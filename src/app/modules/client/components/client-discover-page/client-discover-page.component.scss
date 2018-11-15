@@ -419,31 +419,6 @@
 
   }
 
-  .section-no-result {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    margin-top: 1.57rem;
-    animation-name: fadeIn;
-    animation-duration: .5s;
-    animation-timing-function: ease-in-out;
-
-    .main-heading {
-      margin-top: .6rem;
-      color: #A0A4AF;
-      margin-bottom: .6rem;
-    }
-
-    p {
-      padding-bottom: 0;
-      font-size: .875rem;
-    }
-
-  }
-
-
   .section-pagination {
     display: flex;
     justify-content: flex-end;

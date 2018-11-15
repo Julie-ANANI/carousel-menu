@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, AfterViewInit, HostListener, OnDestroy} from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -45,6 +45,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private _spinnerDisplay = true;
 
   private _adminSide: boolean;
+
+  private _isOwner: boolean;
 
   private _previewMode: boolean;
 
@@ -145,6 +147,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private isAdminSide() {
     this._adminSide = this.location.path().slice(0, 6) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
+    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
 
 
@@ -184,7 +187,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * we are checking do we have any template.
      * @type {number | undefined}
      */
-    this._numberOfSections = this._innovation.executiveReport.totalSections || 0;
+    this._numberOfSections = this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
 
     /***
      * assinging the value of the executive template.
@@ -892,6 +895,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get spinnerDisplay(): boolean {
     return this._spinnerDisplay;
+  }
+
+  get isOwner(): boolean {
+    return this._isOwner;
   }
 
   get openModal(): boolean {

@@ -3,7 +3,7 @@ export const DISCOVER = {
   'MENU_BAR_TITLE': 'Discover Innovations',
 
   'TAGS': {
-    'HEADING': 'Pick up sector(s) to see projects related',
+    'HEADING': 'Select one or more sectors to see specific projects',
     'HEADING_2': 'sector(s) selected.'
   },
 
@@ -21,17 +21,9 @@ export const DISCOVER = {
 
   'TITLE': 'Discover',
 
-  'PAGE_DESCRIPTION': 'All projects we help to grow up',
+  'PAGE_DESCRIPTION': 'All of the projects we\'ve worked on',
 
   'FOOTER_TEXT': 'Also available in: ',
-
-  'NO_RESULT': {
-    'HEADING': 'Something wrong here...',
-    'MESSAGE': {
-      'A': 'Sorry, we couldn\'t find any results (as you can see)',
-      'B': 'try again with some different keywords.'
-    }
-  },
 
   'CATEGORIES': 'Categories',
 

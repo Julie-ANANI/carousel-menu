@@ -299,7 +299,7 @@ export class AdminCampaignMailsComponent implements OnInit {
           Time: '',
           Status: ''
         }],
-      _total: null,
+      _total: 1,
       _columns: [{
         _attrs: ['Step'],
         _name: 'Step',

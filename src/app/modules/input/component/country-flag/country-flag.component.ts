@@ -15,6 +15,7 @@ export class CountryFlagComponent implements OnInit {
   };
 
   @Input() width = 37;
+
   @Input() height = 25;
 
   private names = {
@@ -66,6 +67,7 @@ export class CountryFlagComponent implements OnInit {
     'AZ': 'Azerbaijan', 'IE': 'Ireland', 'ID': 'Indonesia', 'UA': 'Ukraine', 'QA': 'Qatar', 'MZ': 'Mozambique'};
 
   private _url: string;
+
   private _name: string;
 
   constructor() {}
@@ -76,13 +78,18 @@ export class CountryFlagComponent implements OnInit {
 
   updateFlag() {
     let flag = '00';
+
     if (this._country && typeof this._country === 'string') {
       flag = this._country.toUpperCase();
     } else if (this._country && this._country.flag) {
       flag = this._country.flag.toUpperCase();
     }
+
+
     this._url = `https://res.cloudinary.com/umi/image/upload/app/flags/${flag}.png`;
+
     this._name = this.names[flag] || 'Unknown';
+
   }
 
   get url(): string {

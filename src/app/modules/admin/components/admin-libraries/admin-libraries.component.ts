@@ -6,15 +6,19 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
   templateUrl: './admin-libraries.component.html',
   styleUrls: ['./admin-libraries.component.scss']
 })
+
 export class AdminLibrariesComponent implements OnInit {
 
-  private _tabs: Array<string> = ['workflows', 'emails', 'signatures', 'questionnaire'];
+  private _tabs: Array<string> = ['workflows', 'emails', 'questionnaire', 'signatures' ];
 
-  constructor(private _titleService: TranslateTitleService) {}
+  constructor(private translateTitleService: TranslateTitleService) {}
 
-  ngOnInit(): void {
-    this._titleService.setTitle('Libraries');
+  ngOnInit() {
+    this.translateTitleService.setTitle('Libraries');
   }
 
-  public get tabs(): Array<string> { return this._tabs; }
+  get tabs(): Array<string> {
+    return this._tabs;
+  }
+
 }
