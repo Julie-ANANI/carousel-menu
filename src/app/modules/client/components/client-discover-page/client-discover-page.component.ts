@@ -12,6 +12,8 @@ import { PaginationTemplate } from '../../../../models/pagination';
 import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
 import { environment } from '../../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../../../services/auth/auth.service'
+import { UserService } from '../../../../services/user/user.service'
 
 @Component({
   selector: 'app-client-discover-page',
@@ -100,12 +102,18 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _suggestedTags: Array<Tag> = []; // array containing suggested tags id for the selected tag
 
+  private _userId  = ''; // id of the logged user
+
+  private _userSuggestedInnovations: Array<Innovation> = [];
+
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private tagsService: TagsService,
               private translateNotificationsService: TranslateNotificationsService,
               private translateService: TranslateService,
-              private activatedRoute: ActivatedRoute) {}
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
+              private userService: UserService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
@@ -113,6 +121,12 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._paginationValue = { limit: 50, offset: this._config.offset };
     this.checkStoredFilters();
     this.getAllInnovations();
+    if (this.authService.isAuthenticated) {
+      this._userId = this.authService.getUserInfo()['id'];
+      this.applyUserRecommendation();
+    }
+
+
   }
 
 
@@ -400,29 +414,20 @@ export class ClientDiscoverPageComponent implements OnInit {
     if (this._appliedSimilarFilter.length > 0) {
 
       this._localInnovations = [];
-      let sameTag = -1;
-      let sameSimilarTag = -1;
+
 
       this._totalInnovations.forEach((innovation: Innovation) => {
         if (innovation.tags.length > 0) {
           innovation.tags.forEach((tag: Tag) => {
             const indexFilter = this._appliedFilters.findIndex((filter: Tag) => filter._id === tag._id);
             const indexSimilarFilter = this._appliedSimilarFilter.findIndex((filter: Tag) => filter._id === tag._id);
-            if (indexFilter !== -1) {
-              sameTag = 1;
-            }
-            if (indexSimilarFilter !== -1) {
-              sameSimilarTag = 1;
+            if (indexFilter !== -1 || indexSimilarFilter !== -1) {
+              const innovationIndex = this._localInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
+              if (innovationIndex === -1) {
+                this._localInnovations.push(innovation);
+              }
             }
           });
-          if (sameTag !== -1 && sameSimilarTag !== -1) {
-            const innovationIndex = this._localInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
-            if (innovationIndex === -1) {
-              this._localInnovations.push(innovation);
-            }
-            sameTag = -1;
-            sameSimilarTag = -1;
-          }
         }
       });
 
@@ -690,19 +695,27 @@ export class ClientDiscoverPageComponent implements OnInit {
    * Update the list of recommended tags based on the most recent applied filter. If there is no filter selected,
    * we set the recommended list to [].
    */
-  getTagsRecommendation() {
+  private getTagsRecommendation() {
 
     if (this._appliedFilters.length === 0) {
       this._suggestedTags = [];
     }
     else {
       this.tagsService.getSimilarTags(this._appliedFilters[this._appliedFilters.length - 1]._id).first().subscribe((response) => {
-        this._suggestedTags = response;
+        this._suggestedTags = response
       });
     }
   }
 
 
+  private applyUserRecommendation() {
+
+    this.userService.getRecommendation(this._userId).subscribe((response) => {
+      response.forEach((innovation_id: string) => {
+        this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === innovation_id));
+      });
+    });
+  }
 
   get config(): { fields: string; limit: number; offset: number; search: { isPublic: number }; sort: { created: number } } {
     return this._config;
@@ -774,6 +787,10 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   get suggestedTags(): Array<Tag> {
     return this._suggestedTags
+  }
+
+  get userInnovations(): Array<Innovation> {
+    return this._userSuggestedInnovations
   }
 
 }

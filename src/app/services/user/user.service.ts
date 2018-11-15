@@ -102,4 +102,10 @@ export class UserService {
         .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public getRecommendation(userId: string): Observable<any> {
+    return this._http.post(`/user/${userId}/match`)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
 }

@@ -307,6 +307,117 @@
 
   }
 
+  .section-user-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-right: -1rem;
+    margin-left: -.3rem;
+
+    .card-wrapper {
+      display: inline-flex;
+      background-color: white;
+      flex: 0 1 calc(25% - 1rem);
+      transition: all .35s ease-in-out;
+      margin-right: 1rem;
+      margin-bottom: 4.375rem;
+      border-radius: 3px;
+      padding: 10px;
+
+      .card-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+
+        .card-img {
+          margin: 0 auto;
+          height: 200px;
+          text-align: center;
+
+          img {
+            height: 200px;
+            width: 100%;
+            border-radius: 3px;
+          }
+
+        }
+
+        .card-body {
+          margin: .9375rem 0 0 0;
+          flex: 1;
+
+          .card-title {
+            height: 5.9375rem;
+            overflow: hidden;
+
+            .main-heading {
+              margin-bottom: 0;
+              font-size: 1.0625rem;
+              font-weight: 500;
+              overflow: hidden;
+            }
+
+            .tags-wrapper {
+              display: flex;
+              overflow: hidden;
+              flex-wrap: wrap;
+              margin-top: .06rem;
+              max-height: 2.375rem;
+
+              .tag-content {
+                display: inline-flex;
+                font-size: .8125rem;
+                color: $meta-color;
+                font-weight: 600;
+                margin-right: .35rem;
+              }
+
+            }
+
+
+          }
+
+          .summary-text {
+            padding-bottom: 0;
+            font-size: .8125rem;
+            margin-top: .9375rem;
+            color: $text-dark;
+          }
+
+        }
+
+        .card-footer {
+          margin: 1.57rem 0 0 0;
+          font-size: .8125rem;
+          color: $meta-color;
+          font-weight: 600;
+          display: flex;
+          flex-wrap: wrap;
+
+          .text-link {
+            margin-left: .35rem;
+          }
+
+        }
+
+        .card-footer div:last-child {
+
+          .pipe {
+            visibility: hidden;
+          }
+
+        }
+
+      }
+
+    }
+
+    .card-wrapper:hover {
+      box-shadow: $box-shadow-hover;
+    }
+
+  }
 
   .section-no-result {
     display: flex;
