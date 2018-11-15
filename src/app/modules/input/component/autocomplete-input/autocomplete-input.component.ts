@@ -32,7 +32,7 @@ export class AutocompleteInputComponent implements OnInit {
         this.answerList = [];
         config.initialData.forEach(val => {
           if (this.answerList.findIndex(t => {
-            return t === val
+            return t === val;
           }) === -1) {
             this.answerList.push(val);
           }

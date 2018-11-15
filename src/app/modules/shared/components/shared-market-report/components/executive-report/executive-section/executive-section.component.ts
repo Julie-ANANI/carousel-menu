@@ -1,7 +1,8 @@
 import { Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Answer } from '../../../../../../../models/answer';
 import { Question } from '../../../../../../../models/question';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ResponseService } from '../../../services/response.service';
 import { Innovation } from '../../../../../../../models/innovation';
 import { Location } from '@angular/common';
@@ -64,7 +65,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
      * this is when we update the innovation in any component,
      * we are listening that update and will update the innovation attribute.
      */
-    this.innovationCommonService.getInnovation().takeUntil(this._ngUnsubscribe).subscribe((response: Innovation) => {
+    this.innovationCommonService.getInnovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: Innovation) => {
       if (response) {
         this._innovation = response;
         this.getSectionInformation(this._sectionNumber);
@@ -78,7 +79,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * here we are getting the answers that was set on Market report ts file.
    */
   private getAnswers() {
-    this.responseService.getExecutiveAnswers().takeUntil(this._ngUnsubscribe).subscribe((response) => {
+    this.responseService.getExecutiveAnswers().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       if (response !== null) {
         this._answers = response;
         this.getSectionInformation(this._sectionNumber);

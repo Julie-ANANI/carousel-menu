@@ -9,7 +9,7 @@ import {Preset} from '../../../../../models/preset';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Template} from '../../../../sidebar/interfaces/template';
 import {Subject} from 'rxjs';
-import { first, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import {AutocompleteService} from '../../../../../services/autocomplete/autocomplete.service';
 import {DashboardService} from '../../../../../services/dashboard/dashboard.service';
 import {UserService} from '../../../../../services/user/user.service';
@@ -129,17 +129,15 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this.offers = [{name: 'insights', alias: 'GetInsights'}, {name: 'apps', alias: 'GetApps'}, {name: 'leads', alias: 'GetLeads'}];
 
-    this._dashboardService.getOperators().pipe(first()).subscribe((operators: any) => this.operators = operators.result);
+    this._dashboardService.getOperators().subscribe((operators: any) => this.operators = operators.result);
 
     this.operatorId = this._project.operator
       ? (this._project.operator.id ? this._project.operator.id : this._project.operator.toString())
       : undefined;
 
-    this._presetService.getAll(this._config)
-      .pipe(first())
-      .subscribe((p: any) => {
-        this.presets = p.result;
-      });
+    this._presetService.getAll(this._config).subscribe((p: any) => {
+      this.presets = p.result;
+    });
 
     this._project.innovationCards.forEach(value => this.innovCards.push(new InnovCard(value)));
 
@@ -147,7 +145,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this.isEmailsDomainsSidebar = false;
 
-    this._tagService.getTagsFromPool(this.project._id).subscribe((data: any) => {
+    this._tagService.getTagsFromPool(this._project._id).subscribe((data: any) => {
       this.answerTags = data.length;
     });
 
@@ -251,7 +249,7 @@ export class AdminProjectManagementComponent implements OnInit {
             if (valueIndex === -1) { // if not exist then push into the array.
               this.usersSuggestion.push({name: items.name, _id: items._id});
             }
-          })
+          });
         }
       });
     });
@@ -312,7 +310,7 @@ export class AdminProjectManagementComponent implements OnInit {
     let preset: any = {sections: []};
     if (presetName) {
       preset = this.presets.find(value => value.name === presetName);
-      this._innovationService.updatePreset(this._project._id, preset).pipe(first()).subscribe((data: any) => {
+      this._innovationService.updatePreset(this._project._id, preset).subscribe((data: any) => {
         this._activatedRoute.snapshot.parent.data['innovation'] = data;
         this._project = data;
         this.save('Le questionnaire a bien été affecté au projet');
@@ -348,12 +346,12 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   generateQuiz(event: Event) {
     event.preventDefault();
-    this._innovationService.createQuiz(this._project._id).pipe(first()).subscribe((result: any) => {
+    this._innovationService.createQuiz(this._project._id).subscribe((result: any) => {
       this._project = result;
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
     }, (err: any) => {
       this._notificationsService.error('ERROR.ERROR', err);
-    })
+    });
   }
 
   /***
@@ -402,7 +400,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param mail
    */
   sendMailToOwner(mail: any) {
-    this._innovationService.sendMailToOwner(this._project._id, mail).pipe(first()).subscribe((answer: any) => {
+    this._innovationService.sendMailToOwner(this._project._id, mail).subscribe((answer: any) => {
       console.log(answer);
     });
   }
@@ -470,13 +468,12 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   public updateStats(campaign: Campaign) {
     this._campaignService.updateStats(campaign._id)
-      .pipe(first())
       .subscribe((stats: any) => {
         campaign.stats = stats;
       }, (error: any) => {
         this._notificationsService.error('ERROR', error.message);
       });
-  };
+  }
 
   /***
    * This function returns the best campaign related to a project
@@ -524,7 +521,7 @@ export class AdminProjectManagementComponent implements OnInit {
   addTags(tags: Tag[]) {
     this._project.tags = [];
     tags.forEach(tag => {
-      if (!this._project.tags.find(value => { return value._id === tag._id })) {
+      if (!this._project.tags.find(value => value._id === tag._id)) {
         this._project.tags.push(tag);
       }
     });
@@ -724,7 +721,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   public updateOwnerLanguage(language: string) {
     this._project.owner.language = language;
-    this._userService.updateOther(this._project.owner).first().subscribe();
+    this._userService.updateOther(this._project.owner).subscribe();
   }
 
   /**
@@ -757,9 +754,9 @@ export class AdminProjectManagementComponent implements OnInit {
     return this._project;
   }
 
-  get availableScenarios(): Array<EmailScenario> { return this._availableScenarios };
+  get availableScenarios(): Array<EmailScenario> { return this._availableScenarios; }
 
-  get modifiedScenarios(): Array<EmailScenario> { return this._modifiedScenarios };
+  get modifiedScenarios(): Array<EmailScenario> { return this._modifiedScenarios; }
 
   get more() {
     return this._more;
