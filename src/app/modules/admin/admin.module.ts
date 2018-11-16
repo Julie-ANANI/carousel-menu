@@ -23,7 +23,6 @@ import { AdminUserDetailsComponent } from './components/admin-users/admin-user-d
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
-import { FooterModule } from '../base/components/footer/footer.module';
 import { HeaderModule } from '../base/components/header/header.module';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
@@ -54,7 +53,6 @@ import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboa
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    FooterModule,
     HeaderModule,
     NotFoundPageModule,
     LogoutPageModule,

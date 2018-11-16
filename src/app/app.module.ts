@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundModule } from "./modules/not-found/not-found.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 // Services
 import { LocalStorageService } from './services/localStorage/localStorage.service';
@@ -30,6 +31,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     BrowserTransferStateModule,
     HttpClientModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
     CookieModule.forRoot(),
     BrowserModule.withServerTransition({
