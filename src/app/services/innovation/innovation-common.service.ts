@@ -25,10 +25,14 @@ export class InnovationCommonService {
 
    saveInnovation(project: Innovation) {
     const marketReport = project.marketReport;
-    this.innovationService.save(project._id, project).first().subscribe((response: Innovation) => {
-      if (marketReport) response.marketReport = marketReport;
+
+    this.innovationService.save(project._id, project).subscribe((response: Innovation) => {
+      if (marketReport) {
+        response.marketReport = marketReport;
+      }
       this.innovationSubject.next(response);
     });
+
   }
 
 }
