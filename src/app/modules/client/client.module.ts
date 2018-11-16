@@ -12,7 +12,7 @@ import { ClientMyAccountComponent } from './components/client-my-account/client-
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { SharedMarketReportExampleModule } from '../shared/components/shared-market-report-example/shared-market-report-example.module';
 import { LoginPageModule } from '../base/components/login-page/login-page.module';
-import { ForgetPasswordPageModule } from '../base/components/forget-password-page/forget-password-page.module';
+import { ForgetPasswordModule } from '../login/components/forget-password-page/forget-password.module';
 import { SignupPageModule } from '../base/components/signup-page/signup-page.module';
 import { WelcomePageModule } from '../base/components/welcome-page/welcome-page.module';
 import { FooterModule } from '../base/components/footer/footer.module';
@@ -38,7 +38,7 @@ import { SynthesisListModule } from './components/synthesis-list/synthesis-list.
     InputModule,
     LoginPageModule,
     SharedMarketReportExampleModule,
-    ForgetPasswordPageModule,
+    ForgetPasswordModule,
     SignupPageModule,
     WelcomePageModule,
     FooterModule,

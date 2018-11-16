@@ -7,12 +7,12 @@ import { environment } from '../../../../../environments/environment';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-forget-password-page',
-  templateUrl: './forget-password-page.component.html',
-  styleUrls: ['./forget-password-page.component.scss']
+  selector: 'app-forget-password',
+  templateUrl: './forget-password.component.html',
+  styleUrls: ['./forget-password.component.scss']
 })
 
-export class ForgetPasswordPageComponent implements OnInit {
+export class ForgetPasswordComponent implements OnInit {
 
   private _formData: FormGroup;
   private _companyName: string = environment.companyShortName;

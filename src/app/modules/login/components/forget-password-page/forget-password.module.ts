@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ForgetPasswordPageComponent } from './forget-password-page.component';
+import { ForgetPasswordComponent } from './forget-password.component';
 
 @NgModule({
   imports: [
@@ -14,11 +14,11 @@ import { ForgetPasswordPageComponent } from './forget-password-page.component';
     ReactiveFormsModule,
   ],
   declarations: [
-    ForgetPasswordPageComponent
+    ForgetPasswordComponent
   ],
   exports: [
-    ForgetPasswordPageComponent
+    ForgetPasswordComponent
   ]
 })
 
-export class ForgetPasswordPageModule {}
+export class ForgetPasswordModule {}

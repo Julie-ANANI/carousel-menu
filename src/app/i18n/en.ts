@@ -18,14 +18,14 @@ import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i
 import { DISCOVER } from '../modules/discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/discover/components/description/i18n/en';
 import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/en';
-import { FOOTER } from '../modules/base/components/footer/i18n/en';
 import { LOG_IN } from '../modules/base/components/login-page/i18n/en';
 import { SIGN_UP } from '../modules/base/components/signup-page/i18n/en';
-import { FORGET_PASSWORD } from '../modules/base/components/forget-password-page/i18n/en';
+import { FORGET_PASSWORD } from '../modules/login/components/forget-password-page/i18n/en';
 import { WELCOME } from '../modules/base/components/welcome-page/i18n/en';
 import { HEADER } from '../modules/base/components/header/i18n/en';
 import { PAGINATION } from '../modules/input/component/pagination/i18n/en';
 import { SHARE } from '../modules/share/i18n/en';
+import { FOOTER } from "../modules/footer/i18n/en";
 
 export const en = {
   'COMMON': COMMON,

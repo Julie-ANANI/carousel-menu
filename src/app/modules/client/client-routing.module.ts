@@ -20,7 +20,7 @@ import { WelcomePageComponent } from '../base/components/welcome-page/welcome-pa
 import { LoginPageComponent } from '../base/components/login-page/login-page.component';
 import { LogoutPageComponent } from '../base/components/logout-page/logout-page.component';
 import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
-import { ForgetPasswordPageComponent } from '../base/components/forget-password-page/forget-password-page.component';
+import { ForgetPasswordComponent } from '../login/components/forget-password-page/forget-password.component';
 import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
 import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../share/component/synthesis-complete/synthesis-complete.component';
@@ -67,7 +67,7 @@ const clientRoutes: Routes = [
         path: 'forget',
         canActivate: [NonAuthGuard],
         children: [
-          { path: '', component: ForgetPasswordPageComponent, pathMatch: 'full' }
+          { path: '', component: ForgetPasswordComponent, pathMatch: 'full' }
         ]
       },
       {

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { initTranslation, TranslateService } from '../../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
-import { environment } from '../../../../../environments/environment';
-import { CurrentRouteService } from '../../../../services/frontend/current-route/current-route.service';
-import { Router } from '@angular/router';
+import { environment } from "../../../environments/environment";
+import { initTranslation, TranslateService } from "../../i18n/i18n";
 
 @Component({
   selector: 'app-footer',
@@ -19,24 +17,19 @@ export class FooterComponent implements OnInit {
 
   private _currentLang: string;
 
-  private _displayFooter: boolean;
-
   constructor (private translateService: TranslateService,
-               private cookieService: CookieService,
-               private currentRouteService: CurrentRouteService,
-               private router: Router) { }
+               private cookieService: CookieService) { }
 
   ngOnInit(): void {
+    initTranslation(this.translateService);
 
     // for the temporary
-    const currentRoute = this.router.url;
-    this._displayFooter = !(currentRoute === '/forget' || currentRoute === '/signup' || currentRoute === '/login');
+    /*const currentRoute = this.router.url;
+    this._displayFooter = !(currentRoute === '/forget' || currentRoute === '/signup' || currentRoute === '/login');*/
 
-    this.currentRouteService.getCurrentRoute().subscribe((value) => {
+    /*this.currentRouteService.getCurrentRoute().subscribe((value) => {
       this._displayFooter = !(value === '/forget' || value === '/signup' || value === '/login');
-    });
-
-    initTranslation(this.translateService);
+    });*/
 
     this.lang();
 
@@ -100,10 +93,6 @@ export class FooterComponent implements OnInit {
 
   set currentLang(value: string) {
     this._currentLang = value;
-  }
-
-  get displayFooter(): boolean {
-    return this._displayFooter;
   }
 
 }
