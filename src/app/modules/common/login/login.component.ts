@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateTitleService } from "../../services/title/title.service";
+import { TranslateTitleService } from "../../../services/title/title.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../../environments/environment";
 /*import { environment } from "../../../environments/environment";
 import { first } from "rxjs/operators";
 import { AuthService } from "../../services/auth/auth.service";

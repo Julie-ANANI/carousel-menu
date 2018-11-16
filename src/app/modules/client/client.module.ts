@@ -12,7 +12,7 @@ import { ClientMyAccountComponent } from './components/client-my-account/client-
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { SharedMarketReportExampleModule } from '../shared/components/shared-market-report-example/shared-market-report-example.module';
 import { LoginPageModule } from '../base/components/login-page/login-page.module';
-import { ForgetPasswordModule } from '../login/components/forget-password/forget-password.module';
+import { ForgetPasswordModule } from '../common/login/components/forget-password/forget-password.module';
 import { SignupPageModule } from '../base/components/signup-page/signup-page.module';
 import { WelcomePageModule } from '../base/components/welcome-page/welcome-page.module';
 import { HeaderModule } from '../base/components/header/header.module';

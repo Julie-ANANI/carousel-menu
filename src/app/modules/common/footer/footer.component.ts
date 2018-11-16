@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
-import { environment } from "../../../environments/environment";
-import { initTranslation, TranslateService } from "../../i18n/i18n";
+import { environment } from "../../../../environments/environment";
+import { initTranslation, TranslateService } from "../../../i18n/i18n";
 
 @Component({
   selector: 'app-footer',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateTitleService } from "../../services/title/title.service";
+import { TranslateTitleService } from "../../../services/title/title.service";
 
 @Component({
   selector: 'app-not-found-page',

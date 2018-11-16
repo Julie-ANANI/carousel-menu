@@ -20,12 +20,12 @@ import { DISCOVERDESCRIPTION } from '../modules/discover/components/description/
 import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/en';
 import { LOG_IN } from '../modules/base/components/login-page/i18n/en';
 import { SIGN_UP } from '../modules/base/components/signup-page/i18n/en';
-import { FORGET_PASSWORD } from '../modules/login/components/forget-password/i18n/en';
+import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
 import { WELCOME } from '../modules/base/components/welcome-page/i18n/en';
 import { HEADER } from '../modules/base/components/header/i18n/en';
 import { PAGINATION } from '../modules/input/component/pagination/i18n/en';
 import { SHARE } from '../modules/share/i18n/en';
-import { FOOTER } from "../modules/footer/i18n/en";
+import { FOOTER } from "../modules/common/footer/i18n/en";
 
 export const en = {
   'COMMON': COMMON,

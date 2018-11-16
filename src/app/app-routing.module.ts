@@ -12,16 +12,16 @@ import { AuthGuard } from './guards/auth-guard.service';
 /*
   Component
  */
-import { NotFoundPageComponent } from "./modules/not-found/not-found-page.component";
+import { NotFoundPageComponent } from "./modules/common/not-found/not-found-page.component";
 
 const appRoutes: Routes = [
   {
     path: 'login',
-    loadChildren: './modules/login/login.module#LoginModule'
+    loadChildren: './modules/common/login/login.module#LoginModule'
   },
   {
     path: 'signup',
-    loadChildren: './modules/signup/signup.module#SignupModule'
+    loadChildren: './modules/common/signup/signup.module#SignupModule'
   },
   { path: '**', component: NotFoundPageComponent }
   /*{

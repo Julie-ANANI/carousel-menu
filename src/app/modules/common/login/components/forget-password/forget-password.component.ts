@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateTitleService } from '../../../../services/title/title.service';
-import { UserService } from '../../../../services/user/user.service';
-import { environment } from '../../../../../environments/environment';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { UserService } from '../../../../../services/user/user.service';
+import { environment } from '../../../../../../environments/environment';
 import { first } from 'rxjs/operators';
 
 @Component({

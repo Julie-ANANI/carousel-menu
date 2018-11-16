@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 /*
   Guards
 */
-import { NonAuthGuard } from "../../guards/non-auth-guard.service";
+import { NonAuthGuard } from "../../../guards/non-auth-guard.service";
 
 
 /*
