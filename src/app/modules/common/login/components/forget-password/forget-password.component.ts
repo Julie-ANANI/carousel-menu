@@ -15,8 +15,10 @@ import { first } from 'rxjs/operators';
 export class ForgetPasswordComponent implements OnInit {
 
   private _formData: FormGroup;
+
   private _companyName: string = environment.companyShortName;
-  private _emailSent: boolean;
+
+  private _emailSent = false;
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
@@ -25,14 +27,16 @@ export class ForgetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.translateTitleService.setTitle('FORGET_PASSWORD.TITLE');
+    this.buildForm();
+  }
 
-    this._emailSent = false;
 
+  private buildForm() {
     this._formData = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
     });
-
   }
+
 
   onSubmit() {
     if (this._formData.valid) {
@@ -49,6 +53,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   }
 
+
   get formData(): FormGroup {
     return this._formData;
   }
@@ -57,7 +62,6 @@ export class ForgetPasswordComponent implements OnInit {
     return this._emailSent;
   }
 
-  // getting the logo of the company
   getLogo(): string {
     return environment.logoURL;
   }

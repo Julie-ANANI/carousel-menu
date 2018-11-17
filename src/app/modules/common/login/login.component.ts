@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
 
   formData: FormGroup;
@@ -21,14 +22,15 @@ export class LoginComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private authService: AuthService,
-              private translateNotificationsService: TranslateNotificationsService
-              ) { }
+              private translateNotificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
     this.translateTitleService.setTitle('LOG_IN.TITLE');
     this.buildForm();
-    // this.linkedInUrl();
+    this.linkedInUrl();
   }
+
 
   private buildForm() {
     this.formData = this.formBuilder.group({
@@ -37,18 +39,19 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  /*private linkedInUrl() {
+
+  private linkedInUrl() {
     const domain = environment.domain;
 
-    this.authService.linkedinLogin(domain).pipe(first()).subscribe(
-      (url: string) => {
+    this.authService.linkedinLogin(domain).pipe(first()).subscribe((url: string) => {
         this.linkedInLink = url;
       }, (error: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', error.message);
       }
     );
 
-  }*/
+  }
+
 
   onContinue() {
     if (this.formData.valid) {
@@ -58,14 +61,18 @@ export class LoginComponent implements OnInit {
         if (this.authService.isAuthenticated) {
           console.log(this.authService.redirectUrl);
         }
+      }, (err: any) => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this.formData.get('password').reset();
+        console.log(err);
       });
     } else {
       if (this.formData.untouched && this.formData.pristine) {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
     }
-
   }
+
 
   getBackgroundImage(): string {
     return environment.background;
