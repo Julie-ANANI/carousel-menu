@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-/*
-  Guards
-*/
+// Guards
 import { NonAuthGuard } from "../../../guards/non-auth-guard.service";
 
 
-/*
-  Components
-*/
+// Components
 import { SignupComponent } from "./signup.component";
 
 const signupRoutes: Routes = [
