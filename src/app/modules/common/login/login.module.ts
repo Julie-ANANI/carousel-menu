@@ -5,7 +5,6 @@ import { LoginRoutingModule } from "./login-routing.module";
 import { ForgetPasswordModule } from "./components/forget-password/forget-password.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SignupModule } from "../signup/signup.module";
 
 @NgModule({
   imports: [
@@ -14,8 +13,7 @@ import { SignupModule } from "../signup/signup.module";
     LoginRoutingModule,
     ForgetPasswordModule,
     FormsModule,
-    ReactiveFormsModule,
-    SignupModule
+    ReactiveFormsModule
   ],
   declarations: [
     LoginComponent,

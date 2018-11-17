@@ -18,8 +18,8 @@ import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i
 import { DISCOVER } from '../modules/discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/discover/components/description/i18n/en';
 import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/en';
-import { LOG_IN } from '../modules/base/components/login-page/i18n/en';
-import { SIGN_UP } from '../modules/base/components/signup-page/i18n/en';
+import { LOG_IN } from '../modules/common/login/i18n/en';
+import { SIGN_UP } from '../modules/common/signup/i18n/en';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
 import { WELCOME } from '../modules/base/components/welcome-page/i18n/en';
 import { HEADER } from '../modules/base/components/header/i18n/en';

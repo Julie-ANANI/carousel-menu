@@ -1,0 +1,84 @@
+@import "../../../../style/variables";
+
+#signup-component {
+
+  .main-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
+
+    .cover-image {
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      min-height: 100vh;
+    }
+
+
+    .signup-details {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      min-height: 100vh;
+
+      .register {
+        flex: 1 0 auto;
+        justify-content: center;
+        align-items: center;
+        display: inline-flex;
+        flex-direction: column;
+        width: 100%;
+        padding-top: 1.57rem;
+        padding-bottom: 1.57rem;
+        margin-right: auto;
+        margin-left: auto;
+
+        .main-heading {
+          font-size: 1.75rem;
+          color: $background-color;
+        }
+
+        .linkedIn-wrapper {
+          padding-top: 1.57rem;
+
+          .or-wrapper {
+            padding-bottom: 1.57rem;
+          }
+
+          .btn {
+            width: 265px;
+          }
+
+          .btn i {
+            margin-top: -2px;
+          }
+
+        }
+
+      }
+
+    }
+
+
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #signup-component {
+
+    .cover-image {
+      display: none;
+    }
+
+  }
+
+}

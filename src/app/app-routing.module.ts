@@ -20,7 +20,7 @@ const appRoutes: Routes = [
     loadChildren: './modules/common/login/login.module#LoginModule'
   },
   {
-    path: 'signup',
+    path: 'register',
     loadChildren: './modules/common/signup/signup.module#SignupModule'
   },
   {
