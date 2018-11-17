@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateTitleService } from "../../../services/title/title.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { environment } from "../../../../environments/environment";
-/*import { environment } from "../../../environments/environment";
-import { first } from "rxjs/operators";
-import { AuthService } from "../../services/auth/auth.service";
-import { TranslateNotificationsService } from "../../services/notifications/notifications.service";*/
+import { TranslateTitleService } from '../../../services/title/title.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from '../../../../environments/environment';
+import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
+import { User } from '../../../models/user.model';
+import { AuthService } from '../../../services/auth/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'login',
@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
-              // private authService: AuthService,
-              // private translateNotificationsService: TranslateNotificationsService
+              private authService: AuthService,
+              private translateNotificationsService: TranslateNotificationsService
               ) { }
 
   ngOnInit() {
@@ -51,6 +51,19 @@ export class LoginComponent implements OnInit {
   }*/
 
   onContinue() {
+    if (this.formData.valid) {
+      const user = new User(this.formData.value);
+      user.domain = environment.domain;
+      this.authService.login(user).pipe(first()).subscribe(() => {
+        if (this.authService.isAuthenticated) {
+          console.log(this.authService.redirectUrl);
+        }
+      });
+    } else {
+      if (this.formData.untouched && this.formData.pristine) {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+      }
+    }
 
   }
 

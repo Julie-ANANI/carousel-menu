@@ -11,14 +11,14 @@ import { Observable } from 'rxjs';
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NotFoundModule } from "./modules/common/not-found/not-found.module";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NotFoundModule } from './modules/common/not-found/not-found.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Services
 import { LocalStorageService } from './services/localStorage/localStorage.service';
 import { TranslationService } from "./services/translation/translation.service";
-import { TranslateTitleService } from "./services/title/title.service";
-import { TranslateNotificationsService } from "./services/notifications/notifications.service";
+import { TranslateTitleService } from './services/title/title.service';
+import { TranslateNotificationsService } from './services/notifications/notifications.service';
 
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';

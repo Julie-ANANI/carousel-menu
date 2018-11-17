@@ -7,7 +7,7 @@ import { first, map, catchError } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {

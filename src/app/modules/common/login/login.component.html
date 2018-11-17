@@ -1,17 +1,17 @@
 <main class="main-container" id="login-component">
-  <div class="main-wrapper">
+  <section class="main-wrapper">
     <div class="columns col-gapless">
 
 
       <!-- Image -->
-      <section
+      <div
         class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image"
         [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
-      </section>
-
+      </div>
+      <!-- /Image -->
 
       <!-- Login -->
-      <section class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-details section-light-container">
+      <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-details section-light-container">
 
         <!-- Logo -->
         <div>
@@ -102,8 +102,9 @@
           <button type="button" class="btn btn-sm ghost-primary" routerLink="/signup">{{ 'LOG_IN.SIGN_UP' | translate }}</button>
         </div>
 
-      </section>
+      </div>
+      <!-- /Login -->
 
     </div>
-  </div>
+  </section>
 </main>

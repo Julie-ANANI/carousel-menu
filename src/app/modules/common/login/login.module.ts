@@ -21,7 +21,6 @@ import { SignupModule } from "../signup/signup.module";
     LoginComponent,
   ],
   providers: [
-
   ]
 })
 
