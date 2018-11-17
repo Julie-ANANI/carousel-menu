@@ -12,7 +12,7 @@ import { AuthGuard } from './guards/auth-guard.service';
 /*
   Component
  */
-import { NotFoundPageComponent } from "./modules/common/not-found/not-found-page.component";
+import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
 
 const appRoutes: Routes = [
   {
@@ -23,7 +23,15 @@ const appRoutes: Routes = [
     path: 'signup',
     loadChildren: './modules/common/signup/signup.module#SignupModule'
   },
-  { path: '**', component: NotFoundPageComponent }
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'login'
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
   /*{
     path: 'admin',
     loadChildren: './modules/admin/admin.module#AdminModule'
