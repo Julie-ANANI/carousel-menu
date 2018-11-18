@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -21,7 +21,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _usersToRemove: User[] = [];
 
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
 
   private _tableInfos: Table = null;
 

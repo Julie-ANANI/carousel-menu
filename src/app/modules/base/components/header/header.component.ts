@@ -3,7 +3,7 @@ import { environment } from '../../../../../environments/environment';
 import { Location } from '@angular/common';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs/Subject';
 import { CurrentRouteService } from '../../../../services/frontend/current-route/current-route.service';
 import { ListenerService } from '../../../../services/frontend/listener/listener.service';
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   displaySignInForm = false; // to toggle the display of sign if box.
 
-  signUpSidebarTemplateValue: Template = {};
+  signUpSidebarTemplateValue: SidebarInterface = {};
 
   sidebarState = new Subject<string>();
 
@@ -123,9 +123,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   /***
    * This function close the sidebar and send the inactive state to the sidebar.
-   * @param {Template} value
+   * @param {SidebarInterface} value
    */
-  closeSidebar(value: Template) {
+  closeSidebar(value: SidebarInterface) {
     if (value.type === 'isSignUp') {
       this.signUpSidebarTemplateValue.animate_state = 'inactive';
     }

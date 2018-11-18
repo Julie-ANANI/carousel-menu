@@ -1,64 +1,79 @@
 @import "../../../style/variables";
 
-.sidebar-wrapper {
+.sidebar-backdrop {
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
+  height: 100%;
+  z-index: 7997;
+}
+
+.sidebar-container {
+  top: 0;
   height: 100vh;
   z-index: 7999;
   position: fixed;
   right: 0;
-  padding-left: 0;
-  padding-right: 0;
-  opacity: 0;
-  overflow: auto;
-  overflow-x: hidden;
-}
+  bottom: 0;
 
-.sidebar-content {
-  width: 452px;
-  min-height: 100vh;
-  background: #FFFFFF;
-  float: right;
-  right: 0;
-  padding-bottom: 1.875rem;
-  cursor: default;
-}
+  .sidebar-content {
+    width: 100%;
+    min-height: 100vh;
+    background: #FFFFFF;
+    float: right;
+    right: 0;
+    padding-bottom: 1.57rem;
+    cursor: default;
+    overflow: auto;
+    overflow-x: hidden;
+  }
 
-.sidebar-header {
-  min-height: 4.625rem;
-  background-color: $secondary-color;
-  color: white;
-  padding-top: 1.375rem;
-  padding-bottom: 1.375rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  position: sticky;
-  top: 0;
-  z-index: 7998;
-  cursor: default;
-
-  .header-content {
+  .sidebar-header {
+    background-color: $secondary-color;
+    min-height: 4.625rem;
+    color: white;
+    padding-top: .9375rem;
+    padding-bottom: .9375rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 7998;
+    cursor: default;
     display: flex;
-    justify-content: space-between;
-  }
+    justify-content: center;
+    align-items: center;
 
-  .icon {
-    vertical-align: -2px;
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .fa-times:hover {
+      cursor: pointer;
+    }
+
   }
 
 }
-
-.icon-cross:hover {
-  cursor: pointer;
-}
-
 
 /********************************** Media ***************************************/
 
-@media (max-width: 750px) {
+@media (max-width: 840px) {
 
-  .sidebar-content {
-    width: 90vw !important;
+  .sidebar-container {
+    width: 65% !important;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .sidebar-container {
+    width: 90% !important;
   }
 
 }

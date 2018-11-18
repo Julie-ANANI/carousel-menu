@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EmailScenario } from '../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../models/email-template';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../models/email-signature';
 
 @Component({
@@ -29,7 +29,7 @@ export class AdminEditWorkflowComponent implements OnInit {
   private _emails: Array<any> = [];
   private _total: number = 0;
   private _emailToEdit: any;
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   private _tableInfos: any;
   public config: any = {
     limit: 0,

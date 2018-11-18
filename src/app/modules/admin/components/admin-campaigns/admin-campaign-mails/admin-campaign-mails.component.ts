@@ -6,7 +6,7 @@ import { CampaignService } from '../../../../../services/campaign/campaign.servi
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Batch} from '../../../../../models/batch';
 import {Table} from '../../../../table/models/table';
-import {Template} from '../../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -39,7 +39,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     sort: {},
     search: {}
   };
-  public templateSidebar: Template = {};
+  public templateSidebar: SidebarInterface = {};
   public currentBatch: Batch;
   public content = {};
   public currentRow = {};

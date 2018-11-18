@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { ComponentCanDeactivate } from '../../../../../../guards/pending-changes-guard.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
-import { Template } from '../../../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { FrontendService } from '../../../../../../services/frontend/frontend.service';
 import { InnovCard } from '../../../../../../models/innov-card';
 import { Media } from '../../../../../../models/media';
@@ -41,7 +41,7 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
 
   private _innovationPreviewIndex = 0;
 
-  private _sidebarTemplateValue: Template = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
 
   private _currentTab: string;
 
@@ -309,11 +309,11 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
     return this._innovationPreviewIndex;
   }
 
-  get sidebarTemplateValue(): Template {
+  get sidebarTemplateValue(): SidebarInterface {
     return this._sidebarTemplateValue;
   }
 
-  set sidebarTemplateValue(value: Template) {
+  set sidebarTemplateValue(value: SidebarInterface) {
     this._sidebarTemplateValue = value;
   }
 

@@ -3,7 +3,7 @@ import { TemplatesService } from '../../../../../services/templates/templates.se
 import { EmailSignature } from '../../../../../models/email-signature';
 import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import {Template} from '../../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   private _signatures: Array<EmailSignature> = [];
   private _signatureToEdit: EmailSignature;
   private _newSignatureName: string = null;
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   private _total = 0;
   private _tableInfos: Table = null;
   private _config = {

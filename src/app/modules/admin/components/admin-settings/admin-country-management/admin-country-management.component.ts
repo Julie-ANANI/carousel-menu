@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
 import { first } from 'rxjs/operators';
-import {Template} from '../../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../../sidebar/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../services/email/email.service';
 import {Table} from '../../../../table/models/table';
@@ -14,7 +14,7 @@ import {Table} from '../../../../table/models/table';
 })
 export class AdminCountryManagementComponent implements OnInit {
 
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
   private _countriesTable: Table = null;
 
@@ -158,7 +158,7 @@ export class AdminCountryManagementComponent implements OnInit {
       });
   }
 
-  get more(): Template { return this._more; }
+  get more(): SidebarInterface { return this._more; }
   get countriesTable(): Table { return this._countriesTable; }
   get config(): any { return this._config; }
   get data(): Array<any> { return this._countryList.filteredCountries; };

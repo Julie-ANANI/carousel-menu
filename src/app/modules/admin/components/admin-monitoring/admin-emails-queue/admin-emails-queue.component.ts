@@ -3,7 +3,7 @@ import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Table} from '../../../../table/models/table';
-import {Template} from '../../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class AdminEmailQueueComponent implements OnInit {
   };
 
   private _tableInfos: Table = null;
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
   private _currentQueue: EmailQueueModel = null;
 
@@ -117,5 +117,5 @@ export class AdminEmailQueueComponent implements OnInit {
   get queue() { return this._queueList.mailqueues; }
   get tableInfos() { return this._tableInfos; }
   get currentQueue(): any { return this._currentQueue; }
-  get more(): Template { return this._more; }
+  get more(): SidebarInterface { return this._more; }
 }

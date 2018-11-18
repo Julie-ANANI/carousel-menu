@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
 import { first } from 'rxjs/operators';
 import {Table} from '../../../../table/models/table';
-import {Template} from '../../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../../sidebar/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../services/email/email.service';
 
@@ -30,7 +30,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
 
   private _emailInfos: Table = null;
 
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
   private _currentEmailToBlacklist: any = {};
 
@@ -210,7 +210,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
   get total(): number { return this._emailDataset._metadata.totalCount; };
   get searchConfiguration(): string { return this._searchConfiguration; };
   get addressToBL(): string { return this._addressToBL; };
-  get more(): Template { return this._more; }
+  get more(): SidebarInterface { return this._more; }
   get currentEmailToBlacklist(): any { return this._currentEmailToBlacklist; }
   set searchConfiguration(value: string) { this._searchConfiguration = value; };
   set addressToBL(address: string ) { this._addressToBL = address; };

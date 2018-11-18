@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { InnovCard } from '../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class AdminDashboardComponent implements OnInit {
 
   public nbDaysOfStats = 1;
 
-  sidebarTemplateValue: Template = {};
+  sidebarTemplateValue: SidebarInterface = {};
 
   private _selectedInnovation: InnovCard;
 

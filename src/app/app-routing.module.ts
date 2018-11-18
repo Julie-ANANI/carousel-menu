@@ -2,36 +2,19 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 
-/*
-  Guards
-*/
+// Guards
 import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
 
-/*
-  Component
- */
+// Component
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
 
 const appRoutes: Routes = [
-  {
-    path: 'login',
-    loadChildren: './modules/common/login/login.module#LoginModule'
-  },
-  {
-    path: 'register',
-    loadChildren: './modules/common/signup/signup.module#SignupModule'
-  },
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'login'
-  },
-  {
-    path: '**',
-    component: NotFoundComponent
-  }
+  { path: 'login', loadChildren: './modules/common/login/login.module#LoginModule' },
+  { path: 'register', loadChildren: './modules/common/signup/signup.module#SignupModule' },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '**', component: NotFoundComponent }
   /*{
     path: 'admin',
     loadChildren: './modules/admin/admin.module#AdminModule'

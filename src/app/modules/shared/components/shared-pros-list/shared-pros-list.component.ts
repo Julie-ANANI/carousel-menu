@@ -5,7 +5,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import {Table} from '../../../table/models/table';
-import {Template} from '../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import {Tag} from '../../../../models/tag';
@@ -41,7 +41,7 @@ export class SharedProsListComponent {
   private _prosToRemove: Professional[] = [];
   private _prosToTag: Professional[] = [];
 
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   private _showDeleteModal = false;
   private _currentPro: Professional = null;
 

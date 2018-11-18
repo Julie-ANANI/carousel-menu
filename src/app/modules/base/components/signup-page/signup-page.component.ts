@@ -8,7 +8,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -21,7 +21,7 @@ import { first } from 'rxjs/operators';
 export class SignupPageComponent implements OnInit {
 
   public isInvitation = false;
-  private _sidebarTemplateValue: Template = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
   private _sidebarState = new Subject<string>();
   private _linkedInLink: string;
 
@@ -129,11 +129,11 @@ export class SignupPageComponent implements OnInit {
     return this._linkedInLink;
   }
 
-  get sidebarTemplateValue(): Template {
+  get sidebarTemplateValue(): SidebarInterface {
     return this._sidebarTemplateValue;
   }
 
-  set sidebarTemplateValue(value: Template) {
+  set sidebarTemplateValue(value: SidebarInterface) {
     this._sidebarTemplateValue = value;
   }
 

@@ -9,7 +9,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Innovation } from '../../../../../models/innovation';
 import { Table } from '../../../../table/models/table';
 import { Tag } from '../../../../../models/tag';
-import { Template } from '../../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
@@ -25,7 +25,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   private _project: Innovation;
   private _tag: Tag;
   private _tagForm: FormGroup;
-  private _sidebarTemplateValue: Template = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
 
   private _tableInfos: Table = {
     _selector: 'admin-user',

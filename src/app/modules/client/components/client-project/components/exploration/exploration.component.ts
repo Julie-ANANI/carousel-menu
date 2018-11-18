@@ -9,7 +9,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../table/models/table';
-import { Template } from '../../../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { FrontendService } from '../../../../../../services/frontend/frontend.service';
 import { first } from 'rxjs/operators';
 
@@ -38,7 +38,7 @@ export class ExplorationProjectComponent implements OnInit {
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
 
-  private _sidebarTemplateValue: Template = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
 
   private _tableInfos: Table = null;
 
@@ -186,7 +186,7 @@ export class ExplorationProjectComponent implements OnInit {
     return this.project.status;
   }
 
-  get sidebarTemplateValue(): Template {
+  get sidebarTemplateValue(): SidebarInterface {
     return this._sidebarTemplateValue;
   }
 

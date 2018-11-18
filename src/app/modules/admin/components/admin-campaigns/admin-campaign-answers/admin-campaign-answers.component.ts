@@ -10,7 +10,7 @@ import { Section } from '../../../../../models/section';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
-import {Template} from '../../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -27,7 +27,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
   editMode = new Subject<boolean>();
-  sidebarTemplateValue: Template = {};
+  sidebarTemplateValue: SidebarInterface = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,

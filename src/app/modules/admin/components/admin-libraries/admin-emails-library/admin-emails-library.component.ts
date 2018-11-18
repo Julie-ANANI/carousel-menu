@@ -3,7 +3,7 @@ import { TemplatesService } from '../../../../../services/templates/templates.se
 import { TransactionalEmail } from '../../../../../models/transactionnal-email';
 import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { Template } from '../../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
   private _emails: Array<TransactionalEmail> = [];
   private _emailToEdit: TransactionalEmail;
   private _newEmailName: string = null;
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   private _total = 0;
   private _tableInfos: Table = null;
   private _config = {

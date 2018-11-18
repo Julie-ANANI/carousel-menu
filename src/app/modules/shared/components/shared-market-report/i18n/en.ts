@@ -91,11 +91,11 @@ export const MARKET_REPORT = {
     'HEADING': 'Executive Report',
     'TITLE': 'Objective',
     'CHOOSE_TEMPLATE': 'Choose template',
-    'VALID_BUTTON': 'Valid Template',
+    'VALID_BUTTON': 'Valid SidebarInterface',
     'CONCLUSION': 'Conclusion abstract',
     'ABSTRACT': 'Abstract',
     'NO_TAGS': 'Add the tags for this question',
-    'DELETE_BUTTON': 'Delete Executive Template',
+    'DELETE_BUTTON': 'Delete Executive SidebarInterface',
   },
 
   'EXECUTIVE_TEMPLATE': {

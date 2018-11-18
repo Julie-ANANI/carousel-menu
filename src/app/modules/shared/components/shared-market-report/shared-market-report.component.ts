@@ -12,7 +12,7 @@ import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Innovation } from '../../../../models/innovation';
 import { environment } from '../../../../../environments/environment';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
@@ -97,7 +97,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _modalAnswer: Answer = null;
 
-  private _sidebarTemplateValue: Template = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
 
   editMode = new Subject<boolean>(); // this is for the admin side.
 
@@ -860,7 +860,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._adminSide;
   }
 
-  get sidebarTemplateValue(): Template {
+  get sidebarTemplateValue(): SidebarInterface {
     return this._sidebarTemplateValue;
   }
 

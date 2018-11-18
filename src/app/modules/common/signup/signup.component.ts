@@ -5,6 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'signup',
@@ -17,6 +18,8 @@ export class SignupComponent implements OnInit {
   isInvitation = false;
 
   linkedInLink: string;
+
+  sidebarValue: SidebarInterface = {};
 
   constructor(private translateTitleService: TranslateTitleService,
               private activatedRoute: ActivatedRoute,
@@ -46,6 +49,23 @@ export class SignupComponent implements OnInit {
       }
     );
 
+  }
+
+
+  onSignUpClick(event: Event) {
+    event.preventDefault();
+
+    this.sidebarValue = {
+      animate_state: this.sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SIGN_UP.HEADING_SIDEBAR',
+      type: 'isSignUp'
+    }
+
+  }
+
+
+  closeSidebar(value: string) {
+    this.sidebarValue.animate_state = value;
   }
 
 

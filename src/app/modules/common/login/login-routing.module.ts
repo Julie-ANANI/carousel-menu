@@ -11,9 +11,10 @@ import { ForgetPasswordComponent } from "./components/forget-password/forget-pas
 const loginRoutes: Routes = [
   {
     path: '',
+    canActivate: [NonAuthGuard],
     children: [
-      { path: '', canActivate: [NonAuthGuard], component: LoginComponent, pathMatch: 'full' },
-      { path: 'forgetpassword', canActivate: [NonAuthGuard], component: ForgetPasswordComponent, pathMatch: 'full' }
+      { path: '', component: LoginComponent, pathMatch: 'full' },
+      { path: 'forgetpassword', component: ForgetPasswordComponent, pathMatch: 'full' }
     ]
   }
 ];

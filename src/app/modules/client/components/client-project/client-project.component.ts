@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Innovation } from '../../../../models/innovation';
 import { Subject } from 'rxjs';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -19,7 +19,7 @@ export class ClientProjectComponent implements OnInit {
   private _imgType: string;
   private _currentPage: string;
   private _scrollButton = false;
-  private _sidebarTemplateValue: Template = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
   private _sidebarState = new Subject<string>();
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -80,11 +80,11 @@ export class ClientProjectComponent implements OnInit {
     return this._imgType;
   }
 
-  get sidebarTemplateValue(): Template {
+  get sidebarTemplateValue(): SidebarInterface {
     return this._sidebarTemplateValue;
   }
 
-  set sidebarTemplateValue(value: Template) {
+  set sidebarTemplateValue(value: SidebarInterface) {
     this._sidebarTemplateValue = value;
   }
 

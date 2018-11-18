@@ -7,7 +7,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 
@@ -33,7 +33,7 @@ export class ClientMyAccountComponent implements OnInit {
 
   private _profilePicture = '';
 
-  private _sidebarTemplateValue: Template = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
 
   private _sidebarState = new Subject<string>();
 
@@ -233,7 +233,7 @@ export class ClientMyAccountComponent implements OnInit {
     return this._displayCountrySuggestion;
   }
 
-  get sidebarTemplateValue(): Template {
+  get sidebarTemplateValue(): SidebarInterface {
     return this._sidebarTemplateValue;
   }
 

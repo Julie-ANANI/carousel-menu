@@ -7,7 +7,7 @@ import {TranslateNotificationsService} from '../../../../../services/notificatio
 import {Innovation} from '../../../../../models/innovation';
 import {Preset} from '../../../../../models/preset';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Template} from '../../../../sidebar/interfaces/template';
+import {SidebarInterface} from '../../../../sidebar/interfaces/sidebar-interface';
 import {Subject} from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {AutocompleteService} from '../../../../../services/autocomplete/autocomplete.service';
@@ -39,7 +39,7 @@ export class AdminProjectManagementComponent implements OnInit {
   private _project: Innovation;
   private _domain = {fr: '', en: ''};
 
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
   projectSubject = new Subject<Innovation>();
 
