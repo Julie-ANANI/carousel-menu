@@ -92,6 +92,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     this.newBatch.sendNow = sendNow;
     this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: Batch) => {
       this.stats.batches.push(batch);
+    }, err=>{
+      console.error(err);
     });
   }
 
