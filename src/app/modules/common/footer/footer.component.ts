@@ -4,7 +4,7 @@ import { environment } from "../../../../environments/environment";
 import { initTranslation, TranslateService } from "../../../i18n/i18n";
 
 @Component({
-  selector: 'app-footer',
+  selector: 'footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
@@ -22,17 +22,7 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     initTranslation(this.translateService);
-
-    // for the temporary
-    /*const currentRoute = this.router.url;
-    this._displayFooter = !(currentRoute === '/forget' || currentRoute === '/signup' || currentRoute === '/login');*/
-
-    /*this.currentRouteService.getCurrentRoute().subscribe((value) => {
-      this._displayFooter = !(value === '/forget' || value === '/signup' || value === '/login');
-    });*/
-
     this.lang();
-
   }
 
   private lang () {

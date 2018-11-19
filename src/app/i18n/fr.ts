@@ -22,10 +22,10 @@ import { LOG_IN } from '../modules/common/login/i18n/fr';
 import { SIGN_UP } from '../modules/common/signup/i18n/fr';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/fr';
 import { WELCOME } from '../modules/base/components/welcome-page/i18n/fr';
-import { HEADER } from '../modules/base/components/header/i18n/fr';
 import { PAGINATION } from '../modules/input/component/pagination/i18n/fr';
 import { SHARE } from '../modules/share/i18n/fr';
 import { FOOTER } from "../modules/common/footer/i18n/fr";
+import { HEADER } from '../modules/common/header/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
