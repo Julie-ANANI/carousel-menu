@@ -26,6 +26,7 @@ export class UserFormComponent implements OnInit {
      For type 'editUser', put the data into the attribute user and patch it to the formData
   */
   @Input() set user(value: User) {
+    this._selectedProject = null;
     this._user = value;
     this.loadEditUser();
   };
@@ -139,6 +140,7 @@ export class UserFormComponent implements OnInit {
     this.isProfessional = false;
     this.isEditUser = false;
     this.isSignUp = false;
+    this._selectedProject = null;
   }
 
   loadTypes() {
@@ -149,7 +151,6 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'editUser') {
       this.isEditUser = true;
       this.loadEditUser();
-      this.loadInnovations();
     } else if (this._type === 'professional') {
       this.isProfessional = true;
       this.loadProfessional();
@@ -161,6 +162,7 @@ export class UserFormComponent implements OnInit {
     if (this._user) {
       this.isSelf = this._authService.userId === this._user.id;
       this.userForm.patchValue(this._user);
+      this.loadInnovations();
     }
 
   }

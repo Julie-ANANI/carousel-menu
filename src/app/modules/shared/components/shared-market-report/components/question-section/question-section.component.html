@@ -18,9 +18,9 @@
   <!-- If the question type is not checkbox and radio -->
   <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'">
     <div class="header">
-      <div class="section-inline-container">
+      <div>
 
-        <!-- Tags -->
+        <!-- Tags
         <div *ngIf="tags" class="tags">
           <div *ngFor="let tag of tags" class="tags-wrapper"
                [title]="tag.description | multiling:lang" (click)="addTagFilter($event, tag)">
@@ -28,13 +28,14 @@
             <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
           </div>
         </div>
-        <!-- /Tags -->
+        /Tags -->
 
         <app-question-conclusion
           [innovation]="innovation"
           [question]="questionReceived"
           [readonly]="readonly"
-          [stats]="stats">
+          [stats]="stats"
+          [tags]="tags">
         </app-question-conclusion>
 
         <!-- Abstract -->

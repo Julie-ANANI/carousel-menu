@@ -223,7 +223,11 @@
 
 
         <!-- Main page -->
-        <section *ngIf="showDetails" class="section-container front-wrapper" id="main-page">
+        <section
+          *ngIf="showDetails"
+          class="section-container front-wrapper"
+          id="main-page"
+          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container white-background front-page-print">
 
@@ -352,7 +356,10 @@
 
 
         <!-- UMI Intro -->
-        <section *ngIf="showDetails && getDomainName() === 'umi'" class="section-light-container umi-intro-print">
+        <section
+          *ngIf="showDetails && getDomainName() === 'umi'"
+          class="section-light-container umi-intro-print"
+          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <img [src]="getIntroSrc()" class="img-responsive">
           </div>
@@ -361,7 +368,10 @@
 
 
         <!-- Innovation detail -->
-        <section *ngIf="showDetails" class="section-light-container report-innovation-print">
+        <section
+          *ngIf="showDetails"
+          class="section-light-container report-innovation-print"
+          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container innovation-wrapper white-background">
 
@@ -402,7 +412,10 @@
 
 
         <!-- Innovation targeting -->
-        <section *ngIf="showDetails" class="section-light-container report-targeting-print">
+        <section
+          *ngIf="showDetails"
+          class="section-light-container report-targeting-print"
+          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container targeting-wrapper white-background">
 
@@ -465,7 +478,10 @@
 
 
         <!-- Innovation analytics -->
-        <section *ngIf="showDetails" class="section-light-container report-analytics-print">
+        <section
+          *ngIf="showDetails"
+          class="section-light-container report-analytics-print"
+          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container exploration-wrapper white-background">
 
@@ -560,7 +576,10 @@
 
 
         <!-- Key learning section -->
-        <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-light-container report-key-learnings-print" id="key-learning">
+        <section
+          *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide"
+          class="section-light-container report-key-learnings-print"
+          id="key-learning">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="keyLearning-wrapper">
               <div class="section-inline-container">
@@ -583,7 +602,7 @@
         <section class="section-light-container report-origin-print" id="professionals">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="origin-wrapper">
-              <div class="section-inline-container">
+              <div>
 
                 <div *ngFor="let item of answersOrigins | keyvalue">
                   <b>{{ ('CONTINENTS.' + item.key) | translate }}</b>: {{item.value}}

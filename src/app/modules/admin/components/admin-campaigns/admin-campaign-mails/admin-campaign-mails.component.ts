@@ -93,6 +93,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     this.newBatch.sendNow = sendNow;
     this._campaignService.createNewBatch(this._campaign._id, this.newBatch).pipe(first()).subscribe((batch: Batch) => {
       this.stats.batches.push(batch);
+    }, err=>{
+      console.error(err);
     });
   }
 
@@ -300,7 +302,7 @@ export class AdminCampaignMailsComponent implements OnInit {
           Time: '',
           Status: ''
         }],
-      _total: null,
+      _total: 1,
       _columns: [{
         _attrs: ['Step'],
         _name: 'Step',
