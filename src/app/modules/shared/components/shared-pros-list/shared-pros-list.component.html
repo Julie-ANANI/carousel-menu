@@ -6,7 +6,7 @@
                   (performAction)="performActions($event)">
 </app-shared-table>
 
-<app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+<sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-user-form [sidebarState]="sidebarState"
                  *ngIf="isUserForm"
                  [type]="more.type"
@@ -19,7 +19,7 @@
                  [project]="project"
                  (newTags)="addTagsToPro($event)">
   </app-tags-form>
-</app-sidebar>
+</sidebar>
 
 <!-- Modal to ask admin to sure about deleting the user -->
 <div class="modal" [ngClass]="{ 'active': showDeleteModal }">

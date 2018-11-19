@@ -1,12 +1,12 @@
 <div>
-  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+  <sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
     <app-sidebar-workflow
       [emailsObject]="emailToEdit"
       (emailChange)="updateEmail($event)"
       [signatures]="signatures"
       [inputLanguage]="language">
     </app-sidebar-workflow>
-  </app-sidebar>
+  </sidebar>
   <p class="workflow-header">
     <span class="workflow-name">{{ scenario.name }}</span> -
     <a [ngClass]="{'text-warning': language === 'en'}" (click)="changeLanguage('en')">EN</a>

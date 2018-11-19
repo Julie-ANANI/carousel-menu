@@ -84,11 +84,11 @@
 </section>
 
 <!-- Add collaborators -->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-collaborator
     (collaboratorAdded)="addCollaborators($event)"
     [collaborator]="project.collaborators"
     [projectId]="project._id"
     [sidebarState]="sidebarState">
   </app-collaborator>
-</app-sidebar>
+</sidebar>

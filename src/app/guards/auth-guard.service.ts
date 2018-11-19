@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 
 /**
@@ -8,8 +8,9 @@ import { AuthService } from '../services/auth/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private _authService: AuthService,
-              private _router: Router) {}
+
+  constructor(private authService: AuthService,
+              private router: Router) {}
 
   canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url;
@@ -17,21 +18,23 @@ export class AuthGuard implements CanActivate {
   }
 
   private _checkLogin(url: string): boolean {
-    if (this._authService.isAuthenticated ) {
-      if (this._authService.isConfirmed || url === '/logout') {
+    if (this.authService.isAuthenticated ) {
+
+      if (this.authService.isConfirmed || url === '/logout') {
         return true;
       } else {
-          this._authService.redirectUrl = url;
-          this._router.navigate(['/welcome']);
+          this.authService.redirectUrl = url;
+          // this.router.navigate(['/user/client/welcome']);
           return false;
       }
+
     }
 
     // Store the attempted URL for redirecting
-    this._authService.redirectUrl = url;
+    this.authService.redirectUrl = url;
 
     // Navigate to the login page with extras
-    this._router.navigate(['/login']);
+    this.router.navigate(['/login']);
     return false;
   }
 }

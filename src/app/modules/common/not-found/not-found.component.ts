@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from "../../../services/title/title.service";
 
 @Component({
-  selector: 'app-not-found',
+  selector: 'not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss']
 })

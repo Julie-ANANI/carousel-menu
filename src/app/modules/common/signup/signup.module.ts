@@ -5,19 +5,23 @@ import { SignupRoutingModule } from "./signup-routing.module";
 import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../../services/user/user.service';
 import { SidebarModule } from '../../sidebar/sidebar.module';
+import { SidebarSignupFormModule } from '../../sidebar/components/signup-form/sidebar-signup-form.module';
+import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     SignupRoutingModule,
-    SidebarModule
+    SidebarModule,
+    SidebarSignupFormModule
   ],
   declarations: [
     SignupComponent
   ],
   providers: [
-    UserService
+    UserService,
+    AutocompleteService
   ]
 })
 

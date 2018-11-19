@@ -23,7 +23,7 @@
     </app-shared-table>
 
   <!-- Tag preview -->
-  <app-sidebar
+  <sidebar
     [template]="sidebarTemplateValue"
     (closeSidebar)="closeSidebar($event)">
     <app-tags-form
@@ -33,7 +33,7 @@
       [type]="'editTag'"
       (updateTag)="updateTag($event)">
     </app-tags-form>
-  </app-sidebar>
+  </sidebar>
 
 </div>
 

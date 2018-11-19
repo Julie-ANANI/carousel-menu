@@ -248,10 +248,10 @@
 </header>
 
 <!-- Sign up sidebar -->
-<app-sidebar [template]="signUpSidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<sidebar [template]="signUpSidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-user-form
     [type]="signUpSidebarTemplateValue.type"
     [sidebarState]="sidebarState"
     (userSignUpData)="onSignUpSubmit($event)">
   </app-user-form>
-</app-sidebar>
+</sidebar>

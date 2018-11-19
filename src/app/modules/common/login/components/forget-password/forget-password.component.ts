@@ -7,7 +7,7 @@ import { environment } from '../../../../../../environments/environment';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-forget-password',
+  selector: 'forget-password',
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.scss']
 })

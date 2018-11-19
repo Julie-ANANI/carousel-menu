@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 
 /**
@@ -8,8 +8,9 @@ import { AuthService } from '../services/auth/auth.service';
 
 @Injectable()
 export class NonAuthGuard implements CanActivate {
-  constructor(private _authService: AuthService,
-              private _router: Router) {}
+
+  constructor(private authService: AuthService,
+              private router: Router) {}
 
   canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url;
@@ -17,13 +18,16 @@ export class NonAuthGuard implements CanActivate {
   }
 
   private _checkLogin(url: string): boolean {
-    if (!this._authService.isAuthenticated) { return true; }
+
+    if (!this.authService.isAuthenticated) {
+      return true;
+    }
 
     // Store the attempted URL for redirecting
-    this._authService.redirectUrl = url;
+    this.authService.redirectUrl = url;
 
-    // Navigate to the client-login page with extras
-    this._router.navigate(['/']);
+    // Navigate to the login page with extras
+    this.router.navigate(['/login']);
     return false;
   }
 }

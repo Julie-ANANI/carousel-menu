@@ -223,12 +223,12 @@
 
 
 <!-- Change password sidebar -->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-user-change-password
     [sidebarState]="sidebarState"
     (changePasswordData)="changePassword($event)">
   </app-user-change-password>
-</app-sidebar>
+</sidebar>
 
 
 <!-- MODAL : Are you sure you want to delete your account ? -->

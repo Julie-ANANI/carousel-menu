@@ -861,7 +861,7 @@
 
 
 <!-- Insight preview -->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-user-answer
     [adminMode]="adminSide"
     [mode]="editMode"
@@ -869,4 +869,4 @@
     [innovationId]="innovation._id"
     [questions]="questions">
   </app-user-answer>
-</app-sidebar>
+</sidebar>

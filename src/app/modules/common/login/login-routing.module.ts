@@ -14,7 +14,7 @@ const loginRoutes: Routes = [
     canActivate: [NonAuthGuard],
     children: [
       { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path: 'forgetpassword', component: ForgetPasswordComponent, pathMatch: 'full' }
+      { path: 'forgetpassword', component: ForgetPasswordComponent, pathMatch: 'full' },
     ]
   }
 ];

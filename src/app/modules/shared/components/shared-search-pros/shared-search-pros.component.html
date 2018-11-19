@@ -1,12 +1,12 @@
 <div class="columns">
   <div class="column col-5 col-ml-auto">
 
-    <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+    <sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
       <app-sidebar-search
         [params]="params"
         (paramsChange)="updateSettings($event)">
       </app-sidebar-search>
-    </app-sidebar>
+    </sidebar>
 
     <div class="flex-container" id="input-search">
 

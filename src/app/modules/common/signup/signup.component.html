@@ -63,4 +63,8 @@
 
 
 <!-- Sign up sidebar -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)"></app-sidebar>
+<sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+  <signup-form
+    [sidebarState]="sidebarValue.animate_state"
+    (finalOutput)="createUser($event)"></signup-form>
+</sidebar>

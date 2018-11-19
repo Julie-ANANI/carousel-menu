@@ -1,9 +1,9 @@
 <app-shared-table [data]="tableInfos" [config]="config" (configChange)="loadQueue($event)" (editRow)="showCampaignInfos($event)"></app-shared-table>
 
-<app-sidebar
+<sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-emails-form
     [sidebarState]="sidebarState"
     [type]="more.type" [campaignInfos]="currentQueue">
   </app-emails-form>
-</app-sidebar>
+</sidebar>

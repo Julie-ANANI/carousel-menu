@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { LogoutPageComponent } from './logout-page.component';
-import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
+import { LogoutComponent } from './logout.component';
+import { LogoutRoutingModule } from './logout-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    SharedLoaderModule
+    LogoutRoutingModule
   ],
   declarations: [
-    LogoutPageComponent
+    LogoutComponent
   ],
   exports: [
-    LogoutPageComponent
+    LogoutComponent
   ]
 })
 
-export class LogoutPageModule {}
+export class LogoutModule {}

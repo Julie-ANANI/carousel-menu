@@ -6,6 +6,10 @@ import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
+import { FormGroup } from '@angular/forms';
+import { User } from '../../../models/user.model';
+// import { UserService } from '../../../services/user/user.service';
+// import { Location } from '@angular/common';
 
 @Component({
   selector: 'signup',
@@ -24,7 +28,10 @@ export class SignupComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,
-              private authService: AuthService,) { }
+              private authService: AuthService,
+              // private userService: UserService,
+             // private location: Location
+  ) { }
 
   ngOnInit() {
     this.translateTitleService.setTitle('COMMON.SIGN_UP');
@@ -58,7 +65,7 @@ export class SignupComponent implements OnInit {
     this.sidebarValue = {
       animate_state: this.sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'SIGN_UP.HEADING_SIDEBAR',
-      type: 'isSignUp'
+      type: 'signup'
     }
 
   }
@@ -66,6 +73,31 @@ export class SignupComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.sidebarValue.animate_state = value;
+  }
+
+
+  createUser(formValue: FormGroup) {
+    if (formValue.valid) {
+      const user = new User(formValue.value);
+      user.domain = environment.domain;
+
+      /*if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
+      } else {
+        this.userService.create(user).pipe(first()).subscribe(() => {
+          this.authService.login(user).pipe(first()).subscribe(() => {
+            // this.location.back();
+          }, () => {
+            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+          });
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
+        });
+      }*/
+
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+    }
   }
 
 

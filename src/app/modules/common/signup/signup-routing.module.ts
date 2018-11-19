@@ -9,9 +9,7 @@ import { NonAuthGuard } from "../../../guards/non-auth-guard.service";
 import { SignupComponent } from "./signup.component";
 
 const signupRoutes: Routes = [
-  {
-    path: '', component: SignupComponent, canActivate: [NonAuthGuard], pathMatch: 'full'
-  }
+  { path: '', component: SignupComponent, canActivate: [NonAuthGuard], pathMatch: 'full' }
 ];
 
 @NgModule({

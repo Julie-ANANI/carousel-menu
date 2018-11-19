@@ -24,6 +24,7 @@ import { TranslateNotificationsService } from './services/notifications/notifica
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
+import { LoaderService } from './services/loader/loader.service';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     TranslationService,
     TranslateTitleService,
     TranslateNotificationsService,
+    LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, }
@@ -108,7 +110,7 @@ export class TranslateUniversalLoader implements TranslateLoader {
 // UserService,
 // InnovationService,
 // CampaignService,
-// LoaderService,
+//
 // DashboardService,
 // EmailService,
 // ShareService,

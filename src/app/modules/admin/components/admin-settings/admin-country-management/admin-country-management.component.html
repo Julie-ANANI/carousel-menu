@@ -9,14 +9,14 @@
                     (editRow)="editCountry($event)"
                     (removeRows)="deleteCountriesModal($event)"></app-shared-table>
 
-  <app-sidebar
+  <sidebar
     [template]="more" (closeSidebar)="closeSidebar($event)">
     <app-emails-form
       [sidebarState]="sidebarState"
       [type]="more.type" (countryToFilter)="addCountry($event)"
       [countryInfos]="currentCountry" (editCountry)="countryEditionFinish($event)">
     </app-emails-form>
-  </app-sidebar>
+  </sidebar>
 </div>
 
 <!-- Modal to ask admin to sure about deleting the user -->

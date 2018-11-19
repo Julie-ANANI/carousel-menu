@@ -41,13 +41,13 @@
         </div>
 
         <!-- Sign up sidebar -->
-        <app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+        <sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
           <app-user-form
             [type]="sidebarTemplateValue.type"
             (userSignUpData)="onSubmit($event)"
             [sidebarState]="sidebarState">
           </app-user-form>
-        </app-sidebar>
+        </sidebar>
 
       </div>
 

@@ -730,7 +730,7 @@
 </div>
 
 <!-- Sidebars -->
-<app-sidebar
+<sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-innovation-form
     *ngIf="isInnovationSidebar"
@@ -757,7 +757,7 @@
                  tagType="SECTOR"
                  (newTags)="addTags($event)">
   </app-tags-form>
-</app-sidebar>
+</sidebar>
 
 <!-- Modal to ask admin to sure about deleting the project -->
 <div class="modal" [ngClass]="{ 'active': showDeleteModal }">

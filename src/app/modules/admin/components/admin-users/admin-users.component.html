@@ -19,7 +19,7 @@
     </app-shared-table>
     <!-- /Table -->
 
-    <app-sidebar
+    <sidebar
       [template]="more" (closeSidebar)="closeSidebar($event)">
       <app-user-form
         [sidebarState]="sidebarState"
@@ -27,7 +27,7 @@
         [user]="currentUser"
         (editUserData)="userEditionFinish($event)">
       </app-user-form>
-    </app-sidebar>
+    </sidebar>
 
     <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
       <div class="modal-overlay" (click)="closeModal($event)"></div>
@@ -80,7 +80,7 @@
                           (performAction)="performActions($event)">
         </app-shared-table>
 
-        <app-sidebar
+        <sidebar
           [template]="more" (closeSidebar)="closeSidebar($event)">
           <app-user-form
             [sidebarState]="sidebarState"
@@ -88,7 +88,7 @@
             [user]="currentUser"
             (editUserData)="userEditionFinish($event)">
           </app-user-form>
-        </app-sidebar>
+        </sidebar>
 
         &lt;!&ndash; Modal to ask admin to sure about deleting the user &ndash;&gt;
         <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
