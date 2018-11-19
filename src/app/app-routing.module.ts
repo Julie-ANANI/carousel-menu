@@ -14,6 +14,7 @@ const appRoutes: Routes = [
   { path: 'login', loadChildren: './modules/common/login/login.module#LoginModule' },
   { path: 'register', loadChildren: './modules/common/signup/signup.module#SignupModule' },
   { path: 'logout', loadChildren: './modules/common/logout/logout.module#LogoutModule' },
+  { path: 'user', loadChildren: './modules/private/private.module#PrivateModule'},
   // { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', component: NotFoundComponent },
   /*{
