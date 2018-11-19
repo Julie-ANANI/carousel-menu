@@ -273,14 +273,6 @@
                 }
               ]
             },
-            "prod": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dynergie/environment.dynergie.prod.ts"
-                }
-              ]
-            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -290,7 +282,13 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/dynergie/environment.dynergie.prod.ts"
+                }
+              ]
             }
           }
         },
@@ -305,9 +303,6 @@
             },
             "dev": {
               "browserTarget": "dynergie:build:dev"
-            },
-            "prod": {
-              "browserTarget": "dynergie:build:prod"
             },
             "production": {
               "browserTarget": "dynergie:build:production"
