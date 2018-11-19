@@ -60,11 +60,9 @@
         <label class="form-label">Collaborates to {{ projects.length }} projects</label>
         <select (change)="selectProject($event)">
           <option selected>View the projects</option>
-          <option *ngFor="let project of projects" [value]="project._id">{{ project.name }} </option>
+          <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
         </select>
-        <button class="btn btn-primary" *ngIf="selectedProject">
-          <a [href]="'/admin/projects/project/' + selectedProject" target="_blank">Go</a>
-        </button>
+          <a  class="btn btn-primary" *ngIf="selectedProject" [href]="'/admin/projects/project/' + selectedProject" target="_blank">Go</a>
       </div>
 
       <!-- Show Tags -->
