@@ -122,7 +122,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public setNuggets() {
-    this._campaignService.setNuggets(this._campaign._id).first().subscribe((result: Campaign) => {
+    this._campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
         this._campaign = result;
         if (result.nuggets) {
           this._notificationsService.success('Nuggets activés', 'Des pros à 80% seront incorporés.');
@@ -134,7 +134,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   public addNuggetsToBatch(batchId: string) {
     this.nuggetsBatch = null;
-    this._campaignService.addNuggets(this._campaign._id, batchId).first().subscribe((batch: any) => {
+    this._campaignService.addNuggets(this._campaign._id, batchId).pipe(first()).subscribe((batch: any) => {
       this.stats.batches[this._getBatchIndex(batch._id)] = batch;
       this._notificationsService.success('Nuggets ajoutés', `${batch.nuggetsPros} pros à 80% ont été ajoutés.`);
     });
@@ -142,7 +142,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 // DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro() {
-    this._campaignService.creerpro(this._campaign._id).first().subscribe();
+    this._campaignService.creerpro(this._campaign._id).pipe(first()).subscribe();
   }
 
   public deleteBatch(batchId: string) {
