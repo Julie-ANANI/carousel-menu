@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Components
 import { ClientComponent } from './client.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ProjectComponent } from './components/project/project.component';
 
 
@@ -17,13 +16,10 @@ const clientRoutes: Routes = [
         redirectTo: 'projects'
       },
       {
-        path: 'welcome',
-        component: WelcomeComponent
-      },
-      {
         path: 'projects',
-        component: ProjectComponent,
-        pathMatch: 'full'
+        children: [
+          { path: '', component: ProjectComponent, pathMatch: 'full' },
+        ]
       },
     ]
   }

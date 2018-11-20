@@ -13,7 +13,7 @@ import { ClientResetPasswordComponent } from './components/client-reset-password
 import { SharedMarketReportExampleModule } from '../shared/components/shared-market-report-example/shared-market-report-example.module';
 import { ForgetPasswordModule } from '../common/login/components/forget-password/forget-password.module';
 import { SignupPageModule } from '../base/components/signup-page/signup-page.module';
-import { WelcomeModule } from '../user/client/components/welcome/welcome.module';
+import { WelcomeModule } from '../common/welcome/welcome.module';
 import { HeaderModule } from '../base/components/header/header.module';
 import { LogoutModule } from '../common/logout/logout.module';
 import { InputListModule } from '../input/component/input-list/input-list.module';

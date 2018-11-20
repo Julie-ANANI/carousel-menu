@@ -1,19 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { WelcomeComponent } from './welcome.component';
 import { FormsModule } from '@angular/forms';
+import { WelcomeRoutingModule } from './welcome-routing.module';
+
+import { WelcomeComponent } from './welcome.component';
+
+import { UserService } from '../../../services/user/user.service';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
+    WelcomeRoutingModule,
     TranslateModule.forChild(),
     FormsModule
   ],
   declarations: [
     WelcomeComponent
+  ],
+  providers: [
+    UserService
   ],
   exports: [
     WelcomeComponent

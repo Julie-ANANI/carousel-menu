@@ -16,7 +16,7 @@ import { PendingChangesGuard } from '../../guards/pending-changes-guard.service'
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
-import { WelcomeComponent } from '../user/client/components/welcome/welcome.component';
+import { WelcomeComponent } from '../common/welcome/welcome.component';
 import { LogoutComponent } from '../common/logout/logout.component';
 import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
 import { ForgetPasswordComponent } from '../common/login/components/forget-password/forget-password.component';

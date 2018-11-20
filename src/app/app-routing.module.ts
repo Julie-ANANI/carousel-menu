@@ -12,13 +12,16 @@ import { NotFoundComponent } from "./modules/common/not-found/not-found.componen
 
 const appRoutes: Routes = [
   {
-    path: 'login', loadChildren: './modules/common/login/login.module#LoginModule'
+    path: 'login', canActivate: [NonAuthGuard], loadChildren: './modules/common/login/login.module#LoginModule'
   },
   {
-    path: 'register', loadChildren: './modules/common/signup/signup.module#SignupModule'
+    path: 'register', canActivate: [NonAuthGuard], loadChildren: './modules/common/signup/signup.module#SignupModule'
   },
   {
     path: 'logout', canActivate: [AuthGuard], loadChildren: './modules/common/logout/logout.module#LogoutModule'
+  },
+  {
+    path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
   },
   {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'

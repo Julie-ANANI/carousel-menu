@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from '../../../../../services/user/user.service';
-import { User } from '../../../../../models/user.model';
-import { environment } from '../../../../../../environments/environment';
-import { AuthService } from '../../../../../services/auth/auth.service';
+import { UserService } from '../../../services/user/user.service';
+import { User } from '../../../models/user.model';
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -30,23 +30,22 @@ export class WelcomeComponent implements OnInit {
     if (!this._user) {
       this._router.navigate(['/logout']);
     } else if ( this._user.emailVerified ) {
-      this._router.navigate(['/user/projects']);
+      this._router.navigate(['/']);
     }
 
   }
 
   acceptTerms(event: Event): void {
     event.preventDefault();
+
     this._authService.user.state = 'confirmed';
 
-    this._userService.activate(this._authService.user.state, this._tokenEmail)
-      .pipe(first())
-      .subscribe((res: any) => {
+    this._userService.activate(this._authService.user.state, this._tokenEmail).pipe(first()).subscribe((res: any) => {
         if (res.emailVerified === true) {
           this._authService.emailVerified = true;
         }
         this._authService.isConfirmed = true;
-        this._router.navigate(['/user/projects']);
+        this._router.navigate(['/']);
       }, (error: any) => {
         this._router.navigate(['/logout']);
       });

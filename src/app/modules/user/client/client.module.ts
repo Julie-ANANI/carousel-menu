@@ -6,7 +6,6 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 
 import { ProjectModule } from './components/project/project.module';
-import { WelcomeModule } from './components/welcome/welcome.module';
 
 
 @NgModule({
@@ -14,7 +13,6 @@ import { WelcomeModule } from './components/welcome/welcome.module';
     CommonModule,
     TranslateModule.forChild(),
     ClientRoutingModule,
-    WelcomeModule,
     ProjectModule,
   ],
   declarations: [

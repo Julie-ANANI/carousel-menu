@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { TranslateTitleService } from '../../../services/title/title.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 import { FormGroup } from '@angular/forms';
 import { User } from '../../../models/user.model';
-// import { UserService } from '../../../services/user/user.service';
-// import { Location } from '@angular/common';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'signup',
@@ -19,25 +18,25 @@ import { User } from '../../../models/user.model';
 
 export class SignupComponent implements OnInit {
 
-  isInvitation = false;
+  private _isInvitation = false;
 
-  linkedInLink: string;
+  private _linkedInLink: string;
 
-  sidebarValue: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {};
 
   constructor(private translateTitleService: TranslateTitleService,
               private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,
               private authService: AuthService,
-              // user userService: UserService,
-             // user location: Location
-  ) { }
+              private userService: UserService,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.translateTitleService.setTitle('COMMON.SIGN_UP');
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      this.isInvitation = params['invitation'] && params['invitation'] === 'true';
+      this._isInvitation = params['invitation'] && params['invitation'] === 'true';
     });
 
     this.linkedInUrl();
@@ -50,7 +49,7 @@ export class SignupComponent implements OnInit {
 
     this.authService.linkedinLogin(domain).pipe(first()).subscribe(
       (url: string) => {
-        this.linkedInLink = url;
+        this._linkedInLink = url;
       }, (error: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', error.message);
       }
@@ -62,8 +61,8 @@ export class SignupComponent implements OnInit {
   onSignUpClick(event: Event) {
     event.preventDefault();
 
-    this.sidebarValue = {
-      animate_state: this.sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'SIGN_UP.HEADING_SIDEBAR',
       type: 'signup'
     }
@@ -72,7 +71,7 @@ export class SignupComponent implements OnInit {
 
 
   closeSidebar(value: string) {
-    this.sidebarValue.animate_state = value;
+    this._sidebarValue.animate_state = value;
   }
 
 
@@ -81,19 +80,19 @@ export class SignupComponent implements OnInit {
       const user = new User(formValue.value);
       user.domain = environment.domain;
 
-      /*if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
+      if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       } else {
         this.userService.create(user).pipe(first()).subscribe(() => {
           this.authService.login(user).pipe(first()).subscribe(() => {
-            // this.location.back();
+            this.router.navigate(['/welcome']);
           }, () => {
             this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
           });
         }, () => {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
         });
-      }*/
+      }
 
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
@@ -115,6 +114,18 @@ export class SignupComponent implements OnInit {
 
   checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
+  }
+
+  get isInvitation(): boolean {
+    return this._isInvitation;
+  }
+
+  get linkedInLink(): string {
+    return this._linkedInLink;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
   }
 
 }
