@@ -5,7 +5,6 @@ import { SynthesisCompleteComponent } from './synthesis-complete.component';
 import { RouterModule } from '@angular/router';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
-import { NotFoundPageModule } from '../../../base/components/not-found-page/not-found-page.module';
 
 @NgModule({
   imports: [
@@ -14,7 +13,6 @@ import { NotFoundPageModule } from '../../../base/components/not-found-page/not-
     RouterModule,
     SharedMarketReportModule,
     SharedLoaderModule,
-    NotFoundPageModule
   ],
   declarations: [
     SynthesisCompleteComponent

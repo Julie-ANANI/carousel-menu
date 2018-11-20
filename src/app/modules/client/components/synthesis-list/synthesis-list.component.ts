@@ -115,7 +115,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   /**
    * Remove all subscriptions
-   * @private
+   * @user
    */
   private _cleanSubs() {
     this._subscriptions.forEach((sub) => {

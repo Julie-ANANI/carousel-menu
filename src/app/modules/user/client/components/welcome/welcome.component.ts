@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from '../../../../services/user/user.service';
-import { User } from '../../../../models/user.model';
-import { environment } from '../../../../../environments/environment';
-import { AuthService } from '../../../../services/auth/auth.service';
+import { UserService } from '../../../../../services/user/user.service';
+import { User } from '../../../../../models/user.model';
+import { environment } from '../../../../../../environments/environment';
+import { AuthService } from '../../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-welcome-page',
-  templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.scss']
+  selector: 'welcome',
+  templateUrl: './welcome.component.html',
+  styleUrls: ['./welcome.component.scss']
 })
 
-export class WelcomePageComponent implements OnInit {
+export class WelcomeComponent implements OnInit {
 
   private _user: User;
+
   private _tokenEmail: string;
 
   constructor(private _authService: AuthService,
@@ -26,15 +27,17 @@ export class WelcomePageComponent implements OnInit {
   ngOnInit() {
     this._user = this._authService.user;
 
+    console.log(this._authService.isAuthenticated);
+
     if (!this._user) {
       this._router.navigate(['/logout']);
     } else if ( this._user.emailVerified ) {
-      this._router.navigate(['/project']);
+      this._router.navigate(['/user/projects']);
     }
 
   }
 
-  public acceptTerms(event: Event): void {
+  acceptTerms(event: Event): void {
     event.preventDefault();
     this._authService.user.state = 'confirmed';
 
@@ -45,7 +48,7 @@ export class WelcomePageComponent implements OnInit {
           this._authService.emailVerified = true;
         }
         this._authService.isConfirmed = true;
-        this._router.navigate(['/project']);
+        this._router.navigate(['/user/projects']);
       }, (error: any) => {
         this._router.navigate(['/logout']);
       });
@@ -77,7 +80,7 @@ export class WelcomePageComponent implements OnInit {
     return this._translateService;
   }
 
-  public isMainDomain(): boolean {
+  isMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 

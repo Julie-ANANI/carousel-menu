@@ -16,12 +16,10 @@ import { PendingChangesGuard } from '../../guards/pending-changes-guard.service'
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
-import { WelcomePageComponent } from '../base/components/welcome-page/welcome-page.component';
-import { LoginPageComponent } from '../base/components/login-page/login-page.component';
+import { WelcomeComponent } from '../user/client/components/welcome/welcome.component';
 import { LogoutComponent } from '../common/logout/logout.component';
 import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
 import { ForgetPasswordComponent } from '../common/login/components/forget-password/forget-password.component';
-import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
 import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../share/component/synthesis-complete/synthesis-complete.component';
 
@@ -39,16 +37,16 @@ const clientRoutes: Routes = [
       {
         path: 'welcome',
         children: [
-          { path: '', component: WelcomePageComponent, pathMatch: 'full' }
+          { path: '', component: WelcomeComponent, pathMatch: 'full' }
         ]
       },
-      {
+      /*{
         path: 'login',
         canActivate: [NonAuthGuard],
         children: [
           { path: '', component: LoginPageComponent, pathMatch: 'full' }
         ]
-      },
+      },*/
       {
         path: 'logout',
         canActivate: [AuthGuard],
@@ -97,10 +95,10 @@ const clientRoutes: Routes = [
         ]
       },
       ...clientProjectRoutes,
-      {
+      /*{
         path: '**',
         component: NotFoundPageComponent
-      }
+      }*/
     ]
   }
 ];

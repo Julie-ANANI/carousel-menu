@@ -27,12 +27,12 @@ export class AdminAnswersGmailComponent implements OnInit {
     return true;
   }
 
-  /*private _queueList: {mailqueues: Array<EmailQueueModel>, _metadata: any} = {
+  /*user _queueList: {mailqueues: Array<EmailQueueModel>, _metadata: any} = {
     mailqueues: [],
     _metadata: {}
   };*/
 
-  /*private _config = {
+  /*user _config = {
     fields: '',
     limit: 10,
     offset: 0,

@@ -25,6 +25,7 @@ import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
 import { LoaderService } from './services/loader/loader.service';
+import {UserService} from './services/user/user.service';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { LoaderService } from './services/loader/loader.service';
     TranslationService,
     TranslateTitleService,
     TranslateNotificationsService,
+    UserService,
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },

@@ -11,12 +11,10 @@ import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { SharedMarketReportExampleModule } from '../shared/components/shared-market-report-example/shared-market-report-example.module';
-import { LoginPageModule } from '../base/components/login-page/login-page.module';
 import { ForgetPasswordModule } from '../common/login/components/forget-password/forget-password.module';
 import { SignupPageModule } from '../base/components/signup-page/signup-page.module';
-import { WelcomePageModule } from '../base/components/welcome-page/welcome-page.module';
+import { WelcomeModule } from '../user/client/components/welcome/welcome.module';
 import { HeaderModule } from '../base/components/header/header.module';
-import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 import { LogoutModule } from '../common/logout/logout.module';
 import { InputListModule } from '../input/component/input-list/input-list.module';
 import { SidebarUserChangePasswordModule } from '../sidebar/components/user-change-password/sidebar-user-change-password.module';
@@ -35,13 +33,11 @@ import { SynthesisListModule } from './components/synthesis-list/synthesis-list.
     SharedMarketReportModule,
     SidebarModule,
     InputModule,
-    LoginPageModule,
     SharedMarketReportExampleModule,
     ForgetPasswordModule,
     SignupPageModule,
-    WelcomePageModule,
+    WelcomeModule,
     HeaderModule,
-    NotFoundPageModule,
     LogoutModule,
     InputListModule,
     SidebarUserChangePasswordModule,

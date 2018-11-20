@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 
 /**
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
         return true;
       } else {
           this.authService.redirectUrl = url;
-          // this.router.navigate(['/user/welcome']);
+          this.router.navigate(['welcome']);
           return false;
       }
 

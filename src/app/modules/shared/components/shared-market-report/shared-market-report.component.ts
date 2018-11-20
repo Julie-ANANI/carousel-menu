@@ -171,7 +171,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     /***
      * this is to check, if the admin make the synthesis available before the status is Done.
      * @type {boolean | undefined}
-     * @private
+     * @user
      */
     this._previewMode = this._innovation.previewMode || false;
 
@@ -184,7 +184,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     /***
      * Client side to toggle the full view.
      * @type {boolean}
-     * @private
+     * @user
      */
     this._showDetails = true;
 

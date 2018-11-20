@@ -11,29 +11,24 @@ import { AuthGuard } from './guards/auth-guard.service';
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
 
 const appRoutes: Routes = [
-  { path: 'login', loadChildren: './modules/common/login/login.module#LoginModule' },
-  { path: 'register', loadChildren: './modules/common/signup/signup.module#SignupModule' },
-  { path: 'logout', loadChildren: './modules/common/logout/logout.module#LogoutModule' },
-  { path: 'user', loadChildren: './modules/private/private.module#PrivateModule'},
-  // { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: '**', component: NotFoundComponent },
-  /*{
-    path: 'admin',
-    loadChildren: './modules/admin/admin.module#AdminModule'
+  {
+    path: 'login', loadChildren: './modules/common/login/login.module#LoginModule'
   },
   {
-    path: 'discover',
-    loadChildren: './modules/discover/discover.module#DiscoverModule'
+    path: 'register', loadChildren: './modules/common/signup/signup.module#SignupModule'
   },
   {
-    path: 'share',
-    loadChildren: './modules/share/share.module#ShareModule'
+    path: 'logout', loadChildren: './modules/common/logout/logout.module#LogoutModule'
   },
   {
-    path: '',
-    loadChildren: './modules/client/client.module#ClientModule'
+    path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
   },
-  { path: '**', redirectTo: '' }*/
+  {
+    path: '', pathMatch: 'full', redirectTo: 'user'
+  },
+  {
+    path: '**', component: NotFoundComponent
+  },
 ];
 
 @NgModule({

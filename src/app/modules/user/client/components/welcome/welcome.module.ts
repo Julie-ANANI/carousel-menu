@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { NotFoundPageComponent } from './not-found-page.component';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { WelcomeComponent } from './welcome.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     TranslateModule.forChild(),
-    RouterModule
+    FormsModule
   ],
   declarations: [
-    NotFoundPageComponent
+    WelcomeComponent
   ],
   exports: [
-    NotFoundPageComponent
+    WelcomeComponent
   ]
 })
 
-export class NotFoundPageModule {}
+export class WelcomeModule {}

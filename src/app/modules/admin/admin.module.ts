@@ -24,7 +24,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { HeaderModule } from '../base/components/header/header.module';
-import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 import { LogoutModule } from '../common/logout/logout.module';
 import { InputListModule } from '../input/component/input-list/input-list.module';
 import { SidebarInnovationPreviewModule } from '../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
@@ -54,7 +53,6 @@ import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboa
     ReactiveFormsModule,
     RouterModule,
     HeaderModule,
-    NotFoundPageModule,
     LogoutModule,
     InputListModule,
     SidebarInnovationPreviewModule

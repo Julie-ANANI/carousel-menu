@@ -6,6 +6,7 @@ import { TranslateNotificationsService } from '../../../services/notifications/n
 import { User } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -15,14 +16,15 @@ import { first } from 'rxjs/operators';
 
 export class LoginComponent implements OnInit {
 
-  formData: FormGroup;
+  private _formData: FormGroup;
 
-  linkedInLink: string;
+  private _linkedInLink: string;
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private authService: AuthService,
-              private translateNotificationsService: TranslateNotificationsService) {
+              private translateNotificationsService: TranslateNotificationsService,
+              private router: Router,) {
   }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit {
 
 
   private buildForm() {
-    this.formData = this.formBuilder.group({
+    this._formData = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
@@ -44,7 +46,7 @@ export class LoginComponent implements OnInit {
     const domain = environment.domain;
 
     this.authService.linkedinLogin(domain).pipe(first()).subscribe((url: string) => {
-        this.linkedInLink = url;
+        this._linkedInLink = url;
       }, (error: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', error.message);
       }
@@ -54,20 +56,31 @@ export class LoginComponent implements OnInit {
 
 
   onContinue() {
-    if (this.formData.valid) {
-      const user = new User(this.formData.value);
+    if (this._formData.valid) {
+      const user = new User(this._formData.value);
       user.domain = environment.domain;
       this.authService.login(user).pipe(first()).subscribe(() => {
         if (this.authService.isAuthenticated) {
-          console.log(this.authService.redirectUrl);
+
+          // Get the redirect URL from our auth service. If no redirect has been set, use the default.
+          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/user';
+
+          // Set our navigation extras object that passes on our global query params and fragment
+          const navigationExtras: NavigationExtras = {
+            queryParamsHandling: 'merge',
+            preserveFragment: true
+          };
+
+          // Redirect the user
+          this.router.navigate([redirect], navigationExtras);
+
         }
-      }, (err: any) => {
+      }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
-        this.formData.get('password').reset();
-        console.log(err);
+        this._formData.get('password').reset();
       });
     } else {
-      if (this.formData.untouched && this.formData.pristine) {
+      if (this._formData.untouched && this._formData.pristine) {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
     }
@@ -88,6 +101,14 @@ export class LoginComponent implements OnInit {
 
   checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
+  }
+
+  get linkedInLink(): string {
+    return this._linkedInLink;
   }
 
 }

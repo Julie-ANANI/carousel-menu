@@ -27,7 +27,7 @@ export class NonAuthGuard implements CanActivate {
     this.authService.redirectUrl = url;
 
     // Navigate to the login page with extras
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
     return false;
   }
 }

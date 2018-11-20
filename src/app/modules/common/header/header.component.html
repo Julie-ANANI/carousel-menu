@@ -29,7 +29,7 @@
             <!-- Client discover -->
             <li class="navbar-item" *ngIf="!backOfficeValue">
               <a
-                [routerLink]="'/discover'"
+                [routerLink]="'discover'"
                 routerLinkActive="active"
                 (click)="onClickLink()"
                 class="gtm-menu-discover">
@@ -40,7 +40,7 @@
             <!-- Client shared reports -->
             <li class="navbar-item" *ngIf="!backOfficeValue">
               <a
-                [routerLink]="'/synthesis'"
+                [routerLink]="'synthesis'"
                 routerLinkActive="active"
                 (click)="onClickLink()"
                 class="gtm-menu-my-projects">
@@ -51,7 +51,7 @@
             <!-- Client projects --->
             <li class="navbar-item" *ngIf="!backOfficeValue">
               <a
-                [routerLink]="'/project'"
+                [routerLink]="'projects'"
                 routerLinkActive="active"
                 (click)="onClickLink()"
                 class="gtm-menu-my-projects">
@@ -62,7 +62,7 @@
             <!-- Client account -->
             <li class="navbar-item" *ngIf="!backOfficeValue">
               <a
-                [routerLink]="'/account'"
+                [routerLink]="'account'"
                 routerLinkActive="active"
                 (click)="onClickLink()"
                 class="gtm-menu-my-account">
@@ -73,7 +73,7 @@
             <!-- Back office dashboard -->
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
               <a
-                [routerLink]="'/admin'"
+                [routerLink]="'admin'"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="onClickLink()">
@@ -85,7 +85,7 @@
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
               <a
                 routerLinkActive="active"
-                [routerLink]="'/admin/users'"
+                [routerLink]="'admin/users'"
                 (click)="onClickLink()">
                 {{ 'COMMON.USERS' | translate }}
               </a>
@@ -95,7 +95,7 @@
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
               <a
                 routerLinkActive="active"
-                [routerLink]="'/admin/professionals'"
+                [routerLink]="'admin/professionals'"
                 (click)="onClickLink()">
                 {{ 'COMMON.PROFESSIONALS' | translate }}
               </a>
@@ -105,7 +105,7 @@
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
               <a
                 routerLinkActive="active"
-                [routerLink]="'/admin/projects'"
+                [routerLink]="'admin/projects'"
                 (click)="onClickLink()">
                 {{ 'COMMON.PROJECTS' | translate }}
               </a>
@@ -115,7 +115,7 @@
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
               <a
                 routerLinkActive="active"
-                [routerLink]="'/admin/libraries'"
+                [routerLink]="'admin/libraries'"
                 (click)="onClickLink()">
                 Libraries
               </a>
@@ -125,7 +125,7 @@
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
               <a
                 routerLinkActive="active"
-                [routerLink]="'/admin/monitoring'"
+                [routerLink]="'admin/monitoring'"
                 (click)="onClickLink()">
                 Monitoring
               </a>
@@ -135,7 +135,7 @@
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
               <a
                 routerLinkActive="active"
-                [routerLink]="'/admin/settings'"
+                [routerLink]="'admin/settings'"
                 (click)="onClickLink()">
                 {{ 'COMMON.PRESETS' | translate }}
               </a>
@@ -145,7 +145,7 @@
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
               <a
                 routerLinkActive="active"
-                [routerLink]="'/project'"
+                [routerLink]="'projects'"
                 (click)="toggleBackOfficeState(); onClickLink();">
                 {{ 'COMMON.CLIENT_SIDE' | translate }}
               </a>
@@ -154,7 +154,7 @@
             <!-- To go admin side -->
             <li class="navbar-item" *ngIf="!backOfficeValue && canShow(1)">
               <a
-                [routerLink]="'/admin'"
+                [routerLink]="'admin'"
                 routerLinkActive="active"
                 (click)="toggleBackOfficeState(); onClickLink();">
                 {{ 'COMMON.ADMIN' | translate }}

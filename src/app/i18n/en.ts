@@ -21,7 +21,7 @@ import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/en';
 import { LOG_IN } from '../modules/common/login/i18n/en';
 import { SIGN_UP } from '../modules/common/signup/i18n/en';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
-import { WELCOME } from '../modules/base/components/welcome-page/i18n/en';
+import { WELCOME } from '../modules/user/client/components/welcome/i18n/en';
 import { PAGINATION } from '../modules/input/component/pagination/i18n/en';
 import { SHARE } from '../modules/share/i18n/en';
 import { FOOTER } from "../modules/common/footer/i18n/en";

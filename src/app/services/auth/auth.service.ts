@@ -141,8 +141,8 @@ export class AuthService {
 
   public getUserInfo(): any {
     return {
-      name: this.user ? this.user.firstName + ' ' + this.user.lastName : '',
-      id: this.userId
+      name: this._user ? this._user.firstName + ' ' + this._user.lastName : '',
+      id: this._user.id
     };
   }
 
