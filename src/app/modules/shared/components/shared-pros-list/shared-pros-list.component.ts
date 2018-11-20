@@ -81,7 +81,7 @@ export class SharedProsListComponent {
 
       });
     } else {
-      this._professionalService.getAll(this._config).pipe(first()).subscribe((pros: any) => {
+      this._professionalService.getAll(this.configToString()).pipe(first()).subscribe((pros: any) => {
         this._pros = pros.result;
         this._pros.forEach(pro => {
           pro.sent = pro.messages && pro.messages.length > 0;
@@ -111,6 +111,19 @@ export class SharedProsListComponent {
       });
     }
 
+  }
+
+  private configToString() {
+    let config = {};
+    Object.keys(this._config).forEach(key=>{
+      if(this._config[key] instanceof Object) {
+        config[key] = JSON.stringify(this._config[key]);
+      } else {
+        config[key] = this._config[key];
+      }
+    })
+
+    return config;
   }
 
   selectPro(pro: SelectedProfessional): void {
