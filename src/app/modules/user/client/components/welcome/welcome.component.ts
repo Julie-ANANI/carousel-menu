@@ -27,8 +27,6 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
     this._user = this._authService.user;
 
-    console.log(this._authService.isAuthenticated);
-
     if (!this._user) {
       this._router.navigate(['/logout']);
     } else if ( this._user.emailVerified ) {

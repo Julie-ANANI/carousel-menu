@@ -1,6 +1,17 @@
-<header id="header-component">
+<section id="header-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar">
+
+      <div class="menu-view">
+
+        <!-- Logo -->
+        <div class="pad">
+          <a routerLink="/" class="gtm-menu-logo">
+            <img src="{{ getLogo() }}" [alt]="companyName" height="28px">
+          </a>
+        </div>
+
+      </div>
 
       <!-- if authenticated -->
       <ng-container *ngIf="authService.isAuthenticated">
@@ -168,4 +179,4 @@
 
     </nav>
   </div>
-</header>
+</section>

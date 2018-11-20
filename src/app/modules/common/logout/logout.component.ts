@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
-import { Location } from '@angular/common';
 import { TranslateTitleService } from '../../../services/title/title.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'logout',
@@ -14,9 +14,9 @@ import { first } from 'rxjs/operators';
 export class LogoutComponent implements OnInit {
 
   constructor(private authService: AuthService,
-              private location: Location,
               private translateTitleService: TranslateTitleService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService,
+              private router: Router) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('COMMON.LOG_OUT');
@@ -24,12 +24,12 @@ export class LogoutComponent implements OnInit {
     this.authService.logout().pipe(first()).subscribe(() => {
       this.translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
       setTimeout(() => {
-        this.location.back();
+        this.router.navigate(['/login']);
       }, 2000);
       }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
       setTimeout(() => {
-        this.location.back();
+        this.router.navigate(['/']);
       }, 2000);
     });
   }

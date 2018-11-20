@@ -9,7 +9,6 @@ import { ProjectModule } from './components/project/project.module';
 import { WelcomeModule } from './components/welcome/welcome.module';
 
 
-
 @NgModule({
   imports: [
     CommonModule,

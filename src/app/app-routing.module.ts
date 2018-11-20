@@ -18,7 +18,7 @@ const appRoutes: Routes = [
     path: 'register', loadChildren: './modules/common/signup/signup.module#SignupModule'
   },
   {
-    path: 'logout', loadChildren: './modules/common/logout/logout.module#LogoutModule'
+    path: 'logout', canActivate: [AuthGuard], loadChildren: './modules/common/logout/logout.module#LogoutModule'
   },
   {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'

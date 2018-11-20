@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {UserComponent} from './user.component';
+
+import { UserService } from '../../services/user/user.service';
+
+import { UserComponent } from './user.component';
 
 const userRoutes: Routes = [
   {
@@ -9,7 +12,6 @@ const userRoutes: Routes = [
     children: [
       { path: '', loadChildren: './client/client.module#ClientModule' }
     ]
-
   }
 ];
 
@@ -19,6 +21,7 @@ const userRoutes: Routes = [
     RouterModule.forChild(userRoutes)
   ],
   providers: [
+    UserService
   ],
   exports: [
     RouterModule
