@@ -10,6 +10,8 @@ import { PaginationModule } from '../input/component/pagination/pagination.modul
 import { PipeModule } from '../../pipe/pipe.module';
 import { SearchInputModule } from '../input/component/search-input/search-input.module';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
+import { HeaderModule } from '../base/components/header/header.module';
+import { FooterModule } from '../base/components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { SharedLoaderModule } from '../shared/components/shared-loader/shared-lo
     PaginationModule,
     PipeModule,
     SearchInputModule,
-    SharedLoaderModule
+    SharedLoaderModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [
     DiscoverComponent,
