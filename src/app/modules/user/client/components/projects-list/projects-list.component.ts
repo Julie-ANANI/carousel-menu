@@ -69,10 +69,10 @@ export class ProjectsListComponent implements OnInit {
     });
   }
 
-  getRelevantLink(project: Innovation): Array<string> {
-    const link = ['project', project._id];
+  getRelevantLink(innovation: Innovation): Array<string> {
+    const link = [innovation._id];
 
-    switch (project.status) {
+    switch (innovation.status) {
       case 'DONE':
         link.push('synthesis');
         break;

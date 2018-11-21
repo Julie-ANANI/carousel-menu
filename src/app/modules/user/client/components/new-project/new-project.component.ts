@@ -45,8 +45,8 @@ export class NewProjectComponent implements OnInit {
       type: this._formData.value.type
     };
 
-    this.innovationService.create(newProject).pipe(first()).subscribe((response: Innovation) => {
-        this.router.navigate(['/user/projects/project/' + response._id + '/setup'])
+    this.innovationService.create(newProject).pipe(first()).subscribe((innovation: Innovation) => {
+        this.router.navigate(['/user/projects/' + innovation._id + '/setup'])
       }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
     });
