@@ -1,13 +1,7 @@
 FROM node:10.13.0
 
-#ARG APP_NAME
-#ARG ENV_NAME
-
 RUN echo ${APP_NAME}
 RUN echo "${ENV_NAME}"
-
-#RUN : "${APP_NAME:?The name of the application needs to be set and non-empty.}"
-#RUN : "${ENV_NAME:?The environment name needs to be set and non-empty.}"
 
 RUN echo "!!!!!! Builing with ng build ${APP_NAME} -c=${ENV_NAME} --prod !!!!!!"
 
