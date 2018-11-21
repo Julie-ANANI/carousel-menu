@@ -1,18 +1,18 @@
 export const NEW_PROJECT = {
   'DESCRIPTION': {
-    'LINE1': 'Select the language in which you would like to start your project',
+    'LINE1': 'Select the language in which you would like to start your projects-list',
     'LINE2': 'You will be able to translate it in another language later.'
   },
 
   'BUTTON_TEXT': 'Create My Project',
 
-  'COMPANY_NAME_LABEL': 'Give a name to your project',
-  'PROJECT_NAME_PLACEHOLDER': 'Enter name of your project',
+  'COMPANY_NAME_LABEL': 'Give a name to your projects-list',
+  'PROJECT_NAME_PLACEHOLDER': 'Enter name of your projects-list',
   'INNOVATION_TYPE_LABEL': 'Select your offer',
-  'DOWNLOAD': 'Download your project anytime',
+  'DOWNLOAD': 'Download your projects-list anytime',
   'ANONYMOUS': 'Remain anonymous',
   'PRIVATE': 'Nothing will be published at this stage',
-  'BOT_TEXT': 'Ready to begin a new project?',
+  'BOT_TEXT': 'Ready to begin a new projects-list?',
   'PROJECT_NAME': 'Project name is required.',
 
   'APPS': {
@@ -23,7 +23,7 @@ export const NEW_PROJECT = {
 
   'INSIGHTS': {
     'LINE1': 'Validate your market potential',
-    'LINE2': 'Sharp perfect project-market fit',
+    'LINE2': 'Sharp perfect projects-list-market fit',
     'LINE3': 'Make the right decision: Go, No-Go, Adjust'
   },
 

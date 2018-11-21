@@ -5,9 +5,9 @@ export const PITCH = {
     'IMPORT_TRANSLATION': 'Import a translation',
 
     'LANGUAGE': {
-      'HEADING': 'You are describing your project in:',
-      'UPDATE_TEXT': 'Update your project language',
-      'ADD_PROJECT_LANGUAGE': 'or add project in'
+      'HEADING': 'You are describing your projects-list in:',
+      'UPDATE_TEXT': 'Update your projects-list language',
+      'ADD_PROJECT_LANGUAGE': 'or add projects-list in'
     },
 
     'SET_AS_MAIN_LANG': 'Set as main language',
@@ -15,32 +15,32 @@ export const PITCH = {
 
     'MODAL': {
       'TITLE': 'Confirmation Board',
-      'CONTENT': 'Do you want to send your project to validation?'
+      'CONTENT': 'Do you want to send your projects-list to validation?'
     },
 
     'MODAL_DELETE': {
       'TITLE': 'Delete Board',
       'CONTENT': {
-        'A' : 'Do you want to delete your project in',
+        'A' : 'Do you want to delete your projects-list in',
         'B' : 'language?'
       }
     },
 
     'TITLE': {
-      'LABEL': 'Give a title to your project',
-      'PLACEHOLDER': 'Enter title of your project',
+      'LABEL': 'Give a title to your projects-list',
+      'PLACEHOLDER': 'Enter title of your projects-list',
       'ERROR': 'Title is required.'
     },
 
     'SUMMARY': {
-      'LABEL': 'Give a summarization of your project',
+      'LABEL': 'Give a summarization of your projects-list',
       'PLACEHOLDER': 'Your summarization should provide a clear overview of the interest of your innovation (user benefits) as this will be the only information presented in the body of the email.',
       'ERROR': 'Summary is required.'
     },
 
     'PROBLEM': {
-      'LABEL': 'What problems or issues motivated to the creation of this project?',
-      'PLACEHOLDER': 'Explain the origin of your project:\n1. Why did the company conceive of this idea?\n2. What need does it meet?\n3. What gap between ' +
+      'LABEL': 'What problems or issues motivated to the creation of this projects-list?',
+      'PLACEHOLDER': 'Explain the origin of your projects-list:\n1. Why did the company conceive of this idea?\n2. What need does it meet?\n3. What gap between ' +
       'existing solutions does it fill?\n4. What new functionality does it provide that didn’t previously exist, and why did this functionality not ' +
       'exist previously?\nEx: Digital technology used in CCD and CMOS sensors limits their dynamics and sensitivity.',
       'ERROR': 'Problem or issue motivated is required.'
@@ -56,22 +56,22 @@ export const PITCH = {
     },
 
     'ADVANTAGES': {
-      'LABEL': 'What advantages does your project provide to the market?',
+      'LABEL': 'What advantages does your projects-list provide to the market?',
       'INPUT': 'Ex: Improved security',
       'ERROR': 'Advantage is required.'
     }
 
   },
 
-  'STAGE': 'At what stage is your project?',
+  'STAGE': 'At what stage is your projects-list?',
 
   'PATENTED': {
-    'LABEL': 'Is your project patent protected?',
+    'LABEL': 'Is your projects-list patent protected?',
     'ERROR': 'Patent is required.'
   },
 
   'MEDIA': {
-    'LABEL': 'Add images/videos to illustrate your project',
+    'LABEL': 'Add images/videos to illustrate your projects-list',
     'MAIN': 'Main media',
     'SECONDARY': 'Secondary medias',
     'UPLOAD_PICTURE': 'Upload picture',
@@ -83,7 +83,7 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Would you like to authorize',
-    'B' : 'to diffuse your project to it\'s ambassadors community?',
+    'B' : 'to diffuse your projects-list to it\'s ambassadors community?',
     'ERROR': 'Diffusion is required.'
   },
 
@@ -93,6 +93,6 @@ export const PITCH = {
 
   'INNOVATION_PREVIEW': 'Preview',
 
-  'DELETE_LANGUAGE': 'Delete project language'
+  'DELETE_LANGUAGE': 'Delete projects-list language'
 
 };

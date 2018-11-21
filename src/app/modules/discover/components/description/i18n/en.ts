@@ -1,7 +1,7 @@
 export const DISCOVERDESCRIPTION = {
   'AVAILABLE': 'Project already available',
   'PATENT': 'Protected by patent',
-  'SHARE': 'Do you like the project? Share it, collect opinions and help it come to fruition!',
+  'SHARE': 'Do you like the projects-list? Share it, collect opinions and help it come to fruition!',
   'OPINION': 'Give your feedback',
   'MEDIA': 'Media not available.',
   'BENEFITS': 'Benefits',

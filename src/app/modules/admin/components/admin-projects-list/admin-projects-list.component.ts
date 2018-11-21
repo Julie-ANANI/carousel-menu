@@ -129,12 +129,12 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   public getRelevantLink (project: Innovation) { // routerLink : /projects/:project_id
-    const link = '/admin/projects/project/' + project._id;
+    const link = '/admin/projects/projects-list/' + project._id;
     return link;
   }
 
   goToProject(project: Innovation) {
-    // this._router.navigate([this.getRelevantLink(project)]);
+    // this._router.navigate([this.getRelevantLink(projects-list)]);
     window.open(this.getRelevantLink(project), '_blank')
   }
 

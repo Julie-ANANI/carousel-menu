@@ -41,7 +41,7 @@ export class NewProjectComponent implements OnInit {
     };
 
     this.innovationService.create(newProject).pipe(first()).subscribe((project: Innovation) => {
-        this.router.navigate(['/project/' + project._id + '/setup'])
+        this.router.navigate(['/projects-list/' + project._id + '/setup'])
       }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
     });

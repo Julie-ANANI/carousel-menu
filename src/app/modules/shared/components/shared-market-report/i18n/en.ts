@@ -18,9 +18,9 @@ export const MARKET_REPORT = {
   },
 
   'MESSAGE_ADMIN': {
-    'NOT_SUBMITTED': 'The client hasn\'t submitted the project yet. You will be able to edit the market report after he submits his project.',
-    'PREVIEW_MODE': 'The partial synthesis of this project is available at the client side.',
-    'DONE': 'This project is marked as finished, and full synthesis is available at the client side.'
+    'NOT_SUBMITTED': 'The client hasn\'t submitted the projects-list yet. You will be able to edit the market report after he submits his projects-list.',
+    'PREVIEW_MODE': 'The partial synthesis of this projects-list is available at the client side.',
+    'DONE': 'This projects-list is marked as finished, and full synthesis is available at the client side.'
   },
 
   'BUTTON': {
@@ -58,7 +58,7 @@ export const MARKET_REPORT = {
 
   'MODAL': {
     'END_INNOVATION_TITLE': 'Confirmation Board',
-    'END_INNOVATION_CONTENT': 'Do you really want to end this project? Please keep in mind that after this you won\'t be able to make any further changes.',
+    'END_INNOVATION_CONTENT': 'Do you really want to end this projects-list? Please keep in mind that after this you won\'t be able to make any further changes.',
     'EXPORT_INNOVATION_TITLE': 'Export Board',
     'EXPORT_INNOVATION_NOTE': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, the personal data contained in the complete summary must not be used outside of your company.',
     'EXPORT_INNOVATION_CONTENT' : {
@@ -83,7 +83,7 @@ export const MARKET_REPORT = {
 
   'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'The synthesis is not visible to client.',
 
-  'MESSAGE_SYNTHESIS': 'The project has been successfully ended, and the complete synthesis is available at the client side.',
+  'MESSAGE_SYNTHESIS': 'The projects-list has been successfully ended, and the complete synthesis is available at the client side.',
 
   'PRINT_DATE': 'Market test -',
 

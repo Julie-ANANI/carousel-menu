@@ -192,7 +192,7 @@ export const COMMON = {
 
   'HOME': 'Home',
   'ADMIN': 'Admin',
-  'MY_PROJECT': 'My project',
+  'MY_PROJECT': 'My projects-list',
   'MY_PROJECTS': 'My projects',
   'MY_USERS': 'My users',
   'MY_ACCOUNT': 'My account',

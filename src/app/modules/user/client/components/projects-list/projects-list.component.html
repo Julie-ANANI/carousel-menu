@@ -1,7 +1,11 @@
+
+
+
+<!--
 <section class="section-container" id="projects-list">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- Add project button -->
+    &lt;!&ndash; Add projects-list button &ndash;&gt;
     <div class="text-right">
       <a routerLink="new">
         <button (click)="$event.preventDefault()" class="btn btn-primary">
@@ -9,9 +13,9 @@
         </button>
       </a>
     </div>
-    <!-- /Add project button -->
+    &lt;!&ndash; /Add projects-list button &ndash;&gt;
 
-    <!-- No project -->
+    &lt;!&ndash; No projects-list &ndash;&gt;
     <div *ngIf="projects && !projects.length" class="no-project-wrapper text-center">
       <div class="bot-rect">
         {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
@@ -24,21 +28,21 @@
         <img src="https://res.cloudinary.com/umi/image/upload/v1532612435/app/default-images/bot-advice.svg" alt="Bot" class="bot-image">
       </div>
     </div>
-    <!-- /No project -->
+    &lt;!&ndash; /No projects-list &ndash;&gt;
 
-    <!-- Projects -->
+    &lt;!&ndash; Projects &ndash;&gt;
     <ng-container *ngIf="projects && projects.length">
 
-      <!-- While fetching -->
+      &lt;!&ndash; While fetching
       <div *ngIf="displaySpinner" class="spinner-wrapper">
         <app-shared-loader></app-shared-loader>
       </div>
-      <!-- /While fetching -->
+      &lt;!&ndash; /While fetching &ndash;&gt;
 
-      <!-- Complete fetching -->
+      &lt;!&ndash; Complete fetching &ndash;&gt;
       <ng-container *ngIf="!displaySpinner">
 
-        <!-- Projects list -->
+        &lt;!&ndash; Projects list &ndash;&gt;
         <div class="project-wrapper">
           <div *ngFor="let project of projects" class="content-outer">
             <div class="content">
@@ -58,9 +62,9 @@
             </div>
           </div>
         </div>
-        <!-- /Projects list -->
+        &lt;!&ndash; /Projects list &ndash;&gt;
 
-        <!-- Pagination -->
+        &lt;!&ndash; Pagination &ndash;&gt;
         <div class="pagination-wrapper">
           <app-pagination
             [configValue]="paginationConfig"
@@ -69,18 +73,19 @@
             [propertyName]="'client-projects'">
           </app-pagination>
         </div>
-        <!-- /Pagination -->
+        &lt;!&ndash; /Pagination &ndash;&gt;
 
       </ng-container>
-      <!-- /Complete fetching -->
+      &lt;!&ndash; /Complete fetching &ndash;&gt;
 
     </ng-container>
-    <!-- /Projects -->
+    &lt;!&ndash; /Projects &ndash;&gt;
 
   </div>
 </section>
 
-<!--<ng-container>
+&lt;!&ndash;<ng-container>
   <app-shared-carousel></app-shared-carousel>
-</ng-container>-->
+</ng-container>&ndash;&gt;
 
+-->

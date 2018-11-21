@@ -269,7 +269,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   }
 
   /**
-   * After all the settings modifications are done, send them back to the project to be saved.
+   * After all the settings modifications are done, send them back to the projects-list to be saved.
    */
   public updateSettings() {
     if (this._projectStatus) {
@@ -314,7 +314,7 @@ export class SharedProjectSettingsComponent implements OnInit {
     event.preventDefault();
 
     this.innovationService.remove(this.innovId).pipe(first()).subscribe((res: any) => {
-      this.router.navigate(['/project']);
+      this.router.navigate(['/projects-list']);
       this.translateNotificationsService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
     }, (err: any) => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');

@@ -32,7 +32,7 @@ const clientRoutes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         pathMatch: 'full',
-        redirectTo: '/project'
+        redirectTo: '/projects-list'
       },
       {
         path: 'welcome',

@@ -86,7 +86,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   public getRelevantLink (project: Innovation) { // routerLink : /projects/:project_id
-    return 'project/' + project._id;
+    return 'projects-list/' + project._id;
   }
 
   goToProject(project: Innovation) {

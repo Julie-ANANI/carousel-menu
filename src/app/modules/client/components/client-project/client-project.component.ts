@@ -40,7 +40,7 @@ export class ClientProjectComponent implements OnInit {
 
     this.titleService.setTitle(this._project.name || 'Project');
 
-    // Getting the project type
+    // Getting the projects-list type
     this._imgType = `https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-${this._project.type}.svg`;
 
   }

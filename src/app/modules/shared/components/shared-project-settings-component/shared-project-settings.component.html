@@ -361,7 +361,7 @@
     </div>
     <!-- Ques and help section -->
 
-    <!--Delete project button -->
+    <!--Delete projects-list button -->
     <div *ngIf="!adminSide" class="delete-project-wrapper pd-ques">
       <button class="btn btn-sm ghost-delete gtm-delete-project" (click)="showDeleteModal($event)">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' | translate }}</button>
     </div>
@@ -369,7 +369,7 @@
   </div>
 </section>
 
-<!-- Delete project confirmation modal -->
+<!-- Delete projects-list confirmation modal -->
 <div class="modal" [ngClass]="{'active': deleteModal}">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">

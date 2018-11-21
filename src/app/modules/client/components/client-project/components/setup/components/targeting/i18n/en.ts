@@ -1,6 +1,6 @@
 export const TARGETING = {
   'GEOGRAPHY': {
-    'LABEL': 'Select the geographical area of the project',
+    'LABEL': 'Select the geographical area of the projects-list',
     'ENTIRE_WORLD': 'Entire world',
     'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Specify countries to exclude',
     'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Country name to exclude',
@@ -12,7 +12,7 @@ export const TARGETING = {
   'NO': 'None',
   'NOT_ANSWER': 'You haven\'t answered this field.',
 
-  'GEOGRAPHYs': 'Select the geographical area of the project',
+  'GEOGRAPHYs': 'Select the geographical area of the projects-list',
   'SPECIFIC_REQUEST': 'Specific request',
 
   'MARKET': {

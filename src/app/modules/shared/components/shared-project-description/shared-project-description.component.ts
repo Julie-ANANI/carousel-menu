@@ -78,7 +78,7 @@ export class SharedProjectDescriptionComponent implements OnInit {
     return {
       projectId: this.project._id,
       innovationCardId: this.project.innovationCards[0]._id,
-      title: this.project.innovationCards[0].title.slice(0, Math.min(20, this.project.innovationCards[0].title.length)) + '-project(' + (this.project.innovationCards[0].lang || 'en') + ').pdf'
+      title: this.project.innovationCards[0].title.slice(0, Math.min(20, this.project.innovationCards[0].title.length)) + '-projects-list(' + (this.project.innovationCards[0].lang || 'en') + ').pdf'
     }
   }
 

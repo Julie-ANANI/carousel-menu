@@ -4,8 +4,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ClientRoutingModule } from './client-routing.module';
 
 import { ClientComponent } from './client.component';
+import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 
-import { ProjectModule } from './components/project/project.module';
+import { PaginationModule } from '../../input/component/pagination/pagination.module';
 
 
 @NgModule({
@@ -13,10 +14,14 @@ import { ProjectModule } from './components/project/project.module';
     CommonModule,
     TranslateModule.forChild(),
     ClientRoutingModule,
-    ProjectModule,
+    PaginationModule
   ],
   declarations: [
     ClientComponent,
+    ProjectsListComponent
+  ],
+  exports: [
+    ClientComponent
   ]
 })
 

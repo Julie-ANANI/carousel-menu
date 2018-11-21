@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateTitleService } from '../../../../../../services/title/title.service';
-import { UserService } from '../../../../../../services/user/user.service';
-import { Innovation } from '../../../../../../models/innovation';
-import { PaginationTemplate } from '../../../../../../models/pagination';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { UserService } from '../../../../../services/user/user.service';
+import { Innovation } from '../../../../../models/innovation';
+import { PaginationTemplate } from '../../../../../models/pagination';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-projects-list',
+  selector: 'projects-list',
   templateUrl: 'projects-list.component.html',
   styleUrls: ['projects-list.component.scss']
 })
@@ -19,17 +19,19 @@ export class ProjectsListComponent implements OnInit {
 
   private _total: number;
 
-  displaySpinner = true;
 
   private _config = {
     fields: 'name created updated status collaborators principalMedia',
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{ "created" :-1}'
   };
 
-  private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: PaginationTemplate = {
+    limit: this._config.limit,
+    offset: this._config.offset
+  };
 
   constructor(private translateService: TranslateService,
               private userService: UserService,
@@ -48,12 +50,12 @@ export class ProjectsListComponent implements OnInit {
     }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }, () => {
-      this.displaySpinner = false;
+
     });
   }
 
   getRelevantLink(project: Innovation): Array<string> {
-    const link = ['/project', project._id];
+    const link = ['project', project._id];
 
     switch (project.status) {
       case 'DONE':

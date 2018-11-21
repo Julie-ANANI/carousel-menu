@@ -142,7 +142,7 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
 
   /*
       This is to show the error and open the confirmation modal before submitting
-      the project to the server.
+      the projects-list to the server.
    */
   submitButton(event: Event): void {
     event.preventDefault();
@@ -188,7 +188,7 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
       this.project.settings = value;
       // this.completionCalculation();
       this._saveChanges = true;
-      this._saveButtonClass = 'save-project';
+      this._saveButtonClass = 'save-projects-list';
     } else {
       this._saveButtonClass = 'disabled';
     }
@@ -203,7 +203,7 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
       this.checkProjectStatus();
       this._saveChanges = value;
       this._changesSaved = false;
-      this._saveButtonClass = 'save-project';
+      this._saveButtonClass = 'save-projects-list';
     } else {
       this._saveButtonClass = 'disabled';
     }

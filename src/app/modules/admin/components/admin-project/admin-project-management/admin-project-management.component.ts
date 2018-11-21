@@ -32,7 +32,7 @@ import {EmailTemplate} from '../../../../../models/email-template';
 })
 
 /***
- * To do list for one project, show a list of tasks to perform for the project
+ * To do list for one projects-list, show a list of tasks to perform for the projects-list
  */
 export class AdminProjectManagementComponent implements OnInit {
 
@@ -165,7 +165,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /***
    * This function is call when the user click on a toggle
-   * Change the metadata corresponding to the task in the project and saves it
+   * Change the metadata corresponding to the task in the projects-list and saves it
    * @param {string} level
    * @param {string} name
    * @param event
@@ -267,7 +267,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /***
    * This function is call when the user click on save
-   * Change the owner of the project
+   * Change the owner of the projects-list
    */
   ownerEditionFinished() {
     this._project.owner = this.owner;
@@ -275,7 +275,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user change the domain of the project
+   * This function is call when the user change the domain of the projects-list
    * @param {string} value
    */
   changeProjectDomain(value: string) {
@@ -284,7 +284,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user change the operator of the project
+   * This function is call when the user change the operator of the projects-list
    * @param value
    */
   changeProjectOperator(value: any) {
@@ -294,7 +294,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user change the offer of the project
+   * This function is call when the user change the offer of the projects-list
    * @param value
    */
   changeProjectOffer(value: any) {
@@ -303,7 +303,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user change the preset of the project
+   * This function is call when the user change the preset of the projects-list
    * @param {string} presetName
    */
   public updatePreset(presetName: string): void {
@@ -324,7 +324,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function check if a project has a preset
+   * This function check if a projects-list has a preset
    * @returns {boolean}
    */
   public hasPreset(): boolean {
@@ -338,11 +338,11 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the preset edition page
    */
   goToPresetEdition() {
-    this._router.navigate(['/admin/projects/project/' + this._project._id + '/questionnaire']);
+    this._router.navigate(['/admin/projects/projects-list/' + this._project._id + '/questionnaire']);
   }
 
   /***
-   * This function generates the quiz for the project.
+   * This function generates the quiz for the projects-list.
    */
   generateQuiz(event: Event) {
     event.preventDefault();
@@ -355,7 +355,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user edit the description of the project
+   * This function is call when the user edit the description of the projects-list
    * Change the sidebar to the pitch sidebar
    */
   editProjectDescription() {
@@ -369,7 +369,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user edit the targeting of the project
+   * This function is call when the user edit the targeting of the projects-list
    * Change the sidebar to the targeting sidebar
    */
   editProjectTargeting() {
@@ -383,8 +383,8 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user save a modification on the project in a sidebar
-   * Change the project value and saves it
+   * This function is call when the user save a modification on the projects-list in a sidebar
+   * Change the projects-list value and saves it
    * @param {Innovation} value
    */
   changeProject(value: Innovation) {
@@ -406,7 +406,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user edit the mails and domais to blacklist on the project
+   * This function is call when the user edit the mails and domais to blacklist on the projects-list
    * Change the sidebar to the excludeEmails sidebar
    */
   editBlacklist() {
@@ -447,7 +447,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user edit the status of the project
+   * This function is call when the user edit the status of the projects-list
    * Change the sidebar to the status sidebar
    */
   editStatus() {
@@ -476,7 +476,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function returns the best campaign related to a project
+   * This function returns the best campaign related to a projects-list
    * @param {Campaign[]} campaigns
    * @returns {Campaign}
    */
@@ -492,7 +492,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function calculate the click percentage to the project
+   * This function calculate the click percentage to the projects-list
    */
   calculateClickPercentage() {
     if (this.currentCampaign && this.currentCampaign.stats && this.currentCampaign.stats.campaign) {
@@ -502,7 +502,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user edit the tags of the project
+   * This function is call when the user edit the tags of the projects-list
    * Change the sidebar to the addTags sidebar
    */
   editProjectTags() {
@@ -515,7 +515,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user add tags to the project
+   * This function is call when the user add tags to the projects-list
    * @param {Tag[]} tags
    */
   addTags(tags: Tag[]) {
@@ -534,7 +534,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the answer tags edition page
    */
   goToAnswerTagsEdition() {
-    this._router.navigate(['/admin/projects/project/' + this._project._id + '/answer_tags']);
+    this._router.navigate(['/admin/projects/projects-list/' + this._project._id + '/answer_tags']);
   }
 
   /***
@@ -615,7 +615,7 @@ export class AdminProjectManagementComponent implements OnInit {
   /// Delivery section
 
   /***
-   * change the visibility of the project
+   * change the visibility of the projects-list
    */
   changeExternalDiffusion() {
     this._project.isPublic = !this._project.isPublic;
@@ -627,11 +627,11 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the synthesis page
    */
   goToSynthesis() {
-    this._router.navigate(['/admin/projects/project/' + this._project._id + '/synthesis']);
+    this._router.navigate(['/admin/projects/projects-list/' + this._project._id + '/synthesis']);
   }
 
   /***
-   * This function is call when the user wants to write the ending mail of the project
+   * This function is call when the user wants to write the ending mail of the projects-list
    * Change the sidebar to the send-ending-mail sidebar
    */
   editEndingMail() {
@@ -645,7 +645,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user wants to edit the client satisfaction for the project
+   * This function is call when the user wants to edit the client satisfaction for the projects-list
    * Change the sidebar to the satisfaction sidebar
    */
   editClientSatisfaction() {
@@ -658,7 +658,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user wants to edit the project feedback
+   * This function is call when the user wants to edit the projects-list feedback
    * Change the sidebar to the feedback sidebar
    */
   editFeedback() {
@@ -671,7 +671,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user wants to save the project
+   * This function is call when the user wants to save the projects-list
    * @param {string} notification
    */
   public save(notification: string): void {

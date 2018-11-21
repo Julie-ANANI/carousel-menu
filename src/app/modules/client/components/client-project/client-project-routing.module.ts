@@ -5,7 +5,7 @@ import { NewProjectComponent } from './components/new-project/new-project.compon
 import { SetupProjectComponent } from './components/setup/setup.component';
 import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
 import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
-import { ProjectsListComponent } from './components/projects-list/projects-list.component';
+import { ProjectsListComponent } from '../../../user/client/components/projects-list/projects-list.component';
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
