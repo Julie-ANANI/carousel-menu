@@ -604,14 +604,15 @@
             <div class="origin-wrapper">
               <div>
 
-                <div *ngFor="let item of answersOrigins | keyvalue">
+                <!--<div *ngFor="let item of answersOrigins | keyvalue">
                   <b>{{ ('CONTINENTS.' + item.key) | translate }}</b>: {{item.value}}
-                </div>
+                </div>-->
 
                 <app-question-conclusion
                   [innovation]="innovation"
                   [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
                   [readonly]="!adminSide"
+                  [originAnswers]="answersOrigins"
                   [stats]="{ nbAnswers: answers.length, percentage: 0 }">
                 </app-question-conclusion>
 
