@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { LoaderService } from '../../services/loader/loader.service';
 import { takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'user',
@@ -18,18 +19,19 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(private loaderService: LoaderService) { }
 
   ngOnInit() {
-
-    console.log(this.displayLoader);
-
     this.loaderService.isLoading$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((isLoading: boolean) => {
       setTimeout(() => {
         this.displayLoader = isLoading;
-        console.log(this.displayLoader);
-      })
+      }, 400);
     });
+  }
 
-    this.loaderService.stopLoading();
+  getLogo(): string {
+    return environment.logoURL;
+  }
 
+  getDomain(): string {
+    return environment.domain;
   }
 
   ngOnDestroy(): void {
