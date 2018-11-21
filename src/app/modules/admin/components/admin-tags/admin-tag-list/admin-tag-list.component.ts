@@ -8,6 +8,7 @@ import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {PaginationTemplate} from '../../../../../models/pagination';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -21,12 +22,10 @@ export class AdminTagListComponent implements OnInit {
   total = 0;
 
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      label: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"label":-1}'
   };
 
   private _paginationConfig: PaginationTemplate = {};
@@ -59,7 +58,7 @@ export class AdminTagListComponent implements OnInit {
 
   public loadData(config: any) {
     this._config = config;
-    this._tagsService.getAll(this._config).first().subscribe(result => {
+    this._tagsService.getAll(this._config).pipe(first()).subscribe((result: any) => {
       if (result) {
         this._data = result.result;
         this.total = result._metadata.totalCount;

@@ -5,7 +5,6 @@ export const environment = {
   companyName: 'INOMER',
   companyShortName: 'INOMER',
   domain: 'inomer',
-  innovationUrl: 'http://localhost:4200',
   quizUrl: 'http://localhost:4200',
   companyURL: 'https://imr.inomer.fr',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1524213523/whitelabel/inomer/logo-inomer.png',

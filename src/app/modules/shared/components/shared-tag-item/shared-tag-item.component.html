@@ -3,7 +3,7 @@
     <form *ngIf="editMode" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
       <div [ngStyle]="{ 'display': 'flex' }">
         <input
-          ng2-auto-complete
+          auto-complete
           formControlName="tag"
           [source]="tagSuggestions.bind(this)"
           [list-formatter]="autocompleListFormatter"
@@ -17,7 +17,7 @@
     </form>
 
     <div *ngIf="tags?.length > 0" [ngStyle]="{ 'margin-top': '10px' }">
-      <div *ngFor="let t of tags" class="tags">
+      <div *ngFor="let t of tags" class="tags" [title]="t.description | multiling:lang">
         <div class="tags-wrapper">
           #{{ t?.label | multiling:lang }}
           <i *ngIf="editMode || isAdmin" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>

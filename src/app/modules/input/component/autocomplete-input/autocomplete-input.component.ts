@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 
@@ -32,7 +32,7 @@ export class AutocompleteInputComponent implements OnInit {
         this.answerList = [];
         config.initialData.forEach(val => {
           if (this.answerList.findIndex(t => {
-            return t === val
+            return t === val;
           }) === -1) {
             this.answerList.push(val);
           }
@@ -74,20 +74,18 @@ export class AutocompleteInputComponent implements OnInit {
     return this._autocompleteService.get(queryConf);
   }
 
-  autocompleListFormatter = (data: any) : SafeHtml => {
+  autocompleListFormatter(data: any): SafeHtml {
     const text = this.autocompleValueFormatter(data);
     return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
-  };
+  }
 
-  autocompleValueFormatter = (data: any) : string => {
+  autocompleValueFormatter(data: any): string {
     if (this.multiLangObjects) {
       return MultilingPipe.prototype.transform(data[this._identifier], this._translateService.currentLang);
     } else {
       return data[this._identifier];
     }
-  };
-
-
+  }
 
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
@@ -209,9 +207,5 @@ export class AutocompleteInputComponent implements OnInit {
   get canAdd(): boolean {
     return this.inputForm.get('answer').value && (!this.onlyOne || this.answerList.length === 0);
   }
-
-  /*stringify(v: string): string {
-    return JSON.stringify(v);
-  }*/
 
 }

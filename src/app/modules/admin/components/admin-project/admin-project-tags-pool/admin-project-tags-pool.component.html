@@ -2,7 +2,7 @@
 
   <form class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTag($event)">
     <div class="input-group">
-      <input ng2-auto-complete
+      <input auto-complete
              formControlName="tag"
              [source]="suggestions.bind(this)"
              [list-formatter]="autocompleListFormatter"

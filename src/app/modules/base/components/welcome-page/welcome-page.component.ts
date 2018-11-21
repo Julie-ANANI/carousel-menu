@@ -5,6 +5,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { User } from '../../../../models/user.model';
 import { environment } from '../../../../../environments/environment';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-welcome-page',
@@ -38,16 +39,16 @@ export class WelcomePageComponent implements OnInit {
     this._authService.user.state = 'confirmed';
 
     this._userService.activate(this._authService.user.state, this._tokenEmail)
-      .first()
-      .subscribe(res => {
+      .pipe(first())
+      .subscribe((res: any) => {
         if (res.emailVerified === true) {
           this._authService.emailVerified = true;
         }
         this._authService.isConfirmed = true;
         this._router.navigate(['/project']);
-      }, error => {
+      }, (error: any) => {
         this._router.navigate(['/logout']);
-      })
+      });
 
   }
 

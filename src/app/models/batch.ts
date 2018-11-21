@@ -21,9 +21,9 @@ export interface Batch {
     bounced: number,
     insights: number
   }],
-  predictions?: [{
+  predictions?: Array<{
     opened: number,
     clicked: number,
     insights: number
-  }]
+  }>
 }

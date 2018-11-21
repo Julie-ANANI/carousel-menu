@@ -9,7 +9,8 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 
@@ -25,6 +26,7 @@ export class UserFormComponent implements OnInit {
      For type 'editUser', put the data into the attribute user and patch it to the formData
   */
   @Input() set user(value: User) {
+    this._selectedProject = null;
     this._user = value;
     this.loadEditUser();
   };
@@ -111,7 +113,7 @@ export class UserFormComponent implements OnInit {
     this.loadTypes();
 
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           setTimeout (() => {
             this.userForm.reset();
@@ -124,7 +126,6 @@ export class UserFormComponent implements OnInit {
 
   loadInnovations(): void {
     this.userService.getInnovations(this._user.id)
-      .first()
       .subscribe((innovations: any) => {
         this._projects = innovations.result;
       });
@@ -138,6 +139,7 @@ export class UserFormComponent implements OnInit {
     this.isProfessional = false;
     this.isEditUser = false;
     this.isSignUp = false;
+    this._selectedProject = null;
   }
 
   loadTypes() {
@@ -148,7 +150,6 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'editUser') {
       this.isEditUser = true;
       this.loadEditUser();
-      this.loadInnovations();
     } else if (this._type === 'professional') {
       this.isProfessional = true;
       this.loadProfessional();
@@ -160,6 +161,7 @@ export class UserFormComponent implements OnInit {
     if (this._user) {
       this.isSelf = this._authService.userId === this._user.id;
       this.userForm.patchValue(this._user);
+      this.loadInnovations();
     }
 
   }
@@ -189,14 +191,14 @@ export class UserFormComponent implements OnInit {
   }
 
   onSuggestCountries() {
-    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+    this.userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
       this.displayCountrySuggestion = true;
       this.countriesSuggestion = [];
-      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe(res => {
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
           this.displayCountrySuggestion = false;
         } else {
-          res.forEach((items) => {
+          res.forEach((items: any) => {
             const valueIndex = this.countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
               this.countriesSuggestion.push(items.name);

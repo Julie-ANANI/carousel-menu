@@ -3,7 +3,7 @@ export interface Executive {
   value?: number;
 }
 
-export const executiveTemplate: Executive = [
+export const executiveTemplate: Array<Executive> = [
   {
     imageSrc: 'https://res.cloudinary.com/umi/image/upload/v1539159701/app/default-images/sections/sections-2.svg',
     value: 2

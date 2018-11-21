@@ -29,7 +29,7 @@
           </ul>
 
           <p *ngIf="needToSetOriginalTag">
-            <input ng2-auto-complete
+            <input auto-complete
                    [(ngModel)]="tag.originalTagId"
                    [ngModelOptions]="{standalone: true}"
                    [source]="suggestions.bind(this)"

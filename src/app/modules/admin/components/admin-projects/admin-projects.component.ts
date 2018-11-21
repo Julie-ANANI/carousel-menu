@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import {Table} from '../../../table/models/table';
 import {Router} from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-projects',
@@ -19,12 +20,10 @@ export class AdminProjectsComponent implements OnInit {
   private _tableInfos: Table = null;
   private _config = {
     fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   constructor(private _translateService: TranslateService,
@@ -40,8 +39,7 @@ export class AdminProjectsComponent implements OnInit {
   loadProjects(config: any): void {
     this._config = config;
     this._innovationService.getAll(this._config)
-      .first()
-      .subscribe(projects => {
+      .subscribe((projects: any) => {
         this._projects = projects.result;
         this._total = projects._metadata.totalCount;
 
@@ -55,7 +53,10 @@ export class AdminProjectsComponent implements OnInit {
           _isShowable: true,
           _columns: [
             {_attrs: ['name'], _name: 'COMMON.PROJECT.TITLE', _type: 'TEXT'},
-            {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'COMMON.PROJECT.OWNER', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
+            {
+              _attrs: ['owner.firstName', 'owner.lastName'], _name: 'COMMON.PROJECT.OWNER',
+              _type: 'TEXT', _isSortable: false, _isFiltrable: false
+            },
             {_attrs: ['domain'], _name: 'COMMON.PROJECT.DOMAIN', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
             {_attrs: ['updated'], _name: 'COMMON.UPDATED', _type: 'DATE'},
@@ -77,8 +78,8 @@ export class AdminProjectsComponent implements OnInit {
     event.preventDefault();
     this._innovationService
       .remove(projectId)
-      .first()
-      .subscribe(_ => {
+      .pipe(first())
+      .subscribe((_: any) => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });

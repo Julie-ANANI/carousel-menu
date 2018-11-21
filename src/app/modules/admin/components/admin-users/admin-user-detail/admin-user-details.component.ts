@@ -4,7 +4,7 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
-import 'rxjs/add/operator/filter';
+import { first } from 'rxjs/operators';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -39,11 +39,11 @@ export class AdminUserDetailsComponent implements OnInit {
     this._activatedRoute.params.subscribe(params => {
       const userId = params['userId'];
       this._userService.get(userId)
-        .first()
-        .subscribe((user) => {
+        .pipe(first())
+        .subscribe((user: any) => {
           this._userBasicData = user;
           this.formData.patchValue(user);
-        }, error => {
+        }, (error: any) => {
           console.error(error);
         });
     });
@@ -69,13 +69,13 @@ export class AdminUserDetailsComponent implements OnInit {
       user.id = this._userBasicData['id'];
       user.roles = this._userBasicData['roles'];
       this._userService.updateOther(user)
-        .first()
+        .pipe(first())
         .subscribe(
-          data => {
+          (data: any) => {
             this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
             this.formData.patchValue(data);
           },
-          error => {
+          (error: any) => {
             this._notificationsService.error('ERROR.ERROR', error.message);
           });
     }
@@ -117,8 +117,8 @@ export class AdminUserDetailsComponent implements OnInit {
   public deleteAccount(event: Event): void {
     event.preventDefault();
     this._userService.deleteUser(this._userBasicData['id'])
-      .first()
-      .subscribe(_ => {
+      .pipe(first())
+      .subscribe((_: any) => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this._router.navigate(['/admin/users']);
     });

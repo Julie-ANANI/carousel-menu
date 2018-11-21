@@ -7,8 +7,8 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Media, Video } from '../../../../models/media';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
-import { Subject } from 'rxjs/Subject';
-import { forkJoin } from 'rxjs/observable/forkJoin';
+import { Subject, forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslationService } from '../../../../services/translation/translation.service';
@@ -71,7 +71,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.isAdmin();
 
     if (!this._adminSide) {
-      this.showPitchFieldError.subscribe(value => {
+      this.showPitchFieldError.subscribe((value: any) => {
         if (value) {
           this.showError();
         }
@@ -148,7 +148,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this.project._id, new InnovCard({
             lang: lang
-          })).first().subscribe((data: InnovCard) => {
+          })).pipe(first()).subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
             this.notifyModelChanges();
@@ -189,12 +189,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this._showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
   }
 
-  setAsPrincipal (innovationCardId: string): void {
-    this.project.innovationCards.forEach((innovCard: any) => {
-      innovCard.principal = (innovCard._id === innovationCardId);
-    });
-  }
-
   imageUploaded(media: Media, cardIdx: number): void {
     this.project.innovationCards[cardIdx].media.push(media);
     this.checkPrincipalMedia(media, cardIdx);
@@ -203,7 +197,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   newOnlineVideoToAdd (videoInfos: Video): void {
     this.innovationService.addNewMediaVideoToInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
-      .first().subscribe(res => {
+      .pipe(first())
+      .subscribe((res: any) => {
         this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
         this.checkPrincipalMedia(res, this.innovationCardEditingIndex);
       });
@@ -214,8 +209,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     if (this.project.innovationCards[this.innovationCardEditingIndex].media.length > 0) {
       if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
         this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-          this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
-          .subscribe((res) => {
+          this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+          .pipe(first())
+          .subscribe((res: any) => {
             this.project.innovationCards[cardIdx].principalMedia = media;
           });
       }
@@ -227,7 +223,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
-      .first().subscribe((res: Innovation) => {
+      .pipe(first())
+      .subscribe((res: Innovation) => {
         this.project.innovationCards[index].principalMedia = media;
       });
 
@@ -238,7 +235,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
-      .first().subscribe((_res: Innovation) => {
+      .pipe(first())
+      .subscribe((_res: Innovation) => {
         this.project.innovationCards[index].media = this.project.innovationCards[index].media.filter((m) => m._id !== media._id);
         if (this.project.innovationCards[index].principalMedia._id === media._id) {
           this.project.innovationCards[index].principalMedia = null;
@@ -266,13 +264,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId)
-      .subscribe((res) => {
+      .subscribe((res: any) => {
       this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
       // this.innovationCardEditingIndex -= 1;
       this._showDeleteModal = false;
       this.notifyModelChanges();
       this.onLangSelect(event, 0);
-    }, err => {
+    }, (err: any) => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       this._showDeleteModal = false;
     });
@@ -286,15 +284,15 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     switch (model) {
       case 'advantages':
         const subs = from_card[model].map((a) => this.translationService.translate(a.text, target_card.lang));
-        forkJoin(subs).subscribe(results => {
-          target_card[model] = results.map((r) => { return {text: r.translation}; });
+        forkJoin(subs).subscribe((results: any) => {
+          target_card[model] = results.map((r: any) => { return {text: r.translation}; });
           this.notifyModelChanges();
         });
         break;
       default:
         // remove html tags from text
         const text = from_card[model].replace(/<[^>]*>/g, '');
-        this.translationService.translate(text, target_card.lang).first().subscribe((o) => {
+        this.translationService.translate(text, target_card.lang).pipe(first()).subscribe((o: any) => {
           target_card[model] = o.translation;
           this.notifyModelChanges();
         });

@@ -5,6 +5,7 @@ import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import {Question} from '../../../../../../models/question';
 import {Section} from '../../../../../../models/section';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-history-project',
@@ -27,8 +28,8 @@ export class HistoryProjectComponent implements OnInit {
     this._questions = this.project.preset.sections.reduce((acc: Array<Question>, section: Section) => { return acc.concat(section.questions); }, []);
     this.answers
       .getInnovationValidAnswers(this.project._id)
-      .first()
-      .subscribe((answers) => {
+      .pipe(first())
+      .subscribe((answers: any) => {
         const events = this.getBaseEvents();
         answers.answers.forEach((a: Answer) => {
           events.push({type: 'NEWANSWER', date: a.created, data: a});

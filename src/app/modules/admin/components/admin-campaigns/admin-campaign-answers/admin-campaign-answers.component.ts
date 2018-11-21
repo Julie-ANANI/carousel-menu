@@ -8,7 +8,8 @@ import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { AuthService } from '../../../../../services/auth/auth.service';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import {Template} from '../../../../sidebar/interfaces/template';
 
 @Component({
@@ -46,7 +47,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
   loadAnswers(): void {
-    this._campaignService.getAnswers(this._campaign._id).first().subscribe((result: {answers: {localAnswers: Array<Answer>, draftAnswers: Array<Answer>}}) => {
+    this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((result: {answers: {localAnswers: Array<Answer>, draftAnswers: Array<Answer>}}) => {
       this._answers = result.answers.localAnswers;
     });
   }
@@ -79,10 +80,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
   public importAnswers(file: File, event: Event) {
     event.preventDefault();
     this.answerService.importAsCsv(this._campaign._id, file)
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.notificationService.success('ERROR.SUCCESS', res.message);
         this.loadAnswers();
-      }, (err) => {
+      }, (err: any) => {
         this.notificationService.error('ERROR.ERROR', err.message);
       });
   }
@@ -90,7 +91,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   public changeStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
     rows.forEach(value => {
       value.status = status;
-      this.answerService.save(value._id, value).first().subscribe(res => {
+      this.answerService.save(value._id, value).pipe(first()).subscribe((_res: any) => {
         this.loadAnswers();
       });
     });

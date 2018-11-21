@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CookieService, CookieOptions } from 'ngx-cookie';
-import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject, throwError } from 'rxjs';
+import { first, map, catchError } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/throw';
 import {Router} from '@angular/router';
 
 @Injectable()
@@ -29,7 +27,8 @@ export class AuthService {
 
   private _cookieObserver: any = null;
 
-  constructor(private _http: Http,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _http: HttpClient,
               private _cookieService: CookieService,
               private _router: Router) {
   /**
@@ -50,10 +49,10 @@ export class AuthService {
         if (!this._cookieService.get('hasBeenAuthenticated')) {
           // this._cookieService.get('user')
           console.timeEnd('cookieObs');
-          this.logout().first().subscribe(() => {
+          this.logout().pipe(first()).subscribe(() => {
             this._router.navigate(['/logout']);
-          }, err => {
-            console.error(err)
+          }, (err: any) => {
+            console.error(err);
           });
         }
       }, 30000);
@@ -62,44 +61,45 @@ export class AuthService {
 
   public login(user: User): Observable<User> {
     return this._http.post('/auth/login', user.toJSON())
-      .map((res: Response) => {
-        const response = res.json();
-        this._setAuthenticatedTo(response.isAuthenticated);
-        this._setAdminTo(response.adminLevel);
-        this._setConfirmedTo(response.isConfirmed);
-        this._user = response;
-        if (response.isAuthenticated) {
-          this.startCookieObservator();
-        }
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: any) => {
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._user = res;
+          if (res.isAuthenticated) {
+            this.startCookieObservator();
+          }
+          return res;
+        }),
+        catchError((error: Response) => throwError(error.json()))
+      );
   }
 
   public linkedinLogin(domain: string): Observable<any> {
     return this._http.get(`/auth/linkedin?domain=${domain}`)
-      .map((res: Response) => {
-        const response = res.json();
-        return response.url;
-      })
-      .catch((error: Response) => {
-        return Observable.throw(error.json())
-      });
+      .pipe(
+        map((res: any) => {
+          return res.url;
+        }),
+        catchError((error: Response) => throwError(error.json()))
+      );
   }
 
   public logout(): Observable<any> {
     return this._http.get('/auth/logout')
-      .map((res: Response) => {
-        const response = res.json();
-        this._setAuthenticatedTo(response.isAuthenticated);
-        this._setAdminTo(response.adminLevel);
-        this._setConfirmedTo(response.isConfirmed);
-        this._cookieService.removeAll();
-        this._user = null;
-        clearInterval(this._cookieObserver);
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: any) => {
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._cookieService.removeAll();
+          this._user = null;
+          clearInterval(this._cookieObserver);
+          return res;
+        }),
+        catchError((error: Response) => throwError(error.json()))
+      );
   }
 
   /**
@@ -107,47 +107,51 @@ export class AuthService {
    */
   public initializeSession(): Observable<any> {
     return this._http.get('/auth/session')
-      .map((res) => {
-        const response = res.json();
-        this._setAuthenticatedTo(response.isAuthenticated);
-        this._setAdminTo(response.adminLevel);
-        this._setConfirmedTo(response.isConfirmed);
-        this._user = response.user || null;
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: any) => {
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._user = res.user || null;
+          return res;
+        }));
   }
 
   private _setConfirmedTo(newValue: boolean): void {
     this._confirmed = newValue;
-    this._cookieService.put('hasBeenConfirmed', newValue.toString(), this._cookieOptions);
+    if (isPlatformBrowser(this.platformId)) {
+      this._cookieService.put('hasBeenConfirmed', newValue.toString(), this._cookieOptions);
+    }
   }
 
   private _setAuthenticatedTo(newValue: boolean): void {
     this._authenticated = newValue;
     this._authenticatedSource.next(newValue);
-    this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
+    if (isPlatformBrowser(this.platformId)) {
+      this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
+    }
   }
 
   private _setAdminTo(newValue: number): void {
     this._admin = newValue;
-    this._cookieService.put('hasBeenAdmin', `${newValue}`, this._cookieOptions);
+    if (isPlatformBrowser(this.platformId)) {
+      this._cookieService.put('hasBeenAdmin', `${newValue}`, this._cookieOptions);
+    }
   }
 
   public getUserInfo(): any {
     return {
       name: this.user ? this.user.firstName + ' ' + this.user.lastName : '',
       id: this.userId
-    }
+    };
   }
 
-  get isAuthenticated$(): Observable<boolean> { return this._authenticatedSource.asObservable(); }
   get isAuthenticated(): boolean { return this._authenticated; }
   get isConfirmed(): boolean { return this._confirmed; }
   get adminLevel(): number { return this._admin; }
   get user () { return this._user; }
   get userId (): string { return this._user ? this._user.id : ''; }
-  get isAcceptingCookies(): boolean { // CNIL
+  get isAcceptingCookies(): boolean { // CNIL -> TODO: this should be initialized with a false value
     return true;
   }
   get emailVerified(): boolean { return this._user && this._user.emailVerified || false; }

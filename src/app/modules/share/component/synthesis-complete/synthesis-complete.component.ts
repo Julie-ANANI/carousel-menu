@@ -43,7 +43,7 @@ export class SynthesisCompleteComponent implements OnInit {
    * This function is to get the shared synthesis detail from the server.
    */
   private getProject() {
-    this.innovationService.getSharedSynthesis(this._projectId, this._shareKey).first().subscribe((response: any) => {
+    this.innovationService.getSharedSynthesis(this._projectId, this._shareKey).subscribe((response: any) => {
         this._project = response;
       }, () => {
         this._displaySpinner = false;

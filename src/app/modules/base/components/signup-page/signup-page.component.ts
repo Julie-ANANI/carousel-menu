@@ -9,7 +9,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup-page',
@@ -45,11 +46,10 @@ export class SignupPageComponent implements OnInit {
   private linkedInUrl() {
     const domain = environment.domain;
 
-    this.authService.linkedinLogin(domain).first().subscribe(
-      url => {
+    this.authService.linkedinLogin(domain).pipe(first()).subscribe(
+      (url: string) => {
         this._linkedInLink = url;
-      },
-      error => {
+      }, (error: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', error.message);
       }
     );
@@ -62,16 +62,21 @@ export class SignupPageComponent implements OnInit {
       user.domain = environment.domain;
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
-      }else {
-        this.userService.create(user).first().subscribe(_ => {
-            this.authService.login(user).first().subscribe((res) => {
+      } else {
+        this.userService.create(user).pipe(first()).subscribe((_: any) => {
+            this.authService.login(user).pipe(first()).subscribe(
+              (_res: any) => {
                 this.location1.back();
-              }, () => {
+              },
+              (error: any) => {
                 this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-              });
-          }, () => {
+              }
+            );
+          },
+          (error: any) => {
             this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
-          });
+          }
+        );
       }
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');

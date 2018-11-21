@@ -1,7 +1,8 @@
-import { Component, Input, Output, OnInit, EventEmitter, ViewChild } from '@angular/core';
-import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders, FileUploaderOptions } from 'ng2-file-upload';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { FileSystemFileEntry } from 'ngx-file-drop';
+import { HttpClient } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { environment } from '../../../../../environments/environment'
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-shared-upload-zone-photo',
@@ -9,11 +10,8 @@ import { environment } from '../../../../../environments/environment'
   styleUrls: ['./shared-upload-zone-photo.component.scss']
 })
 
-export class SharedUploadZonePhotoComponent implements OnInit {
+export class SharedUploadZonePhotoComponent {
 
-  private _filters: Array<FilterFunction>;
-  private _uploader: FileUploader;
-  public hasBaseDropZoneOver = false;
   public loading = false;
 
   @Input() uri: string;
@@ -22,57 +20,43 @@ export class SharedUploadZonePhotoComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: any;
 
-  constructor(private notificationsService: TranslateNotificationsService) {}
+  constructor(private notificationsService: TranslateNotificationsService,
+              private http: HttpClient) {}
 
-  ngOnInit() {
-    this._filters = Array<FilterFunction>();
-
-    this._uploader = new FileUploader({
-      url: environment.apiUrl + this.uri,
-      autoUpload: true,
-      filters: this._filters,
-      // maxFileSize: 1024 * 1024,
-      additionalParameter: {} // à transmettre au serveur au moment de la sauvegarde
-    });
-
-    const uo: FileUploaderOptions = {};
-
-    uo.headers = [{ name: 'api-token', value : 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ' } ];
-
-    this._uploader.setOptions(uo);
-
-    this._uploader.onBeforeUploadItem = (_: FileItem): void => {
-      this.loading = true;
-    };
-
-    this._uploader.onErrorItem = (_item: FileItem, response: string, _status: number) => {
-      this.notificationsService.error('ERROR.ERROR', response);
-      this.loading = false;
-    };
-
-    this._uploader.onCompleteItem = (_item: FileItem, response: string, status: number, _header: ParsedResponseHeaders) => {
-      if (status !== 200) {
-        console.error(response);
-      } else {
-        try {
-          const image = JSON.parse(response);
-          this.loading = false;
-          // Call back to the media
-          this.cbFn.emit(image);
-        } catch (ex) {
-          console.error(`There's an error: ${ex}`);
+  public dropped(event: any) {
+    if (this.loading === false) {
+      if (event.files) {
+        this.loading = true;
+        for (const droppedFile of event.files) {
+          // Is it a file?
+          if (droppedFile.fileEntry && droppedFile.fileEntry.isFile) {
+            const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+            fileEntry.file(this.uploadFile);
+          } else {
+            // It was a directory (empty directories are added, otherwise only files)
+            this.loading = false;
+          }
+        }
+      } else if (event.target.files) {
+        this.loading = true;
+        for (const file of event.target.files) {
+          this.uploadFile(file);
         }
       }
     }
-
   }
 
-  get uploader() {
-    return this._uploader;
-  }
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
+  private uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    this.http.post(environment.apiUrl + this.uri, formData)
+      .subscribe((data: any) => {
+        // Sanitized logo returned from backend
+        this.loading = false;
+      }, (err: any) => {
+        this.notificationsService.error('ERROR.ERROR', err);
+        this.loading = false;
+      });
   }
 
 }

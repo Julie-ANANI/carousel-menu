@@ -1,6 +1,6 @@
 @import "../../../../../style/variables";
 
-.upload-area {
+file-drop.drop-container {
   border: 2px dashed $border-color;
   padding-left: .35rem;
   padding-right: .35rem;
@@ -17,25 +17,15 @@
 
 }
 
-.upload-area:hover {
+file-drop.drop-container:hover {
   border-color: $primary-color;
   background-color: $hover-background-color;
-}
-
-.my-drop-zone {
-  transition: all 0.15s ease-in-out;
-  border-color: $primary-color;
 }
 
 .nv-file-over {
   transition: all 0.15s ease-in-out;
   border-color: $alert-color;
 } /* Default class applied to drop zones on over */
-
-.another-file-over-class {
-  transition: all 0.15s ease-in-out;
-  border-color: $validation-color;
-}
 
 
 

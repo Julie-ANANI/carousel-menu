@@ -5,7 +5,7 @@
 
 import { Injectable } from '@angular/core';
 import { Innovation } from '../../models/innovation';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { InnovationService } from './innovation.service';
 
 @Injectable()
@@ -25,10 +25,14 @@ export class InnovationCommonService {
 
    saveInnovation(project: Innovation) {
     const marketReport = project.marketReport;
-    this.innovationService.save(project._id, project).first().subscribe((response: Innovation) => {
-      if (marketReport) response.marketReport = marketReport;
+
+    this.innovationService.save(project._id, project).subscribe((response: Innovation) => {
+      if (marketReport) {
+        response.marketReport = marketReport;
+      }
       this.innovationSubject.next(response);
     });
+
   }
 
 }

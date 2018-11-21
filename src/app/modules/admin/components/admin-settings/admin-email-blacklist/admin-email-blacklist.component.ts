@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import { first } from 'rxjs/operators';
 import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
@@ -14,12 +15,10 @@ import {EmailService} from '../../../../../services/email/email.service';
 export class AdminEmailBlacklistComponent implements OnInit {
 
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _emailDataset: {blacklists: Array<any>, _metadata: any};
@@ -53,7 +52,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
   public loadEmails(config: any) {
     this._config = config || this._config;
     this._emailService.getBlacklist(this._config)
-        .subscribe(result => {
+        .subscribe((result: any) => {
           if (result && result.message) {
             // The server may be busy...
             this._notificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
@@ -101,7 +100,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
                   ]}]
             };
           }
-        }, error => {
+        }, (error: any) => {
           this._notificationsService.error('Error', error);
         });
   }
@@ -112,7 +111,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
   }
 
   public resetSearch() {
-    this._config.search = {};
     this.searchConfiguration = '';
     this.loadEmails(null);
   }
@@ -134,8 +132,8 @@ export class AdminEmailBlacklistComponent implements OnInit {
     };
 
     this._emailDataset.blacklists.forEach(value => {this._emailService.updateBlacklistEntry(value._id, value)
-      .subscribe(result => {
-      }, error => {
+      .subscribe((result: any) => {
+      }, (error: any) => {
         this._notificationsService.error('Error', error);
       }); });
   }
@@ -148,14 +146,14 @@ export class AdminEmailBlacklistComponent implements OnInit {
   blacklistEditionFinish(email: any) {
     console.log(email);
     this._emailService.updateBlacklistEntry(email._id, email)
-      .first()
+      .pipe(first())
       .subscribe(
-        data => {
+        (data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
           this.loadEmails(this._config);
         },
-        error => {
+        (error: any) => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         });
   }
@@ -163,11 +161,11 @@ export class AdminEmailBlacklistComponent implements OnInit {
   addEmailsToBlacklistFinish(emails: Array<string>) {
     emails.forEach((value: any) => {
       this._emailService.addToBlacklist({email: value.text})
-        .subscribe(result => {
+        .subscribe((result: any) => {
           this._notificationsService.success('Blacklist', `The address ${value.text} has been added successfully to the blacklist`);
           this._more = {animate_state: 'inactive', title: this._more.title};
           this.loadEmails(this._config);
-        }, error => {
+        }, (error: any) => {
           this._notificationsService.error('Error', error);
         });
     });
@@ -177,10 +175,10 @@ export class AdminEmailBlacklistComponent implements OnInit {
     event.preventDefault();
     this.editDatum[datum._id] = false;
     this._emailService.updateBlacklistEntry(datum._id, datum)
-        .subscribe(result => {
+        .subscribe((result: any) => {
           this.resetSearch();
           this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been updated`);
-        }, error => {
+        }, (error: any) => {
           this._notificationsService.error('Error', error);
         });
   }

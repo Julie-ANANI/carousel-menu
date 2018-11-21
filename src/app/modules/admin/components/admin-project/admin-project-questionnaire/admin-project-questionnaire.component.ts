@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
 import { Preset } from '../../../../../models/preset';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-project-questionnaire',
@@ -22,7 +23,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   public savePreset(preset: Preset): void {
     const project = { preset: this._project.preset };
-    this._innovationService.save(this._project._id, project).first().subscribe( result => {
+    this._innovationService.save(this._project._id, project).pipe(first()).subscribe((result: any) => {
       this._project = result;
     });
   }

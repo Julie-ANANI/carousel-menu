@@ -3,7 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { InnovationService } from '../services/innovation/innovation.service';
 
 @Injectable()

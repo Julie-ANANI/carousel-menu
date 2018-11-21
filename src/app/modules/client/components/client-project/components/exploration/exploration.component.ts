@@ -3,6 +3,7 @@ import { AnswerService } from '../../../../../../services/answer/answer.service'
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../models/answer';
+import { Campaign } from '../../../../../../models/campaign';
 import { Clearbit } from '../../../../../../models/clearbit';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
@@ -10,6 +11,7 @@ import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../table/models/table';
 import { Template } from '../../../../../sidebar/interfaces/template';
 import { FrontendService } from '../../../../../../services/frontend/frontend.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -60,7 +62,7 @@ export class ExplorationProjectComponent implements OnInit {
   }
 
   loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this.project._id).first().subscribe( (response) => {
+    this.answerService.getInnovationValidAnswers(this.project._id).pipe(first()).subscribe((response: any) => {
 
       this._tableInfos = {
         _selector: 'client-answer',
@@ -83,13 +85,13 @@ export class ExplorationProjectComponent implements OnInit {
         return acc;
       }, []);
 
-    }, (error) => {
+    }, (error: any) => {
       this.notificationService.error('ERROR.ERROR', error.message);
     });
 
-    this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
+    this.innovationService.campaigns(this.project._id).pipe(first()).subscribe((results: any) => {
         if (results && Array.isArray(results.result)) {
-          this._campaignsStats = results.result.reduce(function(acc, campaign) {
+          this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
               if (campaign.stats) {
                 if (campaign.stats.campaign) {
                   acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
@@ -106,7 +108,7 @@ export class ExplorationProjectComponent implements OnInit {
               return acc;
             }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
         }
-      }, (error) => {
+      }, (error: any) => {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
 

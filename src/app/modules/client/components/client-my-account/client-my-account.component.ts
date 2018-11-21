@@ -4,12 +4,12 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { Template } from '../../../sidebar/interfaces/template';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-my-account',
@@ -81,14 +81,14 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   onSuggestCountries() {
-    this._formData.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+    this._formData.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
       this._displayCountrySuggestion = true;
       this._countriesSuggestion = [];
-      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe(res => {
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
           this._displayCountrySuggestion = false;
         } else {
-          res.forEach((items) => {
+          res.forEach((items: any) => {
             const valueIndex = this._countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
               this._countriesSuggestion.push(items.name);
@@ -123,7 +123,7 @@ export class ClientMyAccountComponent implements OnInit {
 
     if (this._formData.valid) {
       const user = new User(this._formData.value);
-      this.userService.update(user).first().subscribe(
+      this.userService.update(user).pipe(first()).subscribe(
         (response: User) => {
           this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
           this._name = response.name;
@@ -131,8 +131,7 @@ export class ClientMyAccountComponent implements OnInit {
           this._userProvider = response.provider;
           this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
           this._formData.patchValue(response);
-        },
-        error => {
+        }, (error: any) => {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
     }
@@ -163,8 +162,8 @@ export class ClientMyAccountComponent implements OnInit {
   deleteAccount (event: Event) {
     event.preventDefault();
 
-    this.userService.delete().first().subscribe(_ => {
-      this.authService.logout().first().subscribe(() => {
+    this.userService.delete().pipe(first()).subscribe((_: any) => {
+      this.authService.logout().pipe(first()).subscribe(() => {
         this.translateNotificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this.router.navigate(['/']);
       });
@@ -186,7 +185,7 @@ export class ClientMyAccountComponent implements OnInit {
     if (newPassword === confirmPassword) {
       this.userService.changePassword({
         email: email, oldPassword: value.value.oldPassword, newPassword: newPassword, confirmPassword: confirmPassword
-      }).first().subscribe(() => {
+      }).pipe(first()).subscribe(() => {
         this.showPasswordSidebar(event);
         this.translateNotificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
       }, () => {

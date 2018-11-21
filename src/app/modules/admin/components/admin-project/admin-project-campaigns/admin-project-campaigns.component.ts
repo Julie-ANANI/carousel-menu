@@ -8,6 +8,7 @@ import { environment } from '../../../../../../environments/environment';
 import { Campaign } from '../../../../../models/campaign';
 import { Innovation } from '../../../../../models/innovation';
 import { AuthService } from '../../../../../services/auth/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-project-campaigns',
@@ -40,11 +41,11 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   private getCampaigns() {
     this._innovationService.campaigns(this._innovation._id)
-      .first()
-      .subscribe(campaigns => {
+      .pipe(first())
+      .subscribe((campaigns: any) => {
           this._campaigns = campaigns.result;
         },
-        error => this._notificationsService.error('ERROR', error.message)
+        (error: any) => this._notificationsService.error('ERROR', error.message)
       );
   }
 
@@ -64,10 +65,10 @@ export class AdminProjectCampaignsComponent implements OnInit {
       title: (this._campaigns.length + 1) + '. ' + newTitle
     };
 
-    this._campaignService.create(this._newCampaign).first().subscribe((c) => {
+    this._campaignService.create(this._newCampaign).pipe(first()).subscribe((c: any) => {
       this._notificationsService.success('Campaigns', 'The campaign has been created!');
       this.campaigns.push(c);
-    }, error => {
+    }, (error: any) => {
       this._notificationsService.error('ERROR', error.message);
     });
   }
@@ -92,10 +93,10 @@ export class AdminProjectCampaignsComponent implements OnInit {
   public updateStats(event: Event, campaign: Campaign) {
     event.preventDefault();
     this._campaignService.updateStats(campaign._id)
-      .first()
-      .subscribe(stats => {
+      .pipe(first())
+      .subscribe((stats: any) => {
         campaign.stats = stats;
-      }, error => {
+      }, (error: any) => {
         this._notificationsService.error('ERROR', error.message);
       });
   };
@@ -108,14 +109,14 @@ export class AdminProjectCampaignsComponent implements OnInit {
   public deleteCampaign(event: Event) {
     event.preventDefault();
     this._activateModal = false;
-    if(this._selectCampaign) {
+    if (this._selectCampaign) {
       this._campaignService.remove(this._selectCampaign._id)
-        .first()
-        .subscribe(result => {
+        .pipe(first())
+        .subscribe((result: any) => {
           this._selectCampaign = null;
           this.getCampaigns();
           this._notificationsService.success('Campaigns', 'The campaign and its pros. have been removed.');
-        }, error => {
+        }, (error: any) => {
           this._notificationsService.error('ERROR', error.message);
           this._selectCampaign = null;
         });
@@ -125,10 +126,11 @@ export class AdminProjectCampaignsComponent implements OnInit {
   public onSubmit(campaign: Campaign, event: Event) {
     event.preventDefault();
     campaign.title = this._form.get('title').value;
-    this._campaignService.put(campaign).first()
-      .subscribe(result => {
+    this._campaignService.put(campaign)
+      .pipe(first())
+      .subscribe((result: any) => {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
-      }, error => {
+      }, (error: any) => {
         this._notificationsService.error('ERROR', error.message);
         this._selectCampaign = null;
       });

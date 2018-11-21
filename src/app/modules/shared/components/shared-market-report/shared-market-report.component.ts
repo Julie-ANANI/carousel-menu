@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit, Inject, Input, AfterViewInit, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { FilterService } from './services/filters.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Answer } from '../../../../models/answer';
+import { Campaign } from '../../../../models/campaign';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Innovation } from '../../../../models/innovation';
@@ -14,13 +15,15 @@ import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
 import { CampaignCalculationService } from '../../../../services/campaign/campaign-calculation.service';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
+import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -56,6 +59,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _filteredAnswers: Array<Answer> = [];
 
+  private _answersOrigins: {[c: string]: number} = {};
+
   private _countries: Array<string> = [];
 
   private _questions: Array<Question> = [];
@@ -88,7 +93,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _exportType = '';
 
-  private _executiveTemplates: Executive;
+  private _executiveTemplates: Array<Executive>;
 
   private _modalAnswer: Answer = null;
 
@@ -98,15 +103,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _companies: Array<Clearbit>;
 
-  private _showListProfessional = true;
+  public activeSection: string;
 
-  activeSection: string;
-
-  objectKeys = Object.keys;
+  public objectKeys = Object.keys;
 
   private _mapInitialConfiguration: {[continent: string]: boolean};
 
-  constructor(private translateService: TranslateService,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private translateService: TranslateService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
@@ -116,7 +120,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
               private filterService: FilterService,
               private campaignCalculationService: CampaignCalculationService,
               private responseService: ResponseService,
-              private innovationCommonService: InnovationCommonService) { }
+              private innovationCommonService: InnovationCommonService,
+              private worldmapService: SharedWorldmapService) { }
 
   ngOnInit() {
     this.filterService.reset();
@@ -199,20 +204,21 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * this is when we update the innovation in any sub component,
      * we are listening that update and will update the innovation attribute.
      */
-    this.innovationCommonService.getInnovation().takeUntil(this._ngUnsubscribe).subscribe((response: Innovation) => {
-      if (response) {
-        this._innovation = response;
-      }
-    });
+    this.innovationCommonService.getInnovation()
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((response: Innovation) => {
+        if (response) {
+          this._innovation = response;
+        }
+      });
 
   }
-
 
   /***
    * This function is to fetch the answers from the server.
    */
   private getAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innovation._id).first().subscribe((response) => {
+    this.answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
       this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -223,9 +229,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       this.responseService.setExecutiveAnswers(this._answers);
 
       this._filteredAnswers = this._answers;
+      this._answersOrigins = this.worldmapService.getCountriesRepartition(
+        this._filteredAnswers.map(x => x.country.flag || x.professional.country)
+      );
 
       this.filterService.filtersUpdate.subscribe((_) => {
         this._filteredAnswers = this.filterService.filter(this._answers);
+        this._answersOrigins = this.worldmapService.getCountriesRepartition(
+          this._filteredAnswers.map(x => x.country.flag || x.professional.country)
+        );
       });
 
       this._companies = response.answers.map((answer: any) => answer.company || {
@@ -246,14 +258,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     });
   }
 
-
   /***
    * This function is to fetch the campaign from the server.
    */
   private getCampaign() {
-    this.innovationService.campaigns(this._innovation._id).first().subscribe((results) => {
+    this.innovationService.campaigns(this._innovation._id).subscribe((results) => {
       if (results && Array.isArray(results.result)) {
-        this._campaignsStats = results.result.reduce(function(acc, campaign) {
+        this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
           if (campaign.stats) {
             if (campaign.stats.campaign) {
               acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
@@ -316,7 +327,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       return window.scrollY;
     }
     return 0;
-  };
+  }
 
 
   /***
@@ -325,9 +336,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   toggleDetails(event: Event) {
     event.preventDefault();
-    const value = !this._showDetails;
-    this._showDetails = value;
-    this._showListProfessional = value;
+    this._showDetails = !this._showDetails;
   }
 
 
@@ -341,11 +350,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this._previewMode =  this._innovation.previewMode = event.target['checked'] === true;
 
     if (event.target['checked']) {
-      this.innovationService.save(this._innovation._id, this._innovation).first().subscribe( () => {
+      this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
       });
     } else {
-      this.innovationService.save(this._innovation._id, this._innovation).first().subscribe( () => {
+      this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       });
     }
@@ -394,7 +403,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this._innovationEndModal = false;
     this._openModal = false;
 
-    this.innovationService.updateStatus(this._innovation._id, status).first().subscribe((response) => {
+    this.innovationService.updateStatus(this._innovation._id, status).subscribe((response) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
       this._innovation = response;
       this.innovationCommonService.setInnovation(this._innovation);
@@ -430,7 +439,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   shareSynthesis(event: Event) {
     event.preventDefault();
 
-    this.shareService.shareSynthesis(this._innovation._id).first().subscribe((response: Share) => {
+    this.shareService.shareSynthesis(this._innovation._id).subscribe((response: Share) => {
       this.openMailTo(response.objectId, response.shareKey);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -616,24 +625,23 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       conclusion: event['content']
     };
 
-    this.innovationService.updateMarketReport(this._innovation._id, objToSave).first().subscribe((response) => {
+    this.innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe((response) => {
       this._innovation.marketReport = response;
       this.update(event);
     });
-
   }
 
 
   /***
    * This function is to filter by the countries.
-   * @param {{countries: Array<string>; allChecked: boolean}} event
+   * @param {{continents: {[continent: string]: string}, allChecked: boolean}} event
    */
-  filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
+  filterByContinents(event: {continents: {[continent: string]: string}, allChecked: boolean}): void {
     if (!event.allChecked) {
       this.filterService.addFilter(
         {
           status: 'COUNTRIES',
-          value: event.countries,
+          value: event.continents,
           questionId: 'worldmap',
           questionTitle: {en: 'worldmap', fr: 'mappemonde'}
         }
@@ -653,7 +661,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       questionTitle: {en: 'Professionals', fr: 'Professionnels'}
     });
   }
-
 
   seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
@@ -752,7 +759,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
           reportWindow.focus();
           reportWindow.print();
           reportWindow.close();
-        }, 500)
+        }, 500);
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
@@ -874,7 +881,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getInnovationUrl(): string {
-    return environment.innovationUrl;
+    return environment.clientUrl;
   }
 
   getCompanyURL(): string {
@@ -917,7 +924,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._exportType;
   }
 
-  get executiveTemplates(): Executive {
+  get executiveTemplates(): Array<Executive> {
     return this._executiveTemplates;
   }
 
@@ -929,18 +936,23 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._mapInitialConfiguration;
   }
 
-  ngAfterViewInit() {
-    const wrapper = document.getElementById('answer-wrapper');
+  get answersOrigins(): {[c: string]: number} {
+    return this._answersOrigins;
+  }
 
-    if (wrapper) {
-      const sections = Array.from(
-        wrapper.querySelectorAll('section')
-      );
-      window.onscroll = () => {
-        const scrollPosY = document.body.scrollTop;
-        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().top);
-        this.activeSection = section ? section.id : '';
-      };
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const wrapper = document.getElementById('answer-wrapper');
+      if (wrapper) {
+        const sections = Array.from(
+          wrapper.querySelectorAll('section')
+        );
+        window.onscroll = () => {
+          const scrollPosY = document.body.scrollTop;
+          const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().top);
+          this.activeSection = section ? section.id : '';
+        };
+      }
     }
 
   }

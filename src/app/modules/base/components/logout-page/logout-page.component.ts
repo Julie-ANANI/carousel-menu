@@ -3,6 +3,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { Location } from '@angular/common';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-logout-page',
@@ -20,12 +21,12 @@ export class LogoutPageComponent implements OnInit {
   ngOnInit(): void {
     this._translateTitleService.setTitle('LOG_OUT.TITLE');
 
-    this._authService.logout().first().subscribe(
-        _ => {
+    this._authService.logout().pipe(first()).subscribe(
+      (_: any) => {
           this._translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
           this._location.back();
         },
-        _ => {
+      (_: any) => {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
           this._location.back();
         });

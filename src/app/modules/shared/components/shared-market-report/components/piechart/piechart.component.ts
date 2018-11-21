@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-piechart',
@@ -38,7 +39,7 @@ export class PiechartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._lang = this.translateService.currentLang || 'en';
-    this.translateService.onLangChange.takeUntil(this.ngUnsubscribe).subscribe((e) => {
+    this.translateService.onLangChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((e: any) => {
       this._lang = e.lang;
     });
   }

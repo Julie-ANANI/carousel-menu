@@ -4,7 +4,7 @@ import { DashboardService } from '../../../../services/dashboard/dashboard.servi
 import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { User } from '../../../../models/user.model';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { InnovCard } from '../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,8 +24,6 @@ export class AdminDashboardComponent implements OnInit {
   public operators: Array<User> = [];
 
   public operatorId = '';
-
-  private _modalSelected = false;
 
   private _dateNow = new Date();
 
@@ -77,13 +75,15 @@ export class AdminDashboardComponent implements OnInit {
       this.operatorId = this.authService.user.id;
     }
 
-    this.dashboardService.getOperators().first().subscribe((operators) => {
-      this.operators = operators.result.sort((a, b) => {
+    this.dashboardService.getOperators().subscribe((operators: any) => {
+      this.operators = operators.result.sort((a: User, b: User) => {
         return a.firstName > b.firstName ? 1 : -1;
       });
     });
 
-    this.dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
+    this.dashboardService
+      .getOperatorData(this.operatorId)
+      .subscribe((operatorData: any) => this.operatorData = operatorData);
 
     this.getPeriodStats();
 
@@ -97,37 +97,41 @@ export class AdminDashboardComponent implements OnInit {
     this.refreshNeededEmitter.next({
       operatorId: operatorId
     });
-    this.dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
+    this.dashboardService
+      .getOperatorData(this.operatorId)
+      .subscribe((operatorData: any) => this.operatorData = operatorData);
   }
 
-  getPeriodStats() {
-    this.searchService.getEmailStats(this.nbDaysOfStats).first().subscribe(stats => {
-      const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
-      this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
-      this.statistics.percentFoundPros = 'NA';
-      this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
-      this.statistics.percentReceivedEmails = 'NA';
-    });
+  public getPeriodStats() {
+    this.searchService
+      .getEmailStats(this.nbDaysOfStats)
+      .subscribe((stats: any) => {
+        const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
+        this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
+        this.statistics.percentFoundPros = 'NA';
+        this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
+        this.statistics.percentReceivedEmails = 'NA';
+      });
   }
 
   getWeek() {
     const now = Date.now();
     this._dateNow = new Date(now);
-    this.dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe( (batches: Array<any>) => {
-      this._weekBatches = batches;
+    this.dashboardService.getNextDateSend(this._dateNow.toString()).subscribe( (batches: Array<any>) => {
+        this._weekBatches = batches;
     });
   }
 
   getNextWeek() {
     this._dateNow.setDate(this._dateNow.getDate() + 7);
-    this.dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
+    this.dashboardService.getNextDateSend(this._dateNow.toString()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });
   }
 
   getLastWeek() {
     this._dateNow.setDate(this._dateNow.getDate() - 7);
-    this.dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
+    this.dashboardService.getNextDateSend(this._dateNow.toString()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });
   }
@@ -177,20 +181,18 @@ export class AdminDashboardComponent implements OnInit {
   showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;
-    this.innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe( card => {
+    this.innovationService.getInnovationCard(batch.innovation.innovationCards[0]).subscribe((card: any) => {
       this._selectedInnovation = card;
       this.sidebarTemplateValue = {
         animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
         title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
         size: '726px'
       };
-      this._modalSelected = true;
     });
   }
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
-    this._modalSelected = false;
   }
 
   get refreshNeededEmitter(): Subject<any> {
@@ -215,10 +217,6 @@ export class AdminDashboardComponent implements OnInit {
 
   get dateNow(): any {
     return this._dateNow;
-  }
-
-  get modalSelected(): boolean {
-    return this._modalSelected;
   }
 
   get spinnerDisplay(): boolean {

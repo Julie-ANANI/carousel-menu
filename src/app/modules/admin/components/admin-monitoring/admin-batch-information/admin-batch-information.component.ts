@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../../../../../services/email/email.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { Campaign } from '../../../../../models/campaign';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-batch-information',
@@ -23,15 +24,14 @@ export class AdminBatchInformationComponent implements OnInit {
     this._activatedRoute.params.subscribe(params => {
       const batchId = params['batchId'];
       this._emailService.getBatch(batchId)
-        .first()
-        .subscribe(batch => {
-          console.log(batch);
+        .pipe(first())
+        .subscribe((batch: any) => {
           this._batch = batch.mailqueues[0];
           this._recipients = this._batch.payload.recipients;
           this._campaignService.get(this._batch.payload.metadata.campaign_id)
-            .first()
-            .subscribe(campaign => this._campaign = campaign, error => { console.log(error)});
-        }, error => {
+            .pipe(first())
+            .subscribe((campaign: Campaign) => this._campaign = campaign, (error: any) => { console.log(error); });
+        }, (error: any) => {
           console.error(error); // notify error
         });
     });

@@ -3,6 +3,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import {PaginationTemplate} from '../../../../models/pagination';
+import { first } from 'rxjs/operators';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -42,7 +43,7 @@ export class SharedProsListOldComponent {
 
   loadPros(config: any): void {
     this._config = config;
-    this._searchService.getPros(this._config, this.requestId).first().subscribe(pros => {
+    this._searchService.getPros(this._config, this.requestId).pipe(first()).subscribe((pros: any) => {
       this._pros = pros.persons;
       this._total = pros._metadata.totalCount;
     });

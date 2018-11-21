@@ -6,6 +6,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Campaign } from '../../../../../models/campaign';
 import {Table} from '../../../../table/models/table';
 import {Batch} from '../../../../../models/batch';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-campaign-abtesting',
@@ -50,8 +51,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }>;
   private _sizeA: number;
   private _sizeB: number;
-  private _statusA: number;
-  private _statusB: number;
   private _batchesLength = 0;
 
 
@@ -71,7 +70,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   ngOnInit() {
 
-    this._campaignService.messagesStats(this._campaign._id).first().subscribe(stats => {
+    this._campaignService.messagesStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
       this._batchesLength = stats.batches.length;
     });
 
@@ -113,20 +112,18 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   // MessageStats => Recupere tout les batch de la campagne sans les update (moins lourd, on update sur demande en statut 2)
   public getStatsBatch() {
-    this._campaignService.messagesStats(this.campaign._id).first().subscribe(result => {
+    this._campaignService.messagesStats(this.campaign._id).pipe(first()).subscribe((result: any) => {
       this._sizeA = result.batches[0].size;
       this._sizeB = result.batches[1].size;
       this._statsA = result.batches[0].stats;
       this._statsB = result.batches[1].stats;
-      this._statusA = result.batches[0].status;
-      this._statusB = result.batches[1].status;
       this._generateStatsTable();
     });
   }
 
   public validateABtesting() {
     this._campaign.settings.ABsettings.status = '2';
-    this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
+    this._campaignService.put(this._campaign).pipe(first()).subscribe((savedCampaign: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
@@ -142,7 +139,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
         this.sizeB = this.campaign.stats.nbPros90 - mid;
       }
       // obj = [Absettings, sizeA, size B]
-      this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB).first()
+      this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
+        .pipe(first())
         .subscribe((obj: Array<any>) => {
           if (obj.length === 0) {
             this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
@@ -247,13 +245,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public updateStatsBatches() {
-    this._campaignService.updateBatchesStats(this.campaign._id).first().subscribe((obj: Array<Batch>) => {
+    this._campaignService.updateBatchesStats(this.campaign._id).pipe(first()).subscribe((obj: Array<Batch>) => {
       this._statsA = obj[0].stats;
       this._statsB = obj[1].stats;
       this._sizeA = obj[0].size;
       this._sizeB = obj[1].size;
-      this._statusA = obj[0].status;
-      this._statusB = obj[1].status;
       this._generateStatsTable();
     });
   }

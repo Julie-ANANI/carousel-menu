@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-forget-password-page',
@@ -35,7 +36,7 @@ export class ForgetPasswordPageComponent implements OnInit {
 
   onSubmit() {
     if (this._formData.valid) {
-      this.userService.resetPassword(this._formData.get('email').value).first().subscribe(() => {
+      this.userService.resetPassword(this._formData.get('email').value).pipe(first()).subscribe(() => {
         this._emailSent = true;
       }, () => {
         this._emailSent = true;

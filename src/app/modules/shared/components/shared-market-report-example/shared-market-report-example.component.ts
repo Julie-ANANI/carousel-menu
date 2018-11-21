@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Http } from '../../../../services/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   templateUrl: 'shared-market-report-example.component.html',
@@ -9,18 +9,16 @@ import { Http } from '../../../../services/http';
 
 export class SharedMarketReportExampleComponent implements OnInit {
 
-  private _myTemplate = '';
+  private _sample: Observable<any>;
 
-  constructor(private _http: Http) {  }
+  constructor(private _http: HttpClient) {  }
 
   ngOnInit() {
-    this._http.get('/sample' ).subscribe(page => {
-      this._myTemplate = page.text();
-    });
+    this._sample = this._http.get('/sample',{responseType: 'text'});
   }
 
-  get myTemplate(): string {
-    return this._myTemplate;
+  get sample(): Observable<any> {
+      return this._sample;
   }
 
 }

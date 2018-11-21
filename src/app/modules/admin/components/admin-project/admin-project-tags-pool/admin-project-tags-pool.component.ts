@@ -10,7 +10,8 @@ import { Innovation } from '../../../../../models/innovation';
 import { Table } from '../../../../table/models/table';
 import { Tag } from '../../../../../models/tag';
 import { Template } from '../../../../sidebar/interfaces/template';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { Multiling } from '../../../../../models/multiling';
 
@@ -66,7 +67,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tagForm = this.formBuilder.group({
       tag: null,
     });
-    this.tagService.getTagsFromPool(this._project._id).subscribe((data) => {
+    this.tagService.getTagsFromPool(this._project._id).subscribe((data: any) => {
       this.updateTable(data);
     });
   }
@@ -101,11 +102,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     event.preventDefault();
     this.tagService
       .addTagToPool(this._project._id, this._tagForm.get('tag').value._id)
-      .first()
-      .subscribe((data) => {
+      .pipe(first())
+      .subscribe((data: any) => {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, err => {
+      }, (err: any) => {
         this.notificationsService.error('ERROR.ERROR', err);
       });
     this._tagForm.get('tag').reset();
@@ -114,11 +115,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public updateTag(tag: Tag): void {
     this.tagService
       .updateTagInPool(this._project._id, tag)
-      .first()
-      .subscribe((data) => {
+      .pipe(first())
+      .subscribe((data: any) => {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
-      }, err => {
+      }, (err: any) => {
         this.notificationsService.error('ERROR.ERROR', err);
       });
   }
@@ -140,11 +141,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     tags.forEach((tag) => {
       this.tagService
         .removeTagFromPool(this._project._id, tag)
-        .first()
-        .subscribe((data) => {
+        .pipe(first())
+        .subscribe((data: any) => {
           this.updateTable(data);
           this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
-        }, err => {
+        }, (err: any) => {
           this.notificationsService.error('ERROR.ERROR', err);
         });
     });

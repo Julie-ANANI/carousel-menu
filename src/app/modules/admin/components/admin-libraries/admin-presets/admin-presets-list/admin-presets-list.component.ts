@@ -3,6 +3,7 @@ import { PresetService } from '../../../../../../services/preset/preset.service'
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../models/preset';
 import {PaginationTemplate} from '../../../../../../models/pagination';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-presets-list',
@@ -17,12 +18,10 @@ export class AdminPresetsListComponent implements OnInit {
   private _total: number;
   private _config = {
     fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};
@@ -37,8 +36,8 @@ export class AdminPresetsListComponent implements OnInit {
   loadPresets(config: any): void {
     this._config = config;
     this._presetService.getAll(this._config)
-      .first()
-      .subscribe(presets => {
+      .pipe(first())
+      .subscribe((presets: any) => {
         this._presets = presets.result;
         this._total = presets._metadata.totalCount;
       });
@@ -46,7 +45,7 @@ export class AdminPresetsListComponent implements OnInit {
 
   configChange(value: any) {
     this._paginationConfig = value;
-    this._config.limit = value.limit
+    this._config.limit = value.limit;
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.loadPresets(this._config);
@@ -67,8 +66,8 @@ export class AdminPresetsListComponent implements OnInit {
     event.preventDefault();
     this._presetService
       .remove(presetId)
-      .first()
-      .subscribe(_ => {
+      .pipe(first())
+      .subscribe((_: any) => {
         this._presets.splice(this._getPresetIndex(presetId), 1);
         this.selectedPresetIdToBeDeleted = null;
       });
@@ -77,7 +76,7 @@ export class AdminPresetsListComponent implements OnInit {
   public clonePreset(event: Event, clonedPreset: Preset) {
     event.preventDefault();
     delete clonedPreset._id;
-    this._presetService.create(clonedPreset).first().subscribe(preset => {
+    this._presetService.create(clonedPreset).pipe(first()).subscribe((preset: any) => {
       this._router.navigate(['/admin/libraries/questionnaire/' + preset._id])
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import { first } from 'rxjs/operators';
 import {Template} from '../../../../sidebar/interfaces/template';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../services/email/email.service';
@@ -59,7 +60,7 @@ export class AdminCountryManagementComponent implements OnInit {
   public loadCountries(config: any) {
     this._config = config || this._config;
     this._emailService.getCountries(this._config)
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result && result.message) {
           // The server may be busy...
           this._notificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
@@ -86,18 +87,18 @@ export class AdminCountryManagementComponent implements OnInit {
               {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'}]
           };
         }
-      }, error => {
+      }, (error: any) => {
         this._notificationsService.error('Error', error);
       });
   }
 
   addCountry(country: any) {
     this._emailService.addCountry(country)
-      .subscribe(result => {
+      .subscribe((result: any) => {
         this._notificationsService.success('Country Management', `The country ${country.name} has been filtered successfully`);
         this._more = {animate_state: 'inactive', title: this._more.title};
         this.loadCountries(this._config);
-      }, error => {
+      }, (error: any) => {
         this._notificationsService.error('Error', error);
       });
   }
@@ -113,14 +114,14 @@ export class AdminCountryManagementComponent implements OnInit {
 
   countryEditionFinish(country: any) {
     this._emailService.updateCountry(country._id, country)
-      .first()
+      .pipe(first())
       .subscribe(
         (data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
           this.loadCountries(this._config);
         },
-        error => {
+        (error: any) => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         });
   }
@@ -150,7 +151,8 @@ export class AdminCountryManagementComponent implements OnInit {
   }
 
   removeCountry(countryId: string) {
-    this._emailService.deleteCountry(countryId).first()
+    this._emailService.deleteCountry(countryId)
+      .pipe(first())
       .subscribe((foo: any) => {
         this.loadCountries(this._config);
       });

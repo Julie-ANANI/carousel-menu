@@ -4,6 +4,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { EmailScenario } from '../../../../../models/email-scenario';
 import {EmailTemplate} from '../../../../../models/email-template';
 import { EmailSignature } from '../../../../../models/email-signature';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-workflows-library',
@@ -21,13 +22,13 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
 
   ngOnInit() {
     this.getScenarios();
-    this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+    this._templatesService.getAllSignatures({limit: '0', sort: '{"id":-1}'}).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
     });
   }
 
   public getScenarios() {
-    this._templatesService.getAll({limit: 0, sort: {_id: -1}}).first().subscribe((scenarios: any) => {
+    this._templatesService.getAll({limit: '0', sort: '{"id":-1}'}).pipe(first()).subscribe((scenarios: any) => {
       this._scenarios = scenarios.result;
     });
   }
@@ -53,14 +54,14 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
         emails.push(this._createEmail(step, language));
       });
     });
-    this._templatesService.create({name: this._newScenarioName, emails: emails}).first().subscribe(newScenario => {
+    this._templatesService.create({name: this._newScenarioName, emails: emails}).pipe(first()).subscribe((newScenario: any) => {
       this._newScenarioName = null;
       this._scenarios.unshift(newScenario);
     });
   }
 
   public updateScenario(changedScenario: EmailScenario) {
-    this._templatesService.save(changedScenario).first().subscribe(updatedScenario => {
+    this._templatesService.save(changedScenario).pipe(first()).subscribe((updatedScenario: any) => {
       const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id === changedScenario._id);
       this._scenarios[scenarioIndex] = updatedScenario;
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
@@ -73,7 +74,7 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
    * Suppression et mise à jour de la vue
    */
   public deleteScenario(scenarioToDelete: EmailScenario) {
-    this._templatesService.remove(scenarioToDelete._id).first().subscribe(_ => {
+    this._templatesService.remove(scenarioToDelete._id).pipe(first()).subscribe((_: any) => {
       const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id === scenarioToDelete._id);
       this._scenarios.splice(scenarioIndex, 1);
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');

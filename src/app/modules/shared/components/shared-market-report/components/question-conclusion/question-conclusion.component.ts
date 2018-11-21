@@ -3,7 +3,8 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
 
 @Component({
@@ -56,7 +57,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
     this._lang = this.translateService.currentLang || 'en';
     this.translateService.onLangChange
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((e: LangChangeEvent) => {
         this._lang = e.lang || 'en';
       });
@@ -73,8 +74,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       conclusion: event['content']
     };
     this.innovationService.updateMarketReport(this.innovation._id, objToSave)
-      .first()
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         this.innovation.marketReport = data;
       });
   }

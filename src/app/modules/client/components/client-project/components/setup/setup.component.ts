@@ -5,11 +5,11 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { ComponentCanDeactivate } from '../../../../../../guards/pending-changes-guard.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
-import { Subject } from 'rxjs/Subject';
 import { Template } from '../../../../../sidebar/interfaces/template';
 import { FrontendService } from '../../../../../../services/frontend/frontend.service';
-import {InnovCard} from '../../../../../../models/innov-card';
-import {Media} from '../../../../../../models/media';
+import { InnovCard } from '../../../../../../models/innov-card';
+import { Media } from '../../../../../../models/media';
+import { Subject } from 'rxjs';
 
 const DEFAULT_TAB = 'targeting';
 
@@ -126,14 +126,14 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
     }
 
      if (this._saveChanges) {
-        this.innovationService.save(this.project._id, this.project).first().subscribe(data => {
+        this.innovationService.save(this.project._id, this.project).subscribe((data: any) => {
             this.project = data;
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
             this.checkProjectStatus();
             this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
-          }, err => {
+          }, (err: any) => {
             this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
         });
      }
@@ -170,11 +170,11 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
     this._projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
-      .first().subscribe(data => {
+      .subscribe((data: any) => {
        this.project.status = 'SUBMITTED';
        this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
        this.router.navigate(['project']);
-      }, err => {
+      }, (err: any) => {
         this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
 

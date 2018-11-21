@@ -4,7 +4,7 @@ import { Campaign } from '../../../../../models/campaign';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
-
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-campaign',
@@ -27,6 +27,7 @@ export class AdminCampaignComponent implements OnInit {
   }
 
   public ratio(value1: number, value2: number): any {
+    // don't use triple equal here, it seems sometimes value1 and 2 are not number but strings
     if (value2 == 0) {
       return value1 == 0 ? 0 : '?';
     } else {
@@ -59,11 +60,11 @@ export class AdminCampaignComponent implements OnInit {
 
   public updateStats() {
     this._campaignService.updateStats(this._campaign._id)
-      .first()
-      .subscribe(stats => {
+      .pipe(first())
+      .subscribe((stats: any) => {
         this._campaign.stats = stats;
         this.computeStats();
-      }, error => {
+      }, (error: any) => {
         this._notificationsService.error('ERROR', error.message);
       });
   };

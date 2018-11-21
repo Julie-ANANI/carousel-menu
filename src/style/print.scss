@@ -66,9 +66,17 @@
       }
 
       .summary-text {
+        padding-bottom: -.6rem;
 
-        p:last-child {
-          padding-bottom: 0;
+        ul {
+          margin: 0 !important;
+          padding: 0 !important;
+
+          li {
+            margin: 0 !important;
+            padding: 0 0 .6rem 0 !important;
+          }
+
         }
 
       }

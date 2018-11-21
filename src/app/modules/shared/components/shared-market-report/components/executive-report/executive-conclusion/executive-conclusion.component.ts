@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from '../../../../../../../models/user.model';
 import { environment } from '../../../../../../../../environments/environment';
 import { Innovation } from '../../../../../../../models/innovation';
@@ -9,7 +9,7 @@ import { Innovation } from '../../../../../../../models/innovation';
   styleUrls: ['./executive-conclusion.component.scss']
 })
 
-export class ExecutiveConclusionComponent implements OnInit {
+export class ExecutiveConclusionComponent {
 
   @Input() set project(value: Innovation) {
 
@@ -24,11 +24,6 @@ export class ExecutiveConclusionComponent implements OnInit {
   private _conclusion = '';
 
   private _operator: User;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   getLogo(): string {
     return environment.logoSynthURL;

@@ -21,12 +21,10 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   private _config = {
     fields: 'name,owner,principalMedia',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   constructor( private userService: UserService,
@@ -39,7 +37,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   }
 
   private getUserReports() {
-    this._subscriptions.push(this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+    this._subscriptions.push(this.userService.getSharedWithMe(this.config).subscribe((reports: any) => {
       this.getSharedReports(reports.sharedgraph || []);
     }));
   }
@@ -103,7 +101,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     return this._displaySpinner;
   }
 
-  get config(): { fields: string; limit: number; offset: number; search: {}; sort: { created: number } } {
+  get config(): { fields: string; limit: string; offset: string; search: string; sort: string } {
     return this._config;
   }
 

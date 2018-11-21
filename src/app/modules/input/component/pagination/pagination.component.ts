@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { PaginationTemplate } from '../../../../models/pagination';
+import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-pagination',
@@ -41,16 +42,13 @@ export class PaginationComponent implements OnInit {
 
   private _total = 0;
 
-  constructor(private translateNotificationService: TranslateNotificationsService) {}
+  constructor(private lsService: LocalStorageService,
+              private translateNotificationService: TranslateNotificationsService) {}
 
   ngOnInit() {
-    this.initialize();
-  }
-
-  initialize() {
     this._limit = this.initialConfigValues.limit;
 
-    const localLimit = parseInt(localStorage.getItem(`${this.propertyName}-limit`), 10);
+    const localLimit = parseInt(this.lsService.getItem(`${this.propertyName}-limit`), 10);
 
     if (localLimit !== null && this.propertyName && this.checkConfig(localLimit)) {
       this.initialConfigValues.limit = localLimit;
@@ -59,24 +57,9 @@ export class PaginationComponent implements OnInit {
     this._numPages = Math.ceil(this._total / this.perPage);
 
     this._update();
-
   }
 
-  /*ngOnChanges() {
-    if (!this._initialized && this.propertyName) {
-      // Dès l'initialisation, on regarde si l'utilisateur a déjà des préférences concernant la pagination,
-      // Et on met à jour si c'est le cas
-      this._config.limit = localStorage.getItem(`${this.propertyName}-limit`) || this._config.limit;
-      // this.config.offset = sessionStorage.getItem(`${this.propertyName}-offset`) || this.config.offset;
-    }
-    this._numPages = Math.ceil(this.total / this.perPage);
-    this._update();
-
-  }*/
-
-  checkConfig(value1: any): boolean {
-    const limit = parseInt(value1, 10);
-
+  checkConfig(limit: number): boolean {
     if (limit >= 10 && limit <= 1000) {
       const index = this.perPageValues.findIndex((item) => item === limit);
       if (index === -1) {
@@ -100,8 +83,8 @@ export class PaginationComponent implements OnInit {
 
   private _update() {
     if (this.propertyName) {
-      localStorage.setItem(`${this.propertyName}-limit`, this.initialConfigValues.limit);
-      // sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
+      this.lsService.setItem(`${this.propertyName}-limit`, this.initialConfigValues.limit);
+      // this.lsService.setItem(`${this.propertyName}-offset`, this.config.offset);
     }
 
     // this.configChange.emit(this._config);
@@ -112,12 +95,6 @@ export class PaginationComponent implements OnInit {
     }
 
   }
-
-  /*goToPage(event: any): void {
-    const page = parseInt((<HTMLInputElement> event.srcElement).value);
-    this.config.offset = this.config.limit * (page - 1);
-    this._update();
-  }*/
 
   set currentPage(page: number) {
     // this._config.offset = this._config.limit * (page - 1);
@@ -135,14 +112,9 @@ export class PaginationComponent implements OnInit {
   }
 
   set perPage(number: number) {
-    // this._config.limit = number;
     this.initialConfigValues.limit = number;
     this._update();
     this._numPages = Math.ceil(this._total / this.perPage);
-  }
-
-  get localOffset(): number {
-    return this._localOffset;
   }
 
 

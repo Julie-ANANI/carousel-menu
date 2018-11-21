@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { Preset } from '../../../../../../models/preset';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-presets-edit',
@@ -20,7 +21,7 @@ export class AdminPresetsEditComponent implements OnInit {
   }
 
   public savePreset(preset: Preset): void {
-    this._presetService.save(this._preset._id, preset).first().subscribe( result => {
+    this._presetService.save(this._preset._id, preset).pipe(first()).subscribe((result: any) => {
       this._preset = result;
     });
   }

@@ -1,15 +1,13 @@
 // Modules externes
-import { NgModule } from '@angular/core';
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
-import { Http } from './services/http';
-import { httpFactory } from './factories/http.factory';
+import { NgModule, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { BrowserModule, BrowserTransferStateModule, Title } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule, CookieService } from 'ngx-cookie';
-import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -20,16 +18,12 @@ import { SharedLoaderModule } from './modules/shared/components/shared-loader/sh
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
 import { DashboardService } from './services/dashboard/dashboard.service';
-import { WindowRefService } from './services/window-ref/window-ref.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { TranslateTitleService } from './services/title/title.service';
 import { UserService } from './services/user/user.service';
 import { LoaderService } from './services/loader/loader.service';
-import { ChartsModule } from 'ng2-charts';
-import { IndexService } from './services/index/index.service';
 import { ShareService } from './services/share/share.service';
 import { AutocompleteService } from './services/autocomplete/autocomplete.service';
-import { LatexService } from './services/latex/latex.service';
 import { EmailService } from './services/email/email.service';
 import { SearchService } from './services/search/search.service';
 import { PresetService } from './services/preset/preset.service';
@@ -40,9 +34,9 @@ import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
 import { FrontendService } from './services/frontend/frontend.service';
-import { PrintService } from './services/print/print.service';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
+import { LocalStorageService } from './services/localStorage/localStorage.service';
 import { CampaignCalculationService } from './services/campaign/campaign-calculation.service';
 import { InnovationCommonService } from './services/innovation/innovation-common.service';
 import { QuizService } from './services/quiz/quiz.service';
@@ -55,12 +49,18 @@ import { ScenarioResolver } from './resolvers/scenario.resolver';
 import { SignatureResolver } from './resolvers/signature.resolver';
 import { PresetResolver } from './resolvers/preset.resolver';
 
+// Interceptors
+import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
+import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
+import { SessionInterceptor } from './interceptors/session.interceptor';
+
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
     }),
-    HttpModule,
+    BrowserTransferStateModule,
+    HttpClientModule,
     AppRoutingModule,
     SimpleNotificationsModule.forRoot(),
     BrowserAnimationsModule,
@@ -71,23 +71,21 @@ import { PresetResolver } from './resolvers/preset.resolver';
         useFactory: (CreateTranslateLoader)
       }
     }),
-    ChartsModule,
-    Ng2AutoCompleteModule,
     CookieModule.forRoot()
   ],
   declarations: [
     AppComponent,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
     Title,
     UserService,
     InnovationService,
     CampaignService,
     LoaderService,
-    WindowRefService,
-    IndexService,
     DashboardService,
-    LatexService,
     EmailService,
     ShareService,
     SearchService,
@@ -96,11 +94,6 @@ import { PresetResolver } from './resolvers/preset.resolver';
     ProfessionalsService,
     DownloadService,
     TemplatesService,
-    {
-      provide: Http,
-      useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
-    },
     AutocompleteService,
     TranslateNotificationsService,
     TranslateTitleService,
@@ -114,9 +107,9 @@ import { PresetResolver } from './resolvers/preset.resolver';
     TranslationService,
     TagsService,
     FrontendService,
-    PrintService,
     CurrentRouteService,
     ListenerService,
+    LocalStorageService,
     CampaignCalculationService,
     InnovationCommonService,
     QuizService
@@ -126,19 +119,24 @@ import { PresetResolver } from './resolvers/preset.resolver';
 
 export class AppModule {
 
-  constructor(private _translateService: TranslateService,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _translateService: TranslateService,
               private _cookieService: CookieService) {
+
     this._translateService.addLangs(['en', 'fr']);
     this._translateService.setDefaultLang('en');
 
     const user_lang = this._cookieService.get('user_lang');
-    let browserLang = user_lang || this._translateService.getBrowserLang();
-    if (!browserLang.match(/en|fr/)) {
-      browserLang = 'en';
+    if (isPlatformBrowser(platformId)) {
+      let browserLang = user_lang || this._translateService.getBrowserLang();
+      if (!browserLang.match(/en|fr/)) {
+        browserLang = 'en';
+      }
+      this._cookieService.put('user_lang', browserLang);
+      this._translateService.use(browserLang);
+    } else {
+      this._translateService.use(user_lang || 'en');
     }
-
-    this._cookieService.put('user_lang', browserLang);
-    this._translateService.use(browserLang);
   }
 
 }

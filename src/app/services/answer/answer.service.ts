@@ -1,74 +1,56 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AnswerService {
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
-  public create(answerObj: Answer): Observable<Answer> {
-    return this._http.post('/answer', answerObj)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+  public create(answerObj: Answer): Observable<any> {
+    return this._http.post('/answer', answerObj);
   }
 
   public get(id: string): Observable<Answer> {
-    return this._http.get('/answer/' + id)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.get<Answer>('/answer/' + id);
   }
 
-  public getAll(config: any): Observable<{result: Array<Answer>, _metadata: any}> {
-    return this._http.get('/answer/', {params: config})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+  public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Answer>, _metadata: any}> {
+    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/', {params: config});
   }
 
   public remove(answerId: string): Observable<any> {
-    return this._http.delete('/answer/' + answerId)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.delete('/answer/' + answerId);
   }
 
-  public save(answerId: string, answerObj: Answer): Observable<Answer> {
-    return this._http.put('/answer/' + answerId, answerObj)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+  public save(answerId: string, answerObj: Answer): Observable<any> {
+    return this._http.put('/answer/' + answerId, answerObj);
   }
 
-  public addTag(answerId: string, tagId: string, questionId?: string): Observable<Answer> {
+  public addTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
     const params = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.post('/answer/' + answerId + '/tag', { params: params})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.post('/answer/' + answerId + '/tag', { params: params});
   }
 
-  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<Answer> {
+  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
     const params = {tag: tag };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.post('/answer/' + answerId + '/new-tag', { params: params})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.post('/answer/' + answerId + '/new-tag', { params: params});
   }
 
-  public removeTag(answerId: string, tagId: string, questionId?: string): Observable<Answer> {
+  public removeTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
     const params = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.delete('/answer/' + answerId + '/tag', { params: params})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.delete('/answer/' + answerId + '/tag', { params: params});
   }
 
   public getInnovationValidAnswers(innovationId: string): Observable<{answers: Array<Answer>}> {
-    return this._http.get('/innovation/' + innovationId + '/validAnswers')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.get<{answers: Array<Answer>}>('/innovation/' + innovationId + '/validAnswers');
   }
 
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
@@ -82,28 +64,26 @@ export class AnswerService {
 
   public getReportHTML(innovationId: string, lang: string): Observable<any>  {
     const url = environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
-    return this._http.get(url)
-      .map((res: Response) => res['_body'])
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.get(url, { responseType: 'text' });
+    /*.pipe(
+      map((res: Response) => res['_body']),
+      catchError((error: Response) => throwError(error.text()))
+    );*/
   }
 
   public importFromGmail(file: File): Observable<any> {
-    const url = environment.apiUrl + '/innovation/importAnswers';
-    return this._http.upload(url, file)
-      .map((res: Response) => <string>res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post('/innovation/importAnswers', formData);
   }
 
   public importAsCsv(campaignId: string, file: File): Observable<any> {
-    const url = environment.apiUrl + '/campaign/' + campaignId + '/importAnswers';
-    return this._http.upload(url, file)
-      .map((res: Response) => <string>res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post('/campaign/' + campaignId + '/importAnswers', formData);
   }
 
   public importFromQuiz(answer: any): Observable<any> {
-    return this._http.post(`/campaign/${answer.campaignId}/answer`, answer)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.post(`/campaign/${answer.campaignId}/answer`, answer);
   }
 }

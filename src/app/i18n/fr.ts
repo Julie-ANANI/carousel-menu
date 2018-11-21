@@ -1,9 +1,9 @@
 import { COMMON } from './common_fr';
 import { ERROR } from './error_fr';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
+import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/fr';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/fr';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
-import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/fr';
 import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
@@ -15,8 +15,8 @@ import { TAGS } from '../modules/admin/components/admin-tags/i18n/fr';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/fr';
 import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/fr';
 import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i18n/fr';
-import { DISCOVER } from '../modules/client/components/client-discover-page/i18n/fr';
-import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-page/discover-description/i18n/fr';
+import { DISCOVER } from '../modules/discover/i18n/fr';
+import { DISCOVERDESCRIPTION } from '../modules/discover/components/description/i18n/fr';
 import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/fr';
 import { FOOTER } from '../modules/base/components/footer/i18n/fr';
 import { LOG_IN } from '../modules/base/components/login-page/i18n/fr';
@@ -29,6 +29,7 @@ import { SHARE } from '../modules/share/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
+  'CONTINENTS': CONTINENTS,
   'ERROR': ERROR,
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
@@ -43,7 +44,6 @@ export const fr = {
   'FORGET_PASSWORD': FORGET_PASSWORD,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
-  'EXPORT': EXPORT,
   'PAGINATION': PAGINATION,
   'PROJECT': PROJECT,
   'DASHBOARD': DASHBOARD,

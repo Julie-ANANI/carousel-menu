@@ -1,26 +1,18 @@
-<div
-  ng2FileDrop
-  class="drop-container file-field input-field upload-area"
-  ngClass="{error: errors.medias, 'nv-file-over': hasBaseDropZoneOver}"
-  (fileOver)="fileOverBase($event)"
-  [uploader]="uploader">
+<file-drop class="drop-container"
+           customstyle="upload-zone"
+           (onFileDrop)="dropped($event)">
 
-  <div class="upload-button" ngClass="{ error: errors.medias }">
-
-    <div style="height:0;overflow:hidden">
+  <div class="text-center" *ngIf="!loading">
       <!-- let $event propagate here -->
-      <input type="file" ng2FileSelect [uploader]="uploader" id="fileInput" name="fileInput"  #fileInput />
-    </div>
-
-    <div class="text-center" *ngIf="!loading">
-      <button class="btn btn-primary" (click)="fileInput.click($event)">
-        <i class="fas fa-upload"></i>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.UPLOAD_PICTURE' | translate }}
-      </button>
-      <p class="para">{{ 'COMMON.OR' | translate | lowercase }} {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SLIDE' | translate }}</p>
-    </div>
-
-    <div class="loading loading-lg" *ngIf="loading"></div>
-
+    <input style="height:0;overflow:hidden"
+           (change)="dropped($event)"
+           type="file" #fileInput>
+    <button class="btn btn-primary" (click)="fileInput.click($event)">
+      <i class="fas fa-upload"></i>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.UPLOAD_PICTURE' | translate }}
+    </button>
+    <p class="para">{{ 'COMMON.OR' | translate | lowercase }} {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SLIDE' | translate }}</p>
   </div>
 
-</div>
+  <div class="loading loading-lg" *ngIf="loading"></div>
+
+</file-drop>

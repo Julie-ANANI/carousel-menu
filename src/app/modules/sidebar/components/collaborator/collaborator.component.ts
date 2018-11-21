@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators'
 import {User} from '../../../../models/user.model';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
@@ -37,7 +38,7 @@ export class CollaboratorComponent implements OnInit {
       collaboratorEmail: ['', [Validators.required, Validators.email]]
     });
 
-    this.sidebarState.subscribe((state) => {
+    this.sidebarState.subscribe((state: any) => {
       if (state) {
         setTimeout (() => {
           this.formData.reset();
@@ -53,7 +54,8 @@ export class CollaboratorComponent implements OnInit {
 
     const email = this.formData.get('collaboratorEmail').value;
 
-    this.innovationService.inviteCollaborators(this.projectId, email).first()
+    this.innovationService.inviteCollaborators(this.projectId, email)
+      .pipe(first())
       .subscribe((response: any) => {
         if (response.usersAdded.length || response.invitationsToSend.length || response.invitationsToSendAgain.length) {
           this.collaboratorsAddingProcess = response;
@@ -102,7 +104,7 @@ export class CollaboratorComponent implements OnInit {
   reinviteCollaborator(event: Event, email: string) {
     event.preventDefault();
 
-    this.innovationService.inviteCollaborators(this.projectId, email).first().subscribe((response) => {
+    this.innovationService.inviteCollaborators(this.projectId, email).pipe(first()).subscribe((response: any) => {
       window.location.href = 'mailto:' + response.invitationsToSendAgain.join(',') + '?body=' + this.innovationService.getInvitationUrl();
     });
 
@@ -111,7 +113,7 @@ export class CollaboratorComponent implements OnInit {
   removeCollaborator(event: Event, email: any) {
     event.preventDefault();
 
-    this.innovationService.removeCollaborator(this.projectId, email).subscribe((response) => {
+    this.innovationService.removeCollaborator(this.projectId, email).subscribe((response: any) => {
       this.collaborator = response;
       this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
     });

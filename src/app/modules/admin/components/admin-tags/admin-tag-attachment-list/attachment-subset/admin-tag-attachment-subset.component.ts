@@ -47,11 +47,11 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit {
   }
 
   public loadData() {
-    this._tagsService.getAttachments(this.type || '').subscribe((result) => {
+    this._tagsService.getAttachments(this.type || '').subscribe((result: any) => {
       if (result) {
         this._dataset = result;
       }
-    }, error => {
+    }, (error: any) => {
       this._notificationsService.error('Attachments', 'Error loading some attachments of type ' + this.type);
       console.error(error);
     });

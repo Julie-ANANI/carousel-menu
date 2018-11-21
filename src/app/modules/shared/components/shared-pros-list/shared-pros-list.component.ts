@@ -6,7 +6,8 @@ import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import {Table} from '../../../table/models/table';
 import {Template} from '../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import {Tag} from '../../../../models/tag';
 
 export interface SelectedProfessional extends Professional {
@@ -55,7 +56,7 @@ export class SharedProsListComponent {
     this._config = config;
 
     if (this.requestId) {
-      this._searchService.getPros(this._config, this.requestId).first().subscribe(pros => {
+      this._searchService.getPros(this._config, this.requestId).subscribe((pros: any) => {
         this._pros = pros.persons;
         this._total = pros._metadata.totalCount;
 
@@ -80,7 +81,7 @@ export class SharedProsListComponent {
 
       });
     } else {
-      this._professionalService.getAll(this._config).first().subscribe(pros => {
+      this._professionalService.getAll(this.configToString()).pipe(first()).subscribe((pros: any) => {
         this._pros = pros.result;
         this._pros.forEach(pro => {
           pro.sent = pro.messages && pro.messages.length > 0;
@@ -110,6 +111,19 @@ export class SharedProsListComponent {
       });
     }
 
+  }
+
+  private configToString() {
+    let config = {};
+    Object.keys(this._config).forEach(key=>{
+      if(this._config[key] instanceof Object) {
+        config[key] = JSON.stringify(this._config[key]);
+      } else {
+        config[key] = this._config[key];
+      }
+    })
+
+    return config;
   }
 
   selectPro(pro: SelectedProfessional): void {
@@ -157,11 +171,11 @@ export class SharedProsListComponent {
 
   updatePro(pro: Professional): void {
     this.editUser[pro._id] = false;
-    this._professionalService.save(pro._id, pro).first().subscribe(res => {
+    this._professionalService.save(pro._id, pro).pipe(first()).subscribe((res: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
       this._more = {animate_state: 'inactive', title: this._more.title};
       this.loadPros(this._config);
-    }, err => {
+    }, (err: any) => {
       this._notificationsService.error('ERROR.ERROR', err.message);
     });
   }
@@ -169,9 +183,9 @@ export class SharedProsListComponent {
   deletePro(pro: Professional, event: Event): void {
       event.preventDefault();
       this.editUser[pro._id] = false;
-      this._professionalService.remove(pro._id).first().subscribe(res => {
+      this._professionalService.remove(pro._id).pipe(first()).subscribe((res: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
-      }, err => {
+      }, (err: any) => {
           this._notificationsService.error('ERROR', err.message);
       });
   }
@@ -241,8 +255,9 @@ export class SharedProsListComponent {
   }
 
   removePro(userId: string) {
-    this._professionalService.remove(userId).first()
-      .subscribe(foo => {
+    this._professionalService.remove(userId)
+      .pipe(first())
+      .subscribe((foo: any) => {
         this.loadPros(this._config);
       });
   }

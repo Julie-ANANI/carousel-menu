@@ -4,7 +4,8 @@ import { EmailService } from '../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -20,12 +21,10 @@ export class AdminEmailQueueComponent implements OnInit {
 
   private _config = {
     fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _tableInfos: Table = null;
@@ -51,8 +50,8 @@ export class AdminEmailQueueComponent implements OnInit {
   public loadQueue(config: any): void {
     this._config = config;
     this._emailService.getQueue(this._config)
-      .first()
-      .subscribe(queue => {
+      .pipe(first())
+      .subscribe((queue: any) => {
           this._queueList = queue;
 
           this._tableInfos = {
@@ -74,18 +73,18 @@ export class AdminEmailQueueComponent implements OnInit {
                 ]}]
           };
         },
-        error => this._notificationsService.error('ERROR', error.message)
+        (error: any) => this._notificationsService.error('ERROR', error.message)
       );
   }
 
   private _stopBatch(batch: any): void {
     this._emailService.stopBatch(batch._id)
-      .first()
-      .subscribe((result) => {
+      .pipe(first())
+      .subscribe((result: any) => {
         if (result && result.status === 200) {
           batch.status = 'CANCELED';
         }
-      }, (error) => {
+      }, (error: any) => {
         console.error(error);
       })
   }

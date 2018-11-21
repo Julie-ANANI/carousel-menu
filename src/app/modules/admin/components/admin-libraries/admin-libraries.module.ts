@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
 import { AdminLibrariesComponent } from './admin-libraries.component';
@@ -21,7 +20,6 @@ import { SidebarModule } from '../../../sidebar/sidebar.module';
     SharedSortModule,
     RouterModule,
     TranslateModule.forChild(),
-    Ng2AutoCompleteModule,
     PipeModule,
     AdminWorkflowsLibraryModule,
     AdminSignaturesLibraryModule,

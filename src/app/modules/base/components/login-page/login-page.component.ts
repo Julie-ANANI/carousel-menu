@@ -6,6 +6,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { User } from '../../../../models/user.model';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login-page',
@@ -41,7 +42,7 @@ export class LoginPageComponent implements OnInit {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this._authService.login(user).first().subscribe(() => {
+      this._authService.login(user).pipe(first()).subscribe(() => {
             if (this._authService.isAuthenticated) {
               // Get the redirect URL from our auth service
               // If no redirect has been set, use the default
@@ -50,7 +51,7 @@ export class LoginPageComponent implements OnInit {
               // Set our navigation extras object
               // that passes on our global query params and fragment
               const navigationExtras: NavigationExtras = {
-                preserveQueryParams: true,
+                queryParamsHandling: 'merge',
                 preserveFragment: true
               };
 
@@ -59,7 +60,7 @@ export class LoginPageComponent implements OnInit {
               this.router.navigate([redirect], navigationExtras);
             }
           },
-          err => {
+        (err: any) => {
             this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
             this._formData.get('password').reset();
           });
@@ -74,14 +75,13 @@ export class LoginPageComponent implements OnInit {
   private linkedInUrl() {
     const domain = environment.domain;
 
-    this._authService.linkedinLogin(domain).first().subscribe(
-        url => {
+    this._authService.linkedinLogin(domain).pipe(first()).subscribe(
+      (url: string) => {
           this._linkedInLink = url;
-        },
-        error => {
+      }, (error: any) => {
           this.translateNotificationsService.error('ERROR.ERROR', error.message);
-        }
-      );
+      }
+    );
 
   }
 

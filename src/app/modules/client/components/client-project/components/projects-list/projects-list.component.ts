@@ -5,6 +5,7 @@ import { UserService } from '../../../../../../services/user/user.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { PaginationTemplate } from '../../../../../../models/pagination';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-projects-list',
@@ -22,12 +23,10 @@ export class ProjectsListComponent implements OnInit {
 
   private _config = {
     fields: 'name created updated status collaborators principalMedia',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};
@@ -43,9 +42,9 @@ export class ProjectsListComponent implements OnInit {
   }
 
   private loadProjects() {
-    this.userService.getMyInnovations(this._config).first().subscribe(respones => {
-        this._projects = respones.result;
-        this._total = respones._metadata.totalCount;
+    this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
+        this._projects = responses.result;
+        this._total = responses._metadata.totalCount;
     }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }, () => {

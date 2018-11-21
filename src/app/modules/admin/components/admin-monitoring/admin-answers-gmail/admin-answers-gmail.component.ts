@@ -12,11 +12,11 @@ export class AdminAnswersGmailComponent implements OnInit {
   public importAnswers(file: File, event: Event) {
     event.preventDefault();
     this._answerService.importFromGmail(file)
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         const total = (res.regSuccess || []).length + (res.regErrors || []).length;
         this._notificationsService.success('ERROR.SUCCESS', `${(res.regSuccess|| []).length}/${total} answers has been created`);
 
-      }, (err) => {
+      }, (err: any) => {
         this._notificationsService.error('ERROR.ERROR', err.message);
       });
   }

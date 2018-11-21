@@ -1,7 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Answer } from '../../../../../../../models/answer';
 import { ResponseService } from '../../../services/response.service';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Innovation } from '../../../../../../../models/innovation';
 
 @Component({
@@ -34,12 +35,12 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
   }
 
   private getAnswers() {
-    this.responseService.getExecutiveAnswers().takeUntil(this._ngUnsubscribe).subscribe((response) => {
+    this.responseService.getExecutiveAnswers().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       if (response) {
         this._answers = response;
         this.topProfessionalsAnswer();
       }
-    })
+    });
   }
 
   private topProfessionalsAnswer() {
@@ -61,10 +62,6 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   }
 
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
-  }
-
   get answers(): Array<Answer> {
     return this._answers;
   }
@@ -82,7 +79,8 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._ngUnsubscribe.unsubscribe();
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

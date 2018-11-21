@@ -30,7 +30,7 @@ export class StarsComponent implements OnInit {
 
 
   private _answers: Array<Answer> = [];
-  private _notesData: Array<{label: Multiling, sum: number, count: number, percentage: string}> = [];
+  private _notesData: Array<{label: Multiling, sum: number, percentage: string, count: number}> = [];
   private _starsOptions: Array<{identifier: number, label: Multiling}> = [];
 
   constructor(private translateService: TranslateService) {}
@@ -71,17 +71,24 @@ export class StarsComponent implements OnInit {
           const idx = parseInt(k, 10);
           const vote = parseInt(answer.answers[this.question.identifier][k], 10);
           if (Number.isInteger(idx) && Number.isInteger(vote) && idx < this._notesData.length && this._notesData[k]) {
-            this._notesData[k].count += 1;
             this._notesData[k].sum += vote;
+            this._notesData[k].count += 1;
+          } else {
+            this._notesData[k].sum += 2; // give a default note to increase differences between differents answers
           }
         });
       });
 
-      this._notesData.forEach(function(noteData) {
-        if (noteData.count > 0) {
-          noteData.percentage = `${Math.round(((noteData.sum / noteData.count) || 0) * 20)}%`;
-        }
-      });
+      this._notesData = this._notesData
+        .map((noteData) => {
+          if (this._answers.length > 0) {
+            noteData.percentage = `${Math.round(((noteData.sum / this._answers.length) || 0) * 20)}%`;
+          }
+          return noteData;
+        })
+        .sort((noteA, noteB) => {
+          return noteA.sum - noteB.sum;
+        });
 
     }
   }
