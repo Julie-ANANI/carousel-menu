@@ -42,7 +42,9 @@ export class SharedWorldmapService {
   public getCountriesRepartition(countries: Array<string>): {[continent: string]: number} {
     return countries.reduce((acc, country) => {
       const continent = this._countries[country];
-      acc[continent] = (acc[continent] || 0) + 1;
+      if (continent) {
+        acc[continent] = (acc[continent] || 0) + 1;
+      }
       return acc;
     }, {});
   }
