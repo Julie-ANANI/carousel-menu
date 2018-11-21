@@ -18,8 +18,8 @@ import { animate, keyframes, query, stagger, style, transition, trigger } from '
 
         query(':enter', style({ opacity: 0 }), { optional: true }),
 
-        query(':enter', stagger('500ms', [
-          animate('1s ease-in-out', keyframes([
+        query(':enter', stagger('300ms', [
+          animate('800ms ease-in-out', keyframes([
               style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
               style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
             ])

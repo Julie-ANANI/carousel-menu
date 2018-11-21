@@ -1,6 +1,6 @@
 import { EXPLORATION  } from '../components/exploration/i18n/en';
 import { HISTORY } from '../components/history/i18n/en';
-import { NEW_PROJECT } from '../components/new-project/i18n/en';
+import { NEW_PROJECT } from '../../../../user/client/components/new-project/i18n/en';
 import { PROJECTS_LIST } from '../../../../user/client/components/projects-list/i18n/en';
 import { SETUP } from '../components/setup/i18n/en';
 

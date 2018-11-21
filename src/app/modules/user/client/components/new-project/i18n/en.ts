@@ -1,29 +1,36 @@
 export const NEW_PROJECT = {
   'DESCRIPTION': {
-    'LINE1': 'Select the language in which you would like to start your projects-list',
+    'LINE1': 'Which language would you like to use to start your project?',
     'LINE2': 'You will be able to translate it in another language later.'
   },
 
   'BUTTON_TEXT': 'Create My Project',
 
-  'COMPANY_NAME_LABEL': 'Give a name to your projects-list',
-  'PROJECT_NAME_PLACEHOLDER': 'Enter name of your projects-list',
-  'INNOVATION_TYPE_LABEL': 'Select your offer',
-  'DOWNLOAD': 'Download your projects-list anytime',
+  'COMPANY_NAME_LABEL': 'What is the name of your project?',
+
+  'PROJECT_NAME_PLACEHOLDER': 'Enter the name of your project',
+
+  'INNOVATION_TYPE_LABEL': 'Which offer best responds to your needs for this project?',
+
+  'DOWNLOAD': 'Download your project report anytime',
+
   'ANONYMOUS': 'Remain anonymous',
+
   'PRIVATE': 'Nothing will be published at this stage',
-  'BOT_TEXT': 'Ready to begin a new projects-list?',
+
+  'BOT_TEXT': 'Ready to begin a new project?',
+
   'PROJECT_NAME': 'Project name is required.',
 
   'APPS': {
-    'LINE1': 'Multiply application fields',
+    'LINE1': 'Discover new application fields',
     'LINE2': 'Address new markets and industries',
     'LINE3': 'Turn R&D from a cost center to a profit center'
   },
 
   'INSIGHTS': {
     'LINE1': 'Validate your market potential',
-    'LINE2': 'Sharp perfect projects-list-market fit',
+    'LINE2': 'Adjust project-market fit ',
     'LINE3': 'Make the right decision: Go, No-Go, Adjust'
   },
 

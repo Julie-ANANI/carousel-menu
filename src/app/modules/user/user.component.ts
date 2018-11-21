@@ -14,17 +14,17 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngUnsubscribe: Subject<any> = new Subject();
 
-  displayLoader = true;
+  displayLoader = false;
 
-  constructor(private loaderService: LoaderService) { }
-
-  ngOnInit() {
+  constructor(private loaderService: LoaderService) {
     this.loaderService.isLoading$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((isLoading: boolean) => {
       setTimeout(() => {
         this.displayLoader = isLoading;
-      }, 400);
+      });
     });
   }
+
+  ngOnInit() { }
 
   getLogo(): string {
     return environment.logoURL;

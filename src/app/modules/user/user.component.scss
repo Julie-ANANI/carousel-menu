@@ -6,12 +6,15 @@
 
 .main-wrapper {
   flex: 1 0 auto;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
 }
 
 .display-loader {
   height: 100vh;
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

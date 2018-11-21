@@ -7,9 +7,10 @@ import { FooterModule } from '../common/footer/footer.module';
 import { HeaderModule } from '../common/header/header.module';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 
-import { UserService } from '../../services/user/user.service';
-
 import { UserComponent } from './user.component';
+
+import { UserService } from '../../services/user/user.service';
+import { InnovationService } from '../../services/innovation/innovation.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { UserComponent } from './user.component';
     UserComponent,
   ],
   providers: [
-    UserService
+    UserService,
+    InnovationService
   ]
 })
 
