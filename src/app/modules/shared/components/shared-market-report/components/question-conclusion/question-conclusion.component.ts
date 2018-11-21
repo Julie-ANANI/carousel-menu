@@ -50,7 +50,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   tagId = '';
 
-  answersOrigin: {[c: string]: number} = {};
+  answersOrigin: {[c: string]: number} = null;
 
   constructor(private innovationService: InnovationService,
               private translateService: TranslateService,
