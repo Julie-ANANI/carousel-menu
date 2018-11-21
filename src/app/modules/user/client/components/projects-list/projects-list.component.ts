@@ -6,19 +6,36 @@ import { Innovation } from '../../../../../models/innovation';
 import { PaginationTemplate } from '../../../../../models/pagination';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
+import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'projects-list',
   templateUrl: 'projects-list.component.html',
-  styleUrls: ['projects-list.component.scss']
+  styleUrls: ['projects-list.component.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+
+        query(':enter', stagger('500ms', [
+          animate('1s ease-in-out', keyframes([
+              style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
+              style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
+            ])
+          )]
+        ), { optional: true }),
+
+      ])
+    ])
+  ]
 })
 
 export class ProjectsListComponent implements OnInit {
 
-  private _projects: Array<Innovation>;
+  private _innovations: Array<Innovation> = [];
 
   private _total: number;
-
 
   private _config = {
     fields: 'name created updated status collaborators principalMedia',
@@ -45,12 +62,10 @@ export class ProjectsListComponent implements OnInit {
 
   private loadProjects() {
     this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
-        this._projects = responses.result;
+        this._innovations = responses.result;
         this._total = responses._metadata.totalCount;
     }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    }, () => {
-
     });
   }
 
@@ -71,18 +86,18 @@ export class ProjectsListComponent implements OnInit {
 
   }
 
-  getMedia(project: Innovation): string {
-    if (project.principalMedia) {
+  getImage(innovation: Innovation): string {
+    if (innovation.principalMedia) {
 
-      if (project.principalMedia.type === 'PHOTO') {
-        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
+      if (innovation.principalMedia.type === 'PHOTO') {
+        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + innovation.principalMedia.cloudinary.public_id;
       }
       else {
-        return project.principalMedia.video.thumbnail;
+        return innovation.principalMedia.video.thumbnail;
       }
 
     } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
+      return 'https://res.cloudinary.com/umi/image/upload/v1542811700/app/default-images/icons/no-image.png';
     }
 
   }
@@ -107,8 +122,8 @@ export class ProjectsListComponent implements OnInit {
     return this._total;
   }
 
-  get projects () {
-    return this._projects;
+  get innovations () {
+    return this._innovations;
   }
 
   get dateFormat(): string {

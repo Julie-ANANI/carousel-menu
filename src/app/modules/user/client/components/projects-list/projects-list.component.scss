@@ -1,60 +1,67 @@
 @import "../../../../../../style/variables";
 
-#projects-list {
+#projects-list-component {
 
-  .no-project-wrapper {
+  .section-no-project {
     padding-top: 3.15rem;
+    text-align: center;
 
     .bot-rect {
-      width: 300px;
+      max-width: 354px;
+      animation-name: slideInDown;
+    }
+
+    .bot-triangle {
+      animation-duration: 4s;
     }
 
   }
 
-  .spinner-wrapper {
-    padding-top: 3.15rem;
-  }
 
-  .project-wrapper {
+  .section-projects-list {
     padding-top: 3.15rem;
 
-    .content-outer {
-      margin-bottom: 1.57rem;
+    .project-wrapper {
 
-      .content {
-        display: inline-flex;
-        width: 100%;
+      .content-outer {
+        margin-bottom: 1.57rem;
 
-        img {
-          border-radius: .18rem;
-          width: 120px;
-          height: 100px;
-          margin-right: 1.2rem;
-          cursor: pointer;
-        }
-
-        img:hover {
-          box-shadow: $box-shadow-hover;
-        }
-
-        .project-description {
-          border-bottom: .06rem solid $border-color;
+        .content {
+          display: inline-flex;
           width: 100%;
 
-          span {
-            font-size: 1.4rem;
-          }
-
-          span:hover {
-            color: $primary-color;
+          img {
+            border-radius: .18rem;
+            width: 120px;
+            height: 100px;
+            margin-right: 1.2rem;
             cursor: pointer;
           }
 
-          .date-text {
-            margin-top: 0.95rem;
-            font-size: 0.85rem;
-            color: $meta-color;
-            font-weight: 600;
+          img:hover {
+            box-shadow: $box-shadow-hover;
+          }
+
+          .project-description {
+            border-bottom: .06rem solid $border-color;
+            width: 100%;
+
+            span {
+              font-size: 1.4rem;
+            }
+
+            span:hover {
+              color: $primary-color;
+              cursor: pointer;
+            }
+
+            .date-text {
+              margin-top: 0.95rem;
+              font-size: 0.85rem;
+              color: $meta-color;
+              font-weight: 600;
+            }
+
           }
 
         }
@@ -63,12 +70,13 @@
 
     }
 
+    .pagination-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 3.15rem;
+    }
+
   }
 
-  .pagination-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 1.57rem;
-  }
 
 }
