@@ -42,7 +42,7 @@ export class SidebarComponent implements OnInit {
     this.setTemplate(value);
   };
 
-  @Output() closeSidebar = new EventEmitter<string>();
+  @Output() closeSidebar = new EventEmitter<SidebarInterface>();
 
   private _title: string; // heading
   private _state: string; // animation state
@@ -76,7 +76,7 @@ export class SidebarComponent implements OnInit {
   toggleState(event: Event, target: any) {
     if (event.target['id'] === 'sidebar-wrapper' || event.target['id'] === 'close') {
       this._state = 'inactive';
-      this.closeSidebar.emit(this._state);
+      this.closeSidebar.emit({animate_state: this._state, title: this._title, type: this._type});
       setTimeout(() => {
         target.scrollIntoView();
       }, 300);
