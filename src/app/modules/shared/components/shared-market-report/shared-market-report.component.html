@@ -281,7 +281,7 @@
                       [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
                       rows="5"
                       [(ngModel)]="innovation.executiveReport.objective"
-                      (blur)="update($event)"
+                      (focusout)="update($event)"
                       maxlength="120">
                     </textarea>
                   </label>
@@ -626,7 +626,7 @@
                         [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.PROFESSIONAL' | translate"
                         rows="5"
                         [(ngModel)]="innovation.executiveReport.professionalAbstract"
-                        (blur)="update($event)"
+                        (focusout)="update($event)"
                         maxlength="160">
                       </textarea>
                     </label>
