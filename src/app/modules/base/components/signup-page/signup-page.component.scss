@@ -1,64 +1,62 @@
-#sign-up {
+@import "../../../../../style/variables";
 
-  .cover-image {
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    min-height: 100vh;
-  }
+#signup-component {
 
-  .sign-up-wrapper {
+  .main-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     min-height: 100vh;
+    flex-direction: column;
 
-    .register-wrapper {
-      flex: 1 0 auto;
-      justify-content: center;
+
+    .cover-image {
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      min-height: 100vh;
+    }
+
+
+    .signup-details {
+      display: flex;
       align-items: center;
-      display: inline-flex;
+      justify-content: center;
       flex-direction: column;
+      text-align: center;
+      min-height: 100vh;
 
-      .main-heading {
-        font-size: 2.15rem;
-      }
+      .register {
+        flex: 1 0 auto;
+        justify-content: center;
+        align-items: center;
+        display: inline-flex;
+        flex-direction: column;
+        width: 100%;
+        padding-top: 1.57rem;
+        padding-bottom: 1.57rem;
+        margin-right: auto;
+        margin-left: auto;
 
-      .social-wrapper {
+        .main-heading {
+          font-size: 1.75rem;
+          padding-left: .6rem;
+          padding-right: .6rem;
+          color: $background-color;
+        }
 
-        .btn {
-          background: #1680B9;
-          border-color: #1680B9;
-          color: white;
-          width: 17.5rem;
+        .linkedIn-wrapper {
+          padding-top: 1.57rem;
 
-          i {
-            margin-top: -.2rem;
+          .or-wrapper {
+            padding-bottom: 1.57rem;
           }
 
-        }
+          .btn {
+            width: 265px;
+          }
 
-        .btn:hover {
-          background: lighten(#1680B9, 10%);
-          border-color: lighten(#1680B9, 10%);
-          color: white;
-        }
-
-      }
-
-      .or-wrapper {
-        padding-top: 1.57rem;
-      }
-
-      .sign-wrapper {
-        padding-top: 1.57rem;
-
-        .btn {
-          width: 17.5rem;
-
-          i {
-            margin-top: 0;
+          .btn i {
+            margin-top: -2px;
           }
 
         }
@@ -66,23 +64,21 @@
       }
 
     }
+
 
   }
 
 }
 
+
 /********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 
-  #sign-up {
+  #signup-component {
 
     .cover-image {
       display: none;
-    }
-
-    .heading {
-      padding-top: 1.57rem;
     }
 
   }

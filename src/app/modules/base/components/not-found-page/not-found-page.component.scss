@@ -1,16 +1,27 @@
-#not-found {
+#not-found-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 
-  h1 {
-    font-size: 2.7rem;
-  }
+  .no-result-wrapper {
+    margin-top: 0;
 
-  .bot-rect {
-    width: 245px;
-  }
+    .bot-image {
+      height: 12.37rem;
+      margin-bottom: .9375rem;
+    }
 
-  .link-wrapper {
-    font-size: .85rem;
-    padding-top: 1.57rem;
+    .main-heading {
+      color: #FF795D;
+      font-size: 2.7rem;
+    }
+
+    .text-link {
+      padding-top: 1.57rem;
+    }
+
   }
 
 }

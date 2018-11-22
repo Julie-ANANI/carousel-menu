@@ -12,7 +12,7 @@ export class NotFoundPageComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    this.translateTitleService.setTitle('Page not found');
+    this.translateTitleService.setTitle('Page Not Found');
   }
 
 }

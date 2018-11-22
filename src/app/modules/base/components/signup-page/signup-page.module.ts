@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SignupPageComponent } from './signup-page.component';
-import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
+import { SidebarSignupFormModule } from '../../../sidebar/components/signup-form/sidebar-signup-form.module';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { SidebarModule } from '../../../sidebar/sidebar.module';
     RouterModule,
     TranslateModule.forChild(),
     ReactiveFormsModule,
-    SidebarUserFormModule,
+    SidebarSignupFormModule,
     SidebarModule
   ],
   declarations: [

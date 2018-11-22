@@ -1,32 +1,22 @@
-<main
-  class="main-container sidebar-wrapper"
-  id="sidebar-wrapper"
-  (click)="toggleState($event, content)"
-  [@animateWrapper]="state">
+<div [@animateSidebarBackdrop]="state" class="sidebar-backdrop" id="sidebar-wrapper" (click)="toggleState($event, content)"></div>
 
-  <section
-    class="sidebar-content"
-    [@animateContent]="state"
-    id="sidebar"
-    [ngStyle]="{ 'width': size ? size : '452px' }">
-
+<main class="sidebar-container" [@animateSidebar]="state" [ngStyle]="{ 'width': size ? size : '452px'  }">
+  <section class="sidebar-content">
     <div #content>
 
-      <!-- Heading -->
+      <!-- Header -->
       <header class="sidebar-header">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="header-content">
             <span>{{ title | translate }}</span>
-            <span><i class="icon icon-cross" id="close" (click)="toggleState($event, content)"></i></span>
+            <span><i class="fas fa-times" id="close" (click)="toggleState($event, content)"></i></span>
           </div>
         </div>
       </header>
 
       <!-- Content -->
-      <ng-content (close)="toggleState($event, content)"></ng-content>
+      <ng-content></ng-content>
 
     </div>
-
   </section>
-
 </main>
