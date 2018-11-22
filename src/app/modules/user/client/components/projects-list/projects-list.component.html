@@ -50,7 +50,7 @@
       </div>
 
       <!-- Pagination -->
-      <div class="pagination-wrapper">
+      <div *ngIf="innovations.length > 10" class="pagination-wrapper">
         <app-pagination
           [configValue]="paginationConfig"
           (configChange)="configChange($event)"
