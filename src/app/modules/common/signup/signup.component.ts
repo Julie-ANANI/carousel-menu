@@ -70,8 +70,8 @@ export class SignupComponent implements OnInit {
   }
 
 
-  closeSidebar(value: string) {
-    this._sidebarValue.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this._sidebarValue.animate_state = value.animate_state;
   }
 
 
