@@ -1,17 +1,9 @@
 @import "../../../../../../../style/variables";
 
-#new-project {
+#new-project-component {
 
-  .form-group {
-    margin-bottom: 0 !important;
-  }
-
-  .ques-wrapper {
-
-    .ques-2 {
-      padding-top: 4.06rem;
-    }
-
+  .ques-2, .ques-3, .section-info {
+    padding-top: 4.06rem;
   }
 
   .bot-rect {
@@ -19,7 +11,6 @@
   }
 
   .ques-3 {
-    padding-top: 4.06rem;
 
     .selection-wrapper {
       display: flex;
@@ -38,14 +29,14 @@
     }
 
     .circle-check {
-      margin-top: -.625rem;
-      margin-left: .625rem;
+      margin-top: -11px;
+      margin-left: 11px;
     }
 
     .offers {
       padding: 2.4rem 1.2rem;
       border: 4px solid $border-color;
-      border-radius: .18rem;
+      border-radius: 3px;
       word-wrap: break-word;
       width: 328px;
       cursor: pointer;
@@ -55,8 +46,13 @@
         margin-bottom: 0;
 
         li {
-          font-size: .85rem;
+          font-size: .875rem;
+          padding-right: 0;
           color: #262831;
+        }
+
+        li:last-child {
+          padding-bottom: 0;
         }
 
       }
@@ -87,14 +83,15 @@
 
   }
 
-  .create {
+
+  .create-button {
     padding-top: 2.8rem;
+    text-align: center;
   }
 
-  .general-info {
-    padding-top: 4.68rem;
+  .section-info {
 
-    .fas, .far{
+    .fas {
       color: $meta-color;;
     }
 
@@ -137,7 +134,7 @@
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
 
   .selection-wrapper label {
     margin-right: 1.2rem;
@@ -145,6 +142,14 @@
 
   .offers {
     width: 323px !important;
+  }
+
+}
+
+@media (min-width: 840px) {
+
+  .selection-wrapper label {
+    margin-right: 1.57rem;
   }
 
 }

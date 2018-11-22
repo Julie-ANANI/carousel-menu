@@ -103,7 +103,7 @@ a, a:focus, a:hover, a:active, a.active {
   z-index: 3;
 }
 
-.bot-trian {
+.bot-trian, .bot-triangle {
   padding-left: 150px;
   animation-name: fadeIn;
   animation-duration: 2s;
@@ -113,6 +113,9 @@ a, a:focus, a:hover, a:active, a.active {
 
 .bot-image {
   height: 9.37rem;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
 }
 
 
@@ -124,7 +127,7 @@ a, a:focus, a:hover, a:active, a.active {
 .num-rect {
   color: white;
   border-radius: .35rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   font-style: normal;
   padding: .45rem .95rem;
@@ -144,16 +147,15 @@ a, a:focus, a:hover, a:active, a.active {
   height: 1.57rem;
   width: 1.57rem;
   background: transparent;
-  display: inline-block;
   position: absolute;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   z-index: 2;
 
   i {
     color: transparent;
-    display: flex;
-    justify-content: center;
-    padding-top: .375rem;
-    font-size: .85rem;
+    font-size: .75rem;
   }
 
 }
