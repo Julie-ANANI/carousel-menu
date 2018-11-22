@@ -50,7 +50,7 @@
                   [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.SECTION' | translate"
                   [formControlName]="questionReceived._id"
                   rows="5"
-                  (blur)="saveAbstract($event, questionReceived._id)"
+                  (focusout)="saveAbstract($event, questionReceived._id)"
                   maxlength="160">
                 </textarea>
               </label>
