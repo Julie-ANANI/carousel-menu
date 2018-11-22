@@ -12,7 +12,7 @@ export const PROJECTS_LIST = {
 
   'NO_PROJECT': {
     'TITLE': 'Vous n\'avez pas de projet ?',
-    'CONTENT': 'Cliquez sur le bouton Ajouter un projet pour créer votre premier projet.'
+    'CONTENT': 'Créez vos premiers projet en cliquant sur le bouton "Ajouter un projet".'
   }
 
 };
