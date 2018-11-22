@@ -15,8 +15,10 @@ import { first } from 'rxjs/operators';
 export class ForgetPasswordPageComponent implements OnInit {
 
   private _formData: FormGroup;
+
   private _companyName: string = environment.companyShortName;
-  private _emailSent: boolean;
+
+  private _emailSent = false;
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
@@ -25,13 +27,13 @@ export class ForgetPasswordPageComponent implements OnInit {
 
   ngOnInit() {
     this.translateTitleService.setTitle('FORGET_PASSWORD.TITLE');
+    this.buildForm();
+  }
 
-    this._emailSent = false;
-
+  private buildForm() {
     this._formData = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
     });
-
   }
 
   onSubmit() {
