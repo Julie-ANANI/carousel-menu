@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 
 import { environment } from '../../../environments/environment';
+import {Tag} from '../../models/tag';
 
 @Injectable()
 export class UserService {
@@ -72,9 +73,7 @@ export class UserService {
   }
 
   public getRecommendation(userId: string): Observable<any> {
-    return this._http.post(`/user/${userId}/match`)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.get<Array<Tag>>('/user/' + userId + '/match');
   }
 
 }

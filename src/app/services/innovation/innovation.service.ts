@@ -123,4 +123,8 @@ export class InnovationService {
     return this._http.get(`/sharing/synthesis/${id}/${sharedKey}`);
   }
 
+  public getRecommendation(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/match');
+  }
+
 }

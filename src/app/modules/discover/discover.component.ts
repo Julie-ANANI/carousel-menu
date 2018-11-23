@@ -2,8 +2,8 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../../services/auth/auth.service'
-import { UserService } from '../../../../services/user/user.service'
+import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
 import { TranslateService} from '@ngx-translate/core';
 import { LocalStorageService } from '../../services/localStorage/localStorage.service';
 import { TranslateTitleService } from '../../services/title/title.service';
@@ -13,9 +13,8 @@ import { InnovCard } from '../../models/innov-card';
 import { PaginationTemplate } from '../../models/pagination';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
-import { TagsService} from '../../../../services/tags/tags.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TagsService} from '../../services/tags/tags.service';
+import { InnovationService} from '../../services/innovation/innovation.service';
 
 
 @Component({
@@ -96,39 +95,40 @@ export class DiscoverComponent implements OnInit {
 
   private _suggestedTags: Array<Tag> = []; // array containing suggested tags id for the selected tag
 
-  private _userId  = ''; // id of the logged user
+  private _userId: string; // id of the logged user
 
   private _userSuggestedInnovations: Array<Innovation> = [];
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateTitleService: TranslateTitleService,
-              private translateTitleService: TranslateTitleService,
-              private innovationService: InnovationService,
               private tagsService: TagsService,
-              private translateNotificationsService: TranslateNotificationsService,
               private translateService: TranslateService,
-              private activatedRoute: ActivatedRoute,
               private localStorage: LocalStorageService,
               private activatedRoute: ActivatedRoute,
               private authService: AuthService,
-              private userService: UserService) {}
+              private userService: UserService,
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
     this._paginationValue = { limit: 50, offset: this._config.offset };
     this.checkStoredFilters();
-    this.getAllInnovations();
-    if (this.authService.isAuthenticated) {
-      this._userId = this.authService.getUserInfo()['id'];
-      this.applyUserRecommendation();
-    }
-
     this._totalInnovations = this.activatedRoute.snapshot.data.innovations;
     this._totalResults = this._totalInnovations.length;
     this.getTitles();
     this.getAllTags();
     this.checkSharedResult();
     this.initialize();
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['innovation']) {
+        this.applyInnoRecommendation(params['innovation']);
+      } else if (this.authService.isAuthenticated) {
+        this._userId = this.authService.userId;
+        this.applyUserRecommendation();
+      }
+    });
+
   }
 
 
@@ -392,7 +392,6 @@ export class DiscoverComponent implements OnInit {
    * this function searches for the innovations that contains the applied filters AND the similar filter.
    */
   private applySimilarFilters() {
-
     if (this._appliedSimilarFilter.length > 0) {
 
       this._localInnovations = [];
@@ -687,20 +686,28 @@ export class DiscoverComponent implements OnInit {
 
     if (this._appliedFilters.length === 0) {
       this._suggestedTags = [];
-    }
-    else {
-      this.tagsService.getSimilarTags(this._appliedFilters[this._appliedFilters.length - 1]._id).first().subscribe((response) => {
-        this._suggestedTags = response
+    } else {
+      this.tagsService.getSimilarTags(this._appliedFilters[this._appliedFilters.length - 1]._id).subscribe((response) => {
+        this._suggestedTags = response;
       });
     }
   }
-
 
   private applyUserRecommendation() {
 
     this.userService.getRecommendation(this._userId).subscribe((response) => {
       response.forEach((innovation_id: string) => {
         this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === innovation_id));
+      });
+    });
+  }
+
+  private applyInnoRecommendation(idInno: string) {
+    this.innovationService.getRecommendation(idInno).subscribe((response) => {
+      console.log(response);
+      response.forEach((inno_similar: Innovation) => {
+        this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
+        console.log(this._userSuggestedInnovations);
       });
     });
   }
@@ -770,11 +777,11 @@ export class DiscoverComponent implements OnInit {
   }
 
   get suggestedTags(): Array<Tag> {
-    return this._suggestedTags
+    return this._suggestedTags;
   }
 
   get userInnovations(): Array<Innovation> {
-    return this._userSuggestedInnovations
+    return this._userSuggestedInnovations;
   }
 
 }
