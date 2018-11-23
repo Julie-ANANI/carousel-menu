@@ -704,10 +704,8 @@ export class DiscoverComponent implements OnInit {
 
   private applyInnoRecommendation(idInno: string) {
     this.innovationService.getRecommendation(idInno).subscribe((response) => {
-      console.log(response);
       response.forEach((inno_similar: Innovation) => {
         this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
-        console.log(this._userSuggestedInnovations);
       });
     });
   }
