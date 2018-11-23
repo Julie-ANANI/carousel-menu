@@ -6,6 +6,7 @@ import { Question } from '../../../../../../models/question';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
+import { FilterService } from '../../services/filters.service';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -21,6 +22,10 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   @Input() set tags(value: Array<Tag>) {
     this.receivedTags = value;
+  }
+
+  @Input() set originAnswers(value: any) {
+    this.answersOrigin = value;
   }
 
   @Input() readonly = true;
@@ -43,12 +48,18 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   receivedTags: Array<Tag> = [];
 
+  tagId = '';
+
+  answersOrigin: {[c: string]: number} = null;
+
   constructor(private innovationService: InnovationService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private filterService: FilterService,) {}
 
   ngOnInit() {
     if (this.question && this.question.identifier) {
       this._domSectionId = `${this.question.identifier.replace(/\\s/g, '')}-conclusion`;
+      this.tagId = this.question.identifier + (this.question.controlType !== 'textarea' ? 'Comment' : '');
     }
 
     if (this.innovation && !this.innovation.marketReport) {
@@ -56,11 +67,13 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
     }
 
     this._lang = this.translateService.currentLang || 'en';
+
     this.translateService.onLangChange
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((e: LangChangeEvent) => {
         this._lang = e.lang || 'en';
       });
+
   }
 
   ngOnDestroy() {
@@ -77,6 +90,16 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       .subscribe((data: any) => {
         this.innovation.marketReport = data;
       });
+  }
+
+  addTagFilter(event: Event, tag: Tag) {
+    event.preventDefault();
+    this.filterService.addFilter({
+      status: 'TAG',
+      questionId: this.tagId,
+      questionTitle: tag.label,
+      value: tag._id
+    });
   }
 
   get domSectionId(): string {

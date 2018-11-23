@@ -25,6 +25,13 @@
         (onTextChange)="keyupHandlerFunction($event)">
       </app-text-zone>
 
+      <div class="answer-origin" *ngIf="answersOrigin !== null">
+        <h1>Geographical Distribution:</h1>
+        <div *ngFor="let item of answersOrigin | keyvalue">
+          {{ ('CONTINENTS.' + item.key) | translate }}: {{ item.value }}
+        </div>
+      </div>
+
     </div>
     <!-- /Conclusion -->
 
