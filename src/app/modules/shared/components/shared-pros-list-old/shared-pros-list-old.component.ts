@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import {PaginationTemplate} from '../../../../models/pagination';
+import {PaginationInterface} from '../../../../models/pagination';
 import { first } from 'rxjs/operators';
 
 export interface SelectedProfessional extends Professional {
@@ -17,7 +17,7 @@ export interface SelectedProfessional extends Professional {
 export class SharedProsListOldComponent {
 
   private _config: any;
-  private _paginationConfig: PaginationTemplate = {};
+  private _paginationConfig: PaginationInterface = {};
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
 
@@ -94,5 +94,5 @@ export class SharedProsListOldComponent {
   get total() { return this._total; }
   get pros() { return this._pros; }
   get config() { return this._config; }
-  get paginationConfig(): PaginationTemplate { return this._paginationConfig; }
+  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
 }

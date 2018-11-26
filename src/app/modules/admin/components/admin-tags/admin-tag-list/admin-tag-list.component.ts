@@ -7,7 +7,7 @@ import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import {PaginationTemplate} from '../../../../../models/pagination';
+import {PaginationInterface} from '../../../../../models/pagination';
 import { first } from 'rxjs/operators';
 
 
@@ -28,7 +28,7 @@ export class AdminTagListComponent implements OnInit {
     sort: '{"label":-1}'
   };
 
-  private _paginationConfig: PaginationTemplate = {};
+  private _paginationConfig: PaginationInterface = {};
 
   private _addAttachmentConfig: {
     placeholder: string,
@@ -103,6 +103,6 @@ export class AdminTagListComponent implements OnInit {
   get data(): Array<Tag> { return this._data; };
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
-  get paginationConfig(): PaginationTemplate { return this._paginationConfig; }
+  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
   get lang(): string { return this._translateService.currentLang; };
 }

@@ -8,7 +8,7 @@ import { TranslateTitleService } from '../../services/title/title.service';
 import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
-import { PaginationTemplate } from '../../models/pagination';
+import { PaginationInterface } from '../../models/pagination';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 
@@ -70,7 +70,7 @@ export class DiscoverComponent implements OnInit {
 
   private _innovationTitles: Array<{text: string}> = []; // to store the innovation title to send to the search field.
 
-  private _paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.
+  private _paginationValue: PaginationInterface = {}; // to pass the value in the pagination component.
 
   private _startingIndex: number; // starting index of the innovation.
 
@@ -556,7 +556,7 @@ export class DiscoverComponent implements OnInit {
    * update the innovation cards with the new limit and offset value.
    * @param paginationValues
    */
-  onChangePagination(paginationValues: PaginationTemplate) {
+  onChangePagination(paginationValues: PaginationInterface) {
     if (isPlatformBrowser(this.platformId)) {
       window.scroll(0, 0);
 
@@ -614,7 +614,7 @@ export class DiscoverComponent implements OnInit {
     return this._innovationTitles;
   }
 
-  get paginationValue(): PaginationTemplate {
+  get paginationValue(): PaginationInterface {
     return this._paginationValue;
   }
 

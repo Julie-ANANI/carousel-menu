@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../models/preset';
-import {PaginationTemplate} from '../../../../../../models/pagination';
+import {PaginationInterface} from '../../../../../../models/pagination';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -24,7 +24,7 @@ export class AdminPresetsListComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: PaginationInterface = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _presetService: PresetService,
               private _router: Router) {}
@@ -84,6 +84,6 @@ export class AdminPresetsListComponent implements OnInit {
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }
   get total () { return this._total; }
-  get paginationConfig(): PaginationTemplate { return this._paginationConfig; }
+  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
   get presets () { return this._presets; }
 }

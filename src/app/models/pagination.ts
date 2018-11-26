@@ -1,4 +1,4 @@
-export interface PaginationTemplate {
+export interface PaginationInterface {
   limit?: any;
   offset?: any;
 }
