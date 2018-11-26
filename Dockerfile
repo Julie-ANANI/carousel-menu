@@ -3,8 +3,6 @@ FROM node:10.13.0
 RUN echo ${APP_NAME}
 RUN echo "${ENV_NAME}"
 
-RUN echo "!!!!!! Builing with ng build ${APP_NAME} -c=${ENV_NAME} --prod !!!!!!"
-
 RUN apt-get clean && \
     apt-get update
 
@@ -17,6 +15,9 @@ ADD .npmrc /var/web/.npmrc
 ADD . .
 
 RUN npm install
+
+RUN echo "!!!!!! Builing with ng build ${APP_NAME} -c=${ENV_NAME} --prod !!!!!!"
+
 RUN ng config -g cli.warnings.versionMismatch false
 RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
 RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
