@@ -4,11 +4,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class SearchService {
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,
+              private _commonService: CommonService) {
   }
 
   public search(params: any): Observable<any> {
@@ -33,6 +35,7 @@ export class SearchService {
   }
 
   public getPros(config: {[header: string]: string | string[]}, requestId: string): Observable<any> {
+    config = this._commonService.configToString(config);
     return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params: config});
   }
 
@@ -49,6 +52,7 @@ export class SearchService {
   }
 
   public getRequests(config: {[header: string]: string | string[]}): Observable<any> {
+    config = this._commonService.configToString(config);
     return this._http.get('/search/queryRessourceAPI/request', {params: config});
   }
 
