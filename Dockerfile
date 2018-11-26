@@ -17,6 +17,7 @@ ADD .npmrc /var/web/.npmrc
 ADD . .
 
 RUN npm install
+RUN ng config -g cli.warnings.versionMismatch false
 RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
 RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
 RUN gzip -k -r dist/browser/
