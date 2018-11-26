@@ -3,11 +3,17 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
 
+    <!--Recommendation heading section -->
+    <div *ngIf="userInnovations.length>0" class="section-heading-rec">
+      <!-- heading -->
+      <h1 class="main-heading">{{ 'DISCOVER.RECOMMENDATION' | translate }}</h1>
+    </div>
+
     <!-- User Innovation cards -->
     <div class="section-user-cards" [@cardAnimation]="userInnovations.length">
       <div *ngFor="let innovation of userInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
+        <!-- /Heading section -->
         <div class="card-content">
-
           <!-- img -->
           <div class="card-img">
             <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
@@ -105,6 +111,9 @@
 
     <!-- Suggested tags section -->
     <div *ngIf="suggestedTags.length > 0" class="section-suggested-tags">
+
+      <h6 class="main-heading">{{ 'DISCOVER.SUGGESTED_TAGS' | translate }}</h6>
+
 
       <!-- Suggested Tags -->
       <div class="tags-wrapper" @tagAnimation>

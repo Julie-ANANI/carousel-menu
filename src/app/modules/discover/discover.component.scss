@@ -92,9 +92,10 @@
       color: $meta-color;
       font-weight: 600;
       margin-bottom: .9375rem;
+      margin-top: 1rem;
       font-size: .75rem;
       animation-name: fadeIn;
-      animation-duration: 1s;
+      animation-duration: 0.5s;
       animation-timing-function: ease-in-out;
     }
 
@@ -169,7 +170,6 @@
     margin-top: 2.5rem;
   }
 
-
   .section-heading {
     display: flex;
     justify-content: space-between;
@@ -194,6 +194,19 @@
 
   }
 
+  .section-heading-rec {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .main-heading {
+      font-size: 1.3125rem;
+      flex: 2;
+      animation-name: fadeIn;
+      animation-duration: .5s;
+      animation-timing-function: ease-in-out;
+    }
+  }
 
   .section-cards {
     display: flex;

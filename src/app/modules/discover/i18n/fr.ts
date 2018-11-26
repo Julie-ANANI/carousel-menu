@@ -46,6 +46,8 @@ export const DISCOVER = {
   'NO_INNOVATION': 'Nous ne pouvons pas trouver d\'innovations basées sur votre requête.',
   'STAGE': 'Étape',
 
+  'RECOMMENDATION': 'Projets qui peuvent vous intéresser',
+  'SUGGESTED_TAGS': 'Secteur(s) associé(s)',
 
 
 };
