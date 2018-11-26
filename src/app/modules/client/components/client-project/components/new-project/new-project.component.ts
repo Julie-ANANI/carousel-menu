@@ -24,15 +24,21 @@ export class NewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buildForm();
+  }
+
+
+  private buildForm() {
     this._formData = this.formBuilder.group({
       choosenLang: [null, Validators.required],
       name: [null, Validators.required],
       type: [null, Validators.required],
     });
-
   }
 
-  onSubmit() {
+
+  onCreateProject() {
+
     const newProject = {
       domain: environment.domain,
       lang: this._formData.value.choosenLang,
@@ -40,8 +46,8 @@ export class NewProjectComponent implements OnInit {
       type: this._formData.value.type
     };
 
-    this.innovationService.create(newProject).pipe(first()).subscribe((project: Innovation) => {
-        this.router.navigate(['/project/' + project._id + '/setup'])
+    this.innovationService.create(newProject).pipe(first()).subscribe((innovation: Innovation) => {
+        this.router.navigate(['/project/' + innovation._id + '/setup'])
       }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
     });

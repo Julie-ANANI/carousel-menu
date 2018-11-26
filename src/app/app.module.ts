@@ -40,6 +40,7 @@ import { LocalStorageService } from './services/localStorage/localStorage.servic
 import { CampaignCalculationService } from './services/campaign/campaign-calculation.service';
 import { InnovationCommonService } from './services/innovation/innovation-common.service';
 import { QuizService } from './services/quiz/quiz.service';
+import { CommonService } from './services/common/common.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -90,6 +91,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     ShareService,
     SearchService,
     PresetService,
+    CommonService,
     AnswerService,
     ProfessionalsService,
     DownloadService,

@@ -5,13 +5,15 @@ export const LOG_IN = {
 
   'LOG_IN_BTN': 'Continue',
 
-  'HEADING': 'Sign In',
+  // 'HEADING': 'Sign In',
+
+  'HEADING': 'Welcome back.',
 
   'LOG_IN_LINKEDIN': 'Connect with LinkedIn',
 
   'FORGOT_PASSWORD': {
-   'A': 'Did you',
-   'B': 'forget your password?'
+    'A': 'Did you',
+    'B': 'forget your password?'
   },
 
   'SIGN_UP': 'Get Started'

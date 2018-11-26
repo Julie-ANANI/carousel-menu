@@ -229,6 +229,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       this.responseService.setExecutiveAnswers(this._answers);
 
       this._filteredAnswers = this._answers;
+
       this._answersOrigins = this.worldmapService.getCountriesRepartition(
         this._filteredAnswers.map(x => x.country.flag || x.professional.country)
       );

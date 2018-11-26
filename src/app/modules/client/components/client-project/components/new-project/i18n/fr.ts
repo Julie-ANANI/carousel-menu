@@ -1,28 +1,36 @@
 export const NEW_PROJECT = {
   'DESCRIPTION': {
-    'LINE1': 'Sélectionnez la langue dans laquelle vous souhaitez démarrer votre projet',
+    'LINE1': 'Quelle langue souhaitez-vous utiliser pour démarrer votre projet ?',
     'LINE2': 'Vous pourrez traduire votre projet dans l\'autre langue à tout moment.'
   },
 
   'BUTTON_TEXT': 'Créer mon projet',
-  'COMPANY_NAME_LABEL': 'Donnez un nom à votre projet',
+
+  'COMPANY_NAME_LABEL': 'Quel est le nom de votre projet ?',
+
   'PROJECT_NAME_PLACEHOLDER': 'Entrez le nom de votre projet',
-  'INNOVATION_TYPE_LABEL': 'Sélectionnez votre offre',
-  'DOWNLOAD': 'Téléchargez votre projet à tout moment',
+
+  'INNOVATION_TYPE_LABEL': 'Quelle offre répond le mieux à vos besoins pour ce projet ?',
+
+  'DOWNLOAD': 'Téléchargez votre rapport de projet à tout moment',
+
   'ANONYMOUS': 'Anonymat garanti',
+
   'PRIVATE': 'Rien n\'est publié à ce stade' ,
+
   'BOT_TEXT': 'Prêt à commencer un nouveau projet ?',
+
   'PROJECT_NAME': 'Le nom du projet est requis.',
 
   'APPS': {
-    'LINE1': 'Multiplier les champs d\'application',
+    'LINE1': 'Découvrez de nouveaux domaines d\'application',
     'LINE2': 'Aborder de nouveaux marchés et industries',
     'LINE3': 'Transformez la R & D d\'un centre de coûts en centre de profit'
   },
 
   'INSIGHTS': {
     'LINE1': 'Validez votre potentiel de marché',
-    'LINE2': 'Ajustement parfait parfait du marché du projet',
+    'LINE2': 'Ajuster l\'adéquation projet-marché ',
     'LINE3': 'Prenez la bonne décision: allez, allez-y, ajustez'
   },
 

@@ -1,86 +1,66 @@
-<section class="section-container" id="projects-list">
+<section class="section-container" id="projects-list-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- Add project button -->
-    <div class="text-right">
-      <a routerLink="new">
-        <button (click)="$event.preventDefault()" class="btn btn-primary">
-          {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
-        </button>
-      </a>
-    </div>
-    <!-- /Add project button -->
 
-    <!-- No project -->
-    <div *ngIf="projects && !projects.length" class="no-project-wrapper text-center">
+    <!-- Section add button -->
+    <div class="text-right">
+      <button routerLink="new" (click)="$event.preventDefault()" class="btn btn-primary">
+        {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+      </button>
+    </div>
+
+
+    <!-- Section no project -->
+    <div *ngIf="innovations.length === 0" class="section-no-project">
       <div class="bot-rect">
         {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
         <br>
         {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}
       </div>
       <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle">
       <div>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1532612435/app/default-images/bot-advice.svg" alt="Bot" class="bot-image">
+        <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image">
       </div>
     </div>
-    <!-- /No project -->
 
-    <!-- Projects -->
-    <ng-container *ngIf="projects && projects.length">
 
-      <!-- While fetching -->
-      <div *ngIf="displaySpinner" class="spinner-wrapper">
-        <app-shared-loader></app-shared-loader>
-      </div>
-      <!-- /While fetching -->
+    <!-- Section projects -->
+    <div *ngIf="innovations.length > 0" class="section-projects-list">
 
-      <!-- Complete fetching -->
-      <ng-container *ngIf="!displaySpinner">
-
-        <!-- Projects list -->
-        <div class="project-wrapper">
-          <div *ngFor="let project of projects" class="content-outer">
-            <div class="content">
-              <a [routerLink]="getRelevantLink(project)"><img [src]="getMedia(project)"  alt="Media"></a>
-              <div class="project-description">
-                <a [routerLink]="getRelevantLink(project)">
-                  <span >{{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
-                </a>
-                <p class="date-text">
-                  {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
-                  •
-                  {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
-                  •
-                  {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-                </p>
-              </div>
+      <!-- Projects -->
+      <div class="project-wrapper" [@listAnimation]="innovations.length">
+        <div *ngFor="let innovation of innovations" class="content-outer">
+          <div class="content">
+            <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)"></a>
+            <div class="project-description">
+              <a [routerLink]="getRelevantLink(innovation)">
+                <span >{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+              </a>
+              <p class="date-text">
+                {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
+                •
+                {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
+                •
+                {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+              </p>
             </div>
           </div>
         </div>
-        <!-- /Projects list -->
+      </div>
 
-        <!-- Pagination -->
-        <div class="pagination-wrapper">
-          <app-pagination
-            [configValue]="paginationConfig"
-            (configChange)="configChange($event)"
-            [total]="total"
-            [propertyName]="'client-projects'">
-          </app-pagination>
-        </div>
-        <!-- /Pagination -->
+      <!-- Pagination -->
+      <div *ngIf="innovations.length > 10" class="pagination-wrapper">
+        <app-pagination
+          [configValue]="paginationConfig"
+          (configChange)="configChange($event)"
+          [total]="total"
+          [propertyName]="'client-projects'">
+        </app-pagination>
+      </div>
 
-      </ng-container>
-      <!-- /Complete fetching -->
+    </div>
 
-    </ng-container>
-    <!-- /Projects -->
 
   </div>
 </section>
-
-<!--<ng-container>
-  <app-shared-carousel></app-shared-carousel>
-</ng-container>-->
-

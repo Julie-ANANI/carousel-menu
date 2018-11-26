@@ -5,7 +5,7 @@ export const LOG_IN = {
 
   'LOG_IN_BTN': 'Continuer',
 
-  'HEADING': 'Se Connecter',
+  'HEADING': 'Bienvenus.',
 
   'LOG_IN_LINKEDIN': 'Connexion par LinkedIn',
 

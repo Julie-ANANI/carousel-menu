@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, OnDestroy, HostListener, PLATFORM_ID  } from '@angular/core';
-import { isPlatformBrowser, /*isPlatformServer*/ } from '@angular/common';
+import { isPlatformBrowser/*, isPlatformServer*/ } from '@angular/common';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
@@ -64,15 +64,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
     }
 
-    if (this.authService.isAcceptingCookies) {
-      this.authService.initializeSession().subscribe(
-        (_: any) => {
-        },
-        (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
-          timeOut: 0
-        })
-      );
-    }
+    //if (isPlatformServer(this.platformId)) {
+      if (this.authService.isAcceptingCookies) {
+        this.authService.initializeSession().subscribe(
+          (_: any) => {
+          },
+          (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
+            timeOut: 0
+          })
+        );
+      }
+    //}
   }
 
   /***
