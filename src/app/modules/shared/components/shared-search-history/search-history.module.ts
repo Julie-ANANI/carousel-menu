@@ -7,6 +7,7 @@ import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-in
 import { InputModule } from '../../../input/input.module';
 import { SharedSearchHistoryComponent} from './shared-search-history.component';
 import { PaginationModule } from '../../../input/component/pagination/pagination.module';
+import { SharedFilterMultiModule } from '../shared-filter-multi/shared-filter-multi.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { PaginationModule } from '../../../input/component/pagination/pagination
     SharedFilterInputModule,
     TranslateModule.forChild(),
     InputModule,
-    PaginationModule
+    PaginationModule,
+    SharedFilterMultiModule
   ],
   declarations: [
     SharedSearchHistoryComponent,
