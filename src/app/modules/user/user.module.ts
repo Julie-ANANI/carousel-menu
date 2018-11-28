@@ -11,6 +11,7 @@ import { UserComponent } from './user.component';
 
 import { UserService } from '../../services/user/user.service';
 import { InnovationService } from '../../services/innovation/innovation.service';
+import { InnovationResolver } from '../../resolvers/innovation.resolver';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { InnovationService } from '../../services/innovation/innovation.service'
   ],
   providers: [
     UserService,
-    InnovationService
+    InnovationService,
+    InnovationResolver
   ]
 })
 

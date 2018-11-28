@@ -1,10 +1,12 @@
 @import "../../../../../../style/variables";
 
-#client-project {
+#project-component {
+  padding-top: 0;
 
-  .hero-light-container {
+
+  .section-header {
     background-color: $background-color;
-    padding-bottom: 0;
+    padding-top: 3.15rem;
 
     h1 {
       color: white;
@@ -27,6 +29,26 @@
 
     }
 
+  }
+
+
+}
+
+
+/*
+#client-project {
+
+  .hero-light-container {
+    background-color: $background-color;
+    padding-bottom: 0;
+
+    h1 {
+      color: white;
+      margin-bottom: 1.2rem;
+    }
+
+
+
     .tab-container {
       padding-top: 2.187rem;
 
@@ -46,7 +68,7 @@
 
 }
 
-/********************************** Media ***************************************/
+!********************************** Media ***************************************!
 
 @media (max-width: 600px) {
 
@@ -70,3 +92,4 @@
 
 
 
+*/

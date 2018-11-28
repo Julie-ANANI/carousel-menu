@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Innovation } from '../../../../../models/innovation';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 // const DEFAULT_PAGE = 'setup';
 
@@ -8,7 +13,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./project.component.scss']
 })
 
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
+
+  innovation: Innovation = {};
+
+  ngUnsubscribe: Subject<any> = new Subject();
+
+  offerTypeImage = '';
 
   // private _project: Innovation;
   // private _imgType: string;
@@ -17,27 +28,55 @@ export class ProjectComponent implements OnInit {
   // private _sidebarTemplateValue: SidebarInterface = {};
   // private _sidebarState = new Subject<string>();
 
-  constructor(/*private activatedRoute: ActivatedRoute,
-              private titleService: TranslateTitleService,
-              private router: Router*/) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private translateTitleService: TranslateTitleService,) {
     // override the route reuse strategy
     /*this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };*/
+    /*private activatedRoute: ActivatedRoute,
+
+              private router: Router*/
+    this.activatedRoute.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      if (response) {
+        this.innovation = response.innovation;
+      }
+    });
+
 
   }
 
-  ngOnInit() {
-    // const url = this.router.routerState.snapshot.url.split('/');
-    // this._currentPage = url ? url[3] || DEFAULT_PAGE : DEFAULT_PAGE;
-    //
-    // this._project = this.activatedRoute.snapshot.data['innovation'];
-    //
-    // this.titleService.setTitle(this._project.name || 'Project');
-    //
-    // // Getting the projects-list type
-    // this._imgType = `https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-${this._project.type}.svg`;
 
+  ngOnInit() {
+    this.translateTitleService.setTitle(this.innovation.name || 'Project');
+    this.loadOfferType();
+    console.log(this.innovation);
+  }
+
+
+  private loadOfferType() {
+    switch (this.innovation.type) {
+
+      case 'insights':
+        this.offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg';
+        break;
+
+      case 'apps':
+        this.offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg';
+        break;
+
+      case 'leads':
+        this.offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg';
+        break;
+
+      default:
+        // do nothing.
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   // addCollaborators (event: any): void {

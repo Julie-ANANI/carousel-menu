@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { InnovationResolver } from '../../../../../resolvers/innovation.resolver';
 
 // Components
 import { ProjectComponent } from './project.component';
-import {SetupComponent} from './components/setup/setup.component';
+import { SetupComponent } from './components/setup/setup.component';
+
 
 const projectRoutes: Routes = [
   {
     path: '',
     component: ProjectComponent,
+    resolve: { innovation : InnovationResolver },
+    runGuardsAndResolvers: 'always',
     children: [
       { path: 'setup', component: SetupComponent, pathMatch: 'full' },
       { path: '', redirectTo: 'setup', pathMatch: 'full' }
@@ -34,7 +38,7 @@ export class ProjectRoutingModule {}
 
 
 // import { ProjectComponent } from './project.component';
-// import { ExplorationProjectComponent } from './components/exploration/exploration.component';
+// import { ExplorationComponent } from './components/exploration/exploration.component';
 // import { HistoryProjectComponent } from './components/history/history.component';
 // import { NewProjectComponent } from '../new-project/new-project.component';
 // import { SetupComponent } from './components/setup/setup.component';
@@ -73,7 +77,7 @@ export class ProjectRoutingModule {}
 //             ]
 //           },
 //           {
-//             path: 'exploration', component: ExplorationProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'
+//             path: 'exploration', component: ExplorationComponent, canActivate: [AuthGuard], pathMatch: 'full'
 //           },
 //           {
 //             path: 'synthesis', component: SharedMarketReportComponent, canActivate: [AuthGuard], pathMatch: 'full'

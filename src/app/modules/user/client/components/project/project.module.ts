@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ProjectRoutingModule } from './project-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ProjectComponent } from './project.component';
-
-import { ProjectRoutingModule } from './project-routing.module';
 import { SetupComponent } from './components/setup/setup.component';
+
+import { PipeModule } from '../../../../../pipe/pipe.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    ProjectRoutingModule
-
+    ProjectRoutingModule,
+    TranslateModule.forChild(),
+    PipeModule
   ],
   declarations: [
     ProjectComponent,
@@ -48,7 +52,7 @@ export class ProjectModule {}
 // // SharedCarouselModule
 //   ProjectComponent,
 //   ProjectsListComponent,
-//   ExplorationProjectComponent,
+//   ExplorationComponent,
 //   HistoryProjectComponent,
 //   NewProjectComponent,
 //   ProjectEditExample1Component,

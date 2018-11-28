@@ -14,7 +14,7 @@ import { FrontendService } from '../../../../../../../services/frontend/frontend
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-client-exploration-project',
+  selector: 'app-exploration',
   templateUrl: 'exploration.component.html',
   styleUrls: ['exploration.component.scss']
 })
