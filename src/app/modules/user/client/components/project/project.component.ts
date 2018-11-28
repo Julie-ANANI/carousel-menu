@@ -22,22 +22,23 @@ export class ProjectComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
-              private router: Router) {
+              private router: Router) { }
+
+  ngOnInit() {
 
     this.activatedRoute.data.subscribe((response) => {
       if (response) {
-        this._innovation = response.innovation;
+        this._innovation = response['innovation'];
       }
     });
 
     const url = this.router.routerState.snapshot.url.split('/');
     this._currentPage = url.length > 0 ? url[4] : 'setup';
 
-  }
-
-  ngOnInit() {
     this.translateTitleService.setTitle(this._innovation.name || 'Project');
+
     this.loadOfferType();
+
   }
 
 

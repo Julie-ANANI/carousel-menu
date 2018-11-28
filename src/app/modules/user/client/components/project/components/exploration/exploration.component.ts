@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Innovation} from '../../../../../../../models/innovation';
 // import { AnswerService } from '../../../../../../../services/answer/answer.service';
 // import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 // import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
@@ -20,6 +21,13 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ExplorationComponent implements OnInit {
+
+  @Input() set project(value: Innovation) {
+    this.innovation = value;
+  }
+
+  innovation: Innovation = {};
+
 
   // @Input() project: Innovation;
   //

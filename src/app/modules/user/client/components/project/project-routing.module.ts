@@ -16,9 +16,21 @@ const projectRoutes: Routes = [
     resolve: { innovation : InnovationResolver },
     runGuardsAndResolvers: 'always',
     children: [
-      { path: 'exploration', component: ExplorationComponent, pathMatch: 'full' },
-      { path: 'setup', component: SetupComponent, pathMatch: 'full' },
-      { path: '', redirectTo: 'setup', pathMatch: 'full' }
+      {
+        path: 'exploration',
+        component: ExplorationComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'setup',
+        component: SetupComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: '',
+        redirectTo: 'setup',
+        pathMatch: 'full'
+      }
     ]
   }
 ];

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Innovation} from '../../../../../../../models/innovation';
 
 
 // const DEFAULT_TAB = 'targeting';
@@ -11,8 +12,12 @@ import { Component, OnInit } from '@angular/core';
 
 export class SetupComponent implements OnInit {
 
-  // @Input() project: Innovation;
-  //
+  @Input() set project(value: Innovation) {
+    this.innovation = value;
+  }
+
+  innovation: Innovation = {};
+
   // private _changesSaved: boolean;
   //
   // private _saveChanges: boolean;
@@ -37,12 +42,12 @@ export class SetupComponent implements OnInit {
   //
   // private _projectToBeSubmitted: boolean;
 
-  constructor(/*private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private router: Router,
-              private frontendService: FrontendService*/) {}
+  constructor() { }
 
   ngOnInit() {
+    // const url = this.router.routerState.snapshot.url.split('/');
+    // this.currentPage = url.length > 0 ? url[5] : 'targeting';
+    // console.log(url);
     // const url = this.router.routerState.snapshot.url.split('/');
     // this._currentTab = url ? url[4] || DEFAULT_TAB : DEFAULT_TAB;
     //
