@@ -74,12 +74,12 @@ export class AutocompleteInputComponent implements OnInit {
     return this._autocompleteService.get(queryConf);
   }
 
-  autocompleListFormatter(data: any): SafeHtml {
-    const text = this.autocompleValueFormatter(data);
+  autocompleteListFormatter(data: any): SafeHtml {
+    const text = this.autocompleteValueFormatter(data);
     return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   }
 
-  autocompleValueFormatter(data: any): string {
+  autocompleteValueFormatter(data: any): string {
     if (this.multiLangObjects) {
       return MultilingPipe.prototype.transform(data[this._identifier], this._translateService.currentLang);
     } else {
