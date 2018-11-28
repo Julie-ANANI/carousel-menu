@@ -1,9 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
@@ -12,23 +10,21 @@ import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interfa
   styleUrls: ['./project.component.scss']
 })
 
-export class ProjectComponent implements OnInit, OnDestroy {
+export class ProjectComponent implements OnInit {
 
   private _innovation: Innovation = {};
-
-  private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _offerTypeImage = '';
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _currentPage:string;
+  private _currentPage: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
               private router: Router) {
 
-    this.activatedRoute.data.pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+    this.activatedRoute.data.subscribe((response) => {
       if (response) {
         this._innovation = response.innovation;
       }
@@ -83,7 +79,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
   addCollaborators (event: any): void {
-    this._innovation.collaborators = this._innovation.collaborators.concat(event);
+    this._innovation.collaborators = event;
   }
 
 
@@ -97,10 +93,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     return this._innovation;
   }
 
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
-  }
-
   get offerTypeImage(): string {
     return this._offerTypeImage;
   }
@@ -111,12 +103,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get currentPage(): string {
     return this._currentPage;
-  }
-
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

@@ -4,6 +4,7 @@ import { first } from 'rxjs/operators'
 import { User } from '../../../../models/user.model';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-collaborator',
@@ -13,12 +14,9 @@ import { TranslateNotificationsService } from '../../../../services/notification
 
 export class CollaboratorComponent implements OnInit {
 
-  @Input() set projectId(value: string) {
-    this._innovationId = value;
-  }
-
-  @Input() set collaborator(value: Array<User>) {
-    this._innovationCollaborators = value;
+  @Input() set project(value: Innovation) {
+    this._innovationId = value._id;
+    this._innovationCollaborators = value.collaborators;
   }
 
   @Input() set sidebarState(value: string) {
@@ -37,7 +35,7 @@ export class CollaboratorComponent implements OnInit {
 
   private _collaboratorsInvited: Array<string> = [];
 
-  collaboratorsAddingProcess: any = {
+  private _collaboratorsAddingProcess: any = {
     usersAdded: [],
     invitationsToSend: [],
     invitationsToSendAgain: []
@@ -62,12 +60,12 @@ export class CollaboratorComponent implements OnInit {
     this.innovationService.inviteCollaborators(this._innovationId, email).pipe(first())
       .subscribe((response: any) => {
         if (response.usersAdded.length || response.invitationsToSend.length || response.invitationsToSendAgain.length) {
-          this.collaboratorsAddingProcess = response;
-          this.collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
+          this._collaboratorsAddingProcess = response;
+          this._collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
 
           if (response.invitationsToSend.length) {
-            this._collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSend.toString());
-            window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+            this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSend.toString());
+            window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
           }
 
           if (response.invitationsToSendAgain.length) {
@@ -77,14 +75,14 @@ export class CollaboratorComponent implements OnInit {
               const index = this._collaboratorsInvited.indexOf(email.toString());
 
               if (index === -1) {
-                this._collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSendAgain.toString());
+                this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSendAgain.toString());
               }
 
-              window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+              window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
 
             } else {
-              this._collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSendAgain.toString());
-              window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+              this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSendAgain.toString());
+              window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
             }
 
           }
@@ -101,6 +99,8 @@ export class CollaboratorComponent implements OnInit {
 
         this._formData.reset();
 
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
       });
 
   }
@@ -111,6 +111,8 @@ export class CollaboratorComponent implements OnInit {
 
     this.innovationService.inviteCollaborators(this._innovationId, email).pipe(first()).subscribe((response: any) => {
       window.location.href = 'mailto:' + response.invitationsToSendAgain.join(',') + '?body=' + this.innovationService.getInvitationUrl();
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
   }
@@ -121,7 +123,10 @@ export class CollaboratorComponent implements OnInit {
 
     this.innovationService.removeCollaborator(this._innovationId, email).subscribe((response: any) => {
       this._innovationCollaborators = response;
+      this.collaboratorAdded.emit(this._innovationCollaborators);
       this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
   }
@@ -141,6 +146,10 @@ export class CollaboratorComponent implements OnInit {
 
   get collaboratorsInvited(): Array<string> {
     return this._collaboratorsInvited;
+  }
+
+  get collaboratorsAddingProcess(): any {
+    return this._collaboratorsAddingProcess;
   }
 
 }

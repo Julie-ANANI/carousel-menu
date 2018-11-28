@@ -68,8 +68,7 @@
 <!-- collaborator sidebar -->
 <app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
   <app-collaborator
-    [projectId]="innovation._id"
-    [collaborator]="innovation.collaborators"
+    [project]="innovation"
     (collaboratorAdded)="addCollaborators($event)">
   </app-collaborator>
 </app-sidebar>
