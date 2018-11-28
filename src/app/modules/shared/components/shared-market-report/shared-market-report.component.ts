@@ -404,7 +404,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this._innovationEndModal = false;
     this._openModal = false;
 
-    this.innovationService.updateStatus(this._innovation._id, status).subscribe((response) => {
+    this.innovationService.endProject(this._innovation._id).subscribe((response) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
       this._innovation = response;
       this.innovationCommonService.setInnovation(this._innovation);
