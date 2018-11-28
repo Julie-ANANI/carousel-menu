@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Innovation } from '../../../../../models/innovation';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
-// const DEFAULT_PAGE = 'setup';
+import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-project',
@@ -15,58 +14,50 @@ import { Subject } from 'rxjs';
 
 export class ProjectComponent implements OnInit, OnDestroy {
 
-  innovation: Innovation = {};
+  private _innovation: Innovation = {};
 
-  ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
-  offerTypeImage = '';
+  private _offerTypeImage = '';
 
-  // private _project: Innovation;
-  // private _imgType: string;
-  // private _currentPage: string;
-  // private _scrollButton = false;
-  // private _sidebarTemplateValue: SidebarInterface = {};
-  // private _sidebarState = new Subject<string>();
+  private _sidebarValue: SidebarInterface = {};
+
+  private _currentPage:string;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private translateTitleService: TranslateTitleService,) {
-    // override the route reuse strategy
-    /*this.router.routeReuseStrategy.shouldReuseRoute = function() {
-      return false;
-    };*/
-    /*private activatedRoute: ActivatedRoute,
+              private translateTitleService: TranslateTitleService,
+              private router: Router) {
 
-              private router: Router*/
-    this.activatedRoute.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+    this.activatedRoute.data.pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       if (response) {
-        this.innovation = response.innovation;
+        this._innovation = response.innovation;
       }
     });
 
+    const url = this.router.routerState.snapshot.url.split('/');
+    this._currentPage = url.length > 0 ? url[4] : 'setup';
 
   }
 
-
   ngOnInit() {
-    this.translateTitleService.setTitle(this.innovation.name || 'Project');
+    this.translateTitleService.setTitle(this._innovation.name || 'Project');
     this.loadOfferType();
-    console.log(this.innovation);
   }
 
 
   private loadOfferType() {
-    switch (this.innovation.type) {
+    switch (this._innovation.type) {
 
       case 'insights':
-        this.offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg';
+        this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg';
         break;
 
       case 'apps':
-        this.offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg';
+        this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg';
         break;
 
       case 'leads':
-        this.offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg';
+        this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg';
         break;
 
       default:
@@ -74,61 +65,59 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+
+  editCollaborator(event: Event) {
+    event.preventDefault();
+
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE'
+    };
+
   }
 
-  // addCollaborators (event: any): void {
-  //   this._project.collaborators = this._project.collaborators.concat(event);
-  // }
-  //
-  // editCollaborator(event: Event) {
-  //   event.preventDefault();
-  //
-  //   this._sidebarTemplateValue = {
-  //     animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-  //     title: 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE'
-  //   };
-  //
-  // }
-  //
-  // closeSidebar(value: string) {
-  //   this._sidebarTemplateValue.animate_state = value;
-  //   this._sidebarState.next(this._sidebarTemplateValue.animate_state);
-  // }
-  //
-  // get project() {
-  //   return this._project;
-  // }
-  //
-  // get scrollButton(): boolean {
-  //   return this._scrollButton;
-  // }
-  //
-  // get currentPage(): string {
-  //   return this._currentPage;
-  // }
-  //
-  // get imgType(): string {
-  //   return this._imgType;
-  // }
-  //
-  // get sidebarTemplateValue(): SidebarInterface {
-  //   return this._sidebarTemplateValue;
-  // }
-  //
-  // set sidebarTemplateValue(value: SidebarInterface) {
-  //   this._sidebarTemplateValue = value;
-  // }
-  //
-  // get sidebarState(): Subject<string> {
-  //   return this._sidebarState;
-  // }
-  //
-  // set sidebarState(value: Subject<string>) {
-  //   this._sidebarState = value;
-  // }
+
+  closeSidebar(value: SidebarInterface) {
+    this._sidebarValue.animate_state = value.animate_state;
+  }
+
+
+  addCollaborators (event: any): void {
+    this._innovation.collaborators = this._innovation.collaborators.concat(event);
+  }
+
+
+  setCurrentTab(event: Event, value: string) {
+    event.preventDefault();
+    this._currentPage = value;
+  }
+
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get offerTypeImage(): string {
+    return this._offerTypeImage;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  get currentPage(): string {
+    return this._currentPage;
+  }
+
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
 
 }
 

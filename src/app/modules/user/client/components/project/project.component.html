@@ -23,62 +23,63 @@
         </span>
       </div>
 
+      <!-- tabs -->
+      <div class="tab-wrapper">
+        <ul class="tabs">
+          <li>
+            <a [routerLink]="['setup']" [ngClass]="{'active': currentPage === 'setup'}" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
+              <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage === 'exploration'}" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
+              <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage === 'synthesis'}" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
+              <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
+            </a>
+          </li>
+          <!--<li>
+            <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
+              <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
+            </a>
+          </li>-->
+        </ul>
+      </div>
+
 
     </div>
   </div>
   <!-- /header section -->
 
 
+  <!-- setup section -->
+  <div *ngIf="currentPage === 'setup'">
+    <app-setup></app-setup>
+  </div>
+  <!-- /setup section -->
+
+
 </section>
+
+
+<!-- collaborator sidebar -->
+<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+  <app-collaborator
+    [projectId]="innovation._id"
+    [collaborator]="innovation.collaborators"
+    (collaboratorAdded)="addCollaborators($event)">
+  </app-collaborator>
+</app-sidebar>
+<!-- /collaborator sidebar -->
+
+
 <!--
 <app-shared-loader *ngIf="!project"></app-shared-loader>
 
 <section *ngIf="project" class="main-container" id="client-project">
-
-  &lt;!&ndash; Header &ndash;&gt;
-  <div class="hero-light-container header-project">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-
-      &lt;!&ndash; Name &ndash;&gt;
-
-
-      &lt;!&ndash; Info &ndash;&gt;
-
-      &lt;!&ndash; Tabs &ndash;&gt;
-      <div class="tab-container">
-        <ul class="tabs">
-          <li>
-            <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}" class="gtm-tabs-description">
-              <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}" class="gtm-tabs-exploration">
-              <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}" class="gtm-tabs-synthesis">
-              <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
-            </a>
-          </li>
-          &lt;!&ndash;<li>
-            <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
-              <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
-            </a>
-          </li>&ndash;&gt;
-        </ul>
-      </div>
-
-    </div>
-  </div>
-
-  &lt;!&ndash; Section &ndash;&gt;
-
-  &lt;!&ndash; Setup page &ndash;&gt;
-  <div *ngIf="currentPage === 'setup'">
-    <app-client-setup-project [project]="project"></app-client-setup-project>
-  </div>
 
   &lt;!&ndash; Exploration page &ndash;&gt;
   <div *ngIf="currentPage === 'exploration'">
@@ -103,13 +104,4 @@
 
 </section>
 
-&lt;!&ndash; Add collaborators &ndash;&gt;
-<sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
-  <app-collaborator
-    (collaboratorAdded)="addCollaborators($event)"
-    [collaborator]="project.collaborators"
-    [projectId]="project._id"
-    [sidebarState]="sidebarState">
-  </app-collaborator>
-</sidebar>
--->
+--->

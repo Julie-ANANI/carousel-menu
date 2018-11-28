@@ -6,6 +6,7 @@ import { InnovationResolver } from '../../../../../resolvers/innovation.resolver
 // Components
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
+import { ExplorationComponent } from './components/exploration/exploration.component';
 
 
 const projectRoutes: Routes = [
@@ -15,6 +16,7 @@ const projectRoutes: Routes = [
     resolve: { innovation : InnovationResolver },
     runGuardsAndResolvers: 'always',
     children: [
+      { path: 'exploration', component: ExplorationComponent, pathMatch: 'full' },
       { path: 'setup', component: SetupComponent, pathMatch: 'full' },
       { path: '', redirectTo: 'setup', pathMatch: 'full' }
     ]

@@ -5,8 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
+import { ExplorationComponent } from './components/exploration/exploration.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
+import { SidebarModule } from '../../../../sidebar/sidebar.module';
+import { SidebarCollaboratorModule } from '../../../../sidebar/components/collaborator/sidebar-collaborator.module';
 
 
 @NgModule({
@@ -14,11 +17,14 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
     CommonModule,
     ProjectRoutingModule,
     TranslateModule.forChild(),
-    PipeModule
+    PipeModule,
+    SidebarModule,
+    SidebarCollaboratorModule
   ],
   declarations: [
     ProjectComponent,
-    SetupComponent
+    SetupComponent,
+    ExplorationComponent,
   ],
   providers: [
   ],

@@ -29,10 +29,39 @@
 
     }
 
+    .tab-wrapper {
+      padding-top: 2.187rem;
+
+      .tabs {
+        margin-right: -1.57rem;
+
+        li {
+
+          a {
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+
+        }
+
+      }
+
+      .active {
+        background: white;
+        color: $dark-color;
+      }
+
+    }
+
   }
 
 
 }
+
+
+/********************************** Media ***************************************/
+
+
 
 
 /*
@@ -61,14 +90,11 @@
 
   }
 
-  .active {
-    background: white;
-    color: $dark-color;
-  }
+
 
 }
 
-!********************************** Media ***************************************!
+
 
 @media (max-width: 600px) {
 
