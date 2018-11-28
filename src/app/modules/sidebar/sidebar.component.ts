@@ -3,7 +3,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SidebarInterface } from './interfaces/sidebar-interface';
 
 @Component({
-  selector: 'sidebar',
+  selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   animations: [
@@ -28,7 +28,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
       state('active', style({
         display: 'block',
         opacity: 1,
-        background: 'rgba(0,0,0,0.65)',
+        background: 'rgba(0,0,0,0.75)',
       })),
       transition('inactive => active', animate('.5ms ease-in-out')),
       transition('active => inactive', animate('700ms ease-in-out')),

@@ -9,7 +9,8 @@ import { ClientComponent } from './client.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
 
-import { PaginationModule } from '../../input/component/pagination/pagination.module';
+import { PaginationModule } from '../../utility-components/pagination/pagination.module';
+import { ProjectModule } from './components/project/project.module';
 
 
 
@@ -19,7 +20,8 @@ import { PaginationModule } from '../../input/component/pagination/pagination.mo
     TranslateModule.forChild(),
     ClientRoutingModule,
     PaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProjectModule
   ],
   declarations: [
     ClientComponent,

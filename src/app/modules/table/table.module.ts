@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedFilterMultiModule } from '../shared/components/shared-filter-multi/shared-filter-multi.module';
 import { SharedSortModule } from '../shared/components/shared-sort/shared-sort.module';
 import { InputModule } from '../input/input.module';
-import { PaginationModule } from '../input/component/pagination/pagination.module';
+import { PaginationModule } from '../utility-components/pagination/pagination.module';
 import { ProgressBarModule } from '../input/component/progress-bar/progress-bar.module';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 

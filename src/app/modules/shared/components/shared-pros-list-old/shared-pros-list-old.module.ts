@@ -7,7 +7,7 @@ import {SharedSortModule} from '../shared-sort/shared-sort.module';
 import {SharedFilterInputModule} from '../shared-filter-input/shared-filter-input.module';
 import {SharedSmartSelectModule} from '../shared-smart-select/shared-smart-select.module';
 import {InputModule} from '../../../input/input.module';
-import {PaginationModule} from '../../../input/component/pagination/pagination.module';
+import {PaginationModule} from '../../../utility-components/pagination/pagination.module';
 
 @NgModule({
   imports: [

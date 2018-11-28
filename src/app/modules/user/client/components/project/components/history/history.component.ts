@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { AuthService } from '../../../../../../services/auth/auth.service';
-import { Answer } from '../../../../../../models/answer';
-import { Innovation } from '../../../../../../models/innovation';
-import {Question} from '../../../../../../models/question';
-import {Section} from '../../../../../../models/section';
+import { AnswerService } from '../../../../../../../services/answer/answer.service';
+import { AuthService } from '../../../../../../../services/auth/auth.service';
+import { Answer } from '../../../../../../../models/answer';
+import { Innovation } from '../../../../../../../models/innovation';
+import {Question} from '../../../../../../../models/question';
+import {Section} from '../../../../../../../models/section';
 import { first } from 'rxjs/operators';
 
 @Component({

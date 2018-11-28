@@ -1,14 +1,16 @@
+dqs
+<!--
 <section class="section-container" id="setup">
 
-  <!-- Messages -->
+  &lt;!&ndash; Messages &ndash;&gt;
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- Project under submitted status message -->
+    &lt;!&ndash; Project under submitted status message &ndash;&gt;
     <div *ngIf="projectStatus === 'SUBMITTED'" class="msg-wrapper">
       <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</div>
     </div>
 
-    <!-- Project under reviewing status message -->
+    &lt;!&ndash; Project under reviewing status message &ndash;&gt;
     <div *ngIf="project.reviewing && projectStatus === 'EDITING'" class="msg-wrapper">
       <div class="content text-center">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
@@ -17,27 +19,27 @@
       </div>
     </div>
 
-    <!-- Project under evaluating status message -->
+    &lt;!&ndash; Project under evaluating status message &ndash;&gt;
     <div *ngIf="projectStatus === 'EVALUATING'" class="msg-wrapper">
       <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}</div>
     </div>
 
-    <!-- Project under done status message -->
+    &lt;!&ndash; Project under done status message &ndash;&gt;
     <div *ngIf="projectStatus === 'DONE'" class="msg-wrapper">
       <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}</div>
     </div>
 
   </div>
 
-  <!-- Buttons -->
+  &lt;!&ndash; Buttons &ndash;&gt;
   <div class="heading-button-wrapper" [ngClass]="{ 'setup-scroll-sticky': scrollOn }">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <div class="content-wrapper">
 
-        <!-- Heading -->
+        &lt;!&ndash; Heading &ndash;&gt;
         <h2 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
 
-        <!-- Buttons -->
+        &lt;!&ndash; Buttons &ndash;&gt;
         <div class="func-btn-wrapper">
           <span>
             <button class="btn ghost-primary gtm-print-card" (click)="printInnovationCard($event)">
@@ -69,7 +71,7 @@
     </div>
   </div>
 
-  <!-- Tab section -->
+  &lt;!&ndash; Tab section &ndash;&gt;
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="tabs-container">
       <ul class="tabs">
@@ -95,7 +97,7 @@
     </div>
   </div>
 
-  <!-- Targeting component -->
+  &lt;!&ndash; Targeting component &ndash;&gt;
   <div *ngIf="currentTab === 'targeting'">
     <app-project-targeting
       [project]="project"
@@ -104,7 +106,7 @@
     </app-project-targeting>
   </div>
 
-  <!-- Pitch component -->
+  &lt;!&ndash; Pitch component &ndash;&gt;
   <div *ngIf="currentTab === 'pitch'">
     <app-project-pitch
       [project]="project"
@@ -115,7 +117,7 @@
     </app-project-pitch>
   </div>
 
-  <!-- Survey component -->
+  &lt;!&ndash; Survey component &ndash;&gt;
   <div *ngIf="currentTab === 'survey'">
     <app-project-survey
       [project]="project"
@@ -125,7 +127,7 @@
 
 </section>
 
-<!-- Modal to ask user to sure about submitting the projects-list -->
+&lt;!&ndash; Modal to ask user to sure about submitting the projects-list &ndash;&gt;
 <div class="modal" [ngClass]="{'active': projectToBeSubmitted}">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
@@ -143,29 +145,29 @@
     </div>
   </div>
 </div>
-<!-- /Modal to ask user to sure about submitting the projects-list -->
+&lt;!&ndash; /Modal to ask user to sure about submitting the projects-list &ndash;&gt;
 
 
-<!-- Innovation preview sidebar -->
+&lt;!&ndash; Innovation preview sidebar &ndash;&gt;
 <sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-innovation-preview [innovation]="project.innovationCards[innovationPreviewIndex]"></app-innovation-preview>
 </sidebar>
-<!-- /Innovation preview sidebar -->
+&lt;!&ndash; /Innovation preview sidebar &ndash;&gt;
 
 
-<!-- Print innovation -->
+&lt;!&ndash; Print innovation &ndash;&gt;
 <div id="innovation-card-print">
 
-  <!-- Column 1 -->
+  &lt;!&ndash; Column 1 &ndash;&gt;
   <div class="column-1">
 
-    <!-- Title -->
+    &lt;!&ndash; Title &ndash;&gt;
     <h1 class="main-heading">{{ project.innovationCards[innovationPreviewIndex].title }}</h1>
 
-    <!-- Summary -->
+    &lt;!&ndash; Summary &ndash;&gt;
     <div class="summary-text" [innerHTML]="project.innovationCards[innovationPreviewIndex].summary"></div>
 
-    <!-- Image -->
+    &lt;!&ndash; Image &ndash;&gt;
     <div class="image-wrapper">
       <img
         [src]="getImageSrc(project.innovationCards[innovationPreviewIndex])"
@@ -173,7 +175,7 @@
         height="146px" width="220px">
     </div>
 
-    <!-- Advantages -->
+    &lt;!&ndash; Advantages &ndash;&gt;
     <div class="advantage-wrapper">
       <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
       <ul class="advantages">
@@ -184,34 +186,35 @@
     </div>
 
   </div>
-  <!-- Column 1 -->
+  &lt;!&ndash; Column 1 &ndash;&gt;
 
 
-  <!-- Column 2 -->
+  &lt;!&ndash; Column 2 &ndash;&gt;
   <div class="column-2">
 
-    <!-- Title -->
+    &lt;!&ndash; Title &ndash;&gt;
     <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
 
-    <!-- Issues text -->
+    &lt;!&ndash; Issues text &ndash;&gt;
     <div class="issue-text" [innerHtml]="project.innovationCards[innovationPreviewIndex].problem"></div>
 
   </div>
-  <!-- /Column 2 -->
+  &lt;!&ndash; /Column 2 &ndash;&gt;
 
 
-  <!-- Column 3 -->
+  &lt;!&ndash; Column 3 &ndash;&gt;
   <div class="column-3">
 
-    <!-- Title -->
+    &lt;!&ndash; Title &ndash;&gt;
     <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
 
-    <!-- Solution text -->
+    &lt;!&ndash; Solution text &ndash;&gt;
     <div class="solution-text" [innerHtml]="project.innovationCards[innovationPreviewIndex].solution"></div>
 
   </div>
-  <!-- /Column 3 -->
+  &lt;!&ndash; /Column 3 &ndash;&gt;
 
 
 </div>
-<!-- /Print innovation -->
+&lt;!&ndash; /Print innovation &ndash;&gt;
+-->

@@ -13,7 +13,7 @@ import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/a
 import { InputModule } from '../../../input/input.module';
 import { RouterModule } from '@angular/router';
 import { AutocompleteInputModule } from '../../../input/component/autocomplete-input/autocomplete-input.module';
-import { PaginationModule } from '../../../input/component/pagination/pagination.module';
+import { PaginationModule } from '../../../utility-components/pagination/pagination.module';
 
 @NgModule({
   imports: [

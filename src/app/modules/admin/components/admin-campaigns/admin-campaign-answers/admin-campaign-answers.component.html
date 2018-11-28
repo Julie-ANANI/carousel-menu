@@ -22,7 +22,7 @@
 </app-answers-list>
 
 <!-- Insight preview -->
-<sidebar
+<app-sidebar
   [template]="sidebarTemplateValue"
   (closeSidebar)="closeSidebar($event)">
   <app-user-answer
@@ -32,4 +32,4 @@
     [innovationId]="campaign.innovation._id"
     [questions]="questions">
   </app-user-answer>
-</sidebar>
+</app-sidebar>

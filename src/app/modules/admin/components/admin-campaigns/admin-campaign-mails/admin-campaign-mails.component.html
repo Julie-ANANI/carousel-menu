@@ -197,7 +197,7 @@
   </div>
 </div>
 
-  <sidebar
+  <app-sidebar
     [template]="templateSidebar" (closeSidebar)="closeSidebar($event)">
     <app-sidebar-batch
       [rowBatch]="currentRow"
@@ -205,5 +205,5 @@
       (batchChange)="onSubmitEditBatch($event)"
     >
     </app-sidebar-batch>
-  </sidebar>
+  </app-sidebar>
 

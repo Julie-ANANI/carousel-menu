@@ -4,7 +4,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

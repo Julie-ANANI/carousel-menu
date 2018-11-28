@@ -1,5 +1,5 @@
 import {Component, Output, Input, EventEmitter, OnInit} from '@angular/core';
-import { Innovation } from '../../../../../../../../models/innovation';
+import { Innovation } from '../../../../../../../../../models/innovation';
 import { Subject } from 'rxjs';
 
 @Component({

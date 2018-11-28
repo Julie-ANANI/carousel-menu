@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'logout',
+  selector: 'app-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.scss']
 })

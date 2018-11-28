@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { Answer } from '../../../../../../models/answer';
-import { Campaign } from '../../../../../../models/campaign';
-import { Clearbit } from '../../../../../../models/clearbit';
-import { Innovation } from '../../../../../../models/innovation';
-import { Question } from '../../../../../../models/question';
-import { Section } from '../../../../../../models/section';
-import { Table } from '../../../../../table/models/table';
-import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
-import { FrontendService } from '../../../../../../services/frontend/frontend.service';
+import { AnswerService } from '../../../../../../../services/answer/answer.service';
+import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { Answer } from '../../../../../../../models/answer';
+import { Campaign } from '../../../../../../../models/campaign';
+import { Clearbit } from '../../../../../../../models/clearbit';
+import { Innovation } from '../../../../../../../models/innovation';
+import { Question } from '../../../../../../../models/question';
+import { Section } from '../../../../../../../models/section';
+import { Table } from '../../../../../../table/models/table';
+import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
+import { FrontendService } from '../../../../../../../services/frontend/frontend.service';
 import { first } from 'rxjs/operators';
 
 @Component({

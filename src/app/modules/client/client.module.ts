@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ClientProjectModule } from './components/client-project/client-project.module';
+import { ProjectModule } from '../user/client/components/project/project.module';
 import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { InputModule } from '../input/input.module';
@@ -27,7 +27,7 @@ import { SynthesisListModule } from './components/synthesis-list/synthesis-list.
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ClientProjectModule,
+    ProjectModule,
     ClientRoutingModule,
     TranslateModule.forChild(),
     SharedMarketReportModule,

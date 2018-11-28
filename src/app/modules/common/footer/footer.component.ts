@@ -4,7 +4,7 @@ import { environment } from "../../../../environments/environment";
 import { initTranslation, TranslateService } from "../../../i18n/i18n";
 
 @Component({
-  selector: 'footer',
+  selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })

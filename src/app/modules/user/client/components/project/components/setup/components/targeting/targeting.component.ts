@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { Innovation } from '../../../../../../../../models/innovation';
-import { InnovationSettings } from '../../../../../../../../models/innov-settings';
+import { Innovation } from '../../../../../../../../../models/innovation';
+import { InnovationSettings } from '../../../../../../../../../models/innov-settings';
 import { Subject } from 'rxjs';
 
 @Component({

@@ -19,7 +19,7 @@
     </app-shared-table>
     <!-- /Table -->
 
-    <sidebar
+    <app-sidebar
       [template]="more" (closeSidebar)="closeSidebar($event)">
       <app-user-form
         [sidebarState]="sidebarState"
@@ -27,7 +27,7 @@
         [user]="currentUser"
         (editUserData)="userEditionFinish($event)">
       </app-user-form>
-    </sidebar>
+    </app-sidebar>
 
     <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
       <div class="modal-overlay" (click)="closeModal($event)"></div>

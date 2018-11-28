@@ -14,18 +14,21 @@ const clientRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'projects'
+        redirectTo: 'projects',
+        pathMatch: 'full'
       },
       {
         path: 'projects',
         children: [
           { path: '', component: ProjectsListComponent, pathMatch: 'full' },
           { path: 'new', component: NewProjectComponent, pathMatch: 'full' },
+          { path:  ':id', loadChildren: './components/project/project.module#ProjectModule' }
         ]
       },
     ]
   }
 ];
+
 
 @NgModule({
   imports: [

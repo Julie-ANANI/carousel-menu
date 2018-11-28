@@ -194,7 +194,7 @@
 </section>
 
 <!-- Insight preview -->
-<sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-user-answer
     [adminMode]="false"
     [mode]="false"
@@ -202,5 +202,5 @@
     [questions]="questions"
     [innovationId]="project._id">
   </app-user-answer>
-</sidebar>
+</app-sidebar>
 

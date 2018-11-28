@@ -9,7 +9,7 @@ import { first } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
-  selector: 'login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

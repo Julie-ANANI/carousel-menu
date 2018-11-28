@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Innovation } from '../../../../../../../../models/innovation';
-import { environment } from '../../../../../../../../../environments/environment';
+import { Innovation } from '../../../../../../../../../models/innovation';
+import { environment } from '../../../../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-project-survey',

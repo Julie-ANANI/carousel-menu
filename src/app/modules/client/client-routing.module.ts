@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedMarketReportExampleComponent } from '../shared/components/shared-market-report-example/shared-market-report-example.component';
 
 /* SubModules */
-import { clientProjectRoutes } from './components/client-project/client-project-routing.module';
+// import { clientProjectRoutes } from '../user/client/components/project/project-routing.module';
 
 /* Guards */
 import { AuthGuard } from '../../guards/auth-guard.service';
@@ -94,7 +94,7 @@ const clientRoutes: Routes = [
           { path: '', component: SharedMarketReportExampleComponent }
         ]
       },
-      ...clientProjectRoutes,
+      // ...clientProjectRoutes,
       /*{
         path: '**',
         component: NotFoundPageComponent

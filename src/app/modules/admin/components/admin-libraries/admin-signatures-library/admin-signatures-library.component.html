@@ -1,11 +1,11 @@
 <div class="section-container">
 
-  <sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
     <app-sidebar-signature
       [signature]="signatureToEdit"
       (signatureChange)="updateSignature($event)">
     </app-sidebar-signature>
-  </sidebar>
+  </app-sidebar>
 
   <div class="empty" *ngIf="!signatures.length">
     <div class="empty-action">

@@ -9,7 +9,7 @@ import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'projects-list',
+  selector: 'app-projects-list',
   templateUrl: 'projects-list.component.html',
   styleUrls: ['projects-list.component.scss'],
   animations: [
@@ -60,6 +60,7 @@ export class ProjectsListComponent implements OnInit {
     this.loadProjects();
   }
 
+
   private loadProjects() {
     this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
         this._innovations = responses.result;
@@ -68,6 +69,7 @@ export class ProjectsListComponent implements OnInit {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
+
 
   getRelevantLink(innovation: Innovation): Array<string> {
     const link = [innovation._id];
@@ -86,6 +88,7 @@ export class ProjectsListComponent implements OnInit {
 
   }
 
+
   getImage(innovation: Innovation): string {
     if (innovation.principalMedia) {
 
@@ -102,6 +105,7 @@ export class ProjectsListComponent implements OnInit {
 
   }
 
+
   configChange(value: any) {
     window.scroll(0, 0);
     this._paginationConfig = value;
@@ -109,6 +113,7 @@ export class ProjectsListComponent implements OnInit {
     this._config.offset = value.offset;
     this.loadProjects();
   }
+
 
   set config(value: any) {
     this._config = value;

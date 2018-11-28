@@ -5,10 +5,11 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import {environment} from '../../../../../environments/environment';
 
 @Component({
-  selector: 'signup-form',
+  selector: 'app-signup-form',
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.scss']
 })
+
 export class SignupFormComponent implements OnInit {
 
   @Input() set sidebarState(value: string) {

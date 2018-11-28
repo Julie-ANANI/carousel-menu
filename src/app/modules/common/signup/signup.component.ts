@@ -11,7 +11,7 @@ import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user/user.service';
 
 @Component({
-  selector: 'signup',
+  selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })

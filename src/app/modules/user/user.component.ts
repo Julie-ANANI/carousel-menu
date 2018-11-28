@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'user',
+  selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })

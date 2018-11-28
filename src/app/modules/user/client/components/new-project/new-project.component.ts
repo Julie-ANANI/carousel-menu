@@ -8,7 +8,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'new-project',
+  selector: 'app-new-project',
   templateUrl: 'new-project.component.html',
   styleUrls: ['new-project.component.scss']
 })

@@ -8,7 +8,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'welcome',
+  selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })
