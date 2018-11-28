@@ -2,6 +2,8 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
 import { TranslateService} from '@ngx-translate/core';
 import { LocalStorageService } from '../../services/localStorage/localStorage.service';
 import { TranslateTitleService } from '../../services/title/title.service';
@@ -11,6 +13,9 @@ import { InnovCard } from '../../models/innov-card';
 import { PaginationTemplate } from '../../models/pagination';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
+import { TagsService} from '../../services/tags/tags.service';
+import { InnovationService} from '../../services/innovation/innovation.service';
+
 
 @Component({
   templateUrl: './discover.component.html',
@@ -66,6 +71,8 @@ export class DiscoverComponent implements OnInit {
 
   private _appliedFilters: Array<Tag> = []; // hold all the filters that are selected by the user.
 
+  private _appliedSimilarFilter: Array<Tag> = []; //
+
   private _localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
 
   private _innovationTitles: Array<{text: string}> = []; // to store the innovation title to send to the search field.
@@ -86,24 +93,42 @@ export class DiscoverComponent implements OnInit {
 
   private _tagUrl = ''; // contains all the applied tag in a string.
 
+  private _suggestedTags: Array<Tag> = []; // array containing suggested tags id for the selected tag
+
+  private _userId: string; // id of the logged user
+
+  private _userSuggestedInnovations: Array<Innovation> = [];
+
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateTitleService: TranslateTitleService,
+              private tagsService: TagsService,
               private translateService: TranslateService,
+              private localStorage: LocalStorageService,
               private activatedRoute: ActivatedRoute,
-              private localStorage: LocalStorageService) {}
+              private authService: AuthService,
+              private userService: UserService,
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
     this._paginationValue = { limit: 50, offset: this._config.offset };
     this.checkStoredFilters();
-
-
     this._totalInnovations = this.activatedRoute.snapshot.data.innovations;
     this._totalResults = this._totalInnovations.length;
     this.getTitles();
     this.getAllTags();
     this.checkSharedResult();
     this.initialize();
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['innovation']) {
+        this.applyInnoRecommendation(params['innovation']);
+      } else if (this.authService.isAuthenticated) {
+        this._userId = this.authService.userId;
+        this.applyUserRecommendation();
+      }
+    });
+
   }
 
 
@@ -262,6 +287,15 @@ export class DiscoverComponent implements OnInit {
     return index !== -1;
   }
 
+  /***
+   * this function is to determine which filter is active or not in the similar tab.
+   * @param id
+   */
+  getCheckedSimilarFilter(id: string): boolean {
+    const index = this._appliedSimilarFilter.findIndex((item) => item._id === id);
+    return index !== -1;
+  }
+
 
   /***
    * based on the filter is checked or unchecked we do the respective functions.
@@ -274,11 +308,31 @@ export class DiscoverComponent implements OnInit {
       this._appliedFilters.push(tag);
     } else {
       this.removeFilter(tag._id);
+      this._appliedSimilarFilter = [];
     }
 
     this.applyFilters();
 
     this.storeFilters();
+
+    this.getTagsRecommendation();
+
+  }
+
+  /***
+   * based on the similar filter is checked or unchecked we do the respective functions.
+   * @param event
+   * @param tag
+   */
+  toggleSimilarFilter(event: Event, tag: Tag) {
+
+    if (event.target['checked']) {
+      this._appliedSimilarFilter.push(tag);
+    } else {
+      this.removeSimilarFilter(tag._id);
+    }
+
+    this.applySimilarFilters();
 
   }
 
@@ -291,6 +345,16 @@ export class DiscoverComponent implements OnInit {
     const index = this._appliedFilters.findIndex((tag) => tag._id === id);
     this._appliedFilters.splice(index, 1);
   }
+
+  /***
+   * this function is to remove the applied filter from the variable appliedSimilarFilter.
+   * @param id
+   */
+  private removeSimilarFilter(id: string) {
+    const index = this._appliedSimilarFilter.findIndex((tag) => tag._id === id);
+    this._appliedSimilarFilter.splice(index, 1);
+  }
+
 
 
   /***
@@ -322,6 +386,37 @@ export class DiscoverComponent implements OnInit {
       this.initialize();
     }
 
+  }
+
+  /***
+   * this function searches for the innovations that contains the applied filters AND the similar filter.
+   */
+  private applySimilarFilters() {
+    if (this._appliedSimilarFilter.length > 0) {
+
+      this._localInnovations = [];
+
+
+      this._totalInnovations.forEach((innovation: Innovation) => {
+        if (innovation.tags.length > 0) {
+          innovation.tags.forEach((tag: Tag) => {
+            const indexFilter = this._appliedFilters.findIndex((filter: Tag) => filter._id === tag._id);
+            const indexSimilarFilter = this._appliedSimilarFilter.findIndex((filter: Tag) => filter._id === tag._id);
+            if (indexFilter !== -1 || indexSimilarFilter !== -1) {
+              const innovationIndex = this._localInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
+              if (innovationIndex === -1) {
+                this._localInnovations.push(innovation);
+              }
+            }
+          });
+        }
+      });
+
+      this._localResults = this._localInnovations.length;
+
+    } else {
+      this.initialize();
+    }
   }
 
 
@@ -582,6 +677,39 @@ export class DiscoverComponent implements OnInit {
 
   }
 
+
+  /***
+   * Update the list of recommended tags based on the most recent applied filter. If there is no filter selected,
+   * we set the recommended list to [].
+   */
+  private getTagsRecommendation() {
+
+    if (this._appliedFilters.length === 0) {
+      this._suggestedTags = [];
+    } else {
+      this.tagsService.getSimilarTags(this._appliedFilters[this._appliedFilters.length - 1]._id).subscribe((response) => {
+        this._suggestedTags = response;
+      });
+    }
+  }
+
+  private applyUserRecommendation() {
+
+    this.userService.getRecommendation(this._userId).subscribe((response) => {
+      response.forEach((innovation_id: string) => {
+        this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === innovation_id));
+      });
+    });
+  }
+
+  private applyInnoRecommendation(idInno: string) {
+    this.innovationService.getRecommendation(idInno).subscribe((response) => {
+      response.forEach((inno_similar: Innovation) => {
+        this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
+      });
+    });
+  }
+
   get config() {
     return this._config;
   }
@@ -644,6 +772,14 @@ export class DiscoverComponent implements OnInit {
 
   get tagUrl(): string {
     return this._tagUrl;
+  }
+
+  get suggestedTags(): Array<Tag> {
+    return this._suggestedTags;
+  }
+
+  get userInnovations(): Array<Innovation> {
+    return this._userSuggestedInnovations;
   }
 
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 
 import { environment } from '../../../environments/environment';
+import {Tag} from '../../models/tag';
 
 @Injectable()
 export class UserService {
@@ -69,6 +70,10 @@ export class UserService {
 
   public deleteUser(userId: string): Observable<any> {
     return this._http.delete(`/user/${userId}`);
+  }
+
+  public getRecommendation(userId: string): Observable<any> {
+    return this._http.get<Array<Tag>>('/user/' + userId + '/match');
   }
 
 }
