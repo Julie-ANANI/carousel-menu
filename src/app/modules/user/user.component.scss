@@ -2,11 +2,11 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  animation-name: fadeIn;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
 }
 
 .main-wrapper {
   flex: 1 0 auto;
-  animation-name: fadeIn;
-  animation-duration: 500ms;
-  animation-timing-function: ease-in-out;
 }

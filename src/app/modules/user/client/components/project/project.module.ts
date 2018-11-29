@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
+import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
@@ -25,6 +26,7 @@ import { SidebarCollaboratorModule } from '../../../../sidebar/components/collab
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
+    TargetingComponent
   ],
   providers: [
   ],

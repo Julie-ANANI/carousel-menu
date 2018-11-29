@@ -147,15 +147,16 @@ a, a:focus, a:hover, a:active, a.active {
   height: 1.57rem;
   width: 1.57rem;
   background: transparent;
+  display: inline-block;
   position: absolute;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   z-index: 2;
 
   i {
     color: transparent;
-    font-size: .75rem;
+    display: flex;
+    justify-content: center;
+    padding-top: .375rem;
+    font-size: .85rem;
   }
 
 }
@@ -248,4 +249,23 @@ a, a:focus, a:hover, a:active, a.active {
 .section-spinner {
   display: flex;
   justify-content: center;
+}
+
+
+/*
+    Message Banner
+ */
+.banner-wrapper {
+  background-color: $validation-color;
+  color: white;
+  font-weight: 600;
+  font-size: .875rem;
+  padding: .9375rem;
+  text-align: center;
+
+  .text-link {
+    color: white;
+    text-decoration: underline;
+  }
+
 }

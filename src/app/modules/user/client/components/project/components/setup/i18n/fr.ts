@@ -3,7 +3,7 @@ import { SURVEY } from '../components/survey/i18n/fr';
 import { TARGETING } from '../components/targeting/i18n/fr';
 
 export const SETUP = {
-  'TITLE': 'Tout sur votre projet',
+  'TITLE': 'Détails du projet',
 
   'SAVE_PROJECT': 'Sauvegarder',
   'SUBMIT_PROJECT': 'Soumettre le projet',
@@ -22,7 +22,7 @@ export const SETUP = {
       'C': 'nos commentaires que nous vous avons envoyés par courrier.'
     },
     'PREVIEW_MODE': 'La synthèse partielle de votre innovation est disponible.',
-    'DONE': 'La synthèse est disponible. Vous ne pouvez plus apporter de modifications à votre projet.',
+    'DONE': 'La synthèse complète de votre projet est disponible.',
   },
 
   'PITCH_TAB': 'Description',

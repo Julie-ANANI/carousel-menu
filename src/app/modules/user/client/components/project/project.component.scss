@@ -61,7 +61,17 @@
 
 /********************************** Media ***************************************/
 
+@media (max-width: 600px) {
 
+  #project-component {
+
+    .tabs {
+      margin-right: 0 !important;
+    }
+
+  }
+
+}
 
 
 /*

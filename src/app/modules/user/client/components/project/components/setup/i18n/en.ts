@@ -3,28 +3,26 @@ import { SURVEY } from '../components/survey/i18n/en';
 import { TARGETING } from '../components/targeting/i18n/en';
 
 export const SETUP = {
-  'TITLE': 'All information about your projects-list',
+  'TITLE': 'Project details',
 
-  'SAVE_PROJECT': 'Save projects-list',
-  'SUBMIT_PROJECT': 'Submit projects-list',
+  'SAVE_PROJECT': 'Save',
+  'SUBMIT_PROJECT': 'Submit',
 
   'MESSAGE': {
-    'SUBMITTED': 'Your projects-list is under review by our team. We\'ll come back soon!',
+    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
     'EDITING': {
       'A': 'Please finish',
-      'B': 'setup of your projects-list',
+      'B': 'setup of your project',
       'C': 'and submit it.'
     },
-    'EVALUATING': 'Market exploration is under progress. You can\'t make changes in your projects-list anymore.',
+    'EVALUATING': 'Market exploration is under progress. You can\'t make changes in your project anymore.',
     'REVIEWING': {
-      'A': 'Your projects-list needs to be modified. Please',
-      'B': 'reads',
+      'A': 'Your project needs to be modified. Please',
+      'B': 'read',
       'C': 'our comments that we have sent you by mail.'
     },
-    'PREVIEW_MODE': 'The partial synthesis of your innovation is available.',
-
-    'DONE': 'Synthesis of your projects-list is available. You can\'t make changes in your projects-list anymore.',
-
+    'PREVIEW_MODE': 'The partial synthesis of your project is available.',
+    'DONE': 'The complete synthesis of your project is available.',
   },
 
   'PITCH_TAB': 'Pitch',
@@ -36,14 +34,14 @@ export const SETUP = {
   'TARGETING': TARGETING,
 
   'PREVIEW': 'Preview',
-  'PREVIEW_BUTTON': 'Preview innovation',
-  'PRINT_BUTTON': 'Print innovation',
+  'PREVIEW_BUTTON': 'Preview',
+  'PRINT_BUTTON': 'Print',
 
-  'DELETE_BUTTON': 'Delete projects-list',
+  'DELETE_BUTTON': 'Delete Project',
 
   'DELETE_PROJECT_MODAL': {
     'TITLE': 'Delete Board',
-    'CONTENT': 'Do you really want to delete this projects-list?'
+    'CONTENT': 'Do you really want to delete this project?'
   },
 
 
