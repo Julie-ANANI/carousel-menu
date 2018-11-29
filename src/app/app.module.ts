@@ -19,12 +19,13 @@ import { LocalStorageService } from './services/localStorage/localStorage.servic
 import { TranslationService } from "./services/translation/translation.service";
 import { TranslateTitleService } from './services/title/title.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
+import { LoaderService } from './services/loader/loader.service';
+import { ScrollService } from './services/scroll/scroll.service';
 
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
-import { LoaderService } from './services/loader/loader.service';
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import { LoaderService } from './services/loader/loader.service';
     TranslateTitleService,
     TranslateNotificationsService,
     LoaderService,
+    ScrollService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, }

@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit, PLATFORM_ID  } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { ScrollService } from './services/scroll/scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
               private translateService: TranslateService,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router) {}
+              private router: Router,
+              private scrollService: ScrollService) {}
 
   ngOnInit(): void {
 
@@ -52,6 +54,13 @@ export class AppComponent implements OnInit {
     }
 
   }
+
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.scrollService.setScrollValue(window.pageYOffset || window.scrollY || 0);
+  }
+
 
 }
 
