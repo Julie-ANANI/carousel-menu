@@ -70,6 +70,11 @@
         display: none;
       }
 
+      .active {
+        color: $primary-color !important;
+        border-bottom-color: $primary-color !important;
+      }
+
     }
 
   }

@@ -109,43 +109,43 @@
   <!-- /header section -->
 
 
-  <!-- Tab section -->
+  <!-- tab section -->
   <div class="column col-xs-12 col-11 col-mx-auto section-tabs">
     <ul class="tabs">
       <li>
-        <a [routerLink]="['targeting']" class="gtm-edit-market-targeting">
+        <a [routerLink]="['targeting']" [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
           <i class="fas fa-check targeting-check"></i>
           {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
         </a>
       </li>
       <li>
-        <a class="gtm-edit-market-targeting">
+        <a [routerLink]="['pitch']" [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
           <i class="fas fa-check pitch-check"></i>
           {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
         </a>
       </li>
       <li>
-        <a class="gtm-edit-market-targeting">
+        <a [routerLink]="['survey']" [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
           <i class="fas fa-check survey-check"></i>
           {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
         </a>
       </li>
     </ul>
   </div>
-  <!-- /Tab section -->
+  <!-- /tab section -->
 
 
-  <!-- Different sections -->
+  <!-- different section -->
   <div class="column col-xs-12 col-11 col-mx-auto section-different">
 
     <!-- Targeting -->
-    <div>
+    <div *ngIf="currentPage === 'targeting'">
       <app-targeting>
       </app-targeting>
     </div>
 
   </div>
-  <!-- /Different sections -->
+  <!-- /different section -->
 
 
 </div>
