@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.authService.linkedinLogin(domain).pipe(first()).subscribe((url: string) => {
         this._linkedInLink = url;
       }, (error: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       }
     );
 

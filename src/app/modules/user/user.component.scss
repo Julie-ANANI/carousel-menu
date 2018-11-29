@@ -10,22 +10,3 @@
   animation-duration: 500ms;
   animation-timing-function: ease-in-out;
 }
-
-.display-loader {
-  height: 100vh;
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: white;
-
-  .logo-wrapper {
-    margin-bottom: .9375rem;
-  }
-
-}

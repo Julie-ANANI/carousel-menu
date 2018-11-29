@@ -45,6 +45,7 @@ export class SetupComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.innovation);
     // const url = this.router.routerState.snapshot.url.split('/');
     // this.currentPage = url.length > 0 ? url[5] : 'targeting';
     // console.log(url);

@@ -5,7 +5,6 @@ import { UserRoutingModule } from './user-routing.module';
 
 import { FooterModule } from '../common/footer/footer.module';
 import { HeaderModule } from '../common/header/header.module';
-import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 
 import { UserComponent } from './user.component';
 
@@ -20,7 +19,6 @@ import { InnovationResolver } from '../../resolvers/innovation.resolver';
     UserRoutingModule,
     FooterModule,
     HeaderModule,
-    SharedLoaderModule
   ],
   declarations: [
     UserComponent,

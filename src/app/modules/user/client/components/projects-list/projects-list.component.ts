@@ -33,7 +33,7 @@ import { animate, keyframes, query, stagger, style, transition, trigger } from '
 
 export class ProjectsListComponent implements OnInit {
 
-  private _innovations: Array<Innovation> = [];
+  private _innovations: Array<Innovation>;
 
   private _total: number;
 

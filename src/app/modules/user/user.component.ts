@@ -1,6 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Subject } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -8,11 +6,7 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./user.component.scss']
 })
 
-export class UserComponent implements OnInit, OnDestroy {
-
-  ngUnsubscribe: Subject<any> = new Subject();
-
-  displayLoader = false;
+export class UserComponent implements OnInit {
 
   constructor() {
     /*this.loaderService.isLoading$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((isLoading: boolean) => {
@@ -23,18 +17,5 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() { }
-
-  getLogo(): string {
-    return environment.logoURL;
-  }
-
-  getDomain(): string {
-    return environment.domain;
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
 
 }
