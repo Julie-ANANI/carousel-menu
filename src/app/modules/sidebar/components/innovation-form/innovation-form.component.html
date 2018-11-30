@@ -25,13 +25,13 @@
     *ngIf="isPitch">
   </app-shared-project-edit-cards>
 
-  <app-shared-project-settings
+  <!--<app-shared-project-settings
     [settings]="project.settings"
     [projectStatus]="project.status"
     (settingsChange)="settingsEdit($event)"
     *ngIf="isTargeting"
     [adminMode]="true">
-  </app-shared-project-settings>
+  </app-shared-project-settings>-->
 
   <app-shared-mail-editor *ngIf="isStatus || isMail"
                           [signatures]="signatures"

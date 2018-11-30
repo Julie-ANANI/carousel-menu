@@ -56,7 +56,7 @@ export const ERROR = {
   'PROJECT': {
     'NOT_FOUND': 'Not found',
     'UNFORBIDDEN': 'Unforbidden',
-    'CANT_EDIT': 'You cannot edit this projects-list.',
+    'CANT_EDIT': 'You cannot edit this projects.',
     'SAVED': 'Saved',
     'DELETED': 'Deleted',
     'DELETED_TEXT': 'Your projects-list has been deleted successfully in the specified language.',

@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Innovation } from '../../../../../../../../../models/innovation';
+import { InnovationSettings } from '../../../../../../../../../models/innov-settings';
 
 @Component({
   selector: 'app-targeting',
@@ -8,9 +10,34 @@ import {Component, OnInit} from '@angular/core';
 
 export class TargetingComponent implements OnInit {
 
+  @Input() set project(value: Innovation) {
+    if (value) {
+      this._innovationSettings = value.settings;
+      this._canEdit = value.status === 'EDITING' || value.status === 'SUBMITTED';
+    }
+  }
+
+  @Output() settingsChange = new EventEmitter<InnovationSettings>();
+
+  private _innovationSettings: InnovationSettings;
+
+  private _canEdit = false;
+
   constructor() {}
 
   ngOnInit(): void {
+  }
+
+  updateSettings(value: InnovationSettings) {
+    this.settingsChange.emit(value);
+  }
+
+  get innovationSettings(): InnovationSettings {
+    return this._innovationSettings;
+  }
+
+  get canEdit(): boolean {
+    return this._canEdit;
   }
 
 }

@@ -4,6 +4,7 @@ import {ScrollService} from '../../../../../../../services/scroll/scroll.service
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
+import {InnovationSettings} from '../../../../../../../models/innov-settings';
 
 
 // const DEFAULT_TAB = 'targeting';
@@ -36,7 +37,6 @@ export class SetupComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.scrollService.getScrollValue().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.scrollOn = value > 50;
-      console.log(this.scrollOn);
     });
 
     const url = this.router.routerState.snapshot.url.split('/');
@@ -51,6 +51,14 @@ export class SetupComponent implements OnInit, OnDestroy {
   setCurrentTab(event: Event, value: string) {
     event.preventDefault();
     this.currentPage = value;
+  }
+
+
+  /*
+      Here we are receiving the value from the targeting form.
+   */
+  updateSettings(value: InnovationSettings): void {
+    this.innovation.settings = value;
   }
 
 

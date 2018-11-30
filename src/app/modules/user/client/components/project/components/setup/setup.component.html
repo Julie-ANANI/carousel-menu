@@ -140,8 +140,7 @@
 
     <!-- Targeting -->
     <div *ngIf="currentPage === 'targeting'">
-      <app-targeting>
-      </app-targeting>
+      <app-targeting [project]="innovation" (settingsChange)="updateSettings($event)"></app-targeting>
     </div>
 
   </div>

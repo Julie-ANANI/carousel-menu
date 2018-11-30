@@ -1,9 +1,9 @@
 export const TARGETING = {
   'GEOGRAPHY': {
-    'LABEL': 'Select the geographical area of the projects-list',
-    'ENTIRE_WORLD': 'Entire world',
-    'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Specify countries to exclude',
-    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Country name to exclude',
+    'LABEL': 'What is geographical scope for this project?',
+    'ENTIRE_WORLD': 'Worldwide',
+    'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Are there any specific countries you would like to exclude?',
+    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Country name to be excluded',
     'COMMENT': 'Any comment?',
     'SPECIFIC_REQUEST_PLACEHOLDER': 'Primary focus on US, EU, Korea, Japan, China',
     'ERROR': 'Geographical area is required.'

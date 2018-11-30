@@ -1,8 +1,8 @@
 export const TARGETING = {
   'GEOGRAPHY': {
-    'LABEL': 'Sélectionnez la zone géographique du projet',
-    'ENTIRE_WORLD': 'Monde entier',
-    'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Indiquer des pays à exclure',
+    'LABEL': 'Quelle est la portée géographique de ce projet ?',
+    'ENTIRE_WORLD': 'Dans le monde entier',
+    'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Y a-t-il des pays spécifiques que vous aimeriez exclure ?',
     'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Nom du pays à exclure',
     'COMMENT': 'Un commentaire ?',
     'SPECIFIC_REQUEST_PLACEHOLDER': 'Cibler en priorité les USA, l\'UE, la Corée, le Japon et la Chine',

@@ -11,6 +11,7 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarCollaboratorModule } from '../../../../sidebar/components/collaborator/sidebar-collaborator.module';
+import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SidebarCollaboratorModule } from '../../../../sidebar/components/collab
     TranslateModule.forChild(),
     PipeModule,
     SidebarModule,
-    SidebarCollaboratorModule
+    SidebarCollaboratorModule,
+    SharedProjectSettingsModule
   ],
   declarations: [
     ProjectComponent,
