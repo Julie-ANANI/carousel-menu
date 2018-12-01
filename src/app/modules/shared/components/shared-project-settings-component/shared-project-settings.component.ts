@@ -12,31 +12,31 @@ import * as _ from 'lodash';
 export class SharedProjectSettingsComponent implements OnInit {
 
   @Input() set projectSettings(value: InnovationSettings) {
-    this.innovationSettings = JSON.parse(JSON.stringify(value));
+    this._innovationSettings = JSON.parse(JSON.stringify(value));
     this.getCommentSections();
   }
 
   @Input() set editable(value: boolean) {
-    this.canEdit = value;
+    this._canEdit = value;
   }
 
   @Input() set modeAdmin(value: boolean) {
-    this.adminMode = value;
+    this._adminMode = value;
   }
 
   @Input() set sideAdmin(value: boolean) {
-    this.adminSide = value;
+    this._adminSide = value;
   }
 
   @Output() settingsChange = new EventEmitter<InnovationSettings>();
 
-  innovationSettings: InnovationSettings;
+  private _innovationSettings: InnovationSettings;
 
-  canEdit = false;
+  private _canEdit = false;
 
-  adminMode = false;
+  private _adminMode = false;
 
-  adminSide = false;
+  private _adminSide = false;
 
   private _displayCountriesToExcludeSection = false;
 
@@ -54,16 +54,15 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   constructor(private translateService: TranslateService) {}
 
-
   ngOnInit() {
   }
 
 
   private getCommentSections() {
-    this._displayCountriesCommentSection = this.innovationSettings.geography && this.innovationSettings.geography.comments && this.innovationSettings.geography.comments.length > 0;
-    this._displayCompanyCommentSection = this.innovationSettings.companies.description.length > 0;
-    this._displayPersonsToExcludeSection = this.innovationSettings.professionals && this.innovationSettings.professionals.exclude && this.innovationSettings.professionals.exclude.length > 0;
-    this._displayKeywordsSection = this.innovationSettings.keywords.length > 0;
+    this._displayCountriesCommentSection = this._innovationSettings.geography && this._innovationSettings.geography.comments && this._innovationSettings.geography.comments.length > 0;
+    this._displayCompanyCommentSection = this._innovationSettings.companies.description.length > 0;
+    this._displayPersonsToExcludeSection = this._innovationSettings.professionals && this._innovationSettings.professionals.exclude && this._innovationSettings.professionals.exclude.length > 0;
+    this._displayKeywordsSection = this._innovationSettings.keywords.length > 0;
   }
 
 
@@ -77,38 +76,38 @@ export class SharedProjectSettingsComponent implements OnInit {
     const _inputConfig = {
       'countries': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.innovationSettings && this.innovationSettings.geography ? this.innovationSettings.geography.exclude || [] : [],
+        initialData: this._innovationSettings && this._innovationSettings.geography ? this._innovationSettings.geography.exclude || [] : [],
         type: 'countries'
       },
       'excludedPeople': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.innovationSettings && this.innovationSettings.professionals ? this.innovationSettings.professionals.exclude || [] : []
+        initialData: this._innovationSettings && this._innovationSettings.professionals ? this._innovationSettings.professionals.exclude || [] : []
       },
       'excludedCompanies': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.innovationSettings && this.innovationSettings.companies ? this.innovationSettings.companies.exclude || [] : [],
+        initialData: this._innovationSettings && this._innovationSettings.companies ? this._innovationSettings.companies.exclude || [] : [],
         type: 'company'
       },
       'includedCompanies': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
-        initialData: this.innovationSettings && this.innovationSettings.companies ? this.innovationSettings.companies.include || [] : [],
+        initialData: this._innovationSettings && this._innovationSettings.companies ? this._innovationSettings.companies.include || [] : [],
         type: 'company'
       },
       'keywords': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.PLACEHOLDER',
-        initialData: this.innovationSettings ? this.innovationSettings.keywords || [] : []
+        initialData: this._innovationSettings ? this._innovationSettings.keywords || [] : []
       },
       'domainBL': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.DOMAINS_PLACEHOLDER',
-        initialData: this.innovationSettings && this.innovationSettings.blacklist ? _.map(this.innovationSettings.blacklist.domains, (val: string) => {return {text: val}; }) : []
+        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.domains, (val: string) => {return {text: val}; }) : []
       },
       'emailBL': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.EMAILS_PLACEHOLDER',
-        initialData: this.innovationSettings && this.innovationSettings.blacklist ? _.map(this.innovationSettings.blacklist.emails, (val: string) => {return {text: val}; }) : []
+        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.emails, (val: string) => {return {text: val}; }) : []
       },
       'peopleBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.innovationSettings && this.innovationSettings.blacklist ? _.map(this.innovationSettings.blacklist.people, (val: string) => {return {text: val}; }) : []
+        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.people, (val: string) => {return {text: val}; }) : []
       }
     };
     return _inputConfig[type] || {
@@ -124,7 +123,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   continentModificationDrain(event: any) {
     if (event) {
-      this.innovationSettings.geography.continentTarget = event.continents;
+      this._innovationSettings.geography.continentTarget = event.continents;
       this.updateSettings();
     }
   }
@@ -134,14 +133,14 @@ export class SharedProjectSettingsComponent implements OnInit {
    * Add a country to the exclusion list
    */
   addCountryToExclude(event: {value: Array<string>}): void {
-    this.innovationSettings.geography.exclude = event.value;
+    this._innovationSettings.geography.exclude = event.value;
     // this.showGeographyError = this.innovationSettings.geography.exclude.length === 0;
     this.updateSettings();
   }
 
 
   get continentTarget(): any {
-    return this.innovationSettings ? this.innovationSettings.geography.continentTarget : {};
+    return this._innovationSettings ? this._innovationSettings.geography.continentTarget : {};
   }
 
 
@@ -166,7 +165,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addCompanyToExclude(event: {value: Array<string>}): void {
-    this.innovationSettings.companies.exclude = event.value;
+    this._innovationSettings.companies.exclude = event.value;
     this.updateSettings();
   }
 
@@ -182,7 +181,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addCompanyToInclude(event: {value: Array<string>}): void {
-    this.innovationSettings.companies.include = event.value;
+    this._innovationSettings.companies.include = event.value;
     this.updateSettings();
   }
 
@@ -208,7 +207,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addPeopleToExclude(event: {value: Array<string>}): void {
-    this.innovationSettings.professionals.exclude = event.value;
+    this._innovationSettings.professionals.exclude = event.value;
     this.updateSettings();
   }
 
@@ -224,12 +223,12 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   get comments(): string {
-    return this.innovationSettings ? this.innovationSettings.comments : '';
+    return this._innovationSettings ? this._innovationSettings.comments : '';
   }
 
 
   set comments(value: string) {
-    this.innovationSettings.comments = value;
+    this._innovationSettings.comments = value;
     this.updateSettings();
   }
 
@@ -245,26 +244,26 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addKeywordToExclude(event: {value: Array<string>}): void {
-    this.innovationSettings.keywords = event.value;
+    this._innovationSettings.keywords = event.value;
     this.updateSettings();
   }
 
 
   addDomainToExclude(event: {value: Array<string>}): void {
-    this.innovationSettings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
+    this._innovationSettings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
 
   addEMailToExclude(event: {value: Array<string>}): void {
-    this.innovationSettings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
+    this._innovationSettings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
 
   updateSettings() {
-    if (this.canEdit) {
-      this.settingsChange.emit(this.innovationSettings);
+    if (this._canEdit) {
+      this.settingsChange.emit(this._innovationSettings);
     }
   }
 
@@ -282,6 +281,22 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   get lang() {
     return this.translateService.currentLang;
+  }
+
+  get innovationSettings(): InnovationSettings {
+    return this._innovationSettings;
+  }
+
+  get canEdit(): boolean {
+    return this._canEdit;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
   }
 
 }

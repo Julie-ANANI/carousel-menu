@@ -82,7 +82,7 @@ export const PITCH = {
   },
 
   'BOT': {
-    'HELP': 'Besoin d\'inspiration ? Voici 2 projets concis et bien décrits à découvrir ici et là.'
+    'HELP': 'Vous avez de la difficulté à décrire votre projet ? Notre équipe d\'exploitation est toujours là pour vous aider !'
   },
 
   'INNOVATION_PREVIEW': 'Aperçu',

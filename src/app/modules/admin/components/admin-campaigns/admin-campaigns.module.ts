@@ -24,7 +24,7 @@ import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admi
 import { TableModule } from '../../../table/table.module';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
-import { AutocompleteInputModule } from "../../../input/component/autocomplete-input/autocomplete-input.module";
+import { AutocompleteInputModule } from "../../../utility-components/autocomplete-input/autocomplete-input.module";
 
 @NgModule({
   imports: [

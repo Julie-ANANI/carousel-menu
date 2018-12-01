@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {domainRegEx, emailRegEx} from '../../../../utils/regex';
+import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
+import {domainRegEx, emailRegEx} from '../../../utils/regex';
 
 @Component({
   moduleId: module.id,

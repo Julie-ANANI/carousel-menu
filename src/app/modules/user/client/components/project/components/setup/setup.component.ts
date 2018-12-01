@@ -1,10 +1,10 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Innovation} from '../../../../../../../models/innovation';
-import {ScrollService} from '../../../../../../../services/scroll/scroll.service';
-import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {Router} from '@angular/router';
-import {InnovationSettings} from '../../../../../../../models/innov-settings';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Innovation } from '../../../../../../../models/innovation';
+import { ScrollService } from '../../../../../../../services/scroll/scroll.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { InnovationSettings } from '../../../../../../../models/innov-settings';
 
 
 // const DEFAULT_TAB = 'targeting';
@@ -35,16 +35,26 @@ export class SetupComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
+    this.getCurrentPage();
+
     this.scrollService.getScrollValue().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.scrollOn = value > 50;
     });
 
-    const url = this.router.routerState.snapshot.url.split('/');
-    this.currentPage = url.length > 0 ? url[5] : 'targeting';
-
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.getCurrentPage();
+      }
+    });
 
     console.log(this.innovation);
 
+  }
+
+
+  private getCurrentPage() {
+    const url = this.router.routerState.snapshot.url.split('/');
+    this.currentPage = url.length > 0 ? url[5] : 'targeting';
   }
 
 

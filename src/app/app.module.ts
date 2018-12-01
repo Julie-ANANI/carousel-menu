@@ -122,7 +122,7 @@ export class TranslateUniversalLoader implements TranslateLoader {
 // ProfessionalsService,
 // DownloadService,
 // TemplatesService,
-// AutocompleteService,
+//
 // ,
 // CampaignResolver,
 // InnovationResolver,

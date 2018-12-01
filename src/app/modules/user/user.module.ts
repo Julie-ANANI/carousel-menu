@@ -11,6 +11,7 @@ import { UserComponent } from './user.component';
 import { UserService } from '../../services/user/user.service';
 import { InnovationService } from '../../services/innovation/innovation.service';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
+import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { InnovationResolver } from '../../resolvers/innovation.resolver';
   providers: [
     UserService,
     InnovationService,
-    InnovationResolver
+    InnovationResolver,
+    AutocompleteService,
   ]
 })
 

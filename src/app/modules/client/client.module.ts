@@ -16,7 +16,7 @@ import { SignupPageModule } from '../base/components/signup-page/signup-page.mod
 import { WelcomeModule } from '../common/welcome/welcome.module';
 import { HeaderModule } from '../base/components/header/header.module';
 import { LogoutModule } from '../common/logout/logout.module';
-import { InputListModule } from '../input/component/input-list/input-list.module';
+import { InputListModule } from '../utility-components/input-list/input-list.module';
 import { SidebarUserChangePasswordModule } from '../sidebar/components/user-change-password/sidebar-user-change-password.module';
 import { SynthesisCompleteModule } from '../share/component/synthesis-complete/synthesis-complete.module';
 import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';

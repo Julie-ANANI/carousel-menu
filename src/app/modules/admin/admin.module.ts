@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { HeaderModule } from '../base/components/header/header.module';
 import { LogoutModule } from '../common/logout/logout.module';
-import { InputListModule } from '../input/component/input-list/input-list.module';
+import { InputListModule } from '../utility-components/input-list/input-list.module';
 import { SidebarInnovationPreviewModule } from '../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 

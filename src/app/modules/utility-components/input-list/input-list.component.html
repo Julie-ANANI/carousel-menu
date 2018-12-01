@@ -1,6 +1,6 @@
 <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
 
-  <div class="input-group" [ngStyle]="{ 'display': 'flex' }">
+  <div class="input-group" [ngStyle]="{ 'display': 'flex', 'justify-content': 'space-between' }">
     <input
       type="text"
       class="form-default"
@@ -8,7 +8,7 @@
       [(ngModel)]="answer"
       required
       [attr.placeholder]="placeholder | translate">
-    <button class="btn-round btn-primary" [ngStyle]="{ 'width': '3.368rem' }" translate>
+    <button class="btn-round btn-primary" translate>
       <i class="fas fa-plus"></i>
     </button>
   </div>

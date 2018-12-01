@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="inputForm" (ngSubmit)="addProposition(inputForm)">
 
-    <div *ngIf="canEdit" [ngStyle]="{ 'display': 'flex' }">
+    <div *ngIf="canEdit" [ngStyle]="{ 'display': 'flex', 'justify-content': 'space-between' }">
       <input
         auto-complete
         formControlName="answer"

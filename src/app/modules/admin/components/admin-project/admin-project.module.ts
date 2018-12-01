@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { NguiAutoCompleteModule } from '../../../auto-complete/auto-complete.module';
+import { NguiAutoCompleteModule } from '../../../utility-components/auto-complete/auto-complete.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
 import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
@@ -19,7 +19,7 @@ import { TableModule } from '../../../table/table.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/admin-project-questionnaire.module';
-import { AutocompleteInputModule } from '../../../input/component/autocomplete-input/autocomplete-input.module';
+import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';

@@ -12,7 +12,7 @@ import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/
 import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/admin-tag-new-modal.component';
 import { InputModule } from '../../../input/input.module';
 import { RouterModule } from '@angular/router';
-import { AutocompleteInputModule } from '../../../input/component/autocomplete-input/autocomplete-input.module';
+import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { PaginationModule } from '../../../utility-components/pagination/pagination.module';
 
 @NgModule({

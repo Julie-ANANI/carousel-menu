@@ -88,7 +88,7 @@ export const PITCH = {
   },
 
   'BOT': {
-    'HELP': 'Besoin d\'inspiration ? Voici 2 projets concis et bien décrits à découvrir ici et là.'
+    'HELP': 'Having any difficulty describing your project? Our operations team is always here to help!'
   },
 
   'INNOVATION_PREVIEW': 'Preview',
