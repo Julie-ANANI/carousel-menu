@@ -18,7 +18,6 @@ import { ClientMyAccountComponent } from './components/client-my-account/client-
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { WelcomeComponent } from '../common/welcome/welcome.component';
 import { LogoutComponent } from '../common/logout/logout.component';
-import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
 import { ForgetPasswordComponent } from '../common/login/components/forget-password/forget-password.component';
 import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../share/component/synthesis-complete/synthesis-complete.component';
@@ -52,13 +51,6 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: LogoutComponent, pathMatch: 'full' }
-        ]
-      },
-      {
-        path: 'signup',
-        canActivate: [NonAuthGuard],
-        children: [
-          { path: '', component: SignupPageComponent, pathMatch: 'full' }
         ]
       },
       {

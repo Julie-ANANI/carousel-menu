@@ -69,22 +69,20 @@
           </span>
         </p>
         <div *ngIf="displayCountriesCommentSection" class="pd-input">
-        <textarea
-          class="form-default"
-          id="countries-comments"
-          [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
-          rows="5"
-          [(ngModel)]="innovationSettings.geography.comments"
-          (change)="updateSettings()">
-        </textarea>
+          <label for="countries-comments"></label>
+          <textarea
+            class="form-default"
+            id="countries-comments"
+            [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
+            rows="5"
+            [(ngModel)]="innovationSettings.geography.comments"
+            (change)="updateSettings()">
+          </textarea>
           <div class="charRemaining">
             <span [ngStyle]="{'color': getColor(innovationSettings.geography.comments.length | characterCountdown:500)}">
               {{ innovationSettings.geography.comments.length | characterCountdown:500 }}
             </span>
           </div>
-        </div>
-        <div class="form-error" *ngIf="showGeographyError">
-          <span>{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.ERROR' | translate }}</span>
         </div>
       </div>
       <!-- /Comment countries -->
@@ -100,22 +98,20 @@
         </div>
 
         <div *ngIf="canEdit" class="pd-input">
-        <textarea
-          class="form-default"
-          id="innovation-sector"
-          [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.MARKET.PLACEHOLDER' | translate"
-          rows="5"
-          #market="ngModel"
-          [(ngModel)]="innovationSettings.market.comments"
-          (change)="updateSettings()">
-        </textarea>
+          <label for="innovation-sector"></label>
+          <textarea
+            class="form-default"
+            id="innovation-sector"
+            [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.MARKET.PLACEHOLDER' | translate"
+            rows="5"
+            #market="ngModel"
+            [(ngModel)]="innovationSettings.market.comments"
+            (change)="updateSettings()">
+          </textarea>
           <div class="charRemaining">
             <span [ngStyle]="{'color': getColor(innovationSettings.market.comments.length | characterCountdown:500)}">
               {{ innovationSettings.market.comments.length | characterCountdown:500 }}
             </span>
-          </div>
-          <div class="form-error" *ngIf="market.touched && innovationSettings.market.comments.length === 0">
-            <span>{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.ERROR' | translate }}</span>
           </div>
         </div>
       </div>
@@ -205,6 +201,7 @@
             </span>
           </p>
           <div *ngIf="displayCompanyCommentSection" class="pd-input">
+            <label for="innovation-companies"></label>
             <textarea
               class="form-default"
               id="innovation-companies"
@@ -242,6 +239,7 @@
 
         <div *ngIf="canEdit">
           <div class="pd-input">
+            <label for="innovation-pros"></label>
             <textarea
               class="form-default"
               id="innovation-pros"
@@ -302,6 +300,7 @@
 
         <div *ngIf="canEdit">
           <div class="pd-input">
+            <label for="other-comments"></label>
             <textarea
               class="form-default"
               id="other-comments"
