@@ -1,4 +1,4 @@
 export const SURVEY = {
-  'NOQUIZ': 'There is currently no quiz created.',
-  'DONTSHAREQUIZ': 'Please don\'t share this link, answers won\'t be kept'
+  'NOQUIZ': 'Our operation team will start the campaign once your project is validated.',
+  'DONTSHAREQUIZ': 'Visit this link to see your project campaign, please do not share this link, responses won\'t be kept.'
 };

@@ -7,6 +7,7 @@ import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
+import { SurveyComponent } from './components/setup/components/survey/survey.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
@@ -28,7 +29,8 @@ import { SharedProjectSettingsModule } from '../../../../shared/components/share
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
-    TargetingComponent
+    TargetingComponent,
+    SurveyComponent
   ],
   providers: [
   ],

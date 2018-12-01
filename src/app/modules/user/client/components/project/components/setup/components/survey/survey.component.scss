@@ -1,4 +1,11 @@
-#survey {
-  padding-top: 1.57rem;
-  padding-bottom: 0;
+#survey-component {
+
+  .bot-rect {
+    max-width: 313px;
+  }
+
+  p {
+    padding-bottom: .9375rem;
+  }
+
 }

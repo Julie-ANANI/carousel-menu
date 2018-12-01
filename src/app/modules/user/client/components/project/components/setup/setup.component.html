@@ -138,9 +138,14 @@
   <!-- different section -->
   <div class="column col-xs-12 col-11 col-mx-auto section-different">
 
-    <!-- Targeting -->
+    <!-- targeting -->
     <div *ngIf="currentPage === 'targeting'">
       <app-targeting [project]="innovation" (settingsChange)="updateSettings($event)"></app-targeting>
+    </div>
+
+    <!-- survey -->
+    <div *ngIf="currentPage === 'survey'">
+      <app-survey [project]="innovation"></app-survey>
     </div>
 
   </div>

@@ -8,6 +8,7 @@ import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
+import { SurveyComponent } from './components/setup/components/survey/survey.component';
 
 
 const projectRoutes: Routes = [
@@ -26,6 +27,7 @@ const projectRoutes: Routes = [
         path: 'setup',
         component: SetupComponent,
         children: [
+          { path: 'survey', component: SurveyComponent, pathMatch: 'full' },
           { path: 'targeting', component: TargetingComponent, pathMatch: 'full' },
           { path: '', redirectTo: 'targeting', pathMatch: 'full' }
         ]

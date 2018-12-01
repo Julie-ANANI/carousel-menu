@@ -88,7 +88,7 @@ export const PITCH = {
   },
 
   'BOT': {
-    'HELP': 'Having any difficulty describing your project? Our operations team is always here to help!'
+    'HELP': 'Having any difficulty describing your project? Our operation team is always here to help!'
   },
 
   'INNOVATION_PREVIEW': 'Preview',

@@ -6,7 +6,7 @@ export const SETUP = {
   'TITLE': 'Détails du projet',
 
   'SAVE_PROJECT': 'Sauvegarder',
-  'SUBMIT_PROJECT': 'Soumettre le projet',
+  'SUBMIT_PROJECT': 'Soumettre',
 
   'MESSAGE': {
     'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',

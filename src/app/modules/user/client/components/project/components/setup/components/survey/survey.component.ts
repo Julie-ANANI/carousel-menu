@@ -4,27 +4,35 @@ import { Innovation } from '../../../../../../../../../models/innovation';
 import { environment } from '../../../../../../../../../../environments/environment';
 
 @Component({
-  selector: 'app-project-survey',
+  selector: 'app-survey',
   templateUrl: 'survey.component.html',
   styleUrls: ['survey.component.scss']
 })
 
 export class SurveyComponent implements OnInit {
 
-  @Input() project: Innovation;
+  @Input() set project(value: Innovation) {
+    this._innovation = value;
+  }
 
   private _url: string;
+
+  private _innovation: Innovation;
 
   constructor(private translateService: TranslateService) {}
 
   ngOnInit() {
-    if (this.project.quizId) {
-      this._url = environment.quizUrl + '/quiz/' + this.project.quizId + '/preview?lang=' + this.translateService.currentLang;
+    if (this._innovation.quizId) {
+      this._url = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/preview?lang=' + this.translateService.currentLang;
     }
   }
 
   get url() {
     return this._url;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
   }
 
 }

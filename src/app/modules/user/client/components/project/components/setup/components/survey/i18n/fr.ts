@@ -1,4 +1,4 @@
 export const SURVEY = {
-  'NOQUIZ': 'Le questionnaire sera visible lorsque votre projet sera validé.',
-  'DONTSHAREQUIZ': 'Please don\'t share this link, answers won\'t be kept'
+  'NOQUIZ': 'Notre équipe d\'exploitation démarrera la campagne une fois votre projet validé.',
+  'DONTSHAREQUIZ': 'Visitez ce lien pour voir votre campagne de projet, ne partagez pas ce lien, les réponses ne seront pas conservées.'
 };
