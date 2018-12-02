@@ -334,3 +334,13 @@ textarea {
   box-shadow: none !important;
   width: inherit !important;
 }
+
+/********************************** Media ***************************************/
+
+@media (min-width: 1441px) {
+
+  .restrict-width {
+    max-width: 50% !important;
+  }
+  
+}
