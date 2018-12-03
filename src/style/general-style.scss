@@ -167,12 +167,13 @@ a, a:focus, a:hover, a:active, a.active {
  */
 
 .charRemaining {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 
   span {
     position: absolute;
-    margin-top: -1.4rem;
-    margin-left: -1.875rem;
+    margin-top: -25px;
+    margin-left: -15px;
     font-size: .75rem;
     color: $meta-color;
   }

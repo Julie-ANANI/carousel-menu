@@ -143,6 +143,11 @@
       <app-targeting [project]="innovation" (settingsChange)="updateSettings($event)"></app-targeting>
     </div>
 
+    <!-- pitch -->
+    <div *ngIf="currentPage === 'pitch'">
+      <app-pitch [project]="innovation" (pitchChange)="updatePitch($event)"></app-pitch>
+    </div>
+
     <!-- survey -->
     <div *ngIf="currentPage === 'survey'">
       <app-survey [project]="innovation"></app-survey>

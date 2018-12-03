@@ -7,7 +7,7 @@ export const PITCH = {
     'LANGUAGE': {
       'HEADING': 'Vous décrivez votre projet en :',
       'UPDATE_TEXT': 'Actualiser la langue du projet',
-      'ADD_PROJECT_LANGUAGE': 'ou ajouter un projet dans'
+      'ADD_PROJECT_LANGUAGE': 'ou cliquez ici si vous souhaitez ajouter le projet en'
     },
 
     'SET_AS_MAIN_LANG': 'Devenir langue principale',
@@ -26,32 +26,35 @@ export const PITCH = {
     },
 
     'TITLE': {
-      'LABEL': 'Donnez un titre à votre projet',
-      'PLACEHOLDER': 'Entrez le titre de votre projet',
+      'LABEL': 'Quel titre aimeriez-vous donner à votre projet ?',
+      'PLACEHOLDER': 'Il doit être clair, concis et légèrement accrocheur, car il sera l\'" objet " des courriels de contact qui seront envoyés.',
       'ERROR': 'Veuillez donner un titre à votre projet s\'il vous plaît'
     },
 
     'SUMMARY': {
-      'LABEL': 'Ecrivez un résumé de votre projet',
-      'PLACEHOLDER': 'Votre résumé sera visible dans l\'email envoyé aux professionnels.',
+      'LABEL': 'Comment résumeriez-vous votre projet ?',
+      'PLACEHOLDER': 'Le résumé doit être très bref, composé de quelques phrases claires et concises, telles qu\'elles seront présentées dans le corps des courriels de contact qui seront envoyés.',
       'ERROR': 'Veuillez écrire un résumé de votre projet s\'il vous plaît.'
     },
 
     'PROBLEM': {
-      'LABEL': 'Quels problèmes ont motivé la création de ce projet ?',
-      'PLACEHOLDER': '',
+      'LABEL': ' Quels sont les enjeux ou les problèmes qui ont motivé la création de ce projet ? ',
+      'PLACEHOLDER': 'Cette partie est entièrement consacrée à expliquer pourquoi ce concept/innovation a vu le jour, à quel problème mondial ou problème de marché il répond, etc.',
       'ERROR': 'Veuillez décrire le problème qui a motivé votre projet s\'il vous plaît.'
     },
 
     'SOLUTION': {
-      'LABEL': 'Quelles solutions proposez-vous et quels sont ses avantages ? ',
-      'PLACEHOLDER': '',
+      'LABEL': 'Quelle solution proposez-vous et quels en sont les avantages ?',
+      'PLACEHOLDER': 'La description de la solution doit détailler en quoi consiste exactement l\'innovation et ' +
+        'comment elle répond aux problèmes susmentionnés de la question précédente. Il n\'est pas nécessaire d\'être ' +
+        'trop technique avec beaucoup de chiffres, mais certaines informations dans ce sens aident les répondants à se ' +
+        'faire une meilleure idée. Le plus important est d\'expliquer POURQUOI cette solution est extrêmement innovante - qu\'est-ce qui la rend innovante,... ?',
       'ERROR': 'Veuillez décrire la solution qui a motivé votre projet s\'il vous plaît.'
     },
 
     'ADVANTAGES': {
-      'LABEL': 'Quels avantages votre projet apporte-t-il au marché ?',
-      'INPUT': 'Ecrivez un argument puis cliquez sur le +',
+      'LABEL': 'Quels sont les avantages de votre solution pour le marché ?',
+      'INPUT': 'Celles-ci peuvent être ajoutées une par une et doivent être courtes et concises.',
       'ERROR': 'Veuillez ajoutez les avantages marché apportés par votre projet s\'il vous plaît.'
     }
 
@@ -65,7 +68,8 @@ export const PITCH = {
   },
 
   'MEDIA': {
-    'LABEL': 'Ajouter des images / vidéos pour illustrer votre projet',
+    'LABEL': 'Vous souhaitez ajouter des images ou des vidéos pour mieux illustrer votre projet ?',
+    'SUB_LABEL': '(Il est fortement recommandé et les projets avec des médias attachés ont tendance à avoir un taux de réponse bien meilleur.)',
     'UPLOAD_PICTURE': 'Télécharger la photo',
     'MAIN': 'Média principal',
     'SECONDARY': 'Média(s) secondaire(s)',

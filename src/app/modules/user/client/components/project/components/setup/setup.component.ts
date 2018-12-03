@@ -72,6 +72,15 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
 
+  /*
+     Here we are checking if there are any changes in the pitch form.
+  */
+  updatePitch(value: Innovation) {
+    this.innovation.innovationCards = value.innovationCards;
+  }
+
+
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

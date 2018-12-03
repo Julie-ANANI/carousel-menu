@@ -5,9 +5,9 @@ export const PITCH = {
     'IMPORT_TRANSLATION': 'Import a translation',
 
     'LANGUAGE': {
-      'HEADING': 'You are describing your projects-list in:',
-      'UPDATE_TEXT': 'Update your projects-list language',
-      'ADD_PROJECT_LANGUAGE': 'or add projects-list in'
+      'HEADING': 'You are describing your project in:',
+      'UPDATE_TEXT': 'Update your project language',
+      'ADD_PROJECT_LANGUAGE': 'or click here if you would like to add the project in'
     },
 
     'SET_AS_MAIN_LANG': 'Set as main language',
@@ -15,63 +15,62 @@ export const PITCH = {
 
     'MODAL': {
       'TITLE': 'Confirmation Board',
-      'CONTENT': 'Do you want to send your projects-list to validation?'
+      'CONTENT': 'Do you want to send your project to validation?'
     },
 
     'MODAL_DELETE': {
       'TITLE': 'Delete Board',
       'CONTENT': {
-        'A' : 'Do you want to delete your projects-list in',
+        'A' : 'Do you want to delete your project in',
         'B' : 'language?'
       }
     },
 
     'TITLE': {
-      'LABEL': 'Give a title to your projects-list',
-      'PLACEHOLDER': 'Enter title of your projects-list',
+      'LABEL': 'What title would you like to give to your project?',
+      'PLACEHOLDER': 'It should be clear, concise, and slightly catchy as it will be the ‘object’ of the contact emails that will be sent out',
       'ERROR': 'Title is required.'
     },
 
     'SUMMARY': {
-      'LABEL': 'Give a summarization of your projects-list',
-      'PLACEHOLDER': 'Your summarization should provide a clear overview of the interest of your innovation (user benefits) as this will be the only information presented in the body of the email.',
+      'LABEL': 'How would you summarise your project?',
+      'PLACEHOLDER': 'The summary should be very brief, a couple of sentences that are clear and concise, as it will be presented in the body of the contact emails that will be sent out',
       'ERROR': 'Summary is required.'
     },
 
     'PROBLEM': {
-      'LABEL': 'What problems or issues motivated to the creation of this projects-list?',
-      'PLACEHOLDER': 'Explain the origin of your projects-list:\n1. Why did the company conceive of this idea?\n2. What need does it meet?\n3. What gap between ' +
-      'existing solutions does it fill?\n4. What new functionality does it provide that didn’t previously exist, and why did this functionality not ' +
-      'exist previously?\nEx: Digital technology used in CCD and CMOS sensors limits their dynamics and sensitivity.',
+      'LABEL': ' What issues or problems motivated the creation of this project? ',
+      'PLACEHOLDER': 'This part is entirely dedicated to explaining why this concept/innovation came to be, what world problem or market problem is it responding to, etc. ',
       'ERROR': 'Problem or issue motivated is required.'
     },
 
     'SOLUTION': {
-      'LABEL': 'What solutions does you propose and what are the benefits?',
-      'PLACEHOLDER': 'Explain the principle/operation of your innovation in such a way that the targeted professionals can judge its relevance. ' +
-      'Focus on the benefits in terms of uses for the target areas. Don’t be shy of including key figures that help to position your offering in ' +
-      'relation an existing one: (e.g. “2 x lighter” / “25% longer lifespan”/ etc.)\nEx: replace the layer of silicium photodiodes by a ' +
-      'photosensitive organic component having a sensitivity close to that of an eye.',
+      'LABEL': 'What solution do you propose and what are the benefits?',
+      'PLACEHOLDER': 'The solution description should detail what the innovation is exactly and how it responds to ' +
+        'the aforementioned problems in the previous question. It doesn’t have to be too technical with a lot of figures, but ' +
+        'some information along these lines does help the respondents to get a better idea. The most important is to explain WHY ' +
+        'this solution is extremely innovative - what makes it innovative, ...?',
       'ERROR': 'Solution is required.'
     },
 
     'ADVANTAGES': {
-      'LABEL': 'What advantages does your projects-list provide to the market?',
-      'INPUT': 'Ex: Improved security',
+      'LABEL': 'What advantages does your solution provide to the market?',
+      'INPUT': 'These can be added one by one and should be short and to the point.',
       'ERROR': 'Advantage is required.'
     }
 
   },
 
-  'STAGE': 'At what stage is your projects-list?',
+  'STAGE': 'At what stage is your project?',
 
   'PATENTED': {
-    'LABEL': 'Is your projects-list patent protected?',
+    'LABEL': 'Is your project patent protected?',
     'ERROR': 'Patent is required.'
   },
 
   'MEDIA': {
-    'LABEL': 'Add images/videos to illustrate your projects-list',
+    'LABEL': 'Would you like to add images or videos to better illustrate your project?',
+    'SUB_LABEL': '(It is highly recommended and projects with media attached tend to have a much better response rate.)',
     'MAIN': 'Main media',
     'SECONDARY': 'Secondary medias',
     'UPLOAD_PICTURE': 'Upload picture',
@@ -83,7 +82,7 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Would you like to authorize',
-    'B' : 'to diffuse your projects-list to it\'s ambassadors community?',
+    'B' : 'to diffuse your project to it\'s ambassadors community?',
     'ERROR': 'Diffusion is required.'
   },
 
@@ -93,6 +92,6 @@ export const PITCH = {
 
   'INNOVATION_PREVIEW': 'Preview',
 
-  'DELETE_LANGUAGE': 'Delete projects-list language'
+  'DELETE_LANGUAGE': 'Delete selected language'
 
 };

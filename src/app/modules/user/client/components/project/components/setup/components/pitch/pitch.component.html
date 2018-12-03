@@ -1,10 +1,7 @@
-<div class="pitch">
+<div id="pitch-component">
   <app-shared-project-edit-cards
-    [project]="project"
-    [canEdit]="canEdit"
-    [changesSaved]="changesSaved"
-    (saveChanges)="saveInnovation($event)"
-    [showPitchFieldError]="showFieldError"
-    (innovationToPreview)="innovationPreview($event)">
+    [project]="innovationPitch"
+    [editable]="canEdit"
+    (pitchChange)="updatePitch($event)">
   </app-shared-project-edit-cards>
 </div>

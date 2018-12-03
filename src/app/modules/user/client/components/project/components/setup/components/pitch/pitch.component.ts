@@ -1,9 +1,8 @@
-import {Component, Output, Input, EventEmitter, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Innovation } from '../../../../../../../../../models/innovation';
-import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-project-pitch',
+  selector: 'app-pitch',
   templateUrl: 'pitch.component.html',
   styleUrls: ['pitch.component.scss']
 })
@@ -11,41 +10,27 @@ import { Subject } from 'rxjs';
 export class PitchComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
-    this._project = value;
+    this._innovationPitch = value;
     this._canEdit = value.status === 'EDITING' || value.status === 'SUBMITTED';
   }
-  @Input() changesSaved: boolean;
-  @Input() showPitchFieldError: Subject<boolean>;
 
-  @Output() saveChanges = new EventEmitter<boolean>();
-  @Output() innovationToPreview = new EventEmitter<number>();
+  @Output() pitchChange = new EventEmitter<Innovation>();
 
-  private _project: Innovation;
-  private _showFieldError: Subject<boolean> = new Subject();
+  private _innovationPitch: Innovation;
+
   private _canEdit = false;
 
   constructor() {}
 
-  public saveInnovation(value: boolean) {
-    this.saveChanges.emit(value);
-  }
-
-  innovationPreview(value: number) {
-    this.innovationToPreview.emit(value);
-  }
-
   ngOnInit(): void {
-    this.showPitchFieldError.subscribe( (value: any) => {
-      this._showFieldError.next(value);
-    });
   }
 
-  get project() {
-    return this._project;
+  updatePitch(value: Innovation) {
+    this.pitchChange.emit(value);
   }
 
-  get showFieldError() {
-    return this._showFieldError;
+  get innovationPitch() {
+    return this._innovationPitch;
   }
 
   get canEdit() {
