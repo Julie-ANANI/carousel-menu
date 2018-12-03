@@ -45,8 +45,6 @@ export class ProfessionalsService {
       professionals: "all",
       query: {}
     };
-    return this._http.post(`/professional/clone/${oldCampaignId}/${newCampaignId}/${oldInnovationId}/${newInnovationId}`, config)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.post(`/professional/clone/${oldCampaignId}/${newCampaignId}/${oldInnovationId}/${newInnovationId}`, config);
   }
 }

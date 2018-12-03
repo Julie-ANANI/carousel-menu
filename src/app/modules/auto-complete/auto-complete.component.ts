@@ -19,7 +19,7 @@ import { NguiAutoComplete } from './auto-complete';
 @Component({
     selector: 'ngui-auto-complete',
     template: `
-        <div #autoCompleteContainer class="ngui-auto-complete">
+        <div #autoCompleteContainer class="ng2-auto-complete">
             <!-- keyword input -->
             <input *ngIf="showInputTag"
                    #autoCompleteInput class="keyword"

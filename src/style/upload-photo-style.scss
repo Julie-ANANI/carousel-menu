@@ -1,0 +1,17 @@
+@import "variables";
+
+/*
+    This stylesheet contains the styles that are
+    related to the upload zone photo
+ */
+
+#dropZone {
+  min-height: inherit;
+  width: 100%;
+
+  .content {
+    min-height: inherit;
+    flex-direction: column;
+  }
+
+}

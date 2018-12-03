@@ -5,7 +5,7 @@
       <input
         auto-complete
         formControlName="answer"
-        [list-formatter]="autocompleListFormatter"
+        [list-formatter]="autocompleteListFormatter.bind(this)"
         [source]="suggestions.bind(this)"
         value-property-name="id"
         [display-property-name]="identifier"
