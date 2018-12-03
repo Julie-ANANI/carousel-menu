@@ -57,4 +57,8 @@ export class TagsService {
     return this._http.delete('/tags/' + innovationId + '/pool', { params: {tag: tag._id }});
   }
 
+  public getSimilarTags(tagId: string): Observable<any> {
+    return this._http.get<Array<Tag>>('/tags/' + tagId + '/match');
+  }
+
 }

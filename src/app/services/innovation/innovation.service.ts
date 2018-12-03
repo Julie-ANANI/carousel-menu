@@ -75,10 +75,6 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId + '/updatePreset', {preset: data});
   }
 
-  public updateStatus(innovationId: string, status: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE'): Observable<any> {
-    return this._http.put('/innovation/' + innovationId, {status: status});
-  }
-
   public submitProjectToValidation (innovationId: string): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/submit', {});
   }
@@ -89,6 +85,10 @@ export class InnovationService {
 
   public validate(innovationId: string): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EVALUATING', {});
+  }
+
+  public endProject(innovationId: string): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=DONE', {});
   }
 
   public askRevision(innovationId: string): Observable<any> {
@@ -121,6 +121,10 @@ export class InnovationService {
 
   public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
     return this._http.get(`/sharing/synthesis/${id}/${sharedKey}`);
+  }
+
+  public getRecommendation(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/match');
   }
 
 }
