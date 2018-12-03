@@ -2,17 +2,25 @@
 
 file-drop.drop-container {
   border: 2px dashed $border-color;
-  padding-left: .35rem;
-  padding-right: .35rem;
   position: relative;
-  border-radius: .18rem;
+  border-radius: 3px;
   min-height: 15.625rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+  input {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: inherit;
+  }
 
   .para {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
+    text-align: center;
   }
 
 }
@@ -25,7 +33,13 @@ file-drop.drop-container:hover {
 .nv-file-over {
   transition: all 0.15s ease-in-out;
   border-color: $alert-color;
-} /* Default class applied to drop zones on over */
+}
+
+.loading::after {
+  border-color: $primary-color;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
 
 
 
