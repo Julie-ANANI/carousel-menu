@@ -8,7 +8,7 @@ import { TranslateTitleService } from '../../services/title/title.service';
 import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
-import { PaginationInterface } from '../../models/pagination';
+import { PaginationInterface } from '../utility-components/pagination/interfaces/pagination';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 

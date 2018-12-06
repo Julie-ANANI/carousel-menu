@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../models/preset';
-import {PaginationInterface} from '../../../../../../models/pagination';
+import {PaginationInterface} from '../../../../../utility-components/pagination/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 @Component({

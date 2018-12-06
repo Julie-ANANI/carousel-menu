@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import {PaginationInterface} from '../../../../models/pagination';
+import {PaginationInterface} from '../../../utility-components/pagination/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 export interface SelectedProfessional extends Professional {

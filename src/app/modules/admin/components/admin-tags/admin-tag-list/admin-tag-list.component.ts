@@ -7,7 +7,7 @@ import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import {PaginationInterface} from '../../../../../models/pagination';
+import {PaginationInterface} from '../../../../utility-components/pagination/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 

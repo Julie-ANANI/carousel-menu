@@ -4,7 +4,7 @@ import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import { PaginationInterface } from '../../../models/pagination';
+import { PaginationInterface } from '../../utility-components/pagination/interfaces/pagination';
 
 @Component({
   selector: 'app-shared-table',

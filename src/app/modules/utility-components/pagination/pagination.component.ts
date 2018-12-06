@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
-import { PaginationInterface } from '../../../models/pagination';
+import { PaginationInterface } from './interfaces/pagination';
 import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 
 @Component({

@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { Innovation } from '../../../../../models/innovation';
-import { PaginationInterface } from '../../../../../models/pagination';
+import { PaginationInterface } from '../../../../utility-components/pagination/interfaces/pagination';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';

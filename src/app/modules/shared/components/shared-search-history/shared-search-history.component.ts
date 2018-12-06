@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
-import {PaginationInterface} from '../../../../models/pagination';
+import {PaginationInterface} from '../../../utility-components/pagination/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 @Component({
