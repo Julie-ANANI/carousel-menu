@@ -8,6 +8,8 @@ import { SharedProjectEditCardsComponent } from './shared-project-edit-cards.com
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility-components/input-list/input-list.module';
+import { SharedUploadZonePhotoModule } from '../shared-upload-zone-photo/shared-upload-zone-photo.module';
+import { SharedUploadZoneVideoModule } from '../shared-upload-zone-video/shared-upload-zone-video.module';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { InputListModule } from '../../../utility-components/input-list/input-li
     ReactiveFormsModule,
     PipeModule,
     SharedTextZoneModule,
-    InputListModule
+    InputListModule,
+    SharedUploadZonePhotoModule,
+    SharedUploadZoneVideoModule
   ],
   declarations: [
     SharedProjectEditCardsComponent
