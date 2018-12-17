@@ -14,5 +14,6 @@ export const DISCOVERDESCRIPTION = {
     'C': 'Already available'
   },
   'ERROR': 'We are unable to fetch this innovation at this moment. Please try to reload this innovation!',
-  'CONTACT_US': 'Contact us to know more'
+  'CONTACT_US': 'Contact us to know more',
+  'DISCOVER_OTHER': 'Discover other projects'
 };
