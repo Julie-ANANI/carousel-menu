@@ -14,5 +14,6 @@ export const DISCOVERDESCRIPTION = {
     'C': 'Déjà disponible'
   },
   'ERROR': 'Nous ne pouvons pas trouver cette innovation en ce moment. Essayez de recharger cette innovation !',
-  'CONTACT_US': 'Contactez-nous pour en savoir plus'
+  'CONTACT_US': 'Contactez-nous pour en savoir plus',
+  'DISCOVER_OTHER': 'Découvrez d\'autres projets'
 };
