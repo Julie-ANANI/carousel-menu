@@ -3,6 +3,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-project',
@@ -22,7 +23,8 @@ export class ProjectComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
-              private router: Router) { }
+              private router: Router,
+              private translateService: TranslateService) { }
 
   ngOnInit() {
 
@@ -58,7 +60,7 @@ export class ProjectComponent implements OnInit {
         break;
 
       default:
-        // do nothing.
+        // do nothing...
     }
   }
 
@@ -89,6 +91,9 @@ export class ProjectComponent implements OnInit {
     this._currentPage = value;
   }
 
+  get dateFormat(): string {
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  }
 
   get innovation(): Innovation {
     return this._innovation;

@@ -7,7 +7,7 @@ import { PaginationInterface } from '../../../../utility-components/pagination/i
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
-import {InnovationService} from '../../../../../services/innovation/innovation.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -38,9 +38,9 @@ export class ProjectsListComponent implements OnInit {
 
   private _total: number;
 
-  innovationId: string;
+  private _innovationId: string;
 
-  deleteModal = false;
+  private _deleteModal = false;
 
   private _config = {
     fields: 'name created updated status collaborators principalMedia',
@@ -114,22 +114,22 @@ export class ProjectsListComponent implements OnInit {
 
   onClickDelete(event: Event, innovationId: string) {
     event.preventDefault();
-    this.innovationId = innovationId;
-    this.deleteModal = true;
+    this._innovationId = innovationId;
+    this._deleteModal = true;
   }
 
 
   closeModal(event: Event) {
     event.preventDefault();
-    this.deleteModal = false;
-    this.innovationId = '';
+    this._deleteModal = false;
+    this._innovationId = '';
   }
 
 
   onClickSubmit(event: Event) {
     event.preventDefault();
 
-    this.innovationService.remove(this.innovationId).pipe(first()).subscribe((response: any) => {
+    this.innovationService.remove(this._innovationId).pipe(first()).subscribe((response: any) => {
       this.translateNotificationService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
       this.loadProjects();
       this.closeModal(event);
@@ -163,6 +163,14 @@ export class ProjectsListComponent implements OnInit {
 
   get innovations () {
     return this._innovations;
+  }
+
+  get innovationId(): string {
+    return this._innovationId;
+  }
+
+  get deleteModal(): boolean {
+    return this._deleteModal;
   }
 
   get dateFormat(): string {

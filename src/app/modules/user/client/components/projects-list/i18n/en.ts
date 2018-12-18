@@ -8,7 +8,7 @@ export const PROJECTS_LIST = {
     'CONTENT': 'Do you really want to delete this project?'
   },
 
-  'UNTITLED': 'Untitled projects-list',
+  'UNTITLED': 'Untitled project',
 
   'NO_PROJECT': {
     'TITLE': 'Don\'t have any projects? ',

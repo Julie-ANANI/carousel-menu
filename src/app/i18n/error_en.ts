@@ -56,16 +56,16 @@ export const ERROR = {
   'PROJECT': {
     'NOT_FOUND': 'Not found',
     'UNFORBIDDEN': 'Unforbidden',
-    'CANT_EDIT': 'You cannot edit this projects.',
+    'CANT_EDIT': 'You cannot edit this project.',
     'SAVED': 'Saved',
     'DELETED': 'Deleted',
-    'DELETED_TEXT': 'Your projects-list has been deleted successfully in the specified language.',
-    'DELETED_PROJECT_TEXT': 'Your projects-list has been deleted successfully.',
-    'NOT_DELETED_TEXT': 'Your projects-list can not be deleted at the moment because of some technical reasons. Please try again later!',
-    'SAVED_TEXT': 'Your projects-list has been saved successfully.',
+    'DELETED_TEXT': 'Your project has been deleted successfully in the specified language.',
+    'DELETED_PROJECT_TEXT': 'Your project has been deleted successfully.',
+    'NOT_DELETED_TEXT': 'Your project can not be deleted at the moment because of some technical reasons. Please try again later!',
+    'SAVED_TEXT': 'Your project has been saved successfully.',
     'SAVE_ERROR': 'Please save all your changes before proceeding.',
     'SUBMITTED': 'Submitted',
-    'SUBMITTED_TEXT': 'Your projects-list has been sent to validate.',
+    'SUBMITTED_TEXT': 'Your project has been sent to validate.',
     'NOT_ALLOWED': 'You are not allowed to perform this action anymore.'
   },
 
