@@ -1,4 +1,4 @@
-<div id="shared-project-edit-cards-component">
+<div *ngIf="innovation" id="shared-project-edit-cards-component">
   <form novalidate>
 
 
@@ -33,7 +33,7 @@
         </ul>
       </div>
 
-      <div *ngIf="innovation.innovationCards.length > 1 && canEdit" class="delete-wrapper">
+      <div *ngIf="innovation.innovationCards.length > 1 && canEdit" class="delete-wrapper" (click)="onClickDelete($event)">
         {{ 'PROJECT_MODULE.SETUP.PITCH.DELETE_LANGUAGE' | translate }}
       </div>
 
@@ -394,4 +394,27 @@
 
 
   </form>
+</div>
+
+
+
+<!-- Modal to ask user to sure about deleting the innovation card the project -->
+<div *ngIf="innovation" class="modal" [ngClass]="{ 'active': deleteModal }">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
+        {{ 'COMMON.LANG.' + innovation.innovationCards[selectedCardIndex].lang | uppercase | translate }}
+        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+    </div>
+  </div>
 </div>

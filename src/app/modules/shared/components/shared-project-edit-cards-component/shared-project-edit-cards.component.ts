@@ -54,6 +54,8 @@ export class SharedProjectEditCardsComponent implements OnInit {
 
   saveChanges = false;
 
+  deleteModal = false;
+
   constructor(private translationService: TranslationService,
               private innovationService: InnovationService,
               private innovationCommonService: InnovationCommonService,
@@ -76,6 +78,7 @@ export class SharedProjectEditCardsComponent implements OnInit {
    */
   private notifyChanges() {
     this.innovationCommonService.setNotifyChanges(true);
+    this.pitchChange.emit(this.innovation);
   }
 
 
@@ -121,6 +124,51 @@ export class SharedProjectEditCardsComponent implements OnInit {
 
   containsLanguage(lang: string): boolean {
     return this.innovation.innovationCards.some((c) => c.lang === lang);
+  }
+
+
+  /***
+   * this function is called when the user clicks on the delete language button. It
+   * opens the modal to ask for the confirmation.
+   * @param event
+   */
+  onClickDelete(event: Event) {
+    event.preventDefault();
+    this.deleteModal = true;
+  }
+
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this.deleteModal = false;
+  }
+
+
+  /***
+   * this function is called when the user clicks the submit button in the delete
+   * modal, and it deletes the selected lang card.
+   * @param event
+   */
+  onClickSubmit(event: Event) {
+    event.preventDefault();
+
+    if (this.canEdit) {
+      if ((!this.saveChanges)) {
+        this.innovationService.removeInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id).pipe(first()).subscribe(() => {
+          this.innovation.innovationCards = this.innovation.innovationCards.filter((card) => card._id !== this.innovation.innovationCards[this.selectedCardIndex]._id);
+          this.notifyChanges();
+          this.onLangSelect(event, 0);
+          this.closeModal(event);
+          this.translateNotificationsService.error('ERROR.SUCCESS', 'ERROR.PROJECT.DELETED_TEXT');
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
+          this.closeModal(event);
+        })
+      } else {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+      }
+    }
+
   }
 
 
