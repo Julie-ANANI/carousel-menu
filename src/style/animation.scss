@@ -177,3 +177,11 @@
   }
 }
 
+
+/********************************** Animation class ***************************************/
+
+.animate-page {
+  animation-name: fadeIn;
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
+}
