@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Innovation} from '../../../../models/innovation';
 import {TranslationService} from '../../../../services/translation/translation.service';
 import {forkJoin, Subject} from 'rxjs';
@@ -9,8 +9,9 @@ import {InnovationService} from '../../../../services/innovation/innovation.serv
 import {InnovCard} from '../../../../models/innov-card';
 import {InnovationCommonService} from '../../../../services/innovation/innovation-common.service';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
-// declare const tinymce: any;
+declare const tinymce: any;
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -18,7 +19,7 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
   styleUrls: ['shared-project-edit-cards.component.scss']
 })
 
-export class SharedProjectEditCardsComponent implements OnInit {
+export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this.innovation =  JSON.parse(JSON.stringify(value));
@@ -56,10 +57,13 @@ export class SharedProjectEditCardsComponent implements OnInit {
 
   deleteModal = false;
 
+  _editors: Array<any> = [];
+
   constructor(private translationService: TranslationService,
               private innovationService: InnovationService,
               private innovationCommonService: InnovationCommonService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService,
+              public domSanitizer: DomSanitizer) {}
 
   ngOnInit() {
 
@@ -172,6 +176,11 @@ export class SharedProjectEditCardsComponent implements OnInit {
   }
 
 
+  /***
+   * this function is to import translation. It works on admin side.
+   * @param event
+   * @param model
+   */
   importTranslation(event: Event, model: string) {
     event.preventDefault();
 
@@ -188,20 +197,26 @@ export class SharedProjectEditCardsComponent implements OnInit {
         });
         break;
 
-        default:
-        // remove html tags from text
-        const text = from_card[model].replace(/<[^>]*>/g, '');
-        this.translationService.translate(text, target_card.lang).first().subscribe((o) => {
-          target_card[model] = o.translation;
-
-        });
+      default:
+      // remove html tags from text
+      const text = from_card[model].replace(/<[^>]*>/g, '');
+      this.translationService.translate(text, target_card.lang).first().subscribe((o) => {
+        target_card[model] = o.translation;
+      });
 
     }
 
   }
 
 
-  updateData(event: {id: string, content: string}) {
+  /***
+   * this function is called when the user edit the summary, problem
+   * and solution.
+   * @param event
+   */
+  updateData(event: { id: string, content: string }) {
+    this.notifyChanges();
+
     if (event.id.indexOf('summary') !== -1) {
       this.innovation.innovationCards[this.selectedCardIndex].summary = event.content;
     } else if (event.id.indexOf('problem') !== -1) {
@@ -209,6 +224,7 @@ export class SharedProjectEditCardsComponent implements OnInit {
     } else if (event.id.indexOf('solution') !== -1) {
       this.innovation.innovationCards[this.selectedCardIndex].solution = event.content;
     }
+
   }
 
 
@@ -228,8 +244,9 @@ export class SharedProjectEditCardsComponent implements OnInit {
    * @param event the resulting value sent from the components directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  updateAdvantage (event: {value: Array<{text: string}>}, cardIdx: number): void {
+  updateAdvantage (event: { value: Array<{text: string }>}, cardIdx: number): void {
     this.innovation.innovationCards[cardIdx].advantages = event.value;
+    this.notifyChanges();
   }
 
 
@@ -253,17 +270,28 @@ export class SharedProjectEditCardsComponent implements OnInit {
   }
 
 
+  /***
+   * this function is called when the user upload the images.
+   * @param media
+   * @param cardIdx
+   */
   uploadImage(media: Media, cardIdx: number): void {
     this.innovation.innovationCards[cardIdx].media.push(media);
     this.checkPrincipalMedia(media, cardIdx);
+    this.notifyChanges();
   }
 
 
+  /***
+   * this function is to make the uploaded image or video as a primary image automatically, if not.
+   * @param media
+   * @param cardIdx
+   */
   checkPrincipalMedia(media: Media, cardIdx: number) {
     if (this.innovation.innovationCards[this.selectedCardIndex].media.length > 0) {
       if (!this.innovation.innovationCards[this.selectedCardIndex].principalMedia) {
-        this.innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id, media._id)
-          .pipe(first()).subscribe((res) => {
+        this.innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id, media._id).pipe(first())
+          .subscribe((res) => {
             this.innovation.innovationCards[cardIdx].principalMedia = media;
           });
       }
@@ -271,13 +299,77 @@ export class SharedProjectEditCardsComponent implements OnInit {
   }
 
 
-  uploadVideo(videoInfos: Video): void {
-    this.innovationService.addNewMediaVideoToInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id, videoInfos)
-      .pipe(first()).subscribe(res => {
+  /***
+   * this function is called when the user uploads the video.
+   * @param video
+   */
+  uploadVideo(video: Video): void {
+    this.innovationService.addNewMediaVideoToInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id, video).pipe(first())
+      .subscribe(res => {
       this.innovation.innovationCards[this.selectedCardIndex].media.push(res);
       this.checkPrincipalMedia(res, this.selectedCardIndex);
+      this.notifyChanges();
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
+  }
+
+
+  /***
+   * this function is called when the user clicks on the delete button to delete the media.
+   * @param event
+   * @param media
+   * @param index
+   */
+  onClickDeleteMedia(event: Event, media: Media, index: number) {
+    event.preventDefault();
+
+    this.innovationService.deleteMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[index]._id, media._id).pipe(first())
+      .subscribe((_res: Innovation) => {
+        this.innovation.innovationCards[index].media = this.innovation.innovationCards[index].media.filter((m) => m._id !== media._id);
+
+        if (this.innovation.innovationCards[index].principalMedia._id === media._id) {
+          this.innovation.innovationCards[index].principalMedia = null;
+        }
+
+        this.checkPrincipalMedia(this.innovation.innovationCards[this.selectedCardIndex].media[0], this.selectedCardIndex);
+        this.notifyChanges();
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
 
   }
+
+
+  /***
+   * this function is called when the user wants to make the media as primary media.
+   * @param event
+   * @param media
+   * @param index
+   */
+  onClickSetMainMedia(event: Event, media: Media, index: number) {
+    event.preventDefault();
+
+    this.innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[index]._id, media._id).pipe(first())
+      .subscribe((res: Innovation) => {
+        this.innovation.innovationCards[index].principalMedia = media;
+        this.notifyChanges();
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
+  }
+
+
+  ngOnDestroy(): void {
+    if (Array.isArray(this._editors) && this._editors.length > 0) {
+      this._editors.forEach((ed) => tinymce.remove(ed));
+    }
+
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+
+  }
+
 
 }

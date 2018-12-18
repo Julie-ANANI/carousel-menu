@@ -16,7 +16,7 @@ export class SharedUploadZonePhotoComponent {
 
   @Input() uri: string;
 
-  @Output() public cbFn: EventEmitter <any> = new EventEmitter();
+  @Output() cbFn: EventEmitter <any> = new EventEmitter();
 
   @ViewChild('fileInput') fileInput: any;
 
@@ -53,6 +53,7 @@ export class SharedUploadZonePhotoComponent {
       .subscribe((data: any) => {
         // Sanitized logo returned from backend
         this.loading = false;
+        this.cbFn.emit(data);
       }, (err: any) => {
         this.notificationsService.error('ERROR.ERROR', err);
         this.loading = false;

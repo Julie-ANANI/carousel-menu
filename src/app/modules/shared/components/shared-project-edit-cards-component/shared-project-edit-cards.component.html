@@ -33,8 +33,8 @@
         </ul>
       </div>
 
-      <div *ngIf="innovation.innovationCards.length > 1 && canEdit" class="delete-wrapper" (click)="onClickDelete($event)">
-        {{ 'PROJECT_MODULE.SETUP.PITCH.DELETE_LANGUAGE' | translate }}
+      <div *ngIf="innovation.innovationCards.length > 1 && canEdit" class="delete-wrapper">
+        <span (click)="onClickDelete($event)">{{ 'PROJECT_MODULE.SETUP.PITCH.DELETE_LANGUAGE' | translate }}</span>
       </div>
 
     </div>
@@ -80,7 +80,8 @@
                     name="title"
                     #title="ngModel"
                     [(ngModel)]="innovationCard.title"
-                    [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate">
+                    [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                    (ngModelChange)="notifyChanges()">
                 </div>
 
               </div>
@@ -96,7 +97,7 @@
                 <div *ngIf="adminSide && innovation.innovationCards?.length > 1" class="pd-input">
                   <button
                     class="btn btn-xs ghost-secondary"
-                    [ngClass]="{'disabled': innovationCards.summary}"
+                    [ngClass]="{'disabled': innovationCard.summary}"
                     [disabled]="innovationCard.summary"
                     (click)="importTranslation($event, 'summary')">
                     {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
@@ -142,7 +143,7 @@
                 <div *ngIf="canEdit" class="form-group pd-input">
                   <app-text-zone
                     [data]="innovationCard.problem"
-                    [elementId]="'problem'+innovationCard.lang"
+                    [elementId]="'problem' + innovationCard.lang"
                     (onTextChange)="updateData($event)">
                   </app-text-zone>
                   <!-- todo: add placeholders
@@ -178,7 +179,7 @@
                 <div *ngIf="canEdit" class="form-group pd-input">
                   <app-text-zone
                     [data]="innovationCard.solution"
-                    [elementId]="'solution'+innovationCard.lang"
+                    [elementId]="'solution' + innovationCard.lang"
                     (onTextChange)="updateData($event)">
                   </app-text-zone>
                   <!-- todo: add placeholders
@@ -206,6 +207,8 @@
                 <div *ngIf="adminSide && innovation.innovationCards?.length > 1" class="pd-input">
                   <button
                     class="btn btn-xs ghost-secondary"
+                    [disabled]="innovationCard.advantages?.length"
+                    [ngClass]="{'disabled': innovationCard.advantages?.length}"
                     (click)="importTranslation($event, 'advantages')">
                     {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                   </button>
@@ -238,7 +241,8 @@
                   type="radio"
                   name="projectStatus"
                   [(ngModel)]="innovation.projectStatus"
-                  [value]="0">
+                  [value]="0"
+                  (ngModelChange)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
               </label>
 
@@ -247,7 +251,8 @@
                   type="radio"
                   name="projectStatus"
                   [(ngModel)]="innovation.projectStatus"
-                  [value]="1">
+                  [value]="1"
+                  (ngModelChange)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
               </label>
 
@@ -256,7 +261,8 @@
                   type="radio"
                   name="projectStatus"
                   [(ngModel)]="innovation.projectStatus"
-                  [value]="2">
+                  [value]="2"
+                  (ngModelChange)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
               </label>
             </div>
@@ -280,7 +286,8 @@
                   type="radio"
                   name="patented"
                   [(ngModel)]="innovation.patented"
-                  [value]="false">
+                  [value]="false"
+                  (ngModelChange)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
               </label>
 
@@ -289,7 +296,8 @@
                   type="radio"
                   name="patented"
                   [(ngModel)]="innovation.patented"
-                  [value]="true">
+                  [value]="true"
+                  (ngModelChange)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
               </label>
             </div>
@@ -313,7 +321,8 @@
                   type="radio"
                   name="external_diffusion"
                   [(ngModel)]="innovation.external_diffusion"
-                  [value]="false">
+                  [value]="false"
+                  (ngModelChange)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
               </label>
 
@@ -322,7 +331,8 @@
                   type="radio"
                   name="external_diffusion"
                   [(ngModel)]="innovation.external_diffusion"
-                  [value]="true">
+                  [value]="true"
+                  (ngModelChange)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
               </label>
             </div>
@@ -363,13 +373,75 @@
 
           <div class="pd-input">
 
+            <!-- Media display -->
+            <ng-container *ngIf="innovationCard.media?.length > 0">
 
-            <!-- Uploading center
+              <!-- Main media -->
+              <div class="main-media-wrapper">
+                <p>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAIN' | translate }}</p>
+
+                <!-- Photo -->
+                <div *ngIf="innovationCard.principalMedia?.type === 'PHOTO'" class="media-body">
+                  <img [src]="innovationCard.principalMedia.url" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" height="146" width="220">
+                </div>
+
+                <!-- Video -->
+                <div *ngIf="innovationCard.principalMedia?.type === 'VIDEO'" class="media-body">
+                  <iframe frameborder="0" [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationCard.principalMedia.video.embeddableUrl)"></iframe>
+                </div>
+
+                <!-- Delete media -->
+                <div *ngIf="canEdit" class="delete-wrapper">
+                  <span (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                </div>
+
+              </div>
+              <!-- /Main media -->
+
+              <!-- Secondary medias -->
+              <div *ngIf="innovationCard.media.length > 1" class="secondary-media-wrapper">
+                <p>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SECONDARY' | translate }}</p>
+
+                <div class="media-content">
+                  <ng-container *ngFor="let media of innovationCard.media">
+                    <div *ngIf="innovationCard.principalMedia?._id !== media._id" class="media-body">
+
+                      <!-- Photo -->
+                      <img
+                        *ngIf="media.type === 'PHOTO'"
+                        [src]="'https://res.cloudinary.com/umi/image/upload/' + (media.cloudinary ? media.cloudinary.public_id : 'app/no-image.png')"
+                        [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
+
+                      <!-- Video -->
+                      <iframe *ngIf="media.type === 'VIDEO'" frameborder="0" [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"></iframe>
+
+                      <!-- Make primary media -->
+                      <div *ngIf="canEdit" class="main-link">
+                        <span (click)="onClickSetMainMedia($event, media, i)">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAKE_MAIN' | translate }}</span>
+                      </div>
+
+                      <!-- Delete media -->
+                      <div *ngIf="canEdit" class="delete-wrapper">
+                        <span (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                      </div>
+
+                    </div>
+                  </ng-container>
+                </div>
+
+              </div>
+              <!-- Secondary medias -->
+
+
+            </ng-container>
+            <!-- /Media display -->
+
+            <!-- Uploading center -->
             <div *ngIf="canEdit" class="upload-wrapper">
 
               <div class="image-upload-wrapper">
                 <app-shared-upload-zone-photo
-                  [uri]="'/innovation/'+innovation._id+'/innovationCard/'+innovationItem._id+'/media/image'"
+                  [uri]="'/innovation/'+innovation._id+'/innovationCard/'+innovationCard._id+'/media/image'"
                   (cbFn)="uploadImage($event, i)">
                 </app-shared-upload-zone-photo>
               </div>
@@ -383,7 +455,7 @@
               </div>
 
             </div>
-             /Uploading center -->
+            <!-- /Uploading center -->
 
           </div>
 

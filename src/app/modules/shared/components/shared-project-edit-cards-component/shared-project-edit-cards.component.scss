@@ -6,6 +6,22 @@
     padding: 0;
   }
 
+
+  .delete-wrapper {
+
+    span {
+      color: $alert-color;
+      font-size: .875rem;
+      cursor: pointer;
+    }
+
+    span:hover {
+      text-decoration: underline;
+    }
+
+  }
+
+
   .section-language {
     display: flex;
     justify-content: space-between;
@@ -54,16 +70,6 @@
 
       }
 
-    }
-
-    .delete-wrapper {
-      color: $alert-color;
-      font-size: .875rem;
-      cursor: pointer;
-    }
-
-    .delete-wrapper:hover {
-      text-decoration: underline;
     }
 
   }
@@ -115,6 +121,65 @@
   }
 
 
+  .main-media-wrapper, .secondary-media-wrapper {
+    padding-bottom: 1.2rem;
+    text-align: center;
+
+    p {
+      font-size: 1rem;
+      padding-bottom: .6rem;
+      color: $meta-color;
+    }
+
+    .media-body {
+      display: inline-flex;
+      margin-top: .6rem;
+    }
+
+    .delete-wrapper, .main-link {
+      padding-top: .6rem;
+    }
+
+    .media-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .media-body {
+        margin-left: 1.2rem;
+        margin-right: 1.2rem;
+        flex-direction: column;
+
+        .main-link {
+
+          span {
+            color: $primary-color;
+            font-size: .875rem;
+            cursor: pointer;
+          }
+
+          span:hover {
+            text-decoration: underline;
+          }
+
+        }
+
+        .delete-wrapper {
+          padding-bottom: 1.2rem;
+        }
+
+      }
+
+    }
+
+    img, iframe {
+      width: 220px;
+      height: 152px;
+    }
+
+  }
+
+
   .upload-wrapper {
     display: flex;
     justify-content: space-between;
@@ -142,6 +207,11 @@
       flex: 1;
     }
 
+  }
+
+
+  .form-default.ng-touched.ng-invalid {
+    border-color: $border-color;
   }
 
 

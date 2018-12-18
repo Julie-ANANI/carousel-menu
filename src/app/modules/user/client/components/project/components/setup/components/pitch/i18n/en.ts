@@ -73,8 +73,8 @@ export const PITCH = {
     'SUB_LABEL': '(It is highly recommended and projects with media attached tend to have a much better response rate.)',
     'MAIN': 'Main media',
     'SECONDARY': 'Secondary medias',
-    'UPLOAD_PICTURE': 'Upload picture',
-    'UPLOAD_VIDEO': 'Upload video',
+    'UPLOAD_PICTURE': 'Upload Picture',
+    'UPLOAD_VIDEO': 'Upload Video',
     'SLIDE': 'drag the file here',
     'URL': 'Enter the address of your Youtube or Vimeo video here',
     'MAKE_MAIN': 'Make it as main media'
