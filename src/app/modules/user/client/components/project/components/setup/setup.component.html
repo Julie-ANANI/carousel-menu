@@ -12,7 +12,7 @@
         <div *ngIf="innovation.principalMedia?.type === 'PHOTO'" class="main-media">
           <img
             [src]="innovation.principalMedia.url"
-            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+            [alt]=" "
             width="150px" height="">
         </div>
 
@@ -43,7 +43,7 @@
 
 
 
-<div *ngIf="innovation" class="section-container" id="setup-component">
+<div *ngIf="innovation" class="section-container animate-page" id="setup-component">
 
   <!-- project under submitted status -->
   <div *ngIf="innovation.status === 'SUBMITTED'" class="banner-wrapper">

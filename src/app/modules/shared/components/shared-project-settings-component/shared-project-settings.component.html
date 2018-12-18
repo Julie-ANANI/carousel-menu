@@ -290,8 +290,7 @@
         <!-- /Professional profiles -->
 
         <!-- Keyword and other stuffs -->
-        <div
-          [ngStyle]="{ 'padding-top': innovationSettings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
+        <div [ngStyle]="{ 'padding-top': innovationSettings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
           <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
 
           <div *ngIf="!canEdit" class="pd-input">

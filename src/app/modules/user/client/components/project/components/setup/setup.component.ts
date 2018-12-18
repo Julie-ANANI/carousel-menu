@@ -6,9 +6,6 @@ import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationSettings } from '../../../../../../../models/innov-settings';
 
-
-// const DEFAULT_TAB = 'targeting';
-
 @Component({
   selector: 'app-setup',
   templateUrl: 'setup.component.html',

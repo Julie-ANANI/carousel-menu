@@ -244,9 +244,9 @@ textarea {
   background: $meta-color;
   border-color: $meta-color;
   height: 1.3125rem;
-  width: 1.12rem;
+  width: 1.2rem;
   left: -1px;
-  top: -30%;
+  top: -3.5px;
 }
 
 .form-switch .form-icon  {
@@ -343,4 +343,14 @@ textarea {
     max-width: 50% !important;
   }
   
+}
+
+@media (max-width: 600px) {
+
+
+  .form-switch .form-icon::before {
+    top: -4px !important;
+  }
+
+
 }
