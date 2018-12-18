@@ -270,3 +270,13 @@ a, a:focus, a:hover, a:active, a.active {
   }
 
 }
+
+
+/*
+    Pagination wrapper
+ */
+.pagination-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 3.15rem;
+}

@@ -7,6 +7,7 @@ import { PaginationInterface } from '../../../../utility-components/pagination/i
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -37,6 +38,10 @@ export class ProjectsListComponent implements OnInit {
 
   private _total: number;
 
+  innovationId: string;
+
+  deleteModal = false;
+
   private _config = {
     fields: 'name created updated status collaborators principalMedia',
     limit: '10',
@@ -53,7 +58,8 @@ export class ProjectsListComponent implements OnInit {
   constructor(private translateService: TranslateService,
               private userService: UserService,
               private translateTitleService: TranslateTitleService,
-              private translateNotificationService: TranslateNotificationsService) {}
+              private translateNotificationService: TranslateNotificationsService,
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
@@ -102,6 +108,34 @@ export class ProjectsListComponent implements OnInit {
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/v1542811700/app/default-images/icons/no-image.png';
     }
+
+  }
+
+
+  onClickDelete(event: Event, innovationId: string) {
+    event.preventDefault();
+    this.innovationId = innovationId;
+    this.deleteModal = true;
+  }
+
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this.deleteModal = false;
+    this.innovationId = '';
+  }
+
+
+  onClickSubmit(event: Event) {
+    event.preventDefault();
+
+    this.innovationService.remove(this.innovationId).pipe(first()).subscribe((response: any) => {
+      this.translateNotificationService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
+      this.loadProjects();
+      this.closeModal(event);
+    }, (err: any) => {
+      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
+    });
 
   }
 

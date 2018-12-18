@@ -8,11 +8,6 @@
 
     .bot-rect {
       max-width: 354px;
-      animation-name: slideInDown;
-    }
-
-    .bot-triangle {
-      animation-duration: 4s;
     }
 
   }
@@ -62,18 +57,22 @@
               font-weight: 600;
             }
 
+            .text-link {
+              font-size: 0.85rem;
+              font-weight: 600;
+              color: $alert-color;
+            }
+
+            .text-link:hover {
+              color: $alert-color;
+            }
+
           }
 
         }
 
       }
 
-    }
-
-    .pagination-wrapper {
-      display: flex;
-      justify-content: flex-end;
-      padding-top: 3.15rem;
     }
 
   }

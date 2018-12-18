@@ -120,7 +120,3 @@ getDomain(): string {
  return environment.domain;
 }*/
 
-/*  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }*/

@@ -8,7 +8,7 @@ export const COMMON = {
   'SEND': 'Send',
   'CHANGE': 'Change',
   'DELETE': 'Delete',
-  'SUBMIT': 'CONFIRM',
+  'SUBMIT': 'Confirm',
   'LOG_IN': 'Sign in',
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Sign out',
