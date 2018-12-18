@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Innovation} from '../../../../models/innovation';
 import {TranslationService} from '../../../../services/translation/translation.service';
-import {forkJoin} from 'rxjs';
+import {forkJoin, Subject} from 'rxjs';
 import {environment} from '../../../../../environments/environment';
 import {Media, Video} from '../../../../models/media';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {InnovCard} from '../../../../models/innov-card';
+import {InnovationCommonService} from '../../../../services/innovation/innovation-common.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 // declare const tinymce: any;
 
@@ -37,6 +40,8 @@ export class SharedProjectEditCardsComponent implements OnInit {
 
   innovation: Innovation;
 
+  ngUnsubscribe: Subject<any> = new Subject();
+
   canEdit = false;
 
   adminMode = false;
@@ -47,16 +52,70 @@ export class SharedProjectEditCardsComponent implements OnInit {
 
   companyName: string = environment.companyShortName;
 
+  saveChanges = false;
+
   constructor(private translationService: TranslationService,
-              private innovationService: InnovationService,) {}
+              private innovationService: InnovationService,
+              private innovationCommonService: InnovationCommonService,
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
+
+    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      this.saveChanges = response;
+    });
+
+    console.log(this.saveChanges);
+
   }
 
 
+  /***
+   * this function is to notify all the changes that the user made
+   * in the model.
+   */
+  private notifyChanges() {
+    this.innovationCommonService.setNotifyChanges(true);
+  }
+
+
+  /***
+   * this fucntion is called when the user clicks on one of the lang,
+   * and according to that we display the lang form.
+   * @param event
+   * @param index
+   */
   onLangSelect(event: Event, index: number) {
     event.preventDefault();
     this.selectedCardIndex = index;
+  }
+
+
+  /***
+   * this function is called when the user tries to add the lang in the
+   * project.
+   * @param event
+   * @param lang
+   */
+  onCreateInnovationCard(event: Event, lang: string) {
+    event.preventDefault();
+
+    if (this.canEdit) {
+      if (!this.saveChanges) {
+        if (this.innovation.innovationCards.length < 2 && this.innovation.innovationCards.length !== 0) {
+          this.innovationService.createInnovationCard(this.innovation._id, new InnovCard({ lang: lang})).pipe(first()).subscribe((data: InnovCard) => {
+            this.innovation.innovationCards.push(data);
+            this.notifyChanges();
+            this.selectedCardIndex = this.innovation.innovationCards.length - 1;
+            this.onLangSelect(event, this.selectedCardIndex);
+            this.notifyChanges();
+          });
+        }
+      } else {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+      }
+    }
+
   }
 
 
@@ -102,7 +161,6 @@ export class SharedProjectEditCardsComponent implements OnInit {
     } else if (event.id.indexOf('solution') !== -1) {
       this.innovation.innovationCards[this.selectedCardIndex].solution = event.content;
     }
-
   }
 
 

@@ -92,6 +92,6 @@ export const PITCH = {
 
   'INNOVATION_PREVIEW': 'Preview',
 
-  'DELETE_LANGUAGE': 'Delete selected language'
+  'DELETE_LANGUAGE': 'Delete Selected Language'
 
 };

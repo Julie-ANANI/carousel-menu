@@ -10,12 +10,13 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 
+import { InnovationCommonService } from '../../../../../services/innovation/innovation-common.service';
+
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarCollaboratorModule } from '../../../../sidebar/components/collaborator/sidebar-collaborator.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
-
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { SharedProjectEditCardsModule } from '../../../../shared/components/shar
     SurveyComponent
   ],
   providers: [
+    InnovationCommonService
   ],
   exports: [
     ProjectComponent

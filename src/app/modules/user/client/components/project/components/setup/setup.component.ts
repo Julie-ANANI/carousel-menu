@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationSettings } from '../../../../../../../models/innov-settings';
+import {InnovationCommonService} from '../../../../../../../services/innovation/innovation-common.service';
 
 @Component({
   selector: 'app-setup',
@@ -28,8 +29,11 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   currentPage: string;
 
+  saveChanges = false;
+
   constructor(private scrollService: ScrollService,
-              private router: Router) { }
+              private router: Router,
+              private innovationCommonService: InnovationCommonService) { }
 
   ngOnInit() {
     this.getCurrentPage();
@@ -44,7 +48,14 @@ export class SetupComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      this.saveChanges = response;
+      console.log(this.saveChanges);
+    });
+
     console.log(this.innovation);
+
+    console.log(this.saveChanges);
 
   }
 

@@ -13,6 +13,8 @@ export class InnovationCommonService {
 
   innovationSubject = new Subject<Innovation>();
 
+  saveNotifySubject = new Subject<boolean>();
+
   constructor(private innovationService: InnovationService) { }
 
   setInnovation(innovation: Innovation) {
@@ -32,5 +34,20 @@ export class InnovationCommonService {
       this.innovationSubject.next(response);
     });
   }
+
+
+  /***
+   * this function is called when there are some changes and we want to notify
+   * in the component that changes are to be saved or not.
+   * @param value
+   */
+  setNotifyChanges(value: boolean) {
+    this.saveNotifySubject.next(value);
+  }
+
+  getNotifyChanges(): Subject<boolean> {
+    return this.saveNotifySubject;
+  }
+
 
 }

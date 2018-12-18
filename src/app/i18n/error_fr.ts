@@ -1,5 +1,5 @@
 export const ERROR = {
-  'ERROR': 'Oups...',
+  'ERROR': 'Oups..',
 
   'SUCCESS': 'Succès',
 
@@ -63,7 +63,7 @@ export const ERROR = {
     'DELETED_PROJECT_TEXT': 'Votre projet a été supprimé.',
     'NOT_DELETED_TEXT': 'Votre projet ne peut pas être supprimé pour le moment pour des raisons techniques. Veuillez réessayer plus tard !',
     'SAVED_TEXT': 'Votre projet a été enregistré.',
-    'SAVE_ERROR': 'Veuillez sauvegarder toutes vos modifications avant de continuer.',
+    'SAVE_ERROR': 'Vous devez sauvegarder toutes les modifications avant de continuer.',
     'SUBMITTED': 'Soumis',
     'SUBMITTED_TEXT': 'Votre projet a été envoyé pour validation.',
     'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'

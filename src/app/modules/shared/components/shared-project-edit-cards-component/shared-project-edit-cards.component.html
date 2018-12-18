@@ -6,6 +6,7 @@
     <div class="section-language">
 
       <div class="selection-wrapper">
+
         <!-- ques -->
         <div class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE.HEADING' | translate }}</div>
 
@@ -21,10 +22,10 @@
           <p *ngIf="innovation.innovationCards?.length < 2 && canEdit">
             {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE.ADD_PROJECT_LANGUAGE' | translate }}
             <span class="text-link">
-              <span *ngIf="!containsLanguage('fr')">
+              <span *ngIf="!containsLanguage('fr')" (click)="onCreateInnovationCard($event, 'fr')">
                 {{ 'COMMON.LANG.FR' | translate }}
               </span>
-              <span *ngIf="!containsLanguage('en')">
+              <span *ngIf="!containsLanguage('en')" (click)="onCreateInnovationCard($event, 'en')">
                 {{ 'COMMON.LANG.EN' | translate }}
               </span>
             </span>
@@ -32,7 +33,7 @@
         </ul>
       </div>
 
-      <div *ngIf="innovation.innovationCards?.length > 1 && canEdit" class="delete-wrapper">
+      <div *ngIf="innovation.innovationCards.length > 1 && canEdit" class="delete-wrapper">
         {{ 'PROJECT_MODULE.SETUP.PITCH.DELETE_LANGUAGE' | translate }}
       </div>
 
@@ -363,7 +364,7 @@
           <div class="pd-input">
 
 
-            <!-- Uploading center -->
+            <!-- Uploading center
             <div *ngIf="canEdit" class="upload-wrapper">
 
               <div class="image-upload-wrapper">
@@ -382,7 +383,7 @@
               </div>
 
             </div>
-            <!-- /Uploading center -->
+             /Uploading center -->
 
           </div>
 
