@@ -233,12 +233,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   deleteMedia(event: Event, media: Media, index: number): void {
     event.preventDefault();
 
-    this.innovationService.deleteMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[index]._id, media._id)
-      .pipe(first())
+    this.innovationService.deleteMediaOfInnovationCard(this.project._id, this.project.innovationCards[index]._id, media._id)
       .subscribe((_res: Innovation) => {
         this.project.innovationCards[index].media = this.project.innovationCards[index].media.filter((m) => m._id !== media._id);
-        if (this.project.innovationCards[index].principalMedia._id === media._id) {
+        if (this.project.innovationCards[index].principalMedia && this.project.innovationCards[index].principalMedia._id === media._id) {
           this.project.innovationCards[index].principalMedia = null;
         }
         this.projectChange.emit(this.project);
