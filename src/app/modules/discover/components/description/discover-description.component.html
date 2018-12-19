@@ -1,3 +1,4 @@
+<app-header></app-header>
 <section class="section-container" id="discover-description">
 
 
@@ -130,11 +131,16 @@
       <!-- /Solution and issue section -->
 
     </div>
+
+    <div class="text-center" [ngStyle]="{ 'margin-top': '3.15rem' }">
+      <a routerLink="/discover" class="btn btn-primary">{{ 'DISCOVERDESCRIPTION.DISCOVER_OTHER' | translate }}</a>
+    </div>
+
   </ng-container>
   <!-- /Display innovation card -->
 
-
 </section>
+<app-footer></app-footer>
 
 
 <!-- Modal to display media -->
