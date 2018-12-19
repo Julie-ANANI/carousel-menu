@@ -74,6 +74,7 @@ app.get('*', (req, res) => {
   }, (err, html) => {
     if (err) {
       // Here we catch the errors and we send back a generic error message.
+      console.error(err);
       res.send('An error occured.');
     }
     res.send(html);
