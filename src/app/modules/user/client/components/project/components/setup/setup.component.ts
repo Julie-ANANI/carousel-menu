@@ -1,11 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { ScrollService } from '../../../../../../../services/scroll/scroll.service';
-import { takeUntil } from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationSettings } from '../../../../../../../models/innov-settings';
 import {InnovationCommonService} from '../../../../../../../services/innovation/innovation-common.service';
+import {InnovationService} from '../../../../../../../services/innovation/innovation.service';
+import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-setup',
@@ -21,25 +23,33 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   innovation: Innovation;
 
-  selectedInnovationIndex = 0;
+  selectedInnovationIndex: number;
 
-  scrollOn = false;
+  scrollOn: boolean;
 
   ngUnsubscribe: Subject<any> = new Subject();
 
   currentPage: string;
 
-  saveChanges = false;
+  saveChanges: boolean;
+
+  buttonSaveClass: string;
 
   constructor(private scrollService: ScrollService,
               private router: Router,
-              private innovationCommonService: InnovationCommonService) { }
+              private innovationCommonService: InnovationCommonService,
+              private innovationService: InnovationService,
+              private translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+
+    this.initializeVariables();
+
     this.getCurrentPage();
 
     this.scrollService.getScrollValue().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.scrollOn = value > 50;
+      console.log(value);
     });
 
     this.router.events.subscribe((event) => {
@@ -50,13 +60,20 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
       this.saveChanges = response;
-      console.log(this.saveChanges);
     });
 
     console.log(this.innovation);
 
     console.log(this.saveChanges);
 
+  }
+
+
+  private initializeVariables() {
+    this.scrollOn = false;
+    this.selectedInnovationIndex = 0;
+    this.saveChanges = false;
+    this.buttonSaveClass = 'save-disabled';
   }
 
 
@@ -72,11 +89,46 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
 
+  /***
+   * this function is called when the user wants to save the innovation changes.
+   * @param event
+   */
+  onClickSave(event: Event) {
+    event.preventDefault();
+
+    this.innovationCommonService.completionCalculation(this.innovation);
+
+    const percentages = this.innovationCommonService.calculatedPercentages;
+
+    if (percentages) {
+      this.innovation.settings.completion = percentages.settingPercentage;
+      this.innovation.completion = percentages.totalPercentage;
+      percentages.innovationCardsPercentage.forEach((item: any) => {
+        const index = this.innovation.innovationCards.findIndex(card => card.lang === item.lang);
+        this.innovation.innovationCards[index].completion = item.percentage;
+      });
+    }
+
+    this.innovationService.save(this.innovation._id, this.innovation).pipe(first()).subscribe((response: Innovation) => {
+      this.innovation = response;
+      this.buttonSaveClass = 'save-disabled';
+      this.innovationCommonService.setNotifyChanges(false);
+      this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
+
   /*
       Here we are receiving the value from the targeting form.
    */
   updateSettings(value: InnovationSettings): void {
-    this.innovation.settings = value;
+    if (this.innovation.status === 'EDITING' || this.innovation.status === 'SUBMITTED') {
+      this.innovation.settings = value;
+      this.buttonSaveClass = 'save-active';
+    }
   }
 
 
@@ -84,7 +136,10 @@ export class SetupComponent implements OnInit, OnDestroy {
      Here we are checking if there are any changes in the pitch form.
   */
   updatePitch(value: Innovation) {
-    this.innovation.innovationCards = value.innovationCards;
+    if (this.innovation.status === 'EDITING' || this.innovation.status === 'SUBMITTED') {
+      this.innovation.innovationCards = value.innovationCards;
+      this.buttonSaveClass = 'save-active';
+    }
   }
 
 

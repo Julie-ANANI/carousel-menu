@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -6,16 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.component.scss']
 })
 
-export class UserComponent implements OnInit {
+export class UserComponent {
 
-  constructor() {
-    /*this.loaderService.isLoading$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((isLoading: boolean) => {
-      setTimeout(() => {
-        this.displayLoader = isLoading;
-      });
-    });*/
-  }
+  constructor() { }
 
-  ngOnInit() { }
 
 }

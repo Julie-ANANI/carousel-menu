@@ -26,7 +26,7 @@
         margin-bottom: .9375rem;
 
         span {
-          margin-right: .6rem;
+          margin-right: 1.2rem;
           margin-bottom: .6rem;
         }
 
@@ -34,6 +34,44 @@
           margin-top: -12px;
           margin-left: -11px;
           visibility: hidden;
+
+          i {
+            color: white;
+          }
+
+        }
+
+        .save-disabled {
+
+          .ghost-primary {
+            border-color: $border-color !important;
+            color: $disabled-text-color !important;
+            background-color: $border-color !important;
+            cursor: not-allowed;
+          }
+
+        }
+
+        .save-active {
+
+          .ghost-primary {
+            border-color: $validation-color !important;
+            color: #262831  !important;
+          }
+
+          .ghost-primary:hover {
+            background-color: $hover-background-color !important;
+            box-shadow: none;
+          }
+
+          .circle-check {
+            background: $validation-color !important;
+            visibility: visible;
+            animation-name: fadeIn;
+            animation-duration: .5s;
+            animation-timing-function: ease-in-out;
+          }
+
         }
 
       }

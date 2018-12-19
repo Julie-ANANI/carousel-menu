@@ -71,8 +71,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.saveChanges = response;
     });
 
-    console.log(this.saveChanges);
-
   }
 
 

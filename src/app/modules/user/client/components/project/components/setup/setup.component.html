@@ -88,9 +88,9 @@
               {{ 'PROJECT_MODULE.SETUP.PREVIEW_BUTTON' | translate }}
             </button>
           </span>
-          <span>
+          <span [ngClass]="buttonSaveClass">
             <div class="circle-check"><i class="fas fa-save"></i></div>
-            <button class="btn btn-primary ghost-primary">
+            <button class="btn btn-primary ghost-primary" (click)="onClickSave($event)">
               {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
             </button>
           </span>
