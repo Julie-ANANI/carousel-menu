@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { SharedProjectEditCardsComponent } from './shared-project-edit-cards.component';
 
@@ -17,7 +17,6 @@ import { SharedUploadZoneVideoModule } from '../shared-upload-zone-video/shared-
     CommonModule,
     TranslateModule.forChild(),
     FormsModule,
-    ReactiveFormsModule,
     PipeModule,
     SharedTextZoneModule,
     InputListModule,

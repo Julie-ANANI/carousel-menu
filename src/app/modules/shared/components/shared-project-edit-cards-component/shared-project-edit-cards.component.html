@@ -1,5 +1,4 @@
 <div *ngIf="innovation" id="shared-project-edit-cards-component">
-  <form novalidate>
 
 
     <!-- language section -->
@@ -78,10 +77,9 @@
                     id="edit-innovation-title"
                     class="form-default"
                     name="title"
-                    #title="ngModel"
                     [(ngModel)]="innovationCard.title"
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
-                    (ngModelChange)="notifyChanges()">
+                    (change)="notifyChanges()">
                 </div>
 
               </div>
@@ -242,7 +240,7 @@
                   name="projectStatus"
                   [(ngModel)]="innovation.projectStatus"
                   [value]="0"
-                  (ngModelChange)="notifyChanges()">
+                  (change)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
               </label>
 
@@ -252,7 +250,7 @@
                   name="projectStatus"
                   [(ngModel)]="innovation.projectStatus"
                   [value]="1"
-                  (ngModelChange)="notifyChanges()">
+                  (change)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
               </label>
 
@@ -262,7 +260,7 @@
                   name="projectStatus"
                   [(ngModel)]="innovation.projectStatus"
                   [value]="2"
-                  (ngModelChange)="notifyChanges()">
+                  (change)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
               </label>
             </div>
@@ -287,7 +285,7 @@
                   name="patented"
                   [(ngModel)]="innovation.patented"
                   [value]="false"
-                  (ngModelChange)="notifyChanges()">
+                  (change)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
               </label>
 
@@ -297,7 +295,7 @@
                   name="patented"
                   [(ngModel)]="innovation.patented"
                   [value]="true"
-                  (ngModelChange)="notifyChanges()">
+                  (change)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
               </label>
             </div>
@@ -322,7 +320,7 @@
                   name="external_diffusion"
                   [(ngModel)]="innovation.external_diffusion"
                   [value]="false"
-                  (ngModelChange)="notifyChanges()">
+                  (change)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
               </label>
 
@@ -332,7 +330,7 @@
                   name="external_diffusion"
                   [(ngModel)]="innovation.external_diffusion"
                   [value]="true"
-                  (ngModelChange)="notifyChanges()">
+                  (change)="notifyChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
               </label>
             </div>
@@ -465,7 +463,6 @@
     <!-- /media section -->
 
 
-  </form>
 </div>
 
 

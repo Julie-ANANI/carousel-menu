@@ -1,13 +1,13 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { ScrollService } from '../../../../../../../services/scroll/scroll.service';
-import {first, takeUntil} from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationSettings } from '../../../../../../../models/innov-settings';
-import {InnovationCommonService} from '../../../../../../../services/innovation/innovation-common.service';
-import {InnovationService} from '../../../../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
+import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
+import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-setup',
@@ -49,7 +49,6 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this.scrollService.getScrollValue().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.scrollOn = value > 50;
-      console.log(value);
     });
 
     this.router.events.subscribe((event) => {
@@ -63,9 +62,6 @@ export class SetupComponent implements OnInit, OnDestroy {
     });
 
     console.log(this.innovation);
-
-    console.log(this.saveChanges);
-
   }
 
 
@@ -109,7 +105,7 @@ export class SetupComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.innovationService.save(this.innovation._id, this.innovation).pipe(first()).subscribe((response: Innovation) => {
+    this.innovationService.save(this.innovation._id, this.innovation).subscribe((response: Innovation) => {
       this.innovation = response;
       this.buttonSaveClass = 'save-disabled';
       this.innovationCommonService.setNotifyChanges(false);
@@ -137,7 +133,7 @@ export class SetupComponent implements OnInit, OnDestroy {
   */
   updatePitch(value: Innovation) {
     if (this.innovation.status === 'EDITING' || this.innovation.status === 'SUBMITTED') {
-      this.innovation.innovationCards = value.innovationCards;
+      this.innovation = value;
       this.buttonSaveClass = 'save-active';
     }
   }

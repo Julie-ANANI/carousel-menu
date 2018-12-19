@@ -1,13 +1,13 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { AuthService } from './services/auth/auth.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
-import { TranslateNotificationsService } from './services/notifications/notifications.service';
-import { NavigationEnd, Router } from '@angular/router';
-// import { ScrollService } from './services/scroll/scroll.service';
-import { LoaderService } from './services/loader/loader.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {isPlatformBrowser} from '@angular/common';
+import {AuthService} from './services/auth/auth.service';
+import {initTranslation, TranslateService} from './i18n/i18n';
+import {TranslateNotificationsService} from './services/notifications/notifications.service';
+import {NavigationEnd, Router} from '@angular/router';
+import {ScrollService} from './services/scroll/scroll.service';
+import {LoaderService} from './services/loader/loader.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
               private router: Router,
-              // private scrollService: ScrollService,
+              private scrollService: ScrollService,
               private loaderService: LoaderService) {}
 
   ngOnInit(): void {
@@ -46,10 +46,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (isPlatformBrowser(this.platformId)) {
       this.router.events.subscribe((event) => {
-        if (!(event instanceof NavigationEnd)) {
-          return;
+        if (event instanceof NavigationEnd) {
+          window.scrollTo(0, 0);
         }
-        window.scrollTo(0, 0);
       });
     }
 
@@ -76,7 +75,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    // this.scrollService.setScrollValue(window.pageYOffset || window.scrollY || 0);
+    this.scrollService.setScrollValue(window.pageYOffset || window.scrollY || 0);
   }
 
 
