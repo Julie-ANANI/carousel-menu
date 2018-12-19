@@ -61,6 +61,10 @@ export class SetupComponent implements OnInit, OnDestroy {
       this.saveChanges = response;
     });
 
+    this.innovationCommonService.getSelectedInnovationIndex().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: number) => {
+      this.selectedInnovationIndex = response;
+    });
+
     console.log(this.innovation);
   }
 
@@ -82,6 +86,15 @@ export class SetupComponent implements OnInit, OnDestroy {
   setCurrentTab(event: Event, value: string) {
     event.preventDefault();
     this.currentPage = value;
+  }
+
+
+  /***
+   * this function is called when the user wants to preview the innovation card.
+   * @param event
+   */
+  onClickPreview(event: Event) {
+    event.preventDefault();
   }
 
 

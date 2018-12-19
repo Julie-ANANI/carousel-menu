@@ -37,6 +37,8 @@ export class InnovationCommonService {
 
   saveNotifySubject = new Subject<boolean>();
 
+  selectedInnovationIndex = new Subject<number>();
+
   constructor(private innovationService: InnovationService) { }
 
 
@@ -193,6 +195,19 @@ export class InnovationCommonService {
       }
       this.innovationSubject.next(response);
     });
+  }
+
+
+  /***
+   * this function is to set selected innovation index.
+   * @param value
+   */
+  setSelectedInnovationIndex(value: number) {
+    this.selectedInnovationIndex.next(value);
+  }
+
+  getSelectedInnovationIndex(): Subject<number> {
+    return this.selectedInnovationIndex;
   }
 
 

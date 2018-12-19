@@ -93,6 +93,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onLangSelect(event: Event, index: number) {
     event.preventDefault();
     this.selectedCardIndex = index;
+    this.innovationCommonService.setSelectedInnovationIndex(this.selectedCardIndex);
   }
 
 
