@@ -21,16 +21,22 @@
     min-height: unset !important;
   }
 
-  .modal, app-header, footer, app-sidebar {
+  .modal, app-header, app-footer, app-sidebar {
     display: none !important;
   }
 
 
   /********************************** Innovation Card ***************************************/
 
-  #setup-component, .header-project {
+  #setup-component, .header-project, #project-component .section-header {
     display: none !important;
   }
+
+
+  #project-component {
+    padding-bottom: 0;
+  }
+
 
   #innovation-card-print {
     display: flex !important;
@@ -65,13 +71,13 @@
         margin-bottom: 25px;
       }
 
-      .summary-text {
+      /*.summary-text {
 
         p:last-child {
           padding-bottom: 0;
         }
 
-      }
+      }*/
 
       .image-wrapper {
         padding-top: 15px;
@@ -97,9 +103,9 @@
             padding-top: 0;
           }
 
-          li:last-child {
+          /*li:last-child {
             padding-bottom: 0;
-          }
+          }*/
 
         }
 
@@ -108,7 +114,7 @@
     }
 
 
-    .column-2, .column-3 {
+    /*.column-2, .column-3 {
 
       .issue-text, .solution-text {
 
@@ -118,7 +124,7 @@
 
       }
 
-    }
+    }*/
 
 
   }

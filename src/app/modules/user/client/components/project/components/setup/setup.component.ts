@@ -9,6 +9,8 @@ import { InnovationCommonService } from '../../../../../../../services/innovatio
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import {SidebarInterface} from '../../../../../../sidebar/interfaces/sidebar-interface';
+import {Media} from '../../../../../../../models/media';
+import {InnovCard} from '../../../../../../../models/innov-card';
 
 @Component({
   selector: 'app-setup',
@@ -107,6 +109,16 @@ export class SetupComponent implements OnInit, OnDestroy {
 
 
   /***
+   * this function is called when the user wants to print the innovation.
+   * @param event
+   */
+  onClickPrint(event: Event) {
+    event.preventDefault();
+    window.print();
+  }
+
+
+  /***
    * this function is called when the user wants to preview the innovation card.
    * @param event
    */
@@ -180,6 +192,30 @@ export class SetupComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  getImageSrc(innovCard: InnovCard): string {
+
+    let src = '';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+
+    if (innovCard.principalMedia && innovCard.principalMedia.type === 'PHOTO') {
+      src = innovCard.principalMedia.url;
+    } else {
+      if (innovCard.media) {
+        const index = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
+        if (index !== -1) {
+          src = innovCard.media[index].url;
+        }
+      }
+    }
+
+    if (src === '') {
+      src = defaultSrc;
+    }
+
+    return src;
+
+  }
 
 
   ngOnDestroy(): void {

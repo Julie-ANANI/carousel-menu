@@ -1,48 +1,3 @@
-<div *ngIf="innovation" class="innovation-card-print">
-
-  <!-- Innovation detail -->
-  <div class="section-light-container">
-    <div class="section-inline-container innovation-wrapper white-background">
-
-      <!-- Column 1 -->
-      <div class="summary-wrapper">
-        <h1 class="main-heading">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h1>
-        <div [innerHtml]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
-
-        <div *ngIf="innovation.principalMedia?.type === 'PHOTO'" class="main-media">
-          <img
-            [src]="innovation.principalMedia.url"
-            [alt]=" "
-            width="150px" height="">
-        </div>
-
-        <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
-        <ul class="advantage-wrapper">
-          <li *ngFor="let advantage of innovation.innovationCards[selectedInnovationIndex].advantages;">
-            {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- Column 2 -->
-      <div class="issue-wrapper">
-        <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-        <div [innerHtml]="innovation.innovationCards[selectedInnovationIndex].problem"></div>
-      </div>
-
-      <!-- Column 3 -->
-      <div class="solution-wrapper">
-        <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-        <div [innerHtml]="innovation.innovationCards[selectedInnovationIndex].solution"></div>
-      </div>
-    </div>
-  </div>
-  <!-- /Innovation detail -->
-
-</div>
-
-
-
 <div *ngIf="innovation" class="section-container animate-page" id="setup-component">
 
   <!-- project under submitted status -->
@@ -79,7 +34,7 @@
         <!-- Buttons -->
         <div class="buttons-wrapper">
           <span>
-            <button class="btn ghost-primary gtm-print-card">
+            <button class="btn ghost-primary gtm-print-card" (click)="onClickPrint($event)">
               {{ 'PROJECT_MODULE.SETUP.PRINT_BUTTON' | translate }}
             </button>
           </span>
@@ -166,3 +121,48 @@
   <app-innovation-preview [innovation]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
 </app-sidebar>
 <!-- /innovation preview sidebar -->
+
+
+
+<!-- print innovation -->
+<div *ngIf="innovation" id="innovation-card-print">
+
+  <!-- column 1 -->
+  <div class="column-1">
+
+    <h1 class="main-heading">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h1>
+
+    <div class="summary-text" [innerHTML]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
+
+    <div class="image-wrapper">
+      <img [src]="getImageSrc(innovation.innovationCards[selectedInnovationIndex])" [alt]=" " height="146" width="220">
+    </div>
+
+    <div class="advantage-wrapper">
+      <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+      <ul class="advantages">
+        <li *ngFor="let advantage of innovation.innovationCards[selectedInnovationIndex].advantages">
+          {{ advantage.text | FormatText }}
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /column 1 -->
+
+  <!-- column 2 -->
+  <div class="column-2">
+    <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+    <div class="issue-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].problem"></div>
+  </div>
+  <!-- /column 2 -->
+
+  <!-- column 3 -->
+  <div class="column-3">
+    <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+    <div class="solution-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].solution"></div>
+  </div>
+  <!-- /column 3 -->
+
+</div>
+<!-- /print innovation -->
