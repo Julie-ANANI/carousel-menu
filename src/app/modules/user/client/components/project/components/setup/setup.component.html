@@ -113,19 +113,19 @@
   <div class="column col-xs-12 col-11 col-mx-auto section-tabs">
     <ul class="tabs">
       <li>
-        <a [routerLink]="['setup', 'targeting']" [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
+        <a [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
           <i class="fas fa-check targeting-check"></i>
           {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
         </a>
       </li>
       <li>
-        <a [routerLink]="['setup', 'pitch']" [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
+        <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
           <i class="fas fa-check pitch-check"></i>
           {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
         </a>
       </li>
       <li>
-        <a [routerLink]="['setup', 'survey']" [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
+        <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
           <i class="fas fa-check survey-check"></i>
           {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
         </a>

@@ -3,7 +3,7 @@ import { Innovation } from '../../../../../../../models/innovation';
 import { ScrollService } from '../../../../../../../services/scroll/scroll.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { InnovationSettings } from '../../../../../../../models/innov-settings';
 import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
@@ -42,7 +42,8 @@ export class SetupComponent implements OnInit, OnDestroy {
               private router: Router,
               private innovationCommonService: InnovationCommonService,
               private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService) { }
+              private translateNotificationsService: TranslateNotificationsService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -86,10 +87,22 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
 
+  /***
+   * this function will activate the tab and user has to save all the changes
+   * before going to another page.
+   * @param event
+   * @param value
+   */
   setCurrentTab(event: Event, value: string) {
     event.preventDefault();
-    this.initializeVariables();
-    this.currentPage = value;
+
+    if (!this.saveChanges) {
+      this.currentPage = value;
+      this.router.navigate(['setup', value], {relativeTo: this.activatedRoute});
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+    }
+
   }
 
 

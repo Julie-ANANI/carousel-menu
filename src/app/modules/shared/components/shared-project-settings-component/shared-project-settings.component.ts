@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
+import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -52,7 +53,8 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   private _displayCompanyCommentSection = false;
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService,
+              private innovationCommonService: InnovationCommonService) {}
 
   ngOnInit() {
   }
@@ -263,6 +265,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   updateSettings() {
     if (this._canEdit) {
+      this.innovationCommonService.setNotifyChanges(true);
       this.settingsChange.emit(this._innovationSettings);
     }
   }
