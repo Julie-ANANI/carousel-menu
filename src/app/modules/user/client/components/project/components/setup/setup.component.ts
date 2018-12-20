@@ -88,6 +88,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   setCurrentTab(event: Event, value: string) {
     event.preventDefault();
+    this.initializeVariables();
     this.currentPage = value;
   }
 
