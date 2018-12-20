@@ -5,13 +5,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputListComponent } from './input-list.component';
 import { RouterModule } from '@angular/router';
 
+import { PipeModule } from '../../../pipe/pipe.module';
+
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    PipeModule
   ],
   declarations: [
     InputListComponent

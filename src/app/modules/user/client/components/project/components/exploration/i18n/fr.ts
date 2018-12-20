@@ -1,19 +1,10 @@
 export const EXPLORATION = {
-  'TITLE': {
-    'EDITING': 'Lancement de votre étude imminent...',
-    'SUBMITTED': 'En attente de validation de votre projet...',
-    'EVALUATING': 'Collecte des insights marché en cours',
-    'DONE': 'Synthèse de vos insights marché'
-  },
+  'TITLE': 'Aperçu du marché de votre projet',
 
   'MESSAGE': {
     'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
-    'EDITING': {
-      'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
-      'B': 'la configuration de votre projet',
-      'C': 'et le soumettre.'
-    },
-    'REVIEWING': 'Votre projet a besoin d\'être modifié. VousPlease read our comments.'
+    'EDITING': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
+    'REVIEWING': 'Veuillez modifier les modifications apportées à votre projet et le soumettre à nouveau.'
   },
 
   'STATUS_TEXT': {

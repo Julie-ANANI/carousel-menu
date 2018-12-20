@@ -21,26 +21,26 @@ import {InnovCard} from '../../../../../../../models/innov-card';
 export class SetupComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this.innovation = value;
+    this._innovation = value;
   }
 
-  innovation: Innovation;
+  private _innovation: Innovation;
 
-  selectedInnovationIndex: number;
+  private _selectedInnovationIndex: number;
 
-  scrollOn: boolean;
+  private _scrollOn: boolean;
 
-  ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
-  currentPage: string;
+  private _currentPage: string;
 
-  saveChanges: boolean;
+  private _saveChanges: boolean;
 
-  buttonSaveClass: string;
+  private _buttonSaveClass: string;
 
-  sidebarValue: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {};
 
-  submitModal: boolean;
+  private _submitModal: boolean;
 
   constructor(private scrollService: ScrollService,
               private router: Router,
@@ -55,8 +55,8 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this.getCurrentPage();
 
-    this.scrollService.getScrollValue().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
-      this.scrollOn = value > 50;
+    this.scrollService.getScrollValue().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
+      this._scrollOn = value > 50;
     });
 
     this.router.events.subscribe((event) => {
@@ -65,30 +65,29 @@ export class SetupComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
-      this.saveChanges = response;
+    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
     });
 
-    this.innovationCommonService.getSelectedInnovationIndex().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: number) => {
-      this.selectedInnovationIndex = response;
+    this.innovationCommonService.getSelectedInnovationIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: number) => {
+      this._selectedInnovationIndex = response;
     });
 
-    console.log(this.innovation);
   }
 
 
   private initializeVariables() {
-    this.scrollOn = false;
-    this.selectedInnovationIndex = 0;
-    this.saveChanges = false;
-    this.submitModal = false;
-    this.buttonSaveClass = 'save-disabled';
+    this._scrollOn = false;
+    this._selectedInnovationIndex = 0;
+    this._saveChanges = false;
+    this._submitModal = false;
+    this._buttonSaveClass = 'save-disabled';
   }
 
 
   private getCurrentPage() {
     const url = this.router.routerState.snapshot.url.split('/');
-    this.currentPage = url.length > 0 ? url[5] : 'targeting';
+    this._currentPage = url.length > 0 ? url[5] : 'targeting';
   }
 
 
@@ -101,8 +100,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   setCurrentTab(event: Event, value: string) {
     event.preventDefault();
 
-    if (!this.saveChanges) {
-      this.currentPage = value;
+    if (!this._saveChanges) {
+      this._currentPage = value;
       this.router.navigate(['setup', value], {relativeTo: this.activatedRoute});
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
@@ -128,8 +127,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   onClickPreview(event: Event) {
     event.preventDefault();
 
-    this.sidebarValue = {
-      animate_state: this.sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'PROJECT_MODULE.SETUP.PREVIEW',
       size: '726px'
     };
@@ -138,7 +137,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
 
   closeSidebar(value: SidebarInterface) {
-    this.sidebarValue.animate_state = value.animate_state;
+    this._sidebarValue.animate_state = value.animate_state;
   }
 
 
@@ -149,22 +148,22 @@ export class SetupComponent implements OnInit, OnDestroy {
   onClickSave(event: Event) {
     event.preventDefault();
 
-    this.innovationCommonService.completionCalculation(this.innovation);
+    this.innovationCommonService.completionCalculation(this._innovation);
 
     const percentages = this.innovationCommonService.calculatedPercentages;
 
     if (percentages) {
-      this.innovation.settings.completion = percentages.settingPercentage;
-      this.innovation.completion = percentages.totalPercentage;
+      this._innovation.settings.completion = percentages.settingPercentage;
+      this._innovation.completion = percentages.totalPercentage;
       percentages.innovationCardsPercentage.forEach((item: any) => {
-        const index = this.innovation.innovationCards.findIndex(card => card.lang === item.lang);
-        this.innovation.innovationCards[index].completion = item.percentage;
+        const index = this._innovation.innovationCards.findIndex(card => card.lang === item.lang);
+        this._innovation.innovationCards[index].completion = item.percentage;
       });
     }
 
-    this.innovationService.save(this.innovation._id, this.innovation).subscribe((response: Innovation) => {
-      this.innovation = response;
-      this.buttonSaveClass = 'save-disabled';
+    this.innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
+      this._innovation = response;
+      this._buttonSaveClass = 'save-disabled';
       this.innovationCommonService.setNotifyChanges(false);
       this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
     }, () => {
@@ -182,8 +181,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   onClickSubmit(event: Event) {
     event.preventDefault();
 
-    if (!this.saveChanges) {
-      this.submitModal = true;
+    if (!this._saveChanges) {
+      this._submitModal = true;
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     }
@@ -193,7 +192,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   closeModal(event: Event) {
     event.preventDefault();
-    this.submitModal = false;
+    this._submitModal = false;
   }
 
 
@@ -205,8 +204,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   onClickConfirm(event: Event) {
     event.preventDefault();
 
-    this.innovationService.submitProjectToValidation(this.innovation._id).pipe(first()).subscribe((response: Innovation) => {
-      this.innovation.status = 'SUBMITTED';
+    this.innovationService.submitProjectToValidation(this._innovation._id).pipe(first()).subscribe((response: Innovation) => {
+      this._innovation.status = 'SUBMITTED';
       this.router.navigate(['user/projects']);
       this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       }, () => {
@@ -221,9 +220,9 @@ export class SetupComponent implements OnInit, OnDestroy {
       Here we are receiving the value from the targeting form.
    */
   updateSettings(value: InnovationSettings): void {
-    if (this.innovation.status === 'EDITING') {
-      this.innovation.settings = value;
-      this.buttonSaveClass = 'save-active';
+    if (this._innovation.status === 'EDITING') {
+      this._innovation.settings = value;
+      this._buttonSaveClass = 'save-active';
     }
   }
 
@@ -232,9 +231,9 @@ export class SetupComponent implements OnInit, OnDestroy {
      Here we are checking if there are any changes in the pitch form.
   */
   updatePitch(value: Innovation) {
-    if (this.innovation.status === 'EDITING') {
-      this.innovation = value;
-      this.buttonSaveClass = 'save-active';
+    if (this._innovation.status === 'EDITING') {
+      this._innovation = value;
+      this._buttonSaveClass = 'save-active';
     }
   }
 
@@ -264,9 +263,45 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
 
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get selectedInnovationIndex(): number {
+    return this._selectedInnovationIndex;
+  }
+
+  get scrollOn(): boolean {
+    return this._scrollOn;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get currentPage(): string {
+    return this._currentPage;
+  }
+
+  get saveChanges(): boolean {
+    return this._saveChanges;
+  }
+
+  get buttonSaveClass(): string {
+    return this._buttonSaveClass;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  get submitModal(): boolean {
+    return this._submitModal;
+  }
+
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
-import { InputModule } from '../../../input/input.module';
 import { SharedSearchHistoryComponent} from './shared-search-history.component';
 import { PaginationModule } from '../../../utility-components/pagination/pagination.module';
 import { SharedFilterMultiModule } from '../shared-filter-multi/shared-filter-multi.module';
@@ -16,7 +15,6 @@ import { SharedFilterMultiModule } from '../shared-filter-multi/shared-filter-mu
     RouterModule,
     SharedFilterInputModule,
     TranslateModule.forChild(),
-    InputModule,
     PaginationModule,
     SharedFilterMultiModule
   ],

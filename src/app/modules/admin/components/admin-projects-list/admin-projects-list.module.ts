@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { InputModule } from '../../../input/input.module';
 import {TableModule} from '../../../table/table.module';
 import {AdminProjectsListComponent} from './admin-projects-list.component';
 
@@ -12,7 +11,6 @@ import {AdminProjectsListComponent} from './admin-projects-list.component';
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    InputModule,
     TableModule,
     TranslateModule.forChild()
   ],

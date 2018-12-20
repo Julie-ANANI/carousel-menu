@@ -15,7 +15,6 @@ import { AdminLibrariesModule } from './components/admin-libraries/admin-librari
 import { AdminCountryManagementModule } from './components/admin-settings/admin-country-management/admin-country-management.module';
 import { PipeModule } from '../../pipe/pipe.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
-import { InputModule } from '../input/input.module';
 import { AdminComponent } from './admin.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
@@ -47,7 +46,6 @@ import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboa
     TranslateModule.forChild(),
     SidebarModule,
     PipeModule,
-    InputModule,
     AdminCountryManagementModule,
     FormsModule,
     ReactiveFormsModule,

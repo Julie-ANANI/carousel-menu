@@ -11,7 +11,6 @@ import { AdminProjectCardsComponent } from './admin-project-cards/admin-project-
 import { AdminProjectCampaignsComponent } from './admin-project-campaigns/admin-project-campaigns.component';
 import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
 import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-project-tags-pool.component';
-import { InputModule } from '../../../input/input.module';
 import { SharedProjectEditCardsModule } from '../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { SharedProjectSettingsModule } from '../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/shared-tag-item.module';
@@ -33,7 +32,6 @@ import { ProgressBarModule } from '../../../input/component/progress-bar/progres
     TranslateModule.forChild(),
     NguiAutoCompleteModule,
     PipeModule,
-    InputModule,
     SharedProjectEditCardsModule,
     SharedProjectSettingsModule,
     SharedTagItemModule,

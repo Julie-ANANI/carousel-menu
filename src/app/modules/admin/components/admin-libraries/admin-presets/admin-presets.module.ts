@@ -8,7 +8,6 @@ import { SharedSortModule} from '../../../../shared/components/shared-sort/share
 import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
 import { SharedPresetModule } from '../../../../shared/components/shared-preset/shared-preset.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { InputModule } from '../../../../input/input.module';
 import { AdminPresetsEditComponent } from './admin-presets-edit/admin-presets-edit.component';
 import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-list.component';
 import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.component';
@@ -22,7 +21,6 @@ import { PaginationModule } from '../../../../utility-components/pagination/pagi
     SharedFilterInputModule,
     SharedSortModule,
     TranslateModule.forChild(),
-    InputModule,
     SharedLoaderModule,
     PipeModule,
     RouterModule,

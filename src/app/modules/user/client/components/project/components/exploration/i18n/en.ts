@@ -1,19 +1,10 @@
 export const EXPLORATION = {
-  'TITLE': {
-    'EDITING': 'Market insights of your projects-list will be available soon',
-    'SUBMITTED': 'Collecting market insights of your projects-list',
-    'EVALUATING': 'Collecting market insights of your projects-list',
-    'DONE': 'Market insights of your projects-list'
-  },
+  'TITLE': 'Market insights of your project',
 
   'MESSAGE': {
-    'SUBMITTED': 'Your projects-list is under review by our team. We\'ll come back soon!',
-    'EDITING': {
-      'A': 'Please finish',
-      'B': 'setup of your projects-list',
-      'C': 'and submit it.'
-    },
-    'REVIEWING': 'Please modify the changes in your projects-list and re-submit it.'
+    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'EDITING': 'Please finish setup of your project and submit it.',
+    'REVIEWING': 'Please modify the changes in your project and re-submit it.'
   },
 
   'STATUS_TEXT': {

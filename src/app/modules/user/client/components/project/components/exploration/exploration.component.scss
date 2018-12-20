@@ -1,59 +1,84 @@
 @import "../../../../../../../../style/variables";
 
-#exploration {
+#exploration-component {
+  padding-bottom: 0;
 
-  .title-wrapper {
+  .bot-rect {
+    max-width: 300px;
+  }
+
+  .section-heading {
+    font-weight: 400;
+  }
+
+  .section-title, .section-comment, .section-analytics {
+    padding-bottom: 1.57rem;
+  }
+
+  .section-company, .section-table {
+    padding-top: 3.15rem;
+  }
+
+
+  .section-title {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 1.57rem;
+    align-items: center;
 
-    .btn {
-      padding-top: .95rem;
-      padding-bottom: .95rem;
+    .main-heading, .btn {
+      margin-bottom: 1.57rem;
     }
 
   }
 
-  .sts-comment-wrapper {
+
+  .section-comment {
     display: flex;
-    padding-top: 0;
+    flex-wrap: wrap;
 
     .status-wrapper {
       min-height: 14.75rem;
       width: 330px;
       background-color: $background-color;
-      border-radius: .18rem;
-      padding: 1.57rem 1.57rem;
+      border-radius: 3px;
+      padding: 1.57rem;
       margin-right: 1.57rem;
+      margin-bottom: 1.57rem;
 
       .section-heading {
         color: white;
+        font-size: 1.375rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .status-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .fa-check, .fa-times {
+        margin-right: .35rem;
       }
 
       .fa-check {
         color: $validation-color;
-        margin-right: 0.18rem;
       }
 
       .fa-times {
         color: $alert-color;
-        margin-right: 0.18rem;
       }
 
       .text-white {
         color: white;
-        font-size: 0.95rem;
-      }
-
-      .data-wrapper {
-        display: flex;
-        justify-content: space-between;
+        font-size: 0.875rem;
       }
 
     }
 
     .comment-wrapper {
       flex: 1;
+      margin-bottom: 1.57rem;
 
       .operator-wrapper {
         padding-top: 1.57rem;
@@ -69,66 +94,70 @@
 
   }
 
-  .analytic-wrapper {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
 
-    .pd-top {
-      padding-top: 2.375rem;
-    }
+  .section-analytics {
 
-    .info-analytic-wrapper {
-      margin-bottom: 1.57rem;
+    .analytic-content {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
 
-      p {
-        color: $meta-color;
+      .pd-top {
+        padding-top: 2.375rem;
       }
 
-      .svg-text {
-        font-size: .85rem;
-        font-weight: 600;
-        fill: #FFFFFF;
+      .analytic-body {
+        margin-bottom: 1.57rem;
+        margin-left: .6rem;
+        margin-right: .6rem;
+
+        p {
+          color: $meta-color;
+        }
+
+        .svg-text {
+          font-size: .875rem;
+          font-weight: 600;
+          fill: #FFFFFF;
+        }
+
       }
 
     }
 
   }
 
-  .company-name-wrapper {
-    list-style: none;
 
-    li {
-      padding-top: 0;
-      padding-left: 0;
-      display: inline-flex;
-      width: 33.33%;
+  .section-company {
+
+    .company-content {
+      list-style: none;
+
+      li {
+        padding-top: 0;
+        padding-left: 0;
+        display: inline-flex;
+        width: 33.33%;
+      }
+
     }
 
   }
+
 
 }
 
+
 /********************************** Media ***************************************/
+
 @media (max-width: 840px) {
 
-  #exploration {
+  #exploration-component {
 
-    .sts-comment-wrapper {
-      flex-direction: column;
-
-      .status-wrapper {
-        width: 310px;
-        margin-right: 0;
-        margin-bottom: 1.57rem;
-      }
-
-    }
-
-    .company-name-wrapper {
+    .company-content {
 
       li {
-        width: 50%;
+        width: 50% !important;
       }
 
     }
@@ -139,16 +168,11 @@
 
 @media (max-width: 600px) {
 
-  #exploration {
+  #exploration-component {
 
-    .title-wrapper {
-      flex-direction: column;
-
-      .btn {
-        width: 40%;
-      }
-
-    }
+   .section-comment {
+     flex-direction: column;
+   }
 
   }
 
@@ -157,14 +181,10 @@
 
 @media (max-width: 320px) {
 
-  #exploration {
+  #exploration-component {
 
-    .sts-comment-wrapper {
-
-      .status-wrapper {
-        width: 100%;
-      }
-
+    .status-wrapper {
+      width: 300px !important;
     }
 
   }

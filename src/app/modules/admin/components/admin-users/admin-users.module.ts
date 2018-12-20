@@ -6,7 +6,6 @@ import { TableModule } from '../../../table/table.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminUsersComponent } from './admin-users.component';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { InputModule } from '../../../input/input.module';
 import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sid
     TableModule,
     TranslateModule.forChild(),
     PipeModule,
-    InputModule,
     FormsModule,
     SidebarUserFormModule,
   ],

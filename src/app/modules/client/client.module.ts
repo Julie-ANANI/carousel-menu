@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectModule } from '../user/client/components/project/project.module';
 import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
-import { InputModule } from '../input/input.module';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
@@ -31,7 +30,6 @@ import { SynthesisListModule } from './components/synthesis-list/synthesis-list.
     TranslateModule.forChild(),
     SharedMarketReportModule,
     SidebarModule,
-    InputModule,
     SharedMarketReportExampleModule,
     ForgetPasswordModule,
     WelcomeModule,

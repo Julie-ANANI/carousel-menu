@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedProjectSettingsComponent} from './shared-project-settings.component';
 
-import { InputModule } from '../../../input/input.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
@@ -18,7 +17,6 @@ import { InputListModule } from '../../../utility-components/input-list/input-li
     ReactiveFormsModule,
     FormsModule,
     TranslateModule.forChild(),
-    InputModule,
     PipeModule,
     SharedWorldmapModule,
     AutocompleteInputModule,
