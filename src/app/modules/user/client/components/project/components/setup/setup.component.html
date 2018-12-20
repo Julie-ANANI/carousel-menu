@@ -52,6 +52,7 @@
           <span [ngStyle]="{ 'margin-right': '0' }">
             <button
               [disabled]="innovation.status !== 'EDITING'"
+              (click)="onClickSubmit($event)"
               class="btn btn-primary gtm-submit-project">
               {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
             </button>
@@ -115,13 +116,30 @@
 </div>
 
 
-
 <!-- innovation preview sidebar -->
 <app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
   <app-innovation-preview [innovation]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
 </app-sidebar>
 <!-- /innovation preview sidebar -->
 
+
+<!-- modal to ask user to sure about submitting the project -->
+<div class="modal" [ngClass]="{ 'active': submitModal }">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-sm" (click)="onClickConfirm($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+    </div>
+  </div>
+</div>
+<!-- /modal to ask user to sure about submitting the project -->
 
 
 <!-- print innovation -->

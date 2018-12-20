@@ -14,7 +14,7 @@ export const PITCH = {
     'MAIN_LANG': 'Langue principale',
     'MODAL': {
       'TITLE': 'Comité de confirmation',
-      'CONTENT': 'Voulez-vous envoyer votre projet à validation ?'
+      'CONTENT': 'Veuillez vérifier que vous avez rempli tous les champs. Cliquez sur \'Confirmer\' pour envoyer votre projet à la validation.'
     },
 
     'MODAL_DELETE': {

@@ -11,7 +11,7 @@ export class PitchComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
     this._innovationPitch = value;
-    this._canEdit = value.status === 'EDITING' || value.status === 'SUBMITTED';
+    this._canEdit = value.status === 'EDITING';
   }
 
   @Output() pitchChange = new EventEmitter<Innovation>();

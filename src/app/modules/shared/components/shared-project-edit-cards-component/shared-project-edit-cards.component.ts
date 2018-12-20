@@ -22,42 +22,42 @@ declare const tinymce: any;
 export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this.innovation =  JSON.parse(JSON.stringify(value));
+    this._innovation =  JSON.parse(JSON.stringify(value));
   }
 
   @Input() set editable(value: boolean) {
-    this.canEdit = value;
+    this._canEdit = value;
   }
 
   @Input() set modeAdmin(value: boolean) {
-    this.adminMode = value;
+    this._adminMode = value;
   }
 
   @Input() set sideAdmin(value: boolean) {
-    this.adminSide = value;
+    this._adminSide = value;
   }
 
   @Output() pitchChange = new EventEmitter<Innovation>();
 
-  innovation: Innovation;
+  private _innovation: Innovation;
 
-  ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
-  canEdit = false;
+  private _canEdit = false;
 
-  adminMode = false;
+  private _adminMode = false;
 
-  adminSide = false;
+  private _adminSide = false;
 
-  selectedCardIndex = 0;
+  private _selectedCardIndex = 0;
 
-  companyName: string = environment.companyShortName;
+  private _companyName: string = environment.companyShortName;
 
-  saveChanges = false;
+  private _saveChanges = false;
 
-  deleteModal = false;
+  private _deleteModal = false;
 
-  _editors: Array<any> = [];
+  private _editors: Array<any> = [];
 
   constructor(private translationService: TranslationService,
               private innovationService: InnovationService,
@@ -67,8 +67,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
-      this.saveChanges = response;
+    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
     });
 
   }
@@ -80,7 +80,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    */
   private notifyChanges() {
     this.innovationCommonService.setNotifyChanges(true);
-    this.pitchChange.emit(this.innovation);
+    this.pitchChange.emit(this._innovation);
   }
 
 
@@ -92,8 +92,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    */
   onLangSelect(event: Event, index: number) {
     event.preventDefault();
-    this.selectedCardIndex = index;
-    this.innovationCommonService.setSelectedInnovationIndex(this.selectedCardIndex);
+    this._selectedCardIndex = index;
+    this.innovationCommonService.setSelectedInnovationIndex(this._selectedCardIndex);
   }
 
 
@@ -106,14 +106,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onCreateInnovationCard(event: Event, lang: string) {
     event.preventDefault();
 
-    if (this.canEdit) {
-      if (!this.saveChanges) {
-        if (this.innovation.innovationCards.length < 2 && this.innovation.innovationCards.length !== 0) {
-          this.innovationService.createInnovationCard(this.innovation._id, new InnovCard({ lang: lang})).pipe(first()).subscribe((data: InnovCard) => {
-            this.innovation.innovationCards.push(data);
+    if (this._canEdit) {
+      if (!this._saveChanges) {
+        if (this._innovation.innovationCards.length < 2 && this._innovation.innovationCards.length !== 0) {
+          this.innovationService.createInnovationCard(this._innovation._id, new InnovCard({ lang: lang})).pipe(first()).subscribe((data: InnovCard) => {
+            this._innovation.innovationCards.push(data);
             this.notifyChanges();
-            this.selectedCardIndex = this.innovation.innovationCards.length - 1;
-            this.onLangSelect(event, this.selectedCardIndex);
+            this._selectedCardIndex = this._innovation.innovationCards.length - 1;
+            this.onLangSelect(event, this._selectedCardIndex);
             this.notifyChanges();
           });
         }
@@ -126,7 +126,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
 
   containsLanguage(lang: string): boolean {
-    return this.innovation.innovationCards.some((c) => c.lang === lang);
+    return this._innovation.innovationCards.some((c) => c.lang === lang);
   }
 
 
@@ -137,13 +137,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    */
   onClickDelete(event: Event) {
     event.preventDefault();
-    this.deleteModal = true;
+    this._deleteModal = true;
   }
 
 
   closeModal(event: Event) {
     event.preventDefault();
-    this.deleteModal = false;
+    this._deleteModal = false;
   }
 
 
@@ -155,10 +155,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onClickSubmit(event: Event) {
     event.preventDefault();
 
-    if (this.canEdit) {
-      if ((!this.saveChanges)) {
-        this.innovationService.removeInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id).pipe(first()).subscribe(() => {
-          this.innovation.innovationCards = this.innovation.innovationCards.filter((card) => card._id !== this.innovation.innovationCards[this.selectedCardIndex]._id);
+    if (this._canEdit) {
+      if ((!this._saveChanges)) {
+        this.innovationService.removeInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id).pipe(first()).subscribe(() => {
+          this._innovation.innovationCards = this._innovation.innovationCards.filter((card) => card._id !== this._innovation.innovationCards[this._selectedCardIndex]._id);
           this.notifyChanges();
           this.onLangSelect(event, 0);
           this.closeModal(event);
@@ -183,8 +183,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   importTranslation(event: Event, model: string) {
     event.preventDefault();
 
-    const target_card = this.innovation.innovationCards[this.selectedCardIndex];
-    const from_card = this.innovation.innovationCards[this.selectedCardIndex === 0 ? 1 : 0];
+    const target_card = this._innovation.innovationCards[this._selectedCardIndex];
+    const from_card = this._innovation.innovationCards[this._selectedCardIndex === 0 ? 1 : 0];
 
     switch (model) {
 
@@ -217,11 +217,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.notifyChanges();
 
     if (event.id.indexOf('summary') !== -1) {
-      this.innovation.innovationCards[this.selectedCardIndex].summary = event.content;
+      this._innovation.innovationCards[this._selectedCardIndex].summary = event.content;
     } else if (event.id.indexOf('problem') !== -1) {
-      this.innovation.innovationCards[this.selectedCardIndex].problem = event.content;
+      this._innovation.innovationCards[this._selectedCardIndex].problem = event.content;
     } else if (event.id.indexOf('solution') !== -1) {
-      this.innovation.innovationCards[this.selectedCardIndex].solution = event.content;
+      this._innovation.innovationCards[this._selectedCardIndex].solution = event.content;
     }
 
   }
@@ -244,7 +244,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param cardIdx this is the index of the innovation card being edited.
    */
   updateAdvantage (event: { value: Array<{text: string }>}, cardIdx: number): void {
-    this.innovation.innovationCards[cardIdx].advantages = event.value;
+    this._innovation.innovationCards[cardIdx].advantages = event.value;
     this.notifyChanges();
   }
 
@@ -259,7 +259,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     const _inputConfig = {
       'advantages': {
         placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: this.innovation.innovationCards[this.selectedCardIndex]['advantages']
+        initialData: this._innovation.innovationCards[this._selectedCardIndex]['advantages']
       }
     };
     return _inputConfig[type] || {
@@ -275,7 +275,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param cardIdx
    */
   uploadImage(media: Media, cardIdx: number): void {
-    this.innovation.innovationCards[cardIdx].media.push(media);
+    this._innovation.innovationCards[cardIdx].media.push(media);
     this.checkPrincipalMedia(media, cardIdx);
     this.notifyChanges();
   }
@@ -287,11 +287,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param cardIdx
    */
   checkPrincipalMedia(media: Media, cardIdx: number) {
-    if (this.innovation.innovationCards[this.selectedCardIndex].media.length > 0) {
-      if (!this.innovation.innovationCards[this.selectedCardIndex].principalMedia) {
-        this.innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id, media._id).pipe(first())
+    if (this._innovation.innovationCards[this._selectedCardIndex].media.length > 0) {
+      if (!this._innovation.innovationCards[this._selectedCardIndex].principalMedia) {
+        this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, media._id).pipe(first())
           .subscribe((res) => {
-            this.innovation.innovationCards[cardIdx].principalMedia = media;
+            this._innovation.innovationCards[cardIdx].principalMedia = media;
           });
       }
     }
@@ -303,10 +303,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param video
    */
   uploadVideo(video: Video): void {
-    this.innovationService.addNewMediaVideoToInnovationCard(this.innovation._id, this.innovation.innovationCards[this.selectedCardIndex]._id, video).pipe(first())
+    this.innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, video).pipe(first())
       .subscribe(res => {
-      this.innovation.innovationCards[this.selectedCardIndex].media.push(res);
-      this.checkPrincipalMedia(res, this.selectedCardIndex);
+      this._innovation.innovationCards[this._selectedCardIndex].media.push(res);
+      this.checkPrincipalMedia(res, this._selectedCardIndex);
       this.notifyChanges();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -323,15 +323,15 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onClickDeleteMedia(event: Event, media: Media, index: number) {
     event.preventDefault();
 
-    this.innovationService.deleteMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[index]._id, media._id).pipe(first())
+    this.innovationService.deleteMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id).pipe(first())
       .subscribe((_res: Innovation) => {
-        this.innovation.innovationCards[index].media = this.innovation.innovationCards[index].media.filter((m) => m._id !== media._id);
+        this._innovation.innovationCards[index].media = this._innovation.innovationCards[index].media.filter((m) => m._id !== media._id);
 
-        if (this.innovation.innovationCards[index].principalMedia._id === media._id) {
-          this.innovation.innovationCards[index].principalMedia = null;
+        if (this._innovation.innovationCards[index].principalMedia._id === media._id) {
+          this._innovation.innovationCards[index].principalMedia = null;
         }
 
-        this.checkPrincipalMedia(this.innovation.innovationCards[this.selectedCardIndex].media[0], this.selectedCardIndex);
+        this.checkPrincipalMedia(this._innovation.innovationCards[this._selectedCardIndex].media[0], this._selectedCardIndex);
         this.notifyChanges();
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -349,9 +349,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onClickSetMainMedia(event: Event, media: Media, index: number) {
     event.preventDefault();
 
-    this.innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[index]._id, media._id).pipe(first())
+    this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id).pipe(first())
       .subscribe((res: Innovation) => {
-        this.innovation.innovationCards[index].principalMedia = media;
+        this._innovation.innovationCards[index].principalMedia = media;
         this.notifyChanges();
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -360,13 +360,53 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
 
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get canEdit(): boolean {
+    return this._canEdit;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get selectedCardIndex(): number {
+    return this._selectedCardIndex;
+  }
+
+  get companyName(): string {
+    return this._companyName;
+  }
+
+  get saveChanges(): boolean {
+    return this._saveChanges;
+  }
+
+  get deleteModal(): boolean {
+    return this._deleteModal;
+  }
+
+  get editors(): Array<any> {
+    return this._editors;
+  }
+
   ngOnDestroy(): void {
     if (Array.isArray(this._editors) && this._editors.length > 0) {
       this._editors.forEach((ed) => tinymce.remove(ed));
     }
 
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
 
   }
 

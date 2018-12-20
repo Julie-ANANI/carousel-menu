@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { ScrollService } from '../../../../../../../services/scroll/scroll.service';
-import { takeUntil } from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { InnovationSettings } from '../../../../../../../models/innov-settings';
@@ -39,6 +39,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   buttonSaveClass: string;
 
   sidebarValue: SidebarInterface = {};
+
+  submitModal: boolean;
 
   constructor(private scrollService: ScrollService,
               private router: Router,
@@ -79,6 +81,7 @@ export class SetupComponent implements OnInit, OnDestroy {
     this.scrollOn = false;
     this.selectedInnovationIndex = 0;
     this.saveChanges = false;
+    this.submitModal = false;
     this.buttonSaveClass = 'save-disabled';
   }
 
@@ -171,11 +174,54 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
 
+  /***
+   * this function is called when the user wants to submit his project,
+   * we also checked he saved the project or not then open the confirmation modal.
+   * @param event
+   */
+  onClickSubmit(event: Event) {
+    event.preventDefault();
+
+    if (!this.saveChanges) {
+      this.submitModal = true;
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+    }
+
+  }
+
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this.submitModal = false;
+  }
+
+
+  /***
+   * this function is called when the user clicks on the confirm button of the submit
+   * modal.
+   * @param event
+   */
+  onClickConfirm(event: Event) {
+    event.preventDefault();
+
+    this.innovationService.submitProjectToValidation(this.innovation._id).pipe(first()).subscribe((response: Innovation) => {
+      this.innovation.status = 'SUBMITTED';
+      this.router.navigate(['user/projects']);
+      this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+      }, () => {
+      this.closeModal(event);
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
+  }
+
+
   /*
       Here we are receiving the value from the targeting form.
    */
   updateSettings(value: InnovationSettings): void {
-    if (this.innovation.status === 'EDITING' || this.innovation.status === 'SUBMITTED') {
+    if (this.innovation.status === 'EDITING') {
       this.innovation.settings = value;
       this.buttonSaveClass = 'save-active';
     }
@@ -186,7 +232,7 @@ export class SetupComponent implements OnInit, OnDestroy {
      Here we are checking if there are any changes in the pitch form.
   */
   updatePitch(value: Innovation) {
-    if (this.innovation.status === 'EDITING' || this.innovation.status === 'SUBMITTED') {
+    if (this.innovation.status === 'EDITING') {
       this.innovation = value;
       this.buttonSaveClass = 'save-active';
     }

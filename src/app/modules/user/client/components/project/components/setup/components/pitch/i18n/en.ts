@@ -15,7 +15,7 @@ export const PITCH = {
 
     'MODAL': {
       'TITLE': 'Confirmation Board',
-      'CONTENT': 'Do you want to send your project to validation?'
+      'CONTENT': 'Please verify that you have filled all the fields. Click \'Confirm\' to send your project to validation.'
     },
 
     'MODAL_DELETE': {

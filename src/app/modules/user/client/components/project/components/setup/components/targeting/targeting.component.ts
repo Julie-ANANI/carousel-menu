@@ -13,7 +13,7 @@ export class TargetingComponent implements OnInit {
   @Input() set project(value: Innovation) {
     if (value) {
       this._innovationSettings = value.settings;
-      this._canEdit = value.status === 'EDITING' || value.status === 'SUBMITTED';
+      this._canEdit = value.status === 'EDITING';
     }
   }
 
