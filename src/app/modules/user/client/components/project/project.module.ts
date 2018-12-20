@@ -17,6 +17,7 @@ import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarCollaboratorModule } from '../../../../sidebar/components/collaborator/sidebar-collaborator.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
+import { SidebarInnovationPreviewModule } from '../../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SharedProjectEditCardsModule } from '../../../../shared/components/shar
     SidebarModule,
     SidebarCollaboratorModule,
     SharedProjectSettingsModule,
-    SharedProjectEditCardsModule
+    SharedProjectEditCardsModule,
+    SidebarInnovationPreviewModule
   ],
   declarations: [
     ProjectComponent,

@@ -33,8 +33,10 @@ export const SETUP = {
   'SURVEY': SURVEY,
   'TARGETING': TARGETING,
 
-  'PREVIEW': 'Preview',
+  'PREVIEW': 'Innovation Preview',
+
   'PREVIEW_BUTTON': 'Preview',
+
   'PRINT_BUTTON': 'Print',
 
   'DELETE_BUTTON': 'Delete Project',
@@ -43,6 +45,5 @@ export const SETUP = {
     'TITLE': 'Delete Board',
     'CONTENT': 'Do you really want to delete this project?'
   },
-
 
 };

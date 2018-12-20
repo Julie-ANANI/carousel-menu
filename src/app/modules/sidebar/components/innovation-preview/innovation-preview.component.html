@@ -1,4 +1,4 @@
-<section *ngIf="innovation" id="innovation-wrapper">
+<div *ngIf="innovation" id="innovation-preview-component">
 
   <!-- Hero section -->
   <div class="hero-light-container">
@@ -8,9 +8,7 @@
       <h1 class="main-heading">{{ innovation.title }}</h1>
 
       <!-- Batch date -->
-      <h6 *ngIf="this.getDate">
-        {{ 'DASHBOARD.SENDINGDATE' | translate }} {{ this.getDate | date: this.dateFormat }}
-      </h6>
+      <h6 *ngIf="getDate">{{ 'DASHBOARD.SENDINGDATE' | translate }} {{ getDate | date: dateFormat }}</h6>
 
       <!-- Summary -->
       <div class="summary" [innerHtml]="innovation.summary"></div>
@@ -21,18 +19,12 @@
 
           <!-- Video -->
           <div *ngIf="media?.type === 'VIDEO'" class="gap">
-            <iframe
-              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-              width="220" height="146">
-            </iframe>
+            <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)" width="220" height="146" frameborder="0"></iframe>
           </div>
 
           <!-- Image -->
           <div *ngIf="media?.type === 'PHOTO'" class="gap">
-            <img
-              [src]="media.url"
-              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-              width="220" height="146">
+            <img [src]="media.url" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" width="220" height="146">
           </div>
 
         </div>
@@ -40,6 +32,7 @@
 
     </div>
   </div>
+
 
   <!-- Advantage section -->
   <div class="section-container">
@@ -53,6 +46,7 @@
     </div>
   </div>
 
+
   <!-- Issue section -->
   <div class="section-container">
     <div class="column col-xs-12 col-11 col-mx-auto">
@@ -60,6 +54,7 @@
       <div [innerHtml]="innovation.problem"></div>
     </div>
   </div>
+
 
   <!-- Solution section -->
   <div class="section-container">
@@ -69,4 +64,5 @@
     </div>
   </div>
 
-</section>
+
+</div>

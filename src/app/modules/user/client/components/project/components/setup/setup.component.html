@@ -158,3 +158,11 @@
 
 
 </div>
+
+
+
+<!-- innovation preview sidebar -->
+<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+  <app-innovation-preview [innovation]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
+</app-sidebar>
+<!-- /innovation preview sidebar -->

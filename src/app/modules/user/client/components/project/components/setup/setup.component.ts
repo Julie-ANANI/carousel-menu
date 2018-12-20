@@ -8,6 +8,7 @@ import { InnovationSettings } from '../../../../../../../models/innov-settings';
 import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import {SidebarInterface} from '../../../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-setup',
@@ -34,6 +35,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   saveChanges: boolean;
 
   buttonSaveClass: string;
+
+  sidebarValue: SidebarInterface = {};
 
   constructor(private scrollService: ScrollService,
               private router: Router,
@@ -95,6 +98,18 @@ export class SetupComponent implements OnInit, OnDestroy {
    */
   onClickPreview(event: Event) {
     event.preventDefault();
+
+    this.sidebarValue = {
+      animate_state: this.sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'PROJECT_MODULE.SETUP.PREVIEW',
+      size: '726px'
+    };
+
+  }
+
+
+  closeSidebar(value: SidebarInterface) {
+    this.sidebarValue.animate_state = value.animate_state;
   }
 
 
