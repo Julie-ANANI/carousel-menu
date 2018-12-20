@@ -20,7 +20,6 @@ import { TranslationService } from "./services/translation/translation.service";
 import { TranslateTitleService } from './services/title/title.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
-import { ScrollService } from './services/scroll/scroll.service';
 
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
@@ -55,7 +54,6 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     TranslateTitleService,
     TranslateNotificationsService,
     LoaderService,
-    ScrollService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, }

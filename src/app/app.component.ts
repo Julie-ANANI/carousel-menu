@@ -1,13 +1,9 @@
-import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
-import {AuthService} from './services/auth/auth.service';
-import {initTranslation, TranslateService} from './i18n/i18n';
-import {TranslateNotificationsService} from './services/notifications/notifications.service';
-import {NavigationEnd, Router} from '@angular/router';
-import {ScrollService} from './services/scroll/scroll.service';
-import {LoaderService} from './services/loader/loader.service';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AuthService } from './services/auth/auth.service';
+import { initTranslation, TranslateService } from './i18n/i18n';
+import { TranslateNotificationsService } from './services/notifications/notifications.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +11,7 @@ import {takeUntil} from 'rxjs/operators';
   templateUrl: './app.component.html'
 })
 
-export class AppComponent implements OnInit, OnDestroy {
-
-  private _displayLoader = false;
-
-  private _ngUnsubscribe: Subject<any> = new Subject();
+export class AppComponent implements OnInit {
 
   notificationsOptions = {
     position: ['bottom', 'right'],
@@ -36,9 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private translateService: TranslateService,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router,
-              private scrollService: ScrollService,
-              private loaderService: LoaderService) {}
+              private router: Router) {}
 
   ngOnInit(): void {
 
@@ -60,36 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((isLoading: boolean) => {
-      // Bug corrigé avec setTimeout :
-      // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
-      setTimeout((_: void) => {
-        this._displayLoader = isLoading;
-      });
-    });
-
-    this.loaderService.stopLoading();
-
-  }
-
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.scrollService.setScrollValue(window.pageYOffset || window.scrollY || 0);
-  }
-
-
-  get displayLoader(): boolean {
-    return this._displayLoader;
-  }
-
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

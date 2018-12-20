@@ -12,6 +12,7 @@ import { UserService } from '../../services/user/user.service';
 import { InnovationService } from '../../services/innovation/innovation.service';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
+import { ScrollService } from '../../services/scroll/scroll.service';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { AutocompleteService } from '../../services/autocomplete/autocomplete.se
     InnovationService,
     InnovationResolver,
     AutocompleteService,
+    ScrollService,
   ]
 })
 
