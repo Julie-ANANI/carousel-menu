@@ -45,7 +45,7 @@ export class SharedUploadZonePhotoComponent {
     }
   }
 
-  private uploadFile(file: File) {
+  private uploadFile = (file: File) => {
     const formData = new FormData();
     formData.append('file', file, file.name);
     this.http.post(this.uri, formData)
