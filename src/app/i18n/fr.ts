@@ -22,7 +22,7 @@ import { SIGN_UP } from '../modules/common/signup/i18n/fr';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/fr';
 import { WELCOME } from '../modules/common/welcome/i18n/fr';
 import { PAGINATION } from '../modules/utility-components/pagination/i18n/fr';
-import { SHARE } from '../modules/share/i18n/fr';
+import { SHARE } from '../modules/public/share/i18n/fr';
 import { FOOTER } from "../modules/common/footer/i18n/fr";
 import { HEADER } from '../modules/common/header/i18n/fr';
 

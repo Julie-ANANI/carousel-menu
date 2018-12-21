@@ -6,7 +6,7 @@ import { ProjectsListComponent } from './components/projects-list/projects-list.
 import { NewProjectComponent } from './components/new-project/new-project.component';
 import { AccountComponent } from './components/account/account.component';
 import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
-import { SynthesisCompleteComponent } from '../../share/component/synthesis-complete/synthesis-complete.component';
+import { SynthesisCompleteComponent } from '../../public/share/component/synthesis-complete/synthesis-complete.component';
 
 
 const clientRoutes: Routes = [

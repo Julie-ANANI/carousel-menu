@@ -13,7 +13,7 @@ import { PaginationModule } from '../../utility-components/pagination/pagination
 import { ProjectModule } from './components/project/project.module';
 import { AccountModule } from './components/account/account.module';
 import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';
-import { SynthesisCompleteModule } from '../../share/component/synthesis-complete/synthesis-complete.module';
+import { SynthesisCompleteModule } from '../../public/share/component/synthesis-complete/synthesis-complete.module';
 
 
 @NgModule({

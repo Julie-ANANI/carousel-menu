@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateTitleService } from '../../../../services/title/title.service';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
-import { Innovation } from '../../../../models/innovation';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { AuthService } from '../../../../services/auth/auth.service';
+import { Innovation } from '../../../../../models/innovation';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-synthesis-online',
