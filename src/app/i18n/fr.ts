@@ -3,7 +3,6 @@ import { ERROR } from './error_fr';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
 import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/fr';
 import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/fr';
-import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/fr';
 import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
@@ -39,7 +38,6 @@ export const fr = {
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,
   'LOG_IN': LOG_IN,
   'MY_ACCOUNT': MY_ACCOUNT,
-  'RESET_PASSWORD': RESET_PASSWORD,
   'SIGN_UP': SIGN_UP,
   'FORGET_PASSWORD': FORGET_PASSWORD,
   'WELCOME': WELCOME,
