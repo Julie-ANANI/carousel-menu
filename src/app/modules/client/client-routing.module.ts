@@ -15,7 +15,6 @@ import { PendingChangesGuard } from '../../guards/pending-changes-guard.service'
 /* Components */
 import { ClientComponent } from './client.component';
 import { AccountComponent } from '../user/client/components/account/account.component';
-import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { WelcomeComponent } from '../common/welcome/welcome.component';
 import { LogoutComponent } from '../common/logout/logout.component';
 import { ForgetPasswordComponent } from '../common/login/components/forget-password/forget-password.component';
@@ -58,12 +57,6 @@ const clientRoutes: Routes = [
         canActivate: [NonAuthGuard],
         children: [
           { path: '', component: ForgetPasswordComponent, pathMatch: 'full' }
-        ]
-      },
-      {
-        path: 'reset-password',
-        children: [
-          { path: ':tokenEmail', component: ClientResetPasswordComponent, pathMatch: 'full' }
         ]
       },
       {

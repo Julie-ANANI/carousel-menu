@@ -7,7 +7,6 @@ import { SharedMarketReportModule } from '../shared/components/shared-market-rep
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
-import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { SharedMarketReportExampleModule } from '../shared/components/shared-market-report-example/shared-market-report-example.module';
 import { ForgetPasswordModule } from '../common/login/components/forget-password/forget-password.module';
 import { WelcomeModule } from '../common/welcome/welcome.module';
@@ -40,8 +39,7 @@ import { SynthesisListModule } from './components/synthesis-list/synthesis-list.
     SynthesisListModule
   ],
   declarations: [
-    ClientComponent,
-    ClientResetPasswordComponent
+    ClientComponent
   ]
 })
 
