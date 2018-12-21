@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 
 // Guards
@@ -24,9 +24,6 @@ const appRoutes: Routes = [
     path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
   },
   {
-    path: 'user/discover', canActivate: [AuthGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
-  },
-  {
     path: 'discover', loadChildren: './modules/public/discover/discover.module#DiscoverModule'
   },
   {
@@ -42,7 +39,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(appRoutes)
   ],
   exports: [
     RouterModule

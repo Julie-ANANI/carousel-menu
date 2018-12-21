@@ -27,7 +27,8 @@ const discoverRoutes: Routes = [
   },
   {
     path: 'result',
-      children: [
+    component: DiscoverComponent,
+    children: [
       {
         path: '',
         component: InnovationsComponent,
@@ -59,4 +60,4 @@ const discoverRoutes: Routes = [
   ]
 })
 
-export class DiscoverRoutingModule {}
+export class DiscoverRoutingModule { }

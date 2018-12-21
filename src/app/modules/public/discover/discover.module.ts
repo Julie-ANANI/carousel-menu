@@ -18,7 +18,6 @@ import { PaginationModule } from '../../utility-components/pagination/pagination
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { FooterModule } from '../../common/footer/footer.module';
-import { HeaderModule } from '../../common/header/header.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
 import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
 
@@ -33,7 +32,6 @@ import { SearchInputModule } from '../../utility-components/search-input/search-
     SearchInputModule,
     SharedLoaderModule,
     FooterModule,
-    HeaderModule,
     HeaderUnauthModule
   ],
   providers:[
