@@ -28,4 +28,4 @@ const userRoutes: Routes = [
   ]
 })
 
-export class UserRoutingModule {}
+export class UserRoutingModule { }

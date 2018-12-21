@@ -374,7 +374,7 @@ export class InnovationsComponent implements OnInit {
       this._tagUrl += 'tag=' + tag._id + '&';
     });
 
-    this._shareUrl = `${this.getUrl()}/discover/result?${this._tagUrl.slice(0, this._tagUrl.length - 1)}`;
+    this._shareUrl = `${this.getUrl()}/discover?${this._tagUrl.slice(0, this._tagUrl.length - 1)}`;
 
     this._shareModal = true;
 

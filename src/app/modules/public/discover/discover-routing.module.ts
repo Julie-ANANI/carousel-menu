@@ -26,23 +26,6 @@ const discoverRoutes: Routes = [
     ]
   },
   {
-    path: 'result',
-    component: DiscoverComponent,
-    children: [
-      {
-        path: '',
-        component: InnovationsComponent,
-        resolve: { innovations: InnovationsResolver },
-        pathMatch: 'full'
-      },
-      {
-        path: ':id/:lang',
-        component: DiscoverDescriptionComponent,
-        pathMatch: 'full'
-      }
-    ]
-  },
-  {
     path: '**',
     redirectTo: ''
   }
