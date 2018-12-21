@@ -11,7 +11,6 @@ import { PitchComponent } from './components/setup/components/pitch/pitch.compon
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 
 import { InnovationCommonService } from '../../../../../services/innovation/innovation-common.service';
-import { AnswerService } from '../../../../../services/answer/answer.service';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
@@ -22,6 +21,7 @@ import { SidebarInnovationPreviewModule } from '../../../../sidebar/components/i
 import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
+import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 
 
 @NgModule({
@@ -37,7 +37,8 @@ import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-ans
     SidebarInnovationPreviewModule,
     TableModule,
     SharedWorldmapModule,
-    SidebarUserAnswerModule
+    SidebarUserAnswerModule,
+    SharedMarketReportModule
   ],
   declarations: [
     ProjectComponent,
@@ -48,8 +49,7 @@ import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-ans
     SurveyComponent
   ],
   providers: [
-    InnovationCommonService,
-    AnswerService
+    InnovationCommonService
   ],
   exports: [
     ProjectComponent

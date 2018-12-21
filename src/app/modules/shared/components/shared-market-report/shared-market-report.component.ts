@@ -19,7 +19,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
-import { CampaignCalculationService } from '../../../../services/campaign/campaign-calculation.service';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
@@ -118,7 +117,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
               private authService: AuthService,
               private shareService: ShareService,
               private filterService: FilterService,
-              private campaignCalculationService: CampaignCalculationService,
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService,
               private worldmapService: SharedWorldmapService) { }
@@ -214,6 +212,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   }
 
+
   /***
    * This function is to fetch the answers from the server.
    */
@@ -257,6 +256,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
+
 
   /***
    * This function is to fetch the campaign from the server.
@@ -590,7 +590,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @returns {number}
    */
   percentageCalculation(value1: number, value2: number) {
-    return this.campaignCalculationService.analyticPercentage(value1, value2);
+    if (value2 === 0 || value2 === undefined) {
+      return 0;
+    } else {
+      const percentage = (value2 / value1) * 100;
+      return percentage === Infinity ? 0 : Math.floor(percentage);
+    }
   }
 
 
@@ -717,15 +722,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this.innovationCommonService.saveInnovation(this._innovation);
 
     switch (this._exportType) {
+
       case('excel'):
         this.downloadExcel(event);
         break;
+
       case('executiveReport'):
         this.printExecutiveReport(event);
         break;
+
       case('respReport'):
         this.printAnswers(event);
         break;
+
       default:
         // Do nothing
     }
@@ -785,12 +794,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
 
+
   formatCompanyName(name: string) {
     if (name) {
       return `${name[0].toUpperCase()}${name.slice(1)}`;
     }
     return '--';
   }
+
 
   getDomainName(): string {
     return environment.domain;
@@ -958,7 +969,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnDestroy(): void {
-    this._ngUnsubscribe.unsubscribe();
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

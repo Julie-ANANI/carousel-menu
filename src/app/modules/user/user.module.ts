@@ -13,6 +13,8 @@ import { InnovationService } from '../../services/innovation/innovation.service'
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { ScrollService } from '../../services/scroll/scroll.service';
+import { ShareService } from '../../services/share/share.service';
+import { AnswerService } from '../../services/answer/answer.service';
 
 @NgModule({
   imports: [
@@ -31,6 +33,8 @@ import { ScrollService } from '../../services/scroll/scroll.service';
     InnovationResolver,
     AutocompleteService,
     ScrollService,
+    ShareService,
+    AnswerService
   ]
 })
 

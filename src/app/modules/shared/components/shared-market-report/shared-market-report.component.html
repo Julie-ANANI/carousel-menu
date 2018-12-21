@@ -4,31 +4,22 @@
   <!-- Project status not done client side -->
   <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !innovation?.previewMode">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
-      <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + innovation?.status)  | translate }}</h1>
+      <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
       <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
-      <span class="bot-rect" [ngSwitch]="innovation?.status" [ngStyle]="{ 'max-width': '320px' }">
-        <ng-container *ngSwitchCase="'EDITING'">
-           <ng-container *ngIf="innovation.reviewing">
-              {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
-            </ng-container>
-            <ng-container *ngIf="!innovation.reviewing">
-              {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
-              <span [routerLink]="'setup'" class="text-link">
-                {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
-              </span>
-              {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
-            </ng-container>
-        </ng-container>
-        <ng-container *ngSwitchCase="'SUBMITTED'">
-            {{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}
-        </ng-container>
-        <ng-container *ngSwitchCase="'EVALUATING'">
-            {{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}
-        </ng-container>
-      </span>
+        <div class="bot-rect" [ngSwitch]="innovation?.status" [ngStyle]="{ 'max-width': '320px' }">
+
+          <ng-container *ngSwitchCase="'EDITING'">
+             <ng-container *ngIf="innovation.reviewing">{{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}</ng-container>
+              <ng-container *ngIf="!innovation.reviewing">{{ 'MARKET_REPORT.MESSAGE.EDITING' | translate }}</ng-container>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'SUBMITTED'">{{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}</ng-container>
+          <ng-container *ngSwitchCase="'EVALUATING'">{{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}</ng-container>
+
+        </div>
         <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-        <div><img src="https://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot" class="bot-image"></div>
+        <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
+        <div><img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" "></div>
       </div>
     </div>
   </ng-container>

@@ -31,6 +31,8 @@ import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SidebarUserAnswerModule } from '../../../sidebar/components/user-answer/sidebar-user-answer.module';
+import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
 
 /***
@@ -55,8 +57,6 @@ import { ExecutiveProfessionalComponent } from './components/executive-report/ex
 import { ExecutiveSectionComponent } from './components/executive-report/executive-section/executive-section.component';
 
 
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -71,7 +71,9 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     ProgressBarModule,
     SharedLoaderModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SidebarUserAnswerModule,
+    CountryFlagModule
   ],
   providers: [
     CommonService,
