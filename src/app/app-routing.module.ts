@@ -24,6 +24,12 @@ const appRoutes: Routes = [
     path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
   },
   {
+    path: 'user/discover', canActivate: [AuthGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+  },
+  {
+    path: 'discover', loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+  },
+  {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
   },
   {

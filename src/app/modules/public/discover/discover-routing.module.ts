@@ -3,21 +3,34 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DiscoverComponent } from './discover.component';
 import { DiscoverDescriptionComponent } from './components/description/discover-description.component';
+import { InnovationsComponent} from './components/innovations/innovations.component';
+
 import { InnovationsResolver } from './services/innos-resolver.service';
 
 const discoverRoutes: Routes = [
   {
     path: '',
     component: DiscoverComponent,
-    resolve: { innovations: InnovationsResolver },
-    pathMatch: 'full',
+    children: [
+      {
+        path: '',
+        component: InnovationsComponent,
+        resolve: { innovations: InnovationsResolver },
+        pathMatch: 'full',
+      },
+      {
+        path: ':id/:lang',
+        component: DiscoverDescriptionComponent,
+        pathMatch: 'full'
+      },
+    ]
   },
   {
     path: 'result',
       children: [
       {
         path: '',
-        component: DiscoverComponent,
+        component: InnovationsComponent,
         resolve: { innovations: InnovationsResolver },
         pathMatch: 'full'
       },
@@ -27,11 +40,6 @@ const discoverRoutes: Routes = [
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: ':id/:lang',
-    component: DiscoverDescriptionComponent,
-    pathMatch: 'full'
   },
   {
     path: '**',

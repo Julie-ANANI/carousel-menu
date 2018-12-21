@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { HeaderComponent } from './header.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
-import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
+
+import { HeaderUnauthComponent } from './header-unauth.component';
+
+import { SidebarModule}  from '../../sidebar/sidebar.module';
 
 @NgModule({
   imports: [
@@ -16,15 +16,13 @@ import { SharedLoaderModule } from '../../../shared/components/shared-loader/sha
     FormsModule,
     ReactiveFormsModule,
     SidebarModule,
-    SidebarUserFormModule,
-    SharedLoaderModule
   ],
   declarations: [
-    HeaderComponent
+    HeaderUnauthComponent
   ],
   exports: [
-    HeaderComponent
+    HeaderUnauthComponent
   ]
 })
 
-export class HeaderModule {}
+export class HeaderUnauthModule {}

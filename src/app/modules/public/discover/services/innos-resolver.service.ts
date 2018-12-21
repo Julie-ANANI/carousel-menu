@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { Innovation } from '../../../models/innovation';
-import { InnovationService } from '../../../services/innovation/innovation.service';
+import { Innovation } from '../../../../models/innovation';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 

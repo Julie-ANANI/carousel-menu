@@ -1,0 +1,52 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { DiscoverRoutingModule } from './discover-routing.module';
+import { DiscoverComponent } from './discover.component';
+import { DiscoverDescriptionComponent } from './components/description/discover-description.component';
+
+import { InnovationsComponent } from './components/innovations/innovations.component';
+
+import { InnovationService } from '../../../services/innovation/innovation.service';
+import { ShareService } from '../../../services/share/share.service';
+import { UserService } from '../../../services/user/user.service';
+
+import { InnovationResolver } from '../../../resolvers/innovation.resolver';
+
+import { PaginationModule } from '../../utility-components/pagination/pagination.module';
+import { PipeModule } from '../../../pipe/pipe.module';
+import { SearchInputModule } from '../../input/component/search-input/search-input.module';
+import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
+import { FooterModule } from '../../common/footer/footer.module';
+import { HeaderModule } from '../../common/header/header.module';
+import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
+
+
+@NgModule({
+  imports: [
+    CommonModule,
+    DiscoverRoutingModule,
+    TranslateModule.forChild(),
+    PaginationModule,
+    PipeModule,
+    SearchInputModule,
+    SharedLoaderModule,
+    FooterModule,
+    HeaderModule,
+    HeaderUnauthModule
+  ],
+  providers:[
+    InnovationService,
+    InnovationResolver,
+    ShareService,
+    UserService
+  ],
+  declarations: [
+    DiscoverComponent,
+    DiscoverDescriptionComponent,
+    InnovationsComponent
+  ]
+})
+
+export class DiscoverModule {}

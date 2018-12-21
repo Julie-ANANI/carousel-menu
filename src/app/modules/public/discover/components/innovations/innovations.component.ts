@@ -3,18 +3,18 @@ import { animate, query, style, transition, trigger, stagger, keyframes } from '
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService} from '@ngx-translate/core';
-import { LocalStorageService } from '../../services/localStorage/localStorage.service';
-import { TranslateTitleService } from '../../services/title/title.service';
-import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
-import { Innovation } from '../../models/innovation';
-import { InnovCard } from '../../models/innov-card';
-import { PaginationInterface } from '../utility-components/pagination/interfaces/pagination';
-import { Tag } from '../../models/tag';
-import { environment } from '../../../environments/environment';
+import { Innovation } from '../../../../../models/innovation';
+import { Tag } from '../../../../../models/tag';
+import { PaginationInterface } from '../../../../utility-components/pagination/interfaces/pagination';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { environment } from '../../../../../../environments/environment';
+import { InnovCard } from '../../../../../models/innov-card';
 
 @Component({
-  templateUrl: './discover.component.html',
-  styleUrls: ['./discover.component.scss'],
+  templateUrl: './innovations.component.html',
+  styleUrls: ['./innovations.component.scss'],
   animations: [
     trigger('tagAnimation', [
       transition('* => *', [
@@ -46,7 +46,7 @@ import { environment } from '../../../environments/environment';
   ]
 })
 
-export class DiscoverComponent implements OnInit {
+export class InnovationsComponent implements OnInit {
 
   private _config = {
     fields: 'created innovationCards tags status projectStatus principalMedia',
@@ -498,7 +498,7 @@ export class DiscoverComponent implements OnInit {
 
 
     if (toReturn === 'title') {
-    value = innovation.innovationCards[index].title;
+      value = innovation.innovationCards[index].title;
     }
 
     if (toReturn === 'summary') {
