@@ -8,7 +8,8 @@ const userRoutes: Routes = [
     path: '',
     component: UserComponent,
     children: [
-      { path: '', loadChildren: './client/client.module#ClientModule' }
+      { path: '', loadChildren: './client/client.module#ClientModule' },
+      { path: 'admin', loadChildren: './admin/admin.module#AdminModule' }
     ]
   }
 ];

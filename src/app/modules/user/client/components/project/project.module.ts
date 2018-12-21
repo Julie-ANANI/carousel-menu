@@ -10,8 +10,6 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 
-import { InnovationCommonService } from '../../../../../services/innovation/innovation-common.service';
-
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarCollaboratorModule } from '../../../../sidebar/components/collaborator/sidebar-collaborator.module';
@@ -47,9 +45,6 @@ import { SharedMarketReportModule } from '../../../../shared/components/shared-m
     TargetingComponent,
     PitchComponent,
     SurveyComponent
-  ],
-  providers: [
-    InnovationCommonService
   ],
   exports: [
     ProjectComponent

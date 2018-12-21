@@ -3,10 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
+
 import { SharedSearchHistoryComponent} from './shared-search-history.component';
+
+import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
 import { PaginationModule } from '../../../utility-components/pagination/pagination.module';
 import { SharedFilterMultiModule } from '../shared-filter-multi/shared-filter-multi.module';
+import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
 @NgModule({
   imports: [
@@ -16,7 +19,8 @@ import { SharedFilterMultiModule } from '../shared-filter-multi/shared-filter-mu
     SharedFilterInputModule,
     TranslateModule.forChild(),
     PaginationModule,
-    SharedFilterMultiModule
+    SharedFilterMultiModule,
+    CountryFlagModule
   ],
   declarations: [
     SharedSearchHistoryComponent,

@@ -15,6 +15,7 @@ import { AutocompleteService } from '../../services/autocomplete/autocomplete.se
 import { ScrollService } from '../../services/scroll/scroll.service';
 import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
+import { InnovationCommonService } from '../../services/innovation/innovation-common.service';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { AnswerService } from '../../services/answer/answer.service';
     AutocompleteService,
     ScrollService,
     ShareService,
-    AnswerService
+    AnswerService,
+    InnovationCommonService
   ]
 })
 

@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import {SharedProsListOldComponent} from './shared-pros-list-old.component';
-import {SharedSortModule} from '../shared-sort/shared-sort.module';
-import {SharedFilterInputModule} from '../shared-filter-input/shared-filter-input.module';
-import {SharedSmartSelectModule} from '../shared-smart-select/shared-smart-select.module';
-import {PaginationModule} from '../../../utility-components/pagination/pagination.module';
+
+import { SharedProsListOldComponent } from './shared-pros-list-old.component';
+
+import { SharedSortModule } from '../shared-sort/shared-sort.module';
+import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
+import { SharedSmartSelectModule } from '../shared-smart-select/shared-smart-select.module';
+import { PaginationModule} from '../../../utility-components/pagination/pagination.module';
+import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
 @NgModule({
   imports: [
@@ -17,7 +20,8 @@ import {PaginationModule} from '../../../utility-components/pagination/paginatio
     SharedFilterInputModule,
     SharedSmartSelectModule,
     FormsModule,
-    PaginationModule
+    PaginationModule,
+    CountryFlagModule
   ],
   declarations: [
     SharedProsListOldComponent

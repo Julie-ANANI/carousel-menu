@@ -36,13 +36,17 @@ export class TagsFormComponent implements OnInit {
   }
 
   @Input() tagType: string;
+
   @Input() sidebarState: Subject<string>;
 
   @Output() newTags = new EventEmitter<Tag[]>();
+
   @Output() updateTag = new EventEmitter<Tag>();
 
   private _tags: Tag[] = [];
+
   private _tag: Tag;
+
   private _projectId = '';
 
   private _type = '';
