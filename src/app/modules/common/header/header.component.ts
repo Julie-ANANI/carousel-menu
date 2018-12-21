@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._displayMenuOptions = false;
     this._backOfficeValue = false;
-    this._backOfficeValue = this.location.path().slice(6, 6) === '/admin';
+    this._backOfficeValue = this.location.path().slice(5, 11) === '/admin';
   }
 
 
