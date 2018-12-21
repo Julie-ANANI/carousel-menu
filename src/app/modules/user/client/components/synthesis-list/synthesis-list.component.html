@@ -1,6 +1,7 @@
 <section class="section-container" id="synthesis-list">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+
     <!-- While initializing the component and fetching the details -->
     <ng-container *ngIf="displaySpinner">
       <div class="spinner-wrapper">
@@ -9,20 +10,17 @@
     </ng-container>
     <!-- /While fetching -->
 
+
     <!-- Complete fetching  -->
     <ng-container *ngIf="!displaySpinner">
 
       <!-- No shared reports -->
       <ng-container *ngIf="totalReports && !totalReports?.length">
         <div class="no-report-wrapper text-center">
-          <div class="bot-rect">
-            {{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}
-          </div>
+          <div class="bot-rect">{{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}</div>
           <br>
-          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-          <div>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot" class="bot-image">
-          </div>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" "></div>
         </div>
       </ng-container>
       <!-- /No shared reports -->

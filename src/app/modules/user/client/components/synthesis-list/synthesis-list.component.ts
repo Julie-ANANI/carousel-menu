@@ -20,7 +20,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   private _displaySpinner = true;
 
   private _config = {
-    fields: 'name,owner,principalMedia',
+    fields: 'name owner principalMedia',
     limit: '10',
     offset: '0',
     search: '{}',
