@@ -27,7 +27,7 @@ import { AccountModule } from './components/account/account.module';
   declarations: [
     ClientComponent,
     ProjectsListComponent,
-    NewProjectComponent,
+    NewProjectComponent
   ],
   exports: [
     ClientComponent

@@ -22,7 +22,7 @@ import { AnswerService } from '../../services/answer/answer.service';
     TranslateModule.forChild(),
     UserRoutingModule,
     FooterModule,
-    HeaderModule,
+    HeaderModule
   ],
   declarations: [
     UserComponent,

@@ -27,7 +27,7 @@ const clientRoutes: Routes = [
         children: [
           { path: '', component: ProjectsListComponent, pathMatch: 'full' },
           { path: 'new', component: NewProjectComponent, pathMatch: 'full' },
-          { path:  ':projectId', loadChildren: './components/project/project.module#AccountModule' }
+          { path:  ':projectId', loadChildren: './components/project/project.module#ProjectModule' }
         ]
       },
     ]
