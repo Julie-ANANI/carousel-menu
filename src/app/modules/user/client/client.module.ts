@@ -12,6 +12,8 @@ import { NewProjectComponent } from './components/new-project/new-project.compon
 import { PaginationModule } from '../../utility-components/pagination/pagination.module';
 import { ProjectModule } from './components/project/project.module';
 import { AccountModule } from './components/account/account.module';
+import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';
+import { SynthesisCompleteModule } from '../../share/component/synthesis-complete/synthesis-complete.module';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { AccountModule } from './components/account/account.module';
     PaginationModule,
     ReactiveFormsModule,
     ProjectModule,
-    AccountModule
+    AccountModule,
+    SynthesisListModule,
+    SynthesisCompleteModule
   ],
   declarations: [
     ClientComponent,

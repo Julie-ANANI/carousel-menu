@@ -18,7 +18,7 @@ import { AccountComponent } from '../user/client/components/account/account.comp
 import { WelcomeComponent } from '../common/welcome/welcome.component';
 import { LogoutComponent } from '../common/logout/logout.component';
 import { ForgetPasswordComponent } from '../common/login/components/forget-password/forget-password.component';
-import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
+import { SynthesisListComponent } from '../user/client/components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../share/component/synthesis-complete/synthesis-complete.component';
 
 const clientRoutes: Routes = [

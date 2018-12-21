@@ -5,6 +5,8 @@ import { ClientComponent } from './client.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
 import { AccountComponent } from './components/account/account.component';
+import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
+import { SynthesisCompleteComponent } from '../../share/component/synthesis-complete/synthesis-complete.component';
 
 
 const clientRoutes: Routes = [
@@ -21,6 +23,13 @@ const clientRoutes: Routes = [
         path: 'account',
         component: AccountComponent,
         pathMatch: 'full'
+      },
+      {
+        path: 'synthesis',
+        children: [
+          { path: '', component: SynthesisListComponent, pathMatch: 'full' },
+          { path: ':projectId/:shareKey', component: SynthesisCompleteComponent, pathMatch: 'full' }
+        ]
       },
       {
         path: 'projects',

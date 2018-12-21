@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../../../services/user/user.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { environment } from '../../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Share } from '../../../../models/share';
+import { UserService } from '../../../../../services/user/user.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { environment } from '../../../../../../environments/environment';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { Share } from '../../../../../models/share';
 
 @Component({
   selector: 'app-synthesis-list',
