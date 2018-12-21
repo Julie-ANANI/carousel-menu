@@ -1,5 +1,4 @@
 export const MY_ACCOUNT = {
-
   'TITLE': 'Profile',
 
   'PARA': 'Add information about yourself.',

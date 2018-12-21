@@ -14,7 +14,7 @@ import { PendingChangesGuard } from '../../guards/pending-changes-guard.service'
 
 /* Components */
 import { ClientComponent } from './client.component';
-import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
+import { AccountComponent } from '../user/client/components/account/account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { WelcomeComponent } from '../common/welcome/welcome.component';
 import { LogoutComponent } from '../common/logout/logout.component';
@@ -70,7 +70,7 @@ const clientRoutes: Routes = [
         path: 'account',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientMyAccountComponent, pathMatch: 'full' }
+          { path: '', component: AccountComponent, pathMatch: 'full' }
         ]
       },
       {

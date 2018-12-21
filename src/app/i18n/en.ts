@@ -2,7 +2,7 @@ import { COMMON } from './common_en';
 import { ERROR } from './error_en';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
 import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
-import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
+import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/en';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/en';

@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../../services/user/user.service';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { User } from '../../../../models/user.model';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateTitleService } from '../../../../services/title/title.service';
+import { UserService } from '../../../../../services/user/user.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { User } from '../../../../../models/user.model';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
-import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
+import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
+import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-client-my-account',
-  templateUrl: './client-my-account.component.html',
-  styleUrls: ['./client-my-account.component.scss']
+  selector: 'app-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.scss']
 })
 
-export class ClientMyAccountComponent implements OnInit {
+export class AccountComponent implements OnInit {
 
   private _formData: FormGroup;
 
@@ -29,11 +29,12 @@ export class ClientMyAccountComponent implements OnInit {
   private _userProvider: string;
 
   private _countriesSuggestion: Array<string> = [];
+
   private _displayCountrySuggestion = false;
 
   private _profilePicture = '';
 
-  private _sidebarTemplateValue: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {};
 
   private _sidebarState = new Subject<string>();
 
@@ -107,15 +108,15 @@ export class ClientMyAccountComponent implements OnInit {
   showPasswordSidebar(event: Event) {
     event.preventDefault();
 
-    this._sidebarTemplateValue = {
-      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'MY_ACCOUNT.CHANGE'
     };
 
   }
 
-  closeSidebar(value: string) {
-    this._sidebarTemplateValue.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this._sidebarValue.animate_state = value.animate_state;
     this._sidebarState.next('inactive');
   }
 
@@ -233,8 +234,8 @@ export class ClientMyAccountComponent implements OnInit {
     return this._displayCountrySuggestion;
   }
 
-  get sidebarTemplateValue(): SidebarInterface {
-    return this._sidebarTemplateValue;
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
   }
 
   get sidebarState(): Subject<string> {

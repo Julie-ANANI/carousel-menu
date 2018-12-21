@@ -11,7 +11,7 @@ import { NewProjectComponent } from './components/new-project/new-project.compon
 
 import { PaginationModule } from '../../utility-components/pagination/pagination.module';
 import { ProjectModule } from './components/project/project.module';
-
+import { AccountModule } from './components/account/account.module';
 
 
 @NgModule({
@@ -21,16 +21,17 @@ import { ProjectModule } from './components/project/project.module';
     ClientRoutingModule,
     PaginationModule,
     ReactiveFormsModule,
-    ProjectModule
+    ProjectModule,
+    AccountModule
   ],
   declarations: [
     ClientComponent,
     ProjectsListComponent,
-    NewProjectComponent
+    NewProjectComponent,
   ],
   exports: [
     ClientComponent
   ]
 })
 
-export class ClientModule {}
+export class ClientModule { }

@@ -223,7 +223,7 @@
 
 
 <!-- Change password sidebar -->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
   <app-user-change-password
     [sidebarState]="sidebarState"
     (changePasswordData)="changePassword($event)">
