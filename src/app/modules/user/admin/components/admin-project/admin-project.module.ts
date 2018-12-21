@@ -21,7 +21,7 @@ import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/a
 import { AutocompleteInputModule } from '../../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
-import { ProgressBarModule } from '../../../../input/component/progress-bar/progress-bar.module';
+import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
 import { SidebarTagsFormModule } from '../../../../sidebar/components/tags-form/sidebar-tags-form.module';
 import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebar/components/innovation-form/sidebar-innovation-form.module';

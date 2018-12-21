@@ -16,11 +16,11 @@ import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
 import { PaginationModule } from '../../utility-components/pagination/pagination.module';
 import { PipeModule } from '../../../pipe/pipe.module';
-import { SearchInputModule } from '../../input/component/search-input/search-input.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
+import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
 
 
 @NgModule({
