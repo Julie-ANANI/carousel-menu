@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderUnauthComponent } from './header-unauth.component';
 
 import { SidebarModule}  from '../../sidebar/sidebar.module';
+import { SidebarSignupFormModule } from '../../sidebar/components/signup-form/sidebar-signup-form.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SidebarModule}  from '../../sidebar/sidebar.module';
     FormsModule,
     ReactiveFormsModule,
     SidebarModule,
+    SidebarSignupFormModule
   ],
   declarations: [
     HeaderUnauthComponent
