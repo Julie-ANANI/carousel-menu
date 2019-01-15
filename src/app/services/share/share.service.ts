@@ -62,11 +62,11 @@ export class ShareService {
 
   public googleProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
-    return encodeURI('https://plus.google.com/share?url=' + this._getShareUrl(project) + '&text=' + this._getSummary(project, lang));
+    return 'https://plus.google.com/share?url=' + this._getShareUrl(project) + '&text=' + this._getSummary(project, lang);
   }
 
   public mailProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
-    return `mailto:?body=${this._getSummary(project, lang)}%0A${this._getShareUrl(project)}&subject=${this._getTitle(project, lang)}`
+    return `mailto:?body=${this._getSummary(project, lang)}%0A${this._getShareUrl(project)}&subject=${this._getTitle(project, lang)}`;
   }
 }
