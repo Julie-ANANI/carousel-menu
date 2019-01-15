@@ -1,9 +1,9 @@
 export const CONTINENTS = {
-  'AFRICA': 'Africa',
-  'NORTHAMERICA': 'North America',
-  'SOUTHAMERICA': 'South America',
-  'ASIA': 'Asia',
-  'EUROPE': 'Europe',
-  'OCEANIA': 'Oceania',
-  'RUSSIA': 'Russia'
+  'africa': 'Africa',
+  'americaNord': 'North America',
+  'americaSud': 'South America',
+  'asia': 'Asia',
+  'europe': 'Europe',
+  'oceania': 'Oceania',
+  'russia': 'Russia'
 };
