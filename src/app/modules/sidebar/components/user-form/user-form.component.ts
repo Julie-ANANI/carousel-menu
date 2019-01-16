@@ -100,7 +100,7 @@ export class UserFormComponent implements OnInit {
       companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/[\w]*[\&\@\$\.\#\+\=\/]+[\w]*/g)]],
+      password: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[\s\S]{9,50}$/gm)]],
       country: ['', [Validators.required]],
       roles: '',
       isOperator: [false],

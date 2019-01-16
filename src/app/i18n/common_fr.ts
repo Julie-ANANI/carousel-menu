@@ -118,7 +118,7 @@ export const COMMON = {
     'LASTNAME': 'Le nom est requis.',
     'EMAIL': 'L\'adresse email est requise.',
     'PHONE': 'Le numéro de téléphone est requis.',
-    'PASSWORD': 'Le mot de passe e@st requis.',
+    'PASSWORD': 'Le mot de passe est requis.',
     'OLD_PASSWORD': 'Un ancien mot de passe est requis.',
     'NEW_PASSWORD': 'Un nouveau mot de passe est requis.',
     'CONFIRM_PASSWORD': 'Confirmer le mot de passe est requis.',
@@ -161,8 +161,8 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.',
-    'MUST_CONTAIN': 'Le mot de passe doit en contenir un.'
+    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
+    'MUST_CONTAIN': 'Le mot de passe doit en contenir un symbole spécial ($@&!#).'
   },
 
   'LINKS': 'Liens',
