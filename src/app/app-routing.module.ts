@@ -6,6 +6,7 @@ import { AuthService } from './services/auth/auth.service';
 import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
+import { DiscoverGuard } from './modules/public/discover/guards/discover-guard.service';
 
 // Component
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
@@ -24,7 +25,7 @@ const appRoutes: Routes = [
     path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
   },
   {
-    path: 'discover', loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+    path: 'discover', canActivate: [DiscoverGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
   },
   {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     AuthService,
     AuthGuard,
     NonAuthGuard,
-    AdminAuthGuard
+    AdminAuthGuard,
+    DiscoverGuard
   ]
 })
 
