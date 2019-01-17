@@ -39,20 +39,13 @@ export class SignupPageComponent implements OnInit {
       this.isInvitation = params['invitation'] && params['invitation'] === 'true';
     });
 
-    this.linkedInUrl();
-
-  }
-
-  private linkedInUrl() {
-    const domain = environment.domain;
-
-    this.authService.linkedinLogin(domain).pipe(first()).subscribe(
-      (url: string) => {
-        this._linkedInLink = url;
-      }, (error: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
-      }
-    );
+    const linkedinConfig = {
+      url: 'https://www.linkedin.com/oauth/v2/authorization',
+      clientID: '77283cf7nmchg3',
+      callbackURL: `${environment.clientUrl}/auth/linkedin/callback`,
+      scope: 'r_emailaddress r_liteprofile r_basicprofile'
+    };
+    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=U3iqySrotWCW8e0xRZO9dOC2&client_id=${linkedinConfig.clientID}`;
 
   }
 
