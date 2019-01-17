@@ -1,0 +1,31 @@
+@import "../../../../style/variables";
+
+#header-unauth-component {
+  background: $background-color;
+  font-weight: 600;
+  font-size: .85rem;
+  color: white;
+
+  .pad {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+
+    .menu-view {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+  }
+
+}

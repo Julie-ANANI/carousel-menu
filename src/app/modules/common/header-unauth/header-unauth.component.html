@@ -1,1 +1,32 @@
-sdqsd
+<section id="header-unauth-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <nav class="navbar">
+
+      <div class="menu-view">
+
+        <!-- logo -->
+        <div class="pad">
+          <a routerLink="/" class="gtm-menu-logo">
+            <img src="{{ getLogo() }}" [alt]=" " height="28px">
+          </a>
+        </div>
+
+        <!-- buttons -->
+        <div class="pad">
+          <button type="button" class="btn ghost-primary btn-xs" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'COMMON.LOG_IN' | translate }}</button>
+          <button type="button" class="btn btn-primary btn-xs" (click)="onClickSignUp($event)">{{ 'COMMON.SIGN_UP' | translate }}</button>
+        </div>
+
+      </div>
+
+    </nav>
+  </div>
+</section>
+
+
+<!-- sign up sidebar -->
+<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+  <app-signup-form
+    [sidebarState]="sidebarValue.animate_state"
+    (finalOutput)="createUser($event)"></app-signup-form>
+</app-sidebar>

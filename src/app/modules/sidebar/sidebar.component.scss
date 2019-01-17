@@ -25,10 +25,13 @@
     background: #FFFFFF;
     float: right;
     right: 0;
-    padding-bottom: 3.15rem;
     cursor: default;
     overflow: auto;
     overflow-x: hidden;
+  }
+
+  .pad-bottom {
+    padding-bottom: 3.15rem;
   }
 
   .sidebar-header {
