@@ -8,6 +8,7 @@ import {first} from 'rxjs/operators';
 import {AuthService} from '../../../services/auth/auth.service';
 import {UserService} from '../../../services/user/user.service';
 import {Router} from '@angular/router';
+import {MouseService} from '../../../services/mouse/mouse.service';
 
 @Component({
   selector: 'app-header-unauth',
@@ -19,14 +20,37 @@ export class HeaderUnauthComponent implements OnInit {
 
   sidebarValue: SidebarInterface = {};
 
+  toggleSignInForm = false;
+
   constructor(private translateNotificationsService: TranslateNotificationsService,
               private authService: AuthService,
               private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private mouseService: MouseService) { }
 
   ngOnInit() {
+    this.mouseService.getClickEvent().subscribe((event: Event) => {
+      if (event && event.target && event.target['id'] !== 'button-signIn' && event.target['id'] !== 'header-unauth-signInForm'
+        && event.target['parentNode']['id'] !== 'header-unauth--signInForm'
+        && event.target['parentNode']['offsetParent']
+        && event.target['parentNode']['offsetParent']['id'] !== 'header-unauth--signInForm') {
+        this.toggleSignInForm = false;
+      }
+    });
   }
 
+
+  onClickSignIn(event: Event) {
+    event.preventDefault();
+    this.toggleSignInForm = !this.toggleSignInForm;
+  }
+
+
+  /***
+   * this function open the sign up sidebar where user can
+   * fill the details to register in the platform.
+   * @param event
+   */
   onClickSignUp(event: Event) {
     event.preventDefault();
 
@@ -38,10 +62,19 @@ export class HeaderUnauthComponent implements OnInit {
 
   }
 
+  /***
+   * this closes the sign up sidebar.
+   * @param value
+   */
   closeSidebar(value: SidebarInterface) {
     this.sidebarValue.animate_state = value.animate_state;
   }
 
+
+  /***
+   * this function is to register the new client.
+   * @param formValue
+   */
   createUser(formValue: FormGroup) {
     if (formValue.valid) {
       const user = new User(formValue.value);

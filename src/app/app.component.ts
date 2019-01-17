@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './services/auth/auth.service';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { MouseService } from './services/mouse/mouse.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 export class AppComponent implements OnInit {
 
-  notificationsOptions = {
+  private _notificationsOptions = {
     position: ['bottom', 'right'],
     timeOut: 2000,
     lastOnBottom: true,
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
               private translateService: TranslateService,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router) {}
+              private router: Router,
+              private mouseService: MouseService) {}
 
   ngOnInit(): void {
 
@@ -52,30 +54,17 @@ export class AppComponent implements OnInit {
 
   }
 
+  /***
+   * This is to listen the click event on the page.
+   */
+  @HostListener('mouseup', ['$event'])
+  onMouseUp(event: any) {
+    this.mouseService.setClickEvent(event);
+  }
+
+  get notificationsOptions(): { showProgressBar: boolean; lastOnBottom: boolean; pauseOnHover: boolean; position: string[]; maxStack: number; animate: string; timeOut: number; clickToClose: boolean } {
+    return this._notificationsOptions;
+  }
+
 }
-
-
-/***
- * This is to listen the click event on the page.
- */
-/*@HostListener('mouseup', ['$event'])
-onMouseUp(event: any) {
-  this.listenerService.setClickEvent(event);
-}
-
-user initializeService() {
-  this.currentRouteService.setCurrentRoute(this.router.url);
-}
-
-get notificationsOptions() {
-  return this._notificationsOptions;
-}
-
-getLogo(): string {
-  return environment.logoURL;
-}
-
-getDomain(): string {
- return environment.domain;
-}*/
 
