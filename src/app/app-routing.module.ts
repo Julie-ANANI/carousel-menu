@@ -28,6 +28,9 @@ const appRoutes: Routes = [
     path: 'discover', canActivate: [DiscoverGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
   },
   {
+    path: 'share', loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+  },
+  {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
   },
   {

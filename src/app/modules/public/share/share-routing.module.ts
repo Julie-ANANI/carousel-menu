@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-
-/***
- * Components
- */
 import { SynthesisCompleteComponent } from './component/synthesis-complete/synthesis-complete.component';
 import { ShareComponent } from './share.component';
 

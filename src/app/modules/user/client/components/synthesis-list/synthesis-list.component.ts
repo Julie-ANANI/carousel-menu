@@ -4,11 +4,30 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { environment } from '../../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Share } from '../../../../../models/share';
+import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-synthesis-list',
   templateUrl: './synthesis-list.component.html',
-  styleUrls: ['./synthesis-list.component.scss']
+  styleUrls: ['./synthesis-list.component.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+
+        query(':enter', stagger('300ms', [
+          animate('800ms ease-in-out', keyframes([
+              style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
+              style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
+            ])
+          )]
+        ), { optional: true }),
+
+      ])
+    ])
+  ]
 })
 
 export class SynthesisListComponent implements OnInit, OnDestroy {
@@ -16,8 +35,6 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   private _subscriptions = Array<any>();
 
   private _totalReports: any = [];
-
-  private _displaySpinner = true;
 
   private _config = {
     fields: 'name owner principalMedia',
@@ -29,11 +46,11 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   constructor( private userService: UserService,
                private innovationService: InnovationService,
-               private translateNotificationsService: TranslateNotificationsService) { }
+               private translateNotificationsService: TranslateNotificationsService,
+               private translateService: TranslateService) { }
 
   ngOnInit() {
     this.getUserReports();
-    this._displaySpinner = false;
   }
 
   private getUserReports() {
@@ -42,12 +59,13 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     }));
   }
 
+
   /***
    * This function is getting the shared reports of the user and we are
    * pushing those to totalReports variable.
    */
-  private getSharedReports(recievedReports: any) {
-    recievedReports.forEach((info: Share) => {
+  private getSharedReports(receivedReports: any) {
+    receivedReports.forEach((info: Share) => {
       this._subscriptions.push(this.innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
           const report: Share = {
             name: result.name,
@@ -66,6 +84,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     });
   }
 
+
   /***
    * Here we are getting the link.
    * @param report
@@ -78,6 +97,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
       return '#';
     }
   }
+
 
   /***
    * This function is to get the principal media of the innovation.
@@ -93,12 +113,12 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     return src;
   }
 
-  get totalReports(): any {
-    return this._totalReports;
+  get dateFormat(): string {
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
-  get displaySpinner(): boolean {
-    return this._displaySpinner;
+  get totalReports(): any {
+    return this._totalReports;
   }
 
   get config(): { fields: string; limit: string; offset: string; search: string; sort: string } {

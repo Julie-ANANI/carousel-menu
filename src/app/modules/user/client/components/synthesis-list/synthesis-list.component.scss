@@ -1,71 +1,74 @@
 @import "../../../../../../style/variables";
 
-#synthesis-list {
+#synthesis-list-component {
 
-  .no-report-wrapper {
+  .section-no-reports {
+    text-align: center;
     padding-top: 3.15rem;
 
     .bot-rect {
-      width: 300px;
+      max-width: 354px;
     }
 
   }
 
-  .spinner-wrapper {
-    padding-top: 3.15rem;
-  }
+  .section-reports-list {
 
-  .report-wrapper {
+    .report-wrapper {
 
-    .content-outer {
-      margin-bottom: 1.57rem;
+      .content-outer {
+        margin-bottom: 1.57rem;
 
-      .content {
-        display: inline-flex;
-        width: 100%;
-
-        img {
-          border-radius: .18rem;
-          width: 120px;
-          height: 100px;
-          margin-right: 1.2rem;
-          cursor: pointer;
-        }
-
-        img:hover {
-          box-shadow: $box-shadow-hover;
-        }
-
-        .report-description {
-          border-bottom: .06rem solid $border-color;
+        .content {
+          display: inline-flex;
           width: 100%;
 
-          span {
-            font-size: 1.4rem;
-          }
-
-          span:hover {
-            color: $primary-color;
+          img {
+            border-radius: 3px;
+            width: 120px;
+            height: 100px;
+            margin-right: 1.2rem;
             cursor: pointer;
           }
 
-          .date-text {
-            margin-top: 0.95rem;
-            font-size: 0.85rem;
-            color: $meta-color;
-            font-weight: 600;
+          img:hover {
+            box-shadow: $box-shadow-hover;
+          }
+
+          .report-description {
+            border-bottom: 1px solid $border-color;
+            width: 100%;
+
+            span {
+              font-size: 1.4rem;
+            }
+
+            span:hover {
+              color: $primary-color;
+              cursor: pointer;
+            }
+
+            .date-text {
+              margin-top: 0.95rem;
+              font-size: 0.85rem;
+              color: $meta-color;
+              font-weight: 600;
+            }
+
           }
 
         }
 
       }
 
-    }
+      .content-outer:last-child {
+        margin-bottom: 0;
+      }
 
-    .content-outer:last-child {
-      margin-bottom: 0;
     }
 
   }
+
+
 
 }

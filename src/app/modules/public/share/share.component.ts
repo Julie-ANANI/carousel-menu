@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-share',
@@ -6,11 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./share.component.scss']
 })
 
-export class ShareComponent implements OnInit {
+export class ShareComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor(public authService: AuthService) { }
 
 }

@@ -1,15 +1,20 @@
-<main class="main-container" id="share">
+<div class="body-wrapper animate-page" id="share-component">
 
-  <!-- Header -->
-  <app-header></app-header>
+  <!-- unauthenticated header -->
+  <ng-container *ngIf="!authService.isAuthenticated">
+    <app-header-unauth></app-header-unauth>
+  </ng-container>
+  <!-- /unauthenticated header -->
 
-  <!-- Body -->
-  <section class="main">
+  <!-- body -->
+  <section class="main-wrapper">
     <router-outlet></router-outlet>
   </section>
 
-  <!-- Footer -->
-  <footer></footer>
+  <!-- footer -->
+  <ng-container *ngIf="!authService.isAuthenticated">
+    <app-footer></app-footer>
+  </ng-container>
 
-</main>
+</div>
 
