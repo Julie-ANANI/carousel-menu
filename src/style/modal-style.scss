@@ -17,6 +17,7 @@
     border-radius: .18rem;
     text-align: unset;
     overflow: auto;
+    position: fixed;
   }
 
   .modal-header {
@@ -28,8 +29,9 @@
   }
 
   .btn-clear {
-    font-size: 1.2rem;
+    font-size: 25px;
     color: white;
+    height: 25px;
     line-height: 1.5;
   }
 
