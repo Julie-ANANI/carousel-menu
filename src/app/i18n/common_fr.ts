@@ -51,6 +51,7 @@ export const COMMON = {
   'SEARCH_BY': 'Recherche par',
   'SEARCH_PLACEHOLDER': 'Rechercher ici',
   'SELECT': 'Sélectionnez',
+  'SHARED_SYNTHESIS': 'Rapports partagés',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',

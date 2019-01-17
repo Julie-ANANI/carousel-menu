@@ -6,6 +6,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Share } from '../../../../../models/share';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
+import {TranslateTitleService} from '../../../../../services/title/title.service';
 
 @Component({
   selector: 'app-synthesis-list',
@@ -44,12 +45,14 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     sort: '{"created":-1}'
   };
 
-  constructor( private userService: UserService,
+  constructor( private translateTitleService: TranslateTitleService,
+               private userService: UserService,
                private innovationService: InnovationService,
                private translateNotificationsService: TranslateNotificationsService,
                private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.translateTitleService.setTitle('COMMON.SHARED_SYNTHESIS');
     this.getUserReports();
   }
 

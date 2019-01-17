@@ -1,5 +1,5 @@
 export const PROJECTS_LIST = {
-  'TITLE': 'Mes projets',
+  'TITLE': 'Projets',
 
   'ADD_PROJECT': 'Ajouter un projet',
 
