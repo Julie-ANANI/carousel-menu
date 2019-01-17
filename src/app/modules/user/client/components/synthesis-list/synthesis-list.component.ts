@@ -78,7 +78,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
             sharedKey: info.sharedKey,
             date: info.created // TODO use the share date instead...
           };
-          report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
+          report['link'] = `/user/synthesis/${report.objectId}/${report.sharedKey}`;
           this._totalReports.push(report);
         }, () => {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
