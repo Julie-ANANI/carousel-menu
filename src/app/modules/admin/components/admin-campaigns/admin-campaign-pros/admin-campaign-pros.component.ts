@@ -77,6 +77,16 @@ export class AdminCampaignProsComponent implements OnInit {
     });
   }
 
+  public importProsCsv(file: File, event: Event) {
+    event.preventDefault();
+    this._professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file)
+      .subscribe((res: any) => {
+        this._notificationsService.success('ERROR.SUCCESS', res.message);
+      }, (err: any) => {
+        this._notificationsService.error('ERROR.ERROR', err.message);
+      });
+  }
+
   updateCampaign(event: any) {
     this._originCampaign = event.value;
   }
