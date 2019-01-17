@@ -52,7 +52,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
                private translateService: TranslateService) { }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('COMMON.SHARED_SYNTHESIS');
+    this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
     this.getUserReports();
   }
 

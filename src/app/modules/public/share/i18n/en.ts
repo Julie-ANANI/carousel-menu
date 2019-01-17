@@ -17,4 +17,6 @@ export const SHARE = {
     }
   },
 
+  'NOT_FOUND': 'We are having trouble while fetching the data regarding this market report. Please try to reload the page again!'
+
 };

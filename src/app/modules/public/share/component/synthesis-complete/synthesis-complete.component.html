@@ -1,19 +1,11 @@
-<section id="synthesis-complete">
+<section id="synthesis-complete-component">
 
-  <!-- Message -->
-  <div class="message-wrapper" *ngIf="!notFound && !displaySpinner && authService.adminLevel < 2">
-    <p>{{ 'SHARE.MESSAGE' | translate }}</p>
-  </div>
+  <!-- message -->
+  <div class="banner-wrapper" *ngIf="!notFound && !displayReport && authService.adminLevel < 2">{{ 'SHARE.MESSAGE' | translate }}</div>
 
-  <!-- Spinner -->
-  <ng-container *ngIf="displaySpinner">
-    <div class="spinner-wrapper">
-      <app-shared-loader></app-shared-loader>
-    </div>
-  </ng-container>
 
-  <!-- Market report -->
-  <ng-container *ngIf="!displaySpinner && !notFound">
+  <!-- market report -->
+  <ng-container *ngIf="!displayReport && !notFound">
     <app-shared-market-report
       [project]="project"
       [adminMode]="false"
@@ -21,9 +13,18 @@
     </app-shared-market-report>
   </ng-container>
 
-  <!-- Not found view -->
-  <ng-container *ngIf="notFound">
-    <app-not-found></app-not-found>
-  </ng-container>
+
+  <!-- not found message -->
+  <div *ngIf="notFound" class="column col-xs-12 col-11 col-mx-auto">
+    <div class="section-not-found">
+      <div class="bot-rect">{{ 'SHARE.NOT_FOUND' | translate }}</div>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
+      <div>
+        <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" ">
+      </div>
+    </div>
+  </div>
+
 
 </section>

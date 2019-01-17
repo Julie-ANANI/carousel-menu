@@ -19,9 +19,9 @@
       <div class="report-wrapper" [@listAnimation]="totalReports.length">
         <div *ngFor="let report of totalReports" class="content-outer">
           <div class="content">
-            <a [href]="getRelevantLink(report)"><img [src]="getMedia(report)" alt=" "></a>
+            <a [href]="getRelevantLink(report)" target="_blank"><img [src]="getMedia(report)" alt=" "></a>
             <div class="report-description">
-              <a [href]="getRelevantLink(report)">
+              <a [href]="getRelevantLink(report)" target="_blank">
                 <span >{{ report.name }}</span>
               </a>
               <p class="date-text">

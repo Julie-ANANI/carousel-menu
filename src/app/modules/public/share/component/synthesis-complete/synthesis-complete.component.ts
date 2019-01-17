@@ -19,7 +19,7 @@ export class SynthesisCompleteComponent implements OnInit {
 
   private _project: Innovation;
 
-  private _displaySpinner = true;
+  private _displayReport = true;
 
   private _notFound = false;
 
@@ -29,7 +29,7 @@ export class SynthesisCompleteComponent implements OnInit {
               private _authService: AuthService) { }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('SHARE.TITLE');
+    this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
 
     this.activatedRoute.params.subscribe(params => {
       this._projectId = params['projectId'];
@@ -40,16 +40,16 @@ export class SynthesisCompleteComponent implements OnInit {
   }
 
   /***
-   * This function is to get the shared synthesis detail from the server.
+   * this function is to get the shared synthesis detail from the server.
    */
   private getProject() {
     this.innovationService.getSharedSynthesis(this._projectId, this._shareKey).subscribe((response: any) => {
         this._project = response;
       }, () => {
-        this._displaySpinner = false;
+        this._displayReport = false;
         this._notFound = true;
       }, () => {
-        this._displaySpinner = false;
+        this._displayReport = false;
       });
   }
 
@@ -69,8 +69,8 @@ export class SynthesisCompleteComponent implements OnInit {
     return this._project;
   }
 
-  get displaySpinner(): boolean {
-    return this._displaySpinner;
+  get displayReport(): boolean {
+    return this._displayReport;
   }
 
   get notFound(): boolean {

@@ -1,24 +1,13 @@
-@import "../../../../../../style/variables";
+#synthesis-complete-component {
 
-#synthesis-complete {
-
-  .message-wrapper {
-    background-color: $validation-color;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: .95rem;
+  .section-not-found {
     text-align: center;
+    padding-top: 6.30rem;
 
-    p {
-      padding-bottom: 0;
+    .bot-rect {
+      max-width: 354px;
     }
 
   }
 
-  .spinner-wrapper {
-    padding-top: 3.15rem;
-  }
-
 }
-
