@@ -47,4 +47,10 @@ export class ProfessionalsService {
     };
     return this._http.post(`/professional/clone/${oldCampaignId}/${newCampaignId}/${oldInnovationId}/${newInnovationId}`, config);
   }
+
+  public importProsFromCsv(campaignId: string, innovationId: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post('/professional/import/' + campaignId + '/' + innovationId, formData);
+  }
 }

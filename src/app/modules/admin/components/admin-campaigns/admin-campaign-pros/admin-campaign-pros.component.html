@@ -20,11 +20,18 @@
       <div class="modal-title h5"> Import professionals </div>
     </div>
     <div class="modal-body foo">
+
+      <label class="btn ghost-primary btn-primary">
+        <input #fileupload type="file" [hidden]="true" (change)="importProsCsv(fileupload.files[0], $event)" />
+        Import CSV
+      </label>
+
       <app-autocomplete-input
         (update)="updateCampaign($event)"
         [onlyOne]="true"
         [config]="{placeholder: 'campagne', initialData: originCampaign, type: 'campaign'}"></app-autocomplete-input>
     </div>
+
     <div class="modal-footer">
       <button class="btn btn-primary" (click)="importPros()" [disabled]="!originCampaign.length">
         {{ 'COMMON.ADD' | translate }}
