@@ -33,8 +33,13 @@ export class LoginPageComponent implements OnInit {
       password: ['', [Validators.required]]
     });
 
-    this.linkedInUrl();
-
+    const linkedinConfig = {
+        url: 'https://www.linkedin.com/oauth/v2/authorization',
+        clientID: '77283cf7nmchg3',
+        callbackURL: `${environment.clientUrl}/auth/linkedin/callback`,
+        scope: 'r_emailaddress r_liteprofile r_basicprofile'
+    };
+    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=U3iqySrotWCW8e0xRZO9dOC2&client_id=${linkedinConfig.clientID}`;
   }
 
   onSubmit() {
@@ -72,7 +77,7 @@ export class LoginPageComponent implements OnInit {
 
   }
 
-  private linkedInUrl() {
+  /*private linkedInUrl() {
     const domain = environment.domain;
 
     this._authService.linkedinLogin(domain).pipe(first()).subscribe(
@@ -82,8 +87,7 @@ export class LoginPageComponent implements OnInit {
           this.translateNotificationsService.error('ERROR.ERROR', error.message);
       }
     );
-
-  }
+  }*/
 
   checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
