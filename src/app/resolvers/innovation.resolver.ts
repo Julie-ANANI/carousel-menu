@@ -1,18 +1,45 @@
 /**
  * Created by bastien on 10/01/2018.
  */
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { Innovation } from '../models/innovation';
 import { InnovationService } from '../services/innovation/innovation.service';
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+
+const INNOVATION_KEY = makeStateKey('innovation');
 
 @Injectable()
-export class InnovationResolver implements Resolve<any> {
-  constructor(
-    private _innovationService: InnovationService
-  ) {}
+export class InnovationResolver implements Resolve<Innovation> {
 
-  resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this._innovationService.get(route.params.projectId);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,
+              private innovationService: InnovationService,
+              private state: TransferState) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Innovation> {
+    if (this.state.hasKey(INNOVATION_KEY)) {
+      const innovation = this.state.get<Innovation>(INNOVATION_KEY, null);
+      this.state.remove(INNOVATION_KEY);
+      return new Observable((observer) => {
+        observer.next(innovation);
+        observer.complete();
+      });
+    } else {
+      const innovationId = route.paramMap.get('projectId') || '';
+      return this.innovationService.get(innovationId)
+        .pipe(
+          tap((innovation) => {
+            if (isPlatformServer(this.platformId)) {
+              this.state.set(INNOVATION_KEY, innovation as Innovation);
+            }
+          }),
+          catchError(() => {
+            return Observable.empty();
+          })
+        );
+    }
   }
 }
