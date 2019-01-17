@@ -2,141 +2,133 @@
 <section class="section-container" id="discover-description">
 
 
-  <!-- Display spinner -->
-  <div *ngIf="displaySpinner" class="spinner-wrapper">
-    <app-shared-loader></app-shared-loader>
-  </div>
-  <!-- /Display spinner -->
-
-
   <!-- Display innovation card -->
-  <ng-container *ngIf="!displaySpinner">
-    <div *ngFor="let innovation of innovationCard">
 
-      <!-- Hero section -->
-      <div class="hero-container">
-        <div class="column col-xs-12 col-11 col-mx-auto">
+  <div *ngFor="let innovation of innovationCard">
 
-          <h1 class="main-heading">{{ innovation.title }}</h1>
+    <!-- Hero section -->
+    <div class="hero-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-          <div class="details-wrapper">
-            <div *ngFor="let tag of tags" class="tag-wrapper">
-              #{{ tag }}
-            </div>
-            <span *ngIf="patent">&nbsp;•&nbsp;  {{ 'DISCOVERDESCRIPTION.PATENT' | translate }} </span>
+        <h1 class="main-heading">{{ innovation.title }}</h1>
+
+        <div class="details-wrapper">
+          <div *ngFor="let tag of tags" class="tag-wrapper">
+            #{{ tag }}
           </div>
-          <hr class="hero-hr" align="left">
+          <span *ngIf="patent">&nbsp;•&nbsp;  {{ 'DISCOVERDESCRIPTION.PATENT' | translate }} </span>
+        </div>
+        <hr class="hero-hr" align="left">
 
-          <!-- Summary and share button -->
-          <div class="detail-wrapper">
+        <!-- Summary and share button -->
+        <div class="detail-wrapper">
 
-            <div class="summary-wrapper">
-              <div class="para" [innerHTML]="innovation.summary"></div>
-              <div class="opinion-wrapper">
-                <div class="contact-button">
-                  <a class="btn btn-primary btn-sm" (click)="contactUs($event)">
-                    <i class="fas fa-comments"></i>{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}
-                  </a>
-                </div>
-                <div class="quiz-button" [ngStyle]="{ 'display': quizButtonDisplay }">
-                  <a class="btn ghost-edit btn-sm" [href]="quizUrl" target="_blank">
-                    <i class="icon icon-message"></i>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}
-                  </a>
-                </div>
+          <div class="summary-wrapper">
+            <div class="para" [innerHTML]="innovation.summary"></div>
+            <div class="opinion-wrapper">
+              <div class="contact-button">
+                <a class="btn btn-primary btn-sm" (click)="contactUs($event)">
+                  <i class="fas fa-comments"></i>{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}
+                </a>
+              </div>
+              <div class="quiz-button" [ngStyle]="{ 'display': quizButtonDisplay }">
+                <a class="btn ghost-edit btn-sm" [href]="quizUrl" target="_blank">
+                  <i class="icon icon-message"></i>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}
+                </a>
               </div>
             </div>
-
-            <div class="share-wrapper">
-              <p class="para">{{ 'DISCOVERDESCRIPTION.SHARE' | translate }}</p>
-              <a [href]="linkedInUrl" target="_blank">
-                <i class="fab fa-linkedin-in fa-2x" id="icon-linkedIn"></i>
-              </a>&nbsp;
-              <a [href]="twitterUrl" target="_blank">
-                <i class="fab fa-twitter fa-2x" id="icon-twitter"></i>
-              </a>&nbsp;
-              <a [href]="facebookUrl" target="_blank">
-                <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>
-              </a>&nbsp;
-              <a [href]="mailUrl">
-                <i class="fas fa-envelope fa-2x" id="icon-mail"></i>
-              </a>
-            </div>
           </div>
-          <!-- /Summary and share button -->
 
-        </div>
-      </div>
-      <!-- /Hero section -->
-
-
-      <!-- Media section -->
-      <div *ngIf="innovation.media?.length > 0" class="section-container">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.MEDIAS' | translate }}</h3>
-          <div class="media-wrapper" *ngFor="let media of innovation.media">
-
-            <div *ngIf="media?.type === 'VIDEO'">
-              <iframe
-                [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-                height="230"
-                [ngStyle]="{ 'left': 'O', 'width': '318px', 'border-width': '0' }">
-              </iframe>
-            </div>
-
-            <a *ngIf="media?.type === 'PHOTO'">
-              <img
-                [src]="getSrc(media.url)"
-                [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate"
-                (click)="mediaToShow($event, media.url)">
+          <div class="share-wrapper">
+            <p class="para">{{ 'DISCOVERDESCRIPTION.SHARE' | translate }}</p>
+            <a [href]="linkedInUrl" target="_blank">
+              <i class="fab fa-linkedin-in fa-2x" id="icon-linkedIn"></i>
+            </a>&nbsp;
+            <a [href]="twitterUrl" target="_blank">
+              <i class="fab fa-twitter fa-2x" id="icon-twitter"></i>
+            </a>&nbsp;
+            <a [href]="facebookUrl" target="_blank">
+              <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>
+            </a>&nbsp;
+            <a [href]="mailUrl">
+              <i class="fas fa-envelope fa-2x" id="icon-mail"></i>
             </a>
-
           </div>
         </div>
+        <!-- /Summary and share button -->
+
       </div>
-      <!-- /Media section -->
+    </div>
+    <!-- /Hero section -->
 
 
-      <!-- Advantage section -->
-      <div *ngIf="innovation.advantages?.length > 0" class="section-container" [ngStyle]="{ 'background-color': '#f5f5f5' }">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h3>
-          <ul class="advantage">
-            <li *ngFor="let advantage of innovation.advantages">
-              {{ advantage.text | FormatText }}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- /Advantage section -->
+    <!-- Media section -->
+    <div *ngIf="innovation.media?.length > 0" class="section-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.MEDIAS' | translate }}</h3>
+        <div class="media-wrapper" *ngFor="let media of innovation.media">
 
-
-      <!-- Solution and issue section -->
-      <div *ngIf="innovation.problem?.length > 0 || innovation.solution?.length > 0" class="section-container solution-wrapper">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="columns">
-
-            <div class="column col-md-12 col-6">
-              <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
-              <div [innerHTML]="innovation.problem"></div>
-            </div>
-
-            <div class="column col-md-12 col-6">
-              <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
-              <div [innerHTML]="innovation.solution"></div>
-            </div>
-
+          <div *ngIf="media?.type === 'VIDEO'">
+            <iframe
+              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+              height="230"
+              [ngStyle]="{ 'left': 'O', 'width': '318px', 'border-width': '0' }">
+            </iframe>
           </div>
+
+          <a *ngIf="media?.type === 'PHOTO'">
+            <img
+              [src]="getSrc(media.url)"
+              [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate"
+              (click)="mediaToShow($event, media.url)">
+          </a>
+
         </div>
       </div>
-      <!-- /Solution and issue section -->
-
     </div>
+    <!-- /Media section -->
 
-    <div class="text-center" [ngStyle]="{ 'margin-top': '3.15rem' }">
-      <a routerLink="/discover" class="btn btn-primary">{{ 'DISCOVERDESCRIPTION.DISCOVER_OTHER' | translate }}</a>
+
+    <!-- Advantage section -->
+    <div *ngIf="innovation.advantages?.length > 0" class="section-container" [ngStyle]="{ 'background-color': '#f5f5f5' }">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h3>
+        <ul class="advantage">
+          <li *ngFor="let advantage of innovation.advantages">
+            {{ advantage.text | FormatText }}
+          </li>
+        </ul>
+      </div>
     </div>
+    <!-- /Advantage section -->
 
-  </ng-container>
+
+    <!-- Solution and issue section -->
+    <div *ngIf="innovation.problem?.length > 0 || innovation.solution?.length > 0" class="section-container solution-wrapper">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="columns">
+
+          <div class="column col-md-12 col-6">
+            <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
+            <div [innerHTML]="innovation.problem"></div>
+          </div>
+
+          <div class="column col-md-12 col-6">
+            <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
+            <div [innerHTML]="innovation.solution"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /Solution and issue section -->
+
+  </div>
+
+  <div class="text-center" [ngStyle]="{ 'margin-top': '3.15rem' }">
+    <a routerLink="/discover" class="btn btn-primary">{{ 'DISCOVERDESCRIPTION.DISCOVER_OTHER' | translate }}</a>
+  </div>
+
   <!-- /Display innovation card -->
 
 </section>

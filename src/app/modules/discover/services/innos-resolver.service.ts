@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Innovation } from '../../../models/innovation';
@@ -19,16 +20,16 @@ export class InnovationsResolver implements Resolve<Array<Innovation>> {
     sort: '{"created":-1}'
   };
 
-  innovations: Array<Innovation>;
-
-  constructor(private innovationService: InnovationService, private state: TransferState) {
-    this.innovations = this.state.get(INNOVATIONS_KEY, null as Array<Innovation>);
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,
+              private innovationService: InnovationService,
+              private state: TransferState) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Array<Innovation>> {
-    if (this.innovations) {
+    if (this.state.hasKey(INNOVATIONS_KEY)) {
+      const innovations = this.state.get<Array<Innovation>>(INNOVATIONS_KEY, null);
+      this.state.remove(INNOVATIONS_KEY);
       return new Observable((observer) => {
-        observer.next(this.innovations);
+        observer.next(innovations);
         observer.complete();
       });
     } else {
@@ -36,7 +37,9 @@ export class InnovationsResolver implements Resolve<Array<Innovation>> {
         .pipe(
           map((innovations: any) => innovations.result),
           tap((innovations) => {
-            this.state.set(INNOVATIONS_KEY, innovations as Array<Innovation>);
+              if (isPlatformServer(this.platformId)) {
+                this.state.set(INNOVATIONS_KEY, innovations as Array<Innovation>);
+              }
           }),
           catchError(() => {
             return Observable.empty();

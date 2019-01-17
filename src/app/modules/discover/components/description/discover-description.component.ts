@@ -3,10 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InnovCard } from '../../../../models/innov-card';
 import { Innovation } from '../../../../models/innovation';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { environment } from '../../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateService } from '@ngx-translate/core';
@@ -47,17 +45,13 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _patent = false;
 
-  private _displaySpinner = true;
-
   private _operatorEmail: string;
 
   tags: Array<string> = [];
 
-  constructor(private innovationService: InnovationService,
-              private activatedRoute: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
-              private translateNotificationsService: TranslateNotificationsService,
               private router: Router,
               private translateService: TranslateService) {}
 
@@ -73,25 +67,17 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
   private loadInnovation() {
-    this.innovationService.get(this._id).subscribe((response: Innovation) => {
+    this.innovation = this.activatedRoute.snapshot.data.innovation;
 
-      if (response.quizId === '' || response.status === 'DONE') {
-        this._quizButtonDisplay = 'none';
-      }
+    if (this.innovation.quizId === '' || this.innovation.status === 'DONE') {
+      this._quizButtonDisplay = 'none';
+    }
 
-      this.innovation = response;
-      this.getAllTags();
-      this.getPatent();
-      this.getAllShareLinks();
-      this.getOperatorDetails();
-      this.getInnovationCard();
-
-      }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVERDESCRIPTION.ERROR');
-      this._displaySpinner = false;
-    }, () => {
-      this._displaySpinner = false;
-    });
+    this.getAllTags();
+    this.getPatent();
+    this.getAllShareLinks();
+    this.getOperatorDetails();
+    this.getInnovationCard();
 
   }
 
@@ -203,10 +189,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get patent(): boolean {
     return this._patent;
-  }
-
-  get displaySpinner(): boolean {
-    return this._displaySpinner;
   }
 
   get operatorEmail(): string {
