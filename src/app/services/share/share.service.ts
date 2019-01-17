@@ -37,12 +37,12 @@ export class ShareService {
 
   public linkedinProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
-    return encodeURI('http://www.linkedin.com/shareArticle' +
+    return 'https://www.linkedin.com/shareArticle' +
       '?mini=true' +
       '&url=' + this._getShareUrl(project) +
       '&title=' + this._getTitle(project, lang) +
       '&summary=' + this._getSummary(project, lang) +
-      '&source=' + 'UMI'); // En changeant, ne pas oublier de transformer en URL avec encodeURIComponent()
+      '&source=' + 'UMI';
   }
 
   public twitterProjectShareLink (project: Innovation, lang: string): string {
@@ -62,11 +62,11 @@ export class ShareService {
 
   public googleProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
-    return encodeURI('https://plus.google.com/share?url=' + this._getShareUrl(project) + '&text=' + this._getSummary(project, lang));
+    return 'https://plus.google.com/share?url=' + this._getShareUrl(project) + '&text=' + this._getSummary(project, lang);
   }
 
   public mailProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
-    return `mailto:?body=${this._getSummary(project, lang)}%0A${this._getShareUrl(project)}&subject=${this._getTitle(project, lang)}`
+    return `mailto:?body=${this._getSummary(project, lang)}%0A${this._getShareUrl(project)}&subject=${this._getTitle(project, lang)}`;
   }
 }

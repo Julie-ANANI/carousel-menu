@@ -1,3 +1,4 @@
+<app-header></app-header>
 <section class="section-container" id="discover-description">
 
 
@@ -57,7 +58,7 @@
                 <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>
               </a>&nbsp;
               <a [href]="mailUrl">
-                <i class="far fa-envelope fa-2x" id="icon-mail"></i>
+                <i class="fas fa-envelope fa-2x" id="icon-mail"></i>
               </a>
             </div>
           </div>
@@ -130,11 +131,16 @@
       <!-- /Solution and issue section -->
 
     </div>
+
+    <div class="text-center" [ngStyle]="{ 'margin-top': '3.15rem' }">
+      <a routerLink="/discover" class="btn btn-primary">{{ 'DISCOVERDESCRIPTION.DISCOVER_OTHER' | translate }}</a>
+    </div>
+
   </ng-container>
   <!-- /Display innovation card -->
 
-
 </section>
+<app-footer></app-footer>
 
 
 <!-- Modal to display media -->

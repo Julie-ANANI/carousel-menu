@@ -1,13 +1,13 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 
 const continents = [
-  'AFRICA',
-  'NORTHAMERICA',
-  'SOUTHAMERICA',
-  'ASIA',
-  'EUROPE',
-  'OCEANIA',
-  'RUSSIA'
+  'africa',
+  'americaNord',
+  'americaSud',
+  'asia',
+  'europe',
+  'oceania',
+  'russia'
 ];
 
 @Injectable()

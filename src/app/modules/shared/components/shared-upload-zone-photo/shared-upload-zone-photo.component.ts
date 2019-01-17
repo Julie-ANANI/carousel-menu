@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core
 import { FileSystemFileEntry } from 'ngx-file-drop';
 import { HttpClient } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-shared-upload-zone-photo',
@@ -46,10 +45,10 @@ export class SharedUploadZonePhotoComponent {
     }
   }
 
-  private uploadFile(file: File) {
+  private uploadFile = (file: File) => {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    this.http.post(environment.apiUrl + this.uri, formData)
+    this.http.post(this.uri, formData)
       .subscribe((data: any) => {
         // Sanitized logo returned from backend
         this.loading = false;

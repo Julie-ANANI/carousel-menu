@@ -74,7 +74,9 @@ export class StarsComponent implements OnInit {
             this._notesData[k].sum += vote;
             this._notesData[k].count += 1;
           } else {
-            this._notesData[k].sum += 2; // give a default note to increase differences between differents answers
+            // the client didn't answer this particular options but gave stars to other options
+            // We choose to give him a default value here to increase variability of scores.
+            this._notesData[k].sum += 1;
           }
         });
       });
