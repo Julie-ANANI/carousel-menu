@@ -21,6 +21,10 @@ const appRoutes: Routes = [
     loadChildren: './modules/share/share.module#ShareModule'
   },
   {
+    path: 'auth',
+    loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
+  },
+  {
     path: '',
     loadChildren: './modules/client/client.module#ClientModule'
   },

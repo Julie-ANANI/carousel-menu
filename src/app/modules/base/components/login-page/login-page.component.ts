@@ -29,7 +29,13 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
     this.translateTitleService.setTitle('LOG_IN.TITLE');
     this.buildForm();
-    this.linkedInUrl();
+    const linkedinConfig = {
+      url: 'https://www.linkedin.com/oauth/v2/authorization',
+      clientID: '77283cf7nmchg3',
+      callbackURL: `${environment.clientUrl}/auth/linkedin/callback`,
+      scope: 'r_emailaddress r_liteprofile r_basicprofile'
+    };
+    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=U3iqySrotWCW8e0xRZO9dOC2&client_id=${linkedinConfig.clientID}`;
   }
 
 
@@ -38,18 +44,6 @@ export class LoginPageComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-  }
-
-
-  private linkedInUrl() {
-    const domain = environment.domain;
-
-    this.authService.linkedinLogin(domain).pipe(first()).subscribe((url: string) => {
-        this._linkedInLink = url;
-      }, (error: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
-      }
-    );
 
   }
 
@@ -85,7 +79,6 @@ export class LoginPageComponent implements OnInit {
       }
     }
   }
-
 
   getBackgroundImage(): string {
     return environment.background;
