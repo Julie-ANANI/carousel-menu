@@ -78,7 +78,7 @@ export class AdminCampaignComponent implements OnInit {
     }
   }
 
-  get baseUrl(): any { return `/admin/campaigns/campaign/${this._campaign._id}/`; }
+  get baseUrl(): any { return `/user/admin/campaigns/campaign/${this._campaign._id}/`; }
   get campaign(): any { return this._campaign; }
   get tabs(): any { return this._tabs; }
 }

@@ -86,11 +86,11 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   public getRelevantLink (project: Innovation) { // routerLink : /projects/:project_id
-    return 'projects-list/' + project._id;
+    return 'project/' + project._id;
   }
 
   goToProject(project: Innovation) {
-    this.router.navigate(['/admin/projects/' + this.getRelevantLink(project)]);
+    this.router.navigate(['/user/admin/projects/' + this.getRelevantLink(project)]);
   }
 
   private _getProjectIndex(projectId: string): number {

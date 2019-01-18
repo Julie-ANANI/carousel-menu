@@ -5,7 +5,7 @@
       <div class="columns">
         <div class="column col-11 col-mx-auto">
           <h1><strong>Campaign</strong> / {{ campaign.title }}</h1>
-          <a [routerLink]="'/admin/projects/project/' + campaign.innovation._id + '/settings'" class="back-to-project">Back to project</a>
+          <a [routerLink]="'/user/admin/projects/project/' + campaign.innovation._id + '/settings'" class="back-to-project">Back to project</a>
 
           <ul class="tabs">
             <li class="tab-item" *ngFor="let tab of authorizedTabs">

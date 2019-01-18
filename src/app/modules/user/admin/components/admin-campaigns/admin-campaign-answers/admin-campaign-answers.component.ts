@@ -97,8 +97,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
     });
   }
 
-  public closeSidebar(state: string) {
-    this.sidebarTemplateValue.animate_state = state;
+  public closeSidebar(state: SidebarInterface) {
+    this.sidebarTemplateValue.animate_state = state.animate_state;
     this.editMode.next(false);
   }
 

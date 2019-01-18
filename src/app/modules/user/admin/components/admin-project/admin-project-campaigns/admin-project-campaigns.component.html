@@ -28,7 +28,7 @@
             <input type="text" id="title" formControlName="title" [value]="campaign.title">
             <button type="submit" class="btn btn-primary"><i class="far fa-save"></i>&nbsp;Save</button>
           </form>
-          <a *ngSwitchDefault [routerLink]="'/admin/campaigns/campaign/' + campaign._id + '/answers'">{{campaign.title}}</a>
+          <a *ngSwitchDefault [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">{{campaign.title}}</a>
         </ng-container>
       </td>
       <td class="text-center">{{campaign.stats ? campaign.stats['campaign']['nbProfessionals']||0 : 0}}</td>

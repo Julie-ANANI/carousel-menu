@@ -36,6 +36,17 @@ import { PresetService } from '../../../services/preset/preset.service';
 import { EmailService } from '../../../services/email/email.service';
 import { TagsService } from '../../../services/tags/tags.service';
 import { CampaignService } from '../../../services/campaign/campaign.service';
+import { CampaignResolver } from '../../../resolvers/campaign.resolver';
+import { CommonService } from '../../../services/common/common.service';
+import { AnswerService } from '../../../services/answer/answer.service';
+import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
+import { DownloadService } from '../../../services/download/download.service';
+import { RequestResolver } from '../../../resolvers/request.resolver';
+import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
+import { SignatureResolver } from '../../../resolvers/signature.resolver';
+import { CampaignCalculationService } from '../../../services/campaign/campaign-calculation.service';
+import { QuizService } from '../../../services/quiz/quiz.service';
+import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 
 @NgModule({
   imports: [
@@ -80,7 +91,19 @@ import { CampaignService } from '../../../services/campaign/campaign.service';
     PresetService,
     EmailService,
     TagsService,
-    CampaignService
+    CampaignService,
+    CampaignResolver,
+    CommonService,
+    AnswerService,
+    AutocompleteService,
+    DownloadService,
+    RequestResolver,
+    ScenarioResolver,
+    SignatureResolver,
+    RequestResolver,
+    CampaignCalculationService,
+    QuizService,
+    InnovationCommonService
   ]
 })
 
