@@ -102,6 +102,10 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
       window.location.reload();
     }
 
+    if (this.router.url.includes('/share/synthesis')) {
+      this.router.navigate([this.router.url.replace('/share/', '/user/')]);
+    }
+
   }
 
 
