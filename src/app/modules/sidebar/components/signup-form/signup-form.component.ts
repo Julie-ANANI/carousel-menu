@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-  selector: 'signup-form',
+  selector: 'app-signup-form',
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.scss']
 })
+
 export class SignupFormComponent implements OnInit {
 
   @Input() set sidebarState(value: string) {
@@ -40,7 +41,7 @@ export class SignupFormComponent implements OnInit {
       companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/[\w]*[\&\@\$\.\#\+\=\/]+[\w]*/g)]],
+      password: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[\s\S]{9,50}$/gm)]],
       country: ['', [Validators.required]]
     });
   }

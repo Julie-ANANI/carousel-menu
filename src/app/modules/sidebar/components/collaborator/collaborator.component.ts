@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators'
-import {User} from '../../../../models/user.model';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { User } from '../../../../models/user.model';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-collaborator',
@@ -14,15 +14,28 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 
 export class CollaboratorComponent implements OnInit {
 
-  @Input() projectId: string;
-  @Input() collaborator: Array<User>;
-  @Input() sidebarState: Subject<string>;
+  @Input() set project(value: Innovation) {
+    this._innovationId = value._id;
+    this._innovationCollaborators = value.collaborators;
+  }
+
+  @Input() set sidebarState(value: string) {
+    if (value === 'inactive') {
+      this._formData.reset();
+    }
+  }
 
   @Output() collaboratorAdded = new EventEmitter<any>();
 
-  formData: FormGroup;
-  collaboratorsInvited: Array<string> = [];
-  collaboratorsAddingProcess: any = {
+  private _innovationId: string;
+
+  private _innovationCollaborators: Array<User> = [];
+
+  private _formData: FormGroup;
+
+  private _collaboratorsInvited: Array<string> = [];
+
+  private _collaboratorsAddingProcess: any = {
     usersAdded: [],
     invitationsToSend: [],
     invitationsToSendAgain: []
@@ -30,64 +43,53 @@ export class CollaboratorComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService) {
-  }
+              private translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this.formData = this.formBuilder.group({
+    this._formData = this.formBuilder.group({
       collaboratorEmail: ['', [Validators.required, Validators.email]]
     });
-
-    this.sidebarState.subscribe((state: any) => {
-      if (state) {
-        setTimeout (() => {
-          this.formData.reset();
-        }, 700);
-      }
-    });
-
   }
 
 
   onSubmit(event: Event) {
     event.preventDefault();
 
-    const email = this.formData.get('collaboratorEmail').value;
+    const email = this._formData.get('collaboratorEmail').value;
 
-    this.innovationService.inviteCollaborators(this.projectId, email)
-      .pipe(first())
+    this.innovationService.inviteCollaborators(this._innovationId, email).pipe(first())
       .subscribe((response: any) => {
         if (response.usersAdded.length || response.invitationsToSend.length || response.invitationsToSendAgain.length) {
-          this.collaboratorsAddingProcess = response;
-          this.collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
+          this._collaboratorsAddingProcess = response;
+          this._collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
 
           if (response.invitationsToSend.length) {
-            this.collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSend.toString());
-            window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+            this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSend.toString());
+            window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
           }
 
           if (response.invitationsToSendAgain.length) {
 
-            if (this.collaboratorsInvited.length !== 0) {
+            if (this._collaboratorsInvited.length !== 0) {
 
-              const index = this.collaboratorsInvited.indexOf(email.toString());
+              const index = this._collaboratorsInvited.indexOf(email.toString());
 
               if (index === -1) {
-                this.collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSendAgain.toString());
+                this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSendAgain.toString());
               }
 
-              window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+              window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
 
             } else {
-              this.collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSendAgain.toString());
-              window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+              this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSendAgain.toString());
+              window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
             }
 
           }
 
           if (response.usersAdded.length) {
-            this.collaborator = this.collaborator.concat(response.usersAdded);
-            this.collaboratorAdded.emit(this.collaborator);
+            this._innovationCollaborators = this._innovationCollaborators.concat(response.usersAdded);
+            this.collaboratorAdded.emit(this._innovationCollaborators);
             this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ADDED.CONTENT');
           }
 
@@ -95,29 +97,59 @@ export class CollaboratorComponent implements OnInit {
           this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.CONTENT');
         }
 
-        this.formData.reset();
+        this._formData.reset();
 
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
       });
 
   }
 
+
   reinviteCollaborator(event: Event, email: string) {
     event.preventDefault();
 
-    this.innovationService.inviteCollaborators(this.projectId, email).pipe(first()).subscribe((response: any) => {
+    this.innovationService.inviteCollaborators(this._innovationId, email).pipe(first()).subscribe((response: any) => {
       window.location.href = 'mailto:' + response.invitationsToSendAgain.join(',') + '?body=' + this.innovationService.getInvitationUrl();
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
   }
 
+
   removeCollaborator(event: Event, email: any) {
     event.preventDefault();
 
-    this.innovationService.removeCollaborator(this.projectId, email).subscribe((response: any) => {
-      this.collaborator = response;
+    this.innovationService.removeCollaborator(this._innovationId, email).subscribe((response: any) => {
+      this._innovationCollaborators = response;
+      this.collaboratorAdded.emit(this._innovationCollaborators);
       this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
+  }
+
+
+  get innovationId(): string {
+    return this._innovationId;
+  }
+
+  get innovationCollaborators(): Array<User> {
+    return this._innovationCollaborators;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
+  }
+
+  get collaboratorsInvited(): Array<string> {
+    return this._collaboratorsInvited;
+  }
+
+  get collaboratorsAddingProcess(): any {
+    return this._collaboratorsAddingProcess;
   }
 
 }

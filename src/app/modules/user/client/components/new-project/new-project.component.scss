@@ -1,0 +1,159 @@
+@import "../../../../../../style/variables";
+
+#new-project-component {
+
+  .ques-2, .ques-3, .section-info {
+    padding-top: 4.06rem;
+  }
+
+  .bot-rect {
+    width: 235px;
+  }
+
+  .ques-3 {
+
+    .selection-wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .selection-wrapper label {
+      margin-bottom: 1.2rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    label input[type=radio] {
+      display: none;
+    }
+
+    .circle-check {
+      margin-top: -11px;
+      margin-left: 11px;
+    }
+
+    .offers {
+      padding: 2.4rem 1.2rem;
+      border: 4px solid $border-color;
+      border-radius: 3px;
+      word-wrap: break-word;
+      width: 328px;
+      cursor: pointer;
+      background: #FAFAFA;
+
+      ul {
+        margin-bottom: 0;
+
+        li {
+          font-size: .875rem;
+          padding-right: 0;
+          color: #262831;
+        }
+
+        li:last-child {
+          padding-bottom: 0;
+        }
+
+      }
+
+    }
+
+    .offers:hover {
+      transition: all 0.15s ease-in-out;
+      border-color: $primary-color;
+      background-color: #FFF9EB;
+    }
+
+    label input[type=radio]:checked + .circle-check {
+      transition: all 0.15s ease-in-out;
+      border-color: $validation-color;
+      background: $validation-color;
+
+      i {
+        color: white !important;
+      }
+
+    }
+
+    label input[type=radio]:checked + .circle-check + .offers {
+      transition: all 0.15s ease-in-out;
+      border-color: $validation-color;
+    }
+
+  }
+
+
+  .create-button {
+    padding-top: 2.8rem;
+    text-align: center;
+  }
+
+  .section-info {
+
+    .fas {
+      color: $meta-color;;
+    }
+
+    .text {
+      padding-top: .6rem;
+      width: 221px;
+      display: inline-block;
+    }
+
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 320px) {
+
+  .offers {
+    width: 293px !important;
+  }
+
+}
+
+@media (min-width: 321px) and (max-width: 360px) {
+
+  .offers {
+    width: 295px !important;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .tooltips {
+    display: none;
+  }
+
+  .image-wrapper {
+    display: none;
+  }
+
+}
+
+@media (min-width: 600px) {
+
+  .selection-wrapper label {
+    margin-right: 1.2rem;
+  }
+
+  .offers {
+    width: 323px !important;
+  }
+
+}
+
+@media (min-width: 840px) {
+
+  .selection-wrapper label {
+    margin-right: 1.57rem;
+  }
+
+}
+
+
+

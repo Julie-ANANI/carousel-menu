@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { SharedAnswersListComponent } from './shared-answers-list.component';
-import {InputModule} from '../../../input/input.module';
 import {TableModule} from '../../../table/table.module';
 
 @NgModule({
@@ -15,7 +14,6 @@ import {TableModule} from '../../../table/table.module';
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    InputModule,
     TableModule,
     TranslateModule.forChild()
   ],

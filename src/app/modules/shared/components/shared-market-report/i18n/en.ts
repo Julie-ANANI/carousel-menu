@@ -1,26 +1,17 @@
 export const MARKET_REPORT = {
-
-  'TITLE': {
-    'EDITING': 'Market potential of your innovation will be available soon',
-    'SUBMITTED': 'Exploring market potential of your innovation',
-    'EVALUATING': 'Exploring market potential of your innovation'
-  },
+  'TITLE': 'Market potential of your project',
 
   'MESSAGE': {
-    'SUBMITTED': 'Your innovation is under review by our team. We\'ll come back soon!',
-    'EDITING': {
-      'A': 'Please finish',
-      'B': 'setup of your innovation',
-      'C': 'and submit it.'
-    },
-    'REVIEWING': 'Please modify the changes in your innovation and re-submit it.',
-    'EVALUATING': 'We are collecting market potential of your innovation. We\'ll come back soon!'
+    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'EDITING': 'Please finish setup of your project and submit it.',
+    'REVIEWING': 'Please modify the changes in your project and re-submit it.',
+    'EVALUATING': 'We are collecting market potential of your project. We\'ll come back soon!'
   },
 
   'MESSAGE_ADMIN': {
     'NOT_SUBMITTED': 'The client hasn\'t submitted the project yet. You will be able to edit the market report after he submits his project.',
     'PREVIEW_MODE': 'The partial synthesis of this project is available at the client side.',
-    'DONE': 'This project is marked as finished, and full synthesis is available at the client side.'
+    'DONE': 'This projects is marked as finished, and full synthesis is available at the client side.'
   },
 
   'BUTTON': {

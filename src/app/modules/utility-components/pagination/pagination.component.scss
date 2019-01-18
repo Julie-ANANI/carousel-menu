@@ -1,0 +1,39 @@
+@import "../../../../style/variables";
+
+.pagination-wrapper {
+  display: inline-flex;
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 600;
+  align-items: center;
+
+  .page-selector-wrapper {
+    margin-left: .6rem;
+  }
+
+  select {
+    border: .06rem solid $border-color;
+    height: 2rem;
+  }
+
+  .page-number-wrapper {
+    margin-left: .6rem;
+
+    .fa-angle-double-left, .fa-angle-left, .fa-angle-right, .fa-angle-double-right {
+      color: $meta-color;
+      margin-right: .6rem;
+      font-size: 1.2rem;
+      vertical-align: -10%;
+    }
+
+    .text-wrapper {
+      margin-right: .6rem;
+    }
+
+    .fa-angle-double-left:hover, .fa-angle-left:hover, .fa-angle-right:hover, .fa-angle-double-right:hover {
+      color: $primary-color;
+    }
+
+  }
+
+}

@@ -28,10 +28,11 @@ import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module'
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { RouterModule } from '@angular/router';
-import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
-import { InputModule } from '../../../input/input.module';
+import { ProgressBarModule } from '../../../utility-components/progress-bar/progress-bar.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SidebarUserAnswerModule } from '../../../sidebar/components/user-answer/sidebar-user-answer.module';
+import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
 
 /***
@@ -56,8 +57,6 @@ import { ExecutiveProfessionalComponent } from './components/executive-report/ex
 import { ExecutiveSectionComponent } from './components/executive-report/executive-section/executive-section.component';
 
 
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -68,12 +67,13 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     TranslateModule.forChild(),
     NgxPageScrollModule,
     SidebarModule,
-    InputModule,
     RouterModule,
     ProgressBarModule,
     SharedLoaderModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SidebarUserAnswerModule,
+    CountryFlagModule
   ],
   providers: [
     CommonService,

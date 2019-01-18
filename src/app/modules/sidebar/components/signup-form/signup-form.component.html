@@ -97,7 +97,7 @@
         id="signup-form-country"
         type="text"
         [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
-        (click)="onSuggestCountries()">
+        (keypress)="onSuggestCountries()">
       <ul
         *ngIf="signupForm.get('country').value"
         class="suggestion"

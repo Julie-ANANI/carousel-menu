@@ -8,9 +8,9 @@ export const COMMON = {
   'SEND': 'Send',
   'CHANGE': 'Change',
   'DELETE': 'Delete',
-  'SUBMIT': 'CONFIRM',
-  'LOG_IN': 'Sign in',
-  'SIGN_UP': 'Sign up',
+  'SUBMIT': 'Confirm',
+  'LOG_IN': 'Sign In',
+  'SIGN_UP': 'Sign Up',
   'LOG_OUT': 'Sign out',
   'CANCEL': 'Cancel',
   'MORE': 'Show',
@@ -51,6 +51,7 @@ export const COMMON = {
   'SEARCH_BY': 'Search by',
   'SEARCH_PLACEHOLDER': 'Search here',
   'SELECT': 'Select',
+  'SHARED_REPORTS': 'Shared Reports',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
@@ -164,7 +165,7 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Please enter a valid email address.',
-    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters .',
+    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
     'MUST_CONTAIN': 'Password must contain one special character ($@&!#).'
   },
 

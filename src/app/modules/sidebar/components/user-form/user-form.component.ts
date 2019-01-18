@@ -10,7 +10,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import {distinctUntilChanged, first} from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 
@@ -126,6 +126,7 @@ export class UserFormComponent implements OnInit {
 
   loadInnovations(): void {
     this.userService.getInnovations(this._user.id)
+      .pipe(first())
       .subscribe((innovations: any) => {
         this._projects = innovations.result;
       });

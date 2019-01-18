@@ -187,6 +187,7 @@ export class InnovationFormComponent implements OnInit {
 
   projectEdit(value: Innovation) {
     this._project = value;
+    this._isChange = true;
   }
 
   settingsEdit(value: InnovationSettings) {

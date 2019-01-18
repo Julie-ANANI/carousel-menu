@@ -1,6 +1,6 @@
 // import { AppPage } from './app.po';
 
-describe('workspace-project App', () => {
+describe('workspace-projects-list App', () => {
   /*
   let page: AppPage;
 

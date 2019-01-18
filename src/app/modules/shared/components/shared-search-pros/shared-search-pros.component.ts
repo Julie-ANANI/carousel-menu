@@ -5,7 +5,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import { COUNTRIES } from './COUNTRIES'
-import { Template } from '../../../sidebar/interfaces/template';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,7 @@ import { first } from 'rxjs/operators';
 export class SharedSearchProsComponent implements OnInit {
 
   private _params: any;
-  private _more: Template = {};
+  private _more: SidebarInterface = {};
   private _googleQuota = 30000;
   private _estimatedNumberOfGoogleRequests = 0;
   private _countriesSettings: any[] = [];

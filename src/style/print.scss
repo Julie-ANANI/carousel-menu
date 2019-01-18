@@ -28,9 +28,15 @@
 
   /********************************** Innovation Card ***************************************/
 
-  #setup, .header-project {
+  #setup-component, .header-project, #project-component .section-header {
     display: none !important;
   }
+
+
+  #project-component {
+    padding-bottom: 0;
+  }
+
 
   #innovation-card-print {
     display: flex !important;
@@ -65,7 +71,7 @@
         margin-bottom: 25px;
       }
 
-      .summary-text {
+      /*.summary-text {
         padding-bottom: -.6rem;
 
         ul {
@@ -79,7 +85,15 @@
 
         }
 
-      }
+      }*/
+
+      /*.summary-text {
+
+        p:last-child {
+          padding-bottom: 0;
+        }
+
+      }*/
 
       .image-wrapper {
         padding-top: 15px;
@@ -105,9 +119,9 @@
             padding-top: 0;
           }
 
-          li:last-child {
+          /*li:last-child {
             padding-bottom: 0;
-          }
+          }*/
 
         }
 
@@ -116,7 +130,7 @@
     }
 
 
-    .column-2, .column-3 {
+    /*.column-2, .column-3 {
 
       .issue-text, .solution-text {
 
@@ -126,7 +140,7 @@
 
       }
 
-    }
+    }*/
 
 
   }

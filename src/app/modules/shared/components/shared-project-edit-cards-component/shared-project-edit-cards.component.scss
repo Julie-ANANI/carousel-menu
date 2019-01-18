@@ -1,14 +1,40 @@
 @import "../../../../../style/variables";
 
-#pitch-card {
+#shared-project-edit-cards-component {
 
-  .lang-wrapper {
-    padding-top: 1.57rem;
+  p {
+    padding: 0;
+  }
 
-    .lang-option-wrapper {
-      padding-top: .6rem;
 
-      ul {
+  .delete-wrapper {
+
+    span {
+      color: $alert-color;
+      font-size: .875rem;
+      cursor: pointer;
+    }
+
+    span:hover {
+      text-decoration: underline;
+    }
+
+  }
+
+
+  .section-language {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .selection-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .options {
         list-style: none;
         display: flex;
         align-items: center;
@@ -17,16 +43,9 @@
           display: inline-flex;
           justify-content: center;
           align-items: center;
-          padding-left: 0;
-          padding-right: 1.57rem;
 
-          .radio-button, span {
-            cursor: pointer;
-            margin-left: 0;
-          }
-
-          .radio-button span {
-            visibility: hidden;
+          .radio-button {
+            margin-right: .6rem;
           }
 
         }
@@ -39,7 +58,6 @@
 
             span {
               color: white;
-              visibility: visible;
             }
 
           }
@@ -57,42 +75,110 @@
   }
 
 
-  .project-data {
-    padding-top: 3.15rem;
+  .text {
+    font-size: 0.875rem;
   }
+
 
   .pd-input {
     padding-top: 1.2rem;
   }
 
-  .form-group {
-    margin-bottom: 0 !important;
+
+  .project-data {
+    padding-top: 3.15rem;
   }
 
-  .form-default {
-    margin-top: 0;
+
+  .sub-label {
+    color: $meta-color;
+    font-size: .875rem;
   }
+
+
+  .answer-wrapper {
+    background: #F8F4F4;
+    color: $dark-color;
+    padding: .5rem .95rem;
+    border-radius: 3px;
+    display: inline-flex;
+    margin-right: .6rem;
+    margin-bottom: .6rem;
+    font-size: 0.875rem;
+  }
+
 
   .help-wrapper {
-    padding-top: 2.5rem;
-  }
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 3.15rem;
 
-  .media-content {
-    display: inline-flex;
-
-    .media {
-      display: inline-flex;
-      margin-right: .6rem;
-      flex-direction: column;
+    .bot-rect {
+      max-width: 344px;
     }
 
   }
 
-  .media-action {
-    padding-top: .6rem;
-    padding-bottom: .6rem;
-    font-size: .85rem;
+
+  .main-media-wrapper, .secondary-media-wrapper {
+    padding-bottom: 1.2rem;
+    text-align: center;
+
+    p {
+      font-size: 1rem;
+      padding-bottom: .6rem;
+      color: $meta-color;
+    }
+
+    .media-body {
+      display: inline-flex;
+      margin-top: .6rem;
+    }
+
+    .delete-wrapper, .main-link {
+      padding-top: .6rem;
+    }
+
+    .media-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .media-body {
+        margin-left: 1.2rem;
+        margin-right: 1.2rem;
+        flex-direction: column;
+
+        .main-link {
+
+          span {
+            color: $primary-color;
+            font-size: .875rem;
+            cursor: pointer;
+          }
+
+          span:hover {
+            text-decoration: underline;
+          }
+
+        }
+
+        .delete-wrapper {
+          padding-bottom: 1.2rem;
+        }
+
+      }
+
+    }
+
+    img, iframe {
+      width: 220px;
+      height: 152px;
+    }
+
   }
+
 
   .upload-wrapper {
     display: flex;
@@ -111,7 +197,7 @@
 
       .para {
         color: $meta-color;
-        font-size: .85rem;
+        font-size: .875rem;
         margin: 1.57rem;
       }
 
@@ -123,29 +209,11 @@
 
   }
 
-  .delete-link {
-    color: $alert-color;
-    font-size: .85rem;
+
+  .form-default.ng-touched.ng-invalid {
+    border-color: $border-color;
   }
 
-  p {
-    padding: 0;
-  }
-
-  .adv-padding {
-    padding-bottom: 0.95rem;
-  }
-
-  .answer-wrapper {
-    background: #F8F4F4;
-    color: $dark-color;
-    padding: .5rem .95rem;
-    border-radius: 0.18rem;
-    display: inline-flex;
-    margin-right: .6rem;
-    margin-bottom: .6rem;
-    font-size: 0.85rem;
-  }
 
 }
 
@@ -153,7 +221,7 @@
 
 @media (max-width: 600px) {
 
-  #pitch-card {
+  #shared-project-edit-cards-component {
 
     .upload-wrapper {
       flex-direction: column;
