@@ -338,7 +338,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the preset edition page
    */
   goToPresetEdition() {
-    this._router.navigate(['/admin/projects/projects-list/' + this._project._id + '/questionnaire']);
+    this._router.navigate(['/user/admin/projects/project/' + this._project._id + '/questionnaire']);
   }
 
   /***
@@ -534,7 +534,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the answer tags edition page
    */
   goToAnswerTagsEdition() {
-    this._router.navigate(['/admin/projects/projects-list/' + this._project._id + '/answer_tags']);
+    this._router.navigate(['/user/admin/projects/project/' + this._project._id + '/answer_tags']);
   }
 
   /***
@@ -542,7 +542,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the professional list page
    */
   goToProfessionalsList() {
-    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/pros']);
+    this._router.navigate(['/user/admin/campaigns/campaign/' + this.currentCampaign._id + '/pros']);
   }
 
   /***
@@ -550,7 +550,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the templates edition page
    */
   goToTemplates() {
-    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/templates']);
+    this._router.navigate(['/user/admin/campaigns/campaign/' + this.currentCampaign._id + '/templates']);
   }
 
   /***
@@ -558,7 +558,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the autobatch page
    */
   goToAutoBatch() {
-    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/mails']);
+    this._router.navigate(['/user/admin/campaigns/campaign/' + this.currentCampaign._id + '/mails']);
   }
 
   /***
@@ -566,7 +566,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the answers edition page
    */
   goToInsights() {
-    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/answers']);
+    this._router.navigate(['/user/admin/campaigns/campaign/' + this.currentCampaign._id + '/answers']);
   }
 
   /***
@@ -627,7 +627,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the synthesis page
    */
   goToSynthesis() {
-    this._router.navigate(['/admin/projects/projects-list/' + this._project._id + '/synthesis']);
+    this._router.navigate(['/user/admin/projects/project/' + this._project._id + '/synthesis']);
   }
 
   /***
@@ -731,7 +731,7 @@ export class AdminProjectManagementComponent implements OnInit {
     this._innovationService
       .remove(this._project._id)
       .subscribe((projectRemoved: any) => {
-        this._router.navigate(['/admin/projects/']);
+        this._router.navigate(['/user/admin/projects/']);
       });
   }
 

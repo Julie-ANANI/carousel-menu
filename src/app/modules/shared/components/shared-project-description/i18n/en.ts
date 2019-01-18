@@ -1,6 +1,6 @@
 export const PROJECT = {
   'PATENTED': 'Patent protected',
-  'CONTACT_PROJECT_MANAGER': 'Contact the projects-list manager',
+  'CONTACT_PROJECT_MANAGER': 'Contact the project manager',
   'SOLUTION': 'Solution',
   'PROJECT': 'Project',
   'ISSUE': 'Issue',
@@ -18,7 +18,7 @@ export const PROJECT = {
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choose questionnaire',
     'EDIT_PRESET': 'Edit questionnaire',
-    'EDIT_DESCRIPTION': 'Edit projects-list description',
+    'EDIT_DESCRIPTION': 'Edit project description',
     'DESCRIPTION_TRANSLATION': 'Description translation',
     'EDIT_MARKET_TARGETING': 'Edit market targeting',
     'BLACKLIST_DOMAINS_EMAILS': 'Blacklist Emails / Domains',
@@ -27,9 +27,9 @@ export const PROJECT = {
   'CAMPAIGN': {
     'CAMPAIGN': 'Campaign',
     'INSIGHTS': 'Insights',
-    'PITCH_EDIT_DESCRIPTION': 'Please complete the edition of projects-list description',
+    'PITCH_EDIT_DESCRIPTION': 'Please complete the edition of project description',
     'EDIT_ANSWER_TAGS': 'Edit answer tags',
-    'CREATE_CAMPAIGN': 'Please create a campaign to pursue the projects-list ',
+    'CREATE_CAMPAIGN': 'Please create a campaign to pursue the project ',
     'FIND_PROFESSIONALS': 'Find professionals',
     'ACTIVATE_AB_TESTING': 'Activate AB testing',
     'EDIT_WORKFLOW': 'Edit workflow emails',
@@ -40,7 +40,7 @@ export const PROJECT = {
   },
   'DELIVERY' : {
     'DELIVERY': 'Delivery',
-    'PUBLIC': 'Public projects-list',
+    'PUBLIC': 'Public project',
     'UPDATE_ANSWER_TAGS': 'Update answer tags',
     'WRITE_CONCLUSIONS': 'Write conclusions',
     'WRITE_ENDING_MAIL': 'Write ending mail',

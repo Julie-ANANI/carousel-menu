@@ -1,3 +1,4 @@
+<div class="column col-mx-auto col-xs-12 col-11">
 <form novalidate (ngSubmit)="onSubmit()">
 
   <div class="form-group-inline-space">
@@ -17,21 +18,23 @@
     </button>
   </div>
 
-  <!--<app-shared-project-edit-cards
+  <app-shared-project-edit-cards
     [project]="project"
-    [canEdit]="true"
-    (projectChange)="projectEdit($event)"
-    (saveChanges)="isChange = $event"
+    [editable]="true"
+    (pitchChange)="projectEdit($event)"
+    [sideAdmin]="true"
+    [modeAdmin]="true"
     *ngIf="isPitch">
-  </app-shared-project-edit-cards>-->
+  </app-shared-project-edit-cards>
 
-  <!--<app-shared-project-settings
-    [settings]="project.settings"
-    [projectStatus]="project.status"
+  <app-shared-project-settings
+    [projectSettings]="project.settings"
     (settingsChange)="settingsEdit($event)"
     *ngIf="isTargeting"
-    [adminMode]="true">
-  </app-shared-project-settings>-->
+    [modeAdmin]="true"
+    [sideAdmin]="true"
+    [editable]="true">
+  </app-shared-project-settings>
 
   <app-shared-mail-editor *ngIf="isStatus || isMail"
                           [signatures]="signatures"
@@ -106,3 +109,4 @@
   </div>
 
 </form>
+</div>
