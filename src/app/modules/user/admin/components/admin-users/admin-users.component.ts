@@ -102,8 +102,8 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  closeSidebar(value: string) {
-    this.more.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this.more.animate_state = value.animate_state;
     this.sidebarState.next(this.more.animate_state);
   }
 
