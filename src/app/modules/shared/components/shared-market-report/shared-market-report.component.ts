@@ -155,7 +155,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
   /***
-   *This function is to initialize the variables regarding the innovation and the projects-list.
+   *This function is to initialize the variables regarding the innovation and the projectt.
    */
   private initializeVariable() {
 
@@ -395,7 +395,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
   /***
-   * This function will make the projects-list end and synthesis will be available to the client.
+   * This function will make the project end and synthesis will be available to the client.
    * @param {Event} event
    * @param {"DONE"} status
    */
@@ -508,7 +508,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
   /***
-   * This function is to update the projects-list.
+   * This function is to update the projects.
    * @param {Event} event
    */
   update(event: Event) {
@@ -541,7 +541,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   /***
    * This function is called when you click on the valid template button.
-   * We assign the number of section value to the this.projects-list.executiveReport.totalSections
+   * We assign the number of section value to the this.project.executiveReport.totalSections
    * and call the update function to save it in database.
    * @param {Event} event
    */

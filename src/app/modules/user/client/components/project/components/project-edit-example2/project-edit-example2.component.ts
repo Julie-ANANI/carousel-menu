@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-project-edit-example2',
-  template: '<app-shared-projects-list-description [projects-list]="projects-list"></app-shared-projects-list-description>'
+  template: '<app-shared-projects-list-description [project]="project"></app-shared-projects-list-description>'
 })
 export class ProjectEditExample2Component implements OnInit {
 
@@ -21,7 +21,7 @@ export class ProjectEditExample2Component implements OnInit {
       'principalMedia': {
         '_id': '0123456789',
         'cloudinary': {
-          'public_id': 'app/projects-list-example-2.jpg'
+          'public_id': 'app/project-example-2.jpg'
         },
         'type': 'PHOTO'
       },
@@ -65,7 +65,7 @@ export class ProjectEditExample2Component implements OnInit {
             {
               '_id': '0123456789',
               'cloudinary': {
-                'public_id': 'app/projects-list-example-2.jpg'
+                'public_id': 'app/project-example-2.jpg'
               },
               'type': 'PHOTO'
             }
@@ -110,7 +110,7 @@ export class ProjectEditExample2Component implements OnInit {
             {
               '_id': '0123456789',
               'cloudinary': {
-                'public_id': 'app/projects-list-example-2.jpg'
+                'public_id': 'app/project-example-2.jpg'
               },
               'type': 'PHOTO'
             }

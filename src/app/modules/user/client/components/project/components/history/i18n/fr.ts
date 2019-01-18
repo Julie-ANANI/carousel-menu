@@ -1,5 +1,5 @@
 export const HISTORY = {
-  'TITLE': 'History of your projects-list',
+  'TITLE': 'History of your project',
   'EVENT': {
     'STARTED': 'Started',
     'LAUNCHED': 'Launched',

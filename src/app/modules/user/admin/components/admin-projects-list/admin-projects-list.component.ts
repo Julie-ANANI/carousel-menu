@@ -134,7 +134,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   goToProject(project: Innovation) {
-    // this._router.navigate([this.getRelevantLink(projects-list)]);
+    // this._router.navigate([this.getRelevantLink(project)]);
     window.open(this.getRelevantLink(project), '_blank')
   }
 

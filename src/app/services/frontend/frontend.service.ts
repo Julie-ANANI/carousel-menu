@@ -36,7 +36,7 @@ export class FrontendService {
   constructor() {}
 
   /*
-    We are calculating the percentage for the projects-list.
+    We are calculating the percentage for the project.
    */
   completionCalculation(project: Innovation) {
     this.projectFieldsRequired = 0;
@@ -48,12 +48,12 @@ export class FrontendService {
     this._calculatedValues.innovationCardsPercentage = [];
 
     /*
-      method to calculate the percentage at projects-list level.
+      method to calculate the percentage at project level.
      */
     this.projectLevel(project);
 
     /*
-      method to calculate the percentage in projects-list settings.
+      method to calculate the percentage in project settings.
      */
      this.settingLevel(project);
 
@@ -65,7 +65,7 @@ export class FrontendService {
     this.totalFieldsRequired = this.projectFieldsRequired + this.settingsFieldsRequired + this.innovCardFieldsRequired;
 
     /*
-      now calculating the total projects-list completion percentage.
+      now calculating the total project completion percentage.
      */
     this._calculatedValues.totalPercentage = (this.totalFieldsPresent * 100) / this.totalFieldsRequired;
 
@@ -73,7 +73,7 @@ export class FrontendService {
 
 
   /*
-    Here we are calculating the values that we have at projects-list level
+    Here we are calculating the values that we have at project level
     and we are checking that are field or not.
   */
 
@@ -168,7 +168,7 @@ export class FrontendService {
   }
 
   /*
-    Return the completion percentage of a projects-list section (preparation, campaign or delivery)
+    Return the completion percentage of a project section (preparation, campaign or delivery)
    */
   calculateInnovationMetadataPercentages(project: Innovation, level: string) {
     if (project._metadata[level] !== undefined) {
