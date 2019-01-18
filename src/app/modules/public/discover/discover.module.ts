@@ -20,6 +20,7 @@ import { SharedLoaderModule } from '../../shared/components/shared-loader/shared
 import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
 import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
+import { TagsService } from '../../../services/tags/tags.service';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { SearchInputModule } from '../../utility-components/search-input/search-
     InnovationService,
     InnovationResolver,
     ShareService,
-    UserService
+    UserService,
+    TagsService
   ],
   declarations: [
     DiscoverComponent,

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { InnovCard } from '../../../../models/innov-card';
-import { Innovation } from '../../../../models/innovation';
-import { ShareService } from '../../../../services/share/share.service';
-import { environment } from '../../../../../environments/environment';
-import { Tag } from '../../../../models/tag';
-import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateService } from '@ngx-translate/core';
+import { InnovCard } from '../../../../../models/innov-card';
+import { Innovation } from '../../../../../models/innovation';
+import { ShareService } from '../../../../../services/share/share.service';
+import { Tag } from '../../../../../models/tag';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-discover-description',

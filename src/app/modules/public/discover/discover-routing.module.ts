@@ -6,6 +6,8 @@ import { DiscoverDescriptionComponent } from './components/description/discover-
 import { InnovationsComponent} from './components/innovations/innovations.component';
 
 import { InnovationsResolver } from './services/innos-resolver.service';
+import { InnovationResolver } from './services/inno-resolver.service';
+
 
 const discoverRoutes: Routes = [
   {
@@ -37,6 +39,7 @@ const discoverRoutes: Routes = [
     RouterModule.forChild(discoverRoutes)
   ],
   providers: [
+    InnovationResolver,
     InnovationsResolver
   ],
   exports: [

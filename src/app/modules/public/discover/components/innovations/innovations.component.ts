@@ -2,19 +2,19 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
-import { UserService } from '../../services/user/user.service';
-import { TranslateService} from '@ngx-translate/core';
-import { LocalStorageService } from '../../services/localStorage/localStorage.service';
-import { TranslateTitleService } from '../../services/title/title.service';
-import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
-import { Innovation } from '../../models/innovation';
-import { InnovCard } from '../../models/innov-card';
-import { PaginationTemplate } from '../../models/pagination';
-import { Tag } from '../../models/tag';
-import { environment } from '../../../environments/environment';
-import { TagsService} from '../../services/tags/tags.service';
-import { InnovationService} from '../../services/innovation/innovation.service';
+import { Innovation } from '../../../../../models/innovation';
+import { Tag } from '../../../../../models/tag';
+import { PaginationInterface } from '../../../../utility-components/pagination/interfaces/pagination';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { TagsService } from '../../../../../services/tags/tags.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { UserService } from '../../../../../services/user/user.service';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { environment } from '../../../../../../environments/environment';
+import { InnovCard } from '../../../../../models/innov-card';
 
 
 @Component({
