@@ -35,7 +35,7 @@ import { TemplatesService } from '../../../services/templates/templates.service'
 import { PresetService } from '../../../services/preset/preset.service';
 import { EmailService } from '../../../services/email/email.service';
 import { TagsService } from '../../../services/tags/tags.service';
-import {CampaignService} from '../../../services/campaign/campaign.service';
+import { CampaignService } from '../../../services/campaign/campaign.service';
 
 @NgModule({
   imports: [
