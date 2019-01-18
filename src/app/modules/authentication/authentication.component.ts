@@ -20,7 +20,7 @@ export class AuthenticationComponent {
       } else if(result['code']) {
         this._authService.linkedInFetchToken(result['code'], environment.domain)
           .subscribe(result=>{
-            this._router.navigate(['/project']);
+            this._router.navigate(['/user/projects']);
           }, err=>{
             console.error(err);
             this._router.navigate(['/login']);
@@ -31,7 +31,7 @@ export class AuthenticationComponent {
         this._router.navigate(['/login']);
       } else {
         //There's some error...
-        console.error(result['error_description'])
+        console.error(result['error_description']);
         this._router.navigate(['/login']);
       }
     }, err=>{

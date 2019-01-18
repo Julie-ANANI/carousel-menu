@@ -29,7 +29,6 @@ const authRoutes: Routes = [
     RouterModule
   ],
   providers: [
-
   ]
 })
 

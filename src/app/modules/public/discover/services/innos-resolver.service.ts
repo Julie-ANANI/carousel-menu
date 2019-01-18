@@ -2,44 +2,36 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
-const INNOVATIONS_KEY = makeStateKey('innovations');
+const INNOVATION_KEY = makeStateKey('innovation');
 
 @Injectable()
-export class InnovationsResolver implements Resolve<Array<Innovation>> {
-
-  config = {
-    fields: 'created principalMedia innovationCards tags status projectStatus',
-    limit: '0',
-    offset: '0',
-    search: '{"isPublic":"1","$or":[{"status":"EVALUATING"},{"status":"DONE"}]}',
-    sort: '{"created":-1}'
-  };
+export class InnovationResolver implements Resolve<Innovation> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
               private innovationService: InnovationService,
               private state: TransferState) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Array<Innovation>> {
-    if (this.state.hasKey(INNOVATIONS_KEY)) {
-      const innovations = this.state.get<Array<Innovation>>(INNOVATIONS_KEY, null);
-      this.state.remove(INNOVATIONS_KEY);
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Innovation> {
+    if (this.state.hasKey(INNOVATION_KEY)) {
+      const innovation = this.state.get<Innovation>(INNOVATION_KEY, null);
+      this.state.remove(INNOVATION_KEY);
       return new Observable((observer) => {
-        observer.next(innovations);
+        observer.next(innovation);
         observer.complete();
       });
     } else {
-      return this.innovationService.getAll(this.config)
+      const innovationId = route.paramMap.get('id') || '';
+      return this.innovationService.get(innovationId)
         .pipe(
-          map((innovations: any) => innovations.result),
-          tap((innovations) => {
-              if (isPlatformServer(this.platformId)) {
-                this.state.set(INNOVATIONS_KEY, innovations as Array<Innovation>);
-              }
+          tap((innovation) => {
+            if (isPlatformServer(this.platformId)) {
+              this.state.set(INNOVATION_KEY, innovation as Innovation);
+            }
           }),
           catchError(() => {
             return Observable.empty();

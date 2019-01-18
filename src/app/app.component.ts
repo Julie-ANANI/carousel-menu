@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, HostListener, PLATFORM_ID  } from '@angular/core';
+import { Component, Inject, OnInit, HostListener, PLATFORM_ID  } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './services/auth/auth.service';
 import { initTranslation, TranslateService } from './i18n/i18n';
