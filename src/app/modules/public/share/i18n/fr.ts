@@ -17,6 +17,6 @@ export const SHARE = {
     }
   },
 
-  'NOT_FOUND': 'Nous avons de la difficulté à obtenir les données concernant ce rapport de marché. Veuillez essayer de recharger la page à nouveau !'
+  'NOT_FOUND': 'Nous avons de la difficulté à obtenir les données concernant ce rapport de marché. Veuillez essayer de recharger la page à nouveau ou vérifier l\'URL !'
 
 };

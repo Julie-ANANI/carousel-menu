@@ -7,6 +7,7 @@ import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { DiscoverGuard } from './modules/public/discover/guards/discover-guard.service';
+import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthesis-guard.service';
 
 // Component
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
@@ -28,7 +29,7 @@ const appRoutes: Routes = [
     path: 'discover', canActivate: [DiscoverGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
   },
   {
-    path: 'share', loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+    path: 'share', canActivate: [ShareSynthesisGuard], loadChildren: './modules/public/share/share.module#ShareModule'
   },
   {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
@@ -53,7 +54,8 @@ const appRoutes: Routes = [
     AuthGuard,
     NonAuthGuard,
     AdminAuthGuard,
-    DiscoverGuard
+    DiscoverGuard,
+    ShareSynthesisGuard
   ]
 })
 

@@ -2,17 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ShareRoutingModule } from './share-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ShareComponent } from './share.component';
 
-import { SynthesisListModule } from '../../user/client/components/synthesis-list/synthesis-list.module';
-import { SidebarModule } from '../../sidebar/sidebar.module';
-import { SidebarUserFormModule } from '../../sidebar/components/user-form/sidebar-user-form.module';
-import { HeaderModule } from '../../common/header/header.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
 import { SynthesisCompleteModule } from './component/synthesis-complete/synthesis-complete.module';
+import { FooterModule } from '../../common/footer/footer.module';
+
+import { UserService } from '../../../services/user/user.service';
+import { InnovationService } from '../../../services/innovation/innovation.service';
+import { AnswerService } from '../../../services/answer/answer.service';
+import { ShareService } from '../../../services/share/share.service';
+import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 
 @NgModule({
   imports: [
@@ -21,16 +23,18 @@ import { SynthesisCompleteModule } from './component/synthesis-complete/synthesi
     SynthesisCompleteModule,
     ShareRoutingModule,
     RouterModule,
-    SynthesisListModule,
-    SidebarModule,
-    SidebarUserFormModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HeaderModule,
-    HeaderUnauthModule
+    HeaderUnauthModule,
+    FooterModule
   ],
   declarations: [
     ShareComponent,
+  ],
+  providers: [
+    UserService,
+    InnovationService,
+    AnswerService,
+    ShareService,
+    InnovationCommonService
   ]
 })
 

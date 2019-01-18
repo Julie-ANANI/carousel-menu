@@ -1,11 +1,11 @@
 <section id="synthesis-complete-component">
 
   <!-- message -->
-  <div class="banner-wrapper" *ngIf="!notFound && !displayReport && authService.adminLevel < 2">{{ 'SHARE.MESSAGE' | translate }}</div>
+  <div class="banner-wrapper" *ngIf="!notFound && displayReport && authService.adminLevel < 2">{{ 'SHARE.MESSAGE' | translate }}</div>
 
 
   <!-- market report -->
-  <ng-container *ngIf="!displayReport && !notFound">
+  <ng-container *ngIf="displayReport && !notFound">
     <app-shared-market-report
       [project]="project"
       [adminMode]="false"

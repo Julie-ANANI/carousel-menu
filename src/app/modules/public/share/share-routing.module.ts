@@ -13,10 +13,6 @@ const shareRoutes: Routes = [
       { path: 'synthesis/:projectId/:shareKey',
         component: SynthesisCompleteComponent,
         pathMatch: 'full',
-      },
-      {
-        path: '**',
-        redirectTo: '/login'
       }
     ]
   },
@@ -27,7 +23,9 @@ const shareRoutes: Routes = [
   imports: [
     RouterModule.forChild(shareRoutes)
   ],
-  providers: [],
+  providers: [
+
+  ],
   exports: [
     RouterModule
   ]

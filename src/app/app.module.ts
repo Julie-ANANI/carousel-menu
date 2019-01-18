@@ -137,6 +137,3 @@ export class TranslateUniversalLoader implements TranslateLoader {
 // CampaignCalculationService,
 // InnovationCommonService,
 // QuizService
-
-// BrowserAnimationsModule,
-// SharedLoaderModule,

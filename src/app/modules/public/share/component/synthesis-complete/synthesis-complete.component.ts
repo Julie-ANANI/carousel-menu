@@ -4,9 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-synthesis-online',
+  selector: 'app-synthesis-complete',
   templateUrl: './synthesis-complete.component.html',
   styleUrls: ['./synthesis-complete.component.scss']
 })
@@ -19,7 +20,7 @@ export class SynthesisCompleteComponent implements OnInit {
 
   private _project: Innovation;
 
-  private _displayReport = true;
+  private _displayReport = false;
 
   private _notFound = false;
 
@@ -43,14 +44,18 @@ export class SynthesisCompleteComponent implements OnInit {
    * this function is to get the shared synthesis detail from the server.
    */
   private getProject() {
-    this.innovationService.getSharedSynthesis(this._projectId, this._shareKey).subscribe((response: any) => {
-        this._project = response;
+    this.innovationService.getSharedSynthesis(this._projectId, this._shareKey).pipe(first()).subscribe((response: any) => {
+      this._project = response;
       }, () => {
-        this._displayReport = false;
+      this._displayReport = false;
+      this._notFound = true;
+      }, () => {
+      if (this._project !== undefined) {
+        this._displayReport = true;
+      } else {
         this._notFound = true;
-      }, () => {
-        this._displayReport = false;
-      });
+      }
+    });
   }
 
   get authService() {
