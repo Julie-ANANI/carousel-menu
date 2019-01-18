@@ -6,7 +6,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Share } from '../../../../../models/share';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
-import {TranslateTitleService} from '../../../../../services/title/title.service';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
 
 @Component({
   selector: 'app-synthesis-list',
@@ -35,7 +35,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   private _subscriptions = Array<any>();
 
-  private _totalReports: any = [];
+  private _totalReports: Array<any>;
 
   private _config = {
     fields: 'name owner principalMedia',
@@ -53,6 +53,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
+    this._totalReports = [];
     this.getUserReports();
   }
 
@@ -64,7 +65,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
 
   /***
-   * This function is getting the shared reports of the user and we are
+   * this function is getting the shared reports of the user and we are
    * pushing those to totalReports variable.
    */
   private getSharedReports(receivedReports: any) {
@@ -89,7 +90,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
 
   /***
-   * Here we are getting the link.
+   * here we are getting the link.
    * @param report
    * @returns {string}
    */
@@ -103,7 +104,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
 
   /***
-   * This function is to get the principal media of the innovation.
+   * this function is to get the principal media of the innovation.
    * @param report
    * @returns {string}
    */

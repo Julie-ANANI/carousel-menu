@@ -1,4 +1,4 @@
-<section class="section-container s-print" id="market-report" [ngStyle]="{ 'background-color': (innovation?.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
+<section class="section-container s-print animate-page" id="market-report" [ngStyle]="{ 'background-color': (innovation?.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
 
 
   <!-- Project status not done client side -->
@@ -33,7 +33,7 @@
           {{  'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}
         </span>
         <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+        <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian" alt=" ">
         <div><img src="https://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot" class="bot-image"></div>
       </div>
     </div>

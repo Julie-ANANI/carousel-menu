@@ -3,13 +3,13 @@ export const MARKET_REPORT = {
 
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
-    'EDITING': 'Please finish setup of your innovation and submit it.',
+    'EDITING': 'Please finish setup of your project and submit it.',
     'REVIEWING': 'Please modify the changes in your project and re-submit it.',
     'EVALUATING': 'We are collecting market potential of your project. We\'ll come back soon!'
   },
 
   'MESSAGE_ADMIN': {
-    'NOT_SUBMITTED': 'The client hasn\'t submitted the project yet. You will be able to edit the market report after he submits his projects-list.',
+    'NOT_SUBMITTED': 'The client hasn\'t submitted the project yet. You will be able to edit the market report after he submits his project.',
     'PREVIEW_MODE': 'The partial synthesis of this project is available at the client side.',
     'DONE': 'This projects is marked as finished, and full synthesis is available at the client side.'
   },
@@ -82,11 +82,11 @@ export const MARKET_REPORT = {
     'HEADING': 'Executive Report',
     'TITLE': 'Objective',
     'CHOOSE_TEMPLATE': 'Choose template',
-    'VALID_BUTTON': 'Valid SidebarInterface',
+    'VALID_BUTTON': 'Valid Template',
     'CONCLUSION': 'Conclusion abstract',
     'ABSTRACT': 'Abstract',
     'NO_TAGS': 'Add the tags for this question',
-    'DELETE_BUTTON': 'Delete Executive SidebarInterface',
+    'DELETE_BUTTON': 'Delete Executive Template',
   },
 
   'EXECUTIVE_TEMPLATE': {
