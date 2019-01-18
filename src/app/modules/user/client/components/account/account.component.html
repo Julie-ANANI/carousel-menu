@@ -7,7 +7,7 @@
 
         <!-- Profile pics -->
         <div *ngIf="hasProfilePic()" class="profile-pic">
-            <img [src]="profilePicture">
+            <img [src]="profilePicture" alt=" ">
         </div>
 
         <div *ngIf="!hasProfilePic()" class="profile-pic-def">

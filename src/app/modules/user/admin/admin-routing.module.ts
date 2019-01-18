@@ -69,7 +69,7 @@ const adminRoutes: Routes = [
         path: 'projects',
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
-          { path: 'projects-list/:projectId',
+          { path: 'project/:projectId',
             resolve: { innovation : InnovationResolver },
             component: AdminProjectComponent,
             children: [

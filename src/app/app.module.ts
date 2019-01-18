@@ -108,32 +108,3 @@ export class TranslateUniversalLoader implements TranslateLoader {
     });
   }
 }
-
-// UserService,
-// InnovationService,
-// CampaignService,
-//
-// DashboardService,
-// EmailService,
-// ShareService,
-// SearchService,
-// PresetService,
-// AnswerService,
-// ProfessionalsService,
-// DownloadService,
-// TemplatesService,
-//
-// ,
-// CampaignResolver,
-// InnovationResolver,
-// RequestResolver,
-// ScenarioResolver,
-// SignatureResolver,
-// RequestResolver,
-// PresetResolver,
-// TagsService,
-// FrontendService,
-// CurrentRouteService,
-// CampaignCalculationService,
-// InnovationCommonService,
-// QuizService

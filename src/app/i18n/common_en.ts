@@ -165,8 +165,8 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Please enter a valid email address.',
-    'PASSWORD_TOO_SHORT': 'Password is too short.',
-    'MUST_CONTAIN': 'Password must contain one special character.'
+    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
+    'MUST_CONTAIN': 'Password must contain one special character ($@&!#).'
   },
 
   'LINKS': 'Links',

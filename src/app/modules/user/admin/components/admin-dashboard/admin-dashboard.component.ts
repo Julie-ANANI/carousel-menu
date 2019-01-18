@@ -191,8 +191,8 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this.sidebarTemplateValue.animate_state = value.animate_state;
   }
 
   get refreshNeededEmitter(): Subject<any> {

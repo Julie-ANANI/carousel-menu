@@ -34,6 +34,8 @@ import { ProfessionalsService } from '../../../services/professionals/profession
 import { TemplatesService } from '../../../services/templates/templates.service';
 import { PresetService } from '../../../services/preset/preset.service';
 import { EmailService } from '../../../services/email/email.service';
+import { TagsService } from '../../../services/tags/tags.service';
+import {CampaignService} from '../../../services/campaign/campaign.service';
 
 @NgModule({
   imports: [
@@ -76,7 +78,9 @@ import { EmailService } from '../../../services/email/email.service';
     ProfessionalsService,
     TemplatesService,
     PresetService,
-    EmailService
+    EmailService,
+    TagsService,
+    CampaignService
   ]
 })
 
