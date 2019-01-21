@@ -7,7 +7,7 @@ import { first, map, catchError } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -76,11 +76,18 @@ export class AuthService {
       );
   }
 
-  public linkedinLogin(domain: string): Observable<any> {
-    return this._http.get(`/auth/linkedin?domain=${domain}`)
+  public linkedInFetchToken(code: string, domain: string): Observable<any> {
+    return this._http.post(`/auth/linkedin`, {code: code, domain: domain || "umi" })
       .pipe(
         map((res: any) => {
-          return res.url;
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._user = res;
+          if (res.isAuthenticated) {
+            this.startCookieObservator();
+          }
+          return res;
         }),
         catchError((error: Response) => throwError(error.json()))
       );
@@ -142,7 +149,7 @@ export class AuthService {
   public getUserInfo(): any {
     return {
       name: this._user ? this._user.firstName + ' ' + this._user.lastName : '',
-      id: this.userId
+      id: this._user.id
     };
   }
 

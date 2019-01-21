@@ -1,9 +1,15 @@
-#collaborator-wrapper {
+#collaborator-component {
   padding-top: 1.875rem;
 
   .pd-top {
     padding-top: 1.875rem;
   }
+
+
+  .bot-rect {
+    max-width: 314px;
+  }
+
 
   .collaborator {
     display: flex;
@@ -12,11 +18,15 @@
     list-style: none;
   }
 
+
   ul {
 
     li {
       padding-left: 0;
-      margin-bottom: 1.2rem;
+      margin-bottom: .6rem;
+      display: inline-flex;
+      align-items: center;
+      font-size: .9375rem;
     }
 
   }
@@ -33,14 +43,19 @@
 
   }
 
+
   .ghost-delete {
-    visibility: hidden;
-    margin-bottom: 1.2rem;
+    visibility: visible;
+    margin-top: .6rem;
+    margin-bottom: .6rem;
   }
 
+
   .ghost-primary {
-    margin-bottom: 1.2rem;
+    margin-top: .6rem;
+    margin-bottom: .6rem;
   }
+
 
 }
 
@@ -48,7 +63,7 @@
 
 @media (max-width: 600px) {
 
-  #collaborator-wrapper {
+  #collaborator-component {
 
     .ghost-delete, .ghost-primary {
       width: 78px;

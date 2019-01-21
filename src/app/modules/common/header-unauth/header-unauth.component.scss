@@ -1,0 +1,69 @@
+@import "../../../../style/variables";
+
+#header-unauth-component {
+  background: $background-color;
+  font-weight: 600;
+  font-size: .85rem;
+  color: white;
+
+  .pad {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+
+    .menu-view {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .signIn-wrapper {
+      position: absolute;
+      top: 85%;
+      right: 0;
+      width: 380px;
+      min-height: 300px;
+      text-align: left;
+      background-color: white;
+      z-index: 2;
+      box-shadow: $box-shadow-hover;
+      transition: all .35s ease-in-out;
+      border-radius: 3px;
+      padding-top: 1.57rem;
+      padding-bottom: 1.57rem;
+      display: none;
+
+      .login-button {
+        padding-top: .9375rem;
+        padding-bottom: .6rem;
+      }
+
+    }
+
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #header-unauth-component {
+
+    .signIn-wrapper {
+      width: 80vw !important;
+    }
+
+  }
+
+}

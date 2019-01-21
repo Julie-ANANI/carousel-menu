@@ -1,12 +1,12 @@
-// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-// Components
 import { SharedSearchProsComponent } from './shared-search-pros.component';
-import {SidebarModule} from '../../../sidebar/sidebar.module';
+
+import { SidebarModule } from '../../../sidebar/sidebar.module';
+import { SidebarSearchModule } from '../../../sidebar/components/sidebar-search/sidebar-search.module';
 
 @NgModule({
   imports: [
@@ -14,7 +14,8 @@ import {SidebarModule} from '../../../sidebar/sidebar.module';
     FormsModule,
     SidebarModule,
     ReactiveFormsModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SidebarSearchModule
   ],
   declarations: [
     SharedSearchProsComponent

@@ -1,0 +1,205 @@
+<div *ngIf="innovation" class="section-container animate-page" id="exploration-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+
+    <!-- project under editing and submitted status -->
+    <ng-container *ngIf="innovation.status === 'EDITING' || innovation.status === 'SUBMITTED'">
+      <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h1>
+
+      <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
+        <div class="bot-rect" [ngSwitch]="innovation.status">
+
+          <ng-container *ngSwitchCase="'EDITING'">
+             <ng-container *ngIf="innovation.reviewing">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING' | translate }}</ng-container>
+              <ng-container *ngIf="!innovation.reviewing">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING' | translate }}</ng-container>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'SUBMITTED'">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED' | translate }}</ng-container>
+
+        </div>
+        <br>
+        <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
+        <div><img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" "></div>
+      </div>
+    </ng-container>
+    <!-- /project under editing and submitted status -->
+
+
+    <!-- project under evaluating and done status-->
+    <ng-container *ngIf="innovation.status === 'EVALUATING' || innovation.status === 'DONE'">
+
+
+      <!-- section title -->
+      <div class="section-title">
+        <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h1>
+        <a class="btn btn-primary gtm-exploration-contact-operator" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
+      </div>
+      <!-- /section title -->
+
+
+      <!-- section comment -->
+      <div class="section-comment">
+
+        <!-- status wrapper -->
+        <div class="status-wrapper">
+          <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.TITLE' | translate }}</h2>
+          <div class="status-content">
+            <p><i class="fas fa-check"></i><span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.CREATED' | translate }}</span></p>
+            <p><span class="text-white">{{ innovation.created | date:dateFormat }}</span></p>
+          </div>
+          <ng-container *ngFor="let action of innovation.statusLogs">
+            <div class="status-content">
+              <p>
+                <i class="fas" [ngClass]="(action.action === 'REJECT') ? 'fa-times' : 'fa-check'"></i>
+                <span class="text-white">{{ ('PROJECT_MODULE.EXPLORATION.STATUS_TEXT.' + action.action) | translate }}</span>
+              </p>
+              <p><span class="text-white">{{ action.date | date:dateFormat }}</span></p>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Comment -->
+        <div *ngIf="innovation.comments || innovation.operator?.name" class="comment-wrapper">
+          <ng-container *ngIf="innovation.comments">
+            <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h2>
+            <div [innerHtml]="innovation.comments"></div>
+          </ng-container>
+          <div *ngIf="innovation.operator?.name" class="operator-wrapper">
+            <span>{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span>{{ innovation.operator?.name }}
+          </div>
+        </div>
+
+      </div>
+      <!-- /section comment -->
+
+
+      <!-- section analytics -->
+      <div class="section-analytics">
+        <h2 class="section-heading">{{'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate}}</h2>
+        <div class="analytic-content">
+
+          <!-- reached -->
+          <div class="analytic-body">
+            <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
+            <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
+          </div>
+
+          <div class="analytic-body pd-top">
+            <svg width="80px" height="38px" viewBox="0 0 80 38">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-701.000000, -810.000000)">
+                  <g transform="translate(701.000000, 810.000000)">
+                    <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                    <text class="svg-text">
+                      <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>
+                    </text>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <!-- emails -->
+          <div class="analytic-body">
+            <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
+            <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
+          </div>
+
+          <div class="analytic-body pd-top">
+            <svg width="80px" height="38px" viewBox="0 0 80 38">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-701.000000, -810.000000)">
+                  <g transform="translate(701.000000, 810.000000)">
+                    <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                    <text class="svg-text">
+                      <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>
+                    </text>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <!-- clicks -->
+          <div class="analytic-body">
+            <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
+            <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
+          </div>
+
+          <div class="analytic-body pd-top">
+            <svg width="80px" height="38px" viewBox="0 0 80 38">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-701.000000, -810.000000)">
+                  <g transform="translate(701.000000, 810.000000)">
+                    <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                    <text class="svg-text">
+                      <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>
+                    </text>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <!-- answers -->
+          <div class="analytic-body">
+            <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
+            <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
+          </div>
+
+        </div>
+      </div>
+      <!-- /section analytics -->
+
+
+      <!-- section click rate -->
+      <div class="section-rate">
+        <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h2>
+        <app-worldmap
+          [countries]="countries"
+          [countriesColor]="'#2ECC71'"
+          [isEditable]="false"
+          [width]="'auto'">
+        </app-worldmap>
+      </div>
+      <!-- /section click rate -->
+
+
+      <!-- section company -->
+      <div *ngIf="companies.length > 0" class="section-company">
+        <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
+        <ul class="company-content">
+          <li *ngFor="let company of companies; let i = index">
+            {{ i + 1 + '.'}} {{ company.name | FormatText }}
+          </li>
+        </ul>
+      </div>
+      <!-- /section company -->
+
+
+      <!-- section table -->
+      <div *ngIf="tableInfos?._total > 0" class="section-table">
+        <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h2>
+        <app-shared-table [data]="tableInfos" [config]="config" (editRow)="onClickShow($event)"></app-shared-table>
+      </div>
+      <!-- section table -->
+
+    </ng-container>
+    <!-- /project under evaluating and done status-->
+
+
+  </div>
+</div>
+
+
+<!-- sidebar to view user answer -->
+<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+  <app-user-answer
+    [adminMode]="false"
+    [mode]="false"
+    [(userAnswer)]="modalAnswer"
+    [questions]="questions"
+    [innovationId]="innovation._id">
+  </app-user-answer>
+</app-sidebar>
+<!-- /sidebar to view user answer -->

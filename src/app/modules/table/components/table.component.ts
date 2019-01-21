@@ -4,7 +4,7 @@ import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import { PaginationTemplate } from '../../../models/pagination';
+import { PaginationInterface } from '../../utility-components/pagination/interfaces/pagination';
 
 @Component({
   selector: 'app-shared-table',
@@ -100,7 +100,7 @@ export class TableComponent {
 
   private _config: any = null;
 
-  private _paginationConfig: PaginationTemplate = {};
+  private _paginationConfig: PaginationInterface = {};
 
   private _massSelection = false;
 
@@ -657,7 +657,7 @@ export class TableComponent {
     return this._filteredContent;
   }
 
-  get paginationConfig(): PaginationTemplate {
+  get paginationConfig(): PaginationInterface {
     return this._paginationConfig;
   }
 

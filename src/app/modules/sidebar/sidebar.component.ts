@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Template } from './interfaces/template';
 import { SidebarInterface } from './interfaces/sidebar-interface';
 
 @Component({
@@ -29,7 +28,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
       state('active', style({
         display: 'block',
         opacity: 1,
-        background: 'rgba(0,0,0,0.65)',
+        background: 'rgba(0,0,0,0.75)',
       })),
       transition('inactive => active', animate('.5ms ease-in-out')),
       transition('active => inactive', animate('700ms ease-in-out')),
@@ -39,7 +38,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
 
 export class SidebarComponent implements OnInit {
 
-  @Input() set template(value: Template) {
+  @Input() set template(value: SidebarInterface) {
     this.setTemplate(value);
   };
 
@@ -55,6 +54,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this._state = 'inactive';
   }
+
 
   /***
    * This function is used to initialize the received value to the sidebar variables.

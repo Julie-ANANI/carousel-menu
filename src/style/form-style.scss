@@ -22,7 +22,7 @@
 */
 
 .form-group {
-  margin-bottom: 1.2rem !important;
+  margin-bottom: .6rem !important;
 }
 
 
@@ -57,7 +57,6 @@
   background: white none;
   padding: .9rem;
   transition: all 0.15s ease-in-out;
-  margin-top: .5rem;
 }
 
 
@@ -245,8 +244,9 @@ textarea {
   background: $meta-color;
   border-color: $meta-color;
   height: 1.3125rem;
-  width: 1.12rem;
-  top: -30%;
+  width: 1.2rem;
+  left: -1px;
+  top: -3.5px;
 }
 
 .form-switch .form-icon  {
@@ -333,4 +333,24 @@ textarea {
 .mce-tinymce {
   box-shadow: none !important;
   width: inherit !important;
+}
+
+/********************************** Media ***************************************/
+
+@media (min-width: 1441px) {
+
+  .restrict-width {
+    max-width: 50% !important;
+  }
+  
+}
+
+@media (max-width: 600px) {
+
+
+  .form-switch .form-icon::before {
+    top: -4px !important;
+  }
+
+
 }
