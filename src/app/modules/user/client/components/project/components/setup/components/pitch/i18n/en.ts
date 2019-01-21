@@ -70,7 +70,7 @@ export const PITCH = {
 
   'MEDIA': {
     'LABEL': 'Would you like to add images or videos to better illustrate your project?',
-    'SUB_LABEL': '(It is highly recommended and projects with media attached tend to have a much better response rate.)',
+    'SUB_LABEL': '(We highly recommended and projects with media attached tend to have a much better response rate.)',
     'MAIN': 'Main media',
     'SECONDARY': 'Secondary medias',
     'UPLOAD_PICTURE': 'Upload Picture',
@@ -82,7 +82,7 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Would you like to authorize',
-    'B' : 'to diffuse your project to it\'s ambassadors community?',
+    'B' : 'to diffuse your project to it\'s community?',
     'ERROR': 'Diffusion is required.'
   },
 

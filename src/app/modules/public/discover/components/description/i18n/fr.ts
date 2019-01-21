@@ -27,5 +27,8 @@ export const DISCOVERDESCRIPTION = {
 
   'CONTACT_US': 'Contactez-nous pour en savoir plus',
 
-  'DISCOVER_OTHER': 'Découvrez d\'autres projets'
+  'DISCOVER_OTHER': 'Découvrez d\'autres projets',
+
+  'SIDEBAR_BOT_MESSAGE': 'Décrivez d\'abord votre projet pour le prévisualiser.'
+
 };

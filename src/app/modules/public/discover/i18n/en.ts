@@ -51,6 +51,4 @@ export const DISCOVER = {
   'RECOMMENDATION': 'Projects that may interest you',
   'SUGGESTED_TAGS': 'Similar sector(s)',
 
-
-
 };

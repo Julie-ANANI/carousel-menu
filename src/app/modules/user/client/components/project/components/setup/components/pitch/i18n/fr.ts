@@ -69,7 +69,7 @@ export const PITCH = {
 
   'MEDIA': {
     'LABEL': 'Vous souhaitez ajouter des images ou des vidéos pour mieux illustrer votre projet ?',
-    'SUB_LABEL': '(Il est fortement recommandé et les projets avec des médias attachés ont tendance à avoir un taux de réponse bien meilleur.)',
+    'SUB_LABEL': '(Nous vous le recommandons car les projets avec des illustrations ont un taux de réponse bien meilleur.)',
     'UPLOAD_PICTURE': 'Télécharger la photo',
     'MAIN': 'Média principal',
     'SECONDARY': 'Média(s) secondaire(s)',
@@ -81,12 +81,12 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Souhaitez-vous autoriser',
-    'B' : 'à diffuser votre projet auprès de sa communauté d\'ambassadeurs ?',
+    'B' : 'à diffuser votre projet auprès de sa communauté ?',
     'ERROR': 'Veuillez indiquer si vous autorisez la diffusion de votre projet s\'il vous plaît.'
   },
 
   'BOT': {
-    'HELP': 'Vous avez de la difficulté à décrire votre projet ? Notre équipe d\'exploitation est toujours là pour vous aider !'
+    'HELP': 'Vous avez de la difficulté à décrire votre projet ? Notre équipe est toujours là pour vous aider !'
   },
 
   'INNOVATION_PREVIEW': 'Aperçu',

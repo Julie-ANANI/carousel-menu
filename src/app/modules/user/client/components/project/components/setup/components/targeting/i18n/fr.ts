@@ -16,7 +16,7 @@ export const TARGETING = {
   'SPECIFIC_REQUEST': 'Demande spécifique',
 
   'MARKET': {
-    'LABEL': 'SQuels secteurs de marché souhaitez-vous cibler avec votre projet ?',
+    'LABEL': 'Quels secteurs de marché souhaitez-vous cibler avec votre projet ?',
     'PLACEHOLDER': 'Ex : Branche micro-électronique, secteur photovoltaïque, sécurité industrielle...',
     'ERROR': 'Le secteur du marché est requis.'
   },
@@ -32,9 +32,9 @@ export const TARGETING = {
   'COMPANIES': {
     'LABEL': 'Quels types d\'entreprises aimeriez-vous cibler/contacter et y en a-t-il que vous aimeriez exclure ?',
     'PLACEHOLDER': 'Ex : Les équipementiers et constructeurs automobiles, et les sociétés de transport',
-    'TO_EXCLUDE': 'Veuillez indiquer les entreprises spécifiques qui ne doivent pas être contactées',
+    'TO_EXCLUDE': 'Indiquer les entreprises à exclure',
     'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Nom de l\'entreprise à exclure',
-    'TO_INCLUDE': 'Veuillez indiquer les entreprises spécifiques que vous aimeriez être contacté(e)',
+    'TO_INCLUDE': 'Indiquer les entreprises à contacter',
     'NEW_COMPANY_TO_INCLUDE_PLACEHOLDER': 'Nom de l\'entreprise à inclure',
     'COMMENT': 'D\'autres commentaires sur cette section ?'
   },

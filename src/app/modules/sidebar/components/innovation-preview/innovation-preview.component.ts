@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../models/innov-card';
@@ -9,7 +9,7 @@ import { InnovCard } from '../../../../models/innov-card';
   styleUrls: ['./innovation-preview.component.scss']
 })
 
-export class InnovationPreviewComponent implements OnInit {
+export class InnovationPreviewComponent {
 
   @Input() innovation: InnovCard;
 
@@ -40,9 +40,7 @@ export class InnovationPreviewComponent implements OnInit {
   private _date: Date;
 
   constructor(private domSanitizer1: DomSanitizer,
-              private translateService: TranslateService) {}
-
-  ngOnInit() {}
+              private translateService: TranslateService) { }
 
   get domSanitizer() {
     return this.domSanitizer1;

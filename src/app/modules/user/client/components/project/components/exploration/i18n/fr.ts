@@ -1,10 +1,10 @@
 export const EXPLORATION = {
-  'TITLE': 'Aperçu du marché de votre projet',
+  'TITLE': 'Suivez votre exploration marché',
 
   'MESSAGE': {
     'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
-    'REVIEWING': 'Veuillez modifier les modifications apportées à votre projet et le soumettre à nouveau.'
+    'REVIEWING': 'Nous vous avons suggéré des modifications du projet par email. Une fois fait, soumettez-le de nouveau.'
   },
 
   'STATUS_TEXT': {

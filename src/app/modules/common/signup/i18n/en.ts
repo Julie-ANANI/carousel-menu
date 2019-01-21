@@ -1,7 +1,7 @@
 export const SIGN_UP = {
   'HEADING': 'Sign Up',
 
-  'HEADING_UMI':'Ready to launch test?',
+  'HEADING_UMI':'Ready to launch a market test?',
 
   'HAVE_ACCOUNT': 'Already have an account?',
 

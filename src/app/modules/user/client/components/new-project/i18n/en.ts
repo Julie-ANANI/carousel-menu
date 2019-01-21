@@ -12,7 +12,7 @@ export const NEW_PROJECT = {
 
   'INNOVATION_TYPE_LABEL': 'Which offer best responds to your needs for this project?',
 
-  'DOWNLOAD': 'Download your project report anytime',
+  'DOWNLOAD': 'Download your project report',
 
   'ANONYMOUS': 'Remain anonymous',
 
