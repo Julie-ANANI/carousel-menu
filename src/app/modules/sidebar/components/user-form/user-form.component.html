@@ -3,7 +3,7 @@
     <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()" autocomplete="off">
 
       <!-- Operator -->
-      <div *ngIf="!isSignUp" class="form-group-inline-space operator-wrapper">
+      <div class="form-group-inline-space operator-wrapper">
         <div class="input-group">
           <label class="form-switch" for="operator" *ngIf="authService.userId != user.id && isEditUser">
             <input
@@ -114,20 +114,20 @@
       </div>
 
       <!-- Password -->
-      <div *ngIf="isSignUp" class="form-group">
-        <label class="form-label" for="password">{{ 'COMMON.PASSWORD' | translate }}</label>
-        <input
-          class="form-default"
-          formControlName="password"
-          id="password"
-          type="password"
-          [attr.placeholder]="'COMMON.PASSWORD_SIGNUP_PLACEHOLDER' | translate">
-        <div class="form-error" *ngIf="userForm.get('password').touched && userForm.get('password').invalid">
-          <span *ngIf="userForm.get('password').hasError('required')">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
-          <span *ngIf="userForm.get('password').hasError('minlength')">{{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}</span>
-          <span *ngIf="userForm.get('password').hasError('pattern')">{{ 'COMMON.INVALID.MUST_CONTAIN' | translate }}</span>
-        </div>
-      </div>
+      <!--<div *ngIf="isSignUp" class="form-group">-->
+        <!--<label class="form-label" for="password">{{ 'COMMON.PASSWORD' | translate }}</label>-->
+        <!--<input-->
+          <!--class="form-default"-->
+          <!--formControlName="password"-->
+          <!--id="password"-->
+          <!--type="password"-->
+          <!--[attr.placeholder]="'COMMON.PASSWORD_SIGNUP_PLACEHOLDER' | translate">-->
+        <!--<div class="form-error" *ngIf="userForm.get('password').touched && userForm.get('password').invalid">-->
+          <!--<span *ngIf="userForm.get('password').hasError('required')">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>-->
+          <!--<span *ngIf="userForm.get('password').hasError('minlength')">{{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}</span>-->
+          <!--<span *ngIf="userForm.get('password').hasError('pattern')">{{ 'COMMON.INVALID.MUST_CONTAIN' | translate }}</span>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <!-- Job -->
       <div class="form-group">
@@ -204,15 +204,15 @@
       </div>
 
       <!-- Terms -->
-      <div *ngIf="isSignUp" class="terms-wrapper text-center">
-        {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
-        <a href="https://www.umi.us/end-user-license-agreement/" target="_blank"><span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span></a>
-      </div>
+      <!--<div *ngIf="isSignUp" class="terms-wrapper text-center">-->
+        <!--{{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}-->
+        <!--<a href="https://www.umi.us/end-user-license-agreement/" target="_blank"><span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span></a>-->
+      <!--</div>-->
 
       <!-- Submit button -->
-      <div *ngIf="isSignUp" class="signUp-button-wrapper text-center">
-        <button class="btn btn-primary gtm-signup-email-validated" type="submit" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
-      </div>
+      <!--<div *ngIf="isSignUp" class="signUp-button-wrapper text-center">-->
+        <!--<button class="btn btn-primary gtm-signup-email-validated" type="submit" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>-->
+      <!--</div>-->
 
     </form>
   </div>

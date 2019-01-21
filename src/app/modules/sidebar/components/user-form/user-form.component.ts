@@ -51,16 +51,21 @@ export class UserFormComponent implements OnInit {
   @Input() sidebarState: Subject<string>;
 
   @Output() userSignUpData = new EventEmitter<FormGroup>();
+
   @Output() editUserData = new EventEmitter<User>();
+
   @Output() professionalUserData = new EventEmitter<Professional>();
 
-  isSignUp = false;
   isEditUser = false;
+
   isProfessional = false;
 
   isSelf =  false;
+
   userForm: FormGroup;
+
   countriesSuggestion: Array<string> = [];
+
   displayCountrySuggestion = false;
 
   private _selectedProject: String;
@@ -139,16 +144,16 @@ export class UserFormComponent implements OnInit {
   reinitialiseForm() {
     this.isProfessional = false;
     this.isEditUser = false;
-    this.isSignUp = false;
     this._selectedProject = null;
   }
 
   loadTypes() {
     this.reinitialiseForm();
 
-    if (this._type === 'isSignUp') {
-      this.isSignUp = true;
-    } else if (this._type === 'editUser') {
+    // if (this._type === 'isSignUp') {
+    //   this.isSignUp = true;
+    // } else
+    if (this._type === 'editUser') {
       this.isEditUser = true;
       this.loadEditUser();
     } else if (this._type === 'professional') {
@@ -176,9 +181,10 @@ export class UserFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.isSignUp) {
-      this.userSignUpData.emit(this.userForm);
-    } else if (this.isEditUser) {
+    // if (this.isSignUp) {
+    //   this.userSignUpData.emit(this.userForm);
+    // } else
+    if (this.isEditUser) {
       const user = new User(this.userForm.value);
       user.id = this._user.id;
       this.editUserData.emit(user);
