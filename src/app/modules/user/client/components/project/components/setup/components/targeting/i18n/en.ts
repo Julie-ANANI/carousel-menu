@@ -34,9 +34,9 @@ export const TARGETING = {
   'COMPANIES': {
     'LABEL': 'What types of companies would you like to target/contact and are there any you would like to exclude?',
     'PLACEHOLDER': 'Industrial component manufacturers, consumer goods retail, software development studios... Ex: IBM, Intel',
-    'TO_EXCLUDE': 'Please indicate specific companies that should not be contacted',
+    'TO_EXCLUDE': 'Indicate companies to be excluded',
     'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Company name to be excluded',
-    'TO_INCLUDE': 'Please indicate specific companies that you would like to be contacted',
+    'TO_INCLUDE': 'Indicate companies to be contacted',
     'NEW_COMPANY_TO_INCLUDE_PLACEHOLDER': 'Company name to be included',
     'COMMENT': 'Any additional comments for this section?'
   },

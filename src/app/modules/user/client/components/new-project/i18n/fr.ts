@@ -12,7 +12,7 @@ export const NEW_PROJECT = {
 
   'INNOVATION_TYPE_LABEL': 'Quelle offre répond le mieux à vos besoins pour ce projet ?',
 
-  'DOWNLOAD': 'Téléchargez votre rapport de projet à tout moment',
+  'DOWNLOAD': 'Téléchargez votre étude complète',
 
   'ANONYMOUS': 'Anonymat garanti',
 
