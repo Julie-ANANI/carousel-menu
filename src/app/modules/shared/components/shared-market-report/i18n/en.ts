@@ -4,8 +4,9 @@ export const MARKET_REPORT = {
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
     'EDITING': 'Please finish setup of your project and submit it.',
-    'REVIEWING': 'Please modify the changes in your project and re-submit it.',
-    'EVALUATING': 'We are collecting market potential of your project. We\'ll come back soon!'
+    'REVIEWING': 'You have some modification to do, please check your e-mail and re-submit your project.',
+    'EVALUATING': 'We are collecting market insights' +
+      '. We\'ll come back soon!'
   },
 
   'MESSAGE_ADMIN': {

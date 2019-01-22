@@ -33,7 +33,7 @@ export const SETUP = {
   'SURVEY': SURVEY,
   'TARGETING': TARGETING,
 
-  'PREVIEW': 'Aperçu de l\'innovation',
+  'PREVIEW': 'Aperçu',
 
   'PREVIEW_BUTTON': 'Prévisualiser',
 
