@@ -1,5 +1,9 @@
-.text-right {
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px 0px;
+#tags-form-component {
+  padding-top: 1.875rem;
+
+  .save-button-wrapper {
+    text-align: right;
+    padding-bottom: 1.25rem;
+  }
+
 }

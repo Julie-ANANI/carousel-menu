@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import {TagsService} from '../../../../services/tags/tags.service';
@@ -8,7 +8,7 @@ import { Innovation } from '../../../../models/innovation';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,15 @@ import { first } from 'rxjs/operators';
   templateUrl: './tags-form.component.html',
   styleUrls: ['./tags-form.component.scss']
 })
-export class TagsFormComponent implements OnInit {
+
+export class TagsFormComponent {
+
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || 'active') {
+      this._tags = [];
+      this._activeSaveButton = false;
+    }
+  }
 
   @Input() set type(type: string) {
     this._type = type;
@@ -32,12 +40,10 @@ export class TagsFormComponent implements OnInit {
   }
 
   @Input() set project(value: Innovation) {
-    this._projectId = value._id;
+    this._innovationId = value._id;
   }
 
   @Input() tagType: string;
-
-  @Input() sidebarState: Subject<string>;
 
   @Output() newTags = new EventEmitter<Tag[]>();
 
@@ -47,82 +53,87 @@ export class TagsFormComponent implements OnInit {
 
   private _tag: Tag;
 
-  private _projectId = '';
+  private _innovationId = '';
 
   private _type = '';
 
   private _needToSetOriginalTag = false;
 
-  constructor(private _tagsService: TagsService,
-              private _autocompleteService: AutocompleteService,
-              private _notificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService,
-              private _sanitizer: DomSanitizer) {}
+  private _activeSaveButton = false;
 
-  ngOnInit() {
-    if (this.sidebarState) {
-      this.sidebarState.subscribe((state: any) => {
-        if (state === 'inactive') {
-          setTimeout (() => {
-            this._tags = [];
-          }, 500);
-        }
-      })
-    }
-  }
+  constructor(private tagsService: TagsService,
+              private autocompleteService: AutocompleteService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private translateService: TranslateService,
+              private domSanitizer: DomSanitizer) {}
 
 
-  onSubmit() {
+  onClickSave() {
     switch (this._type) {
+
       case 'addTags':
         this.newTags.emit(this._tags);
         break;
+
       case 'editTag':
         this.updateTag.emit(this._tag);
         break;
+
+      default:
+        // do nothing...
+
     }
   }
 
-  public suggestions(query: string): Observable<Array<any>> {
+
+  suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
       query: query,
       type: 'tags'
     };
-    return this._autocompleteService.get(queryConf);
+    return this.autocompleteService.get(queryConf);
   }
 
-  public autocompleListFormatter = (data: {name: Multiling, _id: string}) : SafeHtml => {
+
+  autocompleListFormatter = (data: {name: Multiling, _id: string}) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
-    return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
+    return this.domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
-    return MultilingPipe.prototype.transform(data.name, this._translateService.currentLang);
+
+  autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
+    return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
   };
+
 
   addTag(tag: any) {
+    this._activeSaveButton = true;
     const id = tag.tag ? tag.tag : tag._id;
-    this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
+    this.tagsService.get(id).pipe(first()).subscribe((res: any) => {
       this._tags.push(res.tags[0]);
     });
   }
 
-  public connectToTag(event: Event, tag: Tag): void {
+
+  connectToTag(event: Event, tag: Tag): void {
     event.preventDefault();
-    this._tagsService
-      .updateTagInPool(this._projectId, tag)
-      .pipe(first())
-      .subscribe((data: any) => {
-        this._needToSetOriginalTag = false;
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.ERROR', err);
-      });
+    this.tagsService.updateTagInPool(this._innovationId, tag).pipe(first()).subscribe((data: any) => {
+      this._needToSetOriginalTag = false;
+      this._activeSaveButton = true;
+      this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
+    }, (err: any) => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ASSOCIATED');
+    });
   }
 
+
   removeTag(tag: any) {
+    this._activeSaveButton = true;
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
   }
+
 
   get tag(): Tag {
     return this._tag;
@@ -136,8 +147,8 @@ export class TagsFormComponent implements OnInit {
     return this._type;
   }
 
-  get projectId(): string {
-    return this._projectId;
+  get innovationId(): string {
+    return this._innovationId;
   }
 
   get needToSetOriginalTag(): boolean {
@@ -145,6 +156,11 @@ export class TagsFormComponent implements OnInit {
   }
 
   get lang(): string {
-    return this._translateService.currentLang;
+    return this.translateService.currentLang;
   }
+
+  get activeSaveButton(): boolean {
+    return this._activeSaveButton;
+  }
+
 }

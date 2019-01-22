@@ -224,6 +224,16 @@ export const COMMON = {
 
   'HEADER': {
     'SHARED_REPORTS': 'Rapports partagés'
+  },
+
+  'TAG_LABEL': {
+    'ADD_TAGS': 'Ajouter des Tags',
+    'LABEL_EN_PLACEHOLDER': 'Entrez le label en anglais',
+    'LABEL_FR_PLACEHOLDER': 'Entrer le label en français',
+    'DESC_EN_PLACEHOLDER': 'Entrez la description en anglais',
+    'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
+    'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag.',
+    'TAG_PLACEHOLDER': 'Ajouter un tag existante'
   }
 
 };

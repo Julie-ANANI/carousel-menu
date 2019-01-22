@@ -19,8 +19,8 @@
   </app-user-form>
 
   <app-tags-form
-    [sidebarState]="sidebarValue.animate_state"
     *ngIf="isTagsForm"
+    [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
     (newTags)="addTagsToPro($event)">
   </app-tags-form>

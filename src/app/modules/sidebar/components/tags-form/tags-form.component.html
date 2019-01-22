@@ -1,78 +1,79 @@
-<div class="user-form-wrapper">
-  <div class="column col-xs-12 col-11 col-mx-auto">
+<div class="column col-xs-12 col-11 col-mx-auto" id="tags-form-component">
 
-    <form novalidate (ngSubmit)="onSubmit()">
-      <div class="text-right">
-        <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
-      </div>
+  <div class="save-button-wrapper">
+    <button type="submit" class="btn btn-primary" [disabled]="!activeSaveButton" (click)="onClickSave()">{{ 'COMMON.SAVE' | translate }}</button>
+  </div>
 
-      <ng-container [ngSwitch]="type">
 
-        <!-- Add Tags -->
-        <app-shared-tag-item *ngSwitchCase="'addTags'"
+  <div [ngSwitch]="type">
+
+    <!-- add tags -->
+    <ng-container *ngSwitchCase="'addTags'">
+      <label class="form-label">{{ 'COMMON.TAG_LABEL.ADD_TAGS' | translate }}</label>
+      <div [ngStyle]="{ 'margin-top': '.5rem' }">
+        <app-shared-tag-item
           [tags]="tags"
           [type]="tagType"
           [editMode]="true"
-          [projectId]="projectId"
+          [projectId]="innovationId"
           (addTag)="addTag($event)"
           (removeTag)="removeTag($event)">
         </app-shared-tag-item>
+      </div>
+    </ng-container>
 
-        <!-- Edit Tag -->
-        <div *ngSwitchCase="'editTag'">
+    <!-- edit Tag -->
+    <div *ngSwitchCase="'editTag'">
 
-          <h4>Original Tag:</h4>
+      <h4>Original Tag:</h4>
 
-          <ul *ngIf="!needToSetOriginalTag">
-            <li><b>Name: </b><span [textContent]="tag.originalLabel | multiling:lang"></span></li>
-            <li><b>Type: </b><span [textContent]="'TAGS.TYPE.' + tag.type" translate></span></li>
-          </ul>
+      <ul *ngIf="!needToSetOriginalTag">
+        <li><b>Name: </b><span [textContent]="tag.originalLabel | multiling:lang"></span></li>
+        <li><b>Type: </b><span [textContent]="'TAGS.TYPE.' + tag.type" translate></span></li>
+      </ul>
 
-          <p *ngIf="needToSetOriginalTag">
-            <input auto-complete
-                   [(ngModel)]="tag.originalTagId"
-                   [ngModelOptions]="{standalone: true}"
-                   [source]="suggestions.bind(this)"
-                   select-value-of="_id"
-                   [list-formatter]="autocompleListFormatter"
-                   [value-formatter]="autocompleValueFormatter"
-                   attr.placeholder="Add an existing tag"
-                   class="form-input form-control input-lg">
-            <button (click)="connectToTag($event, tag)" class="btn btn-primary input-group-btn" translate>
-              COMMON.ADD
-              <i class="icon icon-arrow-right"></i>
-            </button>
-          </p>
+      <p *ngIf="needToSetOriginalTag">
+        <input auto-complete
+               [(ngModel)]="tag.originalTagId"
+               [ngModelOptions]="{standalone: true}"
+               [source]="suggestions.bind(this)"
+               select-value-of="_id"
+               [list-formatter]="autocompleListFormatter"
+               [value-formatter]="autocompleValueFormatter"
+               attr.placeholder="Add an existing tag"
+               class="form-input form-control input-lg">
+        <button (click)="connectToTag($event, tag)" class="btn btn-primary input-group-btn" translate>
+          COMMON.ADD
+          <i class="icon icon-arrow-right"></i>
+        </button>
+      </p>
 
-          <h4>Label:</h4>
-          <p>
-            <label for="enlabel">English: </label>
-            <input id="enlabel" type="text" size="20" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.label.en"
-                   alt="label" placeholder="label in english"/>
-          </p>
-          <p>
-            <label for="frlabel">Français: </label>
-            <input id="frlabel" type="text" size="20" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.label.fr"
-                   alt="label" placeholder="label en français"/>
-          </p>
+      <h4>Label:</h4>
+      <p>
+        <label for="enlabel">English: </label>
+        <input id="enlabel" type="text" size="20" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.label.en"
+               alt="label" placeholder="label in english"/>
+      </p>
+      <p>
+        <label for="frlabel">Français: </label>
+        <input id="frlabel" type="text" size="20" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.label.fr"
+               alt="label" placeholder="label en français"/>
+      </p>
 
-          <h4>Description:</h4>
-          <p>
-            <label for="endesc">English: </label>
-            <input id="endesc" type="text" size="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.description.en"
-                   alt="description" placeholder="description in english"/>
-          </p>
-          <p>
-            <label for="frdesc">Français: </label>
-            <input id="frdesc" type="text" size="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.description.fr"
-                   alt="description" placeholder="description en français"/>
-          </p>
+      <h4>Description:</h4>
+      <p>
+        <label for="endesc">English: </label>
+        <input id="endesc" type="text" size="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.description.en"
+               alt="description" placeholder="description in english"/>
+      </p>
+      <p>
+        <label for="frdesc">Français: </label>
+        <input id="frdesc" type="text" size="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.description.fr"
+               alt="description" placeholder="description en français"/>
+      </p>
 
-        </div>
-
-      </ng-container>
-
-    </form>
+    </div>
 
   </div>
+
 </div>

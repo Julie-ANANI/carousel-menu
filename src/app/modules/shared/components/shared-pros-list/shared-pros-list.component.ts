@@ -39,7 +39,7 @@ export class SharedProsListComponent {
 
   private _tableInfos: Table = null;
 
-  private _actions: string[] = ['COMMON.ADD-TAGS'];
+  private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS'];
 
   private _total = 0;
 
@@ -246,18 +246,15 @@ export class SharedProsListComponent {
 
 
   editTags(pros: Professional[]) {
+    this.isProfessionalForm = false;
+    this.isTagsForm = true;
+    this._prosToTag = pros;
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.ADD-TAGS',
+      title: 'COMMON.TAG_LABEL.ADD_TAGS',
       type: 'addTags'
     };
-
-    this.isProfessionalForm = false;
-
-    this.isTagsForm = true;
-
-    this._prosToTag = pros;
 
   }
 
