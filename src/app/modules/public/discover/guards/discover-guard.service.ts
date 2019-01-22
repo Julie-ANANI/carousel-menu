@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 
@@ -9,7 +10,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 @Injectable()
 export class DiscoverGuard implements CanActivate {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private location: Location) {}
 
   canActivate(_: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
     const url: string = routerStateSnapshot.url;
@@ -19,8 +20,7 @@ export class DiscoverGuard implements CanActivate {
   private _checkLogin(url: string): boolean {
 
     if (this.authService.isAuthenticated ) {
-      window.location.href = url.replace('/discover', '/user/discover');
-      return true;
+      this.location.replaceState('/user/discover');
     }
 
     return true;

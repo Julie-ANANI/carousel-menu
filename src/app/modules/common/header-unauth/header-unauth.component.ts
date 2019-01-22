@@ -98,12 +98,14 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
    */
   private checkUrlToRedirect() {
 
-    if (this.router.url.includes('/discover')) {
-      window.location.reload();
+    const url = this.router.url;
+    
+    if (url.includes('/discover')) {
+      this.router.navigate([url]);
     }
 
-    if (this.router.url.includes('/share/synthesis')) {
-      this.router.navigate([this.router.url.replace('/share/', '/user/')]);
+    if (url.includes('/share/synthesis')) {
+      this.router.navigate([url.replace('/share/', '/user/')]);
     }
 
   }
