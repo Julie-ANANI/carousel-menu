@@ -22,7 +22,7 @@
 */
 
 .form-group {
-  margin-bottom: 1.2rem !important;
+  margin-bottom: .6rem !important;
 }
 
 
@@ -57,13 +57,13 @@
   background: white none;
   padding: .9rem;
   transition: all 0.15s ease-in-out;
-  margin-top: .5rem;
 }
 
 
 .form-select:not([multiple]):not([size]) {
   background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right .9rem center/0.4rem 0.5rem;
   background-size: .6rem;
+  padding-right: 2.187rem;
 }
 
 
@@ -201,14 +201,16 @@
   overflow: auto;
 
   li {
-    padding: .75rem .9375rem;
     transition: all .15s ease-in-out;
     word-break: break-word;
     font-size: .875rem;
     color: $input-color;
+    padding: 0;
 
     a{
       text-decoration: none;
+      display: flex;
+      padding: 1rem .9375rem;
     }
 
   }
@@ -242,8 +244,9 @@ textarea {
   background: $meta-color;
   border-color: $meta-color;
   height: 1.3125rem;
-  width: 1.12rem;
-  top: -.21875rem;
+  width: 1.2rem;
+  left: -1px;
+  top: -3.5px;
 }
 
 .form-switch .form-icon  {
@@ -330,4 +333,24 @@ textarea {
 .mce-tinymce {
   box-shadow: none !important;
   width: inherit !important;
+}
+
+/********************************** Media ***************************************/
+
+@media (min-width: 1441px) {
+
+  .restrict-width {
+    max-width: 50% !important;
+  }
+  
+}
+
+@media (max-width: 600px) {
+
+
+  .form-switch .form-icon::before {
+    top: -4px !important;
+  }
+
+
 }

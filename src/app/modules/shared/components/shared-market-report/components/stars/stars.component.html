@@ -1,16 +1,40 @@
-<div class="star-wrapper">
-  <div *ngFor="let note of notesData">
-    <div class="note-label">
-      <span>{{ note.label | multiling:lang }}</span>
-      <span class="vote-wrapper">
+<!-- Market report -->
+<ng-container *ngIf="!executiveReportView">
+  <div class="star-wrapper">
+    <div *ngFor="let note of notesData">
+      <div class="note-label">
+        <span class="text-left">{{ note.label | multiling:lang }}</span>
+        <span class="vote-wrapper text-right">
         {{ note.count }} {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }} | {{ 'MARKET_REPORT.GRADE' | translate }}: {{ note.percentage }}</span>
+      </div>
+      <ng-container *ngIf="note.count">
+        <app-progress-bar
+          [width]="note.percentage"
+          [backgroundColor]="'#2ECC71'">
+        </app-progress-bar>
+      </ng-container>
+      <span *ngIf="!note.count" class="no-grade-wrapper">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span>
     </div>
-    <ng-container *ngIf="note.count">
-      <app-progress-bar
-        [width]="note.percentage"
-        [backgroundColor]="'#2ECC71'">
-      </app-progress-bar>
-    </ng-container>
-    <span *ngIf="!note.count" class="no-grade-wrapper">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span>
   </div>
-</div>
+</ng-container>
+<!-- /Market report -->
+
+
+<!-- Executive report -->
+<ng-container *ngIf="executiveReportView">
+  <div *ngFor="let data of notesData | slice:0:4" class="executive-star-wrapper">
+    <div class="note-label">
+      <span class="text-left">{{ data.label | multiling:lang }}</span>
+      <span class="vote-wrapper text-right">{{ data.count }} {{ 'MARKET_REPORT.VOTES' | translate }}</span>
+    </div>
+    <div *ngIf="data.count">
+      <app-progress-bar
+        [width]="data.percentage"
+        [height]="'5px'"
+        [backgroundColor]="'#FFB300'">
+      </app-progress-bar>
+    </div>
+    <div *ngIf="!data.count" class="no-grade-wrapper">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</div>
+  </div>
+</ng-container>
+<!-- /Executive report -->

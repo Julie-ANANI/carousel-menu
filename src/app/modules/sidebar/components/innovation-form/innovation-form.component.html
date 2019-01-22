@@ -1,3 +1,4 @@
+<div class="column col-mx-auto col-xs-12 col-11">
 <form novalidate (ngSubmit)="onSubmit()">
 
   <div class="form-group-inline-space">
@@ -19,25 +20,29 @@
 
   <app-shared-project-edit-cards
     [project]="project"
-    [canEdit]="true"
-    (projectChange)="projectEdit($event)"
-    (saveChanges)="isChange = $event"
+    [editable]="true"
+    (pitchChange)="projectEdit($event)"
+    [sideAdmin]="true"
+    [modeAdmin]="true"
     *ngIf="isPitch">
   </app-shared-project-edit-cards>
 
   <app-shared-project-settings
-    [settings]="project.settings"
-    [projectStatus]="project.status"
+    [projectSettings]="project.settings"
     (settingsChange)="settingsEdit($event)"
     *ngIf="isTargeting"
-    [adminMode]="true">
+    [modeAdmin]="true"
+    [sideAdmin]="true"
+    [editable]="true">
   </app-shared-project-settings>
 
-  <!-- This functionality doesn't work for the moment -->
   <app-shared-mail-editor *ngIf="isStatus || isMail"
                           [signatures]="signatures"
                           [emailsObject]="email"
-                          (emailChange)="email = $event">
+                          [inputLanguage]="project.owner.language"
+                          [noLanguage]="true"
+                          (emailChange)="email = $event"
+                          (languageChange)="updateOwnerLanguage($event)">
   </app-shared-mail-editor>
 
   <div *ngIf="isUserSatisfaction" class="form-group-inline-space satisfaction">
@@ -104,3 +109,4 @@
   </div>
 
 </form>
+</div>

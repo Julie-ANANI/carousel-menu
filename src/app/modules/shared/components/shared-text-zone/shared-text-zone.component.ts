@@ -1,4 +1,5 @@
-import { Component, OnDestroy, AfterViewInit, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 declare const tinymce: any;
 
@@ -25,7 +26,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   private editor: any;
   private _htmlId: string;
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object) {
     this._contentHash = 0;
   }
 
@@ -34,39 +35,43 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   ngAfterViewInit() {
-    tinymce.init({
-      selector: '#' + this._htmlId,
-      plugins: ['link', 'paste', 'lists', 'advlist'], // Voir .angular-cli.json
-      default_link_target: '_blank',
-      width: 600,
-      height: 250,
-      statusbar: false,
-      menubar: false,
-      paste_as_text: true,
-      paste_remove_styles_if_webkit: true,
-      paste_retain_style_properties: 'none',
-      toolbar : 'undo redo | bold italic | bullist numlist | link',
-      skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
-      setup: (editor: any) => {
-        this.editor = editor;
-        this._contentHash = this.hashString(this._text);
-        editor.on('Blur', () => {
-          const actualHash = this._contentHash;
-          const content = editor.getContent();
-          this._contentHash = this.hashString(content);
-          if (this._contentHash !== actualHash) {
-            this.onTextChange.emit({id: this.elementId, content: content});
-          }
-        });
-      },
-    });
-    if (this._text && this.editor) {
-      this.editor.setContent(this._text);
+    if (isPlatformBrowser(this.platformId)) {
+      tinymce.init({
+        selector: '#' + this._htmlId,
+        plugins: ['link', 'paste', 'lists', 'advlist'], // Voir .angular-cli.json
+        default_link_target: '_blank',
+        width: 600,
+        height: 250,
+        statusbar: false,
+        menubar: false,
+        paste_as_text: true,
+        paste_remove_styles_if_webkit: true,
+        paste_retain_style_properties: 'none',
+        toolbar : 'undo redo | bold italic underline | bullist numlist | link',
+        skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
+        setup: (editor: any) => {
+          this.editor = editor;
+          this._contentHash = this.hashString(this._text);
+          editor.on('Blur', () => {
+            const actualHash = this._contentHash;
+            const content = editor.getContent();
+            this._contentHash = this.hashString(content);
+            if (this._contentHash !== actualHash) {
+              this.onTextChange.emit({id: this.elementId, content: content});
+            }
+          });
+        },
+      });
+      if (this._text && this.editor) {
+        this.editor.setContent(this._text);
+      }
     }
   }
 
   ngOnDestroy() {
-    tinymce.remove(this.editor);
+    if (isPlatformBrowser(this.platformId)) {
+      tinymce.remove(this.editor);
+    }
   }
 
   private hashString(content: string): number {

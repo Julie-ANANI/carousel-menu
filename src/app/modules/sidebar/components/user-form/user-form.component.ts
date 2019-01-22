@@ -2,13 +2,17 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../../../models/user.model';
+import { Innovation } from '../../../../models/innovation';
 import { Professional } from '../../../../models/professional';
 import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import {distinctUntilChanged, first} from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
+import { QuizService } from '../../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-user-form',
@@ -22,6 +26,7 @@ export class UserFormComponent implements OnInit {
      For type 'editUser', put the data into the attribute user and patch it to the formData
   */
   @Input() set user(value: User) {
+    this._selectedProject = null;
     this._user = value;
     this.loadEditUser();
   };
@@ -58,6 +63,8 @@ export class UserFormComponent implements OnInit {
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
 
+  private _selectedProject: String;
+  private _projects: Array<Innovation> = [];
   private _user: User;
   private _pro: Professional = null;
   private _campaign: Campaign = null;
@@ -83,6 +90,7 @@ export class UserFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private translateService: TranslateService,
+              private userService: UserService,
               private _authService: AuthService) {}
 
   ngOnInit() {
@@ -92,7 +100,7 @@ export class UserFormComponent implements OnInit {
       companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[\s\S]{9,50}$/gm)]],
       country: ['', [Validators.required]],
       roles: '',
       isOperator: [false],
@@ -105,7 +113,7 @@ export class UserFormComponent implements OnInit {
     this.loadTypes();
 
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           setTimeout (() => {
             this.userForm.reset();
@@ -116,10 +124,23 @@ export class UserFormComponent implements OnInit {
 
   }
 
+  loadInnovations(): void {
+    this.userService.getInnovations(this._user.id)
+      .pipe(first())
+      .subscribe((innovations: any) => {
+        this._projects = innovations.result;
+      });
+  }
+
+  selectProject(event: any) {
+    this._selectedProject = event.target.value;
+  }
+
   reinitialiseForm() {
     this.isProfessional = false;
     this.isEditUser = false;
     this.isSignUp = false;
+    this._selectedProject = null;
   }
 
   loadTypes() {
@@ -141,6 +162,7 @@ export class UserFormComponent implements OnInit {
     if (this._user) {
       this.isSelf = this._authService.userId === this._user.id;
       this.userForm.patchValue(this._user);
+      this.loadInnovations();
     }
 
   }
@@ -170,14 +192,14 @@ export class UserFormComponent implements OnInit {
   }
 
   onSuggestCountries() {
-    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+    this.userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
       this.displayCountrySuggestion = true;
       this.countriesSuggestion = [];
-      this.autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
           this.displayCountrySuggestion = false;
         } else {
-          res.forEach((items) => {
+          res.forEach((items: any) => {
             const valueIndex = this.countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
               this.countriesSuggestion.push(items.name);
@@ -195,9 +217,12 @@ export class UserFormComponent implements OnInit {
 
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this.translateService.currentLang;
-    window.open(baseUri + parameters);
+    const quizUrl = QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
+    window.open(quizUrl);
+  }
+
+  public getQuizUrl(pro: Professional): string {
+    return QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
   }
 
   public startEditInstanceDomain(event: Event): void {
@@ -256,6 +281,14 @@ export class UserFormComponent implements OnInit {
 
   get tags(): Tag[] {
     return this._tags;
+  }
+
+  get projects(): Innovation[] {
+    return this._projects;
+  }
+
+  get selectedProject(): String {
+    return this._selectedProject;
   }
 
 }

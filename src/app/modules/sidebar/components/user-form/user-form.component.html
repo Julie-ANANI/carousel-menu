@@ -1,6 +1,5 @@
 <section id="user-form">
   <div class="column col-xs-12 col-11 col-mx-auto">
-
     <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()" autocomplete="off">
 
       <!-- Operator -->
@@ -53,6 +52,16 @@
             [config]="buildInstanceDomainListConfig()">
           </app-autocomplete-input>
         </div>
+      </div>
+
+      <!-- Projects -->
+      <div *ngIf="isEditUser" class="form-group">
+        <label class="form-label">Collaborates to {{ projects.length }} projects</label>
+        <select (change)="selectProject($event)">
+          <option selected>View the projects</option>
+          <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
+        </select>
+          <a  class="btn btn-primary" *ngIf="selectedProject" [href]="'/admin/projects/project/' + selectedProject" target="_blank">Go</a>
       </div>
 
       <!-- Show Tags -->
@@ -116,6 +125,7 @@
         <div class="form-error" *ngIf="userForm.get('password').touched && userForm.get('password').invalid">
           <span *ngIf="userForm.get('password').hasError('required')">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
           <span *ngIf="userForm.get('password').hasError('minlength')">{{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}</span>
+          <span *ngIf="userForm.get('password').hasError('pattern')">{{ 'COMMON.INVALID.MUST_CONTAIN' | translate }}</span>
         </div>
       </div>
 
@@ -189,6 +199,8 @@
         <a (click)="openQuizUri(pro, $event)">
         <label class="text-link">{{ 'COMMON.ADD-ANSWER' | translate }}</label>
         </a>
+
+        <p><a [href]="getQuizUrl(pro)">Link to the professional's quiz <i class="fas fa-link"></i></a></p>
       </div>
 
       <!-- Terms -->
@@ -203,6 +215,5 @@
       </div>
 
     </form>
-
   </div>
 </section>

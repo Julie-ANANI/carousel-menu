@@ -1,0 +1,10 @@
+<section class="section-light-container" id="admin-projects-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <app-shared-table
+      [config]="config"
+      (configChange)="loadProjects($event)"
+      [data]="tableInfos"
+      (editRow)="goToProject($event)">
+    </app-shared-table>
+  </div>
+</section>

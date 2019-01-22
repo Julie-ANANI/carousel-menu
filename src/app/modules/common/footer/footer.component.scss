@@ -1,0 +1,57 @@
+@import "../../../../style/variables";
+
+#footer-component {
+  background: $background-color;
+  font-size: 0.85rem;
+  color: white;
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .pad {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .info {
+      transition: all 0.35s ease-in-out;
+
+      a {
+        color: white;
+      }
+
+      a:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+    }
+
+    .lang {
+
+      .form-switch {
+        padding: 0;
+      }
+
+      .form-select {
+        margin-top: 0;
+        min-width: 100px;
+        min-height: 2.8rem;
+        padding-top: .4375rem;
+        padding-bottom: .5rem;
+      }
+
+      .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+        border-color: $border-color;
+      }
+
+    }
+
+  }
+
+}
+
+

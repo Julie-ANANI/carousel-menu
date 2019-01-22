@@ -1,0 +1,155 @@
+<section class="section-container animate-page" id="new-project-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <form novalidate [formGroup]="formData" (ngSubmit)="onCreateProject()">
+
+
+      <!-- Section 1 -->
+      <div class="columns col-gapless">
+
+        <!-- Questions -->
+        <div class="column col-xl-12 col-6 col-mx-auto">
+
+          <div class="ques-1">
+            <span class="num-rect">1</span>
+            <span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
+            <div class="form-group" [ngStyle]="{ 'padding-top': '1.2rem' }">
+              <label class="form-radio" for="new-project-frLang">
+                <input
+                  type="radio"
+                  name="choosenLang"
+                  value="fr"
+                  formControlName="choosenLang"
+                  id="new-project-frLang">
+                <i class="form-icon"></i>{{ 'COMMON.LANG.FR' | translate }}
+              </label>
+              <label class="form-radio" for="new-project-enLang">
+                <input
+                  type="radio"
+                  name="choosenLang"
+                  value="en"
+                  formControlName="choosenLang"
+                  id="new-project-enLang">
+                <i class="form-icon"></i>{{ 'COMMON.LANG.EN' | translate }}
+              </label>
+            </div>
+          </div>
+
+          <div class="ques-2 restrict-width">
+            <span class="num-rect">2</span>
+            <span class="ques">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
+            <div class="form-group" [ngStyle]="{ 'padding-top': '1.2rem' }">
+              <label for="new-project-companyName">
+                <input
+                  type="text"
+                  class="form-default"
+                  name="name"
+                  formControlName="name"
+                  id="new-project-companyName"
+                  [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
+              </label>
+              <div class="form-error" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
+                {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bot -->
+        <div class="column col-6 hide-xl col-mx-auto text-center">
+          <div class="bot-rect">
+            {{ "PROJECT_MODULE.NEW_PROJECT.BOT_TEXT" | translate }}
+          </div>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle">
+          <div>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image">
+          </div>
+        </div>
+
+      </div>
+      <!-- /Section 1 -->
+
+
+      <!-- Section 2 -->
+      <div class="ques-3">
+        <span class="num-rect">3</span>
+        <span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.INNOVATION_TYPE_LABEL' | translate }}</span>
+        <div class="form-group selection-wrapper" [ngStyle]="{ 'padding-top': '1.2rem' }">
+
+          <label for="apps">
+            <input type="radio" value="apps" name="type" id="apps" formControlName="type">
+            <div class="circle-check"><i class="fas fa-check"></i></div>
+            <div class="offers">
+              <img src="https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg">
+              <ul>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE1' | translate }}</li>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE2' | translate }}</li>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE3' | translate }}</li>
+              </ul>
+            </div>
+          </label>
+
+          <label for="insights">
+            <input type="radio" value="insights" name="type" id="insights" formControlName="type">
+            <div class="circle-check"><i class="fas fa-check"></i></div>
+            <div class="offers">
+              <img src="https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg">
+              <ul>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.INSIGHTS.LINE1' | translate }}</li>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.INSIGHTS.LINE2' | translate }}</li>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.INSIGHTS.LINE3' | translate }}</li>
+              </ul>
+            </div>
+          </label>
+
+          <label for="leads">
+            <input type="radio" value="leads" name="type" id="leads" formControlName="type">
+            <div class="circle-check"><i class="fas fa-check"></i></div>
+            <div class="offers">
+              <img src="https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg">
+              <ul>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.LEADS.LINE1' | translate }}</li>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.LEADS.LINE2' | translate }}</li>
+                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.LEADS.LINE3' | translate }}</li>
+              </ul>
+            </div>
+          </label>
+
+        </div>
+      </div>
+      <!-- /Section 2 -->
+
+
+      <!-- Section 3 -->
+      <div class="create-button">
+        <button class="btn btn-lg btn-primary gtm-create-project-validated" type="submit" [disabled]="formData.invalid">
+          {{ 'PROJECT_MODULE.NEW_PROJECT.BUTTON_TEXT' | translate }}
+        </button>
+      </div>
+      <!-- /Section 3 -->
+
+
+      <!-- Section 4 -->
+      <div class="section-info">
+        <div class="columns col-gapless text-center">
+          <div class="column col-sm-12 col-4 col-mx-auto">
+            <div><i class="fas fa-3x fa-cloud-download-alt"></i></div>
+            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.DOWNLOAD' | translate }}</p>
+          </div>
+          <div class="column col-sm-12 col-4 col-mx-auto">
+            <div><i class="fas fa-3x fa-lock"></i></div>
+            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.ANONYMOUS' | translate }}</p>
+          </div>
+          <div class="column col-sm-12 col-4 col-mx-auto">
+            <div><i class="fas fa-3x fa-eye-slash"></i></div>
+            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.PRIVATE' | translate }}</p>
+          </div>
+        </div>
+      </div>
+      <!-- /Section 4 -->
+
+
+    </form>
+  </div>
+</section>

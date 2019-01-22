@@ -6,6 +6,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-search-results',
@@ -79,7 +80,7 @@ export class SharedSearchResultsComponent implements OnInit {
     if (this._request.country) {
       params.country = this._request.country;
     }
-    this._searchService.searchMails(params).first().subscribe(result => {
+    this._searchService.searchMails(params).pipe(first()).subscribe((result: any) => {
       this._notificationsService.success('Recherche lancée', `La recherche de mails a été lancée`);
     });
   }
@@ -105,7 +106,7 @@ export class SharedSearchResultsComponent implements OnInit {
       params.query = this._selection.query;
       params.query.motherRequestId = this._request._id;
     }
-    this._professionalsService.addFromRequest(params).first().subscribe(result => {
+    this._professionalsService.addFromRequest(params).pipe(first()).subscribe((result: any) => {
       this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
       if (goToCampaign) {
         this._router.navigate([`/admin/campaigns/campaign/${campaign._id}/pros`]);
@@ -127,7 +128,7 @@ export class SharedSearchResultsComponent implements OnInit {
       params.query.motherRequestId = this._request._id;
     }
 
-    this._searchService.export(params.requestId, params).first().subscribe((result: any) => {
+    this._searchService.export(params.requestId, params).pipe(first()).subscribe((result: any) => {
       this._downloadService.saveCsv(result.csv, this.request.keywords);
     });
   }

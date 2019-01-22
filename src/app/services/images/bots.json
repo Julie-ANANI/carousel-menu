@@ -1,0 +1,21 @@
+{
+  "triangle": {
+    "src": "https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg"
+  },
+  "error": {
+    "src": "http://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg"
+  },
+  "juan": {
+    "src": "http://res.cloudinary.com/umi/image/upload/app/default-images/juan-bot.svg"
+  },
+  "info": {
+    "src": "http://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg"
+  },
+  "notfound": {
+    "src": "https://res.cloudinary.com/umi/image/upload/v1532725851/app/default-images/not-found.svg"
+  },
+  "advice": {
+    "src": "https://res.cloudinary.com/umi/image/upload/v1532612435/app/default-images/bot-advice.svg"
+  },
+
+}

@@ -9,6 +9,7 @@ import { MultilingPipe } from './pipes/multiling.pipe';
 import { ObjectKeysPipe } from './pipes/objectKeys.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
+import { FormatText } from './pipes/FormatText';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
     MultilingPipe,
     ObjectKeysPipe,
     EllipsisPipe,
-    DiscoverSummaryPipe
+    DiscoverSummaryPipe,
+    FormatText
   ],
   exports: [
     CharacterCountdown,
@@ -35,7 +37,8 @@ import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
     MultilingPipe,
     ObjectKeysPipe,
     EllipsisPipe,
-    DiscoverSummaryPipe
+    DiscoverSummaryPipe,
+    FormatText
   ]
 })
 

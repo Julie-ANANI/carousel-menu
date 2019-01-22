@@ -29,8 +29,6 @@ export class FrontendService {
   innovCardFieldsRequired: number;
   innovCardFieldsPresent: number;
 
-  scrollValue = 0;
-
   private _calculatedValues: Values = {};
 
   private _innovationMetadataCalculatedValues = {};
@@ -190,10 +188,13 @@ export class FrontendService {
   }
 
 
-  /*
-    We are calculating percentage for the analytics
-    that are being used in Market exploration and
-    Synthesis page.
+
+  /***
+   * This function is to calculate the percentage of the analytics that has been used
+   * in Exploration and Synthesis page.
+   * @param {number} value1
+   * @param {number} value2
+   * @returns {number}
    */
   analyticPercentage(value1: number, value2: number) {
     if (value2 === 0 || value2 === undefined) {
@@ -203,7 +204,6 @@ export class FrontendService {
       return percentage === Infinity ? 0 : Math.floor(percentage);
     }
   }
-
 
   /*
 

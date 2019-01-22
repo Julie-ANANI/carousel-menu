@@ -1,15 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {Column, types} from '../../../table/models/column';
-import {Choice} from '../../../table/models/choice';
+import { Column, types } from '../../../table/models/column';
+import { Choice } from '../../../table/models/choice';
 
 @Component({
-  selector: 'sqFilterMulti',
+  selector: 'app-shared-multi-filter',
   templateUrl: './shared-filter-multi.component.html',
   styleUrls: ['./shared-filter-multi.component.scss']
 })
+
 export class SharedFilterMultiComponent {
 
   @Input() config: any;
+
   @Input() set props(value: Column[]) {
     this.loadProps(value);
   }
@@ -17,20 +19,22 @@ export class SharedFilterMultiComponent {
   @Output() configChange = new EventEmitter <any>();
 
   private _currentTextProp: Column = {_attrs: [''], _name: '', _type: 'TEXT'};
+
   private _textProps: Column[] = [];
+
   private _otherProps: Column[] = [];
 
   constructor() {}
 
   // For values linked with config
   filterText(event: any) {
-    this.config.offset = 0;
-    this.config.search = {};
+    this.config.offset = '0';
     const value = event.value;
       if (value === '') {
+        this.config.search = '{}';
         this.configChange.emit(this.config);
       } else {
-        this.config.search[this._currentTextProp._attrs[0]] = value;
+        this.config.search = JSON.stringify({[this._currentTextProp._attrs[0]]: value});
         this.configChange.emit(this.config);
       }
   }
@@ -103,4 +107,5 @@ export class SharedFilterMultiComponent {
   changeCurrentTextProp(prop: any) {
     this._currentTextProp = this._textProps.find(value => value._attrs[0] === prop.srcElement.value);
   }
+
 }

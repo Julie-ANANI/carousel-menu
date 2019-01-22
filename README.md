@@ -1,42 +1,40 @@
-# umi-application client
+# umi-application-front
 
-Ce projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
 
-Il utilise Angular Universal pour calculer un pré-rendu qui sera restitué au client, favorisant le SEO.
+## Development server
 
-## Développement
+Lancer `ng serve -c=local [--prod]` pour lancer le serveur web de développement en local. 
 
-Lancer `ng serve --env=local --port 3080` pour lancer le serveur web de développement. 
+Se rendre sur `http://localhost:4200/`.
 
-Se rendre sur `http://localhost:3080/`.
+## Code scaffolding
 
-L'application va automatiquement se recharger si une modification est faite sur son code source.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Génération de nouveaux composants avec Angular CLI
+## Build
+From the command prompt, type `npm run build:ssr`  
 
-Lancer `ng generate <component|directive|pipe|service|class|module> <componentName>` pour générer un nouveau composant. 
+The Angular CLI compiles and bundles the universal app into two different folders, browser and server. Webpack transpiles the server.ts file into Javascript.
 
-## Build - Préparation pour mise en production
+## Serve
+After building the application, start the server.  
 
-Lancer `npm build` pour *builder* le projet. Ajouter le paramètre  `-prod` pour *builder* la version de production.
+`npm run serve:ssr`
 
-La version *buildée* est stockée dans le dossier `dist/`.
+Or build the server and run it by doing :
+```
+npm run universal
+```
 
-### Pour builder l'application et la distribuer avec Angular Universal
+## Running unit tests
 
-*Remplace l'étape précédente..*
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-***https://medium.com/@evertonrobertoauler/angular-4-universal-app-with-angular-cli-db8b53bba07d***
+## Running end-to-end tests
 
-Lancer `npm start`. Cette commande lance les tests *end-to-end* et *builde* le projet comme précédemment (en version de production compressée). Elle lance ensuite un serveur Node.js distribuant l'application avec **Angular Universal**. 
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-L'application est alors accessible à l'adresse `http://localhost:3080`.
+## Further help
 
-## Lancement des tests unitaires
-
-Lancer `ng test` pour exécuter les tests unitaires avec [Karma](https://karma-runner.github.io).
-
-## Lancement des tests *end-to-end*
-
-Lancer `ng e2e` pour exécuter les tests end-to-end avec [Protractor](http://www.protractortest.org/).
-Avant de lancer les tests, ne pas oublier de servir l'application avec `ng serve`.
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

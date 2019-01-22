@@ -2,13 +2,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import {TagsService} from '../../../../services/tags/tags.service';
-import {Subject} from 'rxjs/Subject';
-import {Tag} from '../../../../models/tag';
+import { Multiling } from '../../../../models/multiling';
+import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tags-form',
@@ -34,13 +35,18 @@ export class TagsFormComponent implements OnInit {
     this._projectId = value._id;
   }
 
+  @Input() tagType: string;
+
   @Input() sidebarState: Subject<string>;
 
   @Output() newTags = new EventEmitter<Tag[]>();
+
   @Output() updateTag = new EventEmitter<Tag>();
 
   private _tags: Tag[] = [];
+
   private _tag: Tag;
+
   private _projectId = '';
 
   private _type = '';
@@ -55,7 +61,7 @@ export class TagsFormComponent implements OnInit {
 
   ngOnInit() {
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           setTimeout (() => {
             this._tags = [];
@@ -77,26 +83,26 @@ export class TagsFormComponent implements OnInit {
     }
   }
 
-  public suggestions(keyword: string): Observable<Array<any>> {
+  public suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
-      keyword: keyword,
+      query: query,
       type: 'tags'
     };
     return this._autocompleteService.get(queryConf);
   }
 
-  public autocompleListFormatter = (data: {name: string, _id: string}) : SafeHtml => {
+  public autocompleListFormatter = (data: {name: Multiling, _id: string}) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
     return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: {name: string, _id: string}) : string => {
+  public autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
     return MultilingPipe.prototype.transform(data.name, this._translateService.currentLang);
   };
 
   addTag(tag: any) {
     const id = tag.tag ? tag.tag : tag._id;
-    this._tagsService.get(id).first().subscribe(res => {
+    this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
       this._tags.push(res.tags[0]);
     });
   }
@@ -105,11 +111,11 @@ export class TagsFormComponent implements OnInit {
     event.preventDefault();
     this._tagsService
       .updateTagInPool(this._projectId, tag)
-      .first()
-      .subscribe((data) => {
+      .pipe(first())
+      .subscribe((data: any) => {
         this._needToSetOriginalTag = false;
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
-      }, err => {
+      }, (err: any) => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
@@ -136,5 +142,9 @@ export class TagsFormComponent implements OnInit {
 
   get needToSetOriginalTag(): boolean {
     return this._needToSetOriginalTag;
+  }
+
+  get lang(): string {
+    return this._translateService.currentLang;
   }
 }

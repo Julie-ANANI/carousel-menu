@@ -1,0 +1,92 @@
+<section *ngIf="innovations" class="section-container" id="projects-list-component">
+
+
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+
+    <!-- Section add button -->
+    <div class="text-right">
+      <button routerLink="new" (click)="$event.preventDefault()" class="btn btn-primary">
+        {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+      </button>
+    </div>
+
+
+    <!-- Section no project -->
+    <div *ngIf="innovations.length === 0" class="section-no-project">
+      <div class="bot-rect">
+        {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
+        <br>
+        {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}
+      </div>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
+      <div>
+        <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" ">
+      </div>
+    </div>
+
+
+    <!-- Section projects -->
+    <div *ngIf="innovations.length > 0" class="section-projects-list">
+
+      <!-- Projects -->
+      <div class="project-wrapper" [@listAnimation]="innovations.length">
+        <div *ngFor="let innovation of innovations" class="content-outer">
+          <div class="content">
+            <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
+            <div class="project-description">
+              <a [routerLink]="getRelevantLink(innovation)">
+                <span >{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+              </a>
+              <p class="date-text">
+                {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
+                •
+                {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
+                •
+                {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+                |
+                <span class="text-link" (click)="onClickDelete($event, innovation._id)">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_BUTTON' | translate }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="innovations.length > 10" class="pagination-wrapper">
+        <app-pagination
+          [configValue]="paginationConfig"
+          (configChange)="configChange($event)"
+          [total]="total"
+          [propertyName]="'client-projects'">
+        </app-pagination>
+      </div>
+
+    </div>
+    <!-- /Section projects -->
+
+
+  </div>
+
+
+  <!-- Delete project confirmation modal -->
+  <div class="modal" [ngClass]="{ 'active': deleteModal }">
+    <div class="modal-overlay" (click)="closeModal($event)"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+        <div class="modal-title">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.TITLE' | translate }}</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+

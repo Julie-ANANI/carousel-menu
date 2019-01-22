@@ -1,3 +1,4 @@
+<!-- Market report -->
 <div class="bluesquare-response-wrapper">
 
   <div class="number-answers">
@@ -5,12 +6,16 @@
     <p class="subtitle" [ngStyle]="{ 'display': subtitle !== '' ? 'block' : 'none' }">{{ subtitle }}</p>
   </div>
 
-  <ng-container *ngIf="percentage">
-    <hr>
-    <div class="number-ratio">
-      <p>{{ percentage || 0 }}% {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}</p>
-    </div>
-  </ng-container>
-
 </div>
+<!-- /Market report -->
 
+
+
+<!--
+<ng-container *ngIf="percentage">
+      <hr>
+      <div class="number-ratio">
+        <p>{{ percentage || 0 }}% {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}</p>
+      </div>
+    </ng-container>
+-->

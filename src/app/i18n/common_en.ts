@@ -8,10 +8,10 @@ export const COMMON = {
   'SEND': 'Send',
   'CHANGE': 'Change',
   'DELETE': 'Delete',
-  'SUBMIT': 'CONFIRM',
-  'LOG_IN': 'Sign in',
-  'SIGN_UP': 'Sign up',
-  'LOG_OUT': 'Log out',
+  'SUBMIT': 'Confirm',
+  'LOG_IN': 'Sign In',
+  'SIGN_UP': 'Sign Up',
+  'LOG_OUT': 'Sign out',
   'CANCEL': 'Cancel',
   'MORE': 'Show',
   'OF': 'of',
@@ -42,12 +42,16 @@ export const COMMON = {
   'REINVITE': 'Invite again',
   'I_FINISHED': 'I finished',
   'SYNTHESIS': 'Synthesis',
-  'SEARCH_INNOVATION': 'Search innovation',
+  'SEARCH_INNOVATION': 'Search an innovation here',
   'LOADING': 'Loading...',
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
   'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
+  'SEARCH_BY': 'Search by',
+  'SEARCH_PLACEHOLDER': 'Search here',
+  'SELECT': 'Select',
+  'SHARED_REPORTS': 'Shared Reports',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
@@ -61,34 +65,55 @@ export const COMMON = {
   'EXCLUDE-EMAILS': 'Exclude emails',
   'EXCLUDE-DOMAINS': 'Exclude domains',
   'EXCLUDE-COUNTRIES': 'Exclude countries',
+
   'NEVER': 'Never',
+
   'COMMENT': 'Comment',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First Name',
   'LASTNAME': 'Last Name',
-  'EMAIL': 'E-mail',
+
+  'EMAIL': 'E-mail Address',
   'PHONE': 'Phone Number',
+
   'ACTIVITY_FIELDS': 'Activity Fields',
   'ACTIVITY_FIELDS_PLACEHOLDER': 'Enter your activity field',
+
   'TECHNOLOGIES': 'Technologies',
   'TECHNOLOGIES_PLACEHOLDER': 'Enter the technology',
+
   'PASSWORD': 'Password',
+  'OLD_PASSWORD': 'Old Password',
+  'NEW_PASSWORD': 'New Password',
+  'CONFIRM_PASSWORD': 'Confirm Password',
+
   'PASSWORD_PLACEHOLDER': 'Enter your password',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '8+ characters',
+  'OLD_PASSWORD_PLACEHOLDER': 'Enter your old password',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ characters and must have 1 special character',
+  'CONFIRM_PASSWORD_PLACEHOLDER': 'Enter the confirmation password',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ characters and must have 1 special character',
+
   'PASSWORD_CONFIRM': 'Password confirmation',
+
   'COMPANY': 'Company Name',
   'COMPANY_PLACEHOLDER': 'Enter your company name',
+
   'JOBTITLE': 'Job Title',
   'JOBTITLE_PLACEHOLDER': 'Enter your job title',
+
   'TYPE': 'Type',
+
   'DOMAIN': 'Domain',
+
   'COUNTRY': 'Country',
   'COUNTRY_PLACEHOLDER': 'Enter your country',
+
   'TERMS': {
     'A': 'By clicking "Continue" I agree to',
     'B': 'terms and conditions of use.',
   },
+
   'PROFILE_URL': 'Profile URL',
   'TOP_PROFILE': 'Top profile',
 
@@ -98,6 +123,9 @@ export const COMMON = {
     'EMAIL': 'Email address is required.',
     'PHONE': 'Phone is required.',
     'PASSWORD': 'Password is required.',
+    'OLD_PASSWORD': 'Old password is required.',
+    'NEW_PASSWORD': 'New password is required.',
+    'CONFIRM_PASSWORD': 'Confirm password is required.',
     'COMPANY': 'Company is required.',
     'JOBTITLE': 'Job title is required.',
     'MESSAGE': 'All fields are mandatory.',
@@ -111,7 +139,7 @@ export const COMMON = {
   },
 
   'TABLE' : {
-    'SELECTED_ROWS': 'selected rows',
+    'SELECTED_ROWS': 'row(s) selected',
     'NO-RESULTS': 'Sorry, I can\'t display nothing'
   },
 
@@ -137,7 +165,8 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Please enter a valid email address.',
-    'PASSWORD_TOO_SHORT': 'Password is too short.'
+    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
+    'MUST_CONTAIN': 'Password must contain one special character ($@&!#).'
   },
 
   'LINKS': 'Links',
@@ -151,7 +180,11 @@ export const COMMON = {
   },
 
   'USERS': 'Users',
+
+  'AMBASSADOR': 'Ambassador',
+
   'PROFESSIONALS': 'Professionals',
+
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
     'PITCH-DELETE-ALL' : 'Are you sure you want to delete all the professionnals?',
@@ -186,5 +219,11 @@ export const COMMON = {
     'BY_DOMAIN': 'Domain',
     'BY_CREATION_DATE': 'Date',
     'BY_UPDATE_DATE': 'Default'
+  },
+
+  'HEADER': {
+    'SHARED_REPORTS': 'Shared reports'
   }
+
+
 };

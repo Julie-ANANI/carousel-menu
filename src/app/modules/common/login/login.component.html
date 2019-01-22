@@ -1,0 +1,110 @@
+<main class="main-container" id="login-component">
+  <section class="main-wrapper">
+    <div class="columns col-gapless">
+
+
+      <!-- Image -->
+      <div
+        class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image"
+        [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
+      </div>
+      <!-- /Image -->
+
+      <!-- Login -->
+      <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-details section-light-container">
+
+        <!-- Logo -->
+        <div>
+          <a href="{{ getCompanyUrl() }}"><img src="{{ getLogoWBG() }}" height="35px" alt=" "></a>
+        </div>
+
+        <!-- Form -->
+        <div class="form">
+
+          <!-- Heading -->
+          <h1 class="main-heading">{{ 'LOG_IN.HEADING' | translate }}</h1>
+
+          <!-- Details -->
+          <div class="credentials-wrapper">
+            <form (submit)="onContinue()"  [formGroup]="formData">
+
+              <div class="form-group">
+                <label class="form-label" for="login-email">{{ 'COMMON.EMAIL' | translate }}</label>
+                <input
+                  type="email"
+                  id="login-email"
+                  class="form-default"
+                  formControlName="email"
+                  placeholder="john@catco.com">
+                <span
+                  class="form-error"
+                  *ngIf="formData.get('email').touched">
+                <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                <span
+                  *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+                  {{ 'COMMON.INVALID.EMAIL' | translate }}
+                </span>
+              </span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="login-password">{{ 'COMMON.PASSWORD' | translate }}</label>
+                <input
+                  class="form-default"
+                  id="login-password"
+                  type="password"
+                  formControlName="password"
+                  [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
+                <span
+                  class="form-error"
+                  *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+                 {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                </span>
+              </div>
+
+              <!-- Login button and forget password -->
+              <div class="submit-wrapper">
+                <div class="login-button">
+                  <button
+                    class="btn btn-primary gtm-signin-email"
+                    type="submit"
+                    [disabled]="formData.invalid">
+                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                  </button>
+                </div>
+                <p>
+                  {{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}
+                  <span class="text-link" routerLink="forgetpassword">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</span>
+                </p>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- LinkedIn -->
+          <div class="linkedIn-wrapper" *ngIf="checkIsMainDomain()">
+
+            <!-- Or -->
+            <div class="or-wrapper">
+              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+            </div>
+
+            <a [href]="linkedInLink" class="btn btn-secondary gtm-signin-linkedin">
+              <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Sign up -->
+        <div class="text-center">
+          <span [ngStyle]="{ 'font-size': '0.85rem', 'padding-right': '.6rem' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
+          <button type="button" class="btn btn-sm ghost-primary" routerLink="/register">{{ 'LOG_IN.SIGN_UP' | translate }}</button>
+        </div>
+
+      </div>
+      <!-- /Login -->
+
+    </div>
+  </section>
+</main>

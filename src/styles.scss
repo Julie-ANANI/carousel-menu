@@ -1,33 +1,10 @@
 /*
-    Google fonts
- */
-
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
-
-/*
     Spectre framework
  */
 
 @import "../node_modules/spectre.css/src/spectre.scss";
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
-
-/*
-    Fontawesome icons
- */
-
-@import "../node_modules/@fortawesome/fontawesome-free/css/regular.css";
-@import "../node_modules/@fortawesome/fontawesome-free/css/solid.css";
-@import "../node_modules/@fortawesome/fontawesome-free/css/brands.css";
-@import "../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css";
-
-
-/*
-    Print style
- */
-
-@import "style/print";
-
 
 /*
     Color variable file
@@ -68,6 +45,7 @@ body {
 
 @import "style/animation";
 @import "style/app-modal-style";
+@import "style/label-style";
 @import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
@@ -76,10 +54,18 @@ body {
 @import "style/tab-style";
 @import "style/modal-style";
 @import "style/tooltip-style";
-@import "style/table-style";
+@import "style/tinymce-style";
+@import "style/simplenotification-style";
+@import "style/ng2autocomplete-style";
+@import "style/popover-style";
+@import "style/upload-photo-style";
 
 
+/*
+    Print style
+ */
 
+@import "style/print";
 
 
 

@@ -1,91 +1,79 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
+
+import { environment } from '../../../environments/environment';
+import {Tag} from '../../models/tag';
 
 @Injectable()
 export class UserService {
 
-  constructor(private _http: Http) {}
+  constructor(private _http: HttpClient) {}
 
-  public getMyInnovations(config?: any): Observable<any> {
-    return this._http.get('/user/me/innovations', {params: config})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+  public getMyInnovations(config?: {[header: string]: string | string[]}): Observable<any> {
+    return this._http.get('/user/me/innovations', {params: config});
   }
 
   public getInnovations(userId: string): Observable<any> {
-    return this._http.get(`/user/${userId}/innovations`)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.get(`/user/${userId}/innovations`);
+  }
+
+  public getSharedWithMe(config?: {[header: string]: string | string[]}): Observable<any> {
+    return this._http.get('/user/me/sharedwithme', {params: config});
   }
 
   public create(user: User): Observable<any> {
-    return this._http.post('/user', user.toJSON())
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.post('/user', user.toJSON());
   }
 
-  public changePassword(email?: string): Observable<any> {
-    return this._http.post('/user/resetPassword', {email: email})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+  public resetPassword(email?: string): Observable<any> {
+    return this._http.post('/user/resetPassword', {email: email, callback: environment.clientUrl});
+  }
+
+  public changePassword(data: {email: string, oldPassword: string, newPassword: string, confirmPassword: string}): Observable<any> {
+    return this._http.post('/user/me/changePassword', data);
   }
 
   public updatePassword(data: {email: string, password: string, passwordConfirm: string, tokenEmail: string}): Observable<any> {
-    return this._http.post('/user/updatePassword', data)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.post('/user/updatePassword', data);
   }
 
   public update(user: User): Observable<any> {
-    return this._http.put('/user/me', user.toJSON())
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.put('/user/me', user.toJSON());
   }
 
   public updateOther(user: User): Observable<any> {
-    return this._http.put(`/user/${user.id}`, user.toJSON())
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.put(`/user/${user.id}`, user);
   }
 
   public activate(state: string, tokenEmail?: string): Observable<any> {
     // On envoie emailToken pour vérifier l'adresse email.
-    return this._http.put('/user/me', {state: state, tokenEmail: tokenEmail})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.put('/user/me', {state: state, tokenEmail: tokenEmail});
   }
 
   public getSelf(): Observable<any> {
-    return this._http.get('/user/me')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.get('/user/me');
   }
 
   public get(userId: string): Observable<any> {
-    return this._http.get('/user/' + userId)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.get('/user/' + userId);
   }
 
-  public getAll(config?: any): Observable<any> {
-    return this._http.get('/user', {params: config})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+  public getAll(config?: {[header: string]: string | string[]}): Observable<any> {
+    return this._http.get('/user', {params: config});
   }
 
-  public delete(): Observable<any[]> {
-    return this._http.delete('/user/me')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+  public delete(): Observable<any> {
+    return this._http.delete('/user/me');
   }
 
   public deleteUser(userId: string): Observable<any> {
-    return this._http.delete(`/user/${userId}`)
-        .map((res: Response) => res.json())
-        .catch((error: Response) => Observable.throw(error.json()));
+    return this._http.delete(`/user/${userId}`);
+  }
+
+  public getRecommendation(userId: string): Observable<any> {
+    return this._http.get<Array<Tag>>('/user/' + userId + '/match');
   }
 
 }

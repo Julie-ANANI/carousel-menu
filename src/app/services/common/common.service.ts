@@ -63,5 +63,19 @@ export class CommonService {
     }, {});
   }
 
+
+
+  configToString(configObj) {
+    let config = {};
+    Object.keys(configObj).forEach(key=>{
+      if(configObj[key] instanceof Object) {
+        config[key] = JSON.stringify(configObj[key]);
+      } else {
+        config[key] = configObj[key];
+      }
+    });
+    return config;
+  }
+
 }
 

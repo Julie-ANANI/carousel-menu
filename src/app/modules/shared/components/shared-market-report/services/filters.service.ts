@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { SharedWorldmapService } from '../../shared-worldmap/shared-worldmap.service';
 import { Answer } from '../../../../../models/answer';
 import { Filter } from '../models/filter';
 import { Tag } from '../../../../../models/tag';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class FilterService {
@@ -10,7 +11,7 @@ export class FilterService {
   private _filters: {[questionId: string]: Filter} = {};
   private _filtersUpdate = new Subject<null>();
 
-  constructor() {
+  constructor(private _sharedWorld: SharedWorldmapService) {
     this.reset();
   }
 
@@ -83,7 +84,7 @@ export class FilterService {
         case 'COUNTRIES':
           filteredAnswers = filteredAnswers.filter((answer) => {
             const country = answer.country.flag || answer.professional.country;
-            return filter.value.some((c: string) => c === country);
+            return this._sharedWorld.isCountryInSelectedContinents(country,  filter.value);
           });
           break;
         case 'LIST':

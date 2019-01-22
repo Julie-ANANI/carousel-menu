@@ -1,0 +1,38 @@
+<section class="section-light-container" id="admin-monitoring-component">
+
+  <!-- header section -->
+  <div class="section-header">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <!-- Heading -->
+      <h1 class="main-heading">Monitoring</h1>
+
+      <!-- Tabs -->
+      <ul class="tabs">
+        <li>
+          <a routerLinkActive="active" [routerLink]="'/user/admin/monitoring/queue'" [routerLinkActiveOptions]="{ exact: true }">
+            Mailgun
+          </a>
+        </li>
+        <li>
+          <a routerLinkActive="active" [routerLink]="'/user/admin/monitoring/gmail'" [routerLinkActiveOptions]="{ exact: true }">
+            Gmail
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <!-- header section -->
+
+
+  <!-- Other sections -->
+  <div class="section-other">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <!-- /Other sections -->
+
+
+</section>

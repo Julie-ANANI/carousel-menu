@@ -1,7 +1,10 @@
 export const ERROR = {
-  'ERROR': 'Oups...',
+  'ERROR': 'Oups..',
+
   'SUCCESS': 'Succès',
+
   'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment. Veuillez réessayer !',
+
   'FORM_ERROR': 'Erreur de formulaire',
 
   'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
@@ -11,8 +14,12 @@ export const ERROR = {
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Essayez de recharger la page à nouveau !',
 
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
+
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
-  'INVALID_DOMAIN': 'On peut pas créer un compte super-admin dans cette instance.',
+
+  'INVALID_DOMAIN': 'Vous n\'êtes pas autorisé à créer un compte super-administrateur dans cette instance.',
+
+  'ALREADY_EXIST': 'Un utilisateur avec cette adresse e-mail est déjà enregistré dans le système.',
 
   'PAGE_NOT_FOUND': 'Pas de page par ici...',
 
@@ -42,7 +49,8 @@ export const ERROR = {
     'DELETED_TEXT': 'Le compte a été supprimé.',
     'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
     'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a été mis à jour.',
-    'SAME_PASSWORD': 'Les deux mots de passe doivent être identiques.'
+    'SAME_PASSWORD': 'Le nouveau mot de passe et le mot de passe de confirmation doivent être identiques.',
+    'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
   },
 
   'PROJECT': {
@@ -55,7 +63,7 @@ export const ERROR = {
     'DELETED_PROJECT_TEXT': 'Votre projet a été supprimé.',
     'NOT_DELETED_TEXT': 'Votre projet ne peut pas être supprimé pour le moment pour des raisons techniques. Veuillez réessayer plus tard !',
     'SAVED_TEXT': 'Votre projet a été enregistré.',
-    'SAVE_ERROR': 'Veuillez sauvegarder toutes vos modifications avant de continuer.',
+    'SAVE_ERROR': 'Vous devez sauvegarder toutes les modifications avant de continuer.',
     'SUBMITTED': 'Soumis',
     'SUBMITTED_TEXT': 'Votre projet a été envoyé pour validation.',
     'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'
@@ -92,6 +100,21 @@ export const ERROR = {
 
   'QUIZ': {
     'CREATED': 'Le quiz a été créé.'
+  },
+
+  'NO_RESULT': {
+    'HEADING': 'Quelque chose ne va pas ici..',
+    'MESSAGE': {
+      'A': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir),',
+      'B': 'essayez à nouveau avec des mots-clés différents.'
+    }
+  },
+
+  'FETCHING_RESULT': {
+    'MESSAGE': {
+      'A': 'Nous allons chercher les résultats, s\'il vous plaît soyez patient !',
+      'B': 's\'il vous plaît soyez patient !'
+    }
   }
 
 };
