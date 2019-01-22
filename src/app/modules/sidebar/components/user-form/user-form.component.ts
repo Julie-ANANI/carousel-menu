@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../../../models/user.model';
@@ -9,10 +9,10 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
-import { Subject } from 'rxjs';
-import {distinctUntilChanged, first} from 'rxjs/operators';
+import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'app-user-form',
@@ -22,14 +22,17 @@ import { QuizService } from '../../../../services/quiz/quiz.service';
 
 export class UserFormComponent implements OnInit {
 
-  /*
-     For type 'editUser', put the data into the attribute user and patch it to the formData
-  */
-  @Input() set user(value: User) {
-    this._selectedProject = null;
-    this._user = value;
-    this.loadEditUser();
-  };
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || 'active') {
+      this.buildForm();
+      this.userForm.reset();
+    }
+  }
+
+  @Input() set type(type: string) {
+    this._type = type;
+    this.loadTypes();
+  }
 
   /*
       For type 'professional', put the data into the attribute user and patch it to the formData
@@ -43,18 +46,18 @@ export class UserFormComponent implements OnInit {
     this._campaign = value;
   }
 
-  @Input() set type(type: string) {
-    this._type = type;
-    this.loadTypes();
-  }
-
-  @Input() sidebarState: Subject<string>;
-
-  @Output() userSignUpData = new EventEmitter<FormGroup>();
+  /*
+     For type 'editUser', put the data into the attribute user and patch it to the formData
+  */
+  @Input() set user(value: User) {
+    this._selectedProject = null;
+    this._user = value;
+    this.loadEditUser();
+  };
 
   @Output() editUserData = new EventEmitter<User>();
 
-  @Output() professionalUserData = new EventEmitter<Professional>();
+  @Output() finalProfessionalData = new EventEmitter<Professional>();
 
   isEditUser = false;
 
@@ -69,11 +72,17 @@ export class UserFormComponent implements OnInit {
   displayCountrySuggestion = false;
 
   private _selectedProject: String;
+
   private _projects: Array<Innovation> = [];
+
   private _user: User;
+
   private _pro: Professional = null;
+
   private _campaign: Campaign = null;
+
   private _editInstanceDomain = false;
+
   private _tags: Tag[] = [];
 
   private _type = '';
@@ -92,41 +101,61 @@ export class UserFormComponent implements OnInit {
     canOrder: false
   };
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(@Inject(PLATFORM_ID) private platform: Object,
+              private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private translateService: TranslateService,
               private userService: UserService,
               private _authService: AuthService) {}
 
   ngOnInit() {
+    this._user = new User();
+    this.loadTypes();
+  }
+
+
+  private buildForm() {
     this.userForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[\s\S]{9,50}$/gm)]],
       country: ['', [Validators.required]],
       roles: '',
       isOperator: [false],
       profileUrl: [null],
       domain: [''],
     });
+  }
 
-    this._user = new User();
 
-    this.loadTypes();
+  private loadTypes() {
+    this.reinitialiseForm();
 
-    if (this.sidebarState) {
-      this.sidebarState.subscribe((state: any) => {
-        if (state === 'inactive') {
-          setTimeout (() => {
-            this.userForm.reset();
-          }, 500);
-        }
-      })
+    if (this._type === 'editUser') {
+      this.isEditUser = true;
+      this.loadEditUser();
+    } else if (this._type === 'professional') {
+      this.isProfessional = true;
+      this.loadProfessional();
     }
 
+  }
+
+  private reinitialiseForm() {
+    this.isProfessional = false;
+    this.isEditUser = false;
+    this._selectedProject = null;
+  }
+
+
+  private loadProfessional() {
+    if (this._pro && this.userForm) {
+      this.userForm.get('companyName').setValue(this._pro.company);
+      this._tags = this._pro.tags;
+      this.userForm.patchValue(this._pro);
+    }
   }
 
   loadInnovations(): void {
@@ -141,27 +170,9 @@ export class UserFormComponent implements OnInit {
     this._selectedProject = event.target.value;
   }
 
-  reinitialiseForm() {
-    this.isProfessional = false;
-    this.isEditUser = false;
-    this._selectedProject = null;
-  }
 
-  loadTypes() {
-    this.reinitialiseForm();
 
-    // if (this._type === 'isSignUp') {
-    //   this.isSignUp = true;
-    // } else
-    if (this._type === 'editUser') {
-      this.isEditUser = true;
-      this.loadEditUser();
-    } else if (this._type === 'professional') {
-      this.isProfessional = true;
-      this.loadProfessional();
-    }
 
-  }
 
   loadEditUser() {
     if (this._user) {
@@ -172,30 +183,6 @@ export class UserFormComponent implements OnInit {
 
   }
 
-  loadProfessional() {
-    if (this._pro && this.userForm) {
-      this.userForm.get('companyName').setValue(this._pro.company);
-      this._tags = this._pro.tags;
-      this.userForm.patchValue(this._pro);
-    }
-  }
-
-  onSubmit() {
-    // if (this.isSignUp) {
-    //   this.userSignUpData.emit(this.userForm);
-    // } else
-    if (this.isEditUser) {
-      const user = new User(this.userForm.value);
-      user.id = this._user.id;
-      this.editUserData.emit(user);
-    } else if (this.isProfessional) {
-      const pro = this.userForm.value;
-      pro._id = this._pro._id;
-      pro.company = this.userForm.get('companyName').value;
-      pro.tags = this._tags;
-      this.professionalUserData.emit(pro);
-    }
-  }
 
   onSuggestCountries() {
     this.userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
@@ -216,38 +203,66 @@ export class UserFormComponent implements OnInit {
     });
   }
 
+
   onValueSelect(value: string) {
     this.userForm.get('country').setValue(value);
     this.displayCountrySuggestion = false;
   }
 
+
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
+
     const quizUrl = QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
-    window.open(quizUrl);
+
+    if (isPlatformBrowser(this.platform)) {
+      window.open(quizUrl);
+    }
+
   }
 
-  public getQuizUrl(pro: Professional): string {
+
+  onClickSave() {
+    if (this.isEditUser) {
+      const user = new User(this.userForm.value);
+      user.id = this._user.id;
+      this.editUserData.emit(user);
+    } else if (this.isProfessional) {
+      const pro = this.userForm.value;
+      pro._id = this._pro._id;
+      pro.company = this.userForm.get('companyName').value;
+      pro.tags = this._tags;
+      this.finalProfessionalData.emit(pro);
+    }
+  }
+
+
+  getQuizUrl(pro: Professional): string {
     return QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
   }
 
-  public startEditInstanceDomain(event: Event): void {
+
+  startEditInstanceDomain(event: Event): void {
       this._editInstanceDomain = true;
   }
 
-  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
+
+  endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
       this._editInstanceDomain = false;
       this.userForm.get('domain').setValue(event.value[0].name || 'umi');
   }
 
-  public buildInstanceDomainListConfig(): any {
+
+  buildInstanceDomainListConfig(): any {
       this._updateInstanceDomainConfig.initialData = [];
       return this._updateInstanceDomainConfig;
   }
 
-  public updateInstanceDomain(event: any): void {
+
+  updateInstanceDomain(event: any): void {
       this.endEditInstanceDomain(event);
   }
+
 
   affectAsAdmin(check: boolean) {
     if (check === true) {
@@ -260,6 +275,7 @@ export class UserFormComponent implements OnInit {
   removeTag(tag: any) {
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
   }
+
 
   get editInstanceDomain() {
     return this._editInstanceDomain;
