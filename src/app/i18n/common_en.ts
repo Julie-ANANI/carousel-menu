@@ -189,6 +189,10 @@ export const COMMON = {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
     'PITCH-DELETE-ALL' : 'Are you sure you want to delete all the professionnals?',
     'DELETE': 'Delete professionnal(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Delete Board',
+      'CONTENT': 'Do you really want to delete the selected professional(s)?'
+    }
   },
 
   'HOME': 'Home',

@@ -186,6 +186,10 @@ export const COMMON = {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
     'DELETE': 'Supprimer le(s) professionnel(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
+    }
   },
 
   'HOME': 'Accueil',

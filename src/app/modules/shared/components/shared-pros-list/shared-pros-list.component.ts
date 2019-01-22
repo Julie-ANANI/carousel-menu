@@ -150,6 +150,29 @@ export class SharedProsListComponent {
   }
 
 
+  updateSelection(event: any) {
+    this.smartSelect = event;
+    const config = this._config;
+    config.offset = this.smartSelect.offset;
+    config.limit = this.smartSelect.limit;
+    this.selectedProsChange.emit({
+      total: this.nbSelected,
+      pros: 'all',
+      query: config
+    });
+  }
+
+
+  get nbSelected(): number {
+    if (this.smartSelect) {
+      return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
+        this.total - this.smartSelect.offset :
+        this.smartSelect.limit;
+    }
+    return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
+  }
+
+
   performActions(action: any) {
     switch (this._actions.findIndex(value => action._action === value)) {
       case 0: {
@@ -160,7 +183,7 @@ export class SharedProsListComponent {
   }
 
 
-  editPro(pro: Professional) {
+  onClickEdit(pro: Professional) {
     this._professionalService.get(pro._id).subscribe((professional: Professional) => {
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
@@ -187,17 +210,38 @@ export class SharedProsListComponent {
   }
 
 
-  deletePro(pro: Professional, event: Event): void {
+  deleteProsModal(pros: Professional[]) {
+    this._showDeleteModal = true;
+    this._prosToRemove = pros;
+  }
+
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._showDeleteModal = false;
+  }
+
+
+  onClickSubmit(event: Event) {
     event.preventDefault();
 
-    this.editUser[pro._id] = false;
+    for (const pro of this._prosToRemove) {
+      this.removePro(pro._id);
+    }
 
-    this._professionalService.remove(pro._id).pipe(first()).subscribe((res: any) => {
+    this._prosToRemove = [];
+    this._showDeleteModal = false;
+
+  }
+
+
+  private removePro(userId: string) {
+    this._professionalService.remove(userId).pipe(first()).subscribe((foo: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
-    }, (err: any) => {
+      this.loadPros(this._config);
+    }, () => {
       this._notificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
     });
-
   }
 
 
@@ -234,82 +278,10 @@ export class SharedProsListComponent {
   }
 
 
-
-
-
-
-
-
-  updateSelection(event: any) {
-    this.smartSelect = event;
-    const config = this._config;
-    config.offset = this.smartSelect.offset;
-    config.limit = this.smartSelect.limit;
-    this.selectedProsChange.emit({
-      total: this.nbSelected,
-      pros: 'all',
-      query: config
-    });
-  }
-
-
-  get nbSelected(): number {
-    if (this.smartSelect) {
-      return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
-        this.total - this.smartSelect.offset :
-        this.smartSelect.limit;
-    }
-    return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
-  }
-
-
-
-
-
   closeSidebar(value: SidebarInterface) {
     this._sidebarValue.animate_state = value.animate_state;
   }
 
-
-  deleteProModal(pro: Professional) {
-    this._prosToRemove = [];
-    this._sidebarValue = {
-      animate_state: 'inactive',
-      title: this._sidebarValue.title
-    };
-    this._showDeleteModal = true;
-    this._prosToRemove.push(pro);
-  }
-
-
-  deleteProsModal(pros: Professional[]) {
-    this._showDeleteModal = true;
-    this._prosToRemove = pros;
-  }
-
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._showDeleteModal = false;
-  }
-
-
-  removePros() {
-    for (const pro of this._prosToRemove) {
-      this.removePro(pro._id);
-    }
-    this._prosToRemove = [];
-    this._showDeleteModal = false;
-  }
-
-
-  removePro(userId: string) {
-    this._professionalService.remove(userId)
-      .pipe(first())
-      .subscribe((foo: any) => {
-        this.loadPros(this._config);
-      });
-  }
 
   get total() {
     return this._total;
@@ -348,3 +320,27 @@ export class SharedProsListComponent {
   }
 
 }
+
+
+// deletePro(pro: Professional, event: Event): void {
+//   event.preventDefault();
+//
+//   this.editUser[pro._id] = false;
+//
+//   this._professionalService.remove(pro._id).pipe(first()).subscribe((res: any) => {
+//     this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+//   }, (err: any) => {
+//     this._notificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+//   });
+//
+// }
+
+// deleteProModal(pro: Professional) {
+//   this._prosToRemove = [];
+//   this._sidebarValue = {
+//     animate_state: 'inactive',
+//     title: this._sidebarValue.title
+//   };
+//   this._showDeleteModal = true;
+//   this._prosToRemove.push(pro);
+// }

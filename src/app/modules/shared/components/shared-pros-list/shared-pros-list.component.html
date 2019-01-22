@@ -2,7 +2,7 @@
   [config]="config"
   [data]="tableInfos"
   (configChange)="loadPros($event)"
-  (editRow)="editPro($event)"
+  (editRow)="onClickEdit($event)"
   (removeRows)="deleteProsModal($event)"
   (performAction)="performActions($event)">
 </app-shared-table>
@@ -27,26 +27,21 @@
 
 </app-sidebar>
 
-<!-- Modal to ask admin to sure about deleting the user -->
+
+<!-- Modal to ask admin to sure about deleting the professional(s) -->
 <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'COMMON.PROFESSIONAL.DELETE' | translate }}</div>
+      <div class="modal-title">{{ 'COMMON.PROFESSIONAL.DELETE_BOARD.HEADING' | translate }}</div>
     </div>
     <div class="modal-body">
-      <div class="content">
-        {{ 'COMMON.PROFESSIONAL.PITCH-DELETE' | translate }}
-        <ul>
-          <li *ngFor="let pro of prosToRemove">{{pro.firstName}} {{pro.lastName}}</li>
-        </ul>
-      </div>
+      <div class="content">{{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-sm ghost-delete" (click)="removePros()">
-        {{ 'COMMON.DELETE' | translate }}
-      </button>
+      <button class="btn ghost-edit btn-sm" (click)="closeModal($event)">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
     </div>
   </div>
 </div>
