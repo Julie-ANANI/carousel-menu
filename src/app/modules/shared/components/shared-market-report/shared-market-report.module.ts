@@ -45,7 +45,6 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     ChartsModule,
     PipeModule,
     SharedTextZoneModule,

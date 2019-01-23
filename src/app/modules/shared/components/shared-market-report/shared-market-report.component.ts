@@ -83,6 +83,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _showSynthesisModal = false;
 
+  private _synthesisName = '';
+
   private _sharedSynthesisList: Array<SharedSynthesis> = [];
 
   private _innovationExport = false;
@@ -807,23 +809,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this._showSynthesisModal = true;
   }
 
-  public closeSynthesisModal(): void {
-    event.preventDefault();
-    this._showSynthesisModal = false;
-  }
-
-  public shareNewSynthesisVersion(event: Event, name: string): void {
+  public shareNewSynthesisVersion(event: Event): void {
     event.preventDefault();
     const data = {
-      name: name,
+      name: this.synthesisName,
       answers: this._filteredAnswers.map((answer) => answer._id)
     };
     this.innovationService.shareSynthesis(this._innovation._id, data).subscribe((res) => {
       this._sharedSynthesisList.push(res);
+      this.synthesisName = '';
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
-    this.closeSynthesisModal();
+    this._showSynthesisModal = false;
   }
 
   /***
@@ -961,6 +959,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get showSynthesisModal(): boolean {
     return this._showSynthesisModal;
+  }
+
+  set showSynthesisModal(value: boolean) {
+    this._showSynthesisModal = value;
+  }
+
+  get synthesisName(): string {
+    return this._synthesisName;
+  }
+
+  set synthesisName(value: string) {
+    this._synthesisName = value;
   }
 
   get sharedSynthesisList(): Array<SharedSynthesis> {

@@ -886,13 +886,13 @@
 </app-sidebar>
 
 <!-- Share static synthesis -->
-<app-modal *ngIf="showSynthesisModal" (close)="closeSynthesisModal();">
+<app-modal [(showModal)]="showSynthesisModal">
   <h1 [textContent]="'MARKET_REPORT.SHARE_MODAL.TITLE'" translate></h1>
-  <form #shareSynthesisForm="ngForm" (ngSubmit)="shareNewSynthesisVersion($event, synthName); shareSynthesisForm.reset()">
+  <form #shareSynthesisForm="ngForm" (ngSubmit)="shareNewSynthesisVersion($event)">
     <div class="form-group">
       <label for="name" [textContent]="'MARKET_REPORT.SHARE_MODAL.NAME'" translate></label>
       <input type="text" class="form-control" id="name" name="name"
-             required [(ngModel)]="synthName" #name="ngModel">
+             required [(ngModel)]="synthesisName" #name="ngModel">
     </div>
     <button class="btn btn-success" type="submit"
             [disabled]="!shareSynthesisForm.form.valid"
