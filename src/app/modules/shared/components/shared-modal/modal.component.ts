@@ -1,4 +1,5 @@
-import { Component, ElementRef, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, OnDestroy, Output, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
@@ -15,22 +16,21 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.show = value;
   }
 
-  constructor(private el: ElementRef) {
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object, private el: ElementRef) {
     this.element = this.el.nativeElement;
   }
 
   ngOnInit(): void {
-
-    // move element to bottom of page (just before </body>) so it can be displayed above everything else
-    document.body.appendChild(this.element);
-
-    // close modal on background click
-    this.element.addEventListener('click', (e: any) => {
-      if (e.target.className === 'app-modal') {
-        this.showModalChange.emit(false);
-      }
-    });
-
+    if (isPlatformBrowser(this.platformId)) {
+      // move element to bottom of page (just before </body>) so it can be displayed above everything else
+      document.body.appendChild(this.element);
+      // close modal on background click
+      this.element.addEventListener('click', (e: any) => {
+        if (e.target.className === 'app-modal') {
+          this.showModalChange.emit(false);
+        }
+      });
+    }
   }
 
   get showModal() {
