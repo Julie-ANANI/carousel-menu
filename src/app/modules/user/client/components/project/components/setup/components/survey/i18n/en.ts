@@ -1,4 +1,4 @@
 export const SURVEY = {
-  'NOQUIZ': 'Our operation team will start the campaign once your project is validated.',
-  'DONTSHAREQUIZ': 'Visit this link to see your project campaign, please do not share this link, responses won\'t be kept.'
+  'NOQUIZ': 'Our team will launch the study once your project has been validated.',
+  'DONTSHAREQUIZ': 'Visit this link to see the questionnaire that will be sent to market professionals. Do not share this link which is available as an example only.'
 };

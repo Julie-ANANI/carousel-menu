@@ -9,6 +9,7 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { InnovCard } from '../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -181,14 +182,17 @@ export class AdminDashboardComponent implements OnInit {
   showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;
-    this.innovationService.getInnovationCard(batch.innovation.innovationCards[0]).subscribe((card: any) => {
-      this._selectedInnovation = card;
-      this.sidebarTemplateValue = {
-        animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-        title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
-        size: '726px'
-      };
-    });
+    if (this._selectedBatch !== null) {
+      this.innovationService.getInnovationCard(this._selectedBatch.innovation.innovationCards[0]).pipe(first()).subscribe((card: any) => {
+        this._selectedInnovation = card;
+        this.sidebarTemplateValue = {
+          animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+          title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
+          size: '726px'
+        };
+      });
+    }
+
   }
 
   closeSidebar(value: SidebarInterface) {

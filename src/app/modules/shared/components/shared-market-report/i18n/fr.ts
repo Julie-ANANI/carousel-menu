@@ -1,11 +1,11 @@
 export const MARKET_REPORT = {
-  'TITLE': 'Le potentiel commercial de votre projet',
+  'TITLE': 'Potentiel marché de votre projet',
 
   'MESSAGE': {
     'SUBMITTED': 'Votre innovation est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
-    'REVIEWING': 'Veuillez modifier les modifications de votre innovation et renvoyez-le.',
-    'EVALUATING': 'Nous collectons le potentiel de marché de votre innovation. Nous reviendrons bientôt!'
+    'REVIEWING': 'Nous vous avons suggéré des modifications du projet par email. Une fois fait, soumettez-le de nouveau.',
+    'EVALUATING': 'Nous collectons les feedbacks des professionnels du marché. Revenez bientôt !'
   },
 
   'MESSAGE_ADMIN': {

@@ -85,10 +85,6 @@ export class SharedTagItemComponent implements OnInit {
     }
   }
 
-  public closeModal(): void {
-    this._showModal = false;
-  }
-
   public createNewTag(): void {
     const name = this._tagForm.get('tag').value;
     this._tagForm.get('tag').reset();
@@ -120,6 +116,10 @@ export class SharedTagItemComponent implements OnInit {
 
   get showModal(): boolean {
     return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
   }
 
 }

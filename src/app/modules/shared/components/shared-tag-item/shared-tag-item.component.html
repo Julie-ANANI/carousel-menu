@@ -27,9 +27,9 @@
 
 </div>
 
-<app-modal *ngIf="showModal" (close)="closeModal();">
+<app-modal [(showModal)]="showModal">
   <h1>Create a new Tag</h1>
   <p>Do you want to create a new tag: "{{tagForm.get('tag').value}}" ?</p>
   <button type="button" (click)="createNewTag();">Create new tag</button>
-  <button type="button" (click)="closeModal();">Close</button>
+  <button type="button" (click)="showModal = false">Close</button>
 </app-modal>

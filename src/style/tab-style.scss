@@ -22,8 +22,9 @@
     a {
       color: white;
       font-size: 1rem;
-      text-align: center;
-      display: block;
+      justify-content: center;
+      align-items: center;
+      display: flex;
       text-decoration: none;
       padding: 1rem .75rem;
       background: #747D88;

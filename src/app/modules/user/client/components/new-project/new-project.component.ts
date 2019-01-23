@@ -32,7 +32,7 @@ export class NewProjectComponent implements OnInit {
     this._formData = this.formBuilder.group({
       choosenLang: [null, Validators.required],
       name: [null, Validators.required],
-      type: [null, Validators.required],
+      type: ['apps'],
     });
   }
 

@@ -7,7 +7,7 @@ export const LOG_IN = {
 
   // 'HEADING': 'Sign In',
 
-  'HEADING': 'Welcome back.',
+  'HEADING': 'Welcome back!',
 
   'LOG_IN_LINKEDIN': 'Connect with LinkedIn',
 

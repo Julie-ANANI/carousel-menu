@@ -70,19 +70,19 @@
     <ul class="tabs">
       <li>
         <a [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
-          <i class="fas fa-check targeting-check"></i>
+          <div class="btn-round targeting-check" [ngClass]=" { 'complete': innovation?.settings.completion === 100 } ">{{ innovation?.settings.completion }}%</div>
           {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
         </a>
       </li>
       <li>
         <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
-          <i class="fas fa-check pitch-check"></i>
+          <div class="btn-round pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
           {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
         </a>
       </li>
       <li>
         <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
-          <i class="fas fa-check survey-check"></i>
+          <div class="btn-round survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
           {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
         </a>
       </li>
@@ -153,7 +153,7 @@
     <div class="summary-text" [innerHTML]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
 
     <div class="image-wrapper">
-      <img [src]="getImageSrc(innovation.innovationCards[selectedInnovationIndex])" [alt]=" " height="146" width="220">
+      <img [src]="getImageSrc(innovation.innovationCards[selectedInnovationIndex])" alt=" " height="146" width="220">
     </div>
 
     <div class="advantage-wrapper">

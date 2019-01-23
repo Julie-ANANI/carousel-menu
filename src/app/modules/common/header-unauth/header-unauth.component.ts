@@ -4,10 +4,10 @@ import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { User } from '../../../models/user.model';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserService } from '../../../services/user/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MouseService } from '../../../services/mouse/mouse.service';
 import { Subject } from 'rxjs';
 
@@ -31,6 +31,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private userService: UserService,
               private router: Router,
+              private activatedRoute: ActivatedRoute,
               private mouseService: MouseService,
               private formBuilder: FormBuilder) { }
 
@@ -78,7 +79,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this.authService.login(user).pipe(first()).subscribe(() => {
+      this.authService.login(user).subscribe(() => {
         this.checkUrlToRedirect();
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
@@ -97,15 +98,19 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
    * this function is to check url to redirect the user.
    */
   private checkUrlToRedirect() {
+    const url = this.router.url;
 
-    if (this.router.url.includes('/discover')) {
-      window.location.reload();
+    if (url.includes('/discover')) {
+      this.router.navigate(['/user', 'discover'], {
+        queryParams: this.activatedRoute.snapshot.queryParams
+      });
     }
 
-    if (this.router.url.includes('/share/synthesis')) {
-      this.router.navigate([this.router.url.replace('/share/', '/user/')]);
+    if (url.includes('/share/synthesis')) {
+      this.router.navigate([url.replace('/share/', '/user/')], {
+        queryParams: this.activatedRoute.snapshot.queryParams
+      });
     }
-
   }
 
 
@@ -147,8 +152,8 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       } else {
-        this.userService.create(user).pipe(first()).subscribe(() => {
-          this.authService.login(user).pipe(first()).subscribe(() => {
+        this.userService.create(user).subscribe(() => {
+          this.authService.login(user).subscribe(() => {
             this.router.navigate(['/welcome']);
           }, () => {
             this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
@@ -177,10 +182,6 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
   get formData(): FormGroup {
     return this._formData;
-  }
-
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
   }
 
   ngOnDestroy(): void {

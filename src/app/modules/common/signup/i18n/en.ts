@@ -1,7 +1,7 @@
 export const SIGN_UP = {
   'HEADING': 'Sign Up',
 
-  'HEADING_UMI':'The market testing tool for B2B innovation projects.',
+  'HEADING_UMI':'Ready to launch a market test?',
 
   'HAVE_ACCOUNT': 'Already have an account?',
 

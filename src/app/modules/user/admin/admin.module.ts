@@ -2,6 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminRoutingModule } from './admin-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
+import { AdminComponent } from './admin.component';
+import { AdminIndexComponent } from './components/admin-index/admin-index.component';
+import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
+import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
+import { DashboardService } from '../../../services/dashboard/dashboard.service';
+
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
@@ -14,20 +24,12 @@ import { AdminLibrariesModule } from './components/admin-libraries/admin-librari
 import { AdminCountryManagementModule } from './components/admin-settings/admin-country-management/admin-country-management.module';
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SidebarModule } from '../../sidebar/sidebar.module';
-import { AdminComponent } from './admin.component';
-import { AdminIndexComponent } from './components/admin-index/admin-index.component';
-import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
-import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { LogoutModule } from '../../common/logout/logout.module';
 import { InputListModule } from '../../utility-components/input-list/input-list.module';
 import { SidebarInnovationPreviewModule } from '../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
 
-import { DashboardService } from '../../../services/dashboard/dashboard.service';
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
 import { ProfessionalsService } from '../../../services/professionals/professionals.service';
@@ -52,7 +54,6 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
   imports: [
     CommonModule,
     AdminRoutingModule,
-  //  AdminPresetModule,
     AdminSearchModule,
     AdminMonitoringModule,
     AdminUsersModule,

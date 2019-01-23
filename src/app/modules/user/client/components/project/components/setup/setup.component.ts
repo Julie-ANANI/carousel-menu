@@ -1,16 +1,16 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { ScrollService } from '../../../../../../../services/scroll/scroll.service';
-import {first, takeUntil} from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { InnovationSettings } from '../../../../../../../models/innov-settings';
 import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import {SidebarInterface} from '../../../../../../sidebar/interfaces/sidebar-interface';
-import {Media} from '../../../../../../../models/media';
-import {InnovCard} from '../../../../../../../models/innov-card';
+import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
+import { Media } from '../../../../../../../models/media';
+import { InnovCard } from '../../../../../../../models/innov-card';
 
 @Component({
   selector: 'app-setup',
@@ -260,6 +260,15 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     return src;
 
+  }
+
+
+  getPitchCompletion(innovation: Innovation): number {
+    let total = 0;
+    innovation.innovationCards.forEach((innovationCard: InnovCard) => {
+      total += innovationCard.completion;
+    });
+    return (total/innovation.innovationCards.length);
   }
 
 

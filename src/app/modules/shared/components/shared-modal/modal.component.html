@@ -1,7 +1,8 @@
-<div class="app-modal">
-  <div class="app-modal-body">
-    <ng-content></ng-content>
+<div *ngIf="showModal">
+  <div class="app-modal">
+    <div class="app-modal-body">
+      <ng-content></ng-content>
+    </div>
   </div>
+  <div class="app-modal-background"></div>
 </div>
-<div class="app-modal-background"></div>
-

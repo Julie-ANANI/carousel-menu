@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Location} from '@angular/common';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 
 /**
@@ -10,17 +9,18 @@ import { AuthService } from '../../../../services/auth/auth.service';
 @Injectable()
 export class DiscoverGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private location: Location) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(_: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
-    const url: string = routerStateSnapshot.url;
-    return this._checkLogin(url);
+  canActivate(activatedRoute: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
+    return this._checkLogin(activatedRoute.queryParams);
   }
 
-  private _checkLogin(url: string): boolean {
+  private _checkLogin(queryParams: {[key: string]: string}): boolean {
 
     if (this.authService.isAuthenticated ) {
-      this.location.replaceState('/user/discover');
+      this.router.navigate(['/user', 'discover'], {
+        queryParams: queryParams
+      });
     }
 
     return true;

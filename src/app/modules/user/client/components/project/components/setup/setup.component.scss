@@ -96,6 +96,14 @@
         color: $background-color;
         border-bottom: 4px solid transparent;
         font-weight: 500;
+
+        .btn-round {
+          display: inline-flex;
+          width: 35px;
+          height: 35px;
+          margin-right: .9375rem;
+        }
+
       }
 
       a:hover {
@@ -104,9 +112,21 @@
       }
 
       .pitch-check, .targeting-check, .survey-check {
-        color: $validation-color;
+        background: $border-color;
+        color: $text-dark;
+        font-weight: 600;
+        font-size: 10px;
+      }
+
+      .fa-check {
+        margin-right: 0;
+        font-size: 14px;
+      }
+
+      .complete {
+        background-color: $validation-color;
         transition: all 0.15s ease-in-out;
-        display: none;
+        color: white;
       }
 
       .active {

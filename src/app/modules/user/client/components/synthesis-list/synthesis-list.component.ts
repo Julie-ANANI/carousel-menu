@@ -19,7 +19,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
         query(':enter', style({ opacity: 0 }), { optional: true }),
 
         query(':enter', stagger('300ms', [
-          animate('800ms ease-in-out', keyframes([
+          animate('300ms ease-in-out', keyframes([
               style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
               style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
             ])
