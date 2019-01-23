@@ -7,7 +7,7 @@ import { User } from '../../../models/user.model';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserService } from '../../../services/user/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MouseService } from '../../../services/mouse/mouse.service';
 import { Subject } from 'rxjs';
 
@@ -31,6 +31,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private userService: UserService,
               private router: Router,
+              private activatedRoute: ActivatedRoute,
               private mouseService: MouseService,
               private formBuilder: FormBuilder) { }
 
@@ -99,8 +100,16 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
   private checkUrlToRedirect() {
     const url = this.router.url;
 
+    if (url.includes('/discover')) {
+      this.router.navigate(['/user', 'discover'], {
+        queryParams: this.activatedRoute.snapshot.queryParams
+      });
+    }
+
     if (url.includes('/share/synthesis')) {
-      this.router.navigate([url.replace('/share/', '/user/')]);
+      this.router.navigate([url.replace('/share/', '/user/')], {
+        queryParams: this.activatedRoute.snapshot.queryParams
+      });
     }
   }
 
