@@ -9,17 +9,15 @@
 
     <!-- add tags -->
     <ng-container *ngSwitchCase="'addTags'">
-      <label class="form-label">{{ 'COMMON.TAG_LABEL.ADD_TAGS' | translate }}</label>
-      <div [ngStyle]="{ 'margin-top': '.5rem' }">
-        <app-shared-tag-item
-          [tags]="tags"
-          [type]="tagType"
-          [editMode]="true"
-          [projectId]="innovationId"
-          (addTag)="addTag($event)"
-          (removeTag)="removeTag($event)">
-        </app-shared-tag-item>
-      </div>
+      <label class="form-label">Tag</label>
+      <app-shared-tag-item
+        [tags]="tags"
+        [type]="tagType"
+        [editMode]="true"
+        [projectId]="innovationId"
+        (addTag)="addTag($event)"
+        (removeTag)="removeTag($event)">
+      </app-shared-tag-item>
     </ng-container>
 
     <!-- edit Tag -->

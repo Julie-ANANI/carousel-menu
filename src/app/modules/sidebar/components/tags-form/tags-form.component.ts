@@ -65,7 +65,7 @@ export class TagsFormComponent {
               private autocompleteService: AutocompleteService,
               private translateNotificationsService: TranslateNotificationsService,
               private translateService: TranslateService,
-              private domSanitizer: DomSanitizer) {}
+              private domSanitizer: DomSanitizer) { }
 
 
   onClickSave() {
@@ -73,10 +73,12 @@ export class TagsFormComponent {
 
       case 'addTags':
         this.newTags.emit(this._tags);
+        this._activeSaveButton = false;
         break;
 
       case 'editTag':
         this.updateTag.emit(this._tag);
+        this._activeSaveButton = false;
         break;
 
       default:
@@ -108,15 +110,18 @@ export class TagsFormComponent {
 
   addTag(tag: any) {
     this._activeSaveButton = true;
+
     const id = tag.tag ? tag.tag : tag._id;
     this.tagsService.get(id).pipe(first()).subscribe((res: any) => {
       this._tags.push(res.tags[0]);
     });
+
   }
 
 
   connectToTag(event: Event, tag: Tag): void {
     event.preventDefault();
+
     this.tagsService.updateTagInPool(this._innovationId, tag).pipe(first()).subscribe((data: any) => {
       this._needToSetOriginalTag = false;
       this._activeSaveButton = true;
@@ -126,6 +131,7 @@ export class TagsFormComponent {
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ASSOCIATED');
     });
+
   }
 
 

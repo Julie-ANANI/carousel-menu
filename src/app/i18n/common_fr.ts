@@ -227,7 +227,7 @@ export const COMMON = {
   },
 
   'TAG_LABEL': {
-    'ADD_TAGS': 'Ajouter des Tags',
+    'ADD_TAGS': 'Ajouter des tags',
     'LABEL_EN_PLACEHOLDER': 'Entrez le label en anglais',
     'LABEL_FR_PLACEHOLDER': 'Entrer le label en français',
     'DESC_EN_PLACEHOLDER': 'Entrez la description en anglais',

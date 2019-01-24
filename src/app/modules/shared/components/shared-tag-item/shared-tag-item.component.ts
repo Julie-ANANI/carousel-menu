@@ -17,20 +17,29 @@ import { Observable } from 'rxjs';
 export class SharedTagItemComponent implements OnInit {
 
   @Input() tags: Array<any>;
+
   @Input() type: string;
+
   @Input() set projectId(project: string) {
     this._projectId = project;
   };
+
   @Input() editMode: boolean;
+
   @Input() isAdmin: boolean;
+
   @Input() backgroundColor: string;
+
   @Input() textColor: string;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
+
   @Output() createTag: EventEmitter<Tag> = new EventEmitter();
+
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
 
   private _tagForm: FormGroup;
+
   private _showModal = false;
 
   private _projectId = '';
