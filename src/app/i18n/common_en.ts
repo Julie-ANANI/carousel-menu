@@ -181,6 +181,14 @@ export const COMMON = {
 
   'USERS': 'Users',
 
+  'USER': {
+    'DELETE': 'Delete user(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Delete Board',
+      'CONTENT': 'Do you really want to delete the selected user(s)?'
+    }
+  },
+
   'AMBASSADOR': 'Ambassador',
 
   'PROFESSIONALS': 'Professionals',

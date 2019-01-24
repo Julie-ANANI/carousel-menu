@@ -178,6 +178,14 @@ export const COMMON = {
 
   'USERS': 'Utilisateurs',
 
+  'USER': {
+    'DELETE': 'Supprimer le(s) utilisateur(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
+    }
+  },
+
   'AMBASSADOR': 'Ambassadeur',
 
   'PROFESSIONALS': 'Professionnels',

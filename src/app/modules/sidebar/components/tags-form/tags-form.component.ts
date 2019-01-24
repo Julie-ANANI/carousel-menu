@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import {TagsService} from '../../../../services/tags/tags.service';
+import { TagsService } from '../../../../services/tags/tags.service';
 import { Multiling } from '../../../../models/multiling';
 import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';

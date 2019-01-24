@@ -108,7 +108,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
 
-  userEditionFinish(user: User) {
+  updateUser(user: User) {
     this.userService.updateOther(user).pipe(first()).subscribe((data: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
       this.loadUsers();
@@ -132,7 +132,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
 
-  removeUsers() {
+  onClickSubmit() {
     for (const user of this._usersToRemove) {
       this.removeUser(user.id);
     }
@@ -141,11 +141,13 @@ export class AdminUsersComponent implements OnInit {
   }
 
 
-  removeUser(userId: string) {
-    this.userService.deleteUser(userId)
-      .subscribe((foo: any) => {
-        this.loadUsers();
-      });
+  private removeUser(userId: string) {
+    this.userService.deleteUser(userId).pipe(first()).subscribe((foo: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+      this.loadUsers();
+    }, () => {
+      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+    });
   }
 
 
