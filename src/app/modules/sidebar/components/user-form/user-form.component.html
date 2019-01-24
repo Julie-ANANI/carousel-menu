@@ -6,6 +6,57 @@
       <button type="submit" class="btn btn-primary">{{ 'COMMON.SAVE' | translate }}</button>
     </div>
 
+    <!-- operator -->
+    <div *ngIf="isEditUser" class="operator-wrapper">
+      <label class="form-switch" for="user-form-operator" *ngIf="authService.userId !== user.id">
+        <input
+          type="checkbox"
+          name="operator"
+          id="user-form-operator"
+          formControlName="isOperator">
+        <i class="form-icon"></i>{{ 'PROJECT_LIST.OPERATOR' | translate }}
+      </label>
+
+      <label class="form-switch" for="user-form-role" *ngIf="authService.adminLevel > 2 && authService.userId !== user.id">
+        <input
+          type="checkbox"
+          name="role"
+          id="user-form-role"
+          [checked]="userForm.value.roles === 'admin'"
+          (change)="changeRole($event)">
+        <i class="form-icon"></i>{{ 'USERS.ADMIN' | translate }}
+      </label>
+    </div>
+
+    <!-- domain management -->
+    <div *ngIf="isEditUser" class="domain-wrapper">
+      <label *ngIf="!editInstanceDomain" class="form-label">
+        Actual domain:
+        <span>{{ userForm.get('domain').value }}</span>
+        <a (click)="startEditInstanceDomain($event)"><span *ngIf="!isSelf"><i class="fas fa-pencil-alt"></i></span></a>
+      </label>
+
+      <div *ngIf="editInstanceDomain">
+        <label class="form-label">New domain:</label>
+        <app-autocomplete-input
+          id="domain"
+          (update)="updateInstanceDomain($event)"
+          [onlyOne]="true"
+          [config]="buildInstanceDomainListConfig()">
+        </app-autocomplete-input>
+      </div>
+    </div>
+
+    <!-- projects -->
+    <div *ngIf="isEditUser" class="projects-wrapper">
+      <label class="form-label" for="user-form-projects">Collaborates to {{ projects.length }} projects.</label>
+      <select *ngIf="projects.length > 0" class="form-select" id="user-form-projects" (change)="selectProject($event)">
+        <option selected>View the projects</option>
+        <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
+      </select>
+      <a *ngIf="selectedProject" class="text-link" [href]="'/admin/projects/project/' + selectedProject" target="_blank">Visit the project</a>
+    </div>
+
     <!-- show tags -->
     <div *ngIf="isProfessional && tags.length > 0" class="form-group">
       <label class="form-label">Tags</label>
@@ -124,67 +175,6 @@
     <div *ngIf="isProfessional && campaign" class="pro-quiz-wrapper">
       <a (click)="openQuizUri(pro, $event)" class="text-link">{{ 'COMMON.ADD-ANSWER' | translate }}</a>
       <p><a [href]="getQuizUrl(pro)" target="_blank">Link to the professional's quiz <i class="fas fa-link"></i></a></p>
-    </div>
-
-    <!-- Operator -->
-    <div class="form-group-inline-space operator-wrapper">
-      <div class="input-group">
-        <label class="form-switch" for="operator" *ngIf="authService.userId != user.id && isEditUser">
-          <input
-            type="checkbox"
-            name="operator"
-            id="operator"
-            formControlName="isOperator">
-          <i class="form-icon"></i>
-          {{ 'PROJECT_LIST.OPERATOR' | translate }}
-        </label>
-
-        <label
-          class="form-switch"
-          for="role"
-          *ngIf="authService.adminLevel > 2 && authService.userId != user.id && isEditUser"
-          [ngStyle]="{ 'margin-top': '10px' }">
-          <input
-            type="checkbox"
-            name="role"
-            id="role"
-            [checked]="userForm.value.roles === 'admin'"
-            (change)="affectAsAdmin($event.srcElement.checked)" >
-          <i class="form-icon"></i>
-          {{ 'USERS.ADMIN' | translate }}
-        </label>
-      </div>
-    </div>
-
-    <!-- Domain management -->
-    <div *ngIf="isEditUser" class="domain-wrapper">
-      <div *ngIf="!editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
-        <label class="form-label">Actual domain:
-          <span>{{ userForm.get('domain').value }}</span>
-          <a (click)="startEditInstanceDomain($event)">
-            <span *ngIf="!isSelf"><i class="fas fa-pencil-alt"></i></span>
-          </a>
-        </label>
-      </div>
-      <div *ngIf="editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
-        <label class="form-label">New domain:</label>
-        <app-autocomplete-input
-          id="domain"
-          (update)="updateInstanceDomain($event)"
-          [onlyOne]="true"
-          [config]="buildInstanceDomainListConfig()">
-        </app-autocomplete-input>
-      </div>
-    </div>
-
-    <!-- Projects -->
-    <div *ngIf="isEditUser" class="form-group">
-      <label class="form-label">Collaborates to {{ projects.length }} projects</label>
-      <select (change)="selectProject($event)">
-        <option selected>View the projects</option>
-        <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
-      </select>
-        <a  class="btn btn-primary" *ngIf="selectedProject" [href]="'/admin/projects/project/' + selectedProject" target="_blank">Go</a>
     </div>
 
   </form>

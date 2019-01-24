@@ -12,7 +12,7 @@ import { environment } from '../../../../../environments/environment';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
-import {isPlatformBrowser} from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-user-form',
@@ -26,6 +26,7 @@ export class UserFormComponent implements OnInit {
     if (value === undefined || 'active') {
       this.buildForm();
       this.userForm.reset();
+      this._editInstanceDomain = false;
     }
   }
 
@@ -55,7 +56,7 @@ export class UserFormComponent implements OnInit {
     this.loadEditUser();
   };
 
-  @Output() editUserData = new EventEmitter<User>();
+  @Output() finalUserData = new EventEmitter<User>();
 
   @Output() finalProfessionalData = new EventEmitter<Professional>();
 
@@ -110,7 +111,6 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this._user = new User();
-    this.loadTypes();
   }
 
 
@@ -122,7 +122,7 @@ export class UserFormComponent implements OnInit {
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       country: ['', [Validators.required]],
-      roles: '',
+      roles: [''],
       isOperator: [false],
       profileUrl: [null],
       domain: [''],
@@ -158,10 +158,18 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-  loadInnovations(): void {
-    this.userService.getInnovations(this._user.id)
-      .pipe(first())
-      .subscribe((innovations: any) => {
+
+  private loadEditUser() {
+    if (this._user) {
+      this.isSelf = this._authService.userId === this._user.id;
+      this.userForm.patchValue(this._user);
+      this.loadInnovations();
+    }
+  }
+
+
+  private loadInnovations(): void {
+    this.userService.getInnovations(this._user.id).pipe(first()).subscribe((innovations: any) => {
         this._projects = innovations.result;
       });
   }
@@ -171,16 +179,18 @@ export class UserFormComponent implements OnInit {
   }
 
 
-
-
-
-  loadEditUser() {
-    if (this._user) {
-      this.isSelf = this._authService.userId === this._user.id;
-      this.userForm.patchValue(this._user);
-      this.loadInnovations();
+  onClickSave() {
+    if (this.isEditUser) {
+      const user = new User(this.userForm.value);
+      user.id = this._user.id;
+      this.finalUserData.emit(user);
+    } else if (this.isProfessional) {
+      const pro = this.userForm.value;
+      pro._id = this._pro._id;
+      pro.company = this.userForm.get('companyName').value;
+      pro.tags = this._tags;
+      this.finalProfessionalData.emit(pro);
     }
-
   }
 
 
@@ -222,50 +232,36 @@ export class UserFormComponent implements OnInit {
   }
 
 
-  onClickSave() {
-    if (this.isEditUser) {
-      const user = new User(this.userForm.value);
-      user.id = this._user.id;
-      this.editUserData.emit(user);
-    } else if (this.isProfessional) {
-      const pro = this.userForm.value;
-      pro._id = this._pro._id;
-      pro.company = this.userForm.get('companyName').value;
-      pro.tags = this._tags;
-      this.finalProfessionalData.emit(pro);
-    }
-  }
-
-
   getQuizUrl(pro: Professional): string {
     return QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
   }
 
 
   startEditInstanceDomain(event: Event): void {
-      this._editInstanceDomain = true;
+    event.preventDefault();
+    this._editInstanceDomain = true;
   }
 
 
   endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
-      this._editInstanceDomain = false;
-      this.userForm.get('domain').setValue(event.value[0].name || 'umi');
+    this._editInstanceDomain = false;
+    this.userForm.get('domain').setValue(event.value[0].name || 'umi');
   }
 
 
   buildInstanceDomainListConfig(): any {
-      this._updateInstanceDomainConfig.initialData = [];
-      return this._updateInstanceDomainConfig;
+    this._updateInstanceDomainConfig.initialData = [];
+    return this._updateInstanceDomainConfig;
   }
 
 
   updateInstanceDomain(event: any): void {
-      this.endEditInstanceDomain(event);
+    this.endEditInstanceDomain(event);
   }
 
 
-  affectAsAdmin(check: boolean) {
-    if (check === true) {
+  changeRole(event: Event) {
+    if (event.target['checked']) {
       this.userForm.get('roles').setValue('admin');
     } else {
       this.userForm.get('roles').setValue('user');

@@ -59,16 +59,16 @@ export class SharedProsListComponent {
 
   isTagsForm = false;
 
-  constructor(private _professionalService: ProfessionalsService,
-              private _notificationsService: TranslateNotificationsService,
-              private _searchService: SearchService) { }
+  constructor(private professionalsService: ProfessionalsService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private searchService: SearchService) { }
 
 
   private loadPros(config: any): void {
     this._config = config;
 
     if (this.requestId) {
-      this._searchService.getPros(this._config, this.requestId).subscribe((pros: any) => {
+      this.searchService.getPros(this._config, this.requestId).subscribe((pros: any) => {
         this._pros = pros.persons;
         this._total = pros._metadata.totalCount;
 
@@ -93,7 +93,7 @@ export class SharedProsListComponent {
 
       });
     } else {
-      this._professionalService.getAll(this.configToString()).pipe(first()).subscribe((pros: any) => {
+      this.professionalsService.getAll(this.configToString()).pipe(first()).subscribe((pros: any) => {
         this._pros = pros.result;
         this._pros.forEach(pro => {
           pro.sent = pro.messages && pro.messages.length > 0;
@@ -184,7 +184,7 @@ export class SharedProsListComponent {
 
 
   onClickEdit(pro: Professional) {
-    this._professionalService.get(pro._id).subscribe((professional: Professional) => {
+    this.professionalsService.get(pro._id).subscribe((professional: Professional) => {
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
         title: 'COMMON.EDIT_PROFESSIONAL',
@@ -200,11 +200,11 @@ export class SharedProsListComponent {
   updatePro(pro: Professional): void {
     this.editUser[pro._id] = false;
 
-    this._professionalService.save(pro._id, pro).pipe(first()).subscribe((res: any) => {
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+    this.professionalsService.save(pro._id, pro).pipe(first()).subscribe((res: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
       this.loadPros(this._config);
     }, (err: any) => {
-      this._notificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
   }
@@ -236,11 +236,11 @@ export class SharedProsListComponent {
 
 
   private removePro(userId: string) {
-    this._professionalService.remove(userId).pipe(first()).subscribe((foo: any) => {
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+    this.professionalsService.remove(userId).pipe(first()).subscribe((foo: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
       this.loadPros(this._config);
     }, () => {
-      this._notificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 

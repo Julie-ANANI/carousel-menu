@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+
+import { AdminUsersComponent } from './admin-users.component';
+
 import { TableModule } from '../../../../table/table.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { AdminUsersComponent } from './admin-users.component';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
 
