@@ -17,7 +17,6 @@
           <button type="button" class="btn btn-primary btn-xs" (click)="onClickSignUp($event)">{{ 'COMMON.SIGN_UP' | translate }}</button>
         </div>
 
-
         <!-- sign in wrapper -->
         <div class="signIn-wrapper" [ngStyle]="{ 'display': toggleSignInForm ? 'block' : 'none' }" id="header-unauth-signInForm">
           <div class="column col-xs-12 col-11 col-mx-auto">
@@ -59,9 +58,7 @@
 
               <!-- login button -->
               <div class="login-button text-center">
-                <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">
-                  {{ 'LOG_IN.LOG_IN_BTN' | translate }}
-                </button>
+                <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</button>
               </div>
 
             </form>
@@ -76,10 +73,11 @@
   </div>
 </section>
 
-
 <!-- sign up sidebar -->
 <app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
   <app-signup-form
     [sidebarState]="sidebarValue.animate_state"
-    (finalOutput)="createUser($event)"></app-signup-form>
+    (finalOutput)="createUser($event)">
+  </app-signup-form>
 </app-sidebar>
+<!-- /sign up sidebar -->
