@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
 import { environment } from "../../../environments/environment";
@@ -8,12 +8,16 @@ import { environment } from "../../../environments/environment";
   templateUrl: './authentication.component.html',
 })
 
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnInit {
 
   constructor(private _router: Router,
               private _activatedRoute: ActivatedRoute,
               private _authService: AuthService) {
     console.trace("In the constructor");
+  }
+
+  ngOnInit(): void {
+    console.log("I'm in the on init");
     this._activatedRoute.queryParams.subscribe(result=>{
       console.log(`Activated route: ${this._activatedRoute}`);
       if(result['error']) {
@@ -45,5 +49,4 @@ export class AuthenticationComponent {
       this._router.navigate(['/login']);
     });
   }
-
 }
