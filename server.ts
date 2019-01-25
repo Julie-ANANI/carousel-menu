@@ -46,9 +46,14 @@ app.use('*', (req, res, next) => {
 });
 
 app.use('*.*', function (req, res, next) {
+  const indexParams = req.url.indexOf('?');
+  if (indexParams !== - 1) {
+    req.url = req.url.substring(0, indexParams) + '.gz' + req.url.substring(indexParams);
+  } else {
+    req.url = req.url + '.gz';
+  }
   res.set('Content-Encoding', 'gzip');
   res.set('Content-Type', lookup(extname(req.originalUrl)));
-  req.url = req.url + '.gz';
   next();
 });
 

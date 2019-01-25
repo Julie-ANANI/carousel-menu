@@ -114,7 +114,9 @@
     <!-- Terms -->
     <div *ngIf="checkIsMainDomain()" class="terms">
       {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
-      <a href="https://www.umi.us/end-user-license-agreement/" target="_blank"><span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span></a>
+      <a href="https://www.umi.us/end-user-license-agreement/" target="_blank" rel="noopener">
+        <span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span>
+      </a>
     </div>
 
     <!-- Submit button -->
