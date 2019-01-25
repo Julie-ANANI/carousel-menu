@@ -68,11 +68,6 @@ export class SignupComponent implements OnInit {
   }
 
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
   createUser(formValue: FormGroup) {
     if (formValue.valid) {
       const user = new User(formValue.value);
@@ -124,6 +119,10 @@ export class SignupComponent implements OnInit {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
 }

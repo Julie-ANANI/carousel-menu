@@ -38,11 +38,12 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
 
 export class SidebarComponent implements OnInit {
 
+  @Output() templateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();
   @Input() set template(value: SidebarInterface) {
     this.setTemplate(value);
-  };
+  }
 
-  @Output() closeSidebar = new EventEmitter<SidebarInterface>();
+  @Output() closeSidebar = new EventEmitter<SidebarInterface>(); // todo: remove this line
 
   private _title: string; // heading
   private _state: string; // animation state
@@ -75,8 +76,9 @@ export class SidebarComponent implements OnInit {
    */
   toggleState(event: Event, target: any) {
     if (event.target['id'] === 'sidebar-wrapper' || event.target['id'] === 'close') {
-      this._state = 'inactive';
-      this.closeSidebar.emit({animate_state: this._state, title: this._title, type: this._type});
+      this._state = 'inactive'; // todo: remove this line
+      this.templateChange.emit({animate_state: 'inactive', title: this._title, type: this._type});
+      this.closeSidebar.emit({animate_state: this._state, title: this._title, type: this._type}); // todo: remove this line
       setTimeout(() => {
         target.scrollIntoView();
       }, 300);
