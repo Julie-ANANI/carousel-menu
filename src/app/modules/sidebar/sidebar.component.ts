@@ -38,10 +38,11 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
 
 export class SidebarComponent implements OnInit {
 
-  @Output() templateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();
   @Input() set template(value: SidebarInterface) {
     this.setTemplate(value);
   }
+
+  @Output() templateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();
 
   @Output() closeSidebar = new EventEmitter<SidebarInterface>(); // todo: remove this line
 

@@ -103,11 +103,6 @@ export class AdminUsersComponent implements OnInit {
   }
 
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
   updateUser(user: User) {
     this.userService.updateOther(user).pipe(first()).subscribe((data: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
@@ -180,6 +175,10 @@ export class AdminUsersComponent implements OnInit {
 
   get users() {
     return this._users;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get sidebarValue(): SidebarInterface {

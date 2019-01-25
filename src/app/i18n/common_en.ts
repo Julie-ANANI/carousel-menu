@@ -12,6 +12,7 @@ export const COMMON = {
   'LOG_IN': 'Sign In',
   'SIGN_UP': 'Sign Up',
   'LOG_OUT': 'Sign out',
+  'SIGN_OUT': 'Sign Out',
   'CANCEL': 'Cancel',
   'MORE': 'Show',
   'OF': 'of',
@@ -246,6 +247,10 @@ export const COMMON = {
     'DESC_FR_PLACEHOLDER': 'Enter the description in french',
     'CHOOSE_TAG': 'Choose the tag to associate with this actual tag',
     'TAG_PLACEHOLDER': 'Add an existing tag'
+  },
+
+  'LOGOUT': {
+    'TEXT': 'You will be redirected automatically to the login page.'
   }
 
 };

@@ -136,11 +136,6 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
   /***
    * this function is called when the user wants to save the innovation changes.
    * @param event
@@ -298,6 +293,10 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get buttonSaveClass(): string {
     return this._buttonSaveClass;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get sidebarValue(): SidebarInterface {

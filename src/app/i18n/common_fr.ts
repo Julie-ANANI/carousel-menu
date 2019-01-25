@@ -11,6 +11,7 @@ export const COMMON = {
   'SUBMIT': 'Confirmer',
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
+  'SIGN_OUT': 'Se déconnecter',
   'LOG_OUT': 'Se déconnecter',
   'GENERATE': 'Générer',
   'CANCEL': 'Annuler',
@@ -243,6 +244,10 @@ export const COMMON = {
     'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
     'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
     'TAG_PLACEHOLDER': 'Ajouter un tag existante'
+  },
+
+  'LOGOUT': {
+    'TEXT': 'Vous serez redirigé automatiquement vers la page de connexion.'
   }
 
 };

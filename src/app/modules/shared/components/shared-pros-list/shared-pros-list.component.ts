@@ -275,11 +275,6 @@ export class SharedProsListComponent {
   }
 
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
   get total() {
     return this._total;
   }
@@ -302,6 +297,10 @@ export class SharedProsListComponent {
 
   get prosToTag(): Professional[] {
     return this._prosToTag;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get sidebarValue(): SidebarInterface {
