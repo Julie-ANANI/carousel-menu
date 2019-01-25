@@ -64,7 +64,7 @@ export class SharedProsListComponent {
               private searchService: SearchService) { }
 
 
-  private loadPros(config: any): void {
+  loadPros(config: any): void {
     this._config = config;
 
     if (this.requestId) {
