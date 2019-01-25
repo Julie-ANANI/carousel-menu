@@ -73,18 +73,19 @@ export class TagsFormComponent {
 
       case 'addTags':
         this.newTags.emit(this._tags);
-        this._activeSaveButton = false;
         break;
 
       case 'editTag':
         this.updateTag.emit(this._tag);
-        this._activeSaveButton = false;
         break;
 
       default:
         // do nothing...
 
     }
+
+    this._activeSaveButton = false;
+
   }
 
 
@@ -119,15 +120,23 @@ export class TagsFormComponent {
   }
 
 
+  onKeyboardPress(event: Event) {
+    event.preventDefault();
+    this._activeSaveButton = true;
+  }
+
+
   connectToTag(event: Event, tag: Tag): void {
     event.preventDefault();
 
     this.tagsService.updateTagInPool(this._innovationId, tag).pipe(first()).subscribe((data: any) => {
+      const index = data.findIndex((item) => item._id === tag._id);
+      if (index !== -1) {
+        this._tag = data[index];
+      }
+      this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       this._needToSetOriginalTag = false;
       this._activeSaveButton = true;
-      this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
-    }, (err: any) => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ASSOCIATED');
     });

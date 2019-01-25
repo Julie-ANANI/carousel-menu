@@ -25,7 +25,7 @@ export class UserFormComponent implements OnInit {
   @Input() set sidebarState(value: string) {
     if (value === undefined || 'active') {
       this.buildForm();
-      this.userForm.reset();
+      this._userForm.reset();
       this._editInstanceDomain = false;
     }
   }
@@ -60,17 +60,17 @@ export class UserFormComponent implements OnInit {
 
   @Output() finalProfessionalData = new EventEmitter<Professional>();
 
-  isEditUser = false;
+  private _isEditUser = false;
 
-  isProfessional = false;
+  private _isProfessional = false;
 
-  isSelf =  false;
+  private _isSelf =  false;
 
-  userForm: FormGroup;
+  private _userForm: FormGroup;
 
-  countriesSuggestion: Array<string> = [];
+  private _countriesSuggestion: Array<string> = [];
 
-  displayCountrySuggestion = false;
+  private _displayCountrySuggestion = false;
 
   private _selectedProject: String;
 
@@ -115,7 +115,7 @@ export class UserFormComponent implements OnInit {
 
 
   private buildForm() {
-    this.userForm = this.formBuilder.group( {
+    this._userForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       companyName: ['', [Validators.required]],
@@ -134,35 +134,35 @@ export class UserFormComponent implements OnInit {
     this.reinitialiseForm();
 
     if (this._type === 'editUser') {
-      this.isEditUser = true;
+      this._isEditUser = true;
       this.loadEditUser();
     } else if (this._type === 'professional') {
-      this.isProfessional = true;
+      this._isProfessional = true;
       this.loadProfessional();
     }
 
   }
 
   private reinitialiseForm() {
-    this.isProfessional = false;
-    this.isEditUser = false;
+    this._isProfessional = false;
+    this._isEditUser = false;
     this._selectedProject = null;
   }
 
 
   private loadProfessional() {
-    if (this._pro && this.userForm) {
-      this.userForm.get('companyName').setValue(this._pro.company);
+    if (this._pro && this._userForm) {
+      this._userForm.get('companyName').setValue(this._pro.company);
       this._tags = this._pro.tags;
-      this.userForm.patchValue(this._pro);
+      this._userForm.patchValue(this._pro);
     }
   }
 
 
   private loadEditUser() {
     if (this._user) {
-      this.isSelf = this._authService.userId === this._user.id;
-      this.userForm.patchValue(this._user);
+      this._isSelf = this._authService.userId === this._user.id;
+      this._userForm.patchValue(this._user);
       this.loadInnovations();
     }
   }
@@ -180,14 +180,14 @@ export class UserFormComponent implements OnInit {
 
 
   onClickSave() {
-    if (this.isEditUser) {
-      const user = new User(this.userForm.value);
+    if (this._isEditUser) {
+      const user = new User(this._userForm.value);
       user.id = this._user.id;
       this.finalUserData.emit(user);
-    } else if (this.isProfessional) {
-      const pro = this.userForm.value;
+    } else if (this._isProfessional) {
+      const pro = this._userForm.value;
       pro._id = this._pro._id;
-      pro.company = this.userForm.get('companyName').value;
+      pro.company = this._userForm.get('companyName').value;
       pro.tags = this._tags;
       this.finalProfessionalData.emit(pro);
     }
@@ -195,17 +195,17 @@ export class UserFormComponent implements OnInit {
 
 
   onSuggestCountries() {
-    this.userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
-      this.displayCountrySuggestion = true;
-      this.countriesSuggestion = [];
+    this._userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
+      this._displayCountrySuggestion = true;
+      this._countriesSuggestion = [];
       this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
-          this.displayCountrySuggestion = false;
+          this._displayCountrySuggestion = false;
         } else {
           res.forEach((items: any) => {
-            const valueIndex = this.countriesSuggestion.indexOf(items.name);
+            const valueIndex = this._countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
-              this.countriesSuggestion.push(items.name);
+              this._countriesSuggestion.push(items.name);
             }
           })
         }
@@ -215,8 +215,8 @@ export class UserFormComponent implements OnInit {
 
 
   onValueSelect(value: string) {
-    this.userForm.get('country').setValue(value);
-    this.displayCountrySuggestion = false;
+    this._userForm.get('country').setValue(value);
+    this._displayCountrySuggestion = false;
   }
 
 
@@ -245,7 +245,7 @@ export class UserFormComponent implements OnInit {
 
   endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
     this._editInstanceDomain = false;
-    this.userForm.get('domain').setValue(event.value[0].name || 'umi');
+    this._userForm.get('domain').setValue(event.value[0].name || 'umi');
   }
 
 
@@ -262,9 +262,9 @@ export class UserFormComponent implements OnInit {
 
   changeRole(event: Event) {
     if (event.target['checked']) {
-      this.userForm.get('roles').setValue('admin');
+      this._userForm.get('roles').setValue('admin');
     } else {
-      this.userForm.get('roles').setValue('user');
+      this._userForm.get('roles').setValue('user');
     }
   }
 
@@ -307,6 +307,30 @@ export class UserFormComponent implements OnInit {
 
   get selectedProject(): String {
     return this._selectedProject;
+  }
+
+  get isEditUser(): boolean {
+    return this._isEditUser;
+  }
+
+  get isProfessional(): boolean {
+    return this._isProfessional;
+  }
+
+  get isSelf(): boolean {
+    return this._isSelf;
+  }
+
+  get userForm(): FormGroup {
+    return this._userForm;
+  }
+
+  get countriesSuggestion(): Array<string> {
+    return this._countriesSuggestion;
+  }
+
+  get displayCountrySuggestion(): boolean {
+    return this._displayCountrySuggestion;
   }
 
 }
