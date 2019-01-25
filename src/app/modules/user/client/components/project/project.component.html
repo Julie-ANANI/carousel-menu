@@ -1,6 +1,5 @@
 <section *ngIf="innovation" class="section-container animate-page" id="project-component">
 
-
   <!-- header section -->
   <div class="section-header">
     <div class="column col-xs-12 col-11 col-mx-auto">
@@ -54,13 +53,11 @@
   </div>
   <!-- /header section -->
 
-
   <!-- setup section -->
   <div *ngIf="currentPage === 'setup'">
     <app-setup [project]="innovation"></app-setup>
   </div>
   <!-- /setup section -->
-
 
   <!-- exploration section -->
   <div *ngIf="currentPage === 'exploration'">
@@ -73,7 +70,6 @@
     <app-shared-market-report [project]="innovation"></app-shared-market-report>
   </div>
   <!-- /synthesis section -->
-
 
 </section>
 

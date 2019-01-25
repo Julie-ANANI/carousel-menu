@@ -1,18 +1,15 @@
 <section *ngIf="innovations" class="section-container" id="projects-list-component">
 
-
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-
-    <!-- Section add button -->
+    <!-- section add button -->
     <div class="text-right">
       <button routerLink="new" (click)="$event.preventDefault()" class="btn btn-primary">
         {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
       </button>
     </div>
 
-
-    <!-- Section no project -->
+    <!-- section no project -->
     <div *ngIf="innovations.length === 0" class="section-no-project">
       <div class="bot-rect">
         {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
@@ -26,11 +23,10 @@
       </div>
     </div>
 
-
-    <!-- Section projects -->
+    <!-- section projects -->
     <div *ngIf="innovations.length > 0" class="section-projects-list">
 
-      <!-- Projects -->
+      <!-- projects -->
       <div class="project-wrapper" [@listAnimation]="innovations.length">
         <div *ngFor="let innovation of innovations" class="content-outer">
           <div class="content">
@@ -53,7 +49,7 @@
         </div>
       </div>
 
-      <!-- Pagination -->
+      <!-- section pagination -->
       <div *ngIf="innovations.length > 10" class="pagination-wrapper">
         <app-pagination
           [configValue]="paginationConfig"
@@ -64,13 +60,11 @@
       </div>
 
     </div>
-    <!-- /Section projects -->
-
+    <!-- /section projects -->
 
   </div>
 
-
-  <!-- Delete project confirmation modal -->
+  <!-- delete project confirmation modal -->
   <div class="modal" [ngClass]="{ 'active': deleteModal }">
     <div class="modal-overlay" (click)="closeModal($event)"></div>
     <div class="modal-container">
@@ -82,11 +76,11 @@
         <div class="content">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
       </div>
       <div class="modal-footer">
+        <button class="btn ghost-edit btn-sm btn-cancel" (click)="closeModal($event)">{{ 'COMMON.CANCEL' | translate }}</button>
         <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
       </div>
     </div>
   </div>
-
 
 </section>
 

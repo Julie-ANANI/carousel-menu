@@ -2,32 +2,25 @@
   <section class="main-wrapper">
     <div class="columns col-gapless">
 
-      <!-- Image -->
-      <div
-        class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image"
-        [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
-      </div>
-      <!-- /Image -->
+      <!-- image -->
+      <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></div>
 
-
-      <!-- Signup -->
+      <!-- sign up -->
       <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto signup-details section-light-container">
 
-        <!-- Logo -->
-        <div>
-          <a href="{{ getCompanyUrl() }}"><img src="{{ getLogoWBG() }}" height="35px"></a>
-        </div>
+        <!-- logo -->
+        <div><a href="{{ getCompanyUrl() }}"><img src="{{ getLogoWBG() }}" height="35px"></a></div>
 
-        <!-- Register -->
+        <!-- register -->
         <div class="register">
 
-          <!-- Heading -->
+          <!-- heading -->
           <h1 class="main-heading">
             <span *ngIf="!checkIsMainDomain()">{{ 'SIGN_UP.HEADING' | translate }}</span>
             <span *ngIf="checkIsMainDomain()">{{ 'SIGN_UP.HEADING_UMI' | translate }}</span>
           </h1>
 
-          <!-- Sign up button -->
+          <!-- sign up button -->
           <button class="btn btn-primary gtm-signup-email" (click)="onSignUpClick($event)">
             <i class="fas fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
           </button>
@@ -35,9 +28,9 @@
           <!-- LinkedIn -->
           <div class="linkedIn-wrapper" *ngIf="checkIsMainDomain()">
 
-            <!-- Or -->
+            <!-- or -->
             <div class="or-wrapper">
-              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+              <span class="or-divider">{{ 'COMMON.OR' | translate }}</span>
             </div>
 
             <a [href]="linkedInLink" class="btn btn-secondary gtm-signup-linkedin">
@@ -47,24 +40,23 @@
 
         </div>
 
-        <!-- Sign in -->
+        <!-- sign in -->
         <div>
           <span [ngStyle]="{ 'font-size': '.85rem', 'padding-right': '.6rem' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
           <button type="button" class="btn btn-sm ghost-primary" routerLink="/login">{{ 'SIGN_UP.BUTTON' | translate }}</button>
         </div>
 
       </div>
-      <!-- /Signup -->
-
 
     </div>
   </section>
 </main>
 
-
-<!-- Sign up sidebar -->
+<!-- sign up sidebar -->
 <app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
   <app-signup-form
     [sidebarState]="sidebarValue.animate_state"
-    (finalOutput)="createUser($event)"></app-signup-form>
+    (finalOutput)="createUser($event)">
+  </app-signup-form>
 </app-sidebar>
+<!-- /sign up sidebar -->

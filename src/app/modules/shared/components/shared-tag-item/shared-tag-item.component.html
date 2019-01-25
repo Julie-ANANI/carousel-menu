@@ -1,26 +1,25 @@
-<div class="shared-tag-item">
+<div id="shared-tag-item-component">
 
     <form *ngIf="editMode" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
-      <div [ngStyle]="{ 'display': 'flex' }">
+      <div class="tag-input-wrapper">
         <input
           auto-complete
           formControlName="tag"
           [source]="tagSuggestions.bind(this)"
           [list-formatter]="autocompleListFormatter"
           [value-formatter]="autocompleValueFormatter"
-          [attr.placeholder]="'Add an existing tag'"
+          [attr.placeholder]="'COMMON.TAG_LABEL.TAG_PLACEHOLDER' | translate"
+          id="shared-tag-item"
           class="form-default">
-        <button class="btn-round  btn-primary" [disabled]="!canAdd">
-          <i class="icon icon-plus" [ngStyle]="{ 'font-size': '14px' }"></i>
-        </button>
+        <button class="btn-round  btn-primary" [disabled]="!canAdd"><i class="fas fa-plus"></i></button>
       </div>
     </form>
 
-    <div *ngIf="tags?.length > 0" [ngStyle]="{ 'margin-top': '10px' }">
-      <div *ngFor="let t of tags" class="tags" [title]="t.description | multiling:lang">
-        <div class="tags-wrapper">
-          #{{ t?.label | multiling:lang }}
-          <i *ngIf="editMode || isAdmin" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
+    <div *ngIf="tags?.length > 0" class="tags-wrapper">
+      <div *ngFor="let tag of tags" class="tags-content" [title]="tag.description | multiling:lang">
+        <div class="tags-body">
+          #{{ tag?.label | multiling:lang }}
+          <i *ngIf="editMode || isAdmin" class="fas fa-times" (click)="removeTagEmitter($event, tag)"></i>
         </div>
       </div>
     </div>
