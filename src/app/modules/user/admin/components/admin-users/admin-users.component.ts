@@ -5,7 +5,7 @@ import { User } from '../../../../../models/user.model';
 import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
-import { Subject } from 'rxjs/Subject';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-users',
@@ -21,13 +21,11 @@ export class AdminUsersComponent implements OnInit {
 
   private _usersToRemove: User[] = [];
 
-  private _more: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {};
 
   private _tableInfos: Table = null;
 
   private _showDeleteModal = false;
-
-  sidebarState = new Subject<string>();
 
   currentUser: User;
 
@@ -41,22 +39,19 @@ export class AdminUsersComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  constructor(private _titleService: TranslateTitleService,
-              private _userService: UserService,
-              private _notificationsService: TranslateNotificationsService) {}
+  constructor(private translateTitleService: TranslateTitleService,
+              private userService: UserService,
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
-    this._titleService.setTitle('USERS.TITLE');
+    this.translateTitleService.setTitle('USERS.TITLE');
     this._actions = ['Action1', 'Action2', 'Action3'];
     this.loadUsers();
   }
 
-  get tableInfos(): Table {
-    return this._tableInfos;
-  }
 
-  loadUsers(): void {
-    this._userService.getAll(this._config).subscribe((users: any) => {
+  private loadUsers(): void {
+    this.userService.getAll(this._config).pipe(first()).subscribe((users: any) => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
 
@@ -80,45 +75,49 @@ export class AdminUsersComponent implements OnInit {
       });
   }
 
+
   configChange(config: any) {
     this._config = config;
     this.loadUsers();
   }
+
 
   inviteUser(event: Event): void {
     event.preventDefault();
     // TODO
   }
 
+
   editUser(user: User) {
     const us = new User(user);
-    this._userService.get(us.id).subscribe((value: any) => {
-      this._more = {
-        animate_state: 'active',
+
+    this.userService.get(us.id).pipe(first()).subscribe((value: any) => {
+      this._sidebarValue = {
+        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
         title: 'COMMON.EDIT_USER',
         type: 'editUser'
       };
       this.currentUser = value;
     });
+
   }
+
 
   closeSidebar(value: SidebarInterface) {
-    this.more.animate_state = value.animate_state;
-    this.sidebarState.next(this.more.animate_state);
+    this._sidebarValue.animate_state = value.animate_state;
   }
 
-  userEditionFinish(user: User) {
-    this._userService.updateOther(user)
-      .subscribe(
-        (_data: any) => {
-          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-          this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadUsers();
-        },
-        (error: any) => {
-          this._notificationsService.error('ERROR.ERROR', error.message);
-        });
+
+  updateUser(user: User) {
+    this.userService.updateOther(user).pipe(first()).subscribe((data: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+      this.loadUsers();
+    },
+    () => {
+      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+    });
   }
+
 
   deleteUsersModal(users: User[]) {
     this._usersToRemove = [];
@@ -126,12 +125,14 @@ export class AdminUsersComponent implements OnInit {
     users.forEach(value => this._usersToRemove.push(new User(value)));
   }
 
+
   closeModal(event: Event) {
     event.preventDefault();
     this._showDeleteModal = false;
   }
 
-  removeUsers() {
+
+  onClickSubmit() {
     for (const user of this._usersToRemove) {
       this.removeUser(user.id);
     }
@@ -139,12 +140,16 @@ export class AdminUsersComponent implements OnInit {
     this._showDeleteModal = false;
   }
 
-  removeUser(userId: string) {
-    this._userService.deleteUser(userId)
-      .subscribe((foo: any) => {
-        this.loadUsers();
-      });
+
+  private removeUser(userId: string) {
+    this.userService.deleteUser(userId).pipe(first()).subscribe((foo: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+      this.loadUsers();
+    }, () => {
+      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+    });
   }
+
 
   performActions(action: any) {
     this._actions.find(value => value === action._action)
@@ -152,11 +157,37 @@ export class AdminUsersComponent implements OnInit {
       : console.log('l\'Action' + action + 'n\'existe pas !');
   }
 
-  set config(value: any) { this._config = value; }
-  get config(): any { return this._config; }
-  get total(): number { return this._total; }
-  get usersToRemove(): User[] { return this._usersToRemove; }
-  get users() { return this._users; }
-  get more(): any { return this._more; }
-  get showDeleteModal(): boolean { return this._showDeleteModal; }
+
+  set config(value: any) {
+    this._config = value;
+  }
+
+  get config(): any {
+    return this._config;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get usersToRemove(): User[] {
+    return this._usersToRemove;
+  }
+
+  get users() {
+    return this._users;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  get showDeleteModal(): boolean {
+    return this._showDeleteModal;
+  }
+
 }

@@ -181,6 +181,14 @@ export const COMMON = {
 
   'USERS': 'Users',
 
+  'USER': {
+    'DELETE': 'Delete user(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Delete Board',
+      'CONTENT': 'Do you really want to delete the selected user(s)?'
+    }
+  },
+
   'AMBASSADOR': 'Ambassador',
 
   'PROFESSIONALS': 'Professionals',
@@ -189,6 +197,10 @@ export const COMMON = {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
     'PITCH-DELETE-ALL' : 'Are you sure you want to delete all the professionnals?',
     'DELETE': 'Delete professionnal(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Delete Board',
+      'CONTENT': 'Do you really want to delete the selected professional(s)?'
+    }
   },
 
   'HOME': 'Home',
@@ -223,7 +235,17 @@ export const COMMON = {
 
   'HEADER': {
     'SHARED_REPORTS': 'Shared reports'
-  }
+  },
 
+  'TAG_LABEL': {
+    'ADD_TAGS': 'Add Tags',
+    'EDIT_TAG': 'Edit Tag',
+    'LABEL_EN_PLACEHOLDER': 'Enter the label in english',
+    'LABEL_FR_PLACEHOLDER': 'Enter the label in french',
+    'DESC_EN_PLACEHOLDER': 'Enter the description in english',
+    'DESC_FR_PLACEHOLDER': 'Enter the description in french',
+    'CHOOSE_TAG': 'Choose the tag to associate with this actual tag',
+    'TAG_PLACEHOLDER': 'Add an existing tag'
+  }
 
 };

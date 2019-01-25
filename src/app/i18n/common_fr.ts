@@ -178,6 +178,14 @@ export const COMMON = {
 
   'USERS': 'Utilisateurs',
 
+  'USER': {
+    'DELETE': 'Supprimer le(s) utilisateur(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
+    }
+  },
+
   'AMBASSADOR': 'Ambassadeur',
 
   'PROFESSIONALS': 'Professionnels',
@@ -186,6 +194,10 @@ export const COMMON = {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
     'DELETE': 'Supprimer le(s) professionnel(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
+    }
   },
 
   'HOME': 'Accueil',
@@ -220,6 +232,17 @@ export const COMMON = {
 
   'HEADER': {
     'SHARED_REPORTS': 'Rapports partagés'
+  },
+
+  'TAG_LABEL': {
+    'ADD_TAGS': 'Ajouter des tags',
+    'EDIT_TAG': 'Modifier le tag',
+    'LABEL_EN_PLACEHOLDER': 'Entrez le label en anglais',
+    'LABEL_FR_PLACEHOLDER': 'Entrer le label en français',
+    'DESC_EN_PLACEHOLDER': 'Entrez la description en anglais',
+    'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
+    'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
+    'TAG_PLACEHOLDER': 'Ajouter un tag existante'
   }
 
 };

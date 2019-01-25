@@ -82,7 +82,7 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Would you like to authorize',
-    'B' : 'to diffuse your project to it\'s community?',
+    'B' : 'to diffuse your project to its community?',
     'ERROR': 'Diffusion is required.'
   },
 
