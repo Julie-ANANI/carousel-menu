@@ -20,7 +20,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.scss"
@@ -41,7 +43,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/umi/environment.local.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             },
             "dev": {
               "optimization": true,
@@ -58,7 +61,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/umi/environment.dev.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             },
             "production": {
               "optimization": true,
@@ -75,7 +79,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/umi/environment.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             },
             "demo": {
               "optimization": true,
@@ -92,7 +97,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/umi/environment.demo.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -179,7 +185,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ]
           }
         },
@@ -242,7 +250,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.dynergie.scss"
@@ -265,14 +275,6 @@
                 }
               ]
             },
-            "dev": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dynergie/environment.dynergie.dev.ts"
-                }
-              ]
-            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -288,7 +290,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/dynergie/environment.dynergie.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -338,7 +341,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ]
           }
         },
@@ -374,7 +379,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.inomer.scss"
@@ -397,14 +404,6 @@
                 }
               ]
             },
-            "dev": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/inomer/environment.inomer.dev.ts"
-                }
-              ]
-            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -420,7 +419,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/inomer/environment.inomer.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -470,7 +470,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ]
           }
         },
@@ -506,7 +508,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.vendor1.scss"
@@ -544,7 +548,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/multivalente/environment.multivalente.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -591,7 +596,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ]
           }
         },
@@ -627,7 +634,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.vendor1.scss"
@@ -665,7 +674,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/salveo/environment.salveo.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -712,7 +722,9 @@
                 "glob": "**/*",
                 "input": "node_modules/tinymce/skins",
                 "output": "/assets/skins"
-              }
+              },
+              "src/assets",
+              "src/manifest.json"
             ]
           }
         },

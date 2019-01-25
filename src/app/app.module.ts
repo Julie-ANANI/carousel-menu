@@ -1,6 +1,7 @@
 // Modules externes
 import { NgModule, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule, CookieService } from 'ngx-cookie';
@@ -16,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Services
 import { LocalStorageService } from './services/localStorage/localStorage.service';
-import { TranslationService } from "./services/translation/translation.service";
+import { TranslationService } from './services/translation/translation.service';
 import { TranslateTitleService } from './services/title/title.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
@@ -26,6 +27,9 @@ import { MouseService } from './services/mouse/mouse.service';
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
+
+// Environment
+import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
@@ -44,7 +48,8 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
         provide: TranslateLoader,
         useFactory: (CreateTranslateLoader)
       }
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
     AppComponent
