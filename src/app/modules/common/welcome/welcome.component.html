@@ -18,8 +18,8 @@
         {{ 'WELCOME.I_UNDERSTAND' | translate }}
         <strong>
           <span *ngIf="isMainDomain()" class="text-link">
-            <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/'
-               : '/end-user-license-agreement/')">
+            <a target="_blank" rel="noopener"
+               [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
               {{ 'WELCOME.TERMS' | translate }}
             </a>
           </span>
