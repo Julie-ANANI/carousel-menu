@@ -5,7 +5,7 @@ import { environment } from "../../../environments/environment";
 
 @Component({
   selector: 'authenticator',
-  template: '<div>auth!</div>',
+  templateUrl: './authentication.component.html',
 })
 
 export class AuthenticationComponent {

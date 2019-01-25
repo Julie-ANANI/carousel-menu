@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedLoaderModule } from "../shared/components/shared-loader/shared-loader.module";
 
 import { AuthenticationComponent } from './authentication.component';
 import { AuthenticationRoutingModule } from "./authentication-routing.module";
@@ -9,7 +10,8 @@ import { AuthenticationRoutingModule } from "./authentication-routing.module";
   imports: [
     CommonModule,
     AuthenticationRoutingModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SharedLoaderModule
   ],
   declarations: [
     AuthenticationComponent
