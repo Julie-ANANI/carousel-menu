@@ -76,21 +76,10 @@ export class AuthService {
       );
   }
 
-  public linkedInFetchToken(code: string, domain: string): Observable<any> {
-    return this._http.post(`/auth/linkedin`, {code: code, domain: domain || "umi" })
-      .pipe(
-        map((res: any) => {
-          this._setAuthenticatedTo(res.isAuthenticated);
-          this._setAdminTo(res.adminLevel);
-          this._setConfirmedTo(res.isConfirmed);
-          this._user = res;
-          if (res.isAuthenticated) {
-            this.startCookieObservator();
-          }
-          return res;
-        }),
-        catchError((error: Response) => throwError(error.json()))
-      );
+  public updateFromLinkedIn() {
+    this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
+    this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
+    this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
   }
 
   public logout(): Observable<any> {
