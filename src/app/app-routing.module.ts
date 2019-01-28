@@ -32,6 +32,12 @@ const appRoutes: Routes = [
     path: 'share', canActivate: [ShareSynthesisGuard], loadChildren: './modules/public/share/share.module#ShareModule'
   },
   {
+    path: 'wordpress/discover', loadChildren: './modules/wordpress/discover/discover.module#DiscoverModule'
+  },
+  {
+    path: 'wordpress/share', loadChildren: './modules/wordpress/share/share.module#ShareModule'
+  },
+  {
     path: 'auth', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
   },
   {
