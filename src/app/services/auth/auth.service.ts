@@ -76,12 +76,6 @@ export class AuthService {
       );
   }
 
-  public updateFromLinkedIn() {
-    this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
-    this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
-    this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
-  }
-
   public logout(): Observable<any> {
     return this._http.get('/auth/logout')
       .pipe(
