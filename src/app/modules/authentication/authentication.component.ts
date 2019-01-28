@@ -16,7 +16,6 @@ export class AuthenticationComponent implements OnInit {
 
   ngOnInit(): void {
     // Try to update the auth service!
-    console.log("authentication component");
     this._authService.initializeSession()
       .subscribe(result=>{
         if(this._authService.isAuthenticated) {
