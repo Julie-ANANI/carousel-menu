@@ -19,7 +19,7 @@ export class AuthenticationComponent implements OnInit {
     this._authService.initializeSession()
       .subscribe(result=>{
         if(this._authService.isAuthenticated) {
-          return this._router.navigate(['/project']);
+          return this._router.navigate(['/user/projects']);
         } else {
           console.error("There's an authentication problem.");
           return this._router.navigate(['/login']);

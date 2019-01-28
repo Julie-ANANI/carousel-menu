@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     const linkedinConfig = {
       url: 'https://www.linkedin.com/oauth/v2/authorization',
       clientID: '77283cf7nmchg3',
-      callbackURL: `${environment.clientUrl}/auth/linkedin/callback`,
+      callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
       scope: 'r_emailaddress r_liteprofile r_basicprofile'
     };
 
