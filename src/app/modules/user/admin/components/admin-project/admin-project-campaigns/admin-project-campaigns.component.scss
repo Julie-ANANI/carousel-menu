@@ -1,33 +1,86 @@
-.btn-danger {
-  background-color: #ff0000;
-  color: #FFFFFF;
-  border-color: transparent;
-}
+@import "../../../../../../../style/variables";
 
-.btn-action {
-  float: left;
-  margin-right: 10px;
-}
+#admin-project-campaigns-component {
 
-#admin-campaign {
-  padding-top: 0;
-
-  .sticky-section {
-    background-color: white;
-    padding-top: 50px;
-    padding-bottom: 50px;
+  .section-add-campaign {
+    text-align: right;
+    padding-bottom: 1.57rem;
   }
 
-}
+  .section-no-campaign {
+    padding-top: 3.15rem;
+    text-align: center;
 
+    .bot-rect {
+      max-width: 354px;
+    }
 
-@media (min-width: 600px) {
-
-  .sticky-section {
-    position: sticky;
-    top: 0;
-    z-index: 3;
   }
 
+  .section-campaigns-list {
+
+    .campaign-wrapper{
+
+      .content-outer {
+        margin-bottom: 1.57rem;
+
+        .content {
+          background-color: white;
+          min-height: 6.625rem;
+          border-radius: 3px;
+          padding: 1.2rem;
+
+          a {
+            margin-right: .35rem;
+          }
+
+          .title {
+            font-size: 1.4rem;
+            font-weight: 400;
+          }
+
+          .title:hover {
+            color: $primary-color;
+            cursor: pointer;
+          }
+
+          .update, .edit {
+            color: $primary-color;
+            font-size: 0.85rem;
+          }
+
+          .clone {
+            color: $disabled-text-color;
+          }
+
+          .clone:hover {
+            cursor: not-allowed;
+          }
+
+          .delete {
+            color: $alert-color;
+          }
+
+          .update:hover, .delete:hover, .edit:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+
+          .details {
+            padding-top: .6rem;
+            font-size: 0.85rem;
+            color: $meta-color;
+            font-weight: 600;
+            padding-left: .35rem;
+            padding-bottom: 0;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
 
 }

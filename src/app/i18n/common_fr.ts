@@ -248,6 +248,16 @@ export const COMMON = {
 
   'LOGOUT': {
     'TEXT': 'Vous serez redirigé automatiquement vers la page de connexion.'
+  },
+
+  'CAMPAIGN': {
+    'LABEL': 'Nom de la campagne',
+    'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
+    'PLACEHOLDER': 'Entrez le nom de la campagne',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
+    }
   }
 
 };

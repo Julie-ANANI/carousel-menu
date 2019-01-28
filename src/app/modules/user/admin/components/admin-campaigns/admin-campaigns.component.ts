@@ -14,14 +14,21 @@ import { first } from 'rxjs/operators';
   templateUrl: './admin-campaigns.component.html',
   styleUrls: ['./admin-campaigns.component.scss']
 })
+
 export class AdminCampaignsComponent implements OnInit {
 
   private _innovation: Innovation;
+
   private _form: FormGroup;
+
   private _newCampaign: any;
+
   private _campaigns: Array<Campaign> = [];
+
   private _activateModal: boolean = false;
+
   private _selectCampaign: any = null;
+
   public editCampaignName: {[propName: string]: boolean} = {};
 
   constructor(private _activatedRoute: ActivatedRoute,

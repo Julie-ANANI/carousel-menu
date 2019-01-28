@@ -52,27 +52,29 @@ export class AdminUsersComponent implements OnInit {
 
   private loadUsers(): void {
     this.userService.getAll(this._config).pipe(first()).subscribe((users: any) => {
-        this._users = users.result;
-        this._total = users._metadata.totalCount;
+      this._users = users.result;
+      this._total = users._metadata.totalCount;
 
-        this._tableInfos = {
-          _selector: 'admin-user',
-          _title: 'COMMON.USERS',
-          _content: this._users,
-          _total: this._total,
-          _isHeadable: true,
-          _isFiltrable: true,
-          _isDeletable: true,
-          _isSelectable: true,
-          _isEditable: true,
-          _columns: [
-            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-            {_attrs: ['domain'], _name: 'COMMON.DOMAIN', _type: 'TEXT'},
-            {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'}]
-        };
-      });
+      this._tableInfos = {
+        _selector: 'admin-user',
+        _title: 'COMMON.USERS',
+        _content: this._users,
+        _total: this._total,
+        _isHeadable: true,
+        _isFiltrable: true,
+        _isDeletable: true,
+        _isSelectable: true,
+        _isEditable: true,
+        _columns: [
+          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+          {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+          {_attrs: ['domain'], _name: 'COMMON.DOMAIN', _type: 'TEXT'},
+          {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'}]
+      };
+      }, () => {
+      this.translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
+    });
   }
 
 

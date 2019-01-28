@@ -117,6 +117,12 @@ export const ERROR = {
       'A': 'We are fetching the results, please',
       'B': 'have a patience!'
     }
-  }
+  },
+
+  'CAMPAIGN': {
+    'ADDED': 'The campaign has been added successfully.',
+    'UPDATED': 'The campaign has been updated successfully.',
+    'DELETED': 'The campaign and its professional have been deleted successfully.'
+  },
 
 };

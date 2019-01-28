@@ -251,6 +251,16 @@ export const COMMON = {
 
   'LOGOUT': {
     'TEXT': 'You will be redirected automatically to the login page.'
+  },
+
+  'CAMPAIGN': {
+    'LABEL': 'Campaign Name',
+    'LABEL_REQUIRED': 'The campaign name is required.',
+    'PLACEHOLDER': 'Enter the campaign name',
+    'DELETE_BOARD': {
+      'HEADING': 'Delete Board',
+      'CONTENT': 'Do you really want to delete the campaign?'
+    },
   }
 
 };

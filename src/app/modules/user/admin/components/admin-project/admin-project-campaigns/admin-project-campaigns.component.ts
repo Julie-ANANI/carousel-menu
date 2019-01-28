@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -8,54 +8,85 @@ import { Campaign } from '../../../../../../models/campaign';
 import { Innovation } from '../../../../../../models/innovation';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
-import {InnovationService} from '../../../../../../services/innovation/innovation.service';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-admin-project-campaigns',
   templateUrl: 'admin-project-campaigns.component.html',
-  styleUrls: ['admin-project-campaigns.component.scss']
+  styleUrls: ['admin-project-campaigns.component.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+
+        query(':enter', stagger('300ms', [
+          animate('300ms ease-in-out', keyframes([
+              style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
+              style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
+            ])
+          )]
+        ), { optional: true }),
+
+      ])
+    ])
+  ]
 })
+
 export class AdminProjectCampaignsComponent implements OnInit {
 
   private _innovation: Innovation;
-  private _form: FormGroup;
-  private _newCampaign: any;
-  private _campaigns: Array<Campaign> = [];
-  private _activateModal: boolean = false;
-  private _selectCampaign: any = null;
-  public editCampaignName: {[propName: string]: boolean} = {};
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _notificationsService: TranslateNotificationsService,
-              private _campaignService: CampaignService,
-              private _authService: AuthService) { }
+  private _newCampaign: any;
+
+  private _campaigns: Array<Campaign> = [];
+
+  private _activateModal: boolean = false;
+
+  private _selectCampaign: Campaign = null;
+
+  private _sidebarValue: SidebarInterface = {};
+
+  // public editCampaignName: {[propName: string]: boolean} = {};
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private innovationService: InnovationService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private campaignService: CampaignService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    this._innovation =  this._activatedRoute.snapshot.parent.data['innovation'];
-    this._form = new FormGroup({
-      title: new FormControl()
-    });
+    this._innovation =  this.activatedRoute.snapshot.parent.data['innovation'];
     this.getCampaigns();
   }
 
+
   private getCampaigns() {
-    this._innovationService.campaigns(this._innovation._id)
-      .pipe(first())
-      .subscribe((campaigns: any) => {
-          this._campaigns = campaigns.result;
-        },
-        (error: any) => this._notificationsService.error('ERROR', error.message)
-      );
+    this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
+      this._campaigns = campaigns.result;
+      },() => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
   }
 
-  public newCampaign(event: Event) {
+
+  getAuthorizationLevel(level: number): boolean {
+    const adminLevel = this.authService.adminLevel;
+    return adminLevel > level;
+  }
+
+
+  onClickAdd(event: Event) {
     event.preventDefault();
+
     let newTitle = undefined;
+
     if (this._innovation && this._innovation.name) {
       newTitle = this._innovation.name;
     } else {
-      newTitle = 'Nouvelle campagne';
+      newTitle = 'New campaign';
     }
 
     this._newCampaign = {
@@ -65,18 +96,79 @@ export class AdminProjectCampaignsComponent implements OnInit {
       title: (this._campaigns.length + 1) + '. ' + newTitle
     };
 
-    this._campaignService.create(this._newCampaign).pipe(first()).subscribe((c: any) => {
-      this._notificationsService.success('Campaigns', 'The campaign has been created!');
-      this.campaigns.push(c);
-    }, (error: any) => {
-      this._notificationsService.error('ERROR', error.message);
+    this.campaignService.create(this._newCampaign).pipe(first()).subscribe((response: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.ADDED');
+      this.campaigns.push(response);
+    },() => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
+
   }
 
-  public autorizedActions(level: number): boolean {
-    const adminLevel = this._authService.adminLevel;
-    return adminLevel > level;
+
+  onClickEdit(event: Event, campaign: Campaign) {
+    event.preventDefault();
+    this._selectCampaign = campaign;
+
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'CAMPAIGNS.SIDEBAR.TITLE',
+      type: 'editName'
+    };
+
   }
+
+
+  updateCampaign(formGroup: FormGroup) {
+    this._selectCampaign.title = formGroup.value['title'];
+
+    this.campaignService.put(this._selectCampaign).pipe(first()).subscribe((response: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
+      }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._selectCampaign = null;
+    });
+
+  }
+
+
+  OnClickUpdateStatus(event: Event, campaign: Campaign) {
+    event.preventDefault();
+
+    this.campaignService.updateStats(campaign._id).pipe(first()).subscribe((stats: any) => {
+      campaign.stats = stats;
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
+      }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  };
+
+
+  OnClickDelete(event: Event, campaign: Campaign) {
+    event.preventDefault();
+    this._selectCampaign = campaign;
+    this._activateModal = true;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._activateModal = false;
+  }
+
+
+  onClickSubmit() {
+    this.campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe((response: any) => {
+      this._selectCampaign = null;
+      this.getCampaigns();
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.DELETED');
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this._selectCampaign = null;
+    });
+    this._activateModal = false;
+  }
+
 
   get campaigns(): Array<any> {
     return this._campaigns;
@@ -86,55 +178,16 @@ export class AdminProjectCampaignsComponent implements OnInit {
     return this._activateModal;
   }
 
-  set activateModal(value: boolean) {
-    this._activateModal = value;
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
-  public updateStats(event: Event, campaign: Campaign) {
-    event.preventDefault();
-    this._campaignService.updateStats(campaign._id)
-      .pipe(first())
-      .subscribe((stats: any) => {
-        campaign.stats = stats;
-      }, (error: any) => {
-        this._notificationsService.error('ERROR', error.message);
-      });
-  };
-
-  public deleteCampaignModal(campaign: any) {
-    this._activateModal = true;
-    this._selectCampaign = campaign;
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
   }
 
-  public deleteCampaign(event: Event) {
-    event.preventDefault();
-    this._activateModal = false;
-    if (this._selectCampaign) {
-      this._campaignService.remove(this._selectCampaign._id)
-        .pipe(first())
-        .subscribe((result: any) => {
-          this._selectCampaign = null;
-          this.getCampaigns();
-          this._notificationsService.success('Campaigns', 'The campaign and its pros. have been removed.');
-        }, (error: any) => {
-          this._notificationsService.error('ERROR', error.message);
-          this._selectCampaign = null;
-        });
-    }
+  get selectCampaign(): Campaign {
+    return this._selectCampaign;
   }
 
-  public onSubmit(campaign: Campaign, event: Event) {
-    event.preventDefault();
-    campaign.title = this._form.get('title').value;
-    this._campaignService.put(campaign)
-      .pipe(first())
-      .subscribe((result: any) => {
-        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
-      }, (error: any) => {
-        this._notificationsService.error('ERROR', error.message);
-        this._selectCampaign = null;
-      });
-  }
-
-  public get form() { return this._form; }
 }
