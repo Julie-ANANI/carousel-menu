@@ -27,6 +27,7 @@ import { ProgressBarModule } from '../../../../utility-components/progress-bar/p
 import { SidebarTagsFormModule } from '../../../../sidebar/components/tags-form/sidebar-tags-form.module';
 import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebar/components/innovation-form/sidebar-innovation-form.module';
+import { SidebarCampaignFormModule } from '../../../../sidebar/components/campaign-form/sidebar-campaign-form.module';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { SidebarInnovationFormModule } from '../../../../sidebar/components/inno
     ProgressBarModule,
     SidebarTagsFormModule,
     SidebarEmailFormModule,
-    SidebarInnovationFormModule
+    SidebarInnovationFormModule,
+    SidebarCampaignFormModule
   ],
   declarations: [
     AdminProjectComponent,

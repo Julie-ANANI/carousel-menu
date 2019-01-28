@@ -120,7 +120,9 @@ export const ERROR = {
   },
 
   'CAMPAIGN': {
-    'ADDED': 'The campaign has been added successfully.'
+    'ADDED': 'The campaign has been added successfully.',
+    'UPDATED': 'The campaign has been updated successfully.',
+    'DELETED': 'The campaign and its professional have been deleted successfully.'
   },
 
 };

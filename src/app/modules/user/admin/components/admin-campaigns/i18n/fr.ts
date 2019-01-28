@@ -58,6 +58,20 @@ export const CAMPAIGNS = {
     'B': 'Créez la campagne en cliquant sur le bouton "Ajouter une campagne".'
   },
 
-  'PROFESSIONAL': 'Professionnel sur cette campagne'
+  'PROFESSIONAL': 'Professionnel',
+
+  'STATUS': 'statut',
+
+  'UPDATE_BUTTON': 'État de la mise à jour',
+
+  'CLONE_BUTTON': 'Clone',
+
+  'DELETE_BUTTON': 'Supprimer',
+
+  'EDIT_BUTTON': 'modifier',
+
+  'SIDEBAR': {
+    'TITLE': 'Modifier la campagne'
+  }
 
 };

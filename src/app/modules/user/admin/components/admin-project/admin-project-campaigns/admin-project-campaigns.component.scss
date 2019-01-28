@@ -1,6 +1,5 @@
 @import "../../../../../../../style/variables";
 
-
 #admin-project-campaigns-component {
 
   .section-add-campaign {
@@ -31,10 +30,13 @@
           border-radius: 3px;
           padding: 1.2rem;
 
+          a {
+            margin-right: .35rem;
+          }
+
           .title {
             font-size: 1.4rem;
             font-weight: 400;
-            margin-bottom: .6rem;
           }
 
           .title:hover {
@@ -42,7 +44,30 @@
             cursor: pointer;
           }
 
+          .update, .edit {
+            color: $primary-color;
+            font-size: 0.85rem;
+          }
+
+          .clone {
+            color: $disabled-text-color;
+          }
+
+          .clone:hover {
+            cursor: not-allowed;
+          }
+
+          .delete {
+            color: $alert-color;
+          }
+
+          .update:hover, .delete:hover, .edit:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+
           .details {
+            padding-top: .6rem;
             font-size: 0.85rem;
             color: $meta-color;
             font-weight: 600;
@@ -57,41 +82,5 @@
     }
 
   }
-
-
-}
-
-
-.btn-danger {
-  background-color: #ff0000;
-  color: #FFFFFF;
-  border-color: transparent;
-}
-
-.btn-action {
-  float: left;
-  margin-right: 10px;
-}
-
-#admin-campaign {
-  padding-top: 0;
-
-  .sticky-section {
-    background-color: white;
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
-
-}
-
-
-@media (min-width: 600px) {
-
-  .sticky-section {
-    position: sticky;
-    top: 0;
-    z-index: 3;
-  }
-
 
 }

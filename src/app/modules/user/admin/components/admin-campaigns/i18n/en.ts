@@ -58,7 +58,20 @@ export const CAMPAIGNS = {
     'B': 'Create the campaign by clicking on "Add Campaign" button.'
   },
 
-  'PROFESSIONAL': 'Professional on this campaign'
+  'PROFESSIONAL': 'Professional',
 
+  'STATUS': 'status',
+
+  'UPDATE_BUTTON': 'Update Status',
+
+  'CLONE_BUTTON': 'Clone',
+
+  'DELETE_BUTTON': 'Delete',
+
+  'EDIT_BUTTON': 'edit',
+
+  'SIDEBAR': {
+    'TITLE': 'Edit Campaign'
+  }
 
 };

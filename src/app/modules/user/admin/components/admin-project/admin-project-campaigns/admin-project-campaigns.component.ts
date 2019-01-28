@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -9,7 +9,8 @@ import { Innovation } from '../../../../../../models/innovation';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import {animate, keyframes, query, stagger, style, transition, trigger} from '@angular/animations';
+import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-admin-project-campaigns',
@@ -38,17 +39,17 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   private _innovation: Innovation;
 
-  private _form: FormGroup;
-
   private _newCampaign: any;
 
   private _campaigns: Array<Campaign> = [];
 
   private _activateModal: boolean = false;
 
-  private _selectCampaign: any = null;
+  private _selectCampaign: Campaign = null;
 
-  public editCampaignName: {[propName: string]: boolean} = {};
+  private _sidebarValue: SidebarInterface = {};
+
+  // public editCampaignName: {[propName: string]: boolean} = {};
 
   constructor(private activatedRoute: ActivatedRoute,
               private innovationService: InnovationService,
@@ -58,15 +59,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   ngOnInit() {
     this._innovation =  this.activatedRoute.snapshot.parent.data['innovation'];
-    this.buildForm();
     this.getCampaigns();
-  }
-
-
-  private buildForm() {
-    this._form = new FormGroup({
-      title: new FormControl()
-    });
   }
 
 
@@ -74,8 +67,8 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
       this._campaigns = campaigns.result;
       },() => {
-      this.translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR');
-      });
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
   }
 
 
@@ -107,9 +100,73 @@ export class AdminProjectCampaignsComponent implements OnInit {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.ADDED');
       this.campaigns.push(response);
     },() => {
-      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
+  }
+
+
+  onClickEdit(event: Event, campaign: Campaign) {
+    event.preventDefault();
+    this._selectCampaign = campaign;
+
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'CAMPAIGNS.SIDEBAR.TITLE',
+      type: 'editName'
+    };
+
+  }
+
+
+  updateCampaign(formGroup: FormGroup) {
+    this._selectCampaign.title = formGroup.value['title'];
+
+    this.campaignService.put(this._selectCampaign).pipe(first()).subscribe((response: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
+      }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._selectCampaign = null;
+    });
+
+  }
+
+
+  OnClickUpdateStatus(event: Event, campaign: Campaign) {
+    event.preventDefault();
+
+    this.campaignService.updateStats(campaign._id).pipe(first()).subscribe((stats: any) => {
+      campaign.stats = stats;
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
+      }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  };
+
+
+  OnClickDelete(event: Event, campaign: Campaign) {
+    event.preventDefault();
+    this._selectCampaign = campaign;
+    this._activateModal = true;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._activateModal = false;
+  }
+
+
+  onClickSubmit() {
+    this.campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe((response: any) => {
+      this._selectCampaign = null;
+      this.getCampaigns();
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.DELETED');
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this._selectCampaign = null;
+    });
+    this._activateModal = false;
   }
 
 
@@ -121,55 +178,16 @@ export class AdminProjectCampaignsComponent implements OnInit {
     return this._activateModal;
   }
 
-  set activateModal(value: boolean) {
-    this._activateModal = value;
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
-  public updateStats(event: Event, campaign: Campaign) {
-    event.preventDefault();
-    this.campaignService.updateStats(campaign._id)
-      .pipe(first())
-      .subscribe((stats: any) => {
-        campaign.stats = stats;
-      }, (error: any) => {
-        this.translateNotificationsService.error('ERROR', error.message);
-      });
-  };
-
-  public deleteCampaignModal(campaign: any) {
-    this._activateModal = true;
-    this._selectCampaign = campaign;
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
   }
 
-  public deleteCampaign(event: Event) {
-    event.preventDefault();
-    this._activateModal = false;
-    if (this._selectCampaign) {
-      this.campaignService.remove(this._selectCampaign._id)
-        .pipe(first())
-        .subscribe((result: any) => {
-          this._selectCampaign = null;
-          this.getCampaigns();
-          this.translateNotificationsService.success('Campaigns', 'The campaign and its pros. have been removed.');
-        }, (error: any) => {
-          this.translateNotificationsService.error('ERROR', error.message);
-          this._selectCampaign = null;
-        });
-    }
+  get selectCampaign(): Campaign {
+    return this._selectCampaign;
   }
 
-  public onSubmit(campaign: Campaign, event: Event) {
-    event.preventDefault();
-    campaign.title = this._form.get('title').value;
-    this.campaignService.put(campaign)
-      .pipe(first())
-      .subscribe((result: any) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
-      }, (error: any) => {
-        this.translateNotificationsService.error('ERROR', error.message);
-        this._selectCampaign = null;
-      });
-  }
-
-  public get form() { return this._form; }
 }
