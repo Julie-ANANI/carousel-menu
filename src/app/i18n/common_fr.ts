@@ -248,6 +248,6 @@ export const COMMON = {
 
   'LOGOUT': {
     'TEXT': 'Vous serez redirigé automatiquement vers la page de connexion.'
-  }
+  },
 
 };

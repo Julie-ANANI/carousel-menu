@@ -117,6 +117,10 @@ export const ERROR = {
       'A': 'Nous allons chercher les résultats, s\'il vous plaît soyez patient !',
       'B': 's\'il vous plaît soyez patient !'
     }
-  }
+  },
+
+  'CAMPAIGN': {
+    'ADDED': 'La campagne a été ajoutée avec succès.'
+  },
 
 };

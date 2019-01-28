@@ -251,6 +251,6 @@ export const COMMON = {
 
   'LOGOUT': {
     'TEXT': 'You will be redirected automatically to the login page.'
-  }
+  },
 
 };
