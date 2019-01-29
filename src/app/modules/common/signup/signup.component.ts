@@ -9,7 +9,7 @@ import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 import { FormGroup } from '@angular/forms';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user/user.service';
-import {RandomUtil} from "../../../utils/randomUtil";
+import { RandomUtil } from "../../../utils/randomUtil";
 
 @Component({
   selector: 'app-signup',
@@ -59,20 +59,21 @@ export class SignupComponent implements OnInit {
 
   }
 
-  public linkedInEvent() {
+
+  linkedInEvent() {
     const data = {
       domain: environment.domain,
       state: this._linkedInState
     };
-    this.authService.preRegisterDataOAuth2('linkedin', data)
-      .subscribe(_=>{
+    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
         console.log(_);
       }, err=>{
         console.error(err);
       }, ()=>{
         window.open(this._linkedInLink, '_self');
-      });
+    });
   }
+
 
   onSignUpClick(event: Event) {
     event.preventDefault();

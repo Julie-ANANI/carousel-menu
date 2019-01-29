@@ -7,7 +7,6 @@ import { User } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
-
 import { RandomUtil } from "../../../utils/randomUtil";
 
 @Component({
@@ -61,14 +60,13 @@ export class LoginComponent implements OnInit {
       domain: environment.domain,
       state: this._linkedInState
     };
-    this.authService.preRegisterDataOAuth2('linkedin', data)
-      .subscribe(_=>{
+    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
         console.log(_);
       }, err=>{
         console.error(err);
       }, ()=>{
         window.open(this._linkedInLink, '_self');
-      });
+    });
   }
 
 

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth/auth.service";
 //import { environment } from "../../../environments/environment";
 
 @Component({
