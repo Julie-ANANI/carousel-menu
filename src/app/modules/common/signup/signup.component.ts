@@ -9,6 +9,7 @@ import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 import { FormGroup } from '@angular/forms';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user/user.service';
+import {RandomUtil} from "../../../utils/randomUtil";
 
 @Component({
   selector: 'app-signup',
@@ -21,6 +22,8 @@ export class SignupComponent implements OnInit {
   private _isInvitation = false;
 
   private _linkedInLink: string;
+
+  private _linkedInState: string = Date.now().toString();
 
   private _sidebarValue: SidebarInterface = {};
 
@@ -51,8 +54,24 @@ export class SignupComponent implements OnInit {
       callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
       scope: 'r_emailaddress r_liteprofile r_basicprofile'
     };
-    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=U3iqySrotWCW8e0xRZO9dOC2&client_id=${linkedinConfig.clientID}`;
+    this._linkedInState = RandomUtil.generateUUID();
+    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
 
+  }
+
+  public linkedInEvent() {
+    const data = {
+      domain: environment.domain,
+      state: this._linkedInState
+    };
+    this.authService.preRegisterDataOAuth2('linkedin', data)
+      .subscribe(_=>{
+        console.log(_);
+      }, err=>{
+        console.error(err);
+      }, ()=>{
+        window.open(this._linkedInLink, '_self');
+      });
   }
 
   onSignUpClick(event: Event) {

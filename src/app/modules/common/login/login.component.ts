@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   private _formData: FormGroup;
 
   private _linkedInLink: string;
-  private _linkedInState: string = Date.now().toString()
+  private _linkedInState: string = Date.now().toString();
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
