@@ -1,4 +1,112 @@
+<div class="section-light-container" id="admin-campaign-component">
+
+  <!-- section header -->
+  <div class="section-header">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <div class="heading-wrapper">
+        <span>Campaign</span><span class="title">&nbsp;/&nbsp;{{ campaign.title }}</span>&nbsp;
+        <a [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/settings'" class="text-link">Back to project</a>
+      </div>
+
+      <div class="tabs-wrapper">
+        <ul class="tabs">
+          <li *ngFor="let tab of authorizedTabs">
+            <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
+              {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- section stats -->
+  <div class="section-stats">
+
+    <div class="professional-wrapper">
+      <div class="content-wrapper">
+        <h5>{{ 'CAMPAIGNS.PROFESSIONAL' | translate }}</h5>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.ADDED' | translate }}</h4>
+          <h3>{{ campaign.stats.nbPros }}</h3>
+        </div>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.TO_CONTACT' | translate }}</h4>
+          <h3>{{ campaign.stats.nbPros90 }} / {{ ratio(campaign.stats.nbPros90, campaign.stats.nbPros) }}%</h3>
+        </div>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.CONTACTED' | translate }}</h4>
+          <h3>{{ campaign.stats.nbProsSent }} / {{ ratio(campaign.stats.nbProsSent, campaign.stats.nbPros90) }}%</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="interaction-wrapper">
+      <div class="content-wrapper">
+        <h5>Interaction</h5>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.OPENED' | translate }}</h4>
+          <h3>{{ campaign.stats.nbProsOpened }} / {{ ratio(campaign.stats.nbProsOpened, campaign.stats.nbProsSent) }}%</h3>
+        </div>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.CLICKED' | translate }}</h4>
+          <h3>{{ campaign.stats.nbProsClicked }} / {{ ratio(campaign.stats.nbProsClicked, campaign.stats.nbProsOpened || 1) }}%</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="insights-wrapper">
+      <div class="content-wrapper">
+        <h5>Insights</h5>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.STARTED' | translate }}</h4>
+          <h3>{{ campaign.stats.nbStartedAnswers }} / {{ ratio(campaign.stats.nbStartedAnswers, campaign.stats.nbProsClicked || 1) }}%</h3>
+        </div>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.SENT' | translate }}</h4>
+          <h3>{{ campaign.stats.nbAnswers }} / {{ ratio(campaign.stats.nbAnswers, campaign.stats.nbStartedAnswers) }}%</h3>
+        </div>
+        <div class="stats">
+          <h4>{{ 'CAMPAIGNS.STATS.VALIDATED' | translate }}</h4>
+          <h3>{{ campaign.stats.nbValidatedAnswers }} / {{ ratio(campaign.stats.nbValidatedAnswers, campaign.stats.nbStartedAnswers) }}%</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--
 <div class="main-container" id="admin-campaign">
+
+
+ <table>
+      <tr>
+
+<td >
+
+  <div class="stats-wrapper">
+
+    <br>
+    <h3>{{ campaign.stats.nbPros }}</h3>
+  </div>
+</td>
+
+<td >
+
+</td>
+
+<td >
+
+</td>
+
+</tr>
+</table>
 
   <div class="page-header">
     <div class="container">
@@ -89,3 +197,4 @@
   </div>
 
 </div>
+-->

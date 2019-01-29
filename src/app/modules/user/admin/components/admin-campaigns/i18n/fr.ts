@@ -72,6 +72,17 @@ export const CAMPAIGNS = {
 
   'SIDEBAR': {
     'TITLE': 'Modifier la campagne'
+  },
+
+  'STATS': {
+    'ADDED': 'Ajouté',
+    'TO_CONTACT': 'Pour contacter',
+    'CONTACTED': 'Contacté',
+    'OPENED': 'Ouvert',
+    'CLICKED': 'Cliquez',
+    'STARTED': 'Démarré',
+    'SENT': 'Envoyé',
+    'VALIDATED': 'Validé'
   }
 
 };
