@@ -89,9 +89,11 @@
               <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
             </div>
 
-            <a [href]="linkedInLink" class="btn btn-secondary gtm-signin-linkedin">
-              <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
-            </a>
+              <button
+                      class="btn btn-secondary gtm-signin-linkedin"
+                      (click)="linkedInEvent()">
+                  <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+              </button>
           </div>
 
         </div>

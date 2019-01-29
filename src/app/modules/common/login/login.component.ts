@@ -8,6 +8,8 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
 
+import { RandomUtil } from "../../../utils/randomUtil";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
   private _formData: FormGroup;
 
   private _linkedInLink: string;
+  private _linkedInState: string = Date.now().toString()
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
@@ -42,15 +45,30 @@ export class LoginComponent implements OnInit {
   }
 
 
-  private linkedInUrl() {
+  private linkedInUrl(){
     const linkedinConfig = {
       url: 'https://www.linkedin.com/oauth/v2/authorization',
       clientID: '77283cf7nmchg3',
       callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
       scope: 'r_emailaddress r_liteprofile r_basicprofile'
     };
+    this._linkedInState = RandomUtil.generateUUID();
+    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
+  }
 
-    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=U3iqySrotWCW8e0xRZO9dOC2&client_id=${linkedinConfig.clientID}`;
+  public linkedInEvent() {
+    const data = {
+      domain: environment.domain,
+      state: this._linkedInState
+    };
+    this.authService.preRegisterDataOAuth2('linkedin', data)
+      .subscribe(_=>{
+        console.log(_);
+      }, err=>{
+        console.error(err);
+      }, ()=>{
+        window.open(this._linkedInLink, '_self');
+      });
   }
 
 

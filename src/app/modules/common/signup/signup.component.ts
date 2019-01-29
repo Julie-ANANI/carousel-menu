@@ -55,7 +55,6 @@ export class SignupComponent implements OnInit {
 
   }
 
-
   onSignUpClick(event: Event) {
     event.preventDefault();
 

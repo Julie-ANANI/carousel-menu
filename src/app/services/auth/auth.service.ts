@@ -107,6 +107,14 @@ export class AuthService {
         }));
   }
 
+  public preRegisterDataOAuth2(provider: string, data: any): Observable<any> {
+    return this._http.post(`/auth/preoauth/${provider}`, data)
+      .pipe(
+        map((res: any) => {
+          return res;
+        }));
+  }
+
   private _setConfirmedTo(newValue: boolean): void {
     this._confirmed = newValue;
     if (isPlatformBrowser(this.platformId)) {
