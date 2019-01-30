@@ -9,6 +9,7 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {Tag} from '../../../../models/tag';
 import {InnovCard} from '../../../../models/innov-card';
+import {SidebarInterface} from '../../interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-user-answer',
@@ -17,6 +18,12 @@ import {InnovCard} from '../../../../models/innov-card';
 })
 
 export class UserAnswerComponent implements OnInit {
+
+  @Input() set sidebarState(value: SidebarInterface) {
+    if (value === undefined || 'active') {
+      this.reinitializeVariables();
+    }
+  }
 
   @Input() innovationId: string;
   @Input() questions: Array<Question>;
@@ -88,6 +95,12 @@ export class UserAnswerComponent implements OnInit {
     }
 
   }
+
+
+  private reinitializeVariables() {
+    this.editMode = false;
+  }
+
 
   resetEdit() {
     this.editJob = false;

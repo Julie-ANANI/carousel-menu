@@ -8,104 +8,139 @@ import { Campaign } from '../../../../../../models/campaign';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
-import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-admin-campaign-answers',
   templateUrl: './admin-campaign-answers.component.html',
   styleUrls: ['./admin-campaign-answers.component.scss']
 })
+
 export class AdminCampaignAnswersComponent implements OnInit {
 
   private _campaign: Campaign;
+
   private _answers: Array<Answer> = [];
+
   private _total = 0;
+
   private _questions: Array<Question> = [];
+
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
-  private _modalAnswer: Answer;
-  editMode = new Subject<boolean>();
-  sidebarTemplateValue: SidebarInterface = {};
+  private _modalAnswer: Answer = null;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _campaignService: CampaignService,
+  private _sidebarTemplateValue: SidebarInterface = {};
+
+  adminMode = true;
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private campaignService: CampaignService,
               private answerService: AnswerService,
-              private notificationService: TranslateNotificationsService,
-              private _authService: AuthService) { }
+              private translateNotificationsService: TranslateNotificationsService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
+    this.adminMode = this.authService.adminLevel > 2;
     this.loadAnswers();
-    this._modalAnswer = null;
+
     if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
       this._campaign.innovation.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
       });
+
     }
   }
 
-  loadAnswers(): void {
-    this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((result: {answers: {localAnswers: Array<Answer>, draftAnswers: Array<Answer>}}) => {
+
+  private loadAnswers() {
+    this.campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
       this._answers = result.answers.localAnswers;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
-  public autorizedActions(level: number): boolean {
-    const adminLevel = this._authService.adminLevel;
+
+  getAuthorizedActions(level: number): boolean {
+    const adminLevel = this.authService.adminLevel;
     return adminLevel > level;
   }
 
-  public adminMode(): boolean {
-    return this._authService.adminLevel > 2;
+
+  importAnswers(file: File, event: Event) {
+    event.preventDefault();
+
+    this.answerService.importAsCsv(this._campaign._id, file).pipe(first()).subscribe(() => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
+      this.loadAnswers();
+      }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
   }
 
-  public seeAnswer(answer: Answer) {
+
+  exportAnswers(event: Event) {
+    event.preventDefault();
+    this.answerService.exportAsCsvByCampaign(this._campaign._id, false);
+  }
+
+
+  seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
 
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'COMMON.EDIT_INSIGHT',
       size: '726px'
     };
 
   }
 
-  public exportAnswers(event: Event) {
-    event.preventDefault();
-    this.answerService.exportAsCsvByCampaign(this._campaign._id, false);
-  }
-
-  public importAnswers(file: File, event: Event) {
-    event.preventDefault();
-    this.answerService.importAsCsv(this._campaign._id, file)
-      .subscribe((res: any) => {
-        this.notificationService.success('ERROR.SUCCESS', res.message);
-        this.loadAnswers();
-      }, (err: any) => {
-        this.notificationService.error('ERROR.ERROR', err.message);
-      });
-  }
-
-  public changeStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
+  changeStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
     rows.forEach(value => {
       value.status = status;
-      this.answerService.save(value._id, value).pipe(first()).subscribe((_res: any) => {
+      this.answerService.save(value._id, value).pipe(first()).subscribe(() => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.STATUS_UPDATE');
         this.loadAnswers();
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
     });
   }
 
-  public closeSidebar(state: SidebarInterface) {
-    this.sidebarTemplateValue.animate_state = state.animate_state;
-    this.editMode.next(false);
+  get questions() {
+    return this._questions;
   }
 
-  get questions() { return this._questions; }
-  get modalAnswer() { return this._modalAnswer; }
-  set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
-  get total() { return this._total; }
-  get campaign() { return this._campaign; }
-  get answers() { return this._answers; }
+  get modalAnswer() {
+    return this._modalAnswer;
+  }
+
+  set modalAnswer(modalAnswer: Answer) {
+    this._modalAnswer = modalAnswer;
+  }
+
+  get total() {
+    return this._total;
+  }
+
+  get campaign() {
+    return this._campaign;
+  }
+
+  get answers() {
+    return this._answers;
+  }
+
+  get sidebarTemplateValue(): SidebarInterface {
+    return this._sidebarTemplateValue;
+  }
+
+  set sidebarTemplateValue(value: SidebarInterface) {
+    this._sidebarTemplateValue = value;
+  }
+
 }

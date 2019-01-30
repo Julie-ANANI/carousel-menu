@@ -17,9 +17,9 @@ export const CAMPAIGNS = {
 
   'ANSWERS': 'Answers',
 
-  'EXPORT-ANSWERS': 'Export',
+  'EXPORT_ANSWERS': 'Export',
 
-  'IMPORT-ANSWERS': 'Import',
+  'IMPORT_ANSWERS': 'Import',
 
   'EMAIL_CONFIDENCE': 'Email confidence',
 
@@ -83,6 +83,11 @@ export const CAMPAIGNS = {
     'STARTED': 'Started',
     'SENT': 'Sent',
     'VALIDATED': 'Validated'
+  },
+
+  'NO_ANSWERS': {
+    'A': 'Don\'t have any answers?',
+    'B': 'Try to add some by clicking on "Import" button.'
   }
 
 };

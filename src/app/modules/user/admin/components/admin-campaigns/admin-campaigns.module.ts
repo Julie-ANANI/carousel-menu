@@ -29,6 +29,7 @@ import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workf
 import { AutocompleteInputModule } from "../../../../utility-components/autocomplete-input/autocomplete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { SidebarBatchModule } from '../../../../sidebar/components/sidebar-batch/sidebar-batch.module';
+import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { SidebarBatchModule } from '../../../../sidebar/components/sidebar-batch
     PipeModule,
     AutocompleteInputModule,
     SidebarUserAnswerModule,
-    SidebarBatchModule
+    SidebarBatchModule,
+    MessageSpaceModule
   ],
   declarations: [
     AdminCampaignsComponent,

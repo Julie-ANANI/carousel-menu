@@ -93,7 +93,8 @@ export const ERROR = {
 
   'ANSWER': {
     'UPDATED': 'Réponse mise à jour.',
-    'IMPORTED': 'Réponse importeé.',
+    'IMPORTED': 'La réponse a été importée avec succès.',
+    'STATUS_UPDATE': 'Le statut a été mis à jour avec succès.'
   },
 
   'NOT_MODIFIED': {

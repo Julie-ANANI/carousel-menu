@@ -93,7 +93,8 @@ export const ERROR = {
 
   'ANSWER': {
     'UPDATED': 'The answer has been updated.',
-    'IMPORTED': 'The answer has been imported.',
+    'IMPORTED': 'The answer has been imported successfully.',
+    'STATUS_UPDATE': 'The status has been updated successfully.'
   },
 
   'NOT_MODIFIED': {
