@@ -1,7 +1,7 @@
 <div id="message-space-component">
 
   <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px' }">
-    {{ firstLine | translate }}
+    <ng-container *ngIf="firstLine">{{ firstLine | translate }}</ng-container>
     <ng-container *ngIf="secondLine">
       <br>
       {{ secondLine | translate }}

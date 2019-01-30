@@ -24,6 +24,7 @@ import { SharedWorldmapModule } from '../../../../shared/components/shared-world
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedProjectDescriptionModule } from '../../../../shared/components/shared-project-description/shared-project-description.module';
+import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SharedProjectDescriptionModule } from '../../../../shared/components/sh
     SharedWorldmapModule,
     SidebarUserAnswerModule,
     SharedMarketReportModule,
-    SharedProjectDescriptionModule
+    SharedProjectDescriptionModule,
+    MessageSpaceModule
   ],
   declarations: [
     ProjectComponent,

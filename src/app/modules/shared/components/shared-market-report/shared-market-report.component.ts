@@ -143,6 +143,36 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
 
+  getMessage():string {
+    let message = '';
+
+    switch (this._innovation.status) {
+
+      case 'EDITING':
+        if (this._innovation.reviewing) {
+          message = 'MARKET_REPORT.MESSAGE.REVIEWING';
+        } else if (!this._innovation.reviewing) {
+          message = 'MARKET_REPORT.MESSAGE.EDITING';
+        }
+        break;
+
+      case 'EVALUATING':
+        message = 'MARKET_REPORT.MESSAGE.EVALUATING';
+        break;
+
+      case 'SUBMITTED':
+        message = 'MARKET_REPORT.MESSAGE.SUBMITTED';
+        break;
+
+      default:
+      // do nothing...
+
+    }
+
+    return message;
+  }
+
+
   /**
    * This function is checking the are we on the admin side, and if yes than also
    * checking the admin level.

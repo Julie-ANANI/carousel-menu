@@ -136,6 +136,32 @@ export class ExplorationComponent implements OnInit {
   }
 
 
+  getMessage():string {
+    let message = '';
+
+    switch (this._innovation.status) {
+
+      case 'EDITING':
+        if (this._innovation.reviewing) {
+          message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING';
+        } else if (!this._innovation.reviewing) {
+          message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING';
+        }
+        break;
+
+      case 'SUBMITTED':
+        message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED';
+        break;
+
+      default:
+        // do nothing...
+
+    }
+
+    return message;
+  }
+
+
   onClickShow(answer: Answer) {
     this._modalAnswer = answer;
 

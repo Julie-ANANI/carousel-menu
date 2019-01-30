@@ -14,6 +14,7 @@ import { ProjectModule } from './components/project/project.module';
 import { AccountModule } from './components/account/account.module';
 import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';
 import { SynthesisCompleteModule } from '../../public/share/component/synthesis-complete/synthesis-complete.module';
+import { MessageSpaceModule } from '../../utility-components/message-space/message-space.module';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SynthesisCompleteModule } from '../../public/share/component/synthesis-
     ProjectModule,
     AccountModule,
     SynthesisListModule,
-    SynthesisCompleteModule
+    SynthesisCompleteModule,
+    MessageSpaceModule
   ],
   declarations: [
     ClientComponent,

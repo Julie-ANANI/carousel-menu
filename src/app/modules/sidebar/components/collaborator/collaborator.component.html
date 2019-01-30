@@ -28,17 +28,7 @@
     <!-- Bot -->
     <div *ngIf="innovationCollaborators.length === 0 && collaboratorsInvited.length === 0">
       <div class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
-        <span class="bot-rect">
-          {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
-        </span>
-        <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-triangle" alt="bot">
-        <div>
-          <img
-            src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg"
-            class="bot-image"
-            alt="Bot">
-        </div>
+        <app-message-space [messageA]="'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE'" [widthMax]="'314'"></app-message-space>
       </div>
     </div>
 
