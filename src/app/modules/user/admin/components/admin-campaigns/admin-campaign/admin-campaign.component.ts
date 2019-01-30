@@ -16,7 +16,7 @@ export class AdminCampaignComponent implements OnInit {
 
   private _campaign: Campaign;
 
-  private _tabs = ['details', 'history', 'search', 'pros', 'answers', 'mails', 'templates'];
+  private _tabs = ['answers', 'search', 'pros', 'templates', 'mails', 'details', 'history'];
 
   constructor(private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,
@@ -61,29 +61,32 @@ export class AdminCampaignComponent implements OnInit {
   }
 
 
-  autorizedActions(level: number): boolean {
+  authorizedActions(level: number): boolean {
     const adminLevel = this.authService.adminLevel;
     return adminLevel > level;
   }
 
+
   updateStats() {
-    this.campaignService.updateStats(this._campaign._id)
-      .pipe(first())
-      .subscribe((stats: any) => {
-        this._campaign.stats = stats;
-        this.computeStats();
-      }, (error: any) => {
-        this.translateNotificationsService.error('ERROR', error.message);
-      });
+    this.campaignService.updateStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
+      this._campaign.stats = stats;
+      this.computeStats();
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
+      }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
   };
+
 
   get authorizedTabs(): Array<string> {
     const adminLevel = this.authService.adminLevel;
+
     if(adminLevel > 2) {
       return this.tabs;
     } else {
       return ['answers'];
     }
+
   }
 
   get baseUrl(): any {
