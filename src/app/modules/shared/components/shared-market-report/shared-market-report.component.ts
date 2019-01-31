@@ -328,8 +328,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
   loadFilter(name: string) {
-    this.innovationService.getFilter(this._innovation._id, name).subscribe((results) => {
-      console.log(results);
+    this.innovationService.getFilter(this._innovation._id, name).subscribe((result) => {
+      if (result) {
+        this.filterService.addFilter({
+          status: 'CUSTOM',
+          questionTitle: {en: result.name},
+          value: result.answers
+        });
+      }
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });

@@ -87,6 +87,11 @@ export class FilterService {
             return this._sharedWorld.isCountryInSelectedContinents(country,  filter.value);
           });
           break;
+        case 'CUSTOM':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return filter.value.includes(answer._id);
+          });
+          break;
         case 'LIST':
           filteredAnswers = filteredAnswers.filter((answer) => {
             return Array.isArray(answer.answers[filter.questionId]) &&
