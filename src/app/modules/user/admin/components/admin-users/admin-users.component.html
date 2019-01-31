@@ -90,30 +90,6 @@
           </app-user-form>
         </sidebar>
 
-        &lt;!&ndash; Modal to ask admin to sure about deleting the user &ndash;&gt;
-        <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
-          <div class="modal-overlay" (click)="closeModal($event)"></div>
-          <div class="modal-container">
-            <div class="modal-header">
-              <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-              <div class="modal-title">{{ 'USERS.DELETE' | translate }}</div>
-            </div>
-            <div class="modal-body">
-              <div class="content">
-                {{ 'USERS.PITCH-DELETE' | translate }}
-                <ul>
-                  <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
-                </ul>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-sm ghost-delete" (click)="removeUsers()">
-                {{ 'COMMON.DELETE' | translate }}
-              </button>
-            </div>
-          </div>
-        </div>
-
     </div>
   </div>
 </div>

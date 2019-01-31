@@ -27,25 +27,20 @@
       <div class="tab-wrapper">
         <ul class="tabs">
           <li>
-            <a [routerLink]="['setup']" [ngClass]="{'active': currentPage === 'setup'}" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
+            <a [routerLink]="['setup']" routerLinkActive="active" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
               <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage === 'exploration'}" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
+            <a [routerLink]="['exploration']" routerLinkActive="active" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
               <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage === 'synthesis'}" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
+            <a [routerLink]="['synthesis']" routerLinkActive="active" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
               <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
             </a>
           </li>
-          <!--<li>
-            <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
-              <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
-            </a>
-          </li>-->
         </ul>
       </div>
 
@@ -73,6 +68,9 @@
     <app-shared-market-report [project]="innovation"></app-shared-market-report>
   </div>
   <!-- /synthesis section -->
+
+  <!-- TODO: remove currentPage parameter & use router-outlet -->
+  <!-- <router-outlet></router-outlet> -->
 
 
 </section>

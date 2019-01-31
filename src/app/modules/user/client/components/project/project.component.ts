@@ -29,13 +29,20 @@ export class ProjectComponent implements OnInit {
   ngOnInit() {
 
     this.activatedRoute.data.subscribe((response) => {
-      if (response) {
+      if (response && response['innovation']) {
         this._innovation = response['innovation'];
       }
     });
 
     const url = this.router.routerState.snapshot.url.split('/');
-    this._currentPage = url.length > 0 ? url[4] : 'setup';
+
+    if (url.length > 4) {
+      const questionMark = url[4].indexOf('?');
+      this._currentPage = questionMark > 0 ? url[4].slice(0, questionMark) : url[4];
+    } else {
+      this._currentPage = 'setup';
+    }
+
 
     this.translateTitleService.setTitle(this._innovation.name || 'Project');
 
@@ -59,8 +66,6 @@ export class ProjectComponent implements OnInit {
         this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg';
         break;
 
-      default:
-        // do nothing...
     }
   }
 

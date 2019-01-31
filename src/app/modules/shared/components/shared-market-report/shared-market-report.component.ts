@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, Input, AfterViewInit, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -126,13 +127,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
               private filterService: FilterService,
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService,
-              private worldmapService: SharedWorldmapService) { }
+              private worldmapService: SharedWorldmapService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.filterService.reset();
     this.initializeReport();
     this.loadSharedSynthesisList();
     PageScrollConfig.defaultDuration = 800;
+    console.log(this.activatedRoute.snapshot.queryParams);
   }
 
 
