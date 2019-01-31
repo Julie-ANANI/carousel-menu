@@ -178,7 +178,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * checking the admin level.
    */
   private isAdminSide() {
-    this._adminSide = this.location.path().slice(0, 6) === '/admin';
+    this._adminSide = this.location.path().slice(5, 11) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
     this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
