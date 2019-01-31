@@ -226,6 +226,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
 
+  private updateAnswersToShow(): void {
+    this._filteredAnswers = this.filterService.filter(this._answers);
+    this._answersOrigins = this.worldmapService.getCountriesRepartition(
+      this._filteredAnswers.map(x => x.country.flag || x.professional.country)
+    );
+  }
+
+
   /***
    * This function is to fetch the answers from the server.
    */
@@ -242,16 +250,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
       this._filteredAnswers = this._answers;
 
-      this._answersOrigins = this.worldmapService.getCountriesRepartition(
-        this._filteredAnswers.map(x => x.country.flag || x.professional.country)
-      );
-
-      this.filterService.filtersUpdate.subscribe((_) => {
-        this._filteredAnswers = this.filterService.filter(this._answers);
-        this._answersOrigins = this.worldmapService.getCountriesRepartition(
-          this._filteredAnswers.map(x => x.country.flag || x.professional.country)
-        );
-      });
+      this.updateAnswersToShow();
+      this.filterService.filtersUpdate.subscribe(() => this.updateAnswersToShow());
 
       this._companies = response.answers.map((answer: any) => answer.company || {
         name: answer.professional.company
