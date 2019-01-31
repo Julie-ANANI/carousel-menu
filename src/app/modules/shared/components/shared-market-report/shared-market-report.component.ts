@@ -15,7 +15,7 @@ import { Innovation } from '../../../../models/innovation';
 import { environment } from '../../../../../environments/environment';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
-import { SharedSynthesis } from './models/shared-synthesis';
+import { SharedFilter } from './models/shared-filter';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -82,11 +82,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _innovationEndModal: boolean;
 
-  private _showSynthesisModal = false;
+  private _showFilterModal = false;
 
-  private _synthesisName = '';
+  private _filterName = '';
 
-  private _sharedSynthesisList: Array<SharedSynthesis> = [];
+  private _sharedFiltersList: Array<SharedFilter> = [];
 
   private _innovationExport = false;
 
@@ -133,9 +133,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   ngOnInit() {
     this.filterService.reset();
     this.initializeReport();
-    this.loadSharedSynthesisList();
+    this.loadSharedFiltersList();
     PageScrollConfig.defaultDuration = 800;
-    console.log(this.activatedRoute.snapshot.queryParams);
+    if (this.activatedRoute.snapshot.queryParams['filter']) {
+      this.loadFilter(this.activatedRoute.snapshot.queryParams['filter']);
+    }
   }
 
 
@@ -314,11 +316,20 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     };
   }
 
-  loadSharedSynthesisList() {
-    this.innovationService.sharedSynthesisList(this._innovation._id).subscribe((results) => {
+  loadSharedFiltersList() {
+    this.innovationService.getFiltersList(this._innovation._id).subscribe((results) => {
       if (Array.isArray(results)) {
-        this._sharedSynthesisList = results;
+        this._sharedFiltersList = results;
       }
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
+  }
+
+
+  loadFilter(name: string) {
+    this.innovationService.getFilter(this._innovation._id, name).subscribe((results) => {
+      console.log(results);
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
@@ -807,24 +818,24 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     window.print();
   }
 
-  public createSynthesis(event: Event): void {
+  public createFilter(event: Event): void {
     event.preventDefault();
-    this._showSynthesisModal = true;
+    this._showFilterModal = true;
   }
 
-  public shareNewSynthesisVersion(event: Event): void {
+  public shareNewFilter(event: Event): void {
     event.preventDefault();
     const data = {
-      name: this.synthesisName,
+      name: this._filterName,
       answers: this._filteredAnswers.map((answer) => answer._id)
     };
-    this.innovationService.shareSynthesis(this._innovation._id, data).subscribe((res) => {
-      this._sharedSynthesisList.push(res);
-      this.synthesisName = '';
+    this.innovationService.saveFilter(this._innovation._id, data).subscribe((res) => {
+      this._sharedFiltersList.push(res);
+      this._filterName = '';
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
-    this._showSynthesisModal = false;
+    this._showFilterModal = false;
   }
 
   /***
@@ -944,10 +955,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._innovation.owner.name || '';
   }
 
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
-  }
-
   get innovation(): Innovation {
     return this._innovation;
   }
@@ -960,24 +967,24 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._isOwner;
   }
 
-  get showSynthesisModal(): boolean {
-    return this._showSynthesisModal;
+  get showFilterModal(): boolean {
+    return this._showFilterModal;
   }
 
-  set showSynthesisModal(value: boolean) {
-    this._showSynthesisModal = value;
+  set showFilterModal(value: boolean) {
+    this._showFilterModal = value;
   }
 
-  get synthesisName(): string {
-    return this._synthesisName;
+  get filterName(): string {
+    return this._filterName;
   }
 
-  set synthesisName(value: string) {
-    this._synthesisName = value;
+  set filterName(value: string) {
+    this._filterName = value;
   }
 
-  get sharedSynthesisList(): Array<SharedSynthesis> {
-    return this._sharedSynthesisList;
+  get sharedFiltersList(): Array<SharedFilter> {
+    return this._sharedFiltersList;
   }
 
   get openModal(): boolean {

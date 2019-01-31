@@ -71,12 +71,16 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId + '/marketReport', { payload: data });
   }
 
-  public shareSynthesis(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
-    return this._http.post('/innovation/' + innovationId + '/marketReport', data);
+  public saveFilter(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
+    return this._http.post('/innovation/' + innovationId + '/filter', data);
   }
 
-  public sharedSynthesisList(innovationId: string): Observable<any> {
-    return this._http.get('/synthesis/innovation/' + innovationId);
+  public getFiltersList(innovationId: string): Observable<any> {
+    return this._http.get('/filter/innovation/' + innovationId);
+  }
+
+  public getFilter(innovationId: string, filterName: string): Observable<any> {
+    return this._http.get('/filter/innovation/' + innovationId + '/' + filterName);
   }
 
   public updatePreset(innovationId: string, data: any): Observable<any> {

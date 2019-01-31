@@ -142,7 +142,7 @@
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_END' | translate }}
               </button>
             </ng-container>
-            <button class="btn btn-primary gtm-share-synthesis" (click)="createSynthesis($event)">
+            <button class="btn btn-primary gtm-share-synthesis" (click)="createFilter($event)">
               {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
             </button>
           </div>
@@ -886,22 +886,24 @@
 </app-sidebar>
 
 <!-- Share static synthesis -->
-<app-modal [(showModal)]="showSynthesisModal">
+<app-modal [(showModal)]="showFilterModal">
   <h1 [textContent]="'MARKET_REPORT.SHARE_MODAL.TITLE'" translate></h1>
-  <form #shareSynthesisForm="ngForm" (ngSubmit)="shareNewSynthesisVersion($event)">
+  <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter($event)">
     <div class="form-group">
       <label for="name" [textContent]="'MARKET_REPORT.SHARE_MODAL.NAME'" translate></label>
       <input type="text" class="form-control" id="name" name="name"
-             required [(ngModel)]="synthesisName" #name="ngModel">
+             required [(ngModel)]="filterName" #name="ngModel">
     </div>
     <button class="btn btn-success" type="submit"
-            [disabled]="!shareSynthesisForm.form.valid"
+            [disabled]="!shareFilterForm.form.valid"
             [textContent]="'MARKET_REPORT.SHARE_MODAL.SUBMIT'" translate></button>
   </form>
-  <ng-container *ngIf="sharedSynthesisList.length > 0">
+  <ng-container *ngIf="sharedFiltersList.length > 0">
     <h3 [textContent]="'MARKET_REPORT.SHARE_MODAL.EXISTINGSYNTHESIS'" translate></h3>
     <ul>
-      <li *ngFor="let synthesis of sharedSynthesisList" [innerHtml]="synthesis.name"></li>
+      <li *ngFor="let filter of sharedFiltersList">
+        <a [routerLink]="['synthesis']" [queryParams]="{filter: filter.name}" [innerHtml]="filter.name"></a>
+      </li>
     </ul>
   </ng-container>
 </app-modal>
