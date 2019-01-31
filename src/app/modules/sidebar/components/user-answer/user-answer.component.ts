@@ -1,15 +1,14 @@
-import {Component, Input, OnInit } from '@angular/core';
-import {Subject} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import {Question} from '../../../../models/question';
-import {Answer} from '../../../../models/answer';
-import {TranslateService} from '@ngx-translate/core';
-import {AnswerService} from '../../../../services/answer/answer.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {Tag} from '../../../../models/tag';
-import {InnovCard} from '../../../../models/innov-card';
-import {SidebarInterface} from '../../interfaces/sidebar-interface';
+import { Question } from '../../../../models/question';
+import { Answer } from '../../../../models/answer';
+import { TranslateService } from '@ngx-translate/core';
+import { AnswerService } from '../../../../services/answer/answer.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { Tag } from '../../../../models/tag';
+import { InnovCard } from '../../../../models/innov-card';
+import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-user-answer',
@@ -25,10 +24,13 @@ export class UserAnswerComponent implements OnInit {
     }
   }
 
-  @Input() innovationId: string;
+  @Input() set projectId(value: string) {
+    this.innovationId = value;
+  }
+
   @Input() questions: Array<Question>;
+
   @Input() adminMode: boolean;
-  @Input() mode: Subject<boolean>;
 
   @Input() set userAnswer(value: Answer) {
     this.modalAnswer = value;
@@ -38,12 +40,20 @@ export class UserAnswerComponent implements OnInit {
   }
 
   modalAnswer: Answer;
+
   floor: any;
+
   displayEmail = false;
+
   editJob = false;
+
   editCompany = false;
+
   editCountry = false;
+
   editMode = false;
+
+  innovationId = '';
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
@@ -52,12 +62,6 @@ export class UserAnswerComponent implements OnInit {
 
   ngOnInit() {
     // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
-
-    if (this.mode) {
-      this.mode.subscribe((res: boolean) => {
-        this.editMode = res;
-      });
-    }
 
     this.floor = Math.floor;
 
@@ -131,8 +135,8 @@ export class UserAnswerComponent implements OnInit {
         .pipe(first())
         .subscribe((_: any) => {
           this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
-        }, (err: any) => {
-          this.translateNotificationsService.error('ERROR.ERROR', err);
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
     }
 
@@ -158,7 +162,6 @@ export class UserAnswerComponent implements OnInit {
   }
 
   sendEmail(event: Event, status: any) {
-    console.log('click');
     if (event.target['checked']) {
       this.updateStatus(event, status);
     } else {
@@ -203,8 +206,8 @@ export class UserAnswerComponent implements OnInit {
     event.preventDefault();
     this.answerService.importFromQuiz(this.modalAnswer).pipe(first()).subscribe((_res: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
-    }, (err: any) => {
-      this.translateNotificationsService.error('ERROR.ERROR', err);
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 

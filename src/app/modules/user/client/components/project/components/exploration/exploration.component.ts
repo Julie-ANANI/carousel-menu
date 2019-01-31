@@ -173,10 +173,6 @@ export class ExplorationComponent implements OnInit {
 
   }
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
 
   percentage(value1: number, value2: number): number {
     if (value2 === 0 || value2 === undefined) {

@@ -854,12 +854,12 @@
 
 
 <!-- Insight preview -->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [(template)]="sidebarTemplateValue">
   <app-user-answer
     [adminMode]="adminSide"
-    [mode]="editMode"
+    [sidebarState]="sidebarTemplateValue.animate_state"
     [(userAnswer)]="modalAnswer"
-    [innovationId]="innovation._id"
+    [projectId]="innovation._id"
     [questions]="questions">
   </app-user-answer>
 </app-sidebar>

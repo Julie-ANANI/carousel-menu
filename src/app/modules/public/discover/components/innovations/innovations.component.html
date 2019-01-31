@@ -232,7 +232,7 @@
 
 
     <!-- Pagination section -->
-    <div *ngIf="localResults > 0 && !noResultFound" class="section-pagination">
+    <div *ngIf="localResults > 0 && !noResultFound" class="pagination-wrapper">
       <app-pagination
         [total]="localResults"
         [propertyName]="'discover-page'"

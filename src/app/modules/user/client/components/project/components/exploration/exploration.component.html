@@ -181,13 +181,13 @@
 
 
 <!-- sidebar to view user answer -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [(template)]="sidebarValue">
   <app-user-answer
     [adminMode]="false"
-    [mode]="false"
+    [sidebarState]="sidebarValue.animate_state"
     [(userAnswer)]="modalAnswer"
     [questions]="questions"
-    [innovationId]="innovation._id">
+    [projectId]="innovation._id">
   </app-user-answer>
 </app-sidebar>
 <!-- /sidebar to view user answer -->

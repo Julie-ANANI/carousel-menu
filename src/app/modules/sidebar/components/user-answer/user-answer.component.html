@@ -1,18 +1,21 @@
-<div *ngIf="modalAnswer" class="answer-wrapper">
+<div *ngIf="modalAnswer" class="user-answer-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- Save button -->
-    <div *ngIf="adminMode" class="save text-right" [ngSwitch]="modalAnswer.localStatus">
+    <!-- section save -->
+    <div *ngIf="adminMode" class="section-save" [ngSwitch]="modalAnswer?.localStatus">
+
       <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
         {{'COMMON.IMPORT' | translate}}
       </button>
+
       <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
         {{'COMMON.SAVE' | translate}}
       </button>
+
     </div>
 
-    <!-- User detail section -->
-    <div class="detail">
+    <!-- section user details -->
+    <div class="section-details">
 
       <!-- Name, flag and rating -->
       <div class="title">
@@ -138,11 +141,10 @@
       </div>
 
     </div>
-    <!-- /User detail -->
 
-    <!-- Tags section -->
-    <div class="tag-wrapper">
-      <label class="form-label" *ngIf="modalAnswer?.tags.length > 0">Tags</label>
+    <!-- section tags -->
+    <div *ngIf="modalAnswer?.tags.length > 0" class="section-tags">
+      <label class="form-label">Tags</label>
       <app-shared-tag-item
         [tags]="modalAnswer.tags"
         [editMode]="editMode"
@@ -152,10 +154,9 @@
         (removeTag)="removeTag($event)">
       </app-shared-tag-item>
     </div>
-    <!-- /Tags -->
 
-    <!-- Status section -->
-    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="status-wrapper">
+    <!-- section status -->
+    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="section-status">
 
       <!-- Rejected -->
       <div class="status-rejected">
@@ -204,13 +205,10 @@
         </label>
       </div>
 
-
-
     </div>
-    <!-- /Status -->
 
-    <!-- Questions section -->
-    <div class="ques-wrapper">
+    <!-- section questions -->
+    <div class="section-questions">
       <div *ngFor="let question of questions">
         <app-answer-question
           [editMode]="editMode"
@@ -221,7 +219,6 @@
         </app-answer-question>
       </div>
     </div>
-    <!-- /Questions -->
 
   </div>
 </div>

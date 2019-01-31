@@ -31,9 +31,9 @@ export class AdminCampaignAnswersComponent implements OnInit {
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer = null;
 
-  private _sidebarTemplateValue: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {};
 
-  adminMode = true;
+  private _adminMode = true;
 
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
@@ -43,7 +43,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
-    this.adminMode = this.authService.adminLevel > 2;
+    this._adminMode = this.authService.adminLevel > 2;
     this.loadAnswers();
 
     if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
@@ -91,8 +91,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
   seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
 
-    this._sidebarTemplateValue = {
-      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'COMMON.EDIT_INSIGHT',
       size: '726px'
     };
@@ -135,12 +135,16 @@ export class AdminCampaignAnswersComponent implements OnInit {
     return this._answers;
   }
 
-  get sidebarTemplateValue(): SidebarInterface {
-    return this._sidebarTemplateValue;
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
   }
 
-  set sidebarTemplateValue(value: SidebarInterface) {
-    this._sidebarTemplateValue = value;
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
   }
 
 }

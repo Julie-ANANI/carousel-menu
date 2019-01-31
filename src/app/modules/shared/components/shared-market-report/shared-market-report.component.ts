@@ -98,8 +98,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _sidebarTemplateValue: SidebarInterface = {};
 
-  editMode = new Subject<boolean>(); // this is for the admin side.
-
   private _companies: Array<Clearbit>;
 
   public activeSection: string;
@@ -707,11 +705,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       size: '726px'
     };
 
-  }
-
-  closeSidebar(value: string) {
-    this._sidebarTemplateValue.animate_state = value;
-    this.editMode.next(false);
   }
 
 
