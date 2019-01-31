@@ -231,4 +231,8 @@ export class ExplorationComponent implements OnInit {
     return this._sidebarValue;
   }
 
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
 }

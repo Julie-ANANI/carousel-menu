@@ -899,6 +899,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._sidebarTemplateValue;
   }
 
+  set sidebarTemplateValue(value: SidebarInterface) {
+    this._sidebarTemplateValue = value;
+  }
+
   get menuButton(): boolean {
     return this._menuButton;
   }
