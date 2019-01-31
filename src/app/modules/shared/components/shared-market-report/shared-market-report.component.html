@@ -51,11 +51,11 @@
       <!-- /Message -->
 
       <!-- Sticky bar -->
-      <div class="sticky-wrapper" [ngClass]="{ 'scroll-sticky-wrapper': scrollOn }">
+      <div class="sticky-wrapper" [ngClass]="{ 'scroll-sticky-wrapper': scrollOn && !wordpress }">
         <div class="column col-xs-12 col-11 col-mx-auto content-wrapper">
 
           <!-- Detail view and visible to client -->
-          <div class="toggle-option">
+          <div *ngIf="!wordpress" class="toggle-option">
 
             <!-- Client side -->
             <ng-container *ngIf="!adminSide">

@@ -40,6 +40,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   @Input() sharable = false;
 
+  @Input() wordpress = false; // this is temporary for the site.
+
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _innovation: Innovation = {};
@@ -212,7 +214,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * @type {boolean}
      * @user
      */
-    this._showDetails = true;
+    if (this.wordpress) {
+      this._showDetails = false;
+    } else {
+      this._showDetails = true;
+    }
+
 
     /***
      * we are checking do we have any template.
