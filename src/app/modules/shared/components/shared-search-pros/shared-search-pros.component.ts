@@ -128,7 +128,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   public cat() {
-    this._searchService.cat(this.campaign._id, this._params.keywords, this._params.starProfiles).first().subscribe((answer: any) => {
+    this._searchService.cat(this.campaign._id, this._params.keywords, this._params.starProfiles).pipe(first()).subscribe((answer: any) => {
       this.catResult = answer;
       this.estimateNumberOfGoogleRequests(answer.totalResults);
       this._params.keywords.split("\n").forEach((request: string) => {

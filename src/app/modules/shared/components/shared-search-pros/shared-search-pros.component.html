@@ -65,7 +65,7 @@
         <span *ngIf="estimatedNumberOfGoogleRequests">
           {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
           <strong> <span *ngIf="catResult.totalResults">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span *ngIf="catResult.totalResults">max</span></strong>.
-        <a *ngIf="!catResult.advice" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
+        <a *ngIf="!catResult.advice && campaign" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
         </span>
         <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
       </span>

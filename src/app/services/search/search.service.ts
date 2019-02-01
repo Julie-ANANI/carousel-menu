@@ -18,9 +18,7 @@ export class SearchService {
   }
 
   public cat(campaignId: string, requests: string, starProfiles: number): Observable<any> {
-    return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests, starProfiles: starProfiles})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests, starProfiles: starProfiles});
   }
 
   public getRequest(requestId: string): Observable<any> {
