@@ -122,6 +122,9 @@
 
           <!-- Buttons -->
           <div class="button-wrapper" [ngStyle]="{ 'display': sharable ? 'none' : 'inline-flex' }">
+            <button class="btn ghost-primary gtm-share-synthesis" (click)="createFilter($event)">
+              {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_FILTER_MODAL' | translate }}
+            </button>
             <ng-container *ngIf="!adminSide">
               <button
                 class="btn ghost-primary gtm-share-synthesis"
@@ -142,9 +145,6 @@
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_END' | translate }}
               </button>
             </ng-container>
-            <button class="btn btn-primary gtm-share-synthesis" (click)="createFilter($event)">
-              {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
-            </button>
           </div>
           <!-- /Buttons -->
 
@@ -887,22 +887,23 @@
 
 <!-- Share static synthesis -->
 <app-modal [(showModal)]="showFilterModal">
-  <h1 [textContent]="'MARKET_REPORT.SHARE_MODAL.TITLE'" translate></h1>
+  <h1 [textContent]="'MARKET_REPORT.FILTER_MODAL.TITLE'" translate></h1>
   <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter($event)">
     <div class="form-group">
-      <label for="name" [textContent]="'MARKET_REPORT.SHARE_MODAL.NAME'" translate></label>
+      <label for="name" [textContent]="'MARKET_REPORT.FILTER_MODAL.NAME'" translate></label>
       <input type="text" class="form-control" id="name" name="name"
              required [(ngModel)]="filterName" #name="ngModel">
     </div>
     <button class="btn btn-success" type="submit"
             [disabled]="!shareFilterForm.form.valid"
-            [textContent]="'MARKET_REPORT.SHARE_MODAL.SUBMIT'" translate></button>
+            [textContent]="'MARKET_REPORT.FILTER_MODAL.SUBMIT'" translate></button>
   </form>
   <ng-container *ngIf="sharedFiltersList.length > 0">
-    <h3 [textContent]="'MARKET_REPORT.SHARE_MODAL.EXISTINGSYNTHESIS'" translate></h3>
+    <h3 [textContent]="'MARKET_REPORT.FILTER_MODAL.EXISTINGSYNTHESIS'" translate></h3>
     <ul>
       <li *ngFor="let filter of sharedFiltersList">
-        <a [routerLink]="['synthesis']" [queryParams]="{filter: filter.name}" [innerHtml]="filter.name"></a>
+        <a [routerLink]="['synthesis']" [queryParams]="{filter: filter.name}"
+           (click)="loadFilter(filter.name); showFilterModal = false" [innerHtml]="filter.name"></a>
       </li>
     </ul>
   </ng-container>

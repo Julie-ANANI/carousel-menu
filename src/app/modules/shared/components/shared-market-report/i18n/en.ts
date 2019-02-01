@@ -43,12 +43,13 @@ export const MARKET_REPORT = {
     'BUTTON_CSV': 'Export CSV',
     'BUTTON_PRINT': 'Print Executive Report',
     'BUTTON_ADMIN': 'Finalize Synthesis',
+    'BUTTON_FILTER_MODAL': 'Share Filter',
     'BUTTON_SHARE': 'Share Synthesis',
     'BUTTON_EXPORT': 'Export',
     'BUTTON_END': 'End Project'
   },
 
-  'SHARE_MODAL': {
+  'FILTER_MODAL': {
     'TITLE': 'Share the synthesis with your collaborators.',
     'NAME': 'Name this version of the synthesis:',
     'SUBMIT': 'Submit',
