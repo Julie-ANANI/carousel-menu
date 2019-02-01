@@ -5,9 +5,9 @@
     <span *ngIf="status==='QUEUED'"> en attente</span>
   </h2>
   <h6>
+    <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
     <span *ngIf="paused" class="text-error">Module en pause</span>
     <span *ngIf="!paused" class="text-success">
-      <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
       Module en fonctionnement
     </span>
     -
@@ -184,6 +184,7 @@
   <tfoot>
   <tr>
     <td colspan="12">
+      <i (click)="pauseModule()" class="c-hand fa fa-pause"></i>  -
       <app-pagination [configValue]="paginationConfig"
                       (configChange)="configChange($event)"
                       [total]="total"
