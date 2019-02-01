@@ -41,7 +41,7 @@ export class SignupFormComponent implements OnInit {
       companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[\s\S]{9,50}$/gm)]],
+      password: ['', [Validators.required, Validators.minLength(9)]],
       country: ['', [Validators.required]]
     });
   }
