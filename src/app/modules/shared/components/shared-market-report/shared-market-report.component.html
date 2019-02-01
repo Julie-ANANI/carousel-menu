@@ -285,7 +285,7 @@
               <!-- SidebarInterface options -->
               <div class="template-outer-wrapper">
                 <div *ngFor="let template of executiveTemplates" class="template">
-                  <img [src]="template.imageSrc">
+                  <img [src]="template.imageSrc" alt=" ">
                   <div
                     class="radio-button"
                     [ngClass]="{ 'active': numberOfSections === template.value }"
