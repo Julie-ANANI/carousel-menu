@@ -8,16 +8,11 @@
 
     <!-- section no campaign -->
     <div *ngIf="campaigns.length === 0" class="section-no-campaign">
-      <div class="bot-rect">
-        {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
-        <br>
-        {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
-      </div>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
-      <div>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" ">
-      </div>
+      <app-message-space
+        [messageA]="'CAMPAIGNS.BOT_TEXT.A'"
+        [messageB]="'CAMPAIGNS.BOT_TEXT.B'"
+        [widthMax]="'354'">
+      </app-message-space>
     </div>
 
     <!-- section campaigns -->

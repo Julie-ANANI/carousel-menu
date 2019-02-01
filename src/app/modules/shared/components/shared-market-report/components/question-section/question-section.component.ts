@@ -78,7 +78,7 @@ export class QuestionSectionComponent implements OnInit {
      * this is to make visible abstract textarea.
      * @type {boolean}
      */
-    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+    this.adminSide = this.location.path().slice(5, 11) === '/admin';
 
     this.buildForm();
 

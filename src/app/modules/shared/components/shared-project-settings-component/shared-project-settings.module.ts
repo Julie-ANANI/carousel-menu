@@ -10,6 +10,7 @@ import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { InputListModule } from '../../../utility-components/input-list/input-list.module';
+import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { InputListModule } from '../../../utility-components/input-list/input-li
     PipeModule,
     SharedWorldmapModule,
     AutocompleteInputModule,
-    InputListModule
+    InputListModule,
+    MessageSpaceModule
   ],
   declarations: [
     SharedProjectSettingsComponent

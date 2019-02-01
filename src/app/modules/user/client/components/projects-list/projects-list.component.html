@@ -11,16 +11,11 @@
 
     <!-- section no project -->
     <div *ngIf="innovations.length === 0" class="section-no-project">
-      <div class="bot-rect">
-        {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
-        <br>
-        {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}
-      </div>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
-      <div>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" ">
-      </div>
+      <app-message-space
+        [messageA]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE'"
+        [messageB]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT'"
+        [widthMax]="'354'">
+      </app-message-space>
     </div>
 
     <!-- section projects -->

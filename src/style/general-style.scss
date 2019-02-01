@@ -204,16 +204,6 @@ a, a:focus, a:hover, a:active, a.active {
 
 
 /*
-    Pagination section
- */
-.section-pagination {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 1.57rem;
-}
-
-
-/*
     No result & fetching result
  */
 .section-no-result, .no-result-wrapper {
@@ -279,5 +269,5 @@ a, a:focus, a:hover, a:active, a.active {
 .pagination-wrapper {
   display: flex;
   justify-content: flex-end;
-  padding-top: 3.15rem;
+  padding-top: 1.57rem;
 }
