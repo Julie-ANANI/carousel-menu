@@ -5,9 +5,9 @@
     <span *ngIf="status==='QUEUED'"> en attente</span>
   </h2>
   <h6>
+    <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
     <span *ngIf="paused" class="text-error">Module en pause</span>
     <span *ngIf="!paused" class="text-success">
-      <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
       Module en fonctionnement
     </span>
     -
@@ -16,6 +16,8 @@
   'text-warning': googleQuota < 10000 && googleQuota > 5000,
   'text-error': googleQuota < 5000}">
     {{ googleQuota }} requêtes google restantes  <i (click)="getGoogleQuota()" class="c-hand fa fa-refresh"></i></span>
+    -
+    <span class="text-success">Coût total : {{getTotalCost()}}</span>
   </h6>
   <sqFilter [config]="config" (configChange)="loadHistory()" prop="keywords"></sqFilter><i class="icon icon-search"></i>
   <table class="table">
@@ -50,8 +52,8 @@
           <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords}}</a>
           <br/>
           <small *ngIf="request.entity==='PERSON'">{{request.results ? request.results.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
-          <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalResults}} résultats | {{request.metadata.user.name}}</small>
-          <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalResults}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalResults || request.results.person.length}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalResults || request.results.person.length}} résultats | {{request.metadata.user.name}}</small>
         </td>
 
         <td class="text-center" *ngIf="!mails">
@@ -182,7 +184,12 @@
   <tfoot>
   <tr>
     <td colspan="12">
-      <app-pagination [config]="config" (configChange)="loadHistory()" [total]="total" [propertyName]="'shared-history'"></app-pagination>
+      <i (click)="pauseModule()" class="c-hand fa fa-pause"></i>  -
+      <app-pagination [configValue]="paginationConfig"
+                      (configChange)="configChange($event)"
+                      [total]="total"
+                      [propertyName]="'shared-history'">
+      </app-pagination>
     </td>
   </tr>
   </tfoot>

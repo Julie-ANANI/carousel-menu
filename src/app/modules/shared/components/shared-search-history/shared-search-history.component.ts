@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
+import {PaginationInterface} from '../../../utility-components/pagination/interfaces/pagination';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -13,10 +15,10 @@ export class SharedSearchHistoryComponent implements OnInit {
   @Input() mails: boolean;
 
 
-  private _paused: boolean = false;
+  private _paused = false;
   private _requests: Array<any> = [];
-  private _total: number = 0;
-  private _googleQuota: number = 30000;
+  private _total = 0;
+  private _googleQuota = 30000;
   private _config: any = {
     fields: 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results',
     limit: 10,
@@ -26,6 +28,8 @@ export class SharedSearchHistoryComponent implements OnInit {
       created: -1
     }
   };
+
+  private _paginationConfig: PaginationInterface = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _searchService: SearchService) {}
 
@@ -52,33 +56,49 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   public loadHistory() {
     this._searchService.getRequests(this._config)
-      .first()
-      .subscribe(result => {
-        this._requests = result.requests.map((request: any) => {
-          request.keywords = request.keywords || request.oldKeywords[0].original;
-          return request;
-        });
-        this._paused = result._metadata.paused;
+      .pipe(first())
+      .subscribe((result: any) => {
+        if(result.requests) {
+          this._requests = result.requests.map((request: any) => {
+            request.keywords = request.keywords || request.oldKeywords[0].original;
+            return request;
+          });
+        }
         if (result._metadata) {
           this._total = result._metadata.totalCount;
+          this._paused = result._metadata.paused;
         }
       });
   }
-  
+
+  configChange(value: any) {
+    this._paginationConfig = value;
+    this._config.limit = value.limit
+    this._config.offset = value.offset;
+    window.scroll(0, 0);
+    this.loadHistory();
+  }
+
   public relaunchRequests() {
-    this._searchService.relaunchRequests().first().subscribe(_ => {
+    this._searchService.relaunchRequests().pipe(first()).subscribe((_: any) => {
       this.loadHistory();
     });
   }
-  
+
+  public pauseModule() {
+    this._searchService.pauseModule().pipe(first()).subscribe((_: any) => {
+      this.loadHistory();
+    });
+  }
+
   public relaunchMailRequests() {
-    this._searchService.relaunchMailRequests().first().subscribe(_ => {
+    this._searchService.relaunchMailRequests().pipe(first()).subscribe((_: any) => {
       this.loadHistory();
     });
   }
 
   public getGoogleQuota() {
-    this._searchService.dailyStats().first().subscribe(result => {
+    this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
       this._googleQuota = 30000;
       if (result.hours) {
         this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
@@ -93,8 +113,8 @@ export class SharedSearchHistoryComponent implements OnInit {
         'region': '',
         'fields': 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results'
       })
-        .first()
-        .subscribe(children => {
+        .pipe(first())
+        .subscribe((children: any) => {
           request.request = children.requests;
           request.loaded = true;
         });
@@ -103,13 +123,13 @@ export class SharedSearchHistoryComponent implements OnInit {
   };
 
   public stopRequest (requestId: string) {
-    this._searchService.stopRequest(requestId).first().subscribe(res => {
+    this._searchService.stopRequest(requestId).pipe(first()).subscribe((res: any) => {
       this._requests[this._getRequestIndex(requestId, this._requests)].status = 'DONE';
     });
   }
 
   public stopChildRequest (requestId: string, motherRequestId: string) {
-    this._searchService.stopRequest(requestId).first().subscribe(res => {
+    this._searchService.stopRequest(requestId).pipe(first()).subscribe((res: any) => {
       const motherRequestIndex = this._getRequestIndex(motherRequestId, this._requests);
       const childRequestIndex = this._getRequestIndex(requestId, this._requests[motherRequestIndex].request);
       this._requests[motherRequestIndex].request[childRequestIndex].status = 'DONE';
@@ -118,14 +138,14 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   public cancelRequest (requestId: string, cancel: boolean) {
     const newStatus = cancel ? 'CANCELED' : 'QUEUED';
-    this._searchService.cancelRequest(requestId, cancel).first().subscribe(res => {
+    this._searchService.cancelRequest(requestId, cancel).pipe(first()).subscribe((res: any) => {
       this._requests[this._getRequestIndex(requestId, this._requests)].status = newStatus;
     });
   }
 
   public cancelChildRequest (requestId: string, motherRequestId: string, cancel: boolean) {
     const newStatus = cancel ? 'CANCELED' : 'QUEUED';
-    this._searchService.cancelRequest(requestId, cancel).first().subscribe(res => {
+    this._searchService.cancelRequest(requestId, cancel).pipe(first()).subscribe((res: any) => {
       const motherRequestIndex = this._getRequestIndex(motherRequestId, this._requests);
       const childRequestIndex = this._getRequestIndex(requestId, this._requests[motherRequestIndex].request);
       this._requests[motherRequestIndex].request[childRequestIndex].status = newStatus;
@@ -140,9 +160,22 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
+  getTotalCost() {
+    let totalCost = 0;
+    if (this._requests) {
+      for (const cost of this._requests) {
+        if (cost.cost) {
+          totalCost += cost.cost.totalCost;
+        }
+      }
+    }
+    return totalCost.toFixed(2);
+  }
+
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get googleQuota(): number { return this._googleQuota; }
   get config(): any { return this._config; }
   get paused(): boolean { return this._paused; }
+  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
 }

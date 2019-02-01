@@ -1,39 +1,83 @@
+@import "../../../../../../../style/variables";
+
 .ques-conclusion-wrapper {
   display: flex;
   justify-content: space-between;
+  box-shadow: $box-shadow;
 
   .umi-synthesis {
     flex: 2;
+    padding: 3.15rem;
 
     .section-heading {
-      font-size: 18px;
-      color: white;
+      font-size: 1.12rem;
+      color: $dark-color;
       font-weight: 600;
     }
 
     .main-heading {
+      color: $dark-color;
+    }
+
+
+    .tags-outer-wrapper {
+      padding-bottom: 1.57rem;
+    }
+
+    .tags-wrapper {
+      font-size: 0.6875rem;
+      display: inline-flex;
+      background-color: $background-color;
       color: white;
-      opacity: .5;
+      padding: .35rem .9375rem;
+      font-weight: 600;
+      border-radius: 1.57rem;
+      margin: 0 .35rem .35rem 0;
+      cursor: pointer;
+    }
+
+    .tags-wrapper:hover {
+      background-color: $primary-color;
+      color: white;
     }
 
     p {
       padding-top: 0;
-      color: #EA5858;
+      color: $alert-color;
       font-weight: bold;
     }
 
     .op-text {
-      color: #FFB300;
+      color: $primary-color;
       font-weight: 600;
-      padding-bottom: 0;
+      padding-bottom: 1.57rem;
+    }
+
+    .answer-origin {
+      padding-top: 1.57rem;
+
+      h1 {
+        margin-bottom: .6rem;
+        font-weight: 700;
+      }
+
+      div {
+        padding-bottom: .6rem;
+      }
+
+      h1, div {
+        color: $dark-color;
+        font-size: .875rem;
+      }
+
     }
 
   }
 
   .divider-wrapper {
-    margin: 0 25px;
+    margin: 0 1.57rem;
     border: 1px solid white;
-    border-radius: 5px;
+    border-radius: .18rem;
     opacity: .5;
   }
 
@@ -41,6 +85,10 @@
     display: flex;
     justify-content: center;
     text-align: center;
+    align-items: center;
+    padding: 3.15rem;
+    background-color: $background-color;
+    color: white;
   }
 
 }
@@ -58,9 +106,16 @@
       display: none;
     }
 
-    .stat-wrapper {
-      justify-content: center;
-      padding-bottom: 0;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .ques-conclusion-wrapper {
+
+    .umi-synthesis, .stat-wrapper {
+      padding: 1.57rem !important;
     }
 
   }

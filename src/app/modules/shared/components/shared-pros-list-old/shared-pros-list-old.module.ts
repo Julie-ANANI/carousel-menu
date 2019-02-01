@@ -1,15 +1,15 @@
-// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import {SharedProsListOldComponent} from './shared-pros-list-old.component';
-import {SharedSortModule} from '../shared-sort/shared-sort.module';
-import {SharedFilterInputModule} from '../shared-filter-input/shared-filter-input.module';
-import {SharedSmartSelectModule} from '../shared-smart-select/shared-smart-select.module';
-import {InputModule} from '../../../input/input.module';
 
-// Components
+import { SharedProsListOldComponent } from './shared-pros-list-old.component';
+
+import { SharedSortModule } from '../shared-sort/shared-sort.module';
+import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
+import { SharedSmartSelectModule } from '../shared-smart-select/shared-smart-select.module';
+import { PaginationModule} from '../../../utility-components/pagination/pagination.module';
+import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
 @NgModule({
   imports: [
@@ -19,9 +19,9 @@ import {InputModule} from '../../../input/input.module';
     SharedSortModule,
     SharedFilterInputModule,
     SharedSmartSelectModule,
-    InputModule,
-    FormsModule
-
+    FormsModule,
+    PaginationModule,
+    CountryFlagModule
   ],
   declarations: [
     SharedProsListOldComponent

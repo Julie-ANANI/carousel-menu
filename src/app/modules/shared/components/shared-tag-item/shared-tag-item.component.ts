@@ -2,11 +2,11 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
-import { Observable } from 'rxjs/Observable';
-import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shared-tag-item',
@@ -17,15 +17,30 @@ import {AutocompleteService} from '../../../../services/autocomplete/autocomplet
 export class SharedTagItemComponent implements OnInit {
 
   @Input() tags: Array<any>;
+
+  @Input() type: string;
+
   @Input() set projectId(project: string) {
     this._projectId = project;
   };
+
   @Input() editMode: boolean;
 
+  @Input() isAdmin: boolean;
+
+  @Input() backgroundColor: string;
+
+  @Input() textColor: string;
+
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
+
+  @Output() createTag: EventEmitter<Tag> = new EventEmitter();
+
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
 
   private _tagForm: FormGroup;
+
+  private _showModal = false;
 
   private _projectId = '';
 
@@ -41,14 +56,17 @@ export class SharedTagItemComponent implements OnInit {
     });
   }
 
-  public tagSuggestions(keyword: string): Observable<Array<any>> {
+  public tagSuggestions(query: string): Observable<Array<any>> {
     if (this._projectId !== '') {
-      return this.tagsService.searchTagInPool(this.projectId, keyword);
+      return this.tagsService.searchTagInPool(this.projectId, query);
     } else {
       const queryConf = {
-        keyword: keyword,
+        query: query,
         type: 'tags'
       };
+      if (this.type) {
+        queryConf['tagType'] = this.type;
+      }
       return this.autocompleteService.get(queryConf);
     }
   }
@@ -68,8 +86,24 @@ export class SharedTagItemComponent implements OnInit {
 
   public addTagEmitter(event: Event): void {
     event.preventDefault();
-    this.addTag.emit(this._tagForm.get('tag').value);
+    if (typeof this._tagForm.get('tag').value !== 'string') {
+      this.addTag.emit(this._tagForm.get('tag').value);
+      this._tagForm.get('tag').reset();
+    } else {
+      this._showModal = true;
+    }
+  }
+
+  public createNewTag(): void {
+    const name = this._tagForm.get('tag').value;
     this._tagForm.get('tag').reset();
+    if (typeof name === 'string') {
+      this.createTag.emit({
+        label: { en: name, fr: name },
+        description: { en: '', fr: ''}
+      });
+    }
+    this._showModal = false;
   }
 
   public removeTagEmitter(event: Event, tag: Tag): void {
@@ -78,15 +112,23 @@ export class SharedTagItemComponent implements OnInit {
   }
 
   get canAdd(): boolean {
-    return (this._tagForm.get('tag').value && typeof this._tagForm.get('tag').value !== 'string');
+    return !!this._tagForm.get('tag').value;
   }
 
   get tagForm() {
     return this._tagForm;
   }
 
-  get projectId(): string{
+  get projectId(): string {
     return this._projectId;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
   }
 
 }

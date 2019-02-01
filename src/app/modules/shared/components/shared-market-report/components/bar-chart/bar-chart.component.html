@@ -1,116 +1,164 @@
-<div class="bar-chart">
+<!-- Market report -->
+<ng-container *ngIf="!executiveReportView">
+  <div class="bar-chart-wrapper">
 
-  <div class="header-wrapper">
-    <div class="section-inline-container">
-      <app-question-conclusion
-        [innovation]="innovation"
-        [pieChart]="pieChart"
-        [question]="question"
-        [readonly]="readonly"
-        [stats]="stats">
-      </app-question-conclusion>
+    <div class="header-wrapper">
+      <div>
+
+
+        <!--<div *ngFor="let tag of tags" class="tags-wrapper"
+             [title]="tag.description | multiling:lang" (click)="addTagFilter($event, tag)">
+          #{{ tag.label | multiling:lang }}
+          <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
+        </div>-->
+
+        <app-question-conclusion
+          [innovation]="innovation"
+          [pieChart]="pieChart"
+          [question]="question"
+          [readonly]="readonly"
+          [stats]="stats"
+          [tags]="tags">
+        </app-question-conclusion>
+
+        <!-- Abstract -->
+        <form novalidate [formGroup]="formBarChart">
+          <div *ngIf="adminSide" class="abstract-wrapper">
+            <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.ABSTRACT' | translate }}</h1>
+            <div class="form-group">
+              <label class="form-label" [for]="'market-report-' + question._id">
+                <textarea
+                  class="form-default"
+                  [id]="'market-report-' + question._id"
+                  [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.SECTION' | translate"
+                  [formControlName]="question._id"
+                  rows="5"
+                  (blur)="saveAbstract($event, question._id)"
+                  maxlength="160">
+                </textarea>
+              </label>
+              <div class="charRemaining">
+                <span
+                  [ngStyle]="{ 'color': getColor((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
+                  {{ formBarChart.get(question._id).value.length | characterCountdown:160 }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- /Abstract -->
+
+      </div>
     </div>
-  </div>
 
-  <div class="content-wrapper">
+    <div class="content-wrapper">
 
-    <!-- Button to toggle answer display -->
-    <div class="answer-button-wrapper text-center">
-      <button
-        type="button"
-        class="btn ghost-primary"
-        (click)="showDetails = !showDetails; $event.preventDefault()">
-        {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-        <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
-      </button>
-    </div>
+      <!-- Button to toggle answer display -->
+      <div class="answer-button-wrapper text-center">
+        <button
+          type="button"
+          class="btn ghost-primary"
+          (click)="toggleAnswer($event)">
+          {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+          <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+        </button>
+      </div>
 
-    <ng-container *ngIf="showDetails">
-      <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="data-wrapper">
+      <ng-container *ngIf="showDetails">
+        <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="data-wrapper">
 
-        <!-- Row 1 -->
-        <div class="row1-wrapper">
+          <!-- Row 1 -->
+          <div class="row1-wrapper">
 
-          <div class="filter-name-wrapper">
+            <div class="filter-name-wrapper">
           <span class="bar-filter" (click)="filterAnswer(barData, $event)">
-            <img src="https://res.cloudinary.com/umi/image/upload/v1532700378/app/default-images/filter-icon.svg">
+            <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="16px" width="24px">
           </span>
-            <span class="bar-name">{{ barData.label | multiling:lang }}</span>
+              <span class="bar-name">{{ barData.label | multiling:lang }}</span>
+            </div>
+
+            <div class="response-arrow-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
+              <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+              <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+            </div>
+
+          </div>
+          <!-- /Row 1 -->
+
+          <!-- Row 2 -->
+          <div class="row2-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
+            <app-progress-bar
+              [width]="barData.absolutePercentage"
+              [backgroundColor]="barData.color">
+            </app-progress-bar>
+          </div>
+          <!-- /Row 2 -->
+
+          <!-- Row 3 -->
+          <div *ngIf="showAnswers[i]" class="answer-wrapper">
+            <div *ngFor="let answer of barData.answers">
+              <app-market-comment
+                [answer]="answer"
+                [ngStyle]="{ 'width': '100%' }"
+                [questionId]="question.identifier+'Comment'"
+                (modalAnswerChange)="seeAnswer($event)">
+              </app-market-comment>
+            </div>
           </div>
 
-          <div class="response-arrow-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
-            <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }} ({{ barData.absolutePercentage }})</span>
-            <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
-          </div>
-
         </div>
-        <!-- /Row 1 -->
+      </ng-container>
 
-        <!-- Row 2 -->
-        <div class="row2-wrapper">
-          <app-progress-bar
-            [width]="barData.absolutePercentage"
-            [value]="barData.absolutePercentage"
-            [backgroundColor]="barData.color">
-          </app-progress-bar>
-        </div>
-        <!-- /Row 2 -->
-
-        <!-- Row 3 -->
-        <div *ngIf="showAnswers[i]" class="answer-wrapper">
-          <div *ngFor="let answer of barData.answers">
-            <app-market-comment
-              [answer]="answer"
-              [ngStyle]="{ 'width': '100%' }"
-              [questionId]="question.identifier+'Comment'"
-              (modalAnswerChange)="seeAnswer($event)">
-            </app-market-comment>
-          </div>
-        </div>
-
-      </div>
-    </ng-container>
-
-  </div>
-
-</div>
-
-
-
-<!--
-<div class="bar-chart-component">
-
-  <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="page-break">
-
-    <div class="flex-container">
-      <div class="horizontal-bar" (click)="showAnswers[i] = !showAnswers[i]">
-        <div class="bar-number" [ngStyle]="{'background': barData.color}">{{i+1}}</div>
-        <div class="bar-fill" [style.width]="barData.relativePercentage"></div>
-        <div class="bar-name">{{barData.label | multiling:lang}}</div>
-        <div class="bar-stats tooltip" [ngSwitch]="question.controlType"
-             [attr.data-tooltip]="barData.count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
-          <span *ngSwitchCase="'radio'">{{barData.absolutePercentage}}</span>
-          <span *ngSwitchCase="'checkbox'">{{barData.count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
-          <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
-        </div>
-      </div>
-      <button class="btn-round btn-secondary" (click)="filterAnswer(barData, $event)">
-        <i class="fas fa-filter"></i>
-      </button>
     </div>
 
-    &lt;!&ndash; Textarea &ndash;&gt;
-    <ul *ngIf="showAnswers[i]" class="comments">
-      <li *ngFor="let answer of barData.answers">
-        <app-market-comment
-          [answer]="answer"
-          [questionId]="question.identifier+'Comment'"
-          (addFilter)="newFilter($event)"
-          (modalAnswerChange)="seeAnswer($event)">
-        </app-market-comment>
-      </li>
-    </ul>
-
   </div>
+</ng-container>
+<!-- /Market report -->
 
-</div>-->
+
+<!-- Executive report -->
+<ng-container *ngIf="executiveReportView">
+
+  <ng-container *ngIf="question?.controlType === 'radio'">
+    <app-question-conclusion
+      [innovation]="innovation"
+      [pieChart]="pieChart"
+      [question]="question"
+      [executiveReport]="true"
+      [stats]="stats">
+    </app-question-conclusion>
+  </ng-container>
+
+  <ng-container *ngIf="question?.controlType === 'checkbox'">
+    <div *ngFor="let data of barsData" class="executive-bar-chart-wrapper">
+
+      <!-- Row 1 -->
+      <div class="row-1-wrapper">
+        <span class="bar-name">{{ data.label | multiling:lang }}</span>
+        <span class="bar-count">{{ data.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+      </div>
+      <!-- /Row 1 -->
+
+      <!-- Row 2 -->
+      <div class="row-2-wrapper">
+        <app-progress-bar
+          [width]="data.absolutePercentage"
+          [height]="'5px'"
+          [backgroundColor]="'#FFB300'">
+        </app-progress-bar>
+      </div>
+      <!-- /Row 2 -->
+
+      <!-- Row 3 -->
+      <div *ngIf="data.answers.length > 0" class="row-3-wrapper">
+        <div *ngFor="let answer of data.answers | answerslimiter | slice:0:3" class="answer-outer">
+          {{ answer?.professional?.company }}
+        </div>
+      </div>
+      <!-- /Row 3 -->
+
+    </div>
+  </ng-container>
+
+</ng-container>
+<!-- /Executive report -->

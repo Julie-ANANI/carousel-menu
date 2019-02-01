@@ -1,0 +1,19 @@
+<div class="body-wrapper animate-page" id="discover-component">
+
+  <!-- unauthenticated header -->
+  <ng-container *ngIf="!authService.isAuthenticated">
+    <app-header-unauth></app-header-unauth>
+  </ng-container>
+  <!-- /unauthenticated header -->
+
+  <!-- body -->
+  <section class="main-wrapper">
+    <router-outlet></router-outlet>
+  </section>
+
+  <!-- footer -->
+  <ng-container *ngIf="!authService.isAuthenticated">
+    <app-footer></app-footer>
+  </ng-container>
+
+</div>

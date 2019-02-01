@@ -118,7 +118,7 @@
     <ng-container *ngSwitchCase="'textarea'">
 
       <form *ngIf="editMode">
-        <div class="e-comment-wrapper">
+        <div class="comment-wrapper">
           <textarea
             class="form-default"
             [(ngModel)]="fullAnswer.answers[question.identifier]"
@@ -136,14 +136,13 @@
         </div>
       </form>
 
-      <div
-        *ngIf="editMode"
-        [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
         <app-shared-tag-item
           [tags]="answerTags(question.identifier)"
           [editMode]="editMode"
           [projectId]="innoid"
           (addTag)="addTag($event, question.identifier)"
+          (createTag)="createTag($event, question.identifier)"
           (removeTag)="removeTag($event, question.identifier)">
         </app-shared-tag-item>
       </div>
@@ -169,16 +168,6 @@
           [rating]="fullAnswer.answers[question.identifier + 'Quality']"
           (ratingChange)="updateQuality($event)">
         </app-rating-item>
-      </div>
-
-      <div *ngIf="editMode" class="pd-top">
-        <app-shared-tag-item
-          [tags]="fullAnswer.answerTags[question.identifier]"
-          [editMode]="editMode"
-          [projectId]="innoid"
-          (addTag)="addTag($event, question.identifier)"
-          (removeTag)="removeTag($event, question.identifier)">
-        </app-shared-tag-item>
       </div>
 
     </ng-container>
@@ -226,6 +215,16 @@
   <div *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !editMode" [ngStyle]="{ 'padding-top': '15px' }">
     <p class="comment-text" [ngStyle]="{ 'color': '#0B90C6' }" >{{ 'COMMON.COMMENT' | translate }}</p>
     <p class="comment-answer">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
+    <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+      <app-shared-tag-item
+        [tags]="answerTags(question.identifier + 'Comment')"
+        [editMode]="false"
+        [projectId]="innoid"
+        (addTag)="addTag($event, question.identifier + 'Comment')"
+        (createTag)="createTag($event, question.identifier + 'Comment')"
+        (removeTag)="removeTag($event, question.identifier + 'Comment')">
+      </app-shared-tag-item>
+    </div>
   </div>
 
   <div *ngIf="editMode" [ngStyle]="{ 'padding-top': '15px' }">
@@ -236,7 +235,7 @@
 
     <form *ngIf="commenting" [ngStyle]="{ 'width': '100%' }">
       <p class="comment-text">{{ 'COMMON.COMMENT' | translate }} <i class="icon icon-arrow-down"></i></p>
-      <div class="e-comment-wrapper">
+      <div class="comment-wrapper">
           <textarea
             class="form-default"
             name="comment"
@@ -253,6 +252,18 @@
         </div>
         <!--<i class="fas fa-trash" (click)="deleteComment($event)"></i>-->
       </div>
+
+      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+        <app-shared-tag-item
+          [tags]="answerTags(question.identifier + 'Comment')"
+          [editMode]="true"
+          [projectId]="innoid"
+          (addTag)="addTag($event, question.identifier + 'Comment')"
+          (createTag)="createTag($event, question.identifier + 'Comment')"
+          (removeTag)="removeTag($event, question.identifier + 'Comment')">
+        </app-shared-tag-item>
+      </div>
+
     </form>
 
   </div>

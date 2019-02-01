@@ -1,0 +1,90 @@
+@import "../../../../../../style/variables";
+
+#projects-list-component {
+
+  .section-no-project {
+    padding-top: 3.15rem;
+    text-align: center;
+
+    .bot-rect {
+      max-width: 354px;
+    }
+
+  }
+
+
+  .section-projects-list {
+    padding-top: 3.15rem;
+
+    .project-wrapper {
+
+      .content-outer {
+        margin-bottom: 1.57rem;
+
+        .content {
+          display: inline-flex;
+          width: 100%;
+
+          img {
+            border-radius: 3px;
+            width: 120px;
+            height: 100px;
+            margin-right: 1.2rem;
+            cursor: pointer;
+          }
+
+          img:hover {
+            box-shadow: $box-shadow-hover;
+          }
+
+          .project-description {
+            border-bottom: 1px solid $border-color;
+            width: 100%;
+
+            span {
+              font-size: 1.4rem;
+            }
+
+            span:hover {
+              color: $primary-color;
+              cursor: pointer;
+            }
+
+            .date-text {
+              margin-top: 0.95rem;
+              font-size: 0.85rem;
+              color: $meta-color;
+              font-weight: 600;
+            }
+
+            .text-link {
+              font-size: 0.85rem;
+              font-weight: 600;
+              color: $alert-color;
+            }
+
+            .text-link:hover {
+              color: $alert-color;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  .modal {
+
+    .ghost-edit {
+      border: none;
+      margin-right: .6rem;
+    }
+
+  }
+
+}

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { SharedWorldmapService } from '../../shared-worldmap/shared-worldmap.service';
 import { Answer } from '../../../../../models/answer';
 import { Filter } from '../models/filter';
 import { Tag } from '../../../../../models/tag';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class FilterService {
@@ -10,7 +11,7 @@ export class FilterService {
   private _filters: {[questionId: string]: Filter} = {};
   private _filtersUpdate = new Subject<null>();
 
-  constructor() {
+  constructor(private _sharedWorld: SharedWorldmapService) {
     this.reset();
   }
 
@@ -20,7 +21,31 @@ export class FilterService {
   }
 
   public addFilter(filter: Filter) {
-    this._filters[filter.questionId] = filter;
+    switch (filter.status) {
+      case 'CHECKBOX':
+      case 'RADIO':
+        if (this._filters[filter.questionId]
+          && Array.isArray(this._filters[filter.questionId].value)) {
+          // if filter already exist, we search if the value already exist
+          const idx = this._filters[filter.questionId].value.indexOf(filter.value);
+          if (idx === -1) {
+            // If value dosen't exist we push it in the filter
+            this._filters[filter.questionId].value.push(filter.value);
+          } else {
+            // if value already exist, we remove it from the filter
+            this._filters[filter.questionId].value.splice(idx, 1);
+            // and if the filter doesn't filter anything, we remove it
+            if (this._filters[filter.questionId].value.length === 0) {
+              delete this._filters[filter.questionId];
+            }
+          }
+        } else {
+          this._filters[filter.questionId] = {...filter, value: [filter.value]};
+        }
+        break;
+      default:
+        this._filters[filter.questionId] = filter;
+    }
     this._filtersUpdate.next();
   }
 
@@ -47,7 +72,7 @@ export class FilterService {
           break;
         case 'CHECKBOX':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];
+            return answer.answers[filter.questionId] && filter.value.some((val: string) => answer.answers[filter.questionId][val]);
           });
           break;
         case 'CLEARBIT':
@@ -59,7 +84,7 @@ export class FilterService {
         case 'COUNTRIES':
           filteredAnswers = filteredAnswers.filter((answer) => {
             const country = answer.country.flag || answer.professional.country;
-            return filter.value.some((c: string) => c === country);
+            return this._sharedWorld.isCountryInSelectedContinents(country,  filter.value);
           });
           break;
         case 'LIST':
@@ -68,9 +93,12 @@ export class FilterService {
               answer.answers[filter.questionId].some((item: any) => item.text === filter.value);
           });
           break;
+        case 'PROFESSIONALS':
+          filteredAnswers = filteredAnswers.filter((answer) => filter.value.indexOf(answer._id) === -1 );
+          break;
         case 'RADIO':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] === filter.value;
+            return filter.value.indexOf(answer.answers[filter.questionId]) !== -1;
           });
           break;
         default:

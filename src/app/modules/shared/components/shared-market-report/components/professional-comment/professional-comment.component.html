@@ -1,45 +1,10 @@
-<!--
-<div class="professional-comment">
-
-  <div class="flex-container">
-    <p class="flex-container pro-header">
-
-      <app-country-flag *ngIf="answer.country?.flag" [country]="answer.country.flag"></app-country-flag>
-      <span [ngStyle]=" { 'margin-left': '10px' }">
-        {{(answer.professional?.firstName + ' ' + answer.professional?.lastName) | ellipsis:30}}
-      </span>
-
-      <ng-container *ngIf="answer.job || answer.professional?.jobTitle">
-        - {{(answer.job || answer.professional?.jobTitle) | ellipsis:22}}
-      </ng-container>
-
-      <ng-container *ngIf="answer.company?.name || answer.professional?.company">
-        - {{(answer.company?.name || answer.professional?.company) | ellipsis:22}}
-      </ng-container>
-
-      <i class="fas fa-star" *ngIf="answer.answers[questionId+'Quality'] === 2" aria-hidden="true"></i>
-
-    </p>
-
-    <app-market-report-popover
-      [answers]="[answer]"
-      (addFilter)="newFilter($event)"
-      (modalAnswerChange)="seeAnswer($event)">
-    </app-market-report-popover>
-
-  </div>
-
-  <strong class="comment-desc">{{answer.answers[questionId]}}</strong>
-
-</div>
--->
-
 <div class="professional-comment-wrapper">
 
   <!-- User details -->
   <app-pro-tag
     [answer]="answer"
-    (modalAnswerChange)="seeAnswer($event, answer)"
+    [tagId]="questionId"
+    (modalAnswerChange)="seeAnswer(answer)"
     [ngStyle]="{ 'width': '100%', 'height': '100%' }">
   </app-pro-tag>
 

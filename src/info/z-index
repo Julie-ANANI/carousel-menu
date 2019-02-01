@@ -1,0 +1,157 @@
+/*
+  This file contains all the z-index value that we are using for the elements in the platform.
+*/
+
+
+/*
+  progress bar
+*/
+z-index: 99999;
+
+
+// The z-index from 1000 to 9999 are reserved for the elements that are most important and always comes first.
+
+/*
+  simple-notification
+*/
+
+z-index: 9999;
+
+
+/*
+  modal
+*/
+
+z-index: 8999;
+
+
+/*
+  app-modal
+*/
+
+z-index: 8998;
+z-index: 8997;
+
+
+/*
+  shared-carousel
+*/
+
+z-index: 8996;
+
+
+/*
+  sidebar
+*/
+
+z-index: 7999;
+z-index: 7998;
+z-index: 7997;
+
+
+// Rest z-index value depends on which we component we are using and what its priority.
+
+/*
+  share - sign in button
+*/
+z-index: 2;
+
+
+/*
+  button
+*/
+
+z-index: 11;
+
+
+/*
+  form
+*/
+
+z-index: 2;
+
+
+/*
+  bot-rect
+*/
+
+z-index: 3;
+
+
+/*
+  circle-check
+*/
+
+z-index: 2;
+
+
+/*
+  ng2-auto-complete
+*/
+
+z-index: 2
+
+
+/*
+  table
+*/
+
+z-index: 10;
+
+
+/*
+  tooltips
+*/
+
+z-index: 10;
+
+
+/*
+  shared-smart-select
+*/
+
+z-index: 3;
+
+
+/*
+  shared-market-report-popover
+*/
+
+z-index: 3;
+
+
+/*
+  shared-market-report
+*/
+
+z-index: 11;
+
+
+/*
+  input-list
+*/
+
+z-index: 2;
+
+
+/*
+  client-discover
+*/
+
+z-index: 3;
+z-index: 4;
+z-index: 2;
+
+
+/*
+  admin-project-cards
+*/
+
+z-index: 3
+
+
+/*
+  admin-project-campaigns
+*/
+
+z-index: 3

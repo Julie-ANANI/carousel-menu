@@ -1,15 +1,12 @@
-
- <!-- <div class="flag-wrapper">
-    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
-  </div>-->
-
 <div class="pro-tag-wrapper">
 
-  <!-- Flag -->
-  <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
-
   <!-- Top profile -->
-  <div class="label-validate" [ngStyle]="{ 'visibility': answer.profileQuality === 2 ? 'visible' : 'hidden' }">{{ 'COMMON.TOP_PROFILE' | translate }}</div>
+  <div *ngIf="answer?.profileQuality === 2" class="label-validate">Top profile</div>
+
+  <!-- Flag -->
+  <div *ngIf="answer?.country && answer?.country.flag" class="flag-wrapper">
+    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+  </div>
 
   <!-- Professional detail -->
   <div class="detail-wrapper">
@@ -17,25 +14,26 @@
     <!-- Name -->
     <p class="name-wrapper">
       <span class="text-link" (click)="seeAnswer($event, answer)">
-        {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
+          <span *ngIf="answer?.professional && answer?.professional?.firstName">{{ answer?.professional?.firstName[0] | uppercase }}{{ answer?.professional?.firstName | slice:1 }} {{ answer?.professional?.lastName }}</span>
+          <span *ngIf="!answer?.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
       </span>
     </p>
 
     <!-- Job -->
-    <p *ngIf="answer.job || answer.professional?.jobTitle" class="job-wrapper">
-      {{ answer.job || answer.professional?.jobTitle }}
+    <p *ngIf="answer.job || answer?.professional?.jobTitle" class="job-wrapper">
+      {{ answer.job || answer?.professional?.jobTitle }}
     </p>
 
     <!-- Company -->
     <p *ngIf="answer.company?.name || answer.professional?.company" class="company-wrapper">
-      {{ answer.company?.name || answer.professional?.company }}
+      {{ answer?.company?.name || answer?.professional?.company }}
     </p>
 
   </div>
 
   <!-- Tag -->
-  <div *ngIf="answer.tags?.length > 0">
-    <div *ngFor="let tag of answer.tags" class="tag-wrapper">
+  <div *ngIf="tags?.length > 0">
+    <div *ngFor="let tag of tags" class="tag-wrapper" [title]="tag.description | multiling:lang">
       <span (click)="newFilter($event, tag)">#{{ tag.label | multiling:lang }}</span>
     </div>
   </div>

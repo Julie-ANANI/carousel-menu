@@ -1,0 +1,146 @@
+.question {
+  margin-bottom: 15px;
+
+  .question-header {
+    display: flex;
+    margin-left: 30px;
+    align-items: center;
+    padding: 5px 15px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #FFFFFF;
+    border-radius: 4px;
+    background: #97A4B1;
+
+    .move-element {
+      display: flex;
+      flex-direction: column;
+      margin-right: 15px;
+
+      i {
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #d1dee9;
+      }
+
+      i:hover {
+        color: #FFB300;
+      }
+    }
+
+    button.ghost-edit {
+      border-color: #FFFFFF;
+      color: #FFFFFF;
+    }
+
+    .button-actions {
+      flex: 1;
+      text-align: right;
+      display: none;
+    }
+
+    .save-button {
+      flex: 1;
+      text-align: right;
+    }
+
+    .form-select {
+      color: #333333;
+      width: inherit;
+      margin-right: 15px;
+    }
+  }
+
+  .question-header:hover {
+
+    .button-actions {
+      display: block;
+    }
+
+  }
+
+  .question-body {
+    background: white;
+    padding: 30px 50px;
+    margin-left: 30px;
+
+    .question-toolbar {
+      display: flex;
+      align-items: center;
+
+      .active {
+        color: #FFB300;
+      }
+    }
+
+    .question-language {
+      font-weight: 600;
+      font-size: 14px;
+      color: #97A4B1;
+      cursor: pointer;
+      margin-right: 15px;
+    }
+
+    .labelling {
+      display: flex;
+      margin: 35px 0;
+
+      .form-group {
+        width: 100%;
+      }
+
+      .form-group:nth-child(2) {
+        margin: 0 30px;
+      }
+    }
+
+    .add-item-language {
+      display: flex;
+      justify-content: space-between;
+
+      .form-group:first-child {
+        margin-right: 15px;
+      }
+    }
+
+    .option-list {
+      display: flex;
+
+      .option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #AAAAAA;
+        border-radius: 3px;
+        padding: 10px 20px;
+        margin-right: 25px;
+
+        .delete-option {
+          cursor: pointer;
+          color: #97A4B1;
+        }
+
+        .delete-option:hover {
+          color: #FFB300;
+        }
+
+        .name-option {
+          font-size: 18px;
+          color: #616161;
+          margin-top: 8px;
+          margin-bottom: 13px;
+        }
+      }
+    }
+  }
+}
+
+.alert-badge {
+  padding: 3px;
+  border-radius: 50px;
+  background: red;
+  display: inline-block;
+  width: 26px;
+  text-align: center;
+  color: white;
+}

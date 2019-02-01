@@ -1,0 +1,162 @@
+<form [formGroup]="formData" class="question" novalidate>
+
+  <!-- Question header -->
+  <div class="question-header">
+    <div class="move-element">
+      <i class="fa fa-caret-up" (click)="up()"></i>
+      <i class="fa fa-caret-down" (click)="down()"></i>
+    </div>
+
+    <ng-container [ngSwitch]="editMode">
+      <select *ngSwitchCase="true" class="form-select" formControlName="controlType">
+        <option value="checkbox">{{ "PRESETS.QUESTION.TYPE.checkbox" | translate }}</option>
+        <option value="list">{{ "PRESETS.QUESTION.TYPE.list" | translate }}</option>
+        <option value="clearbit">{{ "PRESETS.QUESTION.TYPE.clearbit" | translate }}</option>
+        <option value="radio">{{ "PRESETS.QUESTION.TYPE.radio" | translate }}</option>
+        <option value="scale">{{ "PRESETS.QUESTION.TYPE.scale" | translate }}</option>
+        <option value="stars">{{ "PRESETS.QUESTION.TYPE.stars" | translate }}</option>
+        <option value="textarea">{{ "PRESETS.QUESTION.TYPE.textarea" | translate }}</option>
+        <option value="toggle">{{ "PRESETS.QUESTION.TYPE.toggle" | translate }}</option>
+      </select>
+      <select *ngSwitchDefault class="form-select" disabled>
+        <option [innerHtml]="'PRESETS.QUESTION.TYPE.' + formData.get('controlType').value" translate></option>
+      </select>
+    </ng-container>
+
+    <p>{{formData.get('label').value | multiling:lang}}</p>
+
+    <div *ngIf="editMode" class="save-button">
+      <button type="button" class="btn btn-xs ghost-delete"
+              (click)="removeQuestion($event)">
+        Delete
+      </button>
+      <button type="button" class="btn btn-xs ghost-edit"
+              (click)="(editMode = false) || save($event)">
+        Save
+      </button>
+    </div>
+
+    <div *ngIf="!editMode" class="button-actions">
+      <button type="button" class="btn btn-xs ghost-edit"
+              (click)="cloneQuestion($event)">
+        Clone
+      </button>
+      <button type="button" class="btn btn-xs ghost-edit"
+              (click)="editMode = true">
+        Edit
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Question edition -->
+  <div class="question-body" *ngIf="editMode">
+    <div class="question-toolbar">
+      <button (click)="language = 'en'" class="btn btn-link" [ngClass]="{'active': language === 'en'}">
+        English
+        <span class ="alert-badge" *ngIf="countErrors('en') !== 0" [innerHtml]="countErrors('en')"></span>
+      </button>
+      <button (click)="language = 'fr'" class="btn btn-link" [ngClass]="{'active': language === 'fr'}">
+        French
+        <span class ="alert-badge" *ngIf="countErrors('fr') !== 0" [innerHtml]="countErrors('fr')"></span>
+      </button>
+      <label class="form-switch" *ngIf="formData.get('controlType').value !== 'textarea'">
+        <input type="checkbox" formControlName="canComment">
+        <i class="form-icon"></i> Add comment
+      </label>
+    </div>
+
+    <ng-container *ngFor="let lang of ['en', 'fr']">
+      <div class="labelling" *ngIf="lang === language">
+        <div formGroupName="label" class="form-group">
+          <label class="form-label" for="form-label" translate>PRESETS.QUESTION.EDIT.LABEL</label>
+          <input
+            type="text"
+            class="form-default"
+            id="form-label"
+            placeholder="label"
+            [formControlName]="lang">
+        </div>
+
+        <div formGroupName="title" class="form-group">
+          <label class="form-label" for="form-title" translate>PRESETS.QUESTION.EDIT.TITLE</label>
+          <input
+            type="text"
+            class="form-default"
+            id="form-title"
+            placeholder="title"
+            [formControlName]="lang">
+        </div>
+
+        <div formGroupName="subtitle" class="form-group">
+          <label class="form-label" for="form-subtitle" translate>translate</label>
+          <input
+            type="text"
+            class="form-default"
+            id="form-subtitle"
+            placeholder="subtitle"
+            [formControlName]="lang">
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="option-list" id="optionsWrap"
+         *ngIf="formData.get('controlType').value === 'radio' || formData.get('controlType').value === 'checkbox'">
+
+      <div formArrayName="options" *ngFor="let option of formData.get('options').controls; let i = index;" class="option">
+        <div [formGroupName]="i">
+          <div (click)="deleteOption($event, i)" class="delete-option">
+            <i class="icon icon-cross"></i>
+          </div>
+
+          <div formGroupName="label" class="add-item-language">
+            <div class="form-group">
+              <label class="form-label" for="label-fr">French</label>
+              <input
+                type="text"
+                class="form-default"
+                formControlName="fr"
+                id="label-fr">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="label-en">English</label>
+              <input
+                type="text"
+                class="form-default"
+                formControlName="en"
+                id="label-en">
+            </div>
+          </div>
+
+          <ng-container *ngIf="formData.get('controlType').value === 'radio'">
+
+            <label for="form-color">
+              Option color
+              <select class="form-select" id="form-color" formControlName="color">
+                <option [value]="'#34AC01'">Vert foncé</option>
+                <option [value]="'#82CD30'">Vert clair</option>
+                <option [value]="'#F2C500'">Jaune</option>
+                <option [value]="'#C0210F'">Rouge</option>
+              </select>
+            </label>
+
+            <label class="form-switch">
+              <input type="checkbox" formControlName="positive">
+              <i class="form-icon"></i> Positive answer
+            </label>
+
+          </ng-container>
+
+        </div>
+      </div>
+
+      <button (click)="addNewOption($event)" class="btn btn-primary ghost-primary" type="button">
+        Add item
+      </button>
+
+    </div>
+  </div>
+
+</form>
+

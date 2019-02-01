@@ -1,0 +1,82 @@
+<section *ngIf="innovation" class="section-container animate-page" id="project-component">
+
+  <!-- header section -->
+  <div class="section-header">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <!-- heading -->
+      <h1>{{ innovation.name[0] | uppercase }}{{ innovation.name | slice:1 }}</h1>
+
+      <!-- info -->
+      <div class="info-wrapper">
+        <img [src]="offerTypeImage" alt=" ">
+        <span class="project-info">
+          {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
+          &nbsp;•&nbsp;
+          {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
+          &nbsp;•&nbsp;
+          {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+          <span class="text-link gtm-edit-collaborators" (click)="editCollaborator($event)">
+            {{ 'COMMON.EDIT' | translate | lowercase}}
+          </span>
+        </span>
+      </div>
+
+      <!-- tabs -->
+      <div class="tab-wrapper">
+        <ul class="tabs">
+          <li>
+            <a [routerLink]="['setup']" [ngClass]="{'active': currentPage === 'setup'}" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
+              <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage === 'exploration'}" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
+              <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage === 'synthesis'}" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
+              <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
+            </a>
+          </li>
+          <!--<li>
+            <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
+              <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
+            </a>
+          </li>-->
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- /header section -->
+
+  <!-- setup section -->
+  <div *ngIf="currentPage === 'setup'">
+    <app-setup [project]="innovation"></app-setup>
+  </div>
+  <!-- /setup section -->
+
+  <!-- exploration section -->
+  <div *ngIf="currentPage === 'exploration'">
+    <app-exploration [project]="innovation"></app-exploration>
+  </div>
+  <!-- /exploration section -->
+
+  <!-- synthesis section -->
+  <div *ngIf="currentPage === 'synthesis'">
+    <app-shared-market-report [project]="innovation"></app-shared-market-report>
+  </div>
+  <!-- /synthesis section -->
+
+</section>
+
+
+<!-- collaborator sidebar -->
+<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+  <app-collaborator [project]="innovation" (collaboratorAdded)="addCollaborators($event)"></app-collaborator>
+</app-sidebar>
+<!-- /collaborator sidebar -->
+

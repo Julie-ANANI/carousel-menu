@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class LoaderService implements OnDestroy {
 
   private _isLoadingSubject = new Subject<boolean>();
-  public isLoading$: Observable<boolean> = this._isLoadingSubject.asObservable();
+
+  isLoading$: Observable<boolean> = this._isLoadingSubject.asObservable();
 
   private _nbInProgressRequests = 0;
 
@@ -14,12 +14,12 @@ export class LoaderService implements OnDestroy {
     this._isLoadingSubject.next(false);
   }
 
-  public startLoading (): void {
+  startLoading (): void {
     ++this._nbInProgressRequests;
     this._isLoadingSubject.next(true);
   }
 
-  public stopLoading (): void {
+  stopLoading (): void {
     --this._nbInProgressRequests;
     if (this._nbInProgressRequests <= 0) {
       this._isLoadingSubject.next(false);

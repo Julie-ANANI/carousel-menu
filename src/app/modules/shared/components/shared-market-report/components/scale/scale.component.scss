@@ -1,5 +1,7 @@
-/*
-.scale-component {
+@import "../../../../../../../style/variables";
+
+.scale-wrapper {
+  padding-bottom: 1.57rem;
 
   .flex-container {
     display: flex;
@@ -13,18 +15,18 @@
   .vertical-bar {
     position: relative;
     width: 42px;
-    height: 400px;
-    background: #F5F5F5;
-    border-radius: 4px;
-    margin: 16px 6px;
+    height: 25rem;
+    background: white;
+    border-radius: 25px;
+    margin: 1rem .375rem;
 
     .bar-fill {
       position: absolute;
       bottom: 0;
       width: 42px;
-      min-height: 62px;
+      min-height: 3.875rem;
       background-image: linear-gradient(-90deg, #edeeef 16%, #d7dee0 100%);
-      border-radius: 5px;
+      border-radius: 25px;
     }
 
     &.number1 .bar-fill {
@@ -69,20 +71,20 @@
 
     .bar-stats {
       position: absolute;
-      bottom: 34px;
+      bottom: 2.125rem;
       left: 16px;
       color: white;
       text-align: center;
       font-weight: bold;
-      font-size: 19px;
+      font-size: 1rem;
     }
 
     .bar-picture {
       position: absolute;
-      bottom: 4px;
+      bottom: .25rem;
       left: 16px;
       width: 11px;
-      height: 30px;
+      height: 1.875rem;
       background: transparent url("https://res.cloudinary.com/umi/image/upload/app/man.svg") no-repeat center;
       background-size: contain;
     }
@@ -91,8 +93,8 @@
       position: absolute;
       width: 100%;
       text-align: center;
-      bottom: -28px;
-      font-size: 14px;
+      bottom: -1.75rem;
+      font-size: .875rem;
       color: #AEAEAE;
       font-weight: bold;
     }
@@ -101,7 +103,7 @@
 
 }
 
-*/
+/*
 
 .scale-component-wrapper {
 
@@ -171,3 +173,5 @@
   }
 
 }
+
+*/

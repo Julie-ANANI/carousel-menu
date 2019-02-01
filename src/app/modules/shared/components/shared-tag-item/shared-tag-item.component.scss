@@ -1,41 +1,47 @@
-.shared-tag-item {
+@import "../../../../../style/variables";
 
-  i.big {
-    font-size: 28px;
-    color: #adadad;
-  }
-
-  .form-default {
-    margin-top: 0;
-    margin-right: 5px;
-  }
+#shared-tag-item-component {
 
   .form-default.ng-touched.ng-invalid{
     border-color: #E0E0E0;
   }
 
-  .tags {
-    display: inline-flex;
-    margin-right: 15px;
-    margin-bottom: 10px;
+  .tag-input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .6rem;
   }
 
   .tags-wrapper {
-    font-size: 14px;
-    display: flex;
-    background-color: #F8F4F4;
-    color: #333333;
-    padding: 8px 15px;
-    border-radius: 5px;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
+    margin-bottom: .6rem;
 
-    i {
-      margin-left: 15px;
-      cursor: pointer;
+    .tags-content {
+      display: inline-flex;
+      background-color: $background-color;
+      color: white;
+      border-radius: 25px;
+      justify-content: space-between;
+      padding: .35rem .9375rem;
+      font-weight: 600;
+      align-items: center;
+      font-size: .6875rem;
+      margin: .35rem;
+
+      .tags-body {
+
+        .fa-times {
+          cursor: pointer;
+          margin-left: .6rem;
+          font-size: .75rem;
+          font-weight: 600;
+          vertical-align: middle;
+        }
+
+      }
+
     }
 
   }
+
 
 }

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {EmailQueueModel} from '../../../../models/mail.queue.model';
 import {Table} from '../../../table/models/table';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-emails-form',
@@ -11,6 +11,18 @@ import {Subject} from 'rxjs/Subject';
 })
 
 export class EmailsFormComponent implements OnInit, OnChanges {
+
+  @Input() set initialDomains(value: string[]) {
+    const domains: any[] = [];
+    value.forEach(value1 => domains.push({text: '*@' + value1}));
+    this._initialDomains = domains;
+  };
+
+  @Input() set initialEmails(value: string[]) {
+    const emails: any[] = [];
+    value.forEach(value1 => emails.push({text: value1}));
+    this._initialEmails = emails;
+  };
 
   @Input() set editBlacklistEmail(value: any) {
     this.emailToEdit = value;
@@ -31,13 +43,24 @@ export class EmailsFormComponent implements OnInit, OnChanges {
 
   @Input() set type(type: string) {
     this._type = type;
-    this.loadTypes();
+    if (this.formData) {
+      this.loadTypes();
+    }
   }
 
   @Output() editBlacklist = new EventEmitter<any>();
   @Output() emailsToBlacklists = new EventEmitter<Array<string>>();
   @Output() countryToFilter = new EventEmitter<any>();
   @Output() editCountry = new EventEmitter<any>();
+
+  config = {
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
 
   private _type = '';
 
@@ -55,20 +78,26 @@ export class EmailsFormComponent implements OnInit, OnChanges {
   campaignInfosToShow: EmailQueueModel = null;
   countryInfo: any = null;
 
+  private _initialDomains: any[] = [];
+  private _initialEmails: any[] = [];
+
   public country: {flag: string, domain: string, name: string} = null;
 
   constructor (private formBuilder: FormBuilder) {}
 
   ngOnInit() {
+
     this.formData = this.formBuilder.group( {
-      email: ['', [Validators.required, Validators.email]],
-      domain: ['', Validators.required],
+      email: [[], [Validators.required, Validators.email]],
+      domain: [[], Validators.required],
       expiration: '',
       acceptation: [80, [Validators.required, Validators.max(100), Validators.min(0)]]
     });
 
+    this.loadTypes();
+
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           setTimeout (() => {
             this.country = null;
@@ -83,6 +112,10 @@ export class EmailsFormComponent implements OnInit, OnChanges {
     this.reinitialiseForm();
     if (this._type === 'excludeEmails') {
       this.isExcludeEmails = true;
+      if (this.formData) {
+        this.formData.get('email').patchValue([...this._initialEmails]);
+        this.formData.get('domain').patchValue([...this._initialDomains]);
+      }
     } else if (this._type === 'editBlacklist') {
       this.isBlacklist = true;
       this.loadBlacklist();
@@ -125,13 +158,14 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       this._tableInfos = {
         _selector: 'admin-mailgun',
         _title: 'COMMON.PROFESSIONALS',
+        _isFiltrable: true,
         _isHeadable: true,
+        _isLocal: true,
         _content: this.campaignInfosToShow.payload.recipients,
         _total: this.campaignInfosToShow.payload.recipients.length,
-        _isNotPaginable: true,
         _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
         ]
       };
     }
@@ -203,5 +237,9 @@ export class EmailsFormComponent implements OnInit, OnChanges {
   }
 
   get tableInfos(): Table { return this._tableInfos; }
+
+  get initialDomains(): string[] { return this._initialDomains; }
+
+  get initialEmails(): string[] { return this._initialEmails; }
 
 }

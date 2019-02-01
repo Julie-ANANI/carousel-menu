@@ -1,0 +1,112 @@
+<div class="column col-mx-auto col-xs-12 col-11">
+<form novalidate (ngSubmit)="onSubmit()">
+
+  <div class="form-group-inline-space">
+    <div class="input-group">
+      <select class="form-select"
+              *ngIf="isStatus"
+              [ngModel]="project.status"
+              (ngModelChange)="checkStatus($event)"
+              [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let stat of status" [ngValue]="stat.name">{{stat.alias}}</option>
+      </select>
+    </div>
+    <button type="submit"
+            class="btn btn-primary"
+            [disabled]="(!isChange) || (!statusValid)">
+      {{(isStatus || isMail) ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
+    </button>
+  </div>
+
+  <app-shared-project-edit-cards
+    [project]="project"
+    [editable]="true"
+    (pitchChange)="projectEdit($event)"
+    [sideAdmin]="true"
+    [modeAdmin]="true"
+    *ngIf="isPitch">
+  </app-shared-project-edit-cards>
+
+  <app-shared-project-settings
+    [projectSettings]="project.settings"
+    (settingsChange)="settingsEdit($event)"
+    *ngIf="isTargeting"
+    [modeAdmin]="true"
+    [sideAdmin]="true"
+    [editable]="true">
+  </app-shared-project-settings>
+
+  <app-shared-mail-editor *ngIf="isStatus || isMail"
+                          [signatures]="signatures"
+                          [emailsObject]="email"
+                          [inputLanguage]="project.owner.language"
+                          [noLanguage]="true"
+                          (emailChange)="email = $event"
+                          (languageChange)="updateOwnerLanguage($event)">
+  </app-shared-mail-editor>
+
+  <div *ngIf="isUserSatisfaction" class="form-group-inline-space satisfaction">
+
+    <input type="radio" id="verybad"
+           name="satisfaction"
+           value="VERY_BAD"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="verybad"><i class="bad far fa-2x fa-angry"></i></label>
+
+    <input type="radio" id="bad"
+           name="satisfaction"
+           value="BAD"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="bad"><i class="bad far fa-2x fa-frown"></i></label>
+
+    <input type="radio" id="normal"
+           name="satisfaction"
+           value="NORMAL"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="normal"><i class="normal far fa-2x fa-meh"></i></label>
+
+    <input type="radio" id="happy"
+           name="satisfaction"
+           value="HAPPY"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="happy"><i class="happy far fa-2x fa-smile"></i></label>
+
+    <input type="radio" id="veryhappy"
+           name="satisfaction"
+           value="VERY_HAPPY"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="veryhappy"><i class="happy far fa-2x fa-grin-hearts"></i></label>
+
+  </div>
+
+  <!-- Message for the client -->
+  <div class="form-group" *ngIf="isUserSatisfaction">
+    <label class="form-label" for="message">{{ 'PROJECT.DELIVERY.MESSAGE_FROM_CLIENT' | translate }}</label>
+    <input
+      [ngModel]="project.clientSatisfaction.message"
+      (ngModelChange)="onUserMessageChange($event)"
+      [ngModelOptions]="{standalone: true}"
+      class="form-default"
+      id="userMessage"
+      type="text">
+  </div>
+
+  <!-- Feedback message -->
+  <div class="form-group" *ngIf="isFeedback">
+    <label class="form-label" for="message">{{ 'PROJECT.DELIVERY.MESSAGE_FROM_OPERATOR' | translate }}</label>
+    <input
+      [ngModel]="project.feedback"
+      (ngModelChange)="onReviewChange($event)"
+      [ngModelOptions]="{standalone: true}"
+      class="form-default"
+      id="message"
+      type="text">
+  </div>
+
+</form>
+</div>

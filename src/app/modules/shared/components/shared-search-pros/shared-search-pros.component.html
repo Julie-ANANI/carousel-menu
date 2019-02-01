@@ -4,8 +4,7 @@
     <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
       <app-sidebar-search
         [params]="params"
-        (paramsChange)="updateSettings($event)"
-        [sidebarState]="this.more.animate_state">
+        (paramsChange)="updateSettings($event)">
       </app-sidebar-search>
     </app-sidebar>
 

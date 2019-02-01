@@ -6,6 +6,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-search-results',
@@ -19,7 +20,7 @@ export class SharedSearchResultsComponent implements OnInit {
   private _request: any;
   private _selection: any;
   private _chosenCampaign: Array<any>;
-  public addToCampaignModal: boolean = false;
+  public addToCampaignModal = false;
   public config: any = {
     limit: 10,
     offset: 0,
@@ -57,30 +58,29 @@ export class SharedSearchResultsComponent implements OnInit {
   }
   searchMails() {
     const params: any = {
+      requestId: this._request._id,
       user: this._authService.getUserInfo(),
       query: {
         motherRequestId: this._request._id
       }
     };
-    if (this._selection.pros != 'all') {
+    if (this._selection.pros !== 'all') {
       const prosWithoutEmail = this._selection.pros.map((person: any) => {
-        return {
-          id: person._id,
-          requestId: this._request._id,
-          email: person.email || ''
-        };
+        person.id = person._id;
+        person.requestId = this._request._id;
+        person.email = person.email || "";
+        return person;
       }).filter((p: any) => p.email === '');
       params.persons = prosWithoutEmail;
     } else {
       params.all = true;
-      params.requestId = this._request._id;
       params.query = this._selection.query;
       params.query.motherRequestId = this._request._id;
     }
     if (this._request.country) {
       params.country = this._request.country;
     }
-    this._searchService.searchMails(params).first().subscribe(result => {
+    this._searchService.searchMails(params).pipe(first()).subscribe((result: any) => {
       this._notificationsService.success('Recherche lancée', `La recherche de mails a été lancée`);
     });
   }
@@ -98,7 +98,7 @@ export class SharedSearchResultsComponent implements OnInit {
       requestId: this._request._id,
       keywords: this._request.keywords
     };
-    if (this._selection.pros != 'all') {
+    if (this._selection.pros !== 'all') {
       const prosWithEmail = this._selection.pros.filter((p: any) => p.email);
       params.professionals = prosWithEmail;
     } else {
@@ -106,7 +106,7 @@ export class SharedSearchResultsComponent implements OnInit {
       params.query = this._selection.query;
       params.query.motherRequestId = this._request._id;
     }
-    this._professionalsService.addFromRequest(params).first().subscribe(result => {
+    this._professionalsService.addFromRequest(params).pipe(first()).subscribe((result: any) => {
       this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
       if (goToCampaign) {
         this._router.navigate([`/admin/campaigns/campaign/${campaign._id}/pros`]);
@@ -119,7 +119,7 @@ export class SharedSearchResultsComponent implements OnInit {
       user: this._authService.getUserInfo(),
       requestId: this._request._id
     };
-    if (this._selection.pros != 'all') {
+    if (this._selection.pros !== 'all') {
       params.persons = this._selection.pros;
     } else {
       params.all = true;
@@ -128,7 +128,7 @@ export class SharedSearchResultsComponent implements OnInit {
       params.query.motherRequestId = this._request._id;
     }
 
-    this._searchService.export(params.requestId, params).first().subscribe((result: any) => {
+    this._searchService.export(params.requestId, params).pipe(first()).subscribe((result: any) => {
       this._downloadService.saveCsv(result.csv, this.request.keywords);
     });
   }

@@ -1,19 +1,17 @@
-<!--<div class="scale-component">
-
+<div class="scale-wrapper">
   <div class="column-graph flex-container">
     <div *ngFor="let bar of bars" class="vertical-bar number{{bar}}">
       <ng-container *ngIf="barsData[bar]">
         <div class="bar-fill" [style.height]="barsData[bar].percentage"></div>
-        <div class="bar-stats">{{barsData[bar].count}}</div>
+        <div class="bar-stats">{{ barsData[bar].count }}</div>
         <div class="bar-picture"></div>
       </ng-container>
-      <div class="bar-score">{{bar}}</div>
+      <div class="bar-score">{{ bar }}</div>
     </div>
   </div>
+</div>
 
-</div>-->
-
-<div class="scale-component-wrapper">
+<!--<div class="scale-component-wrapper">
 
   <div *ngFor="let bar of bars">
     <div class="scale-score-wrapper">{{ bar }}</div>
@@ -26,4 +24,4 @@
       </div>
   </div>
 
-</div>
+</div>-->

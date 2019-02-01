@@ -3,19 +3,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
-import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
-
-export interface BarData {
-  label: Multiling,
-  answers: Array<Answer>,
-  absolutePercentage: string,
-  relativePercentage: string,
-  color: string,
-  count: number,
-  positive: boolean,
-  identifier: string
-}
+import { Tag } from '../../../../../../models/tag';
+import { Location } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
+import { ResponseService } from '../../services/response.service';
+import { BarData } from '../../models/bar-data';
 
 @Component({
   selector: 'app-bar-chart',
@@ -25,30 +19,77 @@ export interface BarData {
 
 export class BarChartComponent implements OnInit {
 
+  @Input() set executiveReport(value: boolean) {
+    this.executiveReportView = value;
+  }
+
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
     this.updateAnswersData();
   }
 
-  @Input() public innovation: Innovation;
-  @Input() public question: Question;
-  @Input() public readonly: boolean;
-  @Input() public stats: any;
+  @Input() tags: Array<Tag>;
+  @Input() innovation: Innovation;
+  @Input() question: Question;
+  @Input() readonly: boolean;
+  @Input() stats: any;
   @Input() showDetails: boolean;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
+  @Output() answerButtonClicked = new EventEmitter<boolean>();
+
+  adminSide: boolean;
+
+  formBarChart: FormGroup;
+
+  executiveReportView = false;
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
-  private _pieChart: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string>};
+  private _pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
   public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService,
-              private filterService: FilterService) { }
+              private filterService: FilterService,
+              private location: Location,
+              private formBuilder: FormBuilder,
+              private innovationCommonService: InnovationCommonService,
+              private responseService: ResponseService) {}
 
   ngOnInit() {
+
+    /***
+     * this is to make visible abstract textarea.
+     * @type {boolean}
+     */
+    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+
     this.updateAnswersData();
+
+    this.buildForm();
+    this.patchForm();
   }
+
+
+  /***
+   * Build the form using quesId.
+   */
+  private buildForm() {
+    this.formBarChart = this.formBuilder.group({
+      [this.question._id]: ['']
+    });
+  }
+
+
+  /***
+   * Patch the abstract value for each question.
+   */
+  private patchForm() {
+    const value = this.responseService.getInnovationAbstract(this.innovation, this.question._id);
+    this.formBarChart.get(this.question._id).setValue(value);
+  }
+
+
 
   private updateAnswersData(): void {
     if (this.question && this.question.identifier && Array.isArray(this.question.options)) {
@@ -120,7 +161,9 @@ export class BarChartComponent implements OnInit {
         pieChartData.percentage = Math.round((positiveAnswersCount * 100) / this._answers.length);
         this._pieChart = pieChartData;
       }
+
     }
+
   }
 
   public filterAnswer(data: BarData, event: Event) {
@@ -136,6 +179,46 @@ export class BarChartComponent implements OnInit {
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
   }
+
+  toggleAnswer(event: Event) {
+    event.preventDefault();
+    this.showDetails = !this.showDetails;
+    this.answerButtonClicked.emit(this.showDetails);
+  }
+
+  public addTagFilter(event: Event, tag: Tag) {
+    event.preventDefault();
+    this.filterService.addFilter({
+      status: 'TAG',
+      questionId: this.question.identifier + 'Comment',
+      questionTitle: tag.label,
+      value: tag._id
+    });
+  }
+
+
+  /***
+   * This function is to save the abstract in the innovation object.
+   * @param {Event} event
+   * @param {string} formControlName
+   */
+  saveAbstract(event: Event, formControlName: string) {
+    const abstract = this.formBarChart.get(formControlName).value;
+    this.innovation = this.responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
+    this.innovationCommonService.saveInnovation(this.innovation);
+  }
+
+
+  /***
+   * This function returns the color according to the length of the input data.
+   * @param {number} length
+   * @param {number} limit
+   * @returns {string}
+   */
+  getColor(length: number, limit: number) {
+    return this.responseService.getColor(length, limit);
+  }
+
 
   get barsData(): Array<BarData> {
     return this._barsData;

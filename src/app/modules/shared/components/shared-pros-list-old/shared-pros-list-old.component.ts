@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
+import {PaginationInterface} from '../../../utility-components/pagination/interfaces/pagination';
+import { first } from 'rxjs/operators';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -15,12 +17,14 @@ export interface SelectedProfessional extends Professional {
 export class SharedProsListOldComponent {
 
   private _config: any;
+  private _paginationConfig: PaginationInterface = {};
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
 
   @Input() public requestId: string;
   @Input() public campaign: Campaign;
   @Input() set config(value: any) {
+    this.loadPaginationConfig(value);
     this.loadPros(value);
   }
   @Output() selectedProsChange = new EventEmitter <any>();
@@ -30,12 +34,32 @@ export class SharedProsListOldComponent {
 
   constructor(private _searchService: SearchService) { }
 
+  loadPaginationConfig(config: any) {
+    this._paginationConfig = {
+      limit: config.limit || 10,
+      offset: config.offset || 0
+    };
+  }
+
   loadPros(config: any): void {
     this._config = config;
-    this._searchService.getPros(this._config, this.requestId).first().subscribe(pros => {
+    this._searchService.getPros(this._config, this.requestId).pipe(first()).subscribe((pros: any) => {
       this._pros = pros.persons;
       this._total = pros._metadata.totalCount;
     });
+  }
+
+  /***
+   * This function is call when the user change the pagination config
+   * It affects the values
+   * @param value
+   */
+  changePaginationConfig(value: any) {
+    this._paginationConfig = value;
+    this._config.limit = value.limit
+    this._config.offset = value.offset;
+    window.scroll(0, 0);
+    this.loadPros(this._config);
   }
 
   selectPro(pro: SelectedProfessional): void {
@@ -70,4 +94,5 @@ export class SharedProsListOldComponent {
   get total() { return this._total; }
   get pros() { return this._pros; }
   get config() { return this._config; }
+  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
 }

@@ -1,11 +1,11 @@
-<div class="collaborator-wrapper">
+<section id="collaborator-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit($event)">
 
       <!-- Add button -->
       <div class="text-right">
-        <button class="btn btn-primary" type="submit" [disabled]="formData.invalid">{{ 'COMMON.ADD' | translate }}</button>
+        <button class="btn btn-primary gtm-add-collaborators" type="submit" [disabled]="formData.invalid">{{ 'COMMON.ADD' | translate }}</button>
       </div>
 
       <!-- Input field -->
@@ -24,22 +24,24 @@
 
     </form>
 
+
     <!-- Bot -->
-    <div *ngIf="collaborator.length === 0 && collaboratorsInvited.length === 0">
-      <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '40px' }">
+    <div *ngIf="innovationCollaborators.length === 0 && collaboratorsInvited.length === 0">
+      <div class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
         <span class="bot-rect">
           {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
         </span>
         <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-triangle" alt="bot">
         <div>
           <img
-            src="http://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg"
+            src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg"
             class="bot-image"
             alt="Bot">
         </div>
       </div>
     </div>
+
 
     <!-- Invited collaborator -->
     <div *ngIf="collaboratorsInvited.length >= 1">
@@ -53,9 +55,10 @@
       </ul>
     </div>
 
+
     <!-- Added collaborator -->
-    <div *ngIf="collaborator.length >= 1">
-      <ul *ngFor="let collaborator of collaborator" class="collaborator">
+    <div *ngIf="innovationCollaborators.length >= 1">
+      <ul *ngFor="let collaborator of innovationCollaborators" class="collaborator">
         <li>
           <span class="label-validate">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
         </li>
@@ -65,5 +68,6 @@
       </ul>
     </div>
 
+
   </div>
-</div>
+</section>

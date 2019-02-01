@@ -1,7 +1,4 @@
-/**
- * Created by bastien on 24/11/2017.
- */
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
@@ -20,11 +17,20 @@ export class StarsComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
+
+  @Input() set executiveReport(value: boolean) {
+    this.executiveReportView = value;
+  }
+
   @Input() public innovation: Innovation;
   @Input() public question: Question;
 
+  executiveReportView = false;
+
+
+
   private _answers: Array<Answer> = [];
-  private _notesData: Array<{label: Multiling, sum: number, count: number, percentage: string}> = [];
+  private _notesData: Array<{label: Multiling, sum: number, percentage: string, count: number}> = [];
   private _starsOptions: Array<{identifier: number, label: Multiling}> = [];
 
   constructor(private translateService: TranslateService) {}
@@ -65,17 +71,27 @@ export class StarsComponent implements OnInit {
           const idx = parseInt(k, 10);
           const vote = parseInt(answer.answers[this.question.identifier][k], 10);
           if (Number.isInteger(idx) && Number.isInteger(vote) && idx < this._notesData.length && this._notesData[k]) {
-            this._notesData[k].count += 1;
             this._notesData[k].sum += vote;
+            this._notesData[k].count += 1;
+          } else {
+            // the client didn't answer this particular options but gave stars to other options
+            // We choose to give him a default value here to increase variability of scores.
+            this._notesData[k].sum += 1;
           }
         });
       });
 
-      this._notesData.forEach(function(noteData) {
-        if (noteData.count > 0) {
-          noteData.percentage = `${Math.round(((noteData.sum / noteData.count) || 0) * 20)}%`;
-        }
-      });
+      this._notesData = this._notesData
+        .map((noteData) => {
+          if (this._answers.length > 0) {
+            noteData.percentage = `${Math.round(((noteData.sum / this._answers.length) || 0) * 20)}%`;
+          }
+          return noteData;
+        })
+        .sort((noteA, noteB) => {
+          return noteA.sum - noteB.sum;
+        });
+
     }
   }
 

@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
+import { SharedWorldmapService } from './shared-worldmap.service';
 
 @Component({
   selector: 'app-worldmap',
@@ -6,7 +7,7 @@ import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/cor
   styleUrls: ['shared-worldmap.component.scss']
 })
 
-export class SharedWorldmapComponent {
+export class SharedWorldmapComponent implements OnInit{
 
   @Input() width = '800px';
   @Input() countriesColor: string;
@@ -41,7 +42,6 @@ export class SharedWorldmapComponent {
   }
 
   @Output() updateContinent = new EventEmitter<any>();
-  @Output() updateCountries = new EventEmitter<{countries: Array<string>, allChecked: boolean}>();
 
   private _continents = {
     africa: false,
@@ -53,8 +53,13 @@ export class SharedWorldmapComponent {
     russia: false
   };
 
+  constructor(private _elem: ElementRef,
+              private _worldmap: SharedWorldmapService,
+              private _viewContainerRef: ViewContainerRef) {}
 
-  constructor(private _elem: ElementRef) { }
+  ngOnInit() {
+    this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
+  }
 
   /**
    * Checks whether all the continents have been selected
@@ -82,22 +87,6 @@ export class SharedWorldmapComponent {
     this.updateContinent.emit({continents: this._continents});
   }
 
-  private getCountriesList(): Array<string> {
-    const countries_list: Array<string> = [];
-    Object.keys(this._continents).forEach((continent) => {
-      if (this._continents[continent]) {
-        const continent_elems = this._elem.nativeElement.getElementsByClassName(continent);
-        Array.prototype.forEach.call(continent_elems, (continent_el: HTMLElement) => {
-          const countries_elems = continent_el.getElementsByTagName('path');
-          Array.prototype.forEach.call(countries_elems, (country_el: HTMLElement) => {
-            countries_list.push(country_el.getAttribute('class'));
-          });
-        });
-      }
-    });
-    return countries_list;
-  }
-
   /**
    * Processes the click over one continent
    * @param continent
@@ -107,8 +96,10 @@ export class SharedWorldmapComponent {
 
     if (this.isEditable) {
       this._continents[continent] = !this._continents[continent];
-      this.updateContinent.emit({continents: this._continents});
-      this.updateCountries.emit({countries: this.getCountriesList(), allChecked: this.areAllContinentChecked()});
+      this.updateContinent.emit({
+        continents: this._continents,
+        allChecked: this.areAllContinentChecked()
+      });
     }
 
   }

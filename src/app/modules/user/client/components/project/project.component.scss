@@ -1,0 +1,93 @@
+@import "../../../../../../style/variables";
+
+#project-component {
+  padding-top: 0;
+
+
+  .section-header {
+    background-color: $background-color;
+    padding-top: 3.15rem;
+
+    h1 {
+      color: white;
+      margin-bottom: 1.2rem;
+    }
+
+    .info-wrapper {
+
+      img {
+        vertical-align: middle;
+        margin-bottom: .35rem;
+      }
+
+      .project-info {
+        color: $meta-color;
+        font-weight: 600;
+        padding-left: .95rem;
+        font-size: .85rem;
+      }
+
+    }
+
+    .tab-wrapper {
+      padding-top: 2.187rem;
+
+      .tabs {
+
+        li {
+
+          a {
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+
+        }
+
+      }
+
+      .active {
+        background: white;
+        color: $dark-color;
+      }
+
+    }
+
+  }
+
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #project-component {
+
+    .tabs {
+      margin-right: 0 !important;
+    }
+
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .tabs li a {
+    border-radius: .35rem;
+  }
+
+}
+
+@media (min-width: 601px) {
+
+  .tabs li {
+    margin-right: .95rem;
+  }
+
+  .tabs li:last-child {
+    margin-right: 0;
+  }
+
+}

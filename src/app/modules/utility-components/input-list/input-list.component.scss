@@ -1,0 +1,104 @@
+@import "../../../../style/variables";
+
+.input-group {
+
+  .form-default {
+    margin-right: 10px;
+    width: 80%;
+    margin-top: 0;
+  }
+
+}
+
+.form-default.ng-touched.ng-invalid{
+  border-color: $border-color;
+}
+
+.answerList {
+  margin: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    margin: .6rem 0;
+    padding: 0;
+  }
+
+  li span {
+    background: $validation-color;
+    border-radius: .18rem 0 0 .18rem;
+    padding: .95rem;
+    color: white;
+    font-size: .85rem;
+    width: 100%;
+    word-break: break-word;
+  }
+
+  a.delete {
+    display: flex;
+    background: $alert-color;
+    border-radius: 0 .18rem .18rem 0;
+    padding: .75rem 1.06rem;
+    border: none;
+    cursor: pointer;
+
+    img {
+      width: 1rem;
+    }
+
+  }
+
+  a.updown {
+    background: $secondary-color;
+    padding: .95rem 0;
+    color: white;
+    width: 100%;
+  }
+
+  a.delete:hover {
+    background: lighten($alert-color, 10%);
+  }
+
+  i {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    background: #11A751;
+    padding: 1.06rem;
+    border: none;
+  }
+
+  .fa-thumbs-up.active, .fa-thumbs-up:hover, .fa-thumbs-down.active, .fa-thumbs-down:hover, .fa-pencil-alt:hover {
+    color: white;
+    cursor: pointer;
+  }
+
+
+  .popover {
+
+    .fa-link {
+      color: $primary-color;
+    }
+
+    .fa-link:hover {
+      cursor: pointer;
+      color: lighten($primary-color, 10%);
+    }
+
+  }
+
+  .popover-container {
+    background: #F8F4F4;
+    box-shadow: $box-shadow;
+    z-index: 2;
+    border-radius: .18rem;
+
+    .btn {
+      margin-top: .18rem;
+    }
+
+  }
+
+}
+

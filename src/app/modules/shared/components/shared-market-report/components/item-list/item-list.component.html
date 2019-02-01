@@ -1,17 +1,20 @@
 <div class="item-list-wrapper">
   <div class="items">
-    <div *ngFor="let item of listItems; let i = index" [ngClass]="{'top-profil': item.rating === 2}" class="item s-item-print">
+    <div *ngFor="let item of listItems; let i = index" [ngClass]="{ 'top-profil': item.rating === 2 }" class="item s-item-print">
       <div class="content">
 
         <!-- Filter icon -->
         <div class="filter" (click)="filterAnswer(item, $event)">
-          <img src="https://res.cloudinary.com/umi/image/upload/v1532816663/app/default-images/filter-wicon.svg">
+          <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" style="margin-top: .125rem">
         </div>
 
         <!-- Value and count -->
         <div class="value">
-          <div class="label-success">{{ item.count}}x</div>
-          <p>{{ item.value }}</p>
+          <div *ngIf="item.count > 1" class="label-success">{{ item.count }}x</div>
+          <p [attr.data-tooltip]="item.value" [ngClass]="{ 'tooltip': item.logo }">
+            <img *ngIf="item.logo" [src]="item.logo" width="80px" height="80px"/>
+            <span *ngIf="!item.logo">{{ item.value }}</span>
+          </p>
         </div>
 
         <!-- Respoand -->
@@ -22,42 +25,4 @@
       </div>
     </div>
   </div>
-
 </div>
-
-
-<!--<app-question-conclusion
-  [innovation]="innovation"
-  [question]="question"
-  [readonly]="readonly"
-  [stats]="stats">
-</app-question-conclusion>-->
-<!--
-<div class="items">
-
-  <div>
-    <div
-      *ngFor="let item of (!details && listItems.length > maxToShow) ? listItems.slice(0, maxToShow) : listItems; let i = index"
-      [ngClass]="{'top-profil': item.rating === 2}">
-      <div class="flex-container">
-        <strong class="market-item">
-          <span *ngIf="item.count > 1" class="item-occurrence">{{item.count}}x</span>
-          <img *ngIf="item.logo" src={{item.logo}} width="20px" height="20px"/>
-          {{item.value}}
-          <a *ngIf="item.domain" [href]="item.domain" target="_blank"><i class="fas fa-link" aria-hidden="true"></i></a>
-          <span (click)="filterAnswer(item, $event)"><i class="fas fa-filter" aria-hidden="true"></i></span>
-        </strong>
-        <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
-      </div>
-    </div>
-  </div>
-
-  <a class="clickable-url" *ngIf="details && listItems.length > maxToShow" (click)="showDetails = false">
-    less...
-  </a>
-
-  <a class="clickable-url" *ngIf="!details && listItems.length > maxToShow" (click)="showDetails = true">
-    more...
-  </a>
-
-</div>-->

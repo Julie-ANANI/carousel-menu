@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Tag } from '../../../../../../models/tag';
@@ -9,13 +9,24 @@ import { Tag } from '../../../../../../models/tag';
   styleUrls: ['pro-tag.component.scss']
 })
 
-export class ProfessionalTagComponent {
+export class ProfessionalTagComponent implements OnInit {
 
   @Input() answer: Answer;
+  @Input() tagId: string;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
+  private _tags: Array<Tag>;
+
   constructor(private filterService: FilterService) {}
+
+  ngOnInit() {
+    if (this.tagId) {
+      this._tags = this.answer.answerTags[this.tagId];
+    } else {
+      this._tags = this.answer.tags;
+    }
+  }
 
   seeAnswer(event: Event, answer: Answer) {
     event.preventDefault();
@@ -27,9 +38,14 @@ export class ProfessionalTagComponent {
 
     this.filterService.addFilter({
       status: 'TAG',
+      questionId: this.tagId,
       questionTitle: tag.label,
       value: tag._id
     });
+  }
+
+  get tags() {
+    return this._tags;
   }
 
 }

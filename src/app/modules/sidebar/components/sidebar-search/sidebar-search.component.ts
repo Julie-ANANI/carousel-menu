@@ -78,12 +78,15 @@ export class SidebarSearchComponent {
   ];
 
   @Output() paramsChange = new EventEmitter <any>();
+  @Output() close = new EventEmitter <any>();
   @Input() params: any;
-  @Input() sidebarState: string;
 
   constructor() {}
 
-  public saveParams() {
+  public saveParams(event: any) {
+    event.preventDefault();
+    event.target.id = "close";
+    this.close.emit(event);
     this.paramsChange.emit(this.params);
   }
 

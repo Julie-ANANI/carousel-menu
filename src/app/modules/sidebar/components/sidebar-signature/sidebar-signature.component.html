@@ -63,11 +63,16 @@
       </div>
     </div>
 
-    <label class="form-label" *ngIf="editionMode">Signature</label>
-    <app-text-zone [elementId]="signature.language + signature.name"
-               [readonly]="!editionMode"
-               [data]="signature.content || ''"
-               (onTextChange)="updateContent($event)"></app-text-zone>
-
+    <label class="form-label" *ngIf="editionMode">Signature (code HTML)</label>
+    <textarea
+      *ngIf="editionMode"
+      class="form-default"
+      rows="25"
+      [(ngModel)]="signature.content"
+      id="signature"
+      type="text"
+      placeholder="">
+    </textarea>
+    <div *ngIf="!editionMode" [innerHTML]="signature.content"></div>
   </div>
 </div>

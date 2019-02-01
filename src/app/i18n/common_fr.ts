@@ -5,11 +5,15 @@ export const COMMON = {
   'LAST_SAVED_AT': 'Sauvegardé à',
   'UPDATE': 'Mettre à jour',
   'EDIT': 'Éditer',
+  'SEND': 'Envoyer',
+  'CHANGE': 'Changer',
   'DELETE': 'Supprimer',
   'SUBMIT': 'Confirmer',
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
+  'SIGN_OUT': 'Se déconnecter',
   'LOG_OUT': 'Se déconnecter',
+  'GENERATE': 'Générer',
   'CANCEL': 'Annuler',
   'ADD': 'Ajouter',
   'MORE': 'Voir Plus',
@@ -39,12 +43,16 @@ export const COMMON = {
   'REINVITE': 'Inviter à nouveau',
   'I_FINISHED': 'J\'ai terminé',
   'SYNTHESIS': 'Synthèse',
-  'SEARCHINNOVATION': 'Recherche innovation',
-  'LOADING': 'Chargement',
+  'SEARCH_INNOVATION': 'Rechercher une innovation ici',
+  'LOADING': 'Chargement...',
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
+  'SEARCH_BY': 'Recherche par',
+  'SEARCH_PLACEHOLDER': 'Rechercher ici',
+  'SELECT': 'Sélectionnez',
+  'SHARED_REPORTS': 'Rapports partagés',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
@@ -63,24 +71,47 @@ export const COMMON = {
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
+
   'EMAIL': 'Email',
   'PHONE': 'Téléphone',
+
+  'ACTIVITY_FIELDS': 'Champs d\'activité',
+  'ACTIVITY_FIELDS_PLACEHOLDER': 'Entrez votre secteur d\'activité',
+
+  'TECHNOLOGIES': 'Technologies',
+  'TECHNOLOGIES_PLACEHOLDER': 'Entrez la technologie',
+
   'PASSWORD': 'Mot de passe',
+  'OLD_PASSWORD': 'Ancien mot de passe',
+  'NEW_PASSWORD': 'Nouveau mot de passe',
+  'CONFIRM_PASSWORD': 'Confirmez le mot de passe',
+
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '8+ caractères',
+  'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
-  'COMPANY': 'Entreprise',
+
+  'COMPANY': 'Nom de l\'entreprise',
   'COMPANY_PLACEHOLDER': 'Entrez le nom de votre entreprise',
+
   'JOBTITLE': 'Poste',
   'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
+
   'TYPE': 'Type',
+
   'DOMAIN': 'Domaine',
+
   'COUNTRY': 'Pays',
   'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
+
   'TERMS': {
     'A': 'En cliquant sur "Continuer", j\'accepte',
     'B': 'termes et conditions d\'utilisation.',
   },
+
   'PROFILE_URL': 'Profile URL',
   'TOP_PROFILE': 'Profil haut',
 
@@ -89,7 +120,10 @@ export const COMMON = {
     'LASTNAME': 'Le nom est requis.',
     'EMAIL': 'L\'adresse email est requise.',
     'PHONE': 'Le numéro de téléphone est requis.',
-    'PASSWORD': 'Le mot de passe e@st requis.',
+    'PASSWORD': 'Le mot de passe est requis.',
+    'OLD_PASSWORD': 'Un ancien mot de passe est requis.',
+    'NEW_PASSWORD': 'Un nouveau mot de passe est requis.',
+    'CONFIRM_PASSWORD': 'Confirmer le mot de passe est requis.',
     'COMPANY': 'Le nom de l\'entreprise est requis.',
     'JOBTITLE': 'Le poste est requis.',
     'MESSAGE': 'Tous les champs sont obligatoires',
@@ -123,13 +157,14 @@ export const COMMON = {
   },
 
   'TABLE' : {
-    'SELECTED_ROWS': 'lignes selectionnées',
+    'SELECTED_ROWS': 'ligne(s) sélectionnée(s)',
     'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 
   'INVALID': {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.'
+    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
+    'MUST_CONTAIN': 'Le mot de passe doit en contenir un symbole spécial ($@&!#).'
   },
 
   'LINKS': 'Liens',
@@ -143,10 +178,27 @@ export const COMMON = {
   },
 
   'USERS': 'Utilisateurs',
+
+  'USER': {
+    'DELETE': 'Supprimer le(s) utilisateur(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
+    }
+  },
+
+  'AMBASSADOR': 'Ambassadeur',
+
   'PROFESSIONALS': 'Professionnels',
+
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
+    'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
     'DELETE': 'Supprimer le(s) professionnel(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
+    }
   },
 
   'HOME': 'Accueil',
@@ -161,6 +213,7 @@ export const COMMON = {
   'PRESET': 'Configuration',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
+  'ADD-ANSWER': 'Ajouter une réponse',
   'CLIENT_SIDE': 'Client',
   'EDIT_USER': 'Modifier l\'utilisateur',
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
@@ -176,5 +229,35 @@ export const COMMON = {
     'BY_DOMAIN': 'Domain',
     'BY_CREATION_DATE': 'Création',
     'BY_UPDATE_DATE': 'Mise à jour'
+  },
+
+  'HEADER': {
+    'SHARED_REPORTS': 'Rapports partagés'
+  },
+
+  'TAG_LABEL': {
+    'ADD_TAGS': 'Ajouter des tags',
+    'EDIT_TAG': 'Modifier le tag',
+    'LABEL_EN_PLACEHOLDER': 'Entrez le label en anglais',
+    'LABEL_FR_PLACEHOLDER': 'Entrer le label en français',
+    'DESC_EN_PLACEHOLDER': 'Entrez la description en anglais',
+    'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
+    'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
+    'TAG_PLACEHOLDER': 'Ajouter un tag existante'
+  },
+
+  'LOGOUT': {
+    'TEXT': 'Vous serez redirigé automatiquement vers la page de connexion.'
+  },
+
+  'CAMPAIGN': {
+    'LABEL': 'Nom de la campagne',
+    'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
+    'PLACEHOLDER': 'Entrez le nom de la campagne',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
+    }
   }
+
 };

@@ -1,17 +1,15 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { Location } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { Media, Video } from '../../../../models/media';
-import { Innovation } from '../../../../models/innovation';
-import { InnovCard } from '../../../../models/innov-card';
-import { Subject } from 'rxjs/Subject';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { environment } from '../../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslationService } from '../../../../services/translation/translation.service';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Innovation} from '../../../../models/innovation';
+import {TranslationService} from '../../../../services/translation/translation.service';
+import {forkJoin, Subject} from 'rxjs';
+import {environment} from '../../../../../environments/environment';
+import {Media, Video} from '../../../../models/media';
+import {first, takeUntil} from 'rxjs/operators';
+import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {InnovCard} from '../../../../models/innov-card';
+import {InnovationCommonService} from '../../../../services/innovation/innovation-common.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 declare const tinymce: any;
 
@@ -23,124 +21,100 @@ declare const tinymce: any;
 
 export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
-  @Input() project: Innovation;
-  @Input() canEdit: Boolean;
-  @Input() changesSaved: boolean;
-  @Input() showPitchFieldError: Subject<boolean>;
+  @Input() set project(value: Innovation) {
+    this._innovation =  JSON.parse(JSON.stringify(value));
+  }
 
-  @Output() projectChange = new EventEmitter<any>();
-  @Output() saveChanges = new EventEmitter<boolean>();
-  @Output() innovationToPreview = new EventEmitter<number>();
+  @Input() set editable(value: boolean) {
+    this._canEdit = value;
+  }
 
-  showTitleError: boolean;
-  showSummaryError: boolean;
-  showProblemError: boolean;
-  showSolutionError: boolean;
-  showAdvantageError: boolean;
-  showPatentError: boolean;
-  showDiffusionError: boolean;
+  @Input() set modeAdmin(value: boolean) {
+    this._adminMode = value;
+  }
 
-  private ngUnsubscribe: Subject<any> = new Subject();
+  @Input() set sideAdmin(value: boolean) {
+    this._adminSide = value;
+  }
+
+  @Output() pitchChange = new EventEmitter<Innovation>();
+
+  private _innovation: Innovation;
+
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
+  private _canEdit = false;
+
+  private _adminMode = false;
+
+  private _adminSide = false;
+
+  private _selectedCardIndex = 0;
+
   private _companyName: string = environment.companyShortName;
 
-  private _showDeleteModal = false;
-  private _deleteInnovCardId = '';
-  private _langDelete = '';
+  private _saveChanges = false;
+
+  private _deleteModal = false;
 
   private _editors: Array<any> = [];
 
-  /*
-   * Gestion de l'affichage
-   */
-  public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
-
-  constructor(private innovationService: InnovationService,
-              private authService: AuthService,
-              private domSanitizer1: DomSanitizer,
-              private translateService: TranslateService,
-              private translationService: TranslationService,
+  constructor(private translationService: TranslationService,
+              private innovationService: InnovationService,
+              private innovationCommonService: InnovationCommonService,
               private translateNotificationsService: TranslateNotificationsService,
-              private location: Location) {
-  }
+              public domSanitizer: DomSanitizer) {}
 
   ngOnInit() {
-    this.changesSaved = true;
-    if (this.location.path().slice(0, 6) !== '/admin') {
-      this.showPitchFieldError.subscribe(value => {
-        if (value) {
-          this.showError();
-        }
-      });
-    }
+
+    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
+    });
+
   }
 
-  notifyModelChanges(_event?: any) {
-    this.changesSaved = false;
-    this.saveChanges.emit(true);
-    this.projectChange.emit(this.project);
-  }
 
-  showError() {
-    this.showTitleError = this.project.innovationCards[this.innovationCardEditingIndex].title === '';
-    this.showSummaryError = this.project.innovationCards[this.innovationCardEditingIndex].summary === '';
-    this.showProblemError = this.project.innovationCards[this.innovationCardEditingIndex].problem === '';
-    this.showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution === '';
-    this.showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
-    this.showPatentError = this.project.patented === null;
-    this.showDiffusionError = this.project.external_diffusion === null;
-  }
-
-  /*
-      Resetting the value of all errors when we switch between the languages.
+  /***
+   * this function is to notify all the changes that the user made
+   * in the model.
    */
-  resetErrorValue() {
-    this.showTitleError = false;
-    this.showSummaryError = false;
-    this.showProblemError = false;
-    this.showSolutionError = false;
-    this.showAdvantageError = false;
-    this.showPatentError = false;
-    this.showDiffusionError = false;
+  private notifyChanges() {
+    this.innovationCommonService.setNotifyChanges(true);
+    this.pitchChange.emit(this._innovation);
   }
 
+
+  /***
+   * this fucntion is called when the user clicks on one of the lang,
+   * and according to that we display the lang form.
+   * @param event
+   * @param index
+   */
   onLangSelect(event: Event, index: number) {
     event.preventDefault();
-    this.innovationCardEditingIndex = index;
-    this.resetErrorValue();
-    this.innovationToPreview.emit(this.innovationCardEditingIndex);
+    this._selectedCardIndex = index;
+    this.innovationCommonService.setSelectedInnovationIndex(this._selectedCardIndex);
   }
 
-  /**
-   * This configuration tells the directive what text to use for the placeholder and if it exists,
-   * the initial data to show.
-   * @param type
-   * @returns {any|{placeholder: string, initialData: string}}
+
+  /***
+   * this function is called when the user tries to add the lang in the
+   * project.
+   * @param event
+   * @param lang
    */
-  getConfig(type: string): any {
-    const _inputConfig = {
-      'advantages': {
-        placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: this.project.innovationCards[this.innovationCardEditingIndex]['advantages']
-      }
-    };
-    return _inputConfig[type] || {
-        placeholder: 'Input',
-        initialData: ''
-      };
-  }
-
-  createInnovationCard(event: Event, lang: string): void {
+  onCreateInnovationCard(event: Event, lang: string) {
     event.preventDefault();
-    if (this.canEdit) {
-      if (this.changesSaved) {
-        if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
-          this.innovationService.createInnovationCard(this.project._id, {
-            lang: lang
-          }).first().subscribe((data: InnovCard) => {
-            this.project.innovationCards.push(data);
-            this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
-            this.notifyModelChanges(event);
-            this.onLangSelect(event, this.innovationCardEditingIndex);
+
+    if (this._canEdit) {
+      if (!this._saveChanges) {
+        if (this._innovation.innovationCards.length < 2 && this._innovation.innovationCards.length !== 0) {
+          this.innovationService.createInnovationCard(this._innovation._id, new InnovCard({ lang: lang})).pipe(first()).subscribe((data: InnovCard) => {
+            this._innovation.innovationCards.push(data);
+            this.notifyChanges();
+            this._selectedCardIndex = this._innovation.innovationCards.length - 1;
+            this.onLangSelect(event, this._selectedCardIndex);
+            this.notifyChanges();
           });
         }
       } else {
@@ -150,142 +124,108 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
-  updateData(event: {id: string, content: string}) {
-    if (event.id.indexOf('summary') !== -1) {
-      this.project.innovationCards[this.innovationCardEditingIndex].summary = event.content;
-    } else if (event.id.indexOf('problem') !== -1) {
-      this.project.innovationCards[this.innovationCardEditingIndex].problem = event.content;
-    } else if (event.id.indexOf('solution') !== -1) {
-      this.project.innovationCards[this.innovationCardEditingIndex].solution = event.content;
-    }
-    this.notifyModelChanges();
+
+  containsLanguage(lang: string): boolean {
+    return this._innovation.innovationCards.some((c) => c.lang === lang);
   }
 
-  /**
-   * Add an advantage to the invention card
-   * @param event the resulting value sent from the components directive
-   * @param cardIdx this is the index of the innovation card being edited.
+
+  /***
+   * this function is called when the user clicks on the delete language button. It
+   * opens the modal to ask for the confirmation.
+   * @param event
    */
-  addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
-    this.project.innovationCards[cardIdx].advantages = event.value;
-    this.notifyModelChanges(event.value);
-    this.showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
+  onClickDelete(event: Event) {
+    event.preventDefault();
+    this._deleteModal = true;
   }
 
-  setAsPrincipal (innovationCardId: string): void {
-    this.project.innovationCards.forEach((innovCard: any) => {
-      innovCard.principal = (innovCard._id === innovationCardId);
-    });
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._deleteModal = false;
   }
 
-  imageUploaded(media: Media, cardIdx: number): void {
-    this.project.innovationCards[cardIdx].media.push(media);
-    this.checkPrincipalMedia(media, cardIdx);
-  }
 
-  newOnlineVideoToAdd (videoInfos: Video): void {
-    this.innovationService.addNewMediaVideoToInnovationCard(this.project._id,
-      this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
-      .first().subscribe(res => {
-        this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
-        this.checkPrincipalMedia(res, this.innovationCardEditingIndex);
-      });
-
-  }
-
-  checkPrincipalMedia(media: Media, cardIdx: number) {
-    if (this.project.innovationCards[this.innovationCardEditingIndex].media.length > 0) {
-      if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
-        this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-          this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
-          .subscribe((res) => {
-            this.project.innovationCards[cardIdx].principalMedia = media;
-          });
-      }
-    }
-  }
-
-  setMediaAsPrimary (event: Event, media: Media, index: number): void {
+  /***
+   * this function is called when the user clicks the submit button in the delete
+   * modal, and it deletes the selected lang card.
+   * @param event
+   */
+  onClickSubmit(event: Event) {
     event.preventDefault();
 
-    this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[index]._id, media._id)
-      .first().subscribe((res: Innovation) => {
-        this.project.innovationCards[index].principalMedia = media;
-      });
-
-  }
-
-  deleteMedia(event: Event, media: Media, index: number): void {
-    event.preventDefault();
-
-    this.innovationService.deleteMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[index]._id, media._id)
-      .first().subscribe((_res: Innovation) => {
-        this.project.innovationCards[index].media = this.project.innovationCards[index].media.filter((m) => m._id !== media._id);
-        if (this.project.innovationCards[index].principalMedia._id === media._id) {
-          this.project.innovationCards[index].principalMedia = null;
-        }
-        this.projectChange.emit(this.project);
-        this.checkPrincipalMedia(this.project.innovationCards[this.innovationCardEditingIndex].media[0],
-        this.innovationCardEditingIndex);
-      });
-
-  }
-
-  deleteModal(innovcardID: string, lang: string) {
-    if (this.canEdit) {
-      if (this.changesSaved) {
-        this._deleteInnovCardId = innovcardID;
-        this._langDelete = lang;
-        this._showDeleteModal = true;
+    if (this._canEdit) {
+      if ((!this._saveChanges)) {
+        this.innovationService.removeInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id).pipe(first()).subscribe(() => {
+          this._innovation.innovationCards = this._innovation.innovationCards.filter((card) => card._id !== this._innovation.innovationCards[this._selectedCardIndex]._id);
+          this.notifyChanges();
+          this.onLangSelect(event, 0);
+          this.closeModal(event);
+          this.translateNotificationsService.error('ERROR.SUCCESS', 'ERROR.PROJECT.DELETED_TEXT');
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
+          this.closeModal(event);
+        })
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
     }
+
   }
 
-  deleteInnovCard(event: Event) {
-    event.preventDefault();
-    this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId)
-      .subscribe((res) => {
-      this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
-      // this.innovationCardEditingIndex -= 1;
-      this._showDeleteModal = false;
-      this.notifyModelChanges(event);
-      this.onLangSelect(event, 0);
-    }, err => {
-      this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-      this._showDeleteModal = false;
-    });
-  }
 
+  /***
+   * this function is to import translation. It works on admin side.
+   * @param event
+   * @param model
+   */
   importTranslation(event: Event, model: string) {
     event.preventDefault();
-    const target_card = this.project.innovationCards[this.innovationCardEditingIndex];
-    const from_card = this.project.innovationCards[this.innovationCardEditingIndex === 0 ? 1 : 0];
+
+    const target_card = this._innovation.innovationCards[this._selectedCardIndex];
+    const from_card = this._innovation.innovationCards[this._selectedCardIndex === 0 ? 1 : 0];
+
     switch (model) {
+
       case 'advantages':
         const subs = from_card[model].map((a) => this.translationService.translate(a.text, target_card.lang));
         forkJoin(subs).subscribe(results => {
           target_card[model] = results.map((r) => { return {text: r.translation}; });
-          this.notifyModelChanges();
+
         });
         break;
+
       default:
-        // remove html tags from text
-        const text = from_card[model].replace(/<[^>]*>/g, '');
-        this.translationService.translate(text, target_card.lang).first().subscribe((o) => {
-          target_card[model] = o.translation;
-          this.notifyModelChanges();
-        });
+      // remove html tags from text
+      const text = from_card[model].replace(/<[^>]*>/g, '');
+      this.translationService.translate(text, target_card.lang).first().subscribe((o) => {
+        target_card[model] = o.translation;
+      });
+
     }
+
   }
 
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._showDeleteModal = false;
+
+  /***
+   * this function is called when the user edit the summary, problem
+   * and solution.
+   * @param event
+   */
+  updateData(event: { id: string, content: string }) {
+    this.notifyChanges();
+
+    if (event.id.indexOf('summary') !== -1) {
+      this._innovation.innovationCards[this._selectedCardIndex].summary = event.content;
+    } else if (event.id.indexOf('problem') !== -1) {
+      this._innovation.innovationCards[this._selectedCardIndex].problem = event.content;
+    } else if (event.id.indexOf('solution') !== -1) {
+      this._innovation.innovationCards[this._selectedCardIndex].solution = event.content;
+    }
+
   }
+
 
   getColor(length: number) {
     if (length <= 0) {
@@ -297,40 +237,178 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     }
   }
 
-  containsLanguage(lang: string): boolean {
-    return this.project.innovationCards.some((c) => c.lang === lang);
+
+  /**
+   * Add an advantage to the invention card
+   * @param event the resulting value sent from the components directive
+   * @param cardIdx this is the index of the innovation card being edited.
+   */
+  updateAdvantage (event: { value: Array<{text: string }>}, cardIdx: number): void {
+    this._innovation.innovationCards[cardIdx].advantages = event.value;
+    this.notifyChanges();
   }
 
-  ngOnDestroy() {
+
+  /**
+   * This configuration tells the directive what text to use for the placeholder and if it exists,
+   * the initial data to show.
+   * @param type
+   * @returns {any|{placeholder: string, initialData: string}}
+   */
+  getConfig(type: string): any {
+    const _inputConfig = {
+      'advantages': {
+        placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
+        initialData: this._innovation.innovationCards[this._selectedCardIndex]['advantages']
+      }
+    };
+    return _inputConfig[type] || {
+      placeholder: 'Input',
+      initialData: ''
+    };
+  }
+
+
+  /***
+   * this function is called when the user upload the images.
+   * @param media
+   * @param cardIdx
+   */
+  uploadImage(media: Media, cardIdx: number): void {
+    this._innovation.innovationCards[cardIdx].media.push(media);
+    this.checkPrincipalMedia(media, cardIdx);
+    this.notifyChanges();
+  }
+
+
+  /***
+   * this function is to make the uploaded image or video as a primary image automatically, if not.
+   * @param media
+   * @param cardIdx
+   */
+  checkPrincipalMedia(media: Media, cardIdx: number) {
+    if (this._innovation.innovationCards[this._selectedCardIndex].media.length > 0) {
+      if (!this._innovation.innovationCards[this._selectedCardIndex].principalMedia) {
+        this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, media._id).pipe(first())
+          .subscribe((res) => {
+            this._innovation.innovationCards[cardIdx].principalMedia = media;
+          });
+      }
+    }
+  }
+
+
+  /***
+   * this function is called when the user uploads the video.
+   * @param video
+   */
+  uploadVideo(video: Video): void {
+    this.innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, video).pipe(first())
+      .subscribe(res => {
+      this._innovation.innovationCards[this._selectedCardIndex].media.push(res);
+      this.checkPrincipalMedia(res, this._selectedCardIndex);
+      this.notifyChanges();
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+  }
+
+
+  /***
+   * this function is called when the user clicks on the delete button to delete the media.
+   * @param event
+   * @param media
+   * @param index
+   */
+  onClickDeleteMedia(event: Event, media: Media, index: number) {
+    event.preventDefault();
+
+    this.innovationService.deleteMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id).pipe(first())
+      .subscribe((_res: Innovation) => {
+        this._innovation.innovationCards[index].media = this._innovation.innovationCards[index].media.filter((m) => m._id !== media._id);
+
+        if (this._innovation.innovationCards[index].principalMedia._id === media._id) {
+          this._innovation.innovationCards[index].principalMedia = null;
+        }
+
+        this.checkPrincipalMedia(this._innovation.innovationCards[this._selectedCardIndex].media[0], this._selectedCardIndex);
+        this.notifyChanges();
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
+  }
+
+
+  /***
+   * this function is called when the user wants to make the media as primary media.
+   * @param event
+   * @param media
+   * @param index
+   */
+  onClickSetMainMedia(event: Event, media: Media, index: number) {
+    event.preventDefault();
+
+    this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id).pipe(first())
+      .subscribe((res: Innovation) => {
+        this._innovation.innovationCards[index].principalMedia = media;
+        this.notifyChanges();
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
+  }
+
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get canEdit(): boolean {
+    return this._canEdit;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get selectedCardIndex(): number {
+    return this._selectedCardIndex;
+  }
+
+  get companyName(): string {
+    return this._companyName;
+  }
+
+  get saveChanges(): boolean {
+    return this._saveChanges;
+  }
+
+  get deleteModal(): boolean {
+    return this._deleteModal;
+  }
+
+  get editors(): Array<any> {
+    return this._editors;
+  }
+
+  ngOnDestroy(): void {
     if (Array.isArray(this._editors) && this._editors.length > 0) {
       this._editors.forEach((ed) => tinymce.remove(ed));
     }
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+
   }
 
-  get domSanitizer() {
-    return this.domSanitizer1;
-  }
-
-  get companyName(){
-    return (this._companyName || 'umi').toLocaleUpperCase();
-  }
-
-  get showDeleteModal(): boolean {
-    return this._showDeleteModal;
-  }
-
-  get langDelete(): string {
-    return this._langDelete;
-  }
-
-  get dateFormat(): string {
-    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-  get isAdmin(): boolean {
-    return (this.authService.adminLevel & 3) === 3;
-  }
 
 }

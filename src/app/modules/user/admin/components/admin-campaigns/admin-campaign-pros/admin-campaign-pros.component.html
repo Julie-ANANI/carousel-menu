@@ -1,0 +1,97 @@
+<div class="text-right">
+  <button class="btn btn-primary" (click)="importProsModal = true">
+    Import professionals
+  </button>
+  <button class="btn btn-primary" (click)="addPro(true)">
+    Add a professional
+  </button>
+  <button class="btn btn-primary" (click)="exportPros()">
+    Export pros
+  </button>
+</div>
+<app-shared-pros-list [config]="config" [campaign]="campaign"></app-shared-pros-list>
+
+<!-- Modal d'import de pros -->
+<div class="modal" [ngClass]="{'active': importProsModal}">
+  <div class="modal-overlay" (click)="importProsModal = false && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="importProsModal = false && $event.preventDefault()"></button>
+      <div class="modal-title h5"> Import professionals </div>
+    </div>
+    <div class="modal-body foo">
+
+      <label class="btn ghost-primary btn-primary">
+        <input #fileupload type="file" [hidden]="true" (change)="importProsCsv(fileupload.files[0], $event)" />
+        Import CSV
+      </label>
+
+      <app-autocomplete-input
+        (update)="updateCampaign($event)"
+        [onlyOne]="true"
+        [config]="{placeholder: 'campagne', initialData: originCampaign, type: 'campaign'}"></app-autocomplete-input>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="importPros()" [disabled]="!originCampaign.length">
+        {{ 'COMMON.ADD' | translate }}
+      </button>
+      <button class="btn btn-link" (click)="importProsModal = false && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal d'ajout de pro -->
+<div class="modal" [ngClass]="{'active': addProModal}">
+  <div class="modal-overlay" (click)="addPro(false)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="addPro(false)"></button>
+      <div class="modal-title h5"> Add a professional </div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
+        <input
+          class="form-default"
+          [(ngModel)]="newPro.firstName"
+          id="firstName"
+          type="text"
+          placeholder="John">
+      </div>
+
+      <!-- Last name -->
+      <div class="form-group">
+        <label class="form-label" for="firstName">{{ 'COMMON.LASTNAME' | translate }}</label>
+        <input
+          class="form-default"
+          [(ngModel)]="newPro.lastName"
+          id="lastName"
+          type="text"
+          placeholder="Smith">
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+        <input
+          class="form-default"
+          [(ngModel)]="newPro.email"
+          id="email"
+          type="email"
+          placeholder="john@catco.com">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="createPro()" [disabled]="!newPro.email || !newPro.firstName || !newPro.lastName">
+        {{ 'COMMON.ADD' | translate }}
+      </button>
+      <button class="btn btn-link" (click)="addPro(false)">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

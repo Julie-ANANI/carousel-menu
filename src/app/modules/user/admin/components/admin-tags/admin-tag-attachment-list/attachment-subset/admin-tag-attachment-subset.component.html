@@ -1,0 +1,50 @@
+<h3>{{total}} Attachments</h3>
+
+<app-admin-tag-new-modal [active]="activeNTM"
+                         [title]="'Create a new tag...'"
+                         [initialData]="selected"></app-admin-tag-new-modal>
+
+<table class="table pros" wt-responsive-table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Text</th>
+            <th>Notation</th>
+            <th>URI</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th><input [(ngModel)]="filter.text"/></th>
+            <th><input [(ngModel)]="filter.notation"/></th>
+            <th><button (click)="createTagFromCodes()"
+                        class="btn btn-primary centered"
+                        title="Create a tag with the selection"
+                        [disabled]="selected.length == 0">Create a tag from the selection
+                <i class="fas fa-plus"></i></button></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let datum of ( data | filter: filter | limits: 'offset': config.offset | limits: 'limit' : config.limit)" [ngClass]="{'active': datum.isSelected}">
+        <ng-container (click)="selectDatum(datum)"> <!-- [(ngModel)]="datum.isSelected"-->
+            <td><input type="checkbox" (click)="selectDatum(datum)"/></td>
+            <td>{{ datum.text }}</td>
+            <td>{{ datum.notation }}</td>
+            <td>{{ datum.uri }}</td>
+        </ng-container>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="12">
+            <app-pagination
+              [configValue]="config"
+              (configChange)="configChange($event)"
+              [total]="total"
+              [propertyName]="'admin-attachment-tags'">
+            </app-pagination>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+

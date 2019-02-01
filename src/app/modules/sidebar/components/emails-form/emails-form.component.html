@@ -60,7 +60,7 @@
       </div>
 
       <!-- Show all professionnals related to a campaign -->
-      <app-shared-table [data]="tableInfos" *ngIf="isShowCampaignInfos"></app-shared-table>
+      <app-shared-table [config]="config" [data]="tableInfos" *ngIf="isShowCampaignInfos"></app-shared-table>
 
       <!-- Create new filter on a country -->
       <app-autocomplete-input

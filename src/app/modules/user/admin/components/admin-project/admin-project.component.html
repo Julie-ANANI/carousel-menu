@@ -1,0 +1,42 @@
+<div class="main-container admin-project">
+
+  <div class="section-light-container heading">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <div class="title-button-wrapper">
+        <h1>{{ this.project.name }}</h1>
+        <div class="project-progress">
+          <label class="form-label">Preparation</label>
+          <app-progress-bar class="progress"
+                            [width]="getPercentage('preparation') +'%'"
+                            [backgroundColor]="getColor(getPercentage('preparation'))">
+          </app-progress-bar>
+          <label class="form-label">{{'PROJECT.CAMPAIGN.CAMPAIGN' | translate}}</label>
+          <app-progress-bar class="progress"
+                            [width]="getPercentage('campaign') +'%'"
+                            [backgroundColor]="getColor(getPercentage('campaign'))">
+          </app-progress-bar>
+          <label class="form-label">{{'PROJECT.DELIVERY.DELIVERY' | translate}}</label>
+          <app-progress-bar class="progress"
+                            [width]="getPercentage('delivery') +'%'"
+                            [backgroundColor]="getColor(getPercentage('delivery'))">
+          </app-progress-bar>
+        </div>
+        <a [href]="clientSideUrl" target="_blank"><button class="btn ghost-primary">View client side</button></a>
+      </div>
+
+
+      <ul class="tabs">
+        <li *ngFor="let tab of authorizedTabs" (out)="getEvent($event)">
+          <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
+            {{ 'PROJECT.' + tab.toUpperCase() | translate }}
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+
+</div>

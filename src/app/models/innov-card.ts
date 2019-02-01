@@ -1,9 +1,11 @@
 import { Media } from './media';
+import {Model} from './model';
 
-export interface InnovCard {
+export class InnovCard extends Model {
+
   readonly _id?: string;
   readonly innovation_reference?: string;
-  readonly title?: string;
+  title?: string;
   readonly lang: string;
   media?: Array<Media>;
   principalMedia?: Media;
@@ -13,4 +15,5 @@ export interface InnovCard {
   solution?: string;
   advantages?: Array<{text: string}>;
   readonly principal?: boolean;
+  completion?: number;
 }

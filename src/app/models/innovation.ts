@@ -7,8 +7,9 @@ import { Tag } from './tag';
 import { User } from './user.model';
 
 export interface Innovation {
+  __v?: number;
   readonly _id?: string;
-  readonly owner?: User;
+  owner?: User;
   readonly campaigns?: Array<any>;
   status?: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
   statusLogs?: Array<{
@@ -18,7 +19,7 @@ export interface Innovation {
   }>
   readonly name?: string;
   domain?: string;
-  readonly type?: 'insights' | 'apps' | 'leads';
+  type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
   tags?: Array<Tag>;
@@ -30,13 +31,35 @@ export interface Innovation {
   settings?: InnovationSettings;
   stats?: any;
   restitution?: boolean;
+  clientSatisfaction?: {satisfaction?: 'VERY_HAPPY' | 'HAPPY' | 'NORMAL' | 'BAD' | 'VERY_BAD', message?: string};
+  feedback?: string;
   thanks?: boolean;
   readonly projectStatus?: number;
   readonly reviewing?: any;
   readonly patented?: boolean;
-  readonly external_diffusion?: boolean;
+  isPublic?: boolean;
+  external_diffusion?: boolean;
   readonly launched?: Date;
   readonly created?: Date;
   readonly updated?: Date;
-  readonly operator?: User;
+  ownerConsent?: {
+    value?: boolean,
+    date?: any
+  },
+  executiveReport?: {
+    totalSections?: number,
+    goal?: string,
+    professionalAbstract?: string,
+    sections?: [{
+      quesId?: string
+    }],
+    abstracts?: [{
+      quesId?: string,
+      value?: string
+    }]
+  };
+  operator?: User;
+  previewMode?: boolean;
+  completion?: number;
+  _metadata?: any;
 }
