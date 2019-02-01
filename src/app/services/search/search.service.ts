@@ -88,4 +88,8 @@ export class SearchService {
     };
     return this._http.get('/search/get', {params: query});
   }
+
+  public computerAidedTargeting(keywords: string[]): Observable<any> {
+    return this._http.post('/search/cat', {keywords});
+  }
 }
