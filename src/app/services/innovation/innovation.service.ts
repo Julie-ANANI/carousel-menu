@@ -83,6 +83,10 @@ export class InnovationService {
     return this._http.get('/filter/innovation/' + innovationId + '/' + filterName);
   }
 
+  public deleteFilter(innovationId: string, filterName: string): Observable<any> {
+    return this._http.delete('/filter/innovation/' + innovationId + '/' + filterName);
+  }
+
   public updatePreset(innovationId: string, data: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/updatePreset', {preset: data});
   }

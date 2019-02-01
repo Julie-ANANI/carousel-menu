@@ -341,6 +341,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     });
   }
 
+  deleteCustomFilter(name: string) {
+    this.innovationService.deleteFilter(this._innovation._id, name).subscribe((_result) => {
+      this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
+  }
+
 
   /***
    * This function is to get the questions.

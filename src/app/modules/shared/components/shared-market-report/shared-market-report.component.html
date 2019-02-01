@@ -902,6 +902,7 @@
     <h3 [textContent]="'MARKET_REPORT.FILTER_MODAL.EXISTINGSYNTHESIS'" translate></h3>
     <ul>
       <li *ngFor="let filter of sharedFiltersList">
+        <i class="fa fa-trash" aria-hidden="true" (click)="deleteCustomFilter(filter.name)"></i>
         <a [routerLink]="['synthesis']" [queryParams]="{filter: filter.name}"
            (click)="loadFilter(filter.name); showFilterModal = false" [innerHtml]="filter.name"></a>
       </li>
