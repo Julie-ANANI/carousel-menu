@@ -16,7 +16,7 @@ export class AdminCampaignComponent implements OnInit {
 
   private _campaign: Campaign;
 
-  private _tabs = ['answers', 'search', 'pros', 'templates', 'mails', 'details', 'history'];
+  private _tabs = ['search', 'history', 'pros', 'quiz', 'templates', 'mails', 'answers'];
 
   constructor(private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,

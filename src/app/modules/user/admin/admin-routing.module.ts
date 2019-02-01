@@ -83,7 +83,7 @@ const adminRoutes: Routes = [
           { path: '', component: AdminCampaignsComponent, pathMatch: 'full' },
           { path: 'campaign/:campaignId', component: AdminCampaignComponent, resolve: { campaign : CampaignResolver }, children: [
             { path: '', redirectTo: 'answers', pathMatch: 'full'},
-            { path: 'details', component: AdminCampaignDetailsComponent, pathMatch: 'full'},
+            { path: 'quiz', component: AdminCampaignDetailsComponent, pathMatch: 'full'},
             { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full'},
             { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'},
             { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },

@@ -1,7 +1,7 @@
 export const CAMPAIGNS = {
   'CAMPAIGN-NAME': 'Nom de la campagne',
 
-  'DETAILS': 'Détails',
+  'QUIZ': 'Quiz',
 
   'HISTORY': 'Historique',
 
