@@ -169,9 +169,11 @@ export class UserFormComponent implements OnInit {
 
 
   private loadInnovations(): void {
-    this.userService.getInnovations(this._user.id).pipe(first()).subscribe((innovations: any) => {
+    if(this._user.id) {
+      this.userService.getInnovations(this._user.id).pipe(first()).subscribe((innovations: any) => {
         this._projects = innovations.result;
       });
+    }
   }
 
   selectProject(event: any) {
@@ -270,6 +272,10 @@ export class UserFormComponent implements OnInit {
 
   removeTag(tag: any) {
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
+  }
+
+  get isSuperAdmin(): boolean {
+    return this._user.roles === "super-admin";
   }
 
 

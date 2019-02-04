@@ -5,9 +5,9 @@
     <span *ngIf="status==='QUEUED'"> en attente</span>
   </h2>
   <h6>
+    <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
     <span *ngIf="paused" class="text-error">Module en pause</span>
     <span *ngIf="!paused" class="text-success">
-      <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
       Module en fonctionnement
     </span>
     -
@@ -47,7 +47,7 @@
           <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && !campaignId"
             [routerLink]="'/admin/search/results/' + request._id">{{request.keywords}}</a>
           <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && campaignId"
-             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + request._id">{{request.keywords}}</a>
+             [routerLink]="'/user/admin/campaigns/campaign/' + campaignId + '/results/' + request._id">{{request.keywords}}</a>
           <a *ngIf="mails" href="">{{request.keywords}}</a>
           <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords}}</a>
           <br/>
@@ -102,7 +102,7 @@
 
         <td class="text-center" *ngIf="!mails">
           <button class="btn btn-default btn-sm" *ngIf="!campaign && request.campaign">
-            <a [routerLink]="'/admin/campaigns/campaign/' + request.campaign">
+            <a [routerLink]="'/user/admin/campaigns/campaign/' + request.campaign">
               <i class="fas fa-eye"></i> Campagne
             </a>
           </button>
@@ -115,9 +115,9 @@
         </td>
         <td>
           <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS') && !campaignId"
-             [routerLink]="'/admin/search/results/' + childRequest._id">{{childRequest.keywords}}</a>
+             [routerLink]="'/user/admin/search/results/' + childRequest._id">{{childRequest.keywords}}</a>
           <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS') && campaignId"
-             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + childRequest._id">{{childRequest.keywords}}</a>
+             [routerLink]="'/user/admin/campaigns/campaign/' + campaignId + '/results/' + childRequest._id">{{childRequest.keywords}}</a>
           <a *ngIf="mails" href="">{{childRequest.keywords}}</a>
           <a *ngIf="childRequest.entity==='MAIL'" href="">{{childRequest.keywords}}</a>
           <br/>
@@ -172,7 +172,7 @@
 
         <td class="text-center" *ngIf="!mails">
           <button class="btn btn-default btn-sm" *ngIf="!campaign && childRequest.campaign">
-            <a [routerLink]="'/admin/campaigns/campaign/' + childRequest.campaign">
+            <a [routerLink]="'/user/admin/campaigns/campaign/' + childRequest.campaign">
               <i class="fas fa-eye"></i> Campagne
             </a>
           </button>
@@ -184,6 +184,7 @@
   <tfoot>
   <tr>
     <td colspan="12">
+      <!-- <i (click)="pauseModule()" class="c-hand fa fa-pause"></i>  -->
       <app-pagination [configValue]="paginationConfig"
                       (configChange)="configChange($event)"
                       [total]="total"
