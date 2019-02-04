@@ -389,7 +389,6 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   changeProject(value: Innovation) {
     this._project = value;
-    console.log(this._project);
     this._more = {animate_state: 'inactive', title: this._more.title, type: this._more.type};
     this.save('Le projet a bien été mise à jour !');
     // window.location.reload();
