@@ -1,6 +1,7 @@
 kind: pipeline
 name: default
 
+## UMI development steps
 steps:
 - name: dockerDev
   image: plugins/docker
@@ -36,7 +37,7 @@ steps:
     - push
     branch:
     - development
-
+## UMI production steps
 - name: dockerProd
   image: plugins/docker
   settings:
@@ -63,8 +64,9 @@ steps:
     secret_key:
       from_secret: rancher_secret
     service: "frontstack/umiapplicationfront"
-    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-umi"
     timeout: 240
   when:
     event:
     - tag
+## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
