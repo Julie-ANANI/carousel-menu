@@ -35,7 +35,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && !this.readonly) {
       tinymce.init({
         selector: '#' + this._htmlId,
         plugins: ['link', 'paste', 'lists', 'advlist'], // Voir .angular-cli.json
