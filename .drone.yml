@@ -1,0 +1,32 @@
+kind: pipeline
+name: default
+
+steps:
+- name: docker
+  image: plugins/docker
+  settings:
+    auto_tag: true
+    build_args:
+      - APP_NAME: umi
+      - ENV_NAME: dev
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+- name: rancherDev
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: dev/umiapplicationfront
+    docker_image: unitedmotionideas/umi-application-front:latest
+    timeout: 240
+  when:
+    event:
+      - push
+    branch:
+      - master

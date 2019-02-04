@@ -1,3 +1,5 @@
+[![Build Status](https://drone.umi.us/api/badges/unitedmotionideas/umi-application-front/status.svg)](https://drone.umi.us/unitedmotionideas/umi-application-front)
+
 # umi-application-front
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
