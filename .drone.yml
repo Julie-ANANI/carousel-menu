@@ -36,8 +36,6 @@ steps:
   when:
     event:
     - tag
-    branch:
-    - development
 
 - name: rancherDev
   image: peloton/drone-rancher
