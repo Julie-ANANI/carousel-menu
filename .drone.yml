@@ -14,6 +14,31 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
+  when:
+    event:
+    - push
+    branch:
+    - development
+
+- name: docker
+  image: plugins/docker
+  settings:
+    auto_tag: true
+    auto_tag_suffix: umi
+    build_args:
+    - APP_NAME=umi
+    - ENV_NAME=production
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+    - tag
+    branch:
+    - development
+
 - name: rancherDev
   image: peloton/drone-rancher
   settings:
@@ -29,4 +54,4 @@ steps:
     event:
       - push
     branch:
-      - master
+      - evelopment
