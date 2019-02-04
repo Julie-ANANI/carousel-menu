@@ -25,15 +25,8 @@
   <!-- Project status submitted and client side -->
   <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || innovation?.previewMode">
 
-    <!-- Display spinner -->
-    <ng-container *ngIf="spinnerDisplay">
-      <div [ngStyle]="{ 'padding-top': '3.15rem'}">
-        <app-shared-loader></app-shared-loader>
-      </div>
-    </ng-container>
-
     <!-- Display spinner off -->
-    <ng-container *ngIf="!spinnerDisplay">
+    <ng-container>
 
       <!-- Message -->
       <div *ngIf="innovation?.previewMode && innovation?.status !== 'DONE'" class="msg-wrapper">
@@ -706,7 +699,6 @@
 
 
     </ng-container>
-    <!-- /Display spinner off -->
 
 
   </ng-container>

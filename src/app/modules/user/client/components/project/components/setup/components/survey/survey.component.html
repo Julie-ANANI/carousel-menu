@@ -1,4 +1,4 @@
-<div id="survey-component">
+<div id="survey-component animate-page">
 
   <!-- section no survey -->
   <div *ngIf="!innovation.quizId" class="text-center">
@@ -7,7 +7,7 @@
 
   <!-- section survey -->
   <div *ngIf="innovation.quizId">
-    <p>{{'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
+    <p>{{ 'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
     <a [href]="url" target="_blank">{{ url }}</a>
   </div>
 
