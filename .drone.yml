@@ -2,7 +2,7 @@ kind: pipeline
 name: default
 
 steps:
-- name: docker
+- name: dockerDev
   image: plugins/docker
   settings:
     auto_tag: true
@@ -20,7 +20,7 @@ steps:
     branch:
     - development
 
-- name: docker
+- name: dockerProd
   image: plugins/docker
   settings:
     auto_tag: true
