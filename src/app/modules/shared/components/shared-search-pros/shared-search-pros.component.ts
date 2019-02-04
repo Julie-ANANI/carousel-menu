@@ -127,7 +127,13 @@ export class SharedSearchProsComponent implements OnInit {
     });
   }
 
-  public cat() {
+  public cat(event: Event): void {
+    this._searchService.computerAidedTargeting(this._params.keywords.split('\n')).pipe(first()).subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  public _cat() {
     this._searchService.cat(this.campaign._id, this._params.keywords, this._params.starProfiles).pipe(first()).subscribe((answer: any) => {
       this.catResult = answer;
       this.estimateNumberOfGoogleRequests(answer.totalResults);
