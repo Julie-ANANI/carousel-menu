@@ -128,6 +128,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   public cat(event: Event): void {
+    event.preventDefault();
     this._searchService.computerAidedTargeting(this._params.keywords.split('\n')).pipe(first()).subscribe(response => {
       console.log(response);
     });
