@@ -143,8 +143,8 @@
     </div>
 
     <!-- section tags -->
-    <div *ngIf="modalAnswer?.tags.length > 0" class="section-tags">
-      <label class="form-label">Tags</label>
+    <div class="section-tags">
+      <label *ngIf="modalAnswer?.tags.length > 0" class="form-label">Tags</label>
       <app-shared-tag-item
         [tags]="modalAnswer.tags"
         [editMode]="editMode"
