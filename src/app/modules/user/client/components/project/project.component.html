@@ -54,21 +54,21 @@
   <!-- /header section -->
 
   <!-- setup section -->
-  <div *ngIf="currentPage === 'setup'">
+  <ng-container *ngIf="currentPage === 'setup'">
     <app-setup [project]="innovation"></app-setup>
-  </div>
+  </ng-container>
   <!-- /setup section -->
 
   <!-- exploration section -->
-  <div *ngIf="currentPage === 'exploration'">
+  <ng-container *ngIf="currentPage === 'exploration'">
     <app-exploration [project]="innovation"></app-exploration>
-  </div>
+  </ng-container>
   <!-- /exploration section -->
 
   <!-- synthesis section -->
-  <div *ngIf="currentPage === 'synthesis'">
+  <ng-container *ngIf="currentPage === 'synthesis'">
     <app-shared-market-report [project]="innovation"></app-shared-market-report>
-  </div>
+  </ng-container>
   <!-- /synthesis section -->
 
 </section>
