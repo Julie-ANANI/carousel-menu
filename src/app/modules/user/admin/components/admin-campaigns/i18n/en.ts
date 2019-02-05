@@ -75,6 +75,11 @@ export const CAMPAIGNS = {
   },
 
   'STATS': {
+    'HEADINGS': {
+      'INSIGHTS': 'Insights',
+      'PROFILE': 'Profile',
+      'QUALITY': 'Quality'
+    },
     'ADDED': 'Added',
     'TO_CONTACT': 'To contact',
     'CONTACTED': 'Contacted',
@@ -82,12 +87,12 @@ export const CAMPAIGNS = {
     'CLICKED': 'Clicked',
     'STARTED': 'Started',
     'SENT': 'Sent',
-    'VALIDATED': 'Validated'
+    'VALIDATED': 'Validated',
   },
 
   'NO_ANSWERS': {
     'A': 'Don\'t have any answers?',
     'B': 'Try to add some by clicking on "Import" button.'
-  }
+  },
 
 };
