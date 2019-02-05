@@ -45,7 +45,7 @@
 
         <td>
           <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && !campaignId"
-            [routerLink]="'/admin/search/results/' + request._id">{{request.keywords}}</a>
+            [routerLink]="'/user/admin/search/results/' + request._id">{{request.keywords}}</a>
           <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && campaignId"
              [routerLink]="'/user/admin/campaigns/campaign/' + campaignId + '/results/' + request._id">{{request.keywords}}</a>
           <a *ngIf="mails" href="">{{request.keywords}}</a>
