@@ -46,8 +46,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _innovation: Innovation = {};
 
-  private _spinnerDisplay = true;
-
   private _adminSide: boolean;
 
   private _isOwner: boolean;
@@ -132,14 +130,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is calling all the initial functions.
    */
   private initializeReport() {
-    this._spinnerDisplay = true;
     this.isAdminSide();
     this.initializeVariable();
     this.getAnswers();
     this.getCampaign();
     this.resetMap();
     this.presets();
-    this._spinnerDisplay = false;
   }
 
 
@@ -237,9 +233,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * this is when we update the innovation in any sub component,
      * we are listening that update and will update the innovation attribute.
      */
-    this.innovationCommonService.getInnovation()
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((response: Innovation) => {
+    this.innovationCommonService.getInnovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: Innovation) => {
         if (response) {
           this._innovation = response;
         }
@@ -944,10 +938,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get innovation(): Innovation {
     return this._innovation;
-  }
-
-  get spinnerDisplay(): boolean {
-    return this._spinnerDisplay;
   }
 
   get isOwner(): boolean {

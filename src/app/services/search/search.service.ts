@@ -82,6 +82,13 @@ export class SearchService {
     return this._http.get('/search/get', {params: query});
   }
 
+  public pauseModule(): Observable<any> {
+    const query = {
+      path: '/search/people/pause',
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
   public relaunchMailRequests(): Observable<any> {
     const query = {
       path: '/search/mail/relaunch',

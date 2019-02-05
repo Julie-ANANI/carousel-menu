@@ -1,13 +1,10 @@
 FROM node:10.13.0
 
-#ARG APP_NAME
-#ARG ENV_NAME
+ARG APP_NAME
+ARG ENV_NAME
 
-RUN echo ${APP_NAME}
-RUN echo "${ENV_NAME}"
-
-#RUN : "${APP_NAME:?The name of the application needs to be set and non-empty.}"
-#RUN : "${ENV_NAME:?The environment name needs to be set and non-empty.}"
+#RUN echo ${APP_NAME}
+#RUN echo "${ENV_NAME}"
 
 RUN echo "!!!!!! Builing with ng build ${APP_NAME} -c=${ENV_NAME} --prod !!!!!!"
 
@@ -23,10 +20,10 @@ ADD .npmrc /var/web/.npmrc
 ADD . .
 
 RUN npm install
-#RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
-RUN ng build umi -c=dev
-#RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
-RUN ng run umi:server -c=dev
+RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
+#RUN ng build umi -c=dev
+RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
+#RUN ng run umi:server -c=dev
 RUN gzip -k -r dist/browser/
 RUN npm run webpack:server
 RUN rm -f /var/web/.npmrc

@@ -85,6 +85,12 @@ export class SharedSearchHistoryComponent implements OnInit {
     });
   }
 
+  public pauseModule() {
+    this._searchService.pauseModule().pipe(first()).subscribe((_: any) => {
+      this.loadHistory();
+    });
+  }
+
   public relaunchMailRequests() {
     this._searchService.relaunchMailRequests().pipe(first()).subscribe((_: any) => {
       this.loadHistory();

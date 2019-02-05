@@ -8,7 +8,7 @@
 
     <!-- operator -->
     <div *ngIf="isEditUser" class="operator-wrapper">
-      <label class="form-switch" for="user-form-operator" *ngIf="authService.userId !== user.id">
+      <label class="form-switch" for="user-form-operator" *ngIf="isSuperAdmin && authService.userId !== user.id">
         <input
           type="checkbox"
           name="operator"
@@ -17,7 +17,7 @@
         <i class="form-icon"></i>{{ 'PROJECT_LIST.OPERATOR' | translate }}
       </label>
 
-      <label class="form-switch" for="user-form-role" *ngIf="authService.adminLevel > 2 && authService.userId !== user.id">
+      <label class="form-switch" for="user-form-role" *ngIf="!isSuperAdmin && authService.adminLevel > 2 && authService.userId !== user.id">
         <input
           type="checkbox"
           name="role"
@@ -33,7 +33,7 @@
       <label *ngIf="!editInstanceDomain" class="form-label">
         Actual domain:
         <span>{{ userForm.get('domain').value }}</span>
-        <a (click)="startEditInstanceDomain($event)"><span *ngIf="!isSelf"><i class="fas fa-pencil-alt"></i></span></a>
+        <a (click)="startEditInstanceDomain($event)"><span *ngIf="!isSelf && !isSuperAdmin"><i class="fas fa-pencil-alt"></i></span></a>
       </label>
 
       <div *ngIf="editInstanceDomain">
