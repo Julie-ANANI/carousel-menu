@@ -27,6 +27,15 @@
           translate>
           <i class="fas fa-search"></i>
         </button>
+
+        <div *ngIf="catDone" class="reset-cat">
+          <button
+            (click)="resetCat()"
+            class="btn btn-outline-info">Reset
+            <i class="fas fa-refresh"></i>
+          </button>
+        </div>
+
       </div>
     </div>
 
@@ -71,7 +80,7 @@
         <span *ngIf="estimatedNumberOfGoogleRequests">
           {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
           <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span *ngIf="catResult.total_result">max</span></strong>.
-        <a *ngIf="!catResult.keywords_analysis && campaign" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
+        <a *ngIf="!catResult.keywords_analysis && campaign" (click)="cat($event)">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
         </span>
         <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
       </span>
@@ -95,5 +104,7 @@
       <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
       <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
     </div>
+
+
   </div>
 </div>

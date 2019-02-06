@@ -129,7 +129,8 @@ export class SharedSearchProsComponent implements OnInit {
     });
   }
 
-  public cat(): void {
+  public cat(event: Event): void {
+    event.preventDefault();
     this._searchService.computerAidedTargeting(this._params.keywords.split('\n')).pipe(first()).subscribe((response: any) => {
       console.log(response);
 
@@ -224,6 +225,14 @@ export class SharedSearchProsComponent implements OnInit {
     this._estimatedNumberOfGoogleRequests = totalResultsArray.reduce((acc: number, curr: number) => {
       return acc + this._estimateNumberOfGoogleRequestsForOneSearch(curr);
     }, 0);
+  }
+
+  public resetCat() {
+    this.catResult = {
+      duplicate_status: 'ok',
+    };
+    this._suggestion = ' ';
+    this.estimateNumberOfGoogleRequests();
   }
 
   get suggestion(): string { return this._suggestion; }
