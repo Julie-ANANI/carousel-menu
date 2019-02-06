@@ -50,6 +50,7 @@ import { SignatureResolver } from '../../../resolvers/signature.resolver';
 import { CampaignCalculationService } from '../../../services/campaign/campaign-calculation.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
+import { PresetResolver } from '../../../resolvers/preset.resolver';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
     RequestResolver,
     CampaignCalculationService,
     QuizService,
-    InnovationCommonService
+    InnovationCommonService,
+    PresetResolver
   ]
 })
 
