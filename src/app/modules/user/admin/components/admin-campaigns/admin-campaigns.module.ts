@@ -18,7 +18,6 @@ import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admi
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
 import { SharedProsListModule } from '../../../../shared/components/shared-pros-list/shared-pros-list.module';
-import { SharedAnswerListModule } from '../../../../shared/components/shared-answers-list/shared-answer-list.module';
 import { SharedSearchHistoryModule} from '../../../../shared/components/shared-search-history/search-history.module';
 import { SharedSearchProsModule } from '../../../../shared/components/shared-search-pros/shared-search-pros.module';
 import { SharedSearchResultsModule } from '../../../../shared/components/shared-search-results/search-results.module';
@@ -39,7 +38,6 @@ import { MessageSpaceModule } from '../../../../utility-components/message-space
     FormsModule,
     SharedSearchProsModule,
     SharedSearchResultsModule,
-    SharedAnswerListModule,
     SharedSearchHistoryModule,
     RouterModule,
     TranslateModule.forChild(),

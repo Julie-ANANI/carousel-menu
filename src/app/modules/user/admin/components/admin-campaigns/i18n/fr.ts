@@ -75,11 +75,22 @@ export const CAMPAIGNS = {
   },
 
   'STATS': {
-    'HEADINGS': {
+    'HEADING': {
       'INSIGHTS': 'Insights',
       'PROFILE': 'Profil',
       'QUALITY': 'Qualité'
     },
+    'TITLE': {
+      'LOOK': 'To look at',
+      'VALIDATED': 'Validated',
+      'VALIDATED_WITHOUT': 'Validated no mail',
+      'REJECTED': 'Rejected',
+      'STANDARD': 'Standard',
+      'TOP': 'Top',
+      'FILL_RATE': 'Fill rate',
+      'TIME': 'Time'
+    },
+
     'ADDED': 'Ajouté',
     'TO_CONTACT': 'Pour contacter',
     'CONTACTED': 'Contacté',

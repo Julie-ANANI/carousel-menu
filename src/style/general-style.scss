@@ -271,3 +271,102 @@ a, a:focus, a:hover, a:active, a.active {
   justify-content: flex-end;
   padding-top: 1.57rem;
 }
+
+
+/*
+    Campaign stats
+ */
+.campaign-stats-wrapper {
+  display: flex;
+
+  .stat1, .stat2, .stat3 {
+    padding-top: .9375rem;
+    padding-bottom: .9375rem;
+    display: flex;
+    flex: 1;
+
+    .container {
+      display: flex;
+      width: 92%;
+      margin: 0 auto;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      padding-left: .4rem;
+      padding-right: .4rem;
+    }
+
+    .heading, .title, .value {
+      color: white;
+      margin-bottom: 0;
+    }
+
+    .heading, .value {
+      font-size: 1rem;
+    }
+
+    .heading {
+      margin-right: .6rem;
+
+      .fa-sync-alt {
+        color: $primary-color;
+        margin-right: .6rem;
+      }
+
+      .fa-sync-alt:hover {
+        color: lighten($primary-color, 15%);
+        cursor: pointer;
+      }
+
+    }
+
+    .value {
+      font-weight: normal;
+    }
+
+    .title {
+      opacity: .7;
+      font-size: .75rem;
+    }
+
+    .content {
+      margin: 0 .6rem .6rem .6rem;
+      text-align: center;
+    }
+
+  }
+
+  .stat1 {
+    background-color: $secondary-color;
+  }
+
+  .stat2 {
+    background-color: #2FA4D4;
+  }
+
+  .stat3 {
+    background-color: #5FAECE;
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .campaign-stats-wrapper {
+
+    .container {
+      flex-direction: column;
+
+      .heading {
+        margin-right: 0 !important;
+        margin-bottom: 1.2rem;
+      }
+
+    }
+
+  }
+
+}

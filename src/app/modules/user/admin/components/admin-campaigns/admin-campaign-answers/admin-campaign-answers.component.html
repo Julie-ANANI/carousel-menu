@@ -1,30 +1,89 @@
 <div id="admin-campaign-answers-component">
 
-  <!-- section actions -->
-  <div *ngIf="getAuthorizedActions(2)" class="section-actions">
+  <!-- section stats -->
+  <div class="campaign-stats-wrapper">
 
-    <label class="btn ghost-primary">
-      <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
-      {{ 'CAMPAIGNS.IMPORT_ANSWERS' | translate }}
-    </label>
+    <!-- stat col 1 -->
+    <div class="stat1">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.INSIGHTS' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.REJECTED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('status', 'REJECTED') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.LOOK' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('status', 'SUBMITTED') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.VALIDATED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('status', 'VALIDATED') }}</h3>
+        </div>
+      </div>
+    </div>
 
-    <button class="btn btn-primary" (click)="exportAnswers($event)">{{ 'CAMPAIGNS.EXPORT_ANSWERS' | translate }}</button>
+    <!-- stat col 2 -->
+    <div class="stat2">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFILE' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.STANDARD' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('profile', 1) }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.TOP' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('profile', 2) }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat col 3 -->
+    <div class="stat3">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.QUALITY' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.FILL_RATE' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.TIME' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('quality', 'time_elapsed') }}" min.</h3>
+        </div>
+      </div>
+    </div>
 
   </div>
 
-  <!-- section no answers -->
-  <div *ngIf="answers.length === 0" class="section-no-answer">
-    <app-message-space [messageA]="'CAMPAIGNS.NO_ANSWERS.A'" [messageB]="'CAMPAIGNS.NO_ANSWERS.B'" [widthMax]="'354'"></app-message-space>
-  </div>
 
-  <!-- section answers -->
-  <div *ngIf="answers.length > 0">
-    <app-answers-list
-      [answers]="answers"
-      (modalAnswerChange)="seeAnswer($event)"
-      (validateAnswers)="changeStatus($event, 'VALIDATED_NO_MAIL')"
-      (rejectAnswers)="changeStatus($event, 'REJECTED')">
-    </app-answers-list>
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section actions -->
+    <div *ngIf="getAuthorizedActions(2)" class="section-actions">
+
+      <label class="btn ghost-primary">
+        <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
+        {{ 'CAMPAIGNS.IMPORT_ANSWERS' | translate }}
+      </label>
+
+      <button class="btn btn-primary" (click)="exportAnswers($event)">{{ 'CAMPAIGNS.EXPORT_ANSWERS' | translate }}</button>
+
+    </div>
+
+    <!-- section no answers -->
+    <div *ngIf="answers.length === 0" class="section-no-answer">
+      <app-message-space [messageA]="'CAMPAIGNS.NO_ANSWERS.A'" [messageB]="'CAMPAIGNS.NO_ANSWERS.B'" [widthMax]="'354'"></app-message-space>
+    </div>
+
+    <!-- section answers -->
+    <div *ngIf="answers.length > 0">
+      <app-shared-table
+        [data]="tableInfos"
+        [config]="config"
+        (editRow)="onClickEdit($event)"
+        (performAction)="onTableAction($event)">
+      </app-shared-table>
+    </div>
+
   </div>
 
 </div>
@@ -37,7 +96,8 @@
     [adminMode]="adminMode"
     [(userAnswer)]="modalAnswer"
     [projectId]="campaign.innovation._id"
-    [questions]="questions">
+    [questions]="questions"
+    (answerUpdated)="updateAnswer($event)">
   </app-user-answer>
 </app-sidebar>
 <!-- /sidebar insight preview -->

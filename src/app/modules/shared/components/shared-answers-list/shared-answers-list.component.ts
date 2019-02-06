@@ -3,7 +3,7 @@ import { Answer } from '../../../../models/answer';
 import { Table } from '../../../table/models/table';
 
 @Component({
-  selector: 'app-answers-list',
+  selector: 'app-shared-answers-list',
   templateUrl: './shared-answers-list.component.html',
   styleUrls: ['./shared-answers-list.component.scss']
 })
