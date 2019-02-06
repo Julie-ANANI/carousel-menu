@@ -1,3 +1,28 @@
+@import "../../../../../../../style/variables";
+
+#admin-campaign-answers-component {
+
+  .section-actions {
+    text-align: right;
+    padding-bottom: .9375rem;
+
+    .btn {
+      margin-bottom: .6rem;
+    }
+
+    .ghost-primary {
+      margin-right: 1.2rem;
+    }
+
+  }
+
+  .section-no-answer {
+    text-align: center;
+    padding-top: 3.15rem;
+  }
+
+}
+
 .answers-header {
   color: white;
   padding: 5px;

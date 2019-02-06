@@ -63,7 +63,6 @@ export class SharedProsListComponent {
               private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService) { }
 
-
   loadPros(config: any): void {
     this._config = config;
 
@@ -226,7 +225,11 @@ export class SharedProsListComponent {
     event.preventDefault();
 
     for (const pro of this._prosToRemove) {
-      this.removePro(pro._id);
+      if(this.isCampaignProsLis()) {
+        this.removeProsFromCampaign(pro._id)
+      } else {
+        this.removePro(pro._id);
+      }
     }
 
     this._prosToRemove = [];
@@ -242,6 +245,19 @@ export class SharedProsListComponent {
     }, () => {
       this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
     });
+  }
+
+  private removeProsFromCampaign(userId: string) {
+    const campaignId = this.campaign['id'];
+    const innovationId = this.campaign.innovation._id;
+    this.professionalsService.removeFromCampaign(userId, campaignId, innovationId)
+      .pipe(first())
+      .subscribe(result=>{
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+        this.loadPros(this._config);
+    }, err=>{
+        this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+      });
   }
 
 
@@ -274,6 +290,9 @@ export class SharedProsListComponent {
 
   }
 
+  public isCampaignProsLis(): boolean {
+    return !!this.campaign;
+  }
 
   get total() {
     return this._total;

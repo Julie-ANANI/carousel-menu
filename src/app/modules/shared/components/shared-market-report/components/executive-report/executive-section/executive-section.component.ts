@@ -110,7 +110,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * This function is checking the we are on the admin side.
    */
   private isAdminSide() {
-    this._adminSide = this.location.path().slice(0, 6) === '/admin';
+    this._adminSide = this.location.path().slice(5, 11) === '/admin';
   }
 
 

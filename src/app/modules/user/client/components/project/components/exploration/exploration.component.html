@@ -7,19 +7,7 @@
       <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h1>
 
       <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
-        <div class="bot-rect" [ngSwitch]="innovation.status">
-
-          <ng-container *ngSwitchCase="'EDITING'">
-             <ng-container *ngIf="innovation.reviewing">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING' | translate }}</ng-container>
-              <ng-container *ngIf="!innovation.reviewing">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING' | translate }}</ng-container>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="'SUBMITTED'">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED' | translate }}</ng-container>
-
-        </div>
-        <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
-        <div><img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" "></div>
+        <app-message-space [messageA]="getMessage()" [widthMax]="'320'"></app-message-space>
       </div>
     </ng-container>
     <!-- /project under editing and submitted status -->
@@ -193,13 +181,13 @@
 
 
 <!-- sidebar to view user answer -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [(template)]="sidebarValue">
   <app-user-answer
     [adminMode]="false"
-    [mode]="false"
+    [sidebarState]="sidebarValue.animate_state"
     [(userAnswer)]="modalAnswer"
     [questions]="questions"
-    [innovationId]="innovation._id">
+    [projectId]="innovation._id">
   </app-user-answer>
 </app-sidebar>
 <!-- /sidebar to view user answer -->

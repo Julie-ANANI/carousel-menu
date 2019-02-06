@@ -55,16 +55,9 @@
 
         </div>
 
-        <!-- Bot -->
+        <!-- bot -->
         <div class="column col-6 hide-xl col-mx-auto text-center">
-          <div class="bot-rect">
-            {{ "PROJECT_MODULE.NEW_PROJECT.BOT_TEXT" | translate }}
-          </div>
-          <br>
-          <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
-          <div>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" ">
-          </div>
+          <app-message-space [messageA]="'PROJECT_MODULE.NEW_PROJECT.BOT_TEXT'" [widthMax]="'235'"></app-message-space>
         </div>
 
       </div>

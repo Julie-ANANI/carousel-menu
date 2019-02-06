@@ -1,6 +1,6 @@
 <div *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode)">
 
-  <p class="ques-label" [ngStyle]="{'padding-top': editMode ? '50px' : '30px' }">{{ question.label | multiling:lang }}</p>
+  <p class="ques-label" [ngStyle]="{'padding-top': editMode ? '3.15rem' : '1.875rem' }">{{ question.label | multiling:lang }}</p>
 
   <div [ngSwitch]="question.controlType" class="answer">
 
@@ -37,11 +37,11 @@
     <!-- Clearbit case -->
     <ng-container *ngSwitchCase="'clearbit'">
 
-     <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" [ngStyle]="{ 'margin-bottom': '-10px' }" class="div-top">
+     <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
        <span
          class="list-wrapper"
          *ngFor="let item of fullAnswer.answers[question.identifier]">
-         <img *ngIf="item.logo" [src]=item.logo width="20px" height="20px" [ngStyle]="{ 'margin-right': '15px' }"/>
+         <img *ngIf="item.logo" [src]=item.logo width="20px" height="20px" [ngStyle]="{ 'margin-right': '.9375rem' }"/>
          <span *ngIf="!item.domain">{{ item.name }}</span>
          <a *ngIf="item.domain" class="text-link" [href]=link(item.domain) target="_blank">{{ item.name }}</a>
          <span *ngIf="item.rating === 2"><i class="fas fa-thumbs-up sa-thumbs-up"></i></span>
@@ -63,7 +63,7 @@
     <!-- List case -->
    <ng-container *ngSwitchCase="'list'">
 
-     <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" [ngStyle]="{ 'margin-bottom': '-10px' }" class="div-top">
+     <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
        <span
          *ngFor="let item of fullAnswer.answers[question.identifier]"
          class="list-wrapper">
@@ -88,7 +88,7 @@
     <!-- Checkbox case -->
     <ng-container *ngSwitchCase="'checkbox'">
 
-      <div class="pd-top" [ngStyle]="{ 'margin-bottom': '-10px' }">
+      <div class="pd-top" [ngStyle]="{ 'margin-bottom': '-.6rem' }">
         <ul *ngFor="let option of question.options" [ngClass]="{ 'checkbox-wrapper': !editMode, 'nCheckbox-wrapper': editMode }">
           <li
             *ngIf="(fullAnswer.answers[question.identifier] && !!fullAnswer.answers[question.identifier][option.identifier]) || editMode"
@@ -125,7 +125,7 @@
             name="comment"
             rows="4">
           </textarea>
-          <div [ngStyle]="{ 'margin-top': '20px' }">
+          <div [ngStyle]="{ 'margin-top': '1.2rem' }">
             <app-rating-item
               [editMode]="editMode"
               [prop]="question.identifier"
@@ -136,7 +136,7 @@
         </div>
       </form>
 
-      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+      <div [ngStyle]="{ 'margin-top': '.9375rem', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-.6rem' : '0' }">
         <app-shared-tag-item
           [tags]="answerTags(question.identifier)"
           [editMode]="editMode"
@@ -147,7 +147,7 @@
         </app-shared-tag-item>
       </div>
 
-      <div *ngIf="fullAnswer.answers[question.identifier] && !editMode" [ngStyle]="{ 'margin-bottom': '-10px' }" class="div-top">
+      <div *ngIf="fullAnswer.answers[question.identifier] && !editMode" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
         <span class="list-wrapper">
           {{ fullAnswer.answers[question.identifier] }}
           <span *ngIf="fullAnswer.answers[question.identifier + 'Quality'] === 2"><i class="fas fa-thumbs-up sa-thumbs-up"></i></span>
@@ -201,7 +201,7 @@
 
     <!-- Default case -->
     <ng-container *ngSwitchDefault>
-      <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '30px' }">
+      <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '1.875rem' }">
         <span class="bot-rect">Unknown response type...</span>
         <br>
         <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
@@ -212,10 +212,10 @@
   </div>
 
   <!-- Comment part -->
-  <div *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !editMode" [ngStyle]="{ 'padding-top': '15px' }">
+  <div *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !editMode" [ngStyle]="{ 'padding-top': '.9375rem' }">
     <p class="comment-text" [ngStyle]="{ 'color': '#0B90C6' }" >{{ 'COMMON.COMMENT' | translate }}</p>
     <p class="comment-answer">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
-    <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+    <div [ngStyle]="{ 'margin-top': '.9375rem', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-.6rem' : '0' }">
       <app-shared-tag-item
         [tags]="answerTags(question.identifier + 'Comment')"
         [editMode]="false"
@@ -227,14 +227,14 @@
     </div>
   </div>
 
-  <div *ngIf="editMode" [ngStyle]="{ 'padding-top': '15px' }">
+  <div *ngIf="editMode" [ngStyle]="{ 'padding-top': '.9375rem' }">
 
     <p *ngIf="!commenting" class="comment-text c-hand" (click)="commenting = true">
-      {{ 'COMMON.COMMENT' | translate }} <i class="icon icon-arrow-right"></i>
+      {{ 'COMMON.COMMENT' | translate }} <i class="fas fa-angle-right"></i>
     </p>
 
     <form *ngIf="commenting" [ngStyle]="{ 'width': '100%' }">
-      <p class="comment-text">{{ 'COMMON.COMMENT' | translate }} <i class="icon icon-arrow-down"></i></p>
+      <p class="comment-text">{{ 'COMMON.COMMENT' | translate }} <i class="fas fa-angle-down"></i></p>
       <div class="comment-wrapper">
           <textarea
             class="form-default"
@@ -242,7 +242,7 @@
             rows="4"
             [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']">
           </textarea>
-        <div [ngStyle]="{ 'margin-top': '15px' }">
+        <div [ngStyle]="{ 'margin-top': '.9375rem' }">
           <app-rating-item
             [editMode]="editMode"
             [prop]="question.identifier + 'Comment'"
@@ -253,7 +253,7 @@
         <!--<i class="fas fa-trash" (click)="deleteComment($event)"></i>-->
       </div>
 
-      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+      <div [ngStyle]="{ 'margin-top': '.9375rem', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-.6rem' : '0' }">
         <app-shared-tag-item
           [tags]="answerTags(question.identifier + 'Comment')"
           [editMode]="true"

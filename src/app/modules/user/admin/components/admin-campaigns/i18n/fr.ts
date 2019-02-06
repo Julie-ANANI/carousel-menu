@@ -17,9 +17,9 @@ export const CAMPAIGNS = {
 
   'ANSWERS': 'Réponses',
 
-  'EXPORT-ANSWERS': 'Exporter',
+  'EXPORT_ANSWERS': 'Exporter',
 
-  'IMPORT-ANSWERS': 'Importer',
+  'IMPORT_ANSWERS': 'Importer',
 
   'EMAIL_CONFIDENCE': 'Indice de confiance',
 
@@ -72,6 +72,22 @@ export const CAMPAIGNS = {
 
   'SIDEBAR': {
     'TITLE': 'Modifier la campagne'
+  },
+
+  'STATS': {
+    'ADDED': 'Ajouté',
+    'TO_CONTACT': 'Pour contacter',
+    'CONTACTED': 'Contacté',
+    'OPENED': 'Ouvert',
+    'CLICKED': 'Cliquez',
+    'STARTED': 'Démarré',
+    'SENT': 'Envoyé',
+    'VALIDATED': 'Validé'
+  },
+
+  'NO_ANSWERS': {
+    'A': 'Vous n\'avez pas de réponses ?',
+    'B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
   }
 
 };

@@ -1,63 +1,56 @@
-.answer-wrapper {
-  font-size: 14px;
+@import "../../../../../style/variables";
+
+.user-answer-component {
+  font-size: .875rem;
+  padding-top: 1.875rem;
+
+  .section-save {
+    text-align: right;
+    padding-bottom: 1.25rem;
+  }
 
   .fa-pencil-alt {
-    color: #97A4B1;
+    color: $meta-color;
     cursor: pointer;
-    vertical-align: 2px;
+    vertical-align: .125rem;
   }
 
   .form-group {
-    margin-bottom: 10px !important;
-    width: 400px;
+    margin-bottom: .6rem !important;
   }
 
-  .save {
-    padding-top: 30px;
-  }
-
-
-
-  .detail {
-    padding-top: 30px;
+  .section-details {
 
     .title {
       display: inline-flex;
       vertical-align: middle;
+      align-items: center;
       flex-wrap: wrap;
 
-      h6 {
-        margin-right: 30px;
-        margin-bottom: 10px;
-      }
-
-
-      .app-rating {
-        margin-right: 30px;
-        margin-bottom: 10px;
+      h6, .app-rating, .country {
+        margin-right: 1.875rem;
+        margin-bottom: .6rem;
       }
 
       .country {
         display: flex;
-        margin-right: 30px;
-        margin-bottom: 10px;
       }
 
       .editMode {
-        margin-bottom: 10px;
+        margin-bottom: .6rem;
       }
 
     }
 
     p {
-      padding-bottom: 6px;
+      padding-bottom: .375rem;
     }
 
     .profile {
 
       .fab {
         color: #1680B9;
-        margin-right: 3px;
+        margin-right: .1875rem;
       }
 
     }
@@ -65,15 +58,15 @@
     .email {
 
        .fa-envelope {
-        margin-right: 1px;
+        margin-right: .06rem;
       }
 
       a {
-        color: #FFB300;
+        color: $primary-color;
       }
 
       a:hover {
-        color: #FFB300;
+        color: $primary-color;
         text-decoration: underline;
       }
 
@@ -88,7 +81,7 @@
       display: flex;
 
       .fa-address-card {
-        margin-right: 4.5px;
+        margin-right: .28125rem;
       }
 
     }
@@ -97,21 +90,27 @@
       display: flex;
 
       .fa-building {
-        margin-right: 5px;
+        margin-right: .35rem;
       }
 
     }
 
   }
 
-  .status-wrapper {
-    padding-top: 44px;
+  .section-status {
+    padding-top: 1.57rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+
+    .radio-button {
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     .status-rejected, .status-validated, .status-submitted, .status-email {
-      margin-bottom: 25px;
+      margin-bottom: 1.57rem;
     }
 
     .rejected:hover, .rejected.active {
@@ -144,15 +143,15 @@
     .status-email {
 
       .form-switch {
-        top: -4px;
+        top: -.25rem;
       }
 
     }
 
   }
 
-  .tag-wrapper {
-    padding-top: 25px;
+  .section-tags {
+    padding-top: 1.57rem;
 
     .form-label {
       padding-top: 0;
@@ -160,8 +159,8 @@
 
   }
 
-  .ques-wrapper {
-    margin-top: -10px;
+  .section-questions {
+    margin-top: -.6rem;
   }
 
 
@@ -171,7 +170,7 @@
 
 @media (max-width: 480px) {
 
-  .detail .title {
+  .section-details .title {
     flex-direction: column;
   }
 

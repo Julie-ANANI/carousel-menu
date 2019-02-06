@@ -136,6 +136,32 @@ export class ExplorationComponent implements OnInit {
   }
 
 
+  getMessage():string {
+    let message = '';
+
+    switch (this._innovation.status) {
+
+      case 'EDITING':
+        if (this._innovation.reviewing) {
+          message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING';
+        } else if (!this._innovation.reviewing) {
+          message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING';
+        }
+        break;
+
+      case 'SUBMITTED':
+        message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED';
+        break;
+
+      default:
+        // do nothing...
+
+    }
+
+    return message;
+  }
+
+
   onClickShow(answer: Answer) {
     this._modalAnswer = answer;
 
@@ -145,10 +171,6 @@ export class ExplorationComponent implements OnInit {
       size: '726px'
     };
 
-  }
-
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
   }
 
 
@@ -207,6 +229,10 @@ export class ExplorationComponent implements OnInit {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
 }

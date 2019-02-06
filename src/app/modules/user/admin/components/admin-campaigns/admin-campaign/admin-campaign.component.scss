@@ -1,88 +1,172 @@
-#admin-campaign {
+@import "../../../../../../../style/variables";
 
-  .tabs li {
-    flex: unset;
+#admin-campaign-component {
+  padding-top: 0;
 
-    a {
-      background: white;
-      color: #4F5D6B;
-      border-bottom: 5px solid transparent;
-      font-weight: 500;
-      padding-left: 20px;
-      padding-right: 20px;
-      margin-right: 25px;
+  .section-header {
+    padding-top: 1.57rem;
+
+    background-color: white;
+
+    .heading-wrapper {
+      padding-bottom: 1.57rem;
+
+      span {
+        font-weight: 600;
+        font-size: 1.4375rem;
+      }
+
+      .title {
+        color: $meta-color;
+        font-weight: normal;
+      }
+
+      .text-link {
+        font-weight: 600;
+        font-size: .875rem;
+      }
+
+    }
+
+    .tabs-wrapper {
+
+      .tabs {
+        border-bottom: 1px solid $border-color;
+
+        li {
+          flex: unset;
+          min-width: 110px;
+        }
+
+        a {
+          background-color: white;
+          color: $background-color;
+          border-bottom: 4px solid transparent;
+          font-weight: 500;
+        }
+
+        a:hover {
+          border-bottom-color: $primary-color;
+          color: $primary-color;
+        }
+
+        .active {
+          color: $primary-color !important;
+          border-bottom-color: $primary-color !important;
+        }
+
+      }
+
     }
 
   }
 
-  .tabs li a:hover,
-  .tabs li a.active {
-    color:  #FFB300;
-    border-bottom-color: #FFB300;
+  .section-stats {
+    display: flex;
+
+    .professional-wrapper, .interaction-wrapper, .insights-wrapper {
+      padding-top: .9375rem;
+      padding-bottom: .9375rem;
+      display: flex;
+      flex: 1;
+
+      h5, h4, h3 {
+        color: white;
+        margin-bottom: 0;
+      }
+
+      h5, h3 {
+        font-size: 1rem;
+      }
+
+      h5 {
+        margin-right: .6rem;
+
+        .fa-sync-alt {
+          color: $primary-color;
+          margin-right: .6rem;
+        }
+
+        .fa-sync-alt:hover {
+          color: lighten($primary-color, 15%);
+          cursor: pointer;
+        }
+
+      }
+
+      h3 {
+        font-weight: normal;
+      }
+
+      h4 {
+        opacity: .7;
+        font-size: .75rem;
+      }
+
+      .content-wrapper {
+        display: flex;
+        width: 92%;
+        margin: 0 auto;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .stats {
+        margin: 0 .6rem .6rem .6rem;
+        text-align: center;
+      }
+
+    }
+
+    .professional-wrapper {
+      background-color: $secondary-color;
+    }
+
+    .interaction-wrapper {
+      background-color: #2FA4D4;
+    }
+
+    .insights-wrapper {
+      background-color: #5FAECE;
+    }
+
   }
 
+
 }
+
 
 /********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 
-  .tabs li {
-    flex: 1 0 auto;
-  }
+  #admin-campaign-component {
 
-}
+    .tabs {
+      border-bottom: none !important;
 
+      li {
+        flex: 1 0 auto;
+        border-bottom: 1px solid $border-color;
+      }
 
-h1,
-.back-to-project {
-  display: inline-block;
-}
-
-.toolbar {
-  color: white;
-  display: flex;
-
-  i.fa-sync {
-    color: #FFB300;
-  }
-
-  .section-1,
-  .section-2,
-  .section-3 {
-    display: flex;
-    padding: 15px 30px;
-    flex: 1;
-
-    .title {
-      font-weight: 600;
     }
 
-    .stat {
-      padding: 0 20px;
+    .section-stats {
+
+      .content-wrapper {
+        flex-direction: column;
+
+        h5 {
+          margin-right: 0 !important;
+          margin-bottom: 1.2rem;
+        }
+
+      }
+
     }
 
-    .stat .subtitle {
-      font-weight: 600;
-      font-size: 0.7rem;
-      opacity: 0.7;
-      display: block;
-    }
-
-    .stat .number {
-    }
   }
 
-  .section-1 {
-    background: #0B90C6;
-  }
-
-  .section-2 {
-    background: #2FA4D4;
-    flex: 0.7;
-  }
-
-  .section-3 {
-    background: #5FAECE;
-  }
 }

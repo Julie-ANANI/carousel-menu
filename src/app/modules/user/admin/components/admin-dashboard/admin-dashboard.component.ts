@@ -183,7 +183,7 @@ export class AdminDashboardComponent implements OnInit {
     event.preventDefault();
     this._selectedBatch = batch;
     if (this._selectedBatch !== null) {
-      this.innovationService.getInnovationCard(this._selectedBatch.innovation.innovationCards[0]).pipe(first()).subscribe((card: any) => {
+      this.innovationService.getInnovationCard(this._selectedBatch.innovation.innovationCards[0].id).pipe(first()).subscribe((card: any) => {
         this._selectedInnovation = card;
         this.sidebarTemplateValue = {
           animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',

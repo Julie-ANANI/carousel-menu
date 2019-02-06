@@ -40,11 +40,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   @Input() sharable = false;
 
+  @Input() wordpress = false; // this is temporary for the site.
+
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _innovation: Innovation = {};
-
-  private _spinnerDisplay = true;
 
   private _adminSide: boolean;
 
@@ -98,8 +98,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _sidebarTemplateValue: SidebarInterface = {};
 
-  editMode = new Subject<boolean>(); // this is for the admin side.
-
   private _companies: Array<Clearbit>;
 
   public activeSection: string;
@@ -132,14 +130,42 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is calling all the initial functions.
    */
   private initializeReport() {
-    this._spinnerDisplay = true;
     this.isAdminSide();
     this.initializeVariable();
     this.getAnswers();
     this.getCampaign();
     this.resetMap();
     this.presets();
-    this._spinnerDisplay = false;
+  }
+
+
+  getMessage():string {
+    let message = '';
+
+    switch (this._innovation.status) {
+
+      case 'EDITING':
+        if (this._innovation.reviewing) {
+          message = 'MARKET_REPORT.MESSAGE.REVIEWING';
+        } else if (!this._innovation.reviewing) {
+          message = 'MARKET_REPORT.MESSAGE.EDITING';
+        }
+        break;
+
+      case 'EVALUATING':
+        message = 'MARKET_REPORT.MESSAGE.EVALUATING';
+        break;
+
+      case 'SUBMITTED':
+        message = 'MARKET_REPORT.MESSAGE.SUBMITTED';
+        break;
+
+      default:
+      // do nothing...
+
+    }
+
+    return message;
   }
 
 
@@ -148,7 +174,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * checking the admin level.
    */
   private isAdminSide() {
-    this._adminSide = this.location.path().slice(0, 6) === '/admin';
+    this._adminSide = this.location.path().slice(5, 11) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
     this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
@@ -184,7 +210,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * @type {boolean}
      * @user
      */
-    this._showDetails = true;
+    if (this.wordpress) {
+      this._showDetails = false;
+    } else {
+      this._showDetails = true;
+    }
+
 
     /***
      * we are checking do we have any template.
@@ -202,9 +233,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * this is when we update the innovation in any sub component,
      * we are listening that update and will update the innovation attribute.
      */
-    this.innovationCommonService.getInnovation()
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((response: Innovation) => {
+    this.innovationCommonService.getInnovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: Innovation) => {
         if (response) {
           this._innovation = response;
         }
@@ -679,11 +708,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   }
 
-  closeSidebar(value: string) {
-    this._sidebarTemplateValue.animate_state = value;
-    this.editMode.next(false);
-  }
-
 
   /***
    * this function assign the value to exportType when we select one of the options
@@ -876,6 +900,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._sidebarTemplateValue;
   }
 
+  set sidebarTemplateValue(value: SidebarInterface) {
+    this._sidebarTemplateValue = value;
+  }
+
   get menuButton(): boolean {
     return this._menuButton;
   }
@@ -910,10 +938,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get innovation(): Innovation {
     return this._innovation;
-  }
-
-  get spinnerDisplay(): boolean {
-    return this._spinnerDisplay;
   }
 
   get isOwner(): boolean {

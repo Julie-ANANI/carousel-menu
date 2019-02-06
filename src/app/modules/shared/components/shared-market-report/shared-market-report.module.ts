@@ -33,6 +33,7 @@ import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarUserAnswerModule } from '../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
+import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 
 
 /***
@@ -73,7 +74,8 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     FormsModule,
     ReactiveFormsModule,
     SidebarUserAnswerModule,
-    CountryFlagModule
+    CountryFlagModule,
+    MessageSpaceModule
   ],
   providers: [
     CommonService,
