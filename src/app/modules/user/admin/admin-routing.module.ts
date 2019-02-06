@@ -22,6 +22,7 @@ import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admi
 import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './components/admin-campaigns/admin-campaign-search-results/admin-campaign-search-results.component';
+import {AdminCommunityComponent} from "./components/admin-community/admin-community.component";
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../../resolvers/request.resolver';
@@ -63,6 +64,12 @@ const adminRoutes: Routes = [
         path: 'professionals',
         children: [
           { path: '', component: AdminProfessionalsComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'community',
+        children: [
+          { path: '', component: AdminCommunityComponent, pathMatch: 'full' }
         ]
       },
       {

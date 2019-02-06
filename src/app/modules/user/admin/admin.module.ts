@@ -29,6 +29,7 @@ import { InputListModule } from '../../utility-components/input-list/input-list.
 import { SidebarInnovationPreviewModule } from '../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
+import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
@@ -50,6 +51,7 @@ import { CampaignCalculationService } from '../../../services/campaign/campaign-
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -59,6 +61,7 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
     AdminUsersModule,
     AdminProjectsModule,
     AdminProfessionalsModule,
+    AdminCommunityModule,
     AdminLibrariesModule,
     AdminTagModule,
     AdminDashboardModule,

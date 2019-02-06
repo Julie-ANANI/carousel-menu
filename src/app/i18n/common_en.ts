@@ -194,6 +194,8 @@ export const COMMON = {
 
   'PROFESSIONALS': 'Professionals',
 
+  'COMMUNITY': 'Community',
+
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
     'PITCH-DELETE-ALL' : 'Are you sure you want to delete all the professionnals?',

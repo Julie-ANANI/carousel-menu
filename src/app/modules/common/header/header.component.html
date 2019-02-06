@@ -112,6 +112,16 @@
               </a>
             </li>
 
+              <!-- Back office ambassadors/community program -->
+              <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+                  <a
+                  routerLinkActive="active"
+                  [routerLink]="'/user/admin/community'"
+                  (click)="onClickLink()">
+                  {{ 'COMMON.COMMUNITY' | translate }}
+                  </a>
+              </li>
+
             <!-- Back office projects -->
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
               <a
