@@ -35,9 +35,11 @@ export const SEARCH = {
   "ROBOT": {
     "HELLO": "Nice day, what are you gonna search today?",
     "SPARSE": "Warning: do not do more requests in this field!",
+    "NOT_OK": "Warning : not enough unique results and/or too much duplicates !",
     "OK": "These requests look nice!",
     "ERROR": "There is not enough request for CAT to function properly",
     "OVEREXPLOITED": "There are too many similar requests, delete some !",
+    "SUGGESTED": "Here are some keywords that may be useful !",
     "SEARCH_USE": "This search will use",
     "APPROX": "approximatively",
     "MORE_INFO": "Get more info"

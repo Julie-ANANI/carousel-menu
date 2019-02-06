@@ -9,13 +9,6 @@
     </app-sidebar>
 
     <div>
-      <div *ngIf="suggestion" class="suggestedRequests">
-        <p [innerHTML]="suggestion"></p>
-        <p>
-          <a class="text-success" (click)="applySuggestion()">{{ 'SEARCH.APPLY' | translate }}</a><br/>
-          <a class="text-error" (click)="ignoreSuggestion()">{{ 'SEARCH.IGNORE' | translate }}</a>
-        </p>
-      </div>
       <div id="input-search">
         <textarea
           type="text"
@@ -53,18 +46,32 @@
       </div>
     </div>
 
+    <div *ngIf="catDone" class="keyword-analysis">
+      <p [innerHTML]="suggestion"></p>
+      <p>
+        <a class="text-success" (click)="applySuggestion()">{{ 'SEARCH.APPLY' | translate }}</a><br/>
+        <a class="text-error" (click)="ignoreSuggestion()">{{ 'SEARCH.IGNORE' | translate }}</a>
+      </p>
+    </div>
+
   </div>
 
-  <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.type">
-    <div class="bot-wrapper text-center" *ngSwitchCase="'info'">
+  <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.duplicate_status">
+    <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
       <span class="bot-rect">
-        <span *ngIf="catResult.advice">
-          {{ 'SEARCH.ROBOT.' + catResult.advice.toUpperCase() | translate }} <br/>
+        <span *ngIf="catResult.new_keywords">
+          {{ 'SEARCH.ROBOT.OK' | translate }} <br/>
+          {{ 'SEARCH.ROBOT.SUGGESTED' | translate }}
+          <ul>
+            <li *ngFor="let kw of catResult.new_keywords">
+              {{kw}}
+            </li>
+          </ul>
         </span>
         <span *ngIf="estimatedNumberOfGoogleRequests">
           {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
-          <strong> <span *ngIf="catResult.totalResults">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span *ngIf="catResult.totalResults">max</span></strong>.
-        <a *ngIf="!catResult.advice && campaign" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
+          <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span *ngIf="catResult.total_result">max</span></strong>.
+        <a *ngIf="!catResult.keywords_analysis && campaign" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
         </span>
         <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
       </span>
@@ -73,8 +80,8 @@
       <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-advice.svg" width="" height="120"></div>
     </div>
 
-    <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
-      <span class="bot-rect">{{ 'SEARCH.ROBOT.OK' | translate }}<br/>
+    <div class="bot-wrapper text-center" *ngSwitchCase="'not ok'">
+      <span class="bot-rect">{{ 'SEARCH.ROBOT.NOT_OK' | translate }}<br/>
         <span *ngIf="estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.SEARCH_USE' | translate }} <strong>{{ 'SEARCH.ROBOT.APPROX' | translate }} {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }}</strong>.</span>
       </span>
       <br>

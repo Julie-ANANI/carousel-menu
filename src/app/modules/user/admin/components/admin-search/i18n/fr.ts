@@ -35,12 +35,14 @@ export const SEARCH = {
   "ROBOT": {
     "HELLO": "Bonjour, quelle recherche pour aujourd'hui ?",
     "SPARSE": "Attention : ne pas faire davantage de requêtes pour ce domaine !",
+    "NOT_OK": "Attention : ces requêtes ne renvoient pas beaucoup de résultats et/ou beaucoup de doublons !",
     "OK": "Ces requêtes m'ont l'air bien !",
     "ERROR": "Il n'y a pas assez de requêtes pour que CAT fonctionne correctement.",
     "OVEREXPLOITED": "Il y a trop de requêtes similaires, supprimez-en !",
     "SEARCH_USE": "La recherche utilisera",
     "APPROX": "environ",
-    "MORE_INFO": "Plus d'info"
+    "MORE_INFO": "Plus d'info",
+    "SUGGESTED": "Voici quelques mots-clés pouvant être utiles: "
   },
   "PERSON": {
     "FULLNAME": "Nom",
