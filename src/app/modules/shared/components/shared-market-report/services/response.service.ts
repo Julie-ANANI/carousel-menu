@@ -79,6 +79,17 @@ export class ResponseService {
 
         break;
 
+      case 'stars':
+        /***
+         * here we are checking that at least one of the options of the answer is noted > 0.
+         * @type {Answer[]}
+         */
+        answersToShow = answersToShow.filter(
+          (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k] > 0)
+        );
+
+        break;
+
       case 'textarea':
         /***
          * here we are sorting the answer array first by quality and then length.
