@@ -90,6 +90,11 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
 
+  updateCampaign(event: any) {
+    this._originCampaign = event.value;
+  }
+
+
   addPro(value: boolean) {
     this._addProModal = value;
     this.newPro = {
@@ -134,9 +139,7 @@ export class AdminCampaignProsComponent implements OnInit {
       });
   }
 
-  updateCampaign(event: any) {
-    this._originCampaign = event.value;
-  }
+
 
   exportPros() {
     const config = {

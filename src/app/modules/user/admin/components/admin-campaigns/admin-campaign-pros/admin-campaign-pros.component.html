@@ -180,4 +180,20 @@
 -->
 
 <!-- modal to import pros -->
-<app-modal [(showModal)]="importModal"></app-modal>
+<app-modal [(showModal)]="importModal" [modalTitle]="'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.TITLE'">
+
+  <app-autocomplete-input
+    (update)="updateCampaign($event)"
+    [onlyOne]="true"
+    [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
+  </app-autocomplete-input>
+
+  <div class="text-center" [ngStyle]="{ 'padding-top': '.9375rem' }">
+    <label class="btn btn-primary">
+      <input #fileupload type="file" [hidden]="true" (change)="importProsCsv(fileupload.files[0], $event)" />
+      Import CSV
+    </label>
+  </div>
+
+
+</app-modal>

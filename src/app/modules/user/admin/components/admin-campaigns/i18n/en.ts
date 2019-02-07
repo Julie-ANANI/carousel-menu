@@ -127,6 +127,12 @@ export const CAMPAIGNS = {
       'IMPORT': 'Import',
       'EXPORT': 'Export',
       'ADD': 'Add'
+    },
+    'MODAL': {
+      'IMPORT': {
+        'TITLE': 'Import Board',
+        'PLACEHOLDER': 'Enter the campaign name',
+      }
     }
   }
 
