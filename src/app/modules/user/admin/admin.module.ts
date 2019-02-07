@@ -62,7 +62,6 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
     AdminUsersModule,
     AdminProjectsModule,
     AdminProfessionalsModule,
-    AdminCommunityModule,
     AdminLibrariesModule,
     AdminTagModule,
     AdminDashboardModule,
@@ -78,7 +77,8 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
     HeaderModule,
     LogoutModule,
     InputListModule,
-    SidebarInnovationPreviewModule
+    SidebarInnovationPreviewModule,
+    AdminCommunityModule
   ],
   declarations: [
     AdminComponent,
