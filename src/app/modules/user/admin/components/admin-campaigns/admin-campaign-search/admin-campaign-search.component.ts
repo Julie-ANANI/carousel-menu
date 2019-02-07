@@ -12,10 +12,10 @@ export class AdminCampaignSearchComponent implements OnInit {
 
   private _campaign: Campaign;
 
-  constructor(private _activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
   }
   
   get campaign(): Campaign {

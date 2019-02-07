@@ -284,6 +284,9 @@ a, a:focus, a:hover, a:active, a.active {
     padding-bottom: .9375rem;
     display: flex;
     flex: 1;
+    animation-name: fadeIn;
+    animation-duration: 100ms;
+    animation-timing-function: ease-in-out;
 
     .container {
       display: flex;

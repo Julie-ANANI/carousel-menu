@@ -17,7 +17,7 @@ import { AdminCampaignComponent } from './components/admin-campaigns/admin-campa
 import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
 import { AdminCampaignTemplatesComponent } from './components/admin-campaigns/admin-campaign-templates/admin-campaign-templates.component';
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
-import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admin-campaign-details/admin-campaign-details.component';
+import { AdminCampaignQuizComponent } from './components/admin-campaigns/admin-campaign-quiz/admin-campaign-quiz.component';
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
 import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
@@ -83,7 +83,7 @@ const adminRoutes: Routes = [
           { path: '', component: AdminCampaignsComponent, pathMatch: 'full' },
           { path: 'campaign/:campaignId', component: AdminCampaignComponent, resolve: { campaign : CampaignResolver }, children: [
             { path: '', redirectTo: 'answers', pathMatch: 'full'},
-            { path: 'quiz', component: AdminCampaignDetailsComponent, pathMatch: 'full'},
+            { path: 'quiz', component: AdminCampaignQuizComponent, pathMatch: 'full'},
             { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full'},
             { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'},
             { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },

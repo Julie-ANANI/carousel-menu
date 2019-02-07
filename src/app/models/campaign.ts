@@ -11,7 +11,14 @@ export interface CampaignStats {
     nbToValidateResp: number
   },
   nbPros90: number,
-  mail: any
+  mail: any,
+  nbProsSent: number,
+  nbStartedAnswer: number,
+  nbValidatedAnswers: number,
+  nbProsOpened: number,
+  nbProsClicked: number,
+  nbAnswers: number,
+  nbPros: number,
 }
 
 export interface Campaign {
@@ -25,3 +32,4 @@ export interface Campaign {
   autoBatch: Boolean;
   nuggets?: Boolean;
 }
+

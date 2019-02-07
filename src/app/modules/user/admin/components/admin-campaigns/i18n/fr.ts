@@ -78,7 +78,10 @@ export const CAMPAIGNS = {
     'HEADING': {
       'INSIGHTS': 'Insights',
       'PROFILE': 'Profil',
-      'QUALITY': 'Qualité'
+      'QUALITY': 'Qualité',
+      'PROFESSIONALS': 'Professionnels',
+      'EMAILS': 'Emails',
+      'COST': 'Cost'
     },
     'TITLE': {
       'LOOK': 'To look at',
@@ -88,7 +91,16 @@ export const CAMPAIGNS = {
       'STANDARD': 'Standard',
       'TOP': 'Top',
       'FILL_RATE': 'Fill rate',
-      'TIME': 'Time'
+      'TIME': 'Time',
+      'FIND': 'Trouver',
+      'NOT_REACHED': 'Non atteint',
+      'STARS': 'Étoiles',
+      'DUPLICATE': 'Dupliquer',
+      'GOOD': 'Bon',
+      'UNSURE': 'Incertain',
+      'BAD': 'Mauvais',
+      'REQUEST': 'Demande',
+      'EMAILS': 'Emails'
     },
 
     'ADDED': 'Ajouté',
@@ -104,6 +116,11 @@ export const CAMPAIGNS = {
   'NO_ANSWERS': {
     'A': 'Vous n\'avez pas de réponses ?',
     'B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
+  },
+
+  'QUIZ_PAGE': {
+    'HEADING': 'Visitez ces liens pour voir le questionnaire :',
+    'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
   }
 
 };

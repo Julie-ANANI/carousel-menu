@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminCampaignsComponent } from './admin-campaigns.component';
 import { AdminCampaignComponent } from './admin-campaign/admin-campaign.component';
 import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
-import { AdminCampaignDetailsComponent } from './admin-campaign-details/admin-campaign-details.component';
+import { AdminCampaignQuizComponent } from './admin-campaign-quiz/admin-campaign-quiz.component';
 import { AdminCampaignHistoryComponent } from './admin-campaign-history/admin-campaign-history.component';
 import { AdminCampaignMailsComponent } from './admin-campaign-mails/admin-campaign-mails.component';
 import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign-pros.component';
@@ -55,7 +55,7 @@ import { MessageSpaceModule } from '../../../../utility-components/message-space
     AdminCampaignsComponent,
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
-    AdminCampaignDetailsComponent,
+    AdminCampaignQuizComponent,
     AdminCampaignHistoryComponent,
     AdminCampaignMailsComponent,
     AdminCampaignProsComponent,
@@ -69,7 +69,7 @@ import { MessageSpaceModule } from '../../../../utility-components/message-space
     AdminCampaignsComponent,
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
-    AdminCampaignDetailsComponent,
+    AdminCampaignQuizComponent,
     AdminCampaignHistoryComponent,
     AdminCampaignMailsComponent,
     AdminCampaignProsComponent,
