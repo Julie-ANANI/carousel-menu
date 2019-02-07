@@ -42,6 +42,7 @@ export class SharedWorldmapComponent implements OnInit{
   }
 
   @Output() updateContinent = new EventEmitter<any>();
+  @Output() hoveredContinent = new EventEmitter<string>();
 
   private _continents = {
     africa: false,
@@ -111,6 +112,10 @@ export class SharedWorldmapComponent implements OnInit{
    */
   public getContinentSelectionStatus(continent: string): boolean {
     return !!this._continents[continent];
+  }
+
+  public onHoverChange(continent: string): void {
+    this.hoveredContinent.emit(continent);
   }
 
 
