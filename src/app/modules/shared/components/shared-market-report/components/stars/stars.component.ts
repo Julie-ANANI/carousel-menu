@@ -70,13 +70,10 @@ export class StarsComponent implements OnInit {
         Object.keys(answer.answers[this.question.identifier]).forEach((k) => {
           const idx = parseInt(k, 10);
           const vote = parseInt(answer.answers[this.question.identifier][k], 10);
-          if (Number.isInteger(idx) && Number.isInteger(vote) && idx < this._notesData.length && this._notesData[k]) {
+          if (Number.isInteger(idx) && Number.isInteger(vote) && idx < this._notesData.length && this._notesData[k] > 0) {
+            // If user didn't vote this characteristic, default value will be 0.
             this._notesData[k].sum += vote;
             this._notesData[k].count += 1;
-          } else {
-            // the client didn't answer this particular options but gave stars to other options
-            // We choose to give him a default value here to increase variability of scores.
-            this._notesData[k].sum += 1;
           }
         });
       });
