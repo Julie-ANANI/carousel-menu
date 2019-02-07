@@ -15,6 +15,8 @@ export class AdminCampaignQuizComponent implements OnInit {
 
   private _quizLinks: Array<string> = [];
 
+  private _noResult = false;
+
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -24,6 +26,10 @@ export class AdminCampaignQuizComponent implements OnInit {
       this._quizLinks = ['fr', 'en'].map((l) => {
         return QuizService.getQuizUrl(this._campaign, l);
       });
+    }
+
+    if (this._quizLinks.length === 0) {
+      this._noResult = true;
     }
 
   }
@@ -68,6 +74,10 @@ export class AdminCampaignQuizComponent implements OnInit {
 
   get quizLinks() {
     return this._quizLinks
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
   }
 
 }

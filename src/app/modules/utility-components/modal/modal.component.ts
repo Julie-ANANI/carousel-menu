@@ -3,18 +3,33 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html'
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.scss']
 })
 
 export class ModalComponent implements OnInit, OnDestroy {
 
-  private element: any;
-  private show: boolean;
-
-  @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() set showModal(value: boolean) {
     this.show = value;
   }
+
+  @Input() set widthMax(value: string) {
+    this._maxWidth = value;
+  }
+
+  @Input() set modalTitle(value: string) {
+    this._title = value;
+  }
+
+  @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  private element: any;
+
+  private show: boolean;
+
+  private _maxWidth: string;
+
+  private _title: string;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object, private el: ElementRef) {
     this.element = this.el.nativeElement;
@@ -24,17 +39,25 @@ export class ModalComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       // move element to bottom of page (just before </body>) so it can be displayed above everything else
       document.body.appendChild(this.element);
-      // close modal on background click
-      this.element.addEventListener('click', (e: any) => {
-        if (e.target.className === 'app-modal') {
-          this.showModalChange.emit(false);
-        }
-      });
+    }
+  }
+
+  toggleState(event: Event) {
+    if (event.target['className'] === 'modal-overlay' || event.target['id'] === 'button-close') {
+      this.showModalChange.emit(false);
     }
   }
 
   get showModal() {
     return this.show;
+  }
+
+  get maxWidth(): string {
+    return this._maxWidth;
+  }
+
+  get title(): string {
+    return this._title;
   }
 
   ngOnDestroy(): void {

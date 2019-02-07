@@ -65,13 +65,13 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- section no quiz -->
-    <div *ngIf="quizLinks.length === 0" class="section-no-quiz">
+    <div *ngIf="noResult" class="section-no-quiz">
       <app-message-space [messageA]="'CAMPAIGNS.QUIZ_PAGE.BOT'" [widthMax]="'354'"></app-message-space>
     </div>
 
 
     <!-- section quiz -->
-    <div *ngIf="quizLinks.length > 0" class="section-quiz">
+    <div *ngIf="!noResult" class="section-quiz">
       <p>{{ 'CAMPAIGNS.QUIZ_PAGE.HEADING' | translate }}</p>
       <ul>
         <li *ngFor="let url of quizLinks">

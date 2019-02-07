@@ -19,10 +19,17 @@ export class AdminCampaignProsComponent implements OnInit {
     email: '',
     emailConfidence: 100
   };
+
+  private _importModal = false;
+
   public importProsModal: Boolean = false;
+
   private _addProModal = false;
+
   private _campaign: Campaign;
+
   private _originCampaign: Array<Campaign> = [];
+
   private _config: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -31,17 +38,57 @@ export class AdminCampaignProsComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+
     this._config = {
       fields: 'language firstName lastName company email emailConfidence country jobTitle',
-      limit: 10,
-      offset: 0,
-      search: {},
+      limit: '10',
+      offset: '0',
+      search: '{}',
       campaigns: this._campaign._id,
-      sort: {
-        created: -1
-      }
+      sort: '{ "created: -1" }'
     };
+
   }
+
+
+  getCampaignStat(searchKey: string): number {
+    let value = 0;
+
+    switch (searchKey) {
+
+      case 'professional':
+        value = this._campaign.stats.nbPros;
+        break;
+
+      case 'notReached':
+        value = Math.round(((this._campaign.stats.nbPros - this._campaign.stats.nbProsSent) / this._campaign.stats.nbPros) * 100);
+        break;
+
+      case 'good':
+        value = Math.round((this._campaign.stats.campaign.nbFirstTierMails / this._campaign.stats.nbPros) * 100);
+        break;
+
+      case 'unsure':
+        value = Math.round((this._campaign.stats.campaign.nbSecondTierMails / this._campaign.stats.nbPros) * 100);
+        break;
+
+      case 'bad':
+        value = Math.round(((this._campaign.stats.nbPros - (this._campaign.stats.campaign.nbFirstTierMails + this._campaign.stats.campaign.nbSecondTierMails ))/ this._campaign.stats.nbPros) * 100);
+        break;
+
+      default:
+      // do nothing...
+
+    }
+
+    return isNaN(value) ? 0 : value;
+  }
+
+  onClickImport(event: Event) {
+    event.preventDefault();
+    this._importModal = true;
+  }
+
 
   addPro(value: boolean) {
     this._addProModal = value;
@@ -106,9 +153,32 @@ export class AdminCampaignProsComponent implements OnInit {
     });
   }
 
-  get addProModal(): boolean  { return this._addProModal; }
-  set config(value: any) { this._config = value; }
-  get config(): any { return this._config; }
-  get campaign(): Campaign { return this._campaign; }
-  get originCampaign(): Array<Campaign> { return this._originCampaign; }
+  get addProModal(): boolean  {
+    return this._addProModal;
+  }
+
+  set config(value: any) {
+    this._config = value;
+  }
+
+  get config(): any {
+    return this._config;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
+  get originCampaign(): Array<Campaign> {
+    return this._originCampaign;
+  }
+
+  get importModal(): boolean {
+    return this._importModal;
+  }
+
+  set importModal(value: boolean) {
+    this._importModal = value;
+  }
+
 }

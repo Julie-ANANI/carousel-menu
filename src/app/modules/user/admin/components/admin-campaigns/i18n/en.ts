@@ -120,6 +120,14 @@ export const CAMPAIGNS = {
   'QUIZ_PAGE': {
     'HEADING': 'Visit these link to see the questionnaire:',
     'BOT': 'No quiz has been generated for this campaign.'
+  },
+
+  'PROS_PAGE': {
+    'BUTTON': {
+      'IMPORT': 'Import',
+      'EXPORT': 'Export',
+      'ADD': 'Add'
+    }
   }
 
 };

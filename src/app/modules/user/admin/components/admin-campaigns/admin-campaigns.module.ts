@@ -29,6 +29,7 @@ import { AutocompleteInputModule } from "../../../../utility-components/autocomp
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { SidebarBatchModule } from '../../../../sidebar/components/sidebar-batch/sidebar-batch.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
+import {ModalModule} from '../../../../utility-components/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { MessageSpaceModule } from '../../../../utility-components/message-space
     AutocompleteInputModule,
     SidebarUserAnswerModule,
     SidebarBatchModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    ModalModule
   ],
   declarations: [
     AdminCampaignsComponent,

@@ -14,6 +14,7 @@ import { first } from 'rxjs/operators';
   templateUrl: './admin-campaign-mails.component.html',
   styleUrls: ['./admin-campaign-mails.component.scss']
 })
+
 export class AdminCampaignMailsComponent implements OnInit {
 
   private _campaign: Campaign;

@@ -50,6 +50,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
     }
   };
 
+  private _noResult = false;
+
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
               private answerService: AnswerService,
@@ -73,6 +75,9 @@ export class AdminCampaignAnswersComponent implements OnInit {
   private loadAnswers() {
     this.campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
       this._answers = result.answers.localAnswers;
+      if (this._answers.length === 0) {
+        this._noResult = true;
+      }
       this.loadTable();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
@@ -271,5 +276,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
   get config(): { search: {}; offset: number; limit: number; sort: { created: number }; fields: string } {
     return this._config;
   }
+
+  get noResult(): boolean {
+    return this._noResult;
+  }
+
 
 }

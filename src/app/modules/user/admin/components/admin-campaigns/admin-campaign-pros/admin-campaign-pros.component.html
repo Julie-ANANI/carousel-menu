@@ -1,3 +1,85 @@
+<div id="admin-campaign-pros-component">
+
+  <!-- section stats -->
+  <div class="campaign-stats-wrapper">
+
+    <!-- stat col 1 -->
+    <div class="stat1">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFESSIONALS' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.FIND' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('professional') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.NOT_REACHED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('notReached') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.STARS' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.DUPLICATE' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat col 2 -->
+    <div class="stat2">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.EMAILS' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('good') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.UNSURE' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('unsure') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BAD' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('bad') }}%</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat col 3 -->
+    <div class="stat3">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.COST' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.REQUEST' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAILS' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section actions -->
+    <div class="section-actions">
+      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.IMPORT' | translate }}</button>
+      <button class="btn ghost-primary gap-right">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.ADD' | translate }}</button>
+      <button class="btn btn-primary">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.EXPORT' | translate }}</button>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<!--
 <div class="text-right">
   <button class="btn btn-primary" (click)="importProsModal = true">
     Import professionals
@@ -11,7 +93,7 @@
 </div>
 <app-shared-pros-list [config]="config" [campaign]="campaign"></app-shared-pros-list>
 
-<!-- Modal d'import de pros -->
+&lt;!&ndash; Modal d'import de pros &ndash;&gt;
 <div class="modal" [ngClass]="{'active': importProsModal}">
   <div class="modal-overlay" (click)="importProsModal = false && $event.preventDefault()"></div>
   <div class="modal-container">
@@ -44,7 +126,7 @@
 </div>
 
 
-<!-- Modal d'ajout de pro -->
+&lt;!&ndash; Modal d'ajout de pro &ndash;&gt;
 <div class="modal" [ngClass]="{'active': addProModal}">
   <div class="modal-overlay" (click)="addPro(false)"></div>
   <div class="modal-container">
@@ -63,7 +145,7 @@
           placeholder="John">
       </div>
 
-      <!-- Last name -->
+      &lt;!&ndash; Last name &ndash;&gt;
       <div class="form-group">
         <label class="form-label" for="firstName">{{ 'COMMON.LASTNAME' | translate }}</label>
         <input
@@ -74,7 +156,7 @@
           placeholder="Smith">
       </div>
 
-      <!-- Email -->
+      &lt;!&ndash; Email &ndash;&gt;
       <div class="form-group">
         <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
         <input
@@ -95,3 +177,7 @@
     </div>
   </div>
 </div>
+-->
+
+<!-- modal to import pros -->
+<app-modal [(showModal)]="importModal"></app-modal>
