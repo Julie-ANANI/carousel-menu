@@ -124,7 +124,6 @@ export const MARKET_REPORT = {
   'BTN_COMMENTS_OPEN': 'Commentaires',
   'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',
   'BTN_RECOMPUTE': 'Recalculer l\'infographie',
-  'PEOPLE_VOTED': 'personnes ont voté',
   'VOTES': 'votes',
   'GRADE': 'Note',
   'NO_GRADE': 'Pas de note',
