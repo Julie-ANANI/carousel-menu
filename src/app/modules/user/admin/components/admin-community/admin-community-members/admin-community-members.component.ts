@@ -10,12 +10,14 @@ export class AdminCommunityMembersComponent implements OnInit {
 
   private _config: any;
 
+  private _startSearch: boolean = false;
+
   ngOnInit() {
     this._config = {
       fields: 'language firstName lastName company country jobTitle campaigns tags messages',
       limit: '10',
       offset: '0',
-      search: '{}',
+      search: '{"ambassador.is":true}',
       sort: '{"created":-1}'
     };
   }
@@ -23,4 +25,22 @@ export class AdminCommunityMembersComponent implements OnInit {
   get config() {
     return this._config;
   }
+
+  public onSearchClick(event) {
+    console.log(`Search! ${event}`);
+    this._startSearch = true;
+  }
+
+  public launchSearch() {
+    console.log("GO GO GO!");
+  }
+
+  get startSearch(): boolean {
+    return this._startSearch;
+  }
+
+  set startSearch(value: boolean) {
+    this._startSearch = value;
+  }
+
 }

@@ -5,8 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedProsListModule } from '../../../../../shared/components/shared-pros-list/shared-pros-list.module';
 import { PipeModule } from '../../../../../../pipe/pipe.module';
-import { AdminCommunityMembersComponent } from "./admin-community-members.component";
-import { AdminCommunitySearchModule } from "../admin-community-search/admin-community-search.module";
+import { AdminCommunitySearchComponent } from "./admin-community-search.component";
+
 
 
 @NgModule({
@@ -15,15 +15,14 @@ import { AdminCommunitySearchModule } from "../admin-community-search/admin-comm
     ReactiveFormsModule,
     SharedProsListModule,
     TranslateModule.forChild(),
-    PipeModule,
-    AdminCommunitySearchModule
+    PipeModule
   ],
   declarations: [
-    AdminCommunityMembersComponent
+    AdminCommunitySearchComponent
   ],
   exports: [
-    AdminCommunityMembersComponent
+    AdminCommunitySearchComponent
   ]
 })
 
-export class AdminCommunityMembersModule { }
+export class AdminCommunitySearchModule { }
