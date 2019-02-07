@@ -1,1 +1,68 @@
-<h1>Démo !</h1>
+
+
+<div class="columns">
+  <div class="column col-5 col-ml-auto">
+
+    <div class="flex-container" id="input-search">
+
+      <input
+        type="text"
+        class="form-default input-lg"
+        name="keywords"
+        placeholder="Recherche"/>
+
+      <button
+        (click)="search($event)"
+        class="btn-round btn-primary"
+        translate>
+        <i class="fas fa-search"></i>
+      </button>
+
+    </div>
+
+    <div class="tips">
+      <a (click)="changeSettings() && $event.preventDefault()">Settings</a>
+
+      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} remaining requests
+        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+
+      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} remaining requests
+        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+
+      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} remaining requests
+        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="column col-2 col-mr-auto">
+    <div class="bot-wrapper text-center">
+      <span class="bot-rect" *ngIf="estimatedNumberOfGoogleRequests">This search will use <strong>{{estimatedNumberOfGoogleRequests}} requests max</strong></span>
+      <span class="bot-rect" *ngIf="!estimatedNumberOfGoogleRequests">Nice day, what are you gonna search today?</span>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
+    </div>
+  </div>
+  <div class="column col-9 col-mx-auto">
+    <div class="columns">
+      <div class="column col-3">
+        Data:
+        {{ metadata }}
+      </div>
+      <div class="column col-9">
+        <app-worldmap
+          [initialConfiguration]="continentTarget"
+          [countriesColor]="'#2ECC71'"
+          [isEditable]="true"
+          (hoveredContinent)="displayMetadata($event)"
+          [width]="'auto'">
+        </app-worldmap>
+      </div>
+    </div>
+  </div>
+
+</div>

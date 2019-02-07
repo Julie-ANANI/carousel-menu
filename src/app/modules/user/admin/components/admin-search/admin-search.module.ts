@@ -12,6 +12,7 @@ import { AdminSearchQueueComponent } from './admin-search-queue/admin-search-que
 import { AdminSearchResultsComponent } from './admin-search-results/admin-search-results.component';
 import { AdminSearchDemoComponent } from './admin-search-demo/admin-search-demo.component';
 import { SharedSearchMailModule } from '../../../../shared/components/shared-search-mail/shared-search-mail.module';
+import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { RouterModule } from '@angular/router';
 
 
@@ -23,6 +24,7 @@ import { RouterModule } from '@angular/router';
     SharedSearchHistoryModule,
     TranslateModule.forChild(),
     SharedSearchMailModule,
+    SharedWorldmapModule,
     RouterModule
   ],
   declarations: [
