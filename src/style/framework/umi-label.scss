@@ -1,0 +1,58 @@
+/*
+    This stylesheet contains all the class related to the different labels
+    for our framework.
+ */
+@import "umi-variables";
+
+
+/*
+    this is the base class for the label, add the other classes with this to add the different styles.
+ */
+.label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: .75rem;
+  padding: .375rem .9375rem;
+  margin: .5rem;
+  border-radius: 3px;
+  background-color: transparent;
+  color: #FFFFFF;
+}
+
+
+.label-alert {
+  background-color: $alert;
+}
+
+
+.label-progress {
+  background-color: $progress;
+}
+
+
+.label-success {
+  background-color: $success;
+}
+
+
+.label-draft {
+  background-color: $draft;
+}
+
+
+.label-primary {
+  background-color: $primary;
+}
+
+
+.label-edit {
+  background-color: $edit;
+}
+
+
+.label-meta {
+  background-color: $meta;
+}
+
