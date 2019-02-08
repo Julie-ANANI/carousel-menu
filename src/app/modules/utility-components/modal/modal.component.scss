@@ -35,14 +35,15 @@
   }
 
   .modal-container {
-    display: block;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 0.2rem 0.5rem rgba(69,77,93,.3);
     border-radius: 3px;
     background-color: white;
     position: fixed;
     padding: 0;
     text-align: unset;
-    overflow: auto;
+    overflow: hidden;
     width: 100%;
     min-height: 227px;
     z-index: 1;
@@ -76,6 +77,19 @@
     position: relative;
     max-height: 70vh;
     overflow-y: auto;
+    flex: 1 0 auto;
+  }
+
+  .modal-footer {
+    padding: 1.625rem 1.57rem;
+    text-align: right;
+    overflow: auto;
+
+    .btn-cancel {
+      border: none;
+      margin-right: .6rem;
+    }
+
   }
 
 }

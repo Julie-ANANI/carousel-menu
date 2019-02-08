@@ -202,25 +202,46 @@ export const COMMON = {
   },
 
   'HOME': 'Accueil',
+
   'ADMIN': 'Admin',
+
   'MY_PROJECT': 'Mon projet',
+
   'MY_PROJECTS': 'Mes projets',
+
   'MY_USERS': 'Mes utilisateurs',
+
   'MY_ACCOUNT': 'Mon compte',
+
   'PROJECTS': 'Projets',
+
   'CAMPAIGNS': 'Campagnes',
+
   'DISCOVER': 'Découvrir',
+
   'PRESET': 'Configuration',
+
   'PRESETS': 'Settings',
+
   'QUESTIONNAIRE': 'Questionnaire(s)',
+
   'ADD-ANSWER': 'Ajouter une réponse',
+
   'CLIENT_SIDE': 'Client',
+
   'EDIT_USER': 'Modifier l\'utilisateur',
+
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
+
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
+
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
+
   'ADD-TAGS': 'Ajouter des tags',
+
   'UMI_WORD': 'Le mot d’UMI',
+
+  'ADD_PRO': 'Ajouter un professionnel',
 
   'SORT': {
     'BY_NAME': 'Nom',

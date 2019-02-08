@@ -21,7 +21,17 @@ export class ModalComponent implements OnInit, OnDestroy {
     this._title = value;
   }
 
+  @Input() set actionButtonTitle(value: string) {
+    this._buttonAction = value;
+  }
+
+  @Input() set disabledActionButton(value: string) {
+    this._disabledButton = value;
+  }
+
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output() performAction: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private element: any;
 
@@ -30,6 +40,10 @@ export class ModalComponent implements OnInit, OnDestroy {
   private _maxWidth: string;
 
   private _title: string;
+
+  private _buttonAction: string;
+
+  private _disabledButton: string;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object, private el: ElementRef) {
     this.element = this.el.nativeElement;
@@ -42,10 +56,18 @@ export class ModalComponent implements OnInit, OnDestroy {
     }
   }
 
+
   toggleState(event: Event) {
-    if (event.target['className'] === 'modal-overlay' || event.target['id'] === 'button-close') {
+    if (event.target['className'] === 'modal-overlay' || event.target['id'] === 'button-close' || event.target['id'] === 'btn-cancel') {
       this.showModalChange.emit(false);
     }
+  }
+
+
+  onClickConfirm(event: Event) {
+    event.preventDefault();
+    this.performAction.emit(true);
+    this.showModalChange.emit(false);
   }
 
   get showModal() {
@@ -58,6 +80,14 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   get title(): string {
     return this._title;
+  }
+
+  get buttonAction(): string {
+    return this._buttonAction;
+  }
+
+  get disabledButton(): string {
+    return this._disabledButton;
   }
 
   ngOnDestroy(): void {

@@ -52,7 +52,8 @@ export const ERROR = {
     'SAME_PASSWORD': 'Le nouveau mot de passe et le mot de passe de confirmation doivent être identiques.',
     'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
     'PROFILE_UPDATE_TEXT': 'Le profil a été mis à jour avec succès.',
-    'PROFILE_DELETE_TEXT': 'Le profil a été supprimé avec succès.'
+    'PROFILE_DELETE_TEXT': 'Le profil a été supprimé avec succès.',
+    'ADDED': 'Le profil a été ajouté avec succès.'
   },
 
   'PROJECT': {
@@ -125,5 +126,9 @@ export const ERROR = {
     'UPDATED': 'La campagne a été mis à jour avec succès.',
     'DELETED': 'La campagne et son professionnel ont été supprimés avec succès.'
   },
+
+  'IMPORT': {
+    'CSV': 'Le CSV a été importé avec succès.'
+  }
 
 };

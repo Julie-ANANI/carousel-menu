@@ -1,30 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Professional } from '../../../../../../models/professional';
 import { first } from 'rxjs/operators';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
+import { FormGroup } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-admin-campaign-pros',
   templateUrl: './admin-campaign-pros.component.html',
   styleUrls: ['./admin-campaign-pros.component.scss']
 })
+
 export class AdminCampaignProsComponent implements OnInit {
 
-  public newPro: any = {
+  private _newPro: any = {
     firstName: '',
     lastName: '',
     email: '',
-    emailConfidence: 100
+    emailConfidence: 100,
+    jobTitle: '',
+    company: '',
+    country: '',
+    profileUrl: ''
   };
 
   private _importModal = false;
-
-  public importProsModal: Boolean = false;
-
-  private _addProModal = false;
 
   private _campaign: Campaign;
 
@@ -32,12 +36,15 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _config: any;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _notificationsService: TranslateNotificationsService,
-              private _professionalsService: ProfessionalsService) { }
+  private _sidebarValue: SidebarInterface = {};
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private translateNotificationsService: TranslateNotificationsService,
+              private professionalsService: ProfessionalsService,
+              @Inject(PLATFORM_ID) private platform: Object) { }
 
   ngOnInit() {
-    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
 
     this._config = {
       fields: 'language firstName lastName company email emailConfidence country jobTitle',
@@ -84,81 +91,93 @@ export class AdminCampaignProsComponent implements OnInit {
     return isNaN(value) ? 0 : value;
   }
 
+
   onClickImport(event: Event) {
     event.preventDefault();
     this._importModal = true;
   }
 
 
+  OnClickImportCsv(file: File, event: Event) {
+    event.preventDefault();
+
+    this.professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file).pipe(first()).subscribe((res: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+      this._importModal = false;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
+
+  importPros(value: boolean) {
+    if (value) {
+      this.professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id, this._originCampaign[0].innovation.toString(), this._campaign.innovation._id).pipe(first())
+        .subscribe((answer: any) => {
+          const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
+          this.translateNotificationsService.success('ERROR.SUCCESS', message);
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        });
+    }
+  }
+
   updateCampaign(event: any) {
     this._originCampaign = event.value;
   }
 
 
-  addPro(value: boolean) {
-    this._addProModal = value;
-    this.newPro = {
-      firstName: '',
-      lastName: '',
-      email: '',
+  OnClickAdd(event: Event) {
+    event.preventDefault();
+
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'COMMON.ADD_PRO',
+      type: 'addPro'
+    };
+
+  }
+
+
+  onClickSave(formValue: FormGroup) {
+    this._newPro = {
+      firstName: formValue['firstName'],
+      lastName: formValue['lastName'],
+      email: formValue['email'],
+      jobTitle: formValue['jobTitle'],
+      country: formValue['country'],
+      profileUrl: formValue['profileUrl'],
+      company: formValue['companyName'],
       emailConfidence: 100
     };
-  }
 
-  createPro() {
-    if (this.newPro.email && (this.newPro.firstName && this.newPro.lastName)) {
-      this._professionalsService
-        .create([this.newPro], this.campaign._id, this.campaign.innovation._id)
-        .pipe(first())
-        .subscribe((createdPro: Professional) => {
-          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-        });
-    }
-  }
-
-  importPros() {
-    this._professionalsService.importProsFromCampaign(
-      this._originCampaign[0]._id,
-      this._campaign._id,
-      this._originCampaign[0].innovation.toString(),
-      this._campaign.innovation._id
-    ).pipe(first()).subscribe((answer: any) => {
-      this.importProsModal = false;
-      const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
-      this._notificationsService.success('ERROR.SUCCESS', message);
+    this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id).pipe(first()).subscribe((createdPro: Professional) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
-  }
 
-  public importProsCsv(file: File, event: Event) {
-    event.preventDefault();
-    this._professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file)
-      .subscribe((res: any) => {
-        this._notificationsService.success('ERROR.SUCCESS', res.message);
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.ERROR', err.message);
-      });
   }
 
 
-
-  exportPros() {
+  onClickExport() {
     const config = {
       professionals: 'all',
       campaignId: this._campaign._id,
-      query: {
-        campaignId: this._campaign._id
-      }
+      query: { campaignId: this._campaign._id }
     };
-    this._professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
+
+    this.professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
-      window.open(url);
+      if (isPlatformBrowser(this.platform)) { window.open(url); }
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
+
   }
 
-  get addProModal(): boolean  {
-    return this._addProModal;
-  }
 
   set config(value: any) {
     this._config = value;
@@ -182,6 +201,18 @@ export class AdminCampaignProsComponent implements OnInit {
 
   set importModal(value: boolean) {
     this._importModal = value;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get newPro(): any {
+    return this._newPro;
   }
 
 }
