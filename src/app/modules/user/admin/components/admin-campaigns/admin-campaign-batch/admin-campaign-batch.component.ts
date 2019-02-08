@@ -10,12 +10,12 @@ import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interf
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-admin-campaign-mails',
-  templateUrl: './admin-campaign-mails.component.html',
-  styleUrls: ['./admin-campaign-mails.component.scss']
+  selector: 'app-admin-campaign-batch',
+  templateUrl: './admin-campaign-batch.component.html',
+  styleUrls: ['./admin-campaign-batch.component.scss']
 })
 
-export class AdminCampaignMailsComponent implements OnInit {
+export class AdminCampaignBatchComponent implements OnInit {
 
   private _campaign: Campaign;
   private _quizLinks: Array<string> = [];

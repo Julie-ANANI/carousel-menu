@@ -10,11 +10,11 @@ import { AdminCampaignComponent } from './admin-campaign/admin-campaign.componen
 import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
 import { AdminCampaignQuizComponent } from './admin-campaign-quiz/admin-campaign-quiz.component';
 import { AdminCampaignHistoryComponent } from './admin-campaign-history/admin-campaign-history.component';
-import { AdminCampaignMailsComponent } from './admin-campaign-mails/admin-campaign-mails.component';
+import { AdminCampaignBatchComponent } from './admin-campaign-batch/admin-campaign-batch.component';
 import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
-import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admin-campaign-templates.component';
+import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admin-campaign-workflows.component';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
 import { SharedProsListModule } from '../../../../shared/components/shared-pros-list/shared-pros-list.module';
@@ -61,11 +61,11 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignAnswersComponent,
     AdminCampaignQuizComponent,
     AdminCampaignHistoryComponent,
-    AdminCampaignMailsComponent,
+    AdminCampaignBatchComponent,
     AdminCampaignProsComponent,
     AdminCampaignSearchComponent,
     AdminCampaignSearchResultsComponent,
-    AdminCampaignTemplatesComponent,
+    AdminCampaignWorkflowsComponent,
     AdminCampaignAbtestingComponent
 
   ],
@@ -75,10 +75,10 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignAnswersComponent,
     AdminCampaignQuizComponent,
     AdminCampaignHistoryComponent,
-    AdminCampaignMailsComponent,
+    AdminCampaignBatchComponent,
     AdminCampaignProsComponent,
     AdminCampaignSearchResultsComponent,
-    AdminCampaignTemplatesComponent
+    AdminCampaignWorkflowsComponent
   ]
 })
 

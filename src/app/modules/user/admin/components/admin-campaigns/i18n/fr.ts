@@ -13,7 +13,7 @@ export const CAMPAIGNS = {
 
   'BATCH': 'Batch',
 
-  'TEMPLATES': 'Templates',
+  'WORKFLOWS': 'Workflows',
 
   'ANSWERS': 'Réponses',
 

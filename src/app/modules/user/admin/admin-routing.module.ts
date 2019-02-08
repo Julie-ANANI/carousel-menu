@@ -14,8 +14,8 @@ import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
-import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
-import { AdminCampaignTemplatesComponent } from './components/admin-campaigns/admin-campaign-templates/admin-campaign-templates.component';
+import { AdminCampaignBatchComponent } from './components/admin-campaigns/admin-campaign-batch/admin-campaign-batch.component';
+import { AdminCampaignWorkflowsComponent } from './components/admin-campaigns/admin-campaign-workflows/admin-campaign-workflows.component';
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 import { AdminCampaignQuizComponent } from './components/admin-campaigns/admin-campaign-quiz/admin-campaign-quiz.component';
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
@@ -88,8 +88,8 @@ const adminRoutes: Routes = [
             { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'},
             { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },
             { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full'},
-            { path: 'mails', component: AdminCampaignMailsComponent, pathMatch: 'full'},
-            { path: 'templates', component: AdminCampaignTemplatesComponent, pathMatch: 'full'},
+            { path: 'batch', component: AdminCampaignBatchComponent, pathMatch: 'full'},
+            { path: 'workflows', component: AdminCampaignWorkflowsComponent, pathMatch: 'full'},
             { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full'}
           ]}
         ]
