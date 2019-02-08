@@ -78,9 +78,13 @@
     <div class="form-group" *ngIf="params.profile">
       <label class="form-group-flex">
         <h4>{{ 'SEARCH.STAR_PROFILES' | translate }}</h4>
-        <li *ngFor="let profile of params.profile">
-          {{ profile }}
-        </li>
+        <ul>
+          <li *ngFor="let profile of params.profile | keyvalue">
+            <h5> <a href= "{{ profile.key }}" target="_blank">{{ profile.value.title }}</a> </h5>
+            <h4> <a href= "{{ profile.key }}" target="_blank">{{ profile.key }}</a> </h4>
+            <p> <a href= "{{ profile.key }}" target="_blank">{{ profile.value.snippet }}</a> </p>
+          </li>
+        </ul>
       </label>
     </div>
   </form>

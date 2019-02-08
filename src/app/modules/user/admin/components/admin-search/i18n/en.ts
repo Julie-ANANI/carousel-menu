@@ -120,5 +120,12 @@ export const SEARCH = {
   "DELETEPRO": {
     "TITLE": "Delete",
     "WARNING": "Warning ! These professionals won't appear in the results anymore."
+  },
+  'POPOVER': {
+    'REQUEST': 'No capital letters or "s" to artificially multiply the number of requests.',
+    'PRACTICE' : 'Good request practices for CAT to work.',
+    'KEYWORDS' : 'Keywords with numeric character will not be taken into account in the CAT process.',
+    'MAX': '100 max request per day.',
+    'SPELLING': 'New keywords can be strange due to spelling or typing mistakes in professional descriptions.'
   }
 };
