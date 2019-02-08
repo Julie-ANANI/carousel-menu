@@ -6,7 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedProsListModule } from '../../../../../shared/components/shared-pros-list/shared-pros-list.module';
 import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { AdminCommunityMembersComponent } from "./admin-community-members.component";
-import { AdminCommunitySearchModule } from "../admin-community-search/admin-community-search.module";
+import { SidebarAdvsearchFormModule } from "../../../../../sidebar/components/advsearch-form/sidebar-advsearch-form.module";
+import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AdminCommunitySearchModule } from "../admin-community-search/admin-comm
     SharedProsListModule,
     TranslateModule.forChild(),
     PipeModule,
-    AdminCommunitySearchModule
+    SidebarModule,
+    SidebarAdvsearchFormModule
   ],
   declarations: [
     AdminCommunityMembersComponent

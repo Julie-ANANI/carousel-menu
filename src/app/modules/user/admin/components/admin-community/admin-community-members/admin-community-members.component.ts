@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SidebarInterface } from "../../../../../sidebar/interfaces/sidebar-interface";
 
 @Component({
   selector: 'app-admin-community-members',
@@ -10,7 +11,7 @@ export class AdminCommunityMembersComponent implements OnInit {
 
   private _config: any;
 
-  private _startSearch: boolean = false;
+  private _sidebarValue: SidebarInterface = {};
 
   ngOnInit() {
     this._config = {
@@ -26,21 +27,20 @@ export class AdminCommunityMembersComponent implements OnInit {
     return this._config;
   }
 
-  public onSearchClick(event) {
-    console.log(`Search! ${event}`);
-    this._startSearch = true;
-  }
-
-  public launchSearch() {
+  public launchSearch(event) {
     console.log("GO GO GO!");
   }
 
-  get startSearch(): boolean {
-    return this._startSearch;
+  public onSearchClick() {
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'Smart search',
+      type: 'professional'
+    };
+    //title: 'COMMON.EDIT_PROFESSIONAL',
   }
 
-  set startSearch(value: boolean) {
-    this._startSearch = value;
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
   }
-
 }
