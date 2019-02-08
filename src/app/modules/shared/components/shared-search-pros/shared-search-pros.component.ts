@@ -19,6 +19,7 @@ export class SharedSearchProsComponent implements OnInit {
   private _suggestion: string;
   private _params: any;
   private _more: SidebarInterface = {};
+  private _more_cat: SidebarInterface = {};
   private _googleQuota = 30000;
   private _estimatedNumberOfGoogleRequests = 0;
   private _countriesSettings: any[] = [];
@@ -47,7 +48,7 @@ export class SharedSearchProsComponent implements OnInit {
         xing: false
       },
       count: 10,
-      starProfiles: 2,
+      starProfiles: 5,
       country: '',
       countries: [],
       options: {
@@ -57,6 +58,7 @@ export class SharedSearchProsComponent implements OnInit {
         indexSearch: false
       }
     };
+    console.log(this._params);
 
     if (this.campaign) {
       this._params.options.automated = true;
@@ -80,6 +82,13 @@ export class SharedSearchProsComponent implements OnInit {
     this._more = {
       animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
       title: 'SEARCH.SETTINGS'
+    };
+  }
+
+  displayStars() {
+    this._more_cat = {
+      animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SEARCH.STAR_PROFILES'
     };
   }
 
@@ -151,17 +160,15 @@ export class SharedSearchProsComponent implements OnInit {
             request = request.replace(`${key}`, `<span class="text-success">${key}</span>`);
           }
         });
-        console.log(this._suggestion);
         this._suggestion += (`${request}<br/>`);
       });
-      console.log(this._suggestion);
 
       this.catResult.new_keywords = [];
       Object.entries(response.keywords_analysis.new).forEach(([key, value]) => {
         this.catResult.new_keywords.push(key);
       });
 
-      this.catResult.stars = response.stars;
+      this.catResult.profile = response.stars;
       this.catResult.duplicate_status = response.duplicate_status;
     });
   }
@@ -238,6 +245,7 @@ export class SharedSearchProsComponent implements OnInit {
   get suggestion(): string { return this._suggestion; }
   get params(): any { return this._params; }
   get more(): any { return this._more; }
+  get more_cat(): any { return this._more_cat; }
   get googleQuota(): number { return this._googleQuota; }
   get estimatedNumberOfGoogleRequests(): number { return this._estimatedNumberOfGoogleRequests; }
   get catDone(): any { return this.catResult.keywords_analysis; }

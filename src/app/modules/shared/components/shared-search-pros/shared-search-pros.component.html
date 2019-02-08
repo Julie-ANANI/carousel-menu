@@ -8,6 +8,12 @@
       </app-sidebar-search>
     </app-sidebar>
 
+    <app-sidebar [template]="more_cat" *ngIf="catDone">
+      <app-sidebar-search
+        [params]="catResult">
+      </app-sidebar-search>
+    </app-sidebar>
+
     <div>
       <div id="input-search">
         <textarea
@@ -41,6 +47,7 @@
 
     <div class="tips">
       <a (click)="changeSettings() && $event.preventDefault()">{{ 'SEARCH.SETTINGS' | translate }}</a>
+      <a (click)="displayStars() && $event.preventDefault()" *ngIf="catDone" >{{ 'SEARCH.STAR_PROFILES' | translate }}</a>
 
       <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate }}
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>

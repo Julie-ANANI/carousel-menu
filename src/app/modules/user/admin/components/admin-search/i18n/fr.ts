@@ -24,7 +24,7 @@ export const SEARCH = {
   "SETTINGS": "Paramètres",
   "APPLY": "Appliquer",
   "IGNORE": "Ignorer",
-  "STAR_PROFILES": "Profils Stars",
+  "STAR_PROFILES": "Profils Stars: ",
   "COUNTRY": "Pays",
   "LANGUAGE": "Langue",
   "NUMBER": "Rechercher :",

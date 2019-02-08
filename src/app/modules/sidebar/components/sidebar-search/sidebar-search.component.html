@@ -1,5 +1,5 @@
 <div id="search-settings-wrapper" class="column col-11 col-mx-auto">
-  <form>
+  <form *ngIf="!params.profile">
     <div class="form-group">
       <button (click)="saveParams($event)" class="btn btn-primary">
         {{'COMMON.SAVE' | translate}}
@@ -15,19 +15,6 @@
           <option value="40">{{40}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
           <option value="50">{{50}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
           <option value="100">{{100}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        </select>
-      </label>
-    </div>
-    <div class="form-group">
-      <label class="form-group-flex">
-        <h4>{{ 'SEARCH.STAR_PROFILES' | translate }}</h4>
-        <select name="starProfiles" class="form-control" [(ngModel)]="params.starProfiles">
-          <option value="2">{{2}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="3">{{3}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="4">{{4}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="5">{{5}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="6">{{6}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="7">{{7}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
         </select>
       </label>
     </div>
@@ -85,6 +72,16 @@
           </div>
         </div>
       </div>
+    </div>
+  </form>
+  <form>
+    <div class="form-group" *ngIf="params.profile">
+      <label class="form-group-flex">
+        <h4>{{ 'SEARCH.STAR_PROFILES' | translate }}</h4>
+        <li *ngFor="let profile of params.profile">
+          {{ profile }}
+        </li>
+      </label>
     </div>
   </form>
 </div>
