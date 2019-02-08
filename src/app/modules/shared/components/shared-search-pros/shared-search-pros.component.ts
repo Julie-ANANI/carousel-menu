@@ -58,7 +58,6 @@ export class SharedSearchProsComponent implements OnInit {
         indexSearch: false
       }
     };
-    console.log(this._params);
 
     if (this.campaign) {
       this._params.options.automated = true;
@@ -141,7 +140,6 @@ export class SharedSearchProsComponent implements OnInit {
   public cat(event: Event): void {
     event.preventDefault();
     this._searchService.computerAidedTargeting(this._params.keywords.split('\n')).pipe(first()).subscribe((response: any) => {
-      console.log(response);
 
       this.catResult.total_result = [];
       Object.entries(response.total_result).forEach(([key, value]) => {
@@ -168,25 +166,7 @@ export class SharedSearchProsComponent implements OnInit {
         this.catResult.new_keywords.push(key);
       });
 
-      this.catResult.profile = response.stars;
       this.catResult.duplicate_status = response.duplicate_status;
-    });
-  }
-
-  public _cat() {
-    this._searchService.cat(this.campaign._id, this._params.keywords, this._params.starProfiles).pipe(first()).subscribe((answer: any) => {
-      this.catResult = answer;
-      this.estimateNumberOfGoogleRequests(answer.totalResults);
-      this._params.keywords.split('\n').forEach((request: string) => {
-        if (answer.requestsToDelete.indexOf(request) > -1) {
-          this._suggestion += (`<span class="text-error">${request}</span><br/>`);
-        } else {
-          answer.warningKeywords.forEach((warningWord: string) => {
-            request = request.replace(`"${warningWord}"`, `<span class="text-warning">"${warningWord}"</span>`);
-          });
-          this._suggestion += `${request}<br/>`;
-        }
-      });
     });
   }
 
