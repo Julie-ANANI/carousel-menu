@@ -98,7 +98,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
     this.campaignService.create(this._newCampaign).pipe(first()).subscribe((response: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.ADDED');
-      this.campaigns.push(response);
+      this._campaigns.push(response);
     },() => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });

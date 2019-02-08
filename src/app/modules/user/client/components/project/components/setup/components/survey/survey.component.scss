@@ -4,12 +4,11 @@
 
   p {
     padding-bottom: .9375rem;
+  }
 
-    a:hover {
-      color: $primary-color;
-      text-decoration: underline;
-    }
-
+  a:hover {
+    color: $primary-color;
+    text-decoration: underline;
   }
 
 }

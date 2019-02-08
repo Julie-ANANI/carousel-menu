@@ -10,11 +10,11 @@ import { first } from 'rxjs/operators';
 // import { EmailTemplate } from '../../../../../models/email-template';
 
 @Component({
-  selector: 'app-admin-campaign-templates',
-  templateUrl: './admin-campaign-templates.component.html',
-  styleUrls: ['./admin-campaign-templates.component.scss']
+  selector: 'app-admin-campaign-workflows',
+  templateUrl: './admin-campaign-workflows.component.html',
+  styleUrls: ['./admin-campaign-workflows.component.scss']
 })
-export class AdminCampaignTemplatesComponent implements OnInit {
+export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _campaign: Campaign;
   public importModal = false;

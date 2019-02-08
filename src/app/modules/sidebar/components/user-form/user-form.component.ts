@@ -139,6 +139,8 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'professional') {
       this._isProfessional = true;
       this.loadProfessional();
+    } else if (this._type === 'addPro') {
+      this._isProfessional = true;
     }
 
   }
@@ -186,12 +188,14 @@ export class UserFormComponent implements OnInit {
       const user = new User(this._userForm.value);
       user.id = this._user.id;
       this.finalUserData.emit(user);
-    } else if (this._isProfessional) {
+    } else if (this._isProfessional && this._type === 'professional') {
       const pro = this._userForm.value;
       pro._id = this._pro._id;
       pro.company = this._userForm.get('companyName').value;
       pro.tags = this._tags;
       this.finalProfessionalData.emit(pro);
+    } else if (this._isProfessional && this._type === 'addPro') {
+      this.finalProfessionalData.emit(this._userForm.value);
     }
   }
 

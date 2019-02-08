@@ -1,7 +1,7 @@
 export const CAMPAIGNS = {
   'CAMPAIGN-NAME': 'Campaign name',
 
-  'DETAILS': 'Details',
+  'QUIZ': 'Quiz',
 
   'HISTORY': 'History',
 
@@ -13,7 +13,7 @@ export const CAMPAIGNS = {
 
   'BATCH': 'Batch',
 
-  'TEMPLATES': 'Templates',
+  'WORKFLOWS': 'Workflows',
 
   'ANSWERS': 'Answers',
 
@@ -75,19 +75,65 @@ export const CAMPAIGNS = {
   },
 
   'STATS': {
-    'ADDED': 'Added',
+    'HEADING': {
+      'INSIGHTS': 'Insights',
+      'PROFILE': 'Profile',
+      'QUALITY': 'Quality',
+      'PROFESSIONALS': 'Professionals',
+      'EMAILS': 'Emails',
+      'COST': 'Cost'
+    },
+    'TITLE': {
+      'LOOK': 'To look at',
+      'VALIDATED': 'Validated',
+      'VALIDATED_WITHOUT': 'Validated no mail',
+      'REJECTED': 'Rejected',
+      'STANDARD': 'Standard',
+      'TOP': 'Top',
+      'FILL_RATE': 'Fill rate',
+      'TIME': 'Time',
+      'FIND': 'Find',
+      'NOT_REACHED': 'Not reached',
+      'STARS': 'Stars',
+      'DUPLICATE': 'Duplicate',
+      'GOOD': 'Good',
+      'UNSURE': 'Unsure',
+      'BAD': 'Bad',
+      'REQUEST': 'Request',
+      'EMAILS': 'Emails'
+    },
+
     'TO_CONTACT': 'To contact',
     'CONTACTED': 'Contacted',
     'OPENED': 'Opened',
     'CLICKED': 'Clicked',
     'STARTED': 'Started',
     'SENT': 'Sent',
-    'VALIDATED': 'Validated'
+
   },
 
   'NO_ANSWERS': {
     'A': 'Don\'t have any answers?',
     'B': 'Try to add some by clicking on "Import" button.'
+  },
+
+  'QUIZ_PAGE': {
+    'HEADING': 'Visit these link to see the questionnaire:',
+    'BOT': 'No quiz has been generated for this campaign.'
+  },
+
+  'PROS_PAGE': {
+    'BUTTON': {
+      'IMPORT': 'Import',
+      'EXPORT': 'Export',
+      'ADD': 'Add'
+    },
+    'MODAL': {
+      'IMPORT': {
+        'TITLE': 'Import Board',
+        'PLACEHOLDER': 'Enter the campaign name',
+      }
+    }
   }
 
 };

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Question } from '../../../../models/question';
 import { Answer } from '../../../../models/answer';
@@ -25,7 +25,7 @@ export class UserAnswerComponent implements OnInit {
   }
 
   @Input() set projectId(value: string) {
-    this.innovationId = value;
+    this._innovationId = value;
   }
 
   @Input() questions: Array<Question>;
@@ -33,37 +33,39 @@ export class UserAnswerComponent implements OnInit {
   @Input() adminMode: boolean;
 
   @Input() set userAnswer(value: Answer) {
-    this.modalAnswer = value;
-    if (this.modalAnswer && !this.modalAnswer.company) {
-      this.modalAnswer.company = {};
+    this._modalAnswer = value;
+    if (this._modalAnswer && !this._modalAnswer.company) {
+      this._modalAnswer.company = {};
     }
   }
 
-  modalAnswer: Answer;
+  @Output() answerUpdated = new EventEmitter<boolean>();
 
-  floor: any;
+  private _modalAnswer: Answer;
 
-  displayEmail = false;
+  private _floor: any;
 
-  editJob = false;
+  private _displayEmail = false;
 
-  editCompany = false;
+  private _editJob = false;
 
-  editCountry = false;
+  private _editCompany = false;
 
-  editMode = false;
+  private _editCountry = false;
 
-  innovationId = '';
+  private _editMode = false;
+
+  private _innovationId = '';
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService) { }
 
   ngOnInit() {
     // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
 
-    this.floor = Math.floor;
+    this._floor = Math.floor;
 
     // On regarde si on a une question 'étoiles'
     const starQuestions = this.questions.filter(q => q && q.controlType === 'stars');
@@ -71,8 +73,8 @@ export class UserAnswerComponent implements OnInit {
     if (starQuestions.length) {
       // Si question 'étoiles', on récupère les advantages
       // TODO: merge the 2 following subscribers in only one
-      this.innovationService.getInnovationCardByLanguage(this.innovationId, 'en').pipe(first()).subscribe((cardEn: InnovCard) => {
-        this.innovationService.getInnovationCardByLanguage(this.innovationId, 'fr').pipe(first()).subscribe((cardFr: InnovCard) => {
+      this.innovationService.getInnovationCardByLanguage(this._innovationId, 'en').pipe(first()).subscribe((cardEn: InnovCard) => {
+        this.innovationService.getInnovationCardByLanguage(this._innovationId, 'fr').pipe(first()).subscribe((cardFr: InnovCard) => {
           // puis on les assigne aux questions stars
           starQuestions.forEach(question => {
             question.options = [];
@@ -102,64 +104,72 @@ export class UserAnswerComponent implements OnInit {
 
 
   private reinitializeVariables() {
-    this.editMode = false;
+    this._editMode = false;
   }
 
 
   resetEdit() {
-    this.editJob = false;
-    this.editCompany = false;
-    this.editCountry = false;
+    this._editJob = false;
+    this._editCompany = false;
+    this._editCountry = false;
   }
+
 
   changeMode(event: Event) {
     if (event.target['checked']) {
-      this.editMode = true;
+      this._editMode = true;
     } else {
-      this.editMode = false;
+      this._editMode = false;
       this.resetEdit();
     }
   }
 
+
   save(event: Event) {
     event.preventDefault();
+
     this.resetEdit();
 
-    if (this.modalAnswer.professional.email) {
+    if (this._modalAnswer.professional.email) {
       // Hack : les réponses anciennes n'ont pas de champ quizReference,
       // mais il faut forcément une valeur pour sauvegarder la réponse
       // TODO: remove this hack
-      this.modalAnswer.originalAnswerReference = this.modalAnswer.originalAnswerReference || 'oldQuiz';
-      this.modalAnswer.quizReference = this.modalAnswer.quizReference || 'oldQuiz';
-      this.answerService.save(this.modalAnswer._id, this.modalAnswer)
-        .pipe(first())
-        .subscribe((_: any) => {
-          this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
+      this._modalAnswer.originalAnswerReference = this._modalAnswer.originalAnswerReference || 'oldQuiz';
+      this._modalAnswer.quizReference = this._modalAnswer.quizReference || 'oldQuiz';
+
+      this.answerService.save(this._modalAnswer._id, this._modalAnswer).pipe(first()).subscribe(() => {
+        this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
+        this.answerUpdated.emit(true);
         }, () => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-        });
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
     }
 
   }
 
+
   updateProfileQuality(object: {value: number}) {
-    this.modalAnswer.profileQuality = object.value;
+    this._modalAnswer.profileQuality = object.value;
   }
 
+
   updateCountry(event: {value: Array<any>}) {
-    this.modalAnswer.country = event.value[0];
+    this._modalAnswer.country = event.value[0];
   }
+
 
   updateStatus(event: Event, status: any) {
     event.preventDefault();
-    if (this.editMode) {
-      this.modalAnswer.status = status;
-        this.displayEmail = (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL');
+
+    if (this._editMode) {
+      this._modalAnswer.status = status;
+      this._displayEmail = (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL');
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.NOT_MODIFIED.USER_ANSWER');
     }
 
   }
+
 
   sendEmail(event: Event, status: any) {
     if (event.target['checked']) {
@@ -169,50 +179,85 @@ export class UserAnswerComponent implements OnInit {
     }
   }
 
+
   addTag(tag: Tag): void {
-    this.answerService.addTag(this.modalAnswer._id, tag._id)
-      .pipe(first())
-      .subscribe((a: any) => {
-        this.modalAnswer.tags.push(tag);
-        this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
+    this.answerService.addTag(this._modalAnswer._id, tag._id).pipe(first()).subscribe(() => {
+      this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
+      this._modalAnswer.tags.push(tag);
+      this.answerUpdated.emit(true);
       }, (err: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
-      });
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+    });
   }
+
 
   createTag(tag: Tag): void {
-    this.answerService.createTag(this.modalAnswer._id, tag)
-      .pipe(first())
-      .subscribe((a: any) => {
-        this.modalAnswer.tags.push(tag);
-        this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
-      }, (err: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
-      });
+    this.answerService.createTag(this._modalAnswer._id, tag).pipe(first()).subscribe(() => {
+      this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
+      this._modalAnswer.tags.push(tag);
+      this.answerUpdated.emit(true);
+      }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+    });
   }
+
 
   removeTag(tag: Tag): void {
-    this.answerService.removeTag(this.modalAnswer._id, tag._id)
-      .pipe(first())
-      .subscribe((a: any) => {
-        this.modalAnswer.tags = this.modalAnswer.tags.filter(t => t._id !== tag._id);
-        this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
-      }, (err: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', err);
-      });
-  }
-
-  importAnswer(event: Event): void {
-    event.preventDefault();
-    this.answerService.importFromQuiz(this.modalAnswer).pipe(first()).subscribe((_res: any) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
-    }, () => {
+    this.answerService.removeTag(this._modalAnswer._id, tag._id).pipe(first()).subscribe((a: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
+      this._modalAnswer.tags = this._modalAnswer.tags.filter(t => t._id !== tag._id);
+      this.answerUpdated.emit(true);
+      }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 
+
+  importAnswer(event: Event): void {
+    event.preventDefault();
+
+    this.answerService.importFromQuiz(this._modalAnswer).pipe(first()).subscribe((_res: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
   get lang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
+  }
+
+  get modalAnswer(): Answer {
+    return this._modalAnswer;
+  }
+
+  get floor(): any {
+    return this._floor;
+  }
+
+  get displayEmail(): boolean {
+    return this._displayEmail;
+  }
+
+  get editJob(): boolean {
+    return this._editJob;
+  }
+
+  get editCompany(): boolean {
+    return this._editCompany;
+  }
+
+  get editCountry(): boolean {
+    return this._editCountry;
+  }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
+
+  get innovationId(): string {
+    return this._innovationId;
   }
 
 }

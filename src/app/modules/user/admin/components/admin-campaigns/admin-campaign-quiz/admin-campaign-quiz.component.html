@@ -1,4 +1,4 @@
-<div id="admin-campaign-pros-component">
+<div id="admin-campaign-quiz-component">
 
   <!-- section stats -->
   <div class="campaign-stats-wrapper">
@@ -62,54 +62,24 @@
 
   </div>
 
-
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- section actions -->
-    <div class="section-actions">
-      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.IMPORT' | translate }}</button>
-      <button class="btn ghost-primary gap-right" (click)="OnClickAdd($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.ADD' | translate }}</button>
-      <button class="btn btn-primary" (click)="onClickExport($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.EXPORT' | translate }}</button>
+    <!-- section no quiz -->
+    <div *ngIf="noResult" class="section-no-quiz">
+      <app-message-space [messageA]="'CAMPAIGNS.QUIZ_PAGE.BOT'" [widthMax]="'354'"></app-message-space>
     </div>
 
-    <!-- section pros list -->
-    <app-shared-pros-list [config]="config" [campaign]="campaign"></app-shared-pros-list>
+
+    <!-- section quiz -->
+    <div *ngIf="!noResult" class="section-quiz">
+      <p>{{ 'CAMPAIGNS.QUIZ_PAGE.HEADING' | translate }}</p>
+      <ul>
+        <li *ngFor="let url of quizLinks">
+          <a [href]="url" target="_blank">{{ url }}</a>
+        </li>
+      </ul>
+    </div>
 
   </div>
-
 
 </div>
-
-<!-- modal to import pros -->
-<app-modal
-  [(showModal)]="importModal"
-  [modalTitle]="'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.TITLE'"
-  [actionButtonTitle]="'COMMON.ADD'"
-  [disabledActionButton]="!originCampaign.length"
-  (performAction)="importPros($event)">
-
-  <app-autocomplete-input
-    (update)="updateCampaign($event)"
-    [onlyOne]="true"
-    [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
-  </app-autocomplete-input>
-
-  <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
-    <label class="btn btn-sm ghost-primary">
-      <input #fileupload type="file" [hidden]="true" (change)="OnClickImportCsv(fileupload.files[0], $event)" />
-      Import CSV
-    </label>
-  </div>
-
-</app-modal>
-<!-- /modal to import pros -->
-
-<!-- sidebar to add pro -->
-<app-sidebar [(template)]="sidebarValue">
-  <app-user-form
-    [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type"
-    (finalProfessionalData)="onClickSave($event)">
-  </app-user-form>
-</app-sidebar>
-<!-- /sidebar to add pro -->

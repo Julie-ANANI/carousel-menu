@@ -1,15 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../models/answer';
-import {Table} from '../../../table/models/table';
+import { Table } from '../../../table/models/table';
 
 @Component({
-  selector: 'app-answers-list',
+  selector: 'app-shared-answers-list',
   templateUrl: './shared-answers-list.component.html',
   styleUrls: ['./shared-answers-list.component.scss']
 })
+
 export class SharedAnswersListComponent {
 
   private _config = {
+    fields: '',
     limit: 10,
     offset: 0,
     search: {},
@@ -24,15 +26,18 @@ export class SharedAnswersListComponent {
   };
 
   @Output() modalAnswerChange = new EventEmitter<any>();
+
   @Output() validateAnswers = new EventEmitter<Answer[]>();
+
   @Output() rejectAnswers = new EventEmitter<Answer[]>();
 
   private _answers: Array<Answer> = [];
+
   private _tableInfos: Table = null;
+
   private _actions: string[] = [];
 
-  constructor() {
-  }
+  constructor() { }
 
   loadAnswers() {
     this._actions = ['ANSWER.VALID_ANSWER', 'ANSWER.REJECT_ANSWER'];
@@ -62,11 +67,11 @@ export class SharedAnswersListComponent {
     };
   }
 
-  public seeAnswer(answer: Answer) {
+  seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
   }
 
-  public performActions(action: any) {
+  performActions(action: any) {
     switch (this._actions.findIndex(value => action._action === value)) {
       case 0: {
         this.validateAnswers.emit(action._rows);
@@ -85,5 +90,8 @@ export class SharedAnswersListComponent {
     return this._tableInfos;
   }
 
-  get config(): any { return this._config; }
+  get config(): any {
+    return this._config;
+  }
+
 }
