@@ -1,5 +1,5 @@
 /*
-    Spectre framework
+    Spectre platform
  */
 
 @import "../node_modules/spectre.css/src/spectre.scss";
@@ -42,7 +42,6 @@ body {
     Rest style file
  */
 
-@import "style/label-style";
 @import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
@@ -59,9 +58,10 @@ body {
 /*
     In progress...
  */
-@import "style/framework/animation";
-@import "style/framework/buttons";
-@import "style/framework/tab";
+@import "style/platform/animation";
+@import "style/platform/buttons";
+@import "style/platform/tab";
+@import "style/platform/label";
 
 
 /*
