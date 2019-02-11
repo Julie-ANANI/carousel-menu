@@ -1,5 +1,5 @@
 /*
-    Spectre framework
+    Spectre platform
  */
 
 @import "../node_modules/spectre.css/src/spectre.scss";
@@ -26,7 +26,6 @@ html {
 body {
   font-size: 1rem;
   line-height: 1.5;
-  word-break: break-word;
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,15 +42,10 @@ body {
     Rest style file
  */
 
-@import "style/animation";
-@import "style/app-modal-style";
-@import "style/label-style";
 @import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
 @import "style/form-style";
-@import "style/button-style";
-@import "style/tab-style";
 @import "style/modal-style";
 @import "style/tooltip-style";
 @import "style/tinymce-style";
@@ -59,6 +53,19 @@ body {
 @import "style/ng2autocomplete-style";
 @import "style/popover-style";
 @import "style/upload-photo-style";
+
+
+/*
+    In progress...
+ */
+@import "style/platform/animation";
+@import "style/platform/buttons";
+@import "style/platform/container";
+@import "style/platform/tab";
+@import "style/platform/labels";
+@import "style/platform/headers";
+@import "style/platform/modal";
+@import "style/platform/texts";
 
 
 /*

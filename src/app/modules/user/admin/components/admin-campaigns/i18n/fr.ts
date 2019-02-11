@@ -1,7 +1,7 @@
 export const CAMPAIGNS = {
   'CAMPAIGN-NAME': 'Nom de la campagne',
 
-  'DETAILS': 'Détails',
+  'QUIZ': 'Quiz',
 
   'HISTORY': 'Historique',
 
@@ -13,7 +13,7 @@ export const CAMPAIGNS = {
 
   'BATCH': 'Batch',
 
-  'TEMPLATES': 'Templates',
+  'WORKFLOWS': 'Workflows',
 
   'ANSWERS': 'Réponses',
 
@@ -75,6 +75,34 @@ export const CAMPAIGNS = {
   },
 
   'STATS': {
+    'HEADING': {
+      'INSIGHTS': 'Insights',
+      'PROFILE': 'Profil',
+      'QUALITY': 'Qualité',
+      'PROFESSIONALS': 'Professionnels',
+      'EMAILS': 'Emails',
+      'COST': 'Cost'
+    },
+    'TITLE': {
+      'LOOK': 'To look at',
+      'VALIDATED': 'Validated',
+      'VALIDATED_WITHOUT': 'Validated no mail',
+      'REJECTED': 'Rejected',
+      'STANDARD': 'Standard',
+      'TOP': 'Top',
+      'FILL_RATE': 'Fill rate',
+      'TIME': 'Time',
+      'FIND': 'Trouver',
+      'NOT_REACHED': 'Non atteint',
+      'STARS': 'Étoiles',
+      'DUPLICATE': 'Dupliquer',
+      'GOOD': 'Bon',
+      'UNSURE': 'Incertain',
+      'BAD': 'Mauvais',
+      'REQUEST': 'Demande',
+      'EMAILS': 'Emails'
+    },
+
     'ADDED': 'Ajouté',
     'TO_CONTACT': 'Pour contacter',
     'CONTACTED': 'Contacté',
@@ -82,12 +110,17 @@ export const CAMPAIGNS = {
     'CLICKED': 'Cliquez',
     'STARTED': 'Démarré',
     'SENT': 'Envoyé',
-    'VALIDATED': 'Validé'
+    'VALIDATED': 'Validé',
   },
 
   'NO_ANSWERS': {
     'A': 'Vous n\'avez pas de réponses ?',
     'B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
+  },
+
+  'QUIZ_PAGE': {
+    'HEADING': 'Visitez ces liens pour voir le questionnaire :',
+    'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
   }
 
 };

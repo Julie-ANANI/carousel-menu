@@ -207,25 +207,46 @@ export const COMMON = {
   },
 
   'HOME': 'Home',
+
   'ADMIN': 'Admin',
+
   'MY_PROJECT': 'My project',
+
   'MY_PROJECTS': 'My projects',
+
   'MY_USERS': 'My users',
+
   'MY_ACCOUNT': 'My account',
+
   'PROJECTS': 'Projects',
+
   'CAMPAIGNS': 'Campaigns',
+
   'DISCOVER': 'Discover',
+
   'PRESET': 'Preset',
+
   'EDIT_USER': 'Edit User',
+
   'EDIT_PROFESSIONAL': 'Edit Professional',
+
   'EDIT_INSIGHT': 'Edit Insight',
+
   'EDIT-COUNTRY': 'Edit country\'s filter',
+
   'ADD-TAGS': 'Add tags',
+
   'PRESETS': 'Settings',
+
   'QUESTIONNAIRE': 'Questionnaire(s)',
+
   'ADD-ANSWER': 'Ajouter une réponse',
+
   'CLIENT_SIDE': 'Client',
+
   'UMI_WORD': 'A word from UMI',
+
+  'ADD_PRO': 'Add Professional',
 
   'SORT': {
     'BY_NAME': 'Name',

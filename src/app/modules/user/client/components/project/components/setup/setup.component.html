@@ -65,20 +65,20 @@
 
   <!-- tab section -->
   <div class="column col-xs-12 col-11 col-mx-auto section-tabs">
-    <ul class="tabs">
-      <li>
+    <ul class="tab">
+      <li class="tab-item">
         <a [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
           <div class="btn-round targeting-check" [ngClass]=" { 'complete': innovation?.settings.completion === 100 } ">{{ innovation?.settings.completion }}%</div>
           {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
         </a>
       </li>
-      <li>
+      <li class="tab-item">
         <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
           <div class="btn-round pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
           {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
         </a>
       </li>
-      <li>
+      <li class="tab-item">
         <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
           <div class="btn-round survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
           {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}

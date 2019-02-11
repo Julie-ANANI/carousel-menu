@@ -185,3 +185,9 @@
   animation-duration: 200ms;
   animation-timing-function: ease-in-out;
 }
+
+.animate-content {
+  animation-name: fadeIn;
+  animation-duration: 50ms;
+  animation-timing-function: ease-in-out;
+}

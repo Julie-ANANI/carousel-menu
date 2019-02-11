@@ -10,11 +10,12 @@ import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interf
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-admin-campaign-mails',
-  templateUrl: './admin-campaign-mails.component.html',
-  styleUrls: ['./admin-campaign-mails.component.scss']
+  selector: 'app-admin-campaign-batch',
+  templateUrl: './admin-campaign-batch.component.html',
+  styleUrls: ['./admin-campaign-batch.component.scss']
 })
-export class AdminCampaignMailsComponent implements OnInit {
+
+export class AdminCampaignBatchComponent implements OnInit {
 
   private _campaign: Campaign;
   private _quizLinks: Array<string> = [];
@@ -316,17 +317,17 @@ export class AdminCampaignMailsComponent implements OnInit {
       }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label-validate'}, {_attr: 'OpenedPred', _class: 'label-draft'} ],
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label label-success'}, {_attr: 'OpenedPred', _class: 'label label-draft'} ],
         _isSortable: false
       }, {
         _attrs: ['ClickedPred', 'ClickedReel'],
         _name: 'Clicked',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label-validate'}, {_attr: 'ClickedPred', _class: 'label-draft'} ],
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label label-success'}, {_attr: 'ClickedPred', _class: 'label label-draft'} ],
         _isSortable: false
       }, {
         _attrs: ['InsightsPred', 'InsightsReel'],
         _name: 'Insights',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label-validate'} , {_attr: 'InsightsPred', _class: 'label-draft'}],
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label label-success'} , {_attr: 'InsightsPred', _class: 'label label-draft'}],
         _isSortable: false
       }, {
         _attrs: ['Date'],
@@ -342,8 +343,8 @@ export class AdminCampaignMailsComponent implements OnInit {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
         _isSortable: false,
         _choices: [
-          {_name: 'Sent', _class: 'label-progress'},
-          {_name: 'Planned',  _class: 'label-validate'},
+          {_name: 'Sent', _class: 'label label-progress'},
+          {_name: 'Planned',  _class: 'label label-success'},
         ]}]
     };
     return t;

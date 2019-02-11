@@ -14,7 +14,7 @@
           *ngFor="let innovationCard of innovation.innovationCards; let i = index;"
           [ngClass]="{'active': selectedCardIndex === i }"
           (click)="onLangSelect($event, i)">
-          <div class="radio-button"><span>•</span></div>
+          <div class="btn-radio"><span>•</span></div>
           <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
         </li>
         <p *ngIf="innovation.innovationCards?.length < 2 && canEdit">
