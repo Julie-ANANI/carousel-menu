@@ -162,7 +162,7 @@
       <div class="status-rejected">
         <span class="label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
         <div
-          class="radio-button rejected"
+          class="btn-radio rejected"
           [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
           (click)="updateStatus($event, 'REJECTED')">
           <span>•</span>
@@ -173,7 +173,7 @@
       <div class="status-submitted">
         <span class="label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
         <div
-          class="radio-button submitted"
+          class="btn-radio submitted"
           [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
           (click)="updateStatus($event, 'SUBMITTED')">
           <span>•</span>
@@ -184,7 +184,7 @@
       <div class="status-validated">
         <span class="label-validate">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
         <div
-          class="radio-button validated"
+          class="btn-radio validated"
           [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
           (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
           <span>•</span>

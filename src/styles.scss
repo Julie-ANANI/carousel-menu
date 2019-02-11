@@ -42,14 +42,11 @@ body {
     Rest style file
  */
 
-@import "style/animation";
 @import "style/label-style";
 @import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
 @import "style/form-style";
-@import "style/button-style";
-@import "style/tab-style";
 @import "style/modal-style";
 @import "style/tooltip-style";
 @import "style/tinymce-style";
@@ -57,6 +54,14 @@ body {
 @import "style/ng2autocomplete-style";
 @import "style/popover-style";
 @import "style/upload-photo-style";
+
+
+/*
+    In progress...
+ */
+@import "style/framework/animation";
+@import "style/framework/buttons";
+@import "style/framework/tab";
 
 
 /*

@@ -9,8 +9,8 @@
       <h1 class="main-heading">Settings</h1>
 
       <!-- Tabs -->
-      <ul class="tabs">
-        <li *ngFor="let tab of tabs">
+      <ul class="tab">
+        <li *ngFor="let tab of tabs" class="tab-item">
           <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
             {{ tab | translate | FormatText }}
           </a>

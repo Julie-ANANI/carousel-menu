@@ -9,16 +9,14 @@
         <a [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/settings'" class="text-link">Back to project</a>
       </div>
 
-      <div class="tabs-wrapper">
-        <ul class="tabs">
-          <li *ngFor="let tab of authorizedTabs">
-            <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickTab($event, tab)">
-              {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
-            </a>
-          </li>
-        </ul>
-      </div>
 
+      <ul class="tab">
+        <li *ngFor="let tab of authorizedTabs" class="tab-item">
+          <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickTab($event, tab)">
+            {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
+          </a>
+        </li>
+      </ul>
 
     </div>
   </div>

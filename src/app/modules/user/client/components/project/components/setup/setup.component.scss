@@ -83,19 +83,15 @@
 
   .section-tabs {
 
-    .tabs {
-      border-bottom: 1px solid $border-color;
+    .tab {
 
-      li {
-        flex: unset;
+      .tab-item {
         min-width: 150px;
       }
 
       a {
-        background-color: white;
-        color: $background-color;
-        border-bottom: 4px solid transparent;
-        font-weight: 500;
+        border-bottom-width: 4px;
+        margin-right: 1.2rem;
 
         .btn-round {
           display: inline-flex;
@@ -104,11 +100,6 @@
           margin-right: .9375rem;
         }
 
-      }
-
-      a:hover {
-        border-bottom-color: $primary-color;
-        color: $primary-color;
       }
 
       .pitch-check, .targeting-check, .survey-check {
@@ -127,11 +118,6 @@
         background-color: $validation-color;
         transition: all 0.15s ease-in-out;
         color: white;
-      }
-
-      .active {
-        color: $primary-color !important;
-        border-bottom-color: $primary-color !important;
       }
 
     }
@@ -165,21 +151,3 @@
 
 }
 
-
-@media (max-width: 600px) {
-
-  #setup-component {
-
-    .tabs {
-      border-bottom: none !important;
-
-      li {
-        flex: 1 0 auto;
-        border-bottom: 1px solid $border-color;
-      }
-
-    }
-
-  }
-
-}
