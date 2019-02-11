@@ -47,7 +47,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit() {
     if (this._formData.valid && this._formData.get('email')!.value) {
       if (this._formData.get('password')!.value === this._formData.get('passwordConfirm')!.value) {
-        this.activatedRoute.params.first().subscribe(params => {
+        this.activatedRoute.params.subscribe(params => {
           const tokenEmail = params['tokenEmail'];
           this.userService.updatePassword({
             email: this._formData.get('email')!.value,
