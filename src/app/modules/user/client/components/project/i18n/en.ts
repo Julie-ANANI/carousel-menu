@@ -39,7 +39,7 @@ export const PROJECT_MODULE = {
     'TITLE': 'Collaborators Management',
     'CONTENT': 'You can add here the e-mail addresses of the people you want to add as collaborators for your project.',
     'INFO': '',
-    'NOTE': 'Info: people who are already users of the platform will be added at once, otherwise they will receive an e-mail with an invitation to sign up. ' +
+    'NOTE': 'Info: people who are already users of the framework will be added at once, otherwise they will receive an e-mail with an invitation to sign up. ' +
     'Remember: to accept the invitation, new users need to register using the same registration address.',
     'USERS_ADDED': 'collaborator(s) has/have been added to the project',
     'TO_SEND_EMAIL': 'or more e-mail addresses do not correspond to any of the existing users. To add them as collaborators for this project, you need to send them an ' +
