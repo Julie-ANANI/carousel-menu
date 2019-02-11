@@ -20,10 +20,10 @@
     include this in the page.
  */
 .section-container {
-  padding: 3.15rem 0;
+  padding-top: 3.15rem;
+  padding-bottom: 3.15rem;
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
 }
 
 
@@ -31,10 +31,10 @@
     when you want light padding.
  */
 .section-light-container {
-  padding: 1.57rem 0;
+  padding-top: 1.57rem;
+  padding-bottom: 1.57rem;
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
 }
 
 
@@ -51,6 +51,15 @@
  */
 .full-light {
   padding: 1.57rem;
+}
+
+
+/*
+    add this with the container to remove the left and right padding.
+ */
+.fluid {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 
