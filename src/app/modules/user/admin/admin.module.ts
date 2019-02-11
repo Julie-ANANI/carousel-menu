@@ -51,6 +51,7 @@ import { CampaignCalculationService } from '../../../services/campaign/campaign-
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
+import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
     CampaignCalculationService,
     QuizService,
     InnovationCommonService,
-    PresetResolver
+    PresetResolver,
+    AdvSearchService
   ]
 })
 
