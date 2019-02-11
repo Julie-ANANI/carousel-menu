@@ -1,0 +1,19 @@
+/*
+    This stylesheet contains all the class related to the different headers
+    for our platform.
+ */
+@import "variables";
+
+
+/*
+    this is the base css for the headers like sidebar, modal.
+ */
+.header-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4.625rem;
+  background: $secondary;
+  padding: 1.312rem 1.625rem;
+  color: white;
+}

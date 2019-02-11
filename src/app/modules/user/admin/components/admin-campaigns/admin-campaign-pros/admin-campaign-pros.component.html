@@ -81,12 +81,7 @@
 </div>
 
 <!-- modal to import pros -->
-<app-modal
-  [(showModal)]="importModal"
-  [modalTitle]="'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.TITLE'"
-  [actionButtonTitle]="'COMMON.ADD'"
-  [disabledActionButton]="!originCampaign.length"
-  (performAction)="importPros($event)">
+<app-modal [(showModal)]="importModal" [modalTitle]="'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.TITLE'">
 
   <app-autocomplete-input
     (update)="updateCampaign($event)"
@@ -99,6 +94,11 @@
       <input #fileupload type="file" [hidden]="true" (change)="OnClickImportCsv(fileupload.files[0], $event)" />
       Import CSV
     </label>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.ADD' | translate }}</button>
   </div>
 
 </app-modal>

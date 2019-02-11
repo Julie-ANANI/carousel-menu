@@ -45,29 +45,16 @@
     text-align: unset;
     overflow: hidden;
     width: 100%;
-    min-height: 227px;
     z-index: 1;
     animation: .2s slideInDown;
   }
 
-  .modal-header {
-    min-height: 4.625rem;
-    background: $secondary-color;
+  .header-primary {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    padding: 1.312rem 1.625rem;
-
-    .modal-title {
-      font-weight: 600;
-      font-size: 1.25rem;
-      color: #fff;
-      line-height: 1.5;
-    }
 
     .btn-clear {
-      font-size: 20px;
-      color: white;
-      line-height: 1.5;
+      order: 1;
     }
 
   }
@@ -80,19 +67,8 @@
     flex: 1 0 auto;
   }
 
-  .modal-footer {
-    padding: 1.625rem 1.57rem;
-    text-align: right;
-    overflow: auto;
-
-    .btn-cancel {
-      border: none;
-      margin-right: .6rem;
-    }
-
-  }
-
 }
+
 
 
 

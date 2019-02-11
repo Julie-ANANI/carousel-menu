@@ -206,6 +206,60 @@
 
 
 /*
+    cancel button class that you have to add with button class.
+    Class name: btn-cancel
+ */
+
+.btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active {
+  color: $meta;
+  background-color: transparent;
+  border: none;
+}
+
+.btn-cancel:not(:disabled):hover {
+  color: lighten($meta, 15%);
+  background-color: transparent;
+  border: none;
+}
+
+
+/*
+    to make a button large just add this class with the btn class and
+    color button class. Class name: btn-lg
+*/
+
+.btn-lg {
+  padding-left: 5.25rem !important;
+  padding-right: 5.25rem !important;
+  height: 4.37rem !important;
+  font-size: 1.5rem !important;
+}
+
+
+/*
+    to make a button small just add this class with the btn class and
+    color button class. Class name: btn-sm
+*/
+
+.btn-sm {
+  height: 2.8rem !important;
+  padding: .5rem 1.8rem !important;
+  font-size: .8rem !important;
+}
+
+
+/*
+    to make a button extra small just add this class with the btn class and
+    color button class. Class name: btn-xs
+*/
+
+.btn-xs {
+  height: 2.18rem !important;
+  padding: .35rem .95rem !important;
+}
+
+
+/*
     round button.
  */
 
@@ -295,38 +349,26 @@
 
 
 /*
-    to make a button large just add this class with the btn class and
-    color button class. Class name: btn-lg
-*/
-
-.btn-lg {
-  padding-left: 5.25rem !important;
-  padding-right: 5.25rem !important;
-  height: 4.37rem !important;
-  font-size: 1.5rem !important;
+    add this class with the class .btn. This is for clear or close button.
+ */
+.btn-close {
+  background: transparent;
+  border: 0;
+  color: white;
+  height: 30px;
+  padding: 0;
+  text-decoration: none;
+  width: 12px;
+  font-size: 20px;
 }
 
-
-/*
-    to make a button small just add this class with the btn class and
-    color button class. Class name: btn-sm
-*/
-
-.btn-sm {
-  height: 2.8rem !important;
-  padding: .5rem 1.8rem !important;
-  font-size: .8rem !important;
+.btn-close::before {
+  content: "\2715";
 }
 
-
-/*
-    to make a button extra small just add this class with the btn class and
-    color button class. Class name: btn-xs
-*/
-
-.btn-xs {
-  height: 2.18rem !important;
-  padding: .35rem .95rem !important;
+.btn-close:hover, .btn-close:focus, .btn-close:active, .btn-close.active {
+  background: transparent;
+  border-color: transparent;
 }
 
 
