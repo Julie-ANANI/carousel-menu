@@ -48,7 +48,7 @@ export const ERROR = {
     'DELETED': 'Account deleted',
     'DELETED_TEXT': 'The account has been deleted successfully.',
     'PASSWORD_UPDATED': 'Password updated.',
-    'PASSWORD_UPDATED_TEXT': 'Your password has been updated successfully.',
+    'PASSWORD_UPDATED_TEXT': 'The password has been updated successfully.',
     'SAME_PASSWORD': 'The new password and confirm password must be same.',
     'OLD_PASSWORD': 'Old password is incorrect.',
     'PROFILE_UPDATE_TEXT': 'The profile has been updated successfully.',
