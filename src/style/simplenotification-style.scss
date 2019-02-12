@@ -1,13 +1,14 @@
-@import "variables";
+@import "framework/variables";
 
 /*
-    This is the style that are related to the notification that we see in the bottom-right.
+    This is the style that are related to the notification that we see in the
+    bottom on our framework.
  */
 
 
 .simple-notification {
   border: 1px solid transparent !important;
-  border-radius: .18rem !important;
+  border-radius: 3px !important;
   word-wrap: break-word !important;
 }
 
@@ -31,13 +32,13 @@
 }
 
 .simple-notification.success {
-  background: $validation-color !important;
+  background: $success !important;
   color: white !important;
-  border-color: $validation-color !important;
+  border-color: $success !important;
 }
 
 .simple-notification.error {
-  background: $alert-color !important;
+  background: $alert !important;
   color: white !important;
-  border-color: $alert-color !important;
+  border-color: $alert !important;
 }

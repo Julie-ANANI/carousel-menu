@@ -1,14 +1,13 @@
-@import "../../../../../../style/variables";
+@import "../../../../../../style/framework/variables";
 
 #project-component {
   padding-top: 0;
 
   .section-header {
-    background-color: $background-color;
+    background-color: $background;
     padding-top: 3.15rem;
 
-    h1 {
-      color: white;
+    .title-hero {
       margin-bottom: 1.2rem;
     }
 
@@ -16,14 +15,14 @@
 
       img {
         vertical-align: middle;
-        margin-bottom: .35rem;
+        margin-bottom: 0.35rem;
       }
 
       .project-info {
-        color: $meta-color;
+        color: $meta;
         font-weight: 600;
-        padding-left: .95rem;
-        font-size: .85rem;
+        padding-left: 0.95rem;
+        font-size: 0.875rem;
       }
 
     }
@@ -36,7 +35,7 @@
 
         .tab-item {
           flex: 1 0 auto;
-          margin-right: .9375rem;
+          margin-right: 0.9375rem;
           border: none;
 
           a {
@@ -51,11 +50,11 @@
 
           .active {
             background-color: white;
-            color: $dark-color;
+            color: $text-primary;
           }
 
           a:hover {
-            background-color: $primary-color;
+            background-color: $primary;
             color: white;
           }
 

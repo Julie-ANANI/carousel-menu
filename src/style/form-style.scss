@@ -2,7 +2,7 @@
 
 /*
     This stylesheet contains all the form related class
-    on our platform.
+    on our framework.
  */
 
 
@@ -17,26 +17,7 @@
 
 
 
-/*
-    Form group style
-*/
 
-.form-group {
-  margin-bottom: .6rem !important;
-}
-
-
-/*
-    Form label style
- */
-
-.form-label {
-  color: $label-color;
-  font-weight: 600;
-  font-size: .85rem;
-  line-height: 1.5;
-  display: block;
-}
 
 /*
     Form input style. Just add this class when you are
@@ -140,46 +121,10 @@
 }
 
 
-/*
-    Form error style.  Add this class to show the error related to the
-    input. Class name: form-error
- */
-
-.form-error {
-  color: $alert-color;
-  font-size: .75rem;
-  padding: .3rem 0;
-}
 
 
-/*
-    Form input radio button
- */
 
-.form-radio {
-  padding-left: 1.57rem;
-  padding-right: 1.57rem;
-  color: $label-color;
-}
 
-.form-radio .form-icon {
-  height: 1rem !important;
-  top: 0.2rem !important;
-  width: 1rem !important;
-}
-
-.form-radio input:checked + .form-icon {
-  border: none !important;
-  background: $validation-color;
-}
-
-/*
-    Form input radio button disabled
- */
-
-.form-radio input:disabled + .form-icon {
-  cursor: not-allowed;
-}
 
 
 /*

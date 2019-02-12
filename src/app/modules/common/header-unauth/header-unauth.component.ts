@@ -116,7 +116,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
   /***
    * this function open the sign up sidebar where user can
-   * fill the details to register in the platform.
+   * fill the details to register in the framework.
    * @param event
    */
   onClickSignUp(event: Event) {
