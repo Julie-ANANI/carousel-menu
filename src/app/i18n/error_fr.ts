@@ -48,7 +48,7 @@ export const ERROR = {
     'DELETED': 'Compte supprimé',
     'DELETED_TEXT': 'Le compte a été supprimé.',
     'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
-    'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a été mis à jour.',
+    'PASSWORD_UPDATED_TEXT': 'Le mot de passe a été mis à jour avec succès.',
     'SAME_PASSWORD': 'Le nouveau mot de passe et le mot de passe de confirmation doivent être identiques.',
     'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
     'PROFILE_UPDATE_TEXT': 'Le profil a été mis à jour avec succès.',

@@ -25,6 +25,7 @@ import { PAGINATION } from '../modules/utility-components/pagination/i18n/en';
 import { SHARE } from '../modules/public/share/i18n/en';
 import { FOOTER } from "../modules/common/footer/i18n/en";
 import { HEADER } from '../modules/common/header/i18n/en';
+import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -53,5 +54,6 @@ export const en = {
   'PROJECT_LIST': PROJECT_LIST,
   'PROJECT_MODULE': PROJECT_MODULE,
   'PROFESSIONALS' : PROFESSIONALS,
-  'SHARE': SHARE
+  'SHARE': SHARE,
+  'RESET_PASSWORD': RESET_PASSWORD
 };
