@@ -102,14 +102,43 @@
 
 
 /*
-    form radio
+    form radio, form switch
  */
-.form-radio {
+.form-radio, .form-switch {
   display: inline-block;
   line-height: 1.5;
   padding:  0.2rem 1.57rem;
   position: relative;
   color: $form-label;
+}
+
+
+.form-switch {
+  padding-left: 2.5rem;
+}
+
+
+.form-radio .form-icon, .form-switch .form-icon {
+  background: #fff;
+  left: 0;
+  height: 16px;
+  top: 7px;
+  width: 16px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid $border;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+}
+
+
+.form-switch .form-icon {
+  border-color: $border;
+  background-color: #FFFFFF;
+  height: 15px;
+  width: 34px;
+  border-radius: 16px;
 }
 
 
@@ -126,7 +155,22 @@
 }
 
 
-.form-radio input {
+.form-switch input:checked + .form-icon::before {
+  left: 14px;
+}
+
+
+.form-switch .form-icon::before {
+  background: $meta;
+  border-color: $meta;
+  height: 1.3125rem;
+  width: 1.2rem;
+  left: -1px;
+  top: -3.5px;
+}
+
+
+.form-radio input, .form-switch input, .form-checkbox input {
   clip: rect(0, 0, 0, 0);
   height: 1px;
   margin: -1px;
@@ -136,32 +180,35 @@
 }
 
 
-.form-radio .form-icon {
-  background: #fff;
-  left: 0;
-  height: 16px;
-  top: 7px;
-  width: 16px;
-  border-radius: 50%;
-  transition: all 0.2s ease-in-out;
-  border: 1px solid $border;
-  cursor: pointer;
-  display: inline-block;
-  position: absolute;
-}
-
-
 .form-radio input:active + .form-icon {
   background: $form-border;
 }
 
 
-.form-radio input:checked + .form-icon {
-  border: none !important;
+.form-switch input:active + .form-icon::before {
+  background: $meta;
+  border-color: $meta;
+}
+
+
+.form-radio input:checked + .form-icon, .form-switch input:checked + .form-icon::before {
+  border: none;
   background: $form-success;
 }
 
 
+.form-switch input:checked + .form-icon  {
+  border-color: rgba(46,204,113,0.45);
+  background: rgba(46,204,113,0.45);
+}
+
+
 .form-radio input:disabled + .form-icon {
+  cursor: not-allowed;
+}
+
+
+.form-switch input:disabled + .form-icon::before {
+  background: $disabled;
   cursor: not-allowed;
 }

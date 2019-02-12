@@ -33,6 +33,7 @@ export class AdminCampaignProsComponent implements OnInit {
   private _campaign: Campaign;
 
   private _originCampaign: Array<Campaign> = [];
+
   private _contextSelectedPros: Array<any> = [];
 
   private _config: any;
@@ -161,10 +162,12 @@ export class AdminCampaignProsComponent implements OnInit {
 
   }
 
+
   public selectedProsEvent(event: Event) {
     this._contextSelectedPros = event['pros'];
     console.log(this._contextSelectedPros);
   }
+
 
   onClickExport() {
     const config = {
@@ -178,7 +181,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
     config.query.search = this._config.search ? JSON.parse(this._config.search) : null;
     if( this._contextSelectedPros.length ) {
-      config.professionals = this._contextSelectedPros.map(pro=>pro._id);
+      config.professionals = this._contextSelectedPros.map(pro => pro._id);
     } else {
       config.professionals = 'all';
     }
