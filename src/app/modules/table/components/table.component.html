@@ -86,7 +86,7 @@
 
               <th *ngIf="isSelectable" class="th-checkbox">
                 <label>
-                  <input type="checkbox" (change)="selectAll($event)" [checked]="true"/>
+                  <input type="checkbox" (change)="selectAll($event); onSelectAction()" [checked]="true"/>
                   <div *ngIf="selectedRows === total" class="square-checkbox active">
                     <i class="icon icon-check"></i>
                   </div>
@@ -130,7 +130,7 @@
 
           <td *ngIf="isSelectable" class="th-checkbox">
             <label>
-              <input type="checkbox" (click)="selectRow(key)" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
+              <input type="checkbox" (click)="selectRow(key); onSelectAction()" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
               <div class="square-checkbox active">
                 <i class="icon icon-check"></i>
               </div>

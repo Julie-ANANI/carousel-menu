@@ -73,7 +73,7 @@
     </div>
 
     <!-- section pros list -->
-    <app-shared-pros-list [config]="config" [campaign]="campaign"></app-shared-pros-list>
+    <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
 
   </div>
 
