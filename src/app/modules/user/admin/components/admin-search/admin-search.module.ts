@@ -14,6 +14,7 @@ import { AdminSearchDemoComponent } from './admin-search-demo/admin-search-demo.
 import { SharedSearchMailModule } from '../../../../shared/components/shared-search-mail/shared-search-mail.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { RouterModule } from '@angular/router';
     TranslateModule.forChild(),
     SharedSearchMailModule,
     SharedWorldmapModule,
+    FormsModule,
     RouterModule
   ],
   declarations: [

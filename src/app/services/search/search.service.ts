@@ -17,6 +17,14 @@ export class SearchService {
     return this._http.post('/search/searchPros', params);
   }
 
+  public metadataSearch(keywords: string): Observable<any> {
+    const query = {
+      params: JSON.stringify({keywords: keywords}),
+      path: '/search/metadata'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
   public getRequest(requestId: string): Observable<any> {
     const query = {
       path: '/request/' + requestId,
@@ -24,6 +32,10 @@ export class SearchService {
     };
 
     return this._http.get('/search/get', {params: query});
+  }
+
+  public getMetadataRequest(requestId: string): Observable<any> {
+    return this._http.get('/search/get', {params: {path: '/metadataRequest/' + requestId}});
   }
 
   public stopRequest(requestId: string): Observable<any> {

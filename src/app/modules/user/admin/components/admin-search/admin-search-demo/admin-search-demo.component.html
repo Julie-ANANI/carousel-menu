@@ -9,33 +9,17 @@
         type="text"
         class="form-default input-lg"
         name="keywords"
+        [(ngModel)]="keywords"
         placeholder="Recherche"/>
 
       <button
-        (click)="search($event)"
+        (click)="searchMetadata($event)"
         class="btn-round btn-primary"
         translate>
         <i class="fas fa-search"></i>
       </button>
 
     </div>
-
-    <div class="tips">
-      <a (click)="changeSettings() && $event.preventDefault()">Settings</a>
-
-      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} remaining requests
-        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
-      </div>
-
-      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} remaining requests
-        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
-      </div>
-
-      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} remaining requests
-        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
-      </div>
-    </div>
-
   </div>
 
   <div class="column col-2 col-mr-auto">
@@ -51,7 +35,12 @@
     <div class="columns">
       <div class="column col-3">
         Data:
-        {{ metadata }}
+        {{ selectedArea }}
+        <ul>
+          <li *ngFor="let result of results">
+            {{ result.countryCode }} - {{ result.nbResults }}
+          </li>
+        </ul>
       </div>
       <div class="column col-9">
         <app-worldmap
