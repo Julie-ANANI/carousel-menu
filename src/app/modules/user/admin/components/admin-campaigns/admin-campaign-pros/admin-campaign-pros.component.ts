@@ -102,12 +102,16 @@ export class AdminCampaignProsComponent implements OnInit {
       professionals: [] || 'all',
       campaignId: this._campaign._id,
       query: {
-        campaignId: this._campaign._id
+        campaignId: this._campaign._id,
+        search: ""
       }
     };
     // Build a config according to the state, for example if there are selected pros, create a $in query...
+    config.query.search = this._config.search ? JSON.parse(this._config.search) : null;
     if( this._contextSelectedPros.length ) {
       config.professionals = this._contextSelectedPros.map(pro=>pro._id);
+    } else {
+      config.professionals = 'all';
     }
     this._professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
