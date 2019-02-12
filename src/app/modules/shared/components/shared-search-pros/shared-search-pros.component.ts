@@ -167,6 +167,8 @@ export class SharedSearchProsComponent implements OnInit {
       });
 
       this.catResult.duplicate_status = response.duplicate_status;
+
+      this.catResult.profile = response.stars;
     });
   }
 
