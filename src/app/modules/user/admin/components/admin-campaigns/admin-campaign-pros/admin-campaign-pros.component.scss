@@ -1,14 +1,14 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/variables";
 
 #admin-campaign-pros-component {
 
   .section-actions {
     padding-top: 1.57rem;
-    padding-bottom: .9375rem;
+    padding-bottom: 0.9375rem;
     text-align: right;
 
     .btn {
-      margin-bottom: .6rem;
+      margin-bottom: 0.6rem;
     }
 
     .gap-right {
