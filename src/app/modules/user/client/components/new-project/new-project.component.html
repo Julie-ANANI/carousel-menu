@@ -38,18 +38,15 @@
             <span class="num-rect">2</span>
             <span class="ques">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
             <div class="form-group" [ngStyle]="{ 'padding-top': '1.2rem' }">
-              <label for="new-project-companyName">
+              <label for="new-project-companyName"></label>
                 <input
                   type="text"
-                  class="form-default"
+                  class="form-input"
                   name="name"
                   formControlName="name"
                   id="new-project-companyName"
                   [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
-              </label>
-              <div class="form-error" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
-                {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
-              </div>
+              <span class="form-error" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">{{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}</span>
             </div>
           </div>
 

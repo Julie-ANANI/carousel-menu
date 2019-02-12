@@ -124,34 +124,7 @@
 
 
 
-/*
-    Form input radio button
- */
 
-.form-radio {
-  padding-left: 1.57rem;
-  padding-right: 1.57rem;
-  color: $label-color;
-}
-
-.form-radio .form-icon {
-  height: 1rem !important;
-  top: 0.2rem !important;
-  width: 1rem !important;
-}
-
-.form-radio input:checked + .form-icon {
-  border: none !important;
-  background: $validation-color;
-}
-
-/*
-    Form input radio button disabled
- */
-
-.form-radio input:disabled + .form-icon {
-  cursor: not-allowed;
-}
 
 
 /*

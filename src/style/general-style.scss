@@ -136,7 +136,7 @@
 /*
     No result & fetching result
  */
-.section-no-result {
+.section-no-result, .no-result-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -174,23 +174,7 @@
 }
 
 
-/*
-    Message Banner
- */
-.banner-wrapper {
-  background-color: $validation-color;
-  color: white;
-  font-weight: 600;
-  font-size: .875rem;
-  padding: .9375rem;
-  text-align: center;
 
-  .text-link {
-    color: white;
-    text-decoration: underline;
-  }
-
-}
 
 
 /*

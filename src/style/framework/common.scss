@@ -80,3 +80,23 @@ a, a:focus, a:hover, a:active, a.active {
   height: 1px;
   background: $meta;
 }
+
+
+/*
+    this is to show the message.
+ */
+.banner-wrapper {
+  background-color: $success;
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.9375rem;
+  text-align: center;
+  display: block;
+
+  .text-link {
+    color: white;
+    text-decoration: underline;
+  }
+
+}

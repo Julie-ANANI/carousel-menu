@@ -1,4 +1,4 @@
-@import "../../../../../../../../style/variables";
+@import "../../../../../../../../style/framework/variables";
 
 #innovation-card-print {
   display: none;
@@ -44,9 +44,9 @@
         .save-disabled {
 
           .ghost-primary {
-            border-color: $border-color !important;
-            color: $disabled-text-color !important;
-            background-color: $border-color !important;
+            border-color: $border !important;
+            color: $button-disabled-text !important;
+            background-color: $border !important;
             cursor: not-allowed;
           }
 
@@ -55,17 +55,17 @@
         .save-active {
 
           .ghost-primary {
-            border-color: $validation-color !important;
+            border-color: $success !important;
             color: #262831  !important;
           }
 
           .ghost-primary:hover {
-            background-color: $hover-background-color !important;
+            background-color: $hover-background !important;
             box-shadow: none;
           }
 
           .circle-check {
-            background: $validation-color !important;
+            background: $success !important;
             visibility: visible;
             animation-name: fadeIn;
             animation-duration: .5s;
@@ -97,14 +97,14 @@
           display: inline-flex;
           width: 35px;
           height: 35px;
-          margin-right: .9375rem;
+          margin-right: 0.9375rem;
         }
 
       }
 
       .pitch-check, .targeting-check, .survey-check {
-        background: $border-color;
-        color: $text-dark;
+        background: $border;
+        color: $text-primary;
         font-weight: 600;
         font-size: 10px;
       }
@@ -115,7 +115,7 @@
       }
 
       .complete {
-        background-color: $validation-color;
+        background-color: $success;
         transition: all 0.15s ease-in-out;
         color: white;
       }

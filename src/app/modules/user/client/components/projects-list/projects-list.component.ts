@@ -173,6 +173,10 @@ export class ProjectsListComponent implements OnInit {
     return this._deleteModal;
   }
 
+  set deleteModal(value: boolean) {
+    this._deleteModal = value;
+  }
+
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
