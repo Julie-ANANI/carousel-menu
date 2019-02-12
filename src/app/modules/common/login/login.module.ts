@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from "./login.component";
-import { LoginRoutingModule } from "./login-routing.module";
-import { ForgetPasswordModule } from "./components/forget-password/forget-password.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
+import { LoginComponent } from "./login.component";
+
+import { LoginRoutingModule } from "./login-routing.module";
+import { ForgetPasswordModule } from "./components/forget-password/forget-password.module";
+import { ResetPasswordModule } from './components/reset-password/reset-password.module';
 
 @NgModule({
   imports: [
@@ -13,7 +16,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     LoginRoutingModule,
     ForgetPasswordModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ResetPasswordModule
   ],
   declarations: [
     LoginComponent,

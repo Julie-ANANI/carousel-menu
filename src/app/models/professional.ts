@@ -14,4 +14,5 @@ export interface Professional {
   readonly profileUrl: string;
   readonly country: string;
   readonly campaigns: Campaign[];
+  readonly emailConfidence?: number;
 }

@@ -160,7 +160,7 @@
 
                 <!-- If column type is Picture -->
                 <div *ngSwitchCase="'PICTURE'">
-                  <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-responsive" style="width: 100px">>
+                  <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-responsive" style="width: 100px" alt=" ">
                 </div>
 
                 <!-- If column type is Progress -->
@@ -185,10 +185,11 @@
                     [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || ''))"
                     *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) !== ''"
                     class="img-responsive"
-                    style="width: 100px">
+                    style="width: 100px"
+                    alt=" ">
                   <span
                     *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
-                    [class]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
+                    [ngClass]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
                     {{ (getChoiceAlias(getChoice(column, getContentValue(key, getAttrs(column)[0])|| " - "))) | translate }}
                   </span>
                 </ng-container>

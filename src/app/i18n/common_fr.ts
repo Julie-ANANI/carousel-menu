@@ -88,9 +88,9 @@ export const COMMON = {
 
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
   'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
-  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères',
 
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
@@ -204,25 +204,46 @@ export const COMMON = {
   },
 
   'HOME': 'Accueil',
+
   'ADMIN': 'Admin',
+
   'MY_PROJECT': 'Mon projet',
+
   'MY_PROJECTS': 'Mes projets',
+
   'MY_USERS': 'Mes utilisateurs',
+
   'MY_ACCOUNT': 'Mon compte',
+
   'PROJECTS': 'Projets',
+
   'CAMPAIGNS': 'Campagnes',
+
   'DISCOVER': 'Découvrir',
+
   'PRESET': 'Configuration',
+
   'PRESETS': 'Settings',
+
   'QUESTIONNAIRE': 'Questionnaire(s)',
+
   'ADD-ANSWER': 'Ajouter une réponse',
+
   'CLIENT_SIDE': 'Client',
+
   'EDIT_USER': 'Modifier l\'utilisateur',
+
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
+
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
+
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
+
   'ADD-TAGS': 'Ajouter des tags',
+
   'UMI_WORD': 'Le mot d’UMI',
+
+  'ADD_PRO': 'Ajouter un professionnel',
 
   'SORT': {
     'BY_NAME': 'Nom',

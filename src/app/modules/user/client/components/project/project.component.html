@@ -23,19 +23,19 @@
       </div>
 
       <!-- tabs -->
-      <div class="tab-wrapper">
-        <ul class="tabs">
-          <li>
+      <div class="tab-container">
+        <ul class="tab">
+          <li class="tab-item">
             <a [routerLink]="['setup']" [ngClass]="{'active': currentPage === 'setup'}" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
               <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
             </a>
           </li>
-          <li>
+          <li class="tab-item">
             <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage === 'exploration'}" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
               <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
             </a>
           </li>
-          <li>
+          <li class="tab-item">
             <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage === 'synthesis'}" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
               <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
             </a>

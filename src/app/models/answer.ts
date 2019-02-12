@@ -12,6 +12,7 @@ export interface Answer {
   tags: Array<Tag>;
   answerTags: {[qestionID: string]: Array<Tag>}
   profileQuality?: number;
+  time_elapsed?: number;
   country: {flag: string, domain?: string, name?: string};
   job: string;
   company: Clearbit;

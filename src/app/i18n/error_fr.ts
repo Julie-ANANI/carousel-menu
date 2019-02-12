@@ -48,11 +48,12 @@ export const ERROR = {
     'DELETED': 'Compte supprimé',
     'DELETED_TEXT': 'Le compte a été supprimé.',
     'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
-    'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a été mis à jour.',
+    'PASSWORD_UPDATED_TEXT': 'Le mot de passe a été mis à jour avec succès.',
     'SAME_PASSWORD': 'Le nouveau mot de passe et le mot de passe de confirmation doivent être identiques.',
     'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
     'PROFILE_UPDATE_TEXT': 'Le profil a été mis à jour avec succès.',
-    'PROFILE_DELETE_TEXT': 'Le profil a été supprimé avec succès.'
+    'PROFILE_DELETE_TEXT': 'Le profil a été supprimé avec succès.',
+    'ADDED': 'Le profil a été ajouté avec succès.'
   },
 
   'PROJECT': {
@@ -92,7 +93,7 @@ export const ERROR = {
   },
 
   'ANSWER': {
-    'UPDATED': 'Réponse mise à jour.',
+    'UPDATED': 'La réponse mise à jour avec succès.',
     'IMPORTED': 'La réponse a été importée avec succès.',
     'STATUS_UPDATE': 'Le statut a été mis à jour avec succès.'
   },
@@ -125,5 +126,9 @@ export const ERROR = {
     'UPDATED': 'La campagne a été mis à jour avec succès.',
     'DELETED': 'La campagne et son professionnel ont été supprimés avec succès.'
   },
+
+  'IMPORT': {
+    'CSV': 'Le CSV a été importé avec succès.'
+  }
 
 };

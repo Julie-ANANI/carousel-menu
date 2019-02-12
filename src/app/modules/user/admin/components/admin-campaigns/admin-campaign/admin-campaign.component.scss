@@ -28,111 +28,12 @@
 
     }
 
-    .tabs-wrapper {
-
-      .tabs {
-        border-bottom: 1px solid $border-color;
-
-        li {
-          flex: unset;
-          min-width: 110px;
-        }
-
-        a {
-          background-color: white;
-          color: $background-color;
-          border-bottom: 4px solid transparent;
-          font-weight: 500;
-        }
-
-        a:hover {
-          border-bottom-color: $primary-color;
-          color: $primary-color;
-        }
-
-        .active {
-          color: $primary-color !important;
-          border-bottom-color: $primary-color !important;
-        }
-
-      }
-
+    .tab .tab-item a {
+      border-bottom-width: 4px;
+      margin-right: 2.5rem;
     }
 
   }
-
-  .section-stats {
-    display: flex;
-
-    .professional-wrapper, .interaction-wrapper, .insights-wrapper {
-      padding-top: .9375rem;
-      padding-bottom: .9375rem;
-      display: flex;
-      flex: 1;
-
-      h5, h4, h3 {
-        color: white;
-        margin-bottom: 0;
-      }
-
-      h5, h3 {
-        font-size: 1rem;
-      }
-
-      h5 {
-        margin-right: .6rem;
-
-        .fa-sync-alt {
-          color: $primary-color;
-          margin-right: .6rem;
-        }
-
-        .fa-sync-alt:hover {
-          color: lighten($primary-color, 15%);
-          cursor: pointer;
-        }
-
-      }
-
-      h3 {
-        font-weight: normal;
-      }
-
-      h4 {
-        opacity: .7;
-        font-size: .75rem;
-      }
-
-      .content-wrapper {
-        display: flex;
-        width: 92%;
-        margin: 0 auto;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-
-      .stats {
-        margin: 0 .6rem .6rem .6rem;
-        text-align: center;
-      }
-
-    }
-
-    .professional-wrapper {
-      background-color: $secondary-color;
-    }
-
-    .interaction-wrapper {
-      background-color: #2FA4D4;
-    }
-
-    .insights-wrapper {
-      background-color: #5FAECE;
-    }
-
-  }
-
 
 }
 
@@ -142,16 +43,6 @@
 @media (max-width: 600px) {
 
   #admin-campaign-component {
-
-    .tabs {
-      border-bottom: none !important;
-
-      li {
-        flex: 1 0 auto;
-        border-bottom: 1px solid $border-color;
-      }
-
-    }
 
     .section-stats {
 
