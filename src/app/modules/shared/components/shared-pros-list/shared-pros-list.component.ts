@@ -139,12 +139,10 @@ export class SharedProsListComponent {
   }
 
 
-  selectPro(pro: SelectedProfessional): void {
-    pro.isSelected = !pro.isSelected;
-    const prosSelected = this._pros.filter(p => p.isSelected);
+  selectPro(event): void {
     this.selectedProsChange.emit({
-      total: this.nbSelected,
-      pros: prosSelected
+      total: event._rows.length,
+      pros: event._rows
     });
   }
 

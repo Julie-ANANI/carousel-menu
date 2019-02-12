@@ -23,6 +23,7 @@ export class AdminCampaignProsComponent implements OnInit {
   private _addProModal = false;
   private _campaign: Campaign;
   private _originCampaign: Array<Campaign> = [];
+  private _contextSelectedPros: Array<any> = [];
   private _config: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -77,6 +78,11 @@ export class AdminCampaignProsComponent implements OnInit {
     });
   }
 
+  public selectedProsEvent(event: Event) {
+    this._contextSelectedPros = event['pros'];
+    console.log(this._contextSelectedPros);
+  }
+
   public importProsCsv(file: File, event: Event) {
     event.preventDefault();
     this._professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file)
@@ -93,12 +99,16 @@ export class AdminCampaignProsComponent implements OnInit {
 
   exportPros() {
     const config = {
-      professionals: 'all',
+      professionals: [] || 'all',
       campaignId: this._campaign._id,
       query: {
         campaignId: this._campaign._id
       }
     };
+    // Build a config according to the state, for example if there are selected pros, create a $in query...
+    if( this._contextSelectedPros.length ) {
+      config.professionals = this._contextSelectedPros.map(pro=>pro._id);
+    }
     this._professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);

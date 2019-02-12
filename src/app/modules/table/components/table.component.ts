@@ -66,6 +66,13 @@ export class TableComponent {
    */
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
+  /***
+   * Output call when the user selects one row
+   * Send the list of selected rows
+   * @type {EventEmitter<any>}
+   */
+  @Output() selectRowAction: EventEmitter<any> = new EventEmitter<any>();
+
   private _selector = '';
 
   private _title = 'Résultats';
@@ -279,6 +286,17 @@ export class TableComponent {
       this.performAction.emit({_action: action, _rows: 'all'});
     } else {
       this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
+    }
+  }
+
+  /**
+   * This function is called when the user selects one row. It will emit the selected rows
+   */
+  onSelectAction() {
+    if (this._massSelection) {
+      this.selectRowAction.emit({ _rows: 'all'});
+    } else {
+      this.selectRowAction.emit({ _rows: this.getSelectedRowsContent()});
     }
   }
 

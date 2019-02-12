@@ -9,7 +9,7 @@
     Export pros
   </button>
 </div>
-<app-shared-pros-list [config]="config" [campaign]="campaign"></app-shared-pros-list>
+<app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
 
 <!-- Modal d'import de pros -->
 <div class="modal" [ngClass]="{'active': importProsModal}">
