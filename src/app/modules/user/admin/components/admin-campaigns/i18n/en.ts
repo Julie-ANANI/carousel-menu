@@ -81,7 +81,10 @@ export const CAMPAIGNS = {
       'QUALITY': 'Quality',
       'PROFESSIONALS': 'Professionals',
       'EMAILS': 'Emails',
-      'COST': 'Cost'
+      'COST': 'Cost',
+      'RECEPTION': 'Reception',
+      'INTERACTION': 'Interaction',
+      'DISPLAY': 'Display'
     },
     'TITLE': {
       'LOOK': 'To look at',
@@ -100,7 +103,15 @@ export const CAMPAIGNS = {
       'UNSURE': 'Unsure',
       'BAD': 'Bad',
       'REQUEST': 'Request',
-      'EMAILS': 'Emails'
+      'EMAILS': 'Emails',
+      'GOOD_EMAILS': 'Good emails',
+      'RECEIVED': 'Received',
+      'SPAM': 'Spam',
+      'BOUNCES': 'Bounces',
+      'OPENED': 'Opened',
+      'CLICKED': 'Clicked',
+      'EMAIL': 'Email',
+      'QUESTIONNAIRE': 'Questionnaire'
     },
 
     'TO_CONTACT': 'To contact',
