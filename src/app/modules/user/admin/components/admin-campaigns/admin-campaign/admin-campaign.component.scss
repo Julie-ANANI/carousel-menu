@@ -1,4 +1,4 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/variables";
 
 #admin-campaign-component {
   padding-top: 0;
@@ -11,18 +11,16 @@
     .heading-wrapper {
       padding-bottom: 1.57rem;
 
-      span {
-        font-weight: 600;
+      .title-primary {
         font-size: 1.4375rem;
       }
 
-      .title {
-        color: $meta-color;
+      .campaign-title {
+        color: $meta;
         font-weight: normal;
       }
 
       .text-link {
-        font-weight: 600;
         font-size: .875rem;
       }
 

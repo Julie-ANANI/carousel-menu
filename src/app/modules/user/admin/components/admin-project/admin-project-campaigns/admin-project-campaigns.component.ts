@@ -43,13 +43,13 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   private _campaigns: Array<Campaign> = [];
 
-  private _activateModal: boolean = false;
+  private _activateModal = false;
 
   private _selectCampaign: Campaign = null;
 
   private _sidebarValue: SidebarInterface = {};
 
-  // public editCampaignName: {[propName: string]: boolean} = {};
+  private _noResult = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private innovationService: InnovationService,
@@ -66,6 +66,9 @@ export class AdminProjectCampaignsComponent implements OnInit {
   private getCampaigns() {
     this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
       this._campaigns = campaigns.result;
+      if (this._campaigns.length === 0) {
+        this._noResult = true;
+      }
       },() => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -151,11 +154,6 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._activateModal = true;
   }
 
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._activateModal = false;
-  }
-
 
   onClickSubmit() {
     this.campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe((response: any) => {
@@ -174,6 +172,10 @@ export class AdminProjectCampaignsComponent implements OnInit {
     return this._campaigns;
   }
 
+  set activateModal(value: boolean) {
+    this._activateModal = value;
+  }
+
   get activateModal(): boolean {
     return this._activateModal;
   }
@@ -188,6 +190,9 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   get selectCampaign(): Campaign {
     return this._selectCampaign;
+  }
+  get noResult(): boolean {
+    return this._noResult;
   }
 
 }

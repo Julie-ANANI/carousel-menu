@@ -185,34 +185,11 @@ textarea {
   */
 
 
-.form-switch .form-icon::before {
-  background: $meta-color;
-  border-color: $meta-color;
-  height: 1.3125rem;
-  width: 1.2rem;
-  left: -1px;
-  top: -3.5px;
-}
 
-.form-switch .form-icon  {
-  border-color: $border-color;
-  background-color: #FFFFFF;
-  height: .95rem;
-  width: 2rem;
-}
 
-.form-switch input:checked + .form-icon::before {
-  background: $validation-color;
-}
 
-.form-switch input:checked + .form-icon  {
-  border-color: rgba(46,204,113,0.45) !important;
-  background: rgba(46,204,113,0.45);
-}
 
-.form-switch input:disabled + .form-icon::before {
-  background: $disabled-color;
-}
+
 
 .form-switch input:focus + .form-icon {
   border-color: $border-color;
