@@ -1,9 +1,9 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/variables";
 
 #header-unauth-component {
-  background: $background-color;
+  background: $background;
   font-weight: 600;
-  font-size: .85rem;
+  font-size: 0.875rem;
   color: white;
 
   .pad {
@@ -36,15 +36,19 @@
       background-color: white;
       z-index: 2;
       box-shadow: $box-shadow-hover;
-      transition: all .35s ease-in-out;
+      transition: all 0.35s ease-in-out;
       border-radius: 3px;
       padding-top: 1.57rem;
       padding-bottom: 1.57rem;
       display: none;
 
       .login-button {
-        padding-top: .9375rem;
-        padding-bottom: .6rem;
+        padding-top: 0.9375rem;
+        padding-bottom: 0.6rem;
+      }
+
+      .title-primary {
+        color: $text-background;
       }
 
     }
