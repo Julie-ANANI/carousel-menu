@@ -17,26 +17,7 @@
 
 
 
-/*
-    Form group style
-*/
 
-.form-group {
-  margin-bottom: .6rem !important;
-}
-
-
-/*
-    Form label style
- */
-
-.form-label {
-  color: $label-color;
-  font-weight: 600;
-  font-size: .85rem;
-  line-height: 1.5;
-  display: block;
-}
 
 /*
     Form input style. Just add this class when you are
@@ -140,16 +121,7 @@
 }
 
 
-/*
-    Form error style.  Add this class to show the error related to the
-    input. Class name: form-error
- */
 
-.form-error {
-  color: $alert-color;
-  font-size: .75rem;
-  padding: .3rem 0;
-}
 
 
 /*

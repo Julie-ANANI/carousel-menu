@@ -23,8 +23,8 @@
   border: 1px solid transparent;
   font-size: .85rem;
   height: 3.125rem;
-  border-radius: 5px;
-  padding: .5rem 1.8rem;
+  border-radius: 0.35rem;
+  padding: 0.5rem 1.8rem;
   font-weight: 600;
   transition: background-color 0.15s ease-in-out,
               color 0.15s ease-in-out,
@@ -47,13 +47,13 @@
  */
 
 .btn:disabled, .btn[disabled], .btn.disabled, .btn-round:disabled, .btn-round[disabled], .btn-round.disabled {
-  color: $disabled-text-color !important;
+  color: $button-disabled-text !important;
   background-color: $disabled !important;
   border-color: $disabled !important;
   cursor: not-allowed;
   pointer-events: auto;
   opacity: 1;
-  border-width: 2px;
+  border-width: .125rem;
 }
 
 
@@ -138,7 +138,7 @@
   color: $primary;
   background-color: transparent;
   border-color: $primary;
-  border-width: 2px;
+  border-width: 0.125rem;
 }
 
 .ghost-primary:not(:disabled):hover {
@@ -157,7 +157,7 @@
   color: $secondary;
   background-color: transparent;
   border-color: $secondary;
-  border-width: 2px;
+  border-width: 0.125rem;
 }
 
 .ghost-secondary:not(:disabled):hover {
@@ -176,7 +176,7 @@
   color: $alert;
   background-color: transparent;
   border-color: $alert;
-  border-width: 2px;
+  border-width: 0.125rem;
 }
 
 .ghost-delete:not(:disabled):hover {
@@ -195,7 +195,7 @@
   color: $meta;
   background-color: transparent;
   border-color: $meta;
-  border-width: 2px;
+  border-width: 0.125rem;
 }
 
 .ghost-edit:not(:disabled):hover {
@@ -243,8 +243,8 @@
 
 .btn-sm {
   height: 2.8rem !important;
-  padding: .5rem 1.8rem !important;
-  font-size: .8rem !important;
+  padding: 0.5rem 1.8rem !important;
+  font-size: 0.8rem !important;
 }
 
 
@@ -255,7 +255,7 @@
 
 .btn-xs {
   height: 2.18rem !important;
-  padding: .35rem .95rem !important;
+  padding: 0.35rem 0.95rem !important;
 }
 
 
@@ -272,9 +272,9 @@
   text-align: center;
   justify-content: center;
   background: transparent none;
-  border: 2px solid transparent;
+  border: 0.125rem solid transparent;
   align-items: center;
-  font-size: .6rem;
+  font-size: 0.6rem;
   color: #FFFFFF;
   transition: background-color 0.15s ease-in-out,
               color 0.15s ease-in-out,
@@ -332,7 +332,7 @@
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: .6rem;
+  font-size: 0.6rem;
   transition: background-color 0.15s ease-in-out,
               color 0.15s ease-in-out,
               border-bottom-color 0.15s ease-in-out,

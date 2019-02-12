@@ -1,0 +1,106 @@
+/*
+    This stylesheet contains all the styles that are releated to the forms
+    on the framework.
+ */
+
+@import "variables";
+
+
+/*
+    form group
+*/
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.form-group:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+
+/*
+    form label
+*/
+.form-label {
+  display: flex;
+  color: $form-label;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 0.5rem 0;
+}
+
+
+/*
+    form input style. Just add this class when you are
+    defining the input of the form or any other. Class
+    name: .form-input
+ */
+.form-input {
+  border: 0.06rem solid $form-border;
+  font-size: 0.875rem;
+  color: $form-input;
+  border-radius: 0.35rem;
+  display: flex;
+  width: 100%;
+  outline: none;
+  height: 3.125rem;
+  position: relative;
+  background-color: white;
+  background-image: none;
+  padding: 0.875rem;
+  transition: all 0.15s ease-in-out;
+  max-width: 100%;
+  line-height: 1.5;
+}
+
+
+/*
+    placeholder
+*/
+.form-input:not(:disabled):placeholder-shown {
+  color: $form-placeholder;
+}
+
+
+/*
+    focus
+*/
+.form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
+  border-color: $form-primary;
+}
+
+
+/*
+    error
+*/
+.form-input.ng-touched.ng-invalid {
+  border-color: $form-alert;
+}
+
+
+/*
+    disabled.
+ */
+
+.form-input:disabled, .form-input.disabled, .form-select:disabled, .form-select.disabled {
+  background: $form-disabled;
+  color: $form-disabled-text;
+  border-color: $form-disabled;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+
+/*
+    form error style. Add this class to show the error related to the
+    input. Class name: form-error
+ */
+
+.form-error {
+  color: $form-alert;
+  font-size: 0.75rem;
+  padding: 0.5rem 0;
+}

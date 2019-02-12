@@ -21,21 +21,35 @@ $border: #E0E0E0;
 /*
     text variables
  */
-$text-primary: #484848;
-$text-secondary: #333333;
+$text-primary: #333333;
+$text-secondary: #484848;
+$text-background: #4f5d6b;
+
+
+/*
+    form variables
+ */
+$form-placeholder: #AAB2BD;
+$form-input: #262831;
+$form-label: #333333;
+$form-border: #E0E0E0;
+$form-primary: #FFB300;
+$form-alert: #EA5858;
+$form-disabled: #DBDBDB;
+$form-disabled-text: #A9A9A9;
 
 
 /*
     label variables
  */
-$draft: #4F5D6B;
-$edit: #0B90C6;
+$label-draft: #4F5D6B;
+$label-edit: #0B90C6;
 
 
 /*
     button variables
  */
-$disabled-text-color: #a9a9a9;
+$button-disabled-text: #A9A9A9;
 
 
 

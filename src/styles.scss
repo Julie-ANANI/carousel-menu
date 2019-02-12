@@ -11,7 +11,7 @@
  */
 
 @import "style/variables";
-
+@import "style/framework/variables";
 
 /********************************** Default Styles ***************************************/
 
@@ -56,11 +56,13 @@ body {
 @import "style/framework/animation";
 @import "style/framework/buttons";
 @import "style/framework/container";
+@import "style/framework/common";
 @import "style/framework/tab";
 @import "style/framework/labels";
 @import "style/framework/headers";
 @import "style/framework/modal";
 @import "style/framework/texts";
+@import "style/framework/form";
 @import "style/tinymce-style";
 @import "style/simplenotification-style";
 @import "style/ng2autocomplete-style";
