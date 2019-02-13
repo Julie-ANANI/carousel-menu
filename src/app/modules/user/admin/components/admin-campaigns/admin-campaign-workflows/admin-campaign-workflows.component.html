@@ -1,4 +1,4 @@
-<div id="admin-campaign-workflowss-component">
+<div id="admin-campaign-workflows-component">
 
   <!-- section stats -->
   <div class="campaign-stats-wrapper">
@@ -58,6 +58,57 @@
 
   </div>
 
+
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section select workflow -->
+    <div class="section-light-container">
+      <div class="form-group">
+        <label class="form-label" for="admin-campaign-workflows">{{ 'CAMPAIGNS.WORKFLOW_PAGE.SELECT_LABEL' | translate }}</label>
+        <select
+          class="form-select"
+          id="admin-campaign-workflows"
+          [ngModel]="defaultSelectedTemplate ? defaultSelectedTemplate : null"
+          (ngModelChange)="onClickSelect($event)"
+          [ngModelOptions]="{ standalone: true }">
+          <option *ngIf="!defaultSelectedTemplate" [ngValue]="null">{{ 'COMMON.SELECT' | translate }}</option>
+          <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
+        </select>
+        <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.IMPORT' | translate }}</button>
+      </div>
+    </div>
+
+
+    <!-- section no campaign -->
+    <div *ngIf="campaign.settings && campaign.settings.emails && campaign.settings.emails.length === 0" class="section-container">
+      <app-message-space
+        [messageA]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A'"
+        [messageB]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B'"
+        [widthMax]="'354px'">
+      </app-message-space>
+    </div>
+
+
+    <!-- section campaign -->
+    <div *ngIf="campaign.settings && campaign.settings.emails && campaign.settings.emails.length > 0">
+      <div *ngFor="let scenario of availableScenarios">
+        <app-admin-edit-workflow
+          [scenario]="scenario"
+          [signatures]="signatures"
+          (scenarioChange)="updateAvailableScenario($event)"
+          (deletedScenario)="removeScenario($event)">
+        </app-admin-edit-workflow>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+
+
 </div>
 
 
@@ -66,29 +117,31 @@
 
 
 
-<div class="text-right">
+<!--<div class="text-right">
   <button class="btn btn-primary" (click)="importModal = true">Importer un Workflow</button>
-</div>
+  <button type="button" class="btn btn-primary" (click)="onClickImport($event)">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.IMPORT' | translate }}</button>
+</div>-->
 
-<div *ngIf="!domain">
+<!--<div *ngIf="!domain">
   <div class="bot-wrapper text-center">
     <span class="bot-rect">Attention, le domaine n'est pas défini. Modifiez-le dans le projet, onglet Settings.</span>
     <br>
     <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
     <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
   </div>
-</div>
+</div>-->
 
-<div *ngIf="domain">
+<!--<div *ngIf="domain">
   *|DOMAIN|* <br>
-  en :{{this.campaign.innovation.settings.domain.en}} <br>
-  fr :{{this.campaign.innovation.settings.domain.fr}}
-</div>
+  en :{{campaign.innovation.settings.domain.en}} <br>
+  fr :{{campaign.innovation.settings.domain.fr}}
+</div>-->
 
-<div>
+<!--<div>
   <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
-</div>
-<br>
+</div>-->
+
+<!--<br>
 <div>
   <h3> Choix du Workflow par défault </h3>
   <form>
@@ -116,10 +169,10 @@
     >
     </app-admin-edit-workflow>
   </div>
-</div>
+</div>-->
 
 
-<!-- MODAL : Import d'un template -->
+<!-- MODAL : Import d'un template
 <div class="modal" [ngClass]="{'active': importModal}">
   <div class="modal-overlay" (click)="(importModal = false) && $event.preventDefault()"></div>
   <div class="modal-container">
@@ -158,10 +211,10 @@
       </button>
     </div>
   </div>
-</div>
+</div>-->
 
 
-<!-- Modal selection  d'un workflow par default -->
+<!-- Modal selection  d'un workflow par default
 <div class="modal" [ngClass]="{'active': modalSelectDefault[0]}">
   <div class="modal-overlay" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></div>
   <div class="modal-container">
@@ -182,6 +235,6 @@
       </button>
     </div>
   </div>
-</div>
+</div>-->
 
 

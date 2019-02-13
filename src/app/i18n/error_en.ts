@@ -124,7 +124,12 @@ export const ERROR = {
   'CAMPAIGN': {
     'ADDED': 'The campaign has been added successfully.',
     'UPDATED': 'The campaign has been updated successfully.',
-    'DELETED': 'The campaign and its professional have been deleted successfully.'
+    'DELETED': 'The campaign and its professional have been deleted successfully.',
+    'TEMPLATE_ERROR': 'We are having trouble while fetching the templates data. Please try to reload the page again!',
+    'SIGNATURE_ERROR': 'We are having trouble while fetching the signatures data. Please try to reload the page again!',
+    'WORKFLOW': {
+      'ADDED': 'The workflow has been added successfully.'
+    }
   },
 
   'IMPORT': {

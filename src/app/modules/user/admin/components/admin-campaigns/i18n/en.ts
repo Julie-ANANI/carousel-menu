@@ -145,6 +145,17 @@ export const CAMPAIGNS = {
         'PLACEHOLDER': 'Enter the campaign name',
       }
     }
+  },
+
+  'WORKFLOW_PAGE': {
+    'SELECT_LABEL': 'Select the workflow',
+    'BUTTON': {
+      'IMPORT': 'Import'
+    },
+    'BOT': {
+      'MESSAGE_A': 'Don\'t have any workflows?',
+      'MESSAGE_B': 'Try to add some by clicking on "Import" button.'
+    }
   }
 
 };

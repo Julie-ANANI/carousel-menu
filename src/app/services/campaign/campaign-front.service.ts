@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class CampaignCalculationService {
+export class CampaignFrontService {
 
   constructor() { }
+
 
   /***
    * This function is to calculate the percentage of the analytics that has been used
