@@ -521,7 +521,7 @@ export class TableComponent {
    * @returns {boolean}
    */
   isSelected(content: any): boolean {
-    return content._isSelected
+    return !!content && !!content._isSelected
   }
 
   /***
