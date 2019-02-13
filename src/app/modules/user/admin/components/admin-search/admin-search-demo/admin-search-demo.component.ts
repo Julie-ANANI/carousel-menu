@@ -12,7 +12,7 @@ import {first} from "rxjs/operators";
 export class AdminSearchDemoComponent {
 
   private _keywords: string;
-  private _metadata: any;
+  private _metadata: any = [];
   private _results: any;
   private _fetchInterval = null;
   private _status: string = null;
