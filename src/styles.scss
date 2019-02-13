@@ -1,5 +1,5 @@
 /*
-    Spectre platform
+    Spectre framework
  */
 
 @import "../node_modules/spectre.css/src/spectre.scss";
@@ -11,7 +11,7 @@
  */
 
 @import "style/variables";
-
+@import "style/framework/variables";
 
 /********************************** Default Styles ***************************************/
 
@@ -41,16 +41,11 @@ body {
 /*
     Rest style file
  */
-
-@import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
 @import "style/form-style";
 @import "style/modal-style";
 @import "style/tooltip-style";
-@import "style/tinymce-style";
-@import "style/simplenotification-style";
-@import "style/ng2autocomplete-style";
 @import "style/popover-style";
 @import "style/upload-photo-style";
 
@@ -58,14 +53,19 @@ body {
 /*
     In progress...
  */
-@import "style/platform/animation";
-@import "style/platform/buttons";
-@import "style/platform/container";
-@import "style/platform/tab";
-@import "style/platform/labels";
-@import "style/platform/headers";
-@import "style/platform/modal";
-@import "style/platform/texts";
+@import "style/framework/animation";
+@import "style/framework/buttons";
+@import "style/framework/container";
+@import "style/framework/common";
+@import "style/framework/tab";
+@import "style/framework/labels";
+@import "style/framework/headers";
+@import "style/framework/modal";
+@import "style/framework/texts";
+@import "style/framework/form";
+@import "style/tinymce-style";
+@import "style/simplenotification-style";
+@import "style/ng2autocomplete-style";
 
 
 /*

@@ -1,6 +1,6 @@
 /*
     This stylesheet contains all the class related to the different labels
-    for our platform.
+    for our framework.
  */
 @import "variables";
 
@@ -13,9 +13,9 @@
   justify-content: center;
   align-items: center;
   font-weight: 600;
-  font-size: .6875rem;
-  padding: .5rem .9375rem;
-  margin: .5rem;
+  font-size: 0.6875rem;
+  padding: 0.5rem 0.9375rem;
+  margin: 0.5rem;
   border-radius: 3px;
   background-color: transparent;
   color: #FFFFFF;
@@ -38,7 +38,7 @@
 
 
 .label-draft {
-  background-color: $draft;
+  background-color: $label-draft;
 }
 
 
@@ -48,7 +48,7 @@
 
 
 .label-edit {
-  background-color: $edit;
+  background-color: $label-edit;
 }
 
 

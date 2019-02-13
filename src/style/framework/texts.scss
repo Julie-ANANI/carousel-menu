@@ -1,6 +1,6 @@
 /*
     This stylesheet contains all the class related to the different type of texts
-    for our platform.
+    for our framework.
  */
 @import "variables";
 
@@ -80,6 +80,7 @@ h6 {
  */
 .title-hero {
   font-size: 2rem;
+  margin-bottom: 1.57rem;
   color: #FFFFFF;
 }
 
@@ -120,10 +121,10 @@ h6 {
   color: $primary;
   outline: none;
   text-decoration: none;
-  cursor: pointer;
 }
 
 .text-link:hover {
   color: $primary;
   text-decoration: underline;
+  cursor: pointer;
 }

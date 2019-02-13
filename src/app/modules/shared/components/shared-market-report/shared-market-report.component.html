@@ -6,7 +6,7 @@
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
       <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
       <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
-        <app-message-space [messageA]="getMessage()" [widthMax]="'320'"></app-message-space>
+        <app-message-space [messageA]="getMessage()" [widthMax]="'320px'"></app-message-space>
       </div>
     </div>
   </ng-container>
@@ -16,7 +16,7 @@
   <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
       <div class="text-center">
-        <app-message-space [messageA]="'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED'" [widthMax]="'430'"></app-message-space>
+        <app-message-space [messageA]="'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED'" [widthMax]="'430px'"></app-message-space>
       </div>
     </div>
   </ng-container>
@@ -195,7 +195,7 @@
           id="main-page"
           [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-inline-container white-background front-page-print">
+            <div class="section-container full white-background front-page-print">
 
               <!-- Logo -->
               <div class="header-wrapper">
@@ -237,7 +237,7 @@
         <section *ngIf="adminSide" class="section-light-container" id="innovation-goal">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="goal-wrapper">
-              <div class="section-inline-container">
+              <div class="section-container full">
                 <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h1>
                 <div class="form-group">
                   <label class="form-label" for="market-report-objective">
@@ -267,7 +267,7 @@
         <!-- Executive template generation -->
         <section *ngIf="adminSide" class="section-light-container">
           <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-inline-container executive-generate-wrapper white-background">
+            <div class="section-container full executive-generate-wrapper white-background">
 
               <!-- Heading -->
               <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h1>
@@ -339,7 +339,7 @@
           class="section-light-container report-innovation-print"
           [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-inline-container innovation-wrapper white-background">
+            <div class="section-container full innovation-wrapper white-background">
 
               <!-- Column 1 -->
               <div class="summary-wrapper">
@@ -383,7 +383,7 @@
           class="section-light-container report-targeting-print"
           [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-inline-container targeting-wrapper white-background">
+            <div class="section-container full targeting-wrapper white-background">
 
               <!-- Column 1 -->
               <div class="map-wrapper">
@@ -449,7 +449,7 @@
           class="section-light-container report-analytics-print"
           [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
           <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-inline-container exploration-wrapper white-background">
+            <div class="section-container full exploration-wrapper white-background">
 
               <!-- Heading -->
               <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h1>
@@ -548,7 +548,7 @@
           id="key-learning">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="keyLearning-wrapper">
-              <div class="section-inline-container">
+              <div class="section-container full">
                 <h1 class="main-heading">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h1>
                 <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
                 <app-text-zone
@@ -678,7 +678,7 @@
           id="conclusion">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="conclusion-wrapper">
-              <div class="section-inline-container">
+              <div class="section-container full">
                 <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
                 <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
                 <app-text-zone
