@@ -12,8 +12,8 @@ export const MARKET_REPORT = {
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },
-    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le.',
-    'EVALUATING': 'Nous collectons le potentiel de marché de votre projet. Nous reviendrons bientôt!'
+    'REVIEWING': 'Veuillez apporter les modifications à votre projet et le soumettre de nouveau.',
+    'EVALUATING': 'Analyse du potentiel marché en cours...'
   },
 
   'BUTTON': {
@@ -42,14 +42,14 @@ export const MARKET_REPORT = {
 
   'MESSAGE_SYNTHESIS': 'Le projet a été terminé avec succès.',
 
-  'MODAL_TITLE': 'Comité de confirmation',
+  'MODAL_TITLE': 'Exporter',
 
   'MODAL_CONTENT': 'Voulez-vous terminer ce projet ?',
 
   'TARGET_COUNTRIES': 'Pays ciblés',
 
   // 'TITLE': 'Exploration du potentiel marché',
-  'COLLAPSE': 'Tout plier',
+  'COLLAPSE': 'Tout replier',
   'EXPAND': 'Tout déplier',
   'FILTERS': 'Filtres',
   'SYNTHESIS_FRAME': 'des professionnels',
