@@ -1,0 +1,36 @@
+@import "../../../../style/framework/variables";
+
+#message-space-component {
+
+  .message-wrapper {
+    padding: 1.2rem 0.95rem;
+    border-radius: 0.18rem;
+    color: $text-primary;
+    border: 1px solid $border;
+    display: inline-flex;
+    width: 100%;
+    font-size: 0.9375rem;
+    justify-content: center;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    z-index: 3;
+  }
+
+  .triangle-wrapper {
+    padding-left: 150px;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    margin-top: -2px;
+  }
+
+  .bot-wrapper {
+    height: 9.37rem;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+  }
+
+
+}

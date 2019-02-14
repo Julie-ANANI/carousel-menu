@@ -1,136 +1,97 @@
 // Modules externes
-import { NgModule } from '@angular/core';
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
-import { Http } from './services/http';
-import { httpFactory } from './factories/http.factory';
-import { CookieService, CookieOptions } from 'angular2-cookie/core';
-import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
+import { NgModule, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CookieModule, CookieService } from 'ngx-cookie';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome';
+import { Observable } from 'rxjs';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NotFoundModule } from './modules/common/not-found/not-found.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Services
-import { InnovationService } from './services/innovation/innovation.service';
-import { CampaignService } from './services/campaign/campaign.service';
-import { DashboardService } from './services/dashboard/dashboard.service';
-import { WindowRefService } from './services/window-ref/window-ref.service';
-import { TranslateNotificationsService } from './services/notifications/notifications.service';
+import { LocalStorageService } from './services/localStorage/localStorage.service';
+import { TranslationService } from "./services/translation/translation.service";
 import { TranslateTitleService } from './services/title/title.service';
-import { UserService } from './services/user/user.service';
+import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
-import { ChartsModule } from 'ng2-charts';
-import { IndexService } from './services/index/index.service';
-import { ShareService } from './services/share/share.service';
-import { AutocompleteService } from './services/autocomplete/autocomplete.service';
-import { LatexService } from './services/latex/latex.service';
-import { EmailService } from './services/email/email.service';
-import { SearchService } from './services/search/search.service';
-import { PresetService } from './services/preset/preset.service';
-import { AnswerService } from './services/answer/answer.service';
-import { ProfessionalsService } from './services/professionals/professionals.service';
-import { DownloadService } from './services/download/download.service';
-import { TagsService } from './services/tags/tags.service';
-import { TemplatesService } from './services/templates/templates.service';
-import { TranslationService } from './services/translation/translation.service';
-import { FrontendService } from './services/frontend/frontend.service';
+import { MouseService } from './services/mouse/mouse.service';
 
-// Resolvers
-import { CampaignResolver } from './resolvers/campaign.resolver';
-import { InnovationResolver } from './resolvers/innovation.resolver';
-import { RequestResolver } from './resolvers/request.resolver';
-import { ScenarioResolver } from './resolvers/scenario.resolver';
-import { SignatureResolver } from './resolvers/signature.resolver';
-import { PresetResolver } from './resolvers/preset.resolver';
+// Interceptors
+import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
+import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
+import { SessionInterceptor } from './interceptors/session.interceptor';
 
 @NgModule({
   imports: [
+    NotFoundModule,
+    BrowserTransferStateModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot(),
+    CookieModule.forRoot(),
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
     }),
-    HttpModule,
-    AppRoutingModule,
-    SimpleNotificationsModule.forRoot(),
-    BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (CreateTranslateLoader)
       }
-    }),
-    ChartsModule,
-    Ng2AutoCompleteModule,
-    Angular2FontawesomeModule
+    })
   ],
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   providers: [
-    Title,
-    CookieService,
-    {
-      provide: CookieOptions,
-      useValue: {}
-    },
-    UserService,
-    InnovationService,
-    CampaignService,
-    LoaderService,
-    WindowRefService,
-    IndexService,
-    DashboardService,
-    LatexService,
-    EmailService,
-    ShareService,
-    SearchService,
-    PresetService,
-    AnswerService,
-    ProfessionalsService,
-    DownloadService,
-    TemplatesService,
-    {
-      provide: Http,
-      useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
-    },
-    AutocompleteService,
-    TranslateNotificationsService,
-    TranslateTitleService,
-    CampaignResolver,
-    InnovationResolver,
-    RequestResolver,
-    ScenarioResolver,
-    SignatureResolver,
-    RequestResolver,
-    PresetResolver,
+    LocalStorageService,
     TranslationService,
-    TagsService,
-    FrontendService
+    TranslateTitleService,
+    TranslateNotificationsService,
+    MouseService,
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 
 export class AppModule {
 
-  constructor(private _translateService: TranslateService,
-              private _cookieService: CookieService) {
-    this._translateService.addLangs(['en', 'fr']);
-    this._translateService.setDefaultLang('en');
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private translateService: TranslateService,
+              private cookieService: CookieService) {
 
-    const user_lang = this._cookieService.get('user_lang');
-    let browserLang = user_lang || this._translateService.getBrowserLang();
-    if (!browserLang.match(/en|fr/)) {
-      browserLang = 'en';
+    this.translateService.addLangs(['en', 'fr']);
+
+    this.translateService.setDefaultLang('en');
+
+    const user_lang = this.cookieService.get('user_lang');
+
+    if (isPlatformBrowser(platformId)) {
+
+      let browserLang = user_lang || this.translateService.getBrowserLang();
+
+      if (!browserLang.match(/en|fr/)) {
+        browserLang = 'en';
+      }
+
+      this.cookieService.put('user_lang', browserLang);
+
+      this.translateService.use(browserLang);
+    } else {
+      this.translateService.use(user_lang || 'en');
     }
 
-    this._cookieService.put('user_lang', browserLang);
-    this._translateService.use(browserLang);
   }
 
 }
@@ -140,7 +101,7 @@ export function CreateTranslateLoader() {
 }
 
 export class TranslateUniversalLoader implements TranslateLoader {
-  public getTranslation(_: string): Observable<any> {
+  getTranslation(_: string): Observable<any> {
     return Observable.create((observer: any) => {
       observer.next();
       observer.complete();

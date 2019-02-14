@@ -1,15 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../models/answer';
-import {Table} from '../../../table/models/table';
+import { Table } from '../../../table/models/table';
 
 @Component({
-  selector: 'app-answers-list',
+  selector: 'app-shared-answers-list',
   templateUrl: './shared-answers-list.component.html',
   styleUrls: ['./shared-answers-list.component.scss']
 })
+
 export class SharedAnswersListComponent {
 
   private _config = {
+    fields: '',
     limit: 10,
     offset: 0,
     search: {},
@@ -24,15 +26,18 @@ export class SharedAnswersListComponent {
   };
 
   @Output() modalAnswerChange = new EventEmitter<any>();
+
   @Output() validateAnswers = new EventEmitter<Answer[]>();
+
   @Output() rejectAnswers = new EventEmitter<Answer[]>();
 
   private _answers: Array<Answer> = [];
+
   private _tableInfos: Table = null;
+
   private _actions: string[] = [];
 
-  constructor() {
-  }
+  constructor() { }
 
   loadAnswers() {
     this._actions = ['ANSWER.VALID_ANSWER', 'ANSWER.REJECT_ANSWER'];
@@ -53,21 +58,20 @@ export class SharedAnswersListComponent {
         {_attrs: ['professional.email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
         {_attrs: ['professional.jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
         {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _choices: [
-            {_name: 'VALIDATED', _alias: 'ANSWER.STATUS.VALIDATED', _class: 'label-validate'},
-            {_name: 'VALIDATED_NO_MAIL', _alias: 'ANSWER.STATUS.VALIDATED_NO_MAIL', _class: 'label-validate'},
-            {_name: 'SUBMITTED', _alias: 'ANSWER.STATUS.SUBMITTED', _class: 'label-progress'},
-            {_name: 'REJECTED', _alias: 'ANSWER.STATUS.REJECTED', _class: 'label-alert'},
+            {_name: 'VALIDATED', _alias: 'ANSWER.STATUS.VALIDATED', _class: 'label label-success'},
+            {_name: 'VALIDATED_NO_MAIL', _alias: 'ANSWER.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
+            {_name: 'SUBMITTED', _alias: 'ANSWER.STATUS.SUBMITTED', _class: 'label label-progress'},
+            {_name: 'REJECTED', _alias: 'ANSWER.STATUS.REJECTED', _class: 'label label-alert'},
           ]},
       ]
     };
   }
 
-  public seeAnswer(answer: Answer) {
-    event.preventDefault();
+  seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
   }
 
-  public performActions(action: any) {
+  performActions(action: any) {
     switch (this._actions.findIndex(value => action._action === value)) {
       case 0: {
         this.validateAnswers.emit(action._rows);
@@ -86,5 +90,8 @@ export class SharedAnswersListComponent {
     return this._tableInfos;
   }
 
-  get config(): any { return this._config; }
+  get config(): any {
+    return this._config;
+  }
+
 }

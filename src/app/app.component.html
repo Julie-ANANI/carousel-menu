@@ -1,19 +1,2 @@
-<!-- Displaying the spinner for 500ms -->
-<main *ngIf="displayLoading" class="wait-wrapper">
-  <section>
-    <i class="fas fa-spinner fa-pulse fa-4x"></i>
-    <p class="text">{{ 'COMMON.LOADING' | translate }}</p>
-  </section>
-</main>
-
-
-<main *ngIf="displayLoading === false" class="body-wrapper">
-
-  <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
-  <progress class="progress" max="100" *ngIf="displayLoader"></progress>
-  <router-outlet></router-outlet>
-
-</main>
-
-
-
+<simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
+<router-outlet></router-outlet>

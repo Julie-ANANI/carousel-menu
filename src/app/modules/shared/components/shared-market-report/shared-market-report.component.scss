@@ -9,14 +9,14 @@
   }
 
   .msg-wrapper {
+    background-color: $validation-color;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
 
     .content {
-      background-color: $validation-color;
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: .95rem;
-      border-radius: .18rem;
+      padding-top: .95rem;
+      padding-bottom: .95rem;
     }
 
   }
@@ -24,19 +24,25 @@
   .sticky-wrapper {
     background-color: white;
     transition: all 0.35s ease-in-out;
-    padding-top: .95rem;
-    padding-bottom: .95rem;
+    padding-top: .9375rem;
+    padding-bottom: .9375rem;
 
     .content-wrapper {
       display: flex;
       font-weight: 600;
+      flex-wrap: wrap;
       font-size: .85rem;
       padding-top: .6rem;
       padding-bottom: .6rem;
 
-      .detail-wrapper {
+      .toggle-option {
         padding: 1.2rem 1.57rem 1.2rem 0;
         color: $meta-color;
+
+        .form-switch input:disabled + .form-icon::before {
+          background: $validation-color;
+        }
+
       }
 
       .filter-wrapper {
@@ -83,23 +89,71 @@
       }
 
       .button-wrapper {
-        justify-content: flex-end;
-        display: inline-flex;
+        justify-content: flex-start;
         flex-wrap: wrap;
 
         .btn {
-          margin-bottom: 1.2rem;
-          margin-left: 1.2rem;
-          margin-top: 1.2rem;
+         margin: 1.2rem .6rem;
         }
 
-        .preview-button-wrapper {
-          color: #97A4B1;
+        .btn:last-child {
+          margin-right: 0;
+        }
 
-          .form-switch {
-            margin-top: 20px;
-          }
+      }
 
+    }
+
+  }
+
+  .menu-wrapper {
+    position: fixed;
+    bottom: 1.875rem;
+    right: 1.875rem;
+    z-index: 11;
+    text-align: right;
+
+    .btn {
+      animation-name: fadeIn;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      cursor: default;
+      border-radius: .18rem;
+      box-shadow: $box-shadow;
+    }
+
+    .btn-secondary:hover {
+      background-color: $secondary-color;
+    }
+
+    .menu-item-wrapper {
+      background-color: white;
+      width: 250px;
+      box-shadow: $box-shadow;
+      border: 1px solid $border-color;
+      border-radius: .18rem;
+      text-align: left;
+      max-height: 500px;
+      overflow: auto;
+
+      ul {
+        list-style: none;
+
+        li {
+          cursor: pointer;
+          font-size: .85rem;
+          color: $dark-color;
+          padding: 1rem .9375rem;
+        }
+
+        li:hover {
+          background-color: $primary-color;
+          color: white;
+        }
+
+        .active {
+          background-color: $primary-color !important;
+          color: white !important;
         }
 
       }
@@ -117,34 +171,150 @@
     .body-wrapper {
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      min-height: 80vh;
       justify-content: center;
 
-      h1 {
-        color: $dark-color;
-        font-size: 2.625rem;
+      .text-executive, h1 {
         margin-bottom: .6rem;
       }
 
-      h6 {
+      h1 {
+        color: $text-dark;
+        font-size: 2.625rem;
+        font-weight: 300;
+      }
+
+      .text-executive {
         color: $meta-color;
-        font-size: 1.3125rem;
+        font-size: 1.06rem;
+        display: none;
+      }
+
+      .summary, .image-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1.2rem;
+      }
+
+      .summary {
+        font-weight: normal;
+        font-size: 1rem;
+        color: $text-dark;
+        width: 80%;
+      }
+
+      .image-wrapper {
+        height: 109.65px;
+        width: 173px;
+      }
+
+      .text-owner, .text-jobTitle, .text-email {
+        color: $dark-color;
+        margin-bottom: .18rem;
+      }
+
+      .text-owner {
+        font-size: 1rem;
+      }
+
+      .text-jobTitle, .text-email {
+        font-size: .9375rem;
+        font-weight: normal;
+      }
+
+      .goal-text {
+        display: inline-flex;
+        justify-content: center;
+        max-width: 80%;
+        background: $background-color;
+        color: white;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1.57rem;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: .6875rem .9375rem;
       }
 
     }
 
     .footer-wrapper {
+      border-top: 1px solid $primary-color;
       display: flex;
-      flex-direction: column;
-
-      .text-link {
-        font-size: 1.2rem;
-        margin-bottom: .6rem;
-      }
+      justify-content: space-between;
+      padding-top: .6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $background-color;
 
       p {
-        font-size: .75rem;
         padding-bottom: 0;
+        font-size: .75rem;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+    }
+
+  }
+
+  .goal-wrapper {
+
+    .charRemaining span {
+      margin-top: -2rem;
+    }
+
+  }
+
+  .executive-generate-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .section-heading {
+      font-weight: normal;
+      font-size: 1.5rem;
+    }
+
+    .template-outer-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .template {
+        display: inline-flex;
+        margin-bottom: 1.57rem;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+          width: auto;
+          height: 216px;
+          margin-bottom: .6rem;
+        }
+
+        .btn-radio:hover {
+          background-color: $primary-color;
+          border-color: $primary-color;
+
+          span {
+            color: white;
+          }
+
+        }
+
+        .btn-radio.active {
+          background-color: $validation-color;
+          border-color: $validation-color;
+
+          span {
+            color: white;
+          }
+
+        }
+
       }
 
     }
@@ -155,8 +325,13 @@
     display: flex;
     justify-content: space-between;
 
+    .section-heading {
+      font-weight: normal;
+      font-size: 1.5rem;
+    }
+
     .summary-wrapper {
-      padding-right: 15px;
+      padding-right: .9375rem;
       flex: 1;
 
       .section-heading {
@@ -200,6 +375,7 @@
   .targeting-wrapper {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 1.57rem;
 
     .map-wrapper {
       padding-right: .95rem;
@@ -207,7 +383,7 @@
     }
 
     .question-wrapper {
-      padding-top: 1.57rem;
+      padding-bottom: 1.57rem;
     }
 
     p {
@@ -215,8 +391,10 @@
     }
 
     .sc-ques {
-      font-weight: 600;
+      color: $secondary-color;
       padding-bottom: 1.57rem;
+      font-size: 1.5rem;
+      font-weight: normal;
     }
 
     .answer-wrapper {
@@ -240,15 +418,24 @@
   .exploration-wrapper {
     display: flex;
     flex-direction: column;
-    padding-bottom: 2.5rem;
+    padding-bottom: 1.57rem;
+
+    .section-heading {
+      font-weight: normal;
+      font-size: 1.5rem;
+    }
 
     .analytic-wrapper {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
 
+      h5 {
+        margin-bottom: 0;
+      }
+
       .pd-top {
-        padding-top: 2.375rem;
+        padding-top: 2.0625rem;
       }
 
       .info-analytic-wrapper {
@@ -259,7 +446,7 @@
         }
 
         .svg-text {
-          font-size: .85rem;
+          font-size: .75rem;
           font-weight: 600;
           fill: #FFFFFF;
         }
@@ -269,7 +456,7 @@
     }
 
     .company-wrapper {
-      padding-top: 1.57rem;
+      padding-bottom: 1.57rem;
 
       .name-wrapper {
         list-style: none;
@@ -287,65 +474,32 @@
 
   }
 
-  .menu-wrapper {
-    position: fixed;
-    bottom: 1.875rem;
-    right: 1.875rem;
-    z-index: 11;
-    text-align: right;
+  .abstract-wrapper {
+    margin-top: 1.57rem;
+    padding: 3.15rem;
 
-    .btn {
-      animation-name: fadeIn;
-      animation-duration: 1s;
-      animation-timing-function: ease-in-out;
-      cursor: default;
-      border-radius: .18rem;
-      box-shadow: $box-shadow;
+    .main-heading {
+      color: $dark-color;
     }
 
-    .btn-secondary:hover {
-      background-color: $secondary-color;
+    .form-group {
+      margin-bottom: 0 !important;
     }
 
-    .menu-item-wrapper {
-      background-color: white;
-      width: 250px;
-      box-shadow: $box-shadow;
-      border: 1px solid $border-color;
-      border-radius: .18rem;
-      text-align: left;
+    .form-label {
+      padding: 0;
+    }
 
-      ul {
-        list-style: none;
-        margin-top: .6rem;
-        margin-bottom: .6rem;
-
-        li {
-          cursor: pointer;
-          font-size: .75rem;
-          color: $dark-color;
-        }
-
-        li:hover {
-          background-color: $primary-color;
-          color: white;
-        }
-
-        li.active {
-          background-color: $primary-color;
-          color: white;
-        }
-
-      }
-
+    .charRemaining span {
+      margin-top: -1.57rem;
     }
 
   }
 
   .origin-wrapper {
-    background-color: $background-color;
+    background-color: white;
     border-radius: .18rem;
-    color: white;
+    color: $dark-color;
   }
 
   .professional-wrapper {
@@ -364,29 +518,32 @@
       margin-bottom: 1.2rem;
       flex: 0 1 calc(50% - 1rem);
 
-      i.hide-user {
-        position: absolute;
-        display: none;
-        cursor: pointer;
+      img {
+        visibility: hidden;
       }
+
     }
 
     .profile:hover {
       color: $border-color;
-      i.hide-user {
-        display: block;
+      box-shadow: $box-shadow-hover;
+
+      img {
+        visibility: visible;
+        cursor: pointer;
       }
+
     }
 
   }
 
-  .conclusion-wrapper, .keyLearning-wrapper {
-    background-color: $background-color;
+  .conclusion-wrapper, .keyLearning-wrapper, .goal-wrapper {
+    background-color: white;
     border-radius: .18rem;
-    color: white;
+    color: $dark-color;
 
     .main-heading {
-      color: white;
+      color: $dark-color;
     }
 
     .op-text {
@@ -397,18 +554,63 @@
 
   }
 
+  .keyLearning-wrapper, .conclusion-wrapper {
+    box-shadow: $box-shadow;
+  }
+
 }
 
 /********************************** Media ***************************************/
-
 @media (max-width: 840px) {
 
   #market-report {
 
-    .sticky-wrapper {
+    .content-wrapper {
+      flex-direction: column;
+
+      .toggle-option {
+        padding-top: 0 !important;
+      }
 
       .filter-wrapper {
-        height: unset !important;
+        border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
+        border-left: none !important;
+        border-right: none !important;
+        padding-left: 0 !important;
+      }
+
+      .button-wrapper {
+        padding-top: .6rem;
+
+        .btn {
+          margin: .6rem .6rem .6rem 0 !important;
+        }
+
+      }
+
+    }
+
+    .front-wrapper {
+
+      .body-wrapper {
+        padding-top: 1.57rem;
+        padding-bottom: 1.57rem;
+
+        .summary {
+          width: 100% !important;
+        }
+
+      }
+
+      .footer-wrapper {
+        flex-wrap: wrap;
+
+        .text-right {
+          text-align: left !important;
+          padding-top: .6rem;
+        }
+
       }
 
     }
@@ -416,19 +618,13 @@
     .innovation-wrapper {
       flex-direction: column;
 
-      .summary-wrapper {
+      .summary-wrapper, .issue-wrapper, .solution-wrapper {
         padding-right: 0 !important;
+        padding-left: 0 !important;
       }
 
-      .issue-wrapper {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-top: 1.75rem;
-      }
-
-      .solution-wrapper {
-        padding-left: 0 !important;
-        padding-top: .95rem;
+      .issue-wrapper, .solution-wrapper {
+        padding-top: 1.57rem !important;
       }
 
     }
@@ -445,6 +641,10 @@
 
     .exploration-wrapper {
 
+      .info-analytic-wrapper {
+        margin-right: 1.57rem;
+      }
+
       .company-wrapper .name-wrapper li {
         width: 50% !important;
       }
@@ -459,15 +659,10 @@
 
   #market-report {
 
-    .content-wrapper {
-      flex-direction: column;
+    .executive-generate-wrapper {
 
-      .filter-wrapper {
-        border-top: 1px solid $border-color;
-        border-bottom: 1px solid $border-color;
-        border-left: none !important;
-        border-right: none !important;
-        padding-left: 0 !important;
+      .template-outer-wrapper {
+        justify-content: center;
       }
 
     }
@@ -488,7 +683,8 @@
 
 }
 
-@media (min-width: 840px) {
+
+@media (min-width: 841px) {
 
   #market-report {
 
@@ -497,6 +693,8 @@
       top: -0.06rem;
       box-shadow: $box-shadow;
       z-index: 11;
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
   }

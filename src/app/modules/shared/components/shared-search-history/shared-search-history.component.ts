@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
-import {ConfigTemplate} from '../../../../models/config';
+import {PaginationInterface} from '../../../utility-components/pagination/interfaces/pagination';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -28,7 +29,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   };
 
-  private _paginationConfig: ConfigTemplate = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: PaginationInterface = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _searchService: SearchService) {}
 
@@ -55,8 +56,8 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   public loadHistory() {
     this._searchService.getRequests(this._config)
-      .first()
-      .subscribe(result => {
+      .pipe(first())
+      .subscribe((result: any) => {
         if(result.requests) {
           this._requests = result.requests.map((request: any) => {
             request.keywords = request.keywords || request.oldKeywords[0].original;
@@ -79,19 +80,25 @@ export class SharedSearchHistoryComponent implements OnInit {
   }
 
   public relaunchRequests() {
-    this._searchService.relaunchRequests().first().subscribe(_ => {
+    this._searchService.relaunchRequests().pipe(first()).subscribe((_: any) => {
+      this.loadHistory();
+    });
+  }
+
+  public pauseModule() {
+    this._searchService.pauseModule().pipe(first()).subscribe((_: any) => {
       this.loadHistory();
     });
   }
 
   public relaunchMailRequests() {
-    this._searchService.relaunchMailRequests().first().subscribe(_ => {
+    this._searchService.relaunchMailRequests().pipe(first()).subscribe((_: any) => {
       this.loadHistory();
     });
   }
 
   public getGoogleQuota() {
-    this._searchService.dailyStats().first().subscribe(result => {
+    this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
       this._googleQuota = 30000;
       if (result.hours) {
         this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
@@ -106,8 +113,8 @@ export class SharedSearchHistoryComponent implements OnInit {
         'region': '',
         'fields': 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results'
       })
-        .first()
-        .subscribe(children => {
+        .pipe(first())
+        .subscribe((children: any) => {
           request.request = children.requests;
           request.loaded = true;
         });
@@ -116,13 +123,13 @@ export class SharedSearchHistoryComponent implements OnInit {
   };
 
   public stopRequest (requestId: string) {
-    this._searchService.stopRequest(requestId).first().subscribe(res => {
+    this._searchService.stopRequest(requestId).pipe(first()).subscribe((res: any) => {
       this._requests[this._getRequestIndex(requestId, this._requests)].status = 'DONE';
     });
   }
 
   public stopChildRequest (requestId: string, motherRequestId: string) {
-    this._searchService.stopRequest(requestId).first().subscribe(res => {
+    this._searchService.stopRequest(requestId).pipe(first()).subscribe((res: any) => {
       const motherRequestIndex = this._getRequestIndex(motherRequestId, this._requests);
       const childRequestIndex = this._getRequestIndex(requestId, this._requests[motherRequestIndex].request);
       this._requests[motherRequestIndex].request[childRequestIndex].status = 'DONE';
@@ -131,14 +138,14 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   public cancelRequest (requestId: string, cancel: boolean) {
     const newStatus = cancel ? 'CANCELED' : 'QUEUED';
-    this._searchService.cancelRequest(requestId, cancel).first().subscribe(res => {
+    this._searchService.cancelRequest(requestId, cancel).pipe(first()).subscribe((res: any) => {
       this._requests[this._getRequestIndex(requestId, this._requests)].status = newStatus;
     });
   }
 
   public cancelChildRequest (requestId: string, motherRequestId: string, cancel: boolean) {
     const newStatus = cancel ? 'CANCELED' : 'QUEUED';
-    this._searchService.cancelRequest(requestId, cancel).first().subscribe(res => {
+    this._searchService.cancelRequest(requestId, cancel).pipe(first()).subscribe((res: any) => {
       const motherRequestIndex = this._getRequestIndex(motherRequestId, this._requests);
       const childRequestIndex = this._getRequestIndex(requestId, this._requests[motherRequestIndex].request);
       this._requests[motherRequestIndex].request[childRequestIndex].status = newStatus;
@@ -170,5 +177,5 @@ export class SharedSearchHistoryComponent implements OnInit {
   get googleQuota(): number { return this._googleQuota; }
   get config(): any { return this._config; }
   get paused(): boolean { return this._paused; }
-  get paginationConfig(): ConfigTemplate { return this._paginationConfig; }
+  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
 }

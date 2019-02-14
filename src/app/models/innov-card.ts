@@ -5,7 +5,7 @@ export class InnovCard extends Model {
 
   readonly _id?: string;
   readonly innovation_reference?: string;
-  readonly title?: string;
+  title?: string;
   readonly lang: string;
   media?: Array<Media>;
   principalMedia?: Media;

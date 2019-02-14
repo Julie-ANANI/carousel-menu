@@ -28,7 +28,7 @@ export class SidebarBatchComponent implements OnInit {
   private _dateMail: Date;
   private _timeMail = '';
 
-  constructor(// private _notificationsService: TranslateNotificationsService,
+  constructor(// user _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder
               ) {}
 

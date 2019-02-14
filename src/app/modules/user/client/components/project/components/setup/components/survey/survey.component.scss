@@ -1,0 +1,14 @@
+@import "../../../../../../../../../../style/variables";
+
+#survey-component {
+
+  p {
+    padding-bottom: .9375rem;
+  }
+
+  a:hover {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+
+}

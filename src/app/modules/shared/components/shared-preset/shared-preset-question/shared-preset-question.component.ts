@@ -11,28 +11,30 @@ import { Question, Option } from '../../../../../models/question';
 export class SharedPresetQuestionComponent {
 
   @Input() set question(question: Question) {
-    this._formData = this.formBuilder.group({
-      identifier: new FormControl(question.identifier),
-      controlType: new FormControl(question.controlType),
-      label: this.formBuilder.group({
-        en: new FormControl(question.label ? question.label.en : ''),
-        fr: new FormControl(question.label ? question.label.fr : '')
-      }),
-      title: this.formBuilder.group({
-        en: new FormControl(question.title ? question.title.en : ''),
-        fr: new FormControl(question.title ? question.title.fr : '')
-      }),
-      subtitle: this.formBuilder.group({
-        en: new FormControl(question.subtitle ? question.subtitle.en : ''),
-        fr: new FormControl(question.subtitle ? question.subtitle.fr : '')
-      }),
-      canComment: new FormControl(question.canComment),
-      options: this.formBuilder.array(
-        Array.isArray(question.options) ?
+    if (question) {
+      this._formData = this.formBuilder.group({
+        identifier: new FormControl(question.identifier),
+        controlType: new FormControl(question.controlType),
+        label: this.formBuilder.group({
+          en: new FormControl(question.label ? question.label.en : ''),
+          fr: new FormControl(question.label ? question.label.fr : '')
+        }),
+        title: this.formBuilder.group({
+          en: new FormControl(question.title ? question.title.en : ''),
+          fr: new FormControl(question.title ? question.title.fr : '')
+        }),
+        subtitle: this.formBuilder.group({
+          en: new FormControl(question.subtitle ? question.subtitle.en : ''),
+          fr: new FormControl(question.subtitle ? question.subtitle.fr : '')
+        }),
+        canComment: new FormControl(question.canComment),
+        options: this.formBuilder.array(
+          Array.isArray(question.options) ?
             question.options.map(x => this.buildOptionForm(x))
-          : []
+            : []
         )
-    });
+      });
+    }
   }
 
   @Output() updateQuestion = new EventEmitter<Question>();
@@ -48,6 +50,10 @@ export class SharedPresetQuestionComponent {
 
   public save(event: Event) {
     event.preventDefault();
+    if (this._formData.get('controlType').value === 'textarea') {
+      // This block is here to avoid comments by default when creating a new quiz
+      this._formData.get('canComment').setValue(false);
+    }
     this.updateQuestion.emit(this._formData.value);
   }
 

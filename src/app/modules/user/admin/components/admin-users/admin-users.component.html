@@ -1,0 +1,51 @@
+<section class="section-light-container" id="admin-users-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- TODO
+    <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
+      <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
+      <p>{{ pending_invitations.join(', ') }}</p>
+    </div> -->
+
+    <!-- section table -->
+    <app-shared-table
+      [data]="tableInfos"
+      [config]="config"
+      (configChange)="configChange($event)"
+      (editRow)="editUser($event)"
+      (removeRows)="deleteUsersModal($event)"
+      (performAction)="performActions($event)">
+    </app-shared-table>
+
+    <!-- modal to ask admin to delete the user -->
+    <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
+      <div class="modal-overlay" (click)="closeModal($event)"></div>
+      <div class="modal-container">
+        <div class="modal-header">
+          <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+          <div class="modal-title">{{ 'COMMON.USER.DELETE_BOARD.HEADING' | translate }}</div>
+        </div>
+        <div class="modal-body">
+          <div class="content">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ghost-edit btn-sm btn-cancel" (click)="closeModal($event)">{{ 'COMMON.CANCEL' | translate }}</button>
+          <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.SUBMIT' | translate }}</button>
+        </div>
+      </div>
+    </div>
+    <!-- /modal to ask admin to delete the user -->
+
+  </div>
+</section>
+
+<!-- sidebar to edit user -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-user-form
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type"
+    [user]="currentUser"
+    (finalUserData)="updateUser($event)">
+  </app-user-form>
+</app-sidebar>
+<!-- sidebar to edit user -->

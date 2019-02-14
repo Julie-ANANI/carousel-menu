@@ -1,0 +1,174 @@
+<div *ngIf="innovation" class="section-container animate-page" id="setup-component">
+
+  <!-- project under submitted status -->
+  <div *ngIf="innovation.status === 'SUBMITTED'" class="banner-wrapper">
+    {{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}
+  </div>
+
+  <!-- project under evaluating and reviewing status -->
+  <div *ngIf="innovation.reviewing && innovation.status === 'EDITING'" class="banner-wrapper">
+    {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
+    <span>{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
+    {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
+  </div>
+
+  <!-- project under evaluating status -->
+  <div *ngIf="innovation.status === 'EVALUATING'" class="banner-wrapper">
+    {{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}
+  </div>
+
+  <!-- project under done status message -->
+  <div *ngIf="innovation.status === 'DONE'" class="banner-wrapper">
+    {{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}
+  </div>
+
+  <!-- header section -->
+  <div class="section-header" [ngClass]="{ 'sticky': scrollOn }">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="content">
+
+        <!-- title -->
+        <h1 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
+
+        <!-- buttons -->
+        <div class="buttons-wrapper">
+          <span>
+            <button class="btn ghost-primary gtm-print-card" (click)="onClickPrint($event)">
+              {{ 'PROJECT_MODULE.SETUP.PRINT_BUTTON' | translate }}
+            </button>
+          </span>
+          <span>
+            <button class="btn ghost-primary gtm-preview-card" (click)="onClickPreview($event)">
+              {{ 'PROJECT_MODULE.SETUP.PREVIEW_BUTTON' | translate }}
+            </button>
+          </span>
+          <span [ngClass]="buttonSaveClass">
+            <div class="circle-check"><i class="fas fa-save"></i></div>
+            <button class="btn btn-primary ghost-primary" (click)="onClickSave($event)">
+              {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
+            </button>
+          </span>
+          <span [ngStyle]="{ 'margin-right': '0' }">
+            <button
+              [disabled]="innovation.status !== 'EDITING'"
+              (click)="onClickSubmit($event)"
+              class="btn btn-primary gtm-submit-project">
+              {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
+            </button>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- /header section -->
+
+  <!-- tab section -->
+  <div class="column col-xs-12 col-11 col-mx-auto section-tabs">
+    <ul class="tab">
+      <li class="tab-item">
+        <a [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
+          <div class="btn-round targeting-check" [ngClass]=" { 'complete': innovation?.settings.completion === 100 } ">{{ innovation?.settings.completion }}%</div>
+          {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
+        </a>
+      </li>
+      <li class="tab-item">
+        <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
+          <div class="btn-round pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
+          {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
+        </a>
+      </li>
+      <li class="tab-item">
+        <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
+          <div class="btn-round survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
+          {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- /tab section -->
+
+
+  <!-- different section -->
+  <div class="column col-xs-12 col-11 col-mx-auto section-different">
+
+    <!-- targeting -->
+    <div *ngIf="currentPage === 'targeting'">
+      <app-targeting [project]="innovation" (settingsChange)="updateSettings($event)"></app-targeting>
+    </div>
+
+    <!-- pitch -->
+    <div *ngIf="currentPage === 'pitch'">
+      <app-pitch [project]="innovation" (pitchChange)="updatePitch($event)"></app-pitch>
+    </div>
+
+    <!-- survey -->
+    <div *ngIf="currentPage === 'survey'">
+      <app-survey [project]="innovation"></app-survey>
+    </div>
+
+  </div>
+  <!-- /different section -->
+
+</div>
+
+<!-- innovation preview sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-innovation-preview [innovation]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
+</app-sidebar>
+<!-- /innovation preview sidebar -->
+
+
+<!-- modal to ask user to sure about submitting the project -->
+<app-modal [(showModal)]="submitModal" [modalTitle]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.TITLE'">
+  {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-primary btn-sm" (click)="onClickConfirm($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+  </div>
+</app-modal>
+<!-- /modal to ask user to sure about submitting the project -->
+
+
+<!-- print innovation -->
+<div *ngIf="innovation" id="innovation-card-print">
+
+  <!-- column 1 -->
+  <div class="column-1">
+
+    <h1 class="main-heading">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h1>
+
+    <div class="summary-text" [innerHTML]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
+
+    <div class="image-wrapper">
+      <img [src]="getImageSrc(innovation.innovationCards[selectedInnovationIndex])" alt=" " height="146" width="220">
+    </div>
+
+    <div class="advantage-wrapper">
+      <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+      <ul class="advantages">
+        <li *ngFor="let advantage of innovation.innovationCards[selectedInnovationIndex].advantages">
+          {{ advantage.text | FormatText }}
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /column 1 -->
+
+  <!-- column 2 -->
+  <div class="column-2">
+    <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+    <div class="issue-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].problem"></div>
+  </div>
+  <!-- /column 2 -->
+
+  <!-- column 3 -->
+  <div class="column-3">
+    <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+    <div class="solution-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].solution"></div>
+  </div>
+  <!-- /column 3 -->
+
+</div>
+<!-- /print innovation -->

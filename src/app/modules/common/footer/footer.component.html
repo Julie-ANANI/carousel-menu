@@ -1,0 +1,43 @@
+<section class="container fluid" id="footer-component">
+  <div class="column col-11 col-xs-12 col-mx-auto">
+    <div class="content-wrapper">
+
+      <!-- Logo -->
+      <div class="logo pad">
+        <a routerLink="/" class="gtm-menu-logo">
+          <img src="{{ getLogo() }}" height="28px">
+        </a>
+      </div>
+
+      <!-- Info -->
+      <div class="info pad">
+        {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
+          <span *ngIf="checkIsMainDomain()">
+            |
+            <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
+               target="_blank" rel="noopener" class="gtm-legal-notice">
+              {{ 'FOOTER.LEGAL_NOTICE' | translate }}
+            </a>
+            |
+            <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')"
+               target="_blank" rel="noopener" class="gtm-end-user-licence-agreement">
+              {{ 'FOOTER.TERMS' | translate }}
+            </a>
+          </span>
+      </div>
+
+      <!-- Language -->
+      <div class="lang pad">
+        <label class="form-switch" for="setLang">
+          <select class="form-select" id="setLang" (change)="changeLanguage($event)">
+            <option *ngFor="let lang of langs" [selected]="lang === currentLang">
+              {{ 'COMMON.LANG.' + lang |  uppercase | translate }}
+            </option>
+          </select>
+        </label>
+      </div>
+
+    </div>
+  </div>
+</section>
+

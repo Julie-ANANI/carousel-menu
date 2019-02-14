@@ -1,0 +1,60 @@
+<main class="container fluid" id="signup-component">
+  <section class="main-wrapper">
+    <div class="columns col-gapless">
+
+      <!-- image -->
+      <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></div>
+
+      <!-- sign up -->
+      <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto signup-details section-light-container">
+
+        <!-- logo -->
+        <div><a href="{{ getCompanyUrl() }}"><img src="{{ getLogoWBG() }}" height="35px"></a></div>
+
+        <!-- register -->
+        <div class="register">
+
+          <!-- heading -->
+          <h1 class="title-primary">
+            <span *ngIf="!checkIsMainDomain()">{{ 'SIGN_UP.HEADING' | translate }}</span>
+            <span *ngIf="checkIsMainDomain()">{{ 'SIGN_UP.HEADING_UMI' | translate }}</span>
+          </h1>
+
+          <!-- sign up button -->
+          <button class="btn btn-primary gtm-signup-email" (click)="onSignUpClick($event)">
+            <i class="fas fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
+          </button>
+
+          <!-- LinkedIn -->
+          <div class="linkedIn-wrapper" *ngIf="checkIsMainDomain()">
+
+            <!-- or -->
+            <div class="or-wrapper">
+              <span class="or-divider">{{ 'COMMON.OR' | translate }}</span>
+            </div>
+
+            <button class="btn btn-secondary gtm-signin-linkedin" (click)="linkedInEvent()">
+                <i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
+            </button>
+          </div>
+
+        </div>
+
+        <!-- sign in -->
+        <div>
+          <span [ngStyle]="{ 'font-size': '0.875rem', 'padding-right': '0.6rem' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
+          <button type="button" class="btn btn-sm ghost-primary" routerLink="/login">{{ 'SIGN_UP.BUTTON' | translate }}</button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</main>
+
+
+<!-- sign up sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-signup-form [sidebarState]="sidebarValue.animate_state" (finalOutput)="createUser($event)"></app-signup-form>
+</app-sidebar>
+<!-- /sign up sidebar -->

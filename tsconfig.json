@@ -3,38 +3,23 @@
   "buildOnSave": false,
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
     "allowSyntheticDefaultImports": false,
-    "declaration": true,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noEmitHelpers": true,
-    "noImplicitAny": true,
+    // "noImplicitAny": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": false, // TODO: set to true
-    "outDir": "./dist/out-tsc",
-    "rootDir": "src/",
-    "sourceMap": true,
-    "strict": false, // Set to true only if you feel brave enough :D
-    "strictNullChecks": false,
-    "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
-      "dom",
-      "es6"
+      "es2017",
+      "dom"
     ]
-  },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
-  "paths": {
-    "@angular/*": ["node_modules/@angular/*"]
-  },
-  "typeRoots": [
-    "node_modules/@types"
-  ]
+  }
 }

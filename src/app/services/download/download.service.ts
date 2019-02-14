@@ -2,8 +2,7 @@
  * Created by bastien on 23/02/2018.
  */
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
 
 

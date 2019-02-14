@@ -1,0 +1,143 @@
+@import "../../../../../../../style/variables";
+
+#admin-followed {
+  margin-top: 20px;
+  margin-left: 50px;
+
+  .project-section {
+    background-color: white;
+    margin-bottom: 30px;
+    width: 50%;
+    padding: 10px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+  }
+  .project-line {
+    margin: 10px;
+    min-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+
+    label.form-switch {
+      width: 33%;
+    }
+  }
+
+  .project-summary {
+    div {
+      height: 73px;
+      padding-left: 20px;
+      padding-right: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h6 {
+      font-size: 1rem;
+      width: 100px;
+      color: white;
+    }
+
+    label {
+      color: white;
+    }
+    .timing, .completion {
+      background-color: #0B90C6;
+    }
+    .campaign {
+      background-color: #2FA4D4;
+    }
+    .cost {
+      background-color: #5FAECE;
+    }
+    .form-label {
+      color: $border-color;
+    }
+  }
+
+  .project-campaigns, .project-delivery, .project-preparation {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .project-campaigns .tags{
+    padding: 20px;
+    padding-top: 0;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 40%;
+    overflow: auto;
+    height: 150px;
+  }
+
+  .project-commentaries, .project-summary {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 40%;
+  }
+
+  .project-commentaries .user-message, .project-commentaries .operator-feedback {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-radius: 5px;
+    overflow: auto;
+
+    span, label {
+      color: white;
+    }
+  }
+
+  .project-commentaries .operator-feedback {
+    background-color: $secondary-color;
+  }
+
+  .user-message {
+    background-color: $meta-color;
+  }
+
+  .project-line:hover {
+    .showOnHover {
+      visibility: visible;
+    }
+  }
+
+  .suggestion {
+    position: absolute;
+  }
+
+  .showOnHover {
+    visibility: hidden;
+  }
+
+  .form-select {
+    width: 40%;
+  }
+
+  .disabled {
+    opacity: .5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .satisfaction {
+
+    label {
+      padding: 0;
+      margin-left: 5px;
+    }
+    .happy {
+      color: $validation-color;
+    }
+    .normal {
+      color: $progress-color;
+    }
+    .bad {
+      color: $alert-color;
+    }
+  }
+}

@@ -1,10 +1,4 @@
 /*
-    Google fonts
- */
-
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
-
-/*
     Spectre framework
  */
 
@@ -13,28 +7,11 @@
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
 
 /*
-    Fontawesome icons
- */
-
-@import "../node_modules/@fortawesome/fontawesome-free/css/regular.css";
-@import "../node_modules/@fortawesome/fontawesome-free/css/solid.css";
-@import "../node_modules/@fortawesome/fontawesome-free/css/brands.css";
-@import "../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css";
-
-
-/*
-    Print style
- */
-
-@import "style/print";
-
-
-/*
     Color variable file
  */
 
 @import "style/variables";
-
+@import "style/framework/variables";
 
 /********************************** Default Styles ***************************************/
 
@@ -49,7 +26,6 @@ html {
 body {
   font-size: 1rem;
   line-height: 1.5;
-  word-break: break-word;
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -65,21 +41,38 @@ body {
 /*
     Rest style file
  */
-
-@import "style/animation";
-@import "style/app-modal-style";
-@import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
 @import "style/form-style";
-@import "style/button-style";
-@import "style/tab-style";
 @import "style/modal-style";
 @import "style/tooltip-style";
-@import "style/table-style";
+@import "style/popover-style";
+@import "style/upload-photo-style";
 
 
+/*
+    In progress...
+ */
+@import "style/framework/animation";
+@import "style/framework/buttons";
+@import "style/framework/container";
+@import "style/framework/common";
+@import "style/framework/tab";
+@import "style/framework/labels";
+@import "style/framework/headers";
+@import "style/framework/modal";
+@import "style/framework/texts";
+@import "style/framework/form";
+@import "style/tinymce-style";
+@import "style/simplenotification-style";
+@import "style/ng2autocomplete-style";
 
+
+/*
+    Print style
+ */
+
+@import "style/print";
 
 
 

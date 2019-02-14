@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {Innovation} from '../../../../models/innovation';
 import {InnovationSettings} from '../../../../models/innov-settings';
 import {TemplatesService} from '../../../../services/templates/templates.service';
@@ -28,6 +28,8 @@ export class InnovationFormComponent implements OnInit {
   @Input() sidebarState: Subject<string>;
 
   @Output() projectChange = new EventEmitter<Innovation>();
+
+  @Output() ownerLanguageChange = new EventEmitter<string>();
 
   @Output() sendMail = new EventEmitter<any>();
 
@@ -68,13 +70,13 @@ export class InnovationFormComponent implements OnInit {
     this.statusValid = true;
 
     if (this.setProject) {
-      this.setProject.subscribe((project) => {
+      this.setProject.subscribe((project: Innovation) => {
         this._project = JSON.parse(JSON.stringify(project));
       })
     }
 
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           this._isChange = false;
           this._email = {
@@ -87,6 +89,10 @@ export class InnovationFormComponent implements OnInit {
       });
     }
 
+  }
+
+  updateOwnerLanguage(value: string) {
+    this.ownerLanguageChange.emit(value);
   }
 
   reinitialiseForm() {
@@ -121,13 +127,13 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('send-ending-mail'): {
         this.isMail = true;
-        this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+        this._templatesService.getAllSignatures({limit: '0', sort: '{"id":-1}'}).subscribe((signatures: any) => {
           this._signatures = signatures.result;
         });
         break;
       } case('status'): {
         this.isStatus = true;
-        this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+        this._templatesService.getAllSignatures({limit: '0', sort: '{"id":-1}'}).subscribe((signatures: any) => {
           this._signatures = signatures.result;
         });
         break;
@@ -155,7 +161,7 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('status'): {
         this.projectChange.emit(this._project);
-        if (this.sendMail !== {}) {
+        if (this.sendMail.constructor === Object && Object.keys(this.sendMail).length !== 0) {
           this.sendMail.emit(this._email);
         }
         this.sendMail.emit(this._email);
@@ -168,7 +174,7 @@ export class InnovationFormComponent implements OnInit {
       } case('send-ending-mail'): {
         this._project._metadata.delivery.endingmail = true;
         this.projectChange.emit(this._project);
-        if (this.sendMail !== {}) {
+        if (this.sendMail.constructor === Object && Object.keys(this.sendMail).length !== 0) {
           this.sendMail.emit(this._email);
         }
         break;
@@ -181,6 +187,7 @@ export class InnovationFormComponent implements OnInit {
 
   projectEdit(value: Innovation) {
     this._project = value;
+    this._isChange = true;
   }
 
   settingsEdit(value: InnovationSettings) {

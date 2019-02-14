@@ -8,8 +8,11 @@ export interface Professional {
   readonly jobTitle: string;
   company: string;
   readonly email: string;
+  sent: boolean;
+  readonly messages: Array<any>;
   tags: Array<Tag>;
   readonly profileUrl: string;
   readonly country: string;
   readonly campaigns: Campaign[];
+  readonly emailConfidence?: number;
 }

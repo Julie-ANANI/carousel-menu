@@ -1,72 +1,77 @@
-<section *ngIf="innovation" id="innovation-wrapper">
+<div id="innovation-preview-component">
 
-  <!-- Hero section -->
-  <div class="hero-light-container">
-    <div class="column col-xs-12 col-11 col-mx-auto">
+  <div *ngIf="innovation && innovation.problem === '' && innovation.summary === '' && innovation.title === '' && innovation.advantages.length === 0" class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
+    <app-message-space [messageA]="'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE'"></app-message-space>
+  </div>
 
-      <!-- Title -->
-      <h1 class="main-heading">{{ innovation.title }}</h1>
 
-      <!-- Batch date -->
-      <h6 *ngIf="this.getDate">
-        {{ 'DASHBOARD.SENDINGDATE' | translate }} {{ this.getDate | date: this.dateFormat }}
-      </h6>
+  <div *ngIf="innovation && (innovation.problem !== '' || innovation.summary !== '' || innovation.title !== '' || innovation.advantages.length !== 0)">
 
-      <!-- Summary -->
-      <div class="summary" [innerHtml]="innovation.summary"></div>
+    <!-- Hero section -->
+    <div class="hero-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <!-- Media -->
-      <div class="media-wrapper">
-        <div *ngFor="let media of innovation.media">
+        <!-- Title -->
+        <h1 class="main-heading">{{ innovation.title }}</h1>
 
-          <!-- Video -->
-          <div *ngIf="media?.type === 'VIDEO'" class="gap">
-            <iframe
-              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-              width="220" height="146">
-            </iframe>
+        <!-- Batch date -->
+        <h6 *ngIf="getDate">{{ 'DASHBOARD.SENDINGDATE' | translate }} {{ getDate | date: dateFormat }}</h6>
+
+        <!-- Summary -->
+        <div class="summary" [innerHtml]="innovation.summary"></div>
+
+        <!-- Media -->
+        <div class="media-wrapper">
+          <div *ngFor="let media of innovation.media">
+
+            <!-- Video -->
+            <div *ngIf="media?.type === 'VIDEO'" class="gap">
+              <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)" width="220" height="146" frameborder="0"></iframe>
+            </div>
+
+            <!-- Image -->
+            <div *ngIf="media?.type === 'PHOTO'" class="gap">
+              <img [src]="media.url" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" width="220" height="146">
+            </div>
+
           </div>
-
-          <!-- Image -->
-          <div *ngIf="media?.type === 'PHOTO'" class="gap">
-            <img
-              [src]="media.url"
-              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-              width="220" height="146">
-          </div>
-
         </div>
+
       </div>
-
     </div>
+
+
+    <!-- Advantage section -->
+    <div class="section-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
+        <ul class="advantage">
+          <li *ngFor="let advantage of innovation.advantages;">
+            {{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- Issue section -->
+    <div class="section-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
+        <div [innerHtml]="innovation.problem"></div>
+      </div>
+    </div>
+
+
+    <!-- Solution section -->
+    <div class="section-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
+        <div [innerHtml]="innovation.solution"></div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Advantage section -->
-  <div class="section-container">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
-      <ul class="advantage">
-        <li *ngFor="let advantage of innovation.advantages;">
-          {{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}
-        </li>
-      </ul>
-    </div>
-  </div>
 
-  <!-- Issue section -->
-  <div class="section-container">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
-      <div [innerHtml]="innovation.problem"></div>
-    </div>
-  </div>
-
-  <!-- Solution section -->
-  <div class="section-container">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
-      <div [innerHtml]="innovation.solution"></div>
-    </div>
-  </div>
-
-</section>
+</div>

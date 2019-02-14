@@ -1,0 +1,25 @@
+<section id="synthesis-complete-component">
+
+  <!-- message -->
+  <div class="banner-wrapper" *ngIf="!notFound && displayReport && authService.adminLevel < 2">{{ 'SHARE.MESSAGE' | translate }}</div>
+
+
+  <!-- market report -->
+  <ng-container *ngIf="displayReport && !notFound">
+    <app-shared-market-report
+      [project]="project"
+      [adminMode]="false"
+      [sharable]="true">
+    </app-shared-market-report>
+  </ng-container>
+
+
+  <!-- not found message -->
+  <div *ngIf="notFound" class="column col-xs-12 col-11 col-mx-auto">
+    <div class="section-not-found">
+      <app-message-space [messageA]="'SHARE.NOT_FOUND'" [widthMax]="'354px'"></app-message-space>
+    </div>
+  </div>
+
+
+</section>

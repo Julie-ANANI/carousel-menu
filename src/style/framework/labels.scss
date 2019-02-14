@@ -1,0 +1,58 @@
+/*
+    This stylesheet contains all the class related to the different labels
+    for our framework.
+ */
+@import "variables";
+
+
+/*
+    this is the base class for the label, add the other classes with this to add the different styles.
+ */
+.label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  padding: 0.5rem 0.9375rem;
+  margin: 0.5rem;
+  border-radius: 3px;
+  background-color: transparent;
+  color: #FFFFFF;
+}
+
+
+.label-alert {
+  background-color: $alert;
+}
+
+
+.label-progress {
+  background-color: $progress;
+}
+
+
+.label-success {
+  background-color: $success;
+}
+
+
+.label-draft {
+  background-color: $label-draft;
+}
+
+
+.label-primary {
+  background-color: $primary;
+}
+
+
+.label-edit {
+  background-color: $label-edit;
+}
+
+
+.label-meta {
+  background-color: $meta;
+}
+

@@ -1,22 +1,28 @@
-<div *ngIf="modalAnswer" class="answer-wrapper">
+<div *ngIf="modalAnswer" class="user-answer-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- Save button -->
-    <div *ngIf="adminMode" class="save text-right" [ngSwitch]="modalAnswer.localStatus">
+    <!-- section save -->
+    <div *ngIf="adminMode" class="section-save" [ngSwitch]="modalAnswer?.localStatus">
+
       <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
         {{'COMMON.IMPORT' | translate}}
       </button>
+
       <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
         {{'COMMON.SAVE' | translate}}
       </button>
+
     </div>
 
-    <!-- User detail section -->
-    <div class="detail">
+    <!-- section user details -->
+    <div class="section-details">
 
       <!-- Name, flag and rating -->
       <div class="title">
-       <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
+        <h6>
+          <span *ngIf="modalAnswer.professional?.firstName">{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</span>
+          <span *ngIf="!modalAnswer.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
+        </h6>
         <div *ngIf="editMode" class="app-rating">
           <app-rating-item
             [editMode]="adminMode"
@@ -32,16 +38,20 @@
           </div>
         </div>
         <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
-          <label class="form-switch" for="editMode">
+          <label class="form-switch" for="answer-editMode">
             <input
               type="checkbox"
-              name="editMode"
-              id="editMode"
+              name="answer-editMode"
+              id="answer-editMode"
               (change)="changeMode($event)"
               [checked]="editMode">
             <i class="form-icon"></i>
             {{ 'Edit user' }}
           </label>
+          <p *ngIf="modalAnswer.blacklistedCompany" class="text-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            La réponse vient peut-être d'une entreprise blacklistée !
+          </p>
         </div>
       </div>
 
@@ -66,7 +76,7 @@
 
       <!-- Job -->
       <div class="job" *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle || editMode">
-        <p><i class="far fa-address-card" aria-hidden="true"></i></p>
+        <p><i class="fas fa-address-card" aria-hidden="true"></i></p>
         <p *ngIf="!editJob">
           {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
           <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true;"></i>
@@ -75,16 +85,16 @@
           <input
             type="text"
             [(ngModel)]="modalAnswer.job"
-            id="jobTitle"
+            id="answer-jobTitle"
             alt="Job title"
-            class="form-default"
+            class="form-input"
             [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
         </div>
       </div>
 
       <!-- Company -->
       <div class="company" *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
-        <p><i class="far fa-building" aria-hidden="true"></i></p>
+        <p><i class="fas fa-building" aria-hidden="true"></i></p>
         <p *ngIf="!editCompany">
           {{ modalAnswer.company.name || modalAnswer.professional?.company }}
           <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true;"></i>
@@ -93,15 +103,15 @@
           <input
             type="text"
             [(ngModel)]="modalAnswer.company.name"
-            id="company"
+            id="answer-company"
             alt="Company"
-            class="form-default"
+            class="form-input"
             [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
         </div>
       </div>
 
       <!-- Email -->
-      <div *ngIf="adminMode && (modalAnswer.professional?.email)" class="email">
+      <div *ngIf="modalAnswer.professional?.email" class="email">
         <p>
           <i class="far fa-envelope"></i>
           <a [href]="'mailto:'+modalAnswer.professional.email">
@@ -126,16 +136,15 @@
       </div>
 
       <!-- IP -->
-      <div *ngIf="modalAnswer.ip" class="ip">
+      <div *ngIf="modalAnswer.ip && editMode" class="ip">
         <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
       </div>
 
     </div>
-    <!-- /User detail -->
 
-    <!-- Tags section -->
-    <div class="tag-wrapper">
-      <label class="form-label">Tag</label>
+    <!-- section tags -->
+    <div class="section-tags">
+      <label *ngIf="modalAnswer?.tags.length > 0" class="form-label">Tags</label>
       <app-shared-tag-item
         [tags]="modalAnswer.tags"
         [editMode]="editMode"
@@ -145,16 +154,15 @@
         (removeTag)="removeTag($event)">
       </app-shared-tag-item>
     </div>
-    <!-- /Tags -->
 
-    <!-- Status section -->
-    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="status-wrapper">
+    <!-- section status -->
+    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="section-status">
 
       <!-- Rejected -->
       <div class="status-rejected">
-        <span class="label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
+        <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
         <div
-          class="radio-button rejected"
+          class="btn-radio rejected"
           [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
           (click)="updateStatus($event, 'REJECTED')">
           <span>•</span>
@@ -163,9 +171,9 @@
 
       <!-- Submitted -->
       <div class="status-submitted">
-        <span class="label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
+        <span class="label label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
         <div
-          class="radio-button submitted"
+          class="btn-radio submitted"
           [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
           (click)="updateStatus($event, 'SUBMITTED')">
           <span>•</span>
@@ -174,9 +182,9 @@
 
       <!-- Validated -->
       <div class="status-validated">
-        <span class="label-validate">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
+        <span class="label label-success">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
         <div
-          class="radio-button validated"
+          class="btn-radio validated"
           [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
           (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
           <span>•</span>
@@ -185,11 +193,11 @@
 
       <!-- Email -->
       <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
-        <label class="form-switch" for="email">
+        <label class="form-switch" for="answer-email">
           <input
             type="checkbox"
-            name="email"
-            id="email"
+            name="answer-email"
+            id="answer-email"
             (change)="sendEmail($event, 'VALIDATED')"
             [checked]="modalAnswer.status === 'VALIDATED'">
           <i class="form-icon"></i>
@@ -198,10 +206,9 @@
       </div>
 
     </div>
-    <!-- /Status -->
 
-    <!-- Questions section -->
-    <div class="ques-wrapper">
+    <!-- section questions -->
+    <div class="section-questions">
       <div *ngFor="let question of questions">
         <app-answer-question
           [editMode]="editMode"
@@ -212,7 +219,6 @@
         </app-answer-question>
       </div>
     </div>
-    <!-- /Questions -->
 
   </div>
 </div>

@@ -1,0 +1,29 @@
+@import "../../../../../style/variables";
+
+#signup-form-component {
+  padding-top: 1.57rem;
+
+  .form-group {
+    margin-bottom: 1.2rem !important;
+  }
+
+  .suggestion {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  .terms {
+    padding-top: 1.375rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #97A4B1;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+  }
+
+  .signup-button {
+    padding-top: 1.57rem;
+  }
+
+}

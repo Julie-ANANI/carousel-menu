@@ -1,0 +1,86 @@
+<h3>{{total}} Tags</h3>
+
+<div [hidden]="false">
+    <app-admin-tag-new></app-admin-tag-new>
+</div>
+
+<table class="table pros" wt-responsive-table>
+    <thead>
+    <tr>
+        <th></th>
+        <th><app-shared-sort [config]="config" (configChange)="loadData($event)" [prop]="'label'">Label</app-shared-sort></th>
+        <th><app-shared-sort [config]="config" (configChange)="loadData($event)" [prop]="'description'">Description</app-shared-sort></th>
+        <th><app-shared-sort [config]="config" (configChange)="loadData($event)" [prop]="'type'">Type</app-shared-sort></th>
+        <th><app-shared-sort [config]="config" (configChange)="loadData($event)" [prop]="'attachments'" >Attachments</app-shared-sort></th>
+        <th><app-shared-sort [config]="config" (configChange)="loadData($event)" [prop]="'created'" >Created</app-shared-sort></th>
+        <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let datum of data" [ngClass]="{'active': datum.isSelected}">
+
+        <ng-container [ngSwitch]="editDatum[datum._id]">
+
+            <ng-container *ngSwitchCase="true">
+                <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
+                <td>
+                  <input type="text" size="20" [(ngModel)]="datum.label.en" alt="label" placeholder="label in english"/>
+                  <input type="text" size="20" [(ngModel)]="datum.label.fr" alt="label" placeholder="label en français"/>
+                </td>
+                <td>
+                  <input type="text" size="40" [(ngModel)]="datum.description.en" alt="description" placeholder="description in english"/>
+                  <input type="text" size="40" [(ngModel)]="datum.description.fr" alt="description" placeholder="description en français"/>
+                </td>
+                <td>
+                  <select [(ngModel)]="datum.type">
+                    <option value="UNKNOWN" [textContent]="'TAGS.TYPE.UNKNOWN'" translate></option>
+                    <option value="SECTOR" [textContent]="'TAGS.TYPE.SECTOR'" translate></option>
+                    <option value="VALUE_CHAIN" [textContent]="'TAGS.TYPE.VALUE_CHAIN'" translate></option>
+                    <option value="SOLUTION_TYPE" [textContent]="'TAGS.TYPE.SOLUTION_TYPE'" translate></option>
+                    <option value="QUALIFICATION" [textContent]="'TAGS.TYPE.QUALIFICATION'" translate></option>
+                  </select>
+                </td>
+                <td>
+                    <app-autocomplete-input id="attachments"
+                                            (update)="addAttachment($event, datum)"
+                                            [config]="buildAttachmentsListConfig(datum.attachments)"></app-autocomplete-input>
+                </td>
+                <td>{{ datum.created | date}}</td>
+                <td>
+                    <button class="btn btn-action" (click)="editDatum[datum._id] = false"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-action" (click)="updateEntry(datum, $event)"><i class="far fa-save"></i></button>
+                </td>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+                <ng-container (click)="selectPro(datum)">
+                    <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
+                    <td>{{ datum.label | multiling:lang }}</td>
+                    <td>{{ datum.description | multiling:lang }}</td>
+                    <td [textContent]="'TAGS.TYPE.'+datum.type" translate></td>
+                    <td>{{ datum.attachments?.length || 0 }}</td>
+                    <td>{{ datum.created | date }}</td>
+                </ng-container>
+                <td>
+                    <button class="btn btn-action" (click)="editDatum[datum._id] = true"><i class="fas fa-edit"></i></button>
+                </td>
+            </ng-container>
+
+        </ng-container>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="12">
+            <app-pagination
+              [configValue]="paginationConfig"
+              (configChange)="configChange($event)"
+              [total]="total"
+              [propertyName]="'admin-tags'">
+            </app-pagination>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+

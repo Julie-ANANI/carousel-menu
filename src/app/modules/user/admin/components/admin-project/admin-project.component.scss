@@ -1,0 +1,44 @@
+.admin-project {
+
+  .heading {
+    background-color: white;
+    padding-bottom: 0;
+  }
+
+  .title-button-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      font-size: 23px;
+      color: #4F5D6B;
+      font-weight: 500;
+      max-width: 40%;
+    }
+
+    .btn {
+      margin-bottom: 25px;
+    }
+
+  }
+
+  .tab .tab-item a {
+    border-bottom-width: 4px;
+    margin-right: 2.5rem;
+  }
+
+  .project-progress {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    width: 45%;
+
+    .progress {
+      margin: 10px;
+      width: 100px;
+    }
+  }
+
+}
+

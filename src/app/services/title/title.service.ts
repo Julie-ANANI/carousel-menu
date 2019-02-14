@@ -4,7 +4,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Injectable()
 export class TranslateTitleService implements OnDestroy {
@@ -15,7 +16,7 @@ export class TranslateTitleService implements OnDestroy {
               private _titleService: Title) { }
 
     public setTitle(title: string) {
-      this._translateService.get(title).takeUntil(this.ngUnsubscribe).subscribe((translatedTitle: string) => {
+      this._translateService.get(title).pipe(takeUntil(this.ngUnsubscribe)).subscribe((translatedTitle: string) => {
         return this._titleService.setTitle(translatedTitle);
       });
     }

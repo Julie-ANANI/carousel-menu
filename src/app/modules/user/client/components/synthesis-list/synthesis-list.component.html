@@ -1,0 +1,34 @@
+<section class="section-container" id="synthesis-list-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section no reports -->
+    <div *ngIf="totalReports && totalReports.length === 0" class="section-no-reports">
+      <app-message-space [messageA]="'SHARE.SYNTHESIS_LIST.BOT_TEXT'" [widthMax]="'354px'"></app-message-space>
+    </div>
+
+    <!-- section reports -->
+    <div *ngIf="totalReports && totalReports.length > 0" class="section-reports-list">
+
+      <!-- reports -->
+      <div class="report-wrapper" [@listAnimation]="totalReports.length">
+        <div *ngFor="let report of totalReports" class="content-outer">
+          <div class="content">
+            <a [href]="getRelevantLink(report)" target="_blank"><img [src]="getMedia(report)" alt=" "></a>
+            <div class="report-description">
+              <a [href]="getRelevantLink(report)" target="_blank">
+                <span >{{ report.name }}</span>
+              </a>
+              <p class="date-text">
+                {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.A' | translate }} {{ report.owner.firstName + " " + report.owner.lastName }}
+                {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.B' | translate }} {{ report.date | date:dateFormat }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+

@@ -1,14 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../../../models/user.model';
+import { Innovation } from '../../../../models/innovation';
 import { Professional } from '../../../../models/professional';
 import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
-import { Subject } from 'rxjs/Subject';
+import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
+import { QuizService } from '../../../../services/quiz/quiz.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-user-form',
@@ -18,13 +22,18 @@ import { Tag } from '../../../../models/tag';
 
 export class UserFormComponent implements OnInit {
 
-  /*
-     For type 'editUser', put the data into the attribute user and patch it to the formData
-  */
-  @Input() set user(value: User) {
-    this._user = value;
-    this.loadEditUser();
-  };
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || 'active') {
+      this.buildForm();
+      this._userForm.reset();
+      this._editInstanceDomain = false;
+    }
+  }
+
+  @Input() set type(type: string) {
+    this._type = type;
+    this.loadTypes();
+  }
 
   /*
       For type 'professional', put the data into the attribute user and patch it to the formData
@@ -38,30 +47,43 @@ export class UserFormComponent implements OnInit {
     this._campaign = value;
   }
 
-  @Input() set type(type: string) {
-    this._type = type;
-    this.loadTypes();
-  }
+  /*
+     For type 'editUser', put the data into the attribute user and patch it to the formData
+  */
+  @Input() set user(value: User) {
+    this._selectedProject = null;
+    this._user = value;
+    this.loadEditUser();
+  };
 
-  @Input() sidebarState: Subject<string>;
+  @Output() finalUserData = new EventEmitter<User>();
 
-  @Output() userSignUpData = new EventEmitter<FormGroup>();
-  @Output() editUserData = new EventEmitter<User>();
-  @Output() professionalUserData = new EventEmitter<Professional>();
+  @Output() finalProfessionalData = new EventEmitter<Professional>();
 
-  isSignUp = false;
-  isEditUser = false;
-  isProfessional = false;
+  private _isEditUser = false;
 
-  isSelf =  false;
-  userForm: FormGroup;
-  countriesSuggestion: Array<string> = [];
-  displayCountrySuggestion = false;
+  private _isProfessional = false;
+
+  private _isSelf =  false;
+
+  private _userForm: FormGroup;
+
+  private _countriesSuggestion: Array<string> = [];
+
+  private _displayCountrySuggestion = false;
+
+  private _selectedProject: String;
+
+  private _projects: Array<Innovation> = [];
 
   private _user: User;
+
   private _pro: Professional = null;
+
   private _campaign: Campaign = null;
+
   private _editInstanceDomain = false;
+
   private _tags: Tag[] = [];
 
   private _type = '';
@@ -80,107 +102,116 @@ export class UserFormComponent implements OnInit {
     canOrder: false
   };
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(@Inject(PLATFORM_ID) private platform: Object,
+              private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private translateService: TranslateService,
+              private userService: UserService,
               private _authService: AuthService) {}
 
   ngOnInit() {
-    this.userForm = this.formBuilder.group( {
+    this._user = new User();
+  }
+
+
+  private buildForm() {
+    this._userForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
       country: ['', [Validators.required]],
-      roles: '',
-      operator: [false],
+      roles: [''],
+      isOperator: [false],
       profileUrl: [null],
       domain: [''],
     });
-
-    this._user = new User();
-
-    this.loadTypes();
-
-    if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
-        if (state === 'inactive') {
-          setTimeout (() => {
-            this.userForm.reset();
-          }, 500);
-        }
-      })
-    }
-
   }
 
-  reinitialiseForm() {
-    this.isProfessional = false;
-    this.isEditUser = false;
-    this.isSignUp = false;
-  }
 
-  loadTypes() {
+  private loadTypes() {
     this.reinitialiseForm();
 
-    if (this._type === 'isSignUp') {
-      this.isSignUp = true;
-    } else if (this._type === 'editUser') {
-      this.isEditUser = true;
+    if (this._type === 'editUser') {
+      this._isEditUser = true;
       this.loadEditUser();
     } else if (this._type === 'professional') {
-      this.isProfessional = true;
+      this._isProfessional = true;
       this.loadProfessional();
+    } else if (this._type === 'addPro') {
+      this._isProfessional = true;
     }
 
   }
 
-  loadEditUser() {
-    if (this._user) {
-      this.isSelf = this._authService.userId === this._user.id;
-      this.userForm.patchValue(this._user);
-    }
-
+  private reinitialiseForm() {
+    this._isProfessional = false;
+    this._isEditUser = false;
+    this._selectedProject = null;
   }
 
-  loadProfessional() {
-    if (this._pro && this.userForm) {
-      this.userForm.get('companyName').setValue(this._pro.company);
+
+  private loadProfessional() {
+    if (this._pro && this._userForm) {
+      this._userForm.get('companyName').setValue(this._pro.company);
       this._tags = this._pro.tags;
-      this.userForm.patchValue(this._pro);
+      this._userForm.patchValue(this._pro);
     }
   }
 
-  onSubmit() {
-    if (this.isSignUp) {
-      this.userSignUpData.emit(this.userForm);
-    } else if (this.isEditUser) {
-      const user = new User(this.userForm.value);
-      user.id = this._user.id;
-      this.editUserData.emit(user);
-    } else if (this.isProfessional) {
-      const pro = this.userForm.value;
-      pro._id = this._pro._id;
-      pro.company = this.userForm.get('companyName').value;
-      pro.tags = this._tags;
-      this.professionalUserData.emit(pro);
+
+  private loadEditUser() {
+    if (this._user) {
+      this._isSelf = this._authService.userId === this._user.id;
+      this._userForm.patchValue(this._user);
+      this.loadInnovations();
     }
   }
+
+
+  private loadInnovations(): void {
+    if(this._user.id) {
+      this.userService.getInnovations(this._user.id).pipe(first()).subscribe((innovations: any) => {
+        this._projects = innovations.result;
+      });
+    }
+  }
+
+  selectProject(event: any) {
+    this._selectedProject = event.target.value;
+  }
+
+
+  onClickSave() {
+    if (this._isEditUser) {
+      const user = new User(this._userForm.value);
+      user.id = this._user.id;
+      this.finalUserData.emit(user);
+    } else if (this._isProfessional && this._type === 'professional') {
+      const pro = this._userForm.value;
+      pro._id = this._pro._id;
+      pro.company = this._userForm.get('companyName').value;
+      pro.tags = this._tags;
+      this.finalProfessionalData.emit(pro);
+    } else if (this._isProfessional && this._type === 'addPro') {
+      this.finalProfessionalData.emit(this._userForm.value);
+    }
+  }
+
 
   onSuggestCountries() {
-    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
-      this.displayCountrySuggestion = true;
-      this.countriesSuggestion = [];
-      this.autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
+    this._userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
+      this._displayCountrySuggestion = true;
+      this._countriesSuggestion = [];
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
-          this.displayCountrySuggestion = false;
+          this._displayCountrySuggestion = false;
         } else {
-          res.forEach((items) => {
-            const valueIndex = this.countriesSuggestion.indexOf(items.name);
+          res.forEach((items: any) => {
+            const valueIndex = this._countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
-              this.countriesSuggestion.push(items.name);
+              this._countriesSuggestion.push(items.name);
             }
           })
         }
@@ -188,47 +219,69 @@ export class UserFormComponent implements OnInit {
     });
   }
 
+
   onValueSelect(value: string) {
-    this.userForm.get('country').setValue(value);
-    this.displayCountrySuggestion = false;
+    this._userForm.get('country').setValue(value);
+    this._displayCountrySuggestion = false;
   }
+
 
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this.translateService.currentLang;
-    window.open(baseUri + parameters);
+
+    const quizUrl = QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
+
+    if (isPlatformBrowser(this.platform)) {
+      window.open(quizUrl);
+    }
+
   }
 
-  public startEditInstanceDomain(event: Event): void {
-      this._editInstanceDomain = true;
+
+  getQuizUrl(pro: Professional): string {
+    return QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
   }
 
-  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
-      this._editInstanceDomain = false;
-      this.userForm.get('domain').setValue(event.value[0].name || 'umi');
+
+  startEditInstanceDomain(event: Event): void {
+    event.preventDefault();
+    this._editInstanceDomain = true;
   }
 
-  public buildInstanceDomainListConfig(): any {
-      this._updateInstanceDomainConfig.initialData = [];
-      return this._updateInstanceDomainConfig;
+
+  endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
+    this._editInstanceDomain = false;
+    this._userForm.get('domain').setValue(event.value[0].name || 'umi');
   }
 
-  public updateInstanceDomain(event: any): void {
-      this.endEditInstanceDomain(event);
+
+  buildInstanceDomainListConfig(): any {
+    this._updateInstanceDomainConfig.initialData = [];
+    return this._updateInstanceDomainConfig;
   }
 
-  affectAsAdmin(check: boolean) {
-    if (check === true) {
-      this.userForm.get('roles').setValue('admin');
+
+  updateInstanceDomain(event: any): void {
+    this.endEditInstanceDomain(event);
+  }
+
+
+  changeRole(event: Event) {
+    if (event.target['checked']) {
+      this._userForm.get('roles').setValue('admin');
     } else {
-      this.userForm.get('roles').setValue('user');
+      this._userForm.get('roles').setValue('user');
     }
   }
 
   removeTag(tag: any) {
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
   }
+
+  get isSuperAdmin(): boolean {
+    return this._user.roles === "super-admin";
+  }
+
 
   get editInstanceDomain() {
     return this._editInstanceDomain;
@@ -256,6 +309,38 @@ export class UserFormComponent implements OnInit {
 
   get tags(): Tag[] {
     return this._tags;
+  }
+
+  get projects(): Innovation[] {
+    return this._projects;
+  }
+
+  get selectedProject(): String {
+    return this._selectedProject;
+  }
+
+  get isEditUser(): boolean {
+    return this._isEditUser;
+  }
+
+  get isProfessional(): boolean {
+    return this._isProfessional;
+  }
+
+  get isSelf(): boolean {
+    return this._isSelf;
+  }
+
+  get userForm(): FormGroup {
+    return this._userForm;
+  }
+
+  get countriesSuggestion(): Array<string> {
+    return this._countriesSuggestion;
+  }
+
+  get displayCountrySuggestion(): boolean {
+    return this._displayCountrySuggestion;
   }
 
 }

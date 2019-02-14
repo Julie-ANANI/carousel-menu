@@ -1,0 +1,75 @@
+<div [hidden]="showForm">
+    <button (click)="showForm = !showForm" class="btn btn-primary centered">{{ 'TAGS.ADD' | translate }}
+    <i class="fas fa-plus"></i></button>
+</div>
+<div class="container" [hidden]="!showForm">
+    <div class="columns">
+        <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
+            <div class="columns">
+                <div class="column col-10 col-mx-auto">
+                    <div class="form-group text-left">
+
+                      <fieldset formGroupName="label">
+                        <legend class="form-label h4" for="name">{{ 'TAGS.NEW.NAME.LABEL' | translate }}</legend>
+                        <div class="columns">
+                          <div class="column col-6 col-mx-auto">
+                            <label for="name-en">En</label>
+                            <input class="form-input" id="name-en" formControlName="en" type="text"
+                                   placeholder="{{ 'TAGS.NEW.NAME.PLACEHOLDER' | translate }}">
+                          </div>
+                          <div class="column col-6 col-mx-auto">
+                            <label for="name-fr">Fr</label>
+                            <input class="form-input" id="name-fr" formControlName="fr" type="text"
+                                   placeholder="{{ 'TAGS.NEW.NAME.PLACEHOLDER' | translate }}">
+                          </div>
+                        </div>
+                      </fieldset>
+
+                      <fieldset formGroupName="description">
+                        <legend class="form-label h4" for="description">{{ 'TAGS.NEW.DESCRIPTION.LABEL' | translate }}</legend>
+                        <div class="columns">
+                          <div class="column col-6 col-mx-auto">
+                            <label for="description-en">En</label>
+                            <input class="form-input" id="description-en" formControlName="en" type="text">
+                          </div>
+                          <div class="column col-6 col-mx-auto">
+                            <label for="description-fr">Fr</label>
+                            <input class="form-input" id="description-fr" formControlName="fr" type="text">
+                          </div>
+                        </div>
+                      </fieldset>
+
+                      <div class="columns">
+                        <div class="column col-6 col-mx-auto">
+                            <!--<label class="form-label h4" for="atchtype">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
+                            <select id="atchtype" [(ngModel)]="selType">
+                                <option value="null">--</option>
+                                <option *ngFor="let ctype of codeTypes" [ngValue]="ctype.value">{{ctype.name}}</option>
+                            </select>-->
+                            <label class="form-label h4" for="attachments">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
+                            <app-autocomplete-input id="attachments"
+                                                    (update)="addAttachment($event)"
+                                                    [config]="addAttachmentConfig"></app-autocomplete-input>
+                        </div>
+                        <div class="column col-6 col-mx-auto">
+                          <label class="form-label h4" for="type">{{ 'TAGS.TYPE.LABEL' | translate }}</label>
+                          <select id="type" formControlName="type">
+                            <option value="UNKNOWN">{{ 'TAGS.TYPE.UNKNOWN' | translate }}</option>
+                            <option value="SECTOR">{{ 'TAGS.TYPE.SECTOR' | translate }}</option>
+                            <option value="VALUE_CHAIN">{{ 'TAGS.TYPE.VALUE_CHAIN' | translate }}</option>
+                            <option value="SOLUTION_TYPE">{{ 'TAGS.TYPE.SOLUTION_TYPE' | translate }}</option>
+                            <option value="QUALIFICATION">{{ 'TAGS.TYPE.QUALIFICATION' | translate }}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bblock">
+                <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'TAGS.NEW.SUBMIT' | translate }}</button>
+                <!--<button type="reset" class="btn btn-primary centered" (click)="onReset()">{{ 'TAGS.NEW.CANCEL' | translate }}</button>-->
+            </div>
+
+        </form>
+    </div>
+</div>

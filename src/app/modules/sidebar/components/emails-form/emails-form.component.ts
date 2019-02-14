@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {EmailQueueModel} from '../../../../models/mail.queue.model';
 import {Table} from '../../../table/models/table';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-emails-form',
@@ -97,7 +97,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
     this.loadTypes();
 
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           setTimeout (() => {
             this.country = null;

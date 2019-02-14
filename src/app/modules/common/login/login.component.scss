@@ -1,0 +1,105 @@
+@import "../../../../style/framework/variables";
+
+#login-component {
+
+  .section-main {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
+
+    .cover-image {
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      min-height: 100vh;
+    }
+
+
+    .section-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 100vh;
+
+      .form {
+        flex: 1 0 auto;
+        justify-content: center;
+        align-items: center;
+        display: inline-flex;
+        flex-direction: column;
+        width: 100%;
+        padding-top: 1.57rem;
+        padding-bottom: 1.57rem;
+        margin-right: auto;
+        margin-left: auto;
+
+        .title-primary {
+          font-size: 1.75rem;
+          color: $text-background;
+        }
+
+        .credentials-wrapper {
+          width: 80%;
+
+          .submit-wrapper {
+            padding-top: 1.2rem;
+            text-align: center;
+
+            .login-button {
+              padding-bottom: 0.875rem;
+            }
+
+            p, .text-link {
+              font-size: 0.875rem;
+              padding-bottom: 0;
+            }
+
+          }
+
+        }
+
+        .linkedIn-wrapper {
+          padding-top: 1.2rem;
+          text-align: center;
+
+          .or-wrapper {
+            padding-bottom: 1.57rem;
+          }
+
+          .btn i {
+            margin-top: -2px;
+          }
+
+        }
+
+      }
+
+    }
+
+
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #login-component {
+
+    .cover-image {
+      display: none;
+    }
+
+    .credentials-wrapper {
+      width: 90% !important;
+    }
+
+  }
+
+}
+

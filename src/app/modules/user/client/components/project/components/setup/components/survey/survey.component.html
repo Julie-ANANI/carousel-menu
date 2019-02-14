@@ -1,0 +1,14 @@
+<div id="survey-component animate-page">
+
+  <!-- section no survey -->
+  <div *ngIf="!innovation.quizId" class="text-center">
+    <app-message-space [messageA]="'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ'" [widthMax]="'313px'"></app-message-space>
+  </div>
+
+  <!-- section survey -->
+  <div *ngIf="innovation.quizId">
+    <p>{{ 'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
+    <a [href]="url" target="_blank">{{ url }}</a>
+  </div>
+
+</div>

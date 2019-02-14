@@ -1,4 +1,4 @@
-<section id="collaborator-wrapper">
+<section id="collaborator-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit($event)">
@@ -24,28 +24,20 @@
 
     </form>
 
+
     <!-- Bot -->
-    <div *ngIf="collaborator.length === 0 && collaboratorsInvited.length === 0">
-      <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '2.5rem' }">
-        <span class="bot-rect">
-          {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
-        </span>
-        <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-        <div>
-          <img
-            src="https://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg"
-            class="bot-image"
-            alt="Bot">
-        </div>
+    <div *ngIf="innovationCollaborators.length === 0 && collaboratorsInvited.length === 0">
+      <div class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
+        <app-message-space [messageA]="'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE'" [widthMax]="'314px'"></app-message-space>
       </div>
     </div>
+
 
     <!-- Invited collaborator -->
     <div *ngIf="collaboratorsInvited.length >= 1">
       <ul *ngFor="let collaborator of collaboratorsInvited; let i = index" class="collaborator">
         <li>
-          <span class="label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
+          <span class="label label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
         </li>
         <button class="btn btn-xs ghost-primary" (click)="reinviteCollaborator($event, collaborator)">
           {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.REINVITE' | translate }}
@@ -53,17 +45,19 @@
       </ul>
     </div>
 
+
     <!-- Added collaborator -->
-    <div *ngIf="collaborator.length >= 1">
-      <ul *ngFor="let collaborator of collaborator" class="collaborator">
+    <div *ngIf="innovationCollaborators.length >= 1">
+      <ul *ngFor="let collaborator of innovationCollaborators" class="collaborator">
         <li>
-          <span class="label-validate">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
+          <span class="label label-success">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
         </li>
         <button class="btn btn-xs ghost-delete" (click)="removeCollaborator($event, collaborator)">
           {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.DELETE' | translate }}
         </button>
       </ul>
     </div>
+
 
   </div>
 </section>

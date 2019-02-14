@@ -8,7 +8,7 @@
   font-size: 0.875rem;
   flex-direction: column;
 
-  .label-validate {
+  .label {
     margin-right: auto;
     margin-left: auto;
     margin-bottom: .6rem;
@@ -52,7 +52,7 @@
     border-radius: 1.57rem;
     color: white;
     cursor: pointer;
-    margin: .35rem;
+    margin: 0 .35rem .35rem 0;
     transition: all .15s ease-in-out;
   }
 

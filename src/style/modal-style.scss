@@ -14,21 +14,22 @@
 
   .modal-container {
     padding: 0;
-    border-radius: .35rem;
+    border-radius: 3px;
     text-align: unset;
     overflow: auto;
+    position: fixed;
   }
 
   .modal-header {
     min-height: 4.625rem;
     background: $secondary-color;
-    border-top-left-radius: .35rem;
-    border-top-right-radius: .35rem;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
     padding: 1.312rem 1.625rem;
   }
 
   .btn-clear {
-    font-size: 1.2rem;
+    font-size: 20px;
     color: white;
     line-height: 1.5;
   }
@@ -42,6 +43,78 @@
 
   .modal-body {
     padding: 1.875rem 1.625rem;
+
+    .export-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+
+      .options {
+        display: inline-flex;
+        margin-bottom: 1.57rem;
+        flex-direction: column;
+        align-items: center;
+
+        .type-heading {
+          font-size: 1rem;
+          color: $background-color;
+          margin-bottom: 0;
+          font-weight: normal;
+        }
+
+        .type-subHeading {
+          font-size: .875rem;
+          font-weight: normal;
+          margin-bottom: .6rem;
+          color: $meta-color;
+        }
+
+        img {
+          width: auto;
+          height: 66px;
+          margin-bottom: .6rem;
+        }
+
+        .btn-radio:hover {
+          background-color: $primary-color;
+          border-color: $primary-color;
+
+          span {
+            color: white;
+          }
+
+        }
+
+        .btn-radio.active {
+          background-color: $validation-color;
+          border-color: $validation-color;
+
+          span {
+            color: white;
+          }
+
+        }
+
+      }
+
+    }
+
+    .export {
+      padding-left: 2.5rem;
+
+      .form-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .export-consent {
+        font-size: .875rem;
+        font-weight: normal;
+        color: $text-dark;
+      }
+
+    }
+
   }
 
   .modal-footer {
@@ -49,6 +122,20 @@
     text-align: unset;
     display: flex;
     justify-content: flex-end;
+
+    .export-cancel-button, .export-cancel-button:hover {
+      border-color: white;
+    }
+
+    .btn-cancel {
+      border: none;
+      margin-right: .6rem;
+    }
+
   }
 
+}
+
+.modal.active {
+  z-index: 8999;
 }

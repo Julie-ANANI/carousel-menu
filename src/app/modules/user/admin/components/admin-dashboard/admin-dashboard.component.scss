@@ -1,0 +1,170 @@
+@import "../../../../../../style/variables";
+
+#admin-dashboard-component {
+
+  .section-operator {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .form-select {
+      min-height: 2.5rem;
+      margin-top: 0;
+      padding-top: .18rem;
+      padding-bottom: .18rem;
+      min-width: 102px;
+    }
+
+    .text {
+      font-size: 1rem;
+      color: $background-color;
+      font-weight: 600;
+
+      span {
+        margin-right: 1.57rem;
+      }
+
+    }
+
+    .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+      border-color: $border-color;
+    }
+
+  }
+
+
+  .section-table, .section-batch {
+    margin-top: 1.57rem;
+  }
+
+
+  .section-batch {
+    margin-top: 3.15rem;
+
+    .label-week {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .label-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+
+        .label {
+          border-radius: 25px;
+        }
+
+      }
+
+    }
+
+    .batch-wrapper {
+      margin-top: 1.57rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .batch-content {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          padding-bottom: .9375rem;
+          color: $background-color;
+          font-weight: 600;
+        }
+
+        .batch-body {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: .9375rem;
+
+          .label {
+            margin-right: 0;
+            border-radius: 25px;
+          }
+
+          span {
+            color: $secondary-color;
+            font-size: .875rem;
+            cursor: default;
+          }
+
+          .popover-container {
+            width: 250px;
+
+            .card {
+
+              .card-body {
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #admin-dashboard-component {
+
+    .section-operator {
+      flex-direction: column;
+      align-items: flex-start !important;
+
+      .text {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          margin-right: 0 !important;
+          margin-bottom: .9375rem;
+        }
+
+      }
+
+    }
+
+
+    .section-batch {
+
+      .label-week {
+
+        .ghost-edit, .label {
+          margin-bottom: .9375rem;
+        }
+
+      }
+
+      .batch-wrapper {
+        flex-direction: column;
+
+        .batch-content {
+          margin-bottom: .9375rem;
+        }
+
+      }
+
+      .batch-wrapper .batch-content:last-child {
+        margin-bottom: 0;
+      }
+
+    }
+
+  }
+  
+}

@@ -2,7 +2,7 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <div class="sidebar-header">
-      <div class="language-choice">
+      <div class="language-choice" *ngIf="!noLanguage">
         <div (click)="changeLanguage('en')" [ngClass]="{active: language === 'en'}" class="discreet-link">English</div>
         <div (click)="changeLanguage('fr')" [ngClass]="{active: language === 'fr'}" class="discreet-link">Français</div>
       </div>
@@ -14,7 +14,13 @@
     </div>
 
 
-    <div class="sidebar-edit">
+    <div class="language-choice" *ngIf="noLanguage && !languageHasBeenSet">
+      Dans quelle langue souhaitez vous communiquer avec le porteur de projet ?
+      <button (click)="setLanguage('en')" [ngClass]="{active: language === 'en'}" class="discreet-link">English</button>
+      <button (click)="setLanguage('fr')" [ngClass]="{active: language === 'fr'}" class="discreet-link">Français</button>
+    </div>
+
+    <div class="sidebar-edit" *ngIf="!noLanguage || languageHasBeenSet">
       <div *ngIf="!editionMode"><strong>Object : {{ email?.subject }}</strong></div>
 
       <div *ngIf="editionMode">

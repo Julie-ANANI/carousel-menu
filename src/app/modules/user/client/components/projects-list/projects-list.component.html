@@ -1,0 +1,71 @@
+<section *ngIf="innovations" class="section-container" id="projects-list-component">
+
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section add button -->
+    <div class="text-right">
+      <button routerLink="new" (click)="$event.preventDefault()" class="btn btn-primary">
+        {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+      </button>
+    </div>
+
+    <!-- section no project -->
+    <div *ngIf="innovations.length === 0" class="section-no-project">
+      <app-message-space
+        [messageA]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE'"
+        [messageB]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT'"
+        [widthMax]="'354px'">
+      </app-message-space>
+    </div>
+
+    <!-- section projects -->
+    <div *ngIf="innovations.length > 0" class="section-projects-list">
+
+      <!-- projects -->
+      <div class="project-wrapper" [@listAnimation]="innovations.length">
+        <div *ngFor="let innovation of innovations" class="content-outer">
+          <div class="content">
+            <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
+            <div class="project-description">
+              <a [routerLink]="getRelevantLink(innovation)">
+                <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+              </a>
+              <p class="date-text">
+                {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
+                •
+                {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
+                •
+                {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+                |
+                <span class="text-link" (click)="onClickDelete($event, innovation._id)">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_BUTTON' | translate }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- section pagination -->
+      <div *ngIf="innovations.length > 10" class="pagination-wrapper">
+        <app-pagination
+          [configValue]="paginationConfig"
+          (configChange)="configChange($event)"
+          [total]="total"
+          [propertyName]="'client-projects'">
+        </app-pagination>
+      </div>
+
+    </div>
+    <!-- /section projects -->
+
+  </div>
+
+</section>
+
+<!-- delete project confirmation modal -->
+<app-modal [(showModal)]="deleteModal" [modalTitle]="'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.TITLE'">
+  {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+  </div>
+</app-modal>

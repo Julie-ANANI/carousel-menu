@@ -1,0 +1,26 @@
+@import "../../../../../../../style/framework/variables";
+
+#admin-campaign-answers-component {
+
+  .section-actions {
+    text-align: right;
+    padding-top: 1.57rem;
+    padding-bottom: 0.9375rem;
+
+    .btn {
+      margin-bottom: 0.6rem;
+    }
+
+    .ghost-primary {
+      margin-right: 1.2rem;
+    }
+
+  }
+
+  .section-no-answer {
+    text-align: center;
+    padding-top: 3.15rem;
+  }
+
+}
+

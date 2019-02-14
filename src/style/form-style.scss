@@ -2,7 +2,7 @@
 
 /*
     This stylesheet contains all the form related class
-    on our platform.
+    on our framework.
  */
 
 
@@ -17,26 +17,7 @@
 
 
 
-/*
-    Form group style
-*/
 
-.form-group {
-  margin-bottom: 1.2rem !important;
-}
-
-
-/*
-    Form label style
- */
-
-.form-label {
-  color: $label-color;
-  font-weight: 600;
-  font-size: .85rem;
-  line-height: 1.5;
-  display: block;
-}
 
 /*
     Form input style. Just add this class when you are
@@ -44,7 +25,7 @@
     name: .form-default
  */
 
-.form-default {
+.form-default, .form-select {
   border: 1px solid $border-color;
   font-size: .85rem;
   color: $input-color;
@@ -57,7 +38,13 @@
   background: white none;
   padding: .9rem;
   transition: all 0.15s ease-in-out;
-  margin-top: .5rem;
+}
+
+
+.form-select:not([multiple]):not([size]) {
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right .9rem center/0.4rem 0.5rem;
+  background-size: .6rem;
+  padding-right: 2.187rem;
 }
 
 
@@ -74,7 +61,7 @@
     Focus on input style
  */
 
-.form-default:not(:disabled):focus {
+.form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
   border-color: $primary-color;
 }
 
@@ -83,7 +70,7 @@
     Error on input style
  */
 
-.form-default.ng-touched.ng-invalid{
+.form-default.ng-touched.ng-invalid {
   border-color: $alert-color;
 }
 
@@ -92,7 +79,7 @@
     Form input is disabled.
  */
 
-.form-default:disabled, .form-default.disabled {
+.form-default:disabled, .form-default.disabled, .form-select:disabled, .form-select.disabled {
   background: $disabled-color;
   color: $disabled-text-color;
   border-color: $disabled-color;
@@ -134,46 +121,10 @@
 }
 
 
-/*
-    Form error style.  Add this class to show the error related to the
-    input. Class name: form-error
- */
-
-.form-error {
-  color: $alert-color;
-  font-size: .75rem;
-  padding: .3rem 0;
-}
 
 
-/*
-    Form input radio button
- */
 
-.form-radio {
-  padding-left: 1.57rem;
-  padding-right: 1.57rem;
-  color: $label-color;
-}
 
-.form-radio .form-icon {
-  height: 1rem !important;
-  top: 0.2rem !important;
-  width: 1rem !important;
-}
-
-.form-radio input:checked + .form-icon {
-  border: none !important;
-  background: $validation-color;
-}
-
-/*
-    Form input radio button disabled
- */
-
-.form-radio input:disabled + .form-icon {
-  cursor: not-allowed;
-}
 
 
 /*
@@ -183,31 +134,36 @@
  */
 
 .suggestion {
+  display: flex;
+  flex-direction: column;
   box-shadow: $box-shadow;
   margin: 0;
   padding: 0;
   list-style: none;
   z-index: 2;
-  background-color: white;
+  background-color: #F2F2F2;
   outline: none;
+  overflow: auto;
 
   li {
-    padding: .5rem .6rem;
     transition: all .15s ease-in-out;
-    cursor: pointer;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    word-break: break-word;
+    font-size: .875rem;
+    color: $input-color;
+    padding: 0;
 
     a{
-      color: $label-color;
       text-decoration: none;
+      display: flex;
+      padding: 1rem .9375rem;
     }
 
   }
 
   li:hover {
-    background:  #F2F2F2;
-    border-color: #F2F2F2;
+    background-color: $border-color;
+    border-color: $border-color;
+    cursor: pointer;
   }
 
 }
@@ -229,33 +185,11 @@ textarea {
   */
 
 
-.form-switch .form-icon::before {
-  background: $meta-color;
-  border-color: $meta-color;
-  height: 1.3125rem;
-  width: 1.12rem;
-  top: -.21875rem;
-}
 
-.form-switch .form-icon  {
-  border-color: $border-color;
-  background-color: #FFFFFF;
-  height: .95rem;
-  width: 2rem;
-}
 
-.form-switch input:checked + .form-icon::before {
-  background: $validation-color;
-}
 
-.form-switch input:checked + .form-icon  {
-  border-color: rgba(46,204,113,0.45) !important;
-  background: rgba(46,204,113,0.45);
-}
 
-.form-switch input:disabled + .form-icon::before {
-  background: $disabled-color;
-}
+
 
 .form-switch input:focus + .form-icon {
   border-color: $border-color;
@@ -280,10 +214,65 @@ textarea {
 
 
 /*
+    Form checkbox
+ */
+
+.form-checkbox {
+  padding-left: 1.5rem;
+}
+
+.form-checkbox .form-icon {
+  width: 1rem;
+  height: 1rem;
+  top: .21rem;
+  border-color: $border-color;
+}
+
+.form-checkbox .form-icon::before {
+  height: 11px;
+  width: 7px;
+  margin-left: -3px;
+  margin-top: -7px;
+}
+
+.form-checkbox input:focus + .form-icon {
+  box-shadow: none !important;
+  background: white;
+  -webkit-box-shadow: none !important;
+  border-color: $border-color;
+}
+
+.form-checkbox input:checked + .form-icon, .form-checkbox input:active + .form-icon {
+  background: $validation-color;
+  border-color: $validation-color;
+}
+
+
+/*
     TinyMCE
   */
 
 .mce-tinymce {
   box-shadow: none !important;
   width: inherit !important;
+}
+
+/********************************** Media ***************************************/
+
+@media (min-width: 1441px) {
+
+  .restrict-width {
+    max-width: 50% !important;
+  }
+  
+}
+
+@media (max-width: 600px) {
+
+
+  .form-switch .form-icon::before {
+    top: -4px !important;
+  }
+
+
 }

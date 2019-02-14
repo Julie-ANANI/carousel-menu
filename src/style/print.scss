@@ -1,46 +1,6 @@
+@import "variables";
+
 @media print and (color) {
-
-  /*
-  @page:first {
-    size: 5.5in 8.5in;
-    margin: 0;
-  }
-
-  @page:right{
-    @bottom-left {
-      content: "My book";
-      font-size: 40px;
-      color: #333;
-    }
-  }
-
-  @page:right{
-    @bottom-right {
-      content: "Page " counter(page) " of " counter(pages);
-    }
-  }
-
-  @page :right {
-    @top-right {
-      content: string(doctitle);
-      margin: 30pt 0 10pt 0;
-      font-size: 8pt;
-    }
-  }
-
-  .page-footer:after {
-    counter-increment: page;
-    content: counter(page);
-   }
-
-  .page-footer {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-  }
-  */
-
 
   * {
     -webkit-print-color-adjust: exact !important;
@@ -49,512 +9,412 @@
 
   @page {
     size: A4 landscape;
-    margin: 1.5cm 1.5cm;
+    margin: 0;
   }
 
+  html, body, .main-wrapper, .body-wrapper {
+    width: 100%;
+    height: 20.95cm;
+    margin: 0;
+    padding: 0;
+    flex: unset !important;
+    min-height: unset !important;
+  }
 
-  /* =========================================================================
-    Innovation card
-    ========================================================================== */
-
-  #setup,
-  .header-project,
-  footer,
-  app-header {
+  .modal, app-header, app-footer, app-sidebar {
     display: none !important;
   }
 
-  .innovation-card-print {
-    display: block !important;
-    font-size: 14px;
-    color: #333;
-    line-height: 1.6;
 
-    .section-light-container {
-      padding: 0 !important;
-    }
+  /********************************** Innovation Card ***************************************/
 
-    .section-heading {
-      margin: 0 0 8px !important;
-    }
+  #setup-component, .header-project, #project-component .section-header {
+    display: none !important;
+  }
 
-    .innovation-wrapper {
+
+  #project-component {
+    padding-bottom: 0 !important;
+  }
+
+
+  #innovation-card-print {
+    display: flex !important;
+    color: $text-dark;
+    font-size: 13px;
+    width: 100%;
+    height: 20.95cm;
+
+
+    .column-1, .column-2, .column-3 {
+      width: 33.33%;
+      height: 100%;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      padding: 15px;
 
-      .main-media {
+      .main-heading {
         margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: normal;
       }
 
-      .summary-wrapper {
-        padding-right: 0;
-        flex: 1.3;
+    }
 
-        p {
-          padding-bottom: 25px;
-        }
 
-        .section-heading {
-          margin-bottom: 15px;
-        }
+    .column-1 {
+      background-color: #D8D8D8;
 
-        .advantage-wrapper {
-          margin: 0;
+      .main-heading {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 25px;
+      }
+
+      /*.summary-text {
+        padding-bottom: -.6rem;
+
+        ul {
+          margin: 0 !important;
+          padding: 0 !important;
 
           li {
-            margin: 0;
-            padding: 3px 8px 3px 4px !important;
+            margin: 0 !important;
+            padding: 0 0 .6rem 0 !important;
           }
 
-          li:last-child {
-            padding-bottom: 0;
+        }
+
+      }*/
+
+      /*.summary-text {
+
+        p:last-child {
+          padding-bottom: 0;
+        }
+
+      }*/
+
+      .image-wrapper {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+
+      .advantage-wrapper {
+
+        .main-heading {
+          font-weight: normal;
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
+
+        .advantages {
+
+          li {
+            padding: 5px 1px;
           }
+
+
+          li:first-child {
+            padding-top: 0;
+          }
+
+          /*li:last-child {
+            padding-bottom: 0;
+          }*/
 
         }
 
       }
 
-      .issue-wrapper {
-        padding-left: 15px;
-        padding-right: 0;
-        flex: 0.8;
-      }
-
-      .solution-wrapper {
-        padding-left: 15px;
-        flex: 0.8;
-      }
-
     }
+
+
+    /*.column-2, .column-3 {
+
+      .issue-text, .solution-text {
+
+        p:last-child, ul li:last-child {
+          padding-bottom: 0;
+        }
+
+      }
+
+    }*/
+
+
   }
 
-  /* =========================================================================
-    Market report
-    ========================================================================== */
 
-  /*
-  app-admin h2,
-  .navbar,
-  .admin-buttons,
-  .tab,
-  footer,
-  .sidebar,
-  #app-header,
-  .see-answer,
-  .market-report-btn,
-  .item-menu-sandwich,
-  .bar-stats i,
-  .container.main-container,
-  .btn.btn-action.circle,
-  .popover.popover-bottom,
-  .fas.fa-filter,
-  .fas.fa-link {
-    display: none !important;
-  }
+  /********************************** Market report ***************************************/
 
-  .col-10 {
-    width: 100% !important;
-    padding: 0;
-  }
+  #market-report {
+    padding-bottom: 0 !important;
+    background-color: white !important;
 
-  .market-report {
 
-    .column.col-10.col-mx-auto > h1 {
+    .sticky-wrapper, .menu-button-print, .report-innovation-print, .report-targeting-print, .report-analytics-print, .report-key-learnings-print
+    , .report-professionals-print, .report-map-print, .report-origin-print, .report-other-sections-print, .report-conclusion-print
+    , .msg-wrapper, .scroll-sticky-wrapper {
       display: none !important;
     }
 
-    .content {
-      margin-left: 10px;
+    .front-wrapper {
+      display: flex !important;
     }
 
-    .frontcover {
-      margin-top: 150px;
-      page-break-after: always;
 
-      img {
-        display: block !important;
-        margin-bottom: 30px;
-      }
-
-      .subtitle {
-        display: block !important;
-        margin-bottom: 80px;
-      }
+    #executive-report-wrapper, #main-page, .umi-intro-print {
+      padding-top: 0;
+      padding-bottom: 0 !important;
     }
 
-    h2 {
-      margin-left: 0 !important;
-      font-size: 32px !important;
-      margin-bottom: 20px !important;
-    }
 
-    .big-blue-synthesis,
-    .big-synthesis {
-      padding: 5px 15px 25px 15px !important;
-      margin-right: 20px !important;
-      margin-bottom: 20px !important;
-      min-width: 200px !important;
-      max-width: 200px !important;
-    }
-
-    .umi-synthesis .title {
-      string-set: doctitle content();
-      color: #0c90c6 !important;
-      font-size: 25px !important;
-    }
-
-    .bar-chart-component .horizontal-bar {
-      width: 99% !important;
-    }
-
-    .page-break {
-      page-break-before: always !important;
-    }
-
-    .white-frame {
+    .column {
       padding: 0 !important;
       margin: 0 !important;
-      box-shadow: none !important;
+      width: 100% !important;
+      height: 100% !important;
     }
 
-    section {
-      page-break-before: always;
-    }
 
-    .desc {
-      color: #333 !important;
-      line-height: 20px !important;
+    #main-page {
 
-      p {
-        margin: 0 0 0.3rem;
-      }
-    }
-
-    .items {
-      .clickable-url {
-        display: none;
+      .column {
+        height: 100vh !important;
       }
 
-      div.items-list > div {
+      .header-wrapper {
+        padding-top: 30px;
+      }
+
+      .front-page-print {
+        height: 100%;
+        padding: 15px;
         page-break-inside: avoid;
-        color: #333 !important;
-        background: transparent !important;
-        padding: 0 0 !important;
-        border-radius: 0 !important;
-        margin-bottom: 0 !important;
-        width: 49%;
-        font-size: 12px !important;
-        font-weight: normal !important;
-      }
-    }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
 
-    ul.comments,
-    ul.comments-bar {
-      padding: 0;
-      margin: 0;
+        .body-wrapper {
+          min-height: unset;
+          flex: 1;
 
-      li {
-        page-break-inside: avoid;
-        color: #333 !important;
-        background: transparent !important;
-        padding: 0 0 !important;
-        border-radius: 0 !important;
-        margin-bottom: 0 !important;
-
-        app-country-flag img {
-          position: relative;
-          top: 4px;
-        }
-
-        .professional-comment {
-          color: #333 !important;
-          padding: 8px 0 0 0 !important;
-
-          & > div > p {
-            font-weight: 600;
-            margin: 0;
-            font-size: 12px !important;
-            text-overflow: ellipsis;
+          h1 {
+            font-size: 42px !important;
           }
 
-          .comment-desc {
-            font-weight: normal;
-            margin-left: 44px;
-            display: block;
-            top: -10px;
-            position: relative;
-            font-size: 12px !important;
+          .summary {
+            font-size: 14px !important;
           }
+
         }
-      }
-    }
 
-    ul.comments {
-      page-break-before: always;
-    }
+        .text-owner, .text-jobTitle, .text-email, .footer-wrapper {
+          font-size: 12px !important;
+        }
 
-    ul.comments-bar li app-country-flag img {
-      position: relative;
-      top: -4px;
-    }
+        .footer-wrapper {
+          width: 100%;
+          padding-left: 5px !important;
+          padding-right: 5px !important;
+        }
 
-    .world-map .map {
-      height: 260px !important;
-      page-break-inside: avoid;
-    }
-
-    .world-map {
-      page-break-after: always;
-    }
-
-    .prosList {
-      page-break-inside: avoid;
-    }
-
-    .professional-item {
-      page-break-inside: avoid;
-      box-shadow: none !important;
-      margin: 20px 5px 0px 5px !important;
-      color: #333 !important;
-      padding: 0 !important;
-    }
-
-    .prosList .professional-item:nth-child(9) {
-      page-break-after: always;
-    }
-
-    app-pro-tag {
-      page-break-inside: avoid;
-    }
-
-    .bloc {
-      margin-top: 0 !important;
-      margin-bottom: 30px;
-    }
-
-    .scale-component {
-      page-break-inside: avoid;
-    }
-
-    .scale-component .vertical-bar {
-      height: 250px !important;
-    }
-
-    .big-blue-synthesis .total-score {
-      padding: 0 !important;
-    }
-
-    .stars-component .star-ratings-css,
-    .stars-component .popover-container {
-      display: inline-block;
-
-      .top,
-      .grade-number {
-        color: #0c90c6 !important;
-      }
-
-      .grade-number {
-        font-size: 1.1em !important;
-      }
-    }
-
-    .stars-component .popover-container {
-      max-width: 100% !important;
-      box-shadow: none !important;
-      margin-left: 20px;
-
-      small {
-        display: inline-block;
-        margin-left: 15px;
-      }
-    }
-
-    .market-item {
-      position: relative;
-      margin-left: 10px !important;
-      margin-bottom: 15px !important;
-    }
-
-    .market-item::before {
-      position: absolute;
-      content: "•";
-      display: block;
-      width: 5px;
-      height: 5px;
-      left: -10px;
-    }
-
-    .professional-item.top-profil {
-      color: #333 !important;
-      background: transparent !important;
-    }
-
-    .professional-item.top-profil:before {
-      top: -20px !important;
-    }
-  }*/
-
-  /*
-      Market report
-  */
-
-  .s-print {
-    background-color: white !important;
-  }
-
-  .sticky-wrapper, .s-menuButton-print, .scrollButton-print, .answer-button-wrapper, .comment-button-wrapper {
-    display: none !important;
-  }
-
-  .s-frontPage-print, .s-innovationPage-print, .s-targeting-print, .s-analytics-print, .s-origin-print, .s-map-print,
-  .s-professional-print, .s-conclusion-print, .s-keyLearning-print {
-    padding-top: 0;
-    padding-bottom: 0 !important;
-    page-break-after: always;
-  }
-
-
-  .s-frontPage-print {
-
-    .section-inline-container {
-      padding: 0 !important;
-    }
-
-    .body-wrapper {
-      min-height: 85vh !important;
-    }
-
-  }
-
-  .s-innovationPage-print {
-
-    .section-inline-container {
-      padding: 0 !important;
-    }
-
-    .innovation-wrapper {
-      flex-direction: column;
-
-      .issue-wrapper {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-top: 25px;
-      }
-
-      .solution-wrapper {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-top: 25px;
       }
 
     }
 
-  }
 
-  .s-targeting-print {
+    #executive-report-wrapper {
+     height: 100%;
 
-    .section-inline-container {
-      padding: 0 !important;
+     .main-heading {
+       font-size: 20px !important;
+     }
+
+     .sub-title, .abstract-professional, .details, .conclusion-text, .operator-contact .name, .operator-contact .job, .operator-contact .phone
+     , .section-second h6, .remaining-text, .abstract-wrapper {
+       font-size: 12px !important;
+     }
+
+     .operator-contact .job, .operator-contact .phone, .operator-contact .text-link, .section-second .address, .remaining-text .text-link {
+       font-size: 11px !important;
+     }
+
+     .page-first, .second-page-wrapper {
+       flex-direction: row !important;
+       height: 792px !important;
+     }
+
+     .page-first {
+
+       #executive-professional-wrapper {
+         justify-content: flex-start !important;
+         padding: 20px !important;
+         border-right: 1px solid #E0E0E0 !important;
+
+         .main-heading {
+           margin-bottom: 10px !important;
+         }
+
+         .section-2-wrapper {
+           margin-bottom: 10px !important;
+         }
+
+         .professional-profile-wrapper {
+           margin-bottom: 0 !important;
+
+           .profile {
+             margin-bottom: 10px !important;
+
+             .details {
+
+               p {
+                 padding: 0 0 2px 0 !important;
+               }
+
+             }
+
+           }
+
+         }
+
+       }
+
+     }
+
+     .section-wrapper {
+       width: 33.33% !important;
+     }
+
+     .section {
+       padding: 20px !important;
+       display: inline-flex !important;
+     }
+
+     .sections {
+       width: 66.67% !important;
+     }
+
+     .section-2, .section-4 {
+       height: 50% !important;
+       display: flex !important;
+       border-bottom: 1px solid $border-color !important;
+     }
+
+     .section-4 {
+       width: 50% !important;
+       border-left: 1px solid $border-color !important;
+     }
+
+     .section-2:last-child {
+       border-bottom: none !important;
+     }
+
+     .section-4:last-child, .section-4:nth-child(3) {
+       border-bottom: none !important;
+     }
+
+     .section-4:nth-child(1), .section-4:nth-child(3) {
+       border-left: none !important;
+     }
+
+     .second-page {
+       padding-top: 0 !important;
+
+       .second-page-wrapper {
+         min-height: 100% !important;
+       }
+
+     }
+
+     #executive-section-wrapper {
+
+       .executive-piechart {
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         height: 100%;
+
+         .percentage {
+           margin-bottom: 10px !important;
+         }
+
+         .chart-pie {
+           width: 300px !important;
+           margin-bottom: 10px !important;
+         }
+
+         .data {
+           margin-right: 5px !important;
+           margin-bottom: 5px !important;
+         }
+
+       }
+
+       .title-wrapper {
+         margin-bottom: 15px !important;
+       }
+
+       .content-wrapper {
+         height: 229px !important;
+         justify-content: flex-start !important;
+         margin-bottom: 10px !important;
+       }
+
+       .tag {
+         margin-bottom: 5px !important;
+       }
+
+       .tag:last-child {
+         margin-bottom: 0 !important;
+       }
+
+       .executive-star-wrapper {
+         margin-bottom: 0 !important;
+
+         .note-label {
+           margin-bottom: 5px !important;
+         }
+
+       }
+
+       .executive-bar-chart-wrapper {
+
+         .row-1-wrapper, .row-2-wrapper, .row-3-wrapper {
+           margin-bottom: 5px !important;
+         }
+
+       }
+
+     }
+
+     #executive-conclusion-wrapper {
+
+       .section-first, .section-second {
+         padding: 20px !important;
+       }
+
+       .main-heading, .conclusion-text {
+         margin-bottom: 10px !important;
+       }
+
+       .logo-address {
+         margin-top: 20px !important;
+       }
+
+     }
+
     }
 
-    .answer-wrapper {
-      background: #4F5D6B !important;
-      color: white !important;
-    }
 
-  }
+    .umi-intro-print {
+      display: flex !important;
 
-  .s-analytics-print {
-
-    .section-inline-container {
-      padding: 0 !important;
-    }
-
-    .name-wrapper li {
-      width: 50% !important;
-    }
-
-  }
-
-  .ques-conclusion-wrapper {
-    flex-direction: row !important;
-
-    .divider-wrapper {
-      display: block !important;
-    }
-
-    .stat-wrapper {
-      padding-top: 0 !important;
-      padding-bottom: 25px !important;
-    }
-
-    .pie-chart-print {
-      flex: 1 !important;
-      padding-top: 50px !important;
-    }
-
-  }
-
-  .bar-chart {
-
-    .answer-wrapper {
-      flex-direction: row !important;
-    }
-
-  }
-
-  .s-origin-print {
-
-    .section-inline-container {
-      padding-top: 25px !important;
-      padding-bottom: 25px !important;
-    }
-
-  }
-
-  .s-map-print {
-    align-items: center;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-  }
-
-  .s-professional-print {
-    page-break-inside: avoid;
-
-    .professional-wrapper {
-      flex-direction: row !important;
-
-      .profile {
-        flex: 0 1 calc(32% - 1rem) !important;
-        height: 150px !important;
-      }
-
-    }
-
-  }
-
-  .s-questions-print {
-    padding-top: 0;
-    padding-bottom: 0 !important;
-  }
-
-  .s-question-print {
-    page-break-after: always;
-  }
-
-  .s-item-print {
-    flex: 0 1 calc(32% - 1rem) !important;
-    min-height: 100px !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-
-    .value {
-
-      p {
-        padding-top: 15px !important;
-        font-size: 15px !important;
-
+      .img-responsive {
+        height: 19cm !important;
+        margin: auto;
       }
 
     }

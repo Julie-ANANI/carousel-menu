@@ -1,0 +1,29 @@
+#not-found-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  .no-result-wrapper {
+    margin-top: 0;
+    text-align: center;
+
+    .bot-image {
+      height: 12.37rem;
+      margin-bottom: .9375rem;
+    }
+
+    .title-primary {
+      color: #FF795D;
+      font-size: 2.7rem;
+    }
+
+    .text-link {
+      padding-top: 1.57rem;
+    }
+
+  }
+
+}
+

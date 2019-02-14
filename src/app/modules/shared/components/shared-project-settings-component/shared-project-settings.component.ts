@@ -1,14 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
+import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
-import { Subject } from 'rxjs/Subject';
-import { Location } from '@angular/common';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { Router } from '@angular/router';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -18,63 +12,61 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 
 export class SharedProjectSettingsComponent implements OnInit {
 
-  @Input() settings: InnovationSettings;
-  @Input() adminMode: boolean;
-  @Input() showTargetingFieldError: Subject<boolean>;
-  @Input() projectStatus: string;
-  @Input() innovId: string;
+  @Input() set projectSettings(value: InnovationSettings) {
+    this._innovationSettings = JSON.parse(JSON.stringify(value));
+    this.getCommentSections();
+  }
 
-  @Output() settingsChange = new EventEmitter<any>();
+  @Input() set editable(value: boolean) {
+    this._canEdit = value;
+  }
 
-  private _showMarketError: boolean;
-  private _showGeographyError: boolean;
-  private _adminSide: boolean;
-  private _deleteModal = false;
+  @Input() set modeAdmin(value: boolean) {
+    this._adminMode = value;
+  }
+
+  @Input() set sideAdmin(value: boolean) {
+    this._adminSide = value;
+  }
+
+  @Output() settingsChange = new EventEmitter<InnovationSettings>();
+
+  private _innovationSettings: InnovationSettings;
+
+  private _canEdit = false;
+
+  private _adminMode = false;
+
+  private _adminSide = false;
 
   private _displayCountriesToExcludeSection = false;
+
   private _displayCountriesCommentSection = false;
+
   private _displayCompanyToExcludeSection = false;
+
   private _displayCompanyToIncludeSection = false;
+
   private _displayPersonsToExcludeSection = false;
+
   private _displayKeywordsSection = false;
+
   private _displayCompanyCommentSection = false;
 
   constructor(private translateService: TranslateService,
-              private authService: AuthService,
-              public shareService: ShareService,
-              private location: Location,
-              private innovationService: InnovationService,
-              private router: Router,
-              private translateNotificationsService: TranslateNotificationsService) {}
-
+              private innovationCommonService: InnovationCommonService) {}
 
   ngOnInit() {
-    this.isAdmin();
-
-    if (this.settings) {
-      this._displayCountriesCommentSection = this.settings.geography && this.settings.geography.comments && this.settings.geography.comments.length > 0;
-      this._displayCompanyCommentSection = this.settings.companies.description.length > 0;
-      this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
-      this._displayKeywordsSection = this.settings.keywords.length > 0;
-    }
-
-    if (!this._adminSide) {
-      this.showTargetingFieldError.subscribe(value => {
-        if (value) {
-          this._showMarketError = this.settings.market.comments.length === 0;
-          this.checkGeographyError();
-        } else {
-          this._showMarketError = false;
-        }
-      });
-    }
-
   }
 
-  isAdmin() {
-    this.adminMode = this.adminMode && this.authService.adminLevel >= 1;
-    this._adminSide = this.location.path().slice(0, 6) === '/admin';
+
+  private getCommentSections() {
+    this._displayCountriesCommentSection = this._innovationSettings.geography && this._innovationSettings.geography.comments && this._innovationSettings.geography.comments.length > 0;
+    this._displayCompanyCommentSection = this._innovationSettings.companies.description.length > 0;
+    this._displayPersonsToExcludeSection = this._innovationSettings.professionals && this._innovationSettings.professionals.exclude && this._innovationSettings.professionals.exclude.length > 0;
+    this._displayKeywordsSection = this._innovationSettings.keywords.length > 0;
   }
+
 
   /**
    * This configuration tells the directive what text to use for the placeholder and if it exists,
@@ -82,211 +74,202 @@ export class SharedProjectSettingsComponent implements OnInit {
    * @param type
    * @returns {any|{placeholder: string, initialData: string}}
    */
-  public getConfig(type: string): any {
+  getConfig(type: string): any {
     const _inputConfig = {
       'countries': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings && this.settings.geography ? this.settings.geography.exclude || [] : [],
+        initialData: this._innovationSettings && this._innovationSettings.geography ? this._innovationSettings.geography.exclude || [] : [],
         type: 'countries'
       },
       'excludedPeople': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings && this.settings.professionals ? this.settings.professionals.exclude || [] : []
+        initialData: this._innovationSettings && this._innovationSettings.professionals ? this._innovationSettings.professionals.exclude || [] : []
       },
       'excludedCompanies': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings && this.settings.companies ? this.settings.companies.exclude || [] : [],
+        initialData: this._innovationSettings && this._innovationSettings.companies ? this._innovationSettings.companies.exclude || [] : [],
         type: 'company'
       },
       'includedCompanies': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
-        initialData: this.settings && this.settings.companies ? this.settings.companies.include || [] : [],
+        initialData: this._innovationSettings && this._innovationSettings.companies ? this._innovationSettings.companies.include || [] : [],
         type: 'company'
       },
       'keywords': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.PLACEHOLDER',
-        initialData: this.settings ? this.settings.keywords || [] : []
+        initialData: this._innovationSettings ? this._innovationSettings.keywords || [] : []
       },
       'domainBL': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.DOMAINS_PLACEHOLDER',
-        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.domains, (val: string) => {return {text: val}; }) : []
+        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.domains, (val: string) => {return {text: val}; }) : []
       },
       'emailBL': {
         placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.EMAILS_PLACEHOLDER',
-        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.emails, (val: string) => {return {text: val}; }) : []
+        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.emails, (val: string) => {return {text: val}; }) : []
       },
       'peopleBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.people, (val: string) => {return {text: val}; }) : []
+        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.people, (val: string) => {return {text: val}; }) : []
       }
     };
     return _inputConfig[type] || {
-          placeholder: 'Input',
-          initialData: ''
-        };
+      placeholder: 'Input',
+      initialData: ''
+    };
   }
 
-  /****************************************************************************
-   ******************************** Geography *********************************
-   ****************************************************************************/
 
   /**
    * This method receives the event from a click in some continent. It should update the geography.continentTarget
    * @param event
    */
-  public continentModificationDrain(event: any) {
+  continentModificationDrain(event: any) {
     if (event) {
-      this.settings.geography.continentTarget = event.continents;
-      this.checkGeographyError();
+      this._innovationSettings.geography.continentTarget = event.continents;
       this.updateSettings();
     }
   }
 
+
   /**
    * Add a country to the exclusion list
    */
-  public addCountryToExclude(event: {value: Array<string>}): void {
-    this.settings.geography.exclude = event.value;
-    this._showGeographyError = this.settings.geography.exclude.length === 0;
-    this.checkGeographyError();
+  addCountryToExclude(event: {value: Array<string>}): void {
+    this._innovationSettings.geography.exclude = event.value;
+    // this.showGeographyError = this.innovationSettings.geography.exclude.length === 0;
     this.updateSettings();
   }
 
+
   get continentTarget(): any {
-    return this.settings ? this.settings.geography.continentTarget : {};
+    return this._innovationSettings ? this._innovationSettings.geography.continentTarget : {};
   }
+
 
   get displayCountriesToExcludeSection(): boolean {
     return this._displayCountriesToExcludeSection;
   }
 
+
   set displayCountriesToExcludeSection(value: boolean) {
     this._displayCountriesToExcludeSection = value;
   }
+
 
   get displayCountriesCommentSection(): boolean {
     return this._displayCountriesCommentSection;
   }
 
+
   set displayCountriesCommentSection(value: boolean) {
     this._displayCountriesCommentSection = value;
   }
 
-  /****************************************************************************
-   ******************************* Enterprises ********************************
-   ****************************************************************************/
 
-  public addCompanyToExclude(event: {value: Array<string>}): void {
-    this.settings.companies.exclude = event.value;
+  addCompanyToExclude(event: {value: Array<string>}): void {
+    this._innovationSettings.companies.exclude = event.value;
     this.updateSettings();
   }
+
 
   get displayCompanyToExcludeSection(): boolean {
     return this._displayCompanyToExcludeSection;
   }
 
+
   set displayCompanyToExcludeSection(value: boolean) {
     this._displayCompanyToExcludeSection = value;
   }
 
-  public addCompanyToInclude(event: {value: Array<string>}): void {
-    this.settings.companies.include = event.value;
+
+  addCompanyToInclude(event: {value: Array<string>}): void {
+    this._innovationSettings.companies.include = event.value;
     this.updateSettings();
   }
+
 
   get displayCompanyToIncludeSection(): boolean {
     return this._displayCompanyToIncludeSection;
   }
 
+
   set displayCompanyToIncludeSection(value: boolean) {
     this._displayCompanyToIncludeSection = value;
   }
+
 
   set displayCompanyCommentSection(value: boolean) {
     this._displayCompanyCommentSection = value;
   }
 
+
   get displayCompanyCommentSection(): boolean {
     return this._displayCompanyCommentSection;
   }
 
-  /****************************************************************************
-   ****************************** Professionals *******************************
-   ****************************************************************************/
 
-  public addPeopleToExclude(event: {value: Array<string>}): void {
-    this.settings.professionals.exclude = event.value;
+  addPeopleToExclude(event: {value: Array<string>}): void {
+    this._innovationSettings.professionals.exclude = event.value;
     this.updateSettings();
   }
+
 
   get displayPersonsToExcludeSection(): boolean {
     return this._displayPersonsToExcludeSection;
   }
 
+
   set displayPersonsToExcludeSection(value: boolean) {
     this._displayPersonsToExcludeSection = value;
   }
 
-  /****************************************************************************
-   **************************** Keywords & Comments ***************************
-   ****************************************************************************/
 
   get comments(): string {
-    return this.settings ? this.settings.comments : '';
+    return this._innovationSettings ? this._innovationSettings.comments : '';
   }
 
+
   set comments(value: string) {
-    this.settings.comments = value;
+    this._innovationSettings.comments = value;
     this.updateSettings();
   }
+
 
   get displayKeywordsSection(): boolean {
     return this._displayKeywordsSection;
   }
 
+
   set displayKeywordsSection(value: boolean) {
     this._displayKeywordsSection = value;
   }
 
-  public addKeywordToExclude(event: {value: Array<string>}): void {
-    this.settings.keywords = event.value;
+
+  addKeywordToExclude(event: {value: Array<string>}): void {
+    this._innovationSettings.keywords = event.value;
     this.updateSettings();
   }
 
-  /****************************************************************************
-   ********************************* Blacklist ********************************
-   ****************************************************************************/
 
-  public addDomainToExclude(event: {value: Array<string>}): void {
-    this.settings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
+  addDomainToExclude(event: {value: Array<string>}): void {
+    this._innovationSettings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
-  public addEMailToExclude(event: {value: Array<string>}): void {
-    this.settings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
+
+  addEMailToExclude(event: {value: Array<string>}): void {
+    this._innovationSettings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
-  /**
-   * After all the settings modifications are done, send them back to the project to be saved.
-   */
-  public updateSettings() {
-    if (this._projectStatus) {
-      this.settingsChange.emit(this.settings);
+
+  updateSettings() {
+    if (this._canEdit) {
+      this.innovationCommonService.setNotifyChanges(true);
+      this.settingsChange.emit(this._innovationSettings);
     }
   }
 
-  checkGeographyError() {
-    if (this.settings.geography.exclude.length === 0 && this.settings.geography.comments.length === 0
-      && !this.settings.geography.continentTarget.russia && !this.settings.geography.continentTarget.oceania
-      && !this.settings.geography.continentTarget.europe && !this.settings.geography.continentTarget.asia
-      && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
-      && !this.settings.geography.continentTarget.africa) {
-      this._showGeographyError = true;
-    } else {
-      this._showGeographyError = false;
-    }
-  }
 
   getColor(length: number) {
     if (length <= 0) {
@@ -299,55 +282,24 @@ export class SharedProjectSettingsComponent implements OnInit {
   }
 
 
-  showDeleteModal(event: Event) {
-    event.preventDefault();
-    this._deleteModal = true;
-  }
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._deleteModal = false;
-  }
-
-  deleteProject(event: Event) {
-    event.preventDefault();
-
-    this.innovationService.remove(this.innovId).first().subscribe((res) => {
-      this.router.navigate(['/project']);
-      this.translateNotificationsService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
-    }, err => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
-    })
-  }
-
   get lang() {
     return this.translateService.currentLang;
   }
 
-  get _projectStatus(): boolean {
-    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this._adminSide;
+  get innovationSettings(): InnovationSettings {
+    return this._innovationSettings;
   }
 
-  get showMarketError(): boolean {
-    return this._showMarketError;
+  get canEdit(): boolean {
+    return this._canEdit;
   }
 
-  set showMarketError(value: boolean) {
-    this._showMarketError = value;
+  get adminMode(): boolean {
+    return this._adminMode;
   }
-
-  get showGeographyError(): boolean {
-    return this._showGeographyError;
-  }
-
 
   get adminSide(): boolean {
     return this._adminSide;
-  }
-
-
-  get deleteModal(): boolean {
-    return this._deleteModal;
   }
 
 }

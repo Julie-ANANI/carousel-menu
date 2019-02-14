@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TranslationService {
 
-  constructor(private _http: Http) {}
+  constructor(private _http: HttpClient) {}
 
-  public translate(text: string, lang: string): Observable<{translation: string}> {
-    return this._http.get('/misc/translate', {params: {text: text, lang: lang}})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+  public translate(text: string, lang: string): Observable<any> {
+    return this._http.get('/misc/translate', {params: {text: text, lang: lang}});
   }
 
 }

@@ -6,7 +6,7 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shared-tag-item',
@@ -17,19 +17,29 @@ import { Observable } from 'rxjs/Observable';
 export class SharedTagItemComponent implements OnInit {
 
   @Input() tags: Array<any>;
+
+  @Input() type: string;
+
   @Input() set projectId(project: string) {
     this._projectId = project;
   };
+
   @Input() editMode: boolean;
+
   @Input() isAdmin: boolean;
+
   @Input() backgroundColor: string;
+
   @Input() textColor: string;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
+
   @Output() createTag: EventEmitter<Tag> = new EventEmitter();
+
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
 
   private _tagForm: FormGroup;
+
   private _showModal = false;
 
   private _projectId = '';
@@ -46,14 +56,17 @@ export class SharedTagItemComponent implements OnInit {
     });
   }
 
-  public tagSuggestions(keyword: string): Observable<Array<any>> {
+  public tagSuggestions(query: string): Observable<Array<any>> {
     if (this._projectId !== '') {
-      return this.tagsService.searchTagInPool(this.projectId, keyword);
+      return this.tagsService.searchTagInPool(this.projectId, query);
     } else {
       const queryConf = {
-        keyword: keyword,
+        query: query,
         type: 'tags'
       };
+      if (this.type) {
+        queryConf['tagType'] = this.type;
+      }
       return this.autocompleteService.get(queryConf);
     }
   }
@@ -79,10 +92,6 @@ export class SharedTagItemComponent implements OnInit {
     } else {
       this._showModal = true;
     }
-  }
-
-  public closeModal(): void {
-    this._showModal = false;
   }
 
   public createNewTag(): void {
@@ -116,6 +125,10 @@ export class SharedTagItemComponent implements OnInit {
 
   get showModal(): boolean {
     return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
   }
 
 }

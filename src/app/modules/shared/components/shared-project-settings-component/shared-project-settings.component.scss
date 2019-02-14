@@ -1,27 +1,19 @@
 @import "../../../../../style/variables";
 
-#project-settings {
-  padding-top: 1.57rem;
-  padding-bottom: 0;
-
-  .pd-ques {
-    padding-top: 2.5rem;
-  }
+#shared-project-settings-component {
 
   .pd-para, .pd-input {
     margin: 0;
     padding-top: 1.2rem;
   }
 
-  .icon-arrow-right, .icon-arrow-down {
-    vertical-align: -3px;
+  .pd-ques {
+    padding-top: 2.5rem;
   }
 
-  .help-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-top: 1.2rem;
+  .fa-angle-down, .fa-angle-right {
+    vertical-align: -2px;
+    font-size: 20px;
   }
 
   .borderRed {
@@ -52,12 +44,21 @@
     background: #F8F4F4;
     color: $dark-color;
     padding: .5rem .95rem;
-    border-radius: .18rem;
+    border-radius: 3px;
     display: inline-flex;
     margin-right: .6rem;
     margin-bottom: .6rem;
-    font-size: .85rem;
+    font-size: .875rem;
   }
+
+  .help-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 3.15rem;
+    text-align: center;
+  }
+
 
 }
 

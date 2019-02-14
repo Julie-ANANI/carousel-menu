@@ -1,0 +1,384 @@
+/*
+    This stylesheet contains all the class related to the different buttons
+    for our framework.
+ */
+@import "variables";
+
+
+/*
+    this is the base class for the button, add the other classes with this to add the different styles.
+ */
+.btn {
+  display: inline-flex;
+  vertical-align: middle;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1.5;
+  background: transparent;
+  border: 1px solid transparent;
+  font-size: .85rem;
+  height: 3.125rem;
+  border-radius: 0.35rem;
+  padding: 0.5rem 1.8rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease-in-out,
+              color 0.15s ease-in-out,
+              border-bottom-color 0.15s ease-in-out,
+              border-left-color 0.15s ease-in-out,
+              border-right-color 0.15s ease-in-out,
+              border-top-color 0.15s ease-in-out;
+
+  i {
+    margin-right: .5rem;
+    font-size: 1rem;
+  }
+
+}
+
+
+/*
+    disabled style for the button, you don't have to add any class
+    rather than btn class
+ */
+
+.btn:disabled, .btn[disabled], .btn.disabled, .btn-round:disabled, .btn-round[disabled], .btn-round.disabled {
+  color: $button-disabled-text !important;
+  background-color: $disabled !important;
+  border-color: $disabled !important;
+  cursor: not-allowed;
+  pointer-events: auto;
+  opacity: 1;
+  border-width: .125rem;
+}
+
+
+/*
+    primary button class that you have to add with button class.
+    Class name: btn-primary
+ */
+
+.btn-primary:not(:disabled), .btn-primary:not(:disabled):focus, .btn-primary:not(:disabled):active {
+  color: white;
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.btn-primary:not(:disabled):hover {
+  color: white;
+  background-color: lighten($primary, 15%);
+  border-color: lighten($primary, 15%);
+}
+
+
+/*
+    secondary button class that you have to add with button class.
+    Class name: btn-secondary
+ */
+
+.btn-secondary:not(:disabled), .btn-secondary:not(:disabled):focus, .btn-secondary:not(:disabled):active {
+  color: white;
+  background-color: $secondary;
+  border-color: $secondary;
+}
+
+.btn-secondary:not(:disabled):hover {
+  color: white;
+  background-color: lighten($secondary, 15%);
+  border-color: lighten($secondary, 15%);
+}
+
+
+/*
+    edit button class that you have to add with button class.
+    Class name: btn-edit
+ */
+
+.btn-edit:not(:disabled), .btn-edit:not(:disabled):focus, .btn-edit:not(:disabled):active {
+  color: white;
+  background-color: $meta;
+  border-color: $meta;
+}
+
+.btn-edit:not(:disabled):hover {
+  color: white;
+  background-color: lighten($meta, 15%);
+  border-color: lighten($meta, 15%);
+}
+
+
+/*
+    error button class that you have to add with button class.
+    Class name: btn-error
+ */
+
+.btn-error:not(:disabled), .btn-error:not(:disabled):focus, .btn-error:not(:disabled):active {
+  color: white;
+  background-color: $alert;
+  border-color: $alert;
+}
+
+.btn-error:not(:disabled):hover {
+  color: white;
+  background-color: lighten($alert, 15%);
+  border-color: lighten($alert, 15%);
+}
+
+
+/*
+    ghost primary button class that you have to add with button class.
+    Class name: ghost-primary
+ */
+
+.ghost-primary:not(:disabled), .ghost-primary:not(:disabled):focus, .ghost-primary:not(:disabled):active {
+  color: $primary;
+  background-color: transparent;
+  border-color: $primary;
+  border-width: 0.125rem;
+}
+
+.ghost-primary:not(:disabled):hover {
+  color: lighten($primary, 15%);
+  background-color: transparent;
+  border-color: lighten($primary, 15%);
+}
+
+
+/*
+    ghost secondary button class that you have to add with button class.
+    Class name: ghost-secondary
+ */
+
+.ghost-secondary:not(:disabled), .ghost-secondary:not(:disabled):focus, .ghost-secondary:not(:disabled):active {
+  color: $secondary;
+  background-color: transparent;
+  border-color: $secondary;
+  border-width: 0.125rem;
+}
+
+.ghost-secondary:not(:disabled):hover {
+  color: lighten($secondary, 15%);
+  background-color: transparent;
+  border-color: lighten($secondary, 15%);
+}
+
+
+/*
+    ghost delete button class that you have to add with button class.
+    Class name: ghost-delete
+ */
+
+.ghost-delete:not(:disabled), .ghost-delete:not(:disabled):focus, .ghost-delete:not(:disabled):active {
+  color: $alert;
+  background-color: transparent;
+  border-color: $alert;
+  border-width: 0.125rem;
+}
+
+.ghost-delete:not(:disabled):hover {
+  color: lighten($alert, 15%);
+  background-color: transparent;
+  border-color: lighten($alert, 15%);
+}
+
+
+/*
+    ghost edit button class that you have to add with button class.
+    Class name: ghost-edit
+ */
+
+.ghost-edit:not(:disabled), .ghost-edit:not(:disabled):focus, .ghost-edit:not(:disabled):active {
+  color: $meta;
+  background-color: transparent;
+  border-color: $meta;
+  border-width: 0.125rem;
+}
+
+.ghost-edit:not(:disabled):hover {
+  color: lighten($meta, 15%);
+  background-color: transparent;
+  border-color: lighten($meta, 15%);
+}
+
+
+/*
+    cancel button class that you have to add with button class.
+    Class name: btn-cancel
+ */
+
+.btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active {
+  color: $meta;
+  background-color: transparent;
+  border: none;
+}
+
+.btn-cancel:not(:disabled):hover {
+  color: lighten($meta, 15%);
+  background-color: transparent;
+  border: none;
+}
+
+
+/*
+    to make a button large just add this class with the btn class and
+    color button class. Class name: btn-lg
+*/
+
+.btn-lg {
+  padding-left: 5.25rem !important;
+  padding-right: 5.25rem !important;
+  height: 4.37rem !important;
+  font-size: 1.5rem !important;
+}
+
+
+/*
+    to make a button small just add this class with the btn class and
+    color button class. Class name: btn-sm
+*/
+
+.btn-sm {
+  height: 2.8rem !important;
+  padding: 0.5rem 1.8rem !important;
+  font-size: 0.8rem !important;
+}
+
+
+/*
+    to make a button extra small just add this class with the btn class and
+    color button class. Class name: btn-xs
+*/
+
+.btn-xs {
+  height: 2.18rem !important;
+  padding: 0.35rem 0.95rem !important;
+}
+
+
+/*
+    round button.
+ */
+
+.btn-round {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  background: transparent none;
+  border: 0.125rem solid transparent;
+  align-items: center;
+  font-size: 0.6rem;
+  color: #FFFFFF;
+  transition: background-color 0.15s ease-in-out,
+              color 0.15s ease-in-out,
+              border-bottom-color 0.15s ease-in-out,
+              border-left-color 0.15s ease-in-out,
+              border-right-color 0.15s ease-in-out,
+              border-top-color 0.15s ease-in-out;
+}
+
+
+/*
+    scroll to top button
+ */
+.btn-scroll {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: $background;
+  box-shadow: 0 1px 10px rgba(0,0,0,.1), 0 2px 40px rgba(0,0,0,.2);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 11;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+
+  i {
+    font-size: 14px;
+  }
+
+}
+
+.btn-scroll:hover {
+  background-color: lighten($background, 15%);
+  cursor: pointer;
+}
+
+
+/*
+    radio button
+ */
+.btn-radio {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid $border;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 0.6rem;
+  transition: background-color 0.15s ease-in-out,
+              color 0.15s ease-in-out,
+              border-bottom-color 0.15s ease-in-out,
+              border-left-color 0.15s ease-in-out,
+              border-right-color 0.15s ease-in-out,
+              border-top-color 0.15s ease-in-out;
+
+  span {
+    color: white;
+    font-size: 20px;
+  }
+
+}
+
+
+/*
+    add this class with the class .btn. This is for clear or close button.
+ */
+.btn-close {
+  background: transparent;
+  border: 0;
+  color: white;
+  height: 30px;
+  padding: 0;
+  text-decoration: none;
+  width: 12px;
+  font-size: 20px;
+}
+
+.btn-close::before {
+  content: "\2715";
+}
+
+.btn-close:hover, .btn-close:focus, .btn-close:active, .btn-close.active {
+  background: transparent;
+  border-color: transparent;
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .btn-lg {
+    padding-left: 2.8rem !important;
+    padding-right: 2.8rem !important;
+  }
+
+}

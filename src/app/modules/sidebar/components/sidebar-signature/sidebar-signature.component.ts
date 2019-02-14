@@ -23,9 +23,5 @@ export class SidebarSignatureComponent {
     this.signatureChange.emit(this._signature);
   }
 
-  public updateContent(event: any) {
-    this._signature.content = event.content;
-  }
-
   get signature(): EmailSignature { return this._signature; }
 }

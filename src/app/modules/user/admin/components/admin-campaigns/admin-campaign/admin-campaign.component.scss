@@ -1,0 +1,61 @@
+@import "../../../../../../../style/framework/variables";
+
+#admin-campaign-component {
+  padding-top: 0;
+
+  .section-header {
+    padding-top: 1.57rem;
+
+    background-color: white;
+
+    .heading-wrapper {
+      padding-bottom: 1.57rem;
+
+      .title-primary {
+        font-size: 1.4375rem;
+      }
+
+      .campaign-title {
+        color: $meta;
+        font-weight: normal;
+      }
+
+      .text-link {
+        font-size: .875rem;
+      }
+
+    }
+
+    .tab .tab-item a {
+      border-bottom-width: 4px;
+      margin-right: 2.5rem;
+    }
+
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #admin-campaign-component {
+
+    .section-stats {
+
+      .content-wrapper {
+        flex-direction: column;
+
+        h5 {
+          margin-right: 0 !important;
+          margin-bottom: 1.2rem;
+        }
+
+      }
+
+    }
+
+  }
+
+}
