@@ -114,19 +114,34 @@ h6 {
 
 
 /*
-    text style that has link. Class name: text-link
+    text style for links
  */
-
-.text-link, .text-link:active, .text-link:focus, .text-link:visited {
-  color: $primary;
+.text-link, .text-link:active, .text-link:focus, .text-link:visited, .text-delete, .text-delete:active, .text-delete:focus, .text-delete:visited {
   outline: none;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
 }
 
-.text-link:hover {
-  color: $primary;
+.text-link:hover, .text-delete:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+
+/*
+    primary link
+ */
+.text-link, .text-link:active, .text-link:focus, .text-link:visited, .text-link:hover {
+  color: $primary;
+}
+
+
+/*
+    delete link
+ */
+.text-delete, .text-delete:active, .text-delete:focus, .text-delete:visited, .text-delete:hover {
+  color: $alert;
 }
 
 
@@ -153,3 +168,41 @@ h6 {
   text-align: center;
 }
 
+
+/*
+    these to show different type of text.
+ */
+.text-success, .text-warning, .text-error, .text-alert {
+  outline: none;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: normal;
+  cursor: default;
+}
+
+
+/*
+    text warning
+ */
+
+.text-warning, .text-warning:active, .text-warning:focus, .text-warning:visited {
+  color: $primary;
+}
+
+
+/*
+    text success
+ */
+
+.text-success, .text-success:active, .text-success:focus, .text-success:visited {
+  color: $success;
+}
+
+
+/*
+    text error/alert
+ */
+
+.text-error, .text-alert, .text-error:active, .text-alert:active, .text-error:focus, .text-alert:focus, .text-error:visited, .text-alert:visited {
+  color: $alert;
+}

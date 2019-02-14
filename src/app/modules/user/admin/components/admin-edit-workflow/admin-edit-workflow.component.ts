@@ -12,33 +12,48 @@ import { EmailSignature } from '../../../../../models/email-signature';
 export class AdminEditWorkflowComponent implements OnInit {
 
   @Input() scenario: EmailScenario;
+
   @Input() isDeletable: boolean = true;
+
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
     this._initTable();
   }
+
   @Output() scenarioChange = new EventEmitter<EmailScenario>();
+
   @Output() deletedScenario = new EventEmitter<EmailScenario>();
 
-  public deleteModal: boolean = null;
-  public isModifiedEn: boolean = false;
-  public isModifiedFr: boolean = false;
-  public inCampaign: boolean = false;
-  public language = 'en';
+  deleteModal: boolean = null;
+
+  isModifiedEn: boolean = false;
+
+  isModifiedFr: boolean = false;
+
+  inCampaign: boolean = false;
+
+  language = 'en';
+
   private _signatures: Array<EmailSignature> = [];
+
   private _emails: Array<any> = [];
+
   private _total: number = 0;
+
   private _emailToEdit: any;
+
   private _more: SidebarInterface = {};
+
   private _tableInfos: any;
+
   public config: any = {
-    limit: 0,
-    offset: 0,
-    search: {},
-    sort: {}
+    limit: '0',
+    offset: '0',
+    search: '{}',
+    sort: '{}'
   };
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.inCampaign = this.scenario.emails[0] && this.scenario.emails[0].modified != undefined;
@@ -53,18 +68,24 @@ export class AdminEditWorkflowComponent implements OnInit {
       THIRD: {step: "THIRD", num: "03 - "},
       THANKS: {step: "THANKS", num: "04 - "}
     };
+
     this.scenario.emails.forEach((email: EmailTemplate) => {
       steps[email.step][email.language] = email;
       email.signature = email.signature || {};
     });
+
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
+
     this._total = this.scenario.emails.length;
+
     let columns = [{_attrs: ['num', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
       {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
       {_attrs: [`${this.language}.signature.name`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
+
     if (this.inCampaign) {
       columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'CHECK', _isSortable: false});
     }
+
     this._tableInfos = {
       _selector: 'admin-scenario',
       _content: this._emails,
@@ -78,6 +99,7 @@ export class AdminEditWorkflowComponent implements OnInit {
       _reloadColumns: true,
       _columns: columns
     };
+
   }
 
   public closeSidebar(value: string) {
@@ -130,9 +152,24 @@ export class AdminEditWorkflowComponent implements OnInit {
     }, true);
   }
 
-  get tableInfos(): any { return this._tableInfos; }
-  get signatures(): Array<EmailSignature> { return this._signatures; }
-  get emailToEdit(): any { return this._emailToEdit; }
-  get more(): any { return this._more; }
-  set emailToEdit(value: any) { this._emailToEdit = value; }
+  get tableInfos(): any {
+    return this._tableInfos;
+  }
+
+  get signatures(): Array<EmailSignature> {
+    return this._signatures;
+  }
+
+  get emailToEdit(): any {
+    return this._emailToEdit;
+  }
+
+  get more(): any {
+    return this._more;
+  }
+
+  set emailToEdit(value: any) {
+    this._emailToEdit = value;
+  }
+
 }

@@ -155,7 +155,12 @@ export const CAMPAIGNS = {
     'BOT': {
       'MESSAGE_A': 'Don\'t have any workflows?',
       'MESSAGE_B': 'Try to add some by clicking on "Import" button.'
-    }
+    },
+    'MODAL': {
+      'TITLE': 'Confirmation Board',
+      'CONTENT': 'This workflow is already imported. If you import it again it will replace the first one. Do you really want to import this template?'
+    },
+    'NOTE': 'Note: It is compulsory to modify the imported template/emails before launching the batch.'
   }
 
 };

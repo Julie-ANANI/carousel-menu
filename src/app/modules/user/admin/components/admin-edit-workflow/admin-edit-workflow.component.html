@@ -1,3 +1,19 @@
+<div id="admin-edit-workflow-component">
+
+  <!-- section header -->
+  <div class="section-header">
+    {{ scenario.name }}
+    -
+    <div [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'" class="btn-round"><i class="fas fa-check"></i></div>{{ 'COMMON.LANG.EN' | translate }}
+    |
+    <div [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'" class="btn-round"><i class="fas fa-check"></i></div> {{ 'COMMON.LANG.FR' | translate }}
+    -
+    <div class="text-delete">{{ 'COMMON.DELETE' | translate }}</div>
+  </div>
+
+</div>
+
+<!--
 <div>
   <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
     <app-sidebar-workflow
@@ -19,7 +35,7 @@
   </p>
   <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [config]="config"></app-shared-table>
 
-  <!-- MODAL : Suppression scénario ? -->
+  &lt;!&ndash; MODAL : Suppression scénario ? &ndash;&gt;
   <div class="modal" [ngClass]="{'active': deleteModal}">
     <div class="modal-overlay" (click)="(deleteModal = null) && $event.preventDefault()"></div>
     <div class="modal-container">
@@ -39,3 +55,4 @@
     </div>
   </div>
 </div>
+-->

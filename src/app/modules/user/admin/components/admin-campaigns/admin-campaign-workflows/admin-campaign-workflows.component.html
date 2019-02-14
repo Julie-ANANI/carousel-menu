@@ -62,16 +62,16 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- section select workflow -->
-    <div class="section-light-container">
+    <div class="section-light-container remove-bottom">
       <div class="form-group">
         <label class="form-label" for="admin-campaign-workflows">{{ 'CAMPAIGNS.WORKFLOW_PAGE.SELECT_LABEL' | translate }}</label>
         <select
           class="form-select"
           id="admin-campaign-workflows"
-          [ngModel]="defaultSelectedTemplate ? defaultSelectedTemplate : null"
+          [ngModel]="templates ? templates[0] : null"
           (ngModelChange)="onClickSelect($event)"
           [ngModelOptions]="{ standalone: true }">
-          <option *ngIf="!defaultSelectedTemplate" [ngValue]="null">{{ 'COMMON.SELECT' | translate }}</option>
+          <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.SELECT' | translate }}</option>
           <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
         </select>
         <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.IMPORT' | translate }}</button>
@@ -80,7 +80,7 @@
 
 
     <!-- section no campaign -->
-    <div *ngIf="campaign.settings && campaign.settings.emails && campaign.settings.emails.length === 0" class="section-container">
+    <div *ngIf="noResult" class="section-container">
       <app-message-space
         [messageA]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A'"
         [messageB]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B'"
@@ -90,29 +90,36 @@
 
 
     <!-- section campaign -->
-    <div *ngIf="campaign.settings && campaign.settings.emails && campaign.settings.emails.length > 0">
-      <div *ngFor="let scenario of availableScenarios">
+    <div *ngIf="!noResult">
+
+      <span class="text-alert">{{ 'CAMPAIGNS.WORKFLOW_PAGE.NOTE' | translate }}</span>
+
+      <div class="section-light-container">
         <app-admin-edit-workflow
-          [scenario]="scenario"
-          [signatures]="signatures"
-          (scenarioChange)="updateAvailableScenario($event)"
-          (deletedScenario)="removeScenario($event)">
+          [scenario]="modifiedScenario"
+          [signatures]="signatures">
         </app-admin-edit-workflow>
       </div>
+
     </div>
 
 
   </div>
 
-
-
-
-
-
 </div>
 
 
+<!-- modal to ask for the confirmation if importing the same template -->
+<app-modal [(showModal)]="modalImport" [modalTitle]="'CAMPAIGNS.WORKFLOW_PAGE.MODAL.TITLE'">
+  {{ 'CAMPAIGNS.WORKFLOW_PAGE.MODAL.CONTENT' | translate }}
 
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()">{{ 'COMMON.SUBMIT' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to ask for the confirmation if importing the same template -->
 
 
 

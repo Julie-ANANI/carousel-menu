@@ -128,7 +128,7 @@ export const ERROR = {
     'TEMPLATE_ERROR': 'We are having trouble while fetching the templates data. Please try to reload the page again!',
     'SIGNATURE_ERROR': 'We are having trouble while fetching the signatures data. Please try to reload the page again!',
     'WORKFLOW': {
-      'ADDED': 'The workflow has been added successfully.'
+      'ADDED': 'The workflow has been added successfully.',
     }
   },
 

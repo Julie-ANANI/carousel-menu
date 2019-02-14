@@ -123,6 +123,9 @@ export class AdminCampaignProsComponent implements OnInit {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
     }
+
+    this._importModal = false;
+
   }
 
 
