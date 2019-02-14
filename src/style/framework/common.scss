@@ -101,3 +101,28 @@ a, a:focus, a:hover, a:active, a.active {
   }
 
 }
+
+
+/*
+    circle class. Can use this when you want to show text or any image.
+ */
+.circle {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  cursor: default;
+  text-align: center;
+  justify-content: center;
+  background: $meta none;
+  border: 0.125rem solid transparent;
+  align-items: center;
+  font-size: 0.6rem;
+  color: #FFFFFF;
+  transition: background-color 0.15s ease-in-out,
+              color 0.15s ease-in-out,
+              border-bottom-color 0.15s ease-in-out,
+              border-left-color 0.15s ease-in-out,
+              border-right-color 0.15s ease-in-out,
+              border-top-color 0.15s ease-in-out;
+}

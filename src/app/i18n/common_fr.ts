@@ -281,6 +281,15 @@ export const COMMON = {
       'HEADING': 'Supprimer le forum',
       'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
     }
+  },
+
+  'SIDEBAR': {
+    'EDIT_WORKFLOW': 'Modifier le modèle'
+  },
+
+  'MODAL': {
+    'TITLE_DELETE': 'Supprimer le forum',
+    'TITLE_CONFIRMATION': 'Confirmation le forum'
   }
 
 };

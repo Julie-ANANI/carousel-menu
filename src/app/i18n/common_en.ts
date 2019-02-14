@@ -284,6 +284,15 @@ export const COMMON = {
       'HEADING': 'Delete Board',
       'CONTENT': 'Do you really want to delete the campaign?'
     },
+  },
+
+  'SIDEBAR': {
+    'EDIT_WORKFLOW': 'Edit Workflow'
+  },
+
+  'MODAL': {
+    'TITLE_DELETE': 'Delete Board',
+    'TITLE_CONFIRMATION': 'Confirmation Board'
   }
 
 };

@@ -6,12 +6,13 @@
     color: $meta;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 
-    .text-delete, .btn-round {
-      margin-left: 0.5rem;
+    .text-delete, .circle {
+      margin-left: 0.6rem;
     }
 
-    .btn-round {
+    .circle {
       width: 20px;
       height: 20px;
       margin-right: 0.5rem;
@@ -35,7 +36,21 @@
 
     }
 
-  }
+    .text-link {
+      color: $meta;
 
+      &.active {
+        color: $primary;
+        text-decoration: none;
+        cursor: default;
+      }
+
+    }
+
+    .text-link:hover {
+      color: $primary;
+    }
+
+  }
 
 }

@@ -94,15 +94,16 @@
 
       <span class="text-alert">{{ 'CAMPAIGNS.WORKFLOW_PAGE.NOTE' | translate }}</span>
 
-      <div class="section-light-container">
+      <div class="section-light-container remove-bottom">
         <app-admin-edit-workflow
           [scenario]="modifiedScenario"
-          [signatures]="signatures">
+          [signatures]="signatures"
+          (deletedScenario)="removeScenario()"
+          (scenarioChange)="updateAvailableScenario($event)">
         </app-admin-edit-workflow>
       </div>
 
     </div>
-
 
   </div>
 
@@ -110,8 +111,8 @@
 
 
 <!-- modal to ask for the confirmation if importing the same template -->
-<app-modal [(showModal)]="modalImport" [modalTitle]="'CAMPAIGNS.WORKFLOW_PAGE.MODAL.TITLE'">
-  {{ 'CAMPAIGNS.WORKFLOW_PAGE.MODAL.CONTENT' | translate }}
+<app-modal [(showModal)]="modalImport" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+  {{ modalContent | translate }}
 
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
@@ -123,6 +124,11 @@
 
 
 
+
+
+
+
+<!-- ab testing commented 14 feb -->
 
 <!--<div class="text-right">
   <button class="btn btn-primary" (click)="importModal = true">Importer un Workflow</button>

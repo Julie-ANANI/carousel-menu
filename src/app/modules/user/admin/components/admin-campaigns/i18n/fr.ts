@@ -132,6 +132,22 @@ export const CAMPAIGNS = {
   'QUIZ_PAGE': {
     'HEADING': 'Visitez ces liens pour voir le questionnaire :',
     'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
+  },
+
+  'WORKFLOW_PAGE': {
+    'SELECT_LABEL': 'Sélectionner le workflow',
+    'BUTTON': {
+      'IMPORT': 'Importer'
+    },
+    'BOT': {
+      'MESSAGE_A': 'Vous n\'avez pas des workflows ?',
+      'MESSAGE_B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
+    },
+    'MODAL': {
+      'CONTENT_A': 'Ce workflow est déjà importé. Si vous l\'importez à nouveau, il remplacera le premier. Voulez-vous vraiment importer ce modèle ?',
+      'CONTENT_B': 'Si vous avez déjà importé un workflow, il le remplacera. Voulez-vous vraiment importer ce modèle ?'
+    },
+    'NOTE': 'Note : Il est obligatoire de modifier les modèles/emails importés avant de lancer le lot.',
   }
 
 };

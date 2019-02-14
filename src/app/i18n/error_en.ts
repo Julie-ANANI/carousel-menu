@@ -129,6 +129,8 @@ export const ERROR = {
     'SIGNATURE_ERROR': 'We are having trouble while fetching the signatures data. Please try to reload the page again!',
     'WORKFLOW': {
       'ADDED': 'The workflow has been added successfully.',
+      'DELETED': 'The workflow has been deleted successfully.',
+      'UPDATED': 'The workflow has been updated successfully.'
     }
   },
 
