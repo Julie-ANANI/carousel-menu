@@ -9,8 +9,7 @@
     &nbsp;&nbsp;|
     <div [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'" class="circle"><i class="fas fa-check"></i></div>
     <span [ngClass]="{ 'active': language === 'fr' }" class="text-link" (click)="changeLanguage('fr')">{{ 'COMMON.LANG.FR' | translate }}</span>
-    &nbsp;&nbsp;-
-    <div (click)="onClickDelete()" class="text-delete">{{ 'COMMON.DELETE' | translate }}</div>
+    <div (click)="onClickDelete()" class="text-delete"><i class="fas fa-trash-alt"></i></div>
   </div>
 
   <!-- section table -->
@@ -36,7 +35,6 @@
 <app-sidebar [(template)]="more">
   <app-sidebar-workflow
     [emailsObject]="emailToEdit"
-    [signatures]="signatures"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
   </app-sidebar-workflow>

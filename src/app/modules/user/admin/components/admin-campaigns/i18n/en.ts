@@ -160,7 +160,7 @@ export const CAMPAIGNS = {
       'CONTENT_A': 'This workflow is already imported. If you import it again it will replace the first one. Do you really want to import this template?',
       'CONTENT_B': 'If you have already imported a workflow it will replace that workflow. Do you really want to import this template?'
     },
-    'NOTE': 'Note: It is compulsory to modify the imported template/emails before launching the batch.',
+    'NOTE': 'Note: It is advised to you to modify the imported template/emails before launching the batch.',
   }
 
 };

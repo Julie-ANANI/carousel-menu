@@ -73,19 +73,25 @@ export class AdminEditWorkflowComponent {
 
     this._campaignScenario.emails.forEach((email: EmailTemplate) => {
       steps[email.step][email.language] = email;
-      email.signature = email.signature || {};
+      // email.signature = email.signature || {};
+      email.defaultSignatureName = 'Karine Caulfield';
+      email.status = email.modified.toString();
     });
 
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
 
     this._total = this._campaignScenario.emails.length;
 
-    let columns = [{_attrs: ['num', `${this._language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
-      {_attrs: [`${this._language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
-      {_attrs: [`${this._language}.signature.name`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
+    let columns = [{_attrs: ['num', `${this._language}.subject`], _name: 'TABLE.HEADING.EMAILS', _type: 'TEXT', _isSortable: false, _choices: null},
+     // {_attrs: [`${this._language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false, _choices: null},
+      {_attrs: [`${this._language}.defaultSignatureName`], _name: 'TABLE.HEADING.SIGNATURES', _type: 'TEXT', _isSortable: false, _choices: null}];
 
     if (this._inCampaign) {
-      columns.push({_attrs: [`${this._language}.modified`], _name: 'Modified', _type: 'CHECK', _isSortable: false});
+      // columns.push({_attrs: [`${this._language}.modified`], _name: 'Modified', _type: 'CHECK', _isSortable: false, _choices: null});
+      columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES',_isSortable: false, _choices: [
+          {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label label-draft'},
+          {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label label-success'},
+        ]})
     }
 
     this._tableInfos = {
@@ -124,10 +130,12 @@ export class AdminEditWorkflowComponent {
     this._campaignScenario.emails = this._campaignScenario.emails.map((email: EmailTemplate) => {
       if(emailsObject.step === email.step) {
         email = emailsObject[email.language];
-        if (emailsObject[email.language].signature) {
+        email.status = email.modified.toString();
+        email.defaultSignatureName = 'Karine Caulfield';
+        /*if (emailsObject[email.language].signature) {
           const fullSignature = this._signatures.find(s => s.name === email.signature.name);
           email.signature = fullSignature || {};
-        }
+        }*/
       }
       return email;
     });

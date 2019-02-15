@@ -27,6 +27,7 @@ import { FOOTER } from "../modules/common/footer/i18n/en";
 import { HEADER } from '../modules/common/header/i18n/en';
 import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/en';
 import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/en';
+import { TABLE } from '../modules/table/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -57,5 +58,6 @@ export const en = {
   'PROFESSIONALS' : PROFESSIONALS,
   'SHARE': SHARE,
   'RESET_PASSWORD': RESET_PASSWORD,
-  'EDIT_WORKFLOW': EDIT_WORKFLOW
+  'EDIT_WORKFLOW': EDIT_WORKFLOW,
+  'TABLE': TABLE
 };
