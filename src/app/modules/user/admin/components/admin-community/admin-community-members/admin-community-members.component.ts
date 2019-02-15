@@ -28,7 +28,7 @@ export class AdminCommunityMembersComponent implements OnInit {
   }
 
   public launchSearch(event) {
-    console.log("GO GO GO!");
+    console.log(event);
   }
 
   public onSearchClick() {

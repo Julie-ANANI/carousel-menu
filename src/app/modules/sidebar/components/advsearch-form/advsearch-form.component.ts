@@ -63,18 +63,14 @@ export class AdvsearchFormComponent implements OnInit {
   public search() {
     this._advsearchService.advsearch(this._advSearchForm.value)
       .subscribe(result=>{
+        this.finalOutput.emit(result);
         console.log(result);
       }, error=>{
         console.error(error);
+        this.finalOutput.emit(null);
       }, ()=>{
         console.log("DONE!");
       });
-    console.log(this.processInput());
-    console.log("GO search!");
-  }
-
-  private processInput(): string {
-    return JSON.stringify(this._advSearchForm.value);
   }
 
   get advSearchForm(): FormGroup {
