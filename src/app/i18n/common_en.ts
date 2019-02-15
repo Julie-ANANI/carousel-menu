@@ -261,6 +261,13 @@ export const COMMON = {
     'SHARED_REPORTS': 'Shared reports'
   },
 
+  'MAIL_EDITOR': {
+    'QUESTION': 'Which language would you like to communicate with the project owner?',
+    'SUBJECT': 'Subject',
+    'SUBJECT_PLACEHOLDER': 'Enter the subject of the mail',
+    'MESSAGE': 'Message',
+  },
+
   'TAG_LABEL': {
     'ADD_TAGS': 'Add Tags',
     'EDIT_TAG': 'Edit Tag',
@@ -293,6 +300,10 @@ export const COMMON = {
   'MODAL': {
     'TITLE_DELETE': 'Delete Board',
     'TITLE_CONFIRMATION': 'Confirmation Board'
+  },
+
+  'SELECT_LABELS': {
+    'CHOOSE_LANGUAGE': 'Choose Language:',
   }
 
 };

@@ -258,6 +258,13 @@ export const COMMON = {
     'SHARED_REPORTS': 'Rapports partagés'
   },
 
+  'MAIL_EDITOR': {
+    'QUESTION': 'Dans quelle langue souhaitez-vous communiquer avec le maître d\'ouvrage ?',
+    'SUBJECT': 'Sujet',
+    'SUBJECT_PLACEHOLDER': 'Entrez l\'objet du courrier',
+    'MESSAGE': 'Message',
+  },
+
   'TAG_LABEL': {
     'ADD_TAGS': 'Ajouter des tags',
     'EDIT_TAG': 'Modifier le tag',
@@ -290,6 +297,10 @@ export const COMMON = {
   'MODAL': {
     'TITLE_DELETE': 'Supprimer le forum',
     'TITLE_CONFIRMATION': 'Confirmation le forum'
+  },
+
+  'SELECT_LABELS': {
+    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
   }
 
 };

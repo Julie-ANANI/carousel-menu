@@ -148,6 +148,7 @@
 
 .form-switch {
   padding-left: 2.5rem;
+  padding-right: 0;
 }
 
 
@@ -159,7 +160,7 @@
   width: 16px;
   border-radius: 50%;
   transition: all 0.2s ease-in-out;
-  border: 1px solid $border;
+  border: 1px solid $form-border;
   cursor: pointer;
   display: inline-block;
   position: absolute;
@@ -167,7 +168,7 @@
 
 
 .form-switch .form-icon {
-  border-color: $border;
+  border-color: $form-border;
   background-color: #FFFFFF;
   height: 15px;
   width: 34px;
@@ -199,7 +200,7 @@
   height: 1.3125rem;
   width: 1.2rem;
   left: -1px;
-  top: -3.5px;
+  top: -4px;
 }
 
 
@@ -214,7 +215,9 @@
 
 
 .form-radio input:active + .form-icon, .form-switch input:focus + .form-icon {
-  background: $form-border;
+  background: #FFFFFF;
+  border-color: $meta;
+  box-shadow: none;
 }
 
 

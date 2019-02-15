@@ -41,13 +41,13 @@ export class SharedMailEditorComponent implements OnInit {
 
   private _languageHasBeenSet: Boolean = false;
 
-  editionMode = true;
+  private _editionMode = true;
 
   constructor() { }
 
   ngOnInit() {
     this._signatures = [];
-    this.editionMode = true;
+    this._editionMode = true;
     this._email = {language: this._language, subject: '', content: ''};
     this._emailsObject = {
       en: {language: 'en', subject: '', content: ''},
@@ -82,6 +82,11 @@ export class SharedMailEditorComponent implements OnInit {
     this.emailChange.emit(this._emailsObject);
   }
 
+
+  onPreview() {
+    this._editionMode = !this._editionMode;
+  }
+
   get signatures(): Array<EmailSignature> {
     return this._signatures;
   }
@@ -100,6 +105,10 @@ export class SharedMailEditorComponent implements OnInit {
 
   set email(value: EmailTemplate) {
     this._email = value;
+  }
+
+  get editionMode(): boolean {
+    return this._editionMode;
   }
 
 }
