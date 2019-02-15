@@ -282,5 +282,4 @@ export class AdminCampaignAnswersComponent implements OnInit {
     return this._noResult;
   }
 
-
 }

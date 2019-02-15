@@ -9,8 +9,8 @@ export const MARKET_REPORT = {
   },
 
   'MESSAGE_ADMIN': {
-    'NOT_SUBMITTED': 'Le client n\'a pas encore soumis le projet. Vous pourrez éditer le rapport de marché après qu\'il aura soumis son projet.',
-    'DONE': 'Ce projet est marqué comme terminé et une synthèse complète est disponible chez le client.',
+    'NOT_SUBMITTED': 'Le client n\'a pas encore soumis le projet. Vous pourrez éditer la synthèse après qu\'il ait soumis son projet.',
+    'DONE': 'Ce projet est marqué comme terminé et une synthèse est disponible chez le client.',
     'PREVIEW_MODE': 'La synthèse partielle de ce projet est disponible chez le client.',
   },
 
@@ -37,7 +37,7 @@ export const MARKET_REPORT = {
     'BUTTON_ADMIN': 'Finaliser la synthèse',
     'BUTTON_SHARE': 'Partager la synthèse',
     'BUTTON_EXPORT': 'Exporter',
-    'BUTTON_END': 'Terminez de ce projet'
+    'BUTTON_END': 'Terminer ce projet'
   },
 
   'ANONYMOUS': 'Identité confidentielle',
@@ -48,14 +48,14 @@ export const MARKET_REPORT = {
 
   'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'La synthèse n\'est pas visible pour le client.',
 
-  'MESSAGE_SYNTHESIS': 'Ce projet a été terminée avec succès et la synthèse complète est disponible côté client.',
+  'MESSAGE_SYNTHESIS': 'Ce projet a été terminé avec succès. La synthèse est disponible côté client.',
 
   'PRINT_DATE': 'Test marché -',
 
   'MODAL': {
-    'END_INNOVATION_TITLE': 'Comité de confirmation',
+    'END_INNOVATION_TITLE': 'Clôturer le projet',
     'END_INNOVATION_CONTENT': 'Voulez-vous vraiment mettre fin à ce projet ? N\'oubliez pas qu\'après cela, vous ne pourrez plus apporter de modifications.',
-    'EXPORT_INNOVATION_TITLE': 'Commission d\'exportation',
+    'EXPORT_INNOVATION_TITLE': 'Exporter',
     'EXPORT_INNOVATION_NOTE': 'Nous vous rappelons que selon le règlement nᵒ 2016/679, dit règlement général sur la protection des données, les données à caractère ' +
       'personnel contenues dans la synthèse complète ne doivent pas être utilisées en dehors de votre entreprise.',
     'EXPORT_INNOVATION_CONTENT' : {
@@ -75,12 +75,12 @@ export const MARKET_REPORT = {
   'EXECUTIVE': {
     'HEADING': 'Executive Report',
     'TITLE': 'Objectif',
-    'CHOOSE_TEMPLATE': 'Choisir le modèle',
-    'VALID_BUTTON': 'Modèle valide',
-    'DELETE_BUTTON': 'Supprimer le modèle exécutif',
-    'CONCLUSION': 'Conclusion résumé',
+    'CHOOSE_TEMPLATE': 'Choisissez un template',
+    'VALID_BUTTON': 'Valider',
+    'DELETE_BUTTON': 'Supprimer l\'executive report',
+    'CONCLUSION': 'Conclusion résumée',
     'ABSTRACT': 'Abstract',
-    'NO_TAGS': 'Ajouter les tags pour cette question'
+    'NO_TAGS': 'Ajouter des tags à cette rubrique'
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -93,22 +93,22 @@ export const MARKET_REPORT = {
     },
     'CONCLUSION_HEADING': 'Conclusion',
     'UMI_CONTACT': {
-      'A': 'Vous souhaitez lancer un test marché ?',
+      'A': 'Souhaitez-vous lancer un test marché ?',
       'B': 'Contactez-nous au'
     },
   },
 
   'EXECUTIVE_PLACEHOLDER': {
-    'GOAL': 'Décrivez l\'objectif de cette innovation en 120 mots.',
-    'CONCLUSION': 'Décrivez la conclusion de cette campagne d’innovation en 1200 mots.',
-    'PROFESSIONAL': 'Décrivez le résumé professionnel de cette innovation en 160 mots.',
-    'SECTION': 'Décrivez le résumé de cette question en 160 mots.'
+    'GOAL': 'Ecrivez l\'objectif de la mission en max 120 mots.',
+    'CONCLUSION': 'Ecrivez votre conclusion en max 1200 mots.',
+    'PROFESSIONAL': 'Ecrivez un résumé en max 160 mots.',
+    'SECTION': 'Ecrivez un résumé en max 160 mots.'
   },
 
   'TARGET_COUNTRIES': 'Pays ciblés',
 
   // 'TITLE': 'Exploration du potentiel marché',
-  'COLLAPSE': 'Tout plier',
+  'COLLAPSE': 'Tout replier',
   'EXPAND': 'Tout déplier',
   'FILTERS': 'Filtres',
   'SYNTHESIS_FRAME': 'des professionnels',
@@ -123,7 +123,7 @@ export const MARKET_REPORT = {
   'BTN_ANSWERS_CLOSE': 'Masquer les réponses',
   'BTN_COMMENTS_OPEN': 'Commentaires',
   'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',
-  'BTN_RECOMPUTE': 'Recalculer l\'infographie',
+  'BTN_RECOMPUTE': 'Recalculer la synthèse',
   'VOTES': 'votes',
   'GRADE': 'Note',
   'NO_GRADE': 'Pas de note',

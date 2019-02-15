@@ -1,4 +1,4 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/variables";
 
 #admin-project-campaigns-component {
 
@@ -26,7 +26,7 @@
           padding: 1.2rem;
 
           a {
-            margin-right: .35rem;
+            margin-right: 0.35rem;
           }
 
           .title {
@@ -35,17 +35,17 @@
           }
 
           .title:hover {
-            color: $primary-color;
+            color: $primary;
             cursor: pointer;
           }
 
           .update, .edit {
-            color: $primary-color;
-            font-size: 0.85rem;
+            color: $primary;
+            font-size: 0.875rem;
           }
 
           .clone {
-            color: $disabled-text-color;
+            color: $text-disabled;
           }
 
           .clone:hover {
@@ -53,7 +53,7 @@
           }
 
           .delete {
-            color: $alert-color;
+            color: $alert;
           }
 
           .update:hover, .delete:hover, .edit:hover {
@@ -62,11 +62,11 @@
           }
 
           .details {
-            padding-top: .6rem;
-            font-size: 0.85rem;
-            color: $meta-color;
+            padding-top: 0.6rem;
+            font-size: 0.875rem;
+            color: $meta;
             font-weight: 600;
-            padding-left: .35rem;
+            padding-left: 0.35rem;
             padding-bottom: 0;
           }
 
