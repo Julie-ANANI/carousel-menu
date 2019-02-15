@@ -1,12 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EmailSignature} from '../../../../models/email-signature';
-import {EmailTemplate} from '../../../../models/email-template';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EmailSignature } from '../../../../models/email-signature';
+import { EmailTemplate } from '../../../../models/email-template';
 
 @Component({
   selector: 'app-shared-mail-editor',
   templateUrl: './shared-mail-editor.component.html',
   styleUrls: ['./shared-mail-editor.component.scss']
 })
+
 export class SharedMailEditorComponent implements OnInit {
 
   @Input() set emailsObject(value: any) {
@@ -15,25 +16,34 @@ export class SharedMailEditorComponent implements OnInit {
       this._email = this._emailsObject[this.language];
     }
   }
+
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
   }
+
   @Input() set inputLanguage(value: any) {
     this.changeLanguage(value);
   }
+
   @Input() noLanguage: Boolean;
+
   @Output() languageChange = new EventEmitter<string>();
+
   @Output() emailChange = new EventEmitter<any>();
 
   private _signatures: Array<EmailSignature> = [];
-  private _emailsObject: any = {};
-  private _language = 'en';
-  private _email: EmailTemplate;
-  private _languageHasBeenSet: Boolean = false;
-  public editionMode = true;
 
-  constructor() {
-  }
+  private _emailsObject: any = {};
+
+  private _language = 'en';
+
+  private _email: EmailTemplate;
+
+  private _languageHasBeenSet: Boolean = false;
+
+  editionMode = true;
+
+  constructor() { }
 
   ngOnInit() {
     this._signatures = [];
@@ -45,12 +55,14 @@ export class SharedMailEditorComponent implements OnInit {
     };
   }
 
-  public setLanguage(value: string) {
+
+  setLanguage(value: string) {
     this.changeLanguage(value);
     this.languageChange.emit(value);
   }
 
-  public changeLanguage(value: string) {
+
+  changeLanguage(value: string) {
     if (value) this._languageHasBeenSet = true;
     this._language = value;
     if (this._emailsObject) {
@@ -58,20 +70,36 @@ export class SharedMailEditorComponent implements OnInit {
     }
   }
 
-  public onUpdate(event: any) {
+
+  onUpdate(event: any) {
     this._emailsObject[this._language].subject = event;
     this.emailChange.emit(this._emailsObject);
   }
 
-  public updateContent(event: any) {
+
+  updateContent(event: any) {
     this._emailsObject[this._language].content = event.content;
     this.emailChange.emit(this._emailsObject);
   }
 
-  get signatures(): Array<EmailSignature> { return this._signatures; }
-  get language(): string { return this._language; }
-  get languageHasBeenSet(): Boolean { return this._languageHasBeenSet; }
-  get email(): EmailTemplate { return this._email; }
-  set email(value: EmailTemplate) { this._email = value; }
+  get signatures(): Array<EmailSignature> {
+    return this._signatures;
+  }
+
+  get language(): string {
+    return this._language;
+  }
+
+  get languageHasBeenSet(): Boolean {
+    return this._languageHasBeenSet;
+  }
+
+  get email(): EmailTemplate {
+    return this._email;
+  }
+
+  set email(value: EmailTemplate) {
+    this._email = value;
+  }
 
 }
