@@ -9,19 +9,15 @@
         <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.RECEPTION' | translate }}</h5>
         <div class="content">
           <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate }}</h4>
-          <h3 class="value"></h3>
+          <h3 class="value">{{ getCampaignStat('good_emails') }}</h3>
         </div>
         <div class="content">
           <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.RECEIVED' | translate }}</h4>
-          <h3 class="value"></h3>
-        </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.SPAM' | translate }}</h4>
-          <h3 class="value"></h3>
+          <h3 class="value">{{ getCampaignStat('received') }}</h3>
         </div>
         <div class="content">
           <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BOUNCES' | translate }}</h4>
-          <h3 class="value"></h3>
+          <h3 class="value">{{ getCampaignStat('bounces') }}</h3>
         </div>
       </div>
     </div>
@@ -32,11 +28,11 @@
         <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.INTERACTION' | translate }}</h5>
         <div class="content">
           <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.OPENED' | translate }}</h4>
-          <h3 class="value"></h3>
+          <h3 class="value">{{ getCampaignStat('opened') }}%</h3>
         </div>
         <div class="content">
           <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.CLICKED' | translate }}</h4>
-          <h3 class="value"></h3>
+          <h3 class="value">{{ getCampaignStat('clicked') }}%</h3>
         </div>
       </div>
     </div>
@@ -47,11 +43,11 @@
         <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.DISPLAY' | translate }}</h5>
         <div class="content">
           <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAIL' | translate }}</h4>
-          <h3 class="value"></h3>
+          <h3 class="value">{{ getCampaignStat('email') }}</h3>
         </div>
         <div class="content">
           <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.QUESTIONNAIRE' | translate }}</h4>
-          <h3 class="value"></h3>
+          <h3 class="value">{{ getCampaignStat('questionnaire') }}</h3>
         </div>
       </div>
     </div>

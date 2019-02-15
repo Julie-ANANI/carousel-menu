@@ -233,17 +233,11 @@ export const COMMON = {
 
   'EDIT_USER': 'Modifier l\'utilisateur',
 
-  'EDIT_PROFESSIONAL': 'Modifier Professionnel',
-
-  'EDIT_INSIGHT': 'Modifier l\'aperçu',
-
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
 
   'ADD-TAGS': 'Ajouter des tags',
 
   'UMI_WORD': 'Le mot d’UMI',
-
-  'ADD_PRO': 'Ajouter un professionnel',
 
   'SORT': {
     'BY_NAME': 'Nom',
@@ -291,12 +285,17 @@ export const COMMON = {
   },
 
   'SIDEBAR': {
-    'EDIT_WORKFLOW': 'Modifier le modèle'
+    'EDIT_WORKFLOW': 'Modifier le modèle',
+    'EDIT_INSIGHT': 'Modifier l\'aperçu',
+    'ADD_PRO': 'Ajouter un professionnel',
+    'EDIT_PROFESSIONAL': 'Modifier Professionnel',
+    'ADD_TAGS': 'Ajouter des tags',
   },
 
   'MODAL': {
     'TITLE_DELETE': 'Supprimer le forum',
-    'TITLE_CONFIRMATION': 'Confirmation le forum'
+    'TITLE_CONFIRMATION': 'Confirmation le forum',
+    'TITLE_IMPORT': 'Conseil d\'importation',
   },
 
   'SELECT_LABELS': {

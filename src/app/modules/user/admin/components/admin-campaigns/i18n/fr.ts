@@ -134,6 +134,19 @@ export const CAMPAIGNS = {
     'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
   },
 
+  'PROS_PAGE': {
+    'BUTTON': {
+      'IMPORT': 'Import',
+      'EXPORT': 'Exporter',
+      'ADD': 'Ajouter'
+    },
+    'MODAL': {
+      'IMPORT': {
+        'PLACEHOLDER': 'Entrez le nom de la campagne',
+      }
+    }
+  },
+
   'WORKFLOW_PAGE': {
     'SELECT_LABEL': 'Sélectionner le workflow',
     'BUTTON': {

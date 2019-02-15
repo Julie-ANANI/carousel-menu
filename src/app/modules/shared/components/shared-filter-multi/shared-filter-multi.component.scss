@@ -49,7 +49,7 @@
     margin-right: .6rem;
   }
 
-  .form-select, .form-default {
+  .form-select, .form-input {
     min-height: 2.5rem;
     margin-top: 0;
     padding-top: .18rem;
@@ -57,13 +57,13 @@
     min-width: 102px;
   }
 
-  .form-default {
+  .form-input {
     width: 350px;
     padding-left: 40px;
     padding-right: 38px;
   }
 
-  .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+  .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
     border-color: $border-color;
   }
 
@@ -81,7 +81,7 @@
       margin-right: .9375rem !important;
     }
 
-    .form-default {
+    .form-input {
       width: 280px !important;
     }
 

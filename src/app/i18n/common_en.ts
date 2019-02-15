@@ -228,10 +228,6 @@ export const COMMON = {
 
   'EDIT_USER': 'Edit User',
 
-  'EDIT_PROFESSIONAL': 'Edit Professional',
-
-  'EDIT_INSIGHT': 'Edit Insight',
-
   'EDIT-COUNTRY': 'Edit country\'s filter',
 
   'ADD-TAGS': 'Add tags',
@@ -245,8 +241,6 @@ export const COMMON = {
   'CLIENT_SIDE': 'Client',
 
   'UMI_WORD': 'A word from UMI',
-
-  'ADD_PRO': 'Add Professional',
 
   'SORT': {
     'BY_NAME': 'Name',
@@ -294,12 +288,17 @@ export const COMMON = {
   },
 
   'SIDEBAR': {
-    'EDIT_WORKFLOW': 'Edit Workflow'
+    'EDIT_WORKFLOW': 'Edit Workflow',
+    'EDIT_INSIGHT': 'Edit Insight',
+    'ADD_PRO': 'Add Professional',
+    'EDIT_PROFESSIONAL': 'Edit Professional',
+    'ADD_TAGS': 'Add Tags',
   },
 
   'MODAL': {
     'TITLE_DELETE': 'Delete Board',
-    'TITLE_CONFIRMATION': 'Confirmation Board'
+    'TITLE_CONFIRMATION': 'Confirmation Board',
+    'TITLE_IMPORT': 'Import Board',
   },
 
   'SELECT_LABELS': {

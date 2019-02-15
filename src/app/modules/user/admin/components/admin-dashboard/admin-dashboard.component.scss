@@ -28,7 +28,7 @@
 
     }
 
-    .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+    .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
       border-color: $border-color;
     }
 
