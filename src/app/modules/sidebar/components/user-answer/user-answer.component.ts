@@ -224,6 +224,38 @@ export class UserAnswerComponent implements OnInit {
 
   }
 
+  public meta2Question(): any {
+    /*
+    readonly label: Multiling;
+  readonly title: Multiling;
+  readonly _id?: string;
+  readonly subtitle: Multiling;
+  identifier: string;
+  controlType: 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
+  canComment: boolean;
+  readonly parameters?: {
+    type: 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
+    addon: string;
+    min: number;
+    max: number;
+    step: number;
+  }
+     */
+    let question = {
+      label: "Reply message",
+      title: "Reply message",
+      subtitle: "-",
+      identifier: "randomstring",
+      controlType: 'textarea',
+      canComment: false
+    };
+    return question;
+  }
+
+  get meta(): any {
+    return this._modalAnswer['meta'] || {};
+  }
+
   get lang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
