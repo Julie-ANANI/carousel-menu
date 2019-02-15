@@ -26,6 +26,8 @@ import { SHARE } from '../modules/public/share/i18n/fr';
 import { FOOTER } from "../modules/common/footer/i18n/fr";
 import { HEADER } from '../modules/common/header/i18n/fr';
 import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/fr';
+import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/fr';
+import { TABLE } from '../modules/table/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -55,5 +57,7 @@ export const fr = {
   'PROJECT_MODULE': PROJECT_MODULE,
   'PROFESSIONALS' : PROFESSIONALS,
   'SHARE': SHARE,
-  'RESET_PASSWORD': RESET_PASSWORD
+  'RESET_PASSWORD': RESET_PASSWORD,
+  'EDIT_WORKFLOW': EDIT_WORKFLOW,
+  'TABLE': TABLE
 };

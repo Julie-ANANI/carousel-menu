@@ -1,9 +1,15 @@
-<!-- Save button -->
-<div class="text-right">
-  <button [disabled]="!isChange" type="submit" class="btn btn-primary" (click)="save()">Save</button>
+<div class="column col-xs-12 col-11 col-mx-auto" id="sidebar-workflow-component">
+
+  <div class="save-wrapper">
+    <button [disabled]="!activeSaveButton" type="submit" class="btn btn-primary" (click)="onClickSave()">{{ 'COMMON.SAVE' | translate }}</button>
+  </div>
+
+  <app-shared-mail-editor
+    [emailsObject]="emailsObject"
+    [inputLanguage]="language"
+    [signatures]="signatures"
+    (emailChange)="onChangeEmail($event)">
+  </app-shared-mail-editor>
+
 </div>
 
-<app-shared-mail-editor [emailsObject]="emailsObject"
-                        [inputLanguage]="language"
-                        [signatures]="signatures" (emailChange)="emailsObject = $event; isChange = true">
-</app-shared-mail-editor>

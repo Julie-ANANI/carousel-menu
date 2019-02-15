@@ -1,10 +1,56 @@
-.workflow-header {
-  margin-top: 25px;
-  a {
-    font-size: 0.7rem;
+@import "../../../../../../style/framework/variables";
+
+#admin-edit-workflow-component {
+
+  .section-header {
+    color: $meta;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .icons-delete, .circle {
+      margin-left: 0.6rem;
+    }
+
+    .circle {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.5rem;
+    }
+
+    .incomplete {
+      background-color: $alert;
+
+      .fa-check {
+        visibility: hidden;
+      }
+
+    }
+
+    .complete {
+      background-color: $success;
+
+      .fa-check {
+        visibility: visible;
+      }
+
+    }
+
+    .text-link {
+      color: $meta;
+
+      &.active {
+        color: $primary;
+        text-decoration: none;
+        cursor: default;
+      }
+
+    }
+
+    .text-link:hover {
+      color: $primary;
+    }
+
   }
-  .workflow-name {
-    font-size: 0.9rem;
-    color: #97A4B1
-  }
+
 }

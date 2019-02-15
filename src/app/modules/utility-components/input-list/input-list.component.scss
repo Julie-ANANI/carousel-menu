@@ -2,7 +2,7 @@
 
 .input-group {
 
-  .form-default {
+  .form-input {
     margin-right: 10px;
     width: 80%;
     margin-top: 0;
@@ -10,7 +10,7 @@
 
 }
 
-.form-default.ng-touched.ng-invalid{
+.form-input.ng-touched.ng-invalid{
   border-color: $border-color;
 }
 

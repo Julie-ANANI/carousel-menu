@@ -6,6 +6,7 @@ export interface Table {
   readonly _isHeadable?: boolean;
   readonly _isSelectable?: boolean;
   readonly _isEditable?: boolean;
+  readonly _isNoTitle?: boolean;
   readonly _isShowable?: boolean;
   readonly _isDeletable?: boolean;
   readonly _isFiltrable?: boolean;
