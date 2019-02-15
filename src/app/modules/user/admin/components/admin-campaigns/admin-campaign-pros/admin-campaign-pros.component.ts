@@ -170,7 +170,8 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
 
-  onClickExport() {
+  onClickExport(event: Event) {
+    event.preventDefault();
     const config = {
       professionals: [] || 'all',
       campaignId: this._campaign._id,
