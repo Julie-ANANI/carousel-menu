@@ -127,3 +127,14 @@ a, a:focus, a:hover, a:active, a.active {
               border-right-color 0.15s ease-in-out,
               border-top-color 0.15s ease-in-out;
 }
+
+
+/********************************** Media ***************************************/
+
+@media (min-width: 1441px) {
+
+  .restrict-width {
+    max-width: 800px !important;
+  }
+
+}
