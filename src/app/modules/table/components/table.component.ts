@@ -33,6 +33,9 @@ export class TableComponent {
    */
   @Input() set data(value: Table) {
     this.loadData(value);
+    if (this._isLocal) {
+      this.changeLocalConfig();
+    }
   }
 
 
@@ -235,8 +238,8 @@ export class TableComponent {
           }
           break;
         } default : {
-        this.filterAttribute(key, false);
-        break;
+          this.filterAttribute(key, false);
+          break;
       }
       }
     }

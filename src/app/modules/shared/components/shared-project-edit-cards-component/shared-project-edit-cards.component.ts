@@ -4,7 +4,7 @@ import {TranslationService} from '../../../../services/translation/translation.s
 import {forkJoin, Subject} from 'rxjs';
 import {environment} from '../../../../../environments/environment';
 import {Media, Video} from '../../../../models/media';
-import {first, takeUntil} from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {InnovCard} from '../../../../models/innov-card';
 import {InnovationCommonService} from '../../../../services/innovation/innovation-common.service';
@@ -107,9 +107,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this._canEdit) {
-      if (!this._saveChanges) {
+      if (!this._saveChanges || this._adminSide) {
         if (this._innovation.innovationCards.length < 2 && this._innovation.innovationCards.length !== 0) {
-          this.innovationService.createInnovationCard(this._innovation._id, new InnovCard({ lang: lang})).pipe(first()).subscribe((data: InnovCard) => {
+          this.innovationService.createInnovationCard(this._innovation._id, new InnovCard({ lang: lang})).subscribe((data: InnovCard) => {
             this._innovation.innovationCards.push(data);
             this.notifyChanges();
             this._selectedCardIndex = this._innovation.innovationCards.length - 1;
@@ -156,8 +156,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this._canEdit) {
-      if ((!this._saveChanges)) {
-        this.innovationService.removeInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id).pipe(first()).subscribe(() => {
+      if (!this._saveChanges || this._adminSide) {
+        this.innovationService.removeInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id).subscribe(() => {
           this._innovation.innovationCards = this._innovation.innovationCards.filter((card) => card._id !== this._innovation.innovationCards[this._selectedCardIndex]._id);
           this.notifyChanges();
           this.onLangSelect(event, 0);
@@ -199,7 +199,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       default:
       // remove html tags from text
       const text = from_card[model].replace(/<[^>]*>/g, '');
-      this.translationService.translate(text, target_card.lang).first().subscribe((o) => {
+      this.translationService.translate(text, target_card.lang).subscribe((o) => {
         target_card[model] = o.translation;
       });
 
@@ -289,7 +289,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   checkPrincipalMedia(media: Media, cardIdx: number) {
     if (this._innovation.innovationCards[this._selectedCardIndex].media.length > 0) {
       if (!this._innovation.innovationCards[this._selectedCardIndex].principalMedia) {
-        this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, media._id).pipe(first())
+        this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, media._id)
           .subscribe((res) => {
             this._innovation.innovationCards[cardIdx].principalMedia = media;
           });
@@ -303,7 +303,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param video
    */
   uploadVideo(video: Video): void {
-    this.innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, video).pipe(first())
+    this.innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id, video)
       .subscribe(res => {
       this._innovation.innovationCards[this._selectedCardIndex].media.push(res);
       this.checkPrincipalMedia(res, this._selectedCardIndex);
@@ -323,7 +323,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onClickDeleteMedia(event: Event, media: Media, index: number) {
     event.preventDefault();
 
-    this.innovationService.deleteMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id).pipe(first())
+    this.innovationService.deleteMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id)
       .subscribe((_res: Innovation) => {
         this._innovation.innovationCards[index].media = this._innovation.innovationCards[index].media.filter((m) => m._id !== media._id);
 
@@ -349,7 +349,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onClickSetMainMedia(event: Event, media: Media, index: number) {
     event.preventDefault();
 
-    this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id).pipe(first())
+    this.innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this._innovation.innovationCards[index]._id, media._id)
       .subscribe((res: Innovation) => {
         this._innovation.innovationCards[index].principalMedia = media;
         this.notifyChanges();
@@ -362,10 +362,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   get innovation(): Innovation {
     return this._innovation;
-  }
-
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
   }
 
   get canEdit(): boolean {

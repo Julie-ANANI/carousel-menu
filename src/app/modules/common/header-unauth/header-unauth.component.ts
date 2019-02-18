@@ -107,7 +107,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
     }
 
     if (url.includes('/share/synthesis')) {
-      this.router.navigate([url.replace('/share/', '/user/')], {
+      this.router.navigate([url.replace('/share', '/user')], {
         queryParams: this.activatedRoute.snapshot.queryParams
       });
     }
