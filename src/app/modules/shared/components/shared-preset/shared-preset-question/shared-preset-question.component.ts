@@ -50,10 +50,6 @@ export class SharedPresetQuestionComponent {
 
   public save(event: Event) {
     event.preventDefault();
-    if (this._formData.get('controlType').value === 'textarea') {
-      // This block is here to avoid comments by default when creating a new quiz
-      this._formData.get('canComment').setValue(false);
-    }
     this.updateQuestion.emit(this._formData.value);
   }
 

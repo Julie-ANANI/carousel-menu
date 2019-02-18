@@ -60,7 +60,7 @@
         French
         <span class ="alert-badge" *ngIf="countErrors('fr') !== 0" [innerHtml]="countErrors('fr')"></span>
       </button>
-      <label class="form-switch" *ngIf="formData.get('controlType').value !== 'textarea'">
+      <label class="form-switch">
         <input type="checkbox" formControlName="canComment">
         <i class="form-icon"></i> Add comment
       </label>
