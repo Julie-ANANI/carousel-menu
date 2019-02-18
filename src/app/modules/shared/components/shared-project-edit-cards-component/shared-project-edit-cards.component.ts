@@ -107,7 +107,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this._canEdit) {
-      if (!this._saveChanges) {
+      if (!this._saveChanges || this._adminSide) {
         if (this._innovation.innovationCards.length < 2 && this._innovation.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this._innovation._id, new InnovCard({ lang: lang})).pipe(first()).subscribe((data: InnovCard) => {
             this._innovation.innovationCards.push(data);
@@ -156,7 +156,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this._canEdit) {
-      if ((!this._saveChanges)) {
+      if (!this._saveChanges || this._adminSide) {
         this.innovationService.removeInnovationCard(this._innovation._id, this._innovation.innovationCards[this._selectedCardIndex]._id).pipe(first()).subscribe(() => {
           this._innovation.innovationCards = this._innovation.innovationCards.filter((card) => card._id !== this._innovation.innovationCards[this._selectedCardIndex]._id);
           this.notifyChanges();
