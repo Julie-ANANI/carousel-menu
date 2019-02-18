@@ -603,11 +603,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   getIntroSrc(): string {
 
     if (this.lang === 'en') {
-      return 'https://res.cloudinary.com/umi/image/upload/v1548250235/app/default-images/intro/en.png';
+      return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-en.png';
     }
 
     if (this.lang === 'fr') {
-      return 'https://res.cloudinary.com/umi/image/upload/v1548250235/app/default-images/intro/fr.png';
+      return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-fr.png';
     }
 
   }

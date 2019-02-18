@@ -125,6 +125,30 @@ export class UserAnswerComponent implements OnInit {
   }
 
 
+  onClickEdit(activate: string) {
+
+    switch (activate) {
+
+      case 'country':
+        this._editCountry = true;
+        break;
+
+      case 'job':
+        this._editJob = true;
+        break;
+
+      case 'company':
+        this._editCompany = true;
+        break;
+
+      default:
+        //do nothing...
+
+    }
+
+  }
+
+
   save(event: Event) {
     event.preventDefault();
 
