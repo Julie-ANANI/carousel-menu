@@ -95,6 +95,8 @@ export class TableComponent {
 
   private _reloadColumns = false;
 
+  private _isNoTitle = false;
+
   private _content: Row[] = [];
 
   private _total = 0;
@@ -132,6 +134,7 @@ export class TableComponent {
       this._filteredContent = this._content;
 
       this._isHeadable = value._isHeadable || false;
+      this._isNoTitle = value._isNoTitle || false;
       this._isSelectable = value._isSelectable || false;
       this._isEditable = value._isEditable || false;
       this._isShowable = value._isShowable || false;
@@ -621,6 +624,10 @@ export class TableComponent {
 
   get isEditable(): boolean {
     return this._isEditable;
+  }
+
+  get isNoTitle(): boolean {
+    return this._isNoTitle;
   }
 
   get isLocal(): boolean {

@@ -56,7 +56,7 @@
             [list-formatter]="autocompleListFormatter"
             [value-formatter]="autocompleValueFormatter"
             [attr.placeholder]="'COMMON.TAG_LABEL.TAG_PLACEHOLDER' | translate"
-            class="form-default">
+            class="form-input">
           <button (click)="connectToTag($event, tag)" class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
         </div>
       </div>
@@ -69,7 +69,7 @@
         <input
           id="tags-form-enLabel"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.label.en"
           alt="label"
@@ -82,7 +82,7 @@
         <input
           id="tags-form-frLabel"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.label.fr"
           (change)="onKeyboardPress($event)"
@@ -98,7 +98,7 @@
         <input
           id="tags-form-enDesc"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.description.en"
           alt="description"
@@ -111,7 +111,7 @@
         <input
           id="tags-form-frDesc"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.description.fr"
           alt="description"

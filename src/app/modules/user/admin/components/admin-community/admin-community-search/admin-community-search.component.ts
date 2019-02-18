@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-community-search',
@@ -11,9 +12,9 @@ import { Component, OnInit } from "@angular/core";
 export class AdminCommunitySearchComponent implements OnInit {
 
   private _config: any;
+  public advSearchForm: FormGroup;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     this._config = {
@@ -24,6 +25,10 @@ export class AdminCommunitySearchComponent implements OnInit {
       sort: '{"created":-1}'
     };
     console.log(this._config);
+  }
+
+  public search() {
+    console.log(this.advSearchForm.getRawValue());
   }
 
 }

@@ -81,7 +81,10 @@ export const CAMPAIGNS = {
       'QUALITY': 'Qualité',
       'PROFESSIONALS': 'Professionnels',
       'EMAILS': 'Emails',
-      'COST': 'Cost'
+      'COST': 'Cost',
+      'RECEPTION': 'Réception',
+      'INTERACTION': 'Interaction',
+      'DISPLAY': 'Afficheur'
     },
     'TITLE': {
       'LOOK': 'To look at',
@@ -100,7 +103,15 @@ export const CAMPAIGNS = {
       'UNSURE': 'Incertain',
       'BAD': 'Mauvais',
       'REQUEST': 'Demande',
-      'EMAILS': 'Emails'
+      'EMAILS': 'Emails',
+      'GOOD_EMAILS': 'Bons emails',
+      'RECEIVED': 'Reçu',
+      'SPAM': 'Spam',
+      'BOUNCES': 'Rebonds',
+      'OPENED': 'Ouvert',
+      'CLICKED': 'Cliqué',
+      'EMAIL': 'Email',
+      'QUESTIONNAIRE': 'Questionnaire'
     },
 
     'ADDED': 'Ajouté',
@@ -121,6 +132,35 @@ export const CAMPAIGNS = {
   'QUIZ_PAGE': {
     'HEADING': 'Visitez ces liens pour voir le questionnaire :',
     'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
+  },
+
+  'PROS_PAGE': {
+    'BUTTON': {
+      'IMPORT': 'Import',
+      'EXPORT': 'Exporter',
+      'ADD': 'Ajouter'
+    },
+    'MODAL': {
+      'IMPORT': {
+        'PLACEHOLDER': 'Entrez le nom de la campagne',
+      }
+    }
+  },
+
+  'WORKFLOW_PAGE': {
+    'SELECT_LABEL': 'Sélectionner le workflow',
+    'BUTTON': {
+      'IMPORT': 'Importer'
+    },
+    'BOT': {
+      'MESSAGE_A': 'Vous n\'avez pas des workflows ?',
+      'MESSAGE_B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
+    },
+    'MODAL': {
+      'CONTENT_A': 'Ce workflow est déjà importé. Si vous l\'importez à nouveau, il remplacera le premier. Voulez-vous vraiment importer ce modèle ?',
+      'CONTENT_B': 'Si vous avez déjà importé un workflow, il le remplacera. Voulez-vous vraiment importer ce modèle ?'
+    },
+    'NOTE': 'Note : Il vous est conseillé de modifier les modèles/emails importés avant de lancer le lot.',
   }
 
 };

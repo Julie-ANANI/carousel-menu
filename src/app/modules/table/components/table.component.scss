@@ -67,6 +67,7 @@
 
       }
 
+
       .square-checkbox {
         width: 27px;
         display: flex;
@@ -159,6 +160,10 @@
         .ghost-edit {
           visibility: hidden;
           float: right;
+        }
+
+        .label {
+          margin-left: 0;
         }
 
       }

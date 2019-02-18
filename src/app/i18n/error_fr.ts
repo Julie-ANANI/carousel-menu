@@ -124,7 +124,14 @@ export const ERROR = {
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',
     'UPDATED': 'La campagne a été mis à jour avec succès.',
-    'DELETED': 'La campagne et son professionnel ont été supprimés avec succès.'
+    'DELETED': 'La campagne et son professionnel ont été supprimés avec succès.',
+    'TEMPLATE_ERROR': 'Nous avons du mal à récupérer les données des modèles. Veuillez essayer de recharger la page à nouveau !',
+    'SIGNATURE_ERROR': 'Nous avons du mal à récupérer les données des signatures. Veuillez essayer de recharger la page à nouveau !',
+    'WORKFLOW': {
+      'ADDED': 'Le workflow a été ajouté avec succès.',
+      'DELETED': 'Le workflow a été supprimé avec succès.',
+      'UPDATED': 'Le workflow a été mis à jour avec succès.'
+    }
   },
 
   'IMPORT': {

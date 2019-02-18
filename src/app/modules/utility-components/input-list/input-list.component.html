@@ -3,7 +3,7 @@
   <div class="input-group" [ngStyle]="{ 'display': 'flex', 'justify-content': 'space-between' }">
     <input
       type="text"
-      class="form-default"
+      class="form-input"
       name="answers"
       [(ngModel)]="answer"
       required
@@ -32,7 +32,7 @@
         <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
-            <input type="text" class="form-default" [(ngModel)]="a.text" name="text"/>
+            <input type="text" class="form-input" [(ngModel)]="a.text" name="text"/>
             <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
           </div>
         </div>
