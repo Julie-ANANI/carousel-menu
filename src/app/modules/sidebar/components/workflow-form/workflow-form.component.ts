@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 
 @Component({
-  selector: 'app-sidebar-workflow',
-  templateUrl: './sidebar-workflow.component.html',
-  styleUrls: ['./sidebar-workflow.component.scss']
+  selector: 'app-workflow',
+  templateUrl: './workflow-form.component.html',
+  styleUrls: ['./workflow-form.component.scss']
 })
 
-export class SidebarWorkflowComponent {
+export class WorkflowFormComponent {
 
   @Input() set emailsObject(value: any) {
     this._emailsObject = value;

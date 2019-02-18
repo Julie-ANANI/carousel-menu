@@ -33,10 +33,10 @@
 
 <!-- sidebar to edit workflow -->
 <app-sidebar [(template)]="more">
-  <app-sidebar-workflow
+  <app-workflow
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
-  </app-sidebar-workflow>
+  </app-workflow>
 </app-sidebar>
 <!-- /sidebar to edit workflow -->
