@@ -24,6 +24,10 @@ export class MessageSpaceComponent {
     this._wrapperWidth = value;
   }
 
+  @Input() set background(value: string) {
+    this._colorBackground = value;
+  }
+
   private _firstLine = '';
 
   private _secondLine = '';
@@ -33,6 +37,8 @@ export class MessageSpaceComponent {
   private _wrapperWidth = '';
 
   private _defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg';
+
+  private _colorBackground = '';
 
   constructor() { }
 
@@ -54,6 +60,10 @@ export class MessageSpaceComponent {
 
   get defaultSrc(): string {
     return this._defaultSrc;
+  }
+
+  get colorBackground(): string {
+    return this._colorBackground;
   }
 
 }

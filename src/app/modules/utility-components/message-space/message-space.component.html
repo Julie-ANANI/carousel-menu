@@ -1,8 +1,7 @@
 <div id="message-space-component">
 
-  <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px' }">
-    <ng-container *ngIf="firstLine">{{ firstLine | translate }}</ng-container>
-    <ng-container *ngIf="secondLine"><br>{{ secondLine | translate }}</ng-container>
+  <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px', 'background-color': colorBackground ? colorBackground : 'transparent' }">
+    <ng-content></ng-content>
   </div>
 
   <br>
@@ -12,4 +11,3 @@
   <div><img [src]="imageSrc ? imageSrc : defaultSrc" class="bot-wrapper" alt=" "></div>
 
 </div>
-

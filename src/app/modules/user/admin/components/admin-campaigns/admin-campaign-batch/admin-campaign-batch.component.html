@@ -1,3 +1,73 @@
+<div id="admin-campaign-batch-component">
+
+  <!-- section stats -->
+  <div class="campaign-stats-wrapper">
+
+    <!-- stat col 1 -->
+    <div class="stat1">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.RECEPTION' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('good_emails') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.RECEIVED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('received') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BOUNCES' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('bounces') }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat col 2 -->
+    <div class="stat2">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.INTERACTION' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.OPENED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('opened') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.CLICKED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('clicked') }}%</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat col 3 -->
+    <div class="stat3">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.DISPLAY' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAIL' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('email') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.QUESTIONNAIRE' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('questionnaire') }}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section no batches -->
+    <div *ngIf="noResult" class="section-container">
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+<!--
 <div>
   <div class="emailsStats">
     <div>
@@ -53,11 +123,11 @@
       <li *ngIf="statusAB == '0'"> Vous n'avez pas utilisé le super A/B testing</li>
       <li *ngIf="statusAB == '1'"> Vous ne pouvez pas commencer si A/B testing non validé</li>
     </ul>
-    <!--
+    &lt;!&ndash;
     <button (click)="creerpro()" class="btn btn-primary">
       CreerDesPros Alea + Autobatch si actif
     </button>
-    -->
+    &ndash;&gt;
   </div>
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">
@@ -93,7 +163,7 @@
   </div>
 </div>
 
-<!-- MODAL : Création de batch de mails -->
+&lt;!&ndash; MODAL : Création de batch de mails &ndash;&gt;
 <div class="modal" [ngClass]="{'active': batchModal}">
   <div class="modal-overlay" (click)="(batchModal = false) && $event.preventDefault()"></div>
   <div class="modal-container">
@@ -130,7 +200,7 @@
   </div>
 </div>
 
-<!-- MODAL : Suppression du batch -->
+&lt;!&ndash; MODAL : Suppression du batch &ndash;&gt;
 <div class="modal" [ngClass]="{'active': selectedBatchToBeDeleted}"  >
   <div class="modal-overlay" (click)="(selectedBatchToBeDeleted = null) && $event.preventDefault()"></div>
   <div class="modal-container">
@@ -177,7 +247,7 @@
   </div>
 </div>
 
-<!-- MODAL : ajout de nuggets -->
+&lt;!&ndash; MODAL : ajout de nuggets &ndash;&gt;
 <div class="modal" [ngClass]="{'active': nuggetsBatch}">
   <div class="modal-overlay" (click)="(nuggetsBatch = null) && $event.preventDefault()"></div>
   <div class="modal-container">
@@ -207,3 +277,4 @@
     </app-sidebar-batch>
   </app-sidebar>
 
+-->

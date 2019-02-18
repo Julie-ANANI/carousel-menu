@@ -15,25 +15,6 @@
 
 /********************************** Default Styles ***************************************/
 
-html {
-  font-family: 'Open Sans', sans-serif;
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
-  font-size: 1rem;
-}
-
-
-body {
-  font-size: 1rem;
-  line-height: 1.5;
-  font-family: 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: $dark-color;
-  background-color: #ffffff;
-  font-weight: 400;
-}
-
 .tab-content {
   width: 100%;
 }
@@ -53,6 +34,7 @@ body {
 /*
     In progress...
  */
+@import "style/framework/root";
 @import "style/framework/animation";
 @import "style/framework/buttons";
 @import "style/framework/container";

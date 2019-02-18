@@ -4,10 +4,11 @@ import { Campaign } from '../../../../../../models/campaign';
 import { environment } from '../../../../../../../environments/environment';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import {Batch} from '../../../../../../models/batch';
-import {Table} from '../../../../../table/models/table';
-import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
+import { Batch } from '../../../../../../models/batch';
+import { Table } from '../../../../../table/models/table';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 
 @Component({
   selector: 'app-admin-campaign-batch',
@@ -18,20 +19,35 @@ import { first } from 'rxjs/operators';
 export class AdminCampaignBatchComponent implements OnInit {
 
   private _campaign: Campaign;
+
   private _quizLinks: Array<string> = [];
+
   private _stats: any = {};
+
   public Math: any = Math;
+
   public mailsToSend = 0;
+
   public firstMail = 0;
+
   public secondMail = 0;
+
   public lastMail = 0;
+
   public testModal= false;
+
   public batchModal = false;
+
   public nuggetsBatch: Batch = null;
+
   public newBatch: Batch;
+
   public dateformat = 'le dd/MM/yyyy à HH:mm';
+
   public selectedBatchToBeDeleted: any = null;
+
   public dateMail: string;
+
   public timeMail: string;
 
   private _tableBatch: Array<any> = [];
@@ -40,45 +56,77 @@ export class AdminCampaignBatchComponent implements OnInit {
     sort: {},
     search: {}
   };
+
   public templateSidebar: SidebarInterface = {};
+
   public currentBatch: Batch;
+
   public content = {};
+
   public currentRow = {};
+
   public currentStep: number;
 
+  noResult = false;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _campaignService: CampaignService,
-              private _notificationsService: TranslateNotificationsService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private campaignService: CampaignService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private campaignFrontService: CampaignFrontService) { }
 
   ngOnInit() {
-    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-    if (this._campaign.innovation && this._campaign.innovation.quizId) {
-      this._quizLinks = ['fr', 'en'].map((l) => {
-        return environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + l;
-      });
-    }
-    this._campaignService.messagesStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
-      this._stats = stats;
-      this.lastMail = this._stats['CAMPAIGN_LAST'] || 0;
-      this.secondMail = this._stats['CAMPAIGN_SECOND'] || 0;
-      this.firstMail = this._stats['CAMPAIGN_FIRST'] || 0;
-      if (this._campaign.stats && this._campaign.stats.campaign) {
-        this.mailsToSend = (this._campaign.stats.campaign.nbFirstTierMails || 0) - this.firstMail;
-      } else {
-        this.mailsToSend = 0;
-      }
-      this._stats.batches.forEach( (batch: any) => {
-        this._tableBatch.push(
-          this.generateTableBatch(batch)
-        );
-      });
-    });
+    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
+    this.getQuiz();
+    this.getBatches();
+
     this.newBatch = {
       campaign: this._campaign,
       size: 0,
       active: true
     };
+  }
+
+
+  getCampaignStat(searchKey: any): number {
+    if (this._campaign) {
+      return this.campaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
+    }
+  }
+
+
+  private getBatches() {
+    this.campaignService.messagesStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
+      console.log(stats);
+      this._stats = stats;
+      this.lastMail = this._stats['CAMPAIGN_LAST'] || 0;
+      this.secondMail = this._stats['CAMPAIGN_SECOND'] || 0;
+      this.firstMail = this._stats['CAMPAIGN_FIRST'] || 0;
+
+      if (this._campaign.stats && this._campaign.stats.campaign) {
+        this.mailsToSend = (this._campaign.stats.campaign.nbFirstTierMails || 0) - this.firstMail;
+      } else {
+        this.mailsToSend = 0;
+      }
+
+      if (this._stats.batches.length > 0) {
+        this._stats.batches.forEach( (batch: any) => {
+          this._tableBatch.push(
+            this.generateTableBatch(batch)
+          );
+        });
+      } else {
+        this.noResult = true;
+      }
+
+    });
+  }
+
+  private getQuiz() {
+    if (this._campaign.innovation && this._campaign.innovation.quizId) {
+      this._quizLinks = ['fr', 'en'].map((lang) => {
+        return environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + lang;
+      });
+    }
   }
 
   private getStatus(step: number, status: number): string {
@@ -92,7 +140,7 @@ export class AdminCampaignBatchComponent implements OnInit {
   public createNewBatch(sendNow: boolean) {
     this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.dateMail, this.timeMail);
     this.newBatch.sendNow = sendNow;
-    this._campaignService.createNewBatch(this._campaign._id, this.newBatch).pipe(first()).subscribe((batch: Batch) => {
+    this.campaignService.createNewBatch(this._campaign._id, this.newBatch).pipe(first()).subscribe((batch: Batch) => {
       this.stats.batches.push(batch);
     }, err=>{
       console.error(err);
@@ -100,16 +148,16 @@ export class AdminCampaignBatchComponent implements OnInit {
   }
 
   public freezeStatus(batch: Batch) {
-    this._campaignService.freezeStatus(batch).pipe(first()).subscribe((modifiedBatch: any) => {
+    this.campaignService.freezeStatus(batch).pipe(first()).subscribe((modifiedBatch: any) => {
       this.stats.batches[this._getBatchIndex(modifiedBatch._id)] = modifiedBatch;
     });
   }
 
   // result won't be typed as batch everytime
   public AutoBatch() {
-    this._campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
+    this.campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
       if (result.length === 0) {
-        this._notificationsService.success('Autobatch OFF', 'No batch will be created');
+        this.translateNotificationsService.success('Autobatch OFF', 'No batch will be created');
       } else {
         if (result[0] !== 0) {
           this.stats.batches = result;
@@ -117,37 +165,37 @@ export class AdminCampaignBatchComponent implements OnInit {
             return this.generateTableBatch(batch);
           });
         }
-        this._notificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
+        this.translateNotificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
       }
     });
   }
 
   public setNuggets() {
-    this._campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
+    this.campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
         this._campaign = result;
         if (result.nuggets) {
-          this._notificationsService.success('Nuggets activés', 'Des pros à 80% seront incorporés.');
+          this.translateNotificationsService.success('Nuggets activés', 'Des pros à 80% seront incorporés.');
         } else {
-          this._notificationsService.success('Nuggets désactivés', 'On utilisera uniquement des pros à 90%.');
+          this.translateNotificationsService.success('Nuggets désactivés', 'On utilisera uniquement des pros à 90%.');
         }
     });
   }
 
   public addNuggetsToBatch(batchId: string) {
     this.nuggetsBatch = null;
-    this._campaignService.addNuggets(this._campaign._id, batchId).pipe(first()).subscribe((batch: any) => {
+    this.campaignService.addNuggets(this._campaign._id, batchId).pipe(first()).subscribe((batch: any) => {
       this.stats.batches[this._getBatchIndex(batch._id)] = batch;
-      this._notificationsService.success('Nuggets ajoutés', `${batch.nuggetsPros} pros à 80% ont été ajoutés.`);
+      this.translateNotificationsService.success('Nuggets ajoutés', `${batch.nuggetsPros} pros à 80% ont été ajoutés.`);
     });
   }
 
 // DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro() {
-    this._campaignService.creerpro(this._campaign._id).pipe(first()).subscribe();
+    this.campaignService.creerpro(this._campaign._id).pipe(first()).subscribe();
   }
 
   public deleteBatch(batchId: string) {
-     this._campaignService.deleteBatch(batchId).pipe(first()).subscribe((_: any) => {
+     this.campaignService.deleteBatch(batchId).pipe(first()).subscribe((_: any) => {
        this.stats.batches.splice(this._getBatchIndex(batchId), 1);
        this._tableBatch = this.stats.batches.map((batch: any) => {
          return this.generateTableBatch(batch);
@@ -175,7 +223,7 @@ export class AdminCampaignBatchComponent implements OnInit {
   }
 
   public sendTestEmails(batchStatus: number) {
-    this._campaignService.sendTestEmails(this._campaign._id, batchStatus).pipe(first()).subscribe((_: any) => {
+    this.campaignService.sendTestEmails(this._campaign._id, batchStatus).pipe(first()).subscribe((_: any) => {
       console.log('OK');
     });
   }
@@ -419,19 +467,19 @@ export class AdminCampaignBatchComponent implements OnInit {
         this.currentBatch.thirdMail = this._computeDate(result.date, result.time);
         break;
     }
-    this._campaignService.updateBatch(this.currentBatch).pipe(first()).subscribe((batch: any) => {
+    this.campaignService.updateBatch(this.currentBatch).pipe(first()).subscribe((batch: any) => {
       this.stats.batches[this._getBatchIndex(batch)] = batch;
       this.templateSidebar = { animate_state: 'inactive', title: 'COMMON.EDIT', type: 'editBatch'};
       this._tableBatch.every((table, index) => {
         if (table._selector === batch._id) {
           this._tableBatch[index] = this.generateTableBatch(batch);
-          this._notificationsService.success('ERROR.SUCCESS', '');
+          this.translateNotificationsService.success('ERROR.SUCCESS', '');
           return false;
         }
         return true;
       });
     }, (error: any) => {
-      this._notificationsService.success('ERROR.ERROR', '');
+      this.translateNotificationsService.success('ERROR.ERROR', '');
     });
   }
 
