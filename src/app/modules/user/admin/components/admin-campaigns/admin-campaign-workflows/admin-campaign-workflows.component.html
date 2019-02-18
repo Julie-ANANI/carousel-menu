@@ -71,6 +71,7 @@
           <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
         </select>
         <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.IMPORT' | translate }}</button>
+        <button *ngIf="!noResult" type="button" class="btn btn-sm btn-primary" (click)="onClickTestWorkflow()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.TEST_WORKFLOW' | translate }}</button>
       </div>
     </div>
 

@@ -150,7 +150,8 @@ export const CAMPAIGNS = {
   'WORKFLOW_PAGE': {
     'SELECT_LABEL': 'Select the workflow',
     'BUTTON': {
-      'IMPORT': 'Import'
+      'IMPORT': 'Import',
+      'TEST_WORKFLOW': 'Test Workflow'
     },
     'BOT': {
       'MESSAGE_A': 'Don\'t have any workflows?',
