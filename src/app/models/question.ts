@@ -8,9 +8,9 @@ export interface Option {
 }
 
 export interface Question {
+  readonly _id?: string;
   readonly label: Multiling;
   readonly title: Multiling;
-  readonly _id?: string;
   readonly subtitle: Multiling;
   identifier: string;
   controlType: 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
