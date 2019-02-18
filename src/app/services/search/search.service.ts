@@ -65,7 +65,7 @@ export class SearchService {
       path: '/request/' + requestId + '/export/people',
       data: config
     };
-    return this._http.get('/search/export', {params: query});
+    return this._http.post('/search/export', query);
   }
 
   public getCountriesSettings(): Observable<any> {
@@ -78,6 +78,13 @@ export class SearchService {
   public relaunchRequests(): Observable<any> {
     const query = {
       path: '/search/people/relaunch',
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public pauseModule(): Observable<any> {
+    const query = {
+      path: '/search/people/pause',
     };
     return this._http.get('/search/get', {params: query});
   }

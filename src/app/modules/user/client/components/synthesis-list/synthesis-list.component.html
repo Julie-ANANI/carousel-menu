@@ -3,14 +3,8 @@
 
     <!-- section no reports -->
     <div *ngIf="totalReports && totalReports.length === 0" class="section-no-reports">
-      <div class="bot-rect">{{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}</div>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
-      <div>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" ">
-      </div>
+      <app-message-space [messageA]="'SHARE.SYNTHESIS_LIST.BOT_TEXT'" [widthMax]="'354px'"></app-message-space>
     </div>
-
 
     <!-- section reports -->
     <div *ngIf="totalReports && totalReports.length > 0" class="section-reports-list">
@@ -34,7 +28,6 @@
       </div>
 
     </div>
-
 
   </div>
 </section>

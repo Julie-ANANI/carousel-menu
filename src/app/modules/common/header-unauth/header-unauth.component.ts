@@ -4,7 +4,7 @@ import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { User } from '../../../models/user.model';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserService } from '../../../services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -71,7 +71,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
 
   /***
-   * this function is callec when the user clicks on the continue buttion in the
+   * this function is called when the user clicks on the continue buttion in the
    * sign in form wrapper and redirect the user according to the requested page.
    */
   onClickContinue() {
@@ -79,7 +79,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this.authService.login(user).subscribe(() => {
+      this.authService.login(user).pipe(first()).subscribe(() => {
         this.checkUrlToRedirect();
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
@@ -116,7 +116,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
   /***
    * this function open the sign up sidebar where user can
-   * fill the details to register in the platform.
+   * fill the details to register in the framework.
    * @param event
    */
   onClickSignUp(event: Event) {
@@ -152,8 +152,8 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       } else {
-        this.userService.create(user).subscribe(() => {
-          this.authService.login(user).subscribe(() => {
+        this.userService.create(user).pipe(first()).subscribe(() => {
+          this.authService.login(user).pipe(first()).subscribe(() => {
             this.router.navigate(['/welcome']);
           }, () => {
             this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');

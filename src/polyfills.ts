@@ -47,7 +47,7 @@ import 'core-js/es7/reflect';
 
 
 /**
- * Web Animations `@angular/platform-browser/animations`
+ * Web Animations `@angular/framework-browser/animations`
  * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
  * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
  **/

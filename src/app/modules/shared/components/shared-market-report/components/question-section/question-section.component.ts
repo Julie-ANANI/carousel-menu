@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
 import { Innovation } from '../../../../../../models/innovation';
@@ -54,7 +53,6 @@ export class QuestionSectionComponent implements OnInit {
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
-  private _tagId: string;
   private _tags: Array<Tag>;
   private _stats: {nbAnswers?: number, percentage?: number};
   private _showComment: boolean;
@@ -66,7 +64,6 @@ export class QuestionSectionComponent implements OnInit {
   @Output() executiveTags = new EventEmitter<Array<Tag>>();
 
   constructor(private translateService: TranslateService,
-              private filterService: FilterService,
               private responseService: ResponseService,
               private location: Location,
               private formBuilder: FormBuilder,
@@ -78,13 +75,11 @@ export class QuestionSectionComponent implements OnInit {
      * this is to make visible abstract textarea.
      * @type {boolean}
      */
-    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+    this.adminSide = this.location.path().slice(5, 11) === '/admin';
 
     this.buildForm();
 
     this.patchForm();
-
-    this._tagId = this.questionReceived.identifier + (this.questionReceived.controlType !== 'textarea' ? 'Comment' : '');
 
     this.updateAnswersData();
 
@@ -132,14 +127,14 @@ export class QuestionSectionComponent implements OnInit {
           this._answersWithComment = this.answersReceived.filter(function(a) {
             return !a.answers[id]
             && a.answers[id + 'Comment']
-            && a.answers[id + 'CommentQuality'] !== 0
+            && a.answers[id + 'CommentQuality'] !== 0;
           });
           break;
 
           default:
           this._answersWithComment = this.answersReceived.filter(function(a) {
             return a.answers[id + 'Comment']
-              && a.answers[id + 'CommentQuality'] !== 0
+              && a.answers[id + 'CommentQuality'] !== 0;
           });
       }
 
@@ -171,16 +166,6 @@ export class QuestionSectionComponent implements OnInit {
 
   answerBtnClicked(event: boolean) {
     this._showComment = event;
-  }
-
-  addTagFilter(event: Event, tag: Tag) {
-    event.preventDefault();
-    this.filterService.addFilter({
-      status: 'TAG',
-      questionId: this._tagId,
-      questionTitle: tag.label,
-      value: tag._id
-    });
   }
 
 

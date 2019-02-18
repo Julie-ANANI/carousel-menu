@@ -44,7 +44,7 @@
           justify-content: center;
           align-items: center;
 
-          .radio-button {
+          .btn-radio {
             margin-right: .6rem;
           }
 
@@ -52,7 +52,7 @@
 
         li.active {
 
-          .radio-button {
+          .btn-radio {
             background-color: $validation-color;
             border-color: rgba(46,204,113,0.45) !important;
 
@@ -76,7 +76,7 @@
 
 
   .text {
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
 
@@ -113,11 +113,7 @@
     flex-direction: column;
     flex: 1;
     padding-top: 3.15rem;
-
-    .bot-rect {
-      max-width: 344px;
-    }
-
+    text-align: center;
   }
 
 
@@ -210,12 +206,23 @@
   }
 
 
-  .form-default.ng-touched.ng-invalid {
+  .form-input.ng-touched.ng-invalid {
     border-color: $border-color;
   }
 
 
 }
+
+
+.modal {
+
+  .ghost-edit {
+    border: none;
+    margin-right: .6rem;
+  }
+
+}
+
 
 /********************************** Media ***************************************/
 

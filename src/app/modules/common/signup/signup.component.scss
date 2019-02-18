@@ -1,4 +1,4 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/variables";
 
 #signup-component {
 
@@ -37,12 +37,12 @@
         margin-right: auto;
         margin-left: auto;
 
-        .main-heading {
+        .title-primary {
           font-size: 1.75rem;
-          padding-left: .6rem;
-          padding-right: .6rem;
-          color: $background-color;
-          padding-bottom: .4rem;
+          padding-left: 0.6rem;
+          padding-right: 0.6rem;
+          color: $text-background;
+          padding-bottom: 0.5rem;
         }
 
         .linkedIn-wrapper {

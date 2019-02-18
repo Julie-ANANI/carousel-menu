@@ -56,9 +56,9 @@
         <div class="label-week">
           <button type="button" class="btn ghost-edit btn-xs" (click)="getLastWeek()">{{ 'DASHBOARD.LAST_WEEK' | translate }}</button>
           <div class="label-wrapper">
-            <div class="label-validate">{{ 'DASHBOARD.MAIL_LABEL.FIRST' | translate }}</div>
-            <div class="label-draft">{{ 'DASHBOARD.MAIL_LABEL.SECOND' | translate }}</div>
-            <div class="label-meta">{{ 'DASHBOARD.MAIL_LABEL.THIRD' | translate }}</div>
+            <div class="label label-success">{{ 'DASHBOARD.MAIL_LABEL.FIRST' | translate }}</div>
+            <div class="label label-draft">{{ 'DASHBOARD.MAIL_LABEL.SECOND' | translate }}</div>
+            <div class="label label-meta">{{ 'DASHBOARD.MAIL_LABEL.THIRD' | translate }}</div>
           </div>
           <button type="button" class="btn ghost-edit btn-xs" (click)="getNextWeek()">{{ 'DASHBOARD.NEXT_WEEK' | translate }}</button>
         </div>
@@ -69,13 +69,13 @@
               <p *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
               <ng-container *ngIf="index2 !== 0">
                 <div *ngIf="index2 < 4" class="batch-body">
-                  <label *ngIf="getState(batches) === 0" class="label-validate" (click)="showPreview($event, batches)">
+                  <label *ngIf="getState(batches) === 0" class="label label-success" (click)="showPreview($event, batches)">
                     {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
                   </label>
-                  <label *ngIf="getState(batches) === 1" class="label-draft" (click)="showPreview($event, batches)">
+                  <label *ngIf="getState(batches) === 1" class="label label-draft" (click)="showPreview($event, batches)">
                     {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                   </label>
-                  <label *ngIf="getState(batches) === 2" class="label-meta" (click)="showPreview($event, batches)">
+                  <label *ngIf="getState(batches) === 2" class="label label-meta" (click)="showPreview($event, batches)">
                     {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                   </label>
                 </div>
@@ -87,13 +87,13 @@
                         <div class="card-body">
                           <div *ngFor="let batchesOver of days; let index3 = index">
                             <div *ngIf="index3 > 0" class="batch-body">
-                              <label *ngIf="getState(batchesOver) === 0" class="label-validate" (click)="showPreview($event, batches)">
+                              <label *ngIf="getState(batchesOver) === 0" class="label label-success" (click)="showPreview($event, batches)">
                                 {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                               </label>
-                              <label *ngIf="getState(batchesOver) === 1" class="label-draft" (click)="showPreview($event, batches)">
+                              <label *ngIf="getState(batchesOver) === 1" class="label label-draft" (click)="showPreview($event, batches)">
                                 {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                               </label>
-                              <label *ngIf="getState(batchesOver) === 2" class="label-meta" (click)="showPreview($event, batches)">
+                              <label *ngIf="getState(batchesOver) === 2" class="label label-meta" (click)="showPreview($event, batches)">
                                 {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                               </label>
                             </div>

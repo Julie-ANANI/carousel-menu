@@ -1,17 +1,14 @@
 <div id="innovation-preview-component">
 
   <div *ngIf="innovation && innovation.problem === '' && innovation.summary === '' && innovation.title === '' && innovation.advantages.length === 0" class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
-    <div class="bot-rect">{{ 'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE' | translate }}</div>
-    <br>
-    <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
-    <div><img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" "></div>
+    <app-message-space [messageA]="'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE'"></app-message-space>
   </div>
 
 
   <div *ngIf="innovation && (innovation.problem !== '' || innovation.summary !== '' || innovation.title !== '' || innovation.advantages.length !== 0)">
 
     <!-- Hero section -->
-    <div class="hero-light-container">
+    <div class="hero-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- Title -->

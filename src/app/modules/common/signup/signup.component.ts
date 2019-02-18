@@ -9,6 +9,7 @@ import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 import { FormGroup } from '@angular/forms';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user/user.service';
+import { RandomUtil } from "../../../utils/randomUtil";
 
 @Component({
   selector: 'app-signup',
@@ -21,6 +22,8 @@ export class SignupComponent implements OnInit {
   private _isInvitation = false;
 
   private _linkedInLink: string;
+
+  private _linkedInState: string = Date.now().toString();
 
   private _sidebarValue: SidebarInterface = {};
 
@@ -48,11 +51,27 @@ export class SignupComponent implements OnInit {
     const linkedinConfig = {
       url: 'https://www.linkedin.com/oauth/v2/authorization',
       clientID: '77283cf7nmchg3',
-      callbackURL: `${environment.clientUrl}/auth/linkedin/callback`,
+      callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
       scope: 'r_emailaddress r_liteprofile r_basicprofile'
     };
-    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=U3iqySrotWCW8e0xRZO9dOC2&client_id=${linkedinConfig.clientID}`;
+    this._linkedInState = RandomUtil.generateUUID();
+    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
 
+  }
+
+
+  linkedInEvent() {
+    const data = {
+      domain: environment.domain,
+      state: this._linkedInState
+    };
+    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
+        console.log(_);
+      }, err=>{
+        console.error(err);
+      }, ()=>{
+        window.open(this._linkedInLink, '_self');
+    });
   }
 
 
@@ -65,11 +84,6 @@ export class SignupComponent implements OnInit {
       type: 'signup'
     }
 
-  }
-
-
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
   }
 
 
@@ -124,6 +138,10 @@ export class SignupComponent implements OnInit {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
 }

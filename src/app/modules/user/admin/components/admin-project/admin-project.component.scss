@@ -22,23 +22,9 @@
 
   }
 
-  .tabs {
-    border-bottom: 1px solid #D8D8D8;
-
-    li {
-      flex: unset;
-
-      a {
-        background: white;
-        color: #4F5D6B;
-        font-weight: 500;
-        padding-right: 40px;
-        text-align: center;
-        margin-right: 25px;
-      }
-
-    }
-
+  .tab .tab-item a {
+    border-bottom-width: 4px;
+    margin-right: 2.5rem;
   }
 
   .project-progress {
@@ -54,19 +40,5 @@
     }
   }
 
-  .tabs li a:hover, .tabs li a.active {
-    color:  #FFB300;
-    border-bottom: 5px solid #FFB300;
-  }
-
 }
 
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
-
-  .tabs li {
-    flex: 1 0 auto;
-  }
-
-}

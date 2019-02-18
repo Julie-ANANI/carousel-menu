@@ -1,18 +1,21 @@
-<div *ngIf="modalAnswer" class="answer-wrapper">
+<div *ngIf="modalAnswer" class="user-answer-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- Save button -->
-    <div *ngIf="adminMode" class="save text-right" [ngSwitch]="modalAnswer.localStatus">
+    <!-- section save -->
+    <div *ngIf="adminMode" class="section-save" [ngSwitch]="modalAnswer?.localStatus">
+
       <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
         {{'COMMON.IMPORT' | translate}}
       </button>
+
       <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
         {{'COMMON.SAVE' | translate}}
       </button>
+
     </div>
 
-    <!-- User detail section -->
-    <div class="detail">
+    <!-- section user details -->
+    <div class="section-details">
 
       <!-- Name, flag and rating -->
       <div class="title">
@@ -64,7 +67,7 @@
       <!-- Linkedin -->
       <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
         <p>
-          <i class="fas fa-linkedin-in"></i>
+          <i class="fab fa-linkedin-in"></i>
           <a [href]="modalAnswer.professional.profileUrl" target="_blank">
             <span class="text-link">{{ modalAnswer.professional.profileUrl }}</span>
           </a>
@@ -84,7 +87,7 @@
             [(ngModel)]="modalAnswer.job"
             id="answer-jobTitle"
             alt="Job title"
-            class="form-default"
+            class="form-input"
             [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
         </div>
       </div>
@@ -102,7 +105,7 @@
             [(ngModel)]="modalAnswer.company.name"
             id="answer-company"
             alt="Company"
-            class="form-default"
+            class="form-input"
             [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
         </div>
       </div>
@@ -138,11 +141,10 @@
       </div>
 
     </div>
-    <!-- /User detail -->
 
-    <!-- Tags section -->
-    <div class="tag-wrapper">
-      <label class="form-label" *ngIf="modalAnswer?.tags.length > 0">Tags</label>
+    <!-- section tags -->
+    <div class="section-tags">
+      <label *ngIf="modalAnswer?.tags.length > 0" class="form-label">Tags</label>
       <app-shared-tag-item
         [tags]="modalAnswer.tags"
         [editMode]="editMode"
@@ -152,16 +154,15 @@
         (removeTag)="removeTag($event)">
       </app-shared-tag-item>
     </div>
-    <!-- /Tags -->
 
-    <!-- Status section -->
-    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="status-wrapper">
+    <!-- section status -->
+    <div *ngIf="adminMode && modalAnswer.status !== 'REJECTED_GMAIL' && modalAnswer.localStatus !== 'draft'" class="section-status">
 
       <!-- Rejected -->
       <div class="status-rejected">
-        <span class="label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
+        <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
         <div
-          class="radio-button rejected"
+          class="btn-radio rejected"
           [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
           (click)="updateStatus($event, 'REJECTED')">
           <span>•</span>
@@ -170,9 +171,9 @@
 
       <!-- Submitted -->
       <div class="status-submitted">
-        <span class="label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
+        <span class="label label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
         <div
-          class="radio-button submitted"
+          class="btn-radio submitted"
           [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
           (click)="updateStatus($event, 'SUBMITTED')">
           <span>•</span>
@@ -181,9 +182,9 @@
 
       <!-- Validated -->
       <div class="status-validated">
-        <span class="label-validate">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
+        <span class="label label-success">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
         <div
-          class="radio-button validated"
+          class="btn-radio validated"
           [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
           (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
           <span>•</span>
@@ -204,13 +205,27 @@
         </label>
       </div>
 
-
-
     </div>
-    <!-- /Status -->
 
-    <!-- Questions section -->
-    <div class="ques-wrapper">
+    <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
+        <!-- Rejected -->
+        <div class="status-rejected">
+            <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
+        </div>
+    </div>
+
+    <!-- The original reply message sent to Karine -->
+
+    <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
+        <div *ngIf="meta && !editMode" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
+            <span class="comment-wrapper">
+              {{ meta }}
+            </span>
+        </div>
+    </div>
+
+    <!-- section questions -->
+    <div class="section-questions">
       <div *ngFor="let question of questions">
         <app-answer-question
           [editMode]="editMode"
@@ -221,7 +236,6 @@
         </app-answer-question>
       </div>
     </div>
-    <!-- /Questions -->
 
   </div>
 </div>

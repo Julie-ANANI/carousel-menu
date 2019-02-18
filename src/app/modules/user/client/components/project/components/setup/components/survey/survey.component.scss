@@ -1,14 +1,14 @@
-#survey-component {
-  animation-name: fadeIn;
-  animation-duration: 300ms;
-  animation-timing-function: ease-in-out;
+@import "../../../../../../../../../../style/variables";
 
-  .bot-rect {
-    max-width: 313px;
-  }
+#survey-component {
 
   p {
     padding-bottom: .9375rem;
+  }
+
+  a:hover {
+    color: $primary-color;
+    text-decoration: underline;
   }
 
 }

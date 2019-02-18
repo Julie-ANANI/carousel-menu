@@ -76,23 +76,6 @@ export class AuthService {
       );
   }
 
-  public linkedInFetchToken(code: string, domain: string): Observable<any> {
-    return this._http.post(`/auth/linkedin`, {code: code, domain: domain || "umi" })
-      .pipe(
-        map((res: any) => {
-          this._setAuthenticatedTo(res.isAuthenticated);
-          this._setAdminTo(res.adminLevel);
-          this._setConfirmedTo(res.isConfirmed);
-          this._user = res;
-          if (res.isAuthenticated) {
-            this.startCookieObservator();
-          }
-          return res;
-        }),
-        catchError((error: Response) => throwError(error.json()))
-      );
-  }
-
   public logout(): Observable<any> {
     return this._http.get('/auth/logout')
       .pipe(
@@ -120,6 +103,14 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._user = res.user || null;
+          return res;
+        }));
+  }
+
+  public preRegisterDataOAuth2(provider: string, data: any): Observable<any> {
+    return this._http.post(`/auth/preoauth/${provider}`, data)
+      .pipe(
+        map((res: any) => {
           return res;
         }));
   }

@@ -1,4 +1,4 @@
-<section class="main-container" id="footer-component">
+<section class="container fluid" id="footer-component">
   <div class="column col-11 col-xs-12 col-mx-auto">
     <div class="content-wrapper">
 
@@ -14,11 +14,13 @@
         {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
           <span *ngIf="checkIsMainDomain()">
             |
-            <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')" target="_blank" class="gtm-legal-notice">
+            <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
+               target="_blank" rel="noopener" class="gtm-legal-notice">
               {{ 'FOOTER.LEGAL_NOTICE' | translate }}
             </a>
             |
-            <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')" class="gtm-end-user-licence-agreement">
+            <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')"
+               target="_blank" rel="noopener" class="gtm-end-user-licence-agreement">
               {{ 'FOOTER.TERMS' | translate }}
             </a>
           </span>

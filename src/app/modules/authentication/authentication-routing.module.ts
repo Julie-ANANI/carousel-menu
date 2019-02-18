@@ -11,10 +11,15 @@ const authRoutes: Routes = [
     canActivate: [NonAuthGuard],
     children: [
       {
-        path: 'linkedin/callback',
-        component: AuthenticationComponent,
-        data: {what: "yes"},
-        pathMatch: 'full'
+        path: 'linkedin',
+        children: [
+          {
+            path: 'callback',
+            component: AuthenticationComponent,
+            data: {what: "yes"},
+            pathMatch: 'full'
+          }
+        ],
       },
       //{ path: '**', component: NotFoundPageComponent }
     ]

@@ -23,8 +23,8 @@
   .modal-header {
     min-height: 4.625rem;
     background: $secondary-color;
-    border-top-left-radius: .18rem;
-    border-top-right-radius: .18rem;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
     padding: 1.312rem 1.625rem;
   }
 
@@ -75,7 +75,7 @@
           margin-bottom: .6rem;
         }
 
-        .radio-button:hover {
+        .btn-radio:hover {
           background-color: $primary-color;
           border-color: $primary-color;
 
@@ -85,7 +85,7 @@
 
         }
 
-        .radio-button.active {
+        .btn-radio.active {
           background-color: $validation-color;
           border-color: $validation-color;
 
@@ -125,6 +125,11 @@
 
     .export-cancel-button, .export-cancel-button:hover {
       border-color: white;
+    }
+
+    .btn-cancel {
+      border: none;
+      margin-right: .6rem;
     }
 
   }

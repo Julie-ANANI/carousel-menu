@@ -48,9 +48,12 @@ export const ERROR = {
     'DELETED': 'Compte supprimé',
     'DELETED_TEXT': 'Le compte a été supprimé.',
     'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
-    'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a été mis à jour.',
+    'PASSWORD_UPDATED_TEXT': 'Le mot de passe a été mis à jour avec succès.',
     'SAME_PASSWORD': 'Le nouveau mot de passe et le mot de passe de confirmation doivent être identiques.',
     'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
+    'PROFILE_UPDATE_TEXT': 'Le profil a été mis à jour avec succès.',
+    'PROFILE_DELETE_TEXT': 'Le profil a été supprimé avec succès.',
+    'ADDED': 'Le profil a été ajouté avec succès.'
   },
 
   'PROJECT': {
@@ -90,8 +93,9 @@ export const ERROR = {
   },
 
   'ANSWER': {
-    'UPDATED': 'Réponse mise à jour.',
-    'IMPORTED': 'Réponse importeé.',
+    'UPDATED': 'La réponse mise à jour avec succès.',
+    'IMPORTED': 'La réponse a été importée avec succès.',
+    'STATUS_UPDATE': 'Le statut a été mis à jour avec succès.'
   },
 
   'NOT_MODIFIED': {
@@ -115,6 +119,23 @@ export const ERROR = {
       'A': 'Nous allons chercher les résultats, s\'il vous plaît soyez patient !',
       'B': 's\'il vous plaît soyez patient !'
     }
+  },
+
+  'CAMPAIGN': {
+    'ADDED': 'La campagne a été ajoutée avec succès.',
+    'UPDATED': 'La campagne a été mis à jour avec succès.',
+    'DELETED': 'La campagne et son professionnel ont été supprimés avec succès.',
+    'TEMPLATE_ERROR': 'Nous avons du mal à récupérer les données des modèles. Veuillez essayer de recharger la page à nouveau !',
+    'SIGNATURE_ERROR': 'Nous avons du mal à récupérer les données des signatures. Veuillez essayer de recharger la page à nouveau !',
+    'WORKFLOW': {
+      'ADDED': 'Le workflow a été ajouté avec succès.',
+      'DELETED': 'Le workflow a été supprimé avec succès.',
+      'UPDATED': 'Le workflow a été mis à jour avec succès.'
+    }
+  },
+
+  'IMPORT': {
+    'CSV': 'Le CSV a été importé avec succès.'
   }
 
 };

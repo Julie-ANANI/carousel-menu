@@ -1,6 +1,6 @@
 <section class="section-container" id="welcome-page">
   <div class="column col-xs-12 col-11 col-mx-auto">
-    <h1 class="main-heading">{{ 'WELCOME.WELCOME' | translate }} {{ name }}!</h1>
+    <h1 class="title-primary">{{ 'WELCOME.WELCOME' | translate }} {{ name }}!</h1>
     <p>{{ 'WELCOME.MAIN_SENTENCE' | translate }}</p>
 
     <div *ngIf="isMainDomain()" class="content-wrapper">
@@ -9,7 +9,7 @@
       <p *ngIf="isAdmin" class="admin-text-wrapper">
         {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
         <br>
-        <input class="form-default" type="text" [(ngModel)]="tokenEmail">
+        <input class="form-input" type="text" [(ngModel)]="tokenEmail">
       </p>
 
       <p class="happy-text-wrapper"><strong>Happy UMIing!</strong></p>
@@ -18,8 +18,8 @@
         {{ 'WELCOME.I_UNDERSTAND' | translate }}
         <strong>
           <span *ngIf="isMainDomain()" class="text-link">
-            <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/'
-               : '/end-user-license-agreement/')">
+            <a target="_blank" rel="noopener"
+               [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
               {{ 'WELCOME.TERMS' | translate }}
             </a>
           </span>

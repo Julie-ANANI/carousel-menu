@@ -14,14 +14,15 @@ import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
-import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
-import { AdminCampaignTemplatesComponent } from './components/admin-campaigns/admin-campaign-templates/admin-campaign-templates.component';
+import { AdminCampaignBatchComponent } from './components/admin-campaigns/admin-campaign-batch/admin-campaign-batch.component';
+import { AdminCampaignWorkflowsComponent } from './components/admin-campaigns/admin-campaign-workflows/admin-campaign-workflows.component';
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
-import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admin-campaign-details/admin-campaign-details.component';
+import { AdminCampaignQuizComponent } from './components/admin-campaigns/admin-campaign-quiz/admin-campaign-quiz.component';
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
 import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './components/admin-campaigns/admin-campaign-search-results/admin-campaign-search-results.component';
+import { AdminCommunityComponent } from "./components/admin-community/admin-community.component";
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../../resolvers/request.resolver';
@@ -32,12 +33,13 @@ import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 // import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
 
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
-import {monitoringRoutes} from './components/admin-monitoring/admin-monitoring-routing.module';
+import { monitoringRoutes } from './components/admin-monitoring/admin-monitoring-routing.module';
 import { projectRoutes } from './components/admin-project/admin-project-routing.module';
-import {AdminLibrariesComponent} from './components/admin-libraries/admin-libraries.component';
-import {librariesRoutes} from './components/admin-libraries/admin-libraries-routing.module';
-import {AdminSettingsComponent} from './components/admin-settings/admin-settings.component';
-import {settingsRoutes} from './components/admin-settings/admin-settings-routing.module';
+import { AdminLibrariesComponent } from './components/admin-libraries/admin-libraries.component';
+import { librariesRoutes } from './components/admin-libraries/admin-libraries-routing.module';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
+import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
+import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
 // import {AdminLibrariesComponent} from "./components/admin-libraries/admin-libraries.component";
 // import {librariesRoutes} from "./components/admin-libraries/admin-libraries-routing.module";
 
@@ -66,6 +68,14 @@ const adminRoutes: Routes = [
         ]
       },
       {
+        path: 'community',
+        component: AdminCommunityComponent,
+        children: [
+          { path: '', redirectTo: 'members', pathMatch: 'full' },
+          ...communityRoutes
+        ]
+      },
+      {
         path: 'projects',
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
@@ -83,13 +93,13 @@ const adminRoutes: Routes = [
           { path: '', component: AdminCampaignsComponent, pathMatch: 'full' },
           { path: 'campaign/:campaignId', component: AdminCampaignComponent, resolve: { campaign : CampaignResolver }, children: [
             { path: '', redirectTo: 'answers', pathMatch: 'full'},
-            { path: 'details', component: AdminCampaignDetailsComponent, pathMatch: 'full'},
+            { path: 'quiz', component: AdminCampaignQuizComponent, pathMatch: 'full'},
             { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full'},
             { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'},
             { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },
             { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full'},
-            { path: 'mails', component: AdminCampaignMailsComponent, pathMatch: 'full'},
-            { path: 'templates', component: AdminCampaignTemplatesComponent, pathMatch: 'full'},
+            { path: 'batch', component: AdminCampaignBatchComponent, pathMatch: 'full'},
+            { path: 'workflows', component: AdminCampaignWorkflowsComponent, pathMatch: 'full'},
             { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full'}
           ]}
         ]

@@ -9,6 +9,7 @@ export const ANSWER = {
 
   'STATUS': {
     'REJECTED': 'Rejeté',
+    'REJECTED_GMAIL': 'Rejeté par Mail',
     'VALIDATED': 'Validé',
     'SUBMITTED': 'A regarder',
     'EMAIL': 'Envoyer email'

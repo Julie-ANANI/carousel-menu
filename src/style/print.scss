@@ -34,7 +34,7 @@
 
 
   #project-component {
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
 
 
@@ -155,11 +155,11 @@
 
     .sticky-wrapper, .menu-button-print, .report-innovation-print, .report-targeting-print, .report-analytics-print, .report-key-learnings-print
     , .report-professionals-print, .report-map-print, .report-origin-print, .report-other-sections-print, .report-conclusion-print
-    , .msg-wrapper {
+    , .msg-wrapper, .scroll-sticky-wrapper {
       display: none !important;
     }
 
-    .front-wrapper, .umi-intro-print {
+    .front-wrapper {
       display: flex !important;
     }
 
@@ -167,7 +167,6 @@
     #executive-report-wrapper, #main-page, .umi-intro-print {
       padding-top: 0;
       padding-bottom: 0 !important;
-      page-break-after: always;
     }
 
 
@@ -411,9 +410,11 @@
 
 
     .umi-intro-print {
+      display: flex !important;
 
       .img-responsive {
-        width: 29.5cm !important;
+        height: 19cm !important;
+        margin: auto;
       }
 
     }

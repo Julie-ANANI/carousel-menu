@@ -7,7 +7,7 @@ export const SIGN_UP = {
 
   'HEADING_SIDEBAR': 'Sign Up',
 
-  'SIGN_UP_LINKEDIN': 'Sign Up with LinkedIn',
+  'SIGN_UP_LINKEDIN': 'Connect with LinkedIn',
 
   'SIGN_UP_EMAIL': 'Sign Up with Email Address',
 

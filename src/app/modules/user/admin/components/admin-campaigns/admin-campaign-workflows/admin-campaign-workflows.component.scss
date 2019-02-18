@@ -1,0 +1,28 @@
+@import "../../../../../../../style/framework/variables";
+
+#admin-campaign-workflows-component {
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .form-label, .form-select, .btn {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-select {
+      max-width: 350px;
+      margin-left: 1.2rem;
+      margin-right: 1.2rem;
+    }
+
+  }
+
+  .text-alert {
+    font-weight: 600;
+    font-size: .9375rem;
+  }
+
+}

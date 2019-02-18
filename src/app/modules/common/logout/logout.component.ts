@@ -19,7 +19,7 @@ export class LogoutComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
-    this.translateTitleService.setTitle('COMMON.LOG_OUT');
+    this.translateTitleService.setTitle('COMMON.SIGN_OUT');
 
     this.authService.logout().pipe(first()).subscribe(() => {
       this.translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');

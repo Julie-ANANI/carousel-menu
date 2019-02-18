@@ -17,12 +17,7 @@
   <!-- not found message -->
   <div *ngIf="notFound" class="column col-xs-12 col-11 col-mx-auto">
     <div class="section-not-found">
-      <div class="bot-rect">{{ 'SHARE.NOT_FOUND' | translate }}</div>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="bot-triangle" alt=" ">
-      <div>
-        <img src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg" class="bot-image" alt=" ">
-      </div>
+      <app-message-space [messageA]="'SHARE.NOT_FOUND'" [widthMax]="'354px'"></app-message-space>
     </div>
   </div>
 

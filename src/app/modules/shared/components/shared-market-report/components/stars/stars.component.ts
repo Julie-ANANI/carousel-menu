@@ -30,7 +30,7 @@ export class StarsComponent implements OnInit {
 
 
   private _answers: Array<Answer> = [];
-  private _notesData: Array<{label: Multiling, sum: number, percentage: string, count: number}> = [];
+  private _notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
   private _starsOptions: Array<{identifier: number, label: Multiling}> = [];
 
   constructor(private translateService: TranslateService) {}
@@ -61,7 +61,6 @@ export class StarsComponent implements OnInit {
         return {
           label: x.label,
           sum: 0,
-          count: 0,
           percentage: '0%'
         };
       });
@@ -70,13 +69,9 @@ export class StarsComponent implements OnInit {
         Object.keys(answer.answers[this.question.identifier]).forEach((k) => {
           const idx = parseInt(k, 10);
           const vote = parseInt(answer.answers[this.question.identifier][k], 10);
-          if (Number.isInteger(idx) && Number.isInteger(vote) && idx < this._notesData.length && this._notesData[k]) {
+          if (Number.isInteger(idx) && Number.isInteger(vote) && idx < this._notesData.length) {
+            // If user didn't vote this characteristic, default value will be 0.
             this._notesData[k].sum += vote;
-            this._notesData[k].count += 1;
-          } else {
-            // the client didn't answer this particular options but gave stars to other options
-            // We choose to give him a default value here to increase variability of scores.
-            this._notesData[k].sum += 1;
           }
         });
       });
@@ -89,7 +84,7 @@ export class StarsComponent implements OnInit {
           return noteData;
         })
         .sort((noteA, noteB) => {
-          return noteA.sum - noteB.sum;
+          return noteB.sum - noteA.sum;
         });
 
     }

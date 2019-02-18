@@ -11,6 +11,7 @@ export const COMMON = {
   'SUBMIT': 'Confirmer',
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
+  'SIGN_OUT': 'Se déconnecter',
   'LOG_OUT': 'Se déconnecter',
   'GENERATE': 'Générer',
   'CANCEL': 'Annuler',
@@ -87,9 +88,9 @@ export const COMMON = {
 
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
   'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
-  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères',
 
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
@@ -178,35 +179,64 @@ export const COMMON = {
 
   'USERS': 'Utilisateurs',
 
+  'USER': {
+    'DELETE': 'Supprimer le(s) utilisateur(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
+    }
+  },
+
   'AMBASSADOR': 'Ambassadeur',
 
   'PROFESSIONALS': 'Professionnels',
+
+  'COMMUNITY': 'Communauté',
 
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
     'DELETE': 'Supprimer le(s) professionnel(s)',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
+    }
   },
 
   'HOME': 'Accueil',
+
   'ADMIN': 'Admin',
+
   'MY_PROJECT': 'Mon projet',
+
   'MY_PROJECTS': 'Mes projets',
+
   'MY_USERS': 'Mes utilisateurs',
+
   'MY_ACCOUNT': 'Mon compte',
+
   'PROJECTS': 'Projets',
+
   'CAMPAIGNS': 'Campagnes',
+
   'DISCOVER': 'Découvrir',
+
   'PRESET': 'Configuration',
+
   'PRESETS': 'Settings',
+
   'QUESTIONNAIRE': 'Questionnaire(s)',
+
   'ADD-ANSWER': 'Ajouter une réponse',
+
   'CLIENT_SIDE': 'Client',
+
   'EDIT_USER': 'Modifier l\'utilisateur',
-  'EDIT_PROFESSIONAL': 'Modifier Professionnel',
-  'EDIT_INSIGHT': 'Modifier l\'aperçu',
+
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
+
   'ADD-TAGS': 'Ajouter des tags',
+
   'UMI_WORD': 'Le mot d’UMI',
 
   'SORT': {
@@ -220,6 +250,56 @@ export const COMMON = {
 
   'HEADER': {
     'SHARED_REPORTS': 'Rapports partagés'
+  },
+
+  'MAIL_EDITOR': {
+    'QUESTION': 'Dans quelle langue souhaitez-vous communiquer avec le maître d\'ouvrage ?',
+    'SUBJECT': 'Sujet',
+    'SUBJECT_PLACEHOLDER': 'Entrez l\'objet du courrier',
+    'MESSAGE': 'Message',
+  },
+
+  'TAG_LABEL': {
+    'ADD_TAGS': 'Ajouter des tags',
+    'EDIT_TAG': 'Modifier le tag',
+    'LABEL_EN_PLACEHOLDER': 'Entrez le label en anglais',
+    'LABEL_FR_PLACEHOLDER': 'Entrer le label en français',
+    'DESC_EN_PLACEHOLDER': 'Entrez la description en anglais',
+    'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
+    'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
+    'TAG_PLACEHOLDER': 'Ajouter un tag existante'
+  },
+
+  'LOGOUT': {
+    'TEXT': 'Vous serez redirigé automatiquement vers la page de connexion.'
+  },
+
+  'CAMPAIGN': {
+    'LABEL': 'Nom de la campagne',
+    'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
+    'PLACEHOLDER': 'Entrez le nom de la campagne',
+    'DELETE_BOARD': {
+      'HEADING': 'Supprimer le forum',
+      'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
+    }
+  },
+
+  'SIDEBAR': {
+    'EDIT_WORKFLOW': 'Modifier le modèle',
+    'EDIT_INSIGHT': 'Modifier l\'aperçu',
+    'ADD_PRO': 'Ajouter un professionnel',
+    'EDIT_PROFESSIONAL': 'Modifier Professionnel',
+    'ADD_TAGS': 'Ajouter des tags',
+  },
+
+  'MODAL': {
+    'TITLE_DELETE': 'Supprimer le forum',
+    'TITLE_CONFIRMATION': 'Confirmation le forum',
+    'TITLE_IMPORT': 'Conseil d\'importation',
+  },
+
+  'SELECT_LABELS': {
+    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
   }
 
 };

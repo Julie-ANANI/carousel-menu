@@ -28,6 +28,10 @@ export class ProfessionalsService {
     return this._http.delete('/professional/' + professionalId);
   }
 
+  public removeFromCampaign(professionalId: string, campaignId: string, innovationId: string): Observable<any> {
+    return this._http.delete(`/professional/${professionalId}/${campaignId}/${innovationId}`);
+  }
+
   public save(professionalId: string, professionalObj: Professional): Observable<any> {
     return this._http.put('/professional/' + professionalId, professionalObj);
   }
@@ -53,4 +57,8 @@ export class ProfessionalsService {
     formData.append('file', file, file.name);
     return this._http.post('/professional/import/' + campaignId + '/' + innovationId, formData);
   }
+
+  /////////////// Advanced Search ///////////////
+  // The idea of this piece is to use a new
+  ///////////////////////////////////////////////
 }

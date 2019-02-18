@@ -7,7 +7,7 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
-import { ModalModule } from '../shared-modal/modal.module';
+import { ModalModule } from '../../../utility-components/modal/modal.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from '../../../utility-components/progress-bar/progress-bar.module';
@@ -19,6 +19,7 @@ import { AnswersLimiterPipe } from './pipes/AnswersLimiter.pipe';
 import { CommonService } from '../../../../services/common/common.service';
 import { FilterService } from './services/filters.service';
 import { ResponseService } from './services/response.service';
+import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 
 /***
  * Components
@@ -59,7 +60,8 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     FormsModule,
     ReactiveFormsModule,
     SidebarUserAnswerModule,
-    CountryFlagModule
+    CountryFlagModule,
+    MessageSpaceModule
   ],
   providers: [
     CommonService,

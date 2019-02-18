@@ -1,15 +1,10 @@
-@import "../../../../../../style/variables";
+@import "../../../../../../style/framework/variables";
 
 #projects-list-component {
 
   .section-no-project {
     padding-top: 3.15rem;
     text-align: center;
-
-    .bot-rect {
-      max-width: 354px;
-    }
-
   }
 
 
@@ -30,15 +25,15 @@
             width: 120px;
             height: 100px;
             margin-right: 1.2rem;
-            cursor: pointer;
           }
 
           img:hover {
             box-shadow: $box-shadow-hover;
+            cursor: pointer;
           }
 
           .project-description {
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid $border;
             width: 100%;
 
             span {
@@ -46,25 +41,25 @@
             }
 
             span:hover {
-              color: $primary-color;
+              color: $primary;
               cursor: pointer;
             }
 
             .date-text {
               margin-top: 0.95rem;
-              font-size: 0.85rem;
-              color: $meta-color;
+              font-size: 0.875rem;
+              color: $meta;
               font-weight: 600;
             }
 
             .text-link {
-              font-size: 0.85rem;
+              font-size: 0.875rem;
               font-weight: 600;
-              color: $alert-color;
+              color: $alert;
             }
 
             .text-link:hover {
-              color: $alert-color;
+              color: $alert;
             }
 
           }
@@ -76,6 +71,5 @@
     }
 
   }
-
 
 }

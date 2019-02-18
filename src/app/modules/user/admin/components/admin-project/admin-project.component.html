@@ -1,10 +1,10 @@
-<div class="main-container admin-project">
+<div class="container fluid admin-project">
 
   <div class="section-light-container heading">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
       <div class="title-button-wrapper">
-        <h1>{{ this.project.name }}</h1>
+        <h1>{{ project.name }}</h1>
         <div class="project-progress">
           <label class="form-label">Preparation</label>
           <app-progress-bar class="progress"
@@ -26,8 +26,8 @@
       </div>
 
 
-      <ul class="tabs">
-        <li *ngFor="let tab of authorizedTabs" (out)="getEvent($event)">
+      <ul class="tab">
+        <li *ngFor="let tab of authorizedTabs" (out)="getEvent($event)" class="tab-item">
           <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
             {{ 'PROJECT.' + tab.toUpperCase() | translate }}
           </a>

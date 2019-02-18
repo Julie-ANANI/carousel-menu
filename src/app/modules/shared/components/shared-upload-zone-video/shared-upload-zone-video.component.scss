@@ -21,11 +21,11 @@
 
   }
 
-  .form-default {
+  .form-input {
     max-width: 450px;
   }
 
-  .form-default.ng-touched.ng-invalid{
+  .form-input.ng-touched.ng-invalid{
     border-color: unset !important;
   }
 

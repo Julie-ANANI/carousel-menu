@@ -1,5 +1,5 @@
 <div class="column col-mx-auto col-xs-12 col-11">
-<form novalidate (ngSubmit)="onSubmit()">
+<form novalidate>
 
   <div class="form-group-inline-space">
     <div class="input-group">
@@ -11,8 +11,9 @@
         <option *ngFor="let stat of status" [ngValue]="stat.name">{{stat.alias}}</option>
       </select>
     </div>
-    <button type="submit"
+    <button type="button"
             class="btn btn-primary"
+            (click)="onSubmit()"
             [disabled]="(!isChange) || (!statusValid)">
       {{(isStatus || isMail) ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
     </button>
@@ -91,7 +92,7 @@
       [ngModel]="project.clientSatisfaction.message"
       (ngModelChange)="onUserMessageChange($event)"
       [ngModelOptions]="{standalone: true}"
-      class="form-default"
+      class="form-input"
       id="userMessage"
       type="text">
   </div>
@@ -103,7 +104,7 @@
       [ngModel]="project.feedback"
       (ngModelChange)="onReviewChange($event)"
       [ngModelOptions]="{standalone: true}"
-      class="form-default"
+      class="form-input"
       id="message"
       type="text">
   </div>

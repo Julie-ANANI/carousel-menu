@@ -1,88 +1,57 @@
-#admin-campaign {
+@import "../../../../../../../style/framework/variables";
 
-  .tabs li {
-    flex: unset;
+#admin-campaign-component {
+  padding-top: 0;
 
-    a {
-      background: white;
-      color: #4F5D6B;
-      border-bottom: 5px solid transparent;
-      font-weight: 500;
-      padding-left: 20px;
-      padding-right: 20px;
-      margin-right: 25px;
+  .section-header {
+    padding-top: 1.57rem;
+
+    background-color: white;
+
+    .heading-wrapper {
+      padding-bottom: 1.57rem;
+
+      .title-primary {
+        font-size: 1.4375rem;
+      }
+
+      .campaign-title {
+        color: $meta;
+        font-weight: normal;
+      }
+
+    }
+
+    .tab .tab-item a {
+      border-bottom-width: 4px;
+      margin-right: 2.5rem;
     }
 
   }
 
-  .tabs li a:hover,
-  .tabs li a.active {
-    color:  #FFB300;
-    border-bottom-color: #FFB300;
-  }
-
 }
+
 
 /********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 
-  .tabs li {
-    flex: 1 0 auto;
-  }
+  #admin-campaign-component {
 
-}
+    .section-stats {
 
+      .content-wrapper {
+        flex-direction: column;
 
-h1,
-.back-to-project {
-  display: inline-block;
-}
+        h5 {
+          margin-right: 0 !important;
+          margin-bottom: 1.2rem;
+        }
 
-.toolbar {
-  color: white;
-  display: flex;
+      }
 
-  i.fa-sync {
-    color: #FFB300;
-  }
-
-  .section-1,
-  .section-2,
-  .section-3 {
-    display: flex;
-    padding: 15px 30px;
-    flex: 1;
-
-    .title {
-      font-weight: 600;
     }
 
-    .stat {
-      padding: 0 20px;
-    }
-
-    .stat .subtitle {
-      font-weight: 600;
-      font-size: 0.7rem;
-      opacity: 0.7;
-      display: block;
-    }
-
-    .stat .number {
-    }
   }
 
-  .section-1 {
-    background: #0B90C6;
-  }
-
-  .section-2 {
-    background: #2FA4D4;
-    flex: 0.7;
-  }
-
-  .section-3 {
-    background: #5FAECE;
-  }
 }

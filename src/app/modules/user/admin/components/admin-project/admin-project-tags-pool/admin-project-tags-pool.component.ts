@@ -40,7 +40,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       {_attrs: ['type'], _name: 'Type', _type: 'TEXT'},
       {
         _attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES',
-        _choices: [{_name: 'To Tag', _class: 'label-alert'}, {_name: 'Tagged', _class: 'label-validate'}]
+        _choices: [{_name: 'To Tag', _class: 'label label-alert'}, {_name: 'Tagged', _class: 'label label-success'}]
       }
     ],
   };
@@ -128,13 +128,12 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tag = tag;
     this._sidebarTemplateValue = {
       animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.EDIT_INSIGHT',
-      size: '726px'
+      title: 'COMMON.TAG_LABEL.EDIT_TAG',
     };
   }
 
-  public closeSidebar(state: string) {
-    this._sidebarTemplateValue.animate_state = state;
+  public closeSidebar(state: SidebarInterface) {
+    this._sidebarTemplateValue.animate_state = state.animate_state;
   }
 
   public deleteTags(tags: Array<Tag>): void {

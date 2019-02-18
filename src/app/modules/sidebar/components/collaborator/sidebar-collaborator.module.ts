@@ -6,13 +6,16 @@ import { SidebarModule } from '../../sidebar.module';
 
 import { CollaboratorComponent } from './collaborator.component';
 
+import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarModule
+    SidebarModule,
+    MessageSpaceModule
   ],
   declarations: [
     CollaboratorComponent

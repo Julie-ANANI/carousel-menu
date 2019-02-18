@@ -1,0 +1,22 @@
+<div class="column col-xs-12 col-11 col-mx-auto" id="campaign-form-component">
+  <form novalidate [formGroup]="campaignForm" (ngSubmit)="onSave()" autocomplete="off">
+
+    <!-- save button -->
+    <div class="save-button">
+      <button class="btn btn-primary" type="submit" [disabled]="!activeSaveButton">{{ 'COMMON.SAVE' | translate }}</button>
+    </div>
+
+    <!-- campaign name -->
+    <div *ngIf="isEditName" class="form-group">
+      <label class="form-label" for="campaign-form-title">{{ 'COMMON.CAMPAIGN.LABEL' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="title"
+        id="campaign-form-title"
+        type="text"
+        [placeholder]="'COMMON.CAMPAIGN.PLACEHOLDER' | translate"
+        (change)="onKeyboardPress($event)">
+    </div>
+
+  </form>
+</div>

@@ -29,6 +29,7 @@ import { InputListModule } from '../../utility-components/input-list/input-list.
 import { SidebarInnovationPreviewModule } from '../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
+import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
@@ -46,9 +47,11 @@ import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
 import { SignatureResolver } from '../../../resolvers/signature.resolver';
-import { CampaignCalculationService } from '../../../services/campaign/campaign-calculation.service';
+import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
+import { PresetResolver } from '../../../resolvers/preset.resolver';
+
 
 @NgModule({
   imports: [
@@ -74,7 +77,8 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
     HeaderModule,
     LogoutModule,
     InputListModule,
-    SidebarInnovationPreviewModule
+    SidebarInnovationPreviewModule,
+    AdminCommunityModule
   ],
   declarations: [
     AdminComponent,
@@ -102,9 +106,10 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
-    CampaignCalculationService,
+    CampaignFrontService,
     QuizService,
-    InnovationCommonService
+    InnovationCommonService,
+    PresetResolver
   ]
 })
 

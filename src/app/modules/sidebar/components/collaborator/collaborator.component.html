@@ -12,7 +12,7 @@
       <div class="form-group pd-top">
         <label class="form-label" for="collaborator">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.LABEL' | translate }}</label>
         <input
-          class="form-default"
+          class="form-input"
           id="collaborator"
           type="text"
           formControlName="collaboratorEmail"
@@ -28,17 +28,7 @@
     <!-- Bot -->
     <div *ngIf="innovationCollaborators.length === 0 && collaboratorsInvited.length === 0">
       <div class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
-        <span class="bot-rect">
-          {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
-        </span>
-        <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-triangle" alt="bot">
-        <div>
-          <img
-            src="https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg"
-            class="bot-image"
-            alt="Bot">
-        </div>
+        <app-message-space [messageA]="'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE'" [widthMax]="'314px'"></app-message-space>
       </div>
     </div>
 
@@ -47,7 +37,7 @@
     <div *ngIf="collaboratorsInvited.length >= 1">
       <ul *ngFor="let collaborator of collaboratorsInvited; let i = index" class="collaborator">
         <li>
-          <span class="label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
+          <span class="label label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
         </li>
         <button class="btn btn-xs ghost-primary" (click)="reinviteCollaborator($event, collaborator)">
           {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.REINVITE' | translate }}
@@ -60,7 +50,7 @@
     <div *ngIf="innovationCollaborators.length >= 1">
       <ul *ngFor="let collaborator of innovationCollaborators" class="collaborator">
         <li>
-          <span class="label-validate">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
+          <span class="label label-success">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
         </li>
         <button class="btn btn-xs ghost-delete" (click)="removeCollaborator($event, collaborator)">
           {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.DELETE' | translate }}

@@ -9,22 +9,33 @@ export const ANSWER = {
 
   'STATUS': {
     'REJECTED': 'Rejected',
+    'REJECTED_GMAIL': 'Rejected by Mail',
     'VALIDATED': 'Validated',
     'SUBMITTED': 'To look at',
     'VALIDATED_NO_MAIL': 'Validate without sending mail',
     'EMAIL': 'Send email'
   },
 
-
   'VALIDATED_ANSWER': 'Answer validated',
+
   'UNVALIDATED_ANSWER': 'Answer not validated',
+
   'JOB': 'Job',
+
   'COMPANY': 'Company',
+
   'EDIT': 'Edit',
+
   'TIME_SPENT': 'Time spent',
+
   'REJECT_ANSWER': 'Reject',
+
   'UNCOMPLETE_ANSWER': 'To Complete',
+
   'VALID_ANSWER': 'Validate',
+
   'VALID_ANSWER_NO_MAIL': 'Validate without sending mail',
+
   'INVALID_ANSWER': 'Invalidate'
+
 };

@@ -66,6 +66,13 @@ export class TableComponent {
    */
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
+  /***
+   * Output call when the user selects one row
+   * Send the list of selected rows
+   * @type {EventEmitter<any>}
+   */
+  @Output() selectRowAction: EventEmitter<any> = new EventEmitter<any>();
+
   private _selector = '';
 
   private _title = 'Résultats';
@@ -87,6 +94,8 @@ export class TableComponent {
   private _isNotPaginable = false;
 
   private _reloadColumns = false;
+
+  private _isNoTitle = false;
 
   private _content: Row[] = [];
 
@@ -125,6 +134,7 @@ export class TableComponent {
       this._filteredContent = this._content;
 
       this._isHeadable = value._isHeadable || false;
+      this._isNoTitle = value._isNoTitle || false;
       this._isSelectable = value._isSelectable || false;
       this._isEditable = value._isEditable || false;
       this._isShowable = value._isShowable || false;
@@ -279,6 +289,17 @@ export class TableComponent {
       this.performAction.emit({_action: action, _rows: 'all'});
     } else {
       this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
+    }
+  }
+
+  /**
+   * This function is called when the user selects one row. It will emit the selected rows
+   */
+  onSelectAction() {
+    if (this._massSelection) {
+      this.selectRowAction.emit({ _rows: 'all'});
+    } else {
+      this.selectRowAction.emit({ _rows: this.getSelectedRowsContent()});
     }
   }
 
@@ -603,6 +624,10 @@ export class TableComponent {
 
   get isEditable(): boolean {
     return this._isEditable;
+  }
+
+  get isNoTitle(): boolean {
+    return this._isNoTitle;
   }
 
   get isLocal(): boolean {

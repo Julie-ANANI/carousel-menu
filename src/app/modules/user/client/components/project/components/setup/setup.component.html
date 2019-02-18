@@ -22,16 +22,15 @@
     {{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}
   </div>
 
-
   <!-- header section -->
   <div class="section-header" [ngClass]="{ 'sticky': scrollOn }">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <div class="content">
 
-        <!-- Title -->
-        <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
+        <!-- title -->
+        <h1 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
 
-        <!-- Buttons -->
+        <!-- buttons -->
         <div class="buttons-wrapper">
           <span>
             <button class="btn ghost-primary gtm-print-card" (click)="onClickPrint($event)">
@@ -64,23 +63,22 @@
   </div>
   <!-- /header section -->
 
-
   <!-- tab section -->
   <div class="column col-xs-12 col-11 col-mx-auto section-tabs">
-    <ul class="tabs">
-      <li>
+    <ul class="tab">
+      <li class="tab-item">
         <a [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
           <div class="btn-round targeting-check" [ngClass]=" { 'complete': innovation?.settings.completion === 100 } ">{{ innovation?.settings.completion }}%</div>
           {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
         </a>
       </li>
-      <li>
+      <li class="tab-item">
         <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
           <div class="btn-round pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
           {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
         </a>
       </li>
-      <li>
+      <li class="tab-item">
         <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
           <div class="btn-round survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
           {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
@@ -112,33 +110,23 @@
   </div>
   <!-- /different section -->
 
-
 </div>
 
-
 <!-- innovation preview sidebar -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [(template)]="sidebarValue">
   <app-innovation-preview [innovation]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
 </app-sidebar>
 <!-- /innovation preview sidebar -->
 
 
 <!-- modal to ask user to sure about submitting the project -->
-<div class="modal" [ngClass]="{ 'active': submitModal }">
-  <div class="modal-overlay" (click)="closeModal($event)"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}</div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary btn-sm" (click)="onClickConfirm($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
-    </div>
+<app-modal [(showModal)]="submitModal" [modalTitle]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.TITLE'">
+  {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-primary btn-sm" (click)="onClickConfirm($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
   </div>
-</div>
+</app-modal>
 <!-- /modal to ask user to sure about submitting the project -->
 
 
