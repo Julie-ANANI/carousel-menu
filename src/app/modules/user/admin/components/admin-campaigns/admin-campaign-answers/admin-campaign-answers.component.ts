@@ -144,6 +144,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
               {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
               {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label label-progress'},
               {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label label-alert'},
+              {_name: 'REJECTED_GMAIL', _alias: 'ANSWER.STATUS.REJECTED_GMAIL', _class: 'label label-alert'}
             ]},
         ]
       };
