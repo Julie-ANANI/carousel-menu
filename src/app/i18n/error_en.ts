@@ -132,7 +132,14 @@ export const ERROR = {
       'DELETED': 'The workflow has been deleted successfully.',
       'UPDATED': 'The workflow has been updated successfully.',
       'SENT': 'The mail has been sent successfully.',
-      'SENT_ERROR': 'We had problem while sending the mail.'
+      'SENT_ERROR': 'We are having trouble while sending the mail.'
+    },
+    'BATCH': {
+      'NUGGETS_ERROR': 'We are having trouble while activating the nuggets.',
+      'NOT_CREATED': 'No batch is created.',
+      'STARTED': 'The batch has been started successfully.',
+      'STOP': 'The batch has been stopped successfully.',
+      'ALREADY_STARTED': 'The batch has been already launched. It can not be undone.'
     }
   },
 

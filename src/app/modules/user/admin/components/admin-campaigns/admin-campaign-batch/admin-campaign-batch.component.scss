@@ -2,45 +2,27 @@
 
 #admin-campaign-batch-component {
 
-}
+  .bot-group {
+    margin-bottom: 0;
+    padding-bottom: 0.9375rem;
+  }
 
-/*.emailsStats {
-  display: flex;
-  justify-content: space-around;
+  .section-status {
 
-  div {
-    margin: 15px;
-    text-align: center;
+    .form-group {
+      margin-bottom: 1.25rem;
+      display: inline-flex;
+      margin-right: 1.25rem;
 
-    .number {
-      display: block;
-      font-size: 30px;
+      .form-switch {
+        color: $meta-color;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
     }
+
   }
+
+
 }
-
-.card {
-  margin : 25px;
-
-  .card-body {
-    display: flex;
-    justify-content: space-around;
-  }
-  .card-body-batch {
-    justify-content: space-around;
-  }
-}
-
-.centered-buttons {
-  display: flex;
-  justify-content: space-around;
-}
-
-.email-buttons {
-  display: flex;
-  flex-direction: column;
-
-  .btn {
-    margin: 15px;
-  }
-}*/

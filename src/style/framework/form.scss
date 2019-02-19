@@ -239,14 +239,21 @@
 }
 
 
-.form-radio input:disabled + .form-icon {
+.form-radio input:disabled + .form-icon, .form-radio input.disabled + .form-icon {
   cursor: not-allowed;
 }
 
 
-.form-switch input:disabled + .form-icon::before {
-  background: $disabled;
+.form-switch input:disabled + .form-icon::before, .form-switch input.disabled + .form-icon::before {
+  background: $meta;
   cursor: not-allowed;
+}
+
+
+input:disabled + .form-icon, input.disabled + .form-icon {
+  background: #FFFFFF;
+  cursor: not-allowed;
+  opacity: 1;
 }
 
 

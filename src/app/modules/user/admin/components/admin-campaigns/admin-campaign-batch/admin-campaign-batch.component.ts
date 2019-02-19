@@ -28,15 +28,15 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   public mailsToSend = 0;
 
-  public firstMail = 0;
+  firstMail = 0;
 
-  public secondMail = 0;
+  secondMail = 0;
 
-  public lastMail = 0;
+  lastMail = 0;
 
-  public testModal= false;
+  // public testModal= false;
 
-  public batchModal = false;
+  // public batchModal = false;
 
   public nuggetsBatch: Batch = null;
 
@@ -57,7 +57,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     search: {}
   };
 
-  public templateSidebar: SidebarInterface = {};
+  templateSidebar: SidebarInterface = {};
 
   public currentBatch: Batch;
 
@@ -78,12 +78,14 @@ export class AdminCampaignBatchComponent implements OnInit {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
     this.getQuiz();
     this.getBatches();
+    console.log(this._campaign)
 
-    this.newBatch = {
+    /*this.newBatch = {
       campaign: this._campaign,
       size: 0,
       active: true
-    };
+    };*/
+
   }
 
 
@@ -92,6 +94,18 @@ export class AdminCampaignBatchComponent implements OnInit {
       return this.campaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
     }
   }
+
+
+  private getQuiz() {
+    if (this._campaign.innovation && this._campaign.innovation.quizId) {
+      this._quizLinks = ['fr', 'en'].map((lang) => {
+        return environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + lang;
+      });
+    }
+  }
+
+
+
 
 
   private getBatches() {
@@ -110,9 +124,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
       if (this._stats.batches.length > 0) {
         this._stats.batches.forEach( (batch: any) => {
-          this._tableBatch.push(
-            this.generateTableBatch(batch)
-          );
+          this._tableBatch.push(this.generateTableBatch(batch));
         });
       } else {
         this.noResult = true;
@@ -121,13 +133,46 @@ export class AdminCampaignBatchComponent implements OnInit {
     });
   }
 
-  private getQuiz() {
-    if (this._campaign.innovation && this._campaign.innovation.quizId) {
-      this._quizLinks = ['fr', 'en'].map((lang) => {
-        return environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + lang;
-      });
+  // result won't be typed as batch everytime
+  onSwitchAutoBatch(event: Event) {
+    if (event.target['checked']) {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STARTED');
+
+    } else {
+      event.target['checked'] = true;
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.ALREADY_STARTED');
     }
   }
+
+
+  OnSwitchNuggets() {
+    this.campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
+      this._campaign = result;
+      this.startAutoBatch();
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.NUGGETS_ERROR');
+    });
+  }
+
+
+  private startAutoBatch() {
+    this.campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
+      if (result.length === 0) {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.NOT_CREATED');
+      } else {
+        if (result[0] !== 0) {
+          this.noResult = false;
+          this._stats.batches = result;
+          this._tableBatch = this._stats.batches.map((batch: any) => {
+            return this.generateTableBatch(batch);
+          });
+        }
+      }
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+  }
+
 
   private getStatus(step: number, status: number): string {
     if (status > step) {
@@ -153,34 +198,6 @@ export class AdminCampaignBatchComponent implements OnInit {
     });
   }
 
-  // result won't be typed as batch everytime
-  public AutoBatch() {
-    this.campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
-      if (result.length === 0) {
-        this.translateNotificationsService.success('Autobatch OFF', 'No batch will be created');
-      } else {
-        if (result[0] !== 0) {
-          this.stats.batches = result;
-          this._tableBatch = this.stats.batches.map((batch: any) => {
-            return this.generateTableBatch(batch);
-          });
-        }
-        this.translateNotificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
-      }
-    });
-  }
-
-  public setNuggets() {
-    this.campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
-        this._campaign = result;
-        if (result.nuggets) {
-          this.translateNotificationsService.success('Nuggets activés', 'Des pros à 80% seront incorporés.');
-        } else {
-          this.translateNotificationsService.success('Nuggets désactivés', 'On utilisera uniquement des pros à 90%.');
-        }
-    });
-  }
-
   public addNuggetsToBatch(batchId: string) {
     this.nuggetsBatch = null;
     this.campaignService.addNuggets(this._campaign._id, batchId).pipe(first()).subscribe((batch: any) => {
@@ -189,10 +206,8 @@ export class AdminCampaignBatchComponent implements OnInit {
     });
   }
 
-// DEBUG AUTOBATCH => Creation de pro a la volée
-  public creerpro() {
-    this.campaignService.creerpro(this._campaign._id).pipe(first()).subscribe();
-  }
+
+
 
   public deleteBatch(batchId: string) {
      this.campaignService.deleteBatch(batchId).pipe(first()).subscribe((_: any) => {
@@ -246,21 +261,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     }
   }
 
-  get readyAutoBatch() {
-    return (
-      this.quiz &&
-      this.innoReady &&
-      this.templateImported &&
-      this.defaultWorkflow &&
-      (this.statusAB !== '1')
-    );
-  }
 
-  get templateImported(): boolean {
-    return (
-      this._campaign.settings.emails.length !== 0
-    );
-  }
 
   public getWorkflowName(index: number) {
     if (this.campaign.settings.ABsettings.status !== '0') {
@@ -399,11 +400,7 @@ export class AdminCampaignBatchComponent implements OnInit {
   }
 
 
-  get innoReady() {
-    return (
-      (this._campaign.innovation.status === 'EVALUATING' || this._campaign.innovation.status === 'DONE')
-    );
-  }
+
 
   closeSidebar(value: string) {
     this.templateSidebar.animate_state = value;
@@ -483,6 +480,24 @@ export class AdminCampaignBatchComponent implements OnInit {
     });
   }
 
+
+  // DEBUG AUTOBATCH => Creation de pro a la volée
+  createPro() {
+    this.campaignService.creerpro(this._campaign._id).pipe(first()).subscribe();
+  }
+
+  get autoBatchStatus() {
+    return ( this.quiz && this.innovationStatus && this.templatesStatus && this.defaultWorkflow && (this.statusAB !== '1'));
+  }
+
+  get templatesStatus(): boolean {
+    return (this._campaign.settings.emails.length !== 0);
+  }
+
+  get innovationStatus() {
+    return ((this._campaign.innovation.status === 'EVALUATING' || this._campaign.innovation.status === 'DONE'));
+  }
+
   get statusAB() {
     return this._campaign.settings.ABsettings ? this._campaign.settings.ABsettings.status : null;
   }
@@ -507,7 +522,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     return this._stats;
   }
 
-  public tableBatch(index: number) {
+  tableBatch(index: number) {
     return this._tableBatch[index];
   }
 

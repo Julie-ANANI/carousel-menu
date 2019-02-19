@@ -165,7 +165,14 @@ export const CAMPAIGNS = {
   },
 
   'BATCH_PAGE': {
-    'NOTE': 'Note : Il n\'est pas possible de lancer le lot pour cette campagne pour le moment car il manque le quiz.'
+    'NOTE': 'Note : Il n\'est pas possible de lancer le lot pour cette campagne pour le moment pour la ou les raisons suivantes :',
+    'QUIZ': 'Le quiz n\'est pas défini. ',
+    'INNOVATION': 'l\'état du projet n\'est pas en cours d\'évaluation ou n\'est pas terminé. ',
+    'EMAILS': 'Aucun email n\'est défini. ',
+    'WORKFLOW': 'Pas de workflow par défaut. ',
+    'BOT': 'Lancer auto-batch et prendre des vacances :)',
+    'AUTO_BATCH_LABEL': 'Démarrage auto-batch',
+    'NUGGETS': 'Nuggets déjà activées',
   }
 
 };

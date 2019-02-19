@@ -56,17 +56,53 @@
 
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+    <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
+
     <!-- section no batches -->
-    <div *ngIf="noResult" class="section-container">
+    <div *ngIf="noResult" class="section-light-container remove-bottom">
 
-      <span *ngIf="quiz" class="text-alert">{{ 'CAMPAIGNS.BATCH_PAGE.NOTE' | translate }}</span>
-
-      <div class="section-light-container remove-bottom">
-        <app-message-space [widthMax]="'354px'"></app-message-space>
+      <!-- note -->
+      <div *ngIf="!autoBatchStatus" class="text-alert section-light-container remove-top">
+        {{ 'CAMPAIGNS.BATCH_PAGE.NOTE' | translate }}
+        <span *ngIf="!innovationStatus">{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}</span>
+        <span *ngIf="!defaultWorkflow">{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}</span>
+        <span *ngIf="!templatesStatus">{{ 'CAMPAIGNS.BATCH_PAGE.EMAILS' | translate }}</span>
+        <span *ngIf="!quiz">{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}</span>
       </div>
+
+      <!-- bot -->
+      <app-message-space [widthMax]="'354px'">
+        {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
+        <div class="form-group bot-group">
+          <label class="form-switch" for="auto-batch">
+            <input type="checkbox" id="auto-batch" [disabled]="!autoBatchStatus" (change)="onSwitchAutoBatch($event)" [ngModel]="campaign?.autoBatch">
+            <i class="form-icon"></i>
+          </label>
+        </div>
+      </app-message-space>
 
     </div>
 
+    <!-- section batches -->
+    <div *ngIf="!noResult" class="section-light-container remove-bottom">
+
+      <!-- section status -->
+      <div class="section-status">
+        <div class="form-group">
+          <label class="form-switch" for="result-auto-batch">
+            <input type="checkbox" id="result-auto-batch" (change)="onSwitchAutoBatch($event)" [ngModel]="campaign?.autoBatch">
+            <i class="form-icon"></i>{{ 'CAMPAIGNS.BATCH_PAGE.AUTO_BATCH_LABEL' | translate }}
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-switch" for="result-nuggets">
+            <input type="checkbox" id="result-nuggets" (change)="OnSwitchNuggets()"  [ngModel]="campaign?.nuggets">
+            <i class="form-icon"></i>{{ 'CAMPAIGNS.BATCH_PAGE.NUGGETS' | translate }}
+          </label>
+        </div>
+      </div>
+
+    </div>
 
   </div>
 
