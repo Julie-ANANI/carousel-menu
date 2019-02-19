@@ -58,6 +58,13 @@
 
     <!-- section no batches -->
     <div *ngIf="noResult" class="section-container">
+
+      <span *ngIf="quiz" class="text-alert">{{ 'CAMPAIGNS.BATCH_PAGE.NOTE' | translate }}</span>
+
+      <div class="section-light-container remove-bottom">
+        <app-message-space [widthMax]="'354px'"></app-message-space>
+      </div>
+
     </div>
 
 

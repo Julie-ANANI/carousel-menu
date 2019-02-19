@@ -248,7 +248,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   get readyAutoBatch() {
     return (
-      this.quizGenerated &&
+      this.quiz &&
       this.innoReady &&
       this.templateImported &&
       this.defaultWorkflow &&
@@ -483,13 +483,32 @@ export class AdminCampaignBatchComponent implements OnInit {
     });
   }
 
-  get statusAB() { return this._campaign.settings.ABsettings ? this._campaign.settings.ABsettings.status : null; }
-  get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow; }
-  get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ''); }
-  get campaign() { return this._campaign; }
-  get quizLinks() {return this._quizLinks; }
-  get stats() {return this._stats; }
+  get statusAB() {
+    return this._campaign.settings.ABsettings ? this._campaign.settings.ABsettings.status : null;
+  }
 
-  public tableBatch(index: number) { return this._tableBatch[index]; }
+  get defaultWorkflow() {
+    return  this._campaign.settings.defaultWorkflow;
+  }
+
+  get quiz() {
+    return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== '');
+  }
+
+  get campaign() {
+    return this._campaign;
+  }
+
+  get quizLinks() {
+    return this._quizLinks;
+  }
+
+  get stats() {
+    return this._stats;
+  }
+
+  public tableBatch(index: number) {
+    return this._tableBatch[index];
+  }
 
 }

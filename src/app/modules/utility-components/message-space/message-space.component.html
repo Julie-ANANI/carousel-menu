@@ -1,13 +1,11 @@
 <div id="message-space-component">
 
-  <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px', 'background-color': colorBackground ? colorBackground : 'transparent' }">
-    <ng-content></ng-content>
+  <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px' }">
+    <div class="message-content">
+      <ng-content></ng-content>
+    </div>
+    <div class="triangle"></div>
   </div>
-
-  <br>
-
-  <img src="https://res.cloudinary.com/umi/image/upload/v1542810952/app/default-images/bot/triangle.svg" class="triangle-wrapper" alt=" ">
-
   <div><img [src]="imageSrc ? imageSrc : defaultSrc" class="bot-wrapper" alt=" "></div>
 
 </div>

@@ -162,6 +162,10 @@ export const CAMPAIGNS = {
       'CONTENT_B': 'Si vous avez déjà importé un workflow, il le remplacera. Voulez-vous vraiment importer ce modèle ?'
     },
     'NOTE': 'Note : Il vous est conseillé de modifier les modèles/emails importés avant de lancer le lot.',
+  },
+
+  'BATCH_PAGE': {
+    'NOTE': 'Note : Il n\'est pas possible de lancer le lot pour cette campagne pour le moment car il manque le quiz.'
   }
 
 };

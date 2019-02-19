@@ -162,6 +162,10 @@ export const CAMPAIGNS = {
       'CONTENT_B': 'If you have already imported a workflow it will replace that workflow. Do you really want to import this template?'
     },
     'NOTE': 'Note: It is advised to you to modify the imported template/emails before launching the batch.',
+  },
+
+  'BATCH_PAGE': {
+    'NOTE': 'Note: It is not possible to launch the batch for this campaign at the moment because it misses the quiz.'
   }
 
 };
