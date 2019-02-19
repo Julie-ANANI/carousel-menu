@@ -21,7 +21,7 @@
         <div class="form-group">
           <label class="form-label" for="language">Language</label>
           <select
-            class="form-default"
+            class="form-input"
             [(ngModel)]="signature.language"
             id="language">
             <option value="en" name="en">en</option>
@@ -35,7 +35,7 @@
       <div class="form-group">
         <label class="form-label" for="name">Internal name</label>
         <input
-          class="form-default"
+          class="form-input"
           [(ngModel)]="signature.name"
           id="name"
           type="text"
@@ -45,7 +45,7 @@
       <div class="form-group">
         <label class="form-label" for="from">From name</label>
         <input
-          class="form-default"
+          class="form-input"
           [(ngModel)]="signature.from"
           id="from"
           type="text"
@@ -55,7 +55,7 @@
       <div class="form-group">
         <label class="form-label" for="email">From email</label>
         <input
-          class="form-default"
+          class="form-input"
           [(ngModel)]="signature.email"
           id="email"
           type="text"
@@ -66,7 +66,7 @@
     <label class="form-label" *ngIf="editionMode">Signature (code HTML)</label>
     <textarea
       *ngIf="editionMode"
-      class="form-default"
+      class="form-input"
       rows="25"
       [(ngModel)]="signature.content"
       id="signature"

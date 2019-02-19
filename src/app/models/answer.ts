@@ -6,7 +6,7 @@ export interface Answer {
   readonly _id?: string;
   readonly campaign: string;
   readonly innovation: string;
-  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED';
+  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED' | 'REJECTED_GMAIL';
   quizReference?: string;
   originalAnswerReference?: string;
   tags: Array<Tag>;

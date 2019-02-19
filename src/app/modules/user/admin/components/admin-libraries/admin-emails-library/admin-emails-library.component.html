@@ -1,12 +1,12 @@
 <div class="section-container">
   <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
 
-    <app-sidebar-workflow
+    <app-workflow
       [emailsObject]="emailToEdit"
       (emailChange)="updateEmail($event)"
       [signatures]="signatures"
       [inputLanguage]="language">
-    </app-sidebar-workflow>
+    </app-workflow>
   </app-sidebar>
 
   <div class="text-right">

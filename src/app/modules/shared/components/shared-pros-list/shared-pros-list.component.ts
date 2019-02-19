@@ -83,11 +83,11 @@ export class SharedProsListComponent {
           _isEditable: true,
           _actions: this._actions,
           _columns: [
-            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-            {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
-            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
-            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
+            {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
+            {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+            {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
+            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'}]
         };
 
       });
@@ -111,12 +111,12 @@ export class SharedProsListComponent {
           _isEditable: true,
           _actions: this._actions,
           _columns: [
-            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-            {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
-            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'},
-            {_attrs: ['sent'], _name: 'Contact', _type: 'CHECK'}]
+            {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
+            {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+            {_attrs: ['company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
+            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'},
+            {_attrs: ['sent'], _name: 'TABLE.HEADING.CONTACT', _type: 'CHECK'}]
         };
 
       });
@@ -139,12 +139,10 @@ export class SharedProsListComponent {
   }
 
 
-  selectPro(pro: SelectedProfessional): void {
-    pro.isSelected = !pro.isSelected;
-    const prosSelected = this._pros.filter(p => p.isSelected);
+  selectPro(event): void {
     this.selectedProsChange.emit({
-      total: this.nbSelected,
-      pros: prosSelected
+      total: event._rows.length,
+      pros: event._rows
     });
   }
 
@@ -186,7 +184,7 @@ export class SharedProsListComponent {
     this.professionalsService.get(pro._id).subscribe((professional: Professional) => {
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-        title: 'COMMON.EDIT_PROFESSIONAL',
+        title: 'COMMON.SIDEBAR.EDIT_PROFESSIONAL',
         type: 'professional'
       };
       this.isProfessionalForm = true;
@@ -268,7 +266,7 @@ export class SharedProsListComponent {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.TAG_LABEL.ADD_TAGS',
+      title: 'COMMON.SIDEBAR.ADD_TAGS',
       type: 'addTags'
     };
 

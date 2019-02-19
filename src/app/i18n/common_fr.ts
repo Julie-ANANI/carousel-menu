@@ -88,9 +88,9 @@ export const COMMON = {
 
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
   'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
-  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères',
 
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
@@ -191,6 +191,8 @@ export const COMMON = {
 
   'PROFESSIONALS': 'Professionnels',
 
+  'COMMUNITY': 'Communauté',
+
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
@@ -231,17 +233,11 @@ export const COMMON = {
 
   'EDIT_USER': 'Modifier l\'utilisateur',
 
-  'EDIT_PROFESSIONAL': 'Modifier Professionnel',
-
-  'EDIT_INSIGHT': 'Modifier l\'aperçu',
-
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
 
   'ADD-TAGS': 'Ajouter des tags',
 
   'UMI_WORD': 'Le mot d’UMI',
-
-  'ADD_PRO': 'Ajouter un professionnel',
 
   'SORT': {
     'BY_NAME': 'Nom',
@@ -254,6 +250,13 @@ export const COMMON = {
 
   'HEADER': {
     'SHARED_REPORTS': 'Rapports partagés'
+  },
+
+  'MAIL_EDITOR': {
+    'QUESTION': 'Dans quelle langue souhaitez-vous communiquer avec le maître d\'ouvrage ?',
+    'SUBJECT': 'Sujet',
+    'SUBJECT_PLACEHOLDER': 'Entrez l\'objet du courrier',
+    'MESSAGE': 'Message',
   },
 
   'TAG_LABEL': {
@@ -279,6 +282,24 @@ export const COMMON = {
       'HEADING': 'Supprimer le forum',
       'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
     }
+  },
+
+  'SIDEBAR': {
+    'EDIT_WORKFLOW': 'Modifier le modèle',
+    'EDIT_INSIGHT': 'Modifier l\'aperçu',
+    'ADD_PRO': 'Ajouter un professionnel',
+    'EDIT_PROFESSIONAL': 'Modifier Professionnel',
+    'ADD_TAGS': 'Ajouter des tags',
+  },
+
+  'MODAL': {
+    'TITLE_DELETE': 'Supprimer le forum',
+    'TITLE_CONFIRMATION': 'Confirmation le forum',
+    'TITLE_IMPORT': 'Conseil d\'importation',
+  },
+
+  'SELECT_LABELS': {
+    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
   }
 
 };

@@ -91,9 +91,9 @@ export const COMMON = {
 
   'PASSWORD_PLACEHOLDER': 'Enter your password',
   'OLD_PASSWORD_PLACEHOLDER': 'Enter your old password',
-  'NEW_PASSWORD_PLACEHOLDER': '9+ characters and must have 1 special character',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ characters',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Enter the confirmation password',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ characters and must have 1 special character',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ characters',
 
   'PASSWORD_CONFIRM': 'Password confirmation',
 
@@ -194,6 +194,8 @@ export const COMMON = {
 
   'PROFESSIONALS': 'Professionals',
 
+  'COMMUNITY': 'Community',
+
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
     'PITCH-DELETE-ALL' : 'Are you sure you want to delete all the professionnals?',
@@ -226,10 +228,6 @@ export const COMMON = {
 
   'EDIT_USER': 'Edit User',
 
-  'EDIT_PROFESSIONAL': 'Edit Professional',
-
-  'EDIT_INSIGHT': 'Edit Insight',
-
   'EDIT-COUNTRY': 'Edit country\'s filter',
 
   'ADD-TAGS': 'Add tags',
@@ -244,8 +242,6 @@ export const COMMON = {
 
   'UMI_WORD': 'A word from UMI',
 
-  'ADD_PRO': 'Add Professional',
-
   'SORT': {
     'BY_NAME': 'Name',
     'BY_COMPANY': 'Company',
@@ -257,6 +253,13 @@ export const COMMON = {
 
   'HEADER': {
     'SHARED_REPORTS': 'Shared reports'
+  },
+
+  'MAIL_EDITOR': {
+    'QUESTION': 'Which language would you like to communicate with the project owner?',
+    'SUBJECT': 'Subject',
+    'SUBJECT_PLACEHOLDER': 'Enter the subject of the mail',
+    'MESSAGE': 'Message',
   },
 
   'TAG_LABEL': {
@@ -282,6 +285,24 @@ export const COMMON = {
       'HEADING': 'Delete Board',
       'CONTENT': 'Do you really want to delete the campaign?'
     },
+  },
+
+  'SIDEBAR': {
+    'EDIT_WORKFLOW': 'Edit Workflow',
+    'EDIT_INSIGHT': 'Edit Insight',
+    'ADD_PRO': 'Add Professional',
+    'EDIT_PROFESSIONAL': 'Edit Professional',
+    'ADD_TAGS': 'Add Tags',
+  },
+
+  'MODAL': {
+    'TITLE_DELETE': 'Delete Board',
+    'TITLE_CONFIRMATION': 'Confirmation Board',
+    'TITLE_IMPORT': 'Import Board',
+  },
+
+  'SELECT_LABELS': {
+    'CHOOSE_LANGUAGE': 'Choose Language:',
   }
 
 };

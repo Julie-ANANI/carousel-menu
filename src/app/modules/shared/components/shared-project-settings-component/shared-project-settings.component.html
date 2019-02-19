@@ -72,7 +72,7 @@
           <div *ngIf="displayCountriesCommentSection" class="pd-input">
             <label for="countries-comments"></label>
             <textarea
-              class="form-default"
+              class="form-input"
               id="countries-comments"
               [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
               rows="5"
@@ -101,7 +101,7 @@
           <div *ngIf="canEdit" class="pd-input">
             <label for="innovation-sector"></label>
             <textarea
-              class="form-default"
+              class="form-input"
               id="innovation-sector"
               [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.MARKET.PLACEHOLDER' | translate"
               rows="5"
@@ -204,7 +204,7 @@
             <div *ngIf="displayCompanyCommentSection" class="pd-input">
               <label for="innovation-companies"></label>
               <textarea
-                class="form-default"
+                class="form-input"
                 id="innovation-companies"
                 [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.PLACEHOLDER' | translate"
                 rows="5"
@@ -242,7 +242,7 @@
             <div class="pd-input">
               <label for="innovation-pros"></label>
               <textarea
-                class="form-default"
+                class="form-input"
                 id="innovation-pros"
                 [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.PLACEHOLDER' | translate"
                 rows="5"
@@ -302,7 +302,7 @@
             <div class="pd-input">
               <label for="other-comments"></label>
               <textarea
-                class="form-default"
+                class="form-input"
                 id="other-comments"
                 [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.OTHER.PLACEHOLDER' | translate"
                 rows="5"
@@ -345,7 +345,7 @@
 
     <!-- bot section -->
     <div *ngIf="!adminSide" class="column col-mx-auto col-4 hide-md help-wrapper">
-      <app-message-space [messageA]="'PROJECT_MODULE.SETUP.PITCH.BOT.HELP'" [widthMax]="'344'"></app-message-space>
+      <app-message-space [messageA]="'PROJECT_MODULE.SETUP.PITCH.BOT.HELP'" [widthMax]="'344px'"></app-message-space>
     </div>
     <!-- /bot section -->
 

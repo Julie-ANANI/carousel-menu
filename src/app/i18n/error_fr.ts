@@ -48,7 +48,7 @@ export const ERROR = {
     'DELETED': 'Compte supprimé',
     'DELETED_TEXT': 'Le compte a été supprimé.',
     'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
-    'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a été mis à jour.',
+    'PASSWORD_UPDATED_TEXT': 'Le mot de passe a été mis à jour avec succès.',
     'SAME_PASSWORD': 'Le nouveau mot de passe et le mot de passe de confirmation doivent être identiques.',
     'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
     'PROFILE_UPDATE_TEXT': 'Le profil a été mis à jour avec succès.',
@@ -124,7 +124,16 @@ export const ERROR = {
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',
     'UPDATED': 'La campagne a été mis à jour avec succès.',
-    'DELETED': 'La campagne et son professionnel ont été supprimés avec succès.'
+    'DELETED': 'La campagne et son professionnel sont été supprimés avec succès.',
+    'TEMPLATE_ERROR': 'Nous avons du mal à récupérer les données des modèles. Veuillez essayer de recharger la page à nouveau !',
+    'SIGNATURE_ERROR': 'Nous avons du mal à récupérer les données des signatures. Veuillez essayer de recharger la page à nouveau !',
+    'WORKFLOW': {
+      'ADDED': 'Le workflow a été ajouté avec succès.',
+      'DELETED': 'Le workflow a été supprimé avec succès.',
+      'UPDATED': 'Le workflow a été mis à jour avec succès.',
+      'SENT': 'Le courrier a été envoyé avec succès.',
+      'SENT_ERROR': 'Nous avons eu des problèmes lors de l\'envoi du courrier.'
+    }
   },
 
   'IMPORT': {

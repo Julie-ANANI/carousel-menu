@@ -1,4 +1,4 @@
-<main class="main-container" id="signup-component">
+<main class="container fluid" id="signup-component">
   <section class="main-wrapper">
     <div class="columns col-gapless">
 
@@ -15,7 +15,7 @@
         <div class="register">
 
           <!-- heading -->
-          <h1 class="main-heading">
+          <h1 class="title-primary">
             <span *ngIf="!checkIsMainDomain()">{{ 'SIGN_UP.HEADING' | translate }}</span>
             <span *ngIf="checkIsMainDomain()">{{ 'SIGN_UP.HEADING_UMI' | translate }}</span>
           </h1>
@@ -30,7 +30,7 @@
 
             <!-- or -->
             <div class="or-wrapper">
-              <span class="or-divider">{{ 'COMMON.OR' | translate }}</span>
+              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
             </div>
 
             <button class="btn btn-secondary gtm-signin-linkedin" (click)="linkedInEvent()">
@@ -42,7 +42,7 @@
 
         <!-- sign in -->
         <div>
-          <span [ngStyle]="{ 'font-size': '.85rem', 'padding-right': '.6rem' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
+          <span [ngStyle]="{ 'font-size': '0.875rem', 'padding-right': '0.6rem' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
           <button type="button" class="btn btn-sm ghost-primary" routerLink="/login">{{ 'SIGN_UP.BUTTON' | translate }}</button>
         </div>
 
@@ -55,9 +55,6 @@
 
 <!-- sign up sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-  <app-signup-form
-    [sidebarState]="sidebarValue.animate_state"
-    (finalOutput)="createUser($event)">
-  </app-signup-form>
+  <app-signup-form [sidebarState]="sidebarValue.animate_state" (finalOutput)="createUser($event)"></app-signup-form>
 </app-sidebar>
 <!-- /sign up sidebar -->

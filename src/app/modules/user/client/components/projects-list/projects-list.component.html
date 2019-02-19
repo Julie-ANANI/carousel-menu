@@ -14,7 +14,7 @@
       <app-message-space
         [messageA]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE'"
         [messageB]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT'"
-        [widthMax]="'354'">
+        [widthMax]="'354px'">
       </app-message-space>
     </div>
 
@@ -28,7 +28,7 @@
             <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
             <div class="project-description">
               <a [routerLink]="getRelevantLink(innovation)">
-                <span >{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+                <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
               </a>
               <p class="date-text">
                 {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
@@ -59,23 +59,13 @@
 
   </div>
 
-  <!-- delete project confirmation modal -->
-  <div class="modal" [ngClass]="{ 'active': deleteModal }">
-    <div class="modal-overlay" (click)="closeModal($event)"></div>
-    <div class="modal-container">
-      <div class="modal-header">
-        <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-        <div class="modal-title">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.TITLE' | translate }}</div>
-      </div>
-      <div class="modal-body">
-        <div class="content">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn ghost-edit btn-sm btn-cancel" (click)="closeModal($event)">{{ 'COMMON.CANCEL' | translate }}</button>
-        <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
-      </div>
-    </div>
-  </div>
-
 </section>
 
+<!-- delete project confirmation modal -->
+<app-modal [(showModal)]="deleteModal" [modalTitle]="'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.TITLE'">
+  {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+  </div>
+</app-modal>

@@ -1,8 +1,8 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/variables";
 
 #login-component {
 
-  .main-wrapper {
+  .section-main {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -17,7 +17,7 @@
     }
 
 
-    .login-details {
+    .section-login {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -36,9 +36,9 @@
         margin-right: auto;
         margin-left: auto;
 
-        .main-heading {
+        .title-primary {
           font-size: 1.75rem;
-          color: $background-color;
+          color: $text-background;
         }
 
         .credentials-wrapper {
@@ -49,11 +49,11 @@
             text-align: center;
 
             .login-button {
-              padding-bottom: .85rem;
+              padding-bottom: 0.875rem;
             }
 
             p, .text-link {
-              font-size: .85rem;
+              font-size: 0.875rem;
               padding-bottom: 0;
             }
 

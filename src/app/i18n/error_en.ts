@@ -48,7 +48,7 @@ export const ERROR = {
     'DELETED': 'Account deleted',
     'DELETED_TEXT': 'The account has been deleted successfully.',
     'PASSWORD_UPDATED': 'Password updated.',
-    'PASSWORD_UPDATED_TEXT': 'Your password has been updated successfully.',
+    'PASSWORD_UPDATED_TEXT': 'The password has been updated successfully.',
     'SAME_PASSWORD': 'The new password and confirm password must be same.',
     'OLD_PASSWORD': 'Old password is incorrect.',
     'PROFILE_UPDATE_TEXT': 'The profile has been updated successfully.',
@@ -124,7 +124,16 @@ export const ERROR = {
   'CAMPAIGN': {
     'ADDED': 'The campaign has been added successfully.',
     'UPDATED': 'The campaign has been updated successfully.',
-    'DELETED': 'The campaign and its professional have been deleted successfully.'
+    'DELETED': 'The campaign and its professionals have been deleted successfully.',
+    'TEMPLATE_ERROR': 'We are having trouble while fetching the templates data. Please try to reload the page again!',
+    'SIGNATURE_ERROR': 'We are having trouble while fetching the signatures data. Please try to reload the page again!',
+    'WORKFLOW': {
+      'ADDED': 'The workflow has been added successfully.',
+      'DELETED': 'The workflow has been deleted successfully.',
+      'UPDATED': 'The workflow has been updated successfully.',
+      'SENT': 'The mail has been sent successfully.',
+      'SENT_ERROR': 'We had problem while sending the mail.'
+    }
   },
 
   'IMPORT': {

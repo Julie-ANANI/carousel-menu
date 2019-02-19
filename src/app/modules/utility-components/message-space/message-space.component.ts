@@ -21,7 +21,7 @@ export class MessageSpaceComponent {
   }
 
   @Input() set widthMax(value: string) {
-    this._wrapperWidth = value + 'px';
+    this._wrapperWidth = value;
   }
 
   private _firstLine = '';

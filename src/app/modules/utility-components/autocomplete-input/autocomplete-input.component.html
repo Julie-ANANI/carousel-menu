@@ -10,9 +10,9 @@
         value-property-name="id"
         [display-property-name]="identifier"
         [attr.placeholder]="placeholder | translate"
-        class="form-default"
+        class="form-input"
         [ngStyle]="{ 'margin-top': '0', 'margin-right': '.35rem' }">
-      <button *ngIf="addButton" class="btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
+      <button *ngIf="addButton" [ngStyle]="{ 'font-size': '16px' }" class="btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
     </div>
 
   </form>
@@ -34,7 +34,7 @@
         <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
-            <input type="text" class="form-default" [(ngModel)]="a[identifier]" name="text"/>
+            <input type="text" class="form-input" [(ngModel)]="a[identifier]" name="text"/>
             <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
           </div>
         </div>
@@ -43,7 +43,7 @@
         <i class="fas fa-link" [ngClass]="{'active': a.domain && a.domain.length > 0}"></i>
         <div class="popover-container">
           <div class="input-group">
-            <input type="text" class="form-default" [(ngModel)]="a.domain" name="domain"/>
+            <input type="text" class="form-input" [(ngModel)]="a.domain" name="domain"/>
             <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
           </div>
         </div>

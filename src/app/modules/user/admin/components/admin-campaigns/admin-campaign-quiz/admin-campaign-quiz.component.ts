@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 
 @Component({
   selector: 'app-admin-campaign-quiz',
@@ -17,7 +18,8 @@ export class AdminCampaignQuizComponent implements OnInit {
 
   private _noResult = false;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private campaignFrontService: CampaignFrontService) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -36,36 +38,9 @@ export class AdminCampaignQuizComponent implements OnInit {
 
 
   getCampaignStat(searchKey: string): number {
-    let value = 0;
-
-    switch (searchKey) {
-
-      case 'professional':
-        value = this._campaign.stats.nbPros;
-        break;
-
-      case 'notReached':
-        value = Math.round(((this._campaign.stats.nbPros - this._campaign.stats.nbProsSent) / this._campaign.stats.nbPros) * 100);
-        break;
-
-      case 'good':
-        value = Math.round((this._campaign.stats.campaign.nbFirstTierMails / this._campaign.stats.nbPros) * 100);
-        break;
-
-      case 'unsure':
-        value = Math.round((this._campaign.stats.campaign.nbSecondTierMails / this._campaign.stats.nbPros) * 100);
-        break;
-
-      case 'bad':
-        value = Math.round(((this._campaign.stats.nbPros - (this._campaign.stats.campaign.nbFirstTierMails + this._campaign.stats.campaign.nbSecondTierMails ))/ this._campaign.stats.nbPros) * 100);
-        break;
-
-      default:
-        // do nothing...
-
+    if (this._campaign) {
+      return this.campaignFrontService.getProsCampaignStat(this._campaign, searchKey);
     }
-
-    return isNaN(value) ? 0 : value;
   }
 
   get campaign() {

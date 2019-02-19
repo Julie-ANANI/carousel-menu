@@ -57,4 +57,8 @@ export class ProfessionalsService {
     formData.append('file', file, file.name);
     return this._http.post('/professional/import/' + campaignId + '/' + innovationId, formData);
   }
+
+  /////////////// Advanced Search ///////////////
+  // The idea of this piece is to use a new
+  ///////////////////////////////////////////////
 }

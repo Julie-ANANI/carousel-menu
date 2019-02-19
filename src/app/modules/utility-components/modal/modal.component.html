@@ -4,19 +4,13 @@
 
       <div class="modal-container" [ngStyle]="{ 'max-width': maxWidth ? maxWidth : '640px' }">
 
-        <div *ngIf="title" class="modal-header">
-          <button class="btn btn-clear float-right" id="button-close"></button>
-          <div class="modal-title">{{ title | translate }}</div>
+        <div *ngIf="title" class="header-primary">
+          <div class="title-header">{{ title | translate }}</div>
+          <button class="btn btn-close"></button>
         </div>
 
         <div class="modal-body">
           <ng-content></ng-content>
-        </div>
-
-        <div *ngIf="buttonAction" class="modal-footer">
-          <button class="btn ghost-edit btn-sm btn-cancel" id="btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-          <button *ngIf="!disabledButton" class="btn btn-sm btn-primary" (click)="onClickConfirm($event)">{{ buttonAction | translate }}</button>
-          <button *ngIf="disabledButton" class="btn btn-sm btn-primary" (click)="onClickConfirm($event)" [disabled]="disabledButton">{{ buttonAction | translate }}</button>
         </div>
 
       </div>
@@ -24,3 +18,4 @@
     </div>
   </div>
 </div>
+

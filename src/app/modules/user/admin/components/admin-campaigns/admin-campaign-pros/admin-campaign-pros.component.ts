@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
@@ -8,6 +8,7 @@ import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { FormGroup } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -34,6 +35,8 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _originCampaign: Array<Campaign> = [];
 
+  private _contextSelectedPros: Array<any> = [];
+
   private _config: any;
 
   private _sidebarValue: SidebarInterface = {};
@@ -41,7 +44,8 @@ export class AdminCampaignProsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,
               private professionalsService: ProfessionalsService,
-              @Inject(PLATFORM_ID) private platform: Object) { }
+              @Inject(PLATFORM_ID) private platform: Object,
+              private campaignFrontService: CampaignFrontService) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -59,36 +63,9 @@ export class AdminCampaignProsComponent implements OnInit {
 
 
   getCampaignStat(searchKey: string): number {
-    let value = 0;
-
-    switch (searchKey) {
-
-      case 'professional':
-        value = this._campaign.stats.nbPros;
-        break;
-
-      case 'notReached':
-        value = Math.round(((this._campaign.stats.nbPros - this._campaign.stats.nbProsSent) / this._campaign.stats.nbPros) * 100);
-        break;
-
-      case 'good':
-        value = Math.round((this._campaign.stats.campaign.nbFirstTierMails / this._campaign.stats.nbPros) * 100);
-        break;
-
-      case 'unsure':
-        value = Math.round((this._campaign.stats.campaign.nbSecondTierMails / this._campaign.stats.nbPros) * 100);
-        break;
-
-      case 'bad':
-        value = Math.round(((this._campaign.stats.nbPros - (this._campaign.stats.campaign.nbFirstTierMails + this._campaign.stats.campaign.nbSecondTierMails ))/ this._campaign.stats.nbPros) * 100);
-        break;
-
-      default:
-      // do nothing...
-
+    if (this._campaign) {
+      return this.campaignFrontService.getProsCampaignStat(this._campaign, searchKey);
     }
-
-    return isNaN(value) ? 0 : value;
   }
 
 
@@ -121,7 +98,11 @@ export class AdminCampaignProsComponent implements OnInit {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
     }
+
+    this._importModal = false;
+
   }
+
 
   updateCampaign(event: any) {
     this._originCampaign = event.value;
@@ -133,7 +114,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.ADD_PRO',
+      title: 'COMMON.SIDEBAR.ADD_PRO',
       type: 'addPro'
     };
 
@@ -161,12 +142,30 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
 
-  onClickExport() {
+  public selectedProsEvent(event: Event) {
+    this._contextSelectedPros = event['pros'];
+    console.log(this._contextSelectedPros);
+  }
+
+
+  onClickExport(event: Event) {
+    event.preventDefault();
     const config = {
-      professionals: 'all',
+      professionals: [] || 'all',
       campaignId: this._campaign._id,
-      query: { campaignId: this._campaign._id }
+      query: {
+        campaignId: this._campaign._id,
+        search: ""
+      }
     };
+
+    config.query.search = this._config.search ? JSON.parse(this._config.search) : null;
+
+    if( this._contextSelectedPros.length ) {
+      config.professionals = this._contextSelectedPros.map(pro => pro._id);
+    } else {
+      config.professionals = 'all';
+    }
 
     this.professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });

@@ -16,6 +16,7 @@ import { SynthesisListModule } from './components/synthesis-list/synthesis-list.
 import { SynthesisCompleteModule } from '../../public/share/component/synthesis-complete/synthesis-complete.module';
 import { MessageSpaceModule } from '../../utility-components/message-space/message-space.module';
 import { TagsService } from "../../../services/tags/tags.service";
+import { ModalModule } from '../../utility-components/modal/modal.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { TagsService } from "../../../services/tags/tags.service";
     AccountModule,
     SynthesisListModule,
     SynthesisCompleteModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    ModalModule
   ],
   providers: [
     TagsService

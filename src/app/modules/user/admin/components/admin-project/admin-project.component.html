@@ -1,4 +1,4 @@
-<div class="main-container admin-project">
+<div class="container fluid admin-project">
 
   <div class="section-light-container heading">
     <div class="column col-xs-12 col-11 col-mx-auto">
@@ -26,8 +26,8 @@
       </div>
 
 
-      <ul class="tabs">
-        <li *ngFor="let tab of authorizedTabs" (out)="getEvent($event)">
+      <ul class="tab">
+        <li *ngFor="let tab of authorizedTabs" (out)="getEvent($event)" class="tab-item">
           <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
             {{ 'PROJECT.' + tab.toUpperCase() | translate }}
           </a>

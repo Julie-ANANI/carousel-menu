@@ -107,7 +107,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
     }
 
     if (url.includes('/share/synthesis')) {
-      this.router.navigate([url.replace('/share/', '/user/')], {
+      this.router.navigate([url.replace('/share', '/user')], {
         queryParams: this.activatedRoute.snapshot.queryParams
       });
     }
@@ -116,7 +116,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
   /***
    * this function open the sign up sidebar where user can
-   * fill the details to register in the platform.
+   * fill the details to register in the framework.
    * @param event
    */
   onClickSignUp(event: Event) {

@@ -1,0 +1,15 @@
+/*
+    This stylesheet contains all the class related to the modal
+    for our framework.
+ */
+@import "variables";
+
+.modal-footer {
+  padding: 1.875rem 0 0 0 !important;
+  text-align: right !important;
+
+  .btn-cancel {
+    margin-right: .6rem !important;
+  }
+
+}

@@ -67,19 +67,15 @@
       <a (click)="displayStars() && $event.preventDefault()" *ngIf="catDone">{{ 'SEARCH.STAR_PROFILES' | translate
         }}</a>
 
-      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' |
-        translate
-        }}
+      <div class="label label-success" *ngIf="googleQuota > 10000">{{ googleQuota }} remaining requests
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
 
-      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} {{
-        'SEARCH.REMAINING_REQUESTS' | translate }}
+      <div class="label label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} remaining requests
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
 
-      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate
-        }}
+      <div class="label label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} remaining requests
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
     </div>
@@ -139,7 +135,5 @@
                 height="120">
       </div>
     </div>
-
-
   </div>
 </div>

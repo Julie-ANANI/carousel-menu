@@ -1,9 +1,0 @@
-<!-- Save button -->
-<div class="text-right">
-  <button [disabled]="!isChange" type="submit" class="btn btn-primary" (click)="save()">Save</button>
-</div>
-
-<app-shared-mail-editor [emailsObject]="emailsObject"
-                        [inputLanguage]="language"
-                        [signatures]="signatures" (emailChange)="emailsObject = $event; isChange = true">
-</app-shared-mail-editor>

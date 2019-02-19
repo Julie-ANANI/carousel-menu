@@ -14,7 +14,7 @@
           *ngFor="let innovationCard of innovation.innovationCards; let i = index;"
           [ngClass]="{'active': selectedCardIndex === i }"
           (click)="onLangSelect($event, i)">
-          <div class="radio-button"><span>•</span></div>
+          <div class="btn-radio"><span>•</span></div>
           <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
         </li>
         <p *ngIf="innovation.innovationCards?.length < 2 && canEdit">
@@ -71,7 +71,7 @@
                 <input
                   type="text"
                   id="edit-innovation-title"
-                  class="form-default"
+                  class="form-input"
                   name="title"
                   [(ngModel)]="innovationCard.title"
                   [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
@@ -335,7 +335,7 @@
 
     <!-- bot section -->
     <div *ngIf="!adminSide" class="column col-mx-auto col-5 hide-md help-wrapper">
-      <app-message-space [messageA]="'PROJECT_MODULE.SETUP.PITCH.BOT.HELP'" [widthMax]="'344'"></app-message-space>
+      <app-message-space [messageA]="'PROJECT_MODULE.SETUP.PITCH.BOT.HELP'" [widthMax]="'344px'"></app-message-space>
     </div>
     <!-- /bot section -->
 

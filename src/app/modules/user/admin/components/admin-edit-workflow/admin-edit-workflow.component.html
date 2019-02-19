@@ -1,41 +1,42 @@
-<div>
-  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
-    <app-sidebar-workflow
-      [emailsObject]="emailToEdit"
-      (emailChange)="updateEmail($event)"
-      [signatures]="signatures"
-      [inputLanguage]="language">
-    </app-sidebar-workflow>
-  </app-sidebar>
-  <p class="workflow-header">
-    <span class="workflow-name">{{ scenario.name }}</span> -
-    <a [ngClass]="{'text-warning': language === 'en'}" (click)="changeLanguage('en')">EN</a>
-    <span  class="text-success"><i class="fas fa-check" *ngIf="inCampaign && isModifiedEn"></i></span>
-    <span  class="text-error"><i class="fas fa-times" *ngIf="inCampaign && !isModifiedEn"></i></span> |
-    <a [ngClass]="{'text-warning': language === 'fr'}" (click)="changeLanguage('fr')">FR</a>
-    <span  class="text-success"><i class="fas fa-check" *ngIf="inCampaign && isModifiedFr"></i></span>
-    <span  class="text-error"><i class="fas fa-times" *ngIf="inCampaign && !isModifiedFr"></i></span> -
-    <a class="text-error" (click)="deleteModal = true" *ngIf="isDeletable"><i class="fas fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
-  </p>
+<div id="admin-edit-workflow-component">
+
+  <!-- section header -->
+  <div class="section-header">
+    {{ campaignScenario.name }}
+    &nbsp;-
+    <div [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'" class="circle"><i class="fas fa-check"></i></div>
+    <span [ngClass]="{ 'active': language === 'en' }" class="text-link" (click)="changeLanguage('en')">{{ 'COMMON.LANG.EN' | translate }}</span>
+    &nbsp;&nbsp;|
+    <div [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'" class="circle"><i class="fas fa-check"></i></div>
+    <span [ngClass]="{ 'active': language === 'fr' }" class="text-link" (click)="changeLanguage('fr')">{{ 'COMMON.LANG.FR' | translate }}</span>
+    <div (click)="onClickDelete()" class="icons icons-delete"><i class="fas fa-trash-alt"></i></div>
+  </div>
+
+  <!-- section table -->
   <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [config]="config"></app-shared-table>
 
-  <!-- MODAL : Suppression scénario ? -->
-  <div class="modal" [ngClass]="{'active': deleteModal}">
-    <div class="modal-overlay" (click)="(deleteModal = null) && $event.preventDefault()"></div>
-    <div class="modal-container">
-      <div class="modal-header">
-        <button class="btn btn-clear float-right" (click)="(deleteModal = null) && $event.preventDefault()"></button>
-        <div class="modal-title h5">Suppression du scénario</div>
-      </div>
-      <div class="modal-body">
-        <div class="content">Etes-vous sûr de vouloir supprimer ce scénario ? Cette action est irréversible !</div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-link" (click)="deleteScenario()">{{ 'COMMON.DELETE' | translate }}</button>
-        <button class="btn btn-primary" (click)="(deleteModal = null) && $event.preventDefault()">
-          {{ 'COMMON.CANCEL' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
 </div>
+
+
+<!-- modal to delete the scenario -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  {{ 'EDIT_WORKFLOW.MODAL.CONTENT' | translate }}
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="deleteScenario()">{{ 'COMMON.SUBMIT' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to delete the scenario -->
+
+
+<!-- sidebar to edit workflow -->
+<app-sidebar [(template)]="more">
+  <app-workflow
+    [emailsObject]="emailToEdit"
+    [inputLanguage]="language"
+    (emailChange)="updateEmail($event)">
+  </app-workflow>
+</app-sidebar>
+<!-- /sidebar to edit workflow -->
