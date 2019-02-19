@@ -3,7 +3,9 @@
 
     <!-- section no reports -->
     <div *ngIf="totalReports && totalReports.length === 0" class="section-no-reports">
-      <app-message-space [messageA]="'SHARE.SYNTHESIS_LIST.BOT_TEXT'" [widthMax]="'354px'"></app-message-space>
+      <app-message-space [widthMax]="'354px'">
+        {{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}
+      </app-message-space>
     </div>
 
     <!-- section reports -->

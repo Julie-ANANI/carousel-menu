@@ -66,9 +66,8 @@
 
     <!-- section no quiz -->
     <div *ngIf="noResult" class="section-no-quiz">
-      <app-message-space
-        [messageA]="'CAMPAIGNS.QUIZ_PAGE.BOT'"
-        [widthMax]="'354px'">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'CAMPAIGNS.QUIZ_PAGE.BOT' | translate }}
       </app-message-space>
     </div>
 

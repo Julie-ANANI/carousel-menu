@@ -78,10 +78,10 @@
 
     <!-- section no campaign -->
     <div *ngIf="noResult" class="section-container">
-      <app-message-space
-        [messageA]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A'"
-        [messageB]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B'"
-        [widthMax]="'354px'">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A' | translate }}
+        <br>
+        {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B' | translate }}
       </app-message-space>
     </div>
 

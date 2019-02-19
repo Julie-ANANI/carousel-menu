@@ -8,14 +8,6 @@ import { Component, Input } from '@angular/core';
 
 export class MessageSpaceComponent {
 
-  @Input() set messageA(value: string) {
-    this._firstLine = value;
-  }
-
-  @Input() set messageB(value: string) {
-    this._secondLine = value;
-  }
-
   @Input() set srcImage(value: string) {
     this._imageSrc = value;
   }
@@ -28,10 +20,6 @@ export class MessageSpaceComponent {
     this._colorBackground = value;
   }
 
-  private _firstLine = '';
-
-  private _secondLine = '';
-
   private _imageSrc = '';
 
   private _wrapperWidth = '';
@@ -41,14 +29,6 @@ export class MessageSpaceComponent {
   private _colorBackground = '';
 
   constructor() { }
-
-  get firstLine(): string {
-    return this._firstLine;
-  }
-
-  get secondLine(): string {
-    return this._secondLine;
-  }
 
   get imageSrc(): string {
     return this._imageSrc;

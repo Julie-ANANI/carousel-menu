@@ -54,7 +54,9 @@
 
         <!-- bot -->
         <div class="column col-6 hide-xl col-mx-auto text-center">
-          <app-message-space [messageA]="'PROJECT_MODULE.NEW_PROJECT.BOT_TEXT'" [widthMax]="'235px'"></app-message-space>
+          <app-message-space [widthMax]="'235px'">
+            {{ 'PROJECT_MODULE.NEW_PROJECT.BOT_TEXT' | translate }}
+          </app-message-space>
         </div>
 
       </div>

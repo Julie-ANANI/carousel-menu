@@ -1,7 +1,9 @@
 <div id="innovation-preview-component">
 
   <div *ngIf="innovation && innovation.problem === '' && innovation.summary === '' && innovation.title === '' && innovation.advantages.length === 0" class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
-    <app-message-space [messageA]="'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE'"></app-message-space>
+    <app-message-space>
+      {{ 'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE' | translate }}
+    </app-message-space>
   </div>
 
 
