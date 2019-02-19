@@ -23,60 +23,63 @@
           </div>
           <div class="card-body">
             <ul>
-              <li> {{ 'SEARCH.POPOVER.REQUEST' | translate}}  </li>
-              <li> {{ 'SEARCH.POPOVER.KEYWORDS' | translate}} </li>
-              <li> {{ 'SEARCH.POPOVER.MAX' | translate}} </li>
-              <li> {{ 'SEARCH.POPOVER.SPELLING' | translate}} </li>
+              <li> {{ 'SEARCH.POPOVER.REQUEST' | translate}}</li>
+              <li> {{ 'SEARCH.POPOVER.KEYWORDS' | translate}}</li>
+              <li> {{ 'SEARCH.POPOVER.MAX' | translate}}</li>
+              <li> {{ 'SEARCH.POPOVER.SPELLING' | translate}}</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
 
-    <div>
-      <div id="input-search">
-        <textarea
-          type="text"
-          class="form-default input-lg"
-          name="keywords"
-          rows="4"
-          (ngModelChange)="estimateNumberOfGoogleRequests()"
-          [(ngModel)]="params.keywords"
-          required
-          [placeholder]="'SEARCH.INPUT' | translate ">
-        </textarea>
+    <div class="flex-container" id="input-search">
 
+      <textarea
+        type="text"
+        class="form-input"
+        name="keywords"
+        rows="4"
+        (ngModelChange)="estimateNumberOfGoogleRequests()"
+        [(ngModel)]="params.keywords"
+        required
+        placeholder="Recherche 'Google-like', une requête par ligne"></textarea>
+
+      <button
+        (click)="search($event)"
+        class="btn-round btn-primary"
+        translate>
+        <i class="fas fa-search"></i>
+      </button>
+
+      <div *ngIf="catDone" class="reset-cat">
         <button
-          (click)="search($event)"
-          class="btn-round btn-primary"
-          translate>
-          <i class="fas fa-search"></i>
+          (click)="resetCat()"
+          class="btn btn-outline-info">Reset
+          <i class="fas fa-refresh"></i>
         </button>
-
-        <div *ngIf="catDone" class="reset-cat">
-          <button
-            (click)="resetCat()"
-            class="btn btn-outline-info">Reset
-            <i class="fas fa-refresh"></i>
-          </button>
-        </div>
-
       </div>
+
     </div>
 
     <div class="tips">
       <a (click)="changeSettings() && $event.preventDefault()">{{ 'SEARCH.SETTINGS' | translate }}</a>
-      <a (click)="displayStars() && $event.preventDefault()" *ngIf="catDone" >{{ 'SEARCH.STAR_PROFILES' | translate }}</a>
+      <a (click)="displayStars() && $event.preventDefault()" *ngIf="catDone">{{ 'SEARCH.STAR_PROFILES' | translate
+        }}</a>
 
-      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate }}
+      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' |
+        translate
+        }}
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
 
-      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate }}
+      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} {{
+        'SEARCH.REMAINING_REQUESTS' | translate }}
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
 
-      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate }}
+      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate
+        }}
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
     </div>
@@ -105,14 +108,17 @@
         </span>
         <span *ngIf="estimatedNumberOfGoogleRequests">
           {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
-          <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span *ngIf="catResult.total_result">max</span></strong>.
+          <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span
+            *ngIf="catResult.total_result">max</span></strong>.
         <a *ngIf="!catResult.keywords_analysis && campaign" (click)="cat($event)">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
         </span>
         <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
       </span>
       <br>
       <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-advice.svg" width="" height="120"></div>
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-advice.svg" width=""
+                height="120">
+      </div>
     </div>
 
     <div class="bot-wrapper text-center" *ngSwitchCase="'not ok'">
@@ -121,14 +127,17 @@
       </span>
       <br>
       <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120">
+      </div>
     </div>
 
     <div class="bot-wrapper text-center" *ngSwitchCase="'error'">
       <span class="bot-rect"> {{ 'SEARCH.ROBOT.ERROR' | translate }}</span>
       <br>
       <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width=""
+                height="120">
+      </div>
     </div>
 
 
