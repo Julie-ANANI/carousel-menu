@@ -8,6 +8,7 @@ import { AdminEditWorkflowComponent } from './admin-edit-workflow.component';
 import { TableModule } from '../../../../table/table.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarWorkflowModule } from '../../../../sidebar/components/sidebar-workflow/sidebar-workflow.module';
+import { ModalModule } from '../../../../utility-components/modal/modal.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SidebarWorkflowModule } from '../../../../sidebar/components/sidebar-wo
     RouterModule,
     TableModule,
     SidebarModule,
-    SidebarWorkflowModule
+    SidebarWorkflowModule,
+    ModalModule
   ],
   declarations: [
     AdminEditWorkflowComponent

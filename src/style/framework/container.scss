@@ -73,6 +73,22 @@
   margin-right: auto;
 }
 
+
+/*
+    add this with the container to remove the top padding.
+ */
+.remove-top {
+  padding-top: 0;
+}
+
+
+/*
+    add this with the container to remove the bottom padding.
+ */
+.remove-bottom {
+  padding-bottom: 0;
+}
+
 /********************************** Media ***************************************/
 
 @media (max-width: 600px) {

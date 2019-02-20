@@ -19,74 +19,6 @@
 
 
 
-/*
-    Form input style. Just add this class when you are
-    defining the input of the form or any other. Class
-    name: .form-default
- */
-
-.form-default, .form-select {
-  border: 1px solid $border-color;
-  font-size: .85rem;
-  color: $input-color;
-  border-radius: .35rem;
-  display: block;
-  width: 100%;
-  outline: none;
-  min-height: 3.125rem;
-  position: relative;
-  background: white none;
-  padding: .9rem;
-  transition: all 0.15s ease-in-out;
-}
-
-
-.form-select:not([multiple]):not([size]) {
-  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right .9rem center/0.4rem 0.5rem;
-  background-size: .6rem;
-  padding-right: 2.187rem;
-}
-
-
-/*
-    Placeholder style
- */
-
-.form-default:not(:disabled):placeholder-shown {
-  color: $placeholder-color;
-}
-
-
-/*
-    Focus on input style
- */
-
-.form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
-  border-color: $primary-color;
-}
-
-
-/*
-    Error on input style
- */
-
-.form-default.ng-touched.ng-invalid {
-  border-color: $alert-color;
-}
-
-
-/*
-    Form input is disabled.
- */
-
-.form-default:disabled, .form-default.disabled, .form-select:disabled, .form-select.disabled {
-  background: $disabled-color;
-  color: $disabled-text-color;
-  border-color: $disabled-color;
-  cursor: not-allowed;
-  opacity: 1;
-}
-
 
 
 /*
@@ -169,15 +101,7 @@
 }
 
 
-/*
-    Textarea.
- */
 
-textarea {
-  resize: none;
-  padding-right: 1.87rem !important;
-
-}
 
 
 /*
@@ -191,11 +115,7 @@ textarea {
 
 
 
-.form-switch input:focus + .form-icon {
-  border-color: $border-color;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
+
 
 
 /*

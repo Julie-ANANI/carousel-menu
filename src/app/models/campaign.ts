@@ -19,6 +19,7 @@ export interface CampaignStats {
   nbProsClicked: number,
   nbAnswers: number,
   nbPros: number,
+  nbTotalMails: number,
 }
 
 export interface Campaign {

@@ -26,6 +26,7 @@ export class AdminCampaignComponent implements OnInit {
     if (this._campaign.stats) {
       this._campaign.stats.nbPros = this._campaign.stats.campaign ? this._campaign.stats.campaign.nbProfessionals || 0 : 0;
       this._campaign.stats.nbProsSent = this._campaign.stats.mail ? this._campaign.stats.mail['totalPros'] || 0 : 0;
+      this._campaign.stats.nbTotalMails = this._campaign.stats.mail ? this._campaign.stats.mail['totalMails'] || 0 : 0;
       this._campaign.stats.nbProsOpened = this._campaign.stats.mail && this._campaign.stats.mail['statuses'] ? this._campaign.stats.mail['statuses']['opened'] || 0 : 0;
       this._campaign.stats.nbProsClicked = this._campaign.stats.mail && this._campaign.stats.mail['statuses'] ? this._campaign.stats.mail['statuses']['clicked'] || 0 : 0;
     }

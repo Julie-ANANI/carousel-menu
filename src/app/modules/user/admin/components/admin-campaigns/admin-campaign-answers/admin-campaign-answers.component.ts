@@ -11,6 +11,7 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { Table } from '../../../../../table/models/table';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -56,7 +57,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
               private campaignService: CampaignService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private campaignFrontService: CampaignFrontService) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -86,46 +88,9 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
 
   getCampaignStat(type: string, searchKey: any): number {
-    let value = 0;
-
     if (this._answers) {
-
-      this._answers.forEach((answer: Answer) => {
-
-        switch (type) {
-
-          case 'status':
-            if (answer.status === searchKey) {
-              value += 1;
-            }
-            break;
-
-          case 'profile':
-            if (answer.profileQuality === searchKey) {
-              value += 1;
-            }
-            break;
-
-          case 'quality':
-            if (answer.time_elapsed) {
-              value += Math.floor(answer.time_elapsed / 60);
-            }
-            break;
-
-          default:
-            // do nothing...
-
-        }
-
-      });
-
+      return this.campaignFrontService.getAnswerCampaignStat(this._answers, type, searchKey);
     }
-
-    if (searchKey === 'time_elapsed' ) {
-      value = Math.floor(value / this._answers.length);
-    }
-
-    return  value;
   }
 
 
@@ -170,15 +135,16 @@ export class AdminCampaignAnswersComponent implements OnInit {
         _reloadColumns: true,
         _actions: this._actions,
         _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-          {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY', _isSortable: false},
-          {_attrs: ['professional.email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
-          {_attrs: ['professional.jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-          {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _choices: [
-              {_name: 'VALIDATED', _alias: 'ANSWER.STATUS.VALIDATED', _class: 'label label-success'},
-              {_name: 'VALIDATED_NO_MAIL', _alias: 'ANSWER.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
-              {_name: 'SUBMITTED', _alias: 'ANSWER.STATUS.SUBMITTED', _class: 'label label-progress'},
-              {_name: 'REJECTED', _alias: 'ANSWER.STATUS.REJECTED', _class: 'label label-alert'},
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+          {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSortable: false},
+          {_attrs: ['professional.email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT'},
+          {_attrs: ['professional.jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+          {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _choices: [
+              {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label label-success'},
+              {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
+              {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label label-progress'},
+              {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label label-alert'},
+              {_name: 'REJECTED_GMAIL', _alias: 'ANSWER.STATUS.REJECTED_GMAIL', _class: 'label label-alert'}
             ]},
         ]
       };
@@ -192,7 +158,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.EDIT_INSIGHT',
+      title: 'COMMON.SIDEBAR.EDIT_INSIGHT',
       size: '726px'
     };
 

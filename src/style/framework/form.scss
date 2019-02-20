@@ -48,6 +48,7 @@
   padding: 0.875rem;
   transition: all 0.15s ease-in-out;
   max-width: 100%;
+  vertical-align: middle;
   line-height: 1.5;
 }
 
@@ -57,6 +58,38 @@
 */
 .form-input:not(:disabled):placeholder-shown {
   color: $form-placeholder;
+}
+
+
+/*
+    form select style. Just add this class when you are
+    defining the select input of the form or any other. Class
+    name: .form-select
+ */
+.form-select {
+  border: 0.06rem solid $form-border;
+  font-size: 0.875rem;
+  color: $form-input;
+  border-radius: 0.35rem;
+  display: block;
+  width: 100%;
+  outline: none;
+  height: 3.125rem;
+  position: relative;
+  background-color: white;
+  background-image: none;
+  padding: 0.875rem;
+  transition: all 0.15s ease-in-out;
+  max-width: 100%;
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+
+.form-select:not([multiple]):not([size]) {
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right 0.9rem center/0.4rem 0.5rem;
+  background-size: 0.6rem;
+  padding-right: 2.187rem;
 }
 
 
@@ -115,6 +148,7 @@
 
 .form-switch {
   padding-left: 2.5rem;
+  padding-right: 0;
 }
 
 
@@ -126,7 +160,7 @@
   width: 16px;
   border-radius: 50%;
   transition: all 0.2s ease-in-out;
-  border: 1px solid $border;
+  border: 1px solid $form-border;
   cursor: pointer;
   display: inline-block;
   position: absolute;
@@ -134,7 +168,7 @@
 
 
 .form-switch .form-icon {
-  border-color: $border;
+  border-color: $form-border;
   background-color: #FFFFFF;
   height: 15px;
   width: 34px;
@@ -166,7 +200,7 @@
   height: 1.3125rem;
   width: 1.2rem;
   left: -1px;
-  top: -3.5px;
+  top: -4px;
 }
 
 
@@ -180,8 +214,10 @@
 }
 
 
-.form-radio input:active + .form-icon {
-  background: $form-border;
+.form-radio input:active + .form-icon, .form-switch input:focus + .form-icon {
+  background: #FFFFFF;
+  border-color: $meta;
+  box-shadow: none;
 }
 
 
@@ -211,4 +247,14 @@
 .form-switch input:disabled + .form-icon::before {
   background: $disabled;
   cursor: not-allowed;
+}
+
+
+/*
+    textarea
+ */
+textarea {
+  resize: none;
+  padding-right: 1.87rem !important;
+  height: auto;
 }

@@ -5,8 +5,8 @@ import { environment } from '../../../../../../../../../../environments/environm
 
 @Component({
   selector: 'app-survey',
-  templateUrl: 'survey.component.html',
-  styleUrls: ['survey.component.scss']
+  templateUrl: './survey.component.html',
+  styleUrls: ['./survey.component.scss']
 })
 
 export class SurveyComponent implements OnInit {

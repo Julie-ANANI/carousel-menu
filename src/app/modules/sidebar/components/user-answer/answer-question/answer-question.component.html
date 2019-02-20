@@ -120,7 +120,7 @@
       <form *ngIf="editMode">
         <div class="comment-wrapper">
           <textarea
-            class="form-default"
+            class="form-input"
             [(ngModel)]="fullAnswer.answers[question.identifier]"
             name="comment"
             rows="4">
@@ -237,7 +237,7 @@
       <p class="comment-text">{{ 'COMMON.COMMENT' | translate }} <i class="fas fa-angle-down"></i></p>
       <div class="comment-wrapper">
           <textarea
-            class="form-default"
+            class="form-input"
             name="comment"
             rows="4"
             [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']">

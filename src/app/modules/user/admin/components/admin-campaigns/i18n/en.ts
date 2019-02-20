@@ -81,7 +81,10 @@ export const CAMPAIGNS = {
       'QUALITY': 'Quality',
       'PROFESSIONALS': 'Professionals',
       'EMAILS': 'Emails',
-      'COST': 'Cost'
+      'COST': 'Cost',
+      'RECEPTION': 'Reception',
+      'INTERACTION': 'Interaction',
+      'DISPLAY': 'Display'
     },
     'TITLE': {
       'LOOK': 'To look at',
@@ -100,7 +103,15 @@ export const CAMPAIGNS = {
       'UNSURE': 'Unsure',
       'BAD': 'Bad',
       'REQUEST': 'Request',
-      'EMAILS': 'Emails'
+      'EMAILS': 'Emails',
+      'GOOD_EMAILS': 'Good emails',
+      'RECEIVED': 'Received',
+      'SPAM': 'Spam',
+      'BOUNCES': 'Bounces',
+      'OPENED': 'Opened',
+      'CLICKED': 'Clicked',
+      'EMAIL': 'Email',
+      'QUESTIONNAIRE': 'Questionnaire'
     },
 
     'TO_CONTACT': 'To contact',
@@ -134,6 +145,22 @@ export const CAMPAIGNS = {
         'PLACEHOLDER': 'Enter the campaign name',
       }
     }
+  },
+
+  'WORKFLOW_PAGE': {
+    'SELECT_LABEL': 'Select the workflow',
+    'BUTTON': {
+      'IMPORT': 'Import'
+    },
+    'BOT': {
+      'MESSAGE_A': 'Don\'t have any workflows?',
+      'MESSAGE_B': 'Try to add some by clicking on "Import" button.'
+    },
+    'MODAL': {
+      'CONTENT_A': 'This workflow is already imported. If you import it again it will replace the first one. Do you really want to import this template?',
+      'CONTENT_B': 'If you have already imported a workflow it will replace that workflow. Do you really want to import this template?'
+    },
+    'NOTE': 'Note: It is advised to you to modify the imported template/emails before launching the batch.',
   }
 
 };

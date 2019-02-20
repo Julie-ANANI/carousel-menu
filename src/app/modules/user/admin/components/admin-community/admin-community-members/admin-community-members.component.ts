@@ -27,11 +27,13 @@ export class AdminCommunityMembersComponent implements OnInit {
     return this._config;
   }
 
-  public launchSearch(event) {
+  public launchSearch(event: Event) {
+    console.log("GO GO GO!");
     console.log(event);
   }
 
-  public onSearchClick() {
+  public onSearchClick(event: Event) {
+    event.preventDefault();
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'Smart search',
@@ -42,5 +44,9 @@ export class AdminCommunityMembersComponent implements OnInit {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 }

@@ -47,7 +47,7 @@ import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
 import { SignatureResolver } from '../../../resolvers/signature.resolver';
-import { CampaignCalculationService } from '../../../services/campaign/campaign-calculation.service';
+import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
@@ -107,7 +107,7 @@ import { AdvSearchService } from "../../../services/advsearch/advsearch.service"
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
-    CampaignCalculationService,
+    CampaignFrontService,
     QuizService,
     InnovationCommonService,
     PresetResolver,

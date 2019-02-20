@@ -6,7 +6,7 @@
     <div class="info-wrapper">
 
       <!-- Number of result and title -->
-      <h1 class="main-heading">{{ total }} {{ title | translate }}</h1>
+      <h1 *ngIf="!isNoTitle"  class="main-heading">{{ total }} {{ title | translate }}</h1>
 
       <!-- If we want to filter by columns (not local) -->
       <div class="filter-wrapper">
@@ -24,7 +24,7 @@
 
     <!-- No result -->
     <div *ngIf="total === 0" class="no-result-wrapper">
-      <img src="https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg" class="img-responsive bot-image">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg" class="img-responsive bot-image" alt=" ">
       <ng-container *ngIf="!fetchingResult">
         <h1 class="main-heading">{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h1>
         <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>

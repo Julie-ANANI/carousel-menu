@@ -12,15 +12,13 @@ export class ShareSynthesisGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(activatedRoute: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
-    return this._checkLogin(activatedRoute.queryParams);
+    return this._checkLogin(routerStateSnapshot.url);
   }
 
-  private _checkLogin(queryParams: {[key: string]: string}): boolean {
+  private _checkLogin(url: string): boolean {
 
     if (this.authService.isAuthenticated ) {
-      this.router.navigate(['/user', 'synthesis'], {
-        queryParams: queryParams
-      });
+      this.router.navigate([url.replace('share', 'user'), {}]);
     }
 
     return true;
