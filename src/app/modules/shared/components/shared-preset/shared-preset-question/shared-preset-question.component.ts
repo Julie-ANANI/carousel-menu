@@ -47,27 +47,26 @@ export class SharedPresetQuestionComponent {
 
   public addNewOption(event: Event) {
     event.preventDefault();
-    /*const optionsArray = this._formData.get('options') as FormArray;
-    const stringId = Array.isArray(optionsArray.value) ? optionsArray.value.length.toString() : '0';
-    const newOption = this.buildOptionForm({
+    const options = this._question.options;
+    const stringId = options.length.toString();
+    const newOption = {
       identifier: stringId,
       label: {
-        en: 'Option' + stringId,
-        fr: 'Option' + stringId
-      },
-      positive: false
-    });
-    optionsArray.push(newOption);*/
+        en: 'Option ' + stringId,
+        fr: 'Option ' + stringId
+      }
+    };
+    options.push(newOption);
   }
 
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
-    /*const optionsArray = this._formData.get('options') as FormArray;
-    optionsArray.removeAt(index);
+    const options = this._question.options;
+    options.splice(index, 1);
     // re-index options to keep a count from 0 to X
-    for (let i = index; i < optionsArray.value.length ; i++) {
-      optionsArray.at(i).get('identifier').setValue(i.toString());
-    }*/
+    options.forEach(function (option, i) {
+      option.identifier = i.toString();
+    });
   }
 
   public countErrors(lang: string) {
