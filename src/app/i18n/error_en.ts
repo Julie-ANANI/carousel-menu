@@ -141,7 +141,9 @@ export const ERROR = {
       'NOT_CREATED': 'No batch is created.',
       'STARTED': 'The batch has been started successfully.',
       'STOPPED': 'The batch has been stopped successfully.',
-      'ALREADY_STARTED': 'The batch has been already launched. It can not be undone.'
+      'ALREADY_STARTED': 'The batch has been already launched. It can not be undone.',
+      'DELETED': 'The batch has been deleted successfully.',
+      'FREEZED': 'The batch has been frozen successfully.'
     }
   },
 

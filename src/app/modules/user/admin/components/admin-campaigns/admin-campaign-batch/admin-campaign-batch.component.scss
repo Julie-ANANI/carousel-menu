@@ -7,10 +7,44 @@
     padding-bottom: 0.9375rem;
   }
 
-  .icons {
+  .cog {
     position: absolute;
     right: 0;
     bottom: 5px;
+  }
+
+  .section-error {
+    display: flex;
+    align-items: center;
+
+    .circle {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.5rem;
+    }
+
+    .left {
+      margin-left: 1.2rem;
+    }
+
+    .incomplete {
+      background-color: $alert;
+
+      .fa-check {
+        visibility: hidden;
+      }
+
+    }
+
+    .complete {
+      background-color: $success;
+
+      .fa-check {
+        visibility: visible;
+      }
+
+    }
+
   }
 
   .section-status {
@@ -19,11 +53,31 @@
       margin-bottom: 1.25rem;
       display: inline-flex;
       margin-right: 1.25rem;
+    }
 
-      .form-switch {
+  }
+
+  .card {
+
+    .card-header {
+
+      .card-title {
         color: $meta;
-        font-weight: 600;
-        font-size: 0.875rem;
+        display: inline-flex;
+        text-align: center;
+
+        .icons, .text-success {
+          font-size: 16px;
+        }
+
+        .icons {
+          margin-left: 0.75rem;
+        }
+
+        .text-success {
+          margin-left: 0.5rem;
+        }
+
       }
 
     }

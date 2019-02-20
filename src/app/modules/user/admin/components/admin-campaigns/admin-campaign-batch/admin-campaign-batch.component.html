@@ -62,12 +62,10 @@
     <div *ngIf="noResult" class="section-light-container remove-bottom">
 
       <!-- note -->
-      <div *ngIf="!autoBatchStatus" class="text-alert section-light-container remove-top">
-        {{ 'CAMPAIGNS.BATCH_PAGE.NOTE' | translate }}
-        <span *ngIf="!innovationStatus">{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}</span>
-        <span *ngIf="!defaultWorkflow">{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}</span>
-        <span *ngIf="!templatesStatus">{{ 'CAMPAIGNS.BATCH_PAGE.EMAILS' | translate }}</span>
-        <span *ngIf="!quiz">{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}</span>
+      <div *ngIf="!autoBatchStatus" class="section-light-container remove-top section-error text-notify">
+        <div class="circle" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' "><i class="fas fa-check"></i></div>{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}
+        <div class="circle left" [ngClass]=" quiz ? 'complete' : 'incomplete' "><i class="fas fa-check"></i></div>{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}
+        <div class="circle left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' "><i class="fas fa-check"></i></div>{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}
       </div>
 
       <!-- bot -->
@@ -75,11 +73,11 @@
         {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
         <div class="form-group bot-group">
           <label class="form-switch" for="auto-batch">
-            <input type="checkbox" id="auto-batch" [disabled]="!autoBatchStatus" (change)="onFirstAutoBatch($event);" [ngModel]="campaign?.autoBatch">
+            <input type="checkbox" id="auto-batch" [disabled]="!autoBatchStatus" (change)="onFirstAutoBatch($event)" [ngModel]="campaign?.autoBatch">
             <i class="form-icon"></i>
           </label>
         </div>
-        <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'visible' }" class="icons icons-meta" (click)="activateSidebar('newBatch')"><i class="fas fa-cog"></i></div>
+        <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }" class="icons icons-meta cog" (click)="activateSidebar('newBatch')"><i class="fas fa-cog"></i></div>
       </app-message-space>
 
     </div>
@@ -88,7 +86,7 @@
     <div *ngIf="!noResult" class="section-light-container remove-bottom">
 
       <!-- section status -->
-      <div class="section-status">
+      <div class="section-status section-light-container remove-top">
         <div class="form-group">
           <label class="form-switch" for="result-auto-batch">
             <input type="checkbox" id="result-auto-batch" (change)="onSwitchAutoBatch($event)" [ngModel]="campaign?.autoBatch">
@@ -103,6 +101,21 @@
         </div>
       </div>
 
+      <!-- section batches -->
+      <div *ngFor="let batch of stats.batches; let batchIndex = index" class="card">
+        <div class="card-header">
+          <div class="card-title">
+            {{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros
+            <div class="text-success" *ngIf="batch.nuggets"><i class="fas fa-crow"></i></div>
+            <div *ngIf="getDeleteStatus(batch)" class="icons icons-delete" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
+          </div>
+          <label class="form-switch float-right" for="freeze">
+            <input type="checkbox" id="freeze" (change)="OnSwitchFreeze(batch, $event)" [ngModel]="batch.active">
+            <i class="form-icon"></i>{{ 'COMMON.LABEL.STARTED' | translate }}
+          </label>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -110,14 +123,28 @@
 </div>
 
 
-<!-- sidebars -->
+<!-- modal to delete batch -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  {{ 'CAMPAIGNS.BATCH_PAGE.MODAL_DELETE_CONTENT' | translate }}
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onConfirmDelete()">{{ 'COMMON.SUBMIT' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to delete batch -->
+
+
+<!-- sidebars to perform batch operations -->
 <app-sidebar [(template)]="sidebarValue">
   <app-batch-form
     [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type">
+    [type]="sidebarValue.type"
+    (batchOutput)="onOutput($event)">
   </app-batch-form>
 </app-sidebar>
-<!-- /sidebars -->
+<!-- /sidebars to perform batch operations  -->
 
 
 

@@ -81,7 +81,7 @@ export class ExplorationComponent implements OnInit {
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
           {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
           {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'COMMON.DATE', _type: 'DATE'},
+          {_attrs: ['created'], _name: 'COMMON.LABEL.DATE', _type: 'DATE'},
         ]
       };
 

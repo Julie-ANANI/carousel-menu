@@ -166,13 +166,15 @@ export const CAMPAIGNS = {
 
   'BATCH_PAGE': {
     'NOTE': 'Note: It is not possible to launch the batch for this campaign at the moment because of the following reason(s): ',
-    'QUIZ': 'Quiz is not defined. ',
-    'INNOVATION': 'Project status is not evaluating or done. ',
-    'EMAILS': 'No emails are defined. ',
-    'WORKFLOW': 'No default workflow. ',
+    'QUIZ': 'Quiz',
+    'INNOVATION': 'Project validation',
+    'EMAILS': 'No emails are defined.',
+    'WORKFLOW': 'Workflow',
     'BOT': 'Launch auto-batch and take a holiday :)',
     'AUTO_BATCH_LABEL': 'Auto-batch started',
-    'NUGGETS': 'Nuggets activated'
+    'NUGGETS': 'Nuggets activated',
+    'TITLE': 'Batch for',
+    'MODAL_DELETE_CONTENT': 'Do you really want to delete this batch?'
   }
 
 };

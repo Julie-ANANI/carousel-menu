@@ -123,13 +123,13 @@ export class AdminCampaignProsComponent implements OnInit {
 
   onClickSave(formValue: FormGroup) {
     this._newPro = {
-      firstName: formValue['firstName'],
-      lastName: formValue['lastName'],
-      email: formValue['email'],
-      jobTitle: formValue['jobTitle'],
-      country: formValue['country'],
-      profileUrl: formValue['profileUrl'],
-      company: formValue['companyName'],
+      firstName: formValue.value['firstName'],
+      lastName: formValue.value['lastName'],
+      email: formValue.value['email'],
+      jobTitle: formValue.value['jobTitle'],
+      country: formValue.value['country'],
+      profileUrl: formValue.value['profileUrl'],
+      company: formValue.value['companyName'],
       emailConfidence: 100
     };
 

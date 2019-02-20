@@ -19,7 +19,6 @@ export const COMMON = {
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
   'OF': 'de',
-  'DATE': 'Date',
   'ADDED': 'Ajouté le',
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
@@ -69,7 +68,6 @@ export const COMMON = {
   'COMMENT': 'Commentaire',
 
   'NAME': 'Nom',
-  'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
 
   'EMAIL': 'Email',
@@ -115,6 +113,19 @@ export const COMMON = {
   'PROFILE_URL': 'Profile URL',
   'TOP_PROFILE': 'Profil haut',
 
+
+  'LABEL': {
+    'FIRSTNAME': 'Prénom',
+    'PROS_CONTACT': 'Nombre de pros',
+    'DATE': 'Date',
+    'TIME': 'Le temps',
+    'STARTED': 'Commencé'
+  },
+
+  'PLACEHOLDER': {
+    'PROS_CONTACT': 'Entrez le nombre de pros à contacter'
+  },
+
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis.',
     'LASTNAME': 'Le nom est requis.',
@@ -129,7 +140,9 @@ export const COMMON = {
     'MESSAGE': 'Tous les champs sont obligatoires',
     'ACCEPT': 'Veuillez accepter les termes et conditions.',
     'COUNTRY': 'Le pays est requis.',
-    'URL': 'Le profil est requis.'
+    'URL': 'Le profil est requis.',
+    'PROS_CONTACT': 'Value should be greater then 0.',
+    'BATCH_IMMEDIATE': 'Laissez ce champ vide pour envoyer le batch immédiatement. Le batch sera envoyé dans 7 minutes.'
   },
 
   'BUTTON': {

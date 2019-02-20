@@ -1,18 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
 
 @Component({
   selector: 'app-batch-form',
   templateUrl: './batch-form.component.html',
   styleUrls: ['./batch-form.component.scss']
 })
+
 export class BatchFormComponent {
 
   @Input() set sidebarState(value: string) {
     if (value === undefined || 'active') {
       this.buildForm();
+      this.activeSaveButton = false;
+      this.errorPros = false;
     }
   }
 
@@ -20,6 +22,8 @@ export class BatchFormComponent {
     this.actionType = value;
     this.loadTypes();
   }
+
+  @Output() batchOutput = new EventEmitter <any>();
 
   // @Input() set rowBatch(value: any) {
   //   this.load(value);
@@ -47,6 +51,8 @@ export class BatchFormComponent {
 
   isNewBatch = false;
 
+  errorPros = false;
+
   constructor(private formBuilder: FormBuilder) { }
 
   /*ngOnInit(): void {
@@ -61,7 +67,8 @@ export class BatchFormComponent {
     this.formData = this.formBuilder.group( {
       date: [''],
       time: [''],
-      pros: ['']
+      pros: [''],
+      send: [''],
     });
   }
 
@@ -90,9 +97,43 @@ export class BatchFormComponent {
 
   onSave() {
 
+    switch (this.actionType) {
+
+      case 'newBatch':
+        this.sendNewBatch();
+        break;
+
+      default:
+      // do nothing...
+
+    }
+
+    this.activeSaveButton = false;
+
   }
 
 
+  private sendNewBatch() {
+    const pros = this.formData.get('pros').value;
+    const send = this.formData.get('date').value || this.formData.get('time').value ? 'false' : 'true';
+
+    this.formData.get('send').setValue(send);
+
+    if (pros <= 0) {
+      this.errorPros = true;
+      this.activeSaveButton = false;
+    } else {
+      this.batchOutput.emit(this.formData);
+    }
+
+  }
+
+
+  onKeyboardPress(event: Event) {
+    event.preventDefault();
+    this.errorPros = false;
+    this.activeSaveButton = true;
+  }
 
 
 

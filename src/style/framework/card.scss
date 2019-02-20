@@ -1,0 +1,37 @@
+/*
+    This stylesheet contains the class related to the card for our framework.
+ */
+@import "variables";
+
+.card {
+  background: #fff;
+  border: 1px solid $border;
+  border-radius: 0.18rem;
+  display: flex;
+  flex-direction: column;
+  transition: all .35s ease-in-out;
+  padding: 0.6rem;
+  margin-bottom: 1.25rem;
+
+  .card-header {
+    padding: 0.5rem 0.5rem 0;
+
+    .card-title {
+      font-size: 1rem;
+      color: $text-primary;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+  }
+
+}
+
+.card .card-header:last-child, .card .card-body:last-child, .card .card-footer:last-child {
+  padding-bottom: 0.5rem;
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
