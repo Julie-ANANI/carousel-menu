@@ -1,10 +1,16 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/variables";
 
 #admin-campaign-batch-component {
 
   .bot-group {
     margin-bottom: 0;
     padding-bottom: 0.9375rem;
+  }
+
+  .icons {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
   }
 
   .section-status {
@@ -15,7 +21,7 @@
       margin-right: 1.25rem;
 
       .form-switch {
-        color: $meta-color;
+        color: $meta;
         font-weight: 600;
         font-size: 0.875rem;
       }

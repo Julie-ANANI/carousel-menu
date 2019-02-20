@@ -75,10 +75,11 @@
         {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
         <div class="form-group bot-group">
           <label class="form-switch" for="auto-batch">
-            <input type="checkbox" id="auto-batch" [disabled]="!autoBatchStatus" (change)="onSwitchAutoBatch($event)" [ngModel]="campaign?.autoBatch">
+            <input type="checkbox" id="auto-batch" [disabled]="!autoBatchStatus" (change)="onFirstAutoBatch($event);" [ngModel]="campaign?.autoBatch">
             <i class="form-icon"></i>
           </label>
         </div>
+        <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'visible' }" class="icons icons-meta" (click)="activateSidebar('newBatch')"><i class="fas fa-cog"></i></div>
       </app-message-space>
 
     </div>
@@ -96,7 +97,7 @@
         </div>
         <div class="form-group">
           <label class="form-switch" for="result-nuggets">
-            <input type="checkbox" id="result-nuggets" (change)="OnSwitchNuggets()"  [ngModel]="campaign?.nuggets">
+            <input type="checkbox" id="result-nuggets" (change)="OnSwitchNuggets($event)"  [ngModel]="campaign?.nuggets">
             <i class="form-icon"></i>{{ 'CAMPAIGNS.BATCH_PAGE.NUGGETS' | translate }}
           </label>
         </div>
@@ -107,6 +108,17 @@
   </div>
 
 </div>
+
+
+<!-- sidebars -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-batch-form
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type">
+  </app-batch-form>
+</app-sidebar>
+<!-- /sidebars -->
+
 
 
 
@@ -312,12 +324,12 @@
 
   <app-sidebar
     [template]="templateSidebar" (closeSidebar)="closeSidebar($event)">
-    <app-sidebar-batch
+    <app-batch-form
       [rowBatch]="currentRow"
       [content]="content"
       (batchChange)="onSubmitEditBatch($event)"
     >
-    </app-sidebar-batch>
+    </app-batch-form>
   </app-sidebar>
 
 -->

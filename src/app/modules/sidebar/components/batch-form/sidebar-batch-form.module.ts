@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { SidebarBatchComponent } from './sidebar-batch.component';
+import { BatchFormComponent } from './batch-form.component';
 
 import { SidebarModule } from '../../sidebar.module';
 import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
@@ -18,11 +18,11 @@ import { SharedTextZoneModule } from '../../../shared/components/shared-text-zon
     SharedTextZoneModule
   ],
   declarations: [
-    SidebarBatchComponent
+    BatchFormComponent
   ],
   exports: [
-    SidebarBatchComponent
+    BatchFormComponent
   ]
 })
 
-export class SidebarBatchModule {}
+export class SidebarBatchFormModule {}

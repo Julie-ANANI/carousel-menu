@@ -70,7 +70,6 @@ export class CampaignFormComponent {
 
     }
 
-
   }
 
 

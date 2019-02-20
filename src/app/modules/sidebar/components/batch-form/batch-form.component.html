@@ -1,3 +1,21 @@
+<div class="column col-xs-12 col-11 col-mx-auto" id="batch-form-component">
+  <form  (ngSubmit)="onSave()" autocomplete="off">
+
+    <!-- section save -->
+    <div class="section-save">
+      <button class="btn btn-primary" [disabled]="!activeSaveButton">{{ 'COMMON.SAVE' | translate }}</button>
+    </div>
+
+    <!-- no of pros -->
+    <div *ngIf="isNewBatch" class="form-group">
+      dssq
+    </div>
+
+  </form>
+
+</div>
+
+<!--
 <div *ngIf="this.row">
     <form [hidden]="this.formHidden" novalidate [formGroup]="formData" >
       <div class="form-group">
@@ -17,7 +35,7 @@
       </div>
     </form>
 
-  <!--<div *ngIf="thereIsContent"> -->
+  &lt;!&ndash;<div *ngIf="thereIsContent"> &ndash;&gt;
   <label class="text-ellipsis"> EN </label>
   <app-text-zone [elementId]="'en'"
                  [readonly]="true"
@@ -29,3 +47,4 @@
                  [data]="this.content.fr"
   ></app-text-zone>
 </div>
+-->

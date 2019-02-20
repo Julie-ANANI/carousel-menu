@@ -290,12 +290,14 @@ export const COMMON = {
     'ADD_PRO': 'Ajouter un professionnel',
     'EDIT_PROFESSIONAL': 'Modifier Professionnel',
     'ADD_TAGS': 'Ajouter des tags',
+    'NEW_BATCH': 'Nouveau batch manuellement'
   },
 
   'MODAL': {
     'TITLE_DELETE': 'Supprimer le forum',
     'TITLE_CONFIRMATION': 'Confirmation le forum',
     'TITLE_IMPORT': 'Conseil d\'importation',
+    'TITLE_BATCH': 'Batch le forum',
   },
 
   'SELECT_LABELS': {

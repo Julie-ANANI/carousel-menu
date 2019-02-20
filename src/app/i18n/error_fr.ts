@@ -136,8 +136,11 @@ export const ERROR = {
     },
     'BATCH': {
       'NUGGETS_ERROR': 'Nous avons du mal à activer les nuggets.',
+      'NUGGETS_ACTIVATED': 'Les nuggets ont été activées avec succès.',
+      'NUGGETS_DEACTIVATED': 'Les nuggets ont été désactivées avec succès.',
       'NOT_CREATED': 'Aucun batch est créé.',
       'STARTED': 'Le batch a été démarré avec succès.',
+      'STOPPED': 'Le batch a été arrêté avec succès.',
       'ALREADY_STARTED': 'Le batch a déjà été lancé. Il ne peut pas être défait.'
     }
   },

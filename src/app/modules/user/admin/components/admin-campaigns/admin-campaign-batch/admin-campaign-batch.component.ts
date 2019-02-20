@@ -40,8 +40,6 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   public nuggetsBatch: Batch = null;
 
-  public newBatch: Batch;
-
   public dateformat = 'le dd/MM/yyyy à HH:mm';
 
   public selectedBatchToBeDeleted: any = null;
@@ -67,7 +65,13 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   public currentStep: number;
 
-  noResult = false;
+  noResult = true;
+
+  firstAutoBatch = false;
+
+  newBatch: Batch;
+
+  private _sidebarValue: SidebarInterface = {};
 
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
@@ -76,16 +80,10 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
+    this.initializeNewBatch();
     this.getQuiz();
     this.getBatches();
-    console.log(this._campaign)
-
-    /*this.newBatch = {
-      campaign: this._campaign,
-      size: 0,
-      active: true
-    };*/
-
+    console.log(this._campaign);
   }
 
 
@@ -93,6 +91,15 @@ export class AdminCampaignBatchComponent implements OnInit {
     if (this._campaign) {
       return this.campaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
     }
+  }
+
+
+  private initializeNewBatch() {
+    this.newBatch = {
+      campaign: this._campaign,
+      size: 0,
+      active: true
+    };
   }
 
 
@@ -105,7 +112,88 @@ export class AdminCampaignBatchComponent implements OnInit {
   }
 
 
+  activateSidebar(activate: string) {
 
+    switch (activate) {
+
+      case 'newBatch':
+        this._sidebarValue = {
+          animate_state: 'active',
+          type: 'newBatch',
+          title: 'COMMON.SIDEBAR.NEW_BATCH'
+        };
+        break;
+
+      default:
+        //do nothing...
+    }
+
+  }
+
+
+  onFirstAutoBatch(event: Event) {
+    if (event.target['checked']) {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STARTED');
+      this.firstAutoBatch = true;
+      this.setNuggets();
+    } else {
+      this.setAutoBatch();
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STOPPED');
+    }
+  }
+
+
+  // result won't be typed as batch everytime
+  onSwitchAutoBatch(event: Event) {
+    if (event.target['checked']) {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STARTED');
+    } else {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STOPPED');
+    }
+    this.setAutoBatch();
+  }
+
+
+  OnSwitchNuggets(event: Event) {
+    if (event.target['checked']) {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.NUGGETS_ACTIVATED');
+    } else {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.NUGGETS_DEACTIVATED');
+    }
+    this.setNuggets();
+  }
+
+
+  private setNuggets() {
+    this.campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
+      this._campaign = result;
+      if (this.firstAutoBatch) {
+        this.setAutoBatch();
+      }
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.NUGGETS_ERROR');
+    });
+  }
+
+
+  private setAutoBatch() {
+    this.campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
+      if (result.length === 0) {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.NOT_CREATED');
+      } else {
+        if (result[0] !== 0) {
+          this.noResult = false;
+          this.firstAutoBatch = false;
+          this._stats.batches = result;
+          this._tableBatch = this._stats.batches.map((batch: any) => {
+            return this.generateTableBatch(batch);
+          });
+        }
+      }
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+  }
 
 
   private getBatches() {
@@ -123,6 +211,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       }
 
       if (this._stats.batches.length > 0) {
+        this.noResult = false;
         this._stats.batches.forEach( (batch: any) => {
           this._tableBatch.push(this.generateTableBatch(batch));
         });
@@ -133,45 +222,10 @@ export class AdminCampaignBatchComponent implements OnInit {
     });
   }
 
-  // result won't be typed as batch everytime
-  onSwitchAutoBatch(event: Event) {
-    if (event.target['checked']) {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STARTED');
-
-    } else {
-      event.target['checked'] = true;
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.ALREADY_STARTED');
-    }
-  }
 
 
-  OnSwitchNuggets() {
-    this.campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
-      this._campaign = result;
-      this.startAutoBatch();
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.NUGGETS_ERROR');
-    });
-  }
 
 
-  private startAutoBatch() {
-    this.campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
-      if (result.length === 0) {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.NOT_CREATED');
-      } else {
-        if (result[0] !== 0) {
-          this.noResult = false;
-          this._stats.batches = result;
-          this._tableBatch = this._stats.batches.map((batch: any) => {
-            return this.generateTableBatch(batch);
-          });
-        }
-      }
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
-  }
 
 
   private getStatus(step: number, status: number): string {
@@ -237,11 +291,11 @@ export class AdminCampaignBatchComponent implements OnInit {
     return computedDate;
   }
 
-  public sendTestEmails(batchStatus: number) {
+ /* public sendTestEmails(batchStatus: number) {
     this.campaignService.sendTestEmails(this._campaign._id, batchStatus).pipe(first()).subscribe((_: any) => {
       console.log('OK');
     });
-  }
+  }*/
 
   public removeOK(batch: Batch) {
     if (batch.status === 0) {
@@ -286,7 +340,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     const secondTime = ('0' + secondJSdate.getHours()).slice(-2) + ':' + ('0' + secondJSdate.getMinutes()).slice(-2);
 
     const thirdJSdate = new Date(batch.thirdMail);
-    const thirdTime = ('0' + thirdJSdate.getHours()).slice(-2) + ':' + ('0' + thirdJSdate.getMinutes()).slice(-2)
+    const thirdTime = ('0' + thirdJSdate.getHours()).slice(-2) + ':' + ('0' + thirdJSdate.getMinutes()).slice(-2);
 
     const workflowname = this.getWorkflowName(this._getBatchIndex(batch._id));
 
@@ -524,6 +578,14 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   tableBatch(index: number) {
     return this._tableBatch[index];
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
 }

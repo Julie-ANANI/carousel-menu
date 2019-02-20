@@ -293,12 +293,14 @@ export const COMMON = {
     'ADD_PRO': 'Add Professional',
     'EDIT_PROFESSIONAL': 'Edit Professional',
     'ADD_TAGS': 'Add Tags',
+    'NEW_BATCH': 'New Batch Manually'
   },
 
   'MODAL': {
     'TITLE_DELETE': 'Delete Board',
     'TITLE_CONFIRMATION': 'Confirmation Board',
     'TITLE_IMPORT': 'Import Board',
+    'TITLE_BATCH': 'Batch Board'
   },
 
   'SELECT_LABELS': {
