@@ -10,6 +10,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 export class AdminCommunityComponent implements OnInit {
 
   //private _tabs: Array<string> = ['members', 'lab'];
+  //private _tabs: Array<string> = ['members', 'emailanswers'];
   private _tabs: Array<string> = ['members'];
 
   constructor(private translateTitleService: TranslateTitleService) {}

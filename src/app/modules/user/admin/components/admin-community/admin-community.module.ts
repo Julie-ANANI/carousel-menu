@@ -8,6 +8,7 @@ import { SharedProsListModule } from '../../../../shared/components/shared-pros-
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminCommunityComponent } from "./admin-community.component";
 import { AdminCommunityMembersModule } from "./admin-community-members/admin-community-members.module";
+import { AdminCommunityResponsesModule } from "./admin-community-answers/admin-community-responses.module";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { AdminCommunityMembersModule } from "./admin-community-members/admin-com
     TranslateModule.forChild(),
     PipeModule,
     RouterModule,
-    AdminCommunityMembersModule
+    AdminCommunityMembersModule,
+    AdminCommunityResponsesModule
   ],
   declarations: [
     AdminCommunityComponent

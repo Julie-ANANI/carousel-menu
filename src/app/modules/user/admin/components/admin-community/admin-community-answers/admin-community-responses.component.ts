@@ -3,11 +3,11 @@ import { SidebarInterface } from "../../../../../sidebar/interfaces/sidebar-inte
 
 @Component({
   selector: 'app-admin-community-members',
-  templateUrl: './admin-community-members.component.html',
-  styleUrls: ['./admin-community-members.component.scss']
+  templateUrl: './admin-community-responses.component.html',
+  styleUrls: ['./admin-community-responses.component.scss']
 })
 
-export class AdminCommunityMembersComponent implements OnInit {
+export class AdminCommunityResponsesComponent implements OnInit {
 
   private _config: any;
 
@@ -15,10 +15,10 @@ export class AdminCommunityMembersComponent implements OnInit {
 
   ngOnInit() {
     this._config = {
-      fields: 'language firstName lastName company country jobTitle campaigns tags messages',
+      fields: '',
       limit: '10',
       offset: '0',
-      search: '{"ambassador.is":true}',
+      search: '{"status":"REJECTED_GMAIL"}',
       sort: '{"created":-1}'
     };
   }
@@ -27,7 +27,7 @@ export class AdminCommunityMembersComponent implements OnInit {
     return this._config;
   }
 
-  public receiveResult(event: Event) {
+  public launchSearch(event: Event) {
     console.log("GO GO GO!");
     console.log(event);
   }
@@ -39,6 +39,7 @@ export class AdminCommunityMembersComponent implements OnInit {
       title: 'Smart search',
       type: 'professional'
     };
+    //title: 'COMMON.EDIT_PROFESSIONAL',
   }
 
   get sidebarValue(): SidebarInterface {
