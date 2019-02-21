@@ -12,6 +12,12 @@ export class SharedPresetQuestionComponent {
 
   @Input() set question(value: Question) {
     this._question = value;
+    this._isTaggedQuestion = this.presetService.isTaggedQuestion(value.identifier);
+    if (this._question.identifier && this._isTaggedQuestion) {
+      this._customId = this.presetService.generateId();
+    } else {
+      this._customId = this._question.identifier;
+    }
   }
 
   @Input() set questionIndex(value: number) {
@@ -25,6 +31,9 @@ export class SharedPresetQuestionComponent {
   private _question: Question;
   private _questionIndex: number;
   private _sectionIndex: number;
+
+  private _customId: string;
+  private _isTaggedQuestion: boolean;
   public editMode = false;
 
   private _language: 'en' | 'fr' = 'en';
@@ -87,10 +96,22 @@ export class SharedPresetQuestionComponent {
     this.presetService.moveQuestion(this._questionIndex, this._sectionIndex, 1);
   }
 
+  public getNonUsedQuestions() {
+    return this.presetService.getNonUsedQuestions();
+  }
+
+  public changeIdentifier(identifier: string) {
+    this._isTaggedQuestion = this.presetService.isTaggedQuestion(identifier);
+    if (this._isTaggedQuestion) {
+      this._question.controlType = this.presetService.getQuestionType(identifier);
+    }
+  }
+
   get language() { return this._language; }
   set language(value: 'en' | 'fr') { this._language = value; }
   get lang() { return this.translateService.currentLang; }
 
   get question(): Question { return this._question; }
-
+  get customId(): string { return this._customId; }
+  get isTaggedQuestion(): boolean { return this._isTaggedQuestion; }
 }

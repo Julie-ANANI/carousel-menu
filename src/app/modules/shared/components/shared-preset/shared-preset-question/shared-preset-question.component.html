@@ -7,20 +7,31 @@
       <i class="fa fa-caret-down" (click)="down($event)"></i>
     </div>
 
+    <select *ngIf="editMode && !isTaggedQuestion" class="form-select" [(ngModel)]="question.controlType">
+      <option value="radio">{{ "PRESETS.QUESTION.TYPE.radio" | translate }}</option>
+      <option value="checkbox">{{ "PRESETS.QUESTION.TYPE.checkbox" | translate }}</option>
+      <option value="textarea">{{ "PRESETS.QUESTION.TYPE.textarea" | translate }}</option>
+      <option value="list">{{ "PRESETS.QUESTION.TYPE.list" | translate }}</option>
+      <option value="clearbit">{{ "PRESETS.QUESTION.TYPE.clearbit" | translate }}</option>
+      <option value="scale">{{ "PRESETS.QUESTION.TYPE.scale" | translate }}</option>
+      <option value="stars">{{ "PRESETS.QUESTION.TYPE.stars" | translate }}</option>
+      <option value="toggle">{{ "PRESETS.QUESTION.TYPE.toggle" | translate }}</option>
+    </select>
+
+    <select *ngIf="!editMode || isTaggedQuestion" class="form-select" disabled>
+      <option [innerHtml]="'PRESETS.QUESTION.TYPE.' + question.controlType" translate></option>
+    </select>
+
     <ng-container [ngSwitch]="editMode">
-      <select *ngSwitchCase="true" class="form-select" [(ngModel)]="question.controlType">
-        <option value="radio">{{ "PRESETS.QUESTION.TYPE.radio" | translate }}</option>
-        <option value="checkbox">{{ "PRESETS.QUESTION.TYPE.checkbox" | translate }}</option>
-        <option value="textarea">{{ "PRESETS.QUESTION.TYPE.textarea" | translate }}</option>
-        <option value="list">{{ "PRESETS.QUESTION.TYPE.list" | translate }}</option>
-        <option value="clearbit">{{ "PRESETS.QUESTION.TYPE.clearbit" | translate }}</option>
-        <option value="scale">{{ "PRESETS.QUESTION.TYPE.scale" | translate }}</option>
-        <option value="stars">{{ "PRESETS.QUESTION.TYPE.stars" | translate }}</option>
-        <option value="toggle">{{ "PRESETS.QUESTION.TYPE.toggle" | translate }}</option>
+      <select *ngSwitchCase="true" class="form-select" (ngModelChange)="changeIdentifier($event)" [(ngModel)]="question.identifier">
+        <option *ngFor="let question of getNonUsedQuestions()" [value]="question">#{{question}}</option>
+        <option [value]="customId">custom</option>
       </select>
-      <select *ngSwitchDefault class="form-select" disabled>
-        <option [innerHtml]="'PRESETS.QUESTION.TYPE.' + question.controlType" translate></option>
-      </select>
+      <ng-container *ngSwitchDefault>
+        <div *ngIf="isTaggedQuestion" class="tag-wrapper" >
+          #{{question.identifier}}
+        </div>
+      </ng-container>
     </ng-container>
 
     <p>{{question.label | multiling:lang}}</p>
@@ -84,7 +95,7 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="form-subtitle" translate>translate</label>
+          <label class="form-label" for="form-subtitle" translate>PRESETS.QUESTION.EDIT.SUBTITLE</label>
           <input
             type="text"
             class="form-input"

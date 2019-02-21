@@ -3,13 +3,13 @@ import { Preset } from '../../../../../models/preset';
 import { Question, QuestionType } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 
-function generateId(): string {
-  // Generate a random id for custom questions
-  return Math.random().toString(36).substring(2);
-}
-
 @Injectable()
 export class PresetService {
+
+  public generateId(): string {
+    // Generate a random id for custom questions
+    return Math.random().toString(36).substring(2);
+  }
 
   private taggedQuestionsTypes: {[identifier: string]: QuestionType} = {
     context: 'radio',
@@ -29,6 +29,10 @@ export class PresetService {
 
   public getQuestionType(identifier: string): QuestionType {
     return this.taggedQuestionsTypes[identifier];
+  }
+
+  public isTaggedQuestion(identifier: string): boolean {
+    return Object.keys(this.taggedQuestionsTypes).includes(identifier);
   }
 
   public getNonUsedQuestions(): Array<string> {
@@ -73,7 +77,7 @@ export class PresetService {
           en: '',
           fr: ''
         },
-        identifier: generateId(),
+        identifier: this.generateId(),
         controlType: 'radio',
         canComment: true,
         options: []
@@ -115,9 +119,9 @@ export class PresetService {
 
   public cloneQuestion(questionIndex: number, sectionIndex: number) {
     const questions: Array<Question> = this._preset.sections[sectionIndex].questions;
-    const question: Question = questions[questionIndex];
+    const question: Question = {...questions[questionIndex]};
     /* mutate question to avoid getting 2 questions with the same id */
-    question.identifier = generateId();
+    question.identifier = this.generateId();
     questions.push(question);
   }
 
