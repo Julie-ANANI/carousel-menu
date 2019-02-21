@@ -9,13 +9,14 @@ export class PresetService {
   private taggedQuestionsTypes: {[identifier: string]: QuestionType} = {
     context: 'radio',
     marketNeed: 'radio',
-    pertinence: 'radio',
-    marketDifferenciation: 'radio',
+    relevance: 'radio',
+    differenciation: 'radio',
     strenghts: 'textarea',
-    weaknesses: 'textarea',
+    objections: 'textarea',
     applications: 'list',
-    interests: 'checkbox',
-    competitors: 'textarea'
+    leads: 'checkbox',
+    competition: 'textarea',
+    benefits: 'stars'
   };
 
   private _preset: Preset;
