@@ -6,11 +6,6 @@ import { Section } from '../../../../../models/section';
 @Injectable()
 export class PresetService {
 
-  public generateId(): string {
-    // Generate a random id for custom questions
-    return Math.random().toString(36).substring(2);
-  }
-
   private taggedQuestionsTypes: {[identifier: string]: QuestionType} = {
     context: 'radio',
     marketNeed: 'radio',
@@ -26,6 +21,11 @@ export class PresetService {
   private _preset: Preset;
 
   constructor() {}
+
+  public generateId(): string {
+    // Generate a random id for custom questions
+    return Math.random().toString(36).substring(2);
+  }
 
   public getQuestionType(identifier: string): QuestionType {
     return this.taggedQuestionsTypes[identifier];
@@ -119,7 +119,7 @@ export class PresetService {
 
   public cloneQuestion(questionIndex: number, sectionIndex: number) {
     const questions: Array<Question> = this._preset.sections[sectionIndex].questions;
-    const question: Question = {...questions[questionIndex]};
+    const question: Question = { ...questions[questionIndex] };
     /* mutate question to avoid getting 2 questions with the same id */
     question.identifier = this.generateId();
     questions.push(question);
