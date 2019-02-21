@@ -36,7 +36,11 @@ export class PresetService {
   }
 
   public getNonUsedQuestions(): Array<string> {
-    return Object.keys(this.taggedQuestionsTypes);
+    const identifiersMap = this._preset.sections.reduce((accS, section) => {
+      const subIdentifiersMap = section.questions.reduce((accQ, question) => Object.assign(accQ, {[question.identifier]: 1}), {});
+      return Object.assign(accS, subIdentifiersMap);
+    }, {});
+    return Object.keys(this.taggedQuestionsTypes).filter((tag) => !identifiersMap[tag]);
   }
 
   public addSection() {

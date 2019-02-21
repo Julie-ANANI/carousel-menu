@@ -24,6 +24,7 @@
 
     <ng-container [ngSwitch]="editMode">
       <select *ngSwitchCase="true" class="form-select" (ngModelChange)="changeIdentifier($event)" [(ngModel)]="question.identifier">
+        <option *ngIf="isTaggedQuestion" [value]="question.identifier">#{{question.identifier}}</option>
         <option *ngFor="let question of getNonUsedQuestions()" [value]="question">#{{question}}</option>
         <option [value]="customId">custom</option>
       </select>
