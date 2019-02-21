@@ -143,7 +143,8 @@ export const ERROR = {
       'STOPPED': 'The batch has been stopped successfully.',
       'ALREADY_STARTED': 'The batch has been already launched. It can not be undone.',
       'DELETED': 'The batch has been deleted successfully.',
-      'FREEZED': 'The batch has been frozen successfully.'
+      'FREEZED': 'The batch has been frozen successfully.',
+      'UPDATED': 'The batch has been updated successfully.',
     }
   },
 

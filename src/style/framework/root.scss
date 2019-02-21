@@ -82,3 +82,20 @@ a, a:focus, a:hover, a:active, a.active {
 .float-right {
   float: right !important;
 }
+
+
+/*
+    importing the files...
+ */
+@import "animation";
+@import "buttons";
+@import "container";
+@import "common";
+@import "tab";
+@import "labels";
+@import "headers";
+@import "modal";
+@import "texts";
+@import "form";
+@import "icons";
+@import "card";

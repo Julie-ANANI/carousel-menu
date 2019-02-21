@@ -143,7 +143,8 @@ export const ERROR = {
       'STOPPED': 'Le batch a été arrêté avec succès.',
       'ALREADY_STARTED': 'Le batch a déjà été lancé. Il ne peut pas être défait.',
       'DELETED': 'Le batch a été supprimé avec succès.',
-      'FREEZED': 'Le batch a été congelé avec succès.'
+      'FREEZED': 'Le batch a été congelé avec succès.',
+      'UPDATED': 'Le batch a été mis à jour avec succès.',
     }
   },
 

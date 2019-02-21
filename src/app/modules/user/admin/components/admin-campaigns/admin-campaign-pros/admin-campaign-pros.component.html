@@ -73,7 +73,9 @@
     </div>
 
     <!-- section pros list -->
-    <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
+    <div class="section-light-container remove-top">
+      <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
+    </div>
 
   </div>
 

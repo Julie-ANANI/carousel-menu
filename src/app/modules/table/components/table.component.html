@@ -3,7 +3,7 @@
 
 
     <!-- Info row -->
-    <div class="info-wrapper">
+    <div *ngIf="!isNoTitle || isFiltrable" class="info-wrapper">
 
       <!-- Number of result and title -->
       <h1 *ngIf="!isNoTitle"  class="main-heading">{{ total }} {{ title | translate }}</h1>
@@ -237,7 +237,7 @@
       <!-- /Table -->
 
       <!-- Pagination -->
-      <div class="pagination-wrapper">
+      <div *ngIf="!isNotPaginable" class="pagination-wrapper">
         <app-pagination
           *ngIf="!isNotPaginable"
           [configValue]="paginationConfig"

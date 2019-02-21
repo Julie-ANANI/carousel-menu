@@ -23,68 +23,54 @@
     </div>
 
     <!-- date -->
-    <div class="form-group">
+    <div *ngIf="!hideInput" class="form-group">
       <label class="form-label" for="batch-form-date">{{ 'COMMON.LABEL.DATE' | translate }}</label>
       <input
         class="form-input"
         formControlName="date"
         id="batch-form-date"
         type="date"
-        (change)="onKeyboardPress($event)">
+        (change)="onKeyboardPress($event)"
+        [value]="mailDate | date:'yyyy-MM-dd'">
       <div *ngIf="isNewBatch" class="form-error">
         <span>{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</span>
       </div>
     </div>
 
     <!-- time -->
-    <div class="form-group">
+    <div *ngIf="!hideInput" class="form-group">
       <label class="form-label" for="batch-form-time">{{ 'COMMON.LABEL.TIME' | translate }}</label>
       <input
         class="form-input"
         formControlName="time"
         id="batch-form-time"
         type="time"
-        (change)="onKeyboardPress($event)">
+        (change)="onKeyboardPress($event)"
+        [value]="mailTime">
       <div *ngIf="isNewBatch" class="form-error">
         <span>{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</span>
       </div>
     </div>
 
+    <!-- content en -->
+    <div *ngIf="isEditBatch" class="form-group">
+      <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.EN' | translate }}</label>
+      <app-text-zone
+        [elementId]="'en'"
+        [readonly]="true"
+        [data]="contentCurrent.en">
+      </app-text-zone>
+    </div>
+
+    <!-- content fr -->
+    <div *ngIf="isEditBatch" class="form-group">
+      <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.FR' | translate }}</label>
+      <app-text-zone
+        [elementId]="'fr'"
+        [readonly]="true"
+        [data]="contentCurrent.fr">
+      </app-text-zone>
+    </div>
 
   </form>
-
 </div>
-
-<!--
-<div *ngIf="this.row">
-    <form [hidden]="this.formHidden" novalidate [formGroup]="formData" >
-      <div class="form-group">
-        <button (click)="onSubmit()" class="btn btn-primary">
-          {{'COMMON.SAVE' | translate}}
-        </button>
-      </div>
-      <div class="form-group">
-        <label class="form-label"> DATE </label>
-        <input class="form-input" id="dateMail" name="dateMail" formControlName="dateMail" type="date"
-               [value]="this.getdateMail | date:'yyyy-MM-dd'">
-      </div>
-      <div class="form-group">
-        <label class="form-label"> TIME </label>
-        <input class="form-input" id="timeMail" name="timeMail" formControlName="timeMail" type="time"
-        [value]="this.gettimeMail">
-      </div>
-    </form>
-
-  &lt;!&ndash;<div *ngIf="thereIsContent"> &ndash;&gt;
-  <label class="text-ellipsis"> EN </label>
-  <app-text-zone [elementId]="'en'"
-                 [readonly]="true"
-                 [data]="this.content.en"
-  ></app-text-zone>
-  <label class="text-ellipsis"> FR </label>
-  <app-text-zone [elementId]="'fr'"
-                 [readonly]="true"
-                 [data]="this.content.fr"
-  ></app-text-zone>
-</div>
--->

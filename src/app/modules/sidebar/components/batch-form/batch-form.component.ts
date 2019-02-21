@@ -10,58 +10,53 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 export class BatchFormComponent {
 
+  @Input() set currentRow(value: any) {
+    this._rowCurrent = value;
+  }
+
+  @Input() set content(value: any) {
+    this._contentCurrent = value;
+  }
+
   @Input() set sidebarState(value: string) {
-    if (value === undefined || 'active') {
+    if (value === undefined || value === 'active') {
       this.buildForm();
-      this.activeSaveButton = false;
-      this.errorPros = false;
+      this._activeSaveButton = false;
+      this._errorPros = false;
+      this.patchData();
     }
   }
 
   @Input() set type(value: string) {
-    this.actionType = value;
-    this.loadTypes();
+    this._actionType = value;
+    this.loadTemplate();
   }
 
   @Output() batchOutput = new EventEmitter <any>();
 
-  // @Input() set rowBatch(value: any) {
-  //   this.load(value);
-  // }
-  //
-  // @Input() set content(content: {}) {
-  //   this._content = content;
-  // }
-  //
-  // public formData: FormGroup;
-  // private _row: any;
-  // private _formHidden = false;
-  //
-  // @Output() batchChange = new EventEmitter <any>();
-  //
-  // private _content = {};
-  // private _dateMail: Date;
-  // private _timeMail = '';
-
-  actionType = '';
+  private _actionType = '';
 
   formData: FormGroup;
 
-  activeSaveButton = false;
+  private _activeSaveButton = false;
 
-  isNewBatch = false;
+  private _isNewBatch = false;
 
-  errorPros = false;
+  private _isEditBatch = false;
+
+  private _errorPros = false;
+
+  private _rowCurrent: any = {};
+
+  private _contentCurrent: any = {};
+
+  private _mailDate: Date;
+
+  private _mailTime: '';
+
+  private _hideInput = false;
 
   constructor(private formBuilder: FormBuilder) { }
-
-  /*ngOnInit(): void {
-    this.formData = this._formBuilder.group({
-      dateMail: ['', [Validators.required]],
-      timeMail: ['', [Validators.required]],
-    });
-  }*/
-
 
   private buildForm() {
     this.formData = this.formBuilder.group( {
@@ -74,18 +69,23 @@ export class BatchFormComponent {
 
 
   private reinitialiseVariables() {
-    this.isNewBatch = false;
-    this.activeSaveButton = false;
+    this._isNewBatch = false;
+    this._isEditBatch = false;
+    this._activeSaveButton = false;
   }
 
 
-  private loadTypes() {
+  private loadTemplate() {
     this.reinitialiseVariables();
 
-    switch (this.actionType) {
+    switch (this._actionType) {
 
       case 'newBatch':
-        this.isNewBatch = true;
+        this._isNewBatch = true;
+        break;
+
+      case 'editBatch':
+        this._isEditBatch = true;
         break;
 
       default:
@@ -95,20 +95,44 @@ export class BatchFormComponent {
 
   }
 
+
+  private patchData() {
+
+    if (this._rowCurrent.Date) {
+      this._mailDate = new Date(this._rowCurrent.Date);
+      this._mailTime = this._rowCurrent.Time;
+      this.formData.get('date').setValue(this._mailDate);
+      this.formData.get('time').setValue(this._mailTime);
+    }
+
+    if (this._rowCurrent.Step === '04 - Thanks') {
+      this._hideInput = true;
+    } else {
+      this._hideInput = false;
+    }
+
+  }
+
+
+
   onSave() {
 
-    switch (this.actionType) {
+    switch (this._actionType) {
 
       case 'newBatch':
         this.sendNewBatch();
         break;
 
+      case 'editBatch':
+        this.updateBatch();
+        break;
+
       default:
       // do nothing...
 
     }
 
-    this.activeSaveButton = false;
+    this._activeSaveButton = false;
 
   }
 
@@ -120,8 +144,8 @@ export class BatchFormComponent {
     this.formData.get('send').setValue(send);
 
     if (pros <= 0) {
-      this.errorPros = true;
-      this.activeSaveButton = false;
+      this._errorPros = true;
+      this._activeSaveButton = false;
     } else {
       this.batchOutput.emit(this.formData);
     }
@@ -129,46 +153,55 @@ export class BatchFormComponent {
   }
 
 
+  private updateBatch() {
+    this.batchOutput.emit(this.formData);
+  }
+
+
   onKeyboardPress(event: Event) {
     event.preventDefault();
-    this.errorPros = false;
-    this.activeSaveButton = true;
+    this._errorPros = false;
+    this._activeSaveButton = true;
   }
 
-
-
-  onSubmit() {
-    /*if (this.formData.valid) {
-      this.formData.value.dateMail = new Date(this.formData.value.dateMail);
-      this._dateMail = this.formData.value.dateMail;
-      this._timeMail = this.formData.value.timeMail;
-      this.batchChange.emit({date: this._dateMail, time: this._timeMail});
-    }*/
+  get actionType(): string {
+    return this._actionType;
   }
 
-  /*load(row: any) {
-    this._row = row;
-    if (row.Date) {
-      this._dateMail = new Date(row.Date);
-      this._timeMail = row.Time;
-      this.formData.patchValue({dateMail: this._dateMail, timeMail: this._timeMail});
-    }
-    this.thanks();
-  }*/
+  get activeSaveButton(): boolean {
+    return this._activeSaveButton;
+  }
 
-  /*public thanks() {
-    if (this._row.Step === '04 - Thanks') {
-      this._formHidden = true;
-    } else {
-      this._formHidden = false;
-    }
-  }*/
+  get isNewBatch(): boolean {
+    return this._isNewBatch;
+  }
 
+  get isEditBatch(): boolean {
+    return this._isEditBatch;
+  }
 
-  // get getdateMail() { return this._dateMail; }
-  // get formHidden() { return this._formHidden; }
-  // get gettimeMail() {return this._timeMail; }
-  // get content() { return this._content; }
-  // get row() { return this._row; }
+  get errorPros(): boolean {
+    return this._errorPros;
+  }
+
+  get rowCurrent(): any {
+    return this._rowCurrent;
+  }
+
+  get contentCurrent(): any {
+    return this._contentCurrent;
+  }
+
+  get mailDate(): Date {
+    return this._mailDate;
+  }
+
+  get mailTime(): "" {
+    return this._mailTime;
+  }
+
+  get hideInput(): boolean {
+    return this._hideInput;
+  }
 
 }

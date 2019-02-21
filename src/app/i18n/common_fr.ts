@@ -119,7 +119,8 @@ export const COMMON = {
     'PROS_CONTACT': 'Nombre de pros',
     'DATE': 'Date',
     'TIME': 'Le temps',
-    'STARTED': 'Commencé'
+    'STARTED': 'Commencé',
+    'CONTENT': 'Contenu'
   },
 
   'PLACEHOLDER': {
@@ -303,7 +304,8 @@ export const COMMON = {
     'ADD_PRO': 'Ajouter un professionnel',
     'EDIT_PROFESSIONAL': 'Modifier Professionnel',
     'ADD_TAGS': 'Ajouter des tags',
-    'NEW_BATCH': 'Nouveau batch manuellement'
+    'NEW_BATCH': 'Nouveau batch manuellement',
+    'EDIT_BATCH': 'Modifier le batch'
   },
 
   'MODAL': {

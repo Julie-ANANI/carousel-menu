@@ -12,19 +12,23 @@
   transition: all .35s ease-in-out;
   padding: 0.6rem;
   margin-bottom: 1.25rem;
+}
 
-  .card-header {
-    padding: 0.5rem 0.5rem 0;
+.card .card-header, .card .card-body, .card .card-footer {
+  padding: 0.5rem 0.5rem 0;
+}
 
-    .card-title {
-      font-size: 1rem;
-      color: $text-primary;
-      font-weight: 500;
-      line-height: 1.5;
-    }
+.card .card-header .card-title {
+  font-size: 1rem;
+  color: $text-primary;
+  font-weight: 500;
+  line-height: 1.5;
+}
 
-  }
-
+.card .card-header .card-subtitle {
+  font-size: 0.875rem;
+  color: $meta;
+  font-weight: 600;
 }
 
 .card .card-header:last-child, .card .card-body:last-child, .card .card-footer:last-child {
@@ -32,6 +36,12 @@
 }
 
 .card:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
+.card:hover {
+  box-shadow: $box-shadow-hover;
+}
+
+
+/********************************** Media ***************************************/
