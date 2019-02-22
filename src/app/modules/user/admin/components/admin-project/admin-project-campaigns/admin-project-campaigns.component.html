@@ -7,11 +7,11 @@
     </div>
 
     <!-- section no campaign -->
-    <div *ngIf="noResult" class="section-no-campaign">
-      <app-message-space
-        [messageA]="'CAMPAIGNS.BOT_TEXT.A'"
-        [messageB]="'CAMPAIGNS.BOT_TEXT.B'"
-        [widthMax]="'354px'">
+    <div *ngIf="noResult" class="section-light-container remove-bottom">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
+        <br>
+        {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
       </app-message-space>
     </div>
 

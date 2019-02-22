@@ -1,0 +1,101 @@
+/*
+    This stylesheet contains all the styles for the base html tags
+    for everywhere on the framework.
+ */
+
+@import "variables";
+
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $text-primary;
+  background: #ffffff;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+}
+
+
+/*
+    removing the focus default style.
+ */
+
+*:focus {
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+
+/*
+    ul and li default style
+ */
+
+ul {
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+}
+
+
+/*
+    paragraph default style
+ */
+
+p {
+  margin: 0;
+  padding: 0 0 0.5rem 0;
+}
+
+
+/*
+    a default style
+ */
+
+a, a:focus, a:hover, a:active, a.active {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/*
+    float right
+ */
+.float-right {
+  float: right !important;
+}
+
+
+/*
+    importing the files...
+ */
+@import "animation";
+@import "buttons";
+@import "container";
+@import "common";
+@import "tab";
+@import "labels";
+@import "headers";
+@import "modal";
+@import "texts";
+@import "form";
+@import "icons";
+@import "card";

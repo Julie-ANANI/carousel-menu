@@ -3,7 +3,7 @@
 
     <!-- save button -->
     <div class="save-button">
-      <button class="btn btn-primary" type="submit" [disabled]="!activeSaveButton">{{ 'COMMON.SAVE' | translate }}</button>
+      <button class="btn btn-primary" type="submit">{{ 'COMMON.SAVE' | translate }}</button>
     </div>
 
     <!-- campaign name -->
@@ -14,8 +14,7 @@
         formControlName="title"
         id="campaign-form-title"
         type="text"
-        [placeholder]="'COMMON.CAMPAIGN.PLACEHOLDER' | translate"
-        (change)="onKeyboardPress($event)">
+        [placeholder]="'COMMON.CAMPAIGN.PLACEHOLDER' | translate">
     </div>
 
   </form>

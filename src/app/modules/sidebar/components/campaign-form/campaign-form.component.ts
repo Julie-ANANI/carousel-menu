@@ -10,22 +10,21 @@ import { Campaign } from '../../../../models/campaign';
 
 export class CampaignFormComponent {
 
-  @Input() set sidebarState(value: string) {
-    if (value === undefined || 'active') {
-      this.buildForm();
-      this._campaignForm.reset();
-      this._activeSaveButton = false;
-      this.patchValue();
-    }
-  }
-
   @Input() set campaign(value: Campaign) {
     this._innovationCampaign = value;
   }
 
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || value === 'active') {
+      this.buildForm();
+      this._campaignForm.reset();
+      this.patchValue();
+    }
+  }
+
   @Input() set type(value: string) {
     this._actionType = value;
-    this.loadTypes();
+    this.loadTemplate();
   }
 
   @Output() campaignOutput = new EventEmitter<FormGroup>();
@@ -38,8 +37,6 @@ export class CampaignFormComponent {
 
   private _isEditName = false;
 
-  private _activeSaveButton = false;
-
   constructor(private formBuilder: FormBuilder) { }
 
   private buildForm() {
@@ -51,17 +48,15 @@ export class CampaignFormComponent {
 
   private reinitialiseVariables() {
     this._isEditName = false;
-    this._activeSaveButton = false;
   }
 
 
-  private loadTypes() {
+  private loadTemplate() {
     this.reinitialiseVariables();
 
     switch (this._actionType) {
 
       case 'editName':
-        this.patchValue();
         this._isEditName = true;
         break;
 
@@ -69,7 +64,6 @@ export class CampaignFormComponent {
         // do nothing...
 
     }
-
 
   }
 
@@ -93,16 +87,7 @@ export class CampaignFormComponent {
 
     }
 
-    this._activeSaveButton = false;
-
   }
-
-
-  onKeyboardPress(event: Event) {
-    event.preventDefault();
-    this._activeSaveButton = true;
-  }
-
 
   get campaignForm(): FormGroup {
     return this._campaignForm;
@@ -120,8 +105,5 @@ export class CampaignFormComponent {
     return this._isEditName;
   }
 
-  get activeSaveButton(): boolean {
-    return this._activeSaveButton;
-  }
 
 }

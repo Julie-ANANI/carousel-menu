@@ -1,11 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
+import { Subject}  from 'rxjs';
 
 @Injectable()
 export class CampaignFrontService {
 
+  campaignSubject = new Subject<Campaign>();
+
   constructor() { }
+
+
+  /***
+   * this function is to called to set the campaign object
+   * so that we can have same object in every child component.
+   * @param campaign
+   */
+  setCampaign(campaign: Campaign) {
+    this.campaignSubject.next(campaign);
+  }
+
+
+  /***
+   * this function is to get the value of set campaign after setting
+   * the campaign object.
+   */
+  getCampaign(): Subject<Campaign> {
+    return this.campaignSubject;
+  }
 
 
   /***

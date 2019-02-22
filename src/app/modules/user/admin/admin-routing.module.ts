@@ -89,17 +89,42 @@ const adminRoutes: Routes = [
       {
         path: 'campaigns',
         children: [
-          { path: '', component: AdminCampaignsComponent, pathMatch: 'full' },
-          { path: 'campaign/:campaignId', component: AdminCampaignComponent, resolve: { campaign : CampaignResolver }, children: [
-            { path: '', redirectTo: 'answers', pathMatch: 'full'},
-            { path: 'quiz', component: AdminCampaignQuizComponent, pathMatch: 'full'},
-            { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full'},
-            { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'},
-            { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },
-            { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full'},
-            { path: 'batch', component: AdminCampaignBatchComponent, pathMatch: 'full'},
-            { path: 'workflows', component: AdminCampaignWorkflowsComponent, pathMatch: 'full'},
-            { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full'}
+          {
+            path: '', component: AdminCampaignsComponent, pathMatch: 'full'
+          },
+          {
+            path: 'campaign/:campaignId',
+            resolve: { campaign : CampaignResolver },
+            runGuardsAndResolvers: 'always',
+            component: AdminCampaignComponent,
+            children: [
+            {
+              path: '', redirectTo: 'answers', pathMatch: 'full'
+            },
+            {
+              path: 'quiz', component: AdminCampaignQuizComponent, pathMatch: 'full'
+            },
+            {
+              path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full'
+            },
+            {
+              path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'
+            },
+            {
+              path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full'
+            },
+            {
+              path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full'
+            },
+            {
+              path: 'batch', component: AdminCampaignBatchComponent, pathMatch: 'full'
+            },
+            {
+              path: 'workflows', component: AdminCampaignWorkflowsComponent, pathMatch: 'full'
+            },
+            {
+              path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full'
+            }
           ]}
         ]
       },

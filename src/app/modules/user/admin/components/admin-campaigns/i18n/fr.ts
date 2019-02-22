@@ -162,6 +162,19 @@ export const CAMPAIGNS = {
       'CONTENT_B': 'Si vous avez déjà importé un workflow, il le remplacera. Voulez-vous vraiment importer ce modèle ?'
     },
     'NOTE': 'Note : Il vous est conseillé de modifier les modèles/emails importés avant de lancer le lot.',
+  },
+
+  'BATCH_PAGE': {
+    'NOTE': 'Note : Il n\'est pas possible de lancer le lot pour cette campagne pour le moment pour la ou les raisons suivantes :',
+    'QUIZ': 'Quiz',
+    'INNOVATION': 'Validation du projet',
+    'EMAILS': 'Aucun email n\'est défini. ',
+    'WORKFLOW': 'Workflow',
+    'BOT': 'Lancer auto-batch et prendre des vacances :)',
+    'AUTO_BATCH_LABEL': 'Démarrage auto-batch',
+    'NUGGETS': 'Nuggets',
+    'TITLE': 'Batch des',
+    'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?'
   }
 
 };
