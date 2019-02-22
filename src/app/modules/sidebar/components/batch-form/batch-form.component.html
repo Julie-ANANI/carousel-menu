@@ -1,10 +1,10 @@
 <div class="column col-xs-12 col-11 col-mx-auto" id="batch-form-component">
-  <form [formGroup]="formData" autocomplete="off">
+  <form [formGroup]="formData" autocomplete="off" (ngSubmit)="onSave()">
 
     <!-- section save -->
     <div class="section-save">
-      <button *ngIf="!isNewBatch" type="submit" class="btn btn-primary" (click)="onSave()">{{ 'COMMON.SAVE' | translate }}</button>
-      <button *ngIf="isNewBatch" type="submit" class="btn btn-primary" (click)="onSave()">{{ 'COMMON.SEND' | translate }}</button>
+      <button *ngIf="!isNewBatch" type="submit" class="btn btn-primary">{{ 'COMMON.SAVE' | translate }}</button>
+      <button *ngIf="isNewBatch" type="submit" class="btn btn-primary">{{ 'COMMON.SEND' | translate }}</button>
     </div>
 
     <!-- no of pros -->

@@ -2,9 +2,17 @@
 
 #admin-campaign-batch-component {
 
-  .bot-group {
-    margin-bottom: 0;
-    padding-bottom: 0.9375rem;
+  .toggle {
+    padding: 0.9375rem 0;
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .nuggets {
+    padding-top: 0;
   }
 
   .cog {
@@ -46,7 +54,7 @@
   }
 
 
-  .loading {
+  .notify-wrapper{
     margin-top: 0.6rem;
   }
 
@@ -81,16 +89,8 @@
         text-align: center;
         padding-top: 0.125rem;
 
-        .icons, .text-success {
-          font-size: 16px;
-        }
-
         .icons {
           margin-left: 0.75rem;
-        }
-
-        .text-success {
-          margin-left: 0.5rem;
         }
 
       }

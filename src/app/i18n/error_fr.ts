@@ -136,6 +136,7 @@ export const ERROR = {
     },
     'BATCH': {
       'NUGGETS_ERROR': 'Nous avons du mal à activer/désactiver les nuggets. Veuillez essayer de recharger la page !',
+      'BATCH_ERROR': 'Nous avons du mal à activer/désactiver les batchs. Veuillez essayer de recharger la page !',
       'NUGGETS_ACTIVATED': 'Les nuggets ont été activées avec succès.',
       'NUGGETS_DEACTIVATED': 'Les nuggets ont été désactivées avec succès.',
       'NOT_CREATED': 'Aucun batch est créé.',

@@ -90,8 +90,8 @@ export class AdminCampaignProsComponent implements OnInit {
 
   importPros(value: boolean) {
     if (value) {
-      this.professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id, this._originCampaign[0].innovation.toString(), this._campaign.innovation._id).pipe(first())
-        .subscribe((answer: any) => {
+      this.professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id, this._originCampaign[0].innovation.toString(), this._campaign.innovation._id)
+        .pipe(first()).subscribe((answer: any) => {
           const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
           this.translateNotificationsService.success('ERROR.SUCCESS', message);
         }, () => {
@@ -144,7 +144,6 @@ export class AdminCampaignProsComponent implements OnInit {
 
   public selectedProsEvent(event: Event) {
     this._contextSelectedPros = event['pros'];
-    console.log(this._contextSelectedPros);
   }
 
 
@@ -176,7 +175,6 @@ export class AdminCampaignProsComponent implements OnInit {
     });
 
   }
-
 
   set config(value: any) {
     this._config = value;

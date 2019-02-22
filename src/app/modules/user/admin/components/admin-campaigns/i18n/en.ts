@@ -172,9 +172,10 @@ export const CAMPAIGNS = {
     'WORKFLOW': 'Workflow',
     'BOT': 'Launch auto-batch and take a holiday :)',
     'AUTO_BATCH_LABEL': 'Auto-batch started',
-    'NUGGETS': 'Nuggets activated',
+    'NUGGETS': 'Nuggets',
     'TITLE': 'Batch for',
-    'MODAL_DELETE_CONTENT': 'Do you really want to delete this batch?'
+    'MODAL_DELETE_CONTENT': 'Do you really want to delete this batch?',
+    'CREATING_BATCH': 'We are in progress of creating the batch for this campaign. Please be patient!',
   }
 
 };

@@ -136,6 +136,7 @@ export const ERROR = {
     },
     'BATCH': {
       'NUGGETS_ERROR': 'We are having trouble while activating/deactivating the nuggets. Please try to reload the page!',
+      'BATCH_ERROR': 'We are having trouble while activating/deactivating the batch. Please try to reload the page!',
       'NUGGETS_ACTIVATED': 'The nuggets have been activated successfully.',
       'NUGGETS_DEACTIVATED': 'The nuggets have been deactivated successfully.',
       'NOT_CREATED': 'No batch is created.',
