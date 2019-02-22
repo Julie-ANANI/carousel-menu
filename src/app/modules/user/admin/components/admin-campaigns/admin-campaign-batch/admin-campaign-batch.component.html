@@ -72,19 +72,14 @@
       <app-message-space [widthMax]="'354px'">
         {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
 
-        <div *ngIf="batchAlreadyActivated === 'false'" class="form-group bot-group">
+        <div class="form-group bot-group">
           <label class="form-switch" for="auto-batch">
             <input type="checkbox" id="auto-batch" [disabled]="!autoBatchStatus" (change)="onFirstAutoBatch($event)" [ngModel]="campaign?.autoBatch">
             <i class="form-icon"></i>
           </label>
         </div>
 
-        <div *ngIf="batchAlreadyActivated === 'false'"
-             [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
-             class="icons icons-meta cog"
-             (click)="activateSidebar('newBatch')">
-          <i class="fas fa-cog"></i>
-        </div>
+        <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }" class="icons icons-meta cog" (click)="activateSidebar('newBatch')"><i class="fas fa-cog"></i></div>
 
         <div *ngIf="batchAlreadyActivated === 'true'" class="loading loading-lg"></div>
       </app-message-space>
@@ -106,7 +101,7 @@
 
         <div class="form-group">
           <label class="form-switch" for="result-nuggets">
-            <input type="checkbox" id="result-nuggets" (change)="OnSwitchNuggets($event)"  [ngModel]="campaign?.nuggets">
+            <input type="checkbox" id="result-nuggets" (change)="OnSwitchNuggets()"  [ngModel]="campaign?.nuggets">
             <i class="form-icon"></i>{{ 'CAMPAIGNS.BATCH_PAGE.NUGGETS' | translate }}
           </label>
         </div>

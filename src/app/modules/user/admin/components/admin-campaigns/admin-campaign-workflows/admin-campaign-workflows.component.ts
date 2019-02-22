@@ -9,6 +9,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { first } from 'rxjs/operators';
 import { EmailTemplate } from '../../../../../../models/email-template';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-admin-campaign-workflows',
@@ -44,6 +45,8 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     sort: '{ "created" : -1 }'
   };
 
+  ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
               private templatesService: TemplatesService,
@@ -52,6 +55,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
+    console.log(this._campaign);
     this.getAllTemplates();
     this.getAllSignatures();
     this.generateAvailableScenarios();

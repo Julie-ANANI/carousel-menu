@@ -21,7 +21,6 @@ export class BatchFormComponent {
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this.buildForm();
-      this._activeSaveButton = false;
       this._errorPros = false;
       this.patchData();
     }
@@ -37,8 +36,6 @@ export class BatchFormComponent {
   private _actionType = '';
 
   formData: FormGroup;
-
-  private _activeSaveButton = false;
 
   private _isNewBatch = false;
 
@@ -71,7 +68,6 @@ export class BatchFormComponent {
   private reinitialiseVariables() {
     this._isNewBatch = false;
     this._isEditBatch = false;
-    this._activeSaveButton = false;
   }
 
 
@@ -132,8 +128,6 @@ export class BatchFormComponent {
 
     }
 
-    this._activeSaveButton = false;
-
   }
 
 
@@ -145,7 +139,6 @@ export class BatchFormComponent {
 
     if (pros <= 0) {
       this._errorPros = true;
-      this._activeSaveButton = false;
     } else {
       this.batchOutput.emit(this.formData);
     }
@@ -161,15 +154,10 @@ export class BatchFormComponent {
   onKeyboardPress(event: Event) {
     event.preventDefault();
     this._errorPros = false;
-    this._activeSaveButton = true;
   }
 
   get actionType(): string {
     return this._actionType;
-  }
-
-  get activeSaveButton(): boolean {
-    return this._activeSaveButton;
   }
 
   get isNewBatch(): boolean {
