@@ -10,7 +10,7 @@
     </div>
 
     <!-- section no project -->
-    <div *ngIf="innovations.length === 0" class="section-no-project">
+    <div *ngIf="noResult" class="section-no-project">
       <app-message-space [widthMax]="'354px'">
         {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
         <br>
@@ -19,7 +19,7 @@
     </div>
 
     <!-- section projects -->
-    <div *ngIf="innovations.length > 0" class="section-projects-list">
+    <div *ngIf="!noResult" class="section-projects-list">
 
       <!-- projects -->
       <div class="project-wrapper" [@listAnimation]="innovations.length">
