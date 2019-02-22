@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { PresetService } from '../services/preset.service';
 import { Question } from '../../../../../models/question';
@@ -39,6 +40,7 @@ export class SharedPresetQuestionComponent {
   private _language: 'en' | 'fr' = 'en';
 
   constructor(private presetService: PresetService,
+              private activatedRoute: ActivatedRoute,
               private translateService: TranslateService) { }
 
   public removeQuestion(event: Event) {
@@ -66,6 +68,22 @@ export class SharedPresetQuestionComponent {
       }
     };
     options.push(newOption);
+  }
+
+  public fillWithBenefits(event: Event) {
+    event.preventDefault();
+    const innovation = this.activatedRoute.snapshot.parent.data['innovation'];
+    // Calcul benefits
+    this._question.options = innovation.innovationCards.reduce((acc, innovCard) => {
+      innovCard.advantages.forEach((advantage, index) => {
+        if (acc[index]) {
+          acc[index].label[innovCard.lang] = advantage.text;
+        } else {
+          acc[index] = {identifier: index.toString(), label: { [innovCard.lang]: advantage.text }};
+        }
+      });
+      return acc;
+    }, new Array());
   }
 
   public deleteOption(event: Event, index: number) {
@@ -114,4 +132,5 @@ export class SharedPresetQuestionComponent {
   get question(): Question { return this._question; }
   get customId(): string { return this._customId; }
   get isTaggedQuestion(): boolean { return this._isTaggedQuestion; }
+  get innovation(): boolean { return  !!this.activatedRoute.snapshot.parent.data['innovation']; }
 }

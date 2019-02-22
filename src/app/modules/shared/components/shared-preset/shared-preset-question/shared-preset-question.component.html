@@ -71,6 +71,9 @@
         <input type="checkbox" [(ngModel)]="question.canComment">
         <i class="form-icon"></i> Add comment
       </label>
+      <button *ngIf="question.controlType === 'stars' && innovation" (click)="fillWithBenefits($event)" class="btn btn-primary ghost-primary">
+        Import Benefits
+      </button>
     </div>
 
     <ng-container *ngFor="let lang of ['en', 'fr']">
@@ -108,7 +111,7 @@
     </ng-container>
 
     <div class="option-list" id="optionsWrap"
-         *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'">
+         *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox' || question.controlType === 'stars'">
 
       <div *ngFor="let option of question.options; let i = index;" class="option">
         <div (click)="deleteOption($event, i)" class="delete-option">
