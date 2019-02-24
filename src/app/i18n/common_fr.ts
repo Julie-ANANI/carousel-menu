@@ -108,7 +108,7 @@ export const COMMON = {
     'B': 'termes et conditions d\'utilisation.',
   },
 
-  'PROFILE_URL': 'Profile URL',
+
   'TOP_PROFILE': 'Profil haut',
 
   'LABEL': {
@@ -123,7 +123,10 @@ export const COMMON = {
     'DATE': 'Date',
     'TIME': 'Le temps',
     'STARTED': 'Commencé',
-    'CONTENT': 'Contenu'
+    'CONTENT': 'Contenu',
+    'OPERATOR': 'Opérateur',
+    'ADMIN': 'Affecter comme administrateur',
+    'PROFILE_URL': 'Profile URL',
   },
 
   'PLACEHOLDER': {
@@ -162,6 +165,7 @@ export const COMMON = {
   'BUTTON': {
     'CONTINUE': 'Continuer',
     'ADD': 'Ajouter',
+    'SAVE': 'Sauvegarder',
   },
 
   'PROJECT': {
@@ -312,8 +316,8 @@ export const COMMON = {
     'EDIT_WORKFLOW': 'Modifier le modèle',
     'EDIT_INSIGHT': 'Modifier l\'aperçu',
     'ADD_PRO': 'Ajouter un professionnel',
-    'EDIT_PROFESSIONAL': 'Modifier Professionnel',
-    'ADD_TAGS': 'Ajouter des tags',
+
+
     'NEW_BATCH': 'Nouveau batch manuellement',
     'EDIT_BATCH': 'Modifier le batch'
   },

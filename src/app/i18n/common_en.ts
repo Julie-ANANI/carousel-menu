@@ -113,7 +113,7 @@ export const COMMON = {
     'B': 'terms and conditions of use.',
   },
 
-  'PROFILE_URL': 'Profile URL',
+
   'TOP_PROFILE': 'Top profile',
 
   'LABEL': {
@@ -128,7 +128,10 @@ export const COMMON = {
     'DATE': 'Date',
     'TIME': 'Time',
     'STARTED': 'Started',
-    'CONTENT': 'Content'
+    'CONTENT': 'Content',
+    'OPERATOR': 'Operator',
+    'ADMIN': 'Affect as administrator',
+    'PROFILE_URL': 'Profile URL',
   },
 
   'PLACEHOLDER': {
@@ -166,7 +169,8 @@ export const COMMON = {
 
   'BUTTON': {
     'CONTINUE': 'Continue',
-    'ADD': 'ADD'
+    'ADD': 'ADD',
+    'SAVE': 'Save',
   },
 
   'TABLE' : {
@@ -316,8 +320,8 @@ export const COMMON = {
     'EDIT_WORKFLOW': 'Edit Workflow',
     'EDIT_INSIGHT': 'Edit Insight',
     'ADD_PRO': 'Add Professional',
-    'EDIT_PROFESSIONAL': 'Edit Professional',
-    'ADD_TAGS': 'Add Tags',
+
+
     'NEW_BATCH': 'New Batch Manually',
     'EDIT_BATCH': 'Edit Batch'
   },

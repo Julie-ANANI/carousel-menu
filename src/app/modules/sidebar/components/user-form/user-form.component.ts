@@ -22,19 +22,6 @@ import { isPlatformBrowser } from '@angular/common';
 
 export class UserFormComponent implements OnInit {
 
-  @Input() set sidebarState(value: string) {
-    if (value === undefined || 'active') {
-      this.buildForm();
-      this._userForm.reset();
-      this._editInstanceDomain = false;
-    }
-  }
-
-  @Input() set type(type: string) {
-    this._type = type;
-    this.loadTypes();
-  }
-
   /*
       For type 'professional', put the data into the attribute user and patch it to the formData
    */
@@ -55,6 +42,19 @@ export class UserFormComponent implements OnInit {
     this._user = value;
     this.loadEditUser();
   };
+
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || value ===  'active') {
+      this.buildForm();
+      this._userForm.reset();
+      this._editInstanceDomain = false;
+    }
+  }
+
+  @Input() set type(type: string) {
+    this._type = type;
+    this.loadTemplate();
+  }
 
   @Output() finalUserData = new EventEmitter<User>();
 
@@ -130,7 +130,7 @@ export class UserFormComponent implements OnInit {
   }
 
 
-  private loadTypes() {
+  private loadTemplate() {
     this.reinitialiseForm();
 
     if (this._type === 'editUser') {

@@ -184,7 +184,7 @@ export class SharedProsListComponent {
     this.professionalsService.get(pro._id).subscribe((professional: Professional) => {
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-        title: 'COMMON.SIDEBAR.EDIT_PROFESSIONAL',
+        title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
         type: 'professional'
       };
       this.isProfessionalForm = true;
@@ -266,7 +266,7 @@ export class SharedProsListComponent {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.SIDEBAR.ADD_TAGS',
+      title: 'SIDEBAR.TITLE.ADD_TAGS',
       type: 'addTags'
     };
 

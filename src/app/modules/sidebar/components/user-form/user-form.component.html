@@ -3,7 +3,7 @@
 
     <!-- save button -->
     <div class="save-button-wrapper">
-      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
     </div>
 
     <!-- operator -->
@@ -14,7 +14,7 @@
           name="operator"
           id="user-form-operator"
           formControlName="isOperator">
-        <i class="form-icon"></i>{{ 'PROJECT_LIST.OPERATOR' | translate }}
+        <i class="form-icon"></i>{{ 'COMMON.LABEL.OPERATOR' | translate }}
       </label>
 
       <label class="form-switch" for="user-form-role" *ngIf="!isSuperAdmin && authService.adminLevel > 2 && authService.userId !== user.id">
@@ -24,7 +24,7 @@
           id="user-form-role"
           [checked]="userForm.value.roles === 'admin'"
           (change)="changeRole($event)">
-        <i class="form-icon"></i>{{ 'USERS.ADMIN' | translate }}
+        <i class="form-icon"></i>{{ 'COMMON.LABEL.ADMIN' | translate }}
       </label>
     </div>
 
@@ -159,7 +159,7 @@
 
     <!-- url -->
     <div *ngIf="isProfessional" class="form-group">
-      <label class="form-label" for="user-form-profileUrl">{{ 'COMMON.PROFILE_URL' | translate }}</label>
+      <label class="form-label" for="user-form-profileUrl">{{ 'COMMON.LABEL.PROFILE_URL' | translate }}</label>
       <input
         class="form-input"
         formControlName="profileUrl"
