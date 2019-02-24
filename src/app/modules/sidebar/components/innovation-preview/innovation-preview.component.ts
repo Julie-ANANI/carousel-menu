@@ -11,7 +11,9 @@ import { InnovCard } from '../../../../models/innov-card';
 
 export class InnovationPreviewComponent {
 
-  @Input() innovation: InnovCard;
+  @Input() set projectCard(value: InnovCard) {
+    this._innovationCard = value;
+  }
 
   @Input() set batchInfo(data: any) {
     if (data) {
@@ -39,6 +41,8 @@ export class InnovationPreviewComponent {
 
   private _date: Date;
 
+  private _innovationCard: InnovCard;
+
   constructor(private domSanitizer1: DomSanitizer,
               private translateService: TranslateService) { }
 
@@ -52,6 +56,10 @@ export class InnovationPreviewComponent {
 
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
+  }
+
+  get innovationCard(): InnovCard {
+    return this._innovationCard;
   }
 
 }
