@@ -9,12 +9,13 @@ export const COMMON = {
   'CHANGE': 'Changer',
   'DELETE': 'Supprimer',
   'SUBMIT': 'Confirmer',
+
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
   'SIGN_OUT': 'Se déconnecter',
   'LOG_OUT': 'Se déconnecter',
   'GENERATE': 'Générer',
-  'CANCEL': 'Annuler',
+
   'ADD': 'Ajouter',
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
@@ -127,6 +128,7 @@ export const COMMON = {
     'OPERATOR': 'Opérateur',
     'ADMIN': 'Affecter comme administrateur',
     'PROFILE_URL': 'Profile URL',
+    'CAMPAIGN_NAME': 'Nom de la campagne',
   },
 
   'PLACEHOLDER': {
@@ -135,6 +137,7 @@ export const COMMON = {
     'JOBTITLE': 'Entrez votre titre de poste',
     'COMPANY': 'Entrez le nom de votre entreprise',
     'COUNTRY': 'Entrez votre pays',
+    'CAMPAIGN': 'Entrez le nom de la campagne',
   },
 
   'REQUIRED': {
@@ -166,6 +169,8 @@ export const COMMON = {
     'CONTINUE': 'Continuer',
     'ADD': 'Ajouter',
     'SAVE': 'Sauvegarder',
+    'CANCEL': 'Annuler',
+    'CONFIRM': 'Confirmer',
   },
 
   'PROJECT': {
@@ -303,9 +308,7 @@ export const COMMON = {
   },
 
   'CAMPAIGN': {
-    'LABEL': 'Nom de la campagne',
     'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
-    'PLACEHOLDER': 'Entrez le nom de la campagne',
     'DELETE_BOARD': {
       'HEADING': 'Supprimer le forum',
       'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'

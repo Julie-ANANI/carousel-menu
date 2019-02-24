@@ -65,7 +65,7 @@
 <app-modal [(showModal)]="deleteModal" [modalTitle]="'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.TITLE'">
   {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>

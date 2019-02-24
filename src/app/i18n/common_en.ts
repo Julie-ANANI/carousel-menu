@@ -8,12 +8,11 @@ export const COMMON = {
   'SEND': 'Send',
   'CHANGE': 'Change',
   'DELETE': 'Delete',
-  'SUBMIT': 'Confirm',
+
   'LOG_IN': 'Sign In',
   'SIGN_UP': 'Sign Up',
   'LOG_OUT': 'Sign out',
   'SIGN_OUT': 'Sign Out',
-  'CANCEL': 'Cancel',
   'MORE': 'Show',
   'OF': 'of',
   'ADD': 'Add',
@@ -132,6 +131,7 @@ export const COMMON = {
     'OPERATOR': 'Operator',
     'ADMIN': 'Affect as administrator',
     'PROFILE_URL': 'Profile URL',
+    'CAMPAIGN_NAME': 'Campaign Name',
   },
 
   'PLACEHOLDER': {
@@ -140,6 +140,7 @@ export const COMMON = {
     'JOBTITLE': 'Enter your job title',
     'COMPANY': 'Enter your company name',
     'COUNTRY': 'Enter your country',
+    'CAMPAIGN': 'Enter the campaign name',
   },
 
   'REQUIRED': {
@@ -171,6 +172,8 @@ export const COMMON = {
     'CONTINUE': 'Continue',
     'ADD': 'ADD',
     'SAVE': 'Save',
+    'CANCEL': 'Cancel',
+    'CONFIRM': 'Confirm',
   },
 
   'TABLE' : {
@@ -307,9 +310,7 @@ export const COMMON = {
   },
 
   'CAMPAIGN': {
-    'LABEL': 'Campaign Name',
     'LABEL_REQUIRED': 'The campaign name is required.',
-    'PLACEHOLDER': 'Enter the campaign name',
     'DELETE_BOARD': {
       'HEADING': 'Delete Board',
       'CONTENT': 'Do you really want to delete the campaign?'

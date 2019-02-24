@@ -70,10 +70,6 @@ export const CAMPAIGNS = {
 
   'EDIT_BUTTON': 'edit',
 
-  'SIDEBAR': {
-    'TITLE': 'Edit Campaign'
-  },
-
   'STATS': {
     'HEADING': {
       'INSIGHTS': 'Insights',

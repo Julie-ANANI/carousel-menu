@@ -7,6 +7,7 @@ export const SIDEBAR = {
     'EDIT_USER': 'Edit User',
     'EDIT_PROFESSIONAL': 'Edit Professional',
     'ADD_TAGS': 'Add Tags',
+    'EDIT_CAMPAIGN': 'Edit Campaign'
   }
 
 };

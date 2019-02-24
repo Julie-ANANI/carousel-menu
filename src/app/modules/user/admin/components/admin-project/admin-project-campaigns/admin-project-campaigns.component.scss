@@ -47,11 +47,11 @@
             cursor: not-allowed;
           }
 
-          .delete {
-            color: $alert;
+          .icons {
+            margin-left: 0;
           }
 
-          .update:hover, .delete:hover, .edit:hover {
+          .update:hover, .edit:hover {
             cursor: pointer;
             text-decoration: underline;
           }

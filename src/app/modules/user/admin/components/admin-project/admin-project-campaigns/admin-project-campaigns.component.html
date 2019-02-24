@@ -36,7 +36,7 @@
                 |
                 <span class="clone">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>
                 |
-                <span class="delete" (click)="OnClickDelete($event, campaign)">{{ 'CAMPAIGNS.DELETE_BUTTON' | translate }}</span>
+                <span (click)="OnClickDelete($event, campaign)" class="icons icons-delete"><i class="fas fa-trash-alt"></i></span>
               </ng-container>
             </p>
           </div>
@@ -49,11 +49,11 @@
 
 
 <!-- modal to ask the admin to delete the campaign -->
-<app-modal [(showModal)]="activateModal" [modalTitle]="'COMMON.CAMPAIGN.DELETE_BOARD.HEADING'">
+<app-modal [(showModal)]="activateModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'COMMON.CAMPAIGN.DELETE_BOARD.CONTENT' | translate }}
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>
 <!-- /modal to ask the admin to delete the campaign -->

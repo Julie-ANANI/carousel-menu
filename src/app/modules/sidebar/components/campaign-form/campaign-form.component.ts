@@ -105,5 +105,4 @@ export class CampaignFormComponent {
     return this._isEditName;
   }
 
-
 }
