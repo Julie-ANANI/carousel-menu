@@ -166,6 +166,7 @@ export const COMMON = {
 
   'BUTTON': {
     'CONTINUE': 'Continue',
+    'ADD': 'ADD'
   },
 
   'TABLE' : {

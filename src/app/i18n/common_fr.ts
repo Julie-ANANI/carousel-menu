@@ -161,6 +161,7 @@ export const COMMON = {
 
   'BUTTON': {
     'CONTINUE': 'Continuer',
+    'ADD': 'Ajouter',
   },
 
   'PROJECT': {
