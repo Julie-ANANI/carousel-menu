@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
@@ -10,10 +10,10 @@ import { environment } from '../../../../../environments/environment';
   styleUrls: ['./signup-form.component.scss']
 })
 
-export class SignupFormComponent implements OnInit {
+export class SignupFormComponent {
 
   @Input() set sidebarState(value: string) {
-    if (value === undefined || 'active') {
+    if (value === undefined || value === 'active') {
       this.buildForm();
       this._signupForm.reset();
     }
@@ -29,9 +29,6 @@ export class SignupFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService) { }
-
-  ngOnInit() {
-  }
 
 
   private buildForm() {

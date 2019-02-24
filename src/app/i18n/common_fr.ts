@@ -68,9 +68,9 @@ export const COMMON = {
   'COMMENT': 'Commentaire',
 
   'NAME': 'Nom',
-  'LASTNAME': 'Nom',
 
-  'EMAIL': 'Email',
+
+
   'PHONE': 'Téléphone',
 
   'ACTIVITY_FIELDS': 'Champs d\'activité',
@@ -79,7 +79,7 @@ export const COMMON = {
   'TECHNOLOGIES': 'Technologies',
   'TECHNOLOGIES_PLACEHOLDER': 'Entrez la technologie',
 
-  'PASSWORD': 'Mot de passe',
+
   'OLD_PASSWORD': 'Ancien mot de passe',
   'NEW_PASSWORD': 'Nouveau mot de passe',
   'CONFIRM_PASSWORD': 'Confirmez le mot de passe',
@@ -88,22 +88,20 @@ export const COMMON = {
   'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
   'NEW_PASSWORD_PLACEHOLDER': '9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères',
+
 
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
-  'COMPANY': 'Nom de l\'entreprise',
-  'COMPANY_PLACEHOLDER': 'Entrez le nom de votre entreprise',
 
-  'JOBTITLE': 'Poste',
-  'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
+
+
 
   'TYPE': 'Type',
 
   'DOMAIN': 'Domaine',
 
-  'COUNTRY': 'Pays',
-  'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
+
+
 
   'TERMS': {
     'A': 'En cliquant sur "Continuer", j\'accepte',
@@ -113,10 +111,15 @@ export const COMMON = {
   'PROFILE_URL': 'Profile URL',
   'TOP_PROFILE': 'Profil haut',
 
-
   'LABEL': {
     'FIRSTNAME': 'Prénom',
+    'LASTNAME': 'Nom',
+    'EMAIL': 'Email',
+    'PASSWORD': 'Mot de passe',
     'PROS_CONTACT': 'Nombre de pros',
+    'JOBTITLE': 'Poste',
+    'COMPANY': 'Nom de l\'entreprise',
+    'COUNTRY': 'Pays',
     'DATE': 'Date',
     'TIME': 'Le temps',
     'STARTED': 'Commencé',
@@ -124,7 +127,11 @@ export const COMMON = {
   },
 
   'PLACEHOLDER': {
-    'PROS_CONTACT': 'Entrez le nombre de pros à contacter'
+    'PROS_CONTACT': 'Entrez le nombre de pros à contacter',
+    'PASSWORD_SIGNUP': '9+ caractères',
+    'JOBTITLE': 'Entrez votre titre de poste',
+    'COMPANY': 'Entrez le nom de votre entreprise',
+    'COUNTRY': 'Entrez votre pays',
   },
 
   'REQUIRED': {
@@ -146,8 +153,14 @@ export const COMMON = {
     'BATCH_IMMEDIATE': 'Laissez ce champ vide pour envoyer le batch immédiatement. Le batch sera envoyé dans 7 minutes.'
   },
 
+  'INVALID': {
+    'EMAIL': 'Veuillez renseigner une adresse email valide',
+    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
+    'MUST_CONTAIN': 'Le mot de passe doit en contenir un symbole spécial ($@&!#).'
+  },
+
   'BUTTON': {
-    'SIGN_UP': 'Continuer',
+    'CONTINUE': 'Continuer',
   },
 
   'PROJECT': {
@@ -175,11 +188,7 @@ export const COMMON = {
     'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 
-  'INVALID': {
-    'EMAIL': 'Veuillez renseigner une adresse email valide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
-    'MUST_CONTAIN': 'Le mot de passe doit en contenir un symbole spécial ($@&!#).'
-  },
+
 
   'LINKS': 'Liens',
   'HELP': 'Aide',

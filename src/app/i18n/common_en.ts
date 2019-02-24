@@ -72,9 +72,9 @@ export const COMMON = {
   'COMMENT': 'Comment',
 
   'NAME': 'Name',
-  'LASTNAME': 'Last Name',
 
-  'EMAIL': 'E-mail Address',
+
+
   'PHONE': 'Phone Number',
 
   'ACTIVITY_FIELDS': 'Activity Fields',
@@ -83,7 +83,7 @@ export const COMMON = {
   'TECHNOLOGIES': 'Technologies',
   'TECHNOLOGIES_PLACEHOLDER': 'Enter the technology',
 
-  'PASSWORD': 'Password',
+
   'OLD_PASSWORD': 'Old Password',
   'NEW_PASSWORD': 'New Password',
   'CONFIRM_PASSWORD': 'Confirm Password',
@@ -92,22 +92,21 @@ export const COMMON = {
   'OLD_PASSWORD_PLACEHOLDER': 'Enter your old password',
   'NEW_PASSWORD_PLACEHOLDER': '9+ characters',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Enter the confirmation password',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ characters',
+
 
   'PASSWORD_CONFIRM': 'Password confirmation',
 
-  'COMPANY': 'Company Name',
-  'COMPANY_PLACEHOLDER': 'Enter your company name',
 
-  'JOBTITLE': 'Job Title',
-  'JOBTITLE_PLACEHOLDER': 'Enter your job title',
+
+
+
 
   'TYPE': 'Type',
 
   'DOMAIN': 'Domain',
 
-  'COUNTRY': 'Country',
-  'COUNTRY_PLACEHOLDER': 'Enter your country',
+
+
 
   'TERMS': {
     'A': 'By clicking "Continue" I agree to',
@@ -119,7 +118,13 @@ export const COMMON = {
 
   'LABEL': {
     'FIRSTNAME': 'First Name',
+    'LASTNAME': 'Last Name',
+    'EMAIL': 'E-mail Address',
+    'PASSWORD': 'Password',
     'PROS_CONTACT': 'Pros Number',
+    'JOBTITLE': 'Job Title',
+    'COMPANY': 'Company Name',
+    'COUNTRY': 'Country',
     'DATE': 'Date',
     'TIME': 'Time',
     'STARTED': 'Started',
@@ -127,7 +132,11 @@ export const COMMON = {
   },
 
   'PLACEHOLDER': {
-    'PROS_CONTACT': 'Enter the number of pros to contact'
+    'PROS_CONTACT': 'Enter the number of pros to contact',
+    'PASSWORD_SIGNUP': '9+ characters',
+    'JOBTITLE': 'Enter your job title',
+    'COMPANY': 'Enter your company name',
+    'COUNTRY': 'Enter your country',
   },
 
   'REQUIRED': {
@@ -149,8 +158,14 @@ export const COMMON = {
     'BATCH_IMMEDIATE': 'Leave it blank to send the batch immediately. The batch will be sent after 7 minutes.'
   },
 
+  'INVALID': {
+    'EMAIL': 'Please enter a valid email address.',
+    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
+    'MUST_CONTAIN': 'Password must contain one special character ($@&!#).'
+  },
+
   'BUTTON': {
-    'SIGN_UP': 'Continue',
+    'CONTINUE': 'Continue',
   },
 
   'TABLE' : {
@@ -178,11 +193,6 @@ export const COMMON = {
     '2': 'Already available'
   },
 
-  'INVALID': {
-    'EMAIL': 'Please enter a valid email address.',
-    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
-    'MUST_CONTAIN': 'Password must contain one special character ($@&!#).'
-  },
 
   'LINKS': 'Links',
   'HELP': 'Help',

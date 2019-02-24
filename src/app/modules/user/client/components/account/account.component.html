@@ -70,7 +70,7 @@
 
             <!-- Last name -->
             <div class="form-group">
-              <label class="form-label" for="account-lastName">{{ 'COMMON.LASTNAME' | translate }}</label>
+              <label class="form-label" for="account-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
               <input
                 class="form-input"
                 formControlName="lastName"
@@ -90,7 +90,7 @@
 
             <!-- Email -->
             <div class="form-group">
-              <label class="form-label" for="account-email">{{ 'COMMON.EMAIL' | translate }}</label>
+              <label class="form-label" for="account-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
               <input
                 class="form-input"
                 formControlName="email"
@@ -101,13 +101,13 @@
 
             <!-- Company -->
             <div class="form-group">
-              <label class="form-label" for="account-companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+              <label class="form-label" for="account-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
               <input
                 class="form-input"
                 formControlName="companyName"
                 id="account-companyName"
                 type="text"
-                [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+                [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
             </div>
 
           </div>
@@ -118,24 +118,24 @@
 
             <!-- Job -->
             <div class="form-group">
-              <label class="form-label" for="account-jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+              <label class="form-label" for="account-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
               <input
                 class="form-input"
                 formControlName="jobTitle"
                 id="account-jobTitle"
                 type="text"
-                [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+                [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
             </div>
 
             <!-- Country -->
             <div class="form-group">
-              <label class="form-label" for="account-country">{{ 'COMMON.COUNTRY' | translate }}</label>
+              <label class="form-label" for="account-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
               <input
                 class="form-input"
                 formControlName="country"
                 id="account-country"
                 type="text"
-                [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
+                [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
                 (click)="onSuggestCountries()"
                 autocomplete="off">
               <ul

@@ -16,7 +16,7 @@
 
         <!-- Last name -->
         <div class="form-group">
-            <label class="form-label" for="signup-form-lastName">{{ 'COMMON.LASTNAME' | translate }}</label>
+            <label class="form-label" for="signup-form-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
             <input
                     class="form-input"
                     formControlName="lastName"
@@ -30,7 +30,7 @@
 
         <!-- Email -->
         <div class="form-group">
-            <label class="form-label" for="signup-form-email">{{ 'COMMON.EMAIL' | translate }}</label>
+            <label class="form-label" for="signup-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
             <input
                     class="form-input"
                     formControlName="email"
@@ -45,13 +45,13 @@
 
         <!-- Job -->
         <div class="form-group">
-            <label class="form-label" for="signup-form-jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+            <label class="form-label" for="signup-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
             <input
                     class="form-input"
                     formControlName="jobTitle"
                     id="signup-form-jobTitle"
                     type="text"
-                    [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+                    [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
             <div class="form-error" *ngIf="advSearchForm.get('jobTitle').touched && advSearchForm.get('jobTitle').invalid">
                 <span *ngIf="advSearchForm.get('jobTitle').hasError('required')">{{ 'COMMON.REQUIRED.JOBTITLE' | translate }}</span>
             </div>
@@ -59,13 +59,13 @@
 
         <!-- Company -->
         <div class="form-group">
-            <label class="form-label" for="signup-form-companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+            <label class="form-label" for="signup-form-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
             <input
                     class="form-input"
                     formControlName="companyName"
                     id="signup-form-companyName"
                     type="text"
-                    [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+                    [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
             <div class="form-error" *ngIf="advSearchForm.get('companyName').touched && advSearchForm.get('companyName').invalid">
                 <span *ngIf="advSearchForm.get('companyName').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
             </div>
@@ -73,13 +73,13 @@
 
         <!-- Country -->
         <div class="form-group" [ngStyle]="{ 'position': 'relative' }">
-            <label class="form-label" for="signup-form-country">{{ 'COMMON.COUNTRY' | translate }}</label>
+            <label class="form-label" for="signup-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
             <input
                     class="form-input"
                     formControlName="country"
                     id="signup-form-country"
                     type="text"
-                    [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate">
+                    [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate">
             <div class="form-error" *ngIf="advSearchForm.get('country').touched && advSearchForm.get('country').invalid">
                 <span *ngIf="advSearchForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
             </div>

@@ -201,7 +201,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
   public getConfig(type: string): any {
     const _inputConfig = {
         'countries': {
-          placeholder: 'COMMON.COUNTRY_PLACEHOLDER',
+          placeholder: 'COMMON.PLACEHOLDER.COUNTRY',
           initialData: this.country || null,
           type: 'countries',
         }
