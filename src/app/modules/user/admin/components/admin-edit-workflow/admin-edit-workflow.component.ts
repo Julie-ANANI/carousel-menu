@@ -9,6 +9,7 @@ import { EmailSignature } from '../../../../../models/email-signature';
   templateUrl: 'admin-edit-workflow.component.html',
   styleUrls: ['admin-edit-workflow.component.scss']
 })
+
 export class AdminEditWorkflowComponent {
 
   @Input() set scenario(value: EmailScenario) {
@@ -118,7 +119,7 @@ export class AdminEditWorkflowComponent {
     this._more = {
       size: '726px',
       animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.SIDEBAR.EDIT_WORKFLOW'
+      title: 'SIDEBAR.TITLE.EDIT_WORKFLOW'
     };
 
   }

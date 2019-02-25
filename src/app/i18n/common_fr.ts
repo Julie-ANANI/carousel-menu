@@ -51,7 +51,7 @@ export const COMMON = {
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
   'SEARCH_BY': 'Recherche par',
   'SEARCH_PLACEHOLDER': 'Rechercher ici',
-  'SELECT': 'Sélectionnez',
+
   'SHARED_REPORTS': 'Rapports partagés',
 
   'BLACKLIST': {
@@ -131,6 +131,9 @@ export const COMMON = {
     'CAMPAIGN_NAME': 'Nom de la campagne',
     'NAME': 'Nom',
     'TYPE': 'Type',
+    'SELECT_WORKFLOW': 'Sélectionner le workflow',
+    'SELECT': 'Sélectionnez',
+    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
   },
 
   'PLACEHOLDER': {
@@ -325,9 +328,5 @@ export const COMMON = {
     'TITLE_IMPORT': 'Conseil d\'importation',
     'TITLE_BATCH': 'Batch le forum',
   },
-
-  'SELECT_LABELS': {
-    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
-  }
 
 };

@@ -50,7 +50,7 @@ export const COMMON = {
   'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
   'SEARCH_BY': 'Search by',
   'SEARCH_PLACEHOLDER': 'Search here',
-  'SELECT': 'Select',
+
   'SHARED_REPORTS': 'Shared Reports',
 
   'BLACKLIST': {
@@ -133,6 +133,9 @@ export const COMMON = {
     'CAMPAIGN_NAME': 'Campaign Name',
     'NAME': 'Name',
     'TYPE': 'Type',
+    'SELECT_WORKFLOW': 'Select the workflow',
+    'SELECT': 'Select',
+    'CHOOSE_LANGUAGE': 'Choose Language:',
   },
 
   'PLACEHOLDER': {
@@ -326,9 +329,5 @@ export const COMMON = {
     'TITLE_IMPORT': 'Import Board',
     'TITLE_BATCH': 'Batch Board'
   },
-
-  'SELECT_LABELS': {
-    'CHOOSE_LANGUAGE': 'Choose Language:',
-  }
 
 };

@@ -144,7 +144,6 @@ export const CAMPAIGNS = {
   },
 
   'WORKFLOW_PAGE': {
-    'SELECT_LABEL': 'Select the workflow',
     'BUTTON': {
       'IMPORT': 'Import',
       'TEST_WORKFLOW': 'Test Workflow'
