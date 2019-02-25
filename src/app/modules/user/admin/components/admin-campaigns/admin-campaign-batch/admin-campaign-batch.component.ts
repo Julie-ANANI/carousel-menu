@@ -255,7 +255,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       default:
       //do nothing...
     }
-    
+
   }
 
 
@@ -467,8 +467,8 @@ export class AdminCampaignBatchComponent implements OnInit {
   }
 
 
-  onConfirmDelete(batchId: string) {
-    this.campaignService.deleteBatch(this._selectedBatchToBeDeleted._id).pipe(first()).subscribe((res) => {
+  onConfirmDelete() {
+    this.campaignService.deleteBatch(this._selectedBatchToBeDeleted._id).subscribe((res) => {
 
       this._stats.batches.splice(this.getBatchIndex(this._selectedBatchToBeDeleted._id), 1);
       this.getBatches();
