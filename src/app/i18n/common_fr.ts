@@ -171,6 +171,8 @@ export const COMMON = {
     'SAVE': 'Sauvegarder',
     'CANCEL': 'Annuler',
     'CONFIRM': 'Confirmer',
+    'IMPORT': 'Importer',
+    'EXPORT': 'Exporter',
   },
 
   'PROJECT': {
@@ -313,16 +315,6 @@ export const COMMON = {
       'HEADING': 'Supprimer le forum',
       'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
     }
-  },
-
-  'SIDEBAR': {
-    'EDIT_WORKFLOW': 'Modifier le modèle',
-    'EDIT_INSIGHT': 'Modifier l\'aperçu',
-    'ADD_PRO': 'Ajouter un professionnel',
-
-
-    'NEW_BATCH': 'Nouveau batch manuellement',
-    'EDIT_BATCH': 'Modifier le batch'
   },
 
   'MODAL': {

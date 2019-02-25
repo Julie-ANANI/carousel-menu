@@ -6,7 +6,8 @@ export const TABLE = {
     'VALIDATED': 'Validated',
     'REJECTED': 'Rejected',
     'VALIDATED_NO_MAIL': 'Validate without sending mail',
-    'SUBMITTED': 'To look at'
+    'SUBMITTED': 'To look at',
+    'REJECTED_GMAIL': 'Rejected by Mail',
   },
 
   'HEADING': {

@@ -174,6 +174,8 @@ export const COMMON = {
     'SAVE': 'Save',
     'CANCEL': 'Cancel',
     'CONFIRM': 'Confirm',
+    'IMPORT': 'Import',
+    'EXPORT': 'Export',
   },
 
   'TABLE' : {
@@ -315,16 +317,6 @@ export const COMMON = {
       'HEADING': 'Delete Board',
       'CONTENT': 'Do you really want to delete the campaign?'
     },
-  },
-
-  'SIDEBAR': {
-    'EDIT_WORKFLOW': 'Edit Workflow',
-    'EDIT_INSIGHT': 'Edit Insight',
-    'ADD_PRO': 'Add Professional',
-
-
-    'NEW_BATCH': 'New Batch Manually',
-    'EDIT_BATCH': 'Edit Batch'
   },
 
   'MODAL': {
