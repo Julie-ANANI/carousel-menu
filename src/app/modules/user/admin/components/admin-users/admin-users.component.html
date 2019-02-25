@@ -17,27 +17,20 @@
       (performAction)="performActions($event)">
     </app-shared-table>
 
-    <!-- modal to ask admin to delete the user -->
-    <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
-      <div class="modal-overlay" (click)="closeModal($event)"></div>
-      <div class="modal-container">
-        <div class="modal-header">
-          <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-          <div class="modal-title">{{ 'COMMON.USER.DELETE_BOARD.HEADING' | translate }}</div>
-        </div>
-        <div class="modal-body">
-          <div class="content">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn ghost-edit btn-sm btn-cancel" (click)="closeModal($event)">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-          <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-        </div>
-      </div>
-    </div>
-    <!-- /modal to ask admin to delete the user -->
-
   </div>
 </section>
+
+
+<!-- modal to ask admin to delete the user -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  {{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+</app-modal>
+<!-- /modal to ask admin to delete the user -->
+
 
 <!-- sidebar to edit user -->
 <app-sidebar [(template)]="sidebarValue">

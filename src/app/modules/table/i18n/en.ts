@@ -20,11 +20,18 @@ export const TABLE = {
     'JOB_TITLE': 'Job title',
     'COMPANY': 'Company',
     'CAMPAIGNS': 'Campaigns',
-    'CONTACT': 'Contact'
+    'CONTACT': 'Contact',
+    'DOMAIN': 'Domain',
+    'CREATED': 'Created on',
+    'TITLE': 'Title',
+    'OWNER': 'Owner',
+    'UPDATED': 'Updated on',
   },
 
   'TITLE': {
     'PROFESSIONALS': 'Professionals',
+    'USERS': 'Users',
+    'PROJECTS': 'Projects',
   }
 
 };
