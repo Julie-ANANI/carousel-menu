@@ -68,7 +68,7 @@ export const COMMON = {
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 
-  'NAME': 'Nom',
+
 
 
 
@@ -97,7 +97,7 @@ export const COMMON = {
 
 
 
-  'TYPE': 'Type',
+
 
   'DOMAIN': 'Domaine',
 
@@ -129,6 +129,8 @@ export const COMMON = {
     'ADMIN': 'Affecter comme administrateur',
     'PROFILE_URL': 'Profile URL',
     'CAMPAIGN_NAME': 'Nom de la campagne',
+    'NAME': 'Nom',
+    'TYPE': 'Type',
   },
 
   'PLACEHOLDER': {

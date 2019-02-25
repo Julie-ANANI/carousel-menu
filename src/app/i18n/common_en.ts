@@ -70,7 +70,6 @@ export const COMMON = {
 
   'COMMENT': 'Comment',
 
-  'NAME': 'Name',
 
 
 
@@ -100,7 +99,7 @@ export const COMMON = {
 
 
 
-  'TYPE': 'Type',
+
 
   'DOMAIN': 'Domain',
 
@@ -132,6 +131,8 @@ export const COMMON = {
     'ADMIN': 'Affect as administrator',
     'PROFILE_URL': 'Profile URL',
     'CAMPAIGN_NAME': 'Campaign Name',
+    'NAME': 'Name',
+    'TYPE': 'Type',
   },
 
   'PLACEHOLDER': {
@@ -170,7 +171,7 @@ export const COMMON = {
 
   'BUTTON': {
     'CONTINUE': 'Continue',
-    'ADD': 'ADD',
+    'ADD': 'Add',
     'SAVE': 'Save',
     'CANCEL': 'Cancel',
     'CONFIRM': 'Confirm',

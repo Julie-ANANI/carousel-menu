@@ -53,7 +53,7 @@ export class SharedAnswersListComponent {
       _reloadColumns: true,
       _actions: this._actions,
       _columns: [
-        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
         {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY', _isSortable: false},
         {_attrs: ['professional.email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT'},
         {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},

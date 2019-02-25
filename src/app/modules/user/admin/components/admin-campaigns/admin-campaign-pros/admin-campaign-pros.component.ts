@@ -114,7 +114,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.SIDEBAR.ADD_PRO',
+      title: 'SIDEBAR.TITLE.ADD_PRO',
       type: 'addPro'
     };
 

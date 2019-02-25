@@ -21,6 +21,10 @@ export const TABLE = {
     'COMPANY': 'Company',
     'CAMPAIGNS': 'Campaigns',
     'CONTACT': 'Contact'
+  },
+
+  'TITLE': {
+    'PROFESSIONALS': 'Professionals',
   }
 
 };

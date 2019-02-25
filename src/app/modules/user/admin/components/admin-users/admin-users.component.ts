@@ -66,7 +66,7 @@ export class AdminUsersComponent implements OnInit {
         _isSelectable: true,
         _isEditable: true,
         _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
           {_attrs: ['jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
           {_attrs: ['companyName'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
           {_attrs: ['domain'], _name: 'COMMON.DOMAIN', _type: 'TEXT'},
