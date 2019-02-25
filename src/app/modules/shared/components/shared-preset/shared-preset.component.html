@@ -4,13 +4,15 @@
 
   <h1>{{preset.name}}</h1>
 
+  <div class="text-right">
+    <button type="button" class="btn btn-primary" (click)="savePreset($event)">
+      Save
+    </button>
+  </div>
+
   <div class="body">
     <div *ngFor="let section of preset.sections; let i=index">
-      <app-shared-preset-section
-        [section]="section"
-        (move)="moveSection($event, i)"
-        (updateSection)="updateSection($event, i)">
-      </app-shared-preset-section>
+      <app-shared-preset-section [section]="section" [sectionIndex]="i"></app-shared-preset-section>
     </div>
 
     <div class="add-section" (click)="addSection()">

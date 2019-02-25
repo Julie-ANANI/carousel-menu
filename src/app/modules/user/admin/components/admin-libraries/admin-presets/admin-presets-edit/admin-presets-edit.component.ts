@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PresetService } from '../../../../../../../services/preset/preset.service';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { Preset } from '../../../../../../../models/preset';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-presets-edit',
@@ -14,6 +14,7 @@ export class AdminPresetsEditComponent implements OnInit {
   private _preset: Preset;
 
   constructor(private _activatedRoute: ActivatedRoute,
+              private _notificationService: TranslateNotificationsService,
               private _presetService: PresetService) {}
 
   ngOnInit(): void {
@@ -21,7 +22,8 @@ export class AdminPresetsEditComponent implements OnInit {
   }
 
   public savePreset(preset: Preset): void {
-    this._presetService.save(this._preset._id, preset).pipe(first()).subscribe((result: any) => {
+    this._presetService.save(this._preset._id, preset).subscribe((result: any) => {
+      this._notificationService.success('ERROR.SUCCESS', 'ERROR.PRESET.UPDATED');
       this._preset = result;
     });
   }

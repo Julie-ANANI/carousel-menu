@@ -27,7 +27,7 @@ import { TableModule } from '../../../../table/table.module';
 import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
 import { AutocompleteInputModule } from "../../../../utility-components/autocomplete-input/autocomplete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
-import { SidebarBatchModule } from '../../../../sidebar/components/sidebar-batch/sidebar-batch.module';
+import { SidebarBatchFormModule } from '../../../../sidebar/components/batch-form/sidebar-batch-form.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
 import { ModalModule } from '../../../../utility-components/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
@@ -50,10 +50,10 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     PipeModule,
     AutocompleteInputModule,
     SidebarUserAnswerModule,
-    SidebarBatchModule,
+    SidebarBatchFormModule,
     MessageSpaceModule,
     ModalModule,
-    SidebarUserFormModule
+    SidebarUserFormModule,
   ],
   declarations: [
     AdminCampaignsComponent,

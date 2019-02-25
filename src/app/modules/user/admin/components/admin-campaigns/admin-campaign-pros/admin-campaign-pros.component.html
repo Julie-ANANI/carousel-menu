@@ -67,9 +67,9 @@
 
     <!-- section actions -->
     <div class="section-actions">
-      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.IMPORT' | translate }}</button>
-      <button class="btn ghost-primary gap-right" (click)="OnClickAdd($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.ADD' | translate }}</button>
-      <button class="btn btn-primary" (click)="onClickExport($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.EXPORT' | translate }}</button>
+      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
+      <button class="btn ghost-primary gap-right" (click)="OnClickAdd($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
+      <button class="btn btn-primary" (click)="onClickExport($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
     </div>
 
     <!-- section pros list -->
@@ -98,8 +98,8 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.ADD' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
   </div>
 
 </app-modal>

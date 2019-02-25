@@ -11,7 +11,7 @@ export const ERROR = {
 
   'FETCHING_ERROR': 'We are having trouble while fetching the data. Please try to reload the page again!',
 
-  'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try to reload the page again!',
+  'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try it again!',
 
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
 
@@ -132,7 +132,21 @@ export const ERROR = {
       'DELETED': 'The workflow has been deleted successfully.',
       'UPDATED': 'The workflow has been updated successfully.',
       'SENT': 'The mail has been sent successfully.',
-      'SENT_ERROR': 'We had problem while sending the mail.'
+      'SENT_ERROR': 'We are having trouble while sending the mail.'
+    },
+    'BATCH': {
+      'NUGGETS_ERROR': 'We are having trouble while activating/deactivating the nuggets. Please try to reload the page!',
+      'BATCH_ERROR': 'We are having trouble while activating/deactivating the batch. Please try to reload the page!',
+      'NUGGETS_ACTIVATED': 'The nuggets have been activated successfully.',
+      'NUGGETS_DEACTIVATED': 'The nuggets have been deactivated successfully.',
+      'NOT_CREATED': 'No batch is created.',
+      'STARTED': 'The batch has been started successfully.',
+      'CREATED': 'The batch has been created successfully.',
+      'STOPPED': 'The batch has been stopped successfully.',
+      'ALREADY_STARTED': 'The batch has been already launched. It can not be undone.',
+      'DELETED': 'The batch has been deleted successfully.',
+      'FREEZED': 'The batch has been frozen successfully.',
+      'UPDATED': 'The batch has been updated successfully.',
     }
   },
 

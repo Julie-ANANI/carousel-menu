@@ -106,7 +106,7 @@ export class BarChartComponent implements OnInit {
         } else if (this.question.controlType === 'radio')  {
           answers = this._answers.filter((a) =>
             a.answers[this.question.identifier] === q.identifier
-            && a.answers[this.question.identifier + 'Quality'] !== 0 )
+            && a.answers[this.question.identifier + 'Quality'] !== 0 );
 
         }
         answers = answers.sort((a, b) => {

@@ -6,7 +6,8 @@ export const TABLE = {
     'VALIDATED': 'Validated',
     'REJECTED': 'Rejected',
     'VALIDATED_NO_MAIL': 'Validate without sending mail',
-    'SUBMITTED': 'To look at'
+    'SUBMITTED': 'To look at',
+    'REJECTED_GMAIL': 'Rejected by Mail',
   },
 
   'HEADING': {
@@ -19,7 +20,18 @@ export const TABLE = {
     'JOB_TITLE': 'Job title',
     'COMPANY': 'Company',
     'CAMPAIGNS': 'Campaigns',
-    'CONTACT': 'Contact'
+    'CONTACT': 'Contact',
+    'DOMAIN': 'Domain',
+    'CREATED': 'Created on',
+    'TITLE': 'Title',
+    'OWNER': 'Owner',
+    'UPDATED': 'Updated on',
+  },
+
+  'TITLE': {
+    'PROFESSIONALS': 'Professionals',
+    'USERS': 'Users',
+    'PROJECTS': 'Projects',
   }
 
 };

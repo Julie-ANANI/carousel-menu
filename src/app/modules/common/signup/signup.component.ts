@@ -54,7 +54,9 @@ export class SignupComponent implements OnInit {
       callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
       scope: 'r_emailaddress r_liteprofile r_basicprofile'
     };
+
     this._linkedInState = RandomUtil.generateUUID();
+
     this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
 
   }
@@ -65,6 +67,7 @@ export class SignupComponent implements OnInit {
       domain: environment.domain,
       state: this._linkedInState
     };
+
     this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
         console.log(_);
       }, err=>{
@@ -72,6 +75,7 @@ export class SignupComponent implements OnInit {
       }, ()=>{
         window.open(this._linkedInLink, '_self');
     });
+
   }
 
 
@@ -80,7 +84,7 @@ export class SignupComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SIGN_UP.HEADING_SIDEBAR',
+      title: 'SIDEBAR.TITLE.SIGN_UP',
       type: 'signup'
     }
 

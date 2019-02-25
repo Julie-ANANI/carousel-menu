@@ -60,28 +60,28 @@
     <!-- section select workflow -->
     <div class="section-light-container remove-bottom">
       <div class="form-group">
-        <label class="form-label" for="admin-campaign-workflows">{{ 'CAMPAIGNS.WORKFLOW_PAGE.SELECT_LABEL' | translate }}</label>
+        <label class="form-label" for="admin-campaign-workflows">{{ 'COMMON.LABEL.SELECT_WORKFLOW' | translate }}</label>
         <select
           class="form-select"
           id="admin-campaign-workflows"
           [ngModel]="templates ? templates[0] : null"
           (ngModelChange)="onClickSelect($event)"
           [ngModelOptions]="{ standalone: true }">
-          <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.SELECT' | translate }}</option>
+          <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.LABEL.SELECT' | translate }}</option>
           <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
         </select>
-        <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.IMPORT' | translate }}</button>
+        <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
         <button *ngIf="!noResult" type="button" class="btn btn-sm btn-primary" (click)="onClickTestWorkflow()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.TEST_WORKFLOW' | translate }}</button>
       </div>
     </div>
 
 
     <!-- section no campaign -->
-    <div *ngIf="noResult" class="section-container">
-      <app-message-space
-        [messageA]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A'"
-        [messageB]="'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B'"
-        [widthMax]="'354px'">
+    <div *ngIf="noResult" class="section-light-container remove-bottom">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A' | translate }}
+        <br>
+        {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B' | translate }}
       </app-message-space>
     </div>
 
@@ -110,12 +110,10 @@
 <!-- modal to ask for the confirmation if importing the same template -->
 <app-modal [(showModal)]="modalImport" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
   {{ modalContent | translate }}
-
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-
 </app-modal>
 <!-- /modal to ask for the confirmation if importing the same template -->
 
@@ -126,12 +124,6 @@
 
 
 <!-- ab testing commented 14 feb -->
-
-<!--<div class="text-right">
-  <button class="btn btn-primary" (click)="importModal = true">Importer un Workflow</button>
-  <button type="button" class="btn btn-primary" (click)="onClickImport($event)">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.IMPORT' | translate }}</button>
-</div>-->
-
 <!--<div *ngIf="!domain">
   <div class="bot-wrapper text-center">
     <span class="bot-rect">Attention, le domaine n'est pas défini. Modifiez-le dans le projet, onglet Settings.</span>
@@ -149,102 +141,6 @@
 
 <!--<div>
   <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
-</div>-->
-
-<!--<br>
-<div>
-  <h3> Choix du Workflow par défault </h3>
-  <form>
-    <select class = "form-select"
-            [(ngModel)] = "modalSelectDefault[1]"
-            id = "workflow"
-            name = "quelquechose"
-            (ngModelChange) ="areYouSureYouWantToChange($event)">
-      <option *ngFor = "let scenario of modifiedScenarios"
-              [ngValue] = "scenario.name">
-        {{scenario.name}}
-      </option>
-    </select>
-  </form>
-  <p class="text-error" *ngIf="modifiedScenarios.length === 0">
-    Vous devez avoir au moins un workflow avec tous les emails modifiés
-  </p>
-  <div *ngFor="let scenario of availableScenarios">
-    <app-admin-edit-workflow
-      [scenario]="scenario"
-      [signatures]="signatures"
-      (scenarioChange)="updateAvailableScenario($event)"
-      (deletedScenario)="removeScenario($event)"
-      [isDeletable]="campaign.settings.defaultWorkflow != scenario.name && campaign.settings.ABsettings.nameWorkflowA !=scenario.name && campaign.settings.ABsettings.nameWorkflowB !=scenario.name"
-    >
-    </app-admin-edit-workflow>
-  </div>
-</div>-->
-
-
-<!-- MODAL : Import d'un template
-<div class="modal" [ngClass]="{'active': importModal}">
-  <div class="modal-overlay" (click)="(importModal = false) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(importModal = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">Import d'un template</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        Liste des templates existants :
-        <p *ngIf="!templates">
-          Il n'y a pas de template dans la bibliothèque
-        </p>
-        <table class="table" *ngIf="templates">
-          <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Nombre d'emails</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let template of templates">
-            <td>{{ template.name }}</td>
-            <td>{{ template.emails.length }}</td>
-            <td><button class="btn btn-primary" (click)="importTemplate(template)">Importer</button></td>
-          </tr>
-          </tbody>
-        </table>
-
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-link" (click)="(importModal = false) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-    </div>
-  </div>
-</div>-->
-
-
-<!-- Modal selection  d'un workflow par default
-<div class="modal" [ngClass]="{'active': modalSelectDefault[0]}">
-  <div class="modal-overlay" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></button>
-      <div class="modal-title h5">{{ 'CAMPAIGNS.SELECT_DEFAULT.TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        {{'CAMPAIGNS.SELECT_DEFAULT.CONTENT' | translate}}
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="changeDefaultWorkflow()">{{ 'COMMON.UPDATE' | translate }}</button>
-      <button class="btn btn-link" (click)="resetDefaultWorkflow()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-    </div>
-  </div>
 </div>-->
 
 

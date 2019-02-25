@@ -29,21 +29,16 @@ export class WorkflowFormComponent {
 
   private _language = 'en';
 
-  private _activeSaveButton: boolean;
-
   constructor() { }
-
 
   onClickSave() {
     this._emailsObject[this._language].modified = true;
     this.emailChange.emit(this._emailsObject);
-    this._activeSaveButton = false;
   }
 
 
   onChangeEmail(value: any) {
     this._emailsObject = value;
-    this._activeSaveButton = true;
   }
 
   get signatures(): Array<EmailSignature> {
@@ -60,10 +55,6 @@ export class WorkflowFormComponent {
 
   set language(value: string) {
     this._language = value;
-  }
-
-  get activeSaveButton(): boolean {
-    return this._activeSaveButton;
   }
 
 }

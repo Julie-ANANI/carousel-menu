@@ -275,7 +275,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   /*get domain(): boolean {
     return (this._campaign.innovation.settings.domain !== '');
-
   }*/
 
   get config(): any {
