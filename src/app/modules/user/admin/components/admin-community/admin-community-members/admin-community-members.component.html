@@ -4,17 +4,31 @@
         <button (click)="onSearchClick($event)" class="btn btn-primary">
           Smart pro search
         </button>
+        <span></span>
+        <button (click)="onAddAmbassadors($event)" class="btn btn-primary">
+            Add ambassadors
+        </button>
     </div>
     <app-shared-pros-list [config]="config"></app-shared-pros-list>
   </div>
 
 </section>
 
-<!-- sign up sidebar -->
+<!-- adv search sidebar -->
 <app-sidebar [(template)]="sidebarValue">
     <advsearch-form
             [sidebarState]="sidebarValue.animate_state"
             (finalOutput)="receiveResult($event)">
     </advsearch-form>
 </app-sidebar>
-<!-- /sign up sidebar -->
+<!-- /adv search sidebar -->
+
+
+<!-- add ambassadors sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+    <add-ambassador-form
+            [sidebarState]="sidebarValue.animate_state"
+            (finalOutput)="receiveResult($event)">
+    </add-ambassador-form>
+</app-sidebar>
+<!-- /add ambassadors sidebar -->

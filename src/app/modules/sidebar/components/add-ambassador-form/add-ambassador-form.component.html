@@ -1,0 +1,124 @@
+<div class="column col-xs-12 col-11 col-mx-auto" id="user-form-component">
+  <form novalidate [formGroup]="ambassadorForm" (ngSubmit)="onClickSave()" autocomplete="off">
+
+    <!-- save button -->
+    <div class="save-button-wrapper">
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+    </div>
+
+    <!-- show tags -->
+    <div *ngIf="isProfessional && tags.length > 0" class="form-group">
+      <label class="form-label">Tags</label>
+      <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag-item>
+    </div>
+
+    <!-- first name -->
+    <div class="form-group">
+      <label class="form-label" for="user-form-firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="firstName"
+        id="user-form-firstName"
+        type="text"
+        placeholder="John">
+      <div class="form-error" *ngIf="ambassadorForm.get('firstName').touched && ambassadorForm.get('firstName').invalid">
+        <span *ngIf="ambassadorForm.get('firstName').hasError('required')">{{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- last name -->
+    <div class="form-group">
+      <label class="form-label" for="user-form-lastName">{{ 'COMMON.LASTNAME' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="lastName"
+        id="user-form-lastName"
+        type="text"
+        placeholder="Smith">
+      <div class="form-error" *ngIf="ambassadorForm.get('lastName').touched && ambassadorForm.get('lastName').invalid">
+        <span *ngIf="ambassadorForm.get('lastName').hasError('required')">{{ 'COMMON.REQUIRED.LASTNAME' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- email -->
+    <div class="form-group">
+      <label class="form-label" for="user-form-email">{{ 'COMMON.EMAIL' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="email"
+        id="user-form-email"
+        type="email"
+        placeholder="john@catco.com">
+      <div class="form-error" *ngIf="ambassadorForm.get('email').touched && ambassadorForm.get('email').invalid">
+        <span *ngIf="ambassadorForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+        <span *ngIf="ambassadorForm.get('email').hasError('email') && ambassadorForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- job -->
+    <div class="form-group">
+      <label class="form-label" for="user-form-jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="jobTitle"
+        id="user-form-jobTitle"
+        type="text"
+        [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+      <div class="form-error" *ngIf="ambassadorForm.get('jobTitle').touched && ambassadorForm.get('jobTitle').invalid">
+        <span *ngIf="ambassadorForm.get('jobTitle').hasError('required')">{{ 'COMMON.REQUIRED.JOBTITLE' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- company -->
+    <div class="form-group">
+      <label class="form-label" for="user-form-companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="companyName"
+        id="user-form-companyName"
+        type="text"
+        [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+      <div class="form-error" *ngIf="ambassadorForm.get('companyName').touched && ambassadorForm.get('companyName').invalid">
+        <span *ngIf="ambassadorForm.get('companyName').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- country -->
+    <div class="form-group">
+      <label class="form-label" for="user-form-country">{{ 'COMMON.COUNTRY' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="country"
+        id="user-form-country"
+        type="text"
+        [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
+        (keypress)="onSuggestCountries()">
+      <ul
+        *ngIf="ambassadorForm.get('country').value"
+        class="suggestion"
+        [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
+        <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
+          <a><span>{{ suggestion }}</span></a>
+        </li>
+      </ul>
+      <div class="form-error" *ngIf="ambassadorForm.get('country').touched && ambassadorForm.get('country').invalid">
+        <span *ngIf="ambassadorForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- url -->
+    <div *ngIf="isProfessional" class="form-group">
+      <label class="form-label" for="user-form-profileUrl">{{ 'COMMON.PROFILE_URL' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="profileUrl"
+        id="user-form-profileUrl"
+        type="text"
+        placeholder="http://www.linkedin.com/in/johnsmith">
+      <div class="form-error" *ngIf="ambassadorForm.get('profileUrl').touched && ambassadorForm.get('profileUrl').invalid">
+        <span *ngIf="ambassadorForm.get('profileUrl').hasError('required')">{{ 'COMMON.REQUIRED.URL' | translate }}</span>
+      </div>
+    </div>
+
+  </form>
+</div>
