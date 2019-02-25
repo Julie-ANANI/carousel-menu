@@ -85,6 +85,14 @@ a, a:focus, a:hover, a:active, a.active {
 
 
 /*
+    float left
+ */
+.float-left {
+  float: left !important;
+}
+
+
+/*
     importing the files...
  */
 @import "animation";
@@ -99,3 +107,4 @@ a, a:focus, a:hover, a:active, a.active {
 @import "form";
 @import "icons";
 @import "card";
+@import "tooltip";

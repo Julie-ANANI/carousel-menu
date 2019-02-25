@@ -180,6 +180,7 @@ export const COMMON = {
     'CONFIRM': 'Confirm',
     'IMPORT': 'Import',
     'EXPORT': 'Export',
+    'SEND': 'Send',
   },
 
   'TABLE' : {
