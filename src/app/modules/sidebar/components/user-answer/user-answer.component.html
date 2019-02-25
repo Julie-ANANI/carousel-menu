@@ -60,7 +60,7 @@
         <app-autocomplete-input
           (update)="updateCountry($event)"
           [onlyOne]="true"
-          [config]="{ placeholder: 'COMMON.COUNTRY_PLACEHOLDER', type: 'countries' }">
+          [config]="{ placeholder: 'COMMON.PLACEHOLDER.COUNTRY', type: 'countries' }">
         </app-autocomplete-input>
       </div>
 
@@ -88,7 +88,7 @@
             id="answer-jobTitle"
             alt="Job title"
             class="form-input"
-            [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+            [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
         </div>
       </div>
 
@@ -106,7 +106,7 @@
             id="answer-company"
             alt="Company"
             class="form-input"
-            [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+            [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
         </div>
       </div>
 

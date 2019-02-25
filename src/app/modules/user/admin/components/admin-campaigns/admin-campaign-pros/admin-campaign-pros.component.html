@@ -73,7 +73,9 @@
     </div>
 
     <!-- section pros list -->
-    <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
+    <div class="section-light-container remove-top">
+      <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
+    </div>
 
   </div>
 
@@ -98,7 +100,7 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.ADD' | translate }}</button>
   </div>
 

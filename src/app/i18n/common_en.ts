@@ -8,17 +8,16 @@ export const COMMON = {
   'SEND': 'Send',
   'CHANGE': 'Change',
   'DELETE': 'Delete',
-  'SUBMIT': 'Confirm',
+
   'LOG_IN': 'Sign In',
   'SIGN_UP': 'Sign Up',
   'LOG_OUT': 'Sign out',
   'SIGN_OUT': 'Sign Out',
-  'CANCEL': 'Cancel',
   'MORE': 'Show',
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
-  'DATE': 'Date',
+
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'GENERATE': 'Generate',
@@ -72,10 +71,9 @@ export const COMMON = {
   'COMMENT': 'Comment',
 
   'NAME': 'Name',
-  'FIRSTNAME': 'First Name',
-  'LASTNAME': 'Last Name',
 
-  'EMAIL': 'E-mail Address',
+
+
   'PHONE': 'Phone Number',
 
   'ACTIVITY_FIELDS': 'Activity Fields',
@@ -84,7 +82,7 @@ export const COMMON = {
   'TECHNOLOGIES': 'Technologies',
   'TECHNOLOGIES_PLACEHOLDER': 'Enter the technology',
 
-  'PASSWORD': 'Password',
+
   'OLD_PASSWORD': 'Old Password',
   'NEW_PASSWORD': 'New Password',
   'CONFIRM_PASSWORD': 'Confirm Password',
@@ -93,30 +91,57 @@ export const COMMON = {
   'OLD_PASSWORD_PLACEHOLDER': 'Enter your old password',
   'NEW_PASSWORD_PLACEHOLDER': '9+ characters',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Enter the confirmation password',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ characters',
+
 
   'PASSWORD_CONFIRM': 'Password confirmation',
 
-  'COMPANY': 'Company Name',
-  'COMPANY_PLACEHOLDER': 'Enter your company name',
 
-  'JOBTITLE': 'Job Title',
-  'JOBTITLE_PLACEHOLDER': 'Enter your job title',
+
+
+
 
   'TYPE': 'Type',
 
   'DOMAIN': 'Domain',
 
-  'COUNTRY': 'Country',
-  'COUNTRY_PLACEHOLDER': 'Enter your country',
+
+
 
   'TERMS': {
     'A': 'By clicking "Continue" I agree to',
     'B': 'terms and conditions of use.',
   },
 
-  'PROFILE_URL': 'Profile URL',
+
   'TOP_PROFILE': 'Top profile',
+
+  'LABEL': {
+    'FIRSTNAME': 'First Name',
+    'LASTNAME': 'Last Name',
+    'EMAIL': 'E-mail Address',
+    'PASSWORD': 'Password',
+    'PROS_CONTACT': 'Pros Number',
+    'JOBTITLE': 'Job Title',
+    'COMPANY': 'Company Name',
+    'COUNTRY': 'Country',
+    'DATE': 'Date',
+    'TIME': 'Time',
+    'STARTED': 'Started',
+    'CONTENT': 'Content',
+    'OPERATOR': 'Operator',
+    'ADMIN': 'Affect as administrator',
+    'PROFILE_URL': 'Profile URL',
+    'CAMPAIGN_NAME': 'Campaign Name',
+  },
+
+  'PLACEHOLDER': {
+    'PROS_CONTACT': 'Enter the number of pros to contact',
+    'PASSWORD_SIGNUP': '9+ characters',
+    'JOBTITLE': 'Enter your job title',
+    'COMPANY': 'Enter your company name',
+    'COUNTRY': 'Enter your country',
+    'CAMPAIGN': 'Enter the campaign name',
+  },
 
   'REQUIRED': {
     'FIRSTNAME': 'First name is required.',
@@ -132,11 +157,23 @@ export const COMMON = {
     'MESSAGE': 'All fields are mandatory.',
     'ACCEPT': 'Please accept the terms and conditions.',
     'COUNTRY': 'Country is required.',
-    'URL': 'Profile is required.'
+    'URL': 'Profile is required.',
+    'PROS_CONTACT': 'Value should be greater than 0.',
+    'BATCH_IMMEDIATE': 'Leave it blank to send the batch immediately. The batch will be sent after 7 minutes.'
+  },
+
+  'INVALID': {
+    'EMAIL': 'Please enter a valid email address.',
+    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
+    'MUST_CONTAIN': 'Password must contain one special character ($@&!#).'
   },
 
   'BUTTON': {
-    'SIGN_UP': 'Continue',
+    'CONTINUE': 'Continue',
+    'ADD': 'ADD',
+    'SAVE': 'Save',
+    'CANCEL': 'Cancel',
+    'CONFIRM': 'Confirm',
   },
 
   'TABLE' : {
@@ -164,11 +201,6 @@ export const COMMON = {
     '2': 'Already available'
   },
 
-  'INVALID': {
-    'EMAIL': 'Please enter a valid email address.',
-    'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
-    'MUST_CONTAIN': 'Password must contain one special character ($@&!#).'
-  },
 
   'LINKS': 'Links',
   'HELP': 'Help',
@@ -278,9 +310,7 @@ export const COMMON = {
   },
 
   'CAMPAIGN': {
-    'LABEL': 'Campaign Name',
     'LABEL_REQUIRED': 'The campaign name is required.',
-    'PLACEHOLDER': 'Enter the campaign name',
     'DELETE_BOARD': {
       'HEADING': 'Delete Board',
       'CONTENT': 'Do you really want to delete the campaign?'
@@ -291,14 +321,17 @@ export const COMMON = {
     'EDIT_WORKFLOW': 'Edit Workflow',
     'EDIT_INSIGHT': 'Edit Insight',
     'ADD_PRO': 'Add Professional',
-    'EDIT_PROFESSIONAL': 'Edit Professional',
-    'ADD_TAGS': 'Add Tags',
+
+
+    'NEW_BATCH': 'New Batch Manually',
+    'EDIT_BATCH': 'Edit Batch'
   },
 
   'MODAL': {
     'TITLE_DELETE': 'Delete Board',
     'TITLE_CONFIRMATION': 'Confirmation Board',
     'TITLE_IMPORT': 'Import Board',
+    'TITLE_BATCH': 'Batch Board'
   },
 
   'SELECT_LABELS': {

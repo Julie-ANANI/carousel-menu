@@ -3,35 +3,45 @@
 #message-space-component {
   text-align: center;
 
-  .message-wrapper {
-    padding: 1.2rem 0.95rem;
-    border-radius: 0.18rem;
-    color: $text-primary;
-    border: 1px solid $border;
-    display: inline-flex;
-    width: 100%;
-    font-size: 0.9375rem;
-    justify-content: center;
-    animation-name: fadeIn;
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-    z-index: 3;
+  .message-wrapper, .bot-wrapper {
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .triangle-wrapper {
-    padding-left: 150px;
+  .message-content, .triangle, .bot-wrapper {
     animation-name: fadeIn;
     animation-duration: 2s;
     animation-timing-function: ease-in-out;
-    margin-top: -2px;
+  }
+
+  .message-wrapper {
+    margin-bottom: 0.9375rem;
+
+    .message-content {
+      padding: 1.2rem 0.95rem;
+      border-radius: 0.18rem;
+      color: #FFFFFF;
+      background: $background;
+      font-size: 0.875rem;
+      justify-content: center;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .triangle {
+      border-top: 12px solid $background;
+      border-right: 25px solid transparent;
+      transform: skewX(75deg);
+      margin-left: 75px;
+      width: 0;
+      height: 0;
+      position: relative;
+    }
+
   }
 
   .bot-wrapper {
     height: 9.37rem;
-    animation-name: fadeIn;
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
   }
-
 
 }

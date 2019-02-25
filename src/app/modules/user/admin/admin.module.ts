@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
-import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
@@ -83,7 +82,6 @@ import { AdvSearchService } from "../../../services/advsearch/advsearch.service"
   ],
   declarations: [
     AdminComponent,
-    AdminIndexComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
     AdminSettingsComponent

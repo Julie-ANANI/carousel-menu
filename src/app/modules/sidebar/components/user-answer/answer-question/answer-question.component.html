@@ -53,7 +53,7 @@
         <app-autocomplete-input
           (update)="setAnswer($event)"
           [canEdit]="true"
-          [config]="{ placeholder: 'COMMON.COMPANY', initialData: fullAnswer.answers[question.identifier] || [], type: 'company' }"
+          [config]="{ placeholder: 'COMMON.LABEL.COMPANY', initialData: fullAnswer.answers[question.identifier] || [], type: 'company' }"
           [adminMode]="editMode">
         </app-autocomplete-input>
       </div>

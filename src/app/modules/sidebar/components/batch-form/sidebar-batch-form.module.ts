@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { SidebarWorkflowComponent } from './sidebar-workflow.component';
+import { BatchFormComponent } from './batch-form.component';
 
 import { SidebarModule } from '../../sidebar.module';
-import { SidebarSignatureModule } from '../sidebar-signature/sidebar-signature.module';
-import { SharedMailEditorModule } from '../../../shared/components/shared-mail-editor/shared-mail-editor.module';
-
+import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
 
 @NgModule({
   imports: [
@@ -17,15 +15,14 @@ import { SharedMailEditorModule } from '../../../shared/components/shared-mail-e
     ReactiveFormsModule,
     TranslateModule.forChild(),
     SidebarModule,
-    SidebarSignatureModule,
-    SharedMailEditorModule
+    SharedTextZoneModule
   ],
   declarations: [
-   SidebarWorkflowComponent
+    BatchFormComponent
   ],
   exports: [
-    SidebarWorkflowComponent
+    BatchFormComponent
   ]
 })
 
-export class SidebarWorkflowModule {}
+export class SidebarBatchFormModule {}

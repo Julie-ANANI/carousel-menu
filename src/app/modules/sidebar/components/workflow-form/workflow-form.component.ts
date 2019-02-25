@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 
 @Component({
-  selector: 'app-sidebar-workflow',
-  templateUrl: './sidebar-workflow.component.html',
-  styleUrls: ['./sidebar-workflow.component.scss']
+  selector: 'app-workflow',
+  templateUrl: './workflow-form.component.html',
+  styleUrls: ['./workflow-form.component.scss']
 })
 
-export class SidebarWorkflowComponent {
+export class WorkflowFormComponent {
 
   @Input() set emailsObject(value: any) {
     this._emailsObject = value;
@@ -29,21 +29,16 @@ export class SidebarWorkflowComponent {
 
   private _language = 'en';
 
-  private _activeSaveButton: boolean;
-
   constructor() { }
-
 
   onClickSave() {
     this._emailsObject[this._language].modified = true;
     this.emailChange.emit(this._emailsObject);
-    this._activeSaveButton = false;
   }
 
 
   onChangeEmail(value: any) {
     this._emailsObject = value;
-    this._activeSaveButton = true;
   }
 
   get signatures(): Array<EmailSignature> {
@@ -60,10 +55,6 @@ export class SidebarWorkflowComponent {
 
   set language(value: string) {
     this._language = value;
-  }
-
-  get activeSaveButton(): boolean {
-    return this._activeSaveButton;
   }
 
 }

@@ -24,7 +24,6 @@ export class AdminProjectCardsComponent implements OnInit {
   ngOnInit(): void {
     this.innovationService
       .get(this.activatedRoute.snapshot.parent.data['innovation']._id)
-      .pipe(first())
       .subscribe((result: Innovation) => {
         this.project = result;
       });

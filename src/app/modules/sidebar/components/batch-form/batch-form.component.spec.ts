@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {SidebarBatchComponent} from './sidebar-batch.component';
+import {BatchFormComponent} from './batch-form.component';
 
 describe('UserEditSidebarComponent', () => {
-  let component: SidebarBatchComponent;
-  let fixture: ComponentFixture<SidebarBatchComponent>;
+  let component: BatchFormComponent;
+  let fixture: ComponentFixture<BatchFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarBatchComponent ]
+      declarations: [ BatchFormComponent ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SidebarBatchComponent);
+    fixture = TestBed.createComponent(BatchFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

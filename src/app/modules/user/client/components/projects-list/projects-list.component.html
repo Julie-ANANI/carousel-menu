@@ -10,16 +10,16 @@
     </div>
 
     <!-- section no project -->
-    <div *ngIf="innovations.length === 0" class="section-no-project">
-      <app-message-space
-        [messageA]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE'"
-        [messageB]="'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT'"
-        [widthMax]="'354px'">
+    <div *ngIf="noResult" class="section-no-project">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
+        <br>
+        {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}
       </app-message-space>
     </div>
 
     <!-- section projects -->
-    <div *ngIf="innovations.length > 0" class="section-projects-list">
+    <div *ngIf="!noResult" class="section-projects-list">
 
       <!-- projects -->
       <div class="project-wrapper" [@listAnimation]="innovations.length">
@@ -65,7 +65,7 @@
 <app-modal [(showModal)]="deleteModal" [modalTitle]="'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.TITLE'">
   {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>

@@ -70,7 +70,7 @@ export class ProjectComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE'
+      title: 'SIDEBAR.TITLE.COLLABORATOR'
     };
 
   }

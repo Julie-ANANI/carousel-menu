@@ -45,6 +45,8 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     sort: '{"created":-1}'
   };
 
+  private _noResult = false;
+
   constructor( private translateTitleService: TranslateTitleService,
                private userService: UserService,
                private innovationService: InnovationService,
@@ -60,6 +62,8 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   private getUserReports() {
     this._subscriptions.push(this.userService.getSharedWithMe(this.config).subscribe((reports: any) => {
       this.getSharedReports(reports.sharedgraph || []);
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }));
   }
 
@@ -71,19 +75,26 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   private getSharedReports(receivedReports: any) {
     receivedReports.forEach((info: Share) => {
       this._subscriptions.push(this.innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
-          const report: Share = {
-            name: result.name,
-            owner: result.owner,
-            media: result.principalMedia || null,
-            objectId: info.sharedObjectId,
-            sharedKey: info.sharedKey,
-            date: info.created // TODO use the share date instead...
-          };
-          report['link'] = `/user/synthesis/${report.objectId}/${report.sharedKey}`;
-          this._totalReports.push(report);
+        const report: Share = {
+          name: result.name,
+          owner: result.owner,
+          media: result.principalMedia || null,
+          objectId: info.sharedObjectId,
+          sharedKey: info.sharedKey,
+          date: info.created // TODO use the share date instead...
+        };
+
+        report['link'] = `/user/synthesis/${report.objectId}/${report.sharedKey}`;
+
+        this._totalReports.push(report);
+
+        if (this._totalReports.length === 0) {
+          this._noResult = true;
+        }
+
         }, () => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-        })
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      })
       );
     });
   }
@@ -131,6 +142,10 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   get subscriptions(): any[] {
     return this._subscriptions;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
   }
 
   ngOnDestroy(): void {

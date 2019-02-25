@@ -73,7 +73,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
               _isSelectable: true,
               _isEditable: true,
               _columns: [
-                {_attrs: ['email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
+                {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT'},
                 {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
                 {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'},
                 {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES',
@@ -95,7 +95,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
                     ]},
                 {_attrs: ['type'], _name: 'COMMON.TYPE', _type: 'MULTI-CHOICES',
                   _choices: [
-                    {_name: 'EMAIL', _alias: 'COMMON.EMAIL', _class: 'label label-draft'},
+                    {_name: 'EMAIL', _alias: 'COMMON.LABEL.EMAIL', _class: 'label label-draft'},
                     {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label label-editing'}
                   ]}]
             };

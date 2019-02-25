@@ -28,6 +28,7 @@ import { HEADER } from '../modules/common/header/i18n/fr';
 import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/fr';
 import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/fr';
 import { TABLE } from '../modules/table/i18n/fr';
+import { SIDEBAR } from '../modules/sidebar/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -59,5 +60,6 @@ export const fr = {
   'SHARE': SHARE,
   'RESET_PASSWORD': RESET_PASSWORD,
   'EDIT_WORKFLOW': EDIT_WORKFLOW,
-  'TABLE': TABLE
+  'TABLE': TABLE,
+  'SIDEBAR': SIDEBAR
 };
