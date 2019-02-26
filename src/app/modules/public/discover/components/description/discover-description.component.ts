@@ -8,6 +8,8 @@ import { ShareService } from '../../../../../services/share/share.service';
 import { Tag } from '../../../../../models/tag';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-discover-description',
@@ -41,19 +43,20 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _id: string;
 
-  private _patent = false;
-
   private _operatorEmail: string;
 
   private _tags: Array<string> = [];
 
   private _modalMedia = false;
 
+  innovationsRelated: Array<InnovCard> = [];
+
   constructor(private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
               private router: Router,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private innovationService: InnovationService) { }
 
   ngOnInit() {
 
@@ -73,12 +76,13 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._quizButtonDisplay = 'none';
     }
 
+    console.log(this._innovation);
+
     this.getInnovationCard();
+    this.getRelatedInnovations();
     this.getAllTags();
-    this.getPatent();
     this.getAllShareLinks();
     this.getOperatorDetails();
-
   }
 
 
@@ -96,8 +100,10 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
 
-  private getPatent() {
-    this._patent = this._innovation.patented;
+  private getRelatedInnovations() {
+    this.innovationService.getRecommendedInnovations(this._innovation._id).pipe(first()).subscribe((response) => {
+      console.log(response);
+    })
   }
 
 
@@ -174,10 +180,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get selectedMedia(): string {
     return this._selectedMedia;
-  }
-
-  get patent(): boolean {
-    return this._patent;
   }
 
   get operatorEmail(): string {
