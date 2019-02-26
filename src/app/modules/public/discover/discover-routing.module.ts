@@ -18,12 +18,14 @@ const discoverRoutes: Routes = [
         path: '',
         component: InnovationsComponent,
         resolve: { innovations: InnovationsResolver },
+        runGuardsAndResolvers: 'always',
         pathMatch: 'full',
       },
       {
         path: ':projectId/:lang',
         component: DiscoverDescriptionComponent,
         resolve: { innovation: InnovationResolver },
+        runGuardsAndResolvers: 'always',
         pathMatch: 'full'
       },
     ]

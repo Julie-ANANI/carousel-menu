@@ -26,12 +26,12 @@
 
         <!-- if image -->
         <ng-container *ngIf="media?.type === 'PHOTO'">
-          <img [src]="getSrc(media.url)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate" (click)="mediaToShow($event, media.url)">
+          <img [src]="getSrc(media)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate" (click)="mediaToShow($event, media.url)">
         </ng-container>
 
         <!-- if video -->
         <ng-container *ngIf="media?.type === 'VIDEO'">
-          <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)" height="225" [ngStyle]="{ 'left': 'O', 'width': '318px', 'border-width': '0' }"></iframe>
+          <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)" height="100%" [ngStyle]="{ 'left': 'O', 'width': '100%', 'border-width': '0' }"></iframe>
         </ng-container>
 
       </div>
@@ -78,6 +78,26 @@
         <a [href]="mailUrl" target="_blank" class="btn-round btn-mail"><i class="fas fa-envelope"></i></a>
       </div>
 
+    </div>
+
+    <!-- section related innovations -->
+    <div class="section-related">
+      <span class="text"><i class="fas fa-angle-right"></i>{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
+      <div class="card-wrapper">
+        <div *ngFor="let innovation of innovationsRelated" class="card card-3">
+          <div class="card-image">
+            <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate">
+          </div>
+          <div class="card-header">
+            <a [routerLink]="[getLink(innovation.innovationCard)]"><div class="card-title">{{ innovation.innovationCard.title }}</div></a>
+            <ng-container *ngIf="innovation.tags.length > 0">
+              <ng-container *ngFor="let tag of innovation.tags">
+                <div *ngIf="tag.type === 'SECTOR'" class="label label-draft">#{{ tag.label | multiling:lang | FormatText }}</div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
     </div>
 
   </ng-container>

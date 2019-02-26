@@ -77,8 +77,8 @@
   .card {
     margin-bottom: 1.875rem;
     background: transparent;
-    border: none;
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
 
     .card-header {
       padding-bottom: 0.9375rem;
@@ -102,6 +102,10 @@
       padding-right: 0;
     }
 
+  }
+
+  .card:last-child {
+    margin-bottom: 0 !important;
   }
 
   .card:hover {

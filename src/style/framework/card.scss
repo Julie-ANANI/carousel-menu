@@ -4,44 +4,105 @@
 @import "variables";
 
 .card {
-  background: #fff;
-  border: 1px solid $border;
-  border-radius: 0.18rem;
   display: flex;
   flex-direction: column;
-  transition: all .35s ease-in-out;
+  height: 100%;
+  background: #fff;
+  border: 1px solid transparent;
+  border-radius: 0.18rem;
   padding: 0.6rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.875rem;
+  transition: all .35s ease-in-out;
 }
 
 .card .card-header, .card .card-body, .card .card-footer {
-  padding: 0.5rem 0.5rem 0;
+  padding: 0.5rem;
 }
 
-.card .card-header .card-title {
+.card-title {
   font-size: 1rem;
   color: $text-primary;
-  font-weight: 500;
+  font-weight: normal;
   line-height: 1.5;
 }
 
-.card .card-header .card-subtitle {
+.card-subtitle {
   font-size: 0.875rem;
   color: $meta;
   font-weight: 600;
 }
 
+//Todo remove
 .card .card-header:last-child, .card .card-body:last-child, .card .card-footer:last-child {
-  padding-bottom: 0.5rem;
+  padding-bottom: inherit;
 }
 
-.card:last-child {
-  margin-bottom: 0 !important;
-}
 
 .card:hover {
   box-shadow: $box-shadow-hover;
 }
 
 
+/*
+  add the class card-3 if you want to display 3 cards in one row.
+ */
+.card-3 {
+  display: inline-flex;
+  flex: 0 1 calc(33% - 1rem);
+  max-width: 360px;
+  margin: 0 0.6rem 1.875rem 0.6rem;
+}
+
+
+/*
+  add the class card-4 if you want to display 3 cards in one row.
+ */
+.card-4 {
+  display: inline-flex;
+  flex: 0 1 calc(25% - 1rem);
+  margin: 0 0.6rem 1.875rem 0.6rem;
+}
+
+
+/*
+    add this class .card-image when you want to display the image in the card.
+ */
+.card-image {
+  padding: 0;
+  width: 100%;
+  height: 225px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+}
+
+
+/*
+    add this class .fixed when you want to display the image in the card.
+ */
+.card-header .fixed {
+  height: 5.9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+}
+
 /********************************** Media ***************************************/
+
+@media (max-width: 840px) {
+
+
+}
+
+@media (max-width: 600px) {
+
+  .card-3 {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+
+}

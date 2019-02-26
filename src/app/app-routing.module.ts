@@ -26,6 +26,9 @@ const appRoutes: Routes = [
     path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
   },
   {
+    path: 'discover/:projectId/:lang', canActivate: [DiscoverGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+  },
+  {
     path: 'discover', canActivate: [DiscoverGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
   },
   {
