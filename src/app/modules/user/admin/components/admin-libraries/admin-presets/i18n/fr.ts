@@ -81,15 +81,14 @@ export const PRESETS = {
     'TAKEN_NAME': 'Ce nom est déjà utilisé, merci d\'en choisir un autre',
     'TYPE': {
       'CHOOSE': 'Choisissez le type de question',
-      'list': 'List d\'items',
-      'clearbit': 'List d\'entreprises',
-      'radio': 'Question radio',
-      'scale': 'Note',
-      'stars': 'Note étoiles',
-      'textarea': 'Zone de texte',
-      'textbox': 'Input de texte',
+      'list': 'Liste d\'items',
+      'clearbit': 'Liste d\'entreprises',
+      'radio': 'Question choix unique',
+      'scale': 'Notes',
+      'stars': 'Notes étoiles',
+      'textarea': 'Texte',
       'toggle': 'Toggle',
-      'checkbox': 'Question checkbox'
+      'checkbox': 'Question choix multiples'
     },
     'EDIT': {
       'TITLE': 'Titre dans l\'infographie',

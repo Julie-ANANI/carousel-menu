@@ -70,10 +70,6 @@ export const CAMPAIGNS = {
 
   'EDIT_BUTTON': 'edit',
 
-  'SIDEBAR': {
-    'TITLE': 'Edit Campaign'
-  },
-
   'STATS': {
     'HEADING': {
       'INSIGHTS': 'Insights',
@@ -148,9 +144,9 @@ export const CAMPAIGNS = {
   },
 
   'WORKFLOW_PAGE': {
-    'SELECT_LABEL': 'Select the workflow',
     'BUTTON': {
-      'IMPORT': 'Import'
+      'IMPORT': 'Import',
+      'TEST_WORKFLOW': 'Test Workflow'
     },
     'BOT': {
       'MESSAGE_A': 'Don\'t have any workflows?',
@@ -161,6 +157,20 @@ export const CAMPAIGNS = {
       'CONTENT_B': 'If you have already imported a workflow it will replace that workflow. Do you really want to import this template?'
     },
     'NOTE': 'Note: It is advised to you to modify the imported template/emails before launching the batch.',
+  },
+
+  'BATCH_PAGE': {
+    'NOTE': 'Note: It is not possible to launch the batch for this campaign at the moment because of the following reason(s): ',
+    'QUIZ': 'Quiz',
+    'INNOVATION': 'Project validation',
+    'EMAILS': 'No emails are defined.',
+    'WORKFLOW': 'Workflow',
+    'BOT': 'Launch auto-batch and take a holiday :)',
+    'AUTO_BATCH_LABEL': 'Auto-batch started',
+    'NUGGETS': 'Nuggets',
+    'TITLE': 'Batch for',
+    'MODAL_DELETE_CONTENT': 'Do you really want to delete this batch?',
+    'CREATING_BATCH': 'We are in progress of creating the batch for this campaign. Please be patient!',
   }
 
 };

@@ -1,26 +1,28 @@
 import { Multiling } from './multiling';
 
 export interface Option {
-  readonly identifier: string;
+  identifier: string;
   readonly label: Multiling;
   readonly color?: string;
   readonly positive?: boolean;
 }
 
+export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
+
 export interface Question {
+  readonly _id?: string;
+  identifier: string;
+  controlType: QuestionType;
   readonly label: Multiling;
   readonly title: Multiling;
-  readonly _id?: string;
   readonly subtitle: Multiling;
-  identifier: string;
-  controlType: 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
-  canComment: boolean;
+  readonly canComment: boolean;
   readonly parameters?: {
     type: 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
     addon: string;
     min: number;
     max: number;
     step: number;
-  }
+  };
   options?: Array<Option>;
 }

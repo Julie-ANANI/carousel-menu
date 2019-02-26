@@ -5,8 +5,6 @@ export const SIGN_UP = {
 
   'HAVE_ACCOUNT': 'Already have an account?',
 
-  'HEADING_SIDEBAR': 'Sign Up',
-
   'SIGN_UP_LINKEDIN': 'Connect with LinkedIn',
 
   'SIGN_UP_EMAIL': 'Sign Up with Email Address',

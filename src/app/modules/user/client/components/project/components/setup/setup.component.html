@@ -114,7 +114,7 @@
 
 <!-- innovation preview sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-  <app-innovation-preview [innovation]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
+  <app-innovation-preview [projectCard]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
 </app-sidebar>
 <!-- /innovation preview sidebar -->
 
@@ -123,8 +123,8 @@
 <app-modal [(showModal)]="submitModal" [modalTitle]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.TITLE'">
   {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-primary btn-sm" (click)="onClickConfirm($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-primary btn-sm" (click)="onClickConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>
 <!-- /modal to ask user to sure about submitting the project -->

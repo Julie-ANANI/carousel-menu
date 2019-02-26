@@ -66,9 +66,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
   private getCampaigns() {
     this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
       this._campaigns = campaigns.result;
-      if (this._campaigns.length === 0) {
-        this._noResult = true;
-      }
+      this._noResult = campaigns.result.length === 0;
       },() => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -115,7 +113,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'CAMPAIGNS.SIDEBAR.TITLE',
+      title: 'SIDEBAR.TITLE.EDIT_CAMPAIGN',
       type: 'editName'
     };
 

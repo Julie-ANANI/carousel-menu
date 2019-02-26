@@ -50,11 +50,11 @@ export class AdminSignaturesLibraryComponent implements OnInit {
         _isSelectable: true,
         _isEditable: true,
         _columns: [
-          {_attrs: ['name'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['name'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
           {_attrs: ['from'], _name: 'COMMON.SORT.BY_AUTHOR', _type: 'TEXT'},
           {_attrs: ['content'], _name: 'Content', _type: 'TEXT'},
           {_attrs: ['language'], _name: 'COMMON.LANGUAGE', _type: 'TEXT'},
-          {_attrs: ['email'], _name: 'COMMON.EMAIL', _type: 'TEXT'}]
+          {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT'}]
       };
     });
   }

@@ -129,7 +129,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'PROJECT_MODULE.SETUP.PREVIEW',
+      title: 'SIDEBAR.TITLE.PREVIEW',
       size: '726px'
     };
 

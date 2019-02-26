@@ -8,6 +8,7 @@
 h1, h2, h3, h4, h5, h6, .title-hero, .title-primary, .title-secondary, .title-header {
   font-weight: 600;
   line-height: 1.5;
+  word-break: break-word;
 }
 
 
@@ -172,11 +173,11 @@ h6 {
 /*
     these to show different type of text.
  */
-.text-success, .text-warning, .text-error, .text-alert {
+.text-success, .text-warning, .text-error, .text-alert, .text-notify {
   outline: none;
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: normal;
+  font-size: 0.9375rem;
+  font-weight: 600;
   cursor: default;
 }
 
@@ -205,4 +206,13 @@ h6 {
 
 .text-error, .text-alert, .text-error:active, .text-alert:active, .text-error:focus, .text-alert:focus, .text-error:visited, .text-alert:visited {
   color: $alert;
+}
+
+
+/*
+    text notify
+ */
+
+.text-notify, .text-notify:active, .text-notify:focus, .text-notify:visited {
+  color: $meta;
 }

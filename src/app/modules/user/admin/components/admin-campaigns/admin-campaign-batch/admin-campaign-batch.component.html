@@ -1,5 +1,208 @@
-<div>
-  <div class="emailsStats">
+<div id="admin-campaign-batch-component">
+
+  <!-- section stats -->
+  <div class="campaign-stats-wrapper">
+
+    <!-- stat col 1 -->
+    <div class="stat1">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.RECEPTION' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('good_emails') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.RECEIVED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('received') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BOUNCES' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('bounces') }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat col 2 -->
+    <div class="stat2">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.INTERACTION' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.OPENED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('opened') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.CLICKED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('clicked') }}%</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat col 3 -->
+    <div class="stat3">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.DISPLAY' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAIL' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('email') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.QUESTIONNAIRE' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('questionnaire') }}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
+
+    <!-- section no batches -->
+    <div *ngIf="noResult" class="section-light-container remove-bottom">
+
+      <!-- note -->
+      <div *ngIf="!autoBatchStatus" class="section-light-container remove-top section-error text-notify">
+        <div class="circle circle-sm" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' "><i class="fas fa-check"></i></div>{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}
+        <div class="circle circle-sm left" [ngClass]=" quiz ? 'complete' : 'incomplete' "><i class="fas fa-check"></i></div>{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}
+        <div class="circle circle-sm left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' "><i class="fas fa-check"></i></div>{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}
+      </div>
+
+      <!-- bot -->
+      <app-message-space [widthMax]="'473px'">
+
+        <div class="toggle nuggets">
+          {{ 'CAMPAIGNS.BATCH_PAGE.NUGGETS' | translate }}
+          <div class="form-group">
+            <label class="form-switch" for="result-nuggets">
+              <input type="checkbox" id="result-nuggets" (change)="setNuggets()"  [ngModel]="campaign.nuggets">
+              <i class="form-icon"></i>
+            </label>
+          </div>
+        </div>
+
+        <div class="toggle">
+          {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
+          <div class="form-group">
+            <label class="form-switch" for="auto-batch">
+              <input
+                type="checkbox"
+                id="auto-batch"
+                [disabled]="!autoBatchStatus"
+                [value]="campaign.autoBatch"
+                (change)="onFirstAutoBatch($event)"
+                [ngModel]="campaign.autoBatch">
+              <i class="form-icon"></i>
+            </label>
+          </div>
+        </div>
+
+        <div *ngIf="batchAlreadyActivated === 'false'"
+          [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
+          class="icons icons-meta cog tooltip"
+          data-tooltip="Batch Manually"
+          (click)="activateSidebar('newBatch')">
+          <i class="fas fa-cog"></i>
+        </div>
+
+        <div *ngIf="batchAlreadyActivated === 'true'" class="notify-wrapper">
+          <p>{{ 'CAMPAIGNS.BATCH_PAGE.CREATING_BATCH' | translate }}</p>
+          <div class="loading loading-lg"></div>
+        </div>
+
+      </app-message-space>
+
+    </div>
+
+    <!-- section batches -->
+    <div *ngIf="!noResult" class="section-light-container">
+
+      <!-- section status -->
+      <div class="section-status">
+
+        <div class="form-group">
+          <label class="form-switch" for="result-auto-batch">
+            <input type="checkbox" id="result-auto-batch" (change)="onSwitchAutoBatch($event)" [ngModel]="campaign.autoBatch">
+            <i class="form-icon"></i>{{ 'CAMPAIGNS.BATCH_PAGE.AUTO_BATCH_LABEL' | translate }}
+          </label>
+        </div>
+
+      </div>
+
+      <!-- batches -->
+      <div *ngFor="let batch of stats.batches; let batchIndex = index" class="card">
+
+        <div class="card-header">
+
+          <div class="card-title">
+            {{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros
+            <div *ngIf="getDeleteStatus(batch)" class="icons icons-delete" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
+          </div>
+
+          <label class="form-switch float-right" for="freeze">
+            <input type="checkbox" id="freeze" (change)="OnSwitchFreeze(batch, $event)" [ngModel]="batch.active">
+            <i class="form-icon"></i>{{ 'COMMON.LABEL.STARTED' | translate }}
+          </label>
+
+        </div>
+
+        <div class="card-body">
+          <app-shared-table
+            [data]="tableBatch(batchIndex)"
+            [config]="config"
+            (editRow)="OnClickEdit($event, batch)">
+          </app-shared-table>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- modal to delete batch -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  {{ 'CAMPAIGNS.BATCH_PAGE.MODAL_DELETE_CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onConfirmDelete()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+</app-modal>
+<!-- /modal to delete batch -->
+
+
+<!-- sidebars to perform batch operations -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-batch-form
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type"
+    (batchOutput)="onOutput($event)"
+    [currentRow]="currentRow"
+    [content]="content">
+  </app-batch-form>
+</app-sidebar>
+<!-- /sidebars to perform batch operations  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- commented 20feb
+
+<div class="emailsStats">
     <div>
       <span class="number">{{ mailsToSend }}
         <span class="badge" data-badge="0"><i class="far fa-envelope"></i></span>
@@ -25,159 +228,17 @@
       derniers mails envoyés
     </div>
   </div>
-  <div *ngIf="!stats.batches || !stats.batches.length">
-    Pas de batch d'emails programmé pour l'instant...
-  </div>
-  <p *ngIf="!quizGenerated" class="text-center text-error">
-    La quiz n'a pas été généré pour cette innovation, il doit y avoir un quiz avant de faire un envoi d'emails !
-  </p>
-  <div class="centered-buttons">
-    <button (click)="testModal=true" class="btn btn-primary" [disabled] = "!defaultWorkflow">
-      Envoyer les mails de test
-    </button>
-    <button (click)="batchModal=true" class="btn btn-primary" [disabled] = "!readyAutoBatch" >
-      Programmer un nouveau batch de mails
-    </button>
-    <label class="form-switch">
-      <input type="checkbox" (change)="AutoBatch()" [ngModel]="campaign.autoBatch" [disabled] = "!readyAutoBatch" >
-      <i class="form-icon"></i> Autobatch
-    </label>
-    <label class="form-switch">
-      <input type="checkbox" (change)="setNuggets()" [ngModel]="campaign.nuggets" [disabled] = "!readyAutoBatch" >
-      <i class="form-icon"></i>Méthode nuggets
-    </label>
-    <ul>
-      <li *ngIf="!quizGenerated"> Quizz manquant </li>
-      <li *ngIf="!innoReady"> Fiche manquante </li>
-      <li *ngIf="!defaultWorkflow"> SidebarInterface par défaut manquant</li>
-      <li *ngIf="statusAB == '0'"> Vous n'avez pas utilisé le super A/B testing</li>
-      <li *ngIf="statusAB == '1'"> Vous ne pouvez pas commencer si A/B testing non validé</li>
-    </ul>
-    <!--
-    <button (click)="creerpro()" class="btn btn-primary">
-      CreerDesPros Alea + Autobatch si actif
-    </button>
-    -->
-  </div>
-  <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
-    <div class="card-header">
-      <div class="card-title h5">
-        Batch de {{batch.size}} pros
-          <span *ngIf="this.poubelle(batch)">
-            <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
-              <i class="fas fa-trash"></i>
-            </a>
-          </span>
-          <span *ngIf="batch.nuggets">
-            <i class="fas fa-crow"></i>
-          </span>
-          <span *ngIf="!batch.nuggets && batch.status === 0">
-            <a class="c-hand" role="button" (click)="nuggetsBatch = batch">
-              <i class="fas fa-plus-circle"></i>
-            </a>
-          </span>
-        <label class="form-switch" style="float:right">
-          <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
-          <i class="form-icon"></i>
-        </label>
-      </div>
-      <div class="card-subtitle text-gray">créé {{ batch.created | date: dateformat }}</div>
-      <div class="card-body-batch">
-        <app-shared-table
-          [data]="this.tableBatch(batchIndex)"
-          [config]="config"
-          (editRow)="editBatch($event, batch)">
-        </app-shared-table>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- MODAL : Création de batch de mails -->
-<div class="modal" [ngClass]="{'active': batchModal}">
-  <div class="modal-overlay" (click)="(batchModal = false) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(batchModal = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">Programmer un nouveau batch de mails</div>
-      <p>Le batch doit être programmé dans plus de 7 minutes, ou être envoyé immédiatement</p>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        Nombre de pros à contacter :
-        <input type="number" [(ngModel)]="newBatch.size"/>
-      </div>
-      <div class="form-group">
-        Jour d'envoi du premier mail :
-        <input type="date" [(ngModel)]="dateMail"/>
-      </div>
-      <div class="form-group">
-        Heure d'envoi du premier mail :
-        <input type="time" [(ngModel)]="timeMail"/>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button (click)="batchModal = false; createNewBatch(true)" class="btn btn-primary"
-              [disabled]="!newBatch.size || (!!dateMail && !!timeMail)">
-        Envoyer le batch immédiatement
-      </button>
-      <button class="btn btn-primary" (click)="batchModal = false; createNewBatch(false)"
-              [disabled]="!newBatch.size || !dateMail || !timeMail">Créer</button>
-      <button class="btn btn-link" (click)="(batchModal = false) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-    </div>
-  </div>
-</div>
+<span *ngIf="!batch.nuggets && batch.status === 0">
+  <a class="c-hand" role="button" (click)="nuggetsBatch = batch">
+    <i class="fas fa-plus-circle"></i>
+  </a>
+</span>
+<div class="text-success" *ngIf="batch.nuggets"><i class="fas fa-crow"></i></div>
 
-<!-- MODAL : Suppression du batch -->
-<div class="modal" [ngClass]="{'active': selectedBatchToBeDeleted}"  >
-  <div class="modal-overlay" (click)="(selectedBatchToBeDeleted = null) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(selectedBatchToBeDeleted = null) && $event.preventDefault()"></button>
-      <div class="modal-title h5">Suppression d'un batch</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">Etes-vous bien sûr de vouloir supprimer ce magnifique batch ??</div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-link" (click)="deleteBatch(selectedBatchToBeDeleted._id)">{{ 'COMMON.DELETE' | translate }}</button>
-      <button class="btn btn-primary" (click)="(selectedBatchToBeDeleted = null) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal" [ngClass]="{'active': testModal}">
-  <div class="modal-overlay" (click)="(testModal = null) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(testModal = null) && $event.preventDefault()"></button>
-      <div class="modal-title h5">Envoi des emails de test</div>
-    </div>
-    <div class="modal-body email-buttons">
-      <button (click)="sendTestEmails(1)" class="btn btn-primary">
-        Envoyer le premier mail à Karine
-      </button>
-      <button (click)="sendTestEmails(2)" class="btn btn-primary">
-        Envoyer la première relance à Karine
-      </button>
-      <button (click)="sendTestEmails(3)" class="btn btn-primary">
-        Envoyer la deuxième relance à Karine
-      </button>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="(testModal = null) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL : ajout de nuggets -->
+-->
+<!--
+&lt;!&ndash; MODAL : ajout de nuggets &ndash;&gt;
 <div class="modal" [ngClass]="{'active': nuggetsBatch}">
   <div class="modal-overlay" (click)="(nuggetsBatch = null) && $event.preventDefault()"></div>
   <div class="modal-container">
@@ -196,14 +257,4 @@
     </div>
   </div>
 </div>
-
-  <app-sidebar
-    [template]="templateSidebar" (closeSidebar)="closeSidebar($event)">
-    <app-sidebar-batch
-      [rowBatch]="currentRow"
-      [content]="content"
-      (batchChange)="onSubmitEditBatch($event)"
-    >
-    </app-sidebar-batch>
-  </app-sidebar>
-
+-->

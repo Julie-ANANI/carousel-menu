@@ -9,17 +9,17 @@ export const COMMON = {
   'CHANGE': 'Changer',
   'DELETE': 'Supprimer',
   'SUBMIT': 'Confirmer',
+
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
   'SIGN_OUT': 'Se déconnecter',
   'LOG_OUT': 'Se déconnecter',
   'GENERATE': 'Générer',
-  'CANCEL': 'Annuler',
+
   'ADD': 'Ajouter',
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
   'OF': 'de',
-  'DATE': 'Date',
   'ADDED': 'Ajouté le',
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
@@ -51,7 +51,7 @@ export const COMMON = {
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
   'SEARCH_BY': 'Recherche par',
   'SEARCH_PLACEHOLDER': 'Rechercher ici',
-  'SELECT': 'Sélectionnez',
+
   'SHARED_REPORTS': 'Rapports partagés',
 
   'BLACKLIST': {
@@ -68,11 +68,10 @@ export const COMMON = {
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 
-  'NAME': 'Nom',
-  'FIRSTNAME': 'Prénom',
-  'LASTNAME': 'Nom',
 
-  'EMAIL': 'Email',
+
+
+
   'PHONE': 'Téléphone',
 
   'ACTIVITY_FIELDS': 'Champs d\'activité',
@@ -81,7 +80,7 @@ export const COMMON = {
   'TECHNOLOGIES': 'Technologies',
   'TECHNOLOGIES_PLACEHOLDER': 'Entrez la technologie',
 
-  'PASSWORD': 'Mot de passe',
+
   'OLD_PASSWORD': 'Ancien mot de passe',
   'NEW_PASSWORD': 'Nouveau mot de passe',
   'CONFIRM_PASSWORD': 'Confirmez le mot de passe',
@@ -90,30 +89,61 @@ export const COMMON = {
   'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
   'NEW_PASSWORD_PLACEHOLDER': '9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères',
+
 
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
-  'COMPANY': 'Nom de l\'entreprise',
-  'COMPANY_PLACEHOLDER': 'Entrez le nom de votre entreprise',
 
-  'JOBTITLE': 'Poste',
-  'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
 
-  'TYPE': 'Type',
+
+
+
 
   'DOMAIN': 'Domaine',
 
-  'COUNTRY': 'Pays',
-  'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
+
+
 
   'TERMS': {
     'A': 'En cliquant sur "Continuer", j\'accepte',
     'B': 'termes et conditions d\'utilisation.',
   },
 
-  'PROFILE_URL': 'Profile URL',
+
   'TOP_PROFILE': 'Profil haut',
+
+  'LABEL': {
+    'FIRSTNAME': 'Prénom',
+    'LASTNAME': 'Nom',
+    'EMAIL': 'Email',
+    'PASSWORD': 'Mot de passe',
+    'PROS_CONTACT': 'Nombre de pros',
+    'JOBTITLE': 'Poste',
+    'COMPANY': 'Nom de l\'entreprise',
+    'COUNTRY': 'Pays',
+    'DATE': 'Date',
+    'TIME': 'Le temps',
+    'STARTED': 'Commencé',
+    'CONTENT': 'Contenu',
+    'OPERATOR': 'Opérateur',
+    'ADMIN': 'Affecter comme administrateur',
+    'PROFILE_URL': 'Profile URL',
+    'CAMPAIGN_NAME': 'Nom de la campagne',
+    'NAME': 'Nom',
+    'TYPE': 'Type',
+    'SELECT_WORKFLOW': 'Sélectionner le workflow',
+    'SELECT': 'Sélectionnez',
+    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
+  },
+
+  'PLACEHOLDER': {
+    'PROS_CONTACT': 'Entrez le nombre de pros à contacter',
+    'PASSWORD_SIGNUP': '9+ caractères',
+    'JOBTITLE': 'Entrez votre titre de poste',
+    'COMPANY': 'Entrez le nom de votre entreprise',
+    'COUNTRY': 'Entrez votre pays',
+    'CAMPAIGN': 'Entrez le nom de la campagne',
+  },
 
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis.',
@@ -129,11 +159,26 @@ export const COMMON = {
     'MESSAGE': 'Tous les champs sont obligatoires',
     'ACCEPT': 'Veuillez accepter les termes et conditions.',
     'COUNTRY': 'Le pays est requis.',
-    'URL': 'Le profil est requis.'
+    'URL': 'Le profil est requis.',
+    'PROS_CONTACT': 'Value should be greater then 0.',
+    'BATCH_IMMEDIATE': 'Laissez ce champ vide pour envoyer le batch immédiatement. Le batch sera envoyé dans 7 minutes.'
+  },
+
+  'INVALID': {
+    'EMAIL': 'Veuillez renseigner une adresse email valide',
+    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
+    'MUST_CONTAIN': 'Le mot de passe doit en contenir un symbole spécial ($@&!#).'
   },
 
   'BUTTON': {
-    'SIGN_UP': 'Continuer',
+    'CONTINUE': 'Continuer',
+    'ADD': 'Ajouter',
+    'SAVE': 'Sauvegarder',
+    'CANCEL': 'Annuler',
+    'CONFIRM': 'Confirmer',
+    'IMPORT': 'Importer',
+    'EXPORT': 'Exporter',
+    'SEND': 'Envoyer',
   },
 
   'PROJECT': {
@@ -161,11 +206,7 @@ export const COMMON = {
     'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 
-  'INVALID': {
-    'EMAIL': 'Veuillez renseigner une adresse email valide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
-    'MUST_CONTAIN': 'Le mot de passe doit en contenir un symbole spécial ($@&!#).'
-  },
+
 
   'LINKS': 'Liens',
   'HELP': 'Aide',
@@ -275,31 +316,18 @@ export const COMMON = {
   },
 
   'CAMPAIGN': {
-    'LABEL': 'Nom de la campagne',
     'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
-    'PLACEHOLDER': 'Entrez le nom de la campagne',
     'DELETE_BOARD': {
       'HEADING': 'Supprimer le forum',
       'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
     }
   },
 
-  'SIDEBAR': {
-    'EDIT_WORKFLOW': 'Modifier le modèle',
-    'EDIT_INSIGHT': 'Modifier l\'aperçu',
-    'ADD_PRO': 'Ajouter un professionnel',
-    'EDIT_PROFESSIONAL': 'Modifier Professionnel',
-    'ADD_TAGS': 'Ajouter des tags',
-  },
-
   'MODAL': {
     'TITLE_DELETE': 'Supprimer le forum',
     'TITLE_CONFIRMATION': 'Confirmation le forum',
     'TITLE_IMPORT': 'Conseil d\'importation',
+    'TITLE_BATCH': 'Batch le forum',
   },
-
-  'SELECT_LABELS': {
-    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
-  }
 
 };

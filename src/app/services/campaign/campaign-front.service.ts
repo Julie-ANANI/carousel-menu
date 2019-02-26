@@ -1,11 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
+import { Subject}  from 'rxjs';
 
 @Injectable()
 export class CampaignFrontService {
 
+  campaignSubject = new Subject<Campaign>();
+
   constructor() { }
+
+
+  /***
+   * this function is to called to set the campaign object
+   * so that we can have same object in every child component.
+   * @param campaign
+   */
+  setCampaign(campaign: Campaign) {
+    this.campaignSubject.next(campaign);
+  }
+
+
+  /***
+   * this function is to get the value of set campaign after setting
+   * the campaign object.
+   */
+  getCampaign(): Subject<Campaign> {
+    return this.campaignSubject;
+  }
 
 
   /***
@@ -80,31 +102,33 @@ export class CampaignFrontService {
   getProsCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
-    switch (searchKey) {
+    if (campaign.stats) {
+      switch (searchKey) {
 
-      case 'professional':
-        value = campaign.stats.nbPros;
-        break;
+        case 'professional':
+          value = campaign.stats.nbPros;
+          break;
 
-      case 'notReached':
-        value = Math.round(((campaign.stats.nbPros - campaign.stats.nbProsSent) / campaign.stats.nbPros) * 100);
-        break;
+        case 'notReached':
+          value = Math.round(((campaign.stats.nbPros - campaign.stats.nbProsSent) / campaign.stats.nbPros) * 100);
+          break;
 
-      case 'good':
-        value = Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100);
-        break;
+        case 'good':
+          value = Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100);
+          break;
 
-      case 'unsure':
-        value = Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100);
-        break;
+        case 'unsure':
+          value = Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100);
+          break;
 
-      case 'bad':
-        value = Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100);
-        break;
+        case 'bad':
+          value = Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100);
+          break;
 
-      default:
-      // do nothing...
+        default:
+        // do nothing...
 
+      }
     }
 
     return isNaN(value) ? 0 : value;
@@ -120,36 +144,38 @@ export class CampaignFrontService {
   getBatchCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
-    switch (searchKey) {
+    if (campaign.stats) {
+      switch (searchKey) {
 
-      case 'good_emails':
-        value = campaign.stats.campaign.nbFirstTierMails;
-        break;
+        case 'good_emails':
+          value = campaign.stats.campaign.nbFirstTierMails;
+          break;
 
-      case 'received':
-        value = campaign.stats.nbProsSent;
-        break;
+        case 'received':
+          value = campaign.stats.nbProsSent;
+          break;
 
-      case 'bounces':
-        value = campaign.stats.nbTotalMails - campaign.stats.nbProsSent;
-        break;
+        case 'bounces':
+          value = campaign.stats.nbTotalMails - campaign.stats.nbProsSent;
+          break;
 
-      case 'opened':
-        value = Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsSent) * 100);
-        break;
+        case 'opened':
+          value = Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsSent) * 100);
+          break;
 
-      case 'clicked':
-        value = Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsSent) * 100);
-        break;
+        case 'clicked':
+          value = Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsSent) * 100);
+          break;
 
-      case 'email':
-        value = campaign.stats.nbProsOpened;
-        break;
+        case 'email':
+          value = campaign.stats.nbProsOpened;
+          break;
 
-      case 'questionnaire':
-        value = campaign.stats.nbProsClicked;
-        break;
+        case 'questionnaire':
+          value = campaign.stats.nbProsClicked;
+          break;
 
+      }
     }
 
     return isNaN(value) ? 0 : value;
