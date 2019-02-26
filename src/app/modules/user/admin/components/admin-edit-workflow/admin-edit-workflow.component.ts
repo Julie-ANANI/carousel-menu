@@ -75,7 +75,7 @@ export class AdminEditWorkflowComponent {
       steps[email.step][email.language] = email;
       // email.signature = email.signature || {};
       email.defaultSignatureName = 'Karine Caulfield';
-      email.status = email.modified.toString();
+      email.status = email.modified ? email.modified.toString() : "- N/A -";
     });
 
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
