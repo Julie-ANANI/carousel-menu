@@ -80,31 +80,33 @@ export class CampaignFrontService {
   getProsCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
-    switch (searchKey) {
+    if(campaign && campaign.stats) {
+      switch (searchKey) {
 
-      case 'professional':
-        value = campaign.stats.nbPros;
-        break;
+        case 'professional':
+          value = campaign.stats.nbPros;
+          break;
 
-      case 'notReached':
-        value = Math.round(((campaign.stats.nbPros - campaign.stats.nbProsSent) / campaign.stats.nbPros) * 100);
-        break;
+        case 'notReached':
+          value = Math.round(((campaign.stats.nbPros - campaign.stats.nbProsSent) / campaign.stats.nbPros) * 100);
+          break;
 
-      case 'good':
-        value = Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100);
-        break;
+        case 'good':
+          value = Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100);
+          break;
 
-      case 'unsure':
-        value = Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100);
-        break;
+        case 'unsure':
+          value = Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100);
+          break;
 
-      case 'bad':
-        value = Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100);
-        break;
+        case 'bad':
+          value = Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100);
+          break;
 
-      default:
-      // do nothing...
+        default:
+        // do nothing...
 
+      }
     }
 
     return isNaN(value) ? 0 : value;
