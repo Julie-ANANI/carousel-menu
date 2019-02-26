@@ -11,10 +11,12 @@
       <h1 class="title-primary">{{ innovation.title }}</h1>
 
       <!-- innovation tags -->
-      <div *ngFor="let tag of tags" class="label label-draft">#{{ tag }}</div>
+      <ng-container *ngIf="tags.length > 0">
+        <div *ngFor="let tag of tags" class="label label-draft">#{{ tag }}</div>
+      </ng-container>
 
       <!-- innovation summary -->
-      <div class="summary-wrapper" [innerHTML]="innovation.summary"></div>
+      <div *ngIf="innovation.summary" class="summary-wrapper" [innerHTML]="innovation.summary"></div>
 
     </div>
 
@@ -70,10 +72,10 @@
       <!-- share buttons -->
       <div class="share-wrapper">
         <h1 class="title-section">{{ 'DISCOVERDESCRIPTION.SHARE_TITLE' | translate }}</h1>
-        <a [href]="linkedInUrl" target="_blank" class="btn-round btn-linkedin"><i class="fab fa-linkedin-in fa-2x"></i></a>
-        <a [href]="twitterUrl" target="_blank" class="btn-round btn-twitter"><i class="fab fa-twitter fa-2x"></i></a>
-        <a [href]="facebookUrl" target="_blank" class="btn-round btn-facebook"><i class="fab fa-facebook-f fa-2x"></i></a>
-        <a [href]="mailUrl" target="_blank" class="btn-round btn-mail"><i class="fas fa-envelope fa-2x"></i></a>
+        <a [href]="linkedInUrl" target="_blank" class="btn-round btn-linkedin"><i class="fab fa-linkedin-in"></i></a>
+        <a [href]="twitterUrl" target="_blank" class="btn-round btn-twitter"><i class="fab fa-twitter"></i></a>
+        <a [href]="facebookUrl" target="_blank" class="btn-round btn-facebook"><i class="fab fa-facebook-f"></i></a>
+        <a [href]="mailUrl" target="_blank" class="btn-round btn-mail"><i class="fas fa-envelope"></i></a>
       </div>
 
     </div>
