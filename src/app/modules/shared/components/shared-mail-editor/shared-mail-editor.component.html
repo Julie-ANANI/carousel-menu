@@ -6,7 +6,7 @@
     <!-- language choice -->
 
     <div *ngIf="!noLanguage" class="language-wrapper">
-      <label class="form-label">{{ 'COMMON.SELECT_LABELS.CHOOSE_LANGUAGE' | translate }}</label>
+      <label class="form-label">{{ 'COMMON.LABEL.CHOOSE_LANGUAGE' | translate }}</label>
       <div (click)="changeLanguage('en')" [ngClass]="{ active: language === 'en' }" class="text-link">
         {{ 'COMMON.LANG.EN' | translate }}
       </div>

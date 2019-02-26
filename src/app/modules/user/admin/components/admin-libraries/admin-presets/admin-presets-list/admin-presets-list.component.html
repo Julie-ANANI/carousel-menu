@@ -22,7 +22,7 @@
   <table class="table presets" wt-responsive-table>
     <thead>
       <tr>
-        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'name'">{{ 'COMMON.NAME' | translate }}</app-shared-sort></th>
+        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'name'">{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
         <th>{{ 'PRESETS.SECTIONS' | translate }}</th>
         <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</app-shared-sort></th>
         <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</app-shared-sort></th>

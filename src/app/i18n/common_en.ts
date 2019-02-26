@@ -50,7 +50,7 @@ export const COMMON = {
   'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
   'SEARCH_BY': 'Search by',
   'SEARCH_PLACEHOLDER': 'Search here',
-  'SELECT': 'Select',
+
   'SHARED_REPORTS': 'Shared Reports',
 
   'BLACKLIST': {
@@ -70,7 +70,6 @@ export const COMMON = {
 
   'COMMENT': 'Comment',
 
-  'NAME': 'Name',
 
 
 
@@ -100,7 +99,7 @@ export const COMMON = {
 
 
 
-  'TYPE': 'Type',
+
 
   'DOMAIN': 'Domain',
 
@@ -132,6 +131,11 @@ export const COMMON = {
     'ADMIN': 'Affect as administrator',
     'PROFILE_URL': 'Profile URL',
     'CAMPAIGN_NAME': 'Campaign Name',
+    'NAME': 'Name',
+    'TYPE': 'Type',
+    'SELECT_WORKFLOW': 'Select the workflow',
+    'SELECT': 'Select',
+    'CHOOSE_LANGUAGE': 'Choose Language:',
   },
 
   'PLACEHOLDER': {
@@ -170,10 +174,13 @@ export const COMMON = {
 
   'BUTTON': {
     'CONTINUE': 'Continue',
-    'ADD': 'ADD',
+    'ADD': 'Add',
     'SAVE': 'Save',
     'CANCEL': 'Cancel',
     'CONFIRM': 'Confirm',
+    'IMPORT': 'Import',
+    'EXPORT': 'Export',
+    'SEND': 'Send',
   },
 
   'TABLE' : {
@@ -317,25 +324,11 @@ export const COMMON = {
     },
   },
 
-  'SIDEBAR': {
-    'EDIT_WORKFLOW': 'Edit Workflow',
-    'EDIT_INSIGHT': 'Edit Insight',
-    'ADD_PRO': 'Add Professional',
-
-
-    'NEW_BATCH': 'New Batch Manually',
-    'EDIT_BATCH': 'Edit Batch'
-  },
-
   'MODAL': {
     'TITLE_DELETE': 'Delete Board',
     'TITLE_CONFIRMATION': 'Confirmation Board',
     'TITLE_IMPORT': 'Import Board',
     'TITLE_BATCH': 'Batch Board'
   },
-
-  'SELECT_LABELS': {
-    'CHOOSE_LANGUAGE': 'Choose Language:',
-  }
 
 };

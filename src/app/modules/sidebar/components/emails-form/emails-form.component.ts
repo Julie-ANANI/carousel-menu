@@ -164,7 +164,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
         _content: this.campaignInfosToShow.payload.recipients,
         _total: this.campaignInfosToShow.payload.recipients.length,
         _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
           {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
         ]
       };

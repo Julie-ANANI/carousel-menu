@@ -78,7 +78,7 @@ export class ExplorationComponent implements OnInit {
         _isLocal: true,
         _total: response.answers.length,
         _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
           {_attrs: ['job'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
           {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
           {_attrs: ['created'], _name: 'COMMON.LABEL.DATE', _type: 'DATE'},

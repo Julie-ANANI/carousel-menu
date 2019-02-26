@@ -85,7 +85,13 @@
           {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
           <div class="form-group">
             <label class="form-switch" for="auto-batch">
-              <input type="checkbox" id="auto-batch" [disabled]="!autoBatchStatus" [value]="campaign.autoBatch" (change)="onFirstAutoBatch($event)" [ngModel]="campaign.autoBatch">
+              <input
+                type="checkbox"
+                id="auto-batch"
+                [disabled]="!autoBatchStatus"
+                [value]="campaign.autoBatch"
+                (change)="onFirstAutoBatch($event)"
+                [ngModel]="campaign.autoBatch">
               <i class="form-icon"></i>
             </label>
           </div>
@@ -93,7 +99,8 @@
 
         <div *ngIf="batchAlreadyActivated === 'false'"
           [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
-          class="icons icons-meta cog"
+          class="icons icons-meta cog tooltip"
+          data-tooltip="Batch Manually"
           (click)="activateSidebar('newBatch')">
           <i class="fas fa-cog"></i>
         </div>
@@ -159,12 +166,10 @@
 <!-- modal to delete batch -->
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'CAMPAIGNS.BATCH_PAGE.MODAL_DELETE_CONTENT' | translate }}
-
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button class="btn btn-sm btn-primary" (click)="onConfirmDelete()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-
 </app-modal>
 <!-- /modal to delete batch -->
 

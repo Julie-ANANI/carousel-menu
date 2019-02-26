@@ -51,7 +51,7 @@ export const COMMON = {
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
   'SEARCH_BY': 'Recherche par',
   'SEARCH_PLACEHOLDER': 'Rechercher ici',
-  'SELECT': 'Sélectionnez',
+
   'SHARED_REPORTS': 'Rapports partagés',
 
   'BLACKLIST': {
@@ -68,7 +68,7 @@ export const COMMON = {
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 
-  'NAME': 'Nom',
+
 
 
 
@@ -97,7 +97,7 @@ export const COMMON = {
 
 
 
-  'TYPE': 'Type',
+
 
   'DOMAIN': 'Domaine',
 
@@ -129,6 +129,11 @@ export const COMMON = {
     'ADMIN': 'Affecter comme administrateur',
     'PROFILE_URL': 'Profile URL',
     'CAMPAIGN_NAME': 'Nom de la campagne',
+    'NAME': 'Nom',
+    'TYPE': 'Type',
+    'SELECT_WORKFLOW': 'Sélectionner le workflow',
+    'SELECT': 'Sélectionnez',
+    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
   },
 
   'PLACEHOLDER': {
@@ -171,6 +176,9 @@ export const COMMON = {
     'SAVE': 'Sauvegarder',
     'CANCEL': 'Annuler',
     'CONFIRM': 'Confirmer',
+    'IMPORT': 'Importer',
+    'EXPORT': 'Exporter',
+    'SEND': 'Envoyer',
   },
 
   'PROJECT': {
@@ -315,25 +323,11 @@ export const COMMON = {
     }
   },
 
-  'SIDEBAR': {
-    'EDIT_WORKFLOW': 'Modifier le modèle',
-    'EDIT_INSIGHT': 'Modifier l\'aperçu',
-    'ADD_PRO': 'Ajouter un professionnel',
-
-
-    'NEW_BATCH': 'Nouveau batch manuellement',
-    'EDIT_BATCH': 'Modifier le batch'
-  },
-
   'MODAL': {
     'TITLE_DELETE': 'Supprimer le forum',
     'TITLE_CONFIRMATION': 'Confirmation le forum',
     'TITLE_IMPORT': 'Conseil d\'importation',
     'TITLE_BATCH': 'Batch le forum',
   },
-
-  'SELECT_LABELS': {
-    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
-  }
 
 };

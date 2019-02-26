@@ -62,6 +62,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   private getUserReports() {
     this._subscriptions.push(this.userService.getSharedWithMe(this.config).subscribe((reports: any) => {
       this.getSharedReports(reports.sharedgraph || []);
+      this._noResult = reports.length === 0;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }));
@@ -87,10 +88,6 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
         report['link'] = `/user/synthesis/${report.objectId}/${report.sharedKey}`;
 
         this._totalReports.push(report);
-
-        if (this._totalReports.length === 0) {
-          this._noResult = true;
-        }
 
         }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');

@@ -157,7 +157,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         this._sidebarValue = {
           animate_state: 'active',
           type: 'newBatch',
-          title: 'COMMON.SIDEBAR.NEW_BATCH'
+          title: 'SIDEBAR.TITLE.NEW_BATCH'
         };
         break;
 
@@ -165,7 +165,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         this._sidebarValue = {
           animate_state: 'active',
           type: 'editBatch',
-          title: 'COMMON.SIDEBAR.EDIT_BATCH',
+          title: 'SIDEBAR.TITLE.EDIT_BATCH',
           size: '726px'
         };
         break;

@@ -51,13 +51,13 @@ export class SharedProsListComponent {
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _showDeleteModal = false;
-
   private _currentPro: Professional = null;
 
   isProfessionalForm = false;
 
   isTagsForm = false;
+
+  private _modalDelete = false;
 
   constructor(private professionalsService: ProfessionalsService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -73,7 +73,7 @@ export class SharedProsListComponent {
 
         this._tableInfos = {
           _selector: 'admin-pros',
-          _title: 'COMMON.PROFESSIONALS',
+          _title: 'TABLE.TITLE.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
           _isHeadable: true,
@@ -101,7 +101,7 @@ export class SharedProsListComponent {
 
         this._tableInfos = {
           _selector: 'admin-pros',
-          _title: 'COMMON.PROFESSIONALS',
+          _title: 'TABLE.TITLE.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
           _isFiltrable: true,
@@ -208,14 +208,8 @@ export class SharedProsListComponent {
 
 
   deleteProsModal(pros: Professional[]) {
-    this._showDeleteModal = true;
+    this._modalDelete = true;
     this._prosToRemove = pros;
-  }
-
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._showDeleteModal = false;
   }
 
 
@@ -231,7 +225,7 @@ export class SharedProsListComponent {
     }
 
     this._prosToRemove = [];
-    this._showDeleteModal = false;
+    this._modalDelete = false;
 
   }
 
@@ -324,8 +318,12 @@ export class SharedProsListComponent {
     return this._sidebarValue;
   }
 
-  get showDeleteModal(): boolean {
-    return this._showDeleteModal;
+  get modalDelete(): boolean {
+    return this._modalDelete;
+  }
+
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
   }
 
   get currentPro(): Professional {

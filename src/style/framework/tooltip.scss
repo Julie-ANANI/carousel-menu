@@ -1,0 +1,64 @@
+/*
+    This stylesheet contains the class related to the tooltip for our framework.
+ */
+@import "variables";
+
+
+/*
+  Add the tooltip class and the data-tooltip attribute, which contains the tooltip content,
+  to non self closing elements.
+ */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  background: rgba(0,0,0,0.75);
+  border-radius: 0.18rem;
+  bottom: 100%;
+  color: #fff;
+  content: attr(data-tooltip);
+  display: block;
+  font-size: 0.75rem;
+  left: 50%;
+  max-width: 320px;
+  opacity: 0;
+  overflow: auto;
+  padding: 0.2rem 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  text-overflow: ellipsis;
+  transform: translate(-50%,0.4rem);
+  transition: all 0.15s ease-in-out;
+  white-space: pre;
+  z-index: 300;
+}
+
+.tooltip:focus::after, .tooltip:hover::after {
+  opacity: 1;
+  transform: translate(-50%,-0.2rem);
+}
+
+
+/*
+  And add the tooltip-right, tooltip-bottom or tooltip-left class to define the
+  position of a tooltip. By default, the tooltip appears above the element.
+ */
+.tooltip.tooltip-right::after {
+  bottom: 50%;
+  left: 100%;
+  transform: translate(-0.2rem,50%);
+}
+
+.tooltip.tooltip-left::after {
+  bottom: 50%;
+  left: auto;
+  right: 100%;
+  transform: translate(0.4rem,50%);
+}
+
+.tooltip.tooltip-bottom::after {
+  bottom: auto;
+  top: 100%;
+  transform: translate(-50%,-0.4rem);
+}

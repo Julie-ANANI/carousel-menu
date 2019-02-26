@@ -62,10 +62,10 @@
 
       <label class="btn ghost-primary">
         <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
-        {{ 'CAMPAIGNS.IMPORT_ANSWERS' | translate }}
+        {{ 'COMMON.BUTTON.IMPORT' | translate }}
       </label>
 
-      <button class="btn btn-primary" (click)="exportAnswers($event)">{{ 'CAMPAIGNS.EXPORT_ANSWERS' | translate }}</button>
+      <button class="btn btn-primary" (click)="exportAnswers($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
 
     </div>
 
@@ -79,7 +79,7 @@
     </div>
 
     <!-- section answers -->
-    <div *ngIf="!noResult" class="section-light-container remove-top">
+    <div *ngIf="!noResult">
       <app-shared-table
         [data]="tableInfos"
         [config]="config"

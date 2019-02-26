@@ -60,17 +60,17 @@
     <!-- section select workflow -->
     <div class="section-light-container remove-bottom">
       <div class="form-group">
-        <label class="form-label" for="admin-campaign-workflows">{{ 'CAMPAIGNS.WORKFLOW_PAGE.SELECT_LABEL' | translate }}</label>
+        <label class="form-label" for="admin-campaign-workflows">{{ 'COMMON.LABEL.SELECT_WORKFLOW' | translate }}</label>
         <select
           class="form-select"
           id="admin-campaign-workflows"
           [ngModel]="templates ? templates[0] : null"
           (ngModelChange)="onClickSelect($event)"
           [ngModelOptions]="{ standalone: true }">
-          <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.SELECT' | translate }}</option>
+          <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.LABEL.SELECT' | translate }}</option>
           <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
         </select>
-        <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.IMPORT' | translate }}</button>
+        <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
         <button *ngIf="!noResult" type="button" class="btn btn-sm btn-primary" (click)="onClickTestWorkflow()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.TEST_WORKFLOW' | translate }}</button>
       </div>
     </div>
@@ -87,7 +87,7 @@
 
 
     <!-- section campaign -->
-    <div *ngIf="!noResult" class="section-light-container remove-top">
+    <div *ngIf="!noResult">
 
       <span class="text-alert">{{ 'CAMPAIGNS.WORKFLOW_PAGE.NOTE' | translate }}</span>
 
@@ -110,12 +110,10 @@
 <!-- modal to ask for the confirmation if importing the same template -->
 <app-modal [(showModal)]="modalImport" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
   {{ modalContent | translate }}
-
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button class="btn btn-sm btn-primary" (click)="onClickConfirm()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-
 </app-modal>
 <!-- /modal to ask for the confirmation if importing the same template -->
 

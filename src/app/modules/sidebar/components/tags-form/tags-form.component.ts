@@ -19,17 +19,6 @@ import { first } from 'rxjs/operators';
 
 export class TagsFormComponent {
 
-  @Input() set sidebarState(value: string) {
-    if (value === undefined || 'active') {
-      this._tags = [];
-      this._activeSaveButton = false;
-    }
-  }
-
-  @Input() set type(type: string) {
-    this._type = type;
-  }
-
   @Input() set tags(tags: Array<Tag>) {
     this._tags = [...tags];
   }
@@ -41,6 +30,16 @@ export class TagsFormComponent {
 
   @Input() set project(value: Innovation) {
     this._innovationId = value._id;
+  }
+
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || value === 'active') {
+      this._tags = [];
+    }
+  }
+
+  @Input() set type(type: string) {
+    this._type = type;
   }
 
   @Input() tagType: string;
@@ -58,8 +57,6 @@ export class TagsFormComponent {
   private _type = '';
 
   private _needToSetOriginalTag = false;
-
-  private _activeSaveButton = false;
 
   constructor(private tagsService: TagsService,
               private autocompleteService: AutocompleteService,
@@ -83,8 +80,6 @@ export class TagsFormComponent {
         // do nothing...
 
     }
-
-    this._activeSaveButton = false;
 
   }
 
@@ -110,19 +105,12 @@ export class TagsFormComponent {
 
 
   addTag(tag: any) {
-    this._activeSaveButton = true;
-
     const id = tag.tag ? tag.tag : tag._id;
+
     this.tagsService.get(id).pipe(first()).subscribe((res: any) => {
       this._tags.push(res.tags[0]);
     });
 
-  }
-
-
-  onKeyboardPress(event: Event) {
-    event.preventDefault();
-    this._activeSaveButton = true;
   }
 
 
@@ -136,7 +124,6 @@ export class TagsFormComponent {
       }
       this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       this._needToSetOriginalTag = false;
-      this._activeSaveButton = true;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ASSOCIATED');
     });
@@ -145,7 +132,6 @@ export class TagsFormComponent {
 
 
   removeTag(tag: any) {
-    this._activeSaveButton = true;
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
   }
 
@@ -172,10 +158,6 @@ export class TagsFormComponent {
 
   get lang(): string {
     return this.translateService.currentLang;
-  }
-
-  get activeSaveButton(): boolean {
-    return this._activeSaveButton;
   }
 
 }

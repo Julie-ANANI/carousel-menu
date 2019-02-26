@@ -7,7 +7,12 @@ export const SIDEBAR = {
     'EDIT_USER': 'Edit User',
     'EDIT_PROFESSIONAL': 'Edit Professional',
     'ADD_TAGS': 'Add Tags',
-    'EDIT_CAMPAIGN': 'Edit Campaign'
+    'EDIT_CAMPAIGN': 'Edit Campaign',
+    'EDIT_INSIGHT': 'Edit Insight',
+    'EDIT_WORKFLOW': 'Edit Workflow',
+    'ADD_PRO': 'Add Professional',
+    'NEW_BATCH': 'New Batch Manually',
+    'EDIT_BATCH': 'Edit Batch'
   }
 
 };

@@ -8,6 +8,8 @@ import { ShareService } from '../../../../../services/share/share.service';
 import { Tag } from '../../../../../models/tag';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-discover-description',
@@ -19,7 +21,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _innovationCard: InnovCard[] = [];
 
-  private innovation: Innovation;
+  private _innovation: Innovation;
 
   private _quizUrl: string;
 
@@ -35,25 +37,26 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _quizButtonDisplay: string;
 
-  private _mediaModal: boolean;
-
-  private _mediaURL: string;
+  private _selectedMedia: string;
 
   private _lang: string;
 
   private _id: string;
 
-  private _patent = false;
-
   private _operatorEmail: string;
 
-  tags: Array<string> = [];
+  private _tags: Array<string> = [];
+
+  private _modalMedia = false;
+
+  innovationsRelated: Array<InnovCard> = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
               private router: Router,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private innovationService: InnovationService) { }
 
   ngOnInit() {
 
@@ -67,25 +70,26 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
   private loadInnovation() {
-    this.innovation = this.activatedRoute.snapshot.data.innovation;
+    this._innovation = this.activatedRoute.snapshot.data.innovation;
 
-    if (this.innovation.quizId === '' || this.innovation.status === 'DONE') {
+    if (this._innovation.quizId === '' || this._innovation.status === 'DONE') {
       this._quizButtonDisplay = 'none';
     }
 
+    console.log(this._innovation);
+
+    this.getInnovationCard();
+    this.getRelatedInnovations();
     this.getAllTags();
-    this.getPatent();
     this.getAllShareLinks();
     this.getOperatorDetails();
-    this.getInnovationCard();
-
   }
 
 
   private getAllTags() {
-    this.innovation.tags.forEach((tag: Tag) => {
+    this._innovation.tags.forEach((tag: Tag) => {
       if (tag.type === 'SECTOR') {
-        this.tags.push(MultilingPipe.prototype.transform(tag.label, this.browserLang()));
+        this._tags.push(MultilingPipe.prototype.transform(tag.label, this.browserLang()));
       }
     });
   }
@@ -96,40 +100,40 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
 
-
-  private getPatent() {
-    this._patent = this.innovation.patented;
+  private getRelatedInnovations() {
+    this.innovationService.getRecommendedInnovations(this._innovation._id).pipe(first()).subscribe((response) => {
+      console.log(response);
+    })
   }
 
 
   private getAllShareLinks() {
 
-    if (this.innovation.campaigns.length !== 0) {
-      this._quizUrl = environment.quizUrl + '/quiz/' + this.innovation.quizId + '/' + this.innovation.campaigns[0].id + '?lang=' + this._lang;
+    if (this._innovation.campaigns.length !== 0) {
+      this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
     }
 
-    this._linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, this._lang);
-    this._twitterUrl = this.shareService.twitterProjectShareLink(this.innovation, this._lang);
-    this._facebookUrl = this.shareService.facebookProjectShareLink(this.innovation);
-    this._googlePlusUrl = this.shareService.googleProjectShareLink(this.innovation, this._lang);
-    this._mailUrl = this.shareService.mailProjectShareLink(this.innovation, this._lang);
+    this._linkedInUrl = this.shareService.linkedinProjectShareLink(this._innovation, this._lang);
+    this._twitterUrl = this.shareService.twitterProjectShareLink(this._innovation, this._lang);
+    this._facebookUrl = this.shareService.facebookProjectShareLink(this._innovation);
+    this._googlePlusUrl = this.shareService.googleProjectShareLink(this._innovation, this._lang);
+    this._mailUrl = this.shareService.mailProjectShareLink(this._innovation, this._lang);
 
   }
 
 
   private getOperatorDetails() {
-    this._operatorEmail = this.innovation.operator ? this.innovation.operator.email : 'contact@umi.us';
+    this._operatorEmail = this._innovation.operator ? this._innovation.operator.email : 'contact@umi.us';
   }
 
 
   private getInnovationCard() {
-    const innovationCardIndex = this.innovation.innovationCards.findIndex( (card: InnovCard) => card.lang === this._lang);
-    this._innovationCard.push(this.innovation.innovationCards[innovationCardIndex]);
+    const innovationCardIndex = this._innovation.innovationCards.findIndex( (card: InnovCard) => card.lang === this._lang);
+    this._innovationCard.push(this._innovation.innovationCards[innovationCardIndex]);
   }
 
 
-  contactUs(event: Event) {
-    event.preventDefault();
+  contactUs() {
 
     const url = encodeURI(this.router.url);
 
@@ -137,7 +141,7 @@ export class DiscoverDescriptionComponent implements OnInit {
       + 'Innovation Details: ' + '\r\n' + '\r\n' + 'URL - ' + environment.clientUrl + url + '\r\n' + '\r\n' + 'Title - ' + this._innovationCard[0].title + '\r\n' + '\r\n'
       + 'Summary - ' + this._innovationCard[0].summary);
 
-    window.location.href = 'mailto:' + this._operatorEmail + '?subject=' + 'Contacting us - ' + this._innovationCard[0].title  + '&body=' + message;
+    return ('mailto:' + this._operatorEmail + '?subject=' + 'Contacting us - ' + this._innovationCard[0].title  + '&body=' + message);
 
   }
 
@@ -153,15 +157,10 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   mediaToShow(event: Event, src: string) {
     event.preventDefault();
-    this._mediaModal = true;
-    this._mediaURL = this.getSrc(src);
+    this._modalMedia = true;
+    this._selectedMedia = this.getSrc(src);
   }
 
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._mediaModal = false;
-  }
 
   get lang(): string {
     return this._lang;
@@ -179,16 +178,8 @@ export class DiscoverDescriptionComponent implements OnInit {
     return this.domSanitizer1;
   }
 
-  get mediaModal(): boolean {
-    return this._mediaModal;
-  }
-
-  get mediaURL(): string {
-    return this._mediaURL;
-  }
-
-  get patent(): boolean {
-    return this._patent;
+  get selectedMedia(): string {
+    return this._selectedMedia;
   }
 
   get operatorEmail(): string {
@@ -221,6 +212,22 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get mailUrl() {
     return this._mailUrl;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get tags(): Array<string> {
+    return this._tags;
+  }
+
+  get modalMedia(): boolean {
+    return this._modalMedia;
+  }
+
+  set modalMedia(value: boolean) {
+    this._modalMedia = value;
   }
 
 }
