@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, Router, RouterStateSnapshot, Params} from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router, RouterStateSnapshot, Params } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
-import {environment} from '../../../../../environments/environment';
 
 /**
  * if the user is authenticated we redirect the user to the /user/discover.
@@ -18,21 +17,14 @@ export class DiscoverGuard implements CanActivate {
 
   private _checkLogin(queryParams: {[key: string]: string}, url: string, params: Params): boolean {
 
-    console.log(queryParams);
-
-    if (this.authService.isAuthenticated && queryParams) {
-      console.log('sqdqs');
-      this.router.navigate(['/user', 'discover'], {
-        queryParams: queryParams
-      });
-    } else if (this.authService.isAuthenticated && params) {
-      console.log('qsdq');
-      this.router.navigate([ `${environment.clientUrl}/user/discover/${params['projectId']}/${params['lang']}`  , {}]);
+    if (this.authService.isAuthenticated && !queryParams['tag']) {
+      this.router.navigate([url.replace('discover', 'user/discover')]);
+    } else if (this.authService.isAuthenticated && queryParams['tag']) {
+      this.router.navigate(['/user', 'discover'], { queryParams: queryParams });
     }
-
-    console.log('qsdqssez');
 
     return true;
 
   }
+
 }

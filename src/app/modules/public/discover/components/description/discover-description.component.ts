@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../../models/innov-card';
@@ -10,7 +10,7 @@ import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
-import {Media} from '../../../../../models/media';
+import { Media } from '../../../../../models/media';
 
 @Component({
   selector: 'app-discover-description',
@@ -32,9 +32,9 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _facebookUrl: string;
 
-  private _googlePlusUrl: string;
-
   private _mailUrl: string;
+
+  private _contactUsUrl: string;
 
   private _quizButtonDisplay: string;
 
@@ -50,9 +50,9 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _modalMedia = false;
 
-  innovationsRelated: Array<{ innovationCard: InnovCard, tags: Array<Tag> }> = [];
+  private _innovationsRelated: Array<{ innovationCard: InnovCard, tags: Array<Tag> }> = [];
 
-  innovationConfig = {
+  private _innovationConfig = {
     fields: 'innovationCards tags principalMedia',
     limit: '3',
     offset: '0',
@@ -62,7 +62,6 @@ export class DiscoverDescriptionComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
-              private router: Router,
               private translateService: TranslateService,
               private innovationService: InnovationService) { }
 
@@ -79,14 +78,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
   private loadInnovation() {
-
-    if (this.activatedRoute.snapshot.data.innovation) {
-      this._innovation = this.activatedRoute.snapshot.data.innovation;
-    } else {
-
-    }
-
-    console.log(this.activatedRoute);
+    this._innovation = this.activatedRoute.snapshot.data.innovation;
 
     if ((this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE') {
       this._quizButtonDisplay = 'none';
@@ -117,12 +109,12 @@ export class DiscoverDescriptionComponent implements OnInit {
   private getRelatedInnovations() {
     if (this._innovation.similar) {
       this._innovation.similar.forEach((item) => {
-        this.innovationService.get(item.matched_inno_id , this.innovationConfig).pipe(first()).subscribe((response: Innovation) => {
+        this.innovationService.get(item.matched_inno_id , this._innovationConfig).pipe(first()).subscribe((response: Innovation) => {
           const index = response.innovationCards.findIndex((innovCard: InnovCard) => innovCard.lang === this._lang);
           if (index !== -1) {
-            this.innovationsRelated.push({innovationCard: response.innovationCards[index], tags: response.tags});
+            this._innovationsRelated.push({innovationCard: response.innovationCards[index], tags: response.tags});
           } else {
-            this.innovationsRelated.push({innovationCard: response.innovationCards[0], tags: response.tags});
+            this._innovationsRelated.push({innovationCard: response.innovationCards[0], tags: response.tags});
           }
         });
       });
@@ -136,12 +128,11 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
     }
 
-    this._linkedInUrl = this.shareService.linkedinProjectShareLink(this._innovation, this._lang);
-    this._twitterUrl = this.shareService.twitterProjectShareLink(this._innovation, this._lang);
-    this._facebookUrl = this.shareService.facebookProjectShareLink(this._innovation);
-    this._googlePlusUrl = this.shareService.googleProjectShareLink(this._innovation, this._lang);
-    this._mailUrl = this.shareService.mailProjectShareLink(this._innovation, this._lang);
-
+    this._linkedInUrl = this.shareService.linkedinProjectShareLink(this._innovationCard[0]);
+    this._twitterUrl = this.shareService.twitterProjectShareLink(this._innovationCard[0]);
+    this._facebookUrl = this.shareService.facebookProjectShareLink(this._innovationCard[0]);
+    this._mailUrl = this.shareService.mailProjectShareLink(this._innovationCard[0]);
+    this._contactUsUrl = this.shareService.contactOperator(this.innovationCard[0], this._operatorEmail);
   }
 
 
@@ -156,22 +147,9 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
 
-  contactUs() {
-
-    const url = encodeURI(this.router.url);
-
-    const message = encodeURI('Please add your message here.' + '\r\n' + '\r\n' + '-------------------------------------' + '\r\n' + '\r\n'
-      + 'Innovation Details: ' + '\r\n' + '\r\n' + 'URL - ' + environment.clientUrl + url + '\r\n' + '\r\n' + 'Title - ' + this._innovationCard[0].title + '\r\n' + '\r\n'
-      + 'Summary - ' + this._innovationCard[0].summary);
-
-    return ('mailto:' + this._operatorEmail + '?subject=' + 'Contacting us - ' + this._innovationCard[0].title  + '&body=' + message);
-
-  }
-
-
   getSrc(media: Media): string {
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_225,w_363/app/default-images/image-not-available.png';
-    const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_225,w_363/';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/app/default-images/image-not-available.png';
+    const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/';
     const suffix = '.jpg';
     return media.url === '' ? defaultSrc :  prefix + media.cloudinary.public_id + suffix;
   }
@@ -185,8 +163,8 @@ export class DiscoverDescriptionComponent implements OnInit {
 
 
   getRelatedSrc(innovCard: InnovCard): string {
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_225,w_360/app/default-images/image-not-available.png';
-    const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_225,w_363/';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/app/default-images/image-not-available.png';
+    const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/';
     const suffix = '.jpg';
     let src = '';
 
@@ -205,7 +183,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
 
   getLink(innovCard: InnovCard): string {
-    return `/discover/${innovCard._id}/${innovCard.lang}`;
+    return `/discover/${innovCard.innovation_reference}/${innovCard.lang}`;
   }
 
 
@@ -253,10 +231,6 @@ export class DiscoverDescriptionComponent implements OnInit {
     return this._facebookUrl;
   }
 
-  get googlePlusUrl() {
-    return this._googlePlusUrl;
-  }
-
   get mailUrl() {
     return this._mailUrl;
   }
@@ -275,6 +249,18 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   set modalMedia(value: boolean) {
     this._modalMedia = value;
+  }
+
+  get contactUsUrl(): string {
+    return this._contactUsUrl;
+  }
+
+  get innovationsRelated(): Array<{ innovationCard: InnovCard; tags: Array<Tag> }> {
+    return this._innovationsRelated;
+  }
+
+  get innovationConfig(): { offset: string; limit: string; sort: string; fields: string } {
+    return this._innovationConfig;
   }
 
 }

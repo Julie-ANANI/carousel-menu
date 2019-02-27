@@ -8,7 +8,6 @@ import { DiscoverDescriptionComponent } from './components/description/discover-
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { InnovationsResolver } from './services/innos-resolver.service';
 
-
 const discoverRoutes: Routes = [
   {
     path: '',

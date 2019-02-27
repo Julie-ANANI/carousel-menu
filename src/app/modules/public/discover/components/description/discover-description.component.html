@@ -12,7 +12,7 @@
 
       <!-- innovation tags -->
       <ng-container *ngIf="tags.length > 0">
-        <div *ngFor="let tag of tags" class="label label-draft">#{{ tag }}</div>
+        <div *ngFor="let tag of tags" class="text-notify"><i class="fas fa-tag"></i>{{ tag }}</div>
       </ng-container>
 
       <!-- innovation summary -->
@@ -31,7 +31,7 @@
 
         <!-- if video -->
         <ng-container *ngIf="media?.type === 'VIDEO'">
-          <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)" height="100%" [ngStyle]="{ 'left': 'O', 'width': '100%', 'border-width': '0' }"></iframe>
+          <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)" height="177px" [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
         </ng-container>
 
       </div>
@@ -65,7 +65,7 @@
 
       <!-- actions button -->
       <div class="button-wrapper">
-        <a class="btn btn-primary" [href]="contactUs()">{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}</a>
+        <a class="btn btn-primary" [href]="contactUsUrl" target="_blank">{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}</a>
         <a [href]="quizUrl" target="_blank" class="btn ghost-edit" [ngStyle]="{ 'display': quizButtonDisplay }">{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}</a>
       </div>
 
@@ -81,18 +81,22 @@
     </div>
 
     <!-- section related innovations -->
-    <div class="section-related">
+    <div *ngIf="innovationsRelated.length > 0" class="section-related">
       <span class="text"><i class="fas fa-angle-right"></i>{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
       <div class="card-wrapper">
-        <div *ngFor="let innovation of innovationsRelated" class="card card-3">
-          <div class="card-image">
-            <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate">
-          </div>
+        <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
+          <a [href]="[getLink(innovation.innovationCard)]">
+            <div class="card-image">
+              <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate">
+            </div>
+          </a>
           <div class="card-header">
-            <a [routerLink]="[getLink(innovation.innovationCard)]"><div class="card-title">{{ innovation.innovationCard.title }}</div></a>
+            <a [href]="[getLink(innovation.innovationCard)]">
+              <div class="card-title">{{ innovation.innovationCard.title }}</div>
+            </a>
             <ng-container *ngIf="innovation.tags.length > 0">
               <ng-container *ngFor="let tag of innovation.tags">
-                <div *ngIf="tag.type === 'SECTOR'" class="label label-draft">#{{ tag.label | multiling:lang | FormatText }}</div>
+                <div *ngIf="tag.type === 'SECTOR'" class="text-notify"><i class="fas fa-tag"></i>{{ tag.label | multiling:lang | FormatText }}</div>
               </ng-container>
             </ng-container>
           </div>
