@@ -30,8 +30,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _twitterUrl: string;
 
-  private _facebookUrl: string;
-
   private _mailUrl: string;
 
   private _contactUsUrl: string;
@@ -126,7 +124,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
     this._linkedInUrl = this.shareService.linkedinProjectShareLink(this._innovationCard[0]);
     this._twitterUrl = this.shareService.twitterProjectShareLink(this._innovationCard[0]);
-    this._facebookUrl = this.shareService.facebookProjectShareLink(this._innovationCard[0]);
     this._mailUrl = this.shareService.mailProjectShareLink(this._innovationCard[0]);
     this._contactUsUrl = this.shareService.contactOperator(this.innovationCard[0], this._operatorEmail);
 
@@ -211,10 +208,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get twitterUrl() {
     return this._twitterUrl;
-  }
-
-  get facebookUrl() {
-    return this._facebookUrl;
   }
 
   get mailUrl() {

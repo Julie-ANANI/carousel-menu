@@ -143,15 +143,11 @@
         background-color: #48AAEB;
       }
 
-      .btn-facebook {
-        background-color: #4F65A1;
-      }
-
       .btn-mail {
         background-color: $background;
       }
 
-      .btn-linkedin:hover, .btn-linkedin:focus, .btn-twitter:hover, .btn-twitter:focus, .btn-facebook:hover, .btn-facebook:focus, .btn-mail:hover, .btn-mail:focus {
+      .btn-linkedin:hover, .btn-linkedin:focus, .btn-twitter:hover, .btn-twitter:focus, .btn-mail:hover, .btn-mail:focus {
         box-shadow: $box-shadow-hover;
         color: white;
       }
