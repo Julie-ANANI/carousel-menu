@@ -10,17 +10,17 @@ export class ShareService {
   constructor(private _http: HttpClient) {}
 
 
-  private _getShareUrl (innovationCard: InnovCard): string {
+  private _getShareUrl(innovationCard: InnovCard): string {
     return encodeURIComponent(`${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}`);
   }
 
 
-  private _getTitle (innovationCard: InnovCard): string {
+  private _getTitle(innovationCard: InnovCard): string {
     return innovationCard.title || '';
   }
 
 
-  private _getSummary (innovationCard: InnovCard): string {
+  private _getSummary(innovationCard: InnovCard): string {
     return innovationCard.summary || '';
   }
 
@@ -30,7 +30,7 @@ export class ShareService {
   }
 
 
-  linkedinProjectShareLink (innovationCard: InnovCard): string {
+  linkedinProjectShareLink(innovationCard: InnovCard): string {
     return 'https://www.linkedin.com/shareArticle' +
       '?mini=true' +
       '&url=' + this._getShareUrl(innovationCard) +
@@ -40,14 +40,14 @@ export class ShareService {
   }
 
 
-  twitterProjectShareLink (innovationCard: InnovCard): string {
+  twitterProjectShareLink(innovationCard: InnovCard): string {
     const twitterAccount = 'uMotionIdeas';
     return 'http://twitter.com/home' +
       '?status=' + this._getTitle(innovationCard) + '%20' + this._getShareUrl(innovationCard) + '%20%40' + twitterAccount;
   }
 
 
-  facebookProjectShareLink (innovationCard: InnovCard): string {
+  facebookProjectShareLink(innovationCard: InnovCard): string {
     return 'https://www.facebook.com/dialog/feed' +
       '?app_id=' + '1172496952780763' +
       '&version=' + 'v2.12' +
@@ -61,11 +61,20 @@ export class ShareService {
   }*/
 
 
-  mailProjectShareLink (innovationCard: InnovCard): string {
+  mailProjectShareLink(innovationCard: InnovCard): string {
 
     const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${this._getTitle(innovationCard)}\r\n\r\nSummary - ${this._getSummary(innovationCard)}`);
 
     return `mailto:?subject=Interesting Innovation - ${this._getTitle(innovationCard)}&body=${message}`;
+
+  }
+
+
+  contactOperator(innovationCard: InnovCard, operatorEmail: string): string {
+
+    const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${this._getTitle(innovationCard)}\r\n\r\nSummary - ${this._getSummary(innovationCard)}`);
+
+    return `mailto:${operatorEmail}?subject=Contacting us - ${this._getTitle(innovationCard)}&body=${message}`;
 
   }
 
