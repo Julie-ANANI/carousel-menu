@@ -181,14 +181,14 @@ export class SharedProsListComponent {
 
   onClickEdit(pro: Professional) {
     this.professionalsService.get(pro._id).subscribe((professional: Professional) => {
+      this.isProfessionalForm = true;
+      this.isTagsForm = false;
+      this._currentPro = professional;
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
         title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
         type: 'professional'
       };
-      this.isProfessionalForm = true;
-      this.isTagsForm = false;
-      this._currentPro = professional;
     });
   }
 

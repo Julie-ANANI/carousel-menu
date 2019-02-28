@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NotificationsService } from "angular2-notifications";
 import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 
@@ -9,11 +9,6 @@ import { ProfessionalsService } from "../../../../services/professionals/profess
 })
 
 export class CSVUploadFormComponent implements OnInit {
-
-  @Input() set sidebarState(value: string) {
-    if (value === undefined || 'active') {
-    }
-  }
 
   @Output() finalOutput = new EventEmitter<any>();
 
