@@ -1,5 +1,4 @@
-@import "../variables";
-@import "../mixins";
+@import "variables";
 
 .banner {
   background-color: $primary-color;
@@ -10,18 +9,19 @@
   justify-content: center;
   align-items: center;
   display: flex;
+  box-shadow: $box-shadow;
 
   .text-link {
-    color: $light-color;
+    color: inherit;
     text-decoration: underline;
   }
 
   &.banner-success {
-    @include label-variant($success-color);
+    background-color: $success-color;
   }
 
   &.banner-error {
-    @include label-variant($alert-color);
+    background-color: $alert-color;
   }
 
 }

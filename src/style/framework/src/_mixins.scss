@@ -67,7 +67,18 @@
 }
 
 
-// Label and Banner variant
-@mixin label-variant($bg-color: $primary-color) {
-  background-color: $bg-color;
+// Text link variant
+@mixin text-link-variant($color: $primary-color) {
+  font-weight: 600;
+  font-size: 0.7rem;
+  color: $color;
+
+  &:focus, &:visited, &:active, &.active, &:hover {
+    cursor: pointer;
+    color: $color;
+    text-decoration: underline;
+  }
+
 }
+
+

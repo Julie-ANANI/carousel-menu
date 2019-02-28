@@ -1,4 +1,5 @@
 @import "../variables";
+@import "../mixins";
 
 // Text alignment utilities
 .text-left {
@@ -17,6 +18,7 @@
   text-align: justify;
 }
 
+
 // Text transform utilities
 .text-lowercase {
   text-transform: lowercase;
@@ -29,6 +31,7 @@
 .text-capitalize {
   text-transform: capitalize;
 }
+
 
 // Text style utilities
 .text-normal {
@@ -70,6 +73,7 @@
   margin-bottom: 0.75rem;
 }
 
+
 // Title for the hero container of the page
 .title-hero {
   font-size: 2.3rem;
@@ -92,57 +96,45 @@
 // Modal, sidebar etc.
 .title-header {
   font-size: 1rem;
-  color: #FFFFFF;
+  color: $light-color;
 }
 
 
-// Text style for links
-.text-link, .text-link:active, .text-link:focus, .text-link:visited, .text-delete, .text-delete:active, .text-delete:focus, .text-delete:visited {
-  font-weight: 600;
-  font-size: 0.7rem;
+// Primary Text link
+.text-link {
+  @include text-link-variant($primary-color);
 }
 
-.text-link:hover, .text-delete:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
 
-// Primary link
-.text-link, .text-link:active, .text-link:focus, .text-link:visited, .text-link:hover {
-  color: $primary-color;
-}
-
-// Delete link
-.text-delete, .text-delete:active, .text-delete:focus, .text-delete:visited, .text-delete:hover {
-  color: $alert-color;
+// Delete Text link
+.text-delete {
+  @include text-link-variant($alert-color);
 }
 
 
 // Different types of text
-.text-success, .text-warning, .text-error, .text-alert, .text-notify {
-  font-size: 0.75rem;
+.text {
+  font-size: 0.7rem;
   font-weight: 600;
   cursor: default;
+
+  &.success {
+    color: $success-color;
+  }
+
+  &.warning {
+    color: $primary-color;
+  }
+
+  &.error, &.alert {
+    color: $alert-color;
+  }
+
+  &.notify {
+    color: $meta-color;
+  }
+
 }
 
-//  Text warning
-.text-warning, .text-warning:active, .text-warning:focus, .text-warning:visited {
-  color: $primary-color;
-}
-
-// Text success
-.text-success, .text-success:active, .text-success:focus, .text-success:visited {
-  color: $success-color;
-}
-
-// Text error/alert
-.text-error, .text-alert, .text-error:active, .text-alert:active, .text-error:focus, .text-alert:focus, .text-error:visited, .text-alert:visited {
-  color: $alert-color;
-}
-
-// Text notify
-.text-notify, .text-notify:active, .text-notify:focus, .text-notify:visited {
-  color: $meta-color;
-}
 
 

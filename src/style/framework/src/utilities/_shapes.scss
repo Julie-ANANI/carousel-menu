@@ -1,0 +1,58 @@
+@import "../variables";
+@import "../mixins";
+
+.shape {
+  @include control-transition();
+  display: inline-flex;
+  cursor: default;
+  text-align: center;
+  justify-content: center;
+  background-color: $background-color;
+  color: $light-color;
+  font-weight: 600;
+  align-items: center;
+  font-size: 0.7rem;
+  border: $border-width solid $background-color;
+
+  &.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: $border-color;
+    color: $dark-color;
+    border-color: $border-color;
+    font-size: 0.5rem;
+
+    &.circle-md {
+      width: 35px;
+      height: 35px;
+    }
+
+    &.circle-sm {
+      width: 20px;
+      height: 20px;
+    }
+
+    &.circle-success {
+      background-color: $success-color;
+    }
+
+    &.circle-alert {
+      background-color: $alert-color;
+    }
+
+    &.circle-meta {
+      background-color: $meta-color;
+    }
+
+  }
+
+  &.rect {
+    font-size: 0.9rem;
+    width: 40px;
+    height: 40px;
+    border-width: $border-width-lg;
+  }
+
+}
+

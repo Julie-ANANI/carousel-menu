@@ -1,0 +1,65 @@
+@import "variables";
+
+.label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  margin: 0.4rem;
+  border-radius: $border-width-lg;
+  background-color: inherit;
+  color: $light-color;
+
+  &.label-alert {
+    background-color: $alert-color;
+  }
+
+  &.label-progress {
+    background-color: $progress-color;
+  }
+
+  &.label-success {
+    background-color: $success-color;
+  }
+
+  &.label-draft {
+    background-color: $label-draft-color;
+  }
+
+  &.label-primary {
+    background-color: $primary-color;
+  }
+
+  &.label-edit {
+    background-color: $label-edit-color;
+  }
+
+  &.label-meta {
+    background-color: $meta-color;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
