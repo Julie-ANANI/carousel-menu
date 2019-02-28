@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     if (this.authService.isAcceptingCookies) {
       this.authService.initializeSession().subscribe(() => {
         }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {timeOut: 0})
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR', {timeOut: 0})
         }
       );
     }
