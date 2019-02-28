@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { SidebarInterface } from "../../../../../sidebar/interfaces/sidebar-interface";
 
 @Component({
@@ -14,6 +14,8 @@ export class AdminCommunityMembersComponent implements OnInit {
   private _sidebarValue: SidebarInterface = {};
 
   private _searchResult: any;
+
+  @Output() forceParentReload = new EventEmitter <any>();
 
   ngOnInit() {
     this._config = {
@@ -38,6 +40,12 @@ export class AdminCommunityMembersComponent implements OnInit {
     }
   }
 
+  public onFinishUpload(event: Event) {
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active'
+    };
+  }
+
   public onSearchClick(event: Event) {
     event.preventDefault();
     this._sidebarValue = {
@@ -55,6 +63,15 @@ export class AdminCommunityMembersComponent implements OnInit {
       size: "60%",
       title: 'Add ambassadors',
       type: 'professional'
+    };
+  }
+
+  public onImportAmbassadors(event: Event) {
+    event.preventDefault();
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      size: "60%",
+      title: 'Import ambassadors'
     };
   }
 

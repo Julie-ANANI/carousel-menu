@@ -124,7 +124,6 @@ export class SharedProsListComponent {
 
   }
 
-
   private configToString() {
     let config = {};
     Object.keys(this._config).forEach(key=>{

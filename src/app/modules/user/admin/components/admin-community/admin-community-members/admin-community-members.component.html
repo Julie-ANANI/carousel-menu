@@ -8,6 +8,9 @@
         <button (click)="onAddAmbassadors($event)" class="btn btn-primary">
             Add ambassadors
         </button>
+        <button (click)="onImportAmbassadors($event)" class="btn btn-primary">
+            Import ambassadors
+        </button>
     </div>
     <app-shared-pros-list [config]="config"></app-shared-pros-list>
   </div>
@@ -32,3 +35,12 @@
     </add-ambassador-form>
 </app-sidebar>
 <!-- /add ambassadors sidebar -->
+
+<!-- import ambassadors sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+    <csv-upload-form
+            [sidebarState]="sidebarValue.animate_state"
+            (finalOutput)="onFinishUpload($event)">
+    </csv-upload-form>
+</app-sidebar>
+<!-- /import ambassadors sidebar -->

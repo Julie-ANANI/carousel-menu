@@ -9,6 +9,7 @@ import { AdminCommunityMembersComponent } from "./admin-community-members.compon
 import { SidebarAdvsearchFormModule } from "../../../../../sidebar/components/advsearch-form/sidebar-advsearch-form.module";
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { SidebarAddAmbassadorFormModule } from "../../../../../sidebar/components/add-ambassador-form/sidebar-add-ambassador-form.module";
+import { SidebarCSVUploadFormModule } from "../../../../../sidebar/components/csvupload-form/sidebar-csvupload-form.module";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SidebarAddAmbassadorFormModule } from "../../../../../sidebar/component
     PipeModule,
     SidebarModule,
     SidebarAdvsearchFormModule,
-    SidebarAddAmbassadorFormModule
+    SidebarAddAmbassadorFormModule,
+    SidebarCSVUploadFormModule
   ],
   declarations: [
     AdminCommunityMembersComponent
