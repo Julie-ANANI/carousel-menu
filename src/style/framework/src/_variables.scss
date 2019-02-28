@@ -1,0 +1,115 @@
+//core variables
+$primary: #FFB300 !default;
+$secondary: #0B90C6 !default;
+$progress: #F79323 !default;
+$disabled: #DBDBDB !default;
+$meta: #97A4B1 !default;
+$dark: #333333 !default;
+$background: #4F5D6B !default;
+$border: #E0E0E0 !default;
+$hover-background: #FFF9EB !default;
+$light: #FFFFFF !default;
+
+
+// control variables
+$success: #2ECC71 !default;
+$alert: #EA5858 !default;
+$warning: #FFB300 !default;
+
+
+// Other colors
+$body-bg: $light;
+$body-font-color: $dark;
+$link: $primary;
+
+
+// text variables
+$text-primary: #333333 !default;
+$text-secondary: #484848 !default;
+$text-background: #4F5D6B !default;
+$text-disabled: #A9A9A9 !default;
+
+
+// form variables
+$form-placeholder: #AAB2BD !default;
+$form-input: #262831 !default;
+$form-label: #333333 !default;
+$form-border: #E0E0E0 !default;
+$form-primary: #FFB300 !default;
+$form-alert: #EA5858 !default;
+$form-success: #2ECC71 !default;
+$form-disabled: #DBDBDB !default;
+$form-disabled-text: #A9A9A9 !default;
+$form-meta: #97A4B1 !default;
+
+
+// label variables
+$label-draft: #4F5D6B !default;
+$label-edit: #0B90C6 !default;
+
+
+// button variables
+$button-disabled-text: #A9A9A9 !default;
+
+
+// box shadow variables
+$box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37) !default;
+$box-shadow-hover: 0 2px 8px 2px rgba(20,23,28,.15) !default;
+
+
+// Fonts
+$base-font-family: 'Open Sans', sans-serif, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
+$fallback-font-family: "Helvetica Neue", sans-serif !default;
+$body-font-family: $base-font-family, $fallback-font-family !default;
+
+
+// Unit sizes
+$unit-o: .05rem !default;
+$unit-h: .1rem !default;
+$unit-1: .2rem !default;
+$unit-2: .4rem !default;
+$unit-3: .6rem !default;
+$unit-4: .8rem !default;
+$unit-5: 1rem !default;
+$unit-6: 1.2rem !default;
+$unit-7: 1.4rem !default;
+$unit-8: 1.6rem !default;
+$unit-9: 1.8rem !default;
+$unit-10: 2rem !default;
+$unit-12: 2.4rem !default;
+$unit-16: 3.2rem !default;
+
+
+// Font sizes
+$html-font-size: 16px !default;
+$html-line-height: 1.5em !default;
+$font-size: 16px !default;
+$line-height: 1.5em !default;
+
+
+// Font weights
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+
+// Sizes
+$layout-spacing: $unit-2 !default;
+
+
+// Responsive breakpoints
+$size-xs: 480px !default;
+$size-sm: 600px !default;
+$size-md: 840px !default;
+$size-lg: 960px !default;
+$size-xl: 1280px !default;
+$size-2x: 1440px !default;
+
+$responsive-breakpoint: $size-xs !default;
+
+
+// Z-index
+$zindex-0: 1 !default;
+$zindex-1: 100 !default;
+$zindex-2: 200 !default;
+$zindex-3: 300 !default;
+$zindex-4: 400 !default;

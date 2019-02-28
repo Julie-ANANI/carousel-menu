@@ -1,7 +1,8 @@
 /*
+!*
     This stylesheet contains all the styles for the base html tags
     for everywhere on the framework.
- */
+ *!
 
 @import "variables";
 
@@ -28,9 +29,9 @@ body {
 }
 
 
-/*
+!*
     removing the focus default style.
- */
+ *!
 
 *:focus {
   box-shadow: none !important;
@@ -39,9 +40,9 @@ body {
 }
 
 
-/*
+!*
     ul and li default style
- */
+ *!
 
 ul {
   margin: 0;
@@ -55,9 +56,9 @@ ul {
 }
 
 
-/*
+!*
     paragraph default style
- */
+ *!
 
 p {
   margin: 0;
@@ -65,9 +66,9 @@ p {
 }
 
 
-/*
+!*
     a default style
- */
+ *!
 
 a, a:focus, a:hover, a:active, a.active {
   color: inherit;
@@ -76,25 +77,25 @@ a, a:focus, a:hover, a:active, a.active {
 }
 
 
-/*
+!*
     float right
- */
+ *!
 .float-right {
   float: right !important;
 }
 
 
-/*
+!*
     float left
- */
+ *!
 .float-left {
   float: left !important;
 }
 
 
-/*
+!*
     importing the files...
- */
+ *!
 @import "animation";
 @import "buttons";
 @import "container";
@@ -108,3 +109,4 @@ a, a:focus, a:hover, a:active, a.active {
 @import "icons";
 @import "card";
 @import "tooltip";
+*/

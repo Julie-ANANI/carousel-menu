@@ -1,0 +1,41 @@
+@import "variables";
+
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+
+html {
+  box-sizing: border-box;
+  font-size: $html-font-size;
+  line-height: $html-line-height;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+body {
+  background: $body-bg;
+  color: $body-font-color;
+  font-family: $body-font-family;
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight-normal;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+a {
+  color: $link;
+  outline: none;
+  text-decoration: none;
+
+  &:focus, &:hover, &:active, &.active {
+    color: $link;
+    text-decoration: underline;
+  }
+
+}

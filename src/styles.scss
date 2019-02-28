@@ -2,15 +2,15 @@
     Spectre framework
  */
 
-@import "../node_modules/spectre.css/src/spectre.scss";
+/*@import "../node_modules/spectre.css/src/spectre.scss";
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
-@import "../node_modules/spectre.css/src/spectre-exp.scss";
+@import "../node_modules/spectre.css/src/spectre-exp.scss";*/
 
 /*
     Color variable file
  */
 @import "style/variables";
-@import "style/framework/variables";
+/*@import "style/framework/variables";*/
 
 /********************************** Default Styles ***************************************/
 
@@ -33,7 +33,7 @@
 /*
     In progress...
  */
-@import "style/framework/root";
+@import "style/framework/src/base";
 @import "style/tinymce-style";
 @import "style/simplenotification-style";
 @import "style/ng2autocomplete-style";
