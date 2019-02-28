@@ -1,55 +1,56 @@
 //core variables
-$primary: #FFB300 !default;
-$secondary: #0B90C6 !default;
-$progress: #F79323 !default;
-$disabled: #DBDBDB !default;
-$meta: #97A4B1 !default;
-$dark: #333333 !default;
-$background: #4F5D6B !default;
-$border: #E0E0E0 !default;
-$hover-background: #FFF9EB !default;
-$light: #FFFFFF !default;
+$primary-color: #FFB300 !default;
+$secondary-color: #0B90C6 !default;
+$progress-color: #F79323 !default;
+$disabled-color: #DBDBDB !default;
+$meta-color: #97A4B1 !default;
+$dark-color: #333333 !default;
+$background-color: #4F5D6B !default;
+$border-color: #E0E0E0 !default;
+$hover-background-color: #FFF9EB !default;
+$light-color: #FFFFFF !default;
+$disabled-text-color: #A9A9A9 !default
 
 
 // control variables
-$success: #2ECC71 !default;
-$alert: #EA5858 !default;
-$warning: #FFB300 !default;
+$success-color: #2ECC71 !default;
+$alert-color: #EA5858 !default;
+$warning-color: #FFB300 !default;
 
 
 // Other colors
-$body-bg: $light;
-$body-font-color: $dark;
-$link: $primary;
+$body-bg: $light-color;
+$body-font-color: $dark-color;
+$link-color: $primary-color;
 
 
 // text variables
-$text-primary: #333333 !default;
-$text-secondary: #484848 !default;
-$text-background: #4F5D6B !default;
-$text-disabled: #A9A9A9 !default;
+$text-primary-color: $dark-color !default;
+$text-secondary-color: #484848 !default;
+$text-background-color: $background-color !default;
+$text-disabled-color: $disabled-text-color !default;
 
 
 // form variables
-$form-placeholder: #AAB2BD !default;
-$form-input: #262831 !default;
-$form-label: #333333 !default;
-$form-border: #E0E0E0 !default;
-$form-primary: #FFB300 !default;
-$form-alert: #EA5858 !default;
-$form-success: #2ECC71 !default;
-$form-disabled: #DBDBDB !default;
-$form-disabled-text: #A9A9A9 !default;
-$form-meta: #97A4B1 !default;
+$form-placeholder-color: #AAB2BD !default;
+$form-input-color: #262831 !default;
+$form-label-color: $dark-color !default;
+$form-border-color: $border-color !default;
+$form-primary-color: $primary-color !default;
+$form-alert-color: $alert-color !default;
+$form-success-color: $success-color !default;
+$form-disabled-color: $disabled-color !default;
+$form-disabled-text-color: $disabled-text-color !default;
+$form-meta-color: $meta-color !default;
 
 
 // label variables
-$label-draft: #4F5D6B !default;
-$label-edit: #0B90C6 !default;
+$label-draft-color: $background-color !default;
+$label-edit-color: $secondary-color !default;
 
 
 // button variables
-$button-disabled-text: #A9A9A9 !default;
+$button-disabled-text-color: $disabled-text-color !default;
 
 
 // box shadow variables
@@ -82,9 +83,9 @@ $unit-16: 3.2rem !default;
 
 // Font sizes
 $html-font-size: 20px !default;
-$html-line-height: 1.5em !default;
+$html-line-height: 1.5 !default;
 $font-size: 20px !default;
-$line-height: 1.5em !default;
+$line-height: 1.5 !default;
 
 
 // Font weights
@@ -94,6 +95,9 @@ $font-weight-bold: 700 !default;
 
 // Sizes
 $layout-spacing: $unit-2 !default;
+$border-radius: 0.15rem !default;
+$border-width: $unit-o !default;
+$border-width-lg: $unit-h !default;
 
 
 // Responsive breakpoints

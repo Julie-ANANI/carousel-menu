@@ -6,3 +6,11 @@
     display: table;
   }
 }
+
+
+// Text Ellipsis
+@mixin text-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
