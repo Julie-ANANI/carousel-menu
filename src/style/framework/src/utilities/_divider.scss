@@ -1,0 +1,25 @@
+@import "../variables";
+
+.or-divider {
+  color: $meta-color;
+  font-size: 0.7rem;
+
+}
+
+.or-divider::before {
+  content: '';
+  display: inline-flex;
+  vertical-align: middle;
+  width: 130px;
+  height: 1px;
+  background: $meta-color;
+}
+
+.or-divider::after {
+  content: '';
+  display: inline-flex;
+  vertical-align: middle;
+  width: 130px;
+  height: 1px;
+  background: $meta-color;
+}

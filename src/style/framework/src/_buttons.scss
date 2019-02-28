@@ -1,0 +1,201 @@
+@import "variables";
+@import "mixins";
+
+// The base class for the button, add the other classes with this to add the different styles
+.btn {
+  @include control-transition();
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: $line-height;
+  background: $bg-color-light;
+  border: $border-width solid $primary-color;
+  font-size: 0.7rem;
+  height: 2.5rem;
+  border-radius: $border-radius;
+  padding: 0.4rem 1.6rem;
+  font-weight: 600;
+
+  i {
+    margin-right: 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    color: $button-disabled-text !important;
+    background-color: $button-disabled-bg-color !important;
+    border-color: $button-border-color !important;
+    cursor: not-allowed;
+    pointer-events: auto;
+    opacity: 1;
+    border-width: $border-width-lg;
+  }
+
+  &.btn-primary {
+    @include button-variant($primary-color);
+  }
+
+  &.btn-secondary {
+    @include button-variant($secondary-color);
+  }
+
+  &.btn-edit {
+    @include button-variant($meta-color);
+  }
+
+  &.btn-error {
+    @include button-variant($alert-color);
+  }
+
+  &.btn-success {
+    @include button-variant($success-color);
+  }
+
+  &.ghost-primary {
+    @include ghost-button-variant($primary-color);
+  }
+
+  &.ghost-secondary {
+    @include ghost-button-variant($secondary-color);
+  }
+
+  &.ghost-delete {
+    @include ghost-button-variant($alert-color);
+  }
+
+  &.ghost-edit {
+    @include ghost-button-variant($meta-color);
+  }
+
+}
+
+
+// Cancel button class that you have to add with button class
+.btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active, .btn-cancel:not(:disabled).active {
+  color: $meta-color;
+  background-color: $bg-color-light;
+  border: none;
+}
+
+.btn-cancel:not(:disabled):hover {
+  color: lighten($meta-color, 15%);
+  background-color: $bg-color-light;
+  border: none;
+}
+
+
+// Round button. In this you can add the icon, text, etc.
+.btn-round {
+  @include control-transition();
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background: transparent none;
+  border: $border-width solid transparent;
+  font-size: 0.6rem;
+  color: $light-color;
+
+  &[disabled], &:disabled, &.disabled {
+    color: $button-disabled-text !important;
+    background-color: $button-disabled-bg-color !important;
+    border-color: $button-border-color !important;
+    cursor: not-allowed;
+    pointer-events: auto;
+    opacity: 1;
+    border-width: $border-width-lg;
+  }
+
+}
+
+
+// Radio button
+.btn-radio {
+  @include control-transition();
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: $border-width-lg solid $border;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: $light-color;
+  font-size: 0.6rem;
+
+  span {
+    color: $light-color;
+    font-size: 20px;
+  }
+
+}
+
+
+// Close button
+.btn-close {
+  @include control-transition();
+  background: transparent;
+  border: 0;
+  color: $light-color;
+  height: 30px;
+  padding: 0;
+  text-decoration: none;
+  width: 12px;
+  font-size: 20px;
+
+  &:hover {
+    background: transparent;
+    border-color: transparent;
+    opacity: 0.95;
+  }
+
+  &::before {
+    content: "\2715";
+  }
+
+}
+
+
+// Make a button large just add this class with the btn class
+.btn-lg {
+  padding-left: 4.2rem;
+  padding-right: 4.2rem;
+  height: 3.496rem;
+  font-size: 1.25rem;
+}
+
+
+// Make a button small just add this class with the btn class
+.btn-sm {
+  height: 2.24rem;
+  padding: 0.4rem 1.5rem;
+  font-size: 0.65rem;
+}
+
+
+// Make a button extra small just add this class with the btn class
+.btn-xs {
+  height: 1.75rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.65rem;
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: $size-sm) {
+
+  .btn-lg {
+    padding-left: 2.24rem;
+    padding-right: 2.24rem;
+  }
+
+}

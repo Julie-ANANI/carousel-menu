@@ -1,3 +1,5 @@
+@import "variables";
+
 // Clearfix mixin
 @mixin clearfix() {
   &::after {
@@ -13,4 +15,59 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+
+// Component transition
+@mixin control-transition() {
+  transition: all 0.15s ease;
+}
+
+
+// Button variant
+@mixin button-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:focus, &:active, &.active {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &:hover {
+    background-color: lighten($color, 15%);
+    border-color: lighten($color, 15%);
+  }
+
+}
+
+
+// Ghost button variant
+@mixin ghost-button-variant($color: $primary-color) {
+  color: $color;
+  background-color: $bg-color-light;
+  border-color: $color;
+  border-width: $border-width-lg;
+
+  &:focus, &:active, &.active {
+    color: $color;
+    background-color: $bg-color-light;
+    border-color: $color;
+    border-width: $border-width-lg;
+  }
+
+  &:hover {
+    color: lighten($color, 15%);
+    background-color: $bg-color-light;
+    border-color: lighten($color, 15%);
+  }
+
+}
+
+
+// Label and Banner variant
+@mixin label-variant($bg-color: $primary-color) {
+  background-color: $bg-color;
 }

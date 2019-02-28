@@ -19,9 +19,10 @@ $warning-color: #FFB300 !default;
 
 
 // Other colors
-$body-bg: $light-color;
+$body-bg-color: $light-color;
 $body-font-color: $dark-color;
 $link-color: $primary-color;
+$bg-color-light: $light-color !default;
 
 
 // text variables
@@ -51,6 +52,8 @@ $label-edit-color: $secondary-color !default;
 
 // button variables
 $button-disabled-text-color: $disabled-text-color !default;
+$button-disabled-bg-color: $disabled-color !default;
+$button-border-color: $border-color !default;
 
 
 // box shadow variables
@@ -95,9 +98,10 @@ $font-weight-bold: 700 !default;
 
 // Sizes
 $layout-spacing: $unit-2 !default;
-$border-radius: 0.15rem !default;
+$border-radius: $unit-1 !default;
 $border-width: $unit-o !default;
 $border-width-lg: $unit-h !default;
+$border-width-xl: $unit-1 !default;
 
 
 // Responsive breakpoints
@@ -117,3 +121,84 @@ $zindex-1: 100 !default;
 $zindex-2: 200 !default;
 $zindex-3: 300 !default;
 $zindex-4: 400 !default;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    This stylesheet contains all the variable that we use in the framework.
+ */
+
+
+/*
+    base variables
+ */
+$primary: #FFB300;
+$secondary: #0B90C6;
+$success: #2ECC71;
+$alert: #EA5858;
+$progress: #F79323;
+$disabled: #DBDBDB;
+$meta: #97A4B1;
+$dark: #333333;
+$background: #4F5D6B;
+$border: #E0E0E0;
+$hover-background: #FFF9EB;
+
+
+/*
+    text variables
+ */
+$text-primary: #333333;
+$text-secondary: #484848;
+$text-background: #4F5D6B;
+$text-disabled: #A9A9A9;
+
+
+/*
+    form variables
+ */
+$form-placeholder: #AAB2BD;
+$form-input: #262831;
+$form-label: #333333;
+$form-border: #E0E0E0;
+$form-primary: #FFB300;
+$form-alert: #EA5858;
+$form-success: #2ECC71;
+$form-disabled: #DBDBDB;
+$form-disabled-text: #A9A9A9;
+$form-meta: #97A4B1;
+
+/*
+    label variables
+ */
+$label-draft: #4F5D6B;
+$label-edit: #0B90C6;
+
+
+/*
+    button variables
+ */
+$button-disabled-text: #A9A9A9;
+
+
+
+/*
+    box shadow variables
+ */
+$box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+$box-shadow-hover: 0 2px 8px 2px rgba(20,23,28,.15);

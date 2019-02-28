@@ -16,13 +16,13 @@ html {
 
 
 body {
-  background: $body-bg;
+  background: $body-bg-color;
   color: $body-font-color;
   font-family: $body-font-family;
   font-size: $font-size;
   line-height: $line-height;
   font-weight: $font-weight-normal;
-  overflow: hidden;
+  overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

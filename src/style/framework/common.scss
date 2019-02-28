@@ -10,49 +10,13 @@
     Just wrap the word with this class. Class name: .or-divider
  */
 
-.or-divider {
-  color: $meta;
-  font-size: 0.875rem;
 
-}
-
-.or-divider::before {
-  content: '';
-  display: inline-flex;
-  vertical-align: middle;
-  width: 130px;
-  height: 1px;
-  background: $meta;
-}
-
-.or-divider::after {
-  content: '';
-  display: inline-flex;
-  vertical-align: middle;
-  width: 130px;
-  height: 1px;
-  background: $meta;
-}
 
 
 /*
     this is to show the message.
  */
-.banner-wrapper {
-  background-color: $success;
-  color: white;
-  font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.9375rem;
-  text-align: center;
-  display: block;
 
-  .text-link {
-    color: white;
-    text-decoration: underline;
-  }
-
-}
 
 
 /*

@@ -1,0 +1,27 @@
+@import "../variables";
+@import "../mixins";
+
+.banner {
+  background-color: $primary-color;
+  color: $light-color;
+  font-weight: 600;
+  font-size: 0.7rem;
+  padding: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  .text-link {
+    color: $light-color;
+    text-decoration: underline;
+  }
+
+  &.banner-success {
+    @include label-variant($success-color);
+  }
+
+  &.banner-error {
+    @include label-variant($alert-color);
+  }
+
+}
