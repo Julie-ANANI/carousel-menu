@@ -1,0 +1,148 @@
+@import "../variables";
+
+// Text alignment utilities
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+// Text transform utilities
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+// Text style utilities
+.text-normal {
+  font-weight: normal;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+
+// Text overflow utilities
+.text-ellipsis {
+  @include text-ellipsis();
+}
+
+.text-clip {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.text-break {
+  hyphens: auto;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+
+.title-hero, .title-primary, .title-secondary, .title-header {
+  font-weight: 600;
+  line-height: 1.5;
+  word-break: break-word;
+  color: inherit;
+  margin-bottom: 0.75rem;
+}
+
+// Title for the hero container of the page
+.title-hero {
+  font-size: 2.3rem;
+}
+
+
+// Section title.
+.title-primary {
+  font-size: 1.7rem;
+}
+
+
+// Sub-section or any secondary title.
+.title-secondary {
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+
+
+// Modal, sidebar etc.
+.title-header {
+  font-size: 1rem;
+  color: #FFFFFF;
+}
+
+
+// Text style for links
+.text-link, .text-link:active, .text-link:focus, .text-link:visited, .text-delete, .text-delete:active, .text-delete:focus, .text-delete:visited {
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.text-link:hover, .text-delete:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+// Primary link
+.text-link, .text-link:active, .text-link:focus, .text-link:visited, .text-link:hover {
+  color: $primary-color;
+}
+
+// Delete link
+.text-delete, .text-delete:active, .text-delete:focus, .text-delete:visited, .text-delete:hover {
+  color: $alert-color;
+}
+
+
+// Different types of text
+.text-success, .text-warning, .text-error, .text-alert, .text-notify {
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: default;
+}
+
+//  Text warning
+.text-warning, .text-warning:active, .text-warning:focus, .text-warning:visited {
+  color: $primary-color;
+}
+
+// Text success
+.text-success, .text-success:active, .text-success:focus, .text-success:visited {
+  color: $success-color;
+}
+
+// Text error/alert
+.text-error, .text-alert, .text-error:active, .text-alert:active, .text-error:focus, .text-alert:focus, .text-error:visited, .text-alert:visited {
+  color: $alert-color;
+}
+
+// Text notify
+.text-notify, .text-notify:active, .text-notify:focus, .text-notify:visited {
+  color: $meta-color;
+}
+
+
