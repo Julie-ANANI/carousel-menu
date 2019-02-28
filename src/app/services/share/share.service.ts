@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { InnovCard } from '../../models/innov-card';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
+import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 
 @Injectable()
 export class ShareService {
@@ -21,7 +22,7 @@ export class ShareService {
 
 
   private _getSummary(innovationCard: InnovCard): string {
-    return innovationCard.summary || '';
+    return  new ScrapeHTMLTags().transform(innovationCard.summary) || '';
   }
 
 
@@ -71,6 +72,8 @@ export class ShareService {
 
 
   contactOperator(innovationCard: InnovCard, operatorEmail: string): string {
+
+    operatorEmail = operatorEmail || 'contact@umi.us';
 
     const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${this._getTitle(innovationCard)}\r\n\r\nSummary - ${this._getSummary(innovationCard)}`);
 
