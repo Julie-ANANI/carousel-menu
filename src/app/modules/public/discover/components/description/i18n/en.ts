@@ -33,6 +33,8 @@ export const DISCOVERDESCRIPTION = {
 
   'BACK': 'List of projects',
 
-  'SHARE_TITLE': 'PLEASE SHARE THIS'
+  'SHARE_TITLE': 'PLEASE SHARE THIS',
+
+  'RELATED': 'YOU MIGHT ALSO LIKE'
 
 };
