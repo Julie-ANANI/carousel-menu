@@ -33,7 +33,7 @@
           }
 
           .project-description {
-            border-bottom: 1px solid $border;
+            border-bottom: 1px solid $border-color;
             width: 100%;
 
             span {
@@ -41,25 +41,25 @@
             }
 
             span:hover {
-              color: $primary;
+              color: $primary-color;
               cursor: pointer;
             }
 
             .date-text {
               margin-top: 0.95rem;
               font-size: 0.875rem;
-              color: $meta;
+              color: $meta-color;
               font-weight: 600;
             }
 
             .text-link {
               font-size: 0.875rem;
               font-weight: 600;
-              color: $alert;
+              color: $alert-color;
             }
 
             .text-link:hover {
-              color: $alert;
+              color: $alert-color;
             }
 
           }

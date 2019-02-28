@@ -3,10 +3,10 @@
     <div class="columns col-gapless">
 
       <!-- image -->
-      <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></div>
+      <section class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></section>
 
       <!-- login -->
-      <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto section-login section-light-container">
+      <section class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto section-login section-light-pad">
 
         <!-- logo -->
         <div><a href="{{ getCompanyUrl() }}"><img src="{{ getLogoWBG() }}" height="35px" alt=" "></a></div>
@@ -74,11 +74,11 @@
 
         <!-- Sign up -->
         <div class="text-center">
-          <span [ngStyle]="{ 'font-size': '0.875rem', 'padding-right': '0.6rem' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
+          <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '0.5rem' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
           <button type="button" class="btn btn-sm ghost-primary" routerLink="/register">{{ 'LOG_IN.SIGN_UP' | translate }}</button>
         </div>
 
-      </div>
+      </section>
       <!-- /Login -->
 
     </div>

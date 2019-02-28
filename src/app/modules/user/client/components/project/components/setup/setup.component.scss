@@ -44,9 +44,9 @@
         .save-disabled {
 
           .ghost-primary {
-            border-color: $border !important;
-            color: $button-disabled-text !important;
-            background-color: $border !important;
+            border-color: $border-color !important;
+            color: $button-disabled-text-color !important;
+            background-color: $border-color !important;
             cursor: not-allowed;
           }
 
@@ -55,17 +55,17 @@
         .save-active {
 
           .ghost-primary {
-            border-color: $success !important;
+            border-color: $success-color !important;
             color: #262831  !important;
           }
 
           .ghost-primary:hover {
-            background-color: $hover-background !important;
+            background-color: $hover-background-color !important;
             box-shadow: none;
           }
 
           .circle-check {
-            background: $success !important;
+            background: $success-color !important;
             visibility: visible;
             animation-name: fadeIn;
             animation-duration: .5s;

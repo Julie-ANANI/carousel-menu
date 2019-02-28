@@ -20,14 +20,14 @@ export class LoginComponent implements OnInit {
   private _formData: FormGroup;
 
   private _linkedInLink: string;
+
   private _linkedInState: string = Date.now().toString();
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router,) {
-  }
+              private router: Router,) { }
 
   ngOnInit() {
     this.translateTitleService.setTitle('LOG_IN.TITLE');
@@ -51,22 +51,27 @@ export class LoginComponent implements OnInit {
       callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
       scope: 'r_emailaddress r_liteprofile r_basicprofile'
     };
+
     this._linkedInState = RandomUtil.generateUUID();
+
     this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
+
   }
 
-  public linkedInEvent() {
+
+  linkedInEvent() {
     const data = {
       domain: environment.domain,
       state: this._linkedInState
     };
-    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
-        console.log(_);
-      }, err=>{
-        console.error(err);
-      }, ()=>{
+
+    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{console.log(_);
+      }, (err) => {
+      console.error(err);
+      }, () => {
         window.open(this._linkedInLink, '_self');
     });
+
   }
 
 
