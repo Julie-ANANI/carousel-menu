@@ -9,6 +9,7 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminCommunityComponent } from "./admin-community.component";
 import { AdminCommunityMembersModule } from "./admin-community-members/admin-community-members.module";
 import { AdminCommunityResponsesModule } from "./admin-community-answers/admin-community-responses.module";
+import { AdminCommunityProjectsModule } from "./admin-community-projects/admin-community-projects.module";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { AdminCommunityResponsesModule } from "./admin-community-answers/admin-c
     PipeModule,
     RouterModule,
     AdminCommunityMembersModule,
-    AdminCommunityResponsesModule
+    AdminCommunityResponsesModule,
+    AdminCommunityProjectsModule
   ],
   declarations: [
     AdminCommunityComponent
