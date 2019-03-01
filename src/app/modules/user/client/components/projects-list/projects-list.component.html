@@ -1,6 +1,6 @@
-<section *ngIf="innovations" class="section-container" id="projects-list-component">
+<section *ngIf="innovations" class="column col-xs-12 col-11 col-mx-auto" id="projects-list-component">
 
-  <div class="column col-xs-12 col-11 col-mx-auto">
+  <div class="section-pad">
 
     <!-- section add button -->
     <div class="text-right">
@@ -10,7 +10,7 @@
     </div>
 
     <!-- section no project -->
-    <div *ngIf="noResult" class="section-no-project">
+    <div *ngIf="noResult" class="section-pad rm-pad-bottom">
       <app-message-space [widthMax]="'354px'">
         {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
         <br>
@@ -19,25 +19,25 @@
     </div>
 
     <!-- section projects -->
-    <div *ngIf="!noResult" class="section-projects-list">
+    <div *ngIf="!noResult" class="section-pad rm-pad-bottom">
 
       <!-- projects -->
-      <div class="project-wrapper" [@listAnimation]="innovations.length">
-        <div *ngFor="let innovation of innovations" class="content-outer">
-          <div class="content">
+      <div [@listAnimation]="innovations.length">
+        <div *ngFor="let innovation of innovations" class="card-project">
+          <div class="card-content">
             <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
             <div class="project-description">
               <a [routerLink]="getRelevantLink(innovation)">
                 <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
               </a>
-              <p class="date-text">
+              <p class="text notify">
                 {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
                 •
                 {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
                 •
                 {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
                 |
-                <span class="text-link" (click)="onClickDelete($event, innovation._id)">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_BUTTON' | translate }}</span>
+                <span class="icon icon-delete" (click)="onClickDelete($event, innovation._id)"><i class="fas fa-trash-alt"></i></span>
               </p>
             </div>
           </div>
@@ -45,7 +45,7 @@
       </div>
 
       <!-- section pagination -->
-      <div *ngIf="innovations.length > 10" class="pagination-wrapper">
+      <div *ngIf="innovations.length > 10" class="flex-end section-light-pad rm-pad-bottom">
         <app-pagination
           [configValue]="paginationConfig"
           (configChange)="configChange($event)"
