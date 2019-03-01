@@ -82,10 +82,6 @@
 
     <div *ngIf="catDone" class="keyword-analysis">
       <p [innerHTML]="suggestion"></p>
-      <p>
-        <a class="text-success" (click)="applySuggestion()">{{ 'SEARCH.APPLY' | translate }}</a><br/>
-        <a class="text-error" (click)="ignoreSuggestion()">{{ 'SEARCH.IGNORE' | translate }}</a>
-      </p>
     </div>
 
   </div>
