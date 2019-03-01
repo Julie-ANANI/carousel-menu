@@ -814,6 +814,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return environment.domain === 'umi';
   }
 
+  public getContact(): string {
+    return environment.commercialContact;
+  }
+
+  public getMailto(): string {
+    return `mailto:${environment.commercialContact}`;
+  }
+
   /***
    * getting the current lang of the user.
    * @returns {string}

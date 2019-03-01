@@ -10,6 +10,7 @@ export const environment = {
   logoURL: 'https://salveo.fr/wp-content/uploads/2017/06/SALVEO-Logo-2016-FR.jpg',
   logoSynthURL: 'https://salveo.fr/wp-content/uploads/2017/06/SALVEO-Logo-2016-FR.jpg',
   background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',
+  commercialContact: 'contact@salveo.fr',
   secureCookie: true,
   cookieTime: 48 * 3600 * 1000
 };

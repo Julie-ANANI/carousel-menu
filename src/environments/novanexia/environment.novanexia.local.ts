@@ -10,6 +10,7 @@ export const environment = {
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/novanexia/novanexia-logo-RVB.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/novanexia/novanexia-logo-RVB.png',
   background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',
+  commercialContact: 'contact@novanexia.fr',
   secureCookie: false,
   cookieTime: 48 * 3600 * 1000
 };

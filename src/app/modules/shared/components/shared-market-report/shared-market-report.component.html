@@ -212,9 +212,11 @@
                 <h1>{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
                 <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
                 <img class="image-wrapper" [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
-                <h6 *ngIf="innovation.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
-                <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
-                <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
+              <div *ngIf="isMainDomain()">
+                  <h6 *ngIf="innovation.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
+                  <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
+                  <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
+              </div>
                 <span
                   *ngIf="innovation.executiveReport?.objective"
                   class="goal-text">
@@ -227,7 +229,7 @@
                 <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
                 <div class="text-right">
                   <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>
-                  <p><a href="mailto:contact@umi.us">klegrand@umi.us</a> | 06 49 34 47 32 | www.umi.us</p>
+                  <p><a [href]="getMailto()">{{getContact()}}</a> <span *ngIf="isMainDomain()">| 06 49 34 47 32 </span> | {{getCompanyURL()}}</p>
                 </div>
               </div>
 
