@@ -132,15 +132,6 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
 
   /***
-   * this closes the sign up sidebar.
-   * @param value
-   */
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
-  /***
    * this function is to register the new client.
    * @param formValue
    */
@@ -174,6 +165,10 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get toggleSignInForm(): boolean {
