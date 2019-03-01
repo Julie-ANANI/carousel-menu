@@ -73,6 +73,28 @@
     @include ghost-button-variant($meta-color);
   }
 
+  &.btn-close {
+    background: transparent;
+    border: 0;
+    color: $light-color;
+    height: 30px;
+    padding: 0;
+    text-decoration: none;
+    width: 12px;
+    font-size: $font-size;
+
+    &:hover {
+      background: transparent;
+      border-color: transparent;
+      opacity: 0.85;
+    }
+
+    &::before {
+      content: "\2715";
+    }
+
+  }
+
 }
 
 
@@ -136,31 +158,6 @@
   span {
     color: $light-color;
     font-size: $font-size;
-  }
-
-}
-
-
-// Close button
-.btn-close {
-  @include control-transition();
-  background: transparent;
-  border: 0;
-  color: $light-color;
-  height: 30px;
-  padding: 0;
-  text-decoration: none;
-  width: 12px;
-  font-size: $font-size;
-
-  &:hover {
-    background: transparent;
-    border-color: transparent;
-    opacity: 0.95;
-  }
-
-  &::before {
-    content: "\2715";
   }
 
 }
