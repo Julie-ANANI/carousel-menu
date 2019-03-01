@@ -57,36 +57,40 @@ export class CampaignFrontService {
   getAnswerCampaignStat(answers: Array<Answer>, requestFor: string, searchKey: any): number  {
     let value = 0;
 
-    answers.forEach((answer: Answer) => {
-      switch (requestFor) {
+    if (answers.length > 0) {
 
-        case 'status':
-          if (answer.status === searchKey) {
-            value += 1;
-          }
-          break;
+      answers.forEach((answer: Answer) => {
+        switch (requestFor) {
 
-        case 'profile':
-          if (answer.profileQuality === searchKey) {
-            value += 1;
-          }
-          break;
+          case 'status':
+            if (answer.status === searchKey) {
+              value += 1;
+            }
+            break;
 
-        case 'quality':
-          if (answer.time_elapsed) {
-            value += Math.floor(answer.time_elapsed / 60);
-          }
-          break;
+          case 'profile':
+            if (answer.profileQuality === searchKey) {
+              value += 1;
+            }
+            break;
 
-        default:
-        // do nothing...
+          case 'quality':
+            if (answer.time_elapsed) {
+              value += Math.floor(answer.time_elapsed / 60);
+            }
+            break;
 
+          default:
+          // do nothing...
+
+        }
+
+      });
+
+      if (searchKey === 'time_elapsed' ) {
+        value = Math.floor(value / answers.length);
       }
 
-    });
-
-    if (searchKey === 'time_elapsed' ) {
-      value = Math.floor(value / answers.length);
     }
 
     return value
@@ -102,7 +106,7 @@ export class CampaignFrontService {
   getProsCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
-    if (campaign.stats) {
+    if (campaign && campaign.stats) {
       switch (searchKey) {
 
         case 'professional':
@@ -144,7 +148,7 @@ export class CampaignFrontService {
   getBatchCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
-    if (campaign.stats) {
+    if (campaign && campaign.stats) {
       switch (searchKey) {
 
         case 'good_emails':

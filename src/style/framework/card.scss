@@ -4,44 +4,75 @@
 @import "variables";
 
 .card {
-  background: #fff;
-  border: 1px solid $border;
-  border-radius: 0.18rem;
   display: flex;
   flex-direction: column;
-  transition: all .35s ease-in-out;
+  background: #fff;
+  border: 1px solid transparent;
+  border-radius: 0.18rem;
   padding: 0.6rem;
-  margin-bottom: 1.25rem;
+  margin: 0 0.6rem 1.875rem 0.6rem;
+  transition: all .35s ease-in-out;
 }
 
 .card .card-header, .card .card-body, .card .card-footer {
-  padding: 0.5rem 0.5rem 0;
+  padding: 0.5rem;
 }
 
-.card .card-header .card-title {
+.card-title {
   font-size: 1rem;
   color: $text-primary;
-  font-weight: 500;
+  font-weight: normal;
   line-height: 1.5;
 }
 
-.card .card-header .card-subtitle {
+.card-subtitle {
   font-size: 0.875rem;
   color: $meta;
   font-weight: 600;
 }
 
+//Todo remove
 .card .card-header:last-child, .card .card-body:last-child, .card .card-footer:last-child {
-  padding-bottom: 0.5rem;
+  padding-bottom: inherit;
 }
 
-.card:last-child {
-  margin-bottom: 0 !important;
-}
 
 .card:hover {
   box-shadow: $box-shadow-hover;
 }
 
 
+/*
+    add this class .card-image when you want to display the image in the card.
+ */
+.card-image {
+  padding: 0;
+
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+
+}
+
+
+/*
+    add this class .fixed when you want to display the image in the card.
+ */
+.card-header .fixed {
+  height: 5.9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+}
+
 /********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}

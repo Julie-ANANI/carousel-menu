@@ -5,7 +5,7 @@
 
 
 /*
-  Add the tooltip class and the data-tooltip attribute, which contains the tooltip content,
+  add the tooltip class and the data-tooltip attribute, which contains the tooltip content,
   to non self closing elements.
  */
 .tooltip {
@@ -41,7 +41,7 @@
 
 
 /*
-  And add the tooltip-right, tooltip-bottom or tooltip-left class to define the
+  and add the tooltip-right, tooltip-bottom or tooltip-left class to define the
   position of a tooltip. By default, the tooltip appears above the element.
  */
 .tooltip.tooltip-right::after {

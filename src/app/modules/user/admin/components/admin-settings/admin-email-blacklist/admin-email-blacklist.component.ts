@@ -96,7 +96,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
                 {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-CHOICES',
                   _choices: [
                     {_name: 'EMAIL', _alias: 'COMMON.LABEL.EMAIL', _class: 'label label-draft'},
-                    {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label label-editing'}
+                    {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label label-edit'}
                   ]}]
             };
           }
