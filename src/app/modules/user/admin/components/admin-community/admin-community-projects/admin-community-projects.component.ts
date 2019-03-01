@@ -27,7 +27,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
       fields: '',
       limit: '10',
       offset: '0',
-      search: '{}',
+      search: '{"status":"EVALUATING"}',
       sort: '{"created":-1}'
     };
     this._tableInfos = {
@@ -40,10 +40,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
       _isShowable: true,
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.TITLE', _type: 'TEXT'},
-        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
-        {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT'},
         {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
-        {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE'},
         {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
