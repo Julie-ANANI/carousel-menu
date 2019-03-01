@@ -1,0 +1,22 @@
+@import "../variables";
+
+.icon {
+  outline: none;
+  text-decoration: none;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-md;
+  display: inline-block;
+  margin-left: $unit-1;
+  margin-right: $unit-1;
+  cursor: pointer;
+  color: $border;
+
+  &.icon-delete {
+    color: $alert-color;
+  }
+
+  &.icon-success {
+    color: $success-color;
+  }
+
+}
