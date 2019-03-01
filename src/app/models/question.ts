@@ -10,7 +10,7 @@ export interface Option {
 export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
 
 export interface Question {
-  readonly _id?: string;
+  _id?: string;
   identifier: string;
   controlType: QuestionType;
   readonly label: Multiling;
