@@ -126,6 +126,7 @@ export class PresetService {
     const questions: Array<Question> = this._preset.sections[sectionIndex].questions;
     const question: Question = { ...questions[questionIndex] };
     /* mutate question to avoid getting 2 questions with the same id */
+    delete question._id;
     question.identifier = this.generateId();
     questions.push(question);
   }
