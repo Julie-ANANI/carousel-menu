@@ -9,9 +9,8 @@ const userRoutes: Routes = [
     path: '',
     component: UserComponent,
     children: [
-      { path: '', loadChildren: './client/client.module#ClientModule' },
-      { path: 'discover', loadChildren: '../public/discover/discover.module#DiscoverModule' },
-      { path: 'admin', loadChildren: './admin/admin.module#AdminModule' }
+      { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
+      { path: '', loadChildren: './client/client.module#ClientModule' }
     ]
   }
 ];

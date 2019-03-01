@@ -25,19 +25,19 @@
             </div>
             <div class="column col-3 share" align="right">
               {{ 'PROJECT.SHARE.TITLE' | translate}}<br>
-              <a [href]="shareService.linkedinProjectShareLink(project, lang)" target="_blank">
+              <a [href]="shareService.linkedinProjectShareLink(project.innovationCards[idInnovationCard])" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="36" height="36"
                 title="{{ 'PROJECT.SHARE.LINKEDIN' | translate}}">
               </a>
-              <a [href]="shareService.twitterProjectShareLink(project, lang)" target="_blank">
+              <a [href]="shareService.twitterProjectShareLink(project.innovationCards[idInnovationCard])" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="36" height="36"
                      title="{{ 'PROJECT.SHARE.TWITTER' | translate}}">
               </a>
-              <a [href]="shareService.facebookProjectShareLink(project)" target="_blank">
+              <a [href]="shareService.facebookProjectShareLink(project.innovationCards[idInnovationCard])" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="36" height="36"
                      title="{{ 'PROJECT.SHARE.FACEBOOK' | translate}}">
               </a>
-              <a [href]="shareService.mailProjectShareLink(project, lang)" target="_blank">
+              <a [href]="shareService.mailProjectShareLink(project.innovationCards[idInnovationCard])" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/v1512724745/share-mail_e8xztz.png" width="36" height="36"
                      title="{{ 'PROJECT.SHARE.MAIL' | translate}}">
               </a>
