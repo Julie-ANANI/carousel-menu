@@ -9,9 +9,9 @@
   justify-content: center;
   background-color: $background-color;
   color: $light-color;
-  font-weight: 600;
+  font-weight: $font-weight-medium;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: $font-size-sm;
   border: $border-width solid $background-color;
 
   &.circle {
@@ -21,7 +21,7 @@
     background-color: $border-color;
     color: $dark-color;
     border-color: $border-color;
-    font-size: 0.5rem;
+    font-size: $font-size-xs;
 
     &.circle-md {
       width: 35px;
@@ -48,7 +48,7 @@
   }
 
   &.rect {
-    font-size: 0.9rem;
+    font-size: $font-size-lg;
     width: 40px;
     height: 40px;
     border-width: $border-width-lg;

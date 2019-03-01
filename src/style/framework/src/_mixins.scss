@@ -69,8 +69,8 @@
 
 // Text link variant
 @mixin text-link-variant($color: $primary-color) {
-  font-weight: 600;
-  font-size: 0.7rem;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
   color: $color;
 
   &:focus, &:visited, &:active, &.active, &:hover {

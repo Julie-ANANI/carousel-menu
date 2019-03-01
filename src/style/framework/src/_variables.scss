@@ -88,11 +88,17 @@ $unit-16: 3.2rem !default;
 $html-font-size: 20px !default;
 $html-line-height: 1.5 !default;
 $font-size: 20px !default;
+$font-size-xs: $unit-3 !default;
+$font-size-sm: .7rem !default;
+$font-size-md: $unit-4 !default;
+$font-size-lg: .9rem !default;
+$font-icon: $unit-4 !default;
 $line-height: 1.5 !default;
 
 
 // Font weights
 $font-weight-normal: 400 !default;
+$font-weight-medium: 600 !default;
 $font-weight-bold: 700 !default;
 
 

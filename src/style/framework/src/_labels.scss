@@ -4,10 +4,10 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-weight: 600;
-  font-size: 0.6rem;
-  padding: 0.4rem 0.75rem;
-  margin: 0.4rem;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-xs;
+  padding: $unit-2 $unit-4;
+  margin: $unit-2;
   border-radius: $border-width-lg;
   background-color: inherit;
   color: $light-color;

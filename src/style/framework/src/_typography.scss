@@ -3,15 +3,15 @@
 // Headings
 h1, h2, h3, h4, h5, h6 {
   color: inherit;
-  font-weight: 600;
+  font-weight: $font-weight-medium;
   line-height: 1.5;
-  margin-bottom: 0.5em;
+  margin-bottom: $unit-2;
   margin-top: 0;
   word-break: break-word;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: 600;
+  font-weight: $font-weight-medium;
 }
 
 h1, .h1 {
