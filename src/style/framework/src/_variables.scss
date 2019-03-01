@@ -23,6 +23,7 @@ $body-bg-color: $light-color;
 $body-font-color: $dark-color;
 $link-color: $primary-color;
 $bg-color-light: $light-color !default;
+$bg-overlay: rgba(0,0,0,0.75) !default;
 
 
 // text variables
@@ -89,11 +90,12 @@ $html-font-size: 20px !default;
 $html-line-height: 1.5 !default;
 $font-size: 20px !default;
 $font-size-xs: $unit-3 !default;
-$font-size-sm: .7rem !default;
+$font-size-sm: 0.7rem !default;
 $font-size-md: $unit-4 !default;
-$font-size-lg: .9rem !default;
-$font-icon: $unit-4 !default;
+$font-size-lg: 0.9rem !default;
+$font-icon: 0.75rem !default;
 $line-height: 1.5 !default;
+$line-height-sm: 1 !default;
 
 
 // Font weights

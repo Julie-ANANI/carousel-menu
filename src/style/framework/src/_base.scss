@@ -30,13 +30,13 @@ body {
 
 
 a {
-  color: $link-color;
+  color: inherit;
   outline: none;
   text-decoration: none;
 
   &:focus, &:hover, &:active, &.active {
     color: $link-color;
-    text-decoration: underline;
+    text-decoration: none;
   }
 
 }

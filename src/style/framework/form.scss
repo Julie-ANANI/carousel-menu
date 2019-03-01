@@ -9,23 +9,12 @@
 /*
     form group
 */
-.form-group {
-  display: block;
-  margin-bottom: 0.5rem;
-}
 
 
 /*
     form label
 */
-.form-label {
-  display: block;
-  color: $form-label;
-  font-weight: 600;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  padding: 0.5rem 0;
-}
+
 
 
 /*
@@ -33,32 +22,13 @@
     defining the input of the form or any other. Class
     name: .form-input
  */
-.form-input {
-  border: 0.06rem solid $form-border;
-  font-size: 0.875rem;
-  color: $form-input;
-  border-radius: 0.35rem;
-  display: block;
-  width: 100%;
-  outline: none;
-  height: 3.125rem;
-  position: relative;
-  background-color: white;
-  background-image: none;
-  padding: 0.875rem;
-  transition: all 0.15s ease-in-out;
-  max-width: 100%;
-  vertical-align: middle;
-  line-height: 1.5;
-}
+
 
 
 /*
     placeholder
 */
-.form-input:not(:disabled):placeholder-shown {
-  color: $form-placeholder;
-}
+
 
 
 /*
@@ -66,7 +36,7 @@
     defining the select input of the form or any other. Class
     name: .form-select
  */
-.form-select {
+/*.form-select {
   border: 0.06rem solid $form-border;
   font-size: 0.875rem;
   color: $form-input;
@@ -83,14 +53,14 @@
   max-width: 100%;
   line-height: 1.5;
   vertical-align: middle;
-}
+}*/
 
 
-.form-select:not([multiple]):not([size]) {
+/*.form-select:not([multiple]):not([size]) {
   background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right 0.9rem center/0.4rem 0.5rem;
   background-size: 0.6rem;
   padding-right: 2.187rem;
-}
+}*/
 
 
 /*
@@ -104,9 +74,11 @@
 /*
     error
 */
+/*
 .form-input.ng-touched.ng-invalid {
   border-color: $form-alert;
 }
+*/
 
 
 /*
@@ -126,12 +98,7 @@
     form error style. Add this class to show the error related to the
     input. Class name: form-error
  */
-.form-error {
-  display: block;
-  color: $form-alert;
-  font-size: 0.75rem;
-  padding: 0.5rem 0;
-}
+
 
 
 /*
@@ -207,14 +174,14 @@
 }
 
 
-.form-radio input, .form-switch input, .form-checkbox input {
+/*.form-radio input, .form-switch input, .form-checkbox input {
   clip: rect(0, 0, 0, 0);
   height: 1px;
   margin: -1px;
   overflow: hidden;
   position: absolute;
   width: 1px;
-}
+}*/
 
 
 .form-radio input:active + .form-icon, .form-switch input:focus + .form-icon {

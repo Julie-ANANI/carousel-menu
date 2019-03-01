@@ -1,0 +1,102 @@
+@import "variables";
+@import "mixins";
+
+
+/*
+  add the tooltip class and the data-tooltip attribute, which contains the tooltip content,
+  to non self closing elements.
+ */
+.tooltip {
+  position: relative;
+
+  &::after {
+    @include control-transition();
+    background: $bg-overlay;
+    border-radius: $border-radius;
+    bottom: 100%;
+    color: $light-color;
+    content: attr(data-tooltip);
+    display: block;
+    font-size: $font-size-sm;
+    left: 50%;
+    max-width: 320px;
+    opacity: 0;
+    overflow: hidden;
+    padding: $unit-1 $unit-2;
+    pointer-events: none;
+    position: absolute;
+    text-overflow: ellipsis;
+    transform: translate(-50%, $unit-2);
+    white-space: pre;
+    z-index: 300;
+  }
+
+  &:focus, &:hover {
+
+    &::after {
+      opacity: 1;
+      transform: translate(-50%, -$unit-1);
+    }
+
+  }
+
+  &[disabled], &.disabled {
+    pointer-events: auto;
+  }
+
+  &.tooltip-right {
+
+    &::after {
+      bottom: 50%;
+      left: 100%;
+      transform: translate(-$unit-1, 50%);
+  }
+
+    &:focus, &:hover {
+
+      &::after {
+        transform: translate($unit-1, 50%);
+      }
+
+    }
+
+  }
+
+  &.tooltip-bottom {
+
+    &::after {
+      bottom: auto;
+      top: 100%;
+      transform: translate(-50%, -$unit-2);
+    }
+
+    &:focus, &:hover {
+
+      &::after {
+        transform: translate(-50%, $unit-1);
+      }
+
+    }
+
+  }
+
+  &.tooltip-left {
+
+    &::after {
+      bottom: 50%;
+      left: auto;
+      right: 100%;
+      transform: translate($unit-2, 50%);
+    }
+
+    &:focus, &:hover {
+
+      &::after {
+        transform: translate(-$unit-1, 50%);
+      }
+
+    }
+
+  }
+
+}

@@ -1,0 +1,19 @@
+@import "variables";
+
+.header {
+  display: flex;
+  align-items: center;
+  background: $bg-color-light;
+  min-height: 75px;
+  color: $light-color;
+  font-size: 1rem;
+
+  &.header-primary {
+    background-color: $background-color;
+  }
+
+  &.header-secondary {
+    background-color: $secondary-color;
+  }
+
+}

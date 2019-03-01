@@ -12,7 +12,7 @@
   user-select: none;
   white-space: nowrap;
   text-decoration: none;
-  line-height: $line-height;
+  line-height: $line-height-sm;
   background: $bg-color-light;
   border: $border-width solid $primary-color;
   font-size: $font-size-sm;
@@ -104,6 +104,7 @@
   border: $border-width solid transparent;
   font-size: $font-size-xs;
   color: $light-color;
+  line-height: $line-height-sm;
 
   &[disabled], &:disabled, &.disabled {
     color: $button-disabled-text !important;

@@ -1,0 +1,84 @@
+@import "variables";
+@import "mixins";
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 75px;
+  position: relative;
+
+  .mobile-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .mobile-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 75px;
+      font-size: $font-size-md;
+      color: $light-color;
+      font-weight: $font-weight-medium;
+
+      i {
+        font-size: $font-size-md;
+        margin-right: $unit-2;
+      }
+
+    }
+
+  }
+
+  .logo {
+    height: 75px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navigation-wrapper {
+    font-size: $font-size-sm;
+    color: $light-color;
+    font-weight: $font-weight-medium;
+
+    .menu {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      .menu-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 75px;
+        margin: 0;
+        padding: 0 $unit-3;
+
+        a {
+          @include control-transition();
+          color: inherit;
+          opacity: 0.5;
+
+          &:hover, &:focus, &:active, &.active {
+            text-decoration: none;
+            color: $primary-color;
+            opacity: 1;
+          }
+
+        }
+
+      }
+
+      .menu-item:last-child {
+        padding-right: 0;
+      }
+
+    }
+
+  }
+
+}
+

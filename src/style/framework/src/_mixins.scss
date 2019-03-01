@@ -20,7 +20,7 @@
 
 // Component transition
 @mixin control-transition() {
-  transition: all 0.15s ease;
+  transition: all 0.35s ease;
 }
 
 
@@ -47,20 +47,20 @@
 // Ghost button variant
 @mixin ghost-button-variant($color: $primary-color) {
   color: $color;
-  background-color: $bg-color-light;
+  background-color: transparent;
   border-color: $color;
   border-width: $border-width-lg;
 
   &:focus, &:active, &.active {
     color: $color;
-    background-color: $bg-color-light;
+    background-color: transparent;
     border-color: $color;
     border-width: $border-width-lg;
   }
 
   &:hover {
     color: lighten($color, 15%);
-    background-color: $bg-color-light;
+    background-color: transparent;
     border-color: lighten($color, 15%);
   }
 
