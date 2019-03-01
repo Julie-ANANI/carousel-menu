@@ -554,7 +554,7 @@
             <div class="keyLearning-wrapper">
               <div class="section-container full">
                 <h1 class="main-heading">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h1>
-                <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+                <p *ngIf="isMainDomain()" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
                 <app-text-zone
                   [elementId]="'keyLearning'"
                   [readonly]="!adminSide"
@@ -684,7 +684,7 @@
             <div class="conclusion-wrapper">
               <div class="section-container full">
                 <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
-                <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+                <p *ngIf="isMainDomain()" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
                 <app-text-zone
                   [elementId]="'finalConclusion'"
                   [readonly]="!adminSide"

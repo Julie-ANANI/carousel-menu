@@ -25,8 +25,16 @@ export class ExecutiveConclusionComponent {
 
   private _operator: User;
 
+  public getURL(): string {
+    return environment.companyURL;
+  }
+
   getLogo(): string {
     return environment.logoSynthURL;
+  }
+
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi' || environment.domain === 'dynergie';
   }
 
   get conclusion(): string {
