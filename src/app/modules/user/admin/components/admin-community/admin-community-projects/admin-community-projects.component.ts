@@ -71,6 +71,14 @@ export class AdminCommunityProjectsComponent implements OnInit {
     this._tableInfos = JSON.parse(JSON.stringify(tableInfos));
   }
 
+  public loadProjects(event: Event) {
+    console.log(event);
+  }
+
+  public goToProject(event: Event) {
+    console.log(event);
+  }
+
 
   get config() {
     return this._config;

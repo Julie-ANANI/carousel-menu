@@ -49,4 +49,8 @@ export class AdminCommunityResponsesComponent implements OnInit {
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
   }
+
+  get questions() {
+    return [];
+  }
 }
