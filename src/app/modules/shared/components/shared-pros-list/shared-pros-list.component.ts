@@ -87,7 +87,8 @@ export class SharedProsListComponent {
             {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
             {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
-            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'}]
+            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'}
+          ]
         };
 
       });
@@ -123,7 +124,6 @@ export class SharedProsListComponent {
     }
 
   }
-
 
   private configToString() {
     let config = {};
@@ -182,14 +182,14 @@ export class SharedProsListComponent {
 
   onClickEdit(pro: Professional) {
     this.professionalsService.get(pro._id).subscribe((professional: Professional) => {
+      this.isProfessionalForm = true;
+      this.isTagsForm = false;
+      this._currentPro = professional;
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
         title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
         type: 'professional'
       };
-      this.isProfessionalForm = true;
-      this.isTagsForm = false;
-      this._currentPro = professional;
     });
   }
 

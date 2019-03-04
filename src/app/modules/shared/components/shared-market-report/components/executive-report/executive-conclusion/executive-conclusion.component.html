@@ -37,7 +37,7 @@
     <h6>{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.UMI_CONTACT.A' | translate }}</h6>
 
     <!-- Sub heading -->
-    <h6>{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.UMI_CONTACT.B' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ '06 49 34 47 32' }}</span></h6>
+      <h6>{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.UMI_CONTACT.B' | translate }} <span *ngIf="isMainDomain()">{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.UMI_CONTACT.C' | translate }}&nbsp;<span [ngStyle]="{ 'color': '#FFB300' }">{{ '06 49 34 47 32' }}</span></span></h6>
 
     <!-- Logo and Address -->
     <div class="logo-address">
@@ -45,8 +45,8 @@
         <img [src]="getLogo()">
       </div>
       <div class="address">
-        <p class="text-link"><a href="https://www.umi.us">www.umi.us</a></p>
-        <p>1 place Giovanni da Verrazzano, 69009 Lyon, France</p>
+        <p class="text-link"><a [href]="getURL()">{{getURL()}}</a></p>
+        <p *ngIf="isMainDomain()">1 place Giovanni da Verrazzano, 69009 Lyon, France</p>
       </div>
     </div>
 

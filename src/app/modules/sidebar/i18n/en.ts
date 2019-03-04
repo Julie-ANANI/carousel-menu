@@ -13,6 +13,10 @@ export const SIDEBAR = {
     'ADD_PRO': 'Add Professional',
     'NEW_BATCH': 'New Batch Manually',
     'EDIT_BATCH': 'Edit Batch'
+  },
+
+  'LABELS': {
+    'CSV-IMPORT': 'Import csv file'
   }
 
 };
