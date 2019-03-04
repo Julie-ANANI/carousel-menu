@@ -178,7 +178,7 @@ textarea.form-input {
     }
 
     &:checked + .form-icon {
-      background: $primary-color;
+      background: $primary-color none;
       border-color: $primary-color;
     }
 
@@ -198,7 +198,7 @@ textarea.form-input {
 .form-checkbox, .form-radio {
 
   .form-icon {
-    background: $bg-color-light;
+    background: $bg-color-light none;
     height: $unit-4;
     left: 0;
     width: $unit-4;
@@ -218,7 +218,7 @@ textarea.form-input {
     &:checked + .form-icon {
 
       &::before {
-        background: $bg-color-light;
+        background: $bg-color-light none;
         border-radius: 50%;
         content: "";
         height: 4px;
@@ -232,6 +232,66 @@ textarea.form-input {
 
   }
 
+}
+
+
+// Form element: Switch
+.form-switch {
+  padding-left: 2.5rem;
+  padding-right: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  .form-icon {
+    background: $bg-color-light none;
+    border-color: $form-border-color;
+    background-clip: padding-box;
+    border-radius: 16px;
+    height: 15px;
+    left: 0;
+    top: 7px;
+    width: 34px;
+
+    &::before {
+      @include control-transition();
+      background: $form-meta-color none;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      height: 1.05rem;
+      position: absolute;
+      left: -4px;
+      top: -5px;
+      width: $unit-5;
+      border-color: $form-meta-color;
+    }
+
+  }
+
+  input {
+
+    &:focus + .form-icon {
+      border-color: $form-border-color;
+      background: $bg-color-light none;
+    }
+
+    &:checked + .form-icon {
+
+      &::before {
+        left: 14px;
+      }
+
+    }
+
+    &:active + .form-icon {
+
+      &::before {
+        // background: $bg-color;
+      }
+
+    }
+
+  }
 }
 
 
@@ -257,7 +317,7 @@ textarea.form-input {
 }
 
 
-.form-checkbox, .form-radio, .form-switch {
+.form-checkbox, .form-radio {
 
   .has-error &, &.is-error {
 
@@ -270,8 +330,41 @@ textarea.form-input {
   input {
 
     &:checked  + .form-icon, &:active + .form-icon  {
-      background: $form-success-color;
+      background: $form-success-color none;
       border-color: $form-success-color;
+    }
+
+  }
+
+}
+
+
+.form-switch {
+
+  .has-error &, &.is-error {
+
+    .form-icon {
+      border-color: $form-alert-color;
+    }
+
+  }
+
+  input {
+
+    &:active + .form-icon {
+      border-color: $form-border-color;
+      background-color: $bg-color-light;
+    }
+
+    &:checked  + .form-icon  {
+      border-color: rgba(46,204,113,0.45);
+      background: rgba(46,204,113,0.45) none;
+
+      &::before {
+        border-color: $success-color;
+        background: $success-color none;
+      }
+
     }
 
   }
@@ -303,7 +396,7 @@ textarea.form-input {
 .form-input, .form-select {
 
   &:disabled, &.disabled {
-    background: $form-disabled-color;
+    background: $form-disabled-color none;
     color: $form-disabled-text;
     border-color: $form-disabled-color;
     cursor: not-allowed;
@@ -315,7 +408,7 @@ textarea.form-input {
 .form-input {
 
   &[readonly] {
-    background-color: $form-disabled-color;
+    background: $form-disabled-color none;
   }
 
 }
@@ -325,7 +418,7 @@ input {
   &:disabled, &.disabled {
 
     & + .form-icon {
-      background: $bg-color-light;
+      background: $bg-color-light none;
       cursor: not-allowed;
       opacity: 1;
     }
@@ -341,7 +434,7 @@ input {
     &:disabled, &.disabled {
 
       & + .form-icon::before {
-        background: $form-meta-color;
+        background: $form-meta-color none;
       }
 
     }

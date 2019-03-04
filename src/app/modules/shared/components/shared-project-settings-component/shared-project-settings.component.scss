@@ -1,10 +1,10 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 #shared-project-settings-component {
 
   .pd-para, .pd-input {
     margin: 0;
-    padding-top: 1.2rem;
+    padding-top: $unit-5;
   }
 
   .pd-ques {

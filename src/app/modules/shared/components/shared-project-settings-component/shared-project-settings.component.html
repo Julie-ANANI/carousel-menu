@@ -1,19 +1,23 @@
-<div *ngIf="innovationSettings" id="shared-project-settings-component">
+<ng-container *ngIf="innovationSettings">
+  <section id="shared-project-settings-component">
 
-
-  <!-- geography section -->
-  <div class="section-geography">
-    <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.LABEL' | translate }}</span>
-    <div class="pd-input">
-      <app-worldmap
-        (updateContinent)="continentModificationDrain($event)"
-        [initialConfiguration]="continentTarget"
-        [isEditable]="canEdit"
-        [width]="'auto'">
-      </app-worldmap>
+    <!-- geography section -->
+    <div>
+      <span class="shape rect">1</span>
+      <span class="text question">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.LABEL' | translate }}</span>
+      <div class="pd-input">
+        <app-worldmap
+          (updateContinent)="continentModificationDrain($event)"
+          [initialConfiguration]="continentTarget"
+          [isEditable]="canEdit"
+          [width]="'auto'">
+        </app-worldmap>
+      </div>
     </div>
-  </div>
-  <!-- /geography section -->
+    <!-- /geography section -->
+
+  </section>
+
 
 
   <!-- Two columns -->
@@ -356,4 +360,4 @@
   <!-- /Two columns -->
 
 
-</div>
+</ng-container>

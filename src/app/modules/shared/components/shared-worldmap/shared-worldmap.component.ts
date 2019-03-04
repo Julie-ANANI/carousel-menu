@@ -10,8 +10,11 @@ import { SharedWorldmapService } from './shared-worldmap.service';
 export class SharedWorldmapComponent implements OnInit{
 
   @Input() width = '800px';
+
   @Input() countriesColor: string;
+
   @Input() isEditable = true;
+
   @Input() synthesis = false;
 
   @Input() set countries(value: Array<string>) {
@@ -61,6 +64,7 @@ export class SharedWorldmapComponent implements OnInit{
     this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
+
   /**
    * Checks whether all the continents have been selected
    * @returns {boolean}
@@ -74,6 +78,7 @@ export class SharedWorldmapComponent implements OnInit{
     return i === keys.length;
   }
 
+
   /**
    * Selects/Unselects all the countries
    * @param $event the value of the checkbox
@@ -86,6 +91,7 @@ export class SharedWorldmapComponent implements OnInit{
     });
     this.updateContinent.emit({continents: this._continents});
   }
+
 
   /**
    * Processes the click over one continent
@@ -104,6 +110,7 @@ export class SharedWorldmapComponent implements OnInit{
 
   }
 
+
   /**
    * Indicates selection status of a continent
    * @param continent the continent to test
@@ -112,6 +119,5 @@ export class SharedWorldmapComponent implements OnInit{
   public getContinentSelectionStatus(continent: string): boolean {
     return !!this._continents[continent];
   }
-
 
 }

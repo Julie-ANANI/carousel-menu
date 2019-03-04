@@ -110,6 +110,7 @@
         @include control-transition();
         background-color: $success-color;
         color: $light-color;
+        border-color: $success-color;
       }
 
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
@@ -10,7 +10,7 @@ import { InnovationCommonService } from '../../../../services/innovation/innovat
   styleUrls: ['shared-project-settings.component.scss']
 })
 
-export class SharedProjectSettingsComponent implements OnInit {
+export class SharedProjectSettingsComponent {
 
   @Input() set projectSettings(value: InnovationSettings) {
     this._innovationSettings = JSON.parse(JSON.stringify(value));
@@ -54,11 +54,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   private _displayCompanyCommentSection = false;
 
   constructor(private translateService: TranslateService,
-              private innovationCommonService: InnovationCommonService) {}
-
-  ngOnInit() {
-  }
-
+              private innovationCommonService: InnovationCommonService) { }
 
   private getCommentSections() {
     this._displayCountriesCommentSection = this._innovationSettings.geography && this._innovationSettings.geography.comments && this._innovationSettings.geography.comments.length > 0;
