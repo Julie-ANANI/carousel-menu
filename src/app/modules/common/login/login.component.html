@@ -21,7 +21,7 @@
           <div class="credentials-wrapper">
             <form (submit)="onContinue()"  [formGroup]="formData">
 
-              <div class="form-group">
+              <div class="form-group has-error">
                 <label class="form-label" for="login-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
                 <input
                   type="email"
@@ -30,12 +30,12 @@
                   formControlName="email"
                   placeholder="john@catco.com">
                 <span *ngIf="formData.get('email').touched">
-                <span class="form-error" *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-                <span class="form-error" *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+                <span class="form-input-hint" *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                <span class="form-input-hint" *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
               </span>
               </div>
 
-              <div class="form-group">
+              <div class="form-group has-error">
                 <label class="form-label" for="login-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
                 <input
                   class="form-input"
@@ -43,7 +43,7 @@
                   type="password"
                   formControlName="password"
                   [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
-                <span class="form-error" *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
+                <span class="form-input-hint" *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
               </div>
 
               <!-- Login button and forget password -->
