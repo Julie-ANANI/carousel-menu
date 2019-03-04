@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { environment } from '../../../../../environments/environment';
+import { environment } from "../../../../environments/environment";
 import { Location } from '@angular/common';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { UserService } from '../../../../services/user/user.service';
-import { User } from '../../../../models/user.model';
+import { AuthService } from '../../../services/auth/auth.service';
+import { UserService } from '../../../services/user/user.service';
+import { User } from '../../../models/user.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
