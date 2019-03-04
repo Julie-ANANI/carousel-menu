@@ -2,6 +2,7 @@
   <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
 
     <app-workflow
+      [id]="getId()"
       [emailsObject]="emailToEdit"
       (emailChange)="updateEmail($event)"
       [signatures]="signatures"
