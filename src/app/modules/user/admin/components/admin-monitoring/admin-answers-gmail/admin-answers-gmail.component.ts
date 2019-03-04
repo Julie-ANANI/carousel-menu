@@ -46,7 +46,7 @@ export class AdminAnswersGmailComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    console.log('hello');
+
   }
 
 

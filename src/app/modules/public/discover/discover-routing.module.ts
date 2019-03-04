@@ -8,7 +8,6 @@ import { DiscoverDescriptionComponent } from './components/description/discover-
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { InnovationsResolver } from './services/innos-resolver.service';
 
-
 const discoverRoutes: Routes = [
   {
     path: '',
@@ -18,12 +17,14 @@ const discoverRoutes: Routes = [
         path: '',
         component: InnovationsComponent,
         resolve: { innovations: InnovationsResolver },
+        runGuardsAndResolvers: 'always',
         pathMatch: 'full',
       },
       {
         path: ':projectId/:lang',
         component: DiscoverDescriptionComponent,
         resolve: { innovation: InnovationResolver },
+        runGuardsAndResolvers: 'always',
         pathMatch: 'full'
       },
     ]

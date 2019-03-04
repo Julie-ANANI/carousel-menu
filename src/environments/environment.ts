@@ -17,6 +17,7 @@ export const environment = {
   logoSynthURL: '',
   background: '',
   secureCookie: false,
+  commercialContact: '',
   cookieTime: 48 * 3600 * 1000
 };
 

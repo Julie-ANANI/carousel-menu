@@ -123,7 +123,7 @@
 <!-- Innovation preview sidebar-->
 <app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-innovation-preview
-    [innovation]="selectedInnovation"
+    [projectCard]="selectedInnovation"
     [batchInfo]="{ batchSelected:this.selectedBatch, date: this.dateNow }">
   </app-innovation-preview>
 </app-sidebar>

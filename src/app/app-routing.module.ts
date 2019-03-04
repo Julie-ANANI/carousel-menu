@@ -38,10 +38,16 @@ const appRoutes: Routes = [
     path: 'wordpress/share', loadChildren: './modules/wordpress/share/share.module#ShareModule'
   },
   {
+    path: 'sample', loadChildren: './modules/public/share/share.module#ShareModule'
+  },
+  {
     path: 'auth', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
   },
   {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
+  },
+  {
+    path: 'commercial', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/commercial/commercial.module#CommercialModule'
   },
   {
     path: '', pathMatch: 'full', redirectTo: 'user'

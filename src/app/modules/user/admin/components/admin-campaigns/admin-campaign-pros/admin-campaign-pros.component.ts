@@ -90,8 +90,8 @@ export class AdminCampaignProsComponent implements OnInit {
 
   importPros(value: boolean) {
     if (value) {
-      this.professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id, this._originCampaign[0].innovation.toString(), this._campaign.innovation._id).pipe(first())
-        .subscribe((answer: any) => {
+      this.professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id, this._originCampaign[0].innovation.toString(), this._campaign.innovation._id)
+        .pipe(first()).subscribe((answer: any) => {
           const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
           this.translateNotificationsService.success('ERROR.SUCCESS', message);
         }, () => {
@@ -114,7 +114,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.SIDEBAR.ADD_PRO',
+      title: 'SIDEBAR.TITLE.ADD_PRO',
       type: 'addPro'
     };
 
@@ -123,13 +123,13 @@ export class AdminCampaignProsComponent implements OnInit {
 
   onClickSave(formValue: FormGroup) {
     this._newPro = {
-      firstName: formValue['firstName'],
-      lastName: formValue['lastName'],
-      email: formValue['email'],
-      jobTitle: formValue['jobTitle'],
-      country: formValue['country'],
-      profileUrl: formValue['profileUrl'],
-      company: formValue['companyName'],
+      firstName: formValue.value['firstName'],
+      lastName: formValue.value['lastName'],
+      email: formValue.value['email'],
+      jobTitle: formValue.value['jobTitle'],
+      country: formValue.value['country'],
+      profileUrl: formValue.value['profileUrl'],
+      company: formValue.value['companyName'],
       emailConfidence: 100
     };
 
@@ -144,7 +144,6 @@ export class AdminCampaignProsComponent implements OnInit {
 
   public selectedProsEvent(event: Event) {
     this._contextSelectedPros = event['pros'];
-    console.log(this._contextSelectedPros);
   }
 
 
@@ -176,7 +175,6 @@ export class AdminCampaignProsComponent implements OnInit {
     });
 
   }
-
 
   set config(value: any) {
     this._config = value;

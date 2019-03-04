@@ -21,22 +21,21 @@
 <!-- modal to delete the scenario -->
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'EDIT_WORKFLOW.MODAL.CONTENT' | translate }}
-
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="deleteScenario()">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="deleteScenario()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-
 </app-modal>
 <!-- /modal to delete the scenario -->
 
 
 <!-- sidebar to edit workflow -->
 <app-sidebar [(template)]="more">
-  <app-sidebar-workflow
+  <app-workflow
+    [id]="getId()"
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
-  </app-sidebar-workflow>
+  </app-workflow>
 </app-sidebar>
 <!-- /sidebar to edit workflow -->

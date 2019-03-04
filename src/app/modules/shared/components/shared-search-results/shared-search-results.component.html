@@ -38,7 +38,7 @@
         [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}"></app-autocomplete-input>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="(addToCampaignModal = false) && $event.preventDefault()">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button class="btn btn-link" (click)="(addToCampaignModal = false) && $event.preventDefault()">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
       <button type="submit" class="btn btn-primary" (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length">
         {{ 'SEARCH.ADD' | translate }}
       </button>

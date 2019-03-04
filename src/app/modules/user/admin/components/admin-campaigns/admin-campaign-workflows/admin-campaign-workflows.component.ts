@@ -201,10 +201,20 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
 
+  onClickTestWorkflow() {
+    for (let i = 1; i < 4; i++) {
+      this.campaignService.sendTestEmails(this._campaign._id, i).pipe(first()).subscribe((res) => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.WORKFLOW.SENT');
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.WORKFLOW.SENT_ERROR');
+      });
+    }
+  }
+
+
   private saveTemplates(message: string) {
     this.campaignService.put(this._campaign).pipe(first()).subscribe((savedCampaign: any) => {
       this.translateNotificationsService.success("ERROR.SUCCESS", message);
-      // this.getModifiedScenarios();
     }, () => {
       this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
     });
@@ -265,7 +275,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   /*get domain(): boolean {
     return (this._campaign.innovation.settings.domain !== '');
-
   }*/
 
   get config(): any {

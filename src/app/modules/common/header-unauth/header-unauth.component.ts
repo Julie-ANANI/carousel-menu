@@ -101,7 +101,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
     const url = this.router.url;
 
     if (url.includes('/discover')) {
-      this.router.navigate(['/user', 'discover'], {
+      this.router.navigate([url.replace('/discover', '/user/discover/')], {
         queryParams: this.activatedRoute.snapshot.queryParams
       });
     }
@@ -124,7 +124,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SIGN_UP.HEADING_SIDEBAR',
+      title: 'SIDEBAR.TITLE.SIGN_UP',
       type: 'signup'
     }
 
@@ -156,7 +156,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
           this.authService.login(user).pipe(first()).subscribe(() => {
             this.router.navigate(['/welcome']);
           }, () => {
-            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
           });
         }, () => {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');

@@ -8,8 +8,8 @@
       <header class="sidebar-header">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="header-content">
-            <span>{{ title | translate }}</span>
-            <span><i class="fas fa-times" id="close" (click)="toggleState($event, content)"></i></span>
+            <div>{{ title | translate }}</div>
+            <button class="btn btn-close" id="close" (click)="toggleState($event, content)"></button>
           </div>
         </div>
       </header>

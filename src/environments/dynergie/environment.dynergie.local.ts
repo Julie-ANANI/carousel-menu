@@ -10,6 +10,7 @@ export const environment = {
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1513701711/app/logo-dynergie.png',
   background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1513701711/app/logo-dynergie.png',
+  commercialContact: 'contact@dynergie.eu',
   secureCookie: true,
   cookieTime: 48 * 3600 * 1000
 };

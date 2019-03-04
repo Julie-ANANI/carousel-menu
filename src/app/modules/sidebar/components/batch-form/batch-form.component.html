@@ -1,0 +1,76 @@
+<div class="column col-xs-12 col-11 col-mx-auto" id="batch-form-component">
+  <form [formGroup]="formData" autocomplete="off" (ngSubmit)="onSave()">
+
+    <!-- section save -->
+    <div class="section-save">
+      <button *ngIf="!isNewBatch" type="submit" class="btn btn-primary">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+      <button *ngIf="isNewBatch" type="submit" class="btn btn-primary">{{ 'COMMON.BUTTON.SEND' | translate }}</button>
+    </div>
+
+    <!-- no of pros -->
+    <div *ngIf="isNewBatch" class="form-group">
+      <label class="form-label" for="batch-form-pros">{{ 'COMMON.LABEL.PROS_CONTACT' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="pros"
+        id="batch-form-pros"
+        type="number"
+        [placeholder]="'COMMON.PLACEHOLDER.PROS_CONTACT' | translate"
+        (change)="onKeyboardPress($event)">
+      <div *ngIf="errorPros" class="form-error">
+        <span>{{ 'COMMON.REQUIRED.PROS_CONTACT' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- date -->
+    <div *ngIf="!hideInput" class="form-group">
+      <label class="form-label" for="batch-form-date">{{ 'COMMON.LABEL.DATE' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="date"
+        id="batch-form-date"
+        type="date"
+        (change)="onKeyboardPress($event)"
+        [value]="mailDate | date:'yyyy-MM-dd'">
+      <div *ngIf="isNewBatch" class="form-error">
+        <span>{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- time -->
+    <div *ngIf="!hideInput" class="form-group">
+      <label class="form-label" for="batch-form-time">{{ 'COMMON.LABEL.TIME' | translate }}</label>
+      <input
+        class="form-input"
+        formControlName="time"
+        id="batch-form-time"
+        type="time"
+        (change)="onKeyboardPress($event)"
+        [value]="mailTime">
+      <div *ngIf="isNewBatch" class="form-error">
+        <span>{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- content en -->
+    <div *ngIf="isEditBatch" class="form-group">
+      <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.EN' | translate }}</label>
+      <app-text-zone
+        [elementId]="'en'"
+        [readonly]="true"
+        [data]="contentCurrent.en">
+      </app-text-zone>
+    </div>
+
+    <!-- content fr -->
+    <div *ngIf="isEditBatch" class="form-group">
+      <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.FR' | translate }}</label>
+      <app-text-zone
+        [elementId]="'fr'"
+        [readonly]="true"
+        [data]="contentCurrent.fr">
+      </app-text-zone>
+    </div>
+
+  </form>
+</div>

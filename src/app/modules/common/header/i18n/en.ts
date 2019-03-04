@@ -1,3 +1,3 @@
 export const HEADER = {
-  'EXAMPLE': 'Example'
+  'EXAMPLE': 'Sample results'
 };

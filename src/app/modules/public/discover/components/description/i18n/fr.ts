@@ -5,7 +5,7 @@ export const DISCOVERDESCRIPTION = {
 
   'SHARE' : 'Vous aimez le projet? Partagez-le, récoltez des avis et aidez-le à se concrétiser!',
 
-  'OPINION': 'Donnez votre avis',
+  'OPINION': 'Donner mon avis',
 
   'MEDIA': 'Médias non disponible !',
 
@@ -25,10 +25,16 @@ export const DISCOVERDESCRIPTION = {
 
   'ERROR': 'Nous ne pouvons pas trouver cette innovation en ce moment. Essayez de recharger cette innovation !',
 
-  'CONTACT_US': 'Contactez-nous pour en savoir plus',
+  'CONTACT_US': 'En savoir plus',
 
   'DISCOVER_OTHER': 'Découvrez d\'autres projets',
 
-  'SIDEBAR_BOT_MESSAGE': 'Décrivez d\'abord votre projet pour le prévisualiser.'
+  'SIDEBAR_BOT_MESSAGE': 'Décrivez d\'abord votre projet pour le prévisualiser.',
+
+  'BACK': 'Liste des projets',
+
+  'SHARE_TITLE': 'PARTAGER CECI',
+
+  'RELATED': 'VOUS AIMEREZ PEUT-ÊTRE AUSSI'
 
 };

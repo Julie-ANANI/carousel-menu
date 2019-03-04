@@ -27,6 +27,10 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Input() noLanguage: Boolean;
 
+  @Input() set id(value: string) {
+    this._id = value;
+  }
+
   @Output() languageChange = new EventEmitter<string>();
 
   @Output() emailChange = new EventEmitter<any>();
@@ -36,6 +40,8 @@ export class SharedMailEditorComponent implements OnInit {
   private _emailsObject: any = {};
 
   private _language = 'en';
+
+  private _id = null;
 
   private _email: EmailTemplate;
 
@@ -111,4 +117,7 @@ export class SharedMailEditorComponent implements OnInit {
     return this._editionMode;
   }
 
+  get id(): string {
+    return this._id;
+  }
 }

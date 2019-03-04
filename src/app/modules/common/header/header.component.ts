@@ -124,4 +124,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._backOfficeValue = false;
   }
 
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi';
+  }
+
 }

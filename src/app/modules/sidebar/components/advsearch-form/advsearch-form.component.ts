@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { AdvSearchService } from "../../../../services/advsearch/advsearch.service";
 
 @Component({
   selector: 'advsearch-form',
@@ -22,7 +23,8 @@ export class AdvsearchFormComponent implements OnInit {
   @Output() finalOutput = new EventEmitter<FormGroup>();
 
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder,
+              private _advsearchService: AdvSearchService) { }
 
   ngOnInit() {
   }
@@ -59,12 +61,16 @@ export class AdvsearchFormComponent implements OnInit {
   }
 
   public search() {
-    console.log(this.processInput());
-    console.log("GO search!");
-  }
-
-  private processInput(): string {
-    return JSON.stringify(this._advSearchForm.value);
+    this._advsearchService.advsearch(this._advSearchForm.value)
+      .subscribe(result=>{
+        this.finalOutput.emit(result);
+        console.log(result);
+      }, error=>{
+        console.error(error);
+        this.finalOutput.emit(null);
+      }, ()=>{
+        console.log("DONE!");
+      });
   }
 
   get advSearchForm(): FormGroup {
