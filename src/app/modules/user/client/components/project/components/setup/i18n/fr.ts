@@ -18,7 +18,7 @@ export const SETUP = {
     'EVALUATING': 'Il n\'est plus possible de modifier votre projet car l\'exploration marché est en cours.',
     'REVIEWING': {
       'A': 'Votre projet doit être modifié. Veuillez',
-      'B': 'lire',
+      'B': ' lire ',
       'C': 'nos commentaires que nous vous avons envoyés par courrier.'
     },
     'PREVIEW_MODE': 'La synthèse partielle de votre innovation est disponible.',

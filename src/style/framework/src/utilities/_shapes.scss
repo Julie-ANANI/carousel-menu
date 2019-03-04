@@ -13,6 +13,7 @@
   align-items: center;
   font-size: $font-size-sm;
   line-height: $line-height-sm;
+  margin-right: $unit-2;
   border: $border-width solid $background-color;
 
   &.circle {
@@ -53,6 +54,7 @@
     width: 40px;
     height: 40px;
     border-width: $border-width-lg;
+    border-radius: $border-radius;
   }
 
 }

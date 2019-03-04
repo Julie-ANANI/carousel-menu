@@ -76,11 +76,6 @@ export class ProjectComponent implements OnInit {
   }
 
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
   addCollaborators (event: any): void {
     this._innovation.collaborators = event;
   }
@@ -105,6 +100,10 @@ export class ProjectComponent implements OnInit {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get currentPage(): string {

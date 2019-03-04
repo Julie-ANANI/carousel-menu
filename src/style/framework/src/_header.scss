@@ -3,7 +3,7 @@
 .header {
   display: flex;
   align-items: center;
-  background: $bg-color-light;
+  background-color: $bg-color-light;
   min-height: 75px;
   color: $light-color;
   font-size: 1rem;
@@ -14,6 +14,11 @@
 
   &.header-secondary {
     background-color: $secondary-color;
+  }
+
+  &.header-hero {
+    background-color: $background-color;
+    padding-top: 2.5rem;
   }
 
 }

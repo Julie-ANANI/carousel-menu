@@ -57,7 +57,7 @@ legend {
     color: $form-placeholder-color;
   }
 
-  &.ng-touched.ng-invalid {
+  &.ng-touched.ng-dirty.ng-invalid {
     border-color: $form-alert;
   }
 
@@ -72,6 +72,10 @@ legend {
     height: auto;
   }
 
+  &.input-sm {
+    max-width: 480px;
+  }
+
 }
 
 
@@ -84,8 +88,8 @@ textarea.form-input {
 // Form element: Input hint
 .form-input-hint {
   color: $form-input-color;
-  font-size: $font-size-sm;
-  margin-top: $unit-1;
+  font-size: $font-size-xs;
+  padding: 0 0 $unit-2 0;
 
   .has-success &, .is-success + & {
     color: $form-success-color;
@@ -96,6 +100,7 @@ textarea.form-input {
   }
 
 }
+
 
 // Form element: Error
 .form-error {
@@ -153,8 +158,10 @@ textarea.form-input {
 
 // Form element: Checkbox and Radio
 .form-checkbox, .form-radio, .form-switch {
-  display: inline-block;
+  display: inline-flex;
   line-height: $line-height-sm;
+  font-size: $font-size-md;
+  align-items: center;
   padding:  $unit-1 1.25rem;
   position: relative;
 
@@ -179,10 +186,166 @@ textarea.form-input {
 
   .form-icon {
     @include control-transition();
-    border: $border-width solid $form-border-color;
+    border: $border-width-lg solid $form-border-color;
     cursor: pointer;
     display: inline-block;
     position: absolute;
+  }
+
+}
+
+
+.form-checkbox, .form-radio {
+
+  .form-icon {
+    background: $bg-color-light;
+    height: $unit-4;
+    left: 0;
+    width: $unit-4;
+  }
+
+}
+
+
+.form-radio {
+
+  .form-icon {
+    border-radius: 50%;
+  }
+
+  input {
+
+    &:checked + .form-icon {
+
+      &::before {
+        background: $bg-color-light;
+        border-radius: 50%;
+        content: "";
+        height: 4px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 4px;
+      }
+    }
+
+  }
+
+}
+
+
+// For validation states
+.form-input, .form-select {
+
+  .has-success &, &.is-success {
+
+    &.ng-touched.ng-valid, &.ng-touched.ng-valid:focus {
+      border-color: $form-success-color;
+    }
+
+  }
+
+  .has-error &, &.is-error {
+
+    &.ng-touched.ng-invalid, &.ng-touched.ng-invalid:focus {
+      border-color: $form-alert-color;
+    }
+
+  }
+
+}
+
+
+.form-checkbox, .form-radio, .form-switch {
+
+  .has-error &, &.is-error {
+
+    .form-icon {
+     border-color: $form-alert-color;
+    }
+
+  }
+
+  input {
+
+    &:checked  + .form-icon, &:active + .form-icon  {
+      background: $form-success-color;
+      border-color: $form-success-color;
+    }
+
+  }
+
+}
+
+
+// validation based on :placeholder-shown (Edge doesn't support it yet)
+.form-input {
+
+  &:not(:placeholder-shown) {
+
+    &:invalid, &.ng-touched.ng-invalid {
+      border-color: $form-alert-color;
+
+      & + .form-input-hint {
+        color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+}
+
+
+
+// Form disabled and readonly
+.form-input, .form-select {
+
+  &:disabled, &.disabled {
+    background: $form-disabled-color;
+    color: $form-disabled-text;
+    border-color: $form-disabled-color;
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+}
+
+.form-input {
+
+  &[readonly] {
+    background-color: $form-disabled-color;
+  }
+
+}
+
+input {
+
+  &:disabled, &.disabled {
+
+    & + .form-icon {
+      background: $bg-color-light;
+      cursor: not-allowed;
+      opacity: 1;
+    }
+
+  }
+
+}
+
+.form-switch {
+
+  input {
+
+    &:disabled, &.disabled {
+
+      & + .form-icon::before {
+        background: $form-meta-color;
+      }
+
+    }
+
   }
 
 }

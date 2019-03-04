@@ -76,7 +76,7 @@
 
 
 <!-- collaborator sidebar -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [(template)]="sidebarValue">
   <app-collaborator [project]="innovation" (collaboratorAdded)="addCollaborators($event)"></app-collaborator>
 </app-sidebar>
 <!-- /collaborator sidebar -->

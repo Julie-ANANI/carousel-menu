@@ -1,13 +1,4 @@
-// remove padding top
-.rm-pad-top {
-  padding-top: 0;
-}
-
-
-// remove padding bottom
-.rm-pad-bottom {
-  padding-bottom: 0;
-}
+@import "variables";
 
 
 // hero container padding
@@ -43,7 +34,17 @@
 }
 
 
-/********************************** Media ***************************************/
+// remove padding top
+.rm-pad-top {
+  padding-top: 0;
+}
+
+
+// remove padding bottom
+.rm-pad-bottom {
+  padding-bottom: 0;
+}
+
 
 @media (max-width: $size-sm) {
 

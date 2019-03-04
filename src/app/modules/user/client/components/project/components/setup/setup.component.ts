@@ -22,6 +22,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
+    this.canEdit = value.status === 'EDITING';
   }
 
   private _innovation: Innovation;
@@ -41,6 +42,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   private _sidebarValue: SidebarInterface = {};
 
   private _submitModal: boolean;
+
+  canEdit: boolean;
 
   constructor(private scrollService: ScrollService,
               private router: Router,

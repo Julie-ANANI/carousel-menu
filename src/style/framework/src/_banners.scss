@@ -3,9 +3,9 @@
 .banner {
   background-color: $primary-color;
   color: $light-color;
-  font-weight: 600;
-  font-size: 0.7rem;
-  padding: $unit-2 $unit-4;
+  font-weight: $font-weight-medium;
+  font-size: 0.75rem;
+  padding: $unit-4;
   justify-content: center;
   align-items: center;
   display: flex;

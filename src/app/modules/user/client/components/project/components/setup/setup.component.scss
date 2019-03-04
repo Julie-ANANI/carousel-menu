@@ -1,4 +1,5 @@
 @import "../../../../../../../../style/framework/src/variables";
+@import "../../../../../../../../style/framework/src/mixins";
 
 #innovation-card-print {
   display: none;
@@ -6,12 +7,9 @@
 
 
 #setup-component {
-  padding-top: 0;
-  padding-bottom: 0;
-
 
   .section-header {
-    padding-top: 1.57rem;
+    padding-top: 1.25rem;
 
     .content {
       display: flex;
@@ -19,24 +17,33 @@
       align-items: center;
       justify-content: space-between;
 
+      .title-primary {
+        font-size: 1.35rem;
+      }
+
       .buttons-wrapper {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
-        margin-bottom: .9375rem;
+        margin-bottom: .75rem;
 
         span {
-          margin-right: 1.2rem;
-          margin-bottom: .6rem;
+          margin-right: $unit-5;
+          margin-bottom: $unit-2;
+          position: relative;
         }
 
-        .circle-check {
+        .shape {
+          position: absolute;
+          width: 25px;
+          height: 25px;
+          right: 0;
           margin-top: -12px;
-          margin-left: -11px;
+          margin-right: -11px;
           visibility: hidden;
 
-          i {
-            color: white;
+          .fas {
+            color: $light-color;
           }
 
         }
@@ -44,9 +51,9 @@
         .save-disabled {
 
           .ghost-primary {
-            border-color: $border-color !important;
+            border-color: $button-border-color !important;
             color: $button-disabled-text-color !important;
-            background-color: $border-color !important;
+            background-color: $button-disabled-bg-color !important;
             cursor: not-allowed;
           }
 
@@ -56,7 +63,7 @@
 
           .ghost-primary {
             border-color: $success-color !important;
-            color: #262831  !important;
+            color: #262831 !important;
           }
 
           .ghost-primary:hover {
@@ -64,12 +71,10 @@
             box-shadow: none;
           }
 
-          .circle-check {
-            background: $success-color !important;
+          .shape {
+            background-color: $success-color !important;
+            border-color: $success-color;
             visibility: visible;
-            animation-name: fadeIn;
-            animation-duration: .5s;
-            animation-timing-function: ease-in-out;
           }
 
         }
@@ -80,32 +85,19 @@
 
   }
 
-
   .section-tabs {
 
     .tab {
 
       .tab-item {
         min-width: 150px;
-      }
-
-      a {
-        border-bottom-width: 4px;
-        margin-right: 1.2rem;
-
-        .btn-round {
-          display: inline-flex;
-          width: 35px;
-          height: 35px;
-          margin-right: 0.9375rem;
-        }
-
+        margin-right: $unit-5;
       }
 
       .pitch-check, .targeting-check, .survey-check {
-        background: $border;
-        color: $text-primary;
-        font-weight: 600;
+        background: $border-color;
+        color: $text-primary-color;
+        font-weight: $font-weight-medium;
         font-size: 10px;
       }
 
@@ -115,9 +107,9 @@
       }
 
       .complete {
-        background-color: $success;
-        transition: all 0.15s ease-in-out;
-        color: white;
+        @include control-transition();
+        background-color: $success-color;
+        color: $light-color;
       }
 
     }
@@ -125,17 +117,10 @@
   }
 
 
-  .section-different {
-    padding-top: 3.15rem;
-  }
-
-
 }
 
 
-/********************************** Media ***************************************/
-
-@media (min-width: 840px) {
+@media (min-width: $size-md) {
 
   #setup-component {
 

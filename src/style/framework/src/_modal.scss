@@ -49,8 +49,11 @@
     animation: .2s slideInDown;
 
     .modal-header {
+      display: flex;
+      align-items: center;
       background-color: $secondary-color;
       justify-content: space-between;
+      color: $light-color;
       padding: 1.5rem 1.25rem;
 
       .title {
