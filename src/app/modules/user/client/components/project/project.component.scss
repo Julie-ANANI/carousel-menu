@@ -1,63 +1,41 @@
 @import "../../../../../../style/framework/src/variables";
 
 #project-component {
-  padding-top: 0;
 
-  .section-header {
-    background-color: $background;
-    padding-top: 3.15rem;
+  .title-hero {
+    font-size: 1.6rem;
+    margin-bottom: $unit-5;
+  }
 
-    .title-hero {
-      margin-bottom: 1.2rem;
+  .info-wrapper {
+
+    img {
+      vertical-align: middle;
+      margin-bottom: 0.25rem;
     }
 
-    .info-wrapper {
-
-      img {
-        vertical-align: middle;
-        margin-bottom: 0.35rem;
-      }
-
-      .project-info {
-        color: $meta;
-        font-weight: 600;
-        padding-left: 0.95rem;
-        font-size: 0.875rem;
-      }
-
+    .text.notify {
+      padding-left: 0.75rem;
     }
 
-    .tab-container {
-      padding-top: 2.187rem;
+  }
 
-      .tab {
+  .tab-container {
+    padding-top: 1.75rem;
+
+    .tab {
+
+      .tab-item {
+        flex: 1 0 auto;
         border: none;
+        margin-right: 0.75rem;
 
-        .tab-item {
-          flex: 1 0 auto;
-          margin-right: 0.9375rem;
+        a {
+          background-color: #747d88;
           border: none;
-
-          a {
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
-            background-color: #747d88;
-            color: #FFFFFF;
-            border: none;
-            font-weight: 600;
-            margin: 0;
-          }
-
-          .active {
-            background-color: white;
-            color: $text-primary;
-          }
-
-          a:hover {
-            background-color: $primary;
-            color: white;
-          }
-
+          font-weight: 600;
+          border-top-right-radius: $border-width-xl;
+          border-top-left-radius: $border-width-xl;
         }
 
       }
@@ -66,16 +44,13 @@
 
   }
 
-
 }
 
-
-/********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 
   .tab .tab-item a {
-    border-radius: 5px;
+    border-radius: $border-width-xl;
   }
 
 }
