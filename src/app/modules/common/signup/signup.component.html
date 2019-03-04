@@ -16,8 +16,8 @@
 
           <!-- heading -->
           <h1 class="title-primary">
-            <span *ngIf="!checkIsMainDomain()">{{ 'SIGN_UP.HEADING' | translate }}</span>
-            <span *ngIf="checkIsMainDomain()">{{ 'SIGN_UP.HEADING_UMI' | translate }}</span>
+            <ng-container *ngIf="!checkIsMainDomain()"><span>{{ 'SIGN_UP.HEADING' | translate }}</span></ng-container>
+            <ng-container *ngIf="checkIsMainDomain()"><span>{{ 'SIGN_UP.HEADING_UMI' | translate }}</span></ng-container>
           </h1>
 
           <!-- sign up button -->
@@ -26,17 +26,19 @@
           </button>
 
           <!-- LinkedIn -->
-          <div class="linkedIn-wrapper" *ngIf="checkIsMainDomain()">
+          <ng-container *ngIf="checkIsMainDomain()">
+            <div class="linkedIn-wrapper">
 
-            <!-- or -->
-            <div class="or-wrapper">
-              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
-            </div>
+              <div class="or-wrapper">
+                <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+              </div>
 
-            <button class="btn btn-secondary gtm-signin-linkedin" (click)="linkedInEvent()">
+              <button class="btn btn-secondary gtm-signin-linkedin" (click)="linkedInEvent()">
                 <i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
-            </button>
-          </div>
+              </button>
+
+            </div>
+          </ng-container>
 
         </div>
 
