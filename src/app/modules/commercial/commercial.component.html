@@ -1,0 +1,39 @@
+<main class="body-wrapper" id="commercial-component">
+
+  <!-- header -->
+  <app-header></app-header>
+
+  <!-- body -->
+  <section class="main-wrapper">
+
+    <h1>/!\ Commercial (page en construction) /!\</h1>
+
+    <form [formGroup]="tagForm" (ngSubmit)="selectTag()">
+
+      <label class="form-switch" for="chooseTag">
+        <select class="form-select" formControlName="selectedTag" id="chooseTag">
+          <option *ngFor="let tag of sectorTags" [innerText]="tag.label | multiling:lang" [value]="tag._id"></option>
+        </select>
+      </label>
+
+      <button class="btn btn-primary">Add tag</button>
+
+    </form>
+
+    <ul>
+      <li *ngFor="let tag of selectedTags">
+        {{tag.label | multiling:lang}}
+        <i class="fas fa-times" (click)="removeTag($event, tag)"></i>
+      </li>
+    </ul>
+
+    <hr/>
+
+  </section>
+
+  <!-- footer -->
+  <app-footer></app-footer>
+
+</main>
+
+

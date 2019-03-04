@@ -47,6 +47,9 @@ const appRoutes: Routes = [
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
   },
   {
+    path: 'commercial', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/commercial/commercial.module#CommercialModule'
+  },
+  {
     path: '', pathMatch: 'full', redirectTo: 'user'
   },
   {
