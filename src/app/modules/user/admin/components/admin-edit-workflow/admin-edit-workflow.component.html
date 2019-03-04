@@ -32,6 +32,7 @@
 <!-- sidebar to edit workflow -->
 <app-sidebar [(template)]="more">
   <app-workflow
+    [id]="getId()"
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
