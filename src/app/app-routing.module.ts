@@ -38,6 +38,9 @@ const appRoutes: Routes = [
     path: 'wordpress/share', loadChildren: './modules/wordpress/share/share.module#ShareModule'
   },
   {
+    path: 'sample', loadChildren: './modules/public/share/share.module#ShareModule'
+  },
+  {
     path: 'auth', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
   },
   {
