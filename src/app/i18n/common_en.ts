@@ -207,9 +207,7 @@ export const COMMON = {
   },
 
   'HOME': 'Home',
-
-  'ADMIN': 'Admin',
-
+  'ADMIN': 'Admin Side',
   'MY_PROJECT': 'My project',
 
   'MY_PROJECTS': 'My projects',
@@ -237,9 +235,7 @@ export const COMMON = {
   'QUESTIONNAIRE': 'Questionnaire(s)',
 
   'ADD-ANSWER': 'Ajouter une réponse',
-
-  'CLIENT_SIDE': 'Client',
-
+  'CLIENT_SIDE': 'Client Side',
   'UMI_WORD': 'A word from UMI',
 
   'SORT': {
