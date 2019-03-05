@@ -118,37 +118,31 @@
 
 // Different types of text
 .text {
-  font-size: $font-size-sm;
-  font-weight: 600;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
   cursor: default;
 
-  &.question {
+  &.text-question {
     font-size: 0.9rem;
-    font-weight: $font-weight-normal;
   }
 
-  &.default {
-    font-size: $unit-4;
-    font-weight: $font-weight-normal;
-  }
-
-  &.success {
+  &.text-success {
     color: $success-color;
   }
 
-  &.warning {
+  &.text-warning {
     color: $primary-color;
   }
 
-  &.error, &.alert {
+  &.text-error, &.text-alert {
     color: $alert-color;
   }
 
-  &.notify {
+  &.text-notify {
     color: $meta-color;
   }
 
-  &.secondary {
+  &.text-secondary {
     color: $secondary-color;
   }
 

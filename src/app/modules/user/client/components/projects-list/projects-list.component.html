@@ -33,7 +33,7 @@
                   <a [routerLink]="getRelevantLink(innovation)">
                     <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
                   </a>
-                  <p class="text notify">
+                  <p class="text text-notify">
                     {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
                     •
                     {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}

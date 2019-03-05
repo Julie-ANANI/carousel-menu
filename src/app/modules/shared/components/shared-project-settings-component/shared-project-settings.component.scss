@@ -37,6 +37,11 @@
     padding-top: 0.25rem;
   }
 
+  .text-secondary {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+  }
+
   .text-link:hover {
     text-decoration: none;
   }

@@ -1,10 +1,10 @@
 <ng-container *ngIf="innovationSettings">
-  <section id="shared-project-settings-component">
+  <section id="shared-project-settings-component" class="animate-page">
 
     <!-- geography section -->
     <div>
       <span class="shape rect">1</span>
-      <span class="text question">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.LABEL' | translate }}</span>
+      <span class="text text-question">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.LABEL' | translate }}</span>
       <div class="pd-input">
         <app-worldmap
           (updateContinent)="continentModificationDrain($event)"
@@ -26,7 +26,7 @@
           <!-- Exclude countries -->
           <ng-container *ngIf="!canEdit && innovationSettings.geography.exclude.length > 0">
             <div class="pd-para">
-              <span class="text default">
+              <span class="text">
                 {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
               </span>
               <div class="pd-input">
@@ -39,7 +39,7 @@
 
           <ng-container *ngIf="canEdit">
             <div class="pd-para">
-              <span class="text default">
+              <span class="text">
                 {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
               </span>
               <div class="pd-input">
@@ -52,7 +52,7 @@
           <!-- Comment countries -->
           <ng-container *ngIf="!canEdit && !!innovationSettings.geography.comments">
             <p class="pd-top">
-              <span class="text secondary">
+              <span class="text text-secondary">
                 {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
               </span>
             </p>
@@ -94,7 +94,7 @@
           <div class="pd-ques">
 
             <span class="shape rect">2</span>
-            <span class="text question">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</span>
+            <span class="text text-question">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</span>
 
             <ng-container *ngIf="!canEdit">
               <div class="pd-input">
@@ -129,19 +129,19 @@
           <div class="pd-ques">
 
             <span class="shape rect">3</span>
-            <span class="text question">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.LABEL' | translate }}</span>
+            <span class="text text-question">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.LABEL' | translate }}</span>
 
             <ng-container *ngIf="!canEdit && innovationSettings.companies.include.length === 0 && innovationSettings.companies.exclude.length === 0
             && !innovationSettings.companies.description">
               <div class="pd-para">
-                <p class="text default">{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
+                <p class="text">{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
               </div>
             </ng-container>
 
             <!-- Companies include -->
             <ng-container *ngIf="!canEdit && innovationSettings.companies.include.length > 0">
               <div class="pd-para">
-                <span class="text default">
+                <span class="text">
                   {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}
                 </span>
                 <div class="pd-input">
@@ -154,7 +154,7 @@
 
             <ng-container *ngIf="canEdit">
               <div class="pd-para">
-                <span class="text default">
+                <span class="text">
                   {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}
                 </span>
                 <div class="pd-input">
@@ -167,7 +167,7 @@
             <!-- Companies exclude -->
             <ng-container *ngIf="!canEdit && innovationSettings.companies.exclude.length > 0">
               <div class="pd-para">
-                <span class="text default">
+                <span class="text">
                   {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}
                 </span>
                 <div class="pd-input">
@@ -180,7 +180,7 @@
 
             <ng-container *ngIf="canEdit">
               <div class="pd-para">
-                <span class="text default">
+                <span class="text">
                   {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}
                 </span>
                 <div class="pd-input">
@@ -193,10 +193,10 @@
             <!-- Companies comment -->
             <ng-container *ngIf="!canEdit && !!innovationSettings.companies.description">
               <p class="pd-top">
-                <span class="text secondary">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}</span>
+                <span class="text text-secondary">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}</span>
               </p>
               <div *ngIf="!canEdit && innovationSettings.companies.description" class="pd-input">
-                <p class="text default">{{ innovationSettings.companies.description }}</p>
+                <p class="text">{{ innovationSettings.companies.description }}</p>
               </div>
             </ng-container>
 
@@ -239,18 +239,18 @@
           <div class="pd-ques">
 
             <span class="shape rect">4</span>
-            <span class="text question">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</span>
+            <span class="text text-question">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</span>
 
             <ng-container *ngIf="!canEdit && innovationSettings.professionals.exclude.length === 0 && !innovationSettings.professionals.description">
               <div class="pd-para">
-                <p class="text default">{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
+                <p class="text">{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
               </div>
             </ng-container>
 
             <!-- Description -->
             <ng-container *ngIf="!canEdit && !!innovationSettings.professionals.description">
               <div class="pd-input">
-                <p class="text default">{{ innovationSettings.professionals.description }}</p>
+                <p class="text">{{ innovationSettings.professionals.description }}</p>
               </div>
             </ng-container>
 
@@ -277,7 +277,7 @@
             <!-- Exclude professional -->
             <ng-container *ngIf="!canEdit && innovationSettings.professionals.exclude.length > 0">
               <p class="pd-para">
-                <span class="text secondary">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
+                <span class="text text-secondary">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
               </p>
               <div class="pd-input">
                 <div *ngFor="let professionalExclude of innovationSettings.professionals.exclude" class="label label-answer">
@@ -310,6 +310,65 @@
           </div>
           <!-- /Professional profiles -->
 
+          <!-- Keyword and other stuffs -->
+          <div [ngStyle]="{ 'padding-top': innovationSettings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
+
+            <span class="shape rect">5</span>
+            <span class="text text-question">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
+
+            <ng-container *ngIf="!canEdit">
+              <div class="pd-input">
+                <p class="text" *ngIf="!innovationSettings.comments">{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
+                <p class="text" *ngIf="innovationSettings.comments">{{ innovationSettings.comments }}</p>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+              <div class="pd-input">
+                <label for="other-comments"></label>
+                <textarea
+                  class="form-input"
+                  id="other-comments"
+                  [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.OTHER.PLACEHOLDER' | translate"
+                  rows="5"
+                  [(ngModel)]="innovationSettings.comments"
+                  (change)="updateSettings()">
+                </textarea>
+                <div class="char-remaining">
+                  <span [ngStyle]="{'color': getColor(innovationSettings.comments.length | characterCountdown:500)}">
+                    {{ innovationSettings.comments.length | characterCountdown:500 }}
+                  </span>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="adminMode">
+
+              <p class="pd-para">
+                <span class="text-link" (click)="(displayKeywordsSection = !displayKeywordsSection) && $event.preventDefault()">
+                  {{ 'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.LABEL' | translate }}
+                  <i
+                    class="fas"
+                    [ngClass]="{ 'fa-angle-down' : displayKeywordsSection, 'fa-angle-right' : !displayKeywordsSection  }">
+                  </i>
+                </span>
+              </p>
+
+              <ng-container *ngIf="displayKeywordsSection">
+                <div class="pd-input">
+                  <app-input-list
+                    (update)="addKeywordToExclude($event)"
+                    [canEdit]="true"
+                    id="keywords"
+                    [config]="getConfig('keywords')">
+                  </app-input-list>
+                </div>
+              </ng-container>
+
+            </ng-container>
+          </div>
+          <!-- /Keyword and other stuffs -->
+
         </div>
       </div>
       <!-- /question section -->
@@ -326,81 +385,4 @@
     <!-- /Two columns -->
 
   </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Keyword and other stuffs -->
-        <div [ngStyle]="{ 'padding-top': innovationSettings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
-          <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
-
-          <div *ngIf="!canEdit" class="pd-input">
-            <p *ngIf="!innovationSettings.comments">{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
-            <p *ngIf="innovationSettings.comments">{{ innovationSettings.comments }}</p>
-          </div>
-
-          <div *ngIf="canEdit">
-            <div class="pd-input">
-              <label for="other-comments"></label>
-              <textarea
-                class="form-input"
-                id="other-comments"
-                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.OTHER.PLACEHOLDER' | translate"
-                rows="5"
-                [(ngModel)]="innovationSettings.comments"
-                (change)="updateSettings()">
-            </textarea>
-              <div class="charRemaining">
-            <span [ngStyle]="{'color': getColor(innovationSettings.comments.length | characterCountdown:500)}">
-              {{ innovationSettings.comments.length | characterCountdown:500 }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="adminMode">
-            <p class="pd-para">
-          <span class="text-link" (click)="(displayKeywordsSection = !displayKeywordsSection) && $event.preventDefault()">
-            {{ 'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.LABEL' | translate }}
-            <i
-              class="fas"
-              [ngClass]="{ 'fa-angle-down' : displayKeywordsSection, 'fa-angle-right' : !displayKeywordsSection  }">
-            </i>
-          </span>
-            </p>
-            <div *ngIf="displayKeywordsSection" class="pd-input">
-              <app-input-list
-                (update)="addKeywordToExclude($event)"
-                [canEdit]="true"
-                id="keywords"
-                [config]="getConfig('keywords')">
-              </app-input-list>
-            </div>
-          </div>
-        </div>
-        <!-- /Keyword and other stuffs -->
-
-
-
-
-
-
-
-
-
-
 </ng-container>

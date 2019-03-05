@@ -30,6 +30,8 @@
         }
 
         .text {
+          font-weight: $font-weight-medium;
+          font-size: $font-size-sm;
           margin-top: 0.75rem;
           margin-bottom: $unit-2;
         }
