@@ -14,8 +14,10 @@
       margin-bottom: 0.25rem;
     }
 
-    .text.notify {
+    .text {
       padding-left: 0.75rem;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
     }
 
   }
