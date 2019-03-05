@@ -43,18 +43,18 @@
           <div class="buttons-wrapper">
             <span>
               <button class="btn ghost-primary gtm-print-card" (click)="onClickPrint($event)">
-                {{ 'PROJECT_MODULE.SETUP.PRINT_BUTTON' | translate }}
+                {{ 'COMMON.BUTTON.PRINT' | translate }}
               </button>
             </span>
             <span>
               <button class="btn ghost-primary gtm-preview-card" (click)="onClickPreview($event)">
-                {{ 'PROJECT_MODULE.SETUP.PREVIEW_BUTTON' | translate }}
+                {{ 'COMMON.BUTTON.PREVIEW' | translate }}
               </button>
             </span>
             <span [ngClass]="buttonSaveClass">
               <div class="shape circle circle-md"><i class="fas fa-save"></i></div>
               <button class="btn btn-primary ghost-primary" (click)="onClickSave($event)">
-                {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
+                {{ 'COMMON.BUTTON.SAVE' | translate }}
               </button>
             </span>
             <span [ngStyle]="{ 'margin-right': '0' }">
@@ -62,7 +62,7 @@
                 [disabled]="innovation.status !== 'EDITING'"
                 (click)="onClickSubmit($event)"
                 class="btn btn-primary gtm-submit-project">
-                {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
+                {{ 'COMMON.BUTTON.SUBMIT' | translate }}
               </button>
             </span>
           </div>
@@ -105,11 +105,7 @@
 
         <!-- targeting -->
         <ng-container *ngIf="currentPage === 'targeting'">
-          <app-shared-project-settings
-            [projectSettings]="innovation.settings"
-            [editable]="canEdit"
-            (settingsChange)="updateSettings($event)">
-          </app-shared-project-settings>
+          <app-targeting [project]="innovation" (settingsChange)="updateSettings($event)"></app-targeting>
         </ng-container>
 
         <!-- pitch

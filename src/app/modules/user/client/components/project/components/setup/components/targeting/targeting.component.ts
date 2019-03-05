@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Innovation } from '../../../../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../../../../models/innov-settings';
 
@@ -8,7 +8,7 @@ import { InnovationSettings } from '../../../../../../../../../models/innov-sett
   styleUrls: ['targeting.component.scss']
 })
 
-export class TargetingComponent implements OnInit {
+export class TargetingComponent {
 
   @Input() set project(value: Innovation) {
     if (value) {
@@ -24,9 +24,6 @@ export class TargetingComponent implements OnInit {
   private _canEdit = false;
 
   constructor() {}
-
-  ngOnInit(): void {
-  }
 
   updateSettings(value: InnovationSettings) {
     this.settingsChange.emit(value);

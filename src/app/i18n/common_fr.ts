@@ -179,6 +179,9 @@ export const COMMON = {
     'IMPORT': 'Importer',
     'EXPORT': 'Exporter',
     'SEND': 'Envoyer',
+    'PRINT': 'Imprimer',
+    'PREVIEW': 'Prévisualiser',
+    'SUBMIT': 'Soumettre'
   },
 
   'PROJECT': {

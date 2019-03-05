@@ -43,7 +43,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _submitModal: boolean;
 
-  canEdit: boolean;
+  canEdit = false;
 
   constructor(private scrollService: ScrollService,
               private router: Router,
@@ -220,7 +220,7 @@ export class SetupComponent implements OnInit, OnDestroy {
       Here we are receiving the value from the targeting form.
    */
   updateSettings(value: InnovationSettings): void {
-    if (this._innovation.status === 'EDITING') {
+    if (this.canEdit) {
       this._innovation.settings = value;
       this._buttonSaveClass = 'save-active';
     }

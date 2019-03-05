@@ -181,6 +181,9 @@ export const COMMON = {
     'IMPORT': 'Import',
     'EXPORT': 'Export',
     'SEND': 'Send',
+    'PRINT': 'Print',
+    'PREVIEW': 'Preview',
+    'SUBMIT': 'Submit'
   },
 
   'TABLE' : {

@@ -82,6 +82,8 @@ legend {
 // Form element: Textarea
 textarea.form-input {
   height: auto;
+  resize: none;
+  padding-right: $unit-10 !important;
 }
 
 

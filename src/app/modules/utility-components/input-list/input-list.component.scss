@@ -1,15 +1,15 @@
 @import "../../../../style/framework/src/variables";
 
-.input-group {
+.flex-between {
 
   .form-input {
-    margin-right: 10px;
+    margin-right: 0.4rem;
     width: 80%;
   }
 
 }
 
-.form-input.ng-touched.ng-invalid{
+.form-input.ng-touched.ng-invalid {
   border-color: $border-color;
 }
 

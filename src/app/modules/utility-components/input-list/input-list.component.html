@@ -1,6 +1,6 @@
 <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
 
-  <div class="input-group" [ngStyle]="{ 'display': 'flex', 'justify-content': 'space-between' }">
+  <div class="flex-between">
     <input
       type="text"
       class="form-input"
@@ -8,9 +8,7 @@
       [(ngModel)]="answer"
       required
       [attr.placeholder]="placeholder | translate">
-    <button [ngStyle]="{ 'font-size': '16px' }" class="btn-round btn-primary" translate>
-      <i class="fas fa-plus"></i>
-    </button>
+    <button class="btn btn-round btn-primary" translate><i class="fas fa-plus"></i></button>
   </div>
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
@@ -22,7 +20,7 @@
         aria-label="Close"
         role="button"
         (click)="rmProposition(i)">
-        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
+        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
       </a>
     </li>
 

@@ -118,7 +118,7 @@
 
 // Different types of text
 .text {
-  font-size: 0.7rem;
+  font-size: $font-size-sm;
   font-weight: 600;
   cursor: default;
 
@@ -148,6 +148,21 @@
     color: $meta-color;
   }
 
+  &.secondary {
+    color: $secondary-color;
+  }
+
+}
+
+
+// Character text remaining
+.char-remaining {
+  font-size: $font-size-sm;
+  color: $success-color;
+  font-weight: $font-weight-normal;
+  position: absolute;
+  right: $unit-2;
+  top: 0;
 }
 
 
