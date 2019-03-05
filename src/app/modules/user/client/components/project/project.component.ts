@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { TranslateService } from '@ngx-translate/core';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-project',
@@ -23,24 +24,29 @@ export class ProjectComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
+              private innovationFrontService: InnovationFrontService,
               private router: Router,
-              private translateService: TranslateService) { }
-
-  ngOnInit() {
+              private translateService: TranslateService) {
 
     this.activatedRoute.data.subscribe((response) => {
       if (response) {
         this._innovation = response['innovation'];
+        this.innovationFrontService.setInnovation(this._innovation);
       }
     });
 
+  }
+
+  ngOnInit() {
+    this.translateTitleService.setTitle(this._innovation.name || 'Project');
+    this.getPage();
+    this.loadOfferType();
+  }
+
+
+  private getPage() {
     const url = this.router.routerState.snapshot.url.split('/');
     this._currentPage = url.length > 0 ? url[4] : 'setup';
-
-    this.translateTitleService.setTitle(this._innovation.name || 'Project');
-
-    this.loadOfferType();
-
   }
 
 

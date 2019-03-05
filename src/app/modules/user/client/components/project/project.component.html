@@ -53,7 +53,7 @@
 
     <!-- setup section -->
     <ng-container *ngIf="currentPage === 'setup'">
-      <app-setup [project]="innovation"></app-setup>
+      <app-setup></app-setup>
     </ng-container>
     <!-- /setup section -->
 
@@ -77,7 +77,11 @@
 
 <!-- collaborator sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-  <app-collaborator [project]="innovation" (collaboratorAdded)="addCollaborators($event)"></app-collaborator>
+  <app-collaborator
+    [sidebarState]="sidebarValue.animate_state"
+    [project]="innovation"
+    (collaboratorAdded)="addCollaborators($event)">
+  </app-collaborator>
 </app-sidebar>
 <!-- /collaborator sidebar -->
 
