@@ -228,4 +228,8 @@ export class AdminEditWorkflowComponent {
     return this._campaignScenario;
   }
 
+  public getId(): string {
+    return `${this._language}_${this._campaignScenario.name.replace(/\s/ig, '_').toLowerCase()}`;
+  }
+
 }
