@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Innovation } from '../../../../../../../../../models/innovation';
+import { InnovPitch } from '../../../../../../../../../models/innov-pitch';
 
 @Component({
   selector: 'app-pitch',
@@ -7,7 +8,7 @@ import { Innovation } from '../../../../../../../../../models/innovation';
   styleUrls: ['pitch.component.scss']
 })
 
-export class PitchComponent implements OnInit {
+export class PitchComponent {
 
   @Input() set project(value: Innovation) {
     this._innovationPitch = value;
@@ -22,10 +23,7 @@ export class PitchComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
-
-  updatePitch(value: Innovation) {
+  updatePitch(value: InnovPitch) {
     this.pitchChange.emit(value);
   }
 

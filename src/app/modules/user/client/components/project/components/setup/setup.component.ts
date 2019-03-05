@@ -11,6 +11,7 @@ import { TranslateNotificationsService } from '../../../../../../../services/not
 import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
 import { Media } from '../../../../../../../models/media';
 import { InnovCard } from '../../../../../../../models/innov-card';
+import {InnovPitch} from '../../../../../../../models/innov-pitch';
 
 @Component({
   selector: 'app-setup',
@@ -190,12 +191,6 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
 
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._submitModal = false;
-  }
-
-
   /***
    * this function is called when the user clicks on the confirm button of the submit
    * modal.
@@ -209,7 +204,6 @@ export class SetupComponent implements OnInit, OnDestroy {
       this.router.navigate(['user/projects']);
       this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       }, () => {
-      this.closeModal(event);
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
 
@@ -230,9 +224,12 @@ export class SetupComponent implements OnInit, OnDestroy {
   /*
      Here we are checking if there are any changes in the pitch form.
   */
-  updatePitch(value: Innovation) {
-    if (this._innovation.status === 'EDITING') {
-      this._innovation = value;
+  updatePitch(value: InnovPitch) {
+    if (this.canEdit) {
+      this._innovation.innovationCards = value.innovationCards;
+      this._innovation.projectStatus = value.stage;
+      this._innovation.external_diffusion = value.diffusion;
+      this._innovation.patented = value.patent;
       this._buttonSaveClass = 'save-active';
     }
   }

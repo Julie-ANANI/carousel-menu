@@ -1,11 +1,10 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 #shared-project-edit-cards-component {
 
   p {
-    padding: 0;
+    margin: 0;
   }
-
 
   .delete-wrapper {
 
@@ -22,73 +21,66 @@
   }
 
 
-  .section-language {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .flex-between, .flex-start {
     flex-wrap: wrap;
+  }
 
-    .selection-wrapper {
-      display: flex;
-      justify-content: flex-start;
+  .options {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    li {
+      display: inline-flex;
+      justify-content: center;
       align-items: center;
-      flex-wrap: wrap;
+      margin: 0;
+      padding: $unit-2;
 
-      .options {
-        list-style: none;
-        display: flex;
-        align-items: center;
+      .btn-radio {
+        margin-right: $unit-2;
+      }
 
-        li {
-          display: inline-flex;
-          justify-content: center;
-          align-items: center;
+    }
 
-          .btn-radio {
-            margin-right: .6rem;
-          }
+    li.active {
 
-        }
+      .btn-radio {
+        background-color: $success-color;
+        border-color: $success-color;
 
-        li.active {
-
-          .btn-radio {
-            background-color: $validation-color;
-            border-color: rgba(46,204,113,0.45) !important;
-
-            span {
-              color: white;
-            }
-
-          }
-
-        }
-
-        p {
-          color: $meta-color;
+        span {
+          color: white;
         }
 
       }
 
     }
 
+    .text-link {
+      font-size: $font-size-md;
+      font-weight: $font-weight-normal;
+    }
+
   }
-
-
-  .text {
-    font-size: 1rem;
-  }
-
 
   .pd-input {
-    padding-top: 1.2rem;
+    padding-top: $unit-5;
+    position: relative;
   }
 
+  .form-group {
+    margin-bottom: $unit-5;
+  }
 
   .project-data {
-    padding-top: 3.15rem;
+    padding-top: 2.5rem;
   }
 
+  .char-remaining {
+    top: $unit-6;
+  }
 
   .sub-label {
     color: $meta-color;
@@ -106,16 +98,6 @@
     margin-bottom: .6rem;
     font-size: 0.875rem;
   }
-
-
-  .help-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-top: 3.15rem;
-    text-align: center;
-  }
-
 
   .main-media-wrapper, .secondary-media-wrapper {
     padding-bottom: 1.2rem;

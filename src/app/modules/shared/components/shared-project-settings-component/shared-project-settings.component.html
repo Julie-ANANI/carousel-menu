@@ -80,10 +80,8 @@
                 [(ngModel)]="innovationSettings.geography.comments"
                 (change)="updateSettings()">
               </textarea>
-              <div class="char-remaining">
-                <span [ngStyle]="{'color': getColor(innovationSettings.geography.comments.length | characterCountdown:500)}">
-                  {{ innovationSettings.geography.comments.length | characterCountdown:500 }}
-                </span>
+              <div class="char-remaining" [ngStyle]="{'color': getColor(innovationSettings.geography.comments.length | characterCountdown:500)}">
+                {{ innovationSettings.geography.comments.length | characterCountdown:500 }}
               </div>
             </div>
 
@@ -114,10 +112,8 @@
                   [(ngModel)]="innovationSettings.market.comments"
                   (change)="updateSettings()">
                 </textarea>
-                <div class="char-remaining">
-                  <span [ngStyle]="{'color': getColor(innovationSettings.market.comments.length | characterCountdown:500)}">
-                    {{ innovationSettings.market.comments.length | characterCountdown:500 }}
-                  </span>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovationSettings.market.comments.length | characterCountdown:500)}">
+                  {{ innovationSettings.market.comments.length | characterCountdown:500 }}
                 </div>
               </div>
             </ng-container>
@@ -222,10 +218,8 @@
                   [(ngModel)]="innovationSettings.companies.description"
                   (change)="updateSettings()">
                 </textarea>
-                <div class="char-remaining">
-                  <span [ngStyle]="{'color': getColor(innovationSettings.companies.description.length | characterCountdown:500)}">
-                    {{ innovationSettings.companies.description.length | characterCountdown:500 }}
-                  </span>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovationSettings.companies.description.length | characterCountdown:500)}">
+                  {{ innovationSettings.companies.description.length | characterCountdown:500 }}
                 </div>
               </div>
 
@@ -265,10 +259,8 @@
                   [(ngModel)]="innovationSettings.professionals.description"
                   (change)="updateSettings()">
                 </textarea>
-                <div class="char-remaining">
-                  <span [ngStyle]="{'color': getColor(innovationSettings.professionals.description.length | characterCountdown:500)}">
-                    {{ innovationSettings.professionals.description.length | characterCountdown:500 }}
-                  </span>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovationSettings.professionals.description.length | characterCountdown:500)}">
+                  {{ innovationSettings.professionals.description.length | characterCountdown:500 }}
                 </div>
               </div>
             </ng-container>
@@ -334,10 +326,8 @@
                   [(ngModel)]="innovationSettings.comments"
                   (change)="updateSettings()">
                 </textarea>
-                <div class="char-remaining">
-                  <span [ngStyle]="{'color': getColor(innovationSettings.comments.length | characterCountdown:500)}">
-                    {{ innovationSettings.comments.length | characterCountdown:500 }}
-                  </span>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovationSettings.comments.length | characterCountdown:500)}">
+                  {{ innovationSettings.comments.length | characterCountdown:500 }}
                 </div>
               </div>
             </ng-container>
@@ -374,11 +364,13 @@
       <!-- /question section -->
 
       <!-- bot section -->
-      <div *ngIf="!adminSide" class="column col-mx-auto col-4 hide-md">
-        <app-message-space [widthMax]="'321px'">
-          {{ 'PROJECT_MODULE.SETUP.PITCH.BOT.HELP' | translate }}
-        </app-message-space>
-      </div>
+      <ng-container *ngIf="!adminSide">
+        <div class="column col-mx-auto col-4 hide-md section-pad rm-pad-bottom">
+          <app-message-space [widthMax]="'321px'">
+            {{ 'PROJECT_MODULE.SETUP.PITCH.BOT.HELP' | translate }}
+          </app-message-space>
+        </div>
+      </ng-container>
       <!-- /bot section -->
 
     </div>
