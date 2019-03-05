@@ -16,10 +16,15 @@ import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 export class AutocompleteInputComponent implements OnInit {
 
   @Input() canEdit = true;
+
   @Input() forceSelection = false; // si le booléen est à true, on accepte un string hors auto-complete
+
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
+
   @Input() adminMode = false;
+
   @Input() multiLangObjects = false;
+
   @Input() addButton = true; // this is to add the plus button.
 
   @Input() set config(config: { placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean }) {
@@ -42,17 +47,25 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   @Output() update = new EventEmitter<any>();
+
   @Output() add = new EventEmitter<any>();
+
   @Output() remove = new EventEmitter<any>();
 
   inputForm: FormGroup;
+
   companyName: FormControl = new FormControl();
+
   answerList: Array<{name: string, domain: string, flag: string; url: string, rating: number}> = [];
+
   answer = '';
 
   private _placeholder = '';
+
   private _autocompleteType = '';
+
   private _identifier: string;
+
   private _canOrder: boolean;
 
   constructor(private _fbuilder: FormBuilder,

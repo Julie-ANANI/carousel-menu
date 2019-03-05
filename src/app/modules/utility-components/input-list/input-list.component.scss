@@ -1,11 +1,10 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/src/variables";
 
 .input-group {
 
   .form-input {
     margin-right: 10px;
     width: 80%;
-    margin-top: 0;
   }
 
 }
@@ -20,43 +19,40 @@
 
   li {
     display: flex;
-    margin: .6rem 0;
-    padding: 0;
   }
 
   li span {
-    background: $validation-color;
-    border-radius: .18rem 0 0 .18rem;
-    padding: .95rem;
-    color: white;
-    font-size: .85rem;
+    padding: $unit-3 $unit-4;
+    background: $success-color;
+    border-radius: $border-radius 0 0 $border-radius;
+    font-size: $font-size-sm;
+    color: $light-color;
     width: 100%;
     word-break: break-word;
   }
 
   a.delete {
     display: flex;
+    padding: $unit-3 $unit-4;
     background: $alert-color;
-    border-radius: 0 .18rem .18rem 0;
-    padding: .75rem 1.06rem;
-    border: none;
-    cursor: pointer;
+    border-radius: 0 $border-radius $border-radius 0;
 
     img {
-      width: 1rem;
+      width: $font-icon-lg;
     }
 
   }
 
   a.updown {
     background: $secondary-color;
-    padding: .95rem 0;
-    color: white;
+    padding: $unit-4 0;
+    color: $light-color;
     width: 100%;
   }
 
   a.delete:hover {
     background: lighten($alert-color, 10%);
+    cursor: pointer;
   }
 
   i {

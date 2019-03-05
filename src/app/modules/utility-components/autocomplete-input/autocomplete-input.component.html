@@ -1,19 +1,22 @@
-<div>
+<section>
+
   <form [formGroup]="inputForm" (ngSubmit)="addProposition(inputForm)">
 
-    <div *ngIf="canEdit" [ngStyle]="{ 'display': 'flex', 'justify-content': 'space-between' }">
-      <input
-        auto-complete
-        formControlName="answer"
-        [list-formatter]="autocompleteListFormatter.bind(this)"
-        [source]="suggestions.bind(this)"
-        value-property-name="id"
-        [display-property-name]="identifier"
-        [attr.placeholder]="placeholder | translate"
-        class="form-input"
-        [ngStyle]="{ 'margin-top': '0', 'margin-right': '.35rem' }">
-      <button *ngIf="addButton" [ngStyle]="{ 'font-size': '16px' }" class="btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
-    </div>
+    <ng-container *ngIf="canEdit">
+      <div class="flex-between">
+        <input
+          auto-complete
+          formControlName="answer"
+          [list-formatter]="autocompleteListFormatter.bind(this)"
+          [source]="suggestions.bind(this)"
+          value-property-name="id"
+          [display-property-name]="identifier"
+          [attr.placeholder]="placeholder | translate"
+          class="form-input"
+          [ngStyle]="{ 'margin-right': '0.4rem' }">
+        <button *ngIf="addButton" class="btn btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
+      </div>
+    </ng-container>
 
   </form>
 
@@ -24,7 +27,7 @@
       <i *ngIf="canOrder" class="fa fa-chevron-up c-hand" aria-label="Up" role="button" (click)="up($event, i)"></i>
       <i *ngIf="canOrder" class="fa fa-chevron-down c-hand" aria-label="Down" role="button" (click)="down($event, i)"></i>
       <a class="delete c-hand" aria-label="Close" role="button" (click)="rmProposition($event, i)">
-        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
+        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
       </a>
     </li>
 
@@ -56,7 +59,8 @@
     </li>
 
   </ul>
-</div>
+
+</section>
 
 <!--
 <div>

@@ -41,6 +41,12 @@
     background-color: $meta-color;
   }
 
+  &.label-answer {
+    background-color: $label-answer-color;
+    color: $text-primary-color;
+    font-size: $font-size-sm;
+  }
+
 }
 
 

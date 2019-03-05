@@ -240,7 +240,7 @@ textarea.form-input {
   padding-left: 2.5rem;
   padding-right: 0;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: $font-weight-normal;
 
   .form-icon {
     background: $bg-color-light none;
@@ -249,7 +249,7 @@ textarea.form-input {
     border-radius: 16px;
     height: 15px;
     left: 0;
-    top: 7px;
+    top: 4px;
     width: 34px;
 
     &::before {

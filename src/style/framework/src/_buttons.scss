@@ -27,6 +27,47 @@
     font-size: $font-icon;
   }
 
+  &.btn-close {
+    background: transparent;
+    border: 0;
+    color: $light-color;
+    height: 30px;
+    padding: 0;
+    text-decoration: none;
+    width: 12px;
+    font-size: $font-size;
+
+    &:hover {
+      background: transparent;
+      border-color: transparent;
+      opacity: 0.85;
+    }
+
+    &::before {
+      content: "\2715";
+    }
+
+  }
+
+  // Round button. In this you can add the icon, text, etc.
+  &.btn-round {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    min-width: 0;
+    padding: 0;
+    background: transparent none;
+    border-color: $primary-color;
+    font-size: $font-size-xs;
+    color: $light-color;
+
+    i {
+      margin-right: 0;
+      font-size: $font-icon-lg;
+    }
+
+  }
+
   &[disabled], &:disabled, &.disabled {
     color: $button-disabled-text !important;
     background-color: $button-disabled-bg-color !important;
@@ -71,28 +112,6 @@
 
   &.ghost-edit {
     @include ghost-button-variant($meta-color);
-  }
-
-  &.btn-close {
-    background: transparent;
-    border: 0;
-    color: $light-color;
-    height: 30px;
-    padding: 0;
-    text-decoration: none;
-    width: 12px;
-    font-size: $font-size;
-
-    &:hover {
-      background: transparent;
-      border-color: transparent;
-      opacity: 0.85;
-    }
-
-    &::before {
-      content: "\2715";
-    }
-
   }
 
 }

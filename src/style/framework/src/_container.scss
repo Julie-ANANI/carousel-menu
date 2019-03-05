@@ -57,3 +57,11 @@
   }
 
 }
+
+@media (min-width: $size-2x) {
+
+  .restrict-container {
+    max-width: 800px !important;
+  }
+
+}

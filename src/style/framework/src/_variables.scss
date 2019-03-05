@@ -24,6 +24,7 @@ $body-font-color: $dark-color;
 $link-color: $primary-color;
 $bg-color-light: $light-color !default;
 $bg-overlay: rgba(0,0,0,0.75) !default;
+$bg-dropdown-color: #F2F2F2 !default;
 
 
 // text variables
@@ -49,6 +50,7 @@ $form-meta-color: $meta-color !default;
 // label variables
 $label-draft-color: $background-color !default;
 $label-edit-color: $secondary-color !default;
+$label-answer-color: #F8F4F4 !default;
 
 
 // button variables
@@ -94,6 +96,7 @@ $font-size-sm: 0.7rem !default;
 $font-size-md: $unit-4 !default;
 $font-size-lg: 0.9rem !default;
 $font-icon: 0.75rem !default;
+$font-icon-lg: $unit-4 !default;
 $line-height: 1.5 !default;
 $line-height-sm: 1 !default;
 
