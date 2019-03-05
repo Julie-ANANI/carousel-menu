@@ -15,6 +15,7 @@ import { SharedSearchMailModule } from '../../../../shared/components/shared-sea
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
+import { CountryFlagModule } from "../../../../utility-components/country-flag/country-flag.module";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FormsModule } from "@angular/forms";
     SharedSearchMailModule,
     SharedWorldmapModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    CountryFlagModule
   ],
   declarations: [
     AdminSearchComponent,

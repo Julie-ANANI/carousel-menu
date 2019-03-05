@@ -25,6 +25,16 @@ export class SearchService {
     return this._http.get('/search/get', {params: query});
   }
 
+  public inHouseSearch(keywords: string, country?: string): Observable<any> {
+    const params: any = {keywords: keywords};
+    if (country) params.country = country;
+    const query = {
+      params: JSON.stringify(params),
+      path: '/search/inhouse'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
   public getRequest(requestId: string): Observable<any> {
     const query = {
       path: '/request/' + requestId,
