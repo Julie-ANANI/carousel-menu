@@ -113,10 +113,10 @@
           <app-pitch [project]="innovation" (pitchChange)="updatePitch($event)"></app-pitch>
         </div>-->
 
-        <!-- survey
-        <div *ngIf="currentPage === 'survey'">
+        <!-- survey -->
+        <ng-container *ngIf="currentPage === 'survey'">
           <app-survey [project]="innovation"></app-survey>
-        </div>-->
+        </ng-container>
 
       </div>
     </div>

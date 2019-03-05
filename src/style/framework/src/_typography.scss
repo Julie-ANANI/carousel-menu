@@ -41,7 +41,7 @@ h6, .h6 {
 
 // Paragraphs
 p {
-  margin: 0 0 $unit-4;
+  margin: 0 0 $unit-2;
 }
 
 
@@ -60,11 +60,11 @@ blockquote {
 
 // Lists
 ul, ol {
-  margin: $unit-4 0 $unit-4 $unit-4;
+  margin: $unit-2 0 $unit-2 $unit-2;
   padding: 0;
 
   ul, ol {
-    margin: $unit-4 0 $unit-4 $unit-4;
+    margin: $unit-2 0 $unit-2 $unit-2;
   }
 
   li {

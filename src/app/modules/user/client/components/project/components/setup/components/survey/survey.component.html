@@ -1,16 +1,18 @@
-<div id="survey-component" class="animate-page">
+<ng-container *ngIf="innovation">
+  <section id="survey-component" class="animate-page">
 
-  <!-- section no survey -->
-  <div *ngIf="!innovation.quizId" class="text-center">
-    <app-message-space [widthMax]="'313px'">
-      {{ 'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate }}
-    </app-message-space>
-  </div>
+    <!-- section no survey -->
+    <ng-container *ngIf="!innovation.quizId">
+      <app-message-space [widthMax]="'359px'">
+        {{ 'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate }}
+      </app-message-space>
+    </ng-container>
 
-  <!-- section survey -->
-  <div *ngIf="innovation.quizId">
-    <p>{{ 'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
-    <a [href]="url" target="_blank">{{ url }}</a>
-  </div>
+    <!-- section survey -->
+    <ng-container *ngIf="innovation.quizId">
+      <p class="text">{{ 'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
+      <a class="text-link" [href]="url" target="_blank">{{ url }}</a>
+    </ng-container>
 
-</div>
+  </section>
+</ng-container>

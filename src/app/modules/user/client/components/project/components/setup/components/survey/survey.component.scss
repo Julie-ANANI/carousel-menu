@@ -1,14 +1,10 @@
-@import "../../../../../../../../../../style/variables";
+@import "../../../../../../../../../../style/framework/src/variables";
 
 #survey-component {
 
-  p {
-    padding-bottom: .9375rem;
-  }
-
-  a:hover {
-    color: $primary-color;
-    text-decoration: underline;
+  .text-link {
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
   }
 
 }
