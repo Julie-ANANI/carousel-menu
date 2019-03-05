@@ -68,6 +68,24 @@
 
   }
 
+  // Radio button like form-radio
+  &.btn-radio {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    min-width: 0;
+    padding: 0;
+    border: $border-width-lg solid $button-border-color;
+    color: $light-color;
+    font-size: $font-size-xs;
+
+    span {
+      color: $light-color;
+      font-size: $font-icon-lg;
+    }
+
+  }
+
   &[disabled], &:disabled, &.disabled {
     color: $button-disabled-text !important;
     background-color: $button-disabled-bg-color !important;
@@ -132,7 +150,7 @@
 
 
 // Round button. In this you can add the icon, text, etc.
-.btn-round {
+/*.btn-round {
   @include control-transition();
   border-radius: 50%;
   width: 50px;
@@ -157,11 +175,11 @@
     border-width: $border-width-lg;
   }
 
-}
+}*/
 
 
 // Radio button
-.btn-radio {
+/*.btn-radio {
   @include control-transition();
   width: 22px;
   height: 22px;
@@ -179,7 +197,7 @@
     font-size: $font-size;
   }
 
-}
+}*/
 
 
 // Make a button large just add this class with the btn class
