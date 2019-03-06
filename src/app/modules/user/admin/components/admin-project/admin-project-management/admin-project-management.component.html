@@ -289,27 +289,8 @@
     </div>
 
     <div class="project-summary">
-      <div class="timing">
-        <h6>Timing</h6>
-        <span>
-          <label class="form-label">Preparation</label>
-          <label>0d</label>
-        </span>
-        <span>
-          <label class="form-label">{{'PROJECT.CAMPAIGN.CAMPAIGN' | translate}}</label>
-          <label>0d</label>
-        </span>
-        <span>
-          <label class="form-label">{{'PROJECT.DELIVERY.DELIVERY' | translate}}</label>
-          <label>0d</label>
-        </span>
-      </div>
       <div class="completion">
         <h6>Completion</h6>
-        <span>
-          <label class="form-label">{{'PROJECT.PROJECT' | translate}}</label>
-          <label>{{project.completion.toFixed(0)}} %</label>
-        </span>
         <span *ngFor="let innov of project.innovationCards">
           <label class="form-label">{{innov?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}</label>
           <label>{{innov?.completion?.toFixed(0) || 0}} %</label>
@@ -322,27 +303,8 @@
           <label>{{currentCampaign?.stats?.campaign?.nbProfessionals || '?'}}</label>
         </span>
         <span>
-          <label class="form-label">Click</label>
-          <label>{{clickPercentage}} %</label>
-        </span>
-        <span>
           <label class="form-label">{{'PROJECT.CAMPAIGN.INSIGHTS' | translate}}</label>
           <label>{{currentCampaign?.stats?.campaign?.nbResp || '?'}}</label>
-        </span>
-      </div>
-      <div class="cost">
-        <h6>{{'SEARCH.HISTORY.COST' | translate}}</h6>
-        <span>
-          <label class="form-label">{{'SEARCH.HISTORY.REQUEST' | translate}}</label>
-          <label>0€</label>
-        </span>
-        <span>
-          <label class="form-label">Emails</label>
-          <label>0€</label>
-        </span>
-        <span>
-          <label class="form-label">{{'PROJECT.CAMPAIGN.INSIGHTS' | translate}}</label>
-          <label>0€</label>
         </span>
       </div>
     </div>
