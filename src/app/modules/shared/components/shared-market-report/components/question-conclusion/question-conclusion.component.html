@@ -16,7 +16,7 @@
 
       <h2 *ngIf="question?.label" class="section-heading">{{ question?.label | multiling:lang }}</h2>
 
-      <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+      <p class="op-text" *ngIf="isMainDomain()">{{ 'COMMON.UMI_WORD' | translate }}</p>
 
       <app-text-zone
         [elementId]="domSectionId"
