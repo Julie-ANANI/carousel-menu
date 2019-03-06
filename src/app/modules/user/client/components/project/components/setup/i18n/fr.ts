@@ -1,6 +1,4 @@
-import { PITCH } from '../components/pitch/i18n/fr';
 import { SURVEY } from '../components/survey/i18n/fr';
-import { TARGETING } from '../components/targeting/i18n/fr';
 
 export const SETUP = {
   'TITLE': 'Détails du projet',
@@ -26,12 +24,12 @@ export const SETUP = {
   },
 
   'PITCH_TAB': 'Description',
+
   'TARGETING_TAB': 'Ciblage',
+
   'SURVEY_TAB': 'Questionnaire',
 
-  'PITCH': PITCH,
   'SURVEY': SURVEY,
-  'TARGETING': TARGETING,
 
   'PREVIEW': 'Aperçu',
 

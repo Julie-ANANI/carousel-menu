@@ -25,17 +25,17 @@
         <div class="tab-container">
           <ul class="tab">
             <li class="tab-item">
-              <a [routerLink]="['setup']" [ngClass]="{'active': currentPage === 'setup'}" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
+              <a [ngClass]="{'active': currentPage === 'setup'}" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
                 <span><i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}</span>
               </a>
             </li>
             <li class="tab-item">
-              <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage === 'exploration'}" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
+              <a [ngClass]="{'active': currentPage === 'exploration'}" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
                 <span><i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}</span>
               </a>
             </li>
             <li class="tab-item">
-              <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage === 'synthesis'}" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
+              <a [ngClass]="{'active': currentPage === 'synthesis'}" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
                 <span><i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}</span>
               </a>
             </li>
@@ -53,7 +53,7 @@
 
     <!-- setup section -->
     <ng-container *ngIf="currentPage === 'setup'">
-      <app-setup></app-setup>
+      <app-setup [project]="innovation"></app-setup>
     </ng-container>
     <!-- /setup section -->
 

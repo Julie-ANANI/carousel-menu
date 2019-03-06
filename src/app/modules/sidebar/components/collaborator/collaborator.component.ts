@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators'
 import { User } from '../../../../models/user.model';
@@ -12,7 +12,7 @@ import { Innovation } from '../../../../models/innovation';
   styleUrls: ['./collaborator.component.scss']
 })
 
-export class CollaboratorComponent implements OnInit {
+export class CollaboratorComponent {
 
   @Input() set project(value: Innovation) {
     this._innovationId = value._id;
@@ -20,7 +20,8 @@ export class CollaboratorComponent implements OnInit {
   }
 
   @Input() set sidebarState(value: string) {
-    if (value === 'active' || value === undefined) {
+    if ( value === undefined || value === 'active') {
+      this.buildForm();
       this._formData.reset();
     }
   }
@@ -45,12 +46,11 @@ export class CollaboratorComponent implements OnInit {
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService) { }
 
-  ngOnInit() {
+  private buildForm() {
     this._formData = this.formBuilder.group({
       collaboratorEmail: ['', [Validators.required, Validators.email]]
     });
   }
-
 
   onSubmit(event: Event) {
     event.preventDefault();
@@ -129,7 +129,6 @@ export class CollaboratorComponent implements OnInit {
     });
 
   }
-
 
   get innovationId(): string {
     return this._innovationId;

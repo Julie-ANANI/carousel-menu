@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ScrollService {
 
-  scrollEventValue = new Subject<any>();
+  private _defaultScrollValue = new BehaviorSubject(0);
+
+  scrollValue = this._defaultScrollValue.asObservable();
 
   constructor() { }
 
   setScrollValue(value: any) {
-    this.scrollEventValue.next(value);
+    return this._defaultScrollValue.next(value);
   }
 
-  getScrollValue(): Subject<any> {
-    return this.scrollEventValue;
+  get defaultScrollValue(): BehaviorSubject<number> {
+    return this._defaultScrollValue;
   }
 
 }

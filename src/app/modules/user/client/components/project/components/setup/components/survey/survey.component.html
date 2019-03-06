@@ -4,13 +4,13 @@
     <!-- section no survey -->
     <ng-container *ngIf="!innovation.quizId">
       <app-message-space [widthMax]="'359px'">
-        {{ 'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate }}
+        {{ 'PROJECT_MODULE.SETUP.SURVEY.NO_QUIZ' | translate }}
       </app-message-space>
     </ng-container>
 
     <!-- section survey -->
     <ng-container *ngIf="innovation.quizId">
-      <p class="text">{{ 'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
+      <p class="text">{{ 'PROJECT_MODULE.SETUP.SURVEY.DONT_SHARE_QUIZ' | translate}}</p>
       <a class="text-link" [href]="url" target="_blank">{{ url }}</a>
     </ng-container>
 

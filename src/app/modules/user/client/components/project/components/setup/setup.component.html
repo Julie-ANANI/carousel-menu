@@ -60,7 +60,7 @@
             <span [ngStyle]="{ 'margin-right': '0' }">
               <button
                 [disabled]="innovation.status !== 'EDITING'"
-                (click)="onClickSubmit($event)"
+                (click)="onClickSubmit()"
                 class="btn btn-primary gtm-submit-project">
                 {{ 'COMMON.BUTTON.SUBMIT' | translate }}
               </button>
@@ -105,18 +105,18 @@
 
         <!-- targeting -->
         <ng-container *ngIf="currentPage === 'targeting'">
-          <app-targeting [project]="innovation" (settingsChange)="updateSettings($event)"></app-targeting>
+          <app-shared-project-settings [project]="innovation" [editable]="canEdit"></app-shared-project-settings>
         </ng-container>
 
-        <!-- pitch
+        <!-- pitch -->
         <div *ngIf="currentPage === 'pitch'">
-          <app-pitch [project]="innovation" (pitchChange)="updatePitch($event)"></app-pitch>
-        </div>-->
+          <app-shared-project-edit-cards [project]="innovation" [editable]="canEdit"></app-shared-project-edit-cards>
+        </div>
 
-        <!-- survey
+        <!-- survey -->
         <ng-container *ngIf="currentPage === 'survey'">
           <app-survey [project]="innovation"></app-survey>
-        </ng-container>-->
+        </ng-container>
 
       </div>
     </div>
@@ -138,7 +138,7 @@
   {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-primary btn-sm" (click)="onClickConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="btn btn-primary btn-sm" (click)="onClickConfirm()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>
 <!-- /modal to ask user to sure about submitting the project -->

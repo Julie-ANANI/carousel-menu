@@ -1,11 +1,6 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 file-drop.drop-container {
-  border: 2px dashed $border-color;
-  position: relative;
-  border-radius: 3px;
-  min-height: 15.625rem;
-  display: flex;
 
   input {
     visibility: hidden;

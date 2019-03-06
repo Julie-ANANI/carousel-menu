@@ -4,14 +4,12 @@ import { ScrollService } from '../../../../../../../services/scroll/scroll.servi
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { InnovationSettings } from '../../../../../../../models/innov-settings';
-import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
 import { Media } from '../../../../../../../models/media';
 import { InnovCard } from '../../../../../../../models/innov-card';
-import {InnovPitch} from '../../../../../../../models/innov-pitch';
+import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-setup',
@@ -28,40 +26,30 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation;
 
-  private _selectedInnovationIndex: number;
+  private _selectedInnovationIndex = 0;
 
-  private _scrollOn: boolean;
+  private _scrollOn = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _currentPage: string;
 
-  private _saveChanges: boolean;
+  private _saveChanges = false;
 
-  private _buttonSaveClass: string;
+  private _buttonSaveClass = 'save-disabled';
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _submitModal: boolean;
+  private _submitModal = false;
 
   canEdit = false;
 
   constructor(private scrollService: ScrollService,
               private router: Router,
-              private innovationCommonService: InnovationCommonService,
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
-              private activatedRoute: ActivatedRoute) { }
-
-  ngOnInit() {
-
-    this.initializeVariables();
-
-    this.getCurrentPage();
-
-    this.scrollService.getScrollValue().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
-      this._scrollOn = value > 50;
-    });
+              private activatedRoute: ActivatedRoute,
+              private innovationFrontService: InnovationFrontService) {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -69,23 +57,25 @@ export class SetupComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      this._saveChanges = response;
+    this.scrollService.scrollValue.pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
+      this._scrollOn = value > 50;
     });
 
-    this.innovationCommonService.getSelectedInnovationIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: number) => {
+    this.innovationFrontService.getSelectedInnovationIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: number) => {
       this._selectedInnovationIndex = response;
+    });
+
+    this.innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
+      if (this._saveChanges) {
+        this._buttonSaveClass = 'save-active';
+      }
     });
 
   }
 
-
-  private initializeVariables() {
-    this._scrollOn = false;
-    this._selectedInnovationIndex = 0;
-    this._saveChanges = false;
-    this._submitModal = false;
-    this._buttonSaveClass = 'save-disabled';
+  ngOnInit() {
+    this.getCurrentPage();
   }
 
 
@@ -148,9 +138,9 @@ export class SetupComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this._saveChanges) {
-      this.innovationCommonService.completionCalculation(this._innovation);
 
-      const percentages = this.innovationCommonService.calculatedPercentages;
+      this.innovationFrontService.completionCalculation(this._innovation);
+      const percentages = this.innovationFrontService.calculatedPercentages;
 
       if (percentages) {
         this._innovation.settings.completion = percentages.settingPercentage;
@@ -161,14 +151,14 @@ export class SetupComponent implements OnInit, OnDestroy {
         });
       }
 
-      this.innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
-        this._innovation = response;
+      this.innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
         this._buttonSaveClass = 'save-disabled';
-        this.innovationCommonService.setNotifyChanges(false);
+        this.innovationFrontService.setNotifyChanges(false);
         this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
-      }, () => {
+        }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
+
     }
 
   }
@@ -177,61 +167,28 @@ export class SetupComponent implements OnInit, OnDestroy {
   /***
    * this function is called when the user wants to submit his project,
    * we also checked he saved the project or not then open the confirmation modal.
-   * @param event
    */
-  onClickSubmit(event: Event) {
-    event.preventDefault();
-
+  onClickSubmit() {
     if (!this._saveChanges) {
       this._submitModal = true;
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     }
-
   }
 
 
   /***
    * this function is called when the user clicks on the confirm button of the submit
    * modal.
-   * @param event
    */
-  onClickConfirm(event: Event) {
-    event.preventDefault();
-
+  onClickConfirm() {
     this.innovationService.submitProjectToValidation(this._innovation._id).pipe(first()).subscribe((response: Innovation) => {
       this._innovation.status = 'SUBMITTED';
       this.router.navigate(['user/projects']);
       this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-      });
-
-  }
-
-
-  /*
-      Here we are receiving the value from the targeting form.
-   */
-  updateSettings(value: InnovationSettings): void {
-    if (this.canEdit) {
-      this._innovation.settings = value;
-      this._buttonSaveClass = 'save-active';
-    }
-  }
-
-
-  /*
-     Here we are checking if there are any changes in the pitch form.
-  */
-  updatePitch(value: InnovPitch) {
-    if (this.canEdit) {
-      this._innovation.innovationCards = value.innovationCards;
-      this._innovation.projectStatus = value.stage;
-      this._innovation.external_diffusion = value.diffusion;
-      this._innovation.patented = value.patent;
-      this._buttonSaveClass = 'save-active';
-    }
+    });
   }
 
 

@@ -83,24 +83,11 @@
   }
 
   .sub-label {
-    color: $meta-color;
-    font-size: .875rem;
-  }
-
-
-  .answer-wrapper {
-    background: #F8F4F4;
-    color: $dark-color;
-    padding: .5rem .95rem;
-    border-radius: 3px;
-    display: inline-flex;
-    margin-right: .6rem;
-    margin-bottom: .6rem;
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
   }
 
   .main-media-wrapper, .secondary-media-wrapper {
-    padding-bottom: 1.2rem;
+    padding-bottom: $unit-5;
     text-align: center;
 
     p {
@@ -142,15 +129,15 @@
 
         }
 
-        .delete-wrapper {
-          padding-bottom: 1.2rem;
+        .text-delete-link {
+          padding-bottom: $unit-5;
         }
 
       }
 
     }
 
-    img, iframe {
+    iframe {
       width: 220px;
       height: 152px;
     }
@@ -158,14 +145,13 @@
   }
 
 
-  .upload-wrapper {
-    display: flex;
-    justify-content: space-between;
+  .flex-between {
     flex-wrap: wrap;
-    flex-direction: row;
+    margin-bottom: -$unit-2;
 
     .image-upload-wrapper {
       flex: 1;
+      margin-bottom: $unit-2;
     }
 
     .or-wrapper {
@@ -173,16 +159,16 @@
       justify-content: center;
       align-items: center;
 
-      .para {
-        color: $meta-color;
-        font-size: .875rem;
-        margin: 1.57rem;
+      .text {
+        font-size: $font-size-sm;
+        margin: 1.25rem;
       }
 
     }
 
     .video-upload-wrapper {
       flex: 1;
+      margin-bottom: $unit-2;
     }
 
   }
@@ -196,14 +182,6 @@
 }
 
 
-.modal {
-
-  .ghost-edit {
-    border: none;
-    margin-right: .6rem;
-  }
-
-}
 
 
 /********************************** Media ***************************************/

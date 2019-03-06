@@ -9,14 +9,10 @@
 /*
     Color variable file
  */
-@import "style/variables";
+// @import "style/variables";
 /*@import "style/framework/variables";*/
 
 /********************************** Default Styles ***************************************/
-
-.tab-content {
-  width: 100%;
-}
 
 /*
     Rest style file
@@ -37,6 +33,7 @@
 @import "style/tinymce-style";
 @import "style/simplenotification-style";
 @import "style/ng2autocomplete-style";
+@import "style/upload-zone-photo";
 
 
 /*

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { TranslateService } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { Subject } from 'rxjs';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-project',
@@ -12,9 +15,9 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
   styleUrls: ['./project.component.scss']
 })
 
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
 
-  private _innovation: Innovation = {};
+  private _innovation: Innovation;
 
   private _offerTypeImage = '';
 
@@ -22,17 +25,25 @@ export class ProjectComponent implements OnInit {
 
   private _currentPage: string;
 
+  private _saveChanges = false;
+
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
-              private innovationFrontService: InnovationFrontService,
               private router: Router,
-              private translateService: TranslateService) {
+              private translateService: TranslateService,
+              private innovationFrontService: InnovationFrontService,
+              private translateNotificationsService: TranslateNotificationsService) {
 
     this.activatedRoute.data.subscribe((response) => {
       if (response) {
         this._innovation = response['innovation'];
-        this.innovationFrontService.setInnovation(this._innovation);
       }
+    });
+
+    this.innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
     });
 
   }
@@ -87,9 +98,22 @@ export class ProjectComponent implements OnInit {
   }
 
 
+  /***
+   * this function will activate the tab and user has to save all the changes
+   * before going to another page.
+   * @param event
+   * @param value
+   */
   setCurrentTab(event: Event, value: string) {
     event.preventDefault();
-    this._currentPage = value;
+
+    if (!this._saveChanges) {
+      this._currentPage = value;
+      this.router.navigate([value], {relativeTo: this.activatedRoute});
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+    }
+
   }
 
   get dateFormat(): string {
@@ -114,6 +138,15 @@ export class ProjectComponent implements OnInit {
 
   get currentPage(): string {
     return this._currentPage;
+  }
+
+  get saveChanges(): boolean {
+    return this._saveChanges;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }
