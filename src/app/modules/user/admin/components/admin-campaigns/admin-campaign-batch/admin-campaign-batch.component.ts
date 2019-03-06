@@ -261,7 +261,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   private createNewBatch(formValue: FormGroup) {
     this._newBatch.size = formValue.value['pros'];
-    this._newBatch.firstMail = formValue.value['send'] ? Date.now() : this.computeDate(formValue.value['date'], formValue.value['time']);
+    this._newBatch.firstMail = formValue.value['send'] === 'true' ? Date.now() : this.computeDate(formValue.value['date'], formValue.value['time']||"00:00");
     this._newBatch.sendNow = formValue.value['send'];
 
     this.campaignService.createNewBatch(this._campaign._id, this._newBatch).pipe(first()).subscribe(() => {
