@@ -1,0 +1,57 @@
+@import "../../../../../style/variables";
+
+#user-form-component {
+  padding-top: 1.875rem;
+
+  .save-button-wrapper {
+    text-align: right;
+    padding-bottom: 1.25rem;
+  }
+
+  .operator-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: .35rem;
+    padding-bottom: .9375rem;
+
+    .form-switch {
+      margin-bottom: .6rem;
+    }
+
+  }
+
+  .domain-wrapper {
+    padding-bottom: .9375rem;
+
+    .fa-pencil-alt {
+      font-size: .875rem;
+      margin-left: .35rem;
+    }
+
+    .fa-pencil-alt:hover {
+      color: $primary-color;
+    }
+
+  }
+
+  .projects-wrapper {
+    padding-bottom: 1.2rem;
+
+    .text-link {
+      font-size: .875rem;
+    }
+
+  }
+
+  .pro-quiz-wrapper {
+    padding-top: .6rem;
+
+    p {
+      font-size: .875rem;
+      padding-bottom: 0;
+    }
+
+  }
+
+}

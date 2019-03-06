@@ -55,6 +55,8 @@ export class ProjectsListComponent implements OnInit {
     offset: this._config.offset
   };
 
+  private _noResult = false;
+
   constructor(private translateService: TranslateService,
               private userService: UserService,
               private translateTitleService: TranslateTitleService,
@@ -69,8 +71,9 @@ export class ProjectsListComponent implements OnInit {
 
   private loadProjects() {
     this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
-        this._innovations = responses.result;
-        this._total = responses._metadata.totalCount;
+      this._innovations = responses.result;
+      this._total = responses._metadata.totalCount;
+      this._noResult = responses.result === 0;
     }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -173,12 +176,20 @@ export class ProjectsListComponent implements OnInit {
     return this._deleteModal;
   }
 
+  set deleteModal(value: boolean) {
+    this._deleteModal = value;
+  }
+
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   get paginationConfig(): PaginationInterface {
     return this._paginationConfig;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
   }
 
 }

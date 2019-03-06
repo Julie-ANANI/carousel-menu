@@ -129,7 +129,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'PROJECT_MODULE.SETUP.PREVIEW',
+      title: 'SIDEBAR.TITLE.PREVIEW',
       size: '726px'
     };
 
@@ -143,27 +143,29 @@ export class SetupComponent implements OnInit, OnDestroy {
   onClickSave(event: Event) {
     event.preventDefault();
 
-    this.innovationCommonService.completionCalculation(this._innovation);
+    if (this._saveChanges) {
+      this.innovationCommonService.completionCalculation(this._innovation);
 
-    const percentages = this.innovationCommonService.calculatedPercentages;
+      const percentages = this.innovationCommonService.calculatedPercentages;
 
-    if (percentages) {
-      this._innovation.settings.completion = percentages.settingPercentage;
-      this._innovation.completion = percentages.totalPercentage;
-      percentages.innovationCardsPercentage.forEach((item: any) => {
-        const index = this._innovation.innovationCards.findIndex(card => card.lang === item.lang);
-        this._innovation.innovationCards[index].completion = item.percentage;
+      if (percentages) {
+        this._innovation.settings.completion = percentages.settingPercentage;
+        this._innovation.completion = percentages.totalPercentage;
+        percentages.innovationCardsPercentage.forEach((item: any) => {
+          const index = this._innovation.innovationCards.findIndex(card => card.lang === item.lang);
+          this._innovation.innovationCards[index].completion = item.percentage;
+        });
+      }
+
+      this.innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
+        this._innovation = response;
+        this._buttonSaveClass = 'save-disabled';
+        this.innovationCommonService.setNotifyChanges(false);
+        this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
     }
-
-    this.innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
-      this._innovation = response;
-      this._buttonSaveClass = 'save-disabled';
-      this.innovationCommonService.setNotifyChanges(false);
-      this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
 
   }
 
@@ -301,6 +303,10 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set submitModal(value: boolean) {
+    this._submitModal = value;
   }
 
   get submitModal(): boolean {

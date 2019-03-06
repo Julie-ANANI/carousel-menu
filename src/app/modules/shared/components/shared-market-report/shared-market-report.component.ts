@@ -603,11 +603,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   getIntroSrc(): string {
 
     if (this.lang === 'en') {
-      return 'https://res.cloudinary.com/umi/image/upload/v1548250235/app/default-images/intro/en.png';
+      return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-en.png';
     }
 
     if (this.lang === 'fr') {
-      return 'https://res.cloudinary.com/umi/image/upload/v1548250235/app/default-images/intro/fr.png';
+      return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-fr.png';
     }
 
   }
@@ -702,7 +702,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     this._sidebarTemplateValue = {
       animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: this._adminSide ? 'COMMON.EDIT_INSIGHT' : 'Insight',
+      title: this._adminSide ? 'COMMON.SIDEBAR.EDIT_INSIGHT' : 'Insight',
       size: '726px'
     };
 
@@ -810,6 +810,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     window.print();
   }
 
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi';
+  }
+
+  public getContact(): string {
+    return environment.commercialContact;
+  }
+
+  public getMailto(): string {
+    return `mailto:${environment.commercialContact}`;
+  }
 
   /***
    * getting the current lang of the user.

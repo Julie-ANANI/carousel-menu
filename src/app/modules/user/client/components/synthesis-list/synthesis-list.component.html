@@ -2,12 +2,14 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- section no reports -->
-    <div *ngIf="totalReports && totalReports.length === 0" class="section-no-reports">
-      <app-message-space [messageA]="'SHARE.SYNTHESIS_LIST.BOT_TEXT'" [widthMax]="'354'"></app-message-space>
+    <div *ngIf="noResult" class="section-no-reports">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}
+      </app-message-space>
     </div>
 
     <!-- section reports -->
-    <div *ngIf="totalReports && totalReports.length > 0" class="section-reports-list">
+    <div *ngIf="!noResult" class="section-reports-list">
 
       <!-- reports -->
       <div class="report-wrapper" [@listAnimation]="totalReports.length">

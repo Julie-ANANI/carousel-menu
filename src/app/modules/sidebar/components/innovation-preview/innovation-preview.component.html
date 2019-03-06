@@ -1,28 +1,40 @@
 <div id="innovation-preview-component">
 
-  <div *ngIf="innovation && innovation.problem === '' && innovation.summary === '' && innovation.title === '' && innovation.advantages.length === 0" class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
-    <app-message-space [messageA]="'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE'"></app-message-space>
+  <div
+    *ngIf="innovationCard && innovationCard.problem === ''
+    && innovationCard.summary === ''
+    && innovationCard.title === ''
+    && innovationCard.advantages.length === 0"
+    class="text-center"
+    [ngStyle]="{ 'padding-top': '3.15rem' }">
+    <app-message-space>
+      {{ 'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE' | translate }}
+    </app-message-space>
   </div>
 
 
-  <div *ngIf="innovation && (innovation.problem !== '' || innovation.summary !== '' || innovation.title !== '' || innovation.advantages.length !== 0)">
+  <div
+    *ngIf="innovationCard && (innovationCard.problem !== ''
+    || innovationCard.summary !== ''
+    || innovationCard.title !== ''
+    || innovationCard.advantages.length !== 0)">
 
     <!-- Hero section -->
-    <div class="hero-light-container">
+    <div class="hero-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- Title -->
-        <h1 class="main-heading">{{ innovation.title }}</h1>
+        <h1 class="main-heading">{{ innovationCard.title }}</h1>
 
         <!-- Batch date -->
         <h6 *ngIf="getDate">{{ 'DASHBOARD.SENDINGDATE' | translate }} {{ getDate | date: dateFormat }}</h6>
 
         <!-- Summary -->
-        <div class="summary" [innerHtml]="innovation.summary"></div>
+        <div class="summary" [innerHtml]="innovationCard.summary"></div>
 
         <!-- Media -->
         <div class="media-wrapper">
-          <div *ngFor="let media of innovation.media">
+          <div *ngFor="let media of innovationCard.media">
 
             <!-- Video -->
             <div *ngIf="media?.type === 'VIDEO'" class="gap">
@@ -46,7 +58,7 @@
       <div class="column col-xs-12 col-11 col-mx-auto">
         <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
         <ul class="advantage">
-          <li *ngFor="let advantage of innovation.advantages;">
+          <li *ngFor="let advantage of innovationCard.advantages;">
             {{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}
           </li>
         </ul>
@@ -58,7 +70,7 @@
     <div class="section-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
-        <div [innerHtml]="innovation.problem"></div>
+        <div [innerHtml]="innovationCard.problem"></div>
       </div>
     </div>
 
@@ -67,7 +79,7 @@
     <div class="section-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
-        <div [innerHtml]="innovation.solution"></div>
+        <div [innerHtml]="innovationCard.solution"></div>
       </div>
     </div>
 

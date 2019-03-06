@@ -14,7 +14,7 @@
 
   <div *ngIf="labels" class="pie-data">
     <div *ngFor="let l of (labels | multiling:lang); let i = index" class="data">
-      <span class="circle" [ngStyle]="{'background-color': colors[0].backgroundColor[i]}"></span>
+      <span class="circles" [ngStyle]="{'background-color': colors[0].backgroundColor[i]}"></span>
       <span class="response">{{ datasets[0].data[i] }}</span>
       <span class="text">{{ l }}</span>
       <span>({{ labelPercentage[0].percentage[i] }})</span>

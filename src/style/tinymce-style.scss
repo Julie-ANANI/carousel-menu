@@ -1,4 +1,4 @@
-@import "variables";
+@import "framework/variables";
 
 /*
     This stylesheet contains the style related to the tinymce panel.
@@ -10,12 +10,12 @@
 }
 
 .mce-tinymce {
-  border: .18rem solid $border-color !important;
-  border-radius: .35rem;
+  border: 3px solid $border !important;
+  border-radius: 5px;
 }
 
 .mce-container {
-  font-size: .18rem !important;
+  font-size: 3px !important;
 }
 
 .mce-toolbar .mce-btn-group {
@@ -32,7 +32,7 @@
 }
 
 .mce-ico {
-  color: $meta-color !important;
+  color: $meta !important;
   cursor: pointer !important;
 }
 
@@ -40,7 +40,7 @@
   border-color: transparent !important;
 
   .mce-ico {
-    color: $dark-color !important;
+    color: $text-primary !important;
     background-color: transparent !important;
   }
 
@@ -48,10 +48,10 @@
 
 .mce-btn.mce-active {
   background: none !important;
-  color: $dark-color !important;
+  color: $text-primary !important;
 
   .mce-ico {
-    color: $dark-color !important;
+    color: $text-primary !important;
     background-color: transparent !important;
   }
 

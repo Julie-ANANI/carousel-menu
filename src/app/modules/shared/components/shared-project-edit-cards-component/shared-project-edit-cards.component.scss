@@ -44,7 +44,7 @@
           justify-content: center;
           align-items: center;
 
-          .radio-button {
+          .btn-radio {
             margin-right: .6rem;
           }
 
@@ -52,7 +52,7 @@
 
         li.active {
 
-          .radio-button {
+          .btn-radio {
             background-color: $validation-color;
             border-color: rgba(46,204,113,0.45) !important;
 
@@ -206,7 +206,7 @@
   }
 
 
-  .form-default.ng-touched.ng-invalid {
+  .form-input.ng-touched.ng-invalid {
     border-color: $border-color;
   }
 

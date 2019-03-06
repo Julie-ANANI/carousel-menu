@@ -2,7 +2,7 @@
 
 /*
     This stylesheet contains all the form related class
-    on our platform.
+    on our framework.
  */
 
 
@@ -17,94 +17,7 @@
 
 
 
-/*
-    Form group style
-*/
 
-.form-group {
-  margin-bottom: .6rem !important;
-}
-
-
-/*
-    Form label style
- */
-
-.form-label {
-  color: $label-color;
-  font-weight: 600;
-  font-size: .85rem;
-  line-height: 1.5;
-  display: block;
-}
-
-/*
-    Form input style. Just add this class when you are
-    defining the input of the form or any other. Class
-    name: .form-default
- */
-
-.form-default, .form-select {
-  border: 1px solid $border-color;
-  font-size: .85rem;
-  color: $input-color;
-  border-radius: .35rem;
-  display: block;
-  width: 100%;
-  outline: none;
-  min-height: 3.125rem;
-  position: relative;
-  background: white none;
-  padding: .9rem;
-  transition: all 0.15s ease-in-out;
-}
-
-
-.form-select:not([multiple]):not([size]) {
-  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right .9rem center/0.4rem 0.5rem;
-  background-size: .6rem;
-  padding-right: 2.187rem;
-}
-
-
-/*
-    Placeholder style
- */
-
-.form-default:not(:disabled):placeholder-shown {
-  color: $placeholder-color;
-}
-
-
-/*
-    Focus on input style
- */
-
-.form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
-  border-color: $primary-color;
-}
-
-
-/*
-    Error on input style
- */
-
-.form-default.ng-touched.ng-invalid {
-  border-color: $alert-color;
-}
-
-
-/*
-    Form input is disabled.
- */
-
-.form-default:disabled, .form-default.disabled, .form-select:disabled, .form-select.disabled {
-  background: $disabled-color;
-  color: $disabled-text-color;
-  border-color: $disabled-color;
-  cursor: not-allowed;
-  opacity: 1;
-}
 
 
 
@@ -140,46 +53,10 @@
 }
 
 
-/*
-    Form error style.  Add this class to show the error related to the
-    input. Class name: form-error
- */
-
-.form-error {
-  color: $alert-color;
-  font-size: .75rem;
-  padding: .3rem 0;
-}
 
 
-/*
-    Form input radio button
- */
 
-.form-radio {
-  padding-left: 1.57rem;
-  padding-right: 1.57rem;
-  color: $label-color;
-}
 
-.form-radio .form-icon {
-  height: 1rem !important;
-  top: 0.2rem !important;
-  width: 1rem !important;
-}
-
-.form-radio input:checked + .form-icon {
-  border: none !important;
-  background: $validation-color;
-}
-
-/*
-    Form input radio button disabled
- */
-
-.form-radio input:disabled + .form-icon {
-  cursor: not-allowed;
-}
 
 
 /*
@@ -224,15 +101,7 @@
 }
 
 
-/*
-    Textarea.
- */
 
-textarea {
-  resize: none;
-  padding-right: 1.87rem !important;
-
-}
 
 
 /*
@@ -240,40 +109,13 @@ textarea {
   */
 
 
-.form-switch .form-icon::before {
-  background: $meta-color;
-  border-color: $meta-color;
-  height: 1.3125rem;
-  width: 1.2rem;
-  left: -1px;
-  top: -3.5px;
-}
 
-.form-switch .form-icon  {
-  border-color: $border-color;
-  background-color: #FFFFFF;
-  height: .95rem;
-  width: 2rem;
-}
 
-.form-switch input:checked + .form-icon::before {
-  background: $validation-color;
-}
 
-.form-switch input:checked + .form-icon  {
-  border-color: rgba(46,204,113,0.45) !important;
-  background: rgba(46,204,113,0.45);
-}
 
-.form-switch input:disabled + .form-icon::before {
-  background: $disabled-color;
-}
 
-.form-switch input:focus + .form-icon {
-  border-color: $border-color;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
+
+
 
 
 /*

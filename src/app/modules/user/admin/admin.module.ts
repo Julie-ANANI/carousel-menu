@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
-import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
@@ -29,6 +28,7 @@ import { InputListModule } from '../../utility-components/input-list/input-list.
 import { SidebarInnovationPreviewModule } from '../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
+import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
@@ -46,10 +46,12 @@ import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
 import { SignatureResolver } from '../../../resolvers/signature.resolver';
-import { CampaignCalculationService } from '../../../services/campaign/campaign-calculation.service';
+import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
+import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
+
 
 @NgModule({
   imports: [
@@ -75,11 +77,11 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
     HeaderModule,
     LogoutModule,
     InputListModule,
-    SidebarInnovationPreviewModule
+    SidebarInnovationPreviewModule,
+    AdminCommunityModule
   ],
   declarations: [
     AdminComponent,
-    AdminIndexComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
     AdminSettingsComponent
@@ -103,10 +105,11 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
-    CampaignCalculationService,
+    CampaignFrontService,
     QuizService,
     InnovationCommonService,
-    PresetResolver
+    PresetResolver,
+    AdvSearchService
   ]
 })
 

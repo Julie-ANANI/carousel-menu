@@ -1,7 +1,7 @@
 <div class="column col-xs-12 col-11 col-mx-auto" id="tags-form-component">
 
   <div class="save-button-wrapper">
-    <button type="submit" class="btn btn-primary" [disabled]="!activeSaveButton" (click)="onClickSave()">{{ 'COMMON.SAVE' | translate }}</button>
+    <button type="submit" class="btn btn-primary" (click)="onClickSave()">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
   </div>
 
   <div [ngSwitch]="type">
@@ -25,18 +25,18 @@
       <!-- when not to set tag as original -->
       <div *ngIf="!needToSetOriginalTag" class="tag-details-wrapper">
 
-        <h1 class="main-heading">Original Tag Details</h1>
+        <h1 class="title-primary">Original Tag Details</h1>
 
         <!-- name -->
         <p>
-          <span class="label-text">{{ 'COMMON.NAME' | translate }}: </span>
+          <span class="label-text">{{ 'COMMON.LABEL.NAME' | translate }}: </span>
           <span class="text">{{ tag.originalLabel | multiling:lang }}</span>
         </p>
 
 
         <!-- type -->
         <p>
-          <span class="label-text">{{ 'COMMON.TYPE' | translate }}: </span>
+          <span class="label-text">{{ 'COMMON.LABEL.TYPE' | translate }}: </span>
           <span class="text">{{ 'TAGS.TYPE.' + tag.type | translate }}</span>
         </p>
 
@@ -56,7 +56,7 @@
             [list-formatter]="autocompleListFormatter"
             [value-formatter]="autocompleValueFormatter"
             [attr.placeholder]="'COMMON.TAG_LABEL.TAG_PLACEHOLDER' | translate"
-            class="form-default">
+            class="form-input">
           <button (click)="connectToTag($event, tag)" class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
         </div>
       </div>
@@ -69,11 +69,10 @@
         <input
           id="tags-form-enLabel"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.label.en"
           alt="label"
-          (change)="onKeyboardPress($event)"
           [placeholder]="'COMMON.TAG_LABEL.LABEL_EN_PLACEHOLDER' | translate">
       </div>
 
@@ -82,27 +81,25 @@
         <input
           id="tags-form-frLabel"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.label.fr"
-          (change)="onKeyboardPress($event)"
           alt="label"
           [placeholder]="'COMMON.TAG_LABEL.LABEL_FR_PLACEHOLDER' | translate">
       </div>
 
       <!-- description -->
-      <h1 class="main-heading" [ngStyle]="{ 'padding-top': '.9375rem' }">Actual Tag Description</h1>
+      <h1 class="main-heading" [ngStyle]="{ 'padding-top': '0.9375rem' }">Actual Tag Description</h1>
 
       <div class="form-group">
         <label for="tags-form-enDesc" class="form-label">{{ 'COMMON.LANG.EN' | translate }}</label>
         <input
           id="tags-form-enDesc"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.description.en"
           alt="description"
-          (change)="onKeyboardPress($event)"
           [placeholder]="'COMMON.TAG_LABEL.DESC_EN_PLACEHOLDER' | translate">
       </div>
 
@@ -111,11 +108,10 @@
         <input
           id="tags-form-frDesc"
           type="text"
-          class="form-default"
+          class="form-input"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="tag.description.fr"
           alt="description"
-          (change)="onKeyboardPress($event)"
           [placeholder]="'COMMON.TAG_LABEL.DESC_FR_PLACEHOLDER' | translate">
       </div>
 

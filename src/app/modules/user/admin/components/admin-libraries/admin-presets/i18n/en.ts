@@ -83,13 +83,12 @@ export const PRESETS = {
       'CHOOSE': 'Choose the type of question',
       'list': 'List of items',
       'clearbit': 'List of companies',
-      'radio': 'Radio question',
+      'radio': 'Unique choice question',
       'scale': 'Rating',
       'stars': 'Stars rating',
-      'textarea': 'Text area',
-      'textbox': 'Text box',
+      'textarea': 'Text',
       'toggle': 'Toggle',
-      'checkbox': 'Checkbox question'
+      'checkbox': 'Multiple choice question'
     },
     'EDIT': {
       'SAVE': 'Save the question',

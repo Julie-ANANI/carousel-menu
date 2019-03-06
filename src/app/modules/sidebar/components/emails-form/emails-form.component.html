@@ -11,9 +11,9 @@
 
       <!-- Email -->
       <div class="form-group" *ngIf="isBlacklist">
-        <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+        <label class="form-label" for="email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
         <input
-          class="form-default"
+          class="form-input"
           formControlName="email"
           id="email"
           type="email"
@@ -34,7 +34,7 @@
         </div>
         <label class="form-label" for="expirationDate">{{ 'COMMON.EXPIRATION-SPECIFY' | translate }}</label>
         <input
-          class="form-default"
+          class="form-input"
           formControlName="expiration"
           [value]="formData.value.expiration | date:'yyyy-MM-dd'"
           id="expirationDate"

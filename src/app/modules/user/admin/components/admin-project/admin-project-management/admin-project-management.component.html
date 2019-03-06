@@ -73,7 +73,7 @@
         <!-- if we click on update we show an autoComplete of all users -->
         <div class="form-group" style="position: relative" *ngIf="isEditOwner">
           <input
-            class="form-default"
+            class="form-input"
             formControlName="owner"
             id="user"
             type="text"
@@ -526,7 +526,7 @@
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.VALIDATE_INSIGHTS' | translate}}
           </label>
-          <label class="label-alert">{{currentCampaign?.stats?.campaign.nbToValidateResp}}
+          <label class="label label-alert">{{currentCampaign?.stats?.campaign.nbToValidateResp}}
             {{'PROJECT.CAMPAIGN.INSIGHTS_TO_VALIDATE' | translate}}</label>
           <button class="showOnHover btn btn-xs ghost-edit"
                   (click)="goToInsights()">

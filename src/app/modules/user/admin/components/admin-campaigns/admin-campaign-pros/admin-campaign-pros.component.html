@@ -1,97 +1,117 @@
-<div class="text-right">
-  <button class="btn btn-primary" (click)="importProsModal = true">
-    Import professionals
-  </button>
-  <button class="btn btn-primary" (click)="addPro(true)">
-    Add a professional
-  </button>
-  <button class="btn btn-primary" (click)="exportPros()">
-    Export pros
-  </button>
-</div>
-<app-shared-pros-list [config]="config" [campaign]="campaign"></app-shared-pros-list>
+<div id="admin-campaign-pros-component">
 
-<!-- Modal d'import de pros -->
-<div class="modal" [ngClass]="{'active': importProsModal}">
-  <div class="modal-overlay" (click)="importProsModal = false && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="importProsModal = false && $event.preventDefault()"></button>
-      <div class="modal-title h5"> Import professionals </div>
-    </div>
-    <div class="modal-body foo">
+  <!-- section stats -->
+  <div class="campaign-stats-wrapper">
 
-      <label class="btn ghost-primary btn-primary">
-        <input #fileupload type="file" [hidden]="true" (change)="importProsCsv(fileupload.files[0], $event)" />
-        Import CSV
-      </label>
-
-      <app-autocomplete-input
-        (update)="updateCampaign($event)"
-        [onlyOne]="true"
-        [config]="{placeholder: 'campagne', initialData: originCampaign, type: 'campaign'}"></app-autocomplete-input>
+    <!-- stat col 1 -->
+    <div class="stat1">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFESSIONALS' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.FIND' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('professional') }}</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.NOT_REACHED' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('notReached') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.STARS' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.DUPLICATE' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+      </div>
     </div>
 
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="importPros()" [disabled]="!originCampaign.length">
-        {{ 'COMMON.ADD' | translate }}
-      </button>
-      <button class="btn btn-link" (click)="importProsModal = false && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
+    <!-- stat col 2 -->
+    <div class="stat2">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.EMAILS' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('good') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.UNSURE' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('unsure') }}%</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BAD' | translate }}</h4>
+          <h3 class="value">{{ getCampaignStat('bad') }}%</h3>
+        </div>
+      </div>
     </div>
+
+    <!-- stat col 3 -->
+    <div class="stat3">
+      <div class="container">
+        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.COST' | translate }}</h5>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.REQUEST' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+        <div class="content">
+          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAILS' | translate }}</h4>
+          <h3 class="value">--</h3>
+        </div>
+      </div>
+    </div>
+
   </div>
-</div>
 
 
-<!-- Modal d'ajout de pro -->
-<div class="modal" [ngClass]="{'active': addProModal}">
-  <div class="modal-overlay" (click)="addPro(false)"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="addPro(false)"></button>
-      <div class="modal-title h5"> Add a professional </div>
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section actions -->
+    <div class="section-actions">
+      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
+      <button class="btn ghost-primary gap-right" (click)="OnClickAdd($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
+      <button class="btn btn-primary" (click)="onClickExport($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
     </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
-        <input
-          class="form-default"
-          [(ngModel)]="newPro.firstName"
-          id="firstName"
-          type="text"
-          placeholder="John">
-      </div>
 
-      <!-- Last name -->
-      <div class="form-group">
-        <label class="form-label" for="firstName">{{ 'COMMON.LASTNAME' | translate }}</label>
-        <input
-          class="form-default"
-          [(ngModel)]="newPro.lastName"
-          id="lastName"
-          type="text"
-          placeholder="Smith">
-      </div>
+    <!-- section pros list -->
+    <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
 
-      <!-- Email -->
-      <div class="form-group">
-        <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
-        <input
-          class="form-default"
-          [(ngModel)]="newPro.email"
-          id="email"
-          type="email"
-          placeholder="john@catco.com">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="createPro()" [disabled]="!newPro.email || !newPro.firstName || !newPro.lastName">
-        {{ 'COMMON.ADD' | translate }}
-      </button>
-      <button class="btn btn-link" (click)="addPro(false)">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-    </div>
   </div>
+
+
 </div>
+
+
+<!-- modal to import pros -->
+<app-modal [(showModal)]="importModal" [modalTitle]="'COMMON.MODAL.TITLE_IMPORT'">
+
+  <app-autocomplete-input
+    (update)="updateCampaign($event)"
+    [onlyOne]="true"
+    [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
+  </app-autocomplete-input>
+
+  <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
+    <label class="btn btn-sm ghost-primary">
+      <input #fileupload type="file" [hidden]="true" (change)="OnClickImportCsv(fileupload.files[0], $event)" />
+      Import CSV
+    </label>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to import pros -->
+
+
+<!-- sidebar to add pro -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-user-form
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type"
+    (finalProfessionalData)="onClickSave($event)">
+  </app-user-form>
+</app-sidebar>
+<!-- /sidebar to add pro -->

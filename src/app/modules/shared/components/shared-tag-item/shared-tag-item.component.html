@@ -10,8 +10,8 @@
           [value-formatter]="autocompleValueFormatter"
           [attr.placeholder]="'COMMON.TAG_LABEL.TAG_PLACEHOLDER' | translate"
           id="shared-tag-item"
-          class="form-default">
-        <button class="btn-round  btn-primary" [disabled]="!canAdd"><i class="fas fa-plus"></i></button>
+          class="form-input">
+        <button class="btn-round btn-primary" [disabled]="!canAdd" [ngStyle]="{ 'font-size': '16px' }"><i class="fas fa-plus"></i></button>
       </div>
     </form>
 

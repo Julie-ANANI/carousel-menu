@@ -43,13 +43,13 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   private _campaigns: Array<Campaign> = [];
 
-  private _activateModal: boolean = false;
+  private _activateModal = false;
 
   private _selectCampaign: Campaign = null;
 
   private _sidebarValue: SidebarInterface = {};
 
-  // public editCampaignName: {[propName: string]: boolean} = {};
+  private _noResult = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private innovationService: InnovationService,
@@ -66,6 +66,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
   private getCampaigns() {
     this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
       this._campaigns = campaigns.result;
+      this._noResult = campaigns.result.length === 0;
       },() => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -98,7 +99,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
     this.campaignService.create(this._newCampaign).pipe(first()).subscribe((response: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.ADDED');
-      this.campaigns.push(response);
+      this._campaigns.push(response);
     },() => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
@@ -112,7 +113,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'CAMPAIGNS.SIDEBAR.TITLE',
+      title: 'SIDEBAR.TITLE.EDIT_CAMPAIGN',
       type: 'editName'
     };
 
@@ -151,11 +152,6 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._activateModal = true;
   }
 
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._activateModal = false;
-  }
-
 
   onClickSubmit() {
     this.campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe((response: any) => {
@@ -174,6 +170,10 @@ export class AdminProjectCampaignsComponent implements OnInit {
     return this._campaigns;
   }
 
+  set activateModal(value: boolean) {
+    this._activateModal = value;
+  }
+
   get activateModal(): boolean {
     return this._activateModal;
   }
@@ -188,6 +188,9 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   get selectCampaign(): Campaign {
     return this._selectCampaign;
+  }
+  get noResult(): boolean {
+    return this._noResult;
   }
 
 }

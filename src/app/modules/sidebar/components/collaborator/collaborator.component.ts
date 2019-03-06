@@ -20,7 +20,7 @@ export class CollaboratorComponent implements OnInit {
   }
 
   @Input() set sidebarState(value: string) {
-    if (value === 'inactive') {
+    if (value === 'active' || value === undefined) {
       this._formData.reset();
     }
   }
@@ -57,8 +57,7 @@ export class CollaboratorComponent implements OnInit {
 
     const email = this._formData.get('collaboratorEmail').value;
 
-    this.innovationService.inviteCollaborators(this._innovationId, email).pipe(first())
-      .subscribe((response: any) => {
+    this.innovationService.inviteCollaborators(this._innovationId, email).pipe(first()).subscribe((response: any) => {
         if (response.usersAdded.length || response.invitationsToSend.length || response.invitationsToSendAgain.length) {
           this._collaboratorsAddingProcess = response;
           this._collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
@@ -100,7 +99,7 @@ export class CollaboratorComponent implements OnInit {
         this._formData.reset();
 
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
 
   }
@@ -112,7 +111,7 @@ export class CollaboratorComponent implements OnInit {
     this.innovationService.inviteCollaborators(this._innovationId, email).pipe(first()).subscribe((response: any) => {
       window.location.href = 'mailto:' + response.invitationsToSendAgain.join(',') + '?body=' + this.innovationService.getInvitationUrl();
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
   }
@@ -121,12 +120,12 @@ export class CollaboratorComponent implements OnInit {
   removeCollaborator(event: Event, email: any) {
     event.preventDefault();
 
-    this.innovationService.removeCollaborator(this._innovationId, email).subscribe((response: any) => {
+    this.innovationService.removeCollaborator(this._innovationId, email).pipe(first()).subscribe((response: any) => {
       this._innovationCollaborators = response;
       this.collaboratorAdded.emit(this._innovationCollaborators);
       this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
   }

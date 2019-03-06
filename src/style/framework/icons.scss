@@ -1,0 +1,45 @@
+/*
+    This stylesheet contains all the class related to the different icons
+    for our framework.
+ */
+@import "variables";
+
+
+/*
+    this is the base class for the icons, add the other classes with this to add the different styles.
+ */
+.icons {
+  outline: none;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  display: inline-block;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  color: $border;
+}
+
+
+/*
+    delete icon.
+ */
+.icons-delete {
+  color: $alert !important;
+}
+
+
+/*
+    meta icon.
+ */
+.icons-meta {
+  color: $meta !important;
+}
+
+
+/*
+    success icon.
+ */
+.icons-success {
+  color: $success !important;
+}

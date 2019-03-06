@@ -1,15 +1,10 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/variables";
 
 #admin-project-campaigns-component {
 
   .section-add-campaign {
     text-align: right;
     padding-bottom: 1.57rem;
-  }
-
-  .section-no-campaign {
-    padding-top: 3.15rem;
-    text-align: center;
   }
 
   .section-campaigns-list {
@@ -26,7 +21,7 @@
           padding: 1.2rem;
 
           a {
-            margin-right: .35rem;
+            margin-right: 0.35rem;
           }
 
           .title {
@@ -35,38 +30,38 @@
           }
 
           .title:hover {
-            color: $primary-color;
+            color: $primary;
             cursor: pointer;
           }
 
           .update, .edit {
-            color: $primary-color;
-            font-size: 0.85rem;
+            color: $primary;
+            font-size: 0.875rem;
           }
 
           .clone {
-            color: $disabled-text-color;
+            color: $text-disabled;
           }
 
           .clone:hover {
             cursor: not-allowed;
           }
 
-          .delete {
-            color: $alert-color;
+          .icons {
+            margin-left: 0;
           }
 
-          .update:hover, .delete:hover, .edit:hover {
+          .update:hover, .edit:hover {
             cursor: pointer;
             text-decoration: underline;
           }
 
           .details {
-            padding-top: .6rem;
-            font-size: 0.85rem;
-            color: $meta-color;
+            padding-top: 0.6rem;
+            font-size: 0.875rem;
+            color: $meta;
             font-weight: 600;
-            padding-left: .35rem;
+            padding-left: 0.35rem;
             padding-bottom: 0;
           }
 

@@ -49,6 +49,6 @@ export const DISCOVER = {
   'STAGE': 'Stage',
 
   'RECOMMENDATION': 'Projects that may interest you',
-  'SUGGESTED_TAGS': 'Similar sector(s)',
+  'SUGGESTED_TAGS': 'Related sector(s)',
 
 };

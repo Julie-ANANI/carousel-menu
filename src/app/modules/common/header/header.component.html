@@ -1,4 +1,4 @@
-<section id="header-component">
+<div id="header-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar">
 
@@ -25,17 +25,18 @@
         <div class="menu-item-wrapper" [ngStyle]="{ 'display': displayMenuOptions ? 'flex' : 'none' }">
           <ul class="navbar-nav">
 
-            <!-- Client example
-            <li class="navbar-item" *ngIf="!backOfficeValue">
+            <!-- Client example -->
+            <li class="navbar-item" *ngIf="!backOfficeValue && !isMainDomain()">
               <a
-                [routerLink]="'/sample'"
+                [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
                 routerLinkActive="active"
                 (click)="onClickLink()"
-                class="gtm-menu-sample-synthesis">
+                class="gtm-menu-sample-synthesis"
+                target="_blank">
                 {{ 'HEADER.EXAMPLE' | translate }}
               </a>
             </li>
-            -->
+            <!-- -->
 
             <!-- Client discover -->
             <li class="navbar-item" *ngIf="!backOfficeValue">
@@ -112,6 +113,16 @@
               </a>
             </li>
 
+              <!-- Back office ambassadors/community program
+              <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+                  <a
+                  routerLinkActive="active"
+                  [routerLink]="'/user/admin/community'"
+                  (click)="onClickLink()">
+                  {{ 'COMMON.COMMUNITY' | translate }}
+                  </a>
+              </li> -->
+
             <!-- Back office projects -->
             <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
               <a
@@ -179,4 +190,4 @@
 
     </nav>
   </div>
-</section>
+</div>

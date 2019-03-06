@@ -22,7 +22,7 @@
   <table class="table presets" wt-responsive-table>
     <thead>
       <tr>
-        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'name'">{{ 'COMMON.NAME' | translate }}</app-shared-sort></th>
+        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'name'">{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
         <th>{{ 'PRESETS.SECTIONS' | translate }}</th>
         <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</app-shared-sort></th>
         <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</app-shared-sort></th>
@@ -76,7 +76,7 @@
     <div class="modal-footer">
       <button class="btn btn-link" (click)="removePreset($event, selectedPresetIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
       <button class="btn btn-primary" (click)="(selectedPresetIdToBeDeleted = null) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
+        {{ 'COMMON.BUTTON.CANCEL' | translate }}
       </button>
     </div>
   </div>
@@ -100,7 +100,7 @@
       <button class="btn btn-link" [disabled]="!selectedPresetToBeCloned || !selectedPresetToBeCloned.name"
               (click)="clonePreset($event, selectedPresetToBeCloned)">{{ 'COMMON.CLONE' | translate }}</button>
       <button class="btn btn-primary" (click)="(selectedPresetToBeCloned = null) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
+        {{ 'COMMON.BUTTON.CANCEL' | translate }}
       </button>
     </div>
   </div>

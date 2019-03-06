@@ -5,6 +5,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
+import { initTranslation, TranslateService} from "../../../../../i18n/i18n";
 
 @Component({
   selector: 'app-synthesis-complete',
@@ -18,6 +19,8 @@ export class SynthesisCompleteComponent implements OnInit {
 
   private _shareKey: string;
 
+  //private _lang: string;
+
   private _project: Innovation;
 
   private _displayReport = false;
@@ -27,14 +30,18 @@ export class SynthesisCompleteComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private activatedRoute: ActivatedRoute,
               private innovationService: InnovationService,
-              private _authService: AuthService) { }
+              private _authService: AuthService,
+              private _translateService: TranslateService) { }
 
   ngOnInit() {
     this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
+    initTranslation(this._translateService);
+    this._translateService.use('en');//This should be defined in the URL. Next version
 
     this.activatedRoute.params.subscribe(params => {
       this._projectId = params['projectId'];
       this._shareKey = params['shareKey'];
+      //this._lang = "en";
       this.getProject();
     });
 

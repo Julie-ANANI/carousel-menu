@@ -127,4 +127,8 @@ export class InnovationService {
     return this._http.get('/innovation/' + innovationId + '/match');
   }
 
+  public getRecommendedInnovations(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/similar');
+  }
+
 }

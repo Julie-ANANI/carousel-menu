@@ -9,31 +9,10 @@
 /*
     Color variable file
  */
-
 @import "style/variables";
-
+@import "style/framework/variables";
 
 /********************************** Default Styles ***************************************/
-
-html {
-  font-family: 'Open Sans', sans-serif;
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
-  font-size: 1rem;
-}
-
-
-body {
-  font-size: 1rem;
-  line-height: 1.5;
-  word-break: break-word;
-  font-family: 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: $dark-color;
-  background-color: #ffffff;
-  font-weight: 400;
-}
 
 .tab-content {
   width: 100%;
@@ -42,29 +21,27 @@ body {
 /*
     Rest style file
  */
-
-@import "style/animation";
-@import "style/app-modal-style";
-@import "style/label-style";
-@import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
 @import "style/form-style";
-@import "style/button-style";
-@import "style/tab-style";
 @import "style/modal-style";
 @import "style/tooltip-style";
-@import "style/tinymce-style";
-@import "style/simplenotification-style";
-@import "style/ng2autocomplete-style";
 @import "style/popover-style";
 @import "style/upload-photo-style";
 
 
 /*
+    In progress...
+ */
+@import "style/framework/root";
+@import "style/tinymce-style";
+@import "style/simplenotification-style";
+@import "style/ng2autocomplete-style";
+
+
+/*
     Print style
  */
-
 @import "style/print";
 
 

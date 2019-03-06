@@ -1,0 +1,270 @@
+/*
+    This stylesheet contains all the styles that are releated to the forms
+    on the framework.
+ */
+
+@import "variables";
+
+
+/*
+    form group
+*/
+.form-group {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+
+/*
+    form label
+*/
+.form-label {
+  display: block;
+  color: $form-label;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 0.5rem 0;
+}
+
+
+/*
+    form input style. Just add this class when you are
+    defining the input of the form or any other. Class
+    name: .form-input
+ */
+.form-input {
+  border: 0.06rem solid $form-border;
+  font-size: 0.875rem;
+  color: $form-input;
+  border-radius: 0.35rem;
+  display: block;
+  width: 100%;
+  outline: none;
+  height: 3.125rem;
+  position: relative;
+  background-color: white;
+  background-image: none;
+  padding: 0.875rem;
+  transition: all 0.15s ease-in-out;
+  max-width: 100%;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+
+
+/*
+    placeholder
+*/
+.form-input:not(:disabled):placeholder-shown {
+  color: $form-placeholder;
+}
+
+
+/*
+    form select style. Just add this class when you are
+    defining the select input of the form or any other. Class
+    name: .form-select
+ */
+.form-select {
+  border: 0.06rem solid $form-border;
+  font-size: 0.875rem;
+  color: $form-input;
+  border-radius: 0.35rem;
+  display: block;
+  width: 100%;
+  outline: none;
+  height: 3.125rem;
+  position: relative;
+  background-color: white;
+  background-image: none;
+  padding: 0.875rem;
+  transition: all 0.15s ease-in-out;
+  max-width: 100%;
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+
+.form-select:not([multiple]):not([size]) {
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right 0.9rem center/0.4rem 0.5rem;
+  background-size: 0.6rem;
+  padding-right: 2.187rem;
+}
+
+
+/*
+    focus
+*/
+.form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
+  border-color: $form-primary;
+}
+
+
+/*
+    error
+*/
+.form-input.ng-touched.ng-invalid {
+  border-color: $form-alert;
+}
+
+
+/*
+    disabled.
+ */
+
+.form-input:disabled, .form-input.disabled, .form-select:disabled, .form-select.disabled {
+  background: $form-disabled;
+  color: $form-disabled-text;
+  border-color: $form-disabled;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+
+/*
+    form error style. Add this class to show the error related to the
+    input. Class name: form-error
+ */
+.form-error {
+  display: block;
+  color: $form-alert;
+  font-size: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+
+/*
+    form radio, form switch
+ */
+.form-radio, .form-switch {
+  display: inline-block;
+  line-height: 1.5;
+  padding:  0.2rem 1.57rem;
+  position: relative;
+  color: $form-label;
+}
+
+
+.form-switch {
+  padding-left: 2.5rem;
+  padding-right: 0;
+  color: $form-meta;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+
+.form-radio .form-icon, .form-switch .form-icon {
+  background: #fff;
+  left: 0;
+  height: 16px;
+  top: 7px;
+  width: 16px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid $form-border;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+}
+
+
+.form-switch .form-icon {
+  border-color: $form-border;
+  background-color: #FFFFFF;
+  height: 15px;
+  width: 34px;
+  border-radius: 16px;
+}
+
+
+.form-radio input:checked+.form-icon::before {
+  background: #fff;
+  border-radius: 50%;
+  content: "";
+  height: 4px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+}
+
+
+.form-switch input:checked + .form-icon::before {
+  left: 14px;
+}
+
+
+.form-switch .form-icon::before {
+  background: $meta;
+  border-color: $meta;
+  height: 1.3125rem;
+  width: 1.2rem;
+  left: -1px;
+  top: -4px;
+}
+
+
+.form-radio input, .form-switch input, .form-checkbox input {
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+
+.form-radio input:active + .form-icon, .form-switch input:focus + .form-icon {
+  background: #FFFFFF;
+  border-color: $meta;
+  box-shadow: none;
+}
+
+
+.form-switch input:active + .form-icon::before {
+  background: $meta;
+  border-color: $meta;
+}
+
+
+.form-radio input:checked + .form-icon, .form-switch input:checked + .form-icon::before {
+  border: none;
+  background: $form-success;
+}
+
+
+.form-switch input:checked + .form-icon  {
+  border-color: rgba(46,204,113,0.45);
+  background: rgba(46,204,113,0.45);
+}
+
+
+.form-radio input:disabled + .form-icon, .form-radio input.disabled + .form-icon {
+  cursor: not-allowed;
+}
+
+
+.form-switch input:disabled + .form-icon::before, .form-switch input.disabled + .form-icon::before {
+  background: $meta;
+  cursor: not-allowed;
+}
+
+
+input:disabled + .form-icon, input.disabled + .form-icon {
+  background: #FFFFFF;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+
+/*
+    textarea
+ */
+textarea {
+  resize: none;
+  padding-right: 1.87rem !important;
+  height: auto;
+}

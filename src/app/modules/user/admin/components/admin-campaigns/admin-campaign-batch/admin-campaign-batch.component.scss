@@ -1,0 +1,116 @@
+@import "../../../../../../../style/framework/variables";
+
+#admin-campaign-batch-component {
+
+  .toggle {
+    padding: 0.9375rem 0;
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .nuggets {
+    padding-top: 0;
+  }
+
+  .cog {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+  }
+
+  .section-error {
+    display: flex;
+    align-items: center;
+
+    .circle {
+      margin-right: 0.5rem;
+    }
+
+    .left {
+      margin-left: 1.2rem;
+    }
+
+    .incomplete {
+      background-color: $alert;
+
+      .fa-check {
+        visibility: hidden;
+      }
+
+    }
+
+    .complete {
+      background-color: $success;
+
+      .fa-check {
+        visibility: visible;
+      }
+
+    }
+
+  }
+
+
+  .notify-wrapper{
+    margin-top: 0.6rem;
+  }
+
+  .loading::after {
+    border-color: $primary;
+    border-right-color: transparent;
+    border-top-color: transparent;
+  }
+
+  .section-status {
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      display: inline-flex;
+      margin-right: 1.25rem;
+    }
+
+  }
+
+  .card {
+    margin-bottom: 1.875rem;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+
+    .card-header {
+      padding-bottom: 0.9375rem;
+
+      .card-title {
+        color: $meta;
+        display: inline-flex;
+        text-align: center;
+        padding-top: 0.125rem;
+
+        .icons {
+          margin-left: 0.75rem;
+        }
+
+      }
+
+    }
+
+    .card-body, .card-title, .card-header {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+  }
+
+  .card:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .card:hover {
+    box-shadow: none;
+  }
+
+
+}

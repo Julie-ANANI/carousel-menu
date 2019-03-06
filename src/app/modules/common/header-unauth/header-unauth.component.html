@@ -1,4 +1,4 @@
-<section id="header-unauth-component">
+<div id="header-unauth-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar">
 
@@ -23,7 +23,7 @@
 
             <!-- heading -->
             <div class="text-center">
-              <h1 class="main-heading">{{ 'LOG_IN.HEADING' | translate }}</h1>
+              <h1 class="title-primary">{{ 'LOG_IN.HEADING' | translate }}</h1>
             </div>
 
             <!-- form -->
@@ -31,24 +31,24 @@
 
               <!-- email address -->
               <div class="form-group">
-                <label class="form-label" for="header-unauth-email">{{ 'COMMON.EMAIL' | translate }}</label>
+                <label class="form-label" for="header-unauth-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
                 <input
                   type="email"
                   id="header-unauth-email"
-                  class="form-default"
+                  class="form-input"
                   formControlName="email"
                   placeholder="john@catco.com">
-                <span class="form-error" *ngIf="formData.get('email').touched">
-                  <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-                  <span *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+                <span *ngIf="formData.get('email').touched">
+                  <span class="form-error" *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                  <span class="form-error" *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
                 </span>
               </div>
 
               <!-- password -->
               <div class="form-group">
-                <label class="form-label" for="header-unauth-password">{{ 'COMMON.PASSWORD' | translate }}</label>
+                <label class="form-label" for="header-unauth-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
                 <input
-                  class="form-default"
+                  class="form-input"
                   type="password"
                   id="header-unauth-password"
                   formControlName="password"
@@ -71,13 +71,10 @@
 
     </nav>
   </div>
-</section>
+</div>
 
 <!-- sign up sidebar -->
 <app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
-  <app-signup-form
-    [sidebarState]="sidebarValue.animate_state"
-    (finalOutput)="createUser($event)">
-  </app-signup-form>
+  <app-signup-form [sidebarState]="sidebarValue.animate_state" (finalOutput)="createUser($event)"></app-signup-form>
 </app-sidebar>
 <!-- /sign up sidebar -->

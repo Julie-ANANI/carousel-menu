@@ -57,7 +57,8 @@ export class InnovationsComponent implements OnInit {
     fields: 'created innovationCards tags status projectStatus principalMedia',
     limit: '0',
     offset: '0',
-    search: '{"isPublic":1,"$or":[{"status":"EVALUATING"},{"status":"DONE"}]}',
+    isPublic: '1',
+    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]}',
     sort: '{"created":-1}'
   }; // config to get the innovations from the server.
 

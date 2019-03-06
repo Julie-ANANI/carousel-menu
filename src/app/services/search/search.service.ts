@@ -87,7 +87,7 @@ export class SearchService {
       path: '/request/' + requestId + '/export/people',
       data: config
     };
-    return this._http.get('/search/export', {params: query});
+    return this._http.post('/search/export', query);
   }
 
   public getCountriesSettings(): Observable<any> {

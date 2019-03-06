@@ -22,8 +22,8 @@
         <h6>{{ jobTitle }}</h6>
 
         <!-- Label Ambassador & linkedIn -->
-        <p class="user-label" *ngIf="userProvider === 'hubspot'"><span class="label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</span></p>
-        <p class="user-label" *ngIf="userProvider === 'external'"><span  class="label-editing">LinkedIn</span></p>
+        <p class="user-label" *ngIf="userProvider === 'hubspot'"><span class="label label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</span></p>
+        <p class="user-label" *ngIf="userProvider === 'external'"><span  class="label label-editing">LinkedIn</span></p>
         <!-- /Label Ambassador & linkedIn -->
 
         <!-- hr -->
@@ -56,9 +56,9 @@
 
             <!-- First name -->
             <div class="form-group">
-              <label class="form-label" for="account-firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
+              <label class="form-label" for="account-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
               <input
-                class="form-default"
+                class="form-input"
                 formControlName="firstName"
                 id="account-firstName"
                 type="text"
@@ -70,9 +70,9 @@
 
             <!-- Last name -->
             <div class="form-group">
-              <label class="form-label" for="account-lastName">{{ 'COMMON.LASTNAME' | translate }}</label>
+              <label class="form-label" for="account-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
               <input
-                class="form-default"
+                class="form-input"
                 formControlName="lastName"
                 id="account-lastName"
                 type="text"
@@ -90,9 +90,9 @@
 
             <!-- Email -->
             <div class="form-group">
-              <label class="form-label" for="account-email">{{ 'COMMON.EMAIL' | translate }}</label>
+              <label class="form-label" for="account-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
               <input
-                class="form-default"
+                class="form-input"
                 formControlName="email"
                 id="account-email"
                 type="email"
@@ -101,13 +101,13 @@
 
             <!-- Company -->
             <div class="form-group">
-              <label class="form-label" for="account-companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+              <label class="form-label" for="account-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
               <input
-                class="form-default"
+                class="form-input"
                 formControlName="companyName"
                 id="account-companyName"
                 type="text"
-                [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+                [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
             </div>
 
           </div>
@@ -118,24 +118,24 @@
 
             <!-- Job -->
             <div class="form-group">
-              <label class="form-label" for="account-jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+              <label class="form-label" for="account-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
               <input
-                class="form-default"
+                class="form-input"
                 formControlName="jobTitle"
                 id="account-jobTitle"
                 type="text"
-                [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+                [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
             </div>
 
             <!-- Country -->
             <div class="form-group">
-              <label class="form-label" for="account-country">{{ 'COMMON.COUNTRY' | translate }}</label>
+              <label class="form-label" for="account-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
               <input
-                class="form-default"
+                class="form-input"
                 formControlName="country"
                 id="account-country"
                 type="text"
-                [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
+                [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
                 (click)="onSuggestCountries()"
                 autocomplete="off">
               <ul
@@ -158,7 +158,7 @@
             <div class="form-group">
               <label class="form-label" for="account-phone">{{ 'COMMON.PHONE' | translate }}</label>
               <input
-                class="form-default"
+                class="form-input"
                 formControlName="phone"
                 id="account-phone"
                 type="tel"
@@ -247,8 +247,8 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn ghost-edit btn-sm" (click)="closeModal($event)">{{ 'COMMON.CANCEL' | translate }}</button>
-      <button class="btn btn-primary btn-sm" (click)="deleteAccount($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+      <button class="btn ghost-edit btn-sm" (click)="closeModal($event)">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+      <button class="btn btn-primary btn-sm" (click)="deleteAccount($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
     </div>
   </div>
 </div>

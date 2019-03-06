@@ -1,0 +1,92 @@
+<div class="column col-xs-12 col-11 col-mx-auto" id="advsearch-form-component">
+    <form novalidate [formGroup]="advSearchForm" (ngSubmit)="search()" autocomplete="off">
+        <!-- First name -->
+        <div class="form-group">
+            <label class="form-label" for="signup-form-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
+            <input
+                    class="form-input"
+                    formControlName="firstName"
+                    id="signup-form-firstName"
+                    type="text"
+                    placeholder="John">
+            <div class="form-error" *ngIf="advSearchForm.get('firstName').touched && advSearchForm.get('firstName').invalid">
+                <span *ngIf="advSearchForm.get('firstName').hasError('required')">{{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}</span>
+            </div>
+        </div>
+
+        <!-- Last name -->
+        <div class="form-group">
+            <label class="form-label" for="signup-form-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
+            <input
+                    class="form-input"
+                    formControlName="lastName"
+                    id="signup-form-lastName"
+                    type="text"
+                    placeholder="Smith">
+            <div class="form-error" *ngIf="advSearchForm.get('lastName').touched && advSearchForm.get('lastName').invalid">
+                <span *ngIf="advSearchForm.get('lastName').hasError('required')">{{ 'COMMON.REQUIRED.LASTNAME' | translate }}</span>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label class="form-label" for="signup-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+            <input
+                    class="form-input"
+                    formControlName="email"
+                    id="signup-form-email"
+                    type="email"
+                    placeholder="john@catco.com">
+            <div class="form-error" *ngIf="advSearchForm.get('email').touched && advSearchForm.get('email').invalid">
+                <span *ngIf="advSearchForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                <span *ngIf="advSearchForm.get('email').hasError('email') && advSearchForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+            </div>
+        </div>
+
+        <!-- Job -->
+        <div class="form-group">
+            <label class="form-label" for="signup-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
+            <input
+                    class="form-input"
+                    formControlName="jobTitle"
+                    id="signup-form-jobTitle"
+                    type="text"
+                    [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
+            <div class="form-error" *ngIf="advSearchForm.get('jobTitle').touched && advSearchForm.get('jobTitle').invalid">
+                <span *ngIf="advSearchForm.get('jobTitle').hasError('required')">{{ 'COMMON.REQUIRED.JOBTITLE' | translate }}</span>
+            </div>
+        </div>
+
+        <!-- Company -->
+        <div class="form-group">
+            <label class="form-label" for="signup-form-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+            <input
+                    class="form-input"
+                    formControlName="companyName"
+                    id="signup-form-companyName"
+                    type="text"
+                    [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
+            <div class="form-error" *ngIf="advSearchForm.get('companyName').touched && advSearchForm.get('companyName').invalid">
+                <span *ngIf="advSearchForm.get('companyName').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
+            </div>
+        </div>
+
+        <!-- Country -->
+        <div class="form-group" [ngStyle]="{ 'position': 'relative' }">
+            <label class="form-label" for="signup-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+            <input
+                    class="form-input"
+                    formControlName="country"
+                    id="signup-form-country"
+                    type="text"
+                    [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate">
+            <div class="form-error" *ngIf="advSearchForm.get('country').touched && advSearchForm.get('country').invalid">
+                <span *ngIf="advSearchForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
+            </div>
+        </div>
+
+        <div class="signup-button text-center">
+            <button class="btn btn-primary " type="submit" [disabled]="advSearchForm.invalid">Search!&nbsp;<i class="fas fa-search"></i></button>
+        </div>
+    </form>
+</div>

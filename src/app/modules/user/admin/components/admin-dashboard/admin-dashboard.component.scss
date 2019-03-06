@@ -28,7 +28,7 @@
 
     }
 
-    .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+    .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
       border-color: $border-color;
     }
 
@@ -52,7 +52,7 @@
         display: flex;
         flex-wrap: wrap;
 
-        .label-validate, .label-draft, .label-meta {
+        .label {
           border-radius: 25px;
         }
 
@@ -81,7 +81,7 @@
           flex-direction: column;
           margin-bottom: .9375rem;
 
-          .label-validate, .label-draft, .label-meta {
+          .label {
             margin-right: 0;
             border-radius: 25px;
           }
@@ -144,7 +144,7 @@
 
       .label-week {
 
-        .ghost-edit, .label-validate, .label-draft, .label-meta {
+        .ghost-edit, .label {
           margin-bottom: .9375rem;
         }
 

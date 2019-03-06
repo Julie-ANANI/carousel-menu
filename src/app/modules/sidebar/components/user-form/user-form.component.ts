@@ -23,16 +23,11 @@ import { isPlatformBrowser } from '@angular/common';
 export class UserFormComponent implements OnInit {
 
   @Input() set sidebarState(value: string) {
-    if (value === undefined || 'active') {
+    if (value === undefined || value ===  'active') {
       this.buildForm();
       this._userForm.reset();
       this._editInstanceDomain = false;
     }
-  }
-
-  @Input() set type(type: string) {
-    this._type = type;
-    this.loadTypes();
   }
 
   /*
@@ -55,6 +50,11 @@ export class UserFormComponent implements OnInit {
     this._user = value;
     this.loadEditUser();
   };
+
+  @Input() set type(type: string) {
+    this._type = type;
+    this.loadTemplate();
+  }
 
   @Output() finalUserData = new EventEmitter<User>();
 
@@ -130,7 +130,7 @@ export class UserFormComponent implements OnInit {
   }
 
 
-  private loadTypes() {
+  private loadTemplate() {
     this.reinitialiseForm();
 
     if (this._type === 'editUser') {
@@ -139,6 +139,8 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'professional') {
       this._isProfessional = true;
       this.loadProfessional();
+    } else if (this._type === 'addPro') {
+      this._isProfessional = true;
     }
 
   }
@@ -186,12 +188,14 @@ export class UserFormComponent implements OnInit {
       const user = new User(this._userForm.value);
       user.id = this._user.id;
       this.finalUserData.emit(user);
-    } else if (this._isProfessional) {
+    } else if (this._isProfessional && this._type === 'professional') {
       const pro = this._userForm.value;
       pro._id = this._pro._id;
       pro.company = this._userForm.get('companyName').value;
       pro.tags = this._tags;
       this.finalProfessionalData.emit(pro);
+    } else if (this._isProfessional && this._type === 'addPro') {
+      this.finalProfessionalData.emit(this._userForm.value);
     }
   }
 

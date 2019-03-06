@@ -29,6 +29,7 @@ import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-fo
 import { SidebarInnovationFormModule } from '../../../../sidebar/components/innovation-form/sidebar-innovation-form.module';
 import { SidebarCampaignFormModule } from '../../../../sidebar/components/campaign-form/sidebar-campaign-form.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
+import { ModalModule } from '../../../../utility-components/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { MessageSpaceModule } from '../../../../utility-components/message-space
     SidebarEmailFormModule,
     SidebarInnovationFormModule,
     SidebarCampaignFormModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    ModalModule
   ],
   declarations: [
     AdminProjectComponent,
