@@ -22,7 +22,6 @@
       <option [innerHtml]="'PRESETS.QUESTION.TYPE.' + question.controlType" translate></option>
     </select>
 
-    <!-- TODO: uncomment when back-end is ready
     <ng-container [ngSwitch]="editMode">
       <select *ngSwitchCase="true" class="form-select" (ngModelChange)="changeIdentifier($event)" [(ngModel)]="question.identifier">
         <option *ngIf="isTaggedQuestion" [value]="question.identifier">#{{question.identifier}}</option>
@@ -35,7 +34,6 @@
         </div>
       </ng-container>
     </ng-container>
-    -->
 
     <p>{{question.label | multiling:lang}}</p>
 

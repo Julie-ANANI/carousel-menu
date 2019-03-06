@@ -54,7 +54,7 @@
         <option selected>View the projects</option>
         <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
       </select>
-      <a *ngIf="selectedProject" class="text-link" [href]="'/admin/projects/project/' + selectedProject" target="_blank">Visit the project</a>
+      <a *ngIf="selectedProject" class="text-link" [href]="'/user/admin/projects/project/' + selectedProject" target="_blank">Visit the project</a>
     </div>
 
     <!-- show tags -->

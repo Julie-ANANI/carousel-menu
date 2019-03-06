@@ -70,7 +70,7 @@ const adminRoutes: Routes = [
         path: 'community',
         component: AdminCommunityComponent,
         children: [
-          { path: '', redirectTo: 'members', pathMatch: 'full' },
+          { path: '', redirectTo: 'projects', pathMatch: 'full' },
           ...communityRoutes
         ]
       },

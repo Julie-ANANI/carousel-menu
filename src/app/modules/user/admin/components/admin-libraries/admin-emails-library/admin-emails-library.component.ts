@@ -130,6 +130,10 @@ export class AdminEmailsLibraryComponent implements OnInit {
     });
   }
 
+  public getId(): string {
+    return this._emailToEdit ? `${this._emailToEdit.name.replace(/\s/ig, '_').toLowerCase()}` : "_none";
+  }
+
   get emails(): Array<TransactionalEmail> { return this._emails; }
   get newEmailName(): string { return this._newEmailName; }
   set newEmailName(name: string) { this._newEmailName = name; }
