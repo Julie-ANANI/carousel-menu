@@ -15,14 +15,16 @@ import { first } from 'rxjs/operators';
 })
 export class SharedSearchProsComponent implements OnInit {
 
-  public catResult: any;
-  private _suggestion: string;
+  private _suggestion: { expected: number, kw: string }[] = [];
   private _params: any;
   private _more: SidebarInterface = {};
   private _more_cat: SidebarInterface = {};
   private _googleQuota = 30000;
+  private _catQuota = 100;
   private _estimatedNumberOfGoogleRequests = 0;
   private _countriesSettings: any[] = [];
+  public showText = false;
+  public catResult: any;
 
   @Input() campaign: Campaign;
 
@@ -41,6 +43,7 @@ export class SharedSearchProsComponent implements OnInit {
     this.getGoogleQuota();
     this._params = {
       keywords: '',
+      catKeywords: '',
       websites: {
         linkedin: true,
         viadeo: false,
@@ -74,7 +77,7 @@ export class SharedSearchProsComponent implements OnInit {
     };
     this.estimateNumberOfGoogleRequests();
 
-    this._suggestion = ' ';
+    this._suggestion = [];
   }
 
   changeSettings() {
@@ -96,6 +99,15 @@ export class SharedSearchProsComponent implements OnInit {
       this._googleQuota = 30000;
       if (result.hours) {
         this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
+      }
+    });
+  }
+
+  public getCatQuota() {
+    this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
+      this._catQuota = 100;
+      if (result.hours) {
+        this._catQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueriesCat, 0);
       }
     });
   }
@@ -139,8 +151,9 @@ export class SharedSearchProsComponent implements OnInit {
 
   public cat(event: Event): void {
     event.preventDefault();
-    this._searchService.computerAidedTargeting(this._params.keywords.split('\n')).pipe(first()).subscribe((response: any) => {
-
+    this._searchService.updateCatStats(this._params.catKeywords.split('\n').length).subscribe((response: any) => {});
+    this._searchService.computerAidedTargeting(this._params.catKeywords.split('\n')).pipe(first()).subscribe((response: any) => {
+      this.resetCat();
       this.catResult.total_result = [];
       Object.entries(response.total_result).forEach(([key, value]) => {
         this.catResult.total_result.push(value);
@@ -148,7 +161,10 @@ export class SharedSearchProsComponent implements OnInit {
       this.estimateNumberOfGoogleRequests(this.catResult.total_result);
 
       this.catResult.keywords_analysis = response.keywords_analysis.kw;
-      this._params.keywords.split('\n').forEach((request: string) => {
+
+      let expected_result;
+      this._params.catKeywords.split('\n').forEach((request: string) => {
+        expected_result = response.total_result[request];
         Object.entries(response.keywords_analysis.kw).forEach(([key, value]) => {
           if (value < 0.5) {
             request = request.replace(`${key}`, `<span class="text-error">${key}</span>`);
@@ -158,7 +174,7 @@ export class SharedSearchProsComponent implements OnInit {
             request = request.replace(`${key}`, `<span class="text-success">${key}</span>`);
           }
         });
-        this._suggestion += (`${request}<br/>`);
+        this._suggestion.push({'expected': expected_result, 'kw': request});
       });
 
       this.catResult.new_keywords = [];
@@ -170,19 +186,6 @@ export class SharedSearchProsComponent implements OnInit {
 
       this.catResult.profile = response.stars;
     });
-  }
-
-  public applySuggestion() {
-    this.catResult.requestsToDelete.forEach((request: string) => {
-      this._params.keywords = this._params.keywords.replace(`${request}\n`, '');
-    });
-    this._suggestion = '';
-    this.catResult.advice = '';
-  }
-
-  public ignoreSuggestion() {
-    this._suggestion = '';
-    this.catResult.advice = '';
   }
 
   private _estimateNumberOfGoogleRequestsForOneSearch(totalResults: number): number {
@@ -220,15 +223,16 @@ export class SharedSearchProsComponent implements OnInit {
     this.catResult = {
       duplicate_status: 'ok',
     };
-    this._suggestion = ' ';
+    this._suggestion = [];
     this.estimateNumberOfGoogleRequests();
   }
 
-  get suggestion(): string { return this._suggestion; }
+  get suggestion(): any { return this._suggestion; }
   get params(): any { return this._params; }
   get more(): any { return this._more; }
   get more_cat(): any { return this._more_cat; }
   get googleQuota(): number { return this._googleQuota; }
+  get catQuota(): number { return this._catQuota; }
   get estimatedNumberOfGoogleRequests(): number { return this._estimatedNumberOfGoogleRequests; }
   get catDone(): any { return this.catResult.keywords_analysis; }
   set params(value: any) { this._params = value; }

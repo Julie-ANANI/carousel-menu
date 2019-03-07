@@ -8,12 +8,6 @@
       </app-sidebar-search>
     </app-sidebar>
 
-    <app-sidebar [template]="more_cat" *ngIf="catDone">
-      <app-sidebar-search
-        [params]="catResult">
-      </app-sidebar-search>
-    </app-sidebar>
-
     <div class="popover popover-right">
       <i class="fas fa-question-circle"></i>
       <div class="popover-container">
@@ -34,6 +28,22 @@
     </div>
 
     <div class="flex-container" id="input-search">
+      <button
+        (click)="cat($event)"
+        class="btn-round btn-primary"
+        translate>
+        <i class="fas fa-search"></i>
+      </button>
+
+      <textarea
+        type="text"
+        class="form-input"
+        name="cat-keywords"
+        rows="4"
+        [(ngModel)]="params.catKeywords"
+        required
+        placeholder="Recherche CAT">
+      </textarea>
 
       <textarea
         type="text"
@@ -59,13 +69,21 @@
           <i class="fas fa-refresh"></i>
         </button>
       </div>
-
     </div>
 
     <div class="tips">
+
+      <div class="label label-success" *ngIf="catQuota > 50">{{ catQuota }} remaining CAT requests
+        <i (click)="getCatQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+      <div class="label label-progress" *ngIf="catQuota < 50 && catQuota > 100">{{ catQuota }} remaining CATrequests
+        <i (click)="getCatQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+      <div class="label label-alert" *ngIf="catQuota < 10">{{ catQuota }} remaining CAT requests
+        <i (click)="getCatQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+
       <a (click)="changeSettings() && $event.preventDefault()">{{ 'SEARCH.SETTINGS' | translate }}</a>
-      <a (click)="displayStars() && $event.preventDefault()" *ngIf="catDone">{{ 'SEARCH.STAR_PROFILES' | translate
-        }}</a>
 
       <div class="label label-success" *ngIf="googleQuota > 10000">{{ googleQuota }} remaining requests
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
@@ -80,8 +98,23 @@
       </div>
     </div>
 
-    <div *ngIf="catDone" class="keyword-analysis">
-      <p [innerHTML]="suggestion"></p>
+    <div *ngIf="catDone">
+      <!-- Keywords analysis and expected result -->
+      <div *ngFor="let s of suggestion"  class="request-analysis">
+        {{s.expected}} <p [innerHTML]=s.kw > </p>
+      </div>
+
+      <!-- Additional keywords -->
+      <div class="additional-keywords" [ngStyle]="{ 'display': 'flex' }">
+        <div *ngFor="let kw of catResult.new_keywords" >
+          {{kw}} |
+        </div>
+      </div>
+
+      <!-- Star profiles -->
+      <div *ngFor="let profile of catResult.profile | keyvalue" class="stars">
+        <p class="tooltip" data-tooltip="ça ne marche pas encore :'("> <a href= "{{ profile.key }}" target="_blank">{{ profile.value.title }}</a> </p>
+      </div>
     </div>
 
   </div>
@@ -89,15 +122,6 @@
   <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.duplicate_status">
     <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
       <span class="bot-rect">
-        <span *ngIf="catResult.new_keywords">
-          {{ 'SEARCH.ROBOT.OK' | translate }} <br/>
-          {{ 'SEARCH.ROBOT.SUGGESTED' | translate }}
-          <ul>
-            <li *ngFor="let kw of catResult.new_keywords">
-              {{kw}}
-            </li>
-          </ul>
-        </span>
         <span *ngIf="estimatedNumberOfGoogleRequests">
           {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
           <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span

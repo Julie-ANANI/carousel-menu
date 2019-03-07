@@ -103,4 +103,13 @@ export class SearchService {
   public computerAidedTargeting(keywords: string[]): Observable<any> {
     return this._http.post('/search/cat', {keywords});
   }
+
+  public updateCatStats(usedRequests: number): Observable<any> {
+    const params: any = {usedRequests: usedRequests};
+    const query = {
+      params: JSON.stringify(params),
+      path: '/stats/cat'
+  };
+    return this._http.get('/search/get', {params: query});
+  }
 }
