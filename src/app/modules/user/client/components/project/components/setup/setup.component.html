@@ -134,8 +134,8 @@
 
 
 <!-- modal to ask user to sure about submitting the project -->
-<app-modal [(showModal)]="submitModal" [modalTitle]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.TITLE'">
-  {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}
+<app-modal [(showModal)]="submitModal" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+  {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL.CONTENT' | translate }}
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button class="btn btn-primary btn-sm" (click)="onClickConfirm()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
@@ -145,44 +145,46 @@
 
 
 <!-- print innovation -->
-<div *ngIf="innovation" id="innovation-card-print">
+<ng-container *ngIf="innovation">
+  <div id="innovation-card-print">
 
-  <!-- column 1 -->
-  <div class="column-1">
+    <!-- column 1 -->
+    <div class="column-1">
 
-    <h1 class="main-heading">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h1>
+      <h1 class="main-heading">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h1>
 
-    <div class="summary-text" [innerHTML]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
+      <div class="summary-text" [innerHTML]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
 
-    <div class="image-wrapper">
-      <img [src]="getImageSrc(innovation.innovationCards[selectedInnovationIndex])" alt=" " height="146px" width="220px">
+      <div class="image-wrapper">
+        <img [src]="getImageSrc(innovation.innovationCards[selectedInnovationIndex])" alt=" ">
+      </div>
+
+      <div class="advantage-wrapper">
+        <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+        <ul class="advantages">
+          <li *ngFor="let advantage of innovation.innovationCards[selectedInnovationIndex].advantages">
+            {{ advantage.text | FormatText }}
+          </li>
+        </ul>
+      </div>
+
     </div>
+    <!-- /column 1 -->
 
-    <div class="advantage-wrapper">
-      <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
-      <ul class="advantages">
-        <li *ngFor="let advantage of innovation.innovationCards[selectedInnovationIndex].advantages">
-          {{ advantage.text | FormatText }}
-        </li>
-      </ul>
+    <!-- column 2 -->
+    <div class="column-2">
+      <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+      <div class="issue-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].problem"></div>
     </div>
+    <!-- /column 2 -->
+
+    <!-- column 3 -->
+    <div class="column-3">
+      <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+      <div class="solution-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].solution"></div>
+    </div>
+    <!-- /column 3 -->
 
   </div>
-  <!-- /column 1 -->
-
-  <!-- column 2 -->
-  <div class="column-2">
-    <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-    <div class="issue-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].problem"></div>
-  </div>
-  <!-- /column 2 -->
-
-  <!-- column 3 -->
-  <div class="column-3">
-    <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-    <div class="solution-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].solution"></div>
-  </div>
-  <!-- /column 3 -->
-
-</div>
+</ng-container>
 <!-- /print innovation -->

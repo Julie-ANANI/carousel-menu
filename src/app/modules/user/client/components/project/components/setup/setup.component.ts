@@ -7,7 +7,6 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
-import { Media } from '../../../../../../../models/media';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 
@@ -193,27 +192,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
 
   getImageSrc(innovCard: InnovCard): string {
-
-    let src = '';
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
-
-    if (innovCard.principalMedia && innovCard.principalMedia.type === 'PHOTO') {
-      src = innovCard.principalMedia.url;
-    } else {
-      if (innovCard.media) {
-        const index = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
-        if (index !== -1) {
-          src = innovCard.media[index].url;
-        }
-      }
-    }
-
-    if (src === '') {
-      src = defaultSrc;
-    }
-
-    return src;
-
+    return this.innovationFrontService.getMediaSrc(innovCard);
   }
 
 
