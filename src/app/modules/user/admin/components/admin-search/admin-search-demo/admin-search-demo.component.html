@@ -1,7 +1,7 @@
 
 
 <div class="columns">
-  <div class="column col-5 col-ml-auto">
+  <div class="column col-5 col-mx-auto">
 
     <div class="flex-container" id="input-search">
 
@@ -29,39 +29,12 @@
     </div>
   </div>
 
-  <div class="column col-2 col-mr-auto">
-    <div class="bot-wrapper text-center">
-      <span class="bot-rect" *ngIf="estimatedNumberOfGoogleRequests">This search will use <strong>{{estimatedNumberOfGoogleRequests}} requests max</strong></span>
-      <span class="bot-rect" *ngIf="!estimatedNumberOfGoogleRequests">Nice day, what are you gonna search today?</span>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
-    </div>
-  </div>
-  <!--
   <div class="column col-9 col-mx-auto">
-    <div class="columns">
-      <div class="column col-3">
-        Data:
-        {{ selectedArea }}
-        <ul>
-          <li *ngFor="let result of results">
-            {{ result.countryCode }} - {{ result.nbResults }}
-          </li>
-        </ul>
-      </div>
-      <div class="column col-9">
-        <app-worldmap
-          [initialConfiguration]="continentTarget"
-          [countriesColor]="'#2ECC71'"
-          [isEditable]="true"
-          (hoveredContinent)="displayMetadata($event)"
-          [width]="'auto'">
-        </app-worldmap>
-      </div>
-    </div>
+      <admin-search-map
+        [width]="'auto'"
+        [countriesData]="data">
+      </admin-search-map>
   </div>
-  -->
 
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="professional-wrapper">

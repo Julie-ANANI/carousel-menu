@@ -14,6 +14,68 @@ export class AdminSearchDemoComponent {
   private _keywords: string;
   private _pros: Array<any> = [];
   private _metadata: any = [];
+  public data =  [
+    {
+      "nbResults": 121000,
+      "countryCode": "US"
+    },
+    {
+      "nbResults": 1100,
+      "countryCode": "IN"
+    },
+    {
+      "nbResults": 10300,
+      "countryCode": "CA"
+    },
+    {
+      "nbResults": 16000,
+      "countryCode": "FR"
+    },
+    {
+      "nbResults": 7760,
+      "countryCode": "DE"
+    },
+    {
+      "nbResults": 16800,
+      "countryCode": "UK"
+    },
+    {
+      "nbResults": 6340,
+      "countryCode": "BR"
+    },
+    {
+      "nbResults": 4570,
+      "countryCode": "CN"
+    },
+    {
+      "nbResults": 8090,
+      "countryCode": "IT"
+    },
+    {
+      "nbResults": 6990,
+      "countryCode": "ES"
+    },
+    {
+      "nbResults": 8470,
+      "countryCode": "AU"
+    },
+    {
+      "nbResults": 11400,
+      "countryCode": "NL"
+    },
+    {
+      "nbResults": 4590,
+      "countryCode": "ID"
+    },
+    {
+      "nbResults": 6420,
+      "countryCode": "BE"
+    },
+    {
+      "nbResults": 4200,
+      "countryCode": "NO"
+    }
+    ];
   private _results: any;
   private _fetchInterval = null;
   private _status: string = null;

@@ -1,0 +1,25 @@
+path, g {
+  fill: #E2E2E2;
+  cursor: pointer;
+}
+
+.country {
+  stroke: white;
+  stroke-width: 0.7px;
+}
+
+g.selected, path.selected, .selected g, .selected path {
+  fill: #2ECC71;
+}
+
+.country:hover {
+  fill: #FFB300;
+}
+
+g.disabled, path.disabled, .disabled g, .disabled path {
+  cursor: not-allowed;
+}
+
+
+
+
