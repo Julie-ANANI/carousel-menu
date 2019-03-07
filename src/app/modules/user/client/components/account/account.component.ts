@@ -22,6 +22,7 @@ export class AccountComponent implements OnInit {
   private _formData: FormGroup;
 
   private _name: string;
+
   private _jobTitle: string;
 
   private _accountDeletionAsked = false;
@@ -46,7 +47,7 @@ export class AccountComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private translateTitleService: TranslateTitleService,
-              private autoCompleteService: AutocompleteService) {}
+              private autoCompleteService: AutocompleteService) { }
 
   ngOnInit() {
     this.translateTitleService.setTitle('MY_ACCOUNT.TITLE');

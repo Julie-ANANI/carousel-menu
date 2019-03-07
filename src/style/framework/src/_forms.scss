@@ -297,6 +297,67 @@ textarea.form-input {
 }
 
 
+// Form suggestion
+.form-suggestion {
+  display: flex;
+  flex-direction: column;
+  box-shadow: $box-shadow;
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  z-index: 2;
+  background-color: $bg-color-light;
+  border-radius: $border-radius;
+  overflow: auto;
+  max-height: 350px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  li {
+    @include control-transition();
+    padding: $unit-2;
+    font-size: $font-size-sm;
+    margin-top: $unit-1;
+    color: $text-primary;
+
+    &:hover {
+      background:  $bg-dropdown-color;
+      border-color: $bg-dropdown-color;
+      cursor: pointer;
+    }
+
+  }
+
+}
+
+
+// Form inline group
+.input-group {
+
+  .form-group {
+    padding-left: $unit-2;
+    padding-right: $unit-2;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-suggestion {
+    left: $unit-2;
+    right: $unit-2;
+  }
+
+  &.inline {
+    display: inline-flex;
+    width: 100%;
+  }
+
+}
+
+
 // For validation states
 .form-input, .form-select {
 
@@ -444,3 +505,6 @@ input {
   }
 
 }
+
+
+
