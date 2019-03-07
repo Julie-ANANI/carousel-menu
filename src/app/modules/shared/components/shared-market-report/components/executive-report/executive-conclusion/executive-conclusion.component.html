@@ -10,7 +10,7 @@
     <div class="conclusion-text" [innerHtml]="conclusion"></div>
 
     <!-- Operator contact -->
-    <div *ngIf="operator" class="operator-contact">
+    <div *ngIf="operator && isMainDomain()" class="operator-contact">
 
       <!-- Name -->
       <h6 class="name">{{ operator.name }}</h6>
