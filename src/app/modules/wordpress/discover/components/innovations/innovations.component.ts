@@ -58,7 +58,7 @@ export class InnovationsComponent implements OnInit {
     limit: '0',
     offset: '0',
     isPublic: '1',
-    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]}',
+    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]',
     sort: '{"created":-1}'
   }; // config to get the innovations from the server.
 
