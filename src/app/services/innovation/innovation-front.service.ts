@@ -6,6 +6,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
+import { Media } from '../../models/media';
 
 export interface Values {
   settingPercentage?: number;
@@ -226,6 +227,53 @@ export class InnovationFrontService {
     } else {
       return '#2ECC71';
     }
+  }
+
+
+  /***
+   * this function is to get the src with defined height and width to restrict the size of image.
+   * @param width
+   * @param height
+   * @param requestFor
+   * @param source
+   */
+  getMediaSrc(width: string, height: string, requestFor = 'default', source: any): string {
+    const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/app/default-images/image-not-available.png`;
+    const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
+    const suffix = '.jpg';
+    let src = '';
+
+    if (source) {
+
+      switch (requestFor) {
+
+        case 'mediaSrc':
+          if (source && source.cloudinary && source.cloudinary.public_id) {
+            src = prefix + source.cloudinary.public_id + suffix;
+          }
+          break;
+
+        // it can be used to get the related src for an innovation.
+        case 'default':
+          if (source.principalMedia && source.principalMedia.type === 'PHOTO' && source.principalMedia.cloudinary.public_id) {
+            src = prefix + source.principalMedia.cloudinary.public_id + suffix;
+          } else if (source.media.length > 0) {
+            const index = source.media.findIndex((media: Media) => media.type === 'PHOTO');
+            if (index !== -1) {
+              src = prefix + source.media[index].cloudinary.public_id + suffix;
+            }
+          }
+          break;
+
+        default:
+          // Do nothing...
+
+      }
+
+    }
+
+    return src === '' ? defaultSrc : src;
+
   }
 
 

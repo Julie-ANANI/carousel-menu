@@ -6,20 +6,6 @@
     margin: 0;
   }
 
-  .delete-wrapper {
-
-    span {
-      color: $alert-color;
-      font-size: .875rem;
-      cursor: pointer;
-    }
-
-    span:hover {
-      text-decoration: underline;
-    }
-
-  }
-
 
   .flex-between, .flex-start {
     flex-wrap: wrap;
@@ -91,18 +77,16 @@
     text-align: center;
 
     p {
-      font-size: 1rem;
-      padding-bottom: .6rem;
-      color: $meta-color;
+      margin-bottom: $unit-2;
     }
 
     .media-body {
       display: inline-flex;
-      margin-top: .6rem;
+      margin-top: $unit-2;
     }
 
-    .delete-wrapper, .main-link {
-      padding-top: .6rem;
+    .delete-wrapper, .main-wrapper {
+      padding-top: $unit-2;
     }
 
     .media-content {
@@ -111,25 +95,11 @@
       justify-content: center;
 
       .media-body {
-        margin-left: 1.2rem;
-        margin-right: 1.2rem;
+        margin-left: $unit-2;
+        margin-right: $unit-2;
         flex-direction: column;
 
-        .main-link {
-
-          span {
-            color: $primary-color;
-            font-size: .875rem;
-            cursor: pointer;
-          }
-
-          span:hover {
-            text-decoration: underline;
-          }
-
-        }
-
-        .text-delete-link {
+        .delete-wrapper {
           padding-bottom: $unit-5;
         }
 
@@ -138,14 +108,24 @@
     }
 
     iframe {
-      width: 220px;
-      height: 152px;
+      width: 240px;
+      height: 159px;
+      border-width: 0;
     }
 
   }
 
+  .secondary-media-wrapper {
 
-  .flex-between {
+    .delete-wrapper {
+      padding-top: 0;
+    }
+
+  }
+
+  .upload-wrapper {
+    display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: -$unit-2;
 
@@ -183,10 +163,7 @@
 
 
 
-
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
+@media (max-width: $size-sm) {
 
   #shared-project-edit-cards-component {
 

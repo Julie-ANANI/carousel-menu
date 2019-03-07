@@ -1,4 +1,5 @@
 @import "framework/src/variables";
+@import "framework/src/mixins";
 
 // This stylesheet contains the styles that are related to the upload zone photo.
 
@@ -8,15 +9,45 @@ file-drop.drop-container {
   border-radius: $border-radius;
   min-height: 12.5rem;
   display: flex;
-}
+  padding: $unit-2;
 
+  input {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: inherit;
+  }
+
+  .text {
+    font-size: $font-size-sm;
+    color: $text-primary-color;
+    margin-top: $unit-2;
+  }
+
+}
 
 #dropZone {
   width: 100%;
   height: inherit;
 
   .content {
-    min-height: inherit;
+    min-height: 100%;
+    flex-direction: column;
+    text-align: center;
   }
 
+}
+
+file-drop.drop-container:hover {
+  border-color: $primary-color;
+  background-color: $hover-background-color;
+}
+
+.nv-file-over {
+  @include control-transition();
+  border-color: $alert-color;
 }

@@ -252,6 +252,11 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
   }
 
 
+  getSrc(media: Media, requestFor: string): string {
+    return this.innovationFrontService.getMediaSrc('240', '159', requestFor, media);
+  }
+
+
   /***
    * this function is called when the user upload the images.
    * @param media

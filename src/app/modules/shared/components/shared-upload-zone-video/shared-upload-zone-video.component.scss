@@ -1,22 +1,22 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 .videos-upload {
-  border: 2px dashed $border-color;
+  border: $border-width-lg dashed $border-color;
   position: relative;
-  border-radius: .18rem;
-  min-height: 15.625rem;
+  border-radius: $border-radius;
+  min-height: 12.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 1.57rem .6rem;
+  padding: $unit-2;
 
 
   .logos {
-    padding-bottom: 1.2rem;
+    padding-bottom: $unit-5;
 
     img {
-      margin-right: 1.875rem;
+      margin-right: 1.5rem;
     }
 
   }
@@ -30,7 +30,7 @@
   }
 
   .btn {
-    margin-top: 1.2rem;
+    margin-top: $unit-5;
   }
 
 }
