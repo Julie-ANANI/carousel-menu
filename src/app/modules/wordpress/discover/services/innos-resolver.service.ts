@@ -17,7 +17,7 @@ export class InnovationsResolver implements Resolve<Array<Innovation>> {
     limit: '0',
     offset: '0',
     isPublic: '1',
-    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]}',
+    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]',
     sort: '{"created":-1}'
   };
 
