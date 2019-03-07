@@ -16,7 +16,8 @@ export class InnovationsResolver implements Resolve<Array<Innovation>> {
     fields: 'created principalMedia innovationCards tags status projectStatus',
     limit: '0',
     offset: '0',
-    search: '{"isPublic":"1","$or":[{"status":"EVALUATING"},{"status":"DONE"}]}',
+    isPublic: '1',
+    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]}',
     sort: '{"created":-1}'
   };
 
