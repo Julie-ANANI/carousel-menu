@@ -51,4 +51,8 @@ export class AdvSearchService {
   public advsearch(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get(`${this._base}/`, {params: config});
   }
+
+  public getCommunityInnovations(config: {[header: string]: string | string[]}): Observable<any> {
+    return this._http.get(`${this._base}/getCommunityInnovations`, {params: config});
+  }
 }
