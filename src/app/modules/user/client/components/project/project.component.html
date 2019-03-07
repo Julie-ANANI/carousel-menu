@@ -57,14 +57,16 @@
     </ng-container>
     <!-- /setup section -->
 
+    <!-- exploration section -->
+    <ng-container *ngIf="currentPage === 'exploration'">
+      <app-exploration [project]="innovation"></app-exploration>
+    </ng-container>
+    <!-- /exploration section -->
+
   </section>
 
 
-  <!-- exploration section
-  <ng-container *ngIf="currentPage === 'exploration'">
-    <app-exploration [project]="innovation"></app-exploration>
-  </ng-container>
-   /exploration section -->
+
 
   <!-- synthesis section
   <ng-container *ngIf="currentPage === 'synthesis'">
