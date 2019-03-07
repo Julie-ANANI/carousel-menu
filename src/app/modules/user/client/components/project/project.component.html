@@ -63,16 +63,13 @@
     </ng-container>
     <!-- /exploration section -->
 
+    <!-- synthesis section -->
+    <ng-container *ngIf="currentPage === 'synthesis'">
+      <app-shared-market-report [project]="innovation"></app-shared-market-report>
+    </ng-container>
+  <!-- /synthesis section -->
+
   </section>
-
-
-
-
-  <!-- synthesis section
-  <ng-container *ngIf="currentPage === 'synthesis'">
-    <app-shared-market-report [project]="innovation"></app-shared-market-report>
-  </ng-container>
-  /synthesis section -->
 
 </ng-container>
 

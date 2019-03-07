@@ -2,34 +2,35 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- section no reports -->
-    <div *ngIf="noResult" class="section-no-reports">
-      <app-message-space [widthMax]="'354px'">
-        {{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}
-      </app-message-space>
-    </div>
+    <ng-container *ngIf="noResult">
+      <div class="section-pad rm-pad-bottom">
+        <app-message-space [widthMax]="'286px'">
+          {{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}
+        </app-message-space>
+      </div>
+    </ng-container>
 
     <!-- section reports -->
-    <div *ngIf="!noResult" class="section-reports-list">
-
-      <!-- reports -->
-      <div class="report-wrapper" [@listAnimation]="totalReports.length">
-        <div *ngFor="let report of totalReports" class="content-outer">
-          <div class="content">
-            <a [href]="getRelevantLink(report)" target="_blank"><img [src]="getMedia(report)" alt=" "></a>
-            <div class="report-description">
-              <a [href]="getRelevantLink(report)" target="_blank">
-                <span >{{ report.name }}</span>
-              </a>
-              <p class="date-text">
-                {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.A' | translate }} {{ report.owner.firstName + " " + report.owner.lastName }}
-                {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.B' | translate }} {{ report.date | date:dateFormat }}
-              </p>
+    <ng-container *ngIf="!noResult">
+      <div class="section-pad rm-pad-bottom">
+        <div [@listAnimation]="totalReports.length">
+          <div *ngFor="let report of totalReports" class="card-report">
+            <div class="card-content">
+              <a [href]="getRelevantLink(report)" target="_blank"><img [src]="getMedia(report)" alt=" "></a>
+              <div class="report-description">
+                <a [href]="getRelevantLink(report)" target="_blank">
+                  <span>{{ report.name }}</span>
+                </a>
+                <p class="text text-notify">
+                  {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.A' | translate }} {{ report.owner.firstName + " " + report.owner.lastName }}
+                  {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.B' | translate }} {{ report.date | date:dateFormat }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-    </div>
+    </ng-container>
 
   </div>
 </section>

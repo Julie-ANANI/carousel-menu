@@ -1,69 +1,43 @@
-@import "../../../../../../style/variables";
+@import "../../../../../../style/framework/src/variables";
 
 #synthesis-list-component {
 
-  .section-no-reports {
-    text-align: center;
-    padding-top: 3.15rem;
-  }
+  .card-report {
+    margin-bottom: 1.5rem;
 
-  .section-reports-list {
+    .card-content {
+      display: inline-flex;
+      width: 100%;
 
-    .report-wrapper {
-
-      .content-outer {
-        margin-bottom: 1.57rem;
-
-        .content {
-          display: inline-flex;
-          width: 100%;
-
-          img {
-            border-radius: 3px;
-            width: 120px;
-            height: 100px;
-            margin-right: 1.2rem;
-            cursor: pointer;
-          }
-
-          img:hover {
-            box-shadow: $box-shadow-hover;
-          }
-
-          .report-description {
-            border-bottom: 1px solid $border-color;
-            width: 100%;
-
-            span {
-              font-size: 1.4rem;
-            }
-
-            span:hover {
-              color: $primary-color;
-              cursor: pointer;
-            }
-
-            .date-text {
-              margin-top: 0.95rem;
-              font-size: 0.85rem;
-              color: $meta-color;
-              font-weight: 600;
-            }
-
-          }
-
-        }
-
+      img {
+        border-radius: $border-radius;
+        margin-right: $unit-5;
       }
 
-      .content-outer:last-child {
-        margin-bottom: 0;
+      img:hover {
+        box-shadow: $box-shadow-hover;
+        cursor: pointer;
+      }
+
+      .report-description {
+        border-bottom: $border-width solid $border-color;
+        width: 100%;
+
+        a span {
+          font-size: 1.1rem;
+        }
+
+        .text {
+          font-weight: $font-weight-medium;
+          font-size: $font-size-sm;
+          margin-top: 0.75rem;
+          margin-bottom: $unit-2;
+        }
+
       }
 
     }
 
   }
-
-
 
 }
