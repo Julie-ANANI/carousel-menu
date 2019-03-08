@@ -26,6 +26,9 @@ export const TABLE = {
     'TITLE': 'Title',
     'OWNER': 'Owner',
     'UPDATED': 'Updated on',
+    'SECTORS': 'Sectors',
+    'INDUSTRY': 'Industry',
+    'FEEDBACK': 'Feedback'
   },
 
   'TITLE': {

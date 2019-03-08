@@ -88,7 +88,7 @@ export class SharedAmbassadorListComponent {
           {_attrs: ['tags'], _name: 'TABLE.HEADING.SECTORS', _type: 'TAG-LIST'},
           {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
           {_attrs: ['ambassador.industry'], _name: 'TABLE.HEADING.INDUSTRY', _type: 'TEXT'},
-          {_attrs: ['answers'], _name: 'TABLE.HEADING.CONTACT', _type: 'CHECK'}]
+          {_attrs: ['answers'], _name: 'TABLE.HEADING.FEEDBACK', _type: 'ARRAY'}]
       };
 
     });
