@@ -255,11 +255,11 @@ export class InnovationFrontService {
 
         // it can be used to get the related src for an innovation.
         case 'default':
-          if (source.principalMedia && source.principalMedia.type === 'PHOTO' && source.principalMedia.cloudinary.public_id) {
+          if (source.principalMedia && source.principalMedia.type === 'PHOTO' && source.principalMedia.cloudinary && source.principalMedia.cloudinary.public_id) {
             src = prefix + source.principalMedia.cloudinary.public_id + suffix;
           } else if (source.media.length > 0) {
             const index = source.media.findIndex((media: Media) => media.type === 'PHOTO');
-            if (index !== -1) {
+            if (index !== -1 && source.media[index].cloudinary && source.media[index].cloudinary.public_id) {
               src = prefix + source.media[index].cloudinary.public_id + suffix;
             }
           }

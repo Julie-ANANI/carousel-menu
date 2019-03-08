@@ -104,6 +104,30 @@
     </div>
     <!-- /heading section -->
 
+    <!-- Innovation cards -->
+    <div class="section-cards" [@cardAnimation]="localInnovations.length">
+      <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card">
+
+        <!-- img -->
+        <div class="card-image">
+          <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+            <img [src]="getImageSrc(innovation)" alt=" ">
+          </a>
+        </div>
+
+        <!-- header -->
+        <div class="card-header">
+
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
 
     <!--&lt;!&ndash;Recommendation heading section &ndash;&gt;-->
     <!--<div *ngIf="userInnovations.length>0" class="section-heading-rec">-->
@@ -192,17 +216,11 @@
 
 
 
-    <!--&lt;!&ndash; Innovation cards &ndash;&gt;-->
-    <!--<div class="section-cards" [@cardAnimation]="localInnovations.length">-->
-      <!--<div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">-->
+
+
         <!--<div class="card-content">-->
 
-          <!--&lt;!&ndash; img &ndash;&gt;-->
-          <!--<div class="card-img">-->
-            <!--<a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">-->
-              <!--<img [src]="getImageSrc(innovation)" alt="No media">-->
-            <!--</a>-->
-          <!--</div>-->
+
 
           <!--&lt;!&ndash; body &ndash;&gt;-->
           <!--<div class="card-body">-->

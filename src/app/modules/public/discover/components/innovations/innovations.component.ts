@@ -15,6 +15,7 @@ import { UserService } from '../../../../../services/user/user.service';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
 import { InnovCard } from '../../../../../models/innov-card';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 
 @Component({
@@ -108,7 +109,8 @@ export class InnovationsComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private authService: AuthService,
               private userService: UserService,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService,
+              private innovationFrontService: InnovationFrontService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
@@ -516,9 +518,9 @@ export class InnovationsComponent implements OnInit {
    * @param innovation
    */
   getImageSrc(innovation: Innovation): string {
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/app/default-images/image-not-available.png';
+    /*const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/app/default-images/image-not-available.png';
     const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/';
-    const suffix = '.jpg';
+    const suffix = '.jpg';*/
     /*
      * Search a default innovationCard
      */
@@ -532,18 +534,18 @@ export class InnovationsComponent implements OnInit {
     /*
      * Search default media
      */
-    if (innovationCard && innovationCard.principalMedia && innovationCard.principalMedia.type === 'PHOTO') {
+    /*if (innovationCard && innovationCard.principalMedia && innovationCard.principalMedia.type === 'PHOTO') {
       return prefix + innovationCard.principalMedia.cloudinary.public_id + suffix;
     } else if (Array.isArray(innovationCard.media) && innovationCard.media.length > 0) {
       const media = innovationCard.media.find((image) => image.type === 'PHOTO');
       if (media && media.cloudinary && media.cloudinary.public_id) {
         return prefix + media.cloudinary.public_id + suffix;
       }
-    }
+    }*/
     /*
      * return default uri
      */
-    return defaultSrc;
+    return this.innovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
   }
 
 

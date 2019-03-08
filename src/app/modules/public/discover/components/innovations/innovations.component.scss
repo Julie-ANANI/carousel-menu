@@ -80,6 +80,7 @@
 
     .search-wrapper {
       flex: 1;
+      max-width: 400px;
     }
 
   }
@@ -101,9 +102,15 @@
   .section-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-right: -1rem;
-    margin-left: -.3rem;
+    justify-content: space-between;
+    margin-right: -$unit-5;
+
+    .card {
+      padding: $unit-2;
+      flex: 0 1 calc(14% - 1rem);
+      margin-right: $unit-5;
+      margin-bottom: 1.5rem;
+    }
 
     .card-wrapper {
       display: inline-flex;
@@ -347,10 +354,7 @@
 
 
 
-/********************************** Media ***************************************/
-
 @media (max-width: 960px) {
-
 
   #innovations-component {
 
@@ -387,9 +391,7 @@
 
 @media (max-width: 600px) {
 
-
   #innovations-component {
-
 
     .section-heading {
       flex-direction: column;
@@ -450,3 +452,25 @@
 
 
 }
+
+@media (max-width: $size-2x) {
+
+  .section-heading {
+
+    .search-wrapper {
+      max-width: 100% !important;
+    }
+
+  }
+
+  .section-cards {
+    justify-content: flex-start !important;
+
+    .card {
+      flex: 0 1 calc(25% - 1rem) !important;
+    }
+
+  }
+
+}
+
