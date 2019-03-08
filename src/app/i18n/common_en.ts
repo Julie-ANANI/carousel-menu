@@ -73,13 +73,13 @@ export const COMMON = {
 
 
 
-  'PHONE': 'Phone Number',
 
-  'ACTIVITY_FIELDS': 'Activity Fields',
-  'ACTIVITY_FIELDS_PLACEHOLDER': 'Enter your activity field',
 
-  'TECHNOLOGIES': 'Technologies',
-  'TECHNOLOGIES_PLACEHOLDER': 'Enter the technology',
+
+
+
+
+
 
 
   'OLD_PASSWORD': 'Old Password',
@@ -115,12 +115,15 @@ export const COMMON = {
   'TOP_PROFILE': 'Top profile',
 
   'LABEL': {
+    'ACTIVITY_FIELDS': 'Activity Fields',
     'FIRSTNAME': 'First Name',
     'LASTNAME': 'Last Name',
     'EMAIL': 'E-mail Address',
     'PASSWORD': 'Password',
     'PROS_CONTACT': 'Pros Number',
+    'PHONE': 'Phone Number',
     'JOBTITLE': 'Job Title',
+    'TECHNOLOGIES': 'Technologies',
     'COMPANY': 'Company Name',
     'COUNTRY': 'Country',
     'DATE': 'Date',
@@ -145,6 +148,8 @@ export const COMMON = {
     'COMPANY': 'Enter your company name',
     'COUNTRY': 'Enter your country',
     'CAMPAIGN': 'Enter the campaign name',
+    'ACTIVITY_FIELDS': 'Enter your activity field',
+    'TECHNOLOGIES': 'Enter the technology',
   },
 
   'REQUIRED': {

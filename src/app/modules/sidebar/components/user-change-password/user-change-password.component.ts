@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-user-change-password',
@@ -8,41 +7,31 @@ import { Subject } from 'rxjs';
   styleUrls: ['./user-change-password.component.scss']
 })
 
-export class UserChangePasswordComponent implements OnInit {
+export class UserChangePasswordComponent {
 
-  @Input() sidebarState: Subject<string>;
+ @Input() set sidebarState(value: string) {
+   if (value === undefined || value === 'active') {
+     this.buildForm();
+     this._formData.reset();
+   }
+ }
 
-  @Output() changePasswordData = new EventEmitter<FormGroup>();
+  @Output() passwordUpdate = new EventEmitter<FormGroup>();
 
   private _formData: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
 
-  ngOnInit() {
-    this.buildForm();
-
-    if (this.sidebarState) {
-      this.sidebarState.subscribe((state: any) => {
-        if (state === 'inactive') {
-          setTimeout (() => {
-            this._formData.reset();
-          }, 500);
-        }
-      })
-    }
-
-  }
-
   private buildForm() {
     this._formData = this.formBuilder.group({
       oldPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/[\w]*[\&\@\$\.\#\+\=\/]+[\w]*/g)]],
+      newPassword: ['', [Validators.required, Validators.minLength(9)]],
       confirmPassword: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
-    this.changePasswordData.emit(this._formData);
+    this.passwordUpdate.emit(this._formData);
   }
 
   get formData(): FormGroup {

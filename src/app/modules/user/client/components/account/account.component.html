@@ -1,8 +1,8 @@
-<section class="section-pad animate-page" id="account-page-wrapper">
+<section class="section-pad animate-page" id="account-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="profile-wrapper">
 
-      <!-- Picture left section -->
+      <!-- left section -->
       <div class="left-content-wrapper">
 
         <!-- Profile pics -->
@@ -46,9 +46,9 @@
         </ul>
 
       </div>
-      <!-- /Picture left section -->
+      <!-- /left section -->
 
-      <!-- Data right section -->
+      <!-- right section -->
       <div class="right-content-wrapper">
 
         <!-- Title -->
@@ -145,7 +145,7 @@
                 [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
                 (click)="onSuggestCountries()"
                 autocomplete="off">
-              <ul *ngIf="formData.get('country').value" class="form-suggestion" [ngStyle]="{ 'display': displayCountrySuggestion ? 'flex' : 'none' }">
+              <ul *ngIf="formData.get('country').value" class="input-suggestion" [ngStyle]="{ 'display': displayCountrySuggestion ? 'flex' : 'none' }">
                 <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
                   {{ suggestion }}
                 </li>
@@ -154,121 +154,89 @@
 
           </div>
 
+          <!-- phone & lang -->
+          <div class="input-group inline">
+
+            <!-- phone -->
+            <div class="form-group">
+              <label class="form-label" for="account-phone">{{ 'COMMON.LABEL.PHONE' | translate }}</label>
+              <input
+                class="form-input"
+                formControlName="phone"
+                id="account-phone"
+                type="tel"
+                placeholder="+33 55 90 56 876">
+            </div>
+
+            <!-- language -->
+            <div class="form-group">
+              <label class="form-label" for="lang">{{ 'COMMON.LANGUAGE' | translate }}</label>
+              <select class="form-select" id="lang" name="lang" formControlName="language">
+                <option value="en">{{ 'COMMON.LANG.EN' | translate }}</option>
+                <option value="fr">{{ 'COMMON.LANG.FR' | translate }}</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- sector & technology -->
+          <div class="input-group inline">
+
+            <!-- sector -->
+            <div class="form-group">
+              <label class="form-label">{{ 'COMMON.LABEL.ACTIVITY_FIELDS' | translate }}</label>
+              <div class="input-gap">
+                <app-input-list
+                  (update)="addSector($event)"
+                  [config]="{ placeholder: ('COMMON.PLACEHOLDER.ACTIVITY_FIELDS' | translate), initialData: formData.get('sectors').value }">
+                </app-input-list>
+              </div>
+            </div>
+
+            <!-- technologies -->
+            <div class="form-group">
+              <label class="form-label">{{ 'COMMON.LABEL.TECHNOLOGIES' | translate }}</label>
+              <div class="input-gap">
+                <app-input-list
+                  (update)="addTechnology($event)"
+                  [config]="{ placeholder: ('COMMON.PLACEHOLDER.TECHNOLOGIES' | translate), initialData: formData.get('technologies').value }">
+                </app-input-list>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- save button -->
+          <div class="save-wrapper text-center">
+            <button class="btn btn-primary" type="submit" [disabled]="formData.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+          </div>
 
         </form>
 
       </div>
+      <!-- /right section -->
 
     </div>
-
-
-
-
-
-
-
-
-
-          <!--&lt;!&ndash; Phone & lang &ndash;&gt;-->
-          <!--<div class="group">-->
-
-            <!--&lt;!&ndash; Phone &ndash;&gt;-->
-            <!--<div class="form-group">-->
-              <!--<label class="form-label" for="account-phone">{{ 'COMMON.PHONE' | translate }}</label>-->
-              <!--<input-->
-                <!--class="form-input"-->
-                <!--formControlName="phone"-->
-                <!--id="account-phone"-->
-                <!--type="tel"-->
-                <!--placeholder="+33 55 90 56 876">-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash; Language &ndash;&gt;-->
-            <!--<div class="form-group">-->
-              <!--<label class="form-label" for="lang">{{ 'COMMON.LANGUAGE' | translate }}</label>-->
-              <!--<select class="form-select" id="lang" name="lang" formControlName="language">-->
-                <!--<option value="en">{{ 'COMMON.LANG.EN' | translate }}</option>-->
-                <!--<option value="fr">{{ 'COMMON.LANG.FR' | translate }}</option>-->
-              <!--</select>-->
-            <!--</div>-->
-
-          <!--</div>-->
-          <!--&lt;!&ndash; /Phone & lang &ndash;&gt;-->
-
-          <!--&lt;!&ndash; Sector & Technology &ndash;&gt;-->
-          <!--<div class="group">-->
-
-            <!--&lt;!&ndash; Business &ndash;&gt;-->
-            <!--<div class="form-group">-->
-              <!--<label class="form-label">{{ 'COMMON.ACTIVITY_FIELDS' | translate }}</label>-->
-              <!--<div class="input">-->
-                <!--<app-input-list-->
-                  <!--(update)="addSector($event)"-->
-                  <!--[config]="{ placeholder: ('COMMON.ACTIVITY_FIELDS_PLACEHOLDER' | translate), initialData: formData.get('sectors').value }">-->
-                <!--</app-input-list>-->
-              <!--</div>-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash; Technologies &ndash;&gt;-->
-            <!--<div class="form-group">-->
-              <!--<label class="form-label">{{ 'COMMON.TECHNOLOGIES' | translate }}</label>-->
-              <!--<div class="input">-->
-                <!--<app-input-list-->
-                  <!--(update)="addTechnology($event)"-->
-                  <!--[config]="{ placeholder: ('COMMON.TECHNOLOGIES_PLACEHOLDER' | translate), initialData: formData.get('technologies').value }">-->
-                <!--</app-input-list>-->
-              <!--</div>-->
-            <!--</div>-->
-
-          <!--</div>-->
-          <!--&lt;!&ndash; /Sector & Technology &ndash;&gt;-->
-
-          <!--&lt;!&ndash; Save button &ndash;&gt;-->
-          <!--<div class="save text-center">-->
-            <!--<button class="btn btn-primary" type="submit" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>-->
-          <!--</div>-->
-          <!--&lt;!&ndash; /Save button &ndash;&gt;-->
-
-        <!--</form>-->
-        <!--&lt;!&ndash; /Form &ndash;&gt;-->
-
-      <!--</div>-->
-      <!--&lt;!&ndash; /Data right section &ndash;&gt;-->
-
-    <!--</div>-->
   </div>
 </section>
 
 
-<!-- Change password sidebar
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
-  <app-user-change-password
-    [sidebarState]="sidebarState"
-    (changePasswordData)="changePassword($event)">
-  </app-user-change-password>
-</app-sidebar> -->
+<!-- Change password sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-user-change-password [sidebarState]="sidebarValue.animate_state" (passwordUpdate)="updatePassword($event)"></app-user-change-password>
+</app-sidebar>
 
 
-<!-- MODAL : Are you sure you want to delete your account ?
-<div class="modal" [ngClass]="{'active': accountDeletionAsked}">
-  <div class="modal-overlay" (click)="closeModal($event)"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'MY_ACCOUNT.DELETE_MODAL.BOARD_TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        <span>{{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}</span>
-        <br><br>
-        <span>{{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}</span>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn ghost-edit btn-sm" (click)="closeModal($event)">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-      <button class="btn btn-primary btn-sm" (click)="deleteAccount($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-    </div>
+<!-- modal to delete account -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  {{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}
+  <br><br>
+  {{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-</div>-->
+</app-modal>
+
 
 

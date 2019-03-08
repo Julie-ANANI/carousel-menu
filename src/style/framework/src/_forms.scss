@@ -298,7 +298,7 @@ textarea.form-input {
 
 
 // Form suggestion
-.form-suggestion {
+.input-suggestion {
   display: flex;
   flex-direction: column;
   box-shadow: $box-shadow;
@@ -345,7 +345,7 @@ textarea.form-input {
     margin-right: auto;
   }
 
-  .form-suggestion {
+  .input-suggestion {
     left: $unit-2;
     right: $unit-2;
   }

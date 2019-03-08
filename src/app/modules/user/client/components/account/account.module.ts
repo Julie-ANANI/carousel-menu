@@ -9,6 +9,7 @@ import { AccountComponent } from './account.component';
 import { SidebarUserChangePasswordModule } from '../../../../sidebar/components/user-change-password/sidebar-user-change-password.module';
 import { InputListModule } from '../../../../utility-components/input-list/input-list.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
+import { ModalModule } from '../../../../utility-components/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { SidebarModule } from '../../../../sidebar/sidebar.module';
     RouterModule,
     SidebarUserChangePasswordModule,
     InputListModule,
-    SidebarModule
+    SidebarModule,
+    ModalModule
   ],
   declarations: [
     AccountComponent

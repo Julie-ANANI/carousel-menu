@@ -1,7 +1,7 @@
 @import "../../../../../../style/framework/src/variables";
 @import "../../../../../../style/framework/src/mixins";
 
-#account-page-wrapper {
+#account-component {
 
   .profile-wrapper {
     display: flex;
@@ -110,7 +110,6 @@
 
       .form-wrapper {
         padding-top: 2rem;
-        padding-bottom: 2rem;
 
         .form-group {
           width: 100%;
@@ -122,21 +121,15 @@
           background-color: $bg-color-light;
         }
 
-        .input {
-          margin-top: .5rem;
+        .input-gap {
+          margin-top: $unit-1;
         }
 
-        .save {
-          padding-top: 1.75rem;
+        .save-wrapper {
+          padding-top: 2rem;
+          padding-bottom: 2rem;
         }
 
-      }
-
-      .suggestion {
-        position: absolute;
-        max-height: 300px;
-        left: .9375rem;
-        right: .9375rem;
       }
 
     }
@@ -145,12 +138,16 @@
 
 }
 
-/********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 
-  .profile-wrapper, .group {
+  .profile-wrapper {
     flex-direction: column;
+  }
+
+  .left-content-wrapper {
+    padding-top: 0 !important;
+    padding-bottom: 0.75rem;
   }
 
   .right-content-wrapper, .left-content-wrapper {
@@ -159,31 +156,17 @@
     padding-right: 0 !important;
   }
 
-  .form-wrapper {
+  .save-wrapper {
     padding-bottom: 0 !important;
   }
 
 }
 
-@media (min-width: $size-sm) and (max-width: $size-md) {
+@media (max-width: $size-md) {
 
-  .group {
+  .input-group.inline {
     flex-direction: column;
   }
 
 }
 
-
-@media (min-width: $size-xl) {
-
-  #account-page-wrapper {
-
-    .details-form {
-      padding-left: .6rem;
-      padding-right: .6rem;
-    }
-
-  }
-
-
-}
