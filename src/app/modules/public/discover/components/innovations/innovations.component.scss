@@ -67,7 +67,7 @@
     padding-top: 3.2rem;
 
     .title-primary, .search-wrapper {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
       animation-name: fadeIn;
       animation-duration: .5s;
       animation-timing-function: ease-in-out;
@@ -85,20 +85,6 @@
 
   }
 
-  .section-heading-rec {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .main-heading {
-      font-size: 1.3125rem;
-      flex: 2;
-      animation-name: fadeIn;
-      animation-duration: .5s;
-      animation-timing-function: ease-in-out;
-    }
-  }
-
   .section-cards {
     display: flex;
     flex-wrap: wrap;
@@ -107,113 +93,55 @@
 
     .card {
       padding: $unit-2;
-      flex: 0 1 calc(14% - 1rem);
       margin-right: $unit-5;
       margin-bottom: 1.5rem;
-    }
+      border-color: transparent;
 
-    .card-wrapper {
-      display: inline-flex;
-      background-color: white;
-      flex: 0 1 calc(25% - 1rem);
-      transition: all .35s ease-in-out;
-      margin-right: 1rem;
-      margin-bottom: 4.375rem;
-      border-radius: 3px;
-      padding: 10px;
+      .card-header {
 
-      .card-content {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-
-        .card-img {
-          margin: 0 auto;
-          height: 200px;
-          text-align: center;
-
-          img {
-            height: 200px;
-            width: 100%;
-            border-radius: 3px;
-            object-fit: cover;
-          }
-
+        h6 {
+          margin-bottom: 0;
         }
 
-        .card-body {
-          margin: .9375rem 0 0 0;
-          flex: 1;
+        .tags-wrapper {
+          display: inline-flex;
+          padding-right: -$unit-2;
 
-          .card-title {
-            height: 5.9375rem;
-            overflow: hidden;
-
-            .main-heading {
-              margin-bottom: 0;
-              font-size: 1.0625rem;
-              font-weight: 500;
-              overflow: hidden;
-            }
-
-            .tags-wrapper {
-              display: flex;
-              overflow: hidden;
-              flex-wrap: wrap;
-              margin-top: .06rem;
-              max-height: 2.375rem;
-
-              .tag-content {
-                display: inline-flex;
-                font-size: .8125rem;
-                color: $meta-color;
-                font-weight: 600;
-                margin-right: .35rem;
-              }
-
-            }
-
-
+          .text {
+            padding-top: $unit-1;
+            padding-right: $unit-2;
+            font-size: 0.65rem;
+            font-weight: $font-weight-medium;
           }
 
-          .summary-text {
-            padding-bottom: 0;
-            font-size: .8125rem;
-            margin-top: .9375rem;
-            color: $text-primary-color;
-          }
-
-        }
-
-        .card-footer {
-          margin: 1.57rem 0 0 0;
-          font-size: .8125rem;
-          color: $meta-color;
-          font-weight: 600;
-          display: flex;
-          flex-wrap: wrap;
-
-          .text-link {
-            margin-left: .35rem;
-          }
-
-        }
-
-        .card-footer div:last-child {
-
-          .pipe {
-            visibility: hidden;
+          .fa-tag {
+            font-size: 0.5rem;
+            margin-right: $unit-h;
           }
 
         }
 
       }
 
-    }
+      .card-body {
 
-    .card-wrapper:hover {
-      box-shadow: $box-shadow-hover;
+        .text {
+          font-size: $font-size-sm;
+          margin-bottom: 0;
+          color: $text-secondary-color;
+        }
+
+      }
+
+      .card-footer {
+
+        .text-notify {
+          font-size: 0.65rem;
+          font-weight: $font-weight-medium;
+        }
+
+      }
+
     }
 
   }
@@ -330,12 +258,6 @@
 
   }
 
-  .section-pagination {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-
 }
 
 
@@ -353,43 +275,7 @@
 }
 
 
-
-@media (max-width: 960px) {
-
-  #innovations-component {
-
-
-    .section-heading {
-
-      .main-heading {
-        flex: 1 !important;
-      }
-
-    }
-
-
-    .section-cards {
-      margin-right: -1.12rem !important;
-
-      .card-wrapper {
-        margin-right: 1.12rem !important;
-        flex: 0 1 calc(33% - 1rem) !important;
-
-        .card-title {
-          height: 7.4rem !important;
-        }
-
-      }
-
-    }
-
-  }
-
-
-}
-
-
-@media (max-width: 600px) {
+@media (max-width: $size-xs) {
 
   #innovations-component {
 
@@ -399,57 +285,34 @@
       justify-content: left !important;
     }
 
-
     .section-cards {
-      margin-right: -21px !important;
+      margin-right: 0 !important;
 
-      .card-wrapper {
-        margin-right: 21px !important;
-        flex: 0 1 calc(48% - 1rem) !important;
-
-        .card-title {
-          height: 7.4rem !important;
-        }
-
+      .card {
+        margin-left: auto;
+        margin-right: auto !important;
       }
 
     }
 
   }
-
 
 }
 
 
-@media (max-width: 480px) {
-
+@media (min-width: $size-md) and (max-width: $size-lg) {
 
   #innovations-component {
 
-    .section-cards {
-      margin-right: 0 !important;
-      margin-left: 0 !important;
+    .section-heading {
 
-      .card-wrapper {
-        margin-right: 0 !important;
-        flex: 0 1 100% !important;
-
-        .card-title {
-          height: unset !important;
-          min-height: 2.375rem;
-        }
-
-        .tags-wrapper {
-          max-height: unset !important;
-          min-height: 1.2rem !important;
-        }
-
+      .title-primary {
+        flex: 1 !important;
       }
 
     }
 
   }
-
 
 }
 
@@ -465,11 +328,6 @@
 
   .section-cards {
     justify-content: flex-start !important;
-
-    .card {
-      flex: 0 1 calc(25% - 1rem) !important;
-    }
-
   }
 
 }
