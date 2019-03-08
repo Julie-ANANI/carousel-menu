@@ -7,14 +7,14 @@
 
       <h1 *ngIf="question?.title" class="main-heading">{{ question?.title | multiling:lang }}</h1>
 
+      <h2 *ngIf="question?.label" class="section-heading">{{ question?.label | multiling:lang }}</h2>
+
       <div *ngIf="receivedTags.length > 0" class="tags-outer-wrapper">
         <div *ngFor="let tag of receivedTags" class="tags-wrapper" (click)="addTagFilter($event, tag)">
           #{{ tag.label | multiling:lang }}
           <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
         </div>
       </div>
-
-      <h2 *ngIf="question?.label" class="section-heading">{{ question?.label | multiling:lang }}</h2>
 
       <p class="op-text" *ngIf="isMainDomain()">{{ 'COMMON.UMI_WORD' | translate }}</p>
 
