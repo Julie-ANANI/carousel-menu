@@ -1,6 +1,6 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/src/variables";
 
-#search-input {
+#search-input-component {
 
   .search-wrapper {
     position: relative;
@@ -21,12 +21,12 @@
       display: flex;
       background-color: white;
       transition: all .35s ease-in-out;
-      color: $input-color;
+      color: $form-input-color;
       font-size: .875rem;
       font-weight: 300;
 
       &::placeholder {
-        color: $placeholder-color;
+        color: $form-placeholder-color;
       }
 
     }
@@ -42,7 +42,7 @@
 
     .search-cross-icon:hover {
       cursor: pointer;
-      color: $dark-color;
+      color: $text-primary-color;
     }
 
     .btn-round {
@@ -74,19 +74,10 @@
 
   }
 
-  .suggestion {
-    position: absolute;
-    top: 100%;
-    right: 30px;
-    left: 22px;
-    max-height: 31.25rem;
-
-
-    .is-focused {
-      background-color: $border-color;
-      border-color: $border-color;
-    }
-
+  .input-suggestion {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 }

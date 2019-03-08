@@ -24,11 +24,11 @@ import { InnovCard } from '../../../../../models/innov-card';
     trigger('tagAnimation', [
       transition('* => *', [
 
-        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' })),
+        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
 
         query('.tag-content', stagger('50ms', [
           animate('.15s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
-        ])),
+        ]), { optional: true }),
 
       ])
     ]),
@@ -88,7 +88,7 @@ export class InnovationsComponent implements OnInit {
 
   private _noResultFound = false; // when no result is while respect to search filed.
 
-  private _shareModal = false; // open the modal to share the filtered result.
+  private _modalShare = false; // open the modal to share the filtered result.
 
   private _shareUrl = ''; // share url.
 
@@ -472,23 +472,13 @@ export class InnovationsComponent implements OnInit {
 
     this._shareUrl = `${this.getUrl()}${this._tagUrl.slice(0, this._tagUrl.length - 1)}`;
 
-    this._shareModal = true;
+    this._modalShare = true;
 
   }
 
 
   getUrl(): string {
     return `${environment.clientUrl}/discover?`;
-  }
-
-
-  /***
-   * this function closes the share modal.
-   * @param event
-   */
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._shareModal = false;
   }
 
 
@@ -751,8 +741,12 @@ export class InnovationsComponent implements OnInit {
     return this._noResultFound;
   }
 
-  get shareModal(): boolean {
-    return this._shareModal;
+  get modalShare(): boolean {
+    return this._modalShare;
+  }
+
+  set modalShare(value: boolean) {
+    this._modalShare = value;
   }
 
   get shareUrl(): string {

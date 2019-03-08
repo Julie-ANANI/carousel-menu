@@ -1,6 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import 'rxjs/Rx';
+import { MouseService } from '../../../services/mouse/mouse.service';
+import { Subject } from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-input',
@@ -8,7 +11,7 @@ import 'rxjs/Rx';
   styleUrls: ['./search-input.component.scss']
 })
 
-export class SearchInputComponent implements OnInit {
+export class SearchInputComponent implements OnInit, OnDestroy {
 
   @Output() finalValueEmit = new EventEmitter<any>(); // this is the final value that we send to the parent. By default we send only the string type.
 
@@ -26,14 +29,27 @@ export class SearchInputComponent implements OnInit {
 
   private _localSuggestions: any = [];
 
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
+  constructor(private mouseService: MouseService) {
+
+    this.mouseService.getClickEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((event: Event) => {
+      if (event && event.target && event.target['id'] !== 'search-input-component') {
+        console.log(event);
+      }
+    });
+
+  }
+
   ngOnInit() {
     this._searchField = new FormControl(); // create the form control.
 
-    this._searchField.valueChanges.subscribe(input => {
+    this._searchField.valueChanges.pipe(takeUntil(this._ngUnsubscribe)).subscribe(input => {
       this._crossIcon = input !== '';
       this._displaySuggestion = true;
       this.searchLocally(input);
-      });
+    });
+
   }
 
 
@@ -54,6 +70,7 @@ export class SearchInputComponent implements OnInit {
 
   }
 
+
   onValueSelect(value: any) {
     this._searchField.setValue(value.text);
     this.finalValueEmit.emit(value.text);
@@ -61,12 +78,14 @@ export class SearchInputComponent implements OnInit {
     this._crossIcon = true;
   }
 
+
   clearInput(event: Event) {
     event.preventDefault();
     this._searchField.reset();
     this._crossIcon = false;
     this.finalValueEmit.emit('');
   }
+
 
   closeSearch(event: Event) {
     event.preventDefault();
@@ -105,6 +124,7 @@ export class SearchInputComponent implements OnInit {
 
   }
 
+
   private setFocus(value: number) {
     if (value >= this._localSuggestions.length) {
       this._currentFocus = 0;
@@ -142,6 +162,11 @@ export class SearchInputComponent implements OnInit {
 
   get localSuggestions(): any {
     return this._localSuggestions;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

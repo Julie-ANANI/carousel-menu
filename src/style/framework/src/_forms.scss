@@ -323,7 +323,7 @@ textarea.form-input {
     margin-top: $unit-1;
     color: $text-primary;
 
-    &:hover {
+    &:hover, &.is-focused {
       background:  $bg-dropdown-color;
       border-color: $bg-dropdown-color;
       cursor: pointer;

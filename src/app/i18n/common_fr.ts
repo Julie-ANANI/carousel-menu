@@ -332,10 +332,11 @@ export const COMMON = {
   },
 
   'MODAL': {
-    'TITLE_DELETE': 'Supprimer le forum',
-    'TITLE_CONFIRMATION': 'Confirmation le forum',
-    'TITLE_IMPORT': 'Conseil d\'importation',
-    'TITLE_BATCH': 'Batch le forum',
+    'TITLE_DELETE': 'Supprimer',
+    'TITLE_CONFIRMATION': 'Confirmation',
+    'TITLE_IMPORT': 'Importation',
+    'TITLE_BATCH': 'Batch',
+    'TITLE_SHARE': 'Partage'
   },
 
 };

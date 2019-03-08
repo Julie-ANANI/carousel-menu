@@ -71,14 +71,12 @@
       padding: 1.1rem 1.25rem;
       font-size: $font-size-md;
       position: relative;
-      min-height: 153px;
       max-height: 50vh;
       overflow-y: auto;
-      flex: 1 0 auto;
     }
 
     .modal-footer {
-      padding: 1.1rem 0 0 0 !important;
+      padding: 2rem 0 0 0 !important;
       text-align: right !important;
 
       .btn-cancel {
