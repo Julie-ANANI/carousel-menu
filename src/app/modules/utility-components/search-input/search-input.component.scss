@@ -7,22 +7,22 @@
     transition: all .35s ease-in-out;
     background-color: white;
     border-radius: 50px;
-    height: 3.15rem;
+    height: 2.5rem;
     display: flex;
     justify-content: flex-end;
 
     input[type="search"] {
-      height: 3.15rem;
+      height: 2.5rem;
       width: 0;
       border-radius: 40px;
-      border: 1px solid transparent;
+      border: $border-width solid transparent;
       box-sizing: border-box;
       outline: 0;
       display: flex;
       background-color: white;
       transition: all .35s ease-in-out;
       color: $form-input-color;
-      font-size: .875rem;
+      font-size: $font-size-sm;
       font-weight: 300;
 
       &::placeholder {
@@ -32,10 +32,10 @@
     }
 
     .search-cross-icon {
-      right: 4.0625rem;
+      right: 3.25rem;
       position: absolute;
-      padding-top: 1.06rem;
-      font-size: 1.12rem;
+      padding-top: 0.848rem;
+      font-size: $font-icon-xl;
       color: $meta-color;
       transition: all .15s ease-in-out;
     }
@@ -51,7 +51,7 @@
 
       .search-icon {
         display: inline-flex;
-        font-size: 16px;
+        font-size: $font-icon-lg;
       }
 
     }
@@ -61,7 +61,7 @@
 
       input[type="search"] {
         border-color: $meta-color;
-        padding: .6rem 5.625rem .6rem 1.57rem;
+        padding: $unit-2 4.25rem $unit-2 1.25rem;
         width: 100%;
       }
 

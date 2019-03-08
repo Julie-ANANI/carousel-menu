@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import 'rxjs/Rx';
-import { MouseService } from '../../../services/mouse/mouse.service';
 import { Subject } from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-input',
@@ -31,15 +30,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private mouseService: MouseService) {
-
-    this.mouseService.getClickEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((event: Event) => {
-      if (event && event.target && event.target['id'] !== 'search-input-component') {
-        console.log(event);
-      }
-    });
-
-  }
+  constructor() { }
 
   ngOnInit() {
     this._searchField = new FormControl(); // create the form control.
@@ -51,7 +42,6 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     });
 
   }
-
 
   private searchLocally(value: string) {
     this._localSuggestions = [];
