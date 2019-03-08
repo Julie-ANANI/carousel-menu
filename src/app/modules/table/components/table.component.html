@@ -220,6 +220,23 @@
                   </span>
                 </ng-container>
 
+                  <!-- If column type is a list of tags -->
+                <ng-container *ngSwitchCase="'TAG-LIST'">
+                  <!--<span
+                          *ngFor="let attr of getAttrs(column)"
+                          [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
+                          [ngClass]="{ 'left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
+                      'right-label' : getAttrIndex(column, attr) === getAttrs(column).length-1 && getAttrs(column).length !== 1,
+                      'middle-label' : getAttrIndex(column, attr) !== 0 && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
+                    {{ (getContentValue(key, attr) || " - ").toString() }}-->
+                    <span class="tags-wrapper">
+                        <span *ngFor="let tag of getContentValue(key, getAttrs(column)[0]);"
+                              class="tags-content">
+                            <span class="tags-body">{{ tag.label.en }}</span>
+                        </span>
+                    </span>
+                </ng-container>
+
               </ng-container>
             </span>
 
