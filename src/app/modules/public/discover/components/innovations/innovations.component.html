@@ -1,6 +1,71 @@
 <section id="innovations-component" class="section-pad">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+    <!-- recommendation heading section -->
+    <ng-container *ngIf="userInnovations.length > 0">
+
+      <!-- heading -->
+      <h2 class="title-primary">{{ 'DISCOVER.RECOMMENDATION' | translate }}</h2>
+
+      <!-- user Innovation cards -->
+      <div class="section-cards" [@cardAnimation]="userInnovations.length">
+        <div *ngFor="let innovation of userInnovations | slice:startingIndex:endingIndex" class="card">
+
+          <!-- img -->
+          <div class="card-image">
+            <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+              <img [src]="getImageSrc(innovation)" alt=" ">
+            </a>
+          </div>
+
+          <!-- header -->
+          <div class="card-header">
+            <div class="card-title">
+
+              <!-- title -->
+              <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+                <h6>{{ getInnovationDetail('title', innovation) }}</h6>
+              </a>
+
+              <!-- tags -->
+              <ng-container *ngIf="getInnovationTags(innovation).length > 0">
+                <div class="tags-wrapper">
+                  <div *ngFor="let tag of getInnovationTags(innovation)" class="text text-notify">
+                    <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
+                  </div>
+                </div>
+              </ng-container>
+
+            </div>
+          </div>
+
+          <div class="card-justify">
+
+            <!-- body -->
+            <div class="card-body">
+              <div class="text" [innerHTML]="getInnovationDetail('summary', innovation)"></div>
+            </div>
+
+            <!-- footer -->
+            <ng-container *ngIf="getLangs(innovation).length > 0">
+              <div class="card-footer">
+                <span class="text text-notify">{{ 'DISCOVER.FOOTER_TEXT' | translate }}</span>
+                <ng-container *ngFor="let lang of getLangs(innovation)">
+                  <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
+                    <span class="text-link">{{ lang }}</span>
+                  </a>
+                </ng-container>
+              </div>
+            </ng-container>
+
+          </div>
+
+        </div>
+      </div>
+
+    </ng-container>
+    <!-- /user innovation cards -->
+
     <!-- tags section -->
     <ng-container *ngIf="allTags.length > 0">
       <div class="section-tags">
@@ -106,7 +171,7 @@
 
     <!-- innovation cards -->
     <div class="section-cards" [@cardAnimation]="localInnovations.length">
-      <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card responsive">
+      <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card card-responsive">
 
         <!-- img -->
         <div class="card-image">
@@ -161,87 +226,30 @@
     </div>
     <!-- /innovation cards -->
 
+    <!-- no result found on search -->
+    <ng-container *ngIf="noResultFound">
+      <div class="section-no-result flex-centered">
+        <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png"
+             class="img-responsive" alt=" ">
+        <h4>{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h4>
+        <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>
+        <p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>
+      </div>
+    </ng-container>
+    <!-- /no result found on search -->
 
-
-
-    <!--&lt;!&ndash;Recommendation heading section &ndash;&gt;-->
-    <!--<div *ngIf="userInnovations.length>0" class="section-heading-rec">-->
-      <!--&lt;!&ndash; heading &ndash;&gt;-->
-      <!--<h1 class="main-heading">{{ 'DISCOVER.RECOMMENDATION' | translate }}</h1>-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash; User Innovation cards &ndash;&gt;-->
-    <!--<div class="section-user-cards" [@cardAnimation]="userInnovations.length">-->
-      <!--<div *ngFor="let innovation of userInnovations | slice:startingIndex:endingIndex" class="card-wrapper">-->
-        <!--&lt;!&ndash; /Heading section &ndash;&gt;-->
-        <!--<div class="card-content">-->
-          <!--&lt;!&ndash; img &ndash;&gt;-->
-          <!--<div class="card-img">-->
-            <!--<a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">-->
-              <!--<img [src]="getImageSrc(innovation)" alt="No media">-->
-            <!--</a>-->
-          <!--</div>-->
-
-          <!--&lt;!&ndash; body &ndash;&gt;-->
-          <!--<div class="card-body">-->
-
-            <!--&lt;!&ndash; title and tags &ndash;&gt;-->
-            <!--<div class="card-title">-->
-
-              <!--&lt;!&ndash; title &ndash;&gt;-->
-              <!--<a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">-->
-                <!--<h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:53 }}</h1>-->
-              <!--</a>-->
-
-              <!--&lt;!&ndash; tags &ndash;&gt;-->
-              <!--<div class="tags-wrapper">-->
-                <!--<div *ngFor="let tag of getInnovationTags(innovation)" class="tag-content">-->
-                  <!--#{{ tag?.label | multiling:browserLang() | FormatText }}-->
-                <!--</div>-->
-              <!--</div>-->
-
-            <!--</div>-->
-
-            <!--&lt;!&ndash; summary &ndash;&gt;-->
-            <!--<div class="summary-text" [innerHTML]="getInnovationDetail('summary', innovation)"></div>-->
-
-          <!--</div>-->
-
-
-
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /User innovation cards &ndash;&gt;-->
-
-
-
-
-
-
-    <!--&lt;!&ndash; No result found &ndash;&gt;-->
-    <!--<ng-container *ngIf="noResultFound">-->
-      <!--<div class="section-no-result">-->
-        <!--<img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">-->
-        <!--<h1 class="main-heading">{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h1>-->
-        <!--<p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>-->
-        <!--<p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>-->
-      <!--</div>-->
-    <!--</ng-container>-->
-    <!--&lt;!&ndash; /No result found &ndash;&gt;-->
-
-
-    <!--&lt;!&ndash; Pagination section &ndash;&gt;-->
-    <!--<div *ngIf="localResults > 0 && !noResultFound" class="pagination-wrapper">-->
-      <!--<app-pagination-->
-        <!--[total]="localResults"-->
-        <!--[propertyName]="'discover-page'"-->
-        <!--[configValue]="paginationValue"-->
-        <!--(configChange)="onChangePagination($event)">-->
-      <!--</app-pagination>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; Pagination section &ndash;&gt;-->
-
+    <!-- pagination section -->
+    <ng-container *ngIf="localResults > 0 && !noResultFound">
+      <div class="section-light-pad rm-pad-bottom flex-end">
+        <app-pagination
+          [total]="localResults"
+          [propertyName]="'discover-page'"
+          [configValue]="paginationValue"
+          (configChange)="onChangePagination($event)">
+        </app-pagination>
+      </div>
+    </ng-container>
+    <!-- pagination section -->
 
   </div>
 </section>

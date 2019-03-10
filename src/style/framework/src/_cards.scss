@@ -7,7 +7,7 @@
   border-radius: $border-radius;
   border: $border-width solid $border-color;
 
-  &.responsive {
+  &.card-responsive {
     flex: 0 1 calc(14% - 1rem);
   }
 
@@ -62,7 +62,7 @@
 
 @media (max-width: $size-2x) {
 
-  .responsive {
+  .card-responsive {
     flex: 0 1 calc(25% - 1rem) !important;
   }
 
@@ -70,7 +70,7 @@
 
 @media (min-width: $size-md) and (max-width: $size-lg) {
 
-  .responsive {
+  .card-responsive {
     flex: 0 1 calc(33% - 1rem) !important;
   }
 
@@ -78,7 +78,7 @@
 
 @media (min-width: $size-xs) and (max-width: $size-md) {
 
-  .responsive {
+  .card-responsive {
     flex: 0 1 calc(50% - 1rem) !important;
   }
 
@@ -86,7 +86,7 @@
 
 @media (max-width: $size-xs) {
 
-  .responsive {
+  .card-responsive {
     flex: 0 1 320px !important;
   }
 

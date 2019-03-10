@@ -23,7 +23,6 @@ import { SearchInputModule } from '../../utility-components/search-input/search-
 import { TagsService } from '../../../services/tags/tags.service';
 import { ModalMediaModule } from '../../utility-components/modal-media/modal-media.module';
 import { ModalModule } from '../../utility-components/modal/modal.module';
-import { MessageSpaceModule } from '../../utility-components/message-space/message-space.module';
 
 @NgModule({
   imports: [
@@ -37,8 +36,7 @@ import { MessageSpaceModule } from '../../utility-components/message-space/messa
     FooterModule,
     HeaderUnauthModule,
     ModalMediaModule,
-    ModalModule,
-    MessageSpaceModule
+    ModalModule
   ],
   providers:[
     InnovationService,
