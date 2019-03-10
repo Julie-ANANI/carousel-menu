@@ -2,37 +2,21 @@
 
 #discover-description-component {
 
-  .title-primary, .title-section {
+  .title-primary, .title-secondary {
     color: #3E5164;
-    font-weight: normal;
-    font-size: 2.5rem;
-    margin-top: 0.6rem;
+    font-weight: $font-weight-normal;
+    font-size: 2rem;
+    margin-top: 0.5rem;
     font-family: Oswald, sans-serif;
-    margin-bottom: 0.125rem;
+    margin-bottom: $unit-h;
   }
 
   .summary-wrapper, .issue-wrapper, .solution-wrapper {
-    padding-top: 1.2rem;
-    color: $background;
-    font-size: 1rem;
-    font-weight: normal;
-    padding-bottom: 0;
-  }
-
-  .text-notify {
-    display: inline-flex;
-    font-size: 0.75rem;
-    color: #777777;
-    font-weight: 400;
-    margin-top: 0.5rem;
-    margin-right: 0.9375rem;
-    margin-bottom: 0.5rem;
-    align-items: center;
-
-    i {
-      margin-right: 0.3rem;
-    }
-
+    padding-top: $unit-5;
+    color: $background-color;
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
+    margin-bottom: 0;
   }
 
   .section-header {
@@ -43,28 +27,46 @@
       align-items: center;
 
       .fa-angle-left {
-        font-size: 26px;
-        margin-right: 0.3rem;
-        color: $primary;
+        font-size: 1.3rem;
+        margin-right: $unit-1;
+        color: $primary-color;
       }
 
       .text-link {
         color: #777777;
-        font-weight: normal;
-      }
+        font-weight: $font-weight-normal;
 
-      .text-link:hover, .text-link:focus {
-        color: $primary;
+        &:hover, &:focus {
+          color: $primary-color;
+        }
+
       }
 
     }
 
     .title-primary {
-      font-size: 2.875rem;
+      font-size: 2.3rem;
+      margin-bottom: 0;
     }
 
     .summary-wrapper {
-      padding-top: 0.6rem;
+      padding-top: 0.5rem;
+    }
+
+  }
+
+  .text.text-notify {
+    display: inline-flex;
+    color: #777777;
+    font-weight: $font-weight-normal;
+    align-items: center;
+    font-size: $font-size-xs;
+    margin-right: 0.75rem;
+    margin-bottom: $unit-4;
+    margin-top: $unit-4;
+
+    i {
+      margin-right: $unit-h;
     }
 
   }
@@ -76,7 +78,7 @@
 
     .media-wrapper {
       display: inline-flex;
-      margin: 0.6rem 1.2rem 1.875rem;
+      margin: 0.5rem $unit-5 1.5rem;
 
       img:hover {
         cursor: pointer;
@@ -87,21 +89,18 @@
   }
 
   .section-benefits, .section-issue, .section-solution {
-    padding-bottom: 1.2rem;
+    padding-bottom: $unit-5;
   }
 
   .section-benefits {
+    font-size: $font-size-md;
 
     .benefit-wrapper {
-      margin-top: 1.2rem;
+      margin-top: $unit-3;
+      margin-bottom: 0;
 
       li {
-        color: $background;
-        padding: 0 0 0.6rem;
-      }
-
-      li:last-child {
-        padding: 0;
+        color: $background-color;
       }
 
     }
@@ -109,47 +108,50 @@
   }
 
   .section-share {
-    padding-top: 1.875rem;
-    padding-bottom: 1.875rem;
-    border-top: 1px solid #f1f1f1;
-    border-bottom: 1px solid #f1f1f1;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-top: $border-width solid #f1f1f1;
+    border-bottom: $border-width solid #f1f1f1;
 
     .button-wrapper {
       text-align: center;
 
       .btn {
         border-radius: 25px;
-        margin: 0.6rem;
+        margin: 0.5rem;
       }
 
     }
 
     .share-wrapper {
-      margin-top: 0.9375rem;
+      margin-top: 0.75rem;
       text-align: center;
 
-      .title-section {
-        font-size: 0.875rem;
-        color: $background;
+      .title-secondary {
+        font-size: $font-size-sm;
+        color: $background-color;
       }
 
       .btn-round {
-        margin: 0.6rem 0.35rem;
+        margin: 0.5rem $unit-1;
         width: 40px;
         height: 40px;
-        font-size: 16px;
+        font-size: $font-icon-lg;
       }
 
       .btn-linkedin {
         background-color: #0077B5;
+        border-color: #0077B5;
       }
 
       .btn-twitter {
         background-color: #48AAEB;
+        border-color: #48AAEB;
       }
 
       .btn-mail {
-        background-color: $background;
+        background-color: $background-color;
+        border-color: $background-color;
       }
 
       .btn-linkedin:hover, .btn-linkedin:focus, .btn-twitter:hover, .btn-twitter:focus, .btn-mail:hover, .btn-mail:focus {
@@ -162,20 +164,20 @@
   }
 
   .section-related {
-    padding-top: 1.875rem;
+    padding-top: 1.5rem;
 
-    .text {
+    .text-note {
       display: flex;
       align-items: center;
       font-family: Oswald, sans-serif;
-      font-size: 0.875rem;
-      color: $background;
+      font-size: $font-size-sm;
+      color: $background-color;
       padding-bottom: 0.75rem;
 
       .fa-angle-right {
-        font-size: 26px;
-        margin-right: 0.3rem;
-        color: $primary;
+        font-size: 1.3rem;
+        margin-right: $unit-1;
+        color: $primary-color;
       }
 
     }
@@ -184,24 +186,36 @@
       display: flex;
       justify-content: center;
       text-align: center;
-      margin-bottom: -1.875rem;
+      margin-left: -$unit-5;
+      margin-right: -$unit-5;
+      margin-bottom: -1.5rem;
 
       .card {
-        flex: 0 1 340px;
-      }
+        flex: 0 1 280px;
+        padding: $unit-2;
+        margin-left: $unit-5;
+        margin-right: $unit-5;
+        border-color: transparent;
 
-      .card-header {
-        padding-top: 0.9375rem;
+        .card-header {
 
-        .card-title {
-          font-size: 1rem;
-          font-weight: 600;
-          color: $background;
+          h6 {
+            margin-bottom: 0;
+            font-size: $font-size-md;
+          }
+
+          a:hover {
+            color: $text-primary-color;
+          }
+
         }
 
-        .card-title:hover {
-          color: $primary;
-          cursor: pointer;
+        .text.text-notify {
+
+          i {
+            font-size: 0.5rem;
+          }
+
         }
 
       }
@@ -212,10 +226,7 @@
 
 }
 
-
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
+@media (max-width: $size-sm) {
 
   #discover-description-component {
 
@@ -223,6 +234,14 @@
 
       .card-wrapper {
         flex-direction: column;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+
+        .card {
+          margin-right: auto !important;
+          margin-left: auto !important;
+        }
+
       }
 
     }
@@ -232,7 +251,7 @@
 }
 
 
-@media (max-width: 480px) {
+@media (max-width: $size-xs) {
 
   #discover-description-component {
 
