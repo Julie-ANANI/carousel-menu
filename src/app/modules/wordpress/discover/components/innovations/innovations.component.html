@@ -80,7 +80,7 @@
 
         <!-- tags -->
         <div class="tags-wrapper" @tagAnimation>
-          <ng-container *ngFor="let tag of allTags | slice:0:moreTagsIndex;">
+          <div *ngFor="let tag of allTags | slice:0:moreTagsIndex;" class="tag-content">
             <div [ngClass]="{ 'active': getCheckedFilter(tag._id) }" class="label label-draft">
               <label>
                 <input
@@ -93,25 +93,25 @@
                 {{ tag?.label | multiling:browserLang() | FormatText }}
               </label>
             </div>
-          </ng-container>
+          </div>
         </div>
 
         <!-- more tag label -->
         <div class="more-tag-wrapper" [ngStyle]="{ 'display': allTags.length > 22 ? 'flex' : 'none' }">
-          <span
-            [ngStyle]="{ 'visibility': allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
-            class="text-link"
-            (click)="onClickMore($event)">
-            {{ 'DISCOVER.SEE_MORE' | translate }}
-          </span>
+        <span
+          [ngStyle]="{ 'visibility': allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
+          class="text-link"
+          (click)="onClickMore($event)">
+          {{ 'DISCOVER.SEE_MORE' | translate }}
+        </span>
           <!--  -->
           <span
             [ngStyle]="{ 'visibility': moreTagsIndex > 22 ? 'visible' : 'hidden' }"
             class="text-link"
             (click)="onClickClose($event)">
-           {{ 'DISCOVER.CLOSE' | translate }}
+         {{ 'DISCOVER.CLOSE' | translate }}
             <i class="fas fa-angle-up"></i>
-          </span>
+        </span>
         </div>
 
       </div>
@@ -127,7 +127,7 @@
 
         <!-- Suggested Tags -->
         <div class="tags-wrapper" @tagAnimation>
-          <ng-container *ngFor="let suggested_tag of suggestedTags">
+          <div *ngFor="let suggested_tag of suggestedTags" class="tag-content">
             <div [ngClass]="{ 'active': getCheckedSimilarFilter(suggested_tag._id) }" class="label label-draft">
               <label>
                 <input
@@ -140,7 +140,7 @@
                 {{ suggested_tag?.label | multiling:browserLang() | FormatText }}
               </label>
             </div>
-          </ng-container>
+          </div>
         </div>
 
       </div>
