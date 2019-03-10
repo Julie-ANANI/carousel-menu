@@ -11,6 +11,7 @@ import { InnovationsComponent } from './components/innovations/innovations.compo
 import { InnovationService } from '../../../services/innovation/innovation.service';
 import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
+import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
@@ -21,6 +22,7 @@ import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
 import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
 import { TagsService } from '../../../services/tags/tags.service';
+import { ModalModule } from '../../utility-components/modal/modal.module';
 
 
 @NgModule({
@@ -33,14 +35,16 @@ import { TagsService } from '../../../services/tags/tags.service';
     SearchInputModule,
     SharedLoaderModule,
     FooterModule,
-    HeaderUnauthModule
+    HeaderUnauthModule,
+    ModalModule
   ],
   providers:[
     InnovationService,
     InnovationResolver,
     ShareService,
     UserService,
-    TagsService
+    TagsService,
+    InnovationFrontService
   ],
   declarations: [
     DiscoverComponent,
