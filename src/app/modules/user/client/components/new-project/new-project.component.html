@@ -46,9 +46,9 @@
                   formControlName="name"
                   id="new-project-companyName"
                   [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
-              <span class="form-input-hint" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
-                {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
-              </span>
+                <span class="form-input-hint" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
+                  {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
+                </span>
             </div>
           </div>
 
