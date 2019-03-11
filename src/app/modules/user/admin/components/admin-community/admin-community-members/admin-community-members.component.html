@@ -1,45 +1,46 @@
-<section class="section-light-container" id="admin-community-members-component">
+<section id="admin-community-members-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section buttons -->
     <div class="text-right">
-        <!--<button (click)="onSearchClick($event)" class="btn btn-primary">
-          Smart pro search
-        </button>
-        <span></span>
-        <button (click)="onAddAmbassadors($event)" class="btn btn-primary">
-            Add ambassadors
-        </button>-->
-        <button (click)="onImportAmbassadors($event)" class="btn btn-primary">
-            Import ambassadors
-        </button>
+
+      <!-- import -->
+      <label class="btn ghost-primary btn-sm">
+        <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+        Import
+      </label>
+
+      <!-- add
+      <button type="button" class="btn btn-primary btn-sm" (click)="onClickAdd($event)">Add</button> -->
+
     </div>
+    <!-- /section buttons -->
+
+    <!-- section members -->
     <app-shared-ambassadors-list [config]="config"></app-shared-ambassadors-list>
+    <!-- /section members -->
+
   </div>
-
 </section>
-
-<!-- adv search sidebar -->
-<app-sidebar [(template)]="sidebarValue">
-    <advsearch-form
-            [sidebarState]="sidebarValue.animate_state"
-            (finalOutput)="receiveResult($event)">
-    </advsearch-form>
-</app-sidebar>
-<!-- /adv search sidebar -->
-
 
 <!-- add ambassadors sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-    <add-ambassador-form
-            [sidebarState]="sidebarValue.animate_state"
-            (finalOutput)="receiveResult($event)">
-    </add-ambassador-form>
+  <add-ambassador-form
+    [sidebarState]="sidebarValue.animate_state">
+  </add-ambassador-form>
 </app-sidebar>
 <!-- /add ambassadors sidebar -->
 
-<!-- import ambassadors sidebar -->
-<app-sidebar [(template)]="sidebarValue">
-    <csv-upload-form
-            (finalOutput)="onFinishUpload($event)">
-    </csv-upload-form>
-</app-sidebar>
-<!-- /import ambassadors sidebar -->
+
+<!--<button (click)="onSearchClick($event)" class="btn btn-primary">
+          Smart pro search
+        </button>-->
+
+<!--&lt;!&ndash; adv search sidebar &ndash;&gt;-->
+<!--<app-sidebar [(template)]="sidebarValue">-->
+    <!--<advsearch-form-->
+            <!--[sidebarState]="sidebarValue.animate_state"-->
+            <!--(finalOutput)="receiveResult($event)">-->
+    <!--</advsearch-form>-->
+<!--</app-sidebar>-->
+<!--&lt;!&ndash; /adv search sidebar &ndash;&gt;-->
