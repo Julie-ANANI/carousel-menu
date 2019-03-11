@@ -48,8 +48,8 @@ export const COMMON = {
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
   'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
-  'SEARCH_BY': 'Search by',
-  'SEARCH_PLACEHOLDER': 'Search here',
+
+
 
   'SHARED_REPORTS': 'Shared Reports',
 
@@ -139,6 +139,7 @@ export const COMMON = {
     'SELECT_WORKFLOW': 'Select the workflow',
     'SELECT': 'Select',
     'CHOOSE_LANGUAGE': 'Choose Language:',
+    'SEARCH_BY': 'Search by',
   },
 
   'PLACEHOLDER': {
@@ -150,6 +151,7 @@ export const COMMON = {
     'CAMPAIGN': 'Enter the campaign name',
     'ACTIVITY_FIELDS': 'Enter your activity field',
     'TECHNOLOGIES': 'Enter the technology',
+    'SEARCH': 'Search here',
   },
 
   'REQUIRED': {

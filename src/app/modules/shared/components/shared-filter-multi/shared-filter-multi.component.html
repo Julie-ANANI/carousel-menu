@@ -1,43 +1,47 @@
-<div id="filter-multi-component">
+<section id="filter-multi-component">
 
   <!-- Select by option -->
-  <div *ngIf="textProps.length > 0" class="filter-type-wrapper">
-    <span class="filter-label">{{ 'COMMON.SEARCH_BY' | translate }}:</span>
-    <label>
-      <select (change)="changeCurrentTextProp($event); search.value = '';" class="form-select">
-        <option
-          *ngFor="let propName of textProps"
-          [value]="getAttrs(propName)"
-          [selected]="textIsSelected(propName)">
-          {{ getName(propName) | translate | FormatText }}
-        </option>
-      </select>
-    </label>
-  </div>
+  <ng-container *ngIf="textProps.length > 0">
+    <div class="filter-type-wrapper">
+      <span class="text text-label">{{ 'COMMON.LABEL.SEARCH_BY' | translate }}:</span>
+      <label>
+        <select (change)="changeCurrentTextProp($event)" class="form-select">
+          <option
+            *ngFor="let propName of textProps"
+            [value]="getAttrs(propName)"
+            [selected]="textIsSelected(propName)">
+            {{ getName(propName) | translate | FormatText }}
+          </option>
+        </select>
+      </label>
+    </div>
+  </ng-container>
   <!-- /Select by option -->
 
 
   <!-- Search box -->
-  <div *ngIf="textProps.length > 0" class="filter-search-box">
+  <ng-container *ngIf="textProps.length > 0">
+    <div class="filter-search-box">
 
-    <label>
-      <input
-        type="search"
-        (keyup.enter)="filterText($event.srcElement)"
-        #search
-        class="form-input"
-        [placeholder]="'COMMON.SEARCH_PLACEHOLDER' | translate">
-    </label>
+      <label>
+        <input
+          type="search"
+          (keyup)="filterText($event.srcElement)"
+          #search
+          class="form-input"
+          [placeholder]="'COMMON.PLACEHOLDER.SEARCH' | translate">
+      </label>
 
-    <div class="search-icon" (click)="filterText(search)">
-      <img src="https://res.cloudinary.com/umi/image/upload/v1541656930/app/default-images/icons/search-meta.svg">
+      <div class="search-icon" (click)="filterText(search)">
+        <img src="https://res.cloudinary.com/umi/image/upload/v1541656930/app/default-images/icons/search-meta.svg" alt=" ">
+      </div>
+
+      <div *ngIf="search.value !== ''" class="search-cross" (click)="search.value = ''; filterText(search)">
+        <i class="fas fa-times"></i>
+      </div>
+
     </div>
-
-    <div *ngIf="search.value !== ''" class="search-cross" (click)="search.value = ''; filterText(search)">
-      <i class="fas fa-times"></i>
-    </div>
-
-  </div>
+  </ng-container>
   <!-- /Search box -->
 
 
@@ -79,7 +83,7 @@
   <!-- /Other options -->
 
 
-</div>
+</section>
 
 
 

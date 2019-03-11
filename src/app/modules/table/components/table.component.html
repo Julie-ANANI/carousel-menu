@@ -1,38 +1,42 @@
-<div id="table-component">
+<section id="table-component">
   <div class="table-wrapper">
 
+    <!-- info row -->
+    <ng-container *ngIf="!isNoTitle || isFiltrable">
+      <div class="table-header">
 
-    <!-- Info row -->
-    <div *ngIf="!isNoTitle || isFiltrable" class="info-wrapper">
+        <!-- number of result and title -->
+        <ng-container *ngIf="!isNoTitle">
+          <h6 class="text text-notify">{{ total }} {{ title | translate }}</h6>
+        </ng-container>
 
-      <!-- Number of result and title -->
-      <h1 *ngIf="!isNoTitle"  class="main-heading">{{ total }} {{ title | translate }}</h1>
+        <!-- if we want to filter by columns (not local) -->
+        <ng-container *ngIf="isFiltrable">
+          <div class="filter-wrapper">
+            <app-shared-multi-filter
+              [config]="config"
+              (configChange)="changeConfig($event)"
+              [props]="columns">
+            </app-shared-multi-filter>
+          </div>
+        </ng-container>
 
-      <!-- If we want to filter by columns (not local) -->
-      <div class="filter-wrapper">
-        <app-shared-multi-filter
-          *ngIf="isFiltrable"
-          [config]="config"
-          (configChange)="changeConfig($event)"
-          [props]="columns">
-        </app-shared-multi-filter>
       </div>
-
-    </div>
-    <!-- /Info row -->
+    </ng-container>
+    <!-- /info row -->
 
 
     <!-- No result -->
-    <div *ngIf="total === 0" class="no-result-wrapper">
-      <img src="https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg" class="img-responsive bot-image" alt=" ">
+    <div *ngIf="total === 0" class="section-light-pad rm-pad-bottom">
       <ng-container *ngIf="!fetchingResult">
-        <h1 class="main-heading">{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h1>
-        <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>
-        <p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>
+        <app-message-space [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'" [widthMax]="'338px'">
+          {{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }} {{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}
+        </app-message-space>
       </ng-container>
       <ng-container *ngIf="fetchingResult">
-        <p>{{ 'ERROR.FETCHING_RESULT.MESSAGE.A' | translate }}</p>
-        <p>{{ 'ERROR.FETCHING_RESULT.MESSAGE.B' | translate }}</p>
+        <app-message-space [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'" [widthMax]="'310px'">
+          {{ 'ERROR.FETCHING_RESULT.MESSAGE.A' | translate }} {{ 'ERROR.FETCHING_RESULT.MESSAGE.B' | translate }}
+        </app-message-space>
       </ng-container>
     </div>
 
@@ -253,4 +257,4 @@
 
 
   </div>
-</div>
+</section>

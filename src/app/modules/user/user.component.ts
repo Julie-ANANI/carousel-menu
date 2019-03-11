@@ -1,8 +1,10 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Subject } from 'rxjs';
 import { ScrollService } from '../../services/scroll/scroll.service';
+import { isPlatformBrowser, Location } from '@angular/common';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -16,8 +18,13 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private loaderService: LoaderService,
-              private scrollService: ScrollService) { }
+  private _adminSide = false;
+
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private loaderService: LoaderService,
+              private scrollService: ScrollService,
+              private location: Location,
+              private router: Router) { }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -25,6 +32,16 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this._adminSide = this.location.path().slice(5, 11) === '/admin';
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this._adminSide = this.location.path().slice(5, 11) === '/admin';
+        }
+      });
+    }
 
     this.loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
@@ -44,6 +61,10 @@ export class UserComponent implements OnInit, OnDestroy {
 
   get ngUnsubscribe(): Subject<any> {
     return this._ngUnsubscribe;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
   }
 
   ngOnDestroy(): void {

@@ -1,16 +1,13 @@
-<section class="section-light-container" id="admin-dashboard-component">
+<section class="section-light-pad" id="admin-dashboard-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
-
 
     <!-- When loading -->
     <div *ngIf="spinnerDisplay" class="section-spinner">
       <app-shared-loader></app-shared-loader>
     </div>
 
-
     <!-- Loading finished -->
     <ng-container *ngIf="adminLevel > 2 && !spinnerDisplay">
-
 
       <!-- Section operator -->
       <div class="section-operator">
@@ -30,10 +27,7 @@
             [(ngModel)]="operatorId"
             (ngModelChange)="newOperatorSelected($event)">
             <option value="">{{ 'DASHBOARD.STATS.ALL_OPERATORS' | translate }}</option>
-            <option
-              *ngFor="let operator of operators"
-              [ngValue]="operator._id"
-              [selected]="operatorId === operator._id">
+            <option *ngFor="let operator of operators" [ngValue]="operator._id" [selected]="operatorId === operator._id">
               {{ operator.firstName + ' ' + operator.lastName }}
             </option>
           </select>
@@ -44,7 +38,7 @@
 
 
       <!-- Section table -->
-      <div class="section-table">
+      <div class="section-light-pad rm-pad-bottom">
         <app-admin-projects-list [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
       </div>
       <!-- /Section table -->
@@ -120,14 +114,17 @@
 </section>
 
 
-<!-- Innovation preview sidebar-->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<!-- innovation preview sidebar-->
+<app-sidebar [(template)]="sidebarTemplateValue">
   <app-innovation-preview
     [projectCard]="selectedInnovation"
     [batchInfo]="{ batchSelected:this.selectedBatch, date: this.dateNow }">
   </app-innovation-preview>
 </app-sidebar>
-<!-- /Innovation preview sidebar-->
+<!-- /innovation preview sidebar-->
+
+
+
 
 <!--
 <div class="container">

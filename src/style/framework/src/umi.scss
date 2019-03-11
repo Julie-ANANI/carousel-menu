@@ -15,12 +15,12 @@
 
 // Elements
 @import "typography";
-@import "buttons";
+@import "tables";
 @import "banners";
-@import "labels";
-@import "header";
+@import "buttons";
 @import "forms";
-@import "navbar";
+@import "header";
+@import "labels";
 
 
 // Layout
@@ -28,10 +28,12 @@
 
 
 // Components
+@import "cards";
 @import "modal";
+@import "navbar";
 @import "tabs";
 @import "tooltip";
-@import "cards";
+
 
 
 // Utilities

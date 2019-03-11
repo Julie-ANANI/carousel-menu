@@ -49,8 +49,8 @@ export const COMMON = {
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
-  'SEARCH_BY': 'Recherche par',
-  'SEARCH_PLACEHOLDER': 'Rechercher ici',
+
+
 
   'SHARED_REPORTS': 'Rapports partagés',
 
@@ -137,6 +137,7 @@ export const COMMON = {
     'SELECT': 'Sélectionnez',
     'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
     'TECHNOLOGIES': 'Technologies',
+    'SEARCH_BY': 'Recherche par',
   },
 
   'PLACEHOLDER': {
@@ -148,6 +149,7 @@ export const COMMON = {
     'CAMPAIGN': 'Entrez le nom de la campagne',
     'ACTIVITY_FIELDS': 'Entrez votre secteur d\'activité',
     'TECHNOLOGIES': 'Entrez la technologie',
+    'SEARCH': 'Rechercher ici',
   },
 
   'REQUIRED': {

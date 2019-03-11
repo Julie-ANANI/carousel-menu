@@ -1,24 +1,21 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/src/variables";
 
 #table-component {
 
-
   .table-wrapper {
 
-    .info-wrapper {
+    .table-header {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
 
-      .main-heading {
-        font-size: 1rem;
-        color: $meta-color;
-        font-weight: normal;
-        margin-right: 1.57rem;
+      h6 {
+        margin-bottom: 1.25rem;
+        margin-right: 1.25rem;
       }
 
       .filter-wrapper {
-        margin-bottom: 1.57rem;
+        margin-bottom: 1.25rem;
       }
 
     }
@@ -28,17 +25,17 @@
       width: 100%;
       border-spacing: 0;
       border-collapse: collapse;
-      border: 3px solid $table-border;
+      border: $border-width-lg solid $table-border-color;
       background-color: white;
 
       th {
         position: relative;
-        font-size: .875rem;
-        color: $dark-color;
+        font-size: $font-size-sm;
+        color: $text-primary-color;
         min-width: 100px;
         font-weight: 600;
         transition: all .15s ease-in-out;
-        border-bottom: 1px solid $table-tr-border;
+        border-bottom: 1px solid $table-tr-border-color;
         padding-left: 11px;
         padding-right: 11px;
         background-color: $table-th-background-color;
@@ -103,10 +100,10 @@
 
       tr {
         text-align: left;
-        font-size: .875rem;
+        font-size: $font-size-sm;
         vertical-align: middle;
         height: 51px;
-        border-bottom: 1px solid $table-tr-border;
+        border-bottom: 1px solid $table-tr-border-color;
       }
 
       tr.active {
@@ -132,7 +129,7 @@
         }
 
         .icon-check {
-          color: $validation-color;
+          color: $success-color;
         }
 
         .icon-check, .icon-cross {
