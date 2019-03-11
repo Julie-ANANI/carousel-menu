@@ -1,6 +1,6 @@
 <ng-container *ngIf="innovationCard && innovationCard.length > 0">
   <div class="section-pad animate-page" id="discover-description-component">
-    <div class="column col-xs-12 col-11 col-mx-auto" >
+    <div class="column col-xs-12 col-11 col-mx-auto">
       <ng-container *ngFor="let innovation of innovationCard">
 
         <!-- section header -->
@@ -32,7 +32,7 @@
 
               <!-- if image -->
               <ng-container *ngIf="media?.type === 'PHOTO'">
-                <img [src]="getSrc(media)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate" (click)="mediaToShow($event, media.url)">
+                <img [src]="getSrc(media)" [alt]=" " (click)="mediaToShow($event, media.url)">
               </ng-container>
 
               <!-- if video -->

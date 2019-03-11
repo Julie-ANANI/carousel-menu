@@ -6,13 +6,15 @@ import { InnovationPreviewComponent } from './innovation-preview.component';
 
 import { SidebarModule } from '../../sidebar.module';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     SidebarModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    PipeModule
   ],
   declarations: [
     InnovationPreviewComponent
