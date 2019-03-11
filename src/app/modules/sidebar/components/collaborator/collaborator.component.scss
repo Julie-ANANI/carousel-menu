@@ -1,8 +1,8 @@
 #collaborator-component {
-  padding-top: 1.875rem;
+  padding-top: 1.5rem;
 
-  .pd-top {
-    padding-top: 1.875rem;
+  .btn {
+    margin-bottom: 1.5rem;
   }
 
   .collaborator {
@@ -10,23 +10,25 @@
     justify-content: space-between;
     flex-wrap: wrap;
     list-style: none;
+    align-items: center;
   }
 
 
   ul {
+    margin: 0;
 
     li {
-      padding-left: 0;
-      margin-bottom: .6rem;
       display: inline-flex;
       align-items: center;
-      font-size: .9375rem;
+      font-size: 0.7rem;
+      margin-top: 0;
+
+      .label {
+        margin-left: 0;
+      }
+
     }
 
-  }
-
-  ul:last-child {
-    margin-bottom: 0;
   }
 
   ul:hover {
@@ -40,27 +42,25 @@
 
   .ghost-delete {
     visibility: visible;
-    margin-top: .6rem;
-    margin-bottom: .6rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
 
   .ghost-primary {
-    margin-top: .6rem;
-    margin-bottom: .6rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
 
 }
-
-/********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 
   #collaborator-component {
 
     .ghost-delete, .ghost-primary {
-      width: 78px;
+      min-width: 78px !important;
       padding-left: 0 !important;
       padding-right: 0 !important;
       visibility: visible !important;
