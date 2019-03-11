@@ -1,6 +1,8 @@
 @import "variables";
+@import "mixins";
 
 .card {
+  @include control-transition();
   display: flex;
   flex-direction: column;
   background-color: $bg-color-light;
@@ -41,7 +43,8 @@
   .card-header {
 
     .card-title {
-      font-weight: 500;
+      font-weight: $font-weight-medium;
+      font-size: $unit-5;
     }
 
   }
@@ -54,7 +57,7 @@
   }
 
   &:hover {
-    box-shadow: $box-shadow;
+    box-shadow: $box-shadow-hover-umi;
   }
 
 }
