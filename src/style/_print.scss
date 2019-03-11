@@ -1,4 +1,4 @@
-@import "variables";
+@import "framework/src/variables";
 
 @media print and (color) {
 
@@ -21,30 +21,27 @@
     min-height: unset !important;
   }
 
-  .modal, app-header, app-footer, app-sidebar {
+  app-modal, app-header, app-footer, app-sidebar {
     display: none !important;
   }
 
 
   /********************************** Innovation Card ***************************************/
 
-  #setup-component, .header-project, #project-component .section-header {
+  #setup-component, .header, #project-component .section-header {
     display: none !important;
   }
-
 
   #project-component {
     padding-bottom: 0 !important;
   }
 
-
   #innovation-card-print {
     display: flex !important;
-    color: $text-dark;
+    color: $text-primary-color;
     font-size: 13px;
     width: 100%;
     height: 20.95cm;
-
 
     .column-1, .column-2, .column-3 {
       width: 33.33%;
@@ -53,7 +50,7 @@
       flex-direction: column;
       padding: 15px;
 
-      .main-heading {
+      .title {
         margin-bottom: 10px;
         font-size: 20px;
         font-weight: normal;
@@ -61,39 +58,14 @@
 
     }
 
-
     .column-1 {
       background-color: #D8D8D8;
 
-      .main-heading {
+      .title {
         font-size: 24px;
         font-weight: 600;
         margin-bottom: 25px;
       }
-
-      /*.summary-text {
-        padding-bottom: -.6rem;
-
-        ul {
-          margin: 0 !important;
-          padding: 0 !important;
-
-          li {
-            margin: 0 !important;
-            padding: 0 0 .6rem 0 !important;
-          }
-
-        }
-
-      }*/
-
-      /*.summary-text {
-
-        p:last-child {
-          padding-bottom: 0;
-        }
-
-      }*/
 
       .image-wrapper {
         padding-top: 15px;
@@ -102,46 +74,27 @@
 
       .advantage-wrapper {
 
-        .main-heading {
+        .title {
           font-weight: normal;
           font-size: 20px;
           margin-bottom: 10px;
         }
 
+        .summary-text {
+          margin-bottom: 0;
+        }
+
         .advantages {
 
           li {
-            padding: 5px 1px;
+
           }
-
-
-          li:first-child {
-            padding-top: 0;
-          }
-
-          /*li:last-child {
-            padding-bottom: 0;
-          }*/
 
         }
 
       }
 
     }
-
-
-    /*.column-2, .column-3 {
-
-      .issue-text, .solution-text {
-
-        p:last-child, ul li:last-child {
-          padding-bottom: 0;
-        }
-
-      }
-
-    }*/
-
 
   }
 

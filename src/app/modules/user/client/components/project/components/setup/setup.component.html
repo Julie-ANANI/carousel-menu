@@ -151,7 +151,7 @@
     <!-- column 1 -->
     <div class="column-1">
 
-      <h1 class="main-heading">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h1>
+      <h3 class="title">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h3>
 
       <div class="summary-text" [innerHTML]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
 
@@ -160,7 +160,7 @@
       </div>
 
       <div class="advantage-wrapper">
-        <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+        <h3 class="title">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h3>
         <ul class="advantages">
           <li *ngFor="let advantage of innovation.innovationCards[selectedInnovationIndex].advantages">
             {{ advantage.text | FormatText }}
@@ -173,14 +173,14 @@
 
     <!-- column 2 -->
     <div class="column-2">
-      <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+      <h3 class="title">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
       <div class="issue-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].problem"></div>
     </div>
     <!-- /column 2 -->
 
     <!-- column 3 -->
     <div class="column-3">
-      <h1 class="main-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+      <h3 class="title">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
       <div class="solution-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].solution"></div>
     </div>
     <!-- /column 3 -->
