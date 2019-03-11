@@ -67,6 +67,7 @@
 
     i {
       margin-right: $unit-h;
+      font-size: 0.5rem;
     }
 
   }
@@ -206,14 +207,6 @@
 
           a:hover {
             color: $text-primary-color;
-          }
-
-        }
-
-        .text.text-notify {
-
-          i {
-            font-size: 0.5rem;
           }
 
         }
