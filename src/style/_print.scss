@@ -25,6 +25,21 @@
     display: none !important;
   }
 
+  p {
+    margin-bottom: 4px;
+  }
+
+  ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 4px;
+
+    li {
+      margin-top: 4px;
+    }
+
+  }
+
 
   /********************************** Innovation Card ***************************************/
 
@@ -86,14 +101,18 @@
 
         .advantages {
 
-          li {
-
+          li:first-child {
+            margin-top: 0;
           }
 
         }
 
       }
 
+    }
+
+    .issue-text, .solution-text {
+      margin-bottom: -4px;
     }
 
   }
