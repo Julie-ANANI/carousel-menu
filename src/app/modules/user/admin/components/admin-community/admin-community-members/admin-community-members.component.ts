@@ -57,7 +57,7 @@ export class AdminCommunityMembersComponent implements OnInit {
   onClickAdd() {
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      size: "726px",
+      size: '726px',
       title: 'SIDEBAR.TITLE.ADD_AMBASSADOR',
       type: 'professional'
     };
@@ -71,7 +71,6 @@ export class AdminCommunityMembersComponent implements OnInit {
       this._searchResult = [];
     }
   }
-
 
   get searchResult(): any {
     return this._searchResult;
