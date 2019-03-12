@@ -7,8 +7,7 @@ import { CampaignService } from '../../../../../../services/campaign/campaign.se
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
-import { EmailTemplate } from '../../../../../../models/email-template';
-import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+// import { EmailTemplate } from '../../../../../models/email-template';
 
 @Component({
   selector: 'app-admin-campaign-workflows',
@@ -28,11 +27,9 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _availableScenarios: Array<EmailScenario> = [];
 
-  private _modifiedScenario: EmailScenario;
+  private _modifiedScenarios: Array<EmailScenario> = [];
 
   private _modalImport: boolean;
-
-  private _noResult = false;
 
   private _modalContent: string;
 
@@ -47,17 +44,15 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
               private templatesService: TemplatesService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private campaignFrontService: CampaignFrontService) { }
+              private notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
     this.getAllTemplates();
     this.getAllSignatures();
-    this.generateAvailableScenarios();
-    this.getModifiedScenario();
+    this.generateAvailableScenario();
+    this.generateModifiedScenarios();
   }
-
 
   /***
    * this is to get all the templates from the library and than we choose the first one
@@ -70,7 +65,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
         this._selectedTemplate = this._templates[0];
       }
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.TEMPLATE_ERROR');
+      this.notificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.TEMPLATE_ERROR');
     });
   }
 
@@ -82,87 +77,39 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this.templatesService.getAllSignatures({limit: '0', sort: '{"_id":-1}'}).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.SIGNATURE_ERROR');
+      this.notificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.SIGNATURE_ERROR');
     });
   }
 
-
-  /***
-   * this is to generate the available scenarios. We also group them under the same workflow, and than
-   * assign it to the variable availableScenarios. Based on that we also we assign the value of the
-   * variable noResult.
-   */
-  private generateAvailableScenarios() {
-    this._availableScenarios = [];
-
-    let scenariosNames: Set<string> = new Set<string>();
-
-    if (this._campaign.settings && this._campaign.settings.emails) {
-      this._campaign.settings.emails.forEach((mail) => {
-        scenariosNames.add(mail.nameWorkflow);
-      });
-    }
-
-    scenariosNames.forEach((name) => {
-      let scenario = {} as EmailScenario;
-      scenario.name = name;
-
-      scenario.emails = this._campaign.settings.emails.filter(email => {
-        return email.nameWorkflow === name;
-      });
-
-      this._availableScenarios.push(scenario);
+  public updateAvailableScenario(scenario: EmailScenario) {
+    // DROP
+    this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
+      return mail.nameWorkflow !== scenario.name;
     });
 
-    this._noResult = this._availableScenarios.length === 0;
-
+    // on choppe l'index avant de l'enlever dans le but de le rajouter en bonne position
+    // (evite le deplacement incompréhensible de l'element dans le DOM)
+    const index = this._availableScenarios.findIndex((x) => {
+      return x.name === scenario.name;
+    });
+    this._availableScenarios = this._availableScenarios.filter((scenar) => {
+      return scenar.name !== scenario.name;
+    });
+    // INSERT
+    this._campaign.settings.emails = this._campaign.settings.emails.concat(scenario.emails);
+    this._availableScenarios.splice(index, 0, scenario);
+    this.saveTemplates('ERROR.CAMPAIGN.WORKFLOW.ADDED');
   }
 
 
-  /***
-   * first we check do we have the default workflow, if yes than we search for that workflow in the availableScenarios
-   * and assign that to modifiedScenario. If no than we search in the emails and look which email is modified than
-   * we take the workflow name than look for that in the availableScenarios and that assign it to the modifiedScenario.
-   * If all conditions failed than we assign the first one of availableScenarios to the modifiedScenario.
-   */
-  private getModifiedScenario() {
-    if (this._availableScenarios.length > 0) {
-
-      if (this._campaign.settings.defaultWorkflow) {
-        const index = this._availableScenarios.findIndex((scenario: EmailScenario) => this._campaign.settings.defaultWorkflow === scenario.name);
-        if (index !== -1) {
-          this.updateModifiedScenario(this._availableScenarios[index]);
-        }
-      } else {
-        let nameWorkflow: string;
-
-        this._campaign.settings.emails.forEach((mail: EmailTemplate) => {
-          if (mail.modified) {
-            nameWorkflow = mail.nameWorkflow;
-            return;
-          }
-        });
-
-        if (nameWorkflow) {
-          const index = this._availableScenarios.findIndex((scenario: EmailScenario) => scenario.name === nameWorkflow);
-          if (index !== -1) {
-            this.updateModifiedScenario(this._availableScenarios[index]);
-          }
-        } else {
-          this.updateModifiedScenario(this._availableScenarios[0]);
-        }
-
-      }
-
-    }
+  public generateModifiedScenarios() {
+    this._modifiedScenarios = this._availableScenarios.filter((x) => {
+      return x.emails.reduce((acc, current) => {
+        return (acc && current.modified);
+      }, true);
+    });
   }
 
-
-  getCampaignStat(searchKey: any): number {
-    if (this._campaign) {
-      return this.campaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
-    }
-  }
 
 
   onClickSelect(template: EmailScenario) {
@@ -192,113 +139,93 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
     this._modalImport = true;
 
-    if (this._modifiedScenario && this._modifiedScenario.name && this._modifiedScenario.name === this._selectedTemplate.name) {
+    if (this._availableScenarios.map(scenario => scenario.name).indexOf(this._selectedTemplate.name) > -1) {
       this._modalContent = 'CAMPAIGNS.WORKFLOW_PAGE.MODAL.CONTENT_A';
     } else {
       this._modalContent = 'CAMPAIGNS.WORKFLOW_PAGE.MODAL.CONTENT_B';
     }
-
   }
 
 
   onClickTestWorkflow() {
     for (let i = 1; i < 4; i++) {
       this.campaignService.sendTestEmails(this._campaign._id, i).pipe(first()).subscribe((res) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.WORKFLOW.SENT');
+        this.notificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.WORKFLOW.SENT');
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.WORKFLOW.SENT_ERROR');
+        this.notificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.WORKFLOW.SENT_ERROR');
       });
     }
   }
 
-
   private saveTemplates(message: string) {
     this.campaignService.put(this._campaign).pipe(first()).subscribe((savedCampaign: any) => {
-      this.translateNotificationsService.success("ERROR.SUCCESS", message);
-    }, () => {
-      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+      this.notificationsService.success("ERROR.SUCCESS", message);
+      this.generateModifiedScenarios();
+    }, (err: any) => {
+      this.notificationsService.error('ERROR', err);
     });
   }
-
 
   /***
    * this function is called when the user clicks on the confirm button.
    */
   onClickConfirm() {
-    this.updateModifiedScenario(this._selectedTemplate);
-    this.generateAvailableScenarios();
+    this.updateAvailableScenario(this._selectedTemplate);
     this.saveTemplates('ERROR.CAMPAIGN.WORKFLOW.ADDED');
     this._modalImport = false;
   }
 
-
-  private updateModifiedScenario(scenario: EmailScenario) {
-    this._modifiedScenario = scenario;
-    this._campaign.settings.defaultWorkflow = scenario.name;
-  }
-
-
-  removeScenario() {
-    this._campaign.settings.defaultWorkflow = '';
-    this._campaign.settings.emails = [];
-    this.generateAvailableScenarios();
-    this._modifiedScenario = null;
-    this.saveTemplates('ERROR.CAMPAIGN.WORKFLOW.DELETED');
-  }
-
-
-  /***
-   * for the moment we are keeping it like this because we have old campaigns.
-   * @param scenario
-   */
-  updateAvailableScenario(scenario: EmailScenario) {
-    // DROP
-    this._campaign.settings.emails = this._campaign.settings.emails.filter((mail: EmailTemplate) => {
+  public removeScenario(scenario: EmailScenario) {
+    this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
       return mail.nameWorkflow !== scenario.name;
     });
-
-    // on choppe l'index avant de l'enlever dans le but de le rajouter en bonne position
-    // (evite le deplacement incrompréhensible de l'element dans le DOM)
-    const index = this._availableScenarios.findIndex((x: EmailScenario) => {
-      return x.name === scenario.name;
-    });
-
-    this._availableScenarios = this._availableScenarios.filter((scenar: EmailScenario) => {
+    this._availableScenarios = this._availableScenarios.filter((scenar) => {
       return scenar.name !== scenario.name;
     });
 
-    this._campaign.settings.emails = this._campaign.settings.emails.concat(scenario.emails);
-    this._availableScenarios.splice(index, 0, scenario);
-    this.saveTemplates('ERROR.CAMPAIGN.WORKFLOW.UPDATED');
+    if (scenario.name === this._campaign.settings.defaultWorkflow) {
+      this._campaign.settings.defaultWorkflow = '';
+    }
+
+    this.saveTemplates('ERROR.CAMPAIGN.WORKFLOW.DELETED');
   }
 
-
-  /*get domain(): boolean {
-    return (this._campaign.innovation.settings.domain !== '');
-  }*/
-
-  get config(): any {
-    return this._config;
+  private generateAvailableScenario() {
+    this._availableScenarios = [];
+    let scenariosNames: Set<string>;
+    scenariosNames = new Set<string>();
+    if (this._campaign.settings && this._campaign.settings.emails) {
+      this._campaign.settings.emails.forEach((x) => {
+        scenariosNames.add(x.nameWorkflow);
+      });
+    }
+    scenariosNames.forEach((name) => {
+      let scenar = {} as EmailScenario;
+      scenar.name = name;
+      scenar.emails = this._campaign.settings.emails.filter(email => {
+        return email.nameWorkflow === name;
+      });
+      this._availableScenarios.push(scenar);
+    });
   }
 
   get availableScenarios(): Array<EmailScenario> {
-    return this._availableScenarios
+    return this._availableScenarios;
   }
+
+  get modifiedScenarios(): Array<EmailScenario> {
+    return this._modifiedScenarios;
+  };
 
   get templates(): Array<EmailScenario> {
     return this._templates;
   }
-
   get campaign(): Campaign {
-    return this._campaign
+    return this._campaign;
   };
 
   get signatures(): Array<EmailSignature> {
     return this._signatures;
-  }
-
-  set config(value: any) {
-    this._config = value;
   }
 
   set templates(value: Array<EmailScenario>) {
@@ -309,24 +236,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     return this._modalImport;
   }
 
-  set modalImport(value: boolean) {
-    this._modalImport = value;
-  }
-
-  get selectedTemplate(): EmailScenario {
-    return this._selectedTemplate;
-  }
-
-  get modifiedScenario(): EmailScenario {
-    return this._modifiedScenario;
-  }
-
-  get noResult(): boolean {
-    return this._noResult;
-  }
-
   get modalContent(): string {
     return this._modalContent;
   }
-
 }
