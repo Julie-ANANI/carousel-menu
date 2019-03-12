@@ -316,7 +316,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     const thirdJSdate = new Date(batch.thirdMail);
     const thirdTime = ('0' + thirdJSdate.getHours()).slice(-2) + ':' + ('0' + thirdJSdate.getMinutes()).slice(-2);
 
-    const workflowName = ('Workflow ' + this.getWorkflowName(this.getBatchIndex(batch._id))).toString();
+    const workflowName = ('Workflow ' + this.getWorkflowName(batch)).toString();
 
     const digit = 1; // number of decimals stats/pred
 
@@ -438,16 +438,8 @@ export class AdminCampaignBatchComponent implements OnInit {
   }
 
 
-  private getWorkflowName(index: number) {
-    if (this._campaign.settings.ABsettings.status !== '0') {
-      if (index === 0) {
-        return this._campaign.settings.ABsettings.nameWorkflowA;
-      }
-      if (index === 1) {
-        return this._campaign.settings.ABsettings.nameWorkflowB;
-      }
-    }
-    return this._campaign.settings.defaultWorkflow;
+  private getWorkflowName(batch: Batch) {
+    return batch.workflow || this._campaign.settings.defaultWorkflow;
   }
 
 
@@ -560,11 +552,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   private getContentWorkflowStep(batch: Batch, step: any): any {
-    const index = this.getBatchIndex(batch._id);
-    let workflowName = this.getWorkflowName(index);
-    if (batch.workflow) {
-      workflowName = batch.workflow;
-    }
+    const workflowName = this.getWorkflowName(batch);
     const content = {en: '', fr: ''};
 
     this.campaign.settings.emails.forEach( mail => {
