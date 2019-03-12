@@ -98,6 +98,9 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     // INSERT
     this._campaign.settings.emails = this._campaign.settings.emails.concat(scenario.emails);
     this._availableScenarios.splice(index, 0, scenario);
+    if (this._availableScenarios.length === 1) {
+      this._campaign.settings.defaultWorkflow = this._availableScenarios[0].name;
+    }
     this.saveTemplates('ERROR.CAMPAIGN.WORKFLOW.ADDED');
   }
 
@@ -207,6 +210,11 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       });
       this._availableScenarios.push(scenar);
     });
+  }
+
+  public setDefaultScenario(workflow: string) {
+    this._campaign.settings.defaultWorkflow = workflow;
+    this.saveTemplates('ERROR.CAMPAIGN.WORKFLOW.DEFAULT');
   }
 
   get availableScenarios(): Array<EmailScenario> {
