@@ -58,6 +58,8 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
+  private _campaignWorkflows: Array<string> = [];
+
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -71,6 +73,20 @@ export class AdminCampaignBatchComponent implements OnInit {
     this.initializeNewBatch();
     this.getQuiz();
     this.getBatches();
+
+    const scenariosNames: Set<string> = new Set<string>();
+    if (this._campaign.settings && this._campaign.settings.emails) {
+      this._campaign.settings.emails.forEach((email) => {
+        if (email.modified) {
+          scenariosNames.add(email.nameWorkflow);
+        } else {
+          scenariosNames.delete(email.nameWorkflow);
+        }
+      });
+    }
+    scenariosNames.forEach((name) => {
+      this._campaignWorkflows.push(name);
+    });
   }
 
 
@@ -536,16 +552,19 @@ export class AdminCampaignBatchComponent implements OnInit {
 
     }
 
-    this._content = this.getContentWorkflowStep(batch._id, step);
+    this._content = this.getContentWorkflowStep(batch, step);
     this._currentRow = row;
     this._currentBatch = batch;
     this.activateSidebar('editBatch');
   }
 
 
-  private getContentWorkflowStep(batchID: any, step: any): any {
-    const index = this.getBatchIndex(batchID);
-    const workflowName = this.getWorkflowName(index);
+  private getContentWorkflowStep(batch: Batch, step: any): any {
+    const index = this.getBatchIndex(batch._id);
+    let workflowName = this.getWorkflowName(index);
+    if (batch.workflow) {
+      workflowName = batch.workflow;
+    }
     const content = {en: '', fr: ''};
 
     this.campaign.settings.emails.forEach( mail => {
@@ -583,6 +602,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
     }
 
+    this._currentBatch.workflow = formValue.value['workflow'];
     this.campaignService.updateBatch(this._currentBatch).pipe(first()).subscribe((batch: any) => {
       this._stats.batches[this.getBatchIndex(batch)] = batch;
 
@@ -711,6 +731,10 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
+  }
+
+  get campaignWorkflows(): Array<string> {
+    return this._campaignWorkflows;
   }
 
 }

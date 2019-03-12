@@ -18,6 +18,8 @@ export class BatchFormComponent {
     this._contentCurrent = value;
   }
 
+  @Input() campaignWorkflows: Array<string> = [];
+
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this.buildForm();
@@ -61,6 +63,7 @@ export class BatchFormComponent {
       time: [''],
       pros: [''],
       send: [''],
+      workflow: ['']
     });
   }
 
