@@ -37,7 +37,7 @@ export class SharedAmbassadorListComponent {
 
   private _tableInfos: any = null;
 
-  private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS'];
+  private _actions: string[] = [];
 
   private _total = 0;
 
@@ -64,23 +64,25 @@ export class SharedAmbassadorListComponent {
 
   loadPros(config: any): void {
     this._config = config;
+
     this._advSearchService.getCommunityMembers(this.configToString()).pipe(first()).subscribe((pros: any) => {
       this._pros = pros.result;
       this._pros.forEach(pro => {
         pro.sent = pro.messages && pro.messages.length > 0;
       });
+
       this._total = pros._metadata.totalCount;
 
       this._tableInfos = {
-        _selector: 'admin-pros',
-        _title: 'TABLE.TITLE.PROFESSIONALS',
+        _selector: 'admin-ambassador',
+        _title: 'TABLE.TITLE.AMBASSADORS',
         _content: this._pros,
         _total: this._total,
-        _isFiltrable: true,
-        _isHeadable: true,
+        _isFiltrable: false,
+        _isLocal: true,
+        _isHeadable: false,
         _isDeletable: true,
         _isSelectable: true,
-        _isEditable: true,
         _actions: this._actions,
         _columns: [
           //"tags.label":1, "country":1,"answers.innovation":1, "answers.status":1, "ambassador.industry":1
@@ -150,16 +152,13 @@ export class SharedAmbassadorListComponent {
   }
 
 
-  onClickEdit(pro: Professional) {
-
+  onClickEdit(value: any) {
+    console.log(value);
   }
 
 
   updatePro(pro: Professional): void {
     this.editUser[pro._id] = false;
-
-
-
   }
 
 

@@ -2,6 +2,7 @@ import { Campaign } from './campaign';
 import { Tag } from './tag';
 
 export interface Professional {
+
   readonly _id: string;
   readonly firstName: string;
   readonly lastName: string;
@@ -15,4 +16,18 @@ export interface Professional {
   readonly country: string;
   readonly campaigns: Campaign[];
   readonly emailConfidence?: number;
+  readonly urlCompany?: string;
+  ambassador?: {
+    is?: boolean,
+    positionLevel?: string,
+    persona?: string,
+    industry?: string,
+    experience?: string,
+    ambassadorStatus?: string,
+    ambassadorCommitment?: Array<any>,
+    qualification?: number,
+    qualificationWhy?:string,
+    ambassadorSource?: string,
+  };
+
 }

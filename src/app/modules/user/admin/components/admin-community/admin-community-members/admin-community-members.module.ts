@@ -9,7 +9,7 @@ import { SidebarAdvsearchFormModule } from "../../../../../sidebar/components/ad
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { SidebarAddAmbassadorFormModule } from "../../../../../sidebar/components/add-ambassador-form/sidebar-add-ambassador-form.module";
 import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
-import { MemberComponent } from './components/member/member.component';
+import { AdminCommunityMemberComponent } from './components/admin-community-member/admin-community-member.component';
 
 
 @NgModule({
@@ -25,7 +25,7 @@ import { MemberComponent } from './components/member/member.component';
   ],
   declarations: [
     AdminCommunityMembersComponent,
-    MemberComponent
+    AdminCommunityMemberComponent,
   ],
   exports: [
     AdminCommunityMembersComponent

@@ -51,6 +51,7 @@ import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
 import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
+import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import { AdvSearchService } from "../../../services/advsearch/advsearch.service"
     QuizService,
     InnovationCommonService,
     PresetResolver,
-    AdvSearchService
+    AdvSearchService,
+    ProfessionalResolver
   ]
 })
 

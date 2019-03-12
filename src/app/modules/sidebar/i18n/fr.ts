@@ -13,7 +13,7 @@ export const SIDEBAR = {
     'ADD_PRO': 'Ajouter un professionnel',
     'NEW_BATCH': 'Nouveau batch manuellement',
     'EDIT_BATCH': 'Modifier le batch',
-    'ADD_AMBASSDOR': 'Ajouter des Ambassador'
+    'ADD_AMBASSDOR': 'Ajouter des Ambassadeurs'
   },
 
   'LABELS': {
