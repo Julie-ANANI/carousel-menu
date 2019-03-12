@@ -154,7 +154,7 @@ export const CAMPAIGNS = {
     },
     'MODAL': {
       'CONTENT_A': 'Ce workflow est déjà importé. Si vous l\'importez à nouveau, il remplacera le premier. Voulez-vous vraiment importer ce modèle ?',
-      'CONTENT_B': 'Si vous avez déjà importé un workflow, il le remplacera. Voulez-vous vraiment importer ce modèle ?'
+      'CONTENT_B': 'Vous ajoutez un nouveau workflow à la campagne, vous pourrez lancer un A/B testing !'
     },
     'NOTE': 'Note : Il vous est conseillé de modifier les modèles/emails importés avant de lancer le lot.',
   },
