@@ -129,6 +129,8 @@
     [type]="sidebarValue.type"
     (batchOutput)="onOutput($event)"
     [currentRow]="currentRow"
+    [campaignWorkflows]="campaignWorkflows"
+    [workflow]="currentBatch?.workflow || campaign.settings.defaultWorkflow"
     [content]="content">
   </app-batch-form>
 </app-sidebar>
