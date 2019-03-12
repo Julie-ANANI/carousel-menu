@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { PipeModule } from '../../../../../../pipe/pipe.module';
@@ -15,6 +15,7 @@ import { AdminCommunityMemberComponent } from './components/admin-community-memb
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     SharedAmbassadorListModule,
     TranslateModule.forChild(),

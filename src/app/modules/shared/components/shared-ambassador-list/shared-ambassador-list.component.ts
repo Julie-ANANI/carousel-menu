@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-//import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { AdvSearchService } from "../../../../services/advsearch/advsearch.service";
+import { Router } from '@angular/router';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -58,9 +58,7 @@ export class SharedAmbassadorListComponent {
   private _modalDelete = false;
 
   constructor(private _advSearchService: AdvSearchService,
-  //            private translateNotificationsService: TranslateNotificationsService
-  ) {
-  }
+              private route: Router) { }
 
   loadPros(config: any): void {
     this._config = config;
@@ -152,8 +150,15 @@ export class SharedAmbassadorListComponent {
   }
 
 
-  onClickEdit(value: any) {
-    console.log(value);
+  /***
+   * this function is to redirect to the component to AdminCommunityMember
+   * which will show all its details. Called by clicking on the show button.
+   * @param pro
+   */
+  onClickEdit(pro: Professional) {
+    if (pro._id) {
+      this.route.navigate([`user/admin/community/members/${pro._id}`]);
+    }
   }
 
 

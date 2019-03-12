@@ -1,0 +1,62 @@
+@import "../../../../../../../../../style/framework/src/variables";
+
+#admin-community-member-component {
+  padding-bottom: 25px;
+
+  .section-header {
+    background-color: $bg-color-light;
+    padding-top: 25px;
+
+    .name-wrapper {
+      border-bottom: $border-width solid $border-color;
+
+      h1 {
+        color: $text-background-color;
+        font-size: 23px;
+        margin-bottom: 20px;
+      }
+
+    }
+
+  }
+
+  .section-details {
+    padding-top: 25px;
+
+    .info-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .info-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-top: 25px;
+        padding-right: 10px;
+
+        .form-group {
+          margin-bottom: 10px !important;
+          position: relative;
+
+          .form-label {
+            color: $meta-color;
+          }
+
+          .form-input, .form-select {
+            width: 273px;
+            margin-top: 0;
+          }
+
+          .suggestion {
+            width: 273px;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

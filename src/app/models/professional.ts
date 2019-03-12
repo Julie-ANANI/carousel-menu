@@ -13,10 +13,11 @@ export interface Professional {
   readonly messages: Array<any>;
   tags: Array<Tag>;
   readonly profileUrl: string;
-  readonly country: string;
+  country?: string;
   readonly campaigns: Campaign[];
   readonly emailConfidence?: number;
   readonly urlCompany?: string;
+  language?: string;
   ambassador?: {
     is?: boolean,
     positionLevel?: string,
@@ -29,5 +30,4 @@ export interface Professional {
     qualificationWhy?:string,
     ambassadorSource?: string,
   };
-
 }

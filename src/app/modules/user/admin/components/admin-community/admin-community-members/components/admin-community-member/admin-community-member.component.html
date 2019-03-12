@@ -1,3 +1,230 @@
-<p>
-  admin-community-member works!
-</p>
+<ng-container *ngIf="professional">
+  <section id="admin-community-member-component">
+
+    <!-- section header -->
+    <div class="section-header">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        <!-- name -->
+        <div class="name-wrapper">
+          <h1>
+            <ng-container *ngIf="professional.firstName">{{ professional.firstName }}</ng-container>
+            <ng-container *ngIf="professional.lastName"> {{ professional.lastName }}</ng-container>
+          </h1>
+        </div>
+
+        <!-- stats -->
+        <ul class="stat">
+
+          <!-- feedback -->
+          <li class="stat-container">
+            <h5 class="stat-heading">Feedback</h5>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Total</h5>
+              <span class="stat-value">3</span>
+            </div>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Partnership</h5>
+              <span class="stat-value">7</span>
+            </div>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Solicitations</h5>
+              <span class="stat-value">4</span>
+            </div>
+          </li>
+
+          <!-- rating -->
+          <li class="stat-container">
+            <h5 class="stat-heading">Rating</h5>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Motivations</h5>
+              <span class="stat-value">--</span>
+            </div>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Qualification</h5>
+              <span class="stat-value">--</span>
+            </div>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Activity</h5>
+              <span class="stat-value">--</span>
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+    <!-- /section header -->
+
+    <!-- section details -->
+    <div class="section-details">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        <!-- save button -->
+        <div class="text-right">
+          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSave()">Save</button>
+        </div>
+
+        <!-- information -->
+        <div class="info-wrapper">
+
+          <!-- column 1 -->
+          <div class="info-body">
+
+            <!-- first name -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-firstname">First Name</label>
+              <input
+                id="community-member-firstname"
+                class="form-input"
+                type="text"
+                name="firstname"
+                placeholder="Enter the first name"
+                [(ngModel)]="professional.firstName">
+            </div>
+
+            <!-- last name -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-lastname">Last Name</label>
+              <input
+                id="community-member-lastname"
+                class="form-input"
+                type="text"
+                name="lastname"
+                placeholder="Enter the last name"
+                [(ngModel)]="professional.lastName">
+            </div>
+
+            <!-- email -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-email">Email</label>
+              <input
+                id="community-member-email"
+                class="form-input"
+                type="text"
+                name="email"
+                placeholder="Enter the email address"
+                [(ngModel)]="professional.email">
+            </div>
+
+            <!-- job -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-jobTitle">Job Title</label>
+              <input
+                id="community-member-jobTitle"
+                class="form-input"
+                type="text"
+                name="jobTitle"
+                placeholder="Enter the job title"
+                [(ngModel)]="professional.jobTitle">
+            </div>
+
+            <!-- experience -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-experience">Experience</label>
+              <select
+                class="form-select"
+                id="community-member-experience"
+                name="experience"
+                [ngModelOptions]="{ standalone: true }"
+                [ngModel]="professional.ambassador.experience ? professional.ambassador.experience.toLowerCase() : experiences[0].name"
+                (ngModelChange)="onChangeExperience($event)">
+                <option *ngFor="let experience of experiences" [ngValue]="experience.name">{{ experience.alias }}</option>
+              </select>
+            </div>
+
+            <!-- position level -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-position">Position Level</label>
+              <select
+                class="form-select"
+                id="community-member-position"
+                name="position"
+                [ngModelOptions]="{ standalone: true }"
+                [ngModel]="professional.ambassador.positionLevel ? professional.ambassador.positionLevel.toLowerCase() : positionLevel[0].name"
+                (ngModelChange)="onChangePosition($event)">
+                <option *ngFor="let level of positionLevel" [ngValue]="level.name">{{ level.alias }}</option>
+              </select>
+            </div>
+
+            <!-- company -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-company">Company</label>
+              <input
+                id="community-member-company"
+                class="form-input"
+                type="text"
+                name="company"
+                placeholder="Enter the company"
+                [(ngModel)]="professional.company">
+            </div>
+
+            <!-- linkedin -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-linkedin">LinkedIn Profile</label>
+              <input
+                id="community-member-linkedin"
+                class="form-input"
+                type="text"
+                name="profileUrl"
+                placeholder="Enter the linkedIn profile url"
+                [(ngModel)]="professional.profileUrl">
+            </div>
+
+            <!-- language -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-language">Language</label>
+              <select
+                class="form-select"
+                id="community-member-language"
+                name="language"
+                [ngModelOptions]="{ standalone: true }"
+                [ngModel]="professional.language ? professional.language : language[0].name"
+                (ngModelChange)="onChangeLang($event)">
+                <option *ngFor="let lang of language" [ngValue]="lang.name">{{ lang.alias }}</option>
+              </select>
+            </div>
+
+            <!-- country -->
+            <div class="form-group">
+              <label class="form-label" for="community-member-country">Country</label>
+              <input
+                id="community-member-country"
+                class="form-input"
+                type="text"
+                name="country"
+                #country
+                placeholder="Enter the country"
+                [(ngModel)]="countries[professional.country]"
+                (keypress)="onSuggestCountries(country.value)">
+              <ul
+                *ngIf="country.value"
+                class="suggestion"
+                [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
+                <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onChangeCountry(suggestion)">
+                  {{ suggestion }}
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- column 2 -->
+          <div class="info-body">
+s
+          </div>
+
+          <!-- column 3 -->
+          <div class="info-body">
+s
+          </div>
+
+        </div>
+        <!-- /information -->
+
+      </div>
+    </div>
+    <!-- /section details -->
+
+  </section>
+</ng-container>

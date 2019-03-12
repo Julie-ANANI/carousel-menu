@@ -115,6 +115,7 @@ export class AddAmbassadorFormComponent implements OnInit {
 
 
   private buildForm() {
+    console.log(this.platform);
     this._ambassadorForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
