@@ -1,58 +1,6 @@
 <div id="admin-campaign-batch-component">
 
-  <!-- section stats -->
-  <div class="campaign-stats-wrapper">
-
-    <!-- stat col 1 -->
-    <div class="stat1">
-      <div class="container">
-        <h5 class="heading">Emails</h5>
-        <div class="content">
-          <h4 class="title">To send</h4>
-          <h3 class="value">{{ getCampaignStat('good_emails') }}</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">Received</h4>
-          <h3 class="value">{{ getCampaignStat('received') }}</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">Bounces</h4>
-          <h3 class="value">{{ getCampaignStat('bounces') }}</h3>
-        </div>
-      </div>
-    </div>
-
-    <!-- stat col 2 -->
-    <div class="stat2">
-      <div class="container">
-        <h5 class="heading">Interaction</h5>
-        <div class="content">
-          <h4 class="title">Opened</h4>
-          <h3 class="value">{{ getCampaignStat('opened') }}%</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">Clicked</h4>
-          <h3 class="value">{{ getCampaignStat('clicked') }}%</h3>
-        </div>
-      </div>
-    </div>
-
-    <!-- stat col 3 -->
-    <div class="stat3">
-      <div class="container">
-        <h5 class="heading">Display</h5>
-        <div class="content">
-          <h4 class="title">Email</h4>
-          <h3 class="value">{{ getCampaignStat('email') }}</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">Questionnaire</h4>
-          <h3 class="value">{{ getCampaignStat('questionnaire') }}</h3>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  <app-admin-campaign-stats></app-admin-campaign-stats>
 
   <div class="column col-xs-12 col-11 col-mx-auto">
 

@@ -15,6 +15,7 @@ import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admin-campaign-workflows.component';
+import { AdminCampaignStatsComponent } from './admin-campaign-stats/admin-campaign-stats.component';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
 import { SharedProsListModule } from '../../../../shared/components/shared-pros-list/shared-pros-list.module';
@@ -66,6 +67,7 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignSearchComponent,
     AdminCampaignSearchResultsComponent,
     AdminCampaignWorkflowsComponent,
+    AdminCampaignStatsComponent,
     AdminCampaignAbtestingComponent
 
   ],
@@ -78,7 +80,8 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignBatchComponent,
     AdminCampaignProsComponent,
     AdminCampaignSearchResultsComponent,
-    AdminCampaignWorkflowsComponent
+    AdminCampaignWorkflowsComponent,
+    AdminCampaignStatsComponent
   ]
 })
 
