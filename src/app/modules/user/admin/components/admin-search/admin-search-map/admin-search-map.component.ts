@@ -23,13 +23,15 @@ export class AdminSearchMapComponent implements OnInit{
 
   public clickOnCountry(event: Event) {
     event.preventDefault();
-    const country = event.srcElement.className.baseVal.slice(-2);
+    const foo: any = event.srcElement.className;
+    const country = foo.baseVal.slice(-2);
     console.log(country);
   }
 
-  public hoverCountry(event: Event) {
+  public hoverCountry(event: any) {
     event.preventDefault();
-    const country = event.srcElement.className.baseVal.slice(-2);
+    const foo: any = event.srcElement.className;
+    const country = foo.baseVal.slice(-2);
     this._hoveredCountry = country;
     this._boxStyle = {
       top: `${event.pageY - 220}px`,

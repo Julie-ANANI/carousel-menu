@@ -3748,7 +3748,7 @@ export class AdminSearchDemoComponent {
     setTimeout(() => {
       pro.isLoading = false;
       this._pros[index] = pro;
-    }, index * 300);
+    }, index * 150);
   }
 
   public searchMetadata(event: Event) {
