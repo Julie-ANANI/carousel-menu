@@ -244,6 +244,10 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     return this._modalImport;
   }
 
+  set modalImport(value: boolean) {
+    this._modalImport = value;
+  }
+
   get modalContent(): string {
     return this._modalContent;
   }
