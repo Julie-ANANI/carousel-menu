@@ -21,10 +21,14 @@ export class AdminEditWorkflowComponent {
 
   @Input() isDeletable: boolean = true;
 
+  @Input() defaultScenario: string = null;
+
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
     this._initTable();
   }
+
+  @Output() defaultScenarioChange = new EventEmitter<string>();
 
   @Output() scenarioChange = new EventEmitter<EmailScenario>();
 
@@ -150,6 +154,11 @@ export class AdminEditWorkflowComponent {
       this.deletedScenario.emit(this._campaignScenario);
       this._modalDelete = false;
     }
+  }
+
+  public setDefaultScenario() {
+    this.defaultScenario = this._campaignScenario.name;
+    this.defaultScenarioChange.emit(this.defaultScenario);
   }
 
 

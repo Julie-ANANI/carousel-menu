@@ -42,9 +42,11 @@
       <div *ngFor="let scenario of availableScenarios">
         <app-admin-edit-workflow
           [scenario]="scenario"
+          [defaultScenario]="campaign.settings.defaultWorkflow"
           [signatures]="signatures"
           (scenarioChange)="updateAvailableScenario($event)"
           (deletedScenario)="removeScenario($event)"
+          (defaultScenarioChange)="setDefaultScenario($event)"
           [isDeletable]="campaign.settings.defaultWorkflow != scenario.name && campaign.settings.ABsettings.nameWorkflowA !=scenario.name && campaign.settings.ABsettings.nameWorkflowB !=scenario.name"
         >
         </app-admin-edit-workflow>
