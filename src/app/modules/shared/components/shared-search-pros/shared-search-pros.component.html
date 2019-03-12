@@ -98,13 +98,15 @@
       </div>
     </div>
 
-    <div *ngIf="catDone">
+    <div *ngIf="catDone" class="cat">
       <!-- Keywords analysis and expected result -->
+      <h3>Analysis</h3>
       <div *ngFor="let s of suggestion"  class="request-analysis">
-        {{s.expected}} <p [innerHTML]=s.kw > </p>
+        {{s.expected}} professionals found <span [innerHTML]=s.kw > </span>
       </div>
 
       <!-- Additional keywords -->
+      <h4>Suggested keywords</h4>
       <div class="additional-keywords" [ngStyle]="{ 'display': 'flex' }">
         <div *ngFor="let kw of catResult.new_keywords" >
           {{kw}} |
@@ -112,6 +114,7 @@
       </div>
 
       <!-- Star profiles -->
+      <h5>4 star profiles:</h5>
       <div *ngFor="let profile of catResult.profile | keyvalue" class="stars">
         <p class="tooltip" data-tooltip="ça ne marche pas encore :'("> <a href= "{{ profile.key }}" target="_blank">{{ profile.value.title }}</a> </p>
       </div>
