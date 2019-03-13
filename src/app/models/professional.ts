@@ -29,5 +29,6 @@ export interface Professional {
     qualification?: number,
     qualificationWhy?:string,
     ambassadorSource?: string,
+    notes?: string;
   };
 }

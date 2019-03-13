@@ -25,11 +25,13 @@ $link-color: $primary-color;
 $bg-color-light: $light-color !default;
 $bg-overlay: rgba(0,0,0,0.75) !default;
 $bg-dropdown-color: #F2F2F2 !default;
+$border-meta-color: $meta-color !default;
 
 
 // text variables
 $text-primary-color: $dark-color !default;
 $text-secondary-color: #484848 !default;
+$text-meta-color: $meta-color !default;
 $text-background-color: $background-color !default;
 $text-disabled-color: $disabled-text-color !default;
 

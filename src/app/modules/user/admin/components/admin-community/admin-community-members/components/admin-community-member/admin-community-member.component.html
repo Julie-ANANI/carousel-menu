@@ -61,7 +61,8 @@
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- save button -->
-        <div class="text-right">
+        <div class="save-wrapper text-right" [ngClass]="{ 'active': saveChanges }">
+          <div class="shape circle circle-sm"><i class="fas fa-save"></i></div>
           <button type="button" class="btn btn-primary btn-sm" (click)="onClickSave()">Save</button>
         </div>
 
@@ -80,6 +81,7 @@
                 type="text"
                 name="firstname"
                 placeholder="Enter the first name"
+                (change)="notifyChanges()"
                 [(ngModel)]="professional.firstName">
             </div>
 
@@ -92,6 +94,7 @@
                 type="text"
                 name="lastname"
                 placeholder="Enter the last name"
+                (change)="notifyChanges()"
                 [(ngModel)]="professional.lastName">
             </div>
 
@@ -104,6 +107,7 @@
                 type="text"
                 name="email"
                 placeholder="Enter the email address"
+                (change)="notifyChanges()"
                 [(ngModel)]="professional.email">
             </div>
 
@@ -116,6 +120,7 @@
                 type="text"
                 name="jobTitle"
                 placeholder="Enter the job title"
+                (change)="notifyChanges()"
                 [(ngModel)]="professional.jobTitle">
             </div>
 
@@ -141,9 +146,9 @@
                 id="community-member-position"
                 name="position"
                 [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional.ambassador.positionLevel ? professional.ambassador.positionLevel.toLowerCase() : positionLevel[0].name"
+                [ngModel]="professional.ambassador.positionLevel ? professional.ambassador.positionLevel.toLowerCase() : positions[0].name"
                 (ngModelChange)="onChangePosition($event)">
-                <option *ngFor="let level of positionLevel" [ngValue]="level.name">{{ level.alias }}</option>
+                <option *ngFor="let position of positions" [ngValue]="position.name">{{ position.alias }}</option>
               </select>
             </div>
 
@@ -156,6 +161,7 @@
                 type="text"
                 name="company"
                 placeholder="Enter the company"
+                (change)="notifyChanges()"
                 [(ngModel)]="professional.company">
             </div>
 
@@ -168,6 +174,7 @@
                 type="text"
                 name="profileUrl"
                 placeholder="Enter the linkedIn profile url"
+                (change)="notifyChanges()"
                 [(ngModel)]="professional.profileUrl">
             </div>
 
@@ -179,9 +186,9 @@
                 id="community-member-language"
                 name="language"
                 [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional.language ? professional.language : language[0].name"
+                [ngModel]="professional.language ? professional.language : languages[0].name"
                 (ngModelChange)="onChangeLang($event)">
-                <option *ngFor="let lang of language" [ngValue]="lang.name">{{ lang.alias }}</option>
+                <option *ngFor="let lang of languages" [ngValue]="lang.name">{{ lang.alias }}</option>
               </select>
             </div>
 
@@ -211,12 +218,74 @@
 
           <!-- column 2 -->
           <div class="info-body">
-s
+
+            <!-- interested by -->
+            <div class="form-group form-textarea">
+              <label class="form-label" for="community-member-interested">Interested By</label>
+              <textarea
+                id="community-member-interested"
+                class="form-input"
+                type="text"
+                name="industry"
+                rows="5"
+                placeholder="Enter the interests"
+                (change)="notifyChanges()"
+                [(ngModel)]="professional.ambassador.industry">
+              </textarea>
+            </div>
+
+            <!-- why join -->
+            <div class="form-group form-textarea">
+              <label class="form-label" for="community-member-join">Why join?</label>
+              <textarea
+                id="community-member-join"
+                class="form-input"
+                type="text"
+                name="qualificationWhy"
+                rows="4"
+                placeholder="Enter the qualification"
+                (change)="notifyChanges()"
+                [(ngModel)]="professional.ambassador.qualificationWhy">
+              </textarea>
+            </div>
+
+            <!-- notes -->
+            <div class="form-group form-textarea">
+              <label class="form-label" for="community-member-notes">Notes</label>
+              <textarea
+                id="community-member-notes"
+                class="form-input"
+                type="text"
+                name="notes"
+                rows="4"
+                placeholder="Enter the notes for you"
+                (change)="notifyChanges()"
+                [(ngModel)]="professional.ambassador.notes">
+              </textarea>
+            </div>
+
           </div>
 
           <!-- column 3 -->
           <div class="info-body">
-s
+            <ng-container *ngIf="tags.length > 0">
+
+              <label class="form-label">Sector Tags</label>
+
+              <div *ngFor="let tag of tags" class="tags-wrapper">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    [id]="tag._id"
+                    [name]="tag.label | multiling:browserLang()"
+                    [value]="tag.label | multiling:browserLang()"
+                    (change)="onChangeTag($event, tag)"
+                    [checked]="onCheckTag(tag._id)">
+                  <i class="form-icon"></i><span>{{ tag.label | multiling:browserLang() | FormatText }}</span>
+                </label>
+              </div>
+
+            </ng-container>
           </div>
 
         </div>
