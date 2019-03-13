@@ -52,6 +52,7 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
 import { PresetResolver } from '../../../resolvers/preset.resolver';
 import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
+import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
     InnovationCommonService,
     PresetResolver,
     AdvSearchService,
-    ProfessionalResolver
+    ProfessionalResolver,
+    InnovationFrontService
   ]
 })
 

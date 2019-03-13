@@ -12,6 +12,10 @@ import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../../../services/notifications/notifications.service';
+import { InnovationService } from '../../../../../../../../services/innovation/innovation.service';
+import { Innovation } from '../../../../../../../../models/innovation';
+import { InnovationFrontService } from '../../../../../../../../services/innovation/innovation-front.service';
+import { InnovCard } from '../../../../../../../../models/innov-card';
 
 @Component({
   selector: 'admin-community-member',
@@ -39,6 +43,8 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _tags: Array<Tag> = [];
 
+  innovationsSuggested: Array<InnovCard> = [];
+
   private _configTag = {
     limit: '0',
     offset: '0',
@@ -46,17 +52,29 @@ export class AdminCommunityMemberComponent implements OnInit {
     sort: '{"label":-1}'
   };
 
+  configInnovation = {
+    fields: 'innovationCards principalMedia',
+    limit: '0',
+    offset: '0',
+    isPublic: '1',
+    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]',
+    sort: '{"created":-1}'
+  };
+
   constructor(private activatedRoute: ActivatedRoute,
               private autoCompleteService: AutocompleteService,
               private tagsService: TagsService,
               private translateService: TranslateService,
               private professionalService: ProfessionalsService,
-              private translateNotificationService: TranslateNotificationsService) { }
+              private translateNotificationService: TranslateNotificationsService,
+              private innovationService: InnovationService,
+              private innovationFrontService: InnovationFrontService) { }
 
   ngOnInit() {
     this._professional = this.activatedRoute.snapshot.data['professional'];
     this.getAllTags();
     this.initializeVariables();
+    this.getAllInnovations();
   }
 
 
@@ -92,6 +110,33 @@ export class AdminCommunityMemberComponent implements OnInit {
   }
 
 
+  private getAllInnovations() {
+
+    this.innovationsSuggested = [];
+
+    this.innovationService.getAll(this.configInnovation).pipe(first()).subscribe((response) => {
+      if (response) {
+        response.result.forEach((innovation: Innovation) => {
+          innovation.tags.forEach((tag) => {
+            const find = this._professional.tags.find((proTag) => proTag._id === tag._id);
+            if (find) {
+              if (innovation.innovationCards.length > 1) {
+                const index = innovation.innovationCards.findIndex((innov) => innov.lang === this._professional.language);
+                if (index) {
+                  this.innovationsSuggested.push(innovation.innovationCards[index]);
+                }
+              } else {
+                this.innovationsSuggested.push(innovation.innovationCards[0]);
+              }
+            }
+          });
+        });
+      }
+    });
+
+  }
+
+
   /***
    * to save the changes in professional object to the server.
    */
@@ -99,6 +144,7 @@ export class AdminCommunityMemberComponent implements OnInit {
     this.professionalService.save(this._professional._id, this._professional).pipe(first()).subscribe(() => {
       this._saveChanges = false;
       this.translateNotificationService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+      this.getAllInnovations();
     }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
     });
@@ -215,6 +261,21 @@ export class AdminCommunityMemberComponent implements OnInit {
     this.notifyChanges();
 
   }
+
+
+  getImageSrc(innovation: InnovCard): string {
+    return this.innovationFrontService.getMediaSrc(innovation, 'default', '209', '130');
+  }
+
+
+  /***
+   * whent the user clicks on the push button.
+   * @param innovation
+   */
+  onClickPush(innovation: InnovCard) {
+
+  }
+
 
   get professional(): Professional {
     return this._professional;

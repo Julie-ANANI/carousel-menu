@@ -82,12 +82,12 @@
         }
 
         .form-input, .form-select {
-          width: 273px;
+          max-width: 273px;
           margin-top: 0;
         }
 
         .suggestion {
-          width: 273px;
+          max-width: 273px;
         }
 
         .form-textarea {
@@ -95,7 +95,7 @@
 
           .form-input {
             padding-right: 15px !important;
-            width: 380px;
+            max-width: 380px;
           }
 
         }
@@ -131,6 +131,90 @@
 
       }
 
+    }
+
+    .suggested-wrapper {
+      padding-top: 25px;
+
+      h5 {
+        color: $text-meta-color;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      .card-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-left: -10px;
+        margin-right: -10px;
+        margin-bottom: -30px;
+
+        .card {
+          padding: 0;
+          flex: 0 1 210px;
+          background: transparent;
+
+          .card-image {
+            position: relative;
+
+            .btn {
+              position: absolute;
+              visibility: hidden;
+              top: 31%;
+              left: 27%;
+            }
+
+          }
+
+          .card-header {
+
+            .card-title {
+              font-size: 13px;
+              color: $text-secondary-color;
+            }
+
+          }
+
+          &:hover {
+            box-shadow: none;
+
+            .btn {
+              visibility: visible !important;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #admin-community-member-component {
+
+    .info-wrapper, .card-wrapper, .stat-container {
+      flex-direction: column;
+    }
+
+    .form-textarea, .form-input, .suggestion, .form-select {
+      max-width: 480px !important;
+    }
+
+    .info-body {
+      padding-right: 0 !important;
+    }
+
+    .card-wrapper {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
     }
 
   }

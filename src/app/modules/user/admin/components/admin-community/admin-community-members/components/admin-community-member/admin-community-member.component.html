@@ -21,15 +21,15 @@
             <h5 class="stat-heading">Feedback</h5>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Total</h5>
-              <span class="stat-value">3</span>
+              <span class="stat-value">--</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Partnership</h5>
-              <span class="stat-value">7</span>
+              <span class="stat-value">--</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Solicitations</h5>
-              <span class="stat-value">4</span>
+              <span class="stat-value">--</span>
             </div>
           </li>
 
@@ -42,7 +42,21 @@
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Qualification</h5>
-              <span class="stat-value">--</span>
+              <span class="stat-value">
+                <!--<div class="rating">
+                  <input type="radio" name="qualification" id="qualification-star1" value="1">
+                  <label for="qualification-star1">1</label>
+                  <input type="radio" name="qualification" id="qualification-star2" value="2">
+                  <label for="qualification-star2">2</label>
+                  <input type="radio" name="qualification" id="qualification-star3" value="3">
+                  <label for="qualification-star3">3</label>
+                  <input type="radio" name="qualification" id="qualification-star4" value="4">
+                  <label for="qualification-star4">4</label>
+                  <input type="radio" name="qualification" id="qualification-star5" value="5">
+                  <label for="qualification-star5">5</label>
+                </div>-->
+                --
+              </span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Activity</h5>
@@ -290,6 +304,35 @@
 
         </div>
         <!-- /information -->
+
+        <!-- project suggested -->
+        <ng-container *ngIf="innovationsSuggested.length > 0">
+          <div class="suggested-wrapper">
+
+            <!-- heading -->
+            <h5>Project Suggested</h5>
+
+            <!-- innovations -->
+            <div class="card-wrapper">
+              <div *ngFor="let innovation of innovationsSuggested" class="card">
+
+                <!-- image -->
+                <div class="card-image">
+                  <img [src]="getImageSrc(innovation)" alt=" ">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="onClickPush(innovation)">Push it</button>
+                </div>
+
+                <!-- card header -->
+                <div class="card-header">
+                  <div class="card-title">{{ innovation.title }}</div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
+        <!-- /project suggested -->
 
       </div>
     </div>
