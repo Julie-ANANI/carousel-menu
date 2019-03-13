@@ -1,6 +1,59 @@
 @import "../variables";
 
+.star-rating {
+  overflow: hidden;
+  font-family: FontAwesome, serif;
 
-.rating {
+  &:not(:checked) {
+
+    > input {
+      position: absolute;
+      top: -9999px;
+      clip: rect(0,0,0,0);
+    }
+
+    > label {
+      float: right;
+      width: 20px;
+      height: 20px;
+      padding: 0 1px;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: pointer;
+      color: $primary-color;
+
+      &:before {
+        content: '\f006';
+      }
+
+      &:hover, &:hover ~ label {
+        color: $primary-color;
+
+        &:before {
+          content: '\f005';
+        }
+
+      }
+
+    }
+
+  }
+
+  > input:checked {
+
+    & ~ label {
+
+      &:before {
+        content: '\f005';
+      }
+
+    }
+
+  }
+
+  > label:active {
+    position: relative;
+    top: 2px;
+  }
 
 }
