@@ -36,6 +36,7 @@ export const TABLE = {
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
     'PROJECTS': 'Projets',
+    'AMBASSADORS': 'Ambassadeurs'
   }
 
 };

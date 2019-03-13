@@ -1,0 +1,222 @@
+@import "../../../../../../../../../style/framework/src/variables";
+
+#admin-community-member-component {
+  padding-bottom: 25px;
+
+  .section-header {
+    background-color: $bg-color-light;
+    padding-top: 25px;
+
+    .name-wrapper {
+      border-bottom: $border-width solid $border-color;
+
+      h1 {
+        color: $text-background-color;
+        font-size: 23px;
+        margin-bottom: 20px;
+      }
+
+    }
+
+  }
+
+  .save-wrapper {
+
+    .shape {
+      position: absolute;
+      margin-top: -10px;
+      margin-left: -9px;
+      visibility: hidden;
+    }
+
+    &.active {
+
+      .shape {
+        background-color: $success-color;
+        border-color: $success-color;
+        visibility: visible;
+
+        .fa-save {
+          color: $light-color;
+        }
+
+      }
+
+      .btn {
+        border-color: $success-color;
+        background-color: $bg-color-light;
+        color: $text-primary-color;
+        border-width: $border-width-lg;
+
+        &:hover {
+          background-color: $hover-background-color;
+        }
+
+      }
+
+    }
+
+  }
+
+  .section-details {
+    padding-top: 25px;
+
+    .info-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .info-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-top: 25px;
+        padding-right: 10px;
+
+        .form-group {
+          margin-bottom: 10px !important;
+          position: relative;
+        }
+
+        .form-label {
+          color: $form-meta-color;
+        }
+
+        .form-input, .form-select {
+          max-width: 273px;
+          margin-top: 0;
+        }
+
+        .suggestion {
+          max-width: 273px;
+        }
+
+        .form-textarea {
+          margin-bottom: 20px !important;
+
+          .form-input {
+            padding-right: 15px !important;
+            max-width: 380px;
+          }
+
+        }
+
+        .tags-wrapper {
+
+          .form-checkbox {
+
+            .form-icon {
+              border-width: 2px;
+              border-color: $border-meta-color;
+              background: transparent;
+            }
+
+            .form-icon::before {
+              height: 10px;
+              width: 5px;
+              margin-left: -2px;
+              margin-top: -6px;
+            }
+
+            span {
+              font-size: 12px;
+            }
+
+          }
+
+          .form-checkbox input:checked + .form-icon, .form-checkbox input:checked + .form-icon::before {
+            border-color: $primary-color;
+          }
+
+        }
+
+      }
+
+    }
+
+    .suggested-wrapper {
+      padding-top: 25px;
+
+      h5 {
+        color: $text-meta-color;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      .card-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-left: -10px;
+        margin-right: -10px;
+        margin-bottom: -30px;
+
+        .card {
+          padding: 0;
+          flex: 0 1 210px;
+          background: transparent;
+
+          .card-image {
+            position: relative;
+
+            .btn {
+              position: absolute;
+              visibility: hidden;
+              top: 31%;
+              left: 27%;
+            }
+
+          }
+
+          .card-header {
+
+            .card-title {
+              font-size: 13px;
+              color: $text-secondary-color;
+            }
+
+          }
+
+          &:hover {
+            box-shadow: none;
+
+            .btn {
+              visibility: visible !important;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #admin-community-member-component {
+
+    .info-wrapper, .card-wrapper, .stat-container {
+      flex-direction: column;
+    }
+
+    .form-textarea, .form-input, .suggestion, .form-select {
+      max-width: 480px !important;
+    }
+
+    .info-body {
+      padding-right: 0 !important;
+    }
+
+    .card-wrapper {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+  }
+
+}
