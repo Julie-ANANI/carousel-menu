@@ -4,9 +4,12 @@ export interface AmbassadorPosition {
 }
 
 export const ambassadorPosition: Array<AmbassadorPosition> = [
+  { name:  'uncategorized', alias: 'Uncategorized' },
+  { name:  'academic', alias: 'Academic / Researcher' },
+  { name:  'consultant', alias: 'Consultant' },
+  { name:  'freelance', alias: 'Entrepreneur / Freelance' },
   { name:  'operational', alias: 'Operational' },
-  { name:  'junior', alias: 'Junior' },
-  { name:  'senior', alias: 'Senior' },
-  { name:  'confirmed', alias: 'Confirmed' },
-  { name:  'influencer', alias: 'Influencer' }
+  { name:  'other', alias: 'Other' },
+  { name:  'business', alias: 'Sales / Business Dev. / Marketing / HR' },
+  { name:  'management', alias: 'Upper management' }
 ];
