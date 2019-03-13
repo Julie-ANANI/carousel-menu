@@ -41,9 +41,11 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _saveChanges: boolean;
 
-  private _tags: Array<Tag> = [];
+  private _tagsRest: Array<Tag> = [];
 
-  innovationsSuggested: Array<InnovCard> = [];
+  private _tagsProfessional: Array<Tag> = [];
+
+  private _innovationsSuggested: Array<InnovCard> = [];
 
   private _configTag = {
     limit: '0',
@@ -52,7 +54,7 @@ export class AdminCommunityMemberComponent implements OnInit {
     sort: '{"label":-1}'
   };
 
-  configInnovation = {
+  private _configInnovation = {
     fields: 'innovationCards principalMedia',
     limit: '0',
     offset: '0',
@@ -104,7 +106,14 @@ export class AdminCommunityMemberComponent implements OnInit {
   private getAllTags() {
     this.tagsService.getAll(this._configTag).pipe(first()).subscribe((response) => {
       if (response) {
-        this._tags = response.result;
+        response.result.forEach((tag) => {
+          const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
+          if (find) {
+            this._tagsProfessional.push(tag);
+          } else {
+            this._tagsRest.push(tag);
+          }
+        });
       }
     });
   }
@@ -112,9 +121,9 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private getAllInnovations() {
 
-    this.innovationsSuggested = [];
+    this._innovationsSuggested = [];
 
-    this.innovationService.getAll(this.configInnovation).pipe(first()).subscribe((response) => {
+    this.innovationService.getAll(this._configInnovation).pipe(first()).subscribe((response) => {
       if (response) {
         response.result.forEach((innovation: Innovation) => {
           innovation.tags.forEach((tag) => {
@@ -123,10 +132,10 @@ export class AdminCommunityMemberComponent implements OnInit {
               if (innovation.innovationCards.length > 1) {
                 const index = innovation.innovationCards.findIndex((innov) => innov.lang === this._professional.language);
                 if (index) {
-                  this.innovationsSuggested.push(innovation.innovationCards[index]);
+                  this._innovationsSuggested.push(innovation.innovationCards[index]);
                 }
               } else {
-                this.innovationsSuggested.push(innovation.innovationCards[0]);
+                this._innovationsSuggested.push(innovation.innovationCards[0]);
               }
             }
           });
@@ -156,6 +165,42 @@ export class AdminCommunityMemberComponent implements OnInit {
    */
   notifyChanges() {
     this._saveChanges = true;
+  }
+
+
+  /***
+   * when changing the value of the motivation.
+   * @param event
+   */
+  onChangeMotivation(event: Event) {
+    if (event && event.target && event.target['value']) {
+      // this._professional.ambassador.qualification = event.target['value'];
+      this.notifyChanges();
+    }
+  }
+
+
+  /***
+   * when changing the value of the motivation.
+   * @param event
+   */
+  onChangeQualification(event: Event) {
+    if (event && event.target && event.target['value']) {
+      this._professional.ambassador.qualification = event.target['value'];
+      this.notifyChanges();
+    }
+  }
+
+
+  /***
+   * when changing the value of the motivation.
+   * @param event
+   */
+  onChangeActivity(event: Event) {
+    if (event && event.target && event.target['value']) {
+      // this._professional.ambassador.qualification = event.target['value'];
+      this.notifyChanges();
+    }
   }
 
 
@@ -309,12 +354,24 @@ export class AdminCommunityMemberComponent implements OnInit {
     return this._saveChanges;
   }
 
-  get tags(): Array<Tag> {
-    return this._tags;
+  get tagsRest(): Array<Tag> {
+    return this._tagsRest;
   }
 
   get configTag(): { search: string; offset: string; limit: string; sort: string } {
     return this._configTag;
+  }
+
+  get tagsProfessional(): Array<Tag> {
+    return this._tagsProfessional;
+  }
+
+  get innovationsSuggested(): Array<InnovCard> {
+    return this._innovationsSuggested;
+  }
+
+  get configInnovation(): { offset: string; $or: string; limit: string; isPublic: string; sort: string; fields: string } {
+    return this._configInnovation;
   }
 
 }

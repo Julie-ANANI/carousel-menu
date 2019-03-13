@@ -101,30 +101,36 @@
         }
 
         .tags-wrapper {
+          overflow: auto;
+          max-height: 933px;
 
-          .form-checkbox {
+          .tags {
 
-            .form-icon {
-              border-width: 2px;
-              border-color: $border-meta-color;
-              background: transparent;
+            .form-checkbox {
+
+              .form-icon {
+                border-width: 2px;
+                border-color: $border-meta-color;
+                background: transparent;
+              }
+
+              .form-icon::before {
+                height: 10px;
+                width: 5px;
+                margin-left: -2px;
+                margin-top: -6px;
+              }
+
+              span {
+                font-size: 12px;
+              }
+
             }
 
-            .form-icon::before {
-              height: 10px;
-              width: 5px;
-              margin-left: -2px;
-              margin-top: -6px;
+            .form-checkbox input:checked + .form-icon, .form-checkbox input:checked + .form-icon::before {
+              border-color: $primary-color;
             }
 
-            span {
-              font-size: 12px;
-            }
-
-          }
-
-          .form-checkbox input:checked + .form-icon, .form-checkbox input:checked + .form-icon::before {
-            border-color: $primary-color;
           }
 
         }
