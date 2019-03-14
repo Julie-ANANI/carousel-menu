@@ -73,8 +73,14 @@ legend {
   }
 
   &.input-sm {
-    max-width: 480px;
+    max-width: $control-width-sm;
   }
+
+  &.input-md {
+    max-width: $control-width-md;
+  }
+
+
 
 }
 

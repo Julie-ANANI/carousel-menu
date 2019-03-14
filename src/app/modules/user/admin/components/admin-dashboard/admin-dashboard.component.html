@@ -91,30 +91,45 @@
                     </div>
                   </ng-container>
 
-                  <!--<div *ngIf="index2 === 4" class="batch-body">-->
-                    <!--<div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">-->
-                      <!--<span>{{ 'DASHBOARD.SEE_MORE' | translate }}</span>-->
-                      <!--<div class="popover-container">-->
-                        <!--<div class="card">-->
-                          <!--<div class="card-body">-->
-                            <!--<div *ngFor="let batchesOver of days; let index3 = index">-->
-                              <!--<div *ngIf="index3 > 0" class="batch-body">-->
-                                <!--<label *ngIf="getState(batchesOver) === 0" class="label label-success" (click)="showPreview($event, batches)">-->
-                                  <!--{{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}-->
-                                <!--</label>-->
-                                <!--<label *ngIf="getState(batchesOver) === 1" class="label label-draft" (click)="showPreview($event, batches)">-->
-                                  <!--{{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}-->
-                                <!--</label>-->
-                                <!--<label *ngIf="getState(batchesOver) === 2" class="label label-meta" (click)="showPreview($event, batches)">-->
-                                  <!--{{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}-->
-                                <!--</label>-->
-                              <!--</div>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</div>-->
+                  <ng-container *ngIf="index2 === 4">
+                    <div class="batch-body">
+                      <div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">
+
+                        <div class="text-link">see more...</div>
+
+                        <div class="popover-container popover-sm">
+                          <div class="card">
+                            <div class="card-body">
+                              <div *ngFor="let batchesOver of days; let index3 = index">
+                                <div *ngIf="index3 > 0" class="batch-body">
+
+                                  <ng-container *ngIf="getState(batchesOver) === 0">
+                                    <div class="label label-success" (click)="showPreview($event, batches)">
+                                      {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                                    </div>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="getState(batchesOver) === 1">
+                                    <div class="label label-draft" (click)="showPreview($event, batches)">
+                                      {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                                    </div>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="getState(batchesOver) === 2">
+                                    <div class="label label-meta" (click)="showPreview($event, batches)">
+                                      {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                                    </div>
+                                  </ng-container>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </ng-container>
 
                 </ng-container>
 

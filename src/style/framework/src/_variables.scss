@@ -25,11 +25,13 @@ $link-color: $primary-color;
 $bg-color-light: $light-color !default;
 $bg-overlay: rgba(0,0,0,0.75) !default;
 $bg-dropdown-color: #F2F2F2 !default;
+$border-meta-color: $meta-color !default;
 
 
 // text variables
 $text-primary-color: $dark-color !default;
 $text-secondary-color: #484848 !default;
+$text-meta-color: $meta-color !default;
 $text-background-color: $background-color !default;
 $text-disabled-color: $disabled-text-color !default;
 
@@ -126,6 +128,13 @@ $border-width-lg: $unit-h !default;
 $border-width-xl: $unit-1 !default;
 
 
+$control-width-xs: 180px !default;
+$control-width-sm: 320px !default;
+$control-width-md: 640px !default;
+$control-width-lg: 960px !default;
+$control-width-xl: 1280px !default;
+
+
 // Responsive breakpoints
 $size-xs: 480px !default;
 $size-sm: 600px !default;
@@ -137,6 +146,12 @@ $size-2x: 1440px !default;
 $responsive-breakpoint: $size-xs !default;
 
 
+// Z-index
+$zindex-0: 1 !default;
+$zindex-1: 100 !default;
+$zindex-2: 200 !default;
+$zindex-3: 300 !default;
+$zindex-4: 400 !default;
 
 
 

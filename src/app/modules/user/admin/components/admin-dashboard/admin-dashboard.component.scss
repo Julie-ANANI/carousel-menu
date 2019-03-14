@@ -53,7 +53,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin-top: 1.25rem;
+      margin-top: 0.5rem;
 
       .batch {
         display: flex;
@@ -61,12 +61,13 @@
         text-align: center;
 
         p {
+          margin-top: 0.8755rem;
           color: $background-color;
           font-weight: 600;
         }
 
         .batch-body {
-          display: inline-flex;
+          display: flex;
           flex-direction: column;
 
           .label {
@@ -78,23 +79,9 @@
 
           }
 
-          span {
-            color: $secondary-color;
-            font-size: .875rem;
+          .text-link:hover {
+            text-decoration: none;
             cursor: default;
-          }
-
-          .popover-container {
-            width: 250px;
-
-            .card {
-
-              .card-body {
-
-              }
-
-            }
-
           }
 
         }
@@ -121,7 +108,7 @@
 
         span {
           margin-right: 0 !important;
-          margin-bottom: .9375rem;
+          margin-bottom: .75rem;
         }
 
       }
@@ -143,15 +130,6 @@
 
       .batch-wrapper {
         flex-direction: column;
-
-        .batch-content {
-          margin-bottom: .9375rem;
-        }
-
-      }
-
-      .batch-wrapper .batch-content:last-child {
-        margin-bottom: 0;
       }
 
     }
