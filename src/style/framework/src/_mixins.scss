@@ -1,0 +1,82 @@
+@import "variables";
+
+// Clearfix mixin
+@mixin clearfix() {
+  &::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+
+// Text Ellipsis
+@mixin text-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+// Component transition
+@mixin control-transition() {
+  transition: all 0.2s ease;
+}
+
+
+// Button variant
+@mixin button-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:focus, &:active, &.active {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &:hover {
+    background-color: lighten($color, 15%);
+    border-color: lighten($color, 15%);
+  }
+
+}
+
+
+// Ghost button variant
+@mixin ghost-button-variant($color: $primary-color) {
+  color: $color;
+  background-color: transparent;
+  border-color: $color;
+  border-width: $border-width-lg;
+
+  &:focus, &:active, &.active {
+    color: $color;
+    background-color: transparent;
+    border-color: $color;
+    border-width: $border-width-lg;
+  }
+
+  &:hover {
+    color: lighten($color, 15%);
+    background-color: transparent;
+    border-color: lighten($color, 15%);
+  }
+
+}
+
+
+// Text link variant
+@mixin text-link-variant($color: $primary-color) {
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  color: $color;
+
+  &:focus, &:visited, &:active, &.active, &:hover {
+    cursor: pointer;
+    color: $color;
+    text-decoration: underline;
+  }
+
+}

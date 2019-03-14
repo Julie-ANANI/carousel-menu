@@ -4,6 +4,8 @@
   <div class="section-header">
     {{ campaignScenario.name }}
     &nbsp;-
+    <div *ngIf="inCampaign && defaultScenario === campaignScenario.name">Par défaut</div>
+    <div *ngIf="inCampaign && defaultScenario != campaignScenario.name" (click)="setDefaultScenario()">Utiliser par défaut</div>
     <div [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'" class="circle"><i class="fas fa-check"></i></div>
     <span [ngClass]="{ 'active': language === 'en' }" class="text-link" (click)="changeLanguage('en')">{{ 'COMMON.LANG.EN' | translate }}</span>
     &nbsp;&nbsp;|
@@ -32,6 +34,7 @@
 <!-- sidebar to edit workflow -->
 <app-sidebar [(template)]="more">
   <app-workflow
+    [id]="getId()"
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">

@@ -132,7 +132,8 @@ export const ERROR = {
       'DELETED': 'The workflow has been deleted successfully.',
       'UPDATED': 'The workflow has been updated successfully.',
       'SENT': 'The mail has been sent successfully.',
-      'SENT_ERROR': 'We are having trouble while sending the mail.'
+      'SENT_ERROR': 'We are having trouble while sending the mail.',
+      'DEFAULT': 'The default template has been updated'
     },
     'BATCH': {
       'NUGGETS_ERROR': 'We are having trouble while activating/deactivating the nuggets. Please try to reload the page!',

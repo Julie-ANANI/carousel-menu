@@ -27,12 +27,16 @@ export const TABLE = {
     'TITLE': 'Titre',
     'OWNER': 'Propriétaire',
     'UPDATED': 'Modifié le',
+    'SECTORS': 'Secteurs',
+    'INDUSTRY': 'Industrie',
+    'FEEDBACK': 'Feedback'
   },
 
   'TITLE': {
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
     'PROJECTS': 'Projets',
+    'AMBASSADORS': 'Ambassadeurs'
   }
 
 };

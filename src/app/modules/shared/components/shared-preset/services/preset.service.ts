@@ -10,8 +10,8 @@ export class PresetService {
     context: 'radio',
     marketNeed: 'radio',
     relevance: 'radio',
-    differenciation: 'radio',
-    strenghts: 'textarea',
+    differentiation: 'radio',
+    strengths: 'textarea',
     objections: 'textarea',
     applications: 'list',
     leads: 'checkbox',
@@ -126,6 +126,7 @@ export class PresetService {
     const questions: Array<Question> = this._preset.sections[sectionIndex].questions;
     const question: Question = { ...questions[questionIndex] };
     /* mutate question to avoid getting 2 questions with the same id */
+    delete question._id;
     question.identifier = this.generateId();
     questions.push(question);
   }

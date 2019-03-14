@@ -39,6 +39,8 @@ import { librariesRoutes } from './components/admin-libraries/admin-libraries-ro
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
+import { AdminCommunityMemberComponent } from './components/admin-community/admin-community-members/components/admin-community-member/admin-community-member.component';
+import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 // import {AdminLibrariesComponent} from "./components/admin-libraries/admin-libraries.component";
 // import {librariesRoutes} from "./components/admin-libraries/admin-libraries-routing.module";
 
@@ -68,10 +70,23 @@ const adminRoutes: Routes = [
       },
       {
         path: 'community',
-        component: AdminCommunityComponent,
         children: [
-          { path: '', redirectTo: 'members', pathMatch: 'full' },
-          ...communityRoutes
+          {
+            path: '',
+            component: AdminCommunityComponent,
+            children: [
+              { path: '', redirectTo: 'projects', pathMatch: 'full' },
+              ...communityRoutes
+            ],
+          },
+          {
+            path: 'members/:memberId',
+            resolve: { professional: ProfessionalResolver },
+            runGuardsAndResolvers: 'always',
+            children: [
+              { path: '', component: AdminCommunityMemberComponent, pathMatch: 'full' }
+            ],
+          },
         ]
       },
       {

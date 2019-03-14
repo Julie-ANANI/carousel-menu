@@ -275,11 +275,6 @@ export class TableComponent {
    } else {
      this.removeRows.emit(this.getSelectedRowsContent());
    }
-   /* if (this._massSelection && this._total > this._content.length) {
-      this.removeRows.emit('all');
-    } else {
-      this.removeRows.emit(this.getSelectedRowsContent());
-    }*/
   }
 
   /***
@@ -527,7 +522,7 @@ export class TableComponent {
    * @returns {boolean}
    */
   isSelected(content: any): boolean {
-    return content._isSelected
+    return !!content && !!content._isSelected
   }
 
   /***
@@ -696,5 +691,4 @@ export class TableComponent {
   get lang(): string {
     return this._translateService.currentLang;
   }
-
 }

@@ -58,7 +58,9 @@ export class ProfessionalsService {
     return this._http.post('/professional/import/' + campaignId + '/' + innovationId, formData);
   }
 
-  /////////////// Advanced Search ///////////////
-  // The idea of this piece is to use a new
-  ///////////////////////////////////////////////
+  public importAmbassadorsFromCSV(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post('/professional/ambassadors/', formData);
+  }
 }

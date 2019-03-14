@@ -72,5 +72,15 @@
       </app-text-zone>
     </div>
 
+    <div *ngIf="isEditBatch && campaignWorkflows && campaignWorkflows.length > 1" class="form-group">
+      <label class="form-label">Changer de modèle de mail</label>
+      <select
+        class="form-select"
+        formControlName="workflow">
+        <option *ngFor="let workflow of campaignWorkflows" [ngValue]="workflow">{{ workflow }}</option>
+      </select>
+      <button type="button" class="btn btn-sm btn-primary" (click)="updateBatch($event)">Mettre à jour</button>
+    </div>
+
   </form>
 </div>

@@ -21,6 +21,10 @@ export class WorkflowFormComponent {
     this._language = value;
   }
 
+  @Input() set id(value: string) {
+    this._id = value || this._language;
+  }
+
   @Output() emailChange = new EventEmitter<any>();
 
   private _signatures: Array<EmailSignature> = [];
@@ -28,6 +32,8 @@ export class WorkflowFormComponent {
   private _emailsObject: any = {};
 
   private _language = 'en';
+
+  private _id = null;
 
   constructor() { }
 
@@ -55,6 +61,10 @@ export class WorkflowFormComponent {
 
   set language(value: string) {
     this._language = value;
+  }
+
+  get id(): string {
+    return this._id;
   }
 
 }

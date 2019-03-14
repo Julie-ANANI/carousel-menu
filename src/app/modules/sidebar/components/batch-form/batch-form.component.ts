@@ -18,6 +18,12 @@ export class BatchFormComponent {
     this._contentCurrent = value;
   }
 
+  @Input() set workflow(value: string) {
+    this._workflow = value;
+  }
+
+  @Input() campaignWorkflows: Array<string> = [];
+
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this.buildForm();
@@ -49,6 +55,8 @@ export class BatchFormComponent {
 
   private _mailDate: Date;
 
+  private _workflow: string = '';
+
   private _mailTime: '';
 
   private _hideInput = false;
@@ -61,6 +69,7 @@ export class BatchFormComponent {
       time: [''],
       pros: [''],
       send: [''],
+      workflow: ['']
     });
   }
 
@@ -106,6 +115,8 @@ export class BatchFormComponent {
     } else {
       this._hideInput = false;
     }
+
+    this.formData.get('workflow').setValue(this.workflow);
 
   }
 
@@ -154,6 +165,10 @@ export class BatchFormComponent {
   onKeyboardPress(event: Event) {
     event.preventDefault();
     this._errorPros = false;
+  }
+
+  get workflow(): string {
+    return this._workflow;
   }
 
   get actionType(): string {

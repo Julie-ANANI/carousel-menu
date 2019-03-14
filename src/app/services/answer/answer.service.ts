@@ -65,10 +65,6 @@ export class AnswerService {
   public getReportHTML(innovationId: string, lang: string): Observable<any>  {
     const url = environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
     return this._http.get(url, { responseType: 'text' });
-    /*.pipe(
-      map((res: Response) => res['_body']),
-      catchError((error: Response) => throwError(error.text()))
-    );*/
   }
 
   public importFromGmail(file: File): Observable<any> {

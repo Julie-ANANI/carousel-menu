@@ -12,7 +12,7 @@ export class AdminProfessionalsComponent implements OnInit {
 
   ngOnInit() {
     this._config = {
-      fields: 'language firstName lastName company country jobTitle campaigns tags messages',
+      fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.is',
       limit: '10',
       offset: '0',
       search: '{}',

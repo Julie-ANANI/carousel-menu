@@ -11,6 +11,7 @@ export interface Batch {
   thirdMail?: any,
   sendNow?: boolean,
   size: number,
+  workflow?: string,
   status?: number,
   active: boolean,
   nuggets?: Boolean,

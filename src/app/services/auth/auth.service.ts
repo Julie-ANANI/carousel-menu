@@ -68,7 +68,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._user = res;
           if (res.isAuthenticated) {
-            this.startCookieObservator();
+            //this.startCookieObservator();
           }
           return res;
         }),

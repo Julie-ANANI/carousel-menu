@@ -21,10 +21,14 @@ export class AdminEditWorkflowComponent {
 
   @Input() isDeletable: boolean = true;
 
+  @Input() defaultScenario: string = null;
+
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
     this._initTable();
   }
+
+  @Output() defaultScenarioChange = new EventEmitter<string>();
 
   @Output() scenarioChange = new EventEmitter<EmailScenario>();
 
@@ -152,6 +156,11 @@ export class AdminEditWorkflowComponent {
     }
   }
 
+  public setDefaultScenario() {
+    this.defaultScenario = this._campaignScenario.name;
+    this.defaultScenarioChange.emit(this.defaultScenario);
+  }
+
 
   public changeLanguage(value: string) {
     this._language = value;
@@ -226,6 +235,10 @@ export class AdminEditWorkflowComponent {
 
   get campaignScenario(): EmailScenario {
     return this._campaignScenario;
+  }
+
+  public getId(): string {
+    return `${this._language}_${this._campaignScenario.name.replace(/\s/ig, '_').toLowerCase()}`;
   }
 
 }

@@ -12,7 +12,12 @@ export const SIDEBAR = {
     'EDIT_INSIGHT': 'Modifier l\'aperçu',
     'ADD_PRO': 'Ajouter un professionnel',
     'NEW_BATCH': 'Nouveau batch manuellement',
-    'EDIT_BATCH': 'Modifier le batch'
+    'EDIT_BATCH': 'Modifier le batch',
+    'ADD_AMBASSDOR': 'Ajouter des Ambassadeurs'
+  },
+
+  'LABELS': {
+    'CSV-IMPORT': 'Import csv file'
   }
 
 };
