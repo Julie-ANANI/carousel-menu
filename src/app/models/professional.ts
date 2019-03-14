@@ -30,5 +30,7 @@ export interface Professional {
     qualificationWhy?:string,
     ambassadorSource?: string,
     notes?: string;
+    activity?: number;
+    motivations?: number;
   };
 }

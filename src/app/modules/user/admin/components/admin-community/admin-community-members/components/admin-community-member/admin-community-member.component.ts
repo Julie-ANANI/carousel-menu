@@ -115,11 +115,11 @@ export class AdminCommunityMemberComponent implements OnInit {
             this._tagsRest.push(tag);
           }
         });
-        this._tagsProfessional.sort((a,b)=>{
+        this._tagsProfessional.sort((a,b) => {
           return a.label[activeLang].localeCompare(b.label[activeLang]);
         });
 
-        this._tagsRest.sort((a,b)=>{
+        this._tagsRest.sort((a,b) => {
           return a.label[activeLang].localeCompare(b.label[activeLang]);
         });
       }
@@ -182,7 +182,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    */
   onChangeMotivation(event: Event) {
     if (event && event.target && event.target['value']) {
-      // this._professional.ambassador.qualification = event.target['value'];
+      this._professional.ambassador.motivations = event.target['value'];
       this.notifyChanges();
     }
   }
@@ -206,7 +206,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    */
   onChangeActivity(event: Event) {
     if (event && event.target && event.target['value']) {
-      // this._professional.ambassador.qualification = event.target['value'];
+      this._professional.ambassador.activity = event.target['value'];
       this.notifyChanges();
     }
   }
