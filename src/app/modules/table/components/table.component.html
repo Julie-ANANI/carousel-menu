@@ -92,10 +92,10 @@
                 <label>
                   <input type="checkbox" (change)="selectAll($event); onSelectAction()" [checked]="true"/>
                   <div *ngIf="selectedRows === total" class="square-checkbox active">
-                    <i class="icon icon-check"></i>
+                    <i class="fas fa-check"></i>
                   </div>
                   <div *ngIf="selectedRows < total" class="square-checkbox">
-                    <i class="icon icon-minus"></i>
+                    <i class="fas fa-minus"></i>
                   </div>
                 </label>
               </th>
@@ -103,7 +103,7 @@
               <th class="all" [attr.colspan]="isSelectable ? columns.length : columns.length -1">
               <span class="selected-text">
                 {{ selectedRows }} {{ 'COMMON.TABLE.SELECTED_ROWS' | translate }}
-                <i class="icon icon-arrow-right"></i>
+                <i class="fas fa-angle-right"></i>
               </span>
                 <div [ngStyle]="{ display: 'inline-flex' }" *ngIf="(selectedRows < total) || (total <= content.length)">
                   <button
@@ -136,7 +136,7 @@
             <label>
               <input type="checkbox" (click)="selectRow(key); onSelectAction()" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
               <div class="square-checkbox active">
-                <i class="icon icon-check"></i>
+                <i class="fas fa-check"></i>
               </div>
             </label>
           </td>

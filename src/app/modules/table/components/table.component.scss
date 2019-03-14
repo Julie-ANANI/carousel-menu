@@ -28,6 +28,10 @@
       border: $border-width-lg solid $table-border-color;
       background-color: white;
 
+      .btn {
+        transition: none;
+      }
+
       th {
         position: relative;
         font-size: $font-size-sm;
@@ -40,9 +44,13 @@
         padding-right: 11px;
         background-color: $table-th-background-color;
 
-        .selected-text .icon-arrow-right {
+        .selected-text .fa-angle-right {
           color: $meta-color;
-          vertical-align: -2px;
+        }
+
+        .fa-angle-right {
+          font-size: 20px;
+          vertical-align: -3px;
         }
 
 
@@ -77,16 +85,16 @@
         transition: all .15s ease-in-out;
         border: 2px solid $meta-color;
 
-        .icon-check {
+        .fa-check {
           color: transparent;
         }
 
-        .icon-minus {
+        .fa-minus {
           color: $meta-color;
           width: 12px;
         }
 
-        .icon-minus::before {
+        .fa-minus::before {
           height: 2px;
         }
 
@@ -124,15 +132,15 @@
           float: left;
         }
 
-        .icon-cross {
+        .fa-minus {
           color: $alert-color;
         }
 
-        .icon-check {
+        .fa-check {
           color: $success-color;
         }
 
-        .icon-check, .icon-cross {
+        .fa-check, .fa-minus {
           font-size: 18px;
           vertical-align: unset;
         }
@@ -176,7 +184,7 @@
       label input:checked + .active {
         border-color: $primary-color;
 
-        .icon-check {
+        .fa-check {
           color: $primary-color;
         }
 
@@ -195,9 +203,6 @@
 }
 
 
-/********************************** Media ***************************************/
-
-
 @media (max-width: 600px) {
 
   #table-component {
@@ -208,7 +213,7 @@
 
       .main-heading {
         margin-right: 0 !important;
-        margin-bottom: .9375rem !important;
+        margin-bottom: 0.75rem !important;
       }
 
     }
@@ -239,7 +244,7 @@
 
     tr {
       height: unset !important;
-      padding-bottom: .18rem;
+      padding-bottom: 3px;
     }
 
   }
