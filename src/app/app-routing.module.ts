@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { ExtraOptions, Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 
 // Guards
@@ -57,9 +57,14 @@ const appRoutes: Routes = [
   },
 ];
 
+const config: ExtraOptions = {
+  initialNavigation: 'enabled',
+  scrollPositionRestoration: 'enabled'
+};
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, config)
   ],
   exports: [
     RouterModule

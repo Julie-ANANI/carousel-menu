@@ -2,6 +2,7 @@ import { Campaign } from './campaign';
 import { Tag } from './tag';
 
 export interface Professional {
+
   readonly _id: string;
   readonly firstName: string;
   readonly lastName: string;
@@ -12,7 +13,24 @@ export interface Professional {
   readonly messages: Array<any>;
   tags: Array<Tag>;
   readonly profileUrl: string;
-  readonly country: string;
+  country?: string;
   readonly campaigns: Campaign[];
   readonly emailConfidence?: number;
+  readonly urlCompany?: string;
+  language?: string;
+  ambassador?: {
+    is?: boolean,
+    positionLevel?: string,
+    persona?: string,
+    industry?: string,
+    experience?: string,
+    ambassadorStatus?: string,
+    ambassadorCommitment?: Array<any>,
+    qualification?: number,
+    qualificationWhy?:string,
+    ambassadorSource?: string,
+    notes?: string;
+    activity?: number;
+    motivations?: number;
+  };
 }

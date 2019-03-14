@@ -1,9 +1,7 @@
-import { Component, Inject, OnInit, HostListener, PLATFORM_ID  } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
-import { NavigationEnd, Router } from '@angular/router';
 import { MouseService } from './services/mouse/mouse.service';
 import { environment } from "../environments/environment";
 
@@ -26,25 +24,15 @@ export class AppComponent implements OnInit {
     clickToClose: true
   };
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private translateService: TranslateService,
+  constructor(private translateService: TranslateService,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router,
               private mouseService: MouseService) {}
 
   ngOnInit(): void {
 
     this._setFavicon();
     initTranslation(this.translateService);
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          window.scrollTo(0, 0);
-        }
-      });
-    }
 
     if (this.authService.isAcceptingCookies) {
       this.authService.initializeSession().subscribe(() => {

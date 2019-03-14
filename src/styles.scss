@@ -10,7 +10,7 @@
     Color variable file
  */
 @import "style/variables";
-@import "style/framework/variables";
+@import "style/framework/src/variables";
 
 /********************************** Default Styles ***************************************/
 
@@ -21,6 +21,7 @@
 /*
     Rest style file
  */
+@import "style/framework/src/umi";
 @import "style/general-style";
 @import "style/text-style";
 @import "style/form-style";

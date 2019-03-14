@@ -12,8 +12,7 @@ export class AdvSearchService {
 
   private _base: string = "/advsearch";
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) { }
 
   /////////////// Advanced Search ///////////////
   // The idea of this piece is to use a new
@@ -59,4 +58,5 @@ export class AdvSearchService {
   public getCommunityMembers(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get(`${this._base}/getCommunityMembers`, {params: config});
   }
+
 }
