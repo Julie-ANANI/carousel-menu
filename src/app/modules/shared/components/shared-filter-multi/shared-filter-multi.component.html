@@ -1,142 +1,87 @@
 <section id="filter-multi-component">
 
-  <!-- Select by option -->
+  <!-- select by option -->
   <ng-container *ngIf="textProps.length > 0">
-    <div class="filter-type-wrapper">
+    <div class="type-wrapper">
+
       <span class="text text-label">{{ 'COMMON.LABEL.SEARCH_BY' | translate }}:</span>
-      <label>
-        <select (change)="changeCurrentTextProp($event)" class="form-select">
-          <option
-            *ngFor="let propName of textProps"
-            [value]="getAttrs(propName)"
-            [selected]="textIsSelected(propName)">
-            {{ getName(propName) | translate | FormatText }}
-          </option>
-        </select>
-      </label>
+
+      <select class="form-select" (change)="changeCurrentTextProp($event)">
+        <option
+          *ngFor="let propName of textProps"
+          [value]="getAttrs(propName)"
+          [selected]="textIsSelected(propName)">
+          {{ getName(propName) | translate | FormatText }}
+        </option>
+      </select>
+
     </div>
   </ng-container>
-  <!-- /Select by option -->
+  <!-- /select by option -->
 
-
-  <!-- Search box -->
+  <!-- search box -->
   <ng-container *ngIf="textProps.length > 0">
-    <div class="filter-search-box">
+    <div class="search-box-wrapper">
 
-      <label>
-        <input
-          type="search"
-          (keyup)="filterText($event.srcElement)"
-          #search
-          class="form-input"
-          [placeholder]="'COMMON.PLACEHOLDER.SEARCH' | translate">
-      </label>
+      <input
+        type="search"
+        (keyup)="filterText($event.srcElement)"
+        #search
+        class="form-input"
+        [attr.placeholder]="'COMMON.PLACEHOLDER.SEARCH' | translate">
 
       <div class="search-icon" (click)="filterText(search)">
         <img src="https://res.cloudinary.com/umi/image/upload/v1541656930/app/default-images/icons/search-meta.svg" alt=" ">
       </div>
 
-      <div *ngIf="search.value !== ''" class="search-cross" (click)="search.value = ''; filterText(search)">
-        <i class="fas fa-times"></i>
-      </div>
+      <ng-container *ngIf="search.value !== ''">
+        <div class="search-cross" (click)="search.value = ''; filterText(search)">
+          <i class="fas fa-times"></i>
+        </div>
+      </ng-container>
 
     </div>
   </ng-container>
-  <!-- /Search box -->
+  <!-- /search box -->
 
+  <!-- other options -->
+  <ng-container *ngFor="let prop of otherProps">
+    <div class="type-wrapper">
 
-  <!-- Other options -->
-  <div *ngFor="let prop of otherProps" class="filter-type-wrapper">
+      <span class="text text-label">{{ getName(prop) | translate | FormatText }}:</span>
 
-    <span class="filter-label">{{ getName(prop) | translate | FormatText }}:</span>
+      <ng-container [ngSwitch]="getType(prop)">
 
-    <ng-container [ngSwitch]="getType(prop)">
+        <ng-container *ngSwitchCase="'CHECK'">
+          <select
+            class="form-select"
+            (change)="filterOther(prop)"
+            [(ngModel)]="config[getAttrs(prop)]"
+            [ngStyle]="{ 'padding-right': '2.5rem' }">
+            <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
+            <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
+            <option [ngValue]="false">{{ 'COMMON.NO' | translate }}</option>
+          </select>
+        </ng-container>
 
-      <label *ngSwitchCase="'CHECK'">
-        <select
-          (change)="filterOther(prop)"
-          [(ngModel)]="config[getAttrs(prop)]"
-          class="form-select"
-          [ngStyle]="{ 'padding-right': '3.15rem' }">
-          <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
-          <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
-          <option [ngValue]="false">{{ 'COMMON.NO' | translate }}</option>
-        </select>
-      </label>
+        <ng-container *ngSwitchCase="'MULTI-CHOICES'">
+          <select
+            class="form-select"
+            (change)="filterOther(prop)"
+            [(ngModel)]="config[getAttrs(prop)]">
+            <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
+            <option
+              *ngFor="let choice of getChoices(prop)"
+              [ngValue]="getChoiceName(choice)">
+              {{ getChoiceAlias(choice) | translate | FormatText }}
+            </option>
+          </select>
+        </ng-container>
 
-      <label *ngSwitchCase="'MULTI-CHOICES'">
-        <select
-          (change)="filterOther(prop)"
-          [(ngModel)]="config[getAttrs(prop)]"
-          class="form-select">
-          <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
-          <option
-            *ngFor="let choice of getChoices(prop)"
-            [ngValue]="getChoiceName(choice)">
-            {{ getChoiceAlias(choice) | translate | FormatText }}
-          </option>
-        </select>
-      </label>
+      </ng-container>
 
-    </ng-container>
-  </div>
-  <!-- /Other options -->
-
+    </div>
+  </ng-container>
+  <!-- /other options -->
 
 </section>
-
-
-
-<!--<div class="form-group-inline-left">
-  <div class="input-group" *ngIf="textProps.length > 0" style="width: 100%;">
-    <select (change)="changeCurrentTextProp($event); search.value = '';" class="input-group-addon form-select">
-      <option *ngFor="let propName of textProps"
-              [value]="getAttrs(propName)"
-              [selected]="textIsSelected(propName)">
-        {{getName(propName) | translate}}
-      </option>
-    </select>
-    <div class="has-icon-right">
-      <input (keyup.enter)="filterText($event.srcElement)"
-             #search
-             class="form-input"
-             [placeholder]="'COMMON.FILTER' | translate"
-      />
-      <span (click)="filterText(search)">
-        <i class="form-icon icon icon-search"
-           *ngIf="search.value === ''">
-        </i>
-      </span>
-      <span (click)="search.value = ''; filterText(search)">
-        <i class="form-icon icon icon-cross" *ngIf="search.value !== ''"></i>
-      </span>
-    </div>
-  </div>
-
-  <div *ngFor="let prop of otherProps" class="input-group" style="width: 100%;">
-    <label class="form-label" style="margin-right: 10px;">{{getName(prop) | translate}}</label>
-      <div [ngSwitch]="getType(prop)">
-        <select (change)="filterOther(prop)"
-                [(ngModel)]="config[getAttrs(prop)]"
-                class="form-select small-select"
-                *ngSwitchCase="'CHECK'">
-          <option [ngValue]="undefined">{{'COMMON.ALL' | translate}}</option>
-          <option [ngValue]="true">{{'COMMON.YES' | translate}}</option>
-          <option [ngValue]="false">{{'COMMON.NO' | translate}}</option>
-        </select>
-
-        <select (change)="filterOther(prop)"
-                [(ngModel)]="config[getAttrs(prop)]"
-                class="form-select small-select"
-                style="margin-right: 10px;"
-                *ngSwitchCase="'MULTI-CHOICES'">
-          <option [ngValue]="undefined" selected>{{'COMMON.ALL' | translate}}</option>
-          <option *ngFor="let choice of getChoices(prop)"
-                  [ngValue]="getChoiceName(choice)">
-            {{getChoiceAlias(choice) | translate}}
-          </option>
-        </select>
-      </div>
-    </div>
-</div>-->
-

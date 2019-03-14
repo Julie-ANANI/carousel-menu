@@ -4,31 +4,42 @@
 #filter-multi-component {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
 
-  .filter-type-wrapper, .filter-search-box {
+  .type-wrapper, .search-box-wrapper {
     display: flex;
-    flex-wrap: wrap;
+    flex: 0 1 auto;
     align-items: center;
     margin-right: 1.25rem;
+    margin-bottom: 0.25rem;
+
+    .form-select {
+      min-width: 120px;
+    }
+
   }
 
   .text.text-label {
     margin-right: 0.5rem;
+    width: 100%;
   }
 
-  .filter-search-box {
+  .search-box-wrapper {
     position: relative;
+
+    .form-input {
+      min-width: 350px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
 
     .search-icon {
       position: absolute;
       left: 10px;
-      margin-top: 1px;
       cursor: pointer;
 
       img {
-        width: 20px;
-        height: 19px;
+        width: 17px;
+        height: 17px;
       }
 
     }
@@ -36,22 +47,16 @@
     .search-cross {
       @include control-transition();
       position: absolute;
-      right: 16px;
+      right: 10px;
       cursor: pointer;
 
       .fa-times {
         color: $meta-color;
-        font-size: $font-size-md;
+        font-size: 0.9rem;
       }
 
     }
 
-  }
-
-  .form-input {
-    width: 350px;
-    padding-left: 40px;
-    padding-right: 38px;
   }
 
   .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
@@ -65,13 +70,18 @@
 
   #filter-multi-component {
 
-    .filter-type-wrapper, .filter-search-box {
+    .type-wrapper, .search-box-wrapper {
       margin-bottom: 0.75rem;
-      margin-right: 0.75rem !important;
+      margin-right: 0 !important;
     }
 
-    .form-input {
-      width: 280px !important;
+    .search-box-wrapper {
+      width: 100%;
+
+      .form-input {
+        min-width: 100% !important;
+      }
+
     }
 
   }
