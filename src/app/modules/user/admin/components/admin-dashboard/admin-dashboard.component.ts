@@ -123,15 +123,15 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  getNextWeek() {
-    this._dateNow.setDate(this._dateNow.getDate() + 7);
+  onClickLast() {
+    this._dateNow.setDate(this._dateNow.getDate() - 7);
     this.dashboardService.getNextDateSend(this._dateNow.toString()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });
   }
 
-  getLastWeek() {
-    this._dateNow.setDate(this._dateNow.getDate() - 7);
+  onClickNext() {
+    this._dateNow.setDate(this._dateNow.getDate() + 7);
     this.dashboardService.getNextDateSend(this._dateNow.toString()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });

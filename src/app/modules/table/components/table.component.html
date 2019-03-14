@@ -241,15 +241,16 @@
       <!-- /Table -->
 
       <!-- Pagination -->
-      <div *ngIf="!isNotPaginable" class="pagination-wrapper">
-        <app-pagination
-          *ngIf="!isNotPaginable"
-          [configValue]="paginationConfig"
-          (configChange)="changePaginationConfig($event)"
-          [total]="total"
-          [propertyName]="selector">
-        </app-pagination>
-      </div>
+      <ng-container *ngIf="!isNotPaginable">
+        <div class="flex-end section-light-pad rm-pad-bottom">
+          <app-pagination
+            [configValue]="paginationConfig"
+            (configChange)="changePaginationConfig($event)"
+            [total]="total"
+            [propertyName]="selector">
+          </app-pagination>
+        </div>
+      </ng-container>
       <!-- /Pagination -->
 
     </ng-container>
