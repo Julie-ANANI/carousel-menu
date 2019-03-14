@@ -132,7 +132,8 @@ export const ERROR = {
       'DELETED': 'Le workflow a été supprimé avec succès.',
       'UPDATED': 'Le workflow a été mis à jour avec succès.',
       'SENT': 'Le courrier a été envoyé avec succès.',
-      'SENT_ERROR': 'Nous avons de la difficulté à envoyer le courrier.'
+      'SENT_ERROR': 'Nous avons de la difficulté à envoyer le courrier.',
+      'DEFAULT': 'Le workflow par défaut a été mis à jour.'
     },
     'BATCH': {
       'NUGGETS_ERROR': 'Nous avons du mal à activer/désactiver les nuggets. Veuillez essayer de recharger la page !',

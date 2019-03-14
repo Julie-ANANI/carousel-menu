@@ -16,7 +16,7 @@ import { TagStats } from '../../models/tag-stats';
 export class CommercialComponent implements OnInit {
 
   private _sectorTags: Array<Tag> = [];
-  private _selectedTags: Array<Tag> = [];
+  private _selectedTagsStats: Array<TagStats> = [];
   public tagForm: FormGroup;
 
   private _stats: TagStats;
@@ -25,7 +25,9 @@ export class CommercialComponent implements OnInit {
               private formBuilder: FormBuilder,
               private tagService: TagsService,
               private translateNotificationService: TranslateNotificationsService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService) {
+    this._stats = this.computeStats();
+  }
 
   ngOnInit() {
     this.tagForm = this.formBuilder.group({
@@ -39,22 +41,34 @@ export class CommercialComponent implements OnInit {
     }
   }
 
+  private computeStats(): TagStats {
+    return this._selectedTagsStats.reduce((acc, stats) => {
+      acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
+      acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
+      acc.countNeed = acc.countNeed + stats.countNeed;
+      acc.countDiff = acc.countDiff + stats.countDiff;
+      acc.countLeads = acc.countLeads + stats.countLeads;
+      return acc;
+    }, {totalInnovations: 0, totalAnswers: 0, countNeed: 0, countDiff: 0, countLeads: 0, geographicalRepartition: []});
+  }
+
   public selectTag() {
     const selectedTagId = this.tagForm.get('selectedTag').value;
     const selectedTag = this._sectorTags.find((t) => t._id === selectedTagId);
-    if (selectedTag && this._selectedTags.findIndex((t) => t === selectedTag) === -1) {
-      this._selectedTags.push(selectedTag);
-      this.tagService.getStats(selectedTag._id).subscribe((stats) => {
-        console.log(stats);
-      }, (err) => {
+    if (selectedTag && this._selectedTagsStats.findIndex((t) => t.tag._id === selectedTagId) === -1) {
+      this.tagService.getStats(selectedTag._id).subscribe(stats => {
+        this._selectedTagsStats.push(stats);
+        this._stats = this.computeStats();
+      }, err => {
         this.translateNotificationService.error('ERROR.ERROR', err);
       });
     }
   }
 
-  public removeTag(event: Event, tag: Tag) {
+  public removeStat(event: Event, tagId: string) {
     event.preventDefault();
-    this._selectedTags = this._selectedTags.filter((t) => t !== tag);
+    this._selectedTagsStats = this._selectedTagsStats.filter((t) => t.tag._id !== tagId);
+    this._stats = this.computeStats();
   }
 
   get lang(): string { return this.translateService.currentLang; }
@@ -63,8 +77,8 @@ export class CommercialComponent implements OnInit {
     return this._sectorTags;
   }
 
-  get selectedTags(): Array<Tag> {
-    return this._selectedTags;
+  get selectedTagsStats(): Array<TagStats> {
+    return this._selectedTagsStats;
   }
 
   get stats(): TagStats {

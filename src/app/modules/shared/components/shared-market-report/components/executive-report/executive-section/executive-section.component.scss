@@ -106,6 +106,7 @@
     align-items: center;
     flex-direction: column;
     margin-bottom: 10px;
+    overflow: auto;
   }
 
   .section-star-wrapper, .section-bar-chart-wrapper {
@@ -120,6 +121,8 @@
   .tag {
     display: flex;
     flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
   .tag:last-child {

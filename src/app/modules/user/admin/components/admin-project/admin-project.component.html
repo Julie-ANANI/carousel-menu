@@ -5,6 +5,8 @@
 
       <div class="title-button-wrapper">
         <h1>{{ project.name }}</h1>
+
+        <!--
         <div class="project-progress">
           <label class="form-label">Preparation</label>
           <app-progress-bar class="progress"
@@ -21,7 +23,8 @@
                             [width]="getPercentage('delivery') +'%'"
                             [backgroundColor]="getColor(getPercentage('delivery'))">
           </app-progress-bar>
-        </div>
+        </div>-->
+
         <a [href]="clientSideUrl" target="_blank"><button class="btn ghost-primary">View client side</button></a>
       </div>
 

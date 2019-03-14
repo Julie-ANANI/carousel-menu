@@ -4,17 +4,17 @@ export interface TagStats {
 
   _id?: string;
 
-  tag: Tag;
+  tag?: Tag;
 
   totalInnovations: number;
 
   totalAnswers: number;
 
-  countMarketNeed: number;
+  countNeed: number;
 
-  countMarketDiff: number;
+  countDiff: number;
 
-  countMarketInterest: number;
+  countLeads: number;
 
   geographicalRepartition: Array<{ country: string, count: number }>;
 

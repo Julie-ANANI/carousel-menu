@@ -106,7 +106,7 @@ export class CampaignFrontService {
   getProsCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
-    if (campaign && campaign.stats) {
+    if(campaign && campaign.stats) {
       switch (searchKey) {
 
         case 'professional':

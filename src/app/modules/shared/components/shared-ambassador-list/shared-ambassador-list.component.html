@@ -1,0 +1,42 @@
+<!-- section table -->
+<app-shared-table
+  [config]="config"
+  [data]="tableInfos"
+  (configChange)="loadPros($event)"
+  (editRow)="onClickEdit($event)"
+  (removeRows)="deleteProsModal($event)"
+  (performAction)="performActions($event)"
+  (selectRowAction)="selectPro($event)">
+</app-shared-table>
+
+<!-- section sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+
+  <app-user-form
+    *ngIf="isProfessionalForm"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type"
+    [pro]="currentPro"
+    [campaign]="campaign ? campaign: null"
+    (finalProfessionalData)="updatePro($event)">
+  </app-user-form>
+
+  <app-tags-form
+    *ngIf="isTagsForm"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type"
+    (newTags)="addTagsToPro($event)">
+  </app-tags-form>
+
+</app-sidebar>
+
+
+<!-- modal to ask admin to sure about deleting the professional(s) -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  {{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+</app-modal>
+<!-- /modal to ask admin to sure about deleting the professional(s) -->

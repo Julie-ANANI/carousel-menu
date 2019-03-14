@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
 import { FilterService } from '../../services/filters.service';
+import { environment } from "../../../../../../../environments/environment";
 
 @Component({
   selector: 'app-question-conclusion',
@@ -100,6 +101,10 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       questionTitle: tag.label,
       value: tag._id
     });
+  }
+
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi';
   }
 
   get domSectionId(): string {
