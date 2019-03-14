@@ -41,7 +41,7 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(private translateTitleService: TranslateTitleService,
               private userService: UserService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this.translateTitleService.setTitle('USERS.TITLE');

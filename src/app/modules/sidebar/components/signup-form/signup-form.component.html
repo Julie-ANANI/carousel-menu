@@ -112,12 +112,14 @@
       </div>
 
       <!-- Terms -->
-      <div *ngIf="checkIsMainDomain()" class="text text-notify text-center">
-        {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
-        <a href="https://www.umi.us/end-user-license-agreement/" target="_blank" rel="noopener">
-          <span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span>
-        </a>
-      </div>
+      <ng-container *ngIf="checkIsMainDomain()">
+        <div class="text text-notify text-center">
+          {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
+          <a href="https://www.umi.us/end-user-license-agreement/" target="_blank" rel="noopener">
+            <span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span>
+          </a>
+        </div>
+      </ng-container>
 
       <!-- Submit button -->
       <div class="signup-wrapper text-center">

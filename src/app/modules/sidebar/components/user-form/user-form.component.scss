@@ -1,59 +1,58 @@
 @import "../../../../../style/framework/src/variables";
 
 #user-form-component {
-  padding-top: 1.875rem;
+  padding-top: 1.5rem;
 
-  .save-button-wrapper {
-    text-align: right;
+  .save-wrapper {
     padding-bottom: 1.25rem;
   }
 
   .form-group {
     margin-bottom: 1.2rem;
+    position: relative;
   }
 
   .operator-wrapper {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 0.35rem;
-    padding-bottom: 0.9375rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.75rem;
 
     .form-switch {
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
   }
 
   .domain-wrapper {
-    padding-bottom: 0.9375rem;
+    padding-bottom: 0.75rem;
 
     .fa-pencil-alt {
-      font-size: 0.875rem;
-      margin-left: 0.35rem;
-    }
-
-    .fa-pencil-alt:hover {
-      color: $primary;
+      font-size: $font-icon;
+      margin-left: 0.25rem;
+      vertical-align: 1px;
     }
 
   }
 
   .projects-wrapper {
-    padding-bottom: 1.2rem;
-
-    .text-link {
-      font-size: 0.875rem;
-    }
-
+    padding-bottom: 1rem;
   }
 
   .pro-quiz-wrapper {
-    padding-top: 0.6rem;
+    padding-top: 0.5rem;
 
     p {
-      font-size: 0.875rem;
-      padding-bottom: 0;
+      margin-top: $unit-1;
+      font-size: $font-size-sm;
+      margin-bottom: 0;
+      cursor: pointer;
+
+      .fa-link {
+        font-size: 0.6rem;
+      }
+
     }
 
   }

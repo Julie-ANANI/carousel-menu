@@ -2,10 +2,10 @@
 
 #pagination-component {
   display: inline-flex;
+  align-items: center;
   width: 100%;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
-  align-items: center;
 
   .page-selector-wrapper {
     margin-left: 0.5rem;
@@ -22,8 +22,8 @@
     .fa-angle-double-left, .fa-angle-left, .fa-angle-right, .fa-angle-double-right {
       color: $meta-color;
       margin-right: 0.5rem;
-      font-size: $font-icon-lg;
-      vertical-align: -10%;
+      font-size: $font-icon-xl;
+      vertical-align: -2px;
     }
 
     .text-wrapper {
