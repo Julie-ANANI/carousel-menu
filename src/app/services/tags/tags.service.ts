@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tag } from '../../models/tag';
+import { TagStats } from '../../models/tag-stats';
 
 @Injectable()
 export class TagsService {
@@ -15,6 +16,10 @@ export class TagsService {
 
   public get(id: string): Observable<any> {
     return this._http.get('/tags/entity/' + id);
+  }
+
+  public getStats(id: string): Observable<TagStats> {
+    return this._http.get<TagStats>('/stats/tag/' + id);
   }
 
   public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Tag>, _metadata: any}> {

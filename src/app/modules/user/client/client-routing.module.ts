@@ -8,7 +8,6 @@ import { AccountComponent } from './components/account/account.component';
 import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../../public/share/component/synthesis-complete/synthesis-complete.component';
 
-
 const clientRoutes: Routes = [
   {
     path: '',
@@ -23,6 +22,10 @@ const clientRoutes: Routes = [
         path: 'account',
         component: AccountComponent,
         pathMatch: 'full'
+      },
+      {
+        path: 'discover',
+        loadChildren: '../../public/discover/discover.module#DiscoverModule'
       },
       {
         path: 'synthesis',

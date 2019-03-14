@@ -103,7 +103,7 @@ z-index: 10;
   tooltips
 */
 
-z-index: 10;
+z-index: 300;
 
 
 /*

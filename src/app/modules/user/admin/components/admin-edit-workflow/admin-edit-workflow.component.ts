@@ -9,6 +9,7 @@ import { EmailSignature } from '../../../../../models/email-signature';
   templateUrl: 'admin-edit-workflow.component.html',
   styleUrls: ['admin-edit-workflow.component.scss']
 })
+
 export class AdminEditWorkflowComponent {
 
   @Input() set scenario(value: EmailScenario) {
@@ -20,10 +21,14 @@ export class AdminEditWorkflowComponent {
 
   @Input() isDeletable: boolean = true;
 
+  @Input() defaultScenario: string = null;
+
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
     this._initTable();
   }
+
+  @Output() defaultScenarioChange = new EventEmitter<string>();
 
   @Output() scenarioChange = new EventEmitter<EmailScenario>();
 
@@ -75,7 +80,7 @@ export class AdminEditWorkflowComponent {
       steps[email.step][email.language] = email;
       // email.signature = email.signature || {};
       email.defaultSignatureName = 'Karine Caulfield';
-      email.status = email.modified.toString();
+      email.status = email.modified ? email.modified.toString() : 'false';
     });
 
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
@@ -91,7 +96,7 @@ export class AdminEditWorkflowComponent {
       columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES',_isSortable: false, _choices: [
           {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label label-draft'},
           {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label label-success'},
-        ]})
+        ]});
     }
 
     this._tableInfos = {
@@ -118,7 +123,7 @@ export class AdminEditWorkflowComponent {
     this._more = {
       size: '726px',
       animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.SIDEBAR.EDIT_WORKFLOW'
+      title: 'SIDEBAR.TITLE.EDIT_WORKFLOW'
     };
 
   }
@@ -130,7 +135,7 @@ export class AdminEditWorkflowComponent {
     this._campaignScenario.emails = this._campaignScenario.emails.map((email: EmailTemplate) => {
       if(emailsObject.step === email.step) {
         email = emailsObject[email.language];
-        email.status = email.modified.toString();
+        email.status = email.modified ? email.modified.toString() : 'false';
         email.defaultSignatureName = 'Karine Caulfield';
         /*if (emailsObject[email.language].signature) {
           const fullSignature = this._signatures.find(s => s.name === email.signature.name);
@@ -149,6 +154,11 @@ export class AdminEditWorkflowComponent {
       this.deletedScenario.emit(this._campaignScenario);
       this._modalDelete = false;
     }
+  }
+
+  public setDefaultScenario() {
+    this.defaultScenario = this._campaignScenario.name;
+    this.defaultScenarioChange.emit(this.defaultScenario);
   }
 
 
@@ -225,6 +235,10 @@ export class AdminEditWorkflowComponent {
 
   get campaignScenario(): EmailScenario {
     return this._campaignScenario;
+  }
+
+  public getId(): string {
+    return `${this._language}_${this._campaignScenario.name.replace(/\s/ig, '_').toLowerCase()}`;
   }
 
 }

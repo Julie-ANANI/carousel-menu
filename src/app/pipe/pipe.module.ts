@@ -10,6 +10,7 @@ import { ObjectKeysPipe } from './pipes/objectKeys.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
 import { FormatText } from './pipes/FormatText';
+import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { FormatText } from './pipes/FormatText';
     ObjectKeysPipe,
     EllipsisPipe,
     DiscoverSummaryPipe,
-    FormatText
+    FormatText,
+    ScrapeHTMLTags
   ],
   exports: [
     CharacterCountdown,
@@ -38,7 +40,8 @@ import { FormatText } from './pipes/FormatText';
     ObjectKeysPipe,
     EllipsisPipe,
     DiscoverSummaryPipe,
-    FormatText
+    FormatText,
+    ScrapeHTMLTags
   ]
 })
 

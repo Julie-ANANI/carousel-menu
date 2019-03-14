@@ -33,6 +33,9 @@ export class TableComponent {
    */
   @Input() set data(value: Table) {
     this.loadData(value);
+    if (this._isLocal) {
+      this.changeLocalConfig();
+    }
   }
 
 
@@ -235,8 +238,8 @@ export class TableComponent {
           }
           break;
         } default : {
-        this.filterAttribute(key, false);
-        break;
+          this.filterAttribute(key, false);
+          break;
       }
       }
     }
@@ -272,11 +275,6 @@ export class TableComponent {
    } else {
      this.removeRows.emit(this.getSelectedRowsContent());
    }
-   /* if (this._massSelection && this._total > this._content.length) {
-      this.removeRows.emit('all');
-    } else {
-      this.removeRows.emit(this.getSelectedRowsContent());
-    }*/
   }
 
   /***
@@ -524,7 +522,7 @@ export class TableComponent {
    * @returns {boolean}
    */
   isSelected(content: any): boolean {
-    return content._isSelected
+    return !!content && !!content._isSelected
   }
 
   /***
@@ -693,5 +691,4 @@ export class TableComponent {
   get lang(): string {
     return this._translateService.currentLang;
   }
-
 }

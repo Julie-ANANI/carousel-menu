@@ -1,4 +1,4 @@
-@import "../../../../../../../style/framework/variables";
+@import "../../../../../../../style/framework/src/variables";
 
 #admin-campaign-answers-component {
 
@@ -15,11 +15,6 @@
       margin-right: 1.2rem;
     }
 
-  }
-
-  .section-no-answer {
-    text-align: center;
-    padding-top: 3.15rem;
   }
 
 }

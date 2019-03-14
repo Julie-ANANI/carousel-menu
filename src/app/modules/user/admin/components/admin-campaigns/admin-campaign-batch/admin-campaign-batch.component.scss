@@ -1,40 +1,116 @@
-.emailsStats {
-  display: flex;
-  justify-content: space-around;
+@import "../../../../../../../style/framework/src/variables";
 
-  div {
-    margin: 15px;
-    text-align: center;
+#admin-campaign-batch-component {
 
-    .number {
-      display: block;
-      font-size: 30px;
+  .toggle {
+    padding: 0.9375rem 0;
+
+    .form-group {
+      margin-bottom: 0;
     }
+
   }
-}
 
-.card {
-  margin : 25px;
+  .nuggets {
+    padding-top: 0;
+  }
 
-  .card-body {
+  .cog {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+  }
+
+  .section-error {
     display: flex;
-    justify-content: space-around;
-  }
-  .card-body-batch {
-    justify-content: space-around;
-  }
-}
+    align-items: center;
 
-.centered-buttons {
-  display: flex;
-  justify-content: space-around;
-}
+    .circle {
+      margin-right: 0.5rem;
+    }
 
-.email-buttons {
-  display: flex;
-  flex-direction: column;
+    .left {
+      margin-left: 1.2rem;
+    }
 
-  .btn {
-    margin: 15px;
+    .incomplete {
+      background-color: $alert;
+
+      .fa-check {
+        visibility: hidden;
+      }
+
+    }
+
+    .complete {
+      background-color: $success;
+
+      .fa-check {
+        visibility: visible;
+      }
+
+    }
+
   }
+
+
+  .notify-wrapper{
+    margin-top: 0.6rem;
+  }
+
+  .loading::after {
+    border-color: $primary;
+    border-right-color: transparent;
+    border-top-color: transparent;
+  }
+
+  .section-status {
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      display: inline-flex;
+      margin-right: 1.25rem;
+    }
+
+  }
+
+  .card {
+    margin-bottom: 1.875rem;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+
+    .card-header {
+      padding-bottom: 0.9375rem;
+
+      .card-title {
+        color: $meta;
+        display: inline-flex;
+        text-align: center;
+        padding-top: 0.125rem;
+
+        .icons {
+          margin-left: 0.75rem;
+        }
+
+      }
+
+    }
+
+    .card-body, .card-title, .card-header {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+  }
+
+  .card:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .card:hover {
+    box-shadow: none;
+  }
+
+
 }

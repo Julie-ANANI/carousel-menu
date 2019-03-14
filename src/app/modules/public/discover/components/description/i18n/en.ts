@@ -5,7 +5,7 @@ export const DISCOVERDESCRIPTION = {
 
   'SHARE': 'Do you like the project? Share it, collect opinions and help it come to fruition!',
 
-  'OPINION': 'Give your feedback',
+  'OPINION': 'Give my feedback',
 
   'MEDIA': 'Media not available.',
 
@@ -25,10 +25,16 @@ export const DISCOVERDESCRIPTION = {
 
   'ERROR': 'We are unable to fetch this innovation at this moment. Please try to reload this innovation!',
 
-  'CONTACT_US': 'Contact us to know more',
+  'CONTACT_US': 'Learn more',
 
   'DISCOVER_OTHER': 'Discover other projects',
 
-  'SIDEBAR_BOT_MESSAGE': 'Describe your project first to preview it.'
+  'SIDEBAR_BOT_MESSAGE': 'Describe your project first to preview it.',
+
+  'BACK': 'List of projects',
+
+  'SHARE_TITLE': 'PLEASE SHARE THIS',
+
+  'RELATED': 'YOU MIGHT ALSO LIKE'
 
 };

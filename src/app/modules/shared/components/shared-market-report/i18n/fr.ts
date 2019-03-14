@@ -102,7 +102,8 @@ export const MARKET_REPORT = {
     'CONCLUSION_HEADING': 'Conclusion',
     'UMI_CONTACT': {
       'A': 'Souhaitez-vous lancer un test marché ?',
-      'B': 'Contactez-nous au'
+      'B': 'Contactez-nous ',
+      'C': 'au'
     },
   },
 

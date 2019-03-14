@@ -1,0 +1,11 @@
+<div *ngIf="showModal" (click)="toggleState($event)">
+  <div class="modal-component" [ngClass]="showModal ? 'active' : 'inactive'">
+    <div class="modal-overlay">
+      <button class="btn btn-close"></button>
+      <div class="modal-container">
+        <img [src]="src" alt=" ">
+      </div>
+    </div>
+  </div>
+</div>
+

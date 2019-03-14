@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
-import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
@@ -51,6 +50,9 @@ import { CampaignFrontService } from '../../../services/campaign/campaign-front.
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
+import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
+import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
+import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 
 @NgModule({
@@ -82,7 +84,6 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
   ],
   declarations: [
     AdminComponent,
-    AdminIndexComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
     AdminSettingsComponent
@@ -109,7 +110,10 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
     CampaignFrontService,
     QuizService,
     InnovationCommonService,
-    PresetResolver
+    PresetResolver,
+    AdvSearchService,
+    ProfessionalResolver,
+    InnovationFrontService
   ]
 })
 

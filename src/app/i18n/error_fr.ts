@@ -11,7 +11,7 @@ export const ERROR = {
 
   'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau !',
 
-  'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Essayez de recharger la page à nouveau !',
+  'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Veuillez réessayer !',
 
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
 
@@ -124,13 +124,30 @@ export const ERROR = {
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',
     'UPDATED': 'La campagne a été mis à jour avec succès.',
-    'DELETED': 'La campagne et son professionnel ont été supprimés avec succès.',
+    'DELETED': 'La campagne et son professionnel sont été supprimés avec succès.',
     'TEMPLATE_ERROR': 'Nous avons du mal à récupérer les données des modèles. Veuillez essayer de recharger la page à nouveau !',
     'SIGNATURE_ERROR': 'Nous avons du mal à récupérer les données des signatures. Veuillez essayer de recharger la page à nouveau !',
     'WORKFLOW': {
       'ADDED': 'Le workflow a été ajouté avec succès.',
       'DELETED': 'Le workflow a été supprimé avec succès.',
-      'UPDATED': 'Le workflow a été mis à jour avec succès.'
+      'UPDATED': 'Le workflow a été mis à jour avec succès.',
+      'SENT': 'Le courrier a été envoyé avec succès.',
+      'SENT_ERROR': 'Nous avons de la difficulté à envoyer le courrier.',
+      'DEFAULT': 'Le workflow par défaut a été mis à jour.'
+    },
+    'BATCH': {
+      'NUGGETS_ERROR': 'Nous avons du mal à activer/désactiver les nuggets. Veuillez essayer de recharger la page !',
+      'BATCH_ERROR': 'Nous avons du mal à activer/désactiver les batchs. Veuillez essayer de recharger la page !',
+      'NUGGETS_ACTIVATED': 'Les nuggets ont été activées avec succès.',
+      'NUGGETS_DEACTIVATED': 'Les nuggets ont été désactivées avec succès.',
+      'NOT_CREATED': 'Aucun batch est créé.',
+      'STARTED': 'Le batch a été démarré avec succès.',
+      'CREATED': 'Le batch a été créé avec succès.',
+      'STOPPED': 'Le batch a été arrêté avec succès.',
+      'ALREADY_STARTED': 'Le batch a déjà été lancé. Il ne peut pas être défait.',
+      'DELETED': 'Le batch a été supprimé avec succès.',
+      'FREEZED': 'Le batch a été congelé avec succès.',
+      'UPDATED': 'Le batch a été mis à jour avec succès.',
     }
   },
 

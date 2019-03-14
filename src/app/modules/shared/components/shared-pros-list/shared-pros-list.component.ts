@@ -51,13 +51,13 @@ export class SharedProsListComponent {
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _showDeleteModal = false;
-
   private _currentPro: Professional = null;
 
   isProfessionalForm = false;
 
   isTagsForm = false;
+
+  private _modalDelete = false;
 
   constructor(private professionalsService: ProfessionalsService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -73,7 +73,7 @@ export class SharedProsListComponent {
 
         this._tableInfos = {
           _selector: 'admin-pros',
-          _title: 'COMMON.PROFESSIONALS',
+          _title: 'TABLE.TITLE.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
           _isHeadable: true,
@@ -87,7 +87,8 @@ export class SharedProsListComponent {
             {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
             {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
-            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'}]
+            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'}
+          ]
         };
 
       });
@@ -101,7 +102,7 @@ export class SharedProsListComponent {
 
         this._tableInfos = {
           _selector: 'admin-pros',
-          _title: 'COMMON.PROFESSIONALS',
+          _title: 'TABLE.TITLE.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
           _isFiltrable: true,
@@ -123,7 +124,6 @@ export class SharedProsListComponent {
     }
 
   }
-
 
   private configToString() {
     let config = {};
@@ -182,14 +182,14 @@ export class SharedProsListComponent {
 
   onClickEdit(pro: Professional) {
     this.professionalsService.get(pro._id).subscribe((professional: Professional) => {
-      this._sidebarValue = {
-        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-        title: 'COMMON.SIDEBAR.EDIT_PROFESSIONAL',
-        type: 'professional'
-      };
       this.isProfessionalForm = true;
       this.isTagsForm = false;
       this._currentPro = professional;
+      this._sidebarValue = {
+        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+        title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
+        type: 'professional'
+      };
     });
   }
 
@@ -208,14 +208,8 @@ export class SharedProsListComponent {
 
 
   deleteProsModal(pros: Professional[]) {
-    this._showDeleteModal = true;
+    this._modalDelete = true;
     this._prosToRemove = pros;
-  }
-
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._showDeleteModal = false;
   }
 
 
@@ -231,7 +225,7 @@ export class SharedProsListComponent {
     }
 
     this._prosToRemove = [];
-    this._showDeleteModal = false;
+    this._modalDelete = false;
 
   }
 
@@ -266,7 +260,7 @@ export class SharedProsListComponent {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.SIDEBAR.ADD_TAGS',
+      title: 'SIDEBAR.TITLE.ADD_TAGS',
       type: 'addTags'
     };
 
@@ -324,8 +318,12 @@ export class SharedProsListComponent {
     return this._sidebarValue;
   }
 
-  get showDeleteModal(): boolean {
-    return this._showDeleteModal;
+  get modalDelete(): boolean {
+    return this._modalDelete;
+  }
+
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
   }
 
   get currentPro(): Professional {

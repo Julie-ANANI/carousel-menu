@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { ExtraOptions, Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 
 // Guards
@@ -38,10 +38,16 @@ const appRoutes: Routes = [
     path: 'wordpress/share', loadChildren: './modules/wordpress/share/share.module#ShareModule'
   },
   {
+    path: 'sample', loadChildren: './modules/public/share/share.module#ShareModule'
+  },
+  {
     path: 'auth', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
   },
   {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
+  },
+  {
+    path: 'commercial', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/commercial/commercial.module#CommercialModule'
   },
   {
     path: '', pathMatch: 'full', redirectTo: 'user'
@@ -51,9 +57,14 @@ const appRoutes: Routes = [
   },
 ];
 
+const config: ExtraOptions = {
+  initialNavigation: 'enabled',
+  scrollPositionRestoration: 'enabled'
+};
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, config)
   ],
   exports: [
     RouterModule

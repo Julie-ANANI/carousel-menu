@@ -1,40 +1,52 @@
-<section class="section-light-container" id="admin-community-members-component">
+<section id="admin-community-members-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section buttons -->
     <div class="text-right">
-        <button (click)="onSearchClick($event)" class="btn btn-primary">
-          Smart pro search
-        </button>
+
+      <!-- import -->
+      <label class="btn ghost-primary btn-sm">
+        <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+        Import
+      </label>
+
+      <!-- add
+      <button type="button" class="btn btn-primary btn-sm" (click)="onClickAdd($event)">Add</button> -->
+
     </div>
-    <app-shared-pros-list [config]="config"></app-shared-pros-list>
+    <!-- /section buttons -->
+
+    <!-- section members -->
+    <app-shared-ambassadors-list [config]="config"></app-shared-ambassadors-list>
+    <!-- /section members -->
+
   </div>
-
-
-
-<!--<div class="modal" [ngClass]="{'active': startSearch }">
-    <div class="modal-overlay" (click)="(startSearch = false) && $event.preventDefault()"></div>
-    <div class="modal-container">
-        <div class="modal-header">
-            <div class="modal-title h5">Search for candidates</div>
-        </div>
-        <div class="modal-body">
-            <app-admin-community-search></app-admin-community-search>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" (click)="launchSearch()">Launch</button>
-            <button class="btn btn-link" (click)="(startSearch = false) && $event.preventDefault()">
-                {{ 'COMMON.CANCEL' | translate }}
-            </button>
-        </div>
-    </div>
-</div>-->
-
 </section>
 
-<!-- sign up sidebar -->
+
+<!-- add ambassadors sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-    <advsearch-form
-            [sidebarState]="sidebarValue.animate_state"
-            (finalOutput)="launchSearch($event)">
-    </advsearch-form>
+  <add-ambassador-form
+    [sidebarState]="sidebarValue.animate_state">
+  </add-ambassador-form>
 </app-sidebar>
-<!-- /sign up sidebar -->
+<!-- /add ambassadors sidebar -->
+
+
+
+
+
+
+
+<!--<button (click)="onSearchClick($event)" class="btn btn-primary">
+          Smart pro search
+        </button>-->
+
+<!--&lt;!&ndash; adv search sidebar &ndash;&gt;-->
+<!--<app-sidebar [(template)]="sidebarValue">-->
+    <!--<advsearch-form-->
+            <!--[sidebarState]="sidebarValue.animate_state"-->
+            <!--(finalOutput)="receiveResult($event)">-->
+    <!--</advsearch-form>-->
+<!--</app-sidebar>-->
+<!--&lt;!&ndash; /adv search sidebar &ndash;&gt;-->

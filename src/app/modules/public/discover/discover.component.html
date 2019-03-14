@@ -7,9 +7,9 @@
   <!-- /unauthenticated header -->
 
   <!-- body -->
-  <section class="main-wrapper">
+  <div class="main-wrapper">
     <router-outlet></router-outlet>
-  </section>
+  </div>
 
   <!-- footer -->
   <ng-container *ngIf="!authService.isAuthenticated">

@@ -2,7 +2,7 @@
     This stylesheet contains all the class related to the different buttons
     for our framework.
  */
-@import "variables";
+@import "src/variables";
 
 
 /*
@@ -34,7 +34,7 @@
               border-top-color 0.15s ease-in-out;
 
   i {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
     font-size: 1rem;
   }
 

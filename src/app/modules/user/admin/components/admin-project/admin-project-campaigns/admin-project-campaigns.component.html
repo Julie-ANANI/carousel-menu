@@ -7,11 +7,11 @@
     </div>
 
     <!-- section no campaign -->
-    <div *ngIf="noResult" class="section-no-campaign">
-      <app-message-space
-        [messageA]="'CAMPAIGNS.BOT_TEXT.A'"
-        [messageB]="'CAMPAIGNS.BOT_TEXT.B'"
-        [widthMax]="'354px'">
+    <div *ngIf="noResult" class="section-light-container remove-bottom">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
+        <br>
+        {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
       </app-message-space>
     </div>
 
@@ -23,20 +23,20 @@
             <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">
               <span class="title">{{ campaign.title }}</span>
             </a>
-            <span *ngIf="getAuthorizationLevel(2)" class="edit" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
+            <span *ngIf="getAuthorizationLevel(2)" class="edit" (click)="onClickEdit($event, campaign)">Rename</span>
             <p class="details">
-              {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
+              {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} pros
               •
-              {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.ANSWERS' | translate }}
+              {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} insights
               •
               {{ campaign.status | FormatText }} {{ 'CAMPAIGNS.STATUS' | translate }}
               <ng-container *ngIf="getAuthorizationLevel(2)">
                 |
                 <span class="update" (click)="OnClickUpdateStatus($event, campaign)">{{ 'CAMPAIGNS.UPDATE_BUTTON' | translate }}</span>
+                <!--|
+                <span class="clone">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>-->
                 |
-                <span class="clone">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>
-                |
-                <span class="delete" (click)="OnClickDelete($event, campaign)">{{ 'CAMPAIGNS.DELETE_BUTTON' | translate }}</span>
+                <span (click)="OnClickDelete($event, campaign)" class="icons icons-delete"><i class="fas fa-trash-alt"></i></span>
               </ng-container>
             </p>
           </div>
@@ -49,11 +49,11 @@
 
 
 <!-- modal to ask the admin to delete the campaign -->
-<app-modal [(showModal)]="activateModal" [modalTitle]="'COMMON.CAMPAIGN.DELETE_BOARD.HEADING'">
+<app-modal [(showModal)]="activateModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'COMMON.CAMPAIGN.DELETE_BOARD.CONTENT' | translate }}
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>
 <!-- /modal to ask the admin to delete the campaign -->

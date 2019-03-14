@@ -1,62 +1,46 @@
 <div class="section-header">
   <div class="move-element">
-    <i class="fa fa-caret-up" (click)="up()"></i>
-    <i class="fa fa-caret-down" (click)="down()"></i>
+    <i class="fa fa-caret-up" (click)="up($event)"></i>
+    <i class="fa fa-caret-down" (click)="down($event)"></i>
   </div>
 
-  <form *ngIf="editSection" class="form-group" [formGroup]="formData" novalidate>
-    <select class="form-select" formControlName="description">
+  <ng-container *ngIf="editSection" class="form-group">
+    <select class="form-select" [(ngModel)]="section.description">
       <option [ngValue]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.nothing" | translate }}</option>
       <option [ngValue]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.1st" | translate }}</option>
       <option [ngValue]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.2nd" | translate }}</option>
     </select>
-    <div [formGroup]="formData.get('label')" class="form-group">
-      <input type="text" formControlName="en" placeholder="English name" class="form-input">
-      <input type="text" formControlName="fr" placeholder="Nom français" class="form-input">
+    <div class="form-group">
+      <input type="text" [(ngModel)]="section.label.en" placeholder="English name" class="form-input">
+      <input type="text" [(ngModel)]="section.label.fr" placeholder="Nom français" class="form-input">
     </div>
-  </form>
+  </ng-container>
 
   <ng-container *ngIf="!editSection">
     <select class="form-select" disabled>
-      <option>{{ "PRESETS.SECTION.DESCRIPTION." + formData.get('description').value | translate }}</option>
+      <option>{{ "PRESETS.SECTION.DESCRIPTION." + section.description | translate }}</option>
     </select>
-    <div [innerHtml]="formData.get('label.en').value"></div>
+    <div [innerHtml]="section.label | multiling:lang"></div>
   </ng-container>
 
-  <div *ngIf="editSection" class="save-button">
-    <button type="button" class="btn btn-xs btn-error"
-            (click)="removeSection($event)">
+  <div class="button-actions">
+    <button *ngIf="editSection" type="button" class="btn btn-xs btn-error" (click)="removeSection($event)">
       Delete
     </button>
-    <button type="button" class="btn btn-xs ghost-edit"
-            (click)="(editSection = false) || save($event)">
-      Save
-    </button>
-  </div>
-
-  <div *ngIf="!editSection" class="button-actions">
-    <button type="button" class="btn btn-xs ghost-edit"
-            (click)="editSection = true">
+    <button type="button" class="btn btn-xs ghost-edit" (click)="editSection = !editSection">
       Edit
     </button>
   </div>
 
 </div>
 
-<div *ngIf="true">
-  <div *ngFor="let question of questions; let i = index;">
-    <app-shared-preset-question
-      [question]="question"
-      (updateQuestion)="updateQuestion($event, i)"
-      (clone)="cloneQuestion($event, i)"
-      (move)="moveQuestion($event, i)">
-    </app-shared-preset-question>
+<div>
+  <div *ngFor="let question of section.questions; let i = index;">
+    <app-shared-preset-question [question]="question" [questionIndex]="i" [sectionIndex]="sectionIndex"></app-shared-preset-question>
   </div>
-
   <div class="add-question" (click)="addNewQuestion($event)">
     <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
     <div>Add question</div>
   </div>
-
 </div>
 

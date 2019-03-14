@@ -25,9 +25,9 @@ export class AdminUsersComponent implements OnInit {
 
   private _tableInfos: Table = null;
 
-  private _showDeleteModal = false;
+  private _modalDelete = false;
 
-  currentUser: User;
+  private _currentUser: User;
 
   private _total = 0;
 
@@ -57,7 +57,7 @@ export class AdminUsersComponent implements OnInit {
 
       this._tableInfos = {
         _selector: 'admin-user',
-        _title: 'COMMON.USERS',
+        _title: 'TABLE.TITLE.USERS',
         _content: this._users,
         _total: this._total,
         _isHeadable: true,
@@ -66,11 +66,11 @@ export class AdminUsersComponent implements OnInit {
         _isSelectable: true,
         _isEditable: true,
         _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-          {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-          {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-          {_attrs: ['domain'], _name: 'COMMON.DOMAIN', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'}]
+          {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+          {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+          {_attrs: ['companyName'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
+          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT'},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'}]
       };
       }, () => {
       this.translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
@@ -96,10 +96,10 @@ export class AdminUsersComponent implements OnInit {
     this.userService.get(us.id).pipe(first()).subscribe((value: any) => {
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-        title: 'COMMON.EDIT_USER',
+        title: 'SIDEBAR.TITLE.EDIT_USER',
         type: 'editUser'
       };
-      this.currentUser = value;
+      this._currentUser = value;
     });
 
   }
@@ -118,14 +118,8 @@ export class AdminUsersComponent implements OnInit {
 
   deleteUsersModal(users: User[]) {
     this._usersToRemove = [];
-    this._showDeleteModal = true;
+    this._modalDelete = true;
     users.forEach(value => this._usersToRemove.push(new User(value)));
-  }
-
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._showDeleteModal = false;
   }
 
 
@@ -134,7 +128,7 @@ export class AdminUsersComponent implements OnInit {
       this.removeUser(user.id);
     }
     this._usersToRemove = [];
-    this._showDeleteModal = false;
+    this._modalDelete = false;
   }
 
 
@@ -187,8 +181,16 @@ export class AdminUsersComponent implements OnInit {
     return this._sidebarValue;
   }
 
-  get showDeleteModal(): boolean {
-    return this._showDeleteModal;
+  get currentUser(): User {
+    return this._currentUser;
+  }
+
+  get modalDelete(): boolean {
+    return this._modalDelete;
+  }
+
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
   }
 
 }

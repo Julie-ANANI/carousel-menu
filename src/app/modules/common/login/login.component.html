@@ -22,7 +22,7 @@
             <form (submit)="onContinue()"  [formGroup]="formData">
 
               <div class="form-group">
-                <label class="form-label" for="login-email">{{ 'COMMON.EMAIL' | translate }}</label>
+                <label class="form-label" for="login-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
                 <input
                   type="email"
                   id="login-email"
@@ -36,7 +36,7 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="login-password">{{ 'COMMON.PASSWORD' | translate }}</label>
+                <label class="form-label" for="login-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
                 <input
                   class="form-input"
                   id="login-password"
@@ -51,7 +51,7 @@
                 <div class="login-button">
                   <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</button>
                 </div>
-                <p>{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }} <span class="text-link" routerLink="forgetpassword">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</span></p>
+                <p>{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }} <span class="text-link gtm-change-password" routerLink="forgetpassword">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</span></p>
               </div>
 
             </form>

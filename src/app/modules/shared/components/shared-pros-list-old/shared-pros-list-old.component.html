@@ -4,11 +4,11 @@
   <thead>
     <tr>
       <th></th>
-      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'country'">{{ 'COMMON.COUNTRY' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'firstName'" >{{ 'COMMON.NAME' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'jobTitle'">{{ 'COMMON.JOBTITLE' | translate }}</app-shared-sort></th>
-      <th *ngIf="requestId"><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company.name'">{{ 'COMMON.COMPANY' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'email'">{{ 'COMMON.EMAIL' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'country'">{{ 'COMMON.LABEL.COUNTRY' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'firstName'" >{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'jobTitle'">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</app-shared-sort></th>
+      <th *ngIf="requestId"><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company.name'">{{ 'COMMON.LABEL.COMPANY' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'email'">{{ 'COMMON.LABEL.EMAIL' | translate }}</app-shared-sort></th>
       <th><app-shared-sort [config]="config" (configChange)="loadPros($event)" [prop]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</app-shared-sort></th>
     </tr>
     <tr>

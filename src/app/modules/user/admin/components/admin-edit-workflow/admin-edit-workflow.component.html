@@ -4,6 +4,8 @@
   <div class="section-header">
     {{ campaignScenario.name }}
     &nbsp;-
+    <div *ngIf="inCampaign && defaultScenario === campaignScenario.name">Par défaut</div>
+    <div *ngIf="inCampaign && defaultScenario != campaignScenario.name" (click)="setDefaultScenario()">Utiliser par défaut</div>
     <div [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'" class="circle"><i class="fas fa-check"></i></div>
     <span [ngClass]="{ 'active': language === 'en' }" class="text-link" (click)="changeLanguage('en')">{{ 'COMMON.LANG.EN' | translate }}</span>
     &nbsp;&nbsp;|
@@ -21,22 +23,21 @@
 <!-- modal to delete the scenario -->
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'EDIT_WORKFLOW.MODAL.CONTENT' | translate }}
-
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="deleteScenario()">{{ 'COMMON.SUBMIT' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="deleteScenario()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-
 </app-modal>
 <!-- /modal to delete the scenario -->
 
 
 <!-- sidebar to edit workflow -->
 <app-sidebar [(template)]="more">
-  <app-sidebar-workflow
+  <app-workflow
+    [id]="getId()"
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
-  </app-sidebar-workflow>
+  </app-workflow>
 </app-sidebar>
 <!-- /sidebar to edit workflow -->

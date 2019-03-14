@@ -7,7 +7,7 @@ import { AdminEmailsLibraryComponent } from "./admin-emails-library.component";
 
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
-import { SidebarWorkflowModule } from '../../../../../sidebar/components/sidebar-workflow/sidebar-workflow.module';
+import { SidebarWorkflowFormModule } from '../../../../../sidebar/components/workflow-form/sidebar-workflow-form.module';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import { SidebarWorkflowModule } from '../../../../../sidebar/components/sidebar
     FormsModule,
     SidebarModule,
     TableModule,
-    SidebarWorkflowModule
+    SidebarWorkflowFormModule
   ],
   declarations: [
     AdminEmailsLibraryComponent

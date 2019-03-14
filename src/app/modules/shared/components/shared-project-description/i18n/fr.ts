@@ -13,8 +13,8 @@ export const PROJECT = {
     'FACEBOOK': 'Partager sur Facebook',
     'MAIL': 'Partager par email',
   },
-  'CAMPAIGNS': 'Campagnes',
-  'SETTINGS': 'Paramètres',
+  'CAMPAIGNS': 'Campaigns',
+  'SETTINGS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire',
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choisir un questionnaire',
@@ -23,7 +23,7 @@ export const PROJECT = {
     'DESCRIPTION_TRANSLATION': 'Traduction de la description',
     'EDIT_MARKET_TARGETING': 'Editer le ciblage marché',
     'BLACKLIST_DOMAINS_EMAILS': 'Blacklister Emails / Domaines',
-    'UPDATE_STATUS': 'Mettre à jour le status'
+    'UPDATE_STATUS': 'Mettre à jour le statut'
   },
 
   'CAMPAIGN': {
@@ -50,7 +50,7 @@ export const PROJECT = {
     'RESTITUTION': 'Restitution du projet',
     'CLIENT_SATISFACTION': 'Satisfaction du client',
     'MESSAGE_FROM_CLIENT': 'Message du client',
-    'MESSAGE_FROM_OPERATOR': 'Message de l\'operateur',
+    'MESSAGE_FROM_OPERATOR': 'Message de l\'opérateur',
     'SATISFACTIONS': {
       'VERY_HAPPY': 'Très content',
       'HAPPY': 'Content',
@@ -58,11 +58,11 @@ export const PROJECT = {
       'BAD': 'Mécontent',
       'VERY_BAD': 'Très mécontent',
     },
-    'OPERATOR_FEEDBACK': 'Compte rendu de la mission'
+    'OPERATOR_FEEDBACK': 'Compte-rendu de la mission'
   },
-  'CARDS': 'Innovation Cards',
-  'SYNTHESIS': 'Synthèse',
-  'PROJECT_TAGS': 'Tags du projet',
-  'ANSWER_TAGS': 'Tags pour la réponse',
-  'MAIL_CONFIG': 'Configuration Emails'
+  'CARDS': 'Description',
+  'SYNTHESIS': 'Synthesis',
+  'PROJECT_TAGS': 'Project tags',
+  'ANSWER_TAGS': 'Insight tags',
+  'MAIL_CONFIG': 'Emails settings'
 };

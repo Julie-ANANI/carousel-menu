@@ -34,7 +34,7 @@
         <div class="country">
           <div *ngIf="!editCountry" [ngStyle]="{ 'display': 'inline-flex' }">
             <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="onClickEdit('country')" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
           </div>
         </div>
         <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
@@ -60,7 +60,7 @@
         <app-autocomplete-input
           (update)="updateCountry($event)"
           [onlyOne]="true"
-          [config]="{ placeholder: 'COMMON.COUNTRY_PLACEHOLDER', type: 'countries' }">
+          [config]="{ placeholder: 'COMMON.PLACEHOLDER.COUNTRY', type: 'countries' }">
         </app-autocomplete-input>
       </div>
 
@@ -79,7 +79,7 @@
         <p><i class="fas fa-address-card" aria-hidden="true"></i></p>
         <p *ngIf="!editJob">
           {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
-          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true;"></i>
+          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="onClickEdit('job')"></i>
         </p>
         <div *ngIf="editJob" class="form-group">
           <input
@@ -88,7 +88,7 @@
             id="answer-jobTitle"
             alt="Job title"
             class="form-input"
-            [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+            [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
         </div>
       </div>
 
@@ -97,7 +97,7 @@
         <p><i class="fas fa-building" aria-hidden="true"></i></p>
         <p *ngIf="!editCompany">
           {{ modalAnswer.company.name || modalAnswer.professional?.company }}
-          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true;"></i>
+          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="onClickEdit('company')"></i>
         </p>
         <div *ngIf="editCompany" class="form-group">
           <input
@@ -106,7 +106,7 @@
             id="answer-company"
             alt="Company"
             class="form-input"
-            [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+            [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
         </div>
       </div>
 
@@ -218,9 +218,9 @@
 
     <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
         <div *ngIf="meta && !editMode" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
-            <span class="comment-wrapper">
+            <p class="comment-wrapper">
               {{ meta }}
-            </span>
+            </p>
         </div>
     </div>
 

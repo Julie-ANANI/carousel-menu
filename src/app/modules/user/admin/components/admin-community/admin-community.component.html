@@ -9,8 +9,8 @@
       <h1 class="main-heading">UMI Community</h1>
 
       <!-- Tabs -->
-      <ul class="tabs">
-        <li *ngFor="let tab of tabs">
+      <ul class="tab">
+        <li class="tab-item" *ngFor="let tab of tabs">
           <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
             {{ tab | translate | FormatText }}
           </a>
@@ -24,9 +24,7 @@
 
   <!-- Other sections -->
   <div class="section-other">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </div>
   <!-- /Other sections -->
 

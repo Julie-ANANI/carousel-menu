@@ -3,7 +3,7 @@
 
     <!-- save button -->
     <div class="save-button-wrapper">
-      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
     </div>
 
     <!-- operator -->
@@ -14,7 +14,7 @@
           name="operator"
           id="user-form-operator"
           formControlName="isOperator">
-        <i class="form-icon"></i>{{ 'PROJECT_LIST.OPERATOR' | translate }}
+        <i class="form-icon"></i>{{ 'COMMON.LABEL.OPERATOR' | translate }}
       </label>
 
       <label class="form-switch" for="user-form-role" *ngIf="!isSuperAdmin && authService.adminLevel > 2 && authService.userId !== user.id">
@@ -24,7 +24,7 @@
           id="user-form-role"
           [checked]="userForm.value.roles === 'admin'"
           (change)="changeRole($event)">
-        <i class="form-icon"></i>{{ 'USERS.ADMIN' | translate }}
+        <i class="form-icon"></i>{{ 'COMMON.LABEL.ADMIN' | translate }}
       </label>
     </div>
 
@@ -54,7 +54,7 @@
         <option selected>View the projects</option>
         <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
       </select>
-      <a *ngIf="selectedProject" class="text-link" [href]="'/admin/projects/project/' + selectedProject" target="_blank">Visit the project</a>
+      <a *ngIf="selectedProject" class="text-link" [href]="'/user/admin/projects/project/' + selectedProject" target="_blank">Visit the project</a>
     </div>
 
     <!-- show tags -->
@@ -65,7 +65,7 @@
 
     <!-- first name -->
     <div class="form-group">
-      <label class="form-label" for="user-form-firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
+      <label class="form-label" for="user-form-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
       <input
         class="form-input"
         formControlName="firstName"
@@ -79,7 +79,7 @@
 
     <!-- last name -->
     <div class="form-group">
-      <label class="form-label" for="user-form-lastName">{{ 'COMMON.LASTNAME' | translate }}</label>
+      <label class="form-label" for="user-form-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
       <input
         class="form-input"
         formControlName="lastName"
@@ -93,7 +93,7 @@
 
     <!-- email -->
     <div class="form-group">
-      <label class="form-label" for="user-form-email">{{ 'COMMON.EMAIL' | translate }}</label>
+      <label class="form-label" for="user-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
       <input
         class="form-input"
         formControlName="email"
@@ -108,13 +108,13 @@
 
     <!-- job -->
     <div class="form-group">
-      <label class="form-label" for="user-form-jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+      <label class="form-label" for="user-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
       <input
         class="form-input"
         formControlName="jobTitle"
         id="user-form-jobTitle"
         type="text"
-        [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+        [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
       <div class="form-error" *ngIf="userForm.get('jobTitle').touched && userForm.get('jobTitle').invalid">
         <span *ngIf="userForm.get('jobTitle').hasError('required')">{{ 'COMMON.REQUIRED.JOBTITLE' | translate }}</span>
       </div>
@@ -122,13 +122,13 @@
 
     <!-- company -->
     <div class="form-group">
-      <label class="form-label" for="user-form-companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+      <label class="form-label" for="user-form-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
       <input
         class="form-input"
         formControlName="companyName"
         id="user-form-companyName"
         type="text"
-        [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+        [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
       <div class="form-error" *ngIf="userForm.get('companyName').touched && userForm.get('companyName').invalid">
         <span *ngIf="userForm.get('companyName').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
       </div>
@@ -136,13 +136,13 @@
 
     <!-- country -->
     <div class="form-group">
-      <label class="form-label" for="user-form-country">{{ 'COMMON.COUNTRY' | translate }}</label>
+      <label class="form-label" for="user-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
       <input
         class="form-input"
         formControlName="country"
         id="user-form-country"
         type="text"
-        [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
+        [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
         (keypress)="onSuggestCountries()">
       <ul
         *ngIf="userForm.get('country').value"
@@ -159,7 +159,7 @@
 
     <!-- url -->
     <div *ngIf="isProfessional" class="form-group">
-      <label class="form-label" for="user-form-profileUrl">{{ 'COMMON.PROFILE_URL' | translate }}</label>
+      <label class="form-label" for="user-form-profileUrl">{{ 'COMMON.LABEL.PROFILE_URL' | translate }}</label>
       <input
         class="form-input"
         formControlName="profileUrl"

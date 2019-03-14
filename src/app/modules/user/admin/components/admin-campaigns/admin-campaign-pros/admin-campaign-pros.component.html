@@ -6,21 +6,21 @@
     <!-- stat col 1 -->
     <div class="stat1">
       <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFESSIONALS' | translate }}</h5>
+        <h5 class="heading">Pros</h5>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.FIND' | translate }}</h4>
+          <h4 class="title">Find</h4>
           <h3 class="value">{{ getCampaignStat('professional') }}</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.NOT_REACHED' | translate }}</h4>
+          <h4 class="title">Not reached</h4>
           <h3 class="value">{{ getCampaignStat('notReached') }}%</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.STARS' | translate }}</h4>
+          <h4 class="title">Stars</h4>
           <h3 class="value">--</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.DUPLICATE' | translate }}</h4>
+          <h4 class="title">Duplicate</h4>
           <h3 class="value">--</h3>
         </div>
       </div>
@@ -29,17 +29,17 @@
     <!-- stat col 2 -->
     <div class="stat2">
       <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.EMAILS' | translate }}</h5>
+        <h5 class="heading">Emails</h5>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD' | translate }}</h4>
+          <h4 class="title">Good</h4>
           <h3 class="value">{{ getCampaignStat('good') }}%</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.UNSURE' | translate }}</h4>
+          <h4 class="title">Unsure</h4>
           <h3 class="value">{{ getCampaignStat('unsure') }}%</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BAD' | translate }}</h4>
+          <h4 class="title">Bad</h4>
           <h3 class="value">{{ getCampaignStat('bad') }}%</h3>
         </div>
       </div>
@@ -48,13 +48,13 @@
     <!-- stat col 3 -->
     <div class="stat3">
       <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.COST' | translate }}</h5>
+        <h5 class="heading">Cost</h5>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.REQUEST' | translate }}</h4>
+          <h4 class="title">Request</h4>
           <h3 class="value">--</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAILS' | translate }}</h4>
+          <h4 class="title">Emails</h4>
           <h3 class="value">--</h3>
         </div>
       </div>
@@ -67,9 +67,9 @@
 
     <!-- section actions -->
     <div class="section-actions">
-      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.IMPORT' | translate }}</button>
-      <button class="btn ghost-primary gap-right" (click)="OnClickAdd($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.ADD' | translate }}</button>
-      <button class="btn btn-primary" (click)="onClickExport($event)">{{ 'CAMPAIGNS.PROS_PAGE.BUTTON.EXPORT' | translate }}</button>
+      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
+      <button class="btn ghost-primary gap-right" (click)="OnClickAdd($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
+      <button class="btn btn-primary" (click)="onClickExport($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
     </div>
 
     <!-- section pros list -->
@@ -93,13 +93,13 @@
   <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
     <label class="btn btn-sm ghost-primary">
       <input #fileupload type="file" [hidden]="true" (change)="OnClickImportCsv(fileupload.files[0], $event)" />
-      Import CSV
+      Import
     </label>
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.ADD' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
   </div>
 
 </app-modal>

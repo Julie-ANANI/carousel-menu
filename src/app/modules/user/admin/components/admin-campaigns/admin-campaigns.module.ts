@@ -15,6 +15,7 @@ import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admin-campaign-workflows.component';
+import { AdminCampaignStatsComponent } from './admin-campaign-stats/admin-campaign-stats.component';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
 import { SharedProsListModule } from '../../../../shared/components/shared-pros-list/shared-pros-list.module';
@@ -27,7 +28,7 @@ import { TableModule } from '../../../../table/table.module';
 import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
 import { AutocompleteInputModule } from "../../../../utility-components/autocomplete-input/autocomplete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
-import { SidebarBatchModule } from '../../../../sidebar/components/sidebar-batch/sidebar-batch.module';
+import { SidebarBatchFormModule } from '../../../../sidebar/components/batch-form/sidebar-batch-form.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
 import { ModalModule } from '../../../../utility-components/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
@@ -50,10 +51,10 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     PipeModule,
     AutocompleteInputModule,
     SidebarUserAnswerModule,
-    SidebarBatchModule,
+    SidebarBatchFormModule,
     MessageSpaceModule,
     ModalModule,
-    SidebarUserFormModule
+    SidebarUserFormModule,
   ],
   declarations: [
     AdminCampaignsComponent,
@@ -66,6 +67,7 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignSearchComponent,
     AdminCampaignSearchResultsComponent,
     AdminCampaignWorkflowsComponent,
+    AdminCampaignStatsComponent,
     AdminCampaignAbtestingComponent
 
   ],
@@ -78,7 +80,8 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignBatchComponent,
     AdminCampaignProsComponent,
     AdminCampaignSearchResultsComponent,
-    AdminCampaignWorkflowsComponent
+    AdminCampaignWorkflowsComponent,
+    AdminCampaignStatsComponent
   ]
 })
 

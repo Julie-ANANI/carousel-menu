@@ -6,17 +6,17 @@
     <!-- stat col 1 -->
     <div class="stat1">
       <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.INSIGHTS' | translate }}</h5>
+        <h5 class="heading">Insights</h5>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.REJECTED' | translate }}</h4>
+          <h4 class="title">Rejected</h4>
           <h3 class="value">{{ getCampaignStat('status', 'REJECTED') }}</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.LOOK' | translate }}</h4>
+          <h4 class="title">To look at</h4>
           <h3 class="value">{{ getCampaignStat('status', 'SUBMITTED') }}</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.VALIDATED' | translate }}</h4>
+          <h4 class="title">Validated</h4>
           <h3 class="value">{{ getCampaignStat('status', 'VALIDATED') }}</h3>
         </div>
       </div>
@@ -25,13 +25,13 @@
     <!-- stat col 2 -->
     <div class="stat2">
       <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFILE' | translate }}</h5>
+        <h5 class="heading">Profile</h5>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.STANDARD' | translate }}</h4>
+          <h4 class="title">Standard</h4>
           <h3 class="value">{{ getCampaignStat('profile', 1) }}</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.TOP' | translate }}</h4>
+          <h4 class="title">Top profile</h4>
           <h3 class="value">{{ getCampaignStat('profile', 2) }}</h3>
         </div>
       </div>
@@ -40,13 +40,13 @@
     <!-- stat col 3 -->
     <div class="stat3">
       <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.QUALITY' | translate }}</h5>
+        <h5 class="heading">Quality</h5>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.FILL_RATE' | translate }}</h4>
+          <h4 class="title">Fill rate</h4>
           <h3 class="value">--</h3>
         </div>
         <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.TIME' | translate }}</h4>
+          <h4 class="title">Time spent</h4>
           <h3 class="value">{{ getCampaignStat('quality', 'time_elapsed') }}" min.</h3>
         </div>
       </div>
@@ -62,19 +62,19 @@
 
       <label class="btn ghost-primary">
         <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
-        {{ 'CAMPAIGNS.IMPORT_ANSWERS' | translate }}
+        {{ 'COMMON.BUTTON.IMPORT' | translate }}
       </label>
 
-      <button class="btn btn-primary" (click)="exportAnswers($event)">{{ 'CAMPAIGNS.EXPORT_ANSWERS' | translate }}</button>
+      <button class="btn btn-primary" (click)="exportAnswers($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
 
     </div>
 
     <!-- section no answers -->
-    <div *ngIf="noResult" class="section-no-answer">
-      <app-message-space
-        [messageA]="'CAMPAIGNS.NO_ANSWERS.A'"
-        [messageB]="'CAMPAIGNS.NO_ANSWERS.B'"
-        [widthMax]="'354px'">
+    <div *ngIf="noResult" class="section-light-container remove-bottom">
+      <app-message-space [widthMax]="'354px'">
+        {{ 'CAMPAIGNS.NO_ANSWERS.A' | translate }}
+        <br>
+        {{ 'CAMPAIGNS.NO_ANSWERS.B' | translate }}
       </app-message-space>
     </div>
 
