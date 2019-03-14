@@ -104,6 +104,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * getting all the tags from the server to show under the lable sector tags.
    */
   private getAllTags() {
+    const activeLang = this.browserLang();
     this.tagsService.getAll(this._configTag).pipe(first()).subscribe((response) => {
       if (response) {
         response.result.forEach((tag) => {
@@ -113,6 +114,13 @@ export class AdminCommunityMemberComponent implements OnInit {
           } else {
             this._tagsRest.push(tag);
           }
+        });
+        this._tagsProfessional.sort((a,b)=>{
+          return a.label[activeLang].localeCompare(b.label[activeLang]);
+        });
+
+        this._tagsRest.sort((a,b)=>{
+          return a.label[activeLang].localeCompare(b.label[activeLang]);
         });
       }
     });
