@@ -339,7 +339,8 @@ export const COMMON = {
     'TITLE_CONFIRMATION': 'Confirmation Board',
     'TITLE_IMPORT': 'Import Board',
     'TITLE_BATCH': 'Batch Board',
-    'TITLE_SHARE': 'Share Board'
+    'TITLE_SHARE': 'Share Board',
+    'TITLE_CREATE': 'Creation Board'
   },
 
 };

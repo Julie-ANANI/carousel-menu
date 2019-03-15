@@ -338,7 +338,8 @@ export const COMMON = {
     'TITLE_CONFIRMATION': 'Confirmation',
     'TITLE_IMPORT': 'Importation',
     'TITLE_BATCH': 'Batch',
-    'TITLE_SHARE': 'Partage'
+    'TITLE_SHARE': 'Partage',
+    'TITLE_CREATE': 'Création'
   },
 
 };

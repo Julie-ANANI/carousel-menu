@@ -1,53 +1,41 @@
-<!--<div class="section-container">-->
-  <!--<div class="columns">-->
-    <!--<div class="column col-12 col-mx-auto">-->
+<section id="admin-workflow-library-component">
 
-  <!--<div class="empty" *ngIf="!scenarios.length">-->
-    <!--<div class="empty-action">-->
-      <!--<button (click)="newScenarioName = 'scenario'" class="btn btn-primary">-->
-        <!--Créer un scénario-->
-      <!--</button>-->
-    <!--</div>-->
-  <!--</div>-->
+  <div class="text-right">
+    <button type="button" (click)="onClickAdd()" class="btn btn-primary">Add</button>
+  </div>
 
-  <!--<div class="text-right">-->
-    <!--<button (click)="newScenarioName = 'scenario'" class="btn btn-primary" *ngIf="scenarios.length">-->
-      <!--Créer un scénario-->
-    <!--</button>-->
-  <!--</div>-->
+  <ng-container *ngIf="scenarios.length > 0">
+    <div *ngFor="let scenario of scenarios" class="section-light-pad rm-pad-bottom">
+      <app-admin-edit-workflow
+        [scenario]="scenario"
+        (scenarioChange)="updateScenario($event)"
+        [signatures]="signatures"
+        (deletedScenario)="deleteScenario($event)">
+      </app-admin-edit-workflow>
+    </div>
+  </ng-container>
 
-  <!--<div *ngFor="let scenario of scenarios">-->
-    <!--<app-admin-edit-workflow-->
-      <!--[scenario]="scenario"-->
-      <!--(scenarioChange)="updateScenario($event)"-->
-      <!--[signatures]="signatures"-->
-      <!--(deletedScenario)="deleteScenario($event)">-->
-    <!--</app-admin-edit-workflow>-->
-  <!--</div>-->
+</section>
 
 
-<!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+<!-- modal to add the new workflow -->
+<app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
 
+  <div class="form-group">
+    <label class="form-label" for="add-workflow">Workflow Name</label>
+    <input
+      type="text"
+      id="add-workflow"
+      [(ngModel)]="newScenarioName"
+      name="scenarioName"
+      placeholder="Enter the workflow name"
+      class="form-input">
+  </div>
 
-<!--<div class="modal" [ngClass]="{'active': newScenarioName != null}">-->
-  <!--<div class="modal-overlay" (click)="(newScenarioName = null) && $event.preventDefault()"></div>-->
-  <!--<div class="modal-container">-->
-    <!--<div class="modal-header">-->
-      <!--<div class="modal-title h5">Créer un scénario</div>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-      <!--<div class="content">-->
-        <!--Choisissez un nom pour le scénario-->
-        <!--<input class="form-input" type="text" [(ngModel)]="newScenarioName" name="scenarioName"/>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="modal-footer">-->
-      <!--<button class="btn btn-primary" (click)="createScenario()">Créer</button>-->
-      <!--<button class="btn btn-link" (click)="(newScenarioName = null) && $event.preventDefault()">-->
-        <!--{{ 'COMMON.BUTTON.CANCEL' | translate }}-->
-      <!--</button>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()" [disabled]="!newScenarioName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to add the new workflow -->
