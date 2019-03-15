@@ -12,7 +12,7 @@ export interface Professional {
   readonly messages: Array<any>;
   tags: Array<Tag>;
   readonly profileUrl: string;
-  readonly country: string;
+  country: string;
   readonly campaigns: Campaign[];
   readonly emailConfidence?: number;
 }
