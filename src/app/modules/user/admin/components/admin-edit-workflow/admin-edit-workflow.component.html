@@ -1,21 +1,21 @@
-<div id="admin-edit-workflow-component">
+<section id="admin-edit-workflow-component">
 
   <!-- section header -->
   <div class="section-header">
-    {{ campaignScenario.name }}
+    <span class="text">{{ campaignScenario.name }}</span>
     &nbsp;-
-    <div [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'" class="circle"><i class="fas fa-check"></i></div>
+    <div [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'" class="shape circle circle-sm"><i class="fas fa-check"></i></div>
     <span [ngClass]="{ 'active': language === 'en' }" class="text-link" (click)="changeLanguage('en')">{{ 'COMMON.LANG.EN' | translate }}</span>
     &nbsp;&nbsp;|
-    <div [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'" class="circle"><i class="fas fa-check"></i></div>
+    <div [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'" class="shape circle circle-sm"><i class="fas fa-check"></i></div>
     <span [ngClass]="{ 'active': language === 'fr' }" class="text-link" (click)="changeLanguage('fr')">{{ 'COMMON.LANG.FR' | translate }}</span>
-    <div (click)="onClickDelete()" class="icons icons-delete"><i class="fas fa-trash-alt"></i></div>
+    <div (click)="onClickDelete()" class="icon icon-delete"><i class="fas fa-trash-alt"></i></div>
   </div>
 
   <!-- section table -->
   <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [config]="config"></app-shared-table>
 
-</div>
+</section>
 
 
 <!-- modal to delete the scenario -->
