@@ -111,7 +111,13 @@ export class SharedProsListComponent {
           _isSelectable: true,
           _isEditable: true,
           _actions: this._actions,
+          _editIndex: 2,
           _columns: [
+            {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES',
+              _choices: [
+                {_name: 'false', _alias: 'No'},
+                {_name: 'true', _alias: 'Yes',
+                  _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}]},
             {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
@@ -119,7 +125,6 @@ export class SharedProsListComponent {
             {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'},
             {_attrs: ['sent'], _name: 'TABLE.HEADING.CONTACT', _type: 'CHECK'}]
         };
-
       });
     }
 

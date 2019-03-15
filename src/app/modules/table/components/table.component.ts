@@ -117,6 +117,8 @@ export class TableComponent {
 
   private _massSelection = false;
 
+  private _editIndex = 0;
+
   fetchingResult = true;
 
   constructor(private _translateService: TranslateService) {}
@@ -147,6 +149,7 @@ export class TableComponent {
       this._isNotPaginable = value._isNotPaginable || false;
       this._reloadColumns = value._reloadColumns || false;
       this._isLocal = value._isLocal || false;
+      this._editIndex = value._editIndex || 1;
 
       this._total = value._total;
 
@@ -330,12 +333,12 @@ export class TableComponent {
       for (const i of newColumnAttr){
         tmpContent = tmpContent ? tmpContent[i] : '-';
       }
-      return tmpContent;
+      return tmpContent || '';
     }else {
       if (this._isLocal) {
-        return this._filteredContent[rowKey]._content[columnAttr];
+        return this._filteredContent[rowKey]._content[columnAttr] || '';
       } else {
-        return this._content[rowKey]._content[columnAttr];
+        return this._content[rowKey]._content[columnAttr] || '';
       }
     }
   }
@@ -699,5 +702,9 @@ export class TableComponent {
 
   get lang(): string {
     return this._translateService.currentLang;
+  }
+
+  get editIndex(): number {
+    return this._editIndex;
   }
 }
