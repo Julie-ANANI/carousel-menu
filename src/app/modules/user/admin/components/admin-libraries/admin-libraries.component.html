@@ -1,14 +1,13 @@
-<section class="section-light-container" id="admin-libraries-component">
-
+<section class="section-light-pad rm-pad-top" id="admin-libraries-component">
 
   <!-- header section -->
   <div class="section-header">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <!-- Heading -->
-      <h1 class="main-heading">Libraries</h1>
+      <!-- heading -->
+      <h1 class="title-secondary">Libraries</h1>
 
-      <!-- Tabs -->
+      <!-- tabs -->
       <ul class="tab">
         <li *ngFor="let tab of tabs" class="tab-item">
           <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
@@ -21,14 +20,12 @@
   </div>
   <!-- header section -->
 
-
-  <!-- Other sections -->
-  <div class="section-other">
+  <!-- other sections -->
+  <div class="section-light-pad rm-pad-bottom">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <router-outlet></router-outlet>
     </div>
   </div>
-  <!-- /Other sections -->
-
+  <!-- /other sections -->
 
 </section>
