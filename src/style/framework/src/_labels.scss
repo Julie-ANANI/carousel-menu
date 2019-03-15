@@ -42,6 +42,20 @@
     background-color: $meta-color;
   }
 
+  &.label-tag {
+    background-color: $background-color;
+    border-radius: 25px;
+
+    .fas {
+      font-size: $font-icon-xs;
+    }
+
+    span {
+      margin-left: $unit-1;
+    }
+
+  }
+
   &.label-answer {
     background-color: $label-answer-color;
     color: $text-primary-color;
