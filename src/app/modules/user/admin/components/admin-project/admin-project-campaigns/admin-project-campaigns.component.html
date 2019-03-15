@@ -1,51 +1,57 @@
-<div class="section-light-container" id="admin-project-campaigns-component">
+<section class="section-light-pad rm-pad-bottom" id="admin-project-campaigns-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- section add campaign -->
-    <div *ngIf="getAuthorizationLevel(2)" class="section-add-campaign">
-      <button class="btn btn-primary" (click)="onClickAdd($event)">{{ 'CAMPAIGNS.ADD_BUTTON' | translate }}</button>
-    </div>
+    <ng-container *ngIf="getAuthorizationLevel(2)">
+      <div class="section-light-pad rm-pad-top text-right">
+        <button class="btn btn-primary" (click)="onClickAdd($event)">{{ 'CAMPAIGNS.ADD_BUTTON' | translate }}</button>
+      </div>
+    </ng-container>
 
     <!-- section no campaign -->
-    <div *ngIf="noResult" class="section-light-container remove-bottom">
-      <app-message-space [widthMax]="'354px'">
-        {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
-        <br>
-        {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
-      </app-message-space>
-    </div>
+    <ng-container *ngIf="noResult">
+      <div class="section-pad rm-pad-bottom">
+        <app-message-space [widthMax]="'354px'">
+          {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
+          <br>
+          {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
+        </app-message-space>
+      </div>
+    </ng-container>
 
     <!-- section campaigns -->
-    <div *ngIf="!noResult" class="section-campaigns-list">
-      <div class="campaign-wrapper" [@listAnimation]="campaigns.length">
-        <div *ngFor="let campaign of campaigns" class="content-outer">
-          <div class="content">
-            <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">
-              <span class="title">{{ campaign.title }}</span>
-            </a>
-            <span *ngIf="getAuthorizationLevel(2)" class="edit" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
-            <p class="details">
-              {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
-              •
-              {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.ANSWERS' | translate }}
-              •
-              {{ campaign.status | FormatText }} {{ 'CAMPAIGNS.STATUS' | translate }}
-              <ng-container *ngIf="getAuthorizationLevel(2)">
-                |
-                <span class="update" (click)="OnClickUpdateStatus($event, campaign)">{{ 'CAMPAIGNS.UPDATE_BUTTON' | translate }}</span>
-                |
-                <span class="clone">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>
-                |
-                <span (click)="OnClickDelete($event, campaign)" class="icons icons-delete"><i class="fas fa-trash-alt"></i></span>
-              </ng-container>
-            </p>
+    <ng-container *ngIf="!noResult">
+      <div class="section-light-pad rm-pad-bottom">
+        <div [@listAnimation]="campaigns.length">
+          <div *ngFor="let campaign of campaigns" class="card-campaign">
+            <div class="card-content">
+              <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">
+                <span>{{ campaign.title }}</span>
+              </a>
+              <span *ngIf="getAuthorizationLevel(2)" class="text-link" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
+              <p class="text text-notify">
+                {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
+                •
+                {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.ANSWERS' | translate }}
+                •
+                {{ campaign.status | FormatText }} {{ 'CAMPAIGNS.STATUS' | translate }}
+                <ng-container *ngIf="getAuthorizationLevel(2)">
+                  |
+                  <span class="text-link" (click)="OnClickUpdateStatus($event, campaign)">{{ 'CAMPAIGNS.UPDATE_BUTTON' | translate }}</span>
+                  |
+                  <span class="text text-notify">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>
+                  |
+                  <span (click)="OnClickDelete($event, campaign)" class="icon icon-delete"><i class="fas fa-trash-alt"></i></span>
+                </ng-container>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
 
   </div>
-</div>
+</section>
 
 
 <!-- modal to ask the admin to delete the campaign -->
