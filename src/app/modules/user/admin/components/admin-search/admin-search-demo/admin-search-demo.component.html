@@ -80,6 +80,17 @@
       </div>
     </div>
     <a *ngIf="pros.length" href="https://clearbit.com">Logos provided by Clearbit</a>
+    <a style="font-size: 8px" (click)="modalUpdate = true">Update database</a>
   </div>
 
 </div>
+
+<!-- modal to delete batch -->
+<app-modal [(showModal)]="modalUpdate" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  Mise à jour de la base de données. Si tu ne t'appelles pas Bastien merci de ne pas cliquer sur confirmer :)
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="updateDatabase()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+</app-modal>
+<!-- /modal to delete batch -->

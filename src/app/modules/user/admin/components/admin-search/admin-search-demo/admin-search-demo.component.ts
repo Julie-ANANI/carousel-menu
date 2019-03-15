@@ -14,6 +14,7 @@ export class AdminSearchDemoComponent {
   private _keywords: string;
   private _pros: Array<any> = [];
   private _metadata: any = [];
+  public modalUpdate = false;
   public data =  [
     {
       "nbResults": 121000,
@@ -3770,6 +3771,12 @@ export class AdminSearchDemoComponent {
       if (this._status === "DONE") {
         clearInterval(this._fetchInterval);
       }
+    });
+  }
+
+  public updateDatabase() {
+    this._searchService.updateDatabase().pipe(first()).subscribe(_=> {
+      console.log("OK");
     });
   }
 

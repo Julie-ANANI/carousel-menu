@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
 import { CountryFlagModule } from "../../../../utility-components/country-flag/country-flag.module";
 import { AdminSearchMapModule } from "./admin-search-map/admin-search-map.module";
+import { ModalModule } from "../../../../utility-components/modal/modal.module";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AdminSearchMapModule } from "./admin-search-map/admin-search-map.module
     AdminSearchMapModule,
     FormsModule,
     RouterModule,
-    CountryFlagModule
+    CountryFlagModule,
+    ModalModule
   ],
   declarations: [
     AdminSearchComponent,
