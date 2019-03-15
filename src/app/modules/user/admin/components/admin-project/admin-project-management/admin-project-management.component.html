@@ -723,9 +723,9 @@
 
   </div>
 
-  <button class="btn btn-sm ghost-delete" (click)="deleteProjectModal()">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' |
+  <!--<button class="btn btn-sm ghost-delete" (click)="deleteProjectModal()">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' |
     translate }}
-  </button>
+  </button>-->
 
 </div>
 
@@ -759,7 +759,8 @@
   </app-tags-form>
 </app-sidebar>
 
-<!-- Modal to ask admin to sure about deleting the project -->
+
+<!-- Modal to ask admin to sure about deleting the project
 <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
@@ -771,9 +772,9 @@
       <div class="content">
         {{ 'PROJECT_MODULE.SETUP.DELETE_PROJECT_MODAL.CONTENT' | translate }}
         <ul>
-          <!-- Property 'usersToRemove' does not exist on type 'AdminProjectManagementComponent'.
+          &lt;!&ndash; Property 'usersToRemove' does not exist on type 'AdminProjectManagementComponent'.
             <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
-          -->
+          &ndash;&gt;
         </ul>
       </div>
     </div>
@@ -783,4 +784,4 @@
       </button>
     </div>
   </div>
-</div>
+</div>-->
