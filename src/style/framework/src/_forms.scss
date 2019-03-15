@@ -47,7 +47,7 @@ legend {
   background: $bg-color-light none;
   max-width: 100%;
   line-height: $line-height;
-  padding: $unit-2;
+  padding: $layout-spacing;
 
   &:focus {
     border-color: $form-primary-color;
@@ -136,7 +136,7 @@ textarea.form-input {
   height: 2.5rem;
   align-items: center;
   line-height: $line-height;
-  padding: $unit-2 $unit-4;
+  padding: $layout-spacing;
 
   &[size], &[multiple] {
     height: auto;

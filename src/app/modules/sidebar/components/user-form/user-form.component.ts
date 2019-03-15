@@ -13,7 +13,7 @@ import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
-import {countries} from '../../../../models/static-data/country';
+import { countries } from '../../../../models/static-data/country';
 
 @Component({
   selector: 'app-user-form',
