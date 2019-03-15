@@ -8,6 +8,7 @@ import { Table } from '../../../table/models/table';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
+import {Router} from "@angular/router";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -39,7 +40,7 @@ export class SharedProsListComponent {
 
   private _tableInfos: Table = null;
 
-  private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS'];
+  private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS', 'Convert to ambassador'];
 
   private _total = 0;
 
@@ -61,7 +62,8 @@ export class SharedProsListComponent {
 
   constructor(private professionalsService: ProfessionalsService,
               private translateNotificationsService: TranslateNotificationsService,
-              private searchService: SearchService) { }
+              private searchService: SearchService,
+              private _router: Router) { }
 
   loadPros(config: any): void {
     this._config = config;
@@ -181,6 +183,17 @@ export class SharedProsListComponent {
         this.editTags(action._rows);
         break;
       }
+      case 1:
+        if(action._rows.length) {
+          if(action._rows.length > 1) {
+            console.log("Look man, I could do this action just for the first one...");
+          }
+          const link = `/user/admin/community/members/${action._rows[0]._id}`;
+          this._router.navigate([link]);
+        } else {
+          console.error("What? empty rows? How did you do that?");
+        }
+        break;
     }
   }
 
