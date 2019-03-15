@@ -5,6 +5,7 @@ import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationInterface } from '../../utility-components/pagination/interfaces/pagination';
+import { countries } from "../../../models/static-data/country";
 
 @Component({
   selector: 'app-shared-table',
@@ -601,6 +602,14 @@ export class TableComponent {
       return '#f0ad4e';
     } else {
       return '#2ECC71';
+    }
+  }
+
+  public flag2Name(isoCode: string): string {
+    if(isoCode) {
+      return countries[isoCode] || "Unknown";
+    } else {
+      return "Unknown";
     }
   }
 

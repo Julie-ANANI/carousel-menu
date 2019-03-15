@@ -15,4 +15,4 @@ export interface Column {
 
 export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK'
                     | 'MULTI-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL' | 'MULTILING'
-                    | 'TAG-LIST';
+                    | 'TAG-LIST' | 'COUNTRY-NAME';
