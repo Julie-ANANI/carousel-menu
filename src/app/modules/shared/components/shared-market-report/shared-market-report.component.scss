@@ -21,6 +21,16 @@
 
   }
 
+  .flex-container {
+    display: flex;
+  }
+
+  .sidebar {
+    min-height: 100vh;
+    width: 180px;
+    background-color: white;
+  }
+
   .sticky-wrapper {
     background-color: white;
     transition: all 0.35s ease-in-out;

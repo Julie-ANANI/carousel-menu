@@ -82,7 +82,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _innovationEndModal: boolean;
 
-  private _showFilterModal = false;
+  private _showExportModal = false;
 
   private _filterName = '';
 
@@ -856,11 +856,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     window.print();
   }
 
-  public createFilter(event: Event): void {
-    event.preventDefault();
-    this._showFilterModal = true;
-  }
-
   public shareNewFilter(event: Event): void {
     event.preventDefault();
     const data = {
@@ -873,7 +868,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
-    this._showFilterModal = false;
   }
 
   public isMainDomain(): boolean {
@@ -1017,12 +1011,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._isOwner;
   }
 
-  get showFilterModal(): boolean {
-    return this._showFilterModal;
+  get showExportModal(): boolean {
+    return this._showExportModal;
   }
 
-  set showFilterModal(value: boolean) {
-    this._showFilterModal = value;
+  set showExportModal(value: boolean) {
+    this._showExportModal = value;
   }
 
   get filterName(): string {

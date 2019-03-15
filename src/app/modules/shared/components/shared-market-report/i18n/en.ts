@@ -36,24 +36,12 @@ export const MARKET_REPORT = {
 
   'KEY_LEARNING': 'Key learnings',
 
-  'STICKY_BAR': {
-    'DETAIL_VIEW': 'Detail View',
-    'FILTER': 'Filters',
-    'CLIENT_VISIBLE': 'Make Visible To Client',
-    'BUTTON_CSV': 'Export CSV',
-    'BUTTON_PRINT': 'Print Executive Report',
-    'BUTTON_ADMIN': 'Finalize Synthesis',
-    'BUTTON_FILTER_MODAL': 'Share Filter',
-    'BUTTON_SHARE': 'Share Synthesis',
+  'MENU_BAR': {
     'BUTTON_EXPORT': 'Export',
-    'BUTTON_END': 'End Project'
-  },
-
-  'FILTER_MODAL': {
-    'TITLE': 'Share the synthesis with your collaborators.',
-    'NAME': 'Name this version of the synthesis:',
-    'SUBMIT': 'Submit',
-    'EXISTINGSYNTHESIS': 'Synthesis created'
+    'FILTER': 'Filters',
+    'PLACEHOLDER_VIEW': 'Name of this view',
+    'SUBMIT_VIEW': 'Save',
+    'VIEWS': 'My views'
   },
 
   'MODAL': {

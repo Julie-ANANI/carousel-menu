@@ -1,6 +1,5 @@
 <section class="section-container s-print animate-page" id="market-report" [ngStyle]="{ 'background-color': (innovation?.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
 
-
   <!-- Project status not done client side -->
   <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !innovation?.previewMode">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
@@ -29,32 +28,76 @@
   <!-- Project status submitted and client side -->
   <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || innovation?.previewMode">
 
-    <!-- Display spinner off -->
-    <ng-container>
-
-      <!-- Message -->
-      <div *ngIf="innovation?.previewMode && innovation?.status !== 'DONE'" class="msg-wrapper">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div *ngIf="!adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
-          <div *ngIf="adminSide" class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.PREVIEW_MODE' | translate }}</div>
-        </div>
+    <!-- Message -->
+    <div *ngIf="innovation?.previewMode && innovation?.status !== 'DONE'" class="msg-wrapper">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div *ngIf="!adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
+        <div *ngIf="adminSide" class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.PREVIEW_MODE' | translate }}</div>
       </div>
-
-      <div *ngIf="innovation?.status === 'DONE' && adminSide" class="msg-wrapper">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.DONE' | translate }}</div>
-        </div>
+    </div>
+    <div *ngIf="innovation?.status === 'DONE' && adminSide" class="msg-wrapper">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.DONE' | translate }}</div>
       </div>
-      <!-- /Message -->
+    </div>
+    <!-- /Message -->
 
-      <!-- Sticky bar -->
+    <div class="flex-container">
+
+      <!-- SideBar -->
+      <aside class="sidebar">
+
+        <ng-container *ngIf="isOwner">
+          <button
+            class="btn btn-primary gtm-export-synthesis"
+            (click)="displayModal($event, 'exportInnovation')">
+            {{ 'MARKET_REPORT.MENU_BAR.BUTTON_EXPORT' | translate }}
+          </button>
+          <hr/>
+        </ng-container>
+
+        <div class="views-wrapper">
+          <p>{{ 'MARKET_REPORT.MENU_BAR.VIEWS' | translate }}</p>
+          <ul>
+            <li *ngFor="let filter of sharedFiltersList">
+              <i class="fa fa-trash" aria-hidden="true" (click)="deleteCustomFilter(filter.name)"></i>
+              <a [routerLink]="" [queryParams]="{filter: filter.name}"
+                 (click)="loadFilter(filter.name); showFilterModal = false" [innerHtml]="filter.name"></a>
+            </li>
+          </ul>
+          <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter($event)">
+            <div class="form-group">
+              <input type="text" class="form-control" [placeholder]="'MARKET_REPORT.MENU_BAR.PLACEHOLDER_VIEW' | translate"
+                     required [(ngModel)]="filterName" #name="ngModel">
+            </div>
+            <button class="btn btn-success" type="submit"
+                    [disabled]="!shareFilterForm.form.valid"
+                    [textContent]="'MARKET_REPORT.MENU_BAR.SUBMIT_VIEW'" translate></button>
+          </form>
+        </div>
+
+        <hr/>
+
+        <div class="filter-wrapper">
+          <p>{{ 'MARKET_REPORT.MENU_BAR.FILTER' | translate }}</p>
+          <ul>
+            <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+              <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+      <!-- /SideBar -->
+
+      <!-- Sticky bar
       <div class="sticky-wrapper" [ngClass]="{ 'scroll-sticky-wrapper': scrollOn && !wordpress }">
         <div class="column col-xs-12 col-11 col-mx-auto content-wrapper">
 
-          <!-- Detail view and visible to client -->
+          <!-- Detail view and visible to client
           <div *ngIf="!wordpress" class="toggle-option">
 
-            <!-- Client side -->
+            <!-- Client side
             <ng-container *ngIf="!adminSide">
               <label class="form-switch gtm-synthesis-detail-view" for="showDetails">
                 <input
@@ -67,9 +110,9 @@
                 {{ 'MARKET_REPORT.STICKY_BAR.DETAIL_VIEW' | translate }}
               </label>
             </ng-container>
-            <!-- /Client side -->
+            <!-- /Client side
 
-            <!-- Admin side -->
+            <!-- Admin side
             <ng-container *ngIf="adminSide">
               <label class="form-switch" for="previewMode">
                 <input
@@ -83,23 +126,12 @@
                 {{ 'MARKET_REPORT.STICKY_BAR.CLIENT_VISIBLE' | translate }}
               </label>
             </ng-container>
-            <!-- /Admin side -->
+            <!-- /Admin side
 
           </div>
-          <!-- /Detail view and visible to client -->
+          <!-- /Detail view and visible to client
 
-          <!-- Filter view -->
-          <div class="filter-wrapper" [ngStyle]="{ 'border-right': sharable ? 'none' : 'block' }">
-            <p>{{ 'MARKET_REPORT.STICKY_BAR.FILTER' | translate }}</p>
-            <ul>
-              <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
-                <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
-              </li>
-            </ul>
-          </div>
-          <!-- /Filter view -->
-
-          <!-- Buttons -->
+          <!-- Buttons
           <div class="button-wrapper" [ngStyle]="{ 'display': sharable ? 'none' : 'inline-flex' }">
             <button class="btn ghost-primary gtm-share-synthesis" (click)="createFilter($event)">
               {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_FILTER_MODAL' | translate }}
@@ -125,71 +157,11 @@
               </button>
             </ng-container>
           </div>
-          <!-- /Buttons -->
+          <!-- /Buttons
 
         </div>
       </div>
       <!-- /Sticky bar -->
-
-
-      <!-- Menu button -->
-      <div class="menu-wrapper menu-button-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
-        <div
-          class="menu-item-wrapper"
-          [ngStyle]="{ 'display': displayMenuWrapper ? 'block' : 'none' }"
-          (mouseenter)="displayMenu($event)"
-          (mouseleave)="hideMenu($event)">
-          <ul>
-            <li
-              *ngIf="innovation.executiveReport?.totalSections > 0 || adminSide"
-              [ngClass]="{ 'active': activeSection === 'executive-report' }"
-              pageScroll
-              pageScrollOffset="135"
-              href="#executive-report">
-              Executive report
-            </li>
-            <li
-              *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide"
-              [ngClass]="{ 'active': activeSection === 'key-learning' }"
-              pageScroll
-              pageScrollOffset="135"
-              href="#key-learning">
-              {{ 'MARKET_REPORT.KEY_LEARNING' | translate }}
-            </li>
-            <li
-              [ngClass]="{ 'active': activeSection === 'professionals' }"
-              pageScroll
-              pageScrollOffset="135"
-              href="#professionals">
-              {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
-            </li>
-            <li
-              *ngFor="let question of questions"
-              pageScroll
-              pageScrollOffset="135"
-              [href]="'#' + question.identifier | removespaces"
-              [ngClass]="{'active': activeSection === question.identifier}">
-              {{ question.title | multiling:lang }}
-            </li>
-            <li
-              *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
-              [ngClass]="{ 'active': activeSection === 'conclusion' }"
-              pageScroll
-              pageScrollOffset="135"
-              href="#conclusion">
-              {{ 'MARKET_REPORT.CONCLUSION' | translate }}
-            </li>
-          </ul>
-        </div>
-        <button
-          class="btn btn-secondary"
-          (mouseenter)="displayMenu($event)"
-          (mouseleave)="hideMenu($event)">
-          Menu
-        </button>
-      </div>
-      <!-- /Menu button -->
-
 
       <!-- Answer sections -->
       <section id="answer-wrapper">
@@ -706,9 +678,7 @@
       </section>
       <!-- /Answer sections -->
 
-
-    </ng-container>
-
+    </div>
 
   </ng-container>
   <!-- /Project status submitted and client side -->
@@ -866,26 +836,6 @@
 </app-sidebar>
 
 <!-- Share static synthesis -->
-<app-modal [(showModal)]="showFilterModal">
-  <h1 [textContent]="'MARKET_REPORT.FILTER_MODAL.TITLE'" translate></h1>
-  <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter($event)">
-    <div class="form-group">
-      <label for="name" [textContent]="'MARKET_REPORT.FILTER_MODAL.NAME'" translate></label>
-      <input type="text" class="form-control" id="name" name="name"
-             required [(ngModel)]="filterName" #name="ngModel">
-    </div>
-    <button class="btn btn-success" type="submit"
-            [disabled]="!shareFilterForm.form.valid"
-            [textContent]="'MARKET_REPORT.FILTER_MODAL.SUBMIT'" translate></button>
-  </form>
-  <ng-container *ngIf="sharedFiltersList.length > 0">
-    <h3 [textContent]="'MARKET_REPORT.FILTER_MODAL.EXISTINGSYNTHESIS'" translate></h3>
-    <ul>
-      <li *ngFor="let filter of sharedFiltersList">
-        <i class="fa fa-trash" aria-hidden="true" (click)="deleteCustomFilter(filter.name)"></i>
-        <a [routerLink]="['synthesis']" [queryParams]="{filter: filter.name}"
-           (click)="loadFilter(filter.name); showFilterModal = false" [innerHtml]="filter.name"></a>
-      </li>
-    </ul>
-  </ng-container>
+<app-modal [(showModal)]="showExportModal">
+  Nothing to see here
 </app-modal>
