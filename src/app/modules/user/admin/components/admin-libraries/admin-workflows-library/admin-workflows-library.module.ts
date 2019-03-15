@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { AdminWorkflowsLibraryComponent } from "./admin-workflows-library.component";
 import { AdminEditWorkflowModule } from "../../admin-edit-workflow/admin-edit-workflow.module";
 import { ModalModule } from '../../../../../utility-components/modal/modal.module';
+import { MessageSpaceModule } from '../../../../../utility-components/message-space/message-space.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ModalModule } from '../../../../../utility-components/modal/modal.modul
     TranslateModule.forChild(),
     AdminEditWorkflowModule,
     FormsModule,
-    ModalModule
+    ModalModule,
+    MessageSpaceModule
   ],
   declarations: [
     AdminWorkflowsLibraryComponent

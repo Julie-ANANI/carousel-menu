@@ -14,14 +14,24 @@ import { first } from 'rxjs/operators';
 })
 export class AdminEmailsLibraryComponent implements OnInit {
 
-  public language = 'en';
+  language = 'en';
+
   private _signatures: Array<EmailSignature> = [];
+
   private _emails: Array<TransactionalEmail> = [];
+
   private _emailToEdit: TransactionalEmail;
+
   private _newEmailName: string = null;
-  private _more: SidebarInterface = {};
+
+  private _sidebarValue: SidebarInterface = {};
+
   private _total = 0;
+
   private _tableInfos: Table = null;
+
+  private _modalAdd = false;
+
   private _config = {
     limit: '10',
     offset: '0',
@@ -29,28 +39,42 @@ export class AdminEmailsLibraryComponent implements OnInit {
     sort: '{"id":-1}'
   };
 
-  constructor(private _templatesService: TemplatesService,
-              private _notificationsService: TranslateNotificationsService) {}
+  constructor(private templatesService: TemplatesService,
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
-    this._templatesService.getAllSignatures({limit: '0'}).pipe(first()).subscribe((signatures: any) => {
+    this.templatesService.getAllSignatures({limit: '0'}).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
     this.getEmails();
   }
 
+
   public getEmails(config?: any) {
+
     if (config) {
       this._config = config;
     }
-    this._templatesService.getAllEmails(this._config).pipe(first()).subscribe((emails:any) => {
+
+    this.templatesService.getAllEmails(this._config).pipe(first()).subscribe((emails:any) => {
       this._emails = emails.result;
       this._total = emails._metadata.totalCount;
-      this._initTable();
+      this.initTable();
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
+
   }
 
-  private _initTable() {
+
+  onClickAdd() {
+    this._modalAdd = true;
+  }
+
+
+  private initTable() {
     this._emails.forEach((email: TransactionalEmail) => {
       if (email.en && email.en.signature) {
         const fullSignature = this._signatures.find(s => s._id === email.en.signature.toString());
@@ -85,29 +109,28 @@ export class AdminEmailsLibraryComponent implements OnInit {
 
   public changeLanguage(value: string) {
     this.language = value;
-    this._initTable();
+    this.initTable();
   }
 
-  public closeSidebar(value: string) {
-    this.more.animate_state = value;
-  }
 
   public editEmail(email: any) {
     this._emailToEdit = email;
-    this._more = {
+    this._sidebarValue = {
       size: '650px',
-      animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: email.name
     };
   }
 
+
   public updateEmail(email: TransactionalEmail) {
-    this._templatesService.saveEmail(email).pipe(first()).subscribe((updatedEmail: any) => {
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-    }, (err: any) => {
-      this._notificationsService.error('ERROR', err);
+    this.templatesService.saveEmail(email).pipe(first()).subscribe((updatedEmail: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
+
 
   removeEmails(emails: Array<TransactionalEmail>) {
     emails.forEach((email: TransactionalEmail) => {
@@ -115,29 +138,78 @@ export class AdminEmailsLibraryComponent implements OnInit {
     });
   }
 
+
   public deleteEmail(emailId: string) {
-    this._templatesService.removeEmail(emailId).pipe(first()).subscribe((_: any) => {
+    this.templatesService.removeEmail(emailId).pipe(first()).subscribe((_: any) => {
       this.getEmails();
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 
-  public createEmail() {
-    this._templatesService.createEmail({name: this._newEmailName}).pipe(first()).subscribe((newEmail: any) => {
+
+  public onClickConfirm() {
+    this.templatesService.createEmail({name: this._newEmailName}).pipe(first()).subscribe((newEmail: any) => {
       this._newEmailName = null;
       this.editEmail(newEmail);
       this.getEmails();
+      this._modalAdd = false;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 
-  get emails(): Array<TransactionalEmail> { return this._emails; }
-  get newEmailName(): string { return this._newEmailName; }
-  set newEmailName(name: string) { this._newEmailName = name; }
-  get tableInfos(): any { return this._tableInfos; }
-  get emailToEdit(): any { return this._emailToEdit; }
-  get more(): any { return this._more; }
-  get config(): any { return this._config; }
-  set config(value: any) { this._config = value; }
-  set emailToEdit(value: any) { this._emailToEdit = value; }
-  get signatures(): Array<EmailSignature> { return this._signatures; }
+  get emails(): Array<TransactionalEmail> {
+    return this._emails;
+  }
+
+  get newEmailName(): string {
+    return this._newEmailName;
+  }
+
+  set newEmailName(name: string) {
+    this._newEmailName = name;
+  }
+
+  get tableInfos(): any {
+    return this._tableInfos;
+  }
+
+  get emailToEdit(): any {
+    return this._emailToEdit;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get config(): any {
+    return this._config;
+  }
+
+  set config(value: any) {
+    this._config = value;
+  }
+
+  set emailToEdit(value: any) {
+    this._emailToEdit = value;
+  }
+
+  get signatures(): Array<EmailSignature> {
+    return this._signatures;
+  }
+
+  get modalAdd(): boolean {
+    return this._modalAdd;
+  }
+
+  set modalAdd(value: boolean) {
+    this._modalAdd = value;
+  }
+
 }

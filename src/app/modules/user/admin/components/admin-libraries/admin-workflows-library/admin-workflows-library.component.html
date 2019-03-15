@@ -15,6 +15,14 @@
     </div>
   </ng-container>
 
+  <ng-container *ngIf="scenarios.length === 0">
+    <div class="section-pad rm-pad-bottom">
+      <app-message-space [widthMax]="'320px'">
+        Don't have any workflows? Create the workflow by clicking on "Add" button.
+      </app-message-space>
+    </div>
+  </ng-container>
+
 </section>
 
 
