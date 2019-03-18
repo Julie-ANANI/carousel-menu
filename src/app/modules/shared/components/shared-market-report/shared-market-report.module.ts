@@ -7,7 +7,6 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
-import { ModalModule } from '../../../utility-components/modal/modal.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from '../../../utility-components/progress-bar/progress-bar.module';
@@ -52,7 +51,6 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     SharedWorldmapModule,
     TranslateModule.forChild(),
     NgxPageScrollModule,
-    ModalModule,
     SidebarModule,
     RouterModule,
     ProgressBarModule,

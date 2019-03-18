@@ -82,8 +82,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _innovationEndModal: boolean;
 
-  private _showExportModal = false;
-
   private _filterName = '';
 
   private _sharedFiltersList: Array<SharedFilter> = [];
@@ -1009,14 +1007,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get isOwner(): boolean {
     return this._isOwner;
-  }
-
-  get showExportModal(): boolean {
-    return this._showExportModal;
-  }
-
-  set showExportModal(value: boolean) {
-    this._showExportModal = value;
   }
 
   get filterName(): string {
