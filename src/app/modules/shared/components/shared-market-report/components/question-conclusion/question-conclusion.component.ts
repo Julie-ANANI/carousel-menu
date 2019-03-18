@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -53,9 +54,14 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   answersOrigin: {[c: string]: number} = null;
 
-  constructor(private innovationService: InnovationService,
+  private _isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private innovationService: InnovationService,
               private translateService: TranslateService,
-              private filterService: FilterService,) {}
+              private filterService: FilterService) {
+    this._isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit() {
     if (this.question && this.question.identifier) {
@@ -113,6 +119,10 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   get lang() {
     return this._lang;
+  }
+
+  get isBrowser(): boolean {
+    return this._isBrowser;
   }
 
 }
