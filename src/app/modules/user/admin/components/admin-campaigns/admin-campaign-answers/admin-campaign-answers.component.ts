@@ -65,7 +65,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._adminMode = this.authService.adminLevel > 2;
     this.loadAnswers();
 
-    if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
+    if (this._campaign && this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
       this._campaign.innovation.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
       });

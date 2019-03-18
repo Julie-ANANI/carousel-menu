@@ -1,96 +1,101 @@
-<div id="admin-campaign-answers-component">
+<ng-container *ngIf="campaign">
+  <section id="admin-campaign-answers-component">
 
-  <!-- section stats -->
-  <div class="campaign-stats-wrapper">
+    <!-- section stats -->
+    <ul class="stat">
 
-    <!-- stat col 1 -->
-    <div class="stat1">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.INSIGHTS' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.REJECTED' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('status', 'REJECTED') }}</h3>
+      <!-- stat col 1 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.INSIGHTS' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.REJECTED' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('status', 'REJECTED') }}</span>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.LOOK' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('status', 'SUBMITTED') }}</h3>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.LOOK' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('status', 'SUBMITTED') }}</span>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.VALIDATED' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('status', 'VALIDATED') }}</h3>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.VALIDATED' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('status', 'VALIDATED') }}</span>
         </div>
-      </div>
+      </li>
+
+      <!-- stat col 2 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFILE' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.STANDARD' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('profile', 1) }}</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.TOP' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('profile', 2) }}</span>
+        </div>
+      </li>
+
+      <!-- stat col 3 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.QUALITY' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.FILL_RATE' | translate }}</h5>
+          <span class="stat-value">--</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.TIME' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('quality', 'time_elapsed') }}" min.</span>
+        </div>
+      </li>
+
+    </ul>
+
+
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <!-- section actions -->
+      <ng-container *ngIf="getAuthorizedActions(2)">
+        <div class="section-actions section-light-pad text-right">
+
+          <label class="btn ghost-primary btn-sm">
+            <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
+            {{ 'COMMON.BUTTON.IMPORT' | translate }}
+          </label>
+
+          <button class="btn btn-primary btn-sm" (click)="exportAnswers($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
+
+        </div>
+      </ng-container>
+      <!-- /section actions -->
+
+      <!-- section no answers -->
+      <ng-container *ngIf="noResult">
+        <div class="section-pad rm-pad-bottom">
+          <app-message-space [widthMax]="'354px'">
+            {{ 'CAMPAIGNS.NO_ANSWERS.A' | translate }}
+            <br>
+            {{ 'CAMPAIGNS.NO_ANSWERS.B' | translate }}
+          </app-message-space>
+        </div>
+      </ng-container>
+      <!-- /section no answers -->
+
+      <!-- section answers -->
+      <ng-container *ngIf="!noResult">
+        <div class="section-light-pad rm-pad-top">
+          <app-shared-table
+            [data]="tableInfos"
+            [config]="config"
+            (editRow)="onClickEdit($event)"
+            (performAction)="onTableAction($event)">
+          </app-shared-table>
+        </div>
+      </ng-container>
+      <!-- /section answers -->
+
     </div>
 
-    <!-- stat col 2 -->
-    <div class="stat2">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFILE' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.STANDARD' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('profile', 1) }}</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.TOP' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('profile', 2) }}</h3>
-        </div>
-      </div>
-    </div>
-
-    <!-- stat col 3 -->
-    <div class="stat3">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.QUALITY' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.FILL_RATE' | translate }}</h4>
-          <h3 class="value">--</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.TIME' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('quality', 'time_elapsed') }}" min.</h3>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="column col-xs-12 col-11 col-mx-auto">
-
-    <!-- section actions -->
-    <div *ngIf="getAuthorizedActions(2)" class="section-actions">
-
-      <label class="btn ghost-primary">
-        <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
-        {{ 'COMMON.BUTTON.IMPORT' | translate }}
-      </label>
-
-      <button class="btn btn-primary" (click)="exportAnswers($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
-
-    </div>
-
-    <!-- section no answers -->
-    <div *ngIf="noResult" class="section-light-container remove-bottom">
-      <app-message-space [widthMax]="'354px'">
-        {{ 'CAMPAIGNS.NO_ANSWERS.A' | translate }}
-        <br>
-        {{ 'CAMPAIGNS.NO_ANSWERS.B' | translate }}
-      </app-message-space>
-    </div>
-
-    <!-- section answers -->
-    <div *ngIf="!noResult">
-      <app-shared-table
-        [data]="tableInfos"
-        [config]="config"
-        (editRow)="onClickEdit($event)"
-        (performAction)="onTableAction($event)">
-      </app-shared-table>
-    </div>
-
-  </div>
-
-</div>
+  </section>
+</ng-container>
 
 
 <!-- sidebar insight preview -->
