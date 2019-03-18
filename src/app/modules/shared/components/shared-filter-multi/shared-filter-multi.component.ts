@@ -40,7 +40,7 @@ export class SharedFilterMultiComponent {
         value.forEach((queryStr, idx)=>{
           _search[this._currentTextProp._attrs[idx]] = encodeURIComponent(queryStr.trim());
         });
-        this.config.search = JSON.stringify({_search});
+        this.config.search = JSON.stringify(_search);
         this.configChange.emit(this.config);
       }
   }
