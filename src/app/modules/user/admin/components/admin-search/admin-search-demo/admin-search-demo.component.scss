@@ -1,4 +1,23 @@
 @import "../../../../../../../style/variables";
+
+#totalPros {
+  text-align: center;
+}
+
+#input-search {
+  display: flex;
+  input {
+    padding-right: 42px;
+  }
+
+  i {
+    z-index: 10;
+    cursor: pointer;
+    padding-top: 25px;
+    margin-left: -42px;
+  }
+}
+
 .professional-wrapper {
   display: flex;
   flex-wrap: wrap;

@@ -3,7 +3,7 @@
 <div class="columns">
   <div class="column col-5 col-mx-auto">
 
-    <div class="flex-container" id="input-search">
+    <div id="input-search">
 
       <input
         type="text"
@@ -12,25 +12,14 @@
         [(ngModel)]="keywords"
         placeholder="Recherche"/>
 
-      <button
-        (click)="searchPros($event)"
-        class="btn-round btn-primary"
-        translate>
-        <i class="fas fa-search"></i>
-      </button>
-
-      <button
-        (click)="searchMetadata($event)"
-        class="btn-round btn-primary"
-        translate>
-        <i class="fas fa-search"></i>
-      </button>
-
+        <i (click)="searchMetadata($event)" class="fas fa-search"></i>
     </div>
   </div>
 
+
   <div class="column col-9 col-mx-auto">
-      <admin-search-map
+    <h1 id="totalPros" *ngIf="metadata.world">{{ metadata.world }} pros</h1>
+    <admin-search-map
         [width]="'auto'"
         [countriesData]="data">
       </admin-search-map>
