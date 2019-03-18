@@ -1,9 +1,11 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { AuthService } from './services/auth/auth.service';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,18 +15,19 @@ import { environment } from "../environments/environment";
 
 export class AppComponent implements OnInit {
 
-  private _notificationsOptions = {
+  private _notificationsOptions: Options = {
     position: ['bottom', 'right'],
     timeOut: 2000,
     lastOnBottom: true,
     maxStack: 4,
-    animate: 'fromRight',
+    animate: NotificationAnimationType.FromRight,
     pauseOnHover: false,
     showProgressBar: true,
     clickToClose: true
   };
 
-  constructor(private translateService: TranslateService,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private translateService: TranslateService,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
               private mouseService: MouseService) {}
@@ -52,22 +55,24 @@ export class AppComponent implements OnInit {
     this.mouseService.setClickEvent(event);
   }
 
-  get notificationsOptions(): { showProgressBar: boolean; lastOnBottom: boolean; pauseOnHover: boolean; position: string[]; maxStack: number; animate: string; timeOut: number; clickToClose: boolean } {
+  get notificationsOptions(): Options {
     return this._notificationsOptions;
   }
 
-  //Favicon
+  // Favicon
   private _setFavicon() {
-    let linkElement = document.createElement( "link" );
-    linkElement.setAttribute( "id", "theicon" );
-    linkElement.setAttribute( "rel", "icon" );
-    linkElement.setAttribute( "type", "image/x-icon" );
-    if(environment.domain !== 'umi' && environment.domain !== 'dynergie') {
-      linkElement.setAttribute( "href", "https://res.cloudinary.com/umi/image/upload/app/favicon-wl.ico" );
-    } else {
-      linkElement.setAttribute( "href", "https://res.cloudinary.com/umi/image/upload/app/favicon.ico" );
+    if (isPlatformBrowser(this.platformId)) {
+      const linkElement = document.createElement('link');
+      linkElement.setAttribute('id', 'theicon');
+      linkElement.setAttribute('rel', 'icon');
+      linkElement.setAttribute('type', 'image/x-icon');
+      if (environment.domain !== 'umi' && environment.domain !== 'dynergie') {
+        linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/app/favicon-wl.ico');
+      } else {
+        linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/app/favicon.ico');
+      }
+      document.head.appendChild( linkElement );
     }
-    document.head.appendChild( linkElement );
   }
 
 }
