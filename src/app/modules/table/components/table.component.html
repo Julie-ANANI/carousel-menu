@@ -193,8 +193,8 @@
                   <img
                           [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]).toString() || ''))"
                           *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]).toString() || '')) !== ''"
-                          class="img-responsive"
-                          style="width: 20px"
+                          [ngClass]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]).toString() || '')))"
+                          class="img-responsive badge"
                           alt=" ">
                   <span
                           *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
