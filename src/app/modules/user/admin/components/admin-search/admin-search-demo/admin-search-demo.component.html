@@ -18,7 +18,11 @@
 
 
   <div class="column col-9 col-mx-auto">
-    <h1 id="totalPros" *ngIf="metadata.world">{{ metadata.world }} pros</h1>
+    <h1 *ngIf="metadata.world" id="totalPros">
+      <span *ngIf="metadata.world === 20000">+</span>
+      <span *ngIf="metadata.world < 100">< </span>
+      {{ metadata.world }} pros
+    </h1>
     <admin-search-map
         [width]="'auto'"
         [countriesData]="data">

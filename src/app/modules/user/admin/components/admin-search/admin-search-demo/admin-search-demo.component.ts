@@ -60,17 +60,31 @@ export class AdminSearchDemoComponent {
   }
 
   public totalAnimation(total) {
-    total = total > 20000 ? 20000 : total;
-    /*this._metadata.world = 0;
-    for (let i = 0; i < total; i++) {
-      setTimeout(this._metadata.world++, 5);
-    }*/
-    if (total < 100) this._metadata.world = "<50";
-    if (total === 20000) this._metadata.world = "+" + total.toString();
+    total = total > 20000 ? 20000 : total < 100 ? 50 : total;
+    let duration = 200 / total;
+    let increment = 1;
+    if (duration < 1) {
+      increment = Math.round(1/duration);
+      duration = 1;
+    }
+    this._metadata.world = 0;
+    const self = this;
+    const interval = setInterval(function(){
+      if ( self._metadata.world >= total) {
+        clearInterval(interval);
+      }
+      else  {
+        self._metadata.world + increment > total ?
+          self._metadata.world = total :
+          self._metadata.world += increment;
+      }
+    }, duration);
   }
 
   public searchMetadata(event: Event) {
     event.preventDefault();
+    this._pros = [];
+    this._metadata = {};
     this._searchService.metadataSearch(this._keywords).pipe(first()).subscribe((result: any) => {
       this._metadata = result.metadata;
       this.totalAnimation(this._metadata.world);
