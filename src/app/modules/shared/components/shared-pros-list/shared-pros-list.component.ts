@@ -53,9 +53,9 @@ export class SharedProsListComponent {
 
   private _currentPro: Professional = null;
 
-  isProfessionalForm = false;
+  private _isProfessionalForm = false;
 
-  isTagsForm = false;
+  private _isTagsForm = false;
 
   private _modalDelete = false;
 
@@ -187,8 +187,8 @@ export class SharedProsListComponent {
         title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
         type: 'professional'
       };
-      this.isProfessionalForm = true;
-      this.isTagsForm = false;
+      this._isProfessionalForm = true;
+      this._isTagsForm = false;
       this._currentPro = professional;
     });
   }
@@ -254,8 +254,8 @@ export class SharedProsListComponent {
 
 
   editTags(pros: Professional[]) {
-    this.isProfessionalForm = false;
-    this.isTagsForm = true;
+    this._isProfessionalForm = false;
+    this._isTagsForm = true;
     this._prosToTag = pros;
 
     this._sidebarValue = {
@@ -328,6 +328,14 @@ export class SharedProsListComponent {
 
   get currentPro(): Professional {
     return this._currentPro;
+  }
+
+  get isProfessionalForm(): boolean {
+    return this._isProfessionalForm;
+  }
+
+  get isTagsForm(): boolean {
+    return this._isTagsForm;
   }
 
 }

@@ -1,84 +1,96 @@
-<div id="admin-campaign-pros-component">
+<ng-container *ngIf="campaign">
+  <section id="admin-campaign-pros-component">
 
-  <!-- section stats -->
-  <div class="campaign-stats-wrapper">
+    <!-- section stats -->
+    <ul class="stat">
 
-    <!-- stat col 1 -->
-    <div class="stat1">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFESSIONALS' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.FIND' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('professional') }}</h3>
+      <!-- stat col 1 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFESSIONALS' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.FIND' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('professional') }}</span>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.NOT_REACHED' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('notReached') }}%</h3>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.NOT_REACHED' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('notReached') }}%</span>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.STARS' | translate }}</h4>
-          <h3 class="value">--</h3>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.STARS' | translate }}</h5>
+          <span class="stat-value">--</span>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.DUPLICATE' | translate }}</h4>
-          <h3 class="value">--</h3>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.DUPLICATE' | translate }}</h5>
+          <span class="stat-value">--</span>
         </div>
+      </li>
+
+      <!-- stat col 2 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.EMAILS' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.GOOD' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('good') }}%</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.UNSURE' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('unsure') }}%</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.BAD' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('bad') }}%</span>
+        </div>
+      </li>
+
+      <!-- stat col 3 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.COST' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.REQUEST' | translate }}</h5>
+          <span class="stat-value">--</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.EMAILS' | translate }}</h5>
+          <span class="stat-value">--</span>
+        </div>
+      </li>
+
+    </ul>
+
+
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <!-- section actions -->
+      <div class="section-actions section-light-pad text-right">
+        <button class="btn ghost-primary gap-right btn-sm" (click)="onClickImport($event)">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
+        <button class="btn ghost-primary gap-right btn-sm" (click)="OnClickAdd($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
+        <button class="btn btn-primary btn-sm" (click)="onClickExport($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
       </div>
+
+      <!-- section no pros -->
+      <ng-container *ngIf="noResult">
+        <div class="section-pad">
+          <app-message-space [widthMax]="'354px'">
+            Don't have any pros?
+            <br>
+            Try to add some either by clicking on "Import" or "Add" button.
+          </app-message-space>
+        </div>
+      </ng-container>
+
+      <!-- section pros list -->
+      <ng-container *ngIf="!noResult">
+        <div class="section-light-pad rm-pad-top">
+          <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
+        </div>
+      </ng-container>
+
     </div>
 
-    <!-- stat col 2 -->
-    <div class="stat2">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.EMAILS' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('good') }}%</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.UNSURE' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('unsure') }}%</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BAD' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('bad') }}%</h3>
-        </div>
-      </div>
-    </div>
 
-    <!-- stat col 3 -->
-    <div class="stat3">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.COST' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.REQUEST' | translate }}</h4>
-          <h3 class="value">--</h3>
-        </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAILS' | translate }}</h4>
-          <h3 class="value">--</h3>
-        </div>
-      </div>
-    </div>
+  </section>
+</ng-container>
 
-  </div>
-
-
-  <div class="column col-xs-12 col-11 col-mx-auto">
-
-    <!-- section actions -->
-    <div class="section-actions">
-      <button class="btn ghost-primary gap-right" (click)="onClickImport($event)">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
-      <button class="btn ghost-primary gap-right" (click)="OnClickAdd($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
-      <button class="btn btn-primary" (click)="onClickExport($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
-    </div>
-
-    <!-- section pros list -->
-    <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
-
-  </div>
-
-
-</div>
 
 
 <!-- modal to import pros -->
@@ -90,7 +102,7 @@
     [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
   </app-autocomplete-input>
 
-  <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
+  <div class="text-center section-light-pad rm-pad-bottom">
     <label class="btn btn-sm ghost-primary">
       <input #fileupload type="file" [hidden]="true" (change)="OnClickImportCsv(fileupload.files[0], $event)" />
       Import CSV
