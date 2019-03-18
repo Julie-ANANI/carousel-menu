@@ -1,15 +1,20 @@
 @import "../../../../../style/framework/src/variables";
 
 #batch-form-component {
-  padding-top: 1.875rem;
+  padding-top: 1.5rem;
 
   .section-save {
     padding-bottom: 1.25rem;
-    text-align: right;
   }
 
   .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: $unit-5;
+
+    .text.text-alert {
+      font-size: $font-size-xs;
+      padding: 0 0 $unit-2 0;
+    }
+
   }
 
   .form-input {

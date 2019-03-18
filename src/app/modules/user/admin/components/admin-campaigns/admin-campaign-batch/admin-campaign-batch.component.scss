@@ -2,8 +2,37 @@
 
 #admin-campaign-batch-component {
 
+  .stat {
+
+    .stat-container:first-child {
+      background-color: $secondary-color;
+    }
+
+    .stat-container:nth-child(2) {
+      background-color: #2fa4d4;
+    }
+
+    .stat-container:last-child {
+      background-color: #5faece;
+    }
+
+    .stat-container {
+      border-right: none;
+    }
+
+    .stat-heading, .stat-value {
+      color: $light-color;
+    }
+
+    .stat-sub-heading {
+      opacity: 0.7;
+      color: $light-color;
+    }
+
+  }
+
   .toggle {
-    padding: 0.9375rem 0;
+    padding: 0.75rem 0;
 
     .form-group {
       margin-bottom: 0;
@@ -15,8 +44,7 @@
     padding-top: 0;
   }
 
-  .cog {
-    position: absolute;
+  .icon.icon-white {
     right: 0;
     bottom: 5px;
   }
@@ -25,16 +53,13 @@
     display: flex;
     align-items: center;
 
-    .circle {
-      margin-right: 0.5rem;
-    }
-
     .left {
-      margin-left: 1.2rem;
+      margin-left: $unit-5;
     }
 
     .incomplete {
-      background-color: $alert;
+      background-color: $alert-color;
+      border-color: $alert-color;
 
       .fa-check {
         visibility: hidden;
@@ -43,10 +68,12 @@
     }
 
     .complete {
-      background-color: $success;
+      background-color: $success-color;
+      border-color: $success-color;
 
       .fa-check {
         visibility: visible;
+        color: $light-color;
       }
 
     }
@@ -55,13 +82,7 @@
 
 
   .notify-wrapper{
-    margin-top: 0.6rem;
-  }
-
-  .loading::after {
-    border-color: $primary;
-    border-right-color: transparent;
-    border-top-color: transparent;
+    margin-top: 0.5rem;
   }
 
   .section-status {
@@ -70,47 +91,39 @@
       margin-bottom: 1.25rem;
       display: inline-flex;
       margin-right: 1.25rem;
+
+      .form-switch {
+        color: $meta-color;
+      }
+
     }
 
   }
 
   .card {
-    margin-bottom: 1.875rem;
+    margin-bottom: 1.5rem;
     background: transparent;
-    padding-left: 0;
-    padding-right: 0;
+    border: none;
 
     .card-header {
-      padding-bottom: 0.9375rem;
 
       .card-title {
-        color: $meta;
         display: inline-flex;
         text-align: center;
-        padding-top: 0.125rem;
+        font-size: $font-size-md;
+        color: $meta-color;
+      }
 
-        .icons {
-          margin-left: 0.75rem;
-        }
-
+      .form-switch {
+        color: $meta-color;
       }
 
     }
 
-    .card-body, .card-title, .card-header {
-      padding-left: 0;
-      padding-right: 0;
+    &:hover {
+      box-shadow: none;
     }
 
   }
-
-  .card:last-child {
-    margin-bottom: 0 !important;
-  }
-
-  .card:hover {
-    box-shadow: none;
-  }
-
 
 }

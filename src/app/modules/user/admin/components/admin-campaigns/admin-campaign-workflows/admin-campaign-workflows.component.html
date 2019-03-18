@@ -1,5 +1,5 @@
 <ng-container *ngIf="campaign">
-  <div id="admin-campaign-workflows-component">
+  <section id="admin-campaign-workflows-component">
 
     <!-- section stats -->
     <ul class="stat">
@@ -94,7 +94,7 @@
       <!-- section campaign -->
       <ng-container *ngIf="!noResult">
 
-        <div class="text text-alert">{{ 'CAMPAIGNS.WORKFLOW_PAGE.NOTE' | translate }}</div>
+        <div class="text text-alert text-medium">{{ 'CAMPAIGNS.WORKFLOW_PAGE.NOTE' | translate }}</div>
 
         <div class="section-light-pad">
           <app-admin-edit-workflow
@@ -110,7 +110,7 @@
 
     </div>
 
-  </div>
+  </section>
 </ng-container>
 
 
