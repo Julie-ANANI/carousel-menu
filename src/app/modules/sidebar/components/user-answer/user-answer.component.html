@@ -1,129 +1,176 @@
-<div *ngIf="modalAnswer" class="user-answer-component">
-  <div class="column col-xs-12 col-11 col-mx-auto">
+<ng-container *ngIf="modalAnswer">
+  <section id="user-answer-component">
+    <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- section save -->
-    <div *ngIf="adminMode" class="section-save" [ngSwitch]="modalAnswer?.localStatus">
+      <!-- section save -->
+      <ng-container *ngIf="adminMode">
+        <div class="section-save text-right" [ngSwitch]="modalAnswer?.localStatus">
 
-      <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
-        {{'COMMON.IMPORT' | translate}}
-      </button>
+          <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
+            {{ 'COMMON.BUTTON.IMPORT' | translate }}
+          </button>
 
-      <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
-        {{'COMMON.SAVE' | translate}}
-      </button>
+          <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
+            {{ 'COMMON.BUTTON.SAVE' | translate }}
+          </button>
 
-    </div>
-
-    <!-- section user details -->
-    <div class="section-details">
-
-      <!-- Name, flag and rating -->
-      <div class="title">
-        <h6>
-          <span *ngIf="modalAnswer.professional?.firstName">{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</span>
-          <span *ngIf="!modalAnswer.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
-        </h6>
-        <div *ngIf="editMode" class="app-rating">
-          <app-rating-item
-            [editMode]="adminMode"
-            [prop]="profile"
-            [rating]="modalAnswer.profileQuality"
-            (ratingChange)="updateProfileQuality($event)">
-          </app-rating-item>
         </div>
-        <div class="country">
-          <div *ngIf="!editCountry" [ngStyle]="{ 'display': 'inline-flex' }">
-            <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="onClickEdit('country')" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
+      </ng-container>
+
+      <!-- section user details -->
+      <div class="section-details">
+
+        <!-- name, flag and rating -->
+        <div class="title-wrapper">
+
+          <!-- name -->
+          <h4>
+
+            <ng-container *ngIf="modalAnswer.professional?.firstName">
+              {{ modalAnswer.professional?.lastName }}
+            </ng-container>
+
+            <ng-container *ngIf="!modalAnswer.professional?.firstName">
+              {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
+            </ng-container>
+
+          </h4>
+
+          <!-- rating -->
+          <ng-container *ngIf="editMode">
+            <div class="rating-wrapper">
+              <app-rating-item
+                [editMode]="adminMode"
+                [prop]="profile"
+                [rating]="modalAnswer.profileQuality"
+                (ratingChange)="updateProfileQuality($event)">
+              </app-rating-item>
+            </div>
+          </ng-container>
+
+          <!-- country -->
+          <ng-container *ngIf="!editCountry">
+            <div class="country-wrapper flex-between">
+              <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
+              <div *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Country" (click)="onClickEdit('country')">
+                <i class="fas fa-pencil-alt"></i>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- edit button -->
+          <ng-container *ngIf="adminMode && modalAnswer.localStatus !== 'draft'">
+            <div class="button-wrapper">
+              <label class="form-switch text-medium" for="answer-editMode">
+                <input
+                  type="checkbox"
+                  name="answer-editMode"
+                  id="answer-editMode"
+                  (change)="changeMode($event)"
+                  [checked]="editMode">
+                <i class="form-icon"></i>
+                {{ 'Edit user' }}
+              </label>
+            </div>
+          </ng-container>
+
+        </div>
+
+        <!-- blacklist company -->
+        <ng-container *ngIf="adminMode && modalAnswer.localStatus !== 'draft' && modalAnswer.blacklistedCompany">
+          <div class="icon icon-delete"><i class="fas fa-exclamation-triangle"></i></div>
+          <span class="text text-alert text-medium">Maybe the answer comes from a blacklisted company!</span>
+        </ng-container>
+
+        <!-- edit country -->
+        <ng-container *ngIf="editCountry">
+          <div class="form-group">
+            <label class="form-label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+            <app-autocomplete-input
+              (update)="updateCountry($event)"
+              [onlyOne]="true"
+              [config]="{ placeholder: 'COMMON.PLACEHOLDER.COUNTRY', type: 'countries' }">
+            </app-autocomplete-input>
           </div>
-        </div>
-        <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
-          <label class="form-switch" for="answer-editMode">
-            <input
-              type="checkbox"
-              name="answer-editMode"
-              id="answer-editMode"
-              (change)="changeMode($event)"
-              [checked]="editMode">
-            <i class="form-icon"></i>
-            {{ 'Edit user' }}
-          </label>
-          <p *ngIf="modalAnswer.blacklistedCompany" class="text-error">
-            <i class="fas fa-exclamation-triangle"></i>
-            La réponse vient peut-être d'une entreprise blacklistée !
-          </p>
-        </div>
-      </div>
+        </ng-container>
 
-      <!-- Edit country -->
-      <div *ngIf="editCountry" class="form-group">
-        <app-autocomplete-input
-          (update)="updateCountry($event)"
-          [onlyOne]="true"
-          [config]="{ placeholder: 'COMMON.PLACEHOLDER.COUNTRY', type: 'countries' }">
-        </app-autocomplete-input>
-      </div>
+        <!-- linkedin -->
+        <ng-container *ngIf="adminMode && modalAnswer.professional?.profileUrl">
+          <div class="linkedin-wrapper">
+            <span class="icon icon-secondary picto"><i class="fab fa-linkedin-in"></i></span>
+            <a [href]="modalAnswer.professional.profileUrl" target="_blank">
+              <span class="text-link">{{ modalAnswer.professional.profileUrl }}</span>
+            </a>
+          </div>
+        </ng-container>
 
-      <!-- Linkedin -->
-      <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
-        <p>
-          <i class="fab fa-linkedin-in"></i>
-          <a [href]="modalAnswer.professional.profileUrl" target="_blank">
-            <span class="text-link">{{ modalAnswer.professional.profileUrl }}</span>
-          </a>
-        </p>
-      </div>
+        <!-- job -->
+        <ng-container *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle || editMode">
+          <div class="job-wrapper">
 
-      <!-- Job -->
-      <div class="job" *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle || editMode">
-        <p><i class="fas fa-address-card" aria-hidden="true"></i></p>
-        <p *ngIf="!editJob">
-          {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
-          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="onClickEdit('job')"></i>
-        </p>
-        <div *ngIf="editJob" class="form-group">
-          <input
-            type="text"
-            [(ngModel)]="modalAnswer.job"
-            id="answer-jobTitle"
-            alt="Job title"
-            class="form-input"
-            [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
-        </div>
-      </div>
+            <span class="icon icon-meta picto"><i class="fas fa-address-card" aria-hidden="true"></i></span>
 
-      <!-- Company -->
-      <div class="company" *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
-        <p><i class="fas fa-building" aria-hidden="true"></i></p>
-        <p *ngIf="!editCompany">
-          {{ modalAnswer.company.name || modalAnswer.professional?.company }}
-          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="onClickEdit('company')"></i>
-        </p>
-        <div *ngIf="editCompany" class="form-group">
-          <input
-            type="text"
-            [(ngModel)]="modalAnswer.company.name"
-            id="answer-company"
-            alt="Company"
-            class="form-input"
-            [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
-        </div>
-      </div>
+            <ng-container *ngIf="!editJob">
+              <span>{{ modalAnswer.job || modalAnswer.professional?.jobTitle }}</span>
+              <span *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Profession" (click)="onClickEdit('job')"><i class="fas fa-pencil-alt"></i></span>
+            </ng-container>
 
-      <!-- Email -->
-      <div *ngIf="modalAnswer.professional?.email" class="email">
-        <p>
-          <i class="far fa-envelope"></i>
-          <a [href]="'mailto:'+modalAnswer.professional.email">
-            {{ modalAnswer.professional.email }}
-          </a>
-        </p>
-      </div>
+            <ng-container *ngIf="editJob">
+              <div class="form-group">
+                <label class="form-label" for="answer-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
+                <input
+                  type="text"
+                  [(ngModel)]="modalAnswer.job"
+                  id="answer-jobTitle"
+                  alt="Job title"
+                  class="form-input"
+                  [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
+              </div>
+            </ng-container>
 
-      <!-- Received date and time, and time spent -->
-      <div *ngIf="modalAnswer.created || modalAnswer.time_elapsed" class="time">
-        <p>
-          <strong>
+          </div>
+        </ng-container>
+
+        <!-- company -->
+        <ng-container *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
+          <div class="company-wrapper">
+
+            <span class="icon icon-meta picto"><i class="fas fa-building" aria-hidden="true"></i></span>
+
+            <ng-container *ngIf="!editCompany">
+              <span>{{ modalAnswer.company.name || modalAnswer.professional?.company }}</span>
+              <span *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Company" (click)="onClickEdit('company')"><i class="fas fa-pencil-alt"></i></span>
+            </ng-container>
+
+            <ng-container *ngIf="editCompany">
+              <div class="form-group">
+                <label class="form-label" for="answer-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+                <input
+                  type="text"
+                  [(ngModel)]="modalAnswer.company.name"
+                  id="answer-company"
+                  alt="Company"
+                  class="form-input"
+                  [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
+              </div>
+            </ng-container>
+
+          </div>
+        </ng-container>
+
+        <!-- email -->
+        <ng-container *ngIf="modalAnswer.professional?.email">
+          <div class="email-wrapper">
+            <span class="icon icon-meta picto"><i class="fas fa-envelope"></i></span>
+            <a [href]="'mailto:'+modalAnswer.professional.email">
+              <span class="text-link">{{ modalAnswer.professional.email }}</span>
+            </a>
+          </div>
+        </ng-container>
+
+        <!-- received date and time, and time spent -->
+        <ng-container *ngIf="modalAnswer.created || modalAnswer.time_elapsed">
+          <div class="text text-notify text-bold receive-wrapper">
             <span *ngIf="modalAnswer.created">
               {{ 'ANSWER.RECEIVED.A' | translate }} {{ modalAnswer.created | date }} {{ 'ANSWER.RECEIVED.B' | translate }} {{ modalAnswer.created | slice: 11 : 16  }}
             </span>
@@ -131,111 +178,117 @@
             <span *ngIf="adminMode && modalAnswer.time_elapsed">
               {{ 'ANSWER.RECEIVED.C' | translate }} {{ floor(modalAnswer.time_elapsed/60) }} min. {{ floor(modalAnswer.time_elapsed%60) }} sec.
             </span>
-          </strong>
-        </p>
+          </div>
+        </ng-container>
+
+        <!-- ip -->
+        <ng-container *ngIf="modalAnswer.ip && editMode">
+          <div class="text text-notify text-bold i-wrapper">
+            {{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}
+          </div>
+        </ng-container>
+
       </div>
+      <!-- /section user details -->
 
-      <!-- IP -->
-      <div *ngIf="modalAnswer.ip && editMode" class="ip">
-        <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
-      </div>
-
-    </div>
-
-    <!-- section tags -->
-    <div class="section-tags">
-      <label *ngIf="modalAnswer?.tags.length > 0" class="form-label">Tags</label>
-      <app-shared-tag-item
-        [tags]="modalAnswer.tags"
-        [editMode]="editMode"
-        [projectId]="innovationId"
-        (addTag)="addTag($event)"
-        (createTag)="createTag($event)"
-        (removeTag)="removeTag($event)">
-      </app-shared-tag-item>
-    </div>
-
-    <!-- section status -->
-    <div *ngIf="adminMode && modalAnswer.status !== 'REJECTED_GMAIL' && modalAnswer.localStatus !== 'draft'" class="section-status">
-
-      <!-- Rejected -->
-      <div class="status-rejected">
-        <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
-        <div
-          class="btn-radio rejected"
-          [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
-          (click)="updateStatus($event, 'REJECTED')">
-          <span>•</span>
+      <!-- section tags -->
+      <ng-container *ngIf="modalAnswer?.tags.length > 0 || editMode">
+        <div class="section-tags">
+          <label class="form-label">Tags</label>
+          <app-shared-tag-item
+            [tags]="modalAnswer.tags"
+            [editMode]="editMode"
+            [projectId]="innovationId"
+            (addTag)="addTag($event)"
+            (createTag)="createTag($event)"
+            (removeTag)="removeTag($event)">
+          </app-shared-tag-item>
         </div>
-      </div>
+      </ng-container>
+      <!-- /section tags -->
 
-      <!-- Submitted -->
-      <div class="status-submitted">
-        <span class="label label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
-        <div
-          class="btn-radio submitted"
-          [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
-          (click)="updateStatus($event, 'SUBMITTED')">
-          <span>•</span>
-        </div>
-      </div>
+      <!-- section status -->
+      <div *ngIf="adminMode && modalAnswer.status !== 'REJECTED_GMAIL' && modalAnswer.localStatus !== 'draft'" class="section-status">
 
-      <!-- Validated -->
-      <div class="status-validated">
-        <span class="label label-success">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
-        <div
-          class="btn-radio validated"
-          [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
-          (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
-          <span>•</span>
-        </div>
-      </div>
-
-      <!-- Email -->
-      <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
-        <label class="form-switch" for="answer-email">
-          <input
-            type="checkbox"
-            name="answer-email"
-            id="answer-email"
-            (change)="sendEmail($event, 'VALIDATED')"
-            [checked]="modalAnswer.status === 'VALIDATED'">
-          <i class="form-icon"></i>
-          {{ 'ANSWER.STATUS.EMAIL' | translate }}
-        </label>
-      </div>
-
-    </div>
-
-    <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
         <!-- Rejected -->
         <div class="status-rejected">
-            <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
+          <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
+          <div
+            class="btn-radio rejected"
+            [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
+            (click)="updateStatus($event, 'REJECTED')">
+            <span>•</span>
+          </div>
         </div>
-    </div>
 
-    <!-- The original reply message sent to Karine -->
-
-    <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
-        <div *ngIf="meta && !editMode" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
-            <p class="comment-wrapper">
-              {{ meta }}
-            </p>
+        <!-- Submitted -->
+        <div class="status-submitted">
+          <span class="label label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
+          <div
+            class="btn-radio submitted"
+            [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
+            (click)="updateStatus($event, 'SUBMITTED')">
+            <span>•</span>
+          </div>
         </div>
-    </div>
 
-    <!-- section questions -->
-    <div class="section-questions">
-      <div *ngFor="let question of questions">
-        <app-answer-question
-          [editMode]="editMode"
-          [adminMode]="adminMode"
-          [question]="question"
-          [fullAnswer]="modalAnswer"
-          [innoid]="innovationId">
-        </app-answer-question>
+        <!-- Validated -->
+        <div class="status-validated">
+          <span class="label label-success">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
+          <div
+            class="btn-radio validated"
+            [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
+            (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
+            <span>•</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
+          <label class="form-switch" for="answer-email">
+            <input
+              type="checkbox"
+              name="answer-email"
+              id="answer-email"
+              (change)="sendEmail($event, 'VALIDATED')"
+              [checked]="modalAnswer.status === 'VALIDATED'">
+            <i class="form-icon"></i>
+            {{ 'ANSWER.STATUS.EMAIL' | translate }}
+          </label>
+        </div>
+
       </div>
-    </div>
 
-  </div>
-</div>
+      <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
+        <!-- Rejected -->
+        <div class="status-rejected">
+          <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
+        </div>
+      </div>
+
+      <!-- The original reply message sent to Karine -->
+
+      <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
+        <div *ngIf="meta && !editMode" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
+          <p class="comment-wrapper">
+            {{ meta }}
+          </p>
+        </div>
+      </div>
+
+      <!-- section questions -->
+      <div class="section-questions">
+        <div *ngFor="let question of questions">
+          <app-answer-question
+            [editMode]="editMode"
+            [adminMode]="adminMode"
+            [question]="question"
+            [fullAnswer]="modalAnswer"
+            [innoid]="innovationId">
+          </app-answer-question>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</ng-container>
