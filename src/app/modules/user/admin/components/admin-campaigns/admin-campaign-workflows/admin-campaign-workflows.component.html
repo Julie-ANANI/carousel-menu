@@ -1,110 +1,117 @@
-<div id="admin-campaign-workflows-component">
+<ng-container *ngIf="campaign">
+  <div id="admin-campaign-workflows-component">
 
-  <!-- section stats -->
-  <div class="campaign-stats-wrapper">
+    <!-- section stats -->
+    <ul class="stat">
 
-    <!-- stat col 1 -->
-    <div class="stat1">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.RECEPTION' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('good_emails') }}</h3>
+      <!-- stat col 1 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.RECEPTION' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('good_emails') }}</span>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.RECEIVED' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('received') }}</h3>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.RECEIVED' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('received') }}</span>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.BOUNCES' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('bounces') }}</h3>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.BOUNCES' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('bounces') }}</span>
+        </div>
+      </li>
+
+      <!-- stat col 2 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.INTERACTION' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.OPENED' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('opened') }}%</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.CLICKED' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('clicked') }}%</span>
+        </div>
+      </li>
+
+      <!-- stat col 3 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.DISPLAY' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.EMAIL' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('email') }}</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.QUESTIONNAIRE' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('questionnaire') }}</span>
+        </div>
+      </li>
+
+    </ul>
+    <!-- /section stats -->
+
+
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <!-- section select workflow -->
+      <div class="section-light-pad rm-pad-bottom">
+        <div class="form-group">
+
+          <label class="form-label" for="admin-campaign-workflows">{{ 'COMMON.LABEL.SELECT_WORKFLOW' | translate }}</label>
+
+          <select
+            class="form-select"
+            id="admin-campaign-workflows"
+            [ngModel]="templates ? templates[0] : null"
+            (ngModelChange)="onClickSelect($event)"
+            [ngModelOptions]="{ standalone: true }">
+            <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.LABEL.SELECT' | translate }}</option>
+            <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
+          </select>
+
+          <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
+
+          <ng-container *ngIf="!noResult">
+            <button type="button" class="btn btn-sm btn-primary" (click)="onClickTestWorkflow()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.TEST_WORKFLOW' | translate }}</button>
+          </ng-container>
+
         </div>
       </div>
-    </div>
+      <!-- /section select workflow -->
 
-    <!-- stat col 2 -->
-    <div class="stat2">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.INTERACTION' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.OPENED' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('opened') }}%</h3>
+      <!-- section no campaign -->
+      <ng-container *ngIf="noResult">
+        <div class="section-pad">
+          <app-message-space [widthMax]="'354px'">
+            {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A' | translate }}
+            <br>
+            {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B' | translate }}
+          </app-message-space>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.CLICKED' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('clicked') }}%</h3>
-        </div>
-      </div>
-    </div>
+      </ng-container>
+      <!-- /section no campaign -->
 
-    <!-- stat col 3 -->
-    <div class="stat3">
-      <div class="container">
-        <h5 class="heading">{{ 'CAMPAIGNS.STATS.HEADING.DISPLAY' | translate }}</h5>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.EMAIL' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('email') }}</h3>
+      <!-- section campaign -->
+      <ng-container *ngIf="!noResult">
+
+        <div class="text text-alert">{{ 'CAMPAIGNS.WORKFLOW_PAGE.NOTE' | translate }}</div>
+
+        <div class="section-light-pad">
+          <app-admin-edit-workflow
+            [scenario]="modifiedScenario"
+            [signatures]="signatures"
+            (deletedScenario)="removeScenario()"
+            (scenarioChange)="updateAvailableScenario($event)">
+          </app-admin-edit-workflow>
         </div>
-        <div class="content">
-          <h4 class="title">{{ 'CAMPAIGNS.STATS.TITLE.QUESTIONNAIRE' | translate }}</h4>
-          <h3 class="value">{{ getCampaignStat('questionnaire') }}</h3>
-        </div>
-      </div>
+
+      </ng-container>
+      <!-- /section campaign -->
+
     </div>
 
   </div>
-
-
-  <div class="column col-xs-12 col-11 col-mx-auto">
-
-    <!-- section select workflow -->
-    <div class="section-light-container remove-bottom">
-      <div class="form-group">
-        <label class="form-label" for="admin-campaign-workflows">{{ 'COMMON.LABEL.SELECT_WORKFLOW' | translate }}</label>
-        <select
-          class="form-select"
-          id="admin-campaign-workflows"
-          [ngModel]="templates ? templates[0] : null"
-          (ngModelChange)="onClickSelect($event)"
-          [ngModelOptions]="{ standalone: true }">
-          <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.LABEL.SELECT' | translate }}</option>
-          <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
-        </select>
-        <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
-        <button *ngIf="!noResult" type="button" class="btn btn-sm btn-primary" (click)="onClickTestWorkflow()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.TEST_WORKFLOW' | translate }}</button>
-      </div>
-    </div>
-
-
-    <!-- section no campaign -->
-    <div *ngIf="noResult" class="section-light-container remove-bottom">
-      <app-message-space [widthMax]="'354px'">
-        {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A' | translate }}
-        <br>
-        {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B' | translate }}
-      </app-message-space>
-    </div>
-
-
-    <!-- section campaign -->
-    <div *ngIf="!noResult">
-
-      <span class="text-alert">{{ 'CAMPAIGNS.WORKFLOW_PAGE.NOTE' | translate }}</span>
-
-      <div class="section-light-container remove-bottom">
-        <app-admin-edit-workflow
-          [scenario]="modifiedScenario"
-          [signatures]="signatures"
-          (deletedScenario)="removeScenario()"
-          (scenarioChange)="updateAvailableScenario($event)">
-        </app-admin-edit-workflow>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
+</ng-container>
 
 
 <!-- modal to ask for the confirmation if importing the same template -->

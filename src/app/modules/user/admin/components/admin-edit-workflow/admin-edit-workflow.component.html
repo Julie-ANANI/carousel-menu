@@ -9,7 +9,7 @@
     &nbsp;&nbsp;|
     <div [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'" class="shape circle circle-sm"><i class="fas fa-check"></i></div>
     <span [ngClass]="{ 'active': language === 'fr' }" class="text-link" (click)="changeLanguage('fr')">{{ 'COMMON.LANG.FR' | translate }}</span>
-    <div (click)="onClickDelete()" class="icon icon-delete"><i class="fas fa-trash-alt"></i></div>
+    <div (click)="onClickDelete()" class="icon icon-delete tooltip" data-tooltip="Delete Workflow"><i class="fas fa-trash-alt"></i></div>
   </div>
 
   <!-- section table -->

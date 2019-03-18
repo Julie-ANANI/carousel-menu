@@ -69,3 +69,20 @@
   }
 
 }
+
+
+@media (max-width: $size-sm) {
+
+  .stat {
+
+    .stat-heading {
+      word-break: keep-all;
+    }
+
+    .stat-container {
+      justify-content: center !important;
+    }
+
+  }
+
+}
