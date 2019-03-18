@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, Input, AfterViewInit, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, Location } from '@angular/common';
+import { Component, OnInit, Inject, Input, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -32,7 +32,7 @@ import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.servic
   styleUrls: ['./shared-market-report.component.scss']
 })
 
-export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
@@ -105,8 +105,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private _sidebarTemplateValue: SidebarInterface = {};
 
   private _companies: Array<Clearbit>;
-
-  public activeSection: string;
 
   public objectKeys = Object.keys;
 
@@ -1051,23 +1049,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get answersOrigins(): {[c: string]: number} {
     return this._answersOrigins;
-  }
-
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      const wrapper = document.getElementById('answer-wrapper');
-      if (wrapper) {
-        const sections = Array.from(
-          wrapper.querySelectorAll('section')
-        );
-        window.onscroll = () => {
-          const scrollPosY = document.body.scrollTop;
-          const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().top);
-          this.activeSection = section ? section.id : '';
-        };
-      }
-    }
-
   }
 
   ngOnDestroy(): void {

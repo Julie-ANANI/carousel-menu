@@ -85,83 +85,23 @@
               <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
             </li>
           </ul>
+          <hr />
+          <p>
+            <a href="#professionals" pageScroll>
+              {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+              <i class="icon icon-arrow-right" aria-hidden="true"></i>
+            </a>
+          </p>
+          <p *ngFor="let question of questions">
+            <a [href]="'#' + question.identifier | removespaces" pageScroll>
+              {{ question.title | multiling:lang }}
+              <i class="icon icon-arrow-right" aria-hidden="true"></i>
+            </a>
+          </p>
         </div>
 
       </aside>
       <!-- /SideBar -->
-
-      <!-- Sticky bar
-      <div class="sticky-wrapper" [ngClass]="{ 'scroll-sticky-wrapper': scrollOn && !wordpress }">
-        <div class="column col-xs-12 col-11 col-mx-auto content-wrapper">
-
-          <!-- Detail view and visible to client
-          <div *ngIf="!wordpress" class="toggle-option">
-
-            <!-- Client side
-            <ng-container *ngIf="!adminSide">
-              <label class="form-switch gtm-synthesis-detail-view" for="showDetails">
-                <input
-                  type="checkbox"
-                  name="showDetails"
-                  id="showDetails"
-                  (change)="toggleDetails($event)"
-                  [checked]="showDetails">
-                <i class="form-icon"></i>
-                {{ 'MARKET_REPORT.STICKY_BAR.DETAIL_VIEW' | translate }}
-              </label>
-            </ng-container>
-            <!-- /Client side
-
-            <!-- Admin side
-            <ng-container *ngIf="adminSide">
-              <label class="form-switch" for="previewMode">
-                <input
-                  type="checkbox"
-                  name="previewMode"
-                  id="previewMode"
-                  (change)="enablePreviewMode($event)"
-                  [checked]="previewMode || innovation?.status === 'DONE'"
-                  [disabled]="innovation?.status === 'DONE'">
-                <i class="form-icon"></i>
-                {{ 'MARKET_REPORT.STICKY_BAR.CLIENT_VISIBLE' | translate }}
-              </label>
-            </ng-container>
-            <!-- /Admin side
-
-          </div>
-          <!-- /Detail view and visible to client
-
-          <!-- Buttons
-          <div class="button-wrapper" [ngStyle]="{ 'display': sharable ? 'none' : 'inline-flex' }">
-            <button class="btn ghost-primary gtm-share-synthesis" (click)="createFilter($event)">
-              {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_FILTER_MODAL' | translate }}
-            </button>
-            <ng-container *ngIf="!adminSide">
-              <button
-                class="btn ghost-primary gtm-share-synthesis"
-                (click)="shareSynthesis($event)">
-                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
-              </button>
-              <button
-                *ngIf="isOwner"
-                class="btn btn-primary gtm-export-synthesis"
-                (click)="displayModal($event, 'exportInnovation')">
-                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_EXPORT' | translate }}
-              </button>
-            </ng-container>
-            <ng-container *ngIf="adminSide">
-              <button
-                class="btn btn-primary"
-                (click)="displayModal($event, 'endInnovation')">
-                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_END' | translate }}
-              </button>
-            </ng-container>
-          </div>
-          <!-- /Buttons
-
-        </div>
-      </div>
-      <!-- /Sticky bar -->
 
       <!-- Answer sections -->
       <section id="answer-wrapper">
