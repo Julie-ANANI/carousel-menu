@@ -158,6 +158,8 @@ export class AdminCommunityMemberComponent implements OnInit {
    * to save the changes in professional object to the server.
    */
   onClickSave() {
+    //Convert the professional into an ambassador
+    this._professional.ambassador.is = this._professional.ambassador.is || true;
     this.professionalService.save(this._professional._id, this._professional).pipe(first()).subscribe(() => {
       this._saveChanges = false;
       this.translateNotificationService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
