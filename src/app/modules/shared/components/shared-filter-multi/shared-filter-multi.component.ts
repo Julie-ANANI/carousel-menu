@@ -29,12 +29,18 @@ export class SharedFilterMultiComponent {
   // For values linked with config
   filterText(event: any) {
     this.config.offset = '0';
-    const value = event.value;
+    let value = event.value || '';
       if (value === '') {
         this.config.search = '{}';
         this.configChange.emit(this.config);
       } else {
-        this.config.search = JSON.stringify({[this._currentTextProp._attrs[0]]: value});
+        //Detect an "special" query...
+        value = value.split(',');
+        let _search = {};
+        value.forEach((queryStr, idx)=>{
+          _search[this._currentTextProp._attrs[idx]] = encodeURIComponent(queryStr.trim());
+        });
+        this.config.search = JSON.stringify({_search});
         this.configChange.emit(this.config);
       }
   }
