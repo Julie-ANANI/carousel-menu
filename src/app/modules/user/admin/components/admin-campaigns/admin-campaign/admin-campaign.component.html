@@ -1,27 +1,28 @@
-<div class="section-light-container" id="admin-campaign-component">
+<ng-container *ngIf="campaign">
+  <section id="admin-campaign-component">
 
-  <!-- section header -->
-  <div class="section-header">
-    <div class="column col-xs-12 col-11 col-mx-auto">
+    <!-- section header -->
+    <div class="section-header">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <div class="heading-wrapper">
-        <span class="title-primary">{{ getHeading() }}</span><span class="title-primary campaign-title">&nbsp;/&nbsp;{{ campaign.title }}</span>&nbsp;
-        <a [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/settings'" class="text-link">Back to project</a>
+        <div class="heading-wrapper">
+          <span class="title-primary">{{ getHeading() }}</span><span class="title-primary title-campaign">&nbsp;/&nbsp;{{ campaign.title }}</span>&nbsp;
+          <a [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/settings'" class="text-link">Back to project</a>
+        </div>
+
+        <ul class="tab">
+          <li *ngFor="let tab of authorizedTabs" class="tab-item tab-item-lg">
+            <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickTab($event, tab)">
+              {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
+            </a>
+          </li>
+        </ul>
+
       </div>
-
-
-      <ul class="tab">
-        <li *ngFor="let tab of authorizedTabs" class="tab-item">
-          <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickTab($event, tab)">
-            {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
-          </a>
-        </li>
-      </ul>
-
     </div>
-  </div>
 
-  <!-- section views -->
-  <router-outlet></router-outlet>
+    <!-- section views -->
+    <router-outlet></router-outlet>
 
-</div>
+  </section>
+</ng-container>
