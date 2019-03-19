@@ -552,24 +552,6 @@
 
 }
 
-
-@media (min-width: 841px) {
-
-  #market-report {
-
-    .scroll-sticky-wrapper {
-      position: sticky;
-      top: -0.06rem;
-      box-shadow: $box-shadow;
-      z-index: 11;
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-
-  }
-
-}
-
 @media (min-width: 1280px) {
 
   #market-report {

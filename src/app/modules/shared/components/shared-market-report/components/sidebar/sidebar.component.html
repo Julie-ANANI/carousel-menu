@@ -1,0 +1,70 @@
+<div class="app-market-report-sidebar">
+  <ng-container *ngIf="isOwner">
+    <button
+      class="btn btn-primary gtm-export-synthesis"
+      (click)="showExportModal = true">
+      {{ 'MARKET_REPORT.MENU_BAR.BUTTON_EXPORT' | translate }}
+    </button>
+    <hr/>
+  </ng-container>
+
+  <div class="views-wrapper">
+    <p>{{ 'MARKET_REPORT.MENU_BAR.VIEWS' | translate }}</p>
+    <ul>
+      <li *ngFor="let filter of sharedFiltersList">
+        <i class="fa fa-trash" aria-hidden="true" (click)="deleteCustomFilter(filter.name)"></i>
+        <a [routerLink]="" [queryParams]="{filter: filter.name}"
+           (click)="loadFilter(filter.name)" [innerHtml]="filter.name"></a>
+      </li>
+    </ul>
+    <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter($event)">
+      <div class="form-group">
+        <input type="text" class="form-control" [placeholder]="'MARKET_REPORT.MENU_BAR.PLACEHOLDER_VIEW' | translate"
+               required [(ngModel)]="filterName" [ngModelOptions]="{standalone: true}" #name="ngModel">
+      </div>
+      <button class="btn btn-success" type="submit"
+              [disabled]="!shareFilterForm.form.valid"
+              [textContent]="'MARKET_REPORT.MENU_BAR.SUBMIT_VIEW'" translate></button>
+    </form>
+  </div>
+
+  <hr/>
+
+  <!--
+  <p>{{ 'MARKET_REPORT.MENU_BAR.FILTER' | translate }}</p>
+  <ul>
+    <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+      <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
+    </li>
+  </ul>
+  <hr />
+  -->
+  <p>
+    <a href="#professionals" pageScroll>
+      {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+      <i class="icon icon-arrow-right" aria-hidden="true"></i>
+    </a>
+    <!--<span *ngFor="let t of answerTags">
+                <input type="checkbox" id="scales" name="scales" checked>
+                <label for="scales">Scales</label>
+              </span>-->
+  </p>
+  <p *ngFor="let question of questions">
+    <a [href]="'#' + question.identifier | removespaces" pageScroll>
+      {{ question.title | multiling:lang }}
+      <i class="icon icon-arrow-right" aria-hidden="true"></i>
+    </a>
+  </p>
+  <p>
+    <a href="#conclusion" pageScroll>
+      {{ 'MARKET_REPORT.CONCLUSION' | translate }}
+      <i class="icon icon-arrow-right" aria-hidden="true"></i>
+    </a>
+  </p>
+</div>
+
+<app-market-report-export-modal
+  *ngIf="isOwner"
+  [innovation]="innovation"
+  [(showModal)]="showExportModal">
+</app-market-report-export-modal>

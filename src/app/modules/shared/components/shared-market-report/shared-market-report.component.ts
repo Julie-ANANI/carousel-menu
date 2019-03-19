@@ -1,7 +1,5 @@
-import { Component, OnInit, Inject, Input, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -15,7 +13,6 @@ import { Innovation } from '../../../../models/innovation';
 import { environment } from '../../../../../environments/environment';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
-import { SharedFilter } from './models/shared-filter';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -74,25 +71,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     nbValidatedResp: number
   };
 
-  scrollOn = false;
-
   private _showDetails: boolean;
 
   private _openModal = false;
 
   private _innovationEndModal: boolean;
 
-  private _filterName = '';
-
-  private _sharedFiltersList: Array<SharedFilter> = [];
-
-  private _innovationExport = false;
-
   private _today: Number;
-
-  private _menuButton = false;
-
-  private _displayMenuWrapper = false;
 
   private _numberOfSections: number;
 
@@ -121,17 +106,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private filterService: FilterService,
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService,
-              private worldmapService: SharedWorldmapService,
-              private activatedRoute: ActivatedRoute) { }
+              private worldmapService: SharedWorldmapService) { }
 
   ngOnInit() {
     this.filterService.reset();
     this.initializeReport();
-    this.loadSharedFiltersList();
-    PageScrollConfig.defaultDuration = 800;
-    if (this.activatedRoute.snapshot.queryParams['filter']) {
-      this.loadFilter(this.activatedRoute.snapshot.queryParams['filter']);
-    }
   }
 
 
@@ -148,33 +127,25 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
 
-  getMessage():string {
-    let message = '';
-
+  getMessage(): string {
     switch (this._innovation.status) {
 
       case 'EDITING':
-        if (this._innovation.reviewing) {
-          message = 'MARKET_REPORT.MESSAGE.REVIEWING';
-        } else if (!this._innovation.reviewing) {
-          message = 'MARKET_REPORT.MESSAGE.EDITING';
-        }
+        return this._innovation.reviewing ? 'MARKET_REPORT.MESSAGE.REVIEWING' : 'MARKET_REPORT.MESSAGE.EDITING';
         break;
 
       case 'EVALUATING':
-        message = 'MARKET_REPORT.MESSAGE.EVALUATING';
+        return 'MARKET_REPORT.MESSAGE.EVALUATING';
         break;
 
       case 'SUBMITTED':
-        message = 'MARKET_REPORT.MESSAGE.SUBMITTED';
+        return 'MARKET_REPORT.MESSAGE.SUBMITTED';
         break;
 
       default:
-      // do nothing...
+        return '';
 
     }
-
-    return message;
   }
 
 
@@ -206,7 +177,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      * @type {boolean | undefined}
      * @user
      */
-    this._previewMode = this._innovation.previewMode || false;
+    this._previewMode = !!this._innovation.previewMode;
 
     /***
      * this is to display on the front page.
@@ -219,11 +190,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      * @type {boolean}
      * @user
      */
-    if (this.wordpress) {
-      this._showDetails = false;
-    } else {
-      this._showDetails = true;
-    }
+    this._showDetails = !!this.wordpress;
 
 
     /***
@@ -341,39 +308,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     };
   }
 
-  loadSharedFiltersList() {
-    this.innovationService.getFiltersList(this._innovation._id).subscribe((results) => {
-      if (Array.isArray(results)) {
-        this._sharedFiltersList = results;
-      }
-    }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
-    });
-  }
-
-
-  loadFilter(name: string) {
-    this.innovationService.getFilter(this._innovation._id, name).subscribe((result) => {
-      if (result) {
-        this.filterService.addFilter({
-          status: 'CUSTOM',
-          questionTitle: {en: result.name},
-          value: result.answers
-        });
-      }
-    }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
-    });
-  }
-
-  deleteCustomFilter(name: string) {
-    this.innovationService.deleteFilter(this._innovation._id, name).subscribe((_result) => {
-      this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
-    }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
-    });
-  }
-
 
   /***
    * This function is to get the questions.
@@ -383,24 +317,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      this._questions = this.responseService.getPresets(this._innovation);
    }
   }
-
-
-  /***
-   * We are getting the scroll value for the sticky bar.
-   */
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.scrollOn = window.scrollY !== 0;
-    this._menuButton = (this.getCurrentScroll() > 150);
-  }
-
-  private getCurrentScroll() {
-    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
-      return window.scrollY;
-    }
-    return 0;
-  }
-
 
   /***
    * This function toggles the view.
@@ -447,10 +363,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       this._innovationEndModal = true;
     }
 
-    if (value === 'exportInnovation') {
-      this._innovationExport = true;
-    }
-
   }
 
 
@@ -462,7 +374,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._openModal = false;
     this._innovationEndModal = false;
-    this._innovationExport = false;
   }
 
 
@@ -484,22 +395,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     });
   }
 
-
-  /***
-   * This function the deletes the applied filtered.
-   * @param {string} key
-   * @param {Event} event
-   */
-  deleteFilter(key: string, event: Event) {
-    event.preventDefault();
-
-    if (key === 'worldmap') {
-      this.resetMap();
-    }
-
-    this.filterService.deleteFilter(key);
-
-  }
 
 
   /***
@@ -672,26 +567,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
 
   /***
-   * This function display the menu options.
-   * @param {Event} event
-   */
-  displayMenu(event: Event) {
-    event.preventDefault();
-    this._displayMenuWrapper = true;
-  }
-
-
-  /***
-   * This function hides the menu options.
-   * @param {Event} event
-   */
-  hideMenu(event: Event) {
-    event.preventDefault();
-    this._displayMenuWrapper = false;
-  }
-
-
-  /***
    * This function saves the comment of the operator.
    * @param event
    * @param {string} ob
@@ -750,121 +625,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   }
 
-
-  /***
-   * this function assign the value to exportType when we select one of the options
-   * from the modal.
-   * @param event
-   * @param type
-   */
-  assignExportType(event: Event, type: string) {
-    event.preventDefault();
-    this._exportType = type;
-  }
-
-
-  /***
-   * this function is to toggle the consent value based on the checbox is
-   * checked or not.
-   * @param event
-   */
-  toggleConsent(event: Event) {
-    event.preventDefault();
-    this._innovation.ownerConsent.value = !!event.target['checked'];
-  }
-
-
-  /***
-   * this function calls the respective function based on the value of the
-   * exportType. It is called by the Download button.
-   * @param event
-   */
-  exportInnovation(event: Event) {
-    event.preventDefault();
-
-    this.closeModal(event);
-
-    this._innovation.ownerConsent.date = Date.now();
-
-    this.innovationCommonService.saveInnovation(this._innovation);
-
-    switch (this._exportType) {
-
-      case('excel'):
-        this.downloadExcel(event);
-        break;
-
-      case('executiveReport'):
-        this.printExecutiveReport(event);
-        break;
-
-      case('respReport'):
-        this.printAnswers(event);
-        break;
-
-      default:
-        // Do nothing
-    }
-
-    this._exportType = '';
-
-  }
-
-
-  /***
-   * this function will download the excel file.
-   * @param event
-   */
-  private downloadExcel(event: Event) {
-    event.preventDefault();
-    window.open( this.answerService.getExportUrl(this._innovation._id, true));
-  }
-
-  /***
-   * this function will download the response.
-   * @param event
-   */
-  private printAnswers(event: Event) {
-
-    event.preventDefault();
-
-    this.answerService.getReportHTML(this._innovation._id, 'en').subscribe(html => {
-        const reportWindow = window.open('', '');
-        reportWindow.document.write(html);
-        setTimeout(() => {
-          reportWindow.focus();
-          reportWindow.print();
-          reportWindow.close();
-        }, 500);
-      }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-      });
-
-  }
-
-
-  /***
-   * This functions is called when the user selects the executive report option.
-   * @param {Event} event
-   */
-  private printExecutiveReport(event: Event) {
-    event.preventDefault();
-    window.print();
-  }
-
-  public shareNewFilter(event: Event): void {
-    event.preventDefault();
-    const data = {
-      name: this._filterName,
-      answers: this._filteredAnswers.map((answer) => answer._id)
-    };
-    this.innovationService.saveFilter(this._innovation._id, data).subscribe((res) => {
-      this._sharedFiltersList.push(res);
-      this._filterName = '';
-    }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
-    });
-  }
 
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
@@ -971,14 +731,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._sidebarTemplateValue = value;
   }
 
-  get menuButton(): boolean {
-    return this._menuButton;
-  }
-
-  get displayMenuWrapper(): boolean {
-    return this._displayMenuWrapper;
-  }
-
   get innovationEndModal(): boolean {
     return this._innovationEndModal;
   }
@@ -1007,24 +759,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isOwner;
   }
 
-  get filterName(): string {
-    return this._filterName;
-  }
-
-  set filterName(value: string) {
-    this._filterName = value;
-  }
-
-  get sharedFiltersList(): Array<SharedFilter> {
-    return this._sharedFiltersList;
-  }
-
   get openModal(): boolean {
     return this._openModal;
-  }
-
-  get innovationExport(): boolean {
-    return this._innovationExport;
   }
 
   get numberOfSections(): number {

@@ -1,0 +1,82 @@
+<app-modal [modalTitle]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_TITLE'" [(showModal)]="showExportModal">
+
+  <!-- Export options -->
+  <div class="export-options">
+
+    <!-- RESP Pdf -->
+    <div class="options">
+      <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
+      <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png">
+      <div
+        class="btn-radio"
+        [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }"
+        (click)="assignExportType($event, exportTypeEnum.respReport)">
+        <span>•</span>
+      </div>
+    </div>
+
+    <!-- CSV -->
+    <div class="options">
+      <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
+      <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png">
+      <div
+        class="btn-radio"
+        [ngClass]="{ 'active': exportTypeEnum.csv === exportType }"
+        (click)="assignExportType($event, exportTypeEnum.csv)">
+        <span>•</span>
+      </div>
+    </div>
+
+    <!-- Executive report -->
+    <div class="options">
+      <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
+      <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png">
+      <div
+        class="btn-radio"
+        [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }"
+        (click)="assignExportType($event, exportTypeEnum.executiveReport)">
+        <span>•</span>
+      </div>
+    </div>
+
+  </div>
+  <!-- Export options -->
+
+  <!-- Export consent -->
+  <label class="form-checkbox export" for="market-report-consent">
+    <input
+      type="checkbox"
+      id="market-report-consent"
+      value="true"
+      name="market-report-consent"
+      (change)="toggleConsent($event)"
+      [checked]="innovation.ownerConsent.value">
+    <i class="form-icon"></i><span class="export-consent">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}</span>
+  </label>
+  <!-- /Export consent -->
+
+  <!-- Footer -->
+  <div class="modal-footer">
+
+    <!-- Cancel button -->
+    <button
+      class="btn ghost-edit btn-sm export-cancel-button"
+      style="margin-right:0.6rem;"
+      (click)="showExportModal = false">
+      {{ 'MARKET_REPORT.MODAL.BUTTON_CANCEL' | translate }}
+    </button>
+
+    <!-- Download button -->
+    <button
+      class="btn ghost-primary btn-sm"
+      [disabled]="!(exportType && innovation.ownerConsent.value)"
+      (click)="exportInnovation($event)">
+      {{ 'MARKET_REPORT.MODAL.BUTTON_DOWNLOAD' | translate }}
+    </button>
+
+  </div>
+  <!-- /Footer -->
+</app-modal>

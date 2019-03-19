@@ -19,6 +19,7 @@ import { CommonService } from '../../../../services/common/common.service';
 import { FilterService } from './services/filters.service';
 import { ResponseService } from './services/response.service';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { ModalModule } from '../../../utility-components/modal/modal.module';
 
 /***
  * Components
@@ -40,6 +41,8 @@ import { ExecutiveReportComponent } from './components/executive-report/executiv
 import { ExecutiveConclusionComponent } from './components/executive-report/executive-conclusion/executive-conclusion.component';
 import { ExecutiveProfessionalComponent } from './components/executive-report/executive-professional/executive-professional.component';
 import { ExecutiveSectionComponent } from './components/executive-report/executive-section/executive-section.component';
+import { ExportModalComponent } from './components/export-modal/export-modal.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -59,7 +62,8 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     ReactiveFormsModule,
     SidebarUserAnswerModule,
     CountryFlagModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    ModalModule
   ],
   providers: [
     CommonService,
@@ -84,6 +88,8 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     ExecutiveConclusionComponent,
     ExecutiveProfessionalComponent,
     ExecutiveSectionComponent,
+    ExportModalComponent,
+    SidebarComponent,
     RemoveSpacesPipe,
     AnswersLimiterPipe
   ],
