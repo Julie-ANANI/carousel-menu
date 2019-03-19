@@ -3,6 +3,7 @@
   <p class="percentage">{{ percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}</p>
 
   <canvas
+    *ngIf="isBrowser"
     class="chart chart-pie"
     baseChart
     [chartType]="'pie'"
