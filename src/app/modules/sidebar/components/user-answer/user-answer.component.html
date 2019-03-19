@@ -288,17 +288,15 @@
       <!-- /rejected by gmail -->
 
       <!-- section questions -->
-      <ng-container *ngIf="questions.length === 0">
-        <div *ngFor="let question of questions" class="question-wrapper">
-          <app-answer-question
-            [editMode]="editMode"
-            [adminMode]="adminMode"
-            [question]="question"
-            [fullAnswer]="modalAnswer"
-            [innoid]="innovationId">
-          </app-answer-question>
-        </div>
-      </ng-container>
+      <div *ngFor="let question of questions" class="question-wrapper">
+        <app-answer-question
+          [editMode]="editMode"
+          [adminMode]="adminMode"
+          [question]="question"
+          [fullAnswer]="modalAnswer"
+          [innoid]="innovationId">
+        </app-answer-question>
+      </div>
       <!-- /section questions -->
 
     </div>

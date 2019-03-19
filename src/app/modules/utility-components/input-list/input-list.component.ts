@@ -29,7 +29,9 @@ export class InputListComponent {
   @Output() update = new EventEmitter<any>();
 
   answer: string;
+
   answerList: Array<any>;
+
   _placeholder: string;
 
   constructor(private translateNotificationsService: TranslateNotificationsService) {}

@@ -13,7 +13,7 @@
   border-color: $border-color;
 }
 
-.answerList {
+.input-answer-wrapper {
   margin: 0;
   list-style: none;
 
@@ -58,40 +58,33 @@
   i {
     display: flex;
     align-items: center;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.85rem;
     background: #11A751;
-    padding: 1.06rem;
     border: none;
   }
 
-  .fa-thumbs-up.active, .fa-thumbs-up:hover, .fa-thumbs-down.active, .fa-thumbs-down:hover, .fa-pencil-alt:hover {
-    color: white;
-    cursor: pointer;
-  }
+  .fa-thumbs-up, .fa-thumbs-down {
 
-
-  .popover {
-
-    .fa-link {
-      color: $primary-color;
+    &.active {
+      color: $light-color;
     }
 
-    .fa-link:hover {
+    &:hover {
       cursor: pointer;
-      color: lighten($primary-color, 10%);
+      color: $light-color;
     }
 
   }
 
   .popover-container {
-    background: #F8F4F4;
-    box-shadow: $box-shadow;
-    z-index: 2;
-    border-radius: .18rem;
+    padding: $unit-4;
+    background: $hover-background-color;
+    box-shadow: $box-shadow-hover-umi;
+    border-radius: $border-radius;
 
     .btn {
-      margin-top: .18rem;
+      margin-top: $unit-4;
     }
 
   }
