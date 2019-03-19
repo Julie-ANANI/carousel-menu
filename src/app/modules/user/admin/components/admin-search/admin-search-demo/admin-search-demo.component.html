@@ -18,14 +18,17 @@
 
 
   <div class="column col-9 col-mx-auto">
-    <h1 *ngIf="metadata.world" id="totalPros">
-      <span *ngIf="metadata.world === 20000">+</span>
-      <span *ngIf="metadata.world < 100">< </span>
-      {{ metadata.world }} pros
-    </h1>
+    <div *ngIf="metadata.world" id="totalPros">
+      <h1>
+        <span *ngIf="metadata.world === 20000">+</span>
+        <span *ngIf="metadata.world < 100">< </span>
+        {{ metadata.world }}
+      </h1>
+      <h2 class="subtitle">{{ 'COMMON.PROFESSIONALS' | translate }}</h2>
+    </div>
     <admin-search-map
         [width]="'auto'"
-        [countriesData]="data">
+        [countriesData]="metadata">
       </admin-search-map>
   </div>
 

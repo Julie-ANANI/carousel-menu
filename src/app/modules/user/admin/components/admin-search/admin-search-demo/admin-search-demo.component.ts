@@ -86,7 +86,7 @@ export class AdminSearchDemoComponent {
     this._pros = [];
     this._metadata = {};
     this._searchService.metadataSearch(this._keywords).pipe(first()).subscribe((result: any) => {
-      this._metadata = result.metadata;
+      this._metadata = result.metadata || {};
       this.totalAnimation(this._metadata.world);
 
       this._pros = result.pros.map(pro => {
