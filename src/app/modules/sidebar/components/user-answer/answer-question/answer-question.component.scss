@@ -1,4 +1,4 @@
-@import "../../../../../../style/variables";
+@import "../../../../../../style/framework/src/variables";
 
 .ques-label {
   color: $meta-color;
@@ -41,7 +41,7 @@
 }
 
 .answer {
-  color: $validation-color;
+  color: $success-color;
 }
 
 .gaping {
@@ -77,7 +77,7 @@
 
 
 .topItem, .badItem {
-  background: $validation-color;
+  background: $success-color;
   color: white;
 
   i {

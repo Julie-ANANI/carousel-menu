@@ -153,7 +153,7 @@
             <div class="card-header">
 
               <div class="card-title">
-                {{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros
+                <span>{{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros</span>
                 <div *ngIf="getDeleteStatus(batch)" class="icon icon-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
               </div>
 

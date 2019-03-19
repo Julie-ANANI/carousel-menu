@@ -21,42 +21,47 @@
       <div class="section-details">
 
         <!-- name, flag and rating -->
-        <div class="title-wrapper">
+        <div class="header-wrapper">
 
-          <!-- name -->
-          <h4>
 
-            <ng-container *ngIf="modalAnswer.professional?.firstName">
-              {{ modalAnswer.professional?.lastName }}
-            </ng-container>
+          <div class="title-wrapper">
 
-            <ng-container *ngIf="!modalAnswer.professional?.firstName">
-              {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
-            </ng-container>
+            <!-- name -->
+            <h4>
 
-          </h4>
+              <ng-container *ngIf="modalAnswer.professional?.firstName">
+                {{ modalAnswer.professional?.lastName }}
+              </ng-container>
 
-          <!-- rating -->
-          <ng-container *ngIf="editMode">
-            <div class="rating-wrapper">
-              <app-rating-item
-                [editMode]="adminMode"
-                [prop]="profile"
-                [rating]="modalAnswer.profileQuality"
-                (ratingChange)="updateProfileQuality($event)">
-              </app-rating-item>
-            </div>
-          </ng-container>
+              <ng-container *ngIf="!modalAnswer.professional?.firstName">
+                {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
+              </ng-container>
 
-          <!-- country -->
-          <ng-container *ngIf="!editCountry">
-            <div class="country-wrapper flex-between">
-              <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
-              <div *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Country" (click)="onClickEdit('country')">
-                <i class="fas fa-pencil-alt"></i>
+            </h4>
+
+            <!-- rating -->
+            <ng-container *ngIf="editMode">
+              <div class="rating-wrapper">
+                <app-rating-item
+                  [editMode]="adminMode"
+                  [prop]="profile"
+                  [rating]="modalAnswer.profileQuality"
+                  (ratingChange)="updateProfileQuality($event)">
+                </app-rating-item>
               </div>
-            </div>
-          </ng-container>
+            </ng-container>
+
+            <!-- country -->
+            <ng-container *ngIf="!editCountry">
+              <div class="country-wrapper flex-between">
+                <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
+                <div *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Country" (click)="onClickEdit('country')">
+                  <i class="fas fa-pencil-alt"></i>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
 
           <!-- edit button -->
           <ng-container *ngIf="adminMode && modalAnswer.localStatus !== 'draft'">
@@ -208,77 +213,83 @@
       <!-- /section tags -->
 
       <!-- section status -->
-      <div *ngIf="adminMode && modalAnswer.status !== 'REJECTED_GMAIL' && modalAnswer.localStatus !== 'draft'" class="section-status">
+      <ng-container *ngIf="adminMode && modalAnswer.status !== 'REJECTED_GMAIL' && modalAnswer.localStatus !== 'draft'">
+        <div class="section-status">
 
-        <!-- Rejected -->
-        <div class="status-rejected">
-          <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
-          <div
-            class="btn-radio rejected"
-            [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
-            (click)="updateStatus($event, 'REJECTED')">
-            <span>•</span>
+          <!-- to reject -->
+          <div class="status-rejected">
+            <div class="label label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</div>
+            <button
+              class="btn btn-radio rejected"
+              [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
+              (click)="updateStatus($event, 'REJECTED')">
+              <span>•</span>
+            </button>
           </div>
-        </div>
 
-        <!-- Submitted -->
-        <div class="status-submitted">
-          <span class="label label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span>
-          <div
-            class="btn-radio submitted"
-            [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
-            (click)="updateStatus($event, 'SUBMITTED')">
-            <span>•</span>
+          <!-- submitted -->
+          <div class="status-submitted">
+            <div class="label label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</div>
+            <button
+              class="btn btn-radio submitted"
+              [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
+              (click)="updateStatus($event, 'SUBMITTED')">
+              <span>•</span>
+            </button>
           </div>
-        </div>
 
-        <!-- Validated -->
-        <div class="status-validated">
-          <span class="label label-success">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
-          <div
-            class="btn-radio validated"
-            [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
-            (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
-            <span>•</span>
+          <!-- validated -->
+          <div class="status-validated">
+            <div class="label label-success">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</div>
+            <button
+              class="btn btn-radio validated"
+              [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
+              (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
+              <span>•</span>
+            </button>
           </div>
+
+          <!-- email -->
+          <ng-container *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'">
+            <div class="status-email">
+              <label class="form-switch text-medium" for="answer-email">
+                <input
+                  type="checkbox"
+                  name="answer-email"
+                  id="answer-email"
+                  (change)="sendEmail($event, 'VALIDATED')"
+                  [disabled]="!editMode"
+                  [checked]="modalAnswer.status === 'VALIDATED'">
+                <i class="form-icon"></i>
+                {{ 'ANSWER.STATUS.EMAIL' | translate }}
+              </label>
+            </div>
+          </ng-container>
+
         </div>
+      </ng-container>
+      <!-- /section status -->
 
-        <!-- Email -->
-        <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
-          <label class="form-switch" for="answer-email">
-            <input
-              type="checkbox"
-              name="answer-email"
-              id="answer-email"
-              (change)="sendEmail($event, 'VALIDATED')"
-              [checked]="modalAnswer.status === 'VALIDATED'">
-            <i class="form-icon"></i>
-            {{ 'ANSWER.STATUS.EMAIL' | translate }}
-          </label>
+      <!-- rejected by gmail -->
+      <ng-container *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'">
+        <div class="status-gmail">
+
+          <div class="label label-alert">
+            <span>{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
+          </div>
+
+          <!-- the original reply message sent to Karine -->
+          <ng-container *ngIf="meta && !editMode">
+            <p class="text">{{ meta }}</p>
+          </ng-container>
+
         </div>
-
-      </div>
-
-      <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
-        <!-- Rejected -->
-        <div class="status-rejected">
-          <span class="label label-alert">{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
-        </div>
-      </div>
-
-      <!-- The original reply message sent to Karine -->
-
-      <div *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'" class="section-status">
-        <div *ngIf="meta && !editMode" [ngStyle]="{ 'margin-bottom': '-.6rem' }" class="div-top">
-          <p class="comment-wrapper">
-            {{ meta }}
-          </p>
-        </div>
-      </div>
+      </ng-container>
+      <!-- /rejected by gmail -->
 
       <!-- section questions -->
-      <div class="section-questions">
-        <div *ngFor="let question of questions">
+      <ng-container *ngIf="questions.length === 0">
+        <div *ngFor="let question of questions" class="question-wrapper">
           <app-answer-question
             [editMode]="editMode"
             [adminMode]="adminMode"
@@ -287,7 +298,8 @@
             [innoid]="innovationId">
           </app-answer-question>
         </div>
-      </div>
+      </ng-container>
+      <!-- /section questions -->
 
     </div>
   </section>

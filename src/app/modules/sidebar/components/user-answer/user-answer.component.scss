@@ -18,18 +18,30 @@
 
   .section-details {
 
-    .title-wrapper {
+    .header-wrapper {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       flex-wrap: wrap;
 
-      h4, .rating-wrapper, .country-wrapper {
-        margin-right: 1.25rem;
-        margin-bottom: 0.75rem;
-      }
+      .title-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -1.25rem;
 
-      .flex-between {
-        align-items: baseline;
+        h4, .rating-wrapper, .country-wrapper {
+          margin-right: 1.25rem;
+          margin-bottom: 0.75rem;
+        }
+
+        .flex-between {
+          align-items: baseline;
+        }
+
+        h4 {
+          word-break: break-all;
+        }
+
       }
 
       .button-wrapper {
@@ -58,16 +70,16 @@
 
   }
 
-  .section-tags {
+  .section-tags, .section-status {
     padding-top: $unit-5;
   }
 
   .section-status {
-    padding-top: 1.57rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    margin-left: -$unit-2;
 
     .btn-radio {
       margin-left: auto;
@@ -75,11 +87,15 @@
     }
 
     .status-rejected, .status-validated, .status-submitted, .status-email {
-      margin-bottom: 1.57rem;
+      display: inline-flex;
+      flex-direction: column;
+      text-align: center;
+      margin-bottom: 1.25rem;
     }
 
     .rejected:hover, .rejected.active {
-      background-color: $alert;
+      background-color: $alert-color;
+      border-color: $alert-color;
 
       span {
         color: white;
@@ -88,7 +104,8 @@
     }
 
     .submitted:hover, .submitted.active {
-      background-color: $progress;
+      background-color: $progress-color;
+      border-color: $progress-color;
 
       span {
         color: white;
@@ -97,7 +114,8 @@
     }
 
     .validated:hover, .validated.active {
-      background-color: $success;
+      background-color: $success-color;
+      border-color: $success-color;
 
       span {
         color: white;
@@ -108,25 +126,32 @@
     .status-email {
 
       .form-switch {
-        top: -0.25rem;
+        top: -17px;
       }
 
     }
 
   }
 
-  .section-questions {
-    margin-top: -0.6rem;
+  .status-gmail {
+    margin-left: -$unit-2;
+
+    .text {
+      margin-top: $unit-2;
+      margin-left: $unit-2;
+      font-size: $font-size-sm;
+    }
+
   }
 
+  .question-wrapper {
+    padding-bottom: 1.5rem;
 
-}
+    &:last-child {
+      padding-bottom: 0;
+    }
 
-
-@media (max-width: 480px) {
-
-  .section-details .title {
-    flex-direction: column;
   }
+
 
 }

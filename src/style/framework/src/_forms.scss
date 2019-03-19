@@ -503,7 +503,7 @@ input {
     &:disabled, &.disabled {
 
       & + .form-icon::before {
-        background: $form-meta-color none;
+        background: inherit none;
       }
 
     }
