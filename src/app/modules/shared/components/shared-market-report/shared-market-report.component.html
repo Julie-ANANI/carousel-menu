@@ -250,6 +250,7 @@
                     <textarea
                       class="form-imput"
                       id="market-report-objective"
+                      [ngStyle]="{ 'width': '100%' }"
                       [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
                       rows="5"
                       [(ngModel)]="innovation.executiveReport.objective"
