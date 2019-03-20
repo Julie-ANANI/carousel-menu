@@ -73,10 +73,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _showDetails: boolean;
 
-  private _openModal = false;
-
-  private _innovationEndModal: boolean;
-
   private _today: Number;
 
   private _numberOfSections: number;
@@ -348,53 +344,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     }
 
   }
-
-
-  /***
-   * This function calls the modal.
-   * @param event
-   * @param value
-   */
-  displayModal(event: Event, value: string) {
-    event.preventDefault();
-    this._openModal = true;
-
-    if (value === 'endInnovation') {
-      this._innovationEndModal = true;
-    }
-
-  }
-
-
-  /***
-   * This function is to close the modal.
-   * @param {Event} event
-   */
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._openModal = false;
-    this._innovationEndModal = false;
-  }
-
-
-  /***
-   * This function will make the project end and synthesis will be available to the client.
-   * @param {Event} event
-   * @param {"DONE"} status
-   */
-  endInnovation(event: Event, status: 'DONE'): void {
-    this._innovationEndModal = false;
-    this._openModal = false;
-
-    this.innovationService.endProject(this._innovation._id).subscribe((response) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this._innovation = response;
-      this.innovationCommonService.setInnovation(this._innovation);
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-  }
-
 
 
   /***
@@ -731,10 +680,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._sidebarTemplateValue = value;
   }
 
-  get innovationEndModal(): boolean {
-    return this._innovationEndModal;
-  }
-
   getCompanyName(): string {
     return environment.companyShortName;
   }
@@ -757,10 +702,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get isOwner(): boolean {
     return this._isOwner;
-  }
-
-  get openModal(): boolean {
-    return this._openModal;
   }
 
   get numberOfSections(): number {

@@ -48,6 +48,7 @@
       <app-market-report-sidebar
         [answers]="answers"
         [innovation]="innovation"
+        [isAdmin]="adminSide"
         [isOwner]="isOwner"
         [questions]="questions"
         class="sidebar">
@@ -576,53 +577,6 @@
 
 
 </section>
-
-
-
-<!-- Modal to ask operator to sure about ending the project, and to client to print -->
-<app-modal [showModal]="openModal">
-
-  <!-- Header -->
-  <div class="modal-header">
-    <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-    <div class="modal-title">
-
-      <ng-container *ngIf="innovationEndModal">
-        {{ 'MARKET_REPORT.MODAL.END_INNOVATION_TITLE' | translate }}
-      </ng-container>
-
-    </div>
-  </div>
-  <!-- /Header -->
-
-  <!-- Body -->
-  <div class="modal-body">
-    <div class="content">
-
-      <ng-container *ngIf="innovationEndModal">
-        {{ 'MARKET_REPORT.MODAL.END_INNOVATION_CONTENT' | translate }}
-      </ng-container>
-
-    </div>
-  </div>
-  <!-- /Body -->
-
-  <!-- Footer -->
-  <div class="modal-footer">
-
-    <ng-container *ngIf="innovationEndModal">
-      <!-- End innovation -->
-      <button
-        class="btn btn-primary btn-sm"
-        (click)="endInnovation($event, 'DONE')">
-        {{ 'MARKET_REPORT.MODAL.BUTTON_CONFIRM' | translate }}
-      </button>
-    </ng-container>
-
-  </div>
-  <!-- /Footer -->
-</app-modal>
-<!-- /Modal to ask operator to sure about ending the project, and to client to print -->
 
 
 <!-- Insight preview -->

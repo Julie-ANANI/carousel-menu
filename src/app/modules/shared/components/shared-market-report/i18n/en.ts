@@ -37,6 +37,7 @@ export const MARKET_REPORT = {
   'KEY_LEARNING': 'Key learnings',
 
   'MENU_BAR': {
+    'BUTTON_END': 'End Project',
     'BUTTON_EXPORT': 'Export',
     'FILTER': 'Filters',
     'PLACEHOLDER_VIEW': 'Name of this view',

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { FilterService } from '../../services/filters.service';
+import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../models/answer';
@@ -21,6 +22,10 @@ export class SidebarComponent implements OnInit {
     this._answers = value;
   }
 
+  @Input() set isAdmin(value: boolean) {
+    this._isAdmin = value;
+  }
+
   @Input() set isOwner(value: boolean) {
     this._isOwner = value;
   }
@@ -35,6 +40,8 @@ export class SidebarComponent implements OnInit {
 
   private _answers: Array<Answer>;
 
+  private _isAdmin: boolean;
+
   private _isOwner: boolean;
 
   private _filterName = '';
@@ -47,8 +54,11 @@ export class SidebarComponent implements OnInit {
 
   private _showExportModal: boolean;
 
+  private _showEndInnovationModal: boolean;
+
   constructor(private activatedRoute: ActivatedRoute,
               private filterService: FilterService,
+              private innovationCommonService: InnovationCommonService,
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService) {
     PageScrollConfig.defaultDuration = 600;
@@ -108,8 +118,28 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  /***
+   * This function will make the project end and synthesis will be available to the client.
+   * @param {Event} event
+   */
+  public endInnovation(event: Event): void {
+    event.preventDefault();
+    this._showEndInnovationModal = false;
+    this.innovationService.endProject(this._innovation._id).subscribe((response) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+      this._innovation = response;
+      this.innovationCommonService.setInnovation(this._innovation);
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+  }
+
   get answers(): Array<Answer> {
     return this._answers;
+  }
+
+  get isAdmin(): boolean {
+    return this._isAdmin;
   }
 
   get isOwner(): boolean {
@@ -142,6 +172,14 @@ export class SidebarComponent implements OnInit {
 
   set showExportModal(value: boolean) {
     this._showExportModal = value;
+  }
+
+  get showEndInnovationModal(): boolean {
+    return this._showEndInnovationModal;
+  }
+
+  set showEndInnovationModal(value: boolean) {
+    this._showEndInnovationModal = value;
   }
 
 }

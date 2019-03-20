@@ -1,9 +1,19 @@
 <div class="app-market-report-sidebar">
+
   <ng-container *ngIf="isOwner">
     <button
       class="btn btn-primary gtm-export-synthesis"
       (click)="showExportModal = true">
       {{ 'MARKET_REPORT.MENU_BAR.BUTTON_EXPORT' | translate }}
+    </button>
+    <hr/>
+  </ng-container>
+
+  <ng-container *ngIf="isAdmin">
+    <button
+      class="btn btn-primary"
+      (click)="showEndInnovationModal = true">
+      {{ 'MARKET_REPORT.MENU_BAR.BUTTON_END' | translate }}
     </button>
     <hr/>
   </ng-container>
@@ -68,3 +78,18 @@
   [innovation]="innovation"
   [(showModal)]="showExportModal">
 </app-market-report-export-modal>
+
+<!-- Modal to ask operator to sure about ending the project -->
+<app-modal [modalTitle]="'MARKET_REPORT.MODAL.END_INNOVATION_TITLE'"  [(showModal)]="showEndInnovationModal">
+  <div class="content">
+    {{ 'MARKET_REPORT.MODAL.END_INNOVATION_CONTENT' | translate }}
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-primary btn-sm"
+      (click)="endInnovation($event)">
+      {{ 'MARKET_REPORT.MODAL.BUTTON_CONFIRM' | translate }}
+    </button>
+  </div>
+</app-modal>
+<!-- /Modal to ask operator to sure about ending the project -->
