@@ -51,6 +51,16 @@
   -->
   <p>
     <a href="#professionals" pageScroll>
+      {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
+      <i class="icon icon-arrow-right" aria-hidden="true"></i>
+    </a>
+    <span *ngFor="let c of continentList">
+      <input type="checkbox" [name]="c" [checked]="filteredContinents ? filteredContinents.value[c] : true">
+      <label [for]="c">{{ ('CONTINENTS.' + c) | translate }}</label>
+    </span>
+  </p>
+  <p>
+    <a href="#professionals" pageScroll>
       {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
       <i class="icon icon-arrow-right" aria-hidden="true"></i>
     </a>

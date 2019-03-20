@@ -64,6 +64,10 @@ export const MARKET_REPORT = {
     'BUTTON_CANCEL': 'Cancel'
   },
 
+  'MAP': {
+    'TITLE': 'Map',
+  },
+
   'ANONYMOUS': 'Non Disclosed',
 
   'NOT_ALLOWED': 'You are not allowed to perform this action anymore.',

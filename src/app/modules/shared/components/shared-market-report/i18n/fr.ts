@@ -69,6 +69,10 @@ export const MARKET_REPORT = {
     'BUTTON_CANCEL': 'Annuler'
   },
 
+  'MAP': {
+    'TITLE': 'Carte',
+  },
+
   'EXECUTIVE': {
     'HEADING': 'Executive Report',
     'TITLE': 'Objectif',

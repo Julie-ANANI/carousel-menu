@@ -5,6 +5,7 @@ import { FilterService } from '../../services/filters.service';
 import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { SharedWorldmapService } from '../../../shared-worldmap/shared-worldmap.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
@@ -40,6 +41,8 @@ export class SidebarComponent implements OnInit {
 
   private _answers: Array<Answer>;
 
+  private _continentList: Array<string>;
+
   private _isAdmin: boolean;
 
   private _isOwner: boolean;
@@ -60,8 +63,10 @@ export class SidebarComponent implements OnInit {
               private filterService: FilterService,
               private innovationCommonService: InnovationCommonService,
               private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService) {
+              private translateNotificationsService: TranslateNotificationsService,
+              private worldmapService: SharedWorldmapService) {
     PageScrollConfig.defaultDuration = 600;
+    this._continentList = this.worldmapService.continents;
   }
 
   ngOnInit() {
@@ -138,6 +143,10 @@ export class SidebarComponent implements OnInit {
     return this._answers;
   }
 
+  get continentList(): Array<string> {
+    return this._continentList;
+  }
+
   get isAdmin(): boolean {
     return this._isAdmin;
   }
@@ -180,6 +189,10 @@ export class SidebarComponent implements OnInit {
 
   set showEndInnovationModal(value: boolean) {
     this._showEndInnovationModal = value;
+  }
+
+  get filteredContinents() {
+    return this.filterService.filters['worldmap'];
   }
 
 }
