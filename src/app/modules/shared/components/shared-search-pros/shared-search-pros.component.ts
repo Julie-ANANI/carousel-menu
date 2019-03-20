@@ -13,33 +13,51 @@ import { first } from 'rxjs/operators';
   templateUrl: './shared-search-pros.component.html',
   styleUrls: ['./shared-search-pros.component.scss']
 })
-export class SharedSearchProsComponent implements OnInit {
 
-  private _suggestion: { expected: number, kw: string }[] = [];
-  private _params: any;
-  private _more: SidebarInterface = {};
-  private _googleQuota = 30000;
-  private _catQuota = 100;
-  private _estimatedNumberOfGoogleRequests = 0;
-  private _countriesSettings: any[] = [];
-  public showText = false;
-  public catResult: any;
+export class SharedSearchProsComponent implements OnInit {
 
   @Input() campaign: Campaign;
 
-  constructor(private _notificationsService: TranslateNotificationsService,
-              private _searchService: SearchService,
-              private _authService: AuthService) {}
+  private _suggestion: { expected: number, kw: string }[] = [];
+
+  private _params: any;
+
+  private _more: SidebarInterface = {};
+
+  private _more_cat: SidebarInterface = {};
+
+  private _googleQuota = 30000;
+
+  private _catQuota = 100;
+
+  private _estimatedNumberOfGoogleRequests = 0;
+
+  private _countriesSettings: any[] = [];
+
+  showText = false;
+
+  catResult: any;
+
+  constructor(private translateNotificationsService: TranslateNotificationsService,
+              private searchService: SearchService,
+              private authService: AuthService) {
+
+    this.searchService.getCountriesSettings().pipe(first()).subscribe((countriesSettings: any) => {
+      this._countriesSettings = countriesSettings.countries;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
+
+  }
 
   ngOnInit(): void {
     this._initParams();
-    this._searchService.getCountriesSettings().pipe(first()).subscribe((countriesSettings: any) => {
-      this._countriesSettings = countriesSettings.countries;
-    });
   }
+
 
   private _initParams() {
     this.getGoogleQuota();
+
     this._params = {
       keywords: '',
       catKeywords: '',
@@ -71,13 +89,76 @@ export class SharedSearchProsComponent implements OnInit {
         this._params.countries = this.getTargetCountries(this.campaign.innovation.settings);
       }
     }
-    this.catResult = {
-      duplicate_status: 'ok',
-    };
+
+    this.catResult = { duplicate_status: 'ok' };
+
     this.estimateNumberOfGoogleRequests();
 
     this._suggestion = [];
+
   }
+
+
+  private getGoogleQuota() {
+    this.searchService.dailyStats().pipe(first()).subscribe((result: any) => {
+      this._googleQuota = 30000;
+      if (result.hours) {
+        this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
+      }
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
+  }
+
+
+  private estimateNumberOfGoogleRequests(totalResultsArray?: Array<number>) {
+    totalResultsArray = totalResultsArray || this._params.keywords.split('\n').filter((k: string) => k).fill(1000000);
+
+    this._estimatedNumberOfGoogleRequests = totalResultsArray.reduce((acc: number, curr: number) => {
+      return acc + this._estimateNumberOfGoogleRequestsForOneSearch(curr);
+    }, 0);
+
+  }
+
+
+  private _estimateNumberOfGoogleRequestsForOneSearch(totalResults: number): number {
+    let numberOfRequests = 0;
+    const selectedCountries = this._params.countries;
+    let smartCountries = 0;
+
+    if (this._params.options.smart || this._params.options.regions) {
+      this._countriesSettings.forEach((country: any) => {
+        if (selectedCountries.indexOf(country.code) > -1) {
+          smartCountries++;
+          if (!this._params.options.smart || country.threshold < totalResults) {
+            if (this._params.options.regions && country.regions.length) {
+              numberOfRequests += country.regions.length;
+            } else {
+              numberOfRequests++;
+            }
+          }
+        }
+      });
+    }
+
+    if (!this._params.options.smart) {
+      numberOfRequests += ((selectedCountries.length || 1) - smartCountries);
+    }
+
+    return (numberOfRequests || 1) * this._params.count / 10;
+
+  }
+
+
+  /***
+   * delete the previous Computer Aided Targeting result
+   */
+  onReset() {
+    this.catResult = { duplicate_status: 'ok' };
+    this._suggestion = [];
+    this.estimateNumberOfGoogleRequests();
+  }
+
 
   changeSettings() {
     this._more = {
@@ -93,17 +174,10 @@ export class SharedSearchProsComponent implements OnInit {
     };
   }
 
-  public getGoogleQuota() {
-    this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
-      this._googleQuota = 30000;
-      if (result.hours) {
-        this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
-      }
-    });
-  }
+
 
   public getCatQuota() {
-    this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
+    this.searchService.dailyStats().pipe(first()).subscribe((result: any) => {
       this._catQuota = 100;
       if (result.hours) {
         this._catQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueriesCat, 0);
@@ -140,11 +214,11 @@ export class SharedSearchProsComponent implements OnInit {
   public search(event: Event): void {
     event.preventDefault();
     const searchParams = this._params;
-    searchParams.metadata = {user: this._authService.getUserInfo()};
+    searchParams.metadata = {user: this.authService.getUserInfo()};
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
-    this._searchService.search(searchParams).pipe(first()).subscribe((_: any) => {
+    this.searchService.search(searchParams).pipe(first()).subscribe((_: any) => {
       this._initParams();
-      this._notificationsService.success('Requête ajoutée', 'La requête a bien été ajoutée à la file d\'attente');
+      this.translateNotificationsService.success('Requête ajoutée', 'La requête a bien été ajoutée à la file d\'attente');
     });
   }
 
@@ -157,9 +231,10 @@ export class SharedSearchProsComponent implements OnInit {
    */
   public cat(event: Event): void {
     event.preventDefault();
-    this._searchService.updateCatStats(this._params.catKeywords.split('\n').length).subscribe((response: any) => {});
-    this._searchService.computerAidedTargeting(this._params.catKeywords.split('\n')).pipe(first()).subscribe((response: any) => {
-      this.resetCat();
+    this.searchService.updateCatStats(this._params.catKeywords.split('\n').length).subscribe((response: any) => {});
+    this.searchService.computerAidedTargeting(this._params.catKeywords.split('\n')).pipe(first()).subscribe((response: any) => {
+      this.onReset();
+      console.log(response);
       this.catResult.total_result = [];
       Object.entries(response.total_result).forEach(([key, value]) => {
         this.catResult.total_result.push(value);
@@ -194,51 +269,16 @@ export class SharedSearchProsComponent implements OnInit {
     });
   }
 
-  private _estimateNumberOfGoogleRequestsForOneSearch(totalResults: number): number {
-    let numberOfRequests = 0;
-    const selectedCountries = this._params.countries;
-    let smartCountries = 0;
-    if (this._params.options.smart || this._params.options.regions) {
-      this._countriesSettings.forEach((country: any) => {
-        if (selectedCountries.indexOf(country.code) > -1) {
-          smartCountries++;
-          if (!this._params.options.smart || country.threshold < totalResults) {
-            if (this._params.options.regions && country.regions.length) {
-              numberOfRequests += country.regions.length;
-            } else {
-              numberOfRequests++;
-            }
-          }
-        }
-      });
-    }
-    if (!this._params.options.smart) {
-      numberOfRequests += ((selectedCountries.length || 1) - smartCountries);
-    }
-    return (numberOfRequests || 1) * this._params.count / 10;
-  }
 
-  public estimateNumberOfGoogleRequests(totalResultsArray?: Array<number>) {
-    totalResultsArray = totalResultsArray || this._params.keywords.split('\n').filter((k: string) => k).fill(1000000);
-    this._estimatedNumberOfGoogleRequests = totalResultsArray.reduce((acc: number, curr: number) => {
-      return acc + this._estimateNumberOfGoogleRequestsForOneSearch(curr);
-    }, 0);
-  }
 
-  /***
-   * Delete the previous Computer Aided Targeting result
-   */
-  public resetCat() {
-    this.catResult = {
-      duplicate_status: 'ok',
-    };
-    this._suggestion = [];
-    this.estimateNumberOfGoogleRequests();
-  }
+
+
+
 
   get suggestion(): any { return this._suggestion; }
   get params(): any { return this._params; }
   get more(): any { return this._more; }
+  get more_cat(): any { return this._more_cat; }
   get googleQuota(): number { return this._googleQuota; }
   get catQuota(): number { return this._catQuota; }
   get estimatedNumberOfGoogleRequests(): number { return this._estimatedNumberOfGoogleRequests; }

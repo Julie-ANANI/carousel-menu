@@ -35,16 +35,29 @@
       height: 20px;
     }
 
+    &.circle-xs {
+      width: 10px;
+      height: 10px;
+    }
+
     &.circle-success {
       background-color: $success-color;
+      border-color: $success-color;
     }
 
     &.circle-alert {
       background-color: $alert-color;
+      border-color: $alert-color;
     }
 
     &.circle-meta {
       background-color: $meta-color;
+      border-color: $meta-color;
+    }
+
+    &.circle-progress {
+      background-color: $progress-color;
+      border-color: $progress-color;
     }
 
   }

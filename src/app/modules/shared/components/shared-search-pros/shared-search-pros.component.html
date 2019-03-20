@@ -1,3 +1,57 @@
+<ng-container *ngIf="campaign">
+  <section id="shared-search-pros-component">
+    <div class="search-wrapper">
+
+      <!-- column cat -->
+      <div class="search-col">
+
+        <!-- heading -->
+        <div class="heading-wrapper">
+
+          <h2 class="title-secondary">Rocket testing</h2>
+
+          <span class="text-link" (click)="onReset()">Reset</span>
+
+          <span class="line">|</span>
+
+          <div class="popover popover-top">
+
+            <span class="text-help">Help</span>
+
+            <div class="popover-container">
+              <div class="card">
+                <div class="card-body">
+
+                  <div class="points"><span class="shape circle circle-xs circle-success"></span><span>Relevant</span></div>
+                  <div class="points"><span class="shape circle circle-xs circle-progress"></span><span>Average</span></div>
+                  <div class="points"><span class="shape circle circle-xs circle-alert"></span><span>Overused</span></div>
+                  <div class="points"><span class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></span><span>Too much pros duplicated</span></div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- /heading -->
+
+
+      </div>
+      <!-- /column cat -->
+
+      <!-- column search -->
+      <div class="search-col">
+sss
+      </div>
+      <!-- /column search -->
+
+
+    </div>
+  </section>
+</ng-container>
+
+<!--
 <div class="columns">
   <div class="column col-5 col-ml-auto">
 
@@ -99,13 +153,13 @@
     </div>
 
     <div *ngIf="catDone" class="cat">
-      <!-- Keywords analysis and expected result -->
+      &lt;!&ndash; Keywords analysis and expected result &ndash;&gt;
       <h3>Analysis</h3>
       <div *ngFor="let s of suggestion"  class="request-analysis">
         {{s.expected}} professionals found <span [innerHTML]=s.kw > </span>
       </div>
 
-      <!-- Additional keywords -->
+      &lt;!&ndash; Additional keywords &ndash;&gt;
       <h4>Suggested keywords</h4>
       <div class="additional-keywords" [ngStyle]="{ 'display': 'flex' }">
         <div *ngFor="let kw of catResult.new_keywords" >
@@ -113,7 +167,7 @@
         </div>
       </div>
 
-      <!-- Star profiles -->
+      &lt;!&ndash; Star profiles &ndash;&gt;
       <h5>4 star profiles:</h5>
       <div *ngFor="let profile of catResult.profile | keyvalue" class="stars">
         <p class="tooltip" data-tooltip="ça ne marche pas encore :'("> <a href= "{{ profile.key }}" target="_blank">{{ profile.value.title }}</a> </p>
@@ -160,3 +214,4 @@
     </div>
   </div>
 </div>
+-->
