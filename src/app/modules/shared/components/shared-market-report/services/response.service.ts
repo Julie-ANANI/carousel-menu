@@ -13,8 +13,7 @@ export class ResponseService {
 
   filteredAnswers = new Subject <Array<Answer>>();
 
-  constructor() {
-  }
+  constructor() { }
 
   setExecutiveAnswers(value: Array<Answer>) {
     this.executiveAnswers.next(value);
@@ -206,5 +205,6 @@ export class ResponseService {
     return tags;
 
   }
+
 
 }

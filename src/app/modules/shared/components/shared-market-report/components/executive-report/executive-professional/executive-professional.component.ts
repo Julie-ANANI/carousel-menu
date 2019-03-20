@@ -14,7 +14,6 @@ import { Innovation } from '../../../../../../../models/innovation';
 export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this._mapConfiguration = value.settings.geography.continentTarget || {};
     this._professionalAbstract = value.executiveReport.professionalAbstract;
   }
 
@@ -24,9 +23,9 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   private _professionalsAnswer: Array<Answer> = [];
 
-  private _mapConfiguration: any = {};
-
   private _professionalAbstract = '';
+
+  private _targetCountries: Array<string> = [];
 
   constructor(private responseService: ResponseService) { }
 
@@ -38,10 +37,22 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
     this.responseService.getExecutiveAnswers().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       if (response) {
         this._answers = response;
+        this.getTargetCountries();
         this.topProfessionalsAnswer();
       }
     });
   }
+
+
+  private getTargetCountries() {
+    this._targetCountries = this._answers.reduce((acc, answer) => {
+      if (acc.indexOf(answer.country.flag) === -1) {
+        acc.push(answer.country.flag);
+      }
+      return acc;
+    }, []);
+  }
+
 
   private topProfessionalsAnswer() {
 
@@ -70,8 +81,8 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
     return this._professionalsAnswer;
   }
 
-  get mapConfiguration(): any {
-    return this._mapConfiguration;
+  get targetCountries(): Array<string> {
+    return this._targetCountries;
   }
 
   get professionalAbstract(): string {

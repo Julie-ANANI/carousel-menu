@@ -13,7 +13,7 @@
     <!-- Map -->
     <div class="map-wrapper">
       <app-worldmap
-        [initialConfiguration]="mapConfiguration"
+        [countries]="targetCountries"
         [countriesColor]="'#2ECC71'"
         [isEditable]="false"
         [width]="'auto'">
@@ -49,13 +49,17 @@
       <div class="details">
 
         <!-- Job -->
-        <p *ngIf="answer.professional?.jobTitle" class="job">
-          {{ answer.professional.jobTitle || 'job' }}
+        <p class="job">
+          <span *ngIf="answer.professional?.jobTitle">
+            {{ answer.professional.jobTitle || 'job' }}
+          </span>
         </p>
 
         <!-- Company -->
-        <p *ngIf="answer.professional.company?.name || answer.professional?.company" class="company">
-          {{ answer.professional.company?.name || answer.professional?.company || 'company' }}
+        <p class="company">
+          <span *ngIf="answer.professional.company?.name || answer.professional?.company">
+            {{ answer.professional.company?.name || answer.professional?.company || 'company' }}
+          </span>
         </p>
 
         <!-- Tag -->
