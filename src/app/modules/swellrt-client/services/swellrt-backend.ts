@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {User} from "../../../models/user.model";
 
+import * as sha1 from 'js-sha1';
+
 //declare let swellrt;
 
 @Injectable()
@@ -37,22 +39,25 @@ export class SwellrtBackend {
       });
   }
 
+  loginSwellRT() {
+    return this.service
+      .then(s=>{
+        let password = sha1("jdcruz-gomez@umi.us");
+        return s.login({
+          id: '5a325700e5e43d00018ceb09@local.net',
+          password: password
+        });
+      });
+  }
+
   getUserSRT(userId: string) {
-    /*return this.service
+    return this.service
       .then(s => {
-        s.getUser({id:userId}).then(p=>{}, err=>{})
+        return s.getUser({id:userId});
       })
       .catch(err=>{
         console.error(err);
-    });*/
-    return this.service
-      .then(s=>{
-        return s.login({
-          id: 'jdcruz-gomez@local.net',
-          password: "12345678"
-        });
-      })
-
+    });
   }
 
 

@@ -68,10 +68,18 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   private verifyUser() {
-    this._swellrtBackend.getUserSRT("jdcruz-gomez@umi.us")
+    this._swellrtBackend.loginSwellRT()
     //this._swellrtBackend.createUser(null)
       .then(p=>{
-        console.log(p)
+        console.log(p);
+        this.getUserProfile();
+      });
+  }
+
+  private getUserProfile() {
+    this._swellrtBackend.getUserSRT("")
+      .then(p => {
+        console.log(p);
       });
   }
 
