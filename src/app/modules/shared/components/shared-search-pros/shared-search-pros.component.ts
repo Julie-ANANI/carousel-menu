@@ -18,7 +18,6 @@ export class SharedSearchProsComponent implements OnInit {
   private _suggestion: { expected: number, kw: string }[] = [];
   private _params: any;
   private _more: SidebarInterface = {};
-  private _more_cat: SidebarInterface = {};
   private _googleQuota = 30000;
   private _catQuota = 100;
   private _estimatedNumberOfGoogleRequests = 0;
@@ -149,6 +148,13 @@ export class SharedSearchProsComponent implements OnInit {
     });
   }
 
+  /***
+   *
+   * @param {Event} event: pressed button
+   * > update Computer Aided Targeting statistics (SearchService)
+   * > Trigger the CAT analysis (NLPService)
+   * > format the result and store it in the catResult object
+   */
   public cat(event: Event): void {
     event.preventDefault();
     this._searchService.updateCatStats(this._params.catKeywords.split('\n').length).subscribe((response: any) => {});
@@ -219,6 +225,9 @@ export class SharedSearchProsComponent implements OnInit {
     }, 0);
   }
 
+  /***
+   * Delete the previous Computer Aided Targeting result
+   */
   public resetCat() {
     this.catResult = {
       duplicate_status: 'ok',
@@ -230,7 +239,6 @@ export class SharedSearchProsComponent implements OnInit {
   get suggestion(): any { return this._suggestion; }
   get params(): any { return this._params; }
   get more(): any { return this._more; }
-  get more_cat(): any { return this._more_cat; }
   get googleQuota(): number { return this._googleQuota; }
   get catQuota(): number { return this._catQuota; }
   get estimatedNumberOfGoogleRequests(): number { return this._estimatedNumberOfGoogleRequests; }
