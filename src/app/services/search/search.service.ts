@@ -21,6 +21,24 @@ export class SearchService {
     return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests, starProfiles: starProfiles});
   }
 
+  public metadataSearch(keywords: string): Observable<any> {
+    const query = {
+      params: JSON.stringify({keywords: keywords}),
+      path: '/search/metadata'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public inHouseSearch(keywords: string, country?: string): Observable<any> {
+    const params: any = {keywords: keywords};
+    if (country) params.country = country;
+    const query = {
+      params: JSON.stringify(params),
+      path: '/search/inhouse'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
   public getRequest(requestId: string): Observable<any> {
     const query = {
       path: '/request/' + requestId,
@@ -28,6 +46,10 @@ export class SearchService {
     };
 
     return this._http.get('/search/get', {params: query});
+  }
+
+  public getMetadataRequest(requestId: string): Observable<any> {
+    return this._http.get('/search/get', {params: {path: '/metadataRequest/' + requestId}});
   }
 
   public stopRequest(requestId: string): Observable<any> {
@@ -110,6 +132,14 @@ export class SearchService {
       params: JSON.stringify(params),
       path: '/stats/cat'
   };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  // Function to delete once we used it to update the database
+  public updateDatabase(): Observable<any> {
+    const query = {
+      path: '/request/updateDatabase',
+    };
     return this._http.get('/search/get', {params: query});
   }
 }

@@ -10,8 +10,13 @@ import { AdminSearchMailComponent } from './admin-search-mail/admin-search-mail.
 import { AdminSearchHistoryComponent } from './admin-search-history/admin-search-history.component';
 import { AdminSearchQueueComponent } from './admin-search-queue/admin-search-queue.component';
 import { AdminSearchResultsComponent } from './admin-search-results/admin-search-results.component';
+import { AdminSearchDemoComponent } from './admin-search-demo/admin-search-demo.component';
 import { SharedSearchMailModule } from '../../../../shared/components/shared-search-mail/shared-search-mail.module';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from "@angular/forms";
+import { CountryFlagModule } from "../../../../utility-components/country-flag/country-flag.module";
+import { AdminSearchMapModule } from "./admin-search-map/admin-search-map.module";
+import { ModalModule } from "../../../../utility-components/modal/modal.module";
 
 
 @NgModule({
@@ -22,7 +27,11 @@ import { RouterModule } from '@angular/router';
     SharedSearchHistoryModule,
     TranslateModule.forChild(),
     SharedSearchMailModule,
-    RouterModule
+    AdminSearchMapModule,
+    FormsModule,
+    RouterModule,
+    CountryFlagModule,
+    ModalModule
   ],
   declarations: [
     AdminSearchComponent,
@@ -30,7 +39,8 @@ import { RouterModule } from '@angular/router';
     AdminSearchMailComponent,
     AdminSearchHistoryComponent,
     AdminSearchQueueComponent,
-    AdminSearchResultsComponent
+    AdminSearchResultsComponent,
+    AdminSearchDemoComponent
   ],
   exports: [
     AdminSearchComponent

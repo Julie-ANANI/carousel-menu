@@ -1,0 +1,68 @@
+@import "../../../../../../../style/variables";
+.professional-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: -1.2rem;
+
+  .profile {
+    display: inline-flex;
+    background: white;
+    border: 1px solid $border-color;
+    min-height: 11.875rem;
+    padding: .95rem 1rem .6rem 1rem;
+    border-radius: .18rem;
+    margin-bottom: 1.2rem;
+    flex: 0 1 calc(32% - 1rem);
+
+  }
+
+  .profile:hover {
+    color: $border-color;
+    box-shadow: $box-shadow-hover;
+
+  }
+
+  .pro-tag-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: left;
+    font-size: 0.875rem;
+    flex-direction: row;
+
+    .label-validate {
+      margin-right: auto;
+      margin-left: auto;
+      margin-bottom: .6rem;
+    }
+
+    .flag-wrapper {
+      margin: 0 .6rem .6rem 0;
+    }
+
+    .detail-wrapper {
+
+      .name-wrapper {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .job-wrapper {
+        font-size: 0.9375rem;
+        color: $background-color;
+      }
+
+      .company-wrapper {
+        color: $meta-color;
+        font-weight: 600;
+      }
+
+      .email-wrapper {
+        color: transparent;
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+      }
+    }
+
+  }
+}

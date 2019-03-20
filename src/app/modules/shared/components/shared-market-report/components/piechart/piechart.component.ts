@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -33,9 +34,12 @@ export class PiechartComponent implements OnInit, OnDestroy {
   private _labelPercentage: Array<{percentage: Array<string>}>;
   private ngUnsubscribe: Subject<any> = new Subject();
 
+  private _isBrowser: boolean;
 
-
-  constructor(private translateService: TranslateService) { }
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private translateService: TranslateService) {
+    this._isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit() {
     this._lang = this.translateService.currentLang || 'en';
@@ -71,6 +75,10 @@ export class PiechartComponent implements OnInit, OnDestroy {
 
   get labelPercentage(): Array<{ percentage: Array<string> }> {
     return this._labelPercentage;
+  }
+
+  get isBrowser(): boolean {
+    return this._isBrowser;
   }
 
 }
