@@ -22,7 +22,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _params: any;
 
-  private _more: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {};
 
   private _more_cat: SidebarInterface = {};
 
@@ -37,6 +37,8 @@ export class SharedSearchProsComponent implements OnInit {
   showText = false;
 
   catResult: any;
+
+  private _displayLoader = false;
 
   constructor(private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
@@ -160,29 +162,128 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
 
-  changeSettings() {
-    this._more = {
-      animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SEARCH.SETTINGS'
-    };
-  }
-
-  displayStars() {
-    this._more_cat = {
-      animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SEARCH.STAR_PROFILES'
+  onClickSettings() {
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'Advanced Search',
+      size: '726px'
     };
   }
 
 
+  /***
+   *
+   * @param {Event} event: pressed button
+   * > update Computer Aided Targeting statistics (SearchService)
+   * > Trigger the CAT analysis (NLPService)
+   * > format the result and store it in the catResult object
+   */
+  onClickSearchCat(event: Event): void {
+    event.preventDefault();
 
-  public getCatQuota() {
+    this._displayLoader = true;
+
+    this.searchService.updateCatStats(this._params.catKeywords.split('\n').length).pipe(first()).subscribe((response: any) => {});
+
+    this.searchService.computerAidedTargeting(this._params.catKeywords.split('\n')).pipe(first()).subscribe((response: any) => {
+
+      this._displayLoader = false;
+
+      this.onReset();
+
+      this.catResult.total_result = [];
+
+      Object.entries(response.total_result).forEach(([key, value]) => {
+        this.catResult.total_result.push(value);
+      });
+
+      this.estimateNumberOfGoogleRequests(this.catResult.total_result);
+
+      this.catResult.keywords_analysis = response.keywords_analysis.kw;
+
+      let expected_result;
+
+      this._params.catKeywords.split('\n').forEach((request: string) => {
+        expected_result = response.total_result[request];
+        Object.entries(response.keywords_analysis.kw).forEach(([key, value]) => {
+
+          if (value < 0.5) {
+            request = request.replace(`${key}`, `<span class="text-error">${key}</span>`);
+          } else if (value < 0.8) {
+            request = request.replace(`${key}`, `<span class="text-warning">${key}</span>`);
+          } else {
+            request = request.replace(`${key}`, `<span class="text-success">${key}</span>`);
+          }
+
+        });
+        this._suggestion.push({'expected': expected_result, 'kw': request});
+      });
+
+      this.catResult.new_keywords = [];
+
+      Object.entries(response.keywords_analysis.new).forEach(([key, value]) => {
+        this.catResult.new_keywords.push(key);
+      });
+
+      this.catResult.duplicate_status = response.duplicate_status;
+
+      this.catResult.profile = response.stars;
+
+      this.getCatQuota();
+
+    }, () => {
+      this._displayLoader = false;
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
+  private getCatQuota() {
     this.searchService.dailyStats().pipe(first()).subscribe((result: any) => {
       this._catQuota = 100;
       if (result.hours) {
         this._catQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueriesCat, 0);
       }
+    }, () => {
+
     });
+  }
+
+
+  onClickSearch(event: Event): void {
+    event.preventDefault();
+
+    const searchParams = this._params;
+
+    searchParams.metadata = {user: this.authService.getUserInfo()};
+
+    searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
+
+    this.searchService.search(searchParams).pipe(first()).subscribe((_: any) => {
+      this._initParams();
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'The request has been added to the queue successfully.');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
+
+  getCatCircleClass(): string {
+    return this._catQuota > 50 ? 'circle-success' : (this._catQuota > 10 && this._catQuota <= 50) ? 'circle-progress' : 'circle-alert';
+  }
+
+
+  getCircleClass(): string {
+    return this._googleQuota > 10000 ? 'circle-success' : (this._googleQuota < 10000 && this._googleQuota > 5000) ? 'circle-progress' : 'circle-alert';
+  }
+
+
+  displayStars() {
+    this._more_cat = {
+      // animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SEARCH.STAR_PROFILES'
+    };
   }
 
   updateSettings(value: any) {
@@ -190,9 +291,6 @@ export class SharedSearchProsComponent implements OnInit {
     this.estimateNumberOfGoogleRequests();
   }
 
-  closeSidebar(value: string) {
-    this.more.animate_state = value;
-  }
 
   public getTargetCountries(settings: InnovationSettings): Array<string> {
     let countries: Array<string> = [];
@@ -211,77 +309,49 @@ export class SharedSearchProsComponent implements OnInit {
     return countries;
   }
 
-  public search(event: Event): void {
-    event.preventDefault();
-    const searchParams = this._params;
-    searchParams.metadata = {user: this.authService.getUserInfo()};
-    searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
-    this.searchService.search(searchParams).pipe(first()).subscribe((_: any) => {
-      this._initParams();
-      this.translateNotificationsService.success('Requête ajoutée', 'La requête a bien été ajoutée à la file d\'attente');
-    });
+
+  get suggestion(): any {
+    return this._suggestion;
   }
 
-  /***
-   *
-   * @param {Event} event: pressed button
-   * > update Computer Aided Targeting statistics (SearchService)
-   * > Trigger the CAT analysis (NLPService)
-   * > format the result and store it in the catResult object
-   */
-  public cat(event: Event): void {
-    event.preventDefault();
-    this.searchService.updateCatStats(this._params.catKeywords.split('\n').length).subscribe((response: any) => {});
-    this.searchService.computerAidedTargeting(this._params.catKeywords.split('\n')).pipe(first()).subscribe((response: any) => {
-      this.onReset();
-      console.log(response);
-      this.catResult.total_result = [];
-      Object.entries(response.total_result).forEach(([key, value]) => {
-        this.catResult.total_result.push(value);
-      });
-      this.estimateNumberOfGoogleRequests(this.catResult.total_result);
-
-      this.catResult.keywords_analysis = response.keywords_analysis.kw;
-
-      let expected_result;
-      this._params.catKeywords.split('\n').forEach((request: string) => {
-        expected_result = response.total_result[request];
-        Object.entries(response.keywords_analysis.kw).forEach(([key, value]) => {
-          if (value < 0.5) {
-            request = request.replace(`${key}`, `<span class="text-error">${key}</span>`);
-          } else if (value < 0.8) {
-            request = request.replace(`${key}`, `<span class="text-warning">${key}</span>`);
-          } else {
-            request = request.replace(`${key}`, `<span class="text-success">${key}</span>`);
-          }
-        });
-        this._suggestion.push({'expected': expected_result, 'kw': request});
-      });
-
-      this.catResult.new_keywords = [];
-      Object.entries(response.keywords_analysis.new).forEach(([key, value]) => {
-        this.catResult.new_keywords.push(key);
-      });
-
-      this.catResult.duplicate_status = response.duplicate_status;
-
-      this.catResult.profile = response.stars;
-    });
+  get params(): any {
+    return this._params;
   }
 
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
 
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
 
+  get more_cat(): any {
+    return this._more_cat;
+  }
 
+  get googleQuota(): number {
+    return this._googleQuota;
+  }
 
+  get catQuota(): number {
+    return this._catQuota;
+  }
 
+  get estimatedNumberOfGoogleRequests(): number {
+    return this._estimatedNumberOfGoogleRequests;
+  }
 
-  get suggestion(): any { return this._suggestion; }
-  get params(): any { return this._params; }
-  get more(): any { return this._more; }
-  get more_cat(): any { return this._more_cat; }
-  get googleQuota(): number { return this._googleQuota; }
-  get catQuota(): number { return this._catQuota; }
-  get estimatedNumberOfGoogleRequests(): number { return this._estimatedNumberOfGoogleRequests; }
-  get catDone(): any { return this.catResult.keywords_analysis; }
-  set params(value: any) { this._params = value; }
+  get catProcessDone(): any {
+    return this.catResult.keywords_analysis;
+  }
+
+  set params(value: any) {
+    this._params = value;
+  }
+
+  get displayLoader(): boolean {
+    return this._displayLoader;
+  }
+
 }

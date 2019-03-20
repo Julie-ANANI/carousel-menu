@@ -1,12 +1,14 @@
 @import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
 
 #shared-search-pros-component{
 
-  .search-wrapper {
+  .search-section {
     display: flex;
 
-    .search-col {
-      flex: 1;
+    .search-wrapper {
+      flex: 0 1 50%;
+      padding-right: 5%;
 
       .heading-wrapper {
         display: flex;
@@ -39,31 +41,36 @@
           }
 
           .popover-container {
-            width: 212px;
+            width: 230px;
 
             .card {
               margin: 0;
 
               .card-body {
                 padding: 10px 5px;
+                font-size: 12px;
+                color: $background-color;
+                font-weight: 600;
 
-                .points {
-                  display: flex;
-                  align-items: center;
-                  font-size: 12px;
-                  color: $background-color;
-                  font-weight: 600;
+                ul {
+                  margin: 0;
 
-                  .shape.circle {
+                  li {
                     margin-left: 5px;
-                    margin-right: 11px;
-                  }
-
-                  .icons {
-                    margin-left: 0;
+                    padding: 0;
                   }
 
                 }
+
+                .shape.circle {
+                  margin-left: 5px;
+                  margin-right: 11px;
+                }
+
+                .icons {
+                  margin-left: 0;
+                }
+
 
               }
 
@@ -75,6 +82,55 @@
 
       }
 
+      .input-wrapper {
+        padding-top: 15px;
+
+        .form-group {
+          position: relative;
+          margin-bottom: 10px !important;
+
+          .search-button-wrapper {
+            @include control-transition();
+            position: absolute;
+            right: 10px;
+            bottom: 4px;
+            color: $primary-color;
+
+            &:hover {
+              cursor: pointer;
+            }
+
+          }
+
+        }
+
+        .remaining-wrapper {
+          display: flex;
+          justify-content: space-between;
+          font-size: 12px;
+          color: $meta-color;
+          font-weight: 600;
+        }
+
+      }
+
+    }
+
+    .loader-wrapper, .analysis-wrapper {
+      padding-top: 25px;
+    }
+
+    .analysis-wrapper {
+
+      .icons {
+        margin-bottom: 15px;
+
+        &:hover {
+          cursor: default;
+        }
+
+      }
+
     }
 
 
@@ -82,58 +138,36 @@
 
 }
 
-/*.flex-container {
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
+@media (max-width: $size-md) {
 
-  .form-input {
-    margin-top: 0;
+  #shared-search-pros-component {
+
+    .search-section {
+      flex-direction: column;
+
+      .search-wrapper {
+        flex: 1 !important;
+        padding-right: 15% !important;
+      }
+
+    }
+
   }
 
-  button {
-    margin-left: 15px;
+}
+
+@media (max-width: $size-sm) {
+
+  #shared-search-pros-component {
+
+    .search-section {
+
+      .search-wrapper {
+        padding-right: 0 !important;
+      }
+
+    }
+
   }
+
 }
-
-.tips {
-  display: flex;
-  margin-top: 5px;
-
-  a {
-    font-weight: 600;
-    margin-right: 30px;
-  }
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.bot-wrapper {
-  margin: 30px 0;
-}
-
-.suggestedRequests {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  margin: 5px;
-  justify-content: space-around;
-}
-
-#input-search {
-  display: flex;
-  align-items: center;
-}
-
-.request-analysis{
-  display:inline-block;
-}
-
-.cat{
-  float: left;
-}*/
-
