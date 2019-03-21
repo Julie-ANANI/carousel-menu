@@ -120,6 +120,12 @@
       padding-top: 25px;
     }
 
+    .analysis-content {
+      padding-top: 2px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid $border-color;
+    }
+
     .analysis-wrapper {
 
       .icons {
@@ -131,8 +137,42 @@
 
       }
 
-    }
+      .analysis-content {
 
+        ul {
+          list-style: none;
+
+          li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: $background-color;
+
+            .text-pros {
+              margin-right: 25px;
+            }
+
+            .fa-plus-circle {
+              color: $meta-color;
+              font-size: 20px;
+              vertical-align: middle;
+
+              &:hover {
+                cursor: pointer;
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
 
   }
 

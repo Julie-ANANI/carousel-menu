@@ -22,10 +22,25 @@
               <div class="card">
                 <div class="card-body">
 
-                  <div class="display-flex align-center"><div class="shape circle circle-xs circle-success"></div><span>Relevant</span></div>
-                  <div class="display-flex align-center"><div class="shape circle circle-xs circle-progress"></div><span>Average</span></div>
-                  <div class="display-flex align-center"><div class="shape circle circle-xs circle-alert"></div><span>Overused</span></div>
-                  <div class="display-flex align-center"><div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div><span>Too much pros duplicated</span></div>
+                  <div class="display-flex align-center">
+                    <div class="shape circle circle-xs circle-success"></div>
+                    <span>Relevant</span>
+                  </div>
+
+                  <div class="display-flex align-center">
+                    <div class="shape circle circle-xs circle-progress"></div>
+                    <span>Average</span>
+                  </div>
+
+                  <div class="display-flex align-center">
+                    <div class="shape circle circle-xs circle-alert"></div>
+                    <span>Overused</span>
+                  </div>
+
+                  <div class="display-flex align-center">
+                    <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
+                    <span>Too much pros duplicated</span>
+                  </div>
 
                   <hr class="hr">
 
@@ -54,7 +69,7 @@
               name="cat-keywords"
               rows="5"
               [(ngModel)]="params.catKeywords"
-              placeholder="Search here using Computer Aided Targeting.">
+              placeholder="Search here using Computer Aided Targeting. One request per line.">
             </textarea>
             <ng-container *ngIf="params.catKeywords">
               <span class="search-button-wrapper" (click)="onClickSearchCat($event)"><i class="fas fa-search"></i></span>
@@ -80,8 +95,8 @@
         </ng-container>
         <!-- /loader -->
 
-        <!-- display cat result -->
-        <ng-container *ngIf="!catProcessDone && !displayLoader">
+        <!-- display cat result *ngIf="catProcessDone && !displayLoader" -->
+        <ng-container>
 
           <!-- analysis -->
           <div class="analysis-wrapper">
@@ -93,9 +108,17 @@
               </ng-container>
             </div>
 
+            <div class="analysis-content">
+              <ul>
+                <li *ngFor="let suggestion of suggestions">
+                  <div class="display-flex"><span class="text-pros">{{ suggestion.expected_result }} pros</span><div [innerHTML]="suggestion.search_keywords"></div></div>
+                  <div (click)="onClickPlus(suggestion.keywords)" [ngClass]="{ 'inactive':  }"><i class="fas fa-plus-circle"></i></div>
+                </li>
+              </ul>
+            </div>
+
           </div>
           <!-- /analysis -->
-
 
         </ng-container>
         <!-- /display cat result -->

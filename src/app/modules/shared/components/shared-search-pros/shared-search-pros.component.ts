@@ -18,7 +18,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   @Input() campaign: Campaign;
 
-  private _suggestion: { expected: number, kw: string }[] = [];
+  private _suggestions: Array<{ expected_result: number, search_keywords: string; keywords: string }> = [];
 
   private _params: any;
 
@@ -60,6 +60,8 @@ export class SharedSearchProsComponent implements OnInit {
   private _initParams() {
     this.getGoogleQuota();
 
+    // this.getCatQuota();
+
     this._params = {
       keywords: '',
       catKeywords: '',
@@ -96,7 +98,7 @@ export class SharedSearchProsComponent implements OnInit {
 
     this.estimateNumberOfGoogleRequests();
 
-    this._suggestion = [];
+    this._suggestions = [];
 
   }
 
@@ -157,7 +159,7 @@ export class SharedSearchProsComponent implements OnInit {
    */
   onReset() {
     this.catResult = { duplicate_status: 'ok' };
-    this._suggestion = [];
+    this._suggestions = [];
     this.estimateNumberOfGoogleRequests();
   }
 
@@ -203,10 +205,12 @@ export class SharedSearchProsComponent implements OnInit {
 
       let expected_result;
 
+      let keywords;
+
       this._params.catKeywords.split('\n').forEach((request: string) => {
         expected_result = response.total_result[request];
+        keywords = request;
         Object.entries(response.keywords_analysis.kw).forEach(([key, value]) => {
-
           if (value < 0.5) {
             request = request.replace(`${key}`, `<span class="text-error">${key}</span>`);
           } else if (value < 0.8) {
@@ -216,7 +220,7 @@ export class SharedSearchProsComponent implements OnInit {
           }
 
         });
-        this._suggestion.push({'expected': expected_result, 'kw': request});
+        this._suggestions.push({expected_result: expected_result, search_keywords: request, keywords: keywords});
       });
 
       this.catResult.new_keywords = [];
@@ -247,6 +251,11 @@ export class SharedSearchProsComponent implements OnInit {
     }, () => {
 
     });
+  }
+
+
+  onClickPlus(search_keywords: string) {
+    this._params.keywords += `${search_keywords}\n`;
   }
 
 
@@ -309,9 +318,8 @@ export class SharedSearchProsComponent implements OnInit {
     return countries;
   }
 
-
-  get suggestion(): any {
-    return this._suggestion;
+  get suggestions(): Array<{ expected_result: number; search_keywords: string; keywords: string }> {
+    return this._suggestions;
   }
 
   get params(): any {
