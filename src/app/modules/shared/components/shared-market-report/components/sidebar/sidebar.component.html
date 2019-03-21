@@ -54,7 +54,7 @@
       {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
       <i class="icon icon-arrow-right" aria-hidden="true"></i>
     </a>
-    <span *ngFor="let c of continentList">
+    <span *ngFor="let c of continentsList">
       <input type="checkbox" [name]="c" (change)="checkCountry($event, c)" [checked]="filteredContinents ? filteredContinents[c] : true">
       <label [for]="c">{{ ('CONTINENTS.' + c) | translate }}</label>
     </span>

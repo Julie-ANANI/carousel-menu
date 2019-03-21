@@ -29,30 +29,14 @@ export class SharedWorldmapComponent implements OnInit{
     }
   }
 
-  @Input() set initialConfiguration(initialConfiguration: any) {
-    this._continents = initialConfiguration || {
-          africa: false,
-          americaNord: false,
-          americaSud: false,
-          asia: false,
-          europe: false,
-          oceania: false,
-          russia: false
-        };
+  @Input() set initialConfiguration(initialConfiguration: {[c: string]: boolean}) {
+    this._worldmap.continentsList.forEach((continent) => {
+      this._worldmap.selectContinent(continent, initialConfiguration[continent]);
+    });
   }
 
   @Output() updateContinent = new EventEmitter<any>();
   @Output() hoveredContinent = new EventEmitter<string>();
-
-  private _continents = {
-    africa: false,
-    americaNord: false,
-    americaSud: false,
-    asia: false,
-    europe: false,
-    oceania: false,
-    russia: false
-  };
 
   constructor(private _elem: ElementRef,
               private _worldmap: SharedWorldmapService,
@@ -60,6 +44,12 @@ export class SharedWorldmapComponent implements OnInit{
 
   ngOnInit() {
     this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
+    this._worldmap.newContinentSelected.subscribe((_continent) => {
+      this.updateContinent.emit({
+        continents: this._worldmap.selectedContinents,
+        allChecked: this._worldmap.areAllContinentChecked()
+      });
+    });
   }
 
   /**
@@ -68,11 +58,9 @@ export class SharedWorldmapComponent implements OnInit{
    */
   public switchWorldCheckbox($event: any): void {
     const worldCheckboxValue = $event.target.checked;
-    const keys = Object.keys(this._continents);
-    keys.forEach((continent) => {
-      this._continents[continent] = worldCheckboxValue;
+    this._worldmap.continentsList.forEach((continent) => {
+      this._worldmap.selectedContinents[continent] = worldCheckboxValue;
     });
-    this.updateContinent.emit({continents: this._continents});
   }
 
   /**
@@ -81,15 +69,9 @@ export class SharedWorldmapComponent implements OnInit{
    */
   public clickOnContinent(event: Event, continent: string): void {
     event.preventDefault();
-
     if (this.isEditable) {
-      this._continents[continent] = !this._continents[continent];
-      this.updateContinent.emit({
-        continents: this._continents,
-        allChecked: SharedWorldmapService.areAllContinentChecked(this._continents)
-      });
+      this._worldmap.selectContinent(continent, !this._worldmap.selectedContinents[continent]);
     }
-
   }
 
   /**
@@ -98,12 +80,14 @@ export class SharedWorldmapComponent implements OnInit{
    * @returns {boolean}
    */
   public getContinentSelectionStatus(continent: string): boolean {
-    return !!this._continents[continent];
+    return !!this._worldmap.selectedContinents[continent];
   }
 
   public onHoverChange(continent: string): void {
     this.hoveredContinent.emit(continent);
   }
 
-
+  public continentSelection(): {[c: string]: boolean} {
+    return this._worldmap.selectedContinents;
+  }
 }

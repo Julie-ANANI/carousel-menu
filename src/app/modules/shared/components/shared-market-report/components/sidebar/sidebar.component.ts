@@ -41,8 +41,6 @@ export class SidebarComponent implements OnInit {
 
   private _answers: Array<Answer>;
 
-  private _continentList: Array<string>;
-
   private _isAdmin: boolean;
 
   private _isOwner: boolean;
@@ -66,7 +64,6 @@ export class SidebarComponent implements OnInit {
               private translateNotificationsService: TranslateNotificationsService,
               private worldmapService: SharedWorldmapService) {
     PageScrollConfig.defaultDuration = 600;
-    this._continentList = this.worldmapService.continents;
   }
 
   ngOnInit() {
@@ -141,44 +138,15 @@ export class SidebarComponent implements OnInit {
 
   public checkCountry(event: Event) {
     event.preventDefault();
-    const continentName = event.target['name'];
-    const checked = event.target['checked'];
-    const filteredContinents = this.filteredContinents;
-    if (filteredContinents) {
-      filteredContinents[continentName] = checked;
-      if (SharedWorldmapService.areAllContinentChecked(filteredContinents)) {
-        this.filterService.deleteFilter('worldmap');
-      } else {
-        this.filterService.addFilter(
-          {
-            status: 'COUNTRIES',
-            value: filteredContinents,
-            questionId: 'worldmap',
-            questionTitle: {en: 'worldmap', fr: 'mappemonde'}
-          }
-        );
-      }
-    } else {
-      this.filterService.addFilter(
-        {
-          status: 'COUNTRIES',
-          value: this.worldmapService.continents.reduce((acc, c) => {
-            acc[c] = (c === continentName) ? checked : true;
-            return acc;
-          }, {}),
-          questionId: 'worldmap',
-          questionTitle: {en: 'worldmap', fr: 'mappemonde'}
-        }
-      );
-    }
+    this.worldmapService.selectContinent(event.target['name'], event.target['checked']);
   }
 
   get answers(): Array<Answer> {
     return this._answers;
   }
 
-  get continentList(): Array<string> {
-    return this._continentList;
+  get continentsList(): Array<string> {
+    return this.worldmapService.continentsList;
   }
 
   get isAdmin(): boolean {
