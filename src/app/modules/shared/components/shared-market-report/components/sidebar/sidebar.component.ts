@@ -139,6 +139,33 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  public checkCountry(event: Event) {
+    event.preventDefault();
+    const continentName = event.target['name'];
+    const checked = event.target['checked'];
+    const filteredContinents = this.filteredContinents;
+    /*
+     * TODO: create first filter
+     */
+    if (filteredContinents) {
+      filteredContinents[continentName] = checked;
+      if (SharedWorldmapService.areAllContinentChecked(filteredContinents)) {
+        this.filterService.deleteFilter('worldmap');
+      } else {
+        this.filterService.addFilter(
+          {
+            status: 'COUNTRIES',
+            value: filteredContinents,
+            questionId: 'worldmap',
+            questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+          }
+        );
+      }
+    } else {
+      console.log('not init yet');
+    }
+  }
+
   get answers(): Array<Answer> {
     return this._answers;
   }
@@ -192,7 +219,7 @@ export class SidebarComponent implements OnInit {
   }
 
   get filteredContinents() {
-    return this.filterService.filters['worldmap'];
+    return this.filterService.filters['worldmap'] ? this.filterService.filters['worldmap'].value : null;
   }
 
 }

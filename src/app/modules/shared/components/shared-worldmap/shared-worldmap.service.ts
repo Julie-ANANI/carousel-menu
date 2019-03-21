@@ -7,6 +7,21 @@ export class SharedWorldmapService {
 
   private _countries: {[country: string]: string} = {}; // a mapping of countries -> continent
 
+  /**
+   * Checks whether all the continents have been selected
+   */
+  public static areAllContinentChecked(continents: {[c: string]: boolean}): boolean {
+    const keys = Object.keys(continents);
+    let i = 0;
+    while (i < keys.length) {
+      if (!continents[keys[i]]) {
+        return false;
+      }
+      i++;
+    }
+    return true;
+  }
+
   public loadCountriesFromViewContainerRef (viewContainerRef: ViewContainerRef) {
     if (Object.keys(this._countries).length === 0) {
       this._continents.forEach((continent) => {

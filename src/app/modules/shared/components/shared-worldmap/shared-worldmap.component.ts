@@ -63,19 +63,6 @@ export class SharedWorldmapComponent implements OnInit{
   }
 
   /**
-   * Checks whether all the continents have been selected
-   * @returns {boolean}
-   */
-  public areAllContinentChecked(): boolean {
-    const keys = Object.keys(this._continents);
-    let i = 0;
-    while (i < keys.length && this._continents[keys[i]]) {
-      i++;
-    }
-    return i === keys.length;
-  }
-
-  /**
    * Selects/Unselects all the countries
    * @param $event the value of the checkbox
    */
@@ -99,7 +86,7 @@ export class SharedWorldmapComponent implements OnInit{
       this._continents[continent] = !this._continents[continent];
       this.updateContinent.emit({
         continents: this._continents,
-        allChecked: this.areAllContinentChecked()
+        allChecked: SharedWorldmapService.areAllContinentChecked(this._continents)
       });
     }
 

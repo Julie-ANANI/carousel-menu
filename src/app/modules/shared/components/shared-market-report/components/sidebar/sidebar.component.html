@@ -55,7 +55,7 @@
       <i class="icon icon-arrow-right" aria-hidden="true"></i>
     </a>
     <span *ngFor="let c of continentList">
-      <input type="checkbox" [name]="c" [checked]="filteredContinents ? filteredContinents.value[c] : true">
+      <input type="checkbox" [name]="c" (change)="checkCountry($event, c)" [checked]="filteredContinents ? filteredContinents[c] : true">
       <label [for]="c">{{ ('CONTINENTS.' + c) | translate }}</label>
     </span>
   </p>
