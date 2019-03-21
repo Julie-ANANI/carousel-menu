@@ -33,11 +33,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private mouseService: MouseService,
-              private formBuilder: FormBuilder) { }
-
-  ngOnInit() {
-
-    this.buildForm();
+              private formBuilder: FormBuilder) {
 
     this.mouseService.getClickEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((event: Event) => {
       if (event && event.target && event.target['id'] !== 'button-signIn' && event.target['id'] !== 'header-unauth-signInForm'
@@ -48,6 +44,11 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
         this._formData.reset();
       }
     });
+
+  }
+
+  ngOnInit() {
+    this.buildForm();
   }
 
 

@@ -1,4 +1,5 @@
 @import "../../../../style/framework/src/variables";
+@import "../../../../style/framework/src/mixins";
 
 #header-unauth-component {
 
@@ -13,10 +14,9 @@
     width: 380px;
     min-height: 300px;
     text-align: left;
-    background-color: white;
+    background-color: $bg-color-light;
     z-index: 2;
-    box-shadow: $box-shadow-hover;
-    transition: all 0.35s ease;
+    box-shadow: $box-shadow-hover-umi;
     border-radius: $border-radius;
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
@@ -37,11 +37,9 @@
 }
 
 
-/********************************** Media ***************************************/
+@media (max-width: $size-sm) {
 
-@media (max-width: $size-md) {
-
-  #header-component {
+  #header-unauth-component {
 
     .signIn-wrapper {
       width: 80vw !important;

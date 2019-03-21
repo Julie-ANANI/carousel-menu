@@ -32,7 +32,7 @@
           <form novalidate [formGroup]="formData" (submit)="onClickContinue()">
 
             <!-- email address -->
-            <div class="form-group">
+            <div class="form-group has-error">
               <label class="form-label" for="header-unauth-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
               <input
                 type="email"
@@ -40,14 +40,18 @@
                 class="form-input"
                 formControlName="email"
                 placeholder="john@catco.com">
-              <span *ngIf="formData.get('email').touched">
-                  <span class="form-error" *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-                  <span class="form-error" *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
-                </span>
+              <ng-container *ngIf="formData.get('email').touched">
+                <ng-container *ngIf="formData.get('email').hasError('required')">
+                  <span class="form-input-hint">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                </ng-container>
+                <ng-container *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+                  <span class="form-input-hint">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+                </ng-container>
+               </ng-container>
             </div>
 
             <!-- password -->
-            <div class="form-group">
+            <div class="form-group has-error">
               <label class="form-label" for="header-unauth-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
               <input
                 class="form-input"
@@ -55,7 +59,9 @@
                 id="header-unauth-password"
                 formControlName="password"
                 [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
-              <span class="form-error" *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
+              <ng-container *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+                <span class="form-input-hint">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
+              </ng-container>
             </div>
 
             <!-- login button -->
