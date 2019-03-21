@@ -1,15 +1,15 @@
-<div class="header header-primary" id="footer-component">
+<section class="header header-primary" id="footer-component">
   <div class="column col-11 col-xs-12 col-mx-auto">
     <nav class="navbar">
 
-      <!-- Logo -->
+      <!-- logo -->
       <div class="logo">
         <a routerLink="/" class="gtm-menu-logo">
           <img src="{{ getLogo() }}" [alt]=" " width="110px" height="33px">
         </a>
       </div>
 
-      <!-- Info -->
+      <!-- info -->
       <div class="info">
         {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
           <span *ngIf="checkIsMainDomain()">
@@ -26,7 +26,7 @@
           </span>
       </div>
 
-      <!-- Language -->
+      <!-- language -->
       <div class="lang">
         <label class="form-switch" for="setLang">
           <select class="form-select" id="setLang" (change)="changeLanguage($event)">
@@ -39,5 +39,5 @@
 
     </nav>
   </div>
-</div>
+</section>
 
