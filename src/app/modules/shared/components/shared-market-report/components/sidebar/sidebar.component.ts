@@ -144,9 +144,6 @@ export class SidebarComponent implements OnInit {
     const continentName = event.target['name'];
     const checked = event.target['checked'];
     const filteredContinents = this.filteredContinents;
-    /*
-     * TODO: create first filter
-     */
     if (filteredContinents) {
       filteredContinents[continentName] = checked;
       if (SharedWorldmapService.areAllContinentChecked(filteredContinents)) {
@@ -162,7 +159,17 @@ export class SidebarComponent implements OnInit {
         );
       }
     } else {
-      console.log('not init yet');
+      this.filterService.addFilter(
+        {
+          status: 'COUNTRIES',
+          value: this.worldmapService.continents.reduce((acc, c) => {
+            acc[c] = (c === continentName) ? checked : true;
+            return acc;
+          }, {}),
+          questionId: 'worldmap',
+          questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+        }
+      );
     }
   }
 
