@@ -1,86 +1,101 @@
-<div class="column col-xs-12 col-11 col-mx-auto" id="batch-form-component">
-  <form [formGroup]="formData" autocomplete="off" (ngSubmit)="onSave()">
+<section id="batch-form-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <form [formGroup]="formData" autocomplete="off" (ngSubmit)="onSave()">
 
-    <!-- section save -->
-    <div class="section-save">
-      <button *ngIf="!isNewBatch" type="submit" class="btn btn-primary">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
-      <button *ngIf="isNewBatch" type="submit" class="btn btn-primary">{{ 'COMMON.BUTTON.SEND' | translate }}</button>
-    </div>
+      <!-- section save -->
+      <div class="section-save text-right">
 
-    <!-- no of pros -->
-    <div *ngIf="isNewBatch" class="form-group">
-      <label class="form-label" for="batch-form-pros">{{ 'COMMON.LABEL.PROS_CONTACT' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="pros"
-        id="batch-form-pros"
-        type="number"
-        [placeholder]="'COMMON.PLACEHOLDER.PROS_CONTACT' | translate"
-        (change)="onKeyboardPress($event)">
-      <div *ngIf="errorPros" class="form-error">
-        <span>{{ 'COMMON.REQUIRED.PROS_CONTACT' | translate }}</span>
+        <ng-container *ngIf="!isNewBatch">
+          <button type="submit" class="btn btn-primary">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+        </ng-container>
+
+        <ng-container *ngIf="isNewBatch">
+          <button type="submit" class="btn btn-primary">{{ 'COMMON.BUTTON.SEND' | translate }}</button>
+        </ng-container>
+
       </div>
-    </div>
 
-    <!-- date -->
-    <div *ngIf="!hideInput" class="form-group">
-      <label class="form-label" for="batch-form-date">{{ 'COMMON.LABEL.DATE' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="date"
-        id="batch-form-date"
-        type="date"
-        (change)="onKeyboardPress($event)"
-        [value]="mailDate | date:'yyyy-MM-dd'">
-      <div *ngIf="isNewBatch" class="form-error">
-        <span>{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</span>
-      </div>
-    </div>
+      <!-- no of pros -->
+      <ng-container *ngIf="isNewBatch">
+        <div class="form-group">
+          <label class="form-label" for="batch-form-pros">{{ 'COMMON.LABEL.PROS_CONTACT' | translate }}</label>
+          <input
+            class="form-input"
+            formControlName="pros"
+            id="batch-form-pros"
+            type="number"
+            [placeholder]="'COMMON.PLACEHOLDER.PROS_CONTACT' | translate"
+            (change)="onKeyboardPress($event)">
+          <div class="text text-alert" *ngIf="errorPros">{{ 'COMMON.REQUIRED.PROS_CONTACT' | translate }}</div>
+        </div>
+      </ng-container>
 
-    <!-- time -->
-    <div *ngIf="!hideInput" class="form-group">
-      <label class="form-label" for="batch-form-time">{{ 'COMMON.LABEL.TIME' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="time"
-        id="batch-form-time"
-        type="time"
-        (change)="onKeyboardPress($event)"
-        [value]="mailTime">
-      <div *ngIf="isNewBatch" class="form-error">
-        <span>{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</span>
-      </div>
-    </div>
+      <!-- date -->
+      <ng-container *ngIf="!hideInput">
+        <div class="form-group">
+          <label class="form-label" for="batch-form-date">{{ 'COMMON.LABEL.DATE' | translate }}</label>
+          <input
+            class="form-input"
+            formControlName="date"
+            id="batch-form-date"
+            type="date"
+            (change)="onKeyboardPress($event)"
+            [value]="mailDate | date:'yyyy-MM-dd'">
+          <div *ngIf="isNewBatch" class="text text-alert">{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</div>
+        </div>
+      </ng-container>
 
-    <!-- content en -->
-    <div *ngIf="isEditBatch" class="form-group">
-      <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.EN' | translate }}</label>
-      <app-text-zone
-        [elementId]="'en'"
-        [readonly]="true"
-        [data]="contentCurrent.en">
-      </app-text-zone>
-    </div>
+      <!-- time -->
+      <ng-container *ngIf="!hideInput">
+        <div class="form-group">
+          <label class="form-label" for="batch-form-time">{{ 'COMMON.LABEL.TIME' | translate }}</label>
+          <input
+            class="form-input"
+            formControlName="time"
+            id="batch-form-time"
+            type="time"
+            (change)="onKeyboardPress($event)"
+            [value]="mailTime">
+          <div *ngIf="isNewBatch" class="text text-alert">{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</div>
+        </div>
+      </ng-container>
 
-    <!-- content fr -->
-    <div *ngIf="isEditBatch" class="form-group">
-      <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.FR' | translate }}</label>
-      <app-text-zone
-        [elementId]="'fr'"
-        [readonly]="true"
-        [data]="contentCurrent.fr">
-      </app-text-zone>
-    </div>
+      <!-- content en -->
+      <ng-container *ngIf="isEditBatch">
+        <div class="form-group">
+          <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.EN' | translate }}</label>
+          <app-text-zone
+            [elementId]="'en'"
+            [readonly]="true"
+            [data]="contentCurrent.en">
+          </app-text-zone>
+        </div>
+      </ng-container>
 
-    <div *ngIf="isEditBatch && campaignWorkflows && campaignWorkflows.length > 1" class="form-group">
-      <label class="form-label">Changer de modèle de mail</label>
-      <select
-        class="form-select"
-        formControlName="workflow">
-        <option *ngFor="let workflow of campaignWorkflows" [ngValue]="workflow">{{ workflow }}</option>
-      </select>
-      <button type="button" class="btn btn-sm btn-primary" (click)="updateBatch($event)">Mettre à jour</button>
-    </div>
+      <!-- content fr -->
+      <ng-container *ngIf="isEditBatch">
+        <div class="form-group">
+          <label class="form-label">{{ 'COMMON.LABEL.CONTENT' | translate }} {{ 'COMMON.LANG.FR' | translate }}</label>
+          <app-text-zone
+            [elementId]="'fr'"
+            [readonly]="true"
+            [data]="contentCurrent.fr">
+          </app-text-zone>
+        </div>
+      </ng-container>
 
-  </form>
-</div>
+      <ng-container *ngIf="isEditBatch && campaignWorkflows && campaignWorkflows.length > 1">
+        <div class="form-group">
+          <label class="form-label">Modiy Email Template</label>
+          <select
+            class="form-select"
+            formControlName="workflow">
+            <option *ngFor="let workflow of campaignWorkflows" [ngValue]="workflow">{{ workflow }}</option>
+          </select>
+          <button type="button" class="btn btn-sm btn-primary" (click)="updateBatch($event)">Mettre à jour</button>
+        </div>
+      </ng-container>
+
+    </form>
+  </div>
+</section>

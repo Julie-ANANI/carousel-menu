@@ -23,7 +23,7 @@ export class AdminCampaignComponent implements OnInit {
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.data['campaign'];
 
-    if (this._campaign.stats) {
+    if (this._campaign && this._campaign.stats) {
       this._campaign.stats.nbPros = this._campaign.stats.campaign ? this._campaign.stats.campaign.nbProfessionals || 0 : 0;
       this._campaign.stats.nbProsSent = this._campaign.stats.mail ? this._campaign.stats.mail['totalPros'] || 0 : 0;
       this._campaign.stats.nbTotalMails = this._campaign.stats.mail ? this._campaign.stats.mail['totalMails'] || 0 : 0;

@@ -36,5 +36,4 @@ export class MessageSpaceComponent {
     return this._defaultSrc;
   }
 
-
 }

@@ -266,7 +266,7 @@ export class InnovationFrontService {
           break;
 
         default:
-        // Do nothing...
+          // Do nothing...
 
       }
 
@@ -286,3 +286,4 @@ export class InnovationFrontService {
   }
 
 }
+

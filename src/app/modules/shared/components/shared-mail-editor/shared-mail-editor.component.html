@@ -1,90 +1,113 @@
-<div *ngIf="email" id="shared-mail-editor-component">
+<ng-container *ngIf="email">
+  <section id="shared-mail-editor-component">
 
-  <!-- section header -->
-  <div class="section-header" [ngClass]="{ 'column-header': noLanguage }">
+    <!-- section header -->
+    <div class="section-header" [ngClass]="{ 'column-header': noLanguage }">
 
-    <!-- language choice -->
+      <!-- language choice -->
+      <ng-container *ngIf="!noLanguage">
+        <div class="language-wrapper">
 
-    <div *ngIf="!noLanguage" class="language-wrapper">
-      <label class="form-label">{{ 'COMMON.LABEL.CHOOSE_LANGUAGE' | translate }}</label>
-      <div (click)="changeLanguage('en')" [ngClass]="{ active: language === 'en' }" class="text-link">
-        {{ 'COMMON.LANG.EN' | translate }}
+          <label class="form-label">{{ 'COMMON.LABEL.CHOOSE_LANGUAGE' | translate }}</label>
+
+          <div (click)="changeLanguage('en')" [ngClass]="{ active: language === 'en' }" class="text-link">
+            {{ 'COMMON.LANG.EN' | translate }}
+          </div>
+
+          <div (click)="changeLanguage('fr')" [ngClass]="{ active: language === 'fr' }" class="text-link">
+            {{ 'COMMON.LANG.FR' | translate }}
+          </div>
+
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="noLanguage && !languageHasBeenSet">
+        <div class="language-wrapper">
+
+          <label class="form-label">{{ 'COMMON.MAIL_EDITOR.QUESTION' | translate }}</label>
+
+          <div (click)="setLanguage('en')"  [ngClass]="{ active: language === 'en' }" class="text-link">
+            {{ 'COMMON.LANG.EN' | translate }}
+          </div>
+
+          <div (click)="setLanguage('fr')"  [ngClass]="{ active: language === 'fr' }" class="text-link">
+            {{ 'COMMON.LANG.FR' | translate }}
+          </div>
+
+        </div>
+      </ng-container>
+
+      <!-- preview -->
+      <label class="form-switch">
+        <input type="checkbox" (change)="onPreview()">
+        <i class="form-icon"></i> Preview
+      </label>
+
+    </div>
+
+    <!-- section content-->
+    <ng-container *ngIf="!noLanguage || languageHasBeenSet">
+      <div class="section-content">
+
+        <!-- subject -->
+        <ng-container *ngIf="editionMode">
+          <div class="form-group">
+            <label class="form-label" for="shared-mail-editor-subject">{{ 'COMMON.MAIL_EDITOR.SUBJECT' | translate }}</label>
+            <input
+              class="form-input"
+              [(ngModel)]="email.subject"
+              (ngModelChange)="onUpdate($event)"
+              name="subject"
+              type="text"
+              id="shared-mail-editor-subject"
+              [placeholder]="'COMMON.MAIL_EDITOR.SUBJECT_PLACEHOLDER' | translate">
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="!editionMode">
+          <div class="form-group">
+            <label class="form-label" for="shared-mail-editor-subject">{{ 'COMMON.MAIL_EDITOR.SUBJECT' | translate }}</label>
+            <p class="text">{{ email?.subject }}</p>
+          </div>
+        </ng-container>
+
+        <!-- message -->
+        <ng-container *ngIf="editionMode">
+          <div class="form-group">
+            <label class="form-label">{{ 'COMMON.MAIL_EDITOR.MESSAGE' | translate }}</label>
+            <app-text-zone
+              [elementId]="id"
+              [readonly]="!editionMode"
+              [data]="email.content || ''"
+              (onTextChange)="updateContent($event)">
+            </app-text-zone>
+            <p class="text text-notify">
+              Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*
+            </p>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="!editionMode">
+          <div class="form-group">
+            <label class="form-label">{{ 'COMMON.MAIL_EDITOR.MESSAGE' | translate }}</label>
+            <p class="text" [innerHTML]="email?.content"></p>
+          </div>
+        </ng-container>
+
       </div>
-      <div (click)="changeLanguage('fr')" [ngClass]="{ active: language === 'fr' }" class="text-link">
-        {{ 'COMMON.LANG.FR' | translate }}
-      </div>
-    </div>
+    </ng-container>
 
-    <div *ngIf="noLanguage && !languageHasBeenSet" class="language-wrapper">
-      <label class="form-label">{{ 'COMMON.MAIL_EDITOR.QUESTION' | translate }}</label>
-      <div (click)="setLanguage('en')"  [ngClass]="{ active: language === 'en' }" class="text-link">
-        {{ 'COMMON.LANG.EN' | translate }}
-      </div>
-      <div (click)="setLanguage('fr')"  [ngClass]="{ active: language === 'fr' }" class="text-link">
-        {{ 'COMMON.LANG.FR' | translate }}
-      </div>
-    </div>
+    <!-- section signature
+    <div class="section-signature">
+      <label class="form-label" for="shared-mail-editor-signature">{{ 'COMMON.MAIL_EDITOR.SIGNATURE' | translate }}</label>
+      <select
+        class="form-select"
+        [ngModel]="email.signature ? email.signature.name : null "
+        id="shared-mail-editor-signature">
+        <option [ngValue]="null" selected>{{ 'COMMON.SELECT' | translate }}</option>
+        <option *ngFor="let signature of signatures" [ngValue]="signature.name">{{ signature.name }} - {{ signature.language }}</option>
+      </select>
+    </div>-->
 
-    <!-- preview -->
-    <label class="form-switch">
-      <input type="checkbox" (change)="onPreview()">
-      <i class="form-icon"></i> Preview
-    </label>
-
-  </div>
-
-  <!-- section content-->
-  <div *ngIf="!noLanguage || languageHasBeenSet" class="section-content">
-
-    <!-- subject -->
-    <div *ngIf="editionMode" class="form-group">
-      <label class="form-label" for="shared-mail-editor-subject">{{ 'COMMON.MAIL_EDITOR.SUBJECT' | translate }}</label>
-      <input
-        class="form-input"
-        [(ngModel)]="email.subject"
-        (ngModelChange)="onUpdate($event)"
-        name="subject"
-        type="text"
-        id="shared-mail-editor-subject"
-        [placeholder]="'COMMON.MAIL_EDITOR.SUBJECT_PLACEHOLDER' | translate">
-    </div>
-
-    <div *ngIf="!editionMode" class="form-group">
-      <label class="form-label" for="shared-mail-editor-subject">{{ 'COMMON.MAIL_EDITOR.SUBJECT' | translate }}</label>
-      <p>{{ email?.subject }}</p>
-    </div>
-
-    <!-- message -->
-    <div *ngIf="editionMode" class="form-group">
-      <label class="form-label">{{ 'COMMON.MAIL_EDITOR.MESSAGE' | translate }}</label>
-      <app-text-zone
-        [elementId]="id"
-        [readonly]="!editionMode"
-        [data]="email.content || ''"
-        (onTextChange)="updateContent($event)">
-      </app-text-zone>
-      <p class="variable-tiny-mce">
-        Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*
-      </p>
-    </div>
-
-    <div *ngIf="!editionMode" class="form-group">
-      <label class="form-label">{{ 'COMMON.MAIL_EDITOR.MESSAGE' | translate }}</label>
-      <p [innerHTML]="email?.content"></p>
-    </div>
-
-  </div>
-
-  <!-- section signature
-  <div class="section-signature">
-    <label class="form-label" for="shared-mail-editor-signature">{{ 'COMMON.MAIL_EDITOR.SIGNATURE' | translate }}</label>
-    <select
-      class="form-select"
-      [ngModel]="email.signature ? email.signature.name : null "
-      id="shared-mail-editor-signature">
-      <option [ngValue]="null" selected>{{ 'COMMON.SELECT' | translate }}</option>
-      <option *ngFor="let signature of signatures" [ngValue]="signature.name">{{ signature.name }} - {{ signature.language }}</option>
-    </select>
-  </div>-->
-
-</div>
+  </section>
+</ng-container>

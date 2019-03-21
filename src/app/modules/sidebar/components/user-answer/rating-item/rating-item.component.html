@@ -1,22 +1,36 @@
-<div *ngIf="editMode" class="rating-wrapper">
+<ng-container *ngIf="editMode">
+  <section class="rating-item-component">
 
-  <div class="thumbs-up-wrapper" [ngClass]="{ 'active': rating === 2 }">
-    <i *ngIf="editMode || rating === 2" class="fas fa-thumbs-up" (click)="thumbsUp($event)"></i>
-  </div>
-  <div class="thumbs-down-wrapper" [ngClass]="{ 'active': rating === 0 }">
-    <i *ngIf="editMode || rating === 0" class="fas fa-thumbs-down" (click)="thumbsDown($event)"></i>
-  </div>
+    <ng-container *ngIf="editMode || rating === 2">
+      <div class="thumbs-up-wrapper" [ngClass]="{ 'active': rating === 2 }" (click)="thumbsUp($event)">
+        <i class="fas fa-thumbs-up"></i>
+      </div>
+    </ng-container>
 
-</div>
+    <ng-container *ngIf="editMode || rating === 0">
+      <div class="thumbs-down-wrapper" [ngClass]="{ 'active': rating === 0 }" (click)="thumbsDown($event)">
+        <i  class="fas fa-thumbs-down"></i>
+      </div>
+    </ng-container>
 
-<div *ngIf="!editMode" class="rating-wrapper">
+  </section>
+</ng-container>
 
-  <div *ngIf="rating === 2" class="c-thumbs-up-wrapper">
-    <i class="fas fa-thumbs-up"></i>
-  </div>
 
-  <div *ngIf="rating === 0" class="c-thumbs-down-wrapper">
-    <i class="fas fa-thumbs-down"></i>
-  </div>
+<ng-container *ngIf="!editMode">
+  <section class="rating-item-component">
 
-</div>
+    <ng-container *ngIf="rating === 2">
+      <div class="c-thumbs-up-wrapper">
+        <i class="fas fa-thumbs-up"></i>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="rating === 0">
+      <div class="c-thumbs-down-wrapper">
+        <i class="fas fa-thumbs-down"></i>
+      </div>
+    </ng-container>
+
+  </section>
+</ng-container>

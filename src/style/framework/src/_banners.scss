@@ -1,0 +1,28 @@
+@import "variables";
+
+.banner {
+  background-color: $primary-color;
+  color: $light-color;
+  font-weight: $font-weight-medium;
+  font-size: 0.75rem;
+  padding: $unit-4;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  box-shadow: $box-shadow;
+
+  .text-link {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  &.banner-success {
+    background-color: $success-color;
+  }
+
+  &.banner-error {
+    background-color: $alert-color;
+  }
+
+}

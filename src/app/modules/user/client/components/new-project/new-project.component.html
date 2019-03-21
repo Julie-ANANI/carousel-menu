@@ -1,4 +1,4 @@
-<section class="section-container animate-page" id="new-project-component">
+<section class="section-pad animate-page" id="new-project-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <form novalidate [formGroup]="formData" (ngSubmit)="onCreateProject()">
 
@@ -10,9 +10,9 @@
         <div class="column col-xl-12 col-6 col-mx-auto">
 
           <div class="ques-1">
-            <span class="num-rect">1</span>
-            <span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
-            <div class="form-group" [ngStyle]="{ 'padding-top': '1.2rem' }">
+            <span class="shape rect">1</span>
+            <span class="text question">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
+            <div class="form-group" [ngStyle]="{ 'padding-top': '1rem' }">
               <label class="form-radio" for="new-project-frLang">
                 <input
                   type="radio"
@@ -34,19 +34,21 @@
             </div>
           </div>
 
-          <div class="ques-2 restrict-width">
-            <span class="num-rect">2</span>
-            <span class="ques">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
-            <div class="form-group" [ngStyle]="{ 'padding-top': '1.2rem' }">
+          <div class="ques-2">
+            <span class="shape rect">2</span>
+            <span class="text question">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
+            <div class="form-group has-error" [ngStyle]="{ 'padding-top': '1rem' }">
               <label for="new-project-companyName"></label>
                 <input
                   type="text"
-                  class="form-input"
+                  class="form-input input-md"
                   name="name"
                   formControlName="name"
                   id="new-project-companyName"
                   [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
-              <span class="form-error" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">{{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}</span>
+                <span class="form-input-hint" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
+                  {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
+                </span>
             </div>
           </div>
 
@@ -54,7 +56,7 @@
 
         <!-- bot -->
         <div class="column col-6 hide-xl col-mx-auto text-center">
-          <app-message-space [widthMax]="'235px'">
+          <app-message-space [widthMax]="'200px'">
             {{ 'PROJECT_MODULE.NEW_PROJECT.BOT_TEXT' | translate }}
           </app-message-space>
         </div>
@@ -127,15 +129,15 @@
         <div class="columns col-gapless text-center">
           <div class="column col-sm-12 col-4 col-mx-auto">
             <div><i class="fas fa-3x fa-cloud-download-alt"></i></div>
-            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.DOWNLOAD' | translate }}</p>
+            <p class="text default">{{ 'PROJECT_MODULE.NEW_PROJECT.DOWNLOAD' | translate }}</p>
           </div>
           <div class="column col-sm-12 col-4 col-mx-auto">
             <div><i class="fas fa-3x fa-lock"></i></div>
-            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.ANONYMOUS' | translate }}</p>
+            <p class="text default">{{ 'PROJECT_MODULE.NEW_PROJECT.ANONYMOUS' | translate }}</p>
           </div>
           <div class="column col-sm-12 col-4 col-mx-auto">
             <div><i class="fas fa-3x fa-eye-slash"></i></div>
-            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.PRIVATE' | translate }}</p>
+            <p class="text default">{{ 'PROJECT_MODULE.NEW_PROJECT.PRIVATE' | translate }}</p>
           </div>
         </div>
       </div>

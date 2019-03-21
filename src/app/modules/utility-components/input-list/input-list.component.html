@@ -1,6 +1,6 @@
 <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
 
-  <div class="input-group" [ngStyle]="{ 'display': 'flex', 'justify-content': 'space-between' }">
+  <div class="flex-between">
     <input
       type="text"
       class="form-input"
@@ -8,41 +8,51 @@
       [(ngModel)]="answer"
       required
       [attr.placeholder]="placeholder | translate">
-    <button [ngStyle]="{ 'font-size': '16px' }" class="btn-round btn-primary" translate>
-      <i class="fas fa-plus"></i>
-    </button>
+    <button class="btn btn-round btn-primary" translate><i class="fas fa-plus"></i></button>
   </div>
 
-  <ul *ngFor="let a of answerList; index as i" class="answerList">
+  <ul *ngFor="let a of answerList; index as i" class="input-answer-wrapper">
 
     <li *ngIf="!adminMode">
       <span>{{ a.text }}</span>
-      <a
-        class="delete"
-        aria-label="Close"
-        role="button"
-        (click)="rmProposition(i)">
-        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
+      <a class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
+        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
       </a>
     </li>
 
-    <li *ngIf="adminMode">
-      <span>{{ a.text }}</span>
-      <div class="popover">
-        <i class="fas fa-pencil-alt"></i>
-        <div class="popover-container">
-          <div class="input-group">
-            <input type="text" class="form-input" [(ngModel)]="a.text" name="text"/>
-            <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
+    <ng-container *ngIf="adminMode">
+      <li>
+
+        <span>{{ a.text }}</span>
+
+        <div class="popover popover-left">
+
+          <i class="fas fa-pencil-alt"></i>
+
+          <div class="popover-container">
+            <div class="form-group">
+              <label>
+                <input type="text" class="form-input" id="text" [(ngModel)]="a.text" name="text"/>
+              </label>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
+            </div>
           </div>
+
         </div>
-      </div>
-      <i class="fas fa-thumbs-up" [ngClass]="{ 'active': a.rating === 2 }" (click)="thumbsUp($event, i)"></i>
-      <i class="fas fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown($event, i)"></i>
-      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
-        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
-      </a>
-    </li>
+
+        <i class="fas fa-thumbs-up" [ngClass]="{ 'active': a.rating === 2 }" (click)="thumbsUp($event, i)"></i>
+
+        <i class="fas fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown($event, i)"></i>
+
+        <a class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
+          <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
+        </a>
+
+      </li>
+    </ng-container>
 
   </ul>
+
 </form>

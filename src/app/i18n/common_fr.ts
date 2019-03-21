@@ -49,8 +49,8 @@ export const COMMON = {
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
-  'SEARCH_BY': 'Recherche par',
-  'SEARCH_PLACEHOLDER': 'Rechercher ici',
+
+
 
   'SHARED_REPORTS': 'Rapports partagés',
 
@@ -72,13 +72,13 @@ export const COMMON = {
 
 
 
-  'PHONE': 'Téléphone',
 
-  'ACTIVITY_FIELDS': 'Champs d\'activité',
-  'ACTIVITY_FIELDS_PLACEHOLDER': 'Entrez votre secteur d\'activité',
 
-  'TECHNOLOGIES': 'Technologies',
-  'TECHNOLOGIES_PLACEHOLDER': 'Entrez la technologie',
+
+
+
+
+
 
 
   'OLD_PASSWORD': 'Ancien mot de passe',
@@ -113,11 +113,13 @@ export const COMMON = {
   'TOP_PROFILE': 'Profil haut',
 
   'LABEL': {
+    'ACTIVITY_FIELDS': 'Champs d\'activité',
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
     'EMAIL': 'Email',
     'PASSWORD': 'Mot de passe',
     'PROS_CONTACT': 'Nombre de pros',
+    'PHONE': 'Téléphone',
     'JOBTITLE': 'Poste',
     'COMPANY': 'Nom de l\'entreprise',
     'COUNTRY': 'Pays',
@@ -134,6 +136,8 @@ export const COMMON = {
     'SELECT_WORKFLOW': 'Sélectionner le workflow',
     'SELECT': 'Sélectionnez',
     'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
+    'TECHNOLOGIES': 'Technologies',
+    'SEARCH_BY': 'Recherche par',
   },
 
   'PLACEHOLDER': {
@@ -143,6 +147,9 @@ export const COMMON = {
     'COMPANY': 'Entrez le nom de votre entreprise',
     'COUNTRY': 'Entrez votre pays',
     'CAMPAIGN': 'Entrez le nom de la campagne',
+    'ACTIVITY_FIELDS': 'Entrez votre secteur d\'activité',
+    'TECHNOLOGIES': 'Entrez la technologie',
+    'SEARCH': 'Rechercher ici',
   },
 
   'REQUIRED': {
@@ -179,6 +186,9 @@ export const COMMON = {
     'IMPORT': 'Importer',
     'EXPORT': 'Exporter',
     'SEND': 'Envoyer',
+    'PRINT': 'Imprimer',
+    'PREVIEW': 'Prévisualiser',
+    'SUBMIT': 'Soumettre'
   },
 
   'PROJECT': {
@@ -320,10 +330,12 @@ export const COMMON = {
   },
 
   'MODAL': {
-    'TITLE_DELETE': 'Supprimer le forum',
-    'TITLE_CONFIRMATION': 'Confirmation le forum',
-    'TITLE_IMPORT': 'Conseil d\'importation',
-    'TITLE_BATCH': 'Batch le forum',
+    'TITLE_DELETE': 'Supprimer',
+    'TITLE_CONFIRMATION': 'Confirmation',
+    'TITLE_IMPORT': 'Importation',
+    'TITLE_BATCH': 'Batch',
+    'TITLE_SHARE': 'Partage',
+    'TITLE_CREATE': 'Création'
   },
 
 };

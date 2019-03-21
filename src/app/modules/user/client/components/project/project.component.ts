@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { TranslateService } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { Subject } from 'rxjs';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 // import {SwellrtBackend} from "../../../../swellrt-client/services/swellrt-backend";
 
 @Component({
@@ -12,9 +16,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./project.component.scss']
 })
 
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
 
-  private _innovation: Innovation = {};
+  private _innovation: Innovation;
 
   private _offerTypeImage = '';
 
@@ -22,18 +26,17 @@ export class ProjectComponent implements OnInit {
 
   private _currentPage: string;
 
+  private _saveChanges = false;
+
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
               private router: Router,
               private translateService: TranslateService,
-              //private _swellRtBackend: SwellrtBackend
-              ) { }
-
-  ngOnInit() {
-
-    //let xxx = this._swellRtBackend.get();
-
-    //console.log(xxx);
+              private innovationFrontService: InnovationFrontService,
+              //private _swellRtBackend: SwellrtBackend,
+              private translateNotificationsService: TranslateNotificationsService) {
 
     this.activatedRoute.data.subscribe((response) => {
       if (response) {
@@ -41,13 +44,27 @@ export class ProjectComponent implements OnInit {
       }
     });
 
-    const url = this.router.routerState.snapshot.url.split('/');
-    this._currentPage = url.length > 0 ? url[4] : 'setup';
+    this.innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
+    });
 
+  }
+
+  ngOnInit() {
     this.translateTitleService.setTitle(this._innovation.name || 'Project');
-
+    this.getPage();
     this.loadOfferType();
 
+    //let xxx = this._swellRtBackend.get();
+
+    //console.log(xxx);
+
+  }
+
+
+  private getPage() {
+    const url = this.router.routerState.snapshot.url.split('/');
+    this._currentPage = url.length > 0 ? url[4] : 'setup';
   }
 
 
@@ -83,19 +100,27 @@ export class ProjectComponent implements OnInit {
   }
 
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
   addCollaborators (event: any): void {
     this._innovation.collaborators = event;
   }
 
 
+  /***
+   * this function will activate the tab and user has to save all the changes
+   * before going to another page.
+   * @param event
+   * @param value
+   */
   setCurrentTab(event: Event, value: string) {
     event.preventDefault();
-    this._currentPage = value;
+
+    if (!this._saveChanges) {
+      this._currentPage = value;
+      this.router.navigate([value], {relativeTo: this.activatedRoute});
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+    }
+
   }
 
   get dateFormat(): string {
@@ -114,8 +139,21 @@ export class ProjectComponent implements OnInit {
     return this._sidebarValue;
   }
 
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
   get currentPage(): string {
     return this._currentPage;
+  }
+
+  get saveChanges(): boolean {
+    return this._saveChanges;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

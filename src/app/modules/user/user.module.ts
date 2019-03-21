@@ -16,6 +16,7 @@ import { ScrollService } from '../../services/scroll/scroll.service';
 import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
 import { InnovationCommonService } from '../../services/innovation/innovation-common.service';
+import { InnovationFrontService } from '../../services/innovation/innovation-front.service';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { InnovationCommonService } from '../../services/innovation/innovation-co
     ScrollService,
     ShareService,
     AnswerService,
-    InnovationCommonService
+    InnovationCommonService,
+    InnovationFrontService
   ]
 })
 

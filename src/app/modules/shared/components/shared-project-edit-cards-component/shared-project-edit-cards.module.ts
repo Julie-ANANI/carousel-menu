@@ -11,6 +11,7 @@ import { InputListModule } from '../../../utility-components/input-list/input-li
 import { SharedUploadZonePhotoModule } from '../shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { SharedUploadZoneVideoModule } from '../shared-upload-zone-video/shared-upload-zone-video.module';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { ModalModule } from '../../../utility-components/modal/modal.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { MessageSpaceModule } from '../../../utility-components/message-space/me
     InputListModule,
     SharedUploadZonePhotoModule,
     SharedUploadZoneVideoModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    ModalModule
   ],
   declarations: [
     SharedProjectEditCardsComponent

@@ -1,0 +1,87 @@
+@import "variables";
+
+.label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-xs;
+  padding: $unit-2 $unit-4;
+  margin: $unit-2;
+  border-radius: $border-width-lg;
+  background-color: inherit;
+  line-height: $line-height-sm;
+  color: $light-color;
+
+  &.label-alert {
+    background-color: $alert-color;
+  }
+
+  &.label-progress {
+    background-color: $progress-color;
+  }
+
+  &.label-success {
+    background-color: $success-color;
+  }
+
+  &.label-draft {
+    background-color: $label-draft-color;
+  }
+
+  &.label-primary {
+    background-color: $primary-color;
+  }
+
+  &.label-edit {
+    background-color: $label-edit-color;
+  }
+
+  &.label-meta {
+    background-color: $meta-color;
+  }
+
+  &.label-tag {
+    background-color: $background-color;
+    border-radius: 25px;
+
+    .fas {
+      font-size: $font-icon-xs;
+    }
+
+    span {
+      margin-left: $unit-1;
+    }
+
+  }
+
+  &.label-answer {
+    background-color: $label-answer-color;
+    color: $text-primary-color;
+    font-size: $font-size-sm;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

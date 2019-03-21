@@ -1,4 +1,4 @@
-<div class="body-wrapper animate-page" id="discover-component">
+<div class="body-wrapper animate-page" id="discover-component" [ngStyle]="{ 'min-height': !authService.isAuthenticated ? '100vh' : 'inherit' }">
 
   <!-- unauthenticated header -->
   <ng-container *ngIf="!authService.isAuthenticated">

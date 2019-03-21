@@ -48,8 +48,8 @@ export const COMMON = {
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
   'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
-  'SEARCH_BY': 'Search by',
-  'SEARCH_PLACEHOLDER': 'Search here',
+
+
 
   'SHARED_REPORTS': 'Shared Reports',
 
@@ -73,13 +73,13 @@ export const COMMON = {
 
 
 
-  'PHONE': 'Phone Number',
 
-  'ACTIVITY_FIELDS': 'Activity Fields',
-  'ACTIVITY_FIELDS_PLACEHOLDER': 'Enter your activity field',
 
-  'TECHNOLOGIES': 'Technologies',
-  'TECHNOLOGIES_PLACEHOLDER': 'Enter the technology',
+
+
+
+
+
 
 
   'OLD_PASSWORD': 'Old Password',
@@ -115,12 +115,15 @@ export const COMMON = {
   'TOP_PROFILE': 'Top profile',
 
   'LABEL': {
+    'ACTIVITY_FIELDS': 'Activity Fields',
     'FIRSTNAME': 'First Name',
     'LASTNAME': 'Last Name',
     'EMAIL': 'E-mail Address',
     'PASSWORD': 'Password',
     'PROS_CONTACT': 'Pros Number',
+    'PHONE': 'Phone Number',
     'JOBTITLE': 'Job Title',
+    'TECHNOLOGIES': 'Technologies',
     'COMPANY': 'Company Name',
     'COUNTRY': 'Country',
     'DATE': 'Date',
@@ -136,6 +139,7 @@ export const COMMON = {
     'SELECT_WORKFLOW': 'Select the workflow',
     'SELECT': 'Select',
     'CHOOSE_LANGUAGE': 'Choose Language:',
+    'SEARCH_BY': 'Search by',
   },
 
   'PLACEHOLDER': {
@@ -145,6 +149,9 @@ export const COMMON = {
     'COMPANY': 'Enter your company name',
     'COUNTRY': 'Enter your country',
     'CAMPAIGN': 'Enter the campaign name',
+    'ACTIVITY_FIELDS': 'Enter your activity field',
+    'TECHNOLOGIES': 'Enter the technology',
+    'SEARCH': 'Search here',
   },
 
   'REQUIRED': {
@@ -181,6 +188,9 @@ export const COMMON = {
     'IMPORT': 'Import',
     'EXPORT': 'Export',
     'SEND': 'Send',
+    'PRINT': 'Print',
+    'PREVIEW': 'Preview',
+    'SUBMIT': 'Submit'
   },
 
   'TABLE' : {
@@ -324,7 +334,9 @@ export const COMMON = {
     'TITLE_DELETE': 'Delete Board',
     'TITLE_CONFIRMATION': 'Confirmation Board',
     'TITLE_IMPORT': 'Import Board',
-    'TITLE_BATCH': 'Batch Board'
+    'TITLE_BATCH': 'Batch Board',
+    'TITLE_SHARE': 'Share Board',
+    'TITLE_CREATE': 'Creation Board'
   },
 
 };

@@ -8,6 +8,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -61,7 +62,8 @@ export class ProjectsListComponent implements OnInit {
               private userService: UserService,
               private translateTitleService: TranslateTitleService,
               private translateNotificationService: TranslateNotificationsService,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService,
+              private innovationFrontService: InnovationFrontService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
@@ -102,14 +104,15 @@ export class ProjectsListComponent implements OnInit {
     if (innovation.principalMedia) {
 
       if (innovation.principalMedia.type === 'PHOTO') {
-        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + innovation.principalMedia.cloudinary.public_id;
+        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_100,w_120/' + innovation.principalMedia.cloudinary.public_id;
       }
       else {
         return innovation.principalMedia.video.thumbnail;
       }
 
     } else {
-      return 'https://res.cloudinary.com/umi/image/upload/v1542811700/app/default-images/icons/no-image.png';
+      const findIndex = innovation.innovationCards.findIndex((card) => card.lang === this.translateService.currentLang);
+      return this.innovationFrontService.getMediaSrc(innovation.innovationCards[findIndex], 'default', '120', '100');
     }
 
   }

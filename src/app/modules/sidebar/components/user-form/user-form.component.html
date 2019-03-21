@@ -1,181 +1,213 @@
-<div class="column col-xs-12 col-11 col-mx-auto" id="user-form-component">
-  <form novalidate [formGroup]="userForm" (ngSubmit)="onClickSave()" autocomplete="off">
+<section id="user-form-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <form novalidate [formGroup]="userForm" (ngSubmit)="onClickSave()" autocomplete="off">
 
-    <!-- save button -->
-    <div class="save-button-wrapper">
-      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
-    </div>
+      <!-- save button -->
+      <div class="save-wrapper text-right">
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+      </div>
 
-    <!-- operator -->
-    <div *ngIf="isEditUser" class="operator-wrapper">
-      <label class="form-switch" for="user-form-operator" *ngIf="isSuperAdmin && authService.userId !== user.id">
+      <!-- operator -->
+      <ng-container *ngIf="isEditUser">
+        <div class="operator-wrapper">
+
+          <ng-container *ngIf="isSuperAdmin && authService.userId !== user.id">
+            <label class="form-switch" for="user-form-operator">
+              <input
+                type="checkbox"
+                name="operator"
+                id="user-form-operator"
+                formControlName="isOperator">
+              <i class="form-icon"></i>{{ 'COMMON.LABEL.OPERATOR' | translate }}
+            </label>
+          </ng-container>
+
+          <ng-container *ngIf="!isSuperAdmin && authService.adminLevel > 2 && authService.userId !== user.id">
+            <label class="form-switch" for="user-form-role">
+              <input
+                type="checkbox"
+                name="role"
+                id="user-form-role"
+                [checked]="userForm.value.roles === 'admin'"
+                (change)="changeRole($event)">
+              <i class="form-icon"></i>{{ 'COMMON.LABEL.ADMIN' | translate }}
+            </label>
+          </ng-container>
+
+        </div>
+      </ng-container>
+
+      <!-- domain management -->
+      <ng-container *ngIf="isEditUser">
+        <div  class="domain-wrapper">
+
+          <ng-container *ngIf="!editInstanceDomain">
+            <label class="form-label">
+              Actual domain:
+              <span>{{ userForm.get('domain').value }}</span>
+              <a (click)="startEditInstanceDomain($event)"><ng-container *ngIf="!isSelf && !isSuperAdmin"><i class="fas fa-pencil-alt"></i></ng-container></a>
+            </label>
+          </ng-container>
+
+          <ng-container *ngIf="editInstanceDomain">
+            <label class="form-label">New domain:</label>
+            <app-autocomplete-input
+              id="domain"
+              (update)="updateInstanceDomain($event)"
+              [onlyOne]="true"
+              [config]="buildInstanceDomainListConfig()">
+            </app-autocomplete-input>
+          </ng-container>
+
+        </div>
+      </ng-container>
+
+      <!-- projects -->
+      <ng-container *ngIf="isEditUser">
+        <div class="projects-wrapper">
+
+          <label class="form-label" for="user-form-projects">Collaborates to {{ projects.length }} projects.</label>
+
+          <ng-container *ngIf="projects.length > 0">
+            <select class="form-select" id="user-form-projects" (change)="selectProject($event)">
+              <option selected>View the projects</option>
+              <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
+            </select>
+          </ng-container>
+
+          <ng-container *ngIf="selectedProject">
+            <a class="text-link" [href]="'/user/admin/projects/project/' + selectedProject" target="_blank">Visit the project</a>
+          </ng-container>
+
+        </div>
+      </ng-container>
+
+      <!-- show tags -->
+      <ng-container *ngIf="isProfessional && tags.length > 0">
+        <div class="form-group">
+          <label class="form-label">Tags</label>
+          <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag-item>
+        </div>
+      </ng-container>
+
+      <!-- first name -->
+      <div class="form-group has-error">
+        <label class="form-label" for="user-form-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
         <input
-          type="checkbox"
-          name="operator"
-          id="user-form-operator"
-          formControlName="isOperator">
-        <i class="form-icon"></i>{{ 'COMMON.LABEL.OPERATOR' | translate }}
-      </label>
+          class="form-input"
+          formControlName="firstName"
+          id="user-form-firstName"
+          type="text"
+          placeholder="John">
+        <span class="form-input-hint" *ngIf="userForm.get('firstName').touched && userForm.get('firstName').invalid && userForm.get('firstName').hasError('required')">
+          {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
+        </span>
+      </div>
 
-      <label class="form-switch" for="user-form-role" *ngIf="!isSuperAdmin && authService.adminLevel > 2 && authService.userId !== user.id">
+      <!-- last name -->
+      <div class="form-group has-error">
+        <label class="form-label" for="user-form-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
         <input
-          type="checkbox"
-          name="role"
-          id="user-form-role"
-          [checked]="userForm.value.roles === 'admin'"
-          (change)="changeRole($event)">
-        <i class="form-icon"></i>{{ 'COMMON.LABEL.ADMIN' | translate }}
-      </label>
-    </div>
-
-    <!-- domain management -->
-    <div *ngIf="isEditUser" class="domain-wrapper">
-      <label *ngIf="!editInstanceDomain" class="form-label">
-        Actual domain:
-        <span>{{ userForm.get('domain').value }}</span>
-        <a (click)="startEditInstanceDomain($event)"><span *ngIf="!isSelf && !isSuperAdmin"><i class="fas fa-pencil-alt"></i></span></a>
-      </label>
-
-      <div *ngIf="editInstanceDomain">
-        <label class="form-label">New domain:</label>
-        <app-autocomplete-input
-          id="domain"
-          (update)="updateInstanceDomain($event)"
-          [onlyOne]="true"
-          [config]="buildInstanceDomainListConfig()">
-        </app-autocomplete-input>
+          class="form-input"
+          formControlName="lastName"
+          id="user-form-lastName"
+          type="text"
+          placeholder="Smith">
+        <span class="form-input-hint" *ngIf="userForm.get('lastName').touched && userForm.get('lastName').invalid && userForm.get('lastName').hasError('required')">
+          {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
+        </span>
       </div>
-    </div>
 
-    <!-- projects -->
-    <div *ngIf="isEditUser" class="projects-wrapper">
-      <label class="form-label" for="user-form-projects">Collaborates to {{ projects.length }} projects.</label>
-      <select *ngIf="projects.length > 0" class="form-select" id="user-form-projects" (change)="selectProject($event)">
-        <option selected>View the projects</option>
-        <option *ngFor="let project of projects" [value]="project._id">{{ project.name || "Untitled" }} </option>
-      </select>
-      <a *ngIf="selectedProject" class="text-link" [href]="'/user/admin/projects/project/' + selectedProject" target="_blank">Visit the project</a>
-    </div>
-
-    <!-- show tags -->
-    <div *ngIf="isProfessional && tags.length > 0" class="form-group">
-      <label class="form-label">Tags</label>
-      <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag-item>
-    </div>
-
-    <!-- first name -->
-    <div class="form-group">
-      <label class="form-label" for="user-form-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="firstName"
-        id="user-form-firstName"
-        type="text"
-        placeholder="John">
-      <div class="form-error" *ngIf="userForm.get('firstName').touched && userForm.get('firstName').invalid">
-        <span *ngIf="userForm.get('firstName').hasError('required')">{{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}</span>
+      <!-- email -->
+      <div class="form-group has-error">
+        <label class="form-label" for="user-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+        <input
+          class="form-input"
+          formControlName="email"
+          id="user-form-email"
+          type="email"
+          placeholder="john@catco.com">
+        <span class="form-input-hint" *ngIf="userForm.get('email').touched && userForm.get('email').invalid">
+          <span *ngIf="userForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+          <span *ngIf="userForm.get('email').hasError('email') && userForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+        </span>
       </div>
-    </div>
 
-    <!-- last name -->
-    <div class="form-group">
-      <label class="form-label" for="user-form-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="lastName"
-        id="user-form-lastName"
-        type="text"
-        placeholder="Smith">
-      <div class="form-error" *ngIf="userForm.get('lastName').touched && userForm.get('lastName').invalid">
-        <span *ngIf="userForm.get('lastName').hasError('required')">{{ 'COMMON.REQUIRED.LASTNAME' | translate }}</span>
+      <!-- job -->
+      <div class="form-group has-error">
+        <label class="form-label" for="user-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
+        <input
+          class="form-input"
+          formControlName="jobTitle"
+          id="user-form-jobTitle"
+          type="text"
+          [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
+        <span class="form-input-hint" *ngIf="userForm.get('jobTitle').touched && userForm.get('jobTitle').invalid && userForm.get('jobTitle').hasError('required')">
+          {{ 'COMMON.REQUIRED.JOBTITLE' | translate }}
+        </span>
       </div>
-    </div>
 
-    <!-- email -->
-    <div class="form-group">
-      <label class="form-label" for="user-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="email"
-        id="user-form-email"
-        type="email"
-        placeholder="john@catco.com">
-      <div class="form-error" *ngIf="userForm.get('email').touched && userForm.get('email').invalid">
-        <span *ngIf="userForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-        <span *ngIf="userForm.get('email').hasError('email') && userForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+      <!-- company -->
+      <div class="form-group has-error">
+        <label class="form-label" for="user-form-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+        <input
+          class="form-input"
+          formControlName="companyName"
+          id="user-form-companyName"
+          type="text"
+          [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
+        <span class="form-input-hint" *ngIf="userForm.get('companyName').touched && userForm.get('companyName').invalid && userForm.get('companyName').hasError('required')">
+          {{ 'COMMON.REQUIRED.COMPANY' | translate }}
+        </span>
       </div>
-    </div>
 
-    <!-- job -->
-    <div class="form-group">
-      <label class="form-label" for="user-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="jobTitle"
-        id="user-form-jobTitle"
-        type="text"
-        [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
-      <div class="form-error" *ngIf="userForm.get('jobTitle').touched && userForm.get('jobTitle').invalid">
-        <span *ngIf="userForm.get('jobTitle').hasError('required')">{{ 'COMMON.REQUIRED.JOBTITLE' | translate }}</span>
+      <!-- country -->
+      <div class="form-group has-error">
+        <label class="form-label" for="user-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+        <input
+          class="form-input"
+          formControlName="country"
+          id="user-form-country"
+          type="text"
+          [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
+          (keypress)="onSuggestCountries()">
+        <ul
+          *ngIf="userForm.get('country').value"
+          class="input-suggestion"
+          [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
+          <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
+            {{ suggestion }}
+          </li>
+        </ul>
+        <span class="form-input-hint" *ngIf="userForm.get('country').touched && userForm.get('country').invalid && userForm.get('country').hasError('required')">
+          {{ 'COMMON.REQUIRED.COUNTRY' | translate }}
+        </span>
       </div>
-    </div>
 
-    <!-- company -->
-    <div class="form-group">
-      <label class="form-label" for="user-form-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="companyName"
-        id="user-form-companyName"
-        type="text"
-        [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
-      <div class="form-error" *ngIf="userForm.get('companyName').touched && userForm.get('companyName').invalid">
-        <span *ngIf="userForm.get('companyName').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
-      </div>
-    </div>
+      <!-- url -->
+      <ng-container *ngIf="isProfessional">
+        <div class="form-group">
+          <label class="form-label" for="user-form-profileUrl">{{ 'COMMON.LABEL.PROFILE_URL' | translate }}</label>
+          <input
+            class="form-input"
+            formControlName="profileUrl"
+            id="user-form-profileUrl"
+            type="text"
+            placeholder="http://www.linkedin.com/in/johnsmith">
+          <span class="form-input-hint" *ngIf="userForm.get('profileUrl').touched && userForm.get('profileUrl').invalid && userForm.get('profileUrl').hasError('required')">
+            {{ 'COMMON.REQUIRED.URL' | translate }}
+          </span>
+        </div>
+      </ng-container>
 
-    <!-- country -->
-    <div class="form-group">
-      <label class="form-label" for="user-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="country"
-        id="user-form-country"
-        type="text"
-        [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
-        (keypress)="onSuggestCountries()">
-      <ul
-        *ngIf="userForm.get('country').value"
-        class="suggestion"
-        [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
-        <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
-          <a><span>{{ suggestion }}</span></a>
-        </li>
-      </ul>
-      <div class="form-error" *ngIf="userForm.get('country').touched && userForm.get('country').invalid">
-        <span *ngIf="userForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
-      </div>
-    </div>
+      <!-- link to quiz URI -->
+      <ng-container *ngIf="isProfessional && campaign">
+        <div class="pro-quiz-wrapper">
+          <a (click)="openQuizUri(pro, $event)" class="text-link">{{ 'COMMON.ADD-ANSWER' | translate }}</a>
+          <p><a [href]="getQuizUrl(pro)" target="_blank">Link to the professional's quiz <i class="fas fa-link"></i></a></p>
+        </div>
+      </ng-container>
 
-    <!-- url -->
-    <div *ngIf="isProfessional" class="form-group">
-      <label class="form-label" for="user-form-profileUrl">{{ 'COMMON.LABEL.PROFILE_URL' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="profileUrl"
-        id="user-form-profileUrl"
-        type="text"
-        placeholder="http://www.linkedin.com/in/johnsmith">
-      <div class="form-error" *ngIf="userForm.get('profileUrl').touched && userForm.get('profileUrl').invalid">
-        <span *ngIf="userForm.get('profileUrl').hasError('required')">{{ 'COMMON.REQUIRED.URL' | translate }}</span>
-      </div>
-    </div>
-
-    <!-- link to quiz URI -->
-    <div *ngIf="isProfessional && campaign" class="pro-quiz-wrapper">
-      <a (click)="openQuizUri(pro, $event)" class="text-link">{{ 'COMMON.ADD-ANSWER' | translate }}</a>
-      <p><a [href]="getQuizUrl(pro)" target="_blank">Link to the professional's quiz <i class="fas fa-link"></i></a></p>
-    </div>
-
-  </form>
-</div>
+    </form>
+  </div>
+</section>

@@ -15,6 +15,7 @@ import { UserService } from '../../../../../services/user/user.service';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
 import { InnovCard } from '../../../../../models/innov-card';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 
 @Component({
@@ -24,11 +25,11 @@ import { InnovCard } from '../../../../../models/innov-card';
     trigger('tagAnimation', [
       transition('* => *', [
 
-        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' })),
+        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
 
         query('.tag-content', stagger('50ms', [
           animate('.15s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
-        ])),
+        ]), { optional: true }),
 
       ])
     ]),
@@ -88,7 +89,7 @@ export class InnovationsComponent implements OnInit {
 
   private _noResultFound = false; // when no result is while respect to search filed.
 
-  private _shareModal = false; // open the modal to share the filtered result.
+  private _modalShare = false; // open the modal to share the filtered result.
 
   private _shareUrl = ''; // share url.
 
@@ -108,7 +109,8 @@ export class InnovationsComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private authService: AuthService,
               private userService: UserService,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService,
+              private innovationFrontService: InnovationFrontService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
@@ -472,23 +474,13 @@ export class InnovationsComponent implements OnInit {
 
     this._shareUrl = `${this.getUrl()}${this._tagUrl.slice(0, this._tagUrl.length - 1)}`;
 
-    this._shareModal = true;
+    this._modalShare = true;
 
   }
 
 
   getUrl(): string {
     return `${environment.clientUrl}/discover?`;
-  }
-
-
-  /***
-   * this function closes the share modal.
-   * @param event
-   */
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._shareModal = false;
   }
 
 
@@ -526,9 +518,9 @@ export class InnovationsComponent implements OnInit {
    * @param innovation
    */
   getImageSrc(innovation: Innovation): string {
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/app/default-images/image-not-available.png';
+    /*const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/app/default-images/image-not-available.png';
     const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/';
-    const suffix = '.jpg';
+    const suffix = '.jpg';*/
     /*
      * Search a default innovationCard
      */
@@ -542,18 +534,18 @@ export class InnovationsComponent implements OnInit {
     /*
      * Search default media
      */
-    if (innovationCard && innovationCard.principalMedia && innovationCard.principalMedia.type === 'PHOTO') {
+    /*if (innovationCard && innovationCard.principalMedia && innovationCard.principalMedia.type === 'PHOTO') {
       return prefix + innovationCard.principalMedia.cloudinary.public_id + suffix;
     } else if (Array.isArray(innovationCard.media) && innovationCard.media.length > 0) {
       const media = innovationCard.media.find((image) => image.type === 'PHOTO');
       if (media && media.cloudinary && media.cloudinary.public_id) {
         return prefix + media.cloudinary.public_id + suffix;
       }
-    }
+    }*/
     /*
      * return default uri
      */
-    return defaultSrc;
+    return this.innovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
   }
 
 
@@ -751,8 +743,12 @@ export class InnovationsComponent implements OnInit {
     return this._noResultFound;
   }
 
-  get shareModal(): boolean {
-    return this._shareModal;
+  get modalShare(): boolean {
+    return this._modalShare;
+  }
+
+  set modalShare(value: boolean) {
+    this._modalShare = value;
   }
 
   get shareUrl(): string {

@@ -1,64 +1,69 @@
-<div class="column col-xs-12 col-11 col-mx-auto" id="collaborator-component">
+<section id="collaborator-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
 
-  <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit($event)">
+    <!-- email field -->
+    <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit($event)">
 
-    <!-- Add button -->
-    <div class="text-right">
-      <button class="btn btn-primary gtm-add-collaborators" type="submit" [disabled]="formData.invalid">
-        {{ 'COMMON.BUTTON.ADD' | translate }}
-      </button>
-    </div>
-
-    <!-- Input field -->
-    <div class="form-group pd-top">
-      <label class="form-label" for="collaborator">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
-      <input
-        class="form-input"
-        id="collaborator"
-        type="text"
-        formControlName="collaboratorEmail"
-        placeholder="elon.musk@gmail.com">
-      <div class="form-error" *ngIf="formData.get('collaboratorEmail').touched && formData.get('collaboratorEmail').invalid">
-        <span *ngIf="formData.get('collaboratorEmail').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+      <!-- Add button -->
+      <div class="text-right">
+        <button class="btn btn-primary gtm-add-collaborators" type="submit" [disabled]="formData.invalid">
+          {{ 'COMMON.BUTTON.ADD' | translate }}
+        </button>
       </div>
-    </div>
 
-  </form>
+      <!-- Input field -->
+      <div class="form-group has-error">
+        <label class="form-label" for="collaborator">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+        <input
+          class="form-input"
+          id="collaborator"
+          type="text"
+          formControlName="collaboratorEmail"
+          placeholder="elon.musk@gmail.com">
+        <span class="form-input-hint" *ngIf="formData.get('collaboratorEmail').touched && formData.get('collaboratorEmail').invalid && formData.get('collaboratorEmail').hasError('required')">
+          {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+        </span>
+      </div>
+
+    </form>
+    <!-- /email field -->
+
+    <!-- bot -->
+    <ng-container *ngIf="innovationCollaborators.length === 0 && collaboratorsInvited.length === 0">
+      <div class="section-pad rm-pad-bottom">
+        <app-message-space [widthMax]="'321px'">
+          {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
+        </app-message-space>
+      </div>
+    </ng-container>
+    <!-- bot -->
+
+    <!-- invited collaborator -->
+    <ng-container *ngIf="collaboratorsInvited.length >= 1">
+      <ul *ngFor="let collaborator of collaboratorsInvited" class="collaborator">
+        <li>
+          <span class="label label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
+        </li>
+        <button class="btn btn-xs ghost-primary" (click)="reinviteCollaborator($event, collaborator)">
+          {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.REINVITE' | translate }}
+        </button>
+      </ul>
+    </ng-container>
+    <!-- /invited collaborator -->
 
 
-  <!-- Bot -->
-  <div *ngIf="innovationCollaborators.length === 0 && collaboratorsInvited.length === 0">
-    <div class="text-center" [ngStyle]="{ 'padding-top': '3.15rem' }">
-      <app-message-space [widthMax]="'314px'">
-        {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
-      </app-message-space>
-    </div>
+    <!-- Added collaborator -->
+    <ng-container *ngIf="innovationCollaborators.length >= 1">
+      <ul *ngFor="let collaborator of innovationCollaborators" class="collaborator">
+        <li>
+          <span class="label label-success">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
+        </li>
+        <button class="btn btn-xs ghost-delete" (click)="removeCollaborator($event, collaborator)">
+          {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.DELETE' | translate }}
+        </button>
+      </ul>
+    </ng-container>
+
+
   </div>
-
-
-  <!-- Invited collaborator -->
-  <div *ngIf="collaboratorsInvited.length >= 1">
-    <ul *ngFor="let collaborator of collaboratorsInvited; let i = index" class="collaborator">
-      <li>
-        <span class="label label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
-      </li>
-      <button class="btn btn-xs ghost-primary" (click)="reinviteCollaborator($event, collaborator)">
-        {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.REINVITE' | translate }}
-      </button>
-    </ul>
-  </div>
-
-
-  <!-- Added collaborator -->
-  <div *ngIf="innovationCollaborators.length >= 1">
-    <ul *ngFor="let collaborator of innovationCollaborators" class="collaborator">
-      <li>
-        <span class="label label-success">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
-      </li>
-      <button class="btn btn-xs ghost-delete" (click)="removeCollaborator($event, collaborator)">
-        {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.DELETE' | translate }}
-      </button>
-    </ul>
-  </div>
-
-</div>
+</section>

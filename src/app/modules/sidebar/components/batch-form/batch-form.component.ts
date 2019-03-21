@@ -28,9 +28,11 @@ export class BatchFormComponent {
     if (value === undefined || value === 'active') {
       this.buildForm();
       this._errorPros = false;
+      this._formData.reset();
       this.patchData();
     }
   }
+
 
   @Input() set type(value: string) {
     this._actionType = value;
@@ -41,7 +43,7 @@ export class BatchFormComponent {
 
   private _actionType = '';
 
-  formData: FormGroup;
+  private _formData: FormGroup;
 
   private _isNewBatch = false;
 
@@ -64,7 +66,7 @@ export class BatchFormComponent {
   constructor(private formBuilder: FormBuilder) { }
 
   private buildForm() {
-    this.formData = this.formBuilder.group( {
+    this._formData = this.formBuilder.group( {
       date: [''],
       time: [''],
       pros: [''],
@@ -106,8 +108,8 @@ export class BatchFormComponent {
     if (this._rowCurrent.Date) {
       this._mailDate = new Date(this._rowCurrent.Date);
       this._mailTime = this._rowCurrent.Time;
-      this.formData.get('date').setValue(this._mailDate);
-      this.formData.get('time').setValue(this._mailTime);
+      this._formData.get('date').setValue(this._mailDate);
+      this._formData.get('time').setValue(this._mailTime);
     }
 
     if (this._rowCurrent.Step === '04 - Thanks') {
@@ -143,22 +145,22 @@ export class BatchFormComponent {
 
 
   private sendNewBatch() {
-    const pros = this.formData.get('pros').value;
-    const send = this.formData.get('date').value || this.formData.get('time').value ? 'false' : 'true';
+    const pros = this._formData.get('pros').value;
+    const send = this._formData.get('date').value || this._formData.get('time').value ? 'false' : 'true';
 
-    this.formData.get('send').setValue(send);
+    this._formData.get('send').setValue(send);
 
     if (pros <= 0) {
       this._errorPros = true;
     } else {
-      this.batchOutput.emit(this.formData);
+      this.batchOutput.emit(this._formData);
     }
 
   }
 
 
   private updateBatch() {
-    this.batchOutput.emit(this.formData);
+    this.batchOutput.emit(this._formData);
   }
 
 
@@ -205,6 +207,10 @@ export class BatchFormComponent {
 
   get hideInput(): boolean {
     return this._hideInput;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
   }
 
 }

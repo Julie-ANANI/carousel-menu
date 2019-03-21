@@ -1,4 +1,4 @@
-<div class="section-container">
+<div>
 
   <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
     <app-sidebar-signature
@@ -9,14 +9,14 @@
 
   <div class="empty" *ngIf="!signatures.length">
     <div class="empty-action">
-      <button (click)="newSignatureName = 'signature'" class="btn btn-primary">
+      <button (click)="newSignatureName = 'signature'; onClickAdd()" class="btn btn-primary">
         Créer une signature
       </button>
     </div>
   </div>
 
   <div class="text-right">
-    <button *ngIf="signatures.length" (click)="newSignatureName = 'signature'" class="btn btn-primary">
+    <button *ngIf="signatures.length" (click)="newSignatureName = 'signature'; onClickAdd()" class="btn btn-primary">
       Créer une signature
     </button>
   </div>
@@ -28,28 +28,27 @@
     (editRow)="editSignature($event)"
     (removeRows)="removeSignatures($event)">
   </app-shared-table>
+</div>
 
 
-  <!-- MODAL : Création d'une nouvelle signature -->
-  <div class="modal" [ngClass]="{'active': newSignatureName != null}">
-    <div class="modal-overlay" (click)="(newSignatureName = null) && $event.preventDefault()"></div>
-    <div class="modal-container">
-      <div class="modal-header">
-        <div class="modal-title h5">Créer une signature</div>
-      </div>
-      <div class="modal-body">
-        <div class="content">
-          Donnez un nom à la signature
-          <input class="form-input" type="text" [(ngModel)]="newSignatureName"/>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" (click)="createSignature()">Créer</button>
-        <button class="btn btn-link" (click)="(newSignatureName = null) && $event.preventDefault()">
-          {{ 'COMMON.BUTTON.CANCEL' | translate }}
-        </button>
-      </div>
-    </div>
+<!-- modal to add the new signature -->
+<app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+
+  <div class="form-group">
+    <label class="form-label" for="add-email">Signature Name</label>
+    <input
+      type="text"
+      id="add-email"
+      [(ngModel)]="newSignatureName"
+      name="emailName"
+      placeholder="Enter the email name"
+      class="form-input">
   </div>
 
-</div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="createSignature()" [disabled]="!newSignatureName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to add the new signature -->

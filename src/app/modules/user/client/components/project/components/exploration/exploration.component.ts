@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../../../../services/answer/answer.service';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';

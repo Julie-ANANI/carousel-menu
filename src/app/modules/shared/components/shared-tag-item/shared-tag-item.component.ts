@@ -111,6 +111,10 @@ export class SharedTagItemComponent implements OnInit {
     this.removeTag.emit(tag);
   }
 
+  browserLang(): string {
+    return this.translateService.getBrowserLang() || 'en';
+  }
+
   get canAdd(): boolean {
     return !!this._tagForm.get('tag').value;
   }

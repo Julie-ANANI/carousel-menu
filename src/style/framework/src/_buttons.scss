@@ -1,0 +1,238 @@
+@import "variables";
+@import "mixins";
+
+// The base class for the button, add the other classes with this to add the different styles
+.btn {
+  @include control-transition();
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: $line-height-sm;
+  background: $bg-color-light;
+  border: $border-width solid $primary-color;
+  font-size: $font-size-sm;
+  height: 2.5rem;
+  min-width: 5rem;
+  border-radius: $border-radius;
+  padding: $unit-2 $unit-8;
+  font-weight: $font-weight-medium;
+
+  i {
+    margin-right: $unit-2;
+    font-size: $font-icon;
+  }
+
+  &.btn-close {
+    background: transparent;
+    border: 0;
+    color: $light-color;
+    height: 30px;
+    padding: 0;
+    text-decoration: none;
+    width: 12px;
+    line-height: 1.5;
+    font-size: $font-size;
+
+    &:hover {
+      background: transparent;
+      border-color: transparent;
+      opacity: 0.85;
+    }
+
+    &::before {
+      content: "\2715";
+    }
+
+  }
+
+  // Round button. In this you can add the icon, text, etc.
+  &.btn-round {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    min-width: 0;
+    padding: 0;
+    background: transparent none;
+    border-color: $primary-color;
+    font-size: $font-size-xs;
+    color: $light-color;
+
+    i {
+      margin-right: 0;
+      font-size: $font-icon-lg;
+    }
+
+  }
+
+  // Radio button like form-radio
+  &.btn-radio {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    min-width: 0;
+    padding: 0;
+    border: $border-width-lg solid $button-border-color;
+    color: $light-color;
+    font-size: $font-size-xs;
+
+    span {
+      color: $light-color;
+      font-size: $font-icon-xl;
+    }
+
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    color: $button-disabled-text !important;
+    background-color: $button-disabled-bg-color !important;
+    border-color: $button-border-color !important;
+    cursor: not-allowed;
+    pointer-events: auto;
+    opacity: 1;
+    border-width: $border-width-lg;
+  }
+
+  &.btn-primary {
+    @include button-variant($primary-color);
+  }
+
+  &.btn-secondary {
+    @include button-variant($secondary-color);
+  }
+
+  &.btn-edit {
+    @include button-variant($meta-color);
+  }
+
+  &.btn-error {
+    @include button-variant($alert-color);
+  }
+
+  &.btn-success {
+    @include button-variant($success-color);
+  }
+
+  &.ghost-primary {
+    @include ghost-button-variant($primary-color);
+  }
+
+  &.ghost-secondary {
+    @include ghost-button-variant($secondary-color);
+  }
+
+  &.ghost-delete {
+    @include ghost-button-variant($alert-color);
+  }
+
+  &.ghost-edit {
+    @include ghost-button-variant($meta-color);
+  }
+
+}
+
+
+// Cancel button class that you have to add with button class
+.btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active, .btn-cancel:not(:disabled).active {
+  color: $meta-color;
+  background-color: $bg-color-light;
+  border: none;
+}
+
+.btn-cancel:not(:disabled):hover {
+  color: lighten($meta-color, 15%);
+  background-color: $bg-color-light;
+  border: none;
+}
+
+
+// Round button. In this you can add the icon, text, etc.
+/*.btn-round {
+  @include control-transition();
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background: transparent none;
+  border: $border-width solid transparent;
+  font-size: $font-size-xs;
+  color: $light-color;
+  line-height: $line-height-sm;
+
+  &[disabled], &:disabled, &.disabled {
+    color: $button-disabled-text !important;
+    background-color: $button-disabled-bg-color !important;
+    border-color: $button-border-color !important;
+    cursor: not-allowed;
+    pointer-events: auto;
+    opacity: 1;
+    border-width: $border-width-lg;
+  }
+
+}*/
+
+
+// Radio button
+/*.btn-radio {
+  @include control-transition();
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: $border-width-lg solid $border;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: $light-color;
+  font-size: $font-size-xs;
+
+  span {
+    color: $light-color;
+    font-size: $font-size;
+  }
+
+}*/
+
+
+// Make a button large just add this class with the btn class
+.btn-lg {
+  padding-left: 4.2rem;
+  padding-right: 4.2rem;
+  height: 3.496rem;
+  font-size: 1.25rem;
+}
+
+
+// Make a button small just add this class with the btn class
+.btn-sm {
+  height: 2.05rem;
+  padding: $unit-2 $unit-4;
+  font-size: $font-size-xs;
+}
+
+
+// Make a button extra small just add this class with the btn class
+.btn-xs {
+  height: 1.75rem;
+  padding: 0.5rem $unit-4;
+  font-size: $font-size-xs;
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: $size-sm) {
+
+  .btn-lg {
+    padding: $unit-2 $unit-8;
+  }
+
+}

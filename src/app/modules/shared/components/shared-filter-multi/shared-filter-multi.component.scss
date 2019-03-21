@@ -1,66 +1,61 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
 
 #filter-multi-component {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
 
-  .filter-type-wrapper, .filter-search-box {
+  .type-wrapper, .search-box-wrapper {
     display: flex;
-    flex-wrap: wrap;
+    flex: 0 1 auto;
     align-items: center;
-    margin-right: 1.57rem;
+    margin-right: 1.25rem;
+    margin-bottom: 0.25rem;
+
+    .form-select {
+      min-width: 120px;
+    }
+
   }
 
-  .filter-search-box {
+  .text.text-label {
+    margin-right: 0.5rem;
+  }
+
+  .search-box-wrapper {
     position: relative;
+
+    .form-input {
+      min-width: 350px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
 
     .search-icon {
       position: absolute;
       left: 10px;
-      margin-top: 1px;
       cursor: pointer;
 
       img {
-        width: 20px;
-        height: 19px;
+        width: 17px;
+        height: 17px;
       }
 
     }
 
     .search-cross {
+      @include control-transition();
       position: absolute;
-      right: 16px;
-      transition: all .35s ease-in-out;
+      right: 10px;
       cursor: pointer;
 
       .fa-times {
         color: $meta-color;
+        font-size: 0.9rem;
       }
 
     }
 
-  }
-  
-  .filter-label {
-    font-weight: 600;
-    font-size: .875rem;
-    color: $text-dark;
-    margin-right: .6rem;
-  }
-
-  .form-select, .form-input {
-    min-height: 2.5rem;
-    margin-top: 0;
-    padding-top: .18rem;
-    padding-bottom: .18rem;
-    min-width: 102px;
-  }
-
-  .form-input {
-    width: 350px;
-    padding-left: 40px;
-    padding-right: 38px;
   }
 
   .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
@@ -70,19 +65,22 @@
 }
 
 
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
+@media (max-width: $size-sm) {
 
   #filter-multi-component {
 
-    .filter-type-wrapper, .filter-search-box {
-      margin-bottom: .9375rem;
-      margin-right: .9375rem !important;
+    .type-wrapper, .search-box-wrapper {
+      margin-bottom: 0.75rem;
+      margin-right: 0 !important;
     }
 
-    .form-input {
-      width: 280px !important;
+    .search-box-wrapper {
+      width: 100%;
+
+      .form-input {
+        min-width: 100% !important;
+      }
+
     }
 
   }

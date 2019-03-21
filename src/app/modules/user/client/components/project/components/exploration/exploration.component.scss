@@ -1,87 +1,75 @@
-@import "../../../../../../../../style/variables";
+@import "../../../../../../../../style/framework/src/variables";
 
 #exploration-component {
-  padding-bottom: 0;
 
-  .section-heading {
-    font-weight: 400;
+  .title-primary {
+    font-size: 1.35rem;
   }
 
   .section-title, .section-comment, .section-analytics {
-    padding-bottom: 1.57rem;
+    padding-bottom: 1.25rem;
   }
-
-  .section-company, .section-table {
-    padding-top: 3.15rem;
-  }
-
 
   .section-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-    .main-heading, .btn {
-      margin-bottom: 1.57rem;
+    .title-primary, .btn {
+      margin-bottom: 1.25rem;
     }
 
   }
-
 
   .section-comment {
     display: flex;
     flex-wrap: wrap;
 
     .status-wrapper {
-      min-height: 14.75rem;
+      min-height: 11rem;
       width: 330px;
       background-color: $background-color;
-      border-radius: 3px;
-      padding: 1.57rem;
-      margin-right: 1.57rem;
-      margin-bottom: 1.57rem;
+      border-radius: $border-width-xl;
+      padding: 1.25rem;
+      margin-right: 1.25rem;
+      margin-bottom: 1.25rem;
 
-      .section-heading {
-        color: white;
-        font-size: 1.375rem;
-        margin-bottom: 1.2rem;
+      h4 {
+        color: $light-color;
+        font-size: 1.1rem;
+        margin-bottom: $unit-5;
+        font-weight: $font-weight-normal;
       }
 
       .status-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        font-size: $font-size-sm;
+        color: $light-color;
       }
 
       .fa-check, .fa-times {
-        margin-right: .35rem;
+        margin-right: 0.25rem;
+        font-size: $font-icon-lg;
       }
 
       .fa-check {
-        color: $validation-color;
+        color: $success-color;
       }
 
       .fa-times {
         color: $alert-color;
       }
 
-      .text-white {
-        color: white;
-        font-size: 0.875rem;
-      }
-
     }
 
     .comment-wrapper {
       flex: 1;
-      margin-bottom: 1.57rem;
+      padding-bottom: 1.25rem;
 
       .operator-wrapper {
-        padding-top: 1.57rem;
+        padding-top: 1.25rem;
 
-        span {
+        .text {
           font-weight: 600;
-          color: $dark-color;
         }
 
       }
@@ -90,6 +78,10 @@
 
   }
 
+  .title-secondary {
+    color: $secondary-color;
+    margin-bottom: 1.25rem;
+  }
 
   .section-analytics {
 
@@ -97,24 +89,31 @@
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
+      align-items: center;
 
       .pd-top {
-        padding-top: 2.375rem;
+        padding-top: 1.5rem;
       }
 
       .analytic-body {
-        margin-bottom: 1.57rem;
-        margin-left: .6rem;
-        margin-right: .6rem;
+        margin-bottom: 1.25rem;
+        margin-left: $unit-2;
+        margin-right: $unit-2;
+        vertical-align: middle;
 
         p {
           color: $meta-color;
+          font-size: $font-size-md;
+        }
+
+        h5 {
+          font-size: 1.3rem;
         }
 
         .svg-text {
-          font-size: .875rem;
+          font-size: $font-size-xs;
           font-weight: 600;
-          fill: #FFFFFF;
+          fill: $light-color;
         }
 
       }
@@ -123,15 +122,15 @@
 
   }
 
-
   .section-company {
 
     .company-content {
       list-style: none;
+      margin: 0;
 
       li {
-        padding-top: 0;
-        padding-left: 0;
+        margin-top: 0;
+        margin-bottom: 0.4rem;
         display: inline-flex;
         width: 33.33%;
       }
@@ -143,10 +142,7 @@
 
 }
 
-
-/********************************** Media ***************************************/
-
-@media (max-width: 840px) {
+@media (max-width: $size-md) {
 
   #exploration-component {
 
@@ -162,7 +158,7 @@
 
 }
 
-@media (max-width: 600px) {
+@media (max-width: $size-sm) {
 
   #exploration-component {
 
@@ -173,7 +169,6 @@
   }
 
 }
-
 
 @media (max-width: 320px) {
 

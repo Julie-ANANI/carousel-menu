@@ -1,359 +1,380 @@
-<div *ngIf="innovationSettings" id="shared-project-settings-component">
+<ng-container *ngIf="innovation && innovation.settings">
+  <section id="shared-project-settings-component" class="animate-page">
 
-
-  <!-- geography section -->
-  <div class="section-geography">
-    <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.LABEL' | translate }}</span>
-    <div class="pd-input">
-      <app-worldmap
-        (updateContinent)="continentModificationDrain($event)"
-        [initialConfiguration]="continentTarget"
-        [isEditable]="canEdit"
-        [width]="'auto'">
-      </app-worldmap>
-    </div>
-  </div>
-  <!-- /geography section -->
-
-
-  <!-- Two columns -->
-  <div class="columns">
-
-
-    <!-- question section -->
-    <div class="column col-md-12 col-mx-auto" [ngClass]="adminSide ? 'col-12' : 'col-8' ">
-      <div class="restrict-width">
-
-        <!-- Exclude countries -->
-        <div *ngIf="!canEdit && innovationSettings.geography.exclude.length > 0">
-          <div class="pd-para">
-          <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
-            {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-          </span>
-            <div class="pd-input">
-              <div *ngFor="let country of innovationSettings.geography.exclude" class="answer-wrapper">
-                {{ country.name }}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="canEdit">
-          <div class="pd-para">
-          <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
-            {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-          </span>
-            <div class="pd-input">
-              <app-autocomplete-input (update)="addCountryToExclude($event)" [config]="getConfig('countries')"></app-autocomplete-input>
-            </div>
-          </div>
-        </div>
-        <!-- /Exclude countries -->
-
-        <!-- Comment countries -->
-        <div *ngIf="!canEdit && !!innovationSettings.geography.comments">
-          <p class="pd-top">
-          <span [ngStyle]="{ 'color': '#0B90C6' }">
-            {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
-          </span>
-          </p>
-          <div class="pd-input"><p>{{ innovationSettings.geography.comments }}</p></div>
-        </div>
-
-        <div *ngIf="canEdit">
-          <p class="pd-para">
-          <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
-            {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
-            <i
-              class="fas"
-              [ngClass]="{ 'fa-angle-down' : displayCountriesCommentSection, 'fa-angle-right' : !displayCountriesCommentSection  }"></i>
-          </span>
-          </p>
-          <div *ngIf="displayCountriesCommentSection" class="pd-input">
-            <label for="countries-comments"></label>
-            <textarea
-              class="form-input"
-              id="countries-comments"
-              [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
-              rows="5"
-              [(ngModel)]="innovationSettings.geography.comments"
-              (change)="updateSettings()">
-          </textarea>
-            <div class="charRemaining">
-            <span [ngStyle]="{'color': getColor(innovationSettings.geography.comments.length | characterCountdown:500)}">
-              {{ innovationSettings.geography.comments.length | characterCountdown:500 }}
-            </span>
-            </div>
-          </div>
-        </div>
-        <!-- /Comment countries -->
-
-        <!-- Activity sectors -->
-        <div class="pd-ques">
-          <span class="num-rect">2</span><span class="ques">
-          {{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}
-        </span>
-
-          <div *ngIf="!canEdit" class="pd-input">
-            <p>{{ innovationSettings.market.comments }}</p>
-          </div>
-
-          <div *ngIf="canEdit" class="pd-input">
-            <label for="innovation-sector"></label>
-            <textarea
-              class="form-input"
-              id="innovation-sector"
-              [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.MARKET.PLACEHOLDER' | translate"
-              rows="5"
-              #market="ngModel"
-              [(ngModel)]="innovationSettings.market.comments"
-              (change)="updateSettings()">
-          </textarea>
-            <div class="charRemaining">
-            <span [ngStyle]="{'color': getColor(innovationSettings.market.comments.length | characterCountdown:500)}">
-              {{ innovationSettings.market.comments.length | characterCountdown:500 }}
-            </span>
-            </div>
-          </div>
-        </div>
-        <!-- /Activity sectors -->
-
-        <!-- Type of enterprises -->
-        <div class="pd-ques">
-          <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.LABEL' | translate }}</span>
-
-          <div
-            *ngIf="!canEdit && innovationSettings.companies.include.length === 0 && innovationSettings.companies.exclude.length === 0
-        && !innovationSettings.companies.description"
-            class="pd-para">
-            <p>{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
-          </div>
-
-          <!-- Companies include -->
-          <div *ngIf="!canEdit && innovationSettings.companies.include.length > 0">
-            <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
-              {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}
-            </span>
-              <div class="pd-input">
-                <div *ngFor="let companyInclude of innovationSettings.companies.include" class="answer-wrapper">
-                  {{ companyInclude.name }}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="canEdit">
-            <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
-              {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}
-            </span>
-              <div class="pd-input">
-                <app-autocomplete-input (update)="addCompanyToInclude($event)" [config]="getConfig('includedCompanies')"></app-autocomplete-input>
-              </div>
-            </div>
-          </div>
-          <!-- /Companies include -->
-
-          <!-- Companies exclude -->
-          <div *ngIf="!canEdit && innovationSettings.companies.exclude.length > 0">
-            <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
-              {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}
-            </span>
-              <div class="pd-input">
-                <div *ngFor="let companyExclude of innovationSettings.companies.exclude" class="answer-wrapper">
-                  {{  companyExclude.name }}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="canEdit">
-            <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
-              {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}
-            </span>
-              <div class="pd-input">
-                <app-autocomplete-input (update)="addCompanyToExclude($event)" [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
-              </div>
-            </div>
-          </div>
-          <!-- /Companies exclude -->
-
-          <!-- Companies comment -->
-          <div *ngIf="!canEdit && !!innovationSettings.companies.description">
-            <p class="pd-top">
-              <span [ngStyle]="{ 'color': '#0B90C6' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}</span>
-            </p>
-            <div *ngIf="!canEdit && innovationSettings.companies.description" class="pd-input">
-              <p>{{ innovationSettings.companies.description }}</p>
-            </div>
-          </div>
-
-          <div *ngIf="canEdit">
-            <p class="pd-para">
-            <span class="text-link" (click)="(displayCompanyCommentSection = !displayCompanyCommentSection) && $event.preventDefault()">
-              {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}
-              <i
-                class="fas"
-                [ngClass]="{ 'fa-angle-down' : displayCompanyCommentSection, 'fa-angle-right' : !displayCompanyCommentSection  }">
-              </i>
-            </span>
-            </p>
-            <div *ngIf="displayCompanyCommentSection" class="pd-input">
-              <label for="innovation-companies"></label>
-              <textarea
-                class="form-input"
-                id="innovation-companies"
-                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.PLACEHOLDER' | translate"
-                rows="5"
-                [(ngModel)]="innovationSettings.companies.description"
-                (change)="updateSettings()">
-            </textarea>
-              <div class="charRemaining">
-              <span [ngStyle]="{'color': getColor(innovationSettings.companies.description.length | characterCountdown:500)}">
-                {{ innovationSettings.companies.description.length | characterCountdown:500 }}
-              </span>
-              </div>
-            </div>
-          </div>
-          <!-- /Companies comment -->
-
-        </div>
-        <!-- /Type of enterprises -->
-
-        <!-- Professional profiles -->
-        <div class="pd-ques">
-          <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</span>
-
-          <div
-            *ngIf="!canEdit && innovationSettings.professionals.exclude.length === 0 && !innovationSettings.professionals.description"
-            class="pd-para">
-            <p>{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
-          </div>
-
-          <!-- Description -->
-          <div *ngIf="!canEdit && !!innovationSettings.professionals.description" class="pd-input">
-            <p>{{ innovationSettings.professionals.description }}</p>
-          </div>
-
-          <div *ngIf="canEdit">
-            <div class="pd-input">
-              <label for="innovation-pros"></label>
-              <textarea
-                class="form-input"
-                id="innovation-pros"
-                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.PLACEHOLDER' | translate"
-                rows="5"
-                [(ngModel)]="innovationSettings.professionals.description"
-                (change)="updateSettings()">
-            </textarea>
-              <div class="charRemaining">
-              <span [ngStyle]="{'color': getColor(innovationSettings.professionals.description.length | characterCountdown:500)}">
-                {{ innovationSettings.professionals.description.length | characterCountdown:500 }}
-              </span>
-              </div>
-            </div>
-          </div>
-          <!-- /Description -->
-
-          <!-- Exclude professional -->
-          <div *ngIf="!canEdit && innovationSettings.professionals.exclude.length > 0">
-            <p class="pd-para">
-              <span [ngStyle]="{ 'color': '#0B90C6' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
-            </p>
-            <div class="pd-input">
-              <div *ngFor="let professionalExclude of innovationSettings.professionals.exclude" class="answer-wrapper">
-                {{ professionalExclude.text }}
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="canEdit">
-            <p class="pd-para">
-            <span class="text-link" (click)="(displayPersonsToExcludeSection = !displayPersonsToExcludeSection) && $event.preventDefault()">
-              {{'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}
-              <i
-                class="fas"
-                [ngClass]="{ 'fa-angle-down' : displayPersonsToExcludeSection, 'fa-angle-right' : !displayPersonsToExcludeSection  }">
-              </i>
-            </span>
-            </p>
-            <div *ngIf="displayPersonsToExcludeSection" class="pd-input">
-              <app-input-list (update)="addPeopleToExclude($event)" [config]="getConfig('excludedPeople')"></app-input-list>
-            </div>
-          </div>
-          <!-- /Exclude professional -->
-
-        </div>
-        <!-- /Professional profiles -->
-
-        <!-- Keyword and other stuffs -->
-        <div [ngStyle]="{ 'padding-top': innovationSettings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
-          <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
-
-          <div *ngIf="!canEdit" class="pd-input">
-            <p *ngIf="!innovationSettings.comments">{{ 'PROJECT_MODULE.SETUP.TARGETING.NOT_ANSWER' | translate }}</p>
-            <p *ngIf="innovationSettings.comments">{{ innovationSettings.comments }}</p>
-          </div>
-
-          <div *ngIf="canEdit">
-            <div class="pd-input">
-              <label for="other-comments"></label>
-              <textarea
-                class="form-input"
-                id="other-comments"
-                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.OTHER.PLACEHOLDER' | translate"
-                rows="5"
-                [(ngModel)]="innovationSettings.comments"
-                (change)="updateSettings()">
-            </textarea>
-              <div class="charRemaining">
-            <span [ngStyle]="{'color': getColor(innovationSettings.comments.length | characterCountdown:500)}">
-              {{ innovationSettings.comments.length | characterCountdown:500 }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="adminMode">
-            <p class="pd-para">
-          <span class="text-link" (click)="(displayKeywordsSection = !displayKeywordsSection) && $event.preventDefault()">
-            {{ 'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.LABEL' | translate }}
-            <i
-              class="fas"
-              [ngClass]="{ 'fa-angle-down' : displayKeywordsSection, 'fa-angle-right' : !displayKeywordsSection  }">
-            </i>
-          </span>
-            </p>
-            <div *ngIf="displayKeywordsSection" class="pd-input">
-              <app-input-list
-                (update)="addKeywordToExclude($event)"
-                [canEdit]="true"
-                id="keywords"
-                [config]="getConfig('keywords')">
-              </app-input-list>
-            </div>
-          </div>
-        </div>
-        <!-- /Keyword and other stuffs -->
-
+    <!-- geography section -->
+    <div>
+      <span class="shape rect">1</span>
+      <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.LABEL' | translate }}</span>
+      <div class="pd-input">
+        <app-worldmap
+          (updateContinent)="continentModificationDrain($event)"
+          [initialConfiguration]="continentTarget"
+          [isEditable]="canEdit"
+          [width]="'auto'">
+        </app-worldmap>
       </div>
     </div>
-    <!-- /question section -->
+    <!-- /geography section -->
 
+    <!-- Two columns -->
+    <div class="columns">
 
-    <!-- bot section -->
-    <div *ngIf="!adminSide" class="column col-mx-auto col-4 hide-md help-wrapper">
-      <app-message-space [widthMax]="'321px'">
-        {{ 'PROJECT_MODULE.SETUP.PITCH.BOT.HELP' | translate }}
-      </app-message-space>
+      <!-- question section -->
+      <div class="column col-md-12 col-mx-auto" [ngClass]="adminSide ? 'col-12' : 'col-8'">
+        <div class="restrict-container">
+
+          <!-- Exclude countries -->
+          <ng-container *ngIf="!canEdit && innovation.settings.geography.exclude.length > 0">
+            <div class="pd-para">
+              <span class="text">
+                {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
+              </span>
+              <div class="pd-input">
+                <div *ngFor="let country of innovation.settings.geography.exclude" class="label label-answer">
+                  {{ country.name }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="canEdit">
+            <div class="pd-para">
+              <span class="text">
+                {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
+              </span>
+              <div class="pd-input">
+                <app-autocomplete-input (update)="addCountryToExclude($event)" [config]="getConfig('countries')"></app-autocomplete-input>
+              </div>
+            </div>
+          </ng-container>
+          <!-- /Exclude countries -->
+
+          <!-- Comment countries -->
+          <ng-container *ngIf="!canEdit && !!innovation.settings.geography.comments">
+            <p class="pd-top">
+              <span class="text text-secondary">
+                {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.COMMENT' | translate }}
+              </span>
+            </p>
+            <div class="pd-input"><p class="text default">{{ innovation.settings.geography.comments }}</p></div>
+          </ng-container>
+
+          <ng-container *ngIf="canEdit">
+
+            <p class="pd-para">
+              <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
+                {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.COMMENT' | translate }}
+                <i
+                  class="fas"
+                  [ngClass]="{ 'fa-angle-down' : displayCountriesCommentSection, 'fa-angle-right' : !displayCountriesCommentSection  }"></i>
+              </span>
+            </p>
+
+            <div *ngIf="displayCountriesCommentSection" class="pd-input">
+              <label for="countries-comments"></label>
+              <textarea
+                class="form-input"
+                id="countries-comments"
+                [attr.placeholder]="'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
+                rows="5"
+                [(ngModel)]="innovation.settings.geography.comments"
+                (change)="updateSettings()">
+              </textarea>
+              <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.geography.comments.length | characterCountdown:500)}">
+                {{ innovation.settings.geography.comments.length | characterCountdown:500 }}
+              </div>
+            </div>
+
+          </ng-container>
+          <!-- /Comment countries -->
+
+          <!-- Activity sectors -->
+          <div class="pd-ques">
+
+            <span class="shape rect">2</span>
+            <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.MARKET.LABEL' | translate }}</span>
+
+            <ng-container *ngIf="!canEdit">
+              <div class="pd-input">
+                <p class="text default">{{ innovation.settings.market.comments }}</p>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+              <div class="pd-input">
+                <label for="innovation-sector"></label>
+                <textarea
+                  class="form-input"
+                  id="innovation-sector"
+                  [attr.placeholder]="'SHARED_PROJECT_SETTINGS.MARKET.PLACEHOLDER' | translate"
+                  rows="5"
+                  #market="ngModel"
+                  [(ngModel)]="innovation.settings.market.comments"
+                  (change)="updateSettings()">
+                </textarea>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.market.comments.length | characterCountdown:500)}">
+                  {{ innovation.settings.market.comments.length | characterCountdown:500 }}
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+          <!-- /Activity sectors -->
+
+          <!-- Type of enterprises -->
+          <div class="pd-ques">
+
+            <span class="shape rect">3</span>
+            <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.LABEL' | translate }}</span>
+
+            <ng-container *ngIf="!canEdit && innovation.settings.companies.include.length === 0 && innovation.settings.companies.exclude.length === 0
+            && !innovation.settings.companies.description">
+              <div class="pd-para">
+                <p class="text">{{ 'SHARED_PROJECT_SETTINGS.NOT_ANSWER' | translate }}</p>
+              </div>
+            </ng-container>
+
+            <!-- Companies include -->
+            <ng-container *ngIf="!canEdit && innovation.settings.companies.include.length > 0">
+              <div class="pd-para">
+                <span class="text">
+                  {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}
+                </span>
+                <div class="pd-input">
+                  <div *ngFor="let companyInclude of innovation.settings.companies.include" class="label label-answer">
+                    {{ companyInclude.name }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+              <div class="pd-para">
+                <span class="text">
+                  {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}
+                </span>
+                <div class="pd-input">
+                  <app-autocomplete-input (update)="addCompanyToInclude($event)" [config]="getConfig('includedCompanies')"></app-autocomplete-input>
+                </div>
+              </div>
+            </ng-container>
+            <!-- /Companies include -->
+
+            <!-- Companies exclude -->
+            <ng-container *ngIf="!canEdit && innovation.settings.companies.exclude.length > 0">
+              <div class="pd-para">
+                <span class="text">
+                  {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}
+                </span>
+                <div class="pd-input">
+                  <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="label label-answer">
+                    {{  companyExclude.name }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+              <div class="pd-para">
+                <span class="text">
+                  {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}
+                </span>
+                <div class="pd-input">
+                  <app-autocomplete-input (update)="addCompanyToExclude($event)" [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
+                </div>
+              </div>
+            </ng-container>
+            <!-- /Companies exclude -->
+
+            <!-- Companies comment -->
+            <ng-container *ngIf="!canEdit && !!innovation.settings.companies.description">
+              <p class="pd-top">
+                <span class="text text-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.COMMENT' | translate }}</span>
+              </p>
+              <div *ngIf="!canEdit && innovation.settings.companies.description" class="pd-input">
+                <p class="text">{{ innovation.settings.companies.description }}</p>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+
+              <p class="pd-para">
+                <span class="text-link" (click)="(displayCompanyCommentSection = !displayCompanyCommentSection) && $event.preventDefault()">
+                  {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.COMMENT' | translate }}
+                  <i
+                    class="fas"
+                    [ngClass]="{ 'fa-angle-down' : displayCompanyCommentSection, 'fa-angle-right' : !displayCompanyCommentSection  }">
+                  </i>
+                </span>
+              </p>
+
+              <div *ngIf="displayCompanyCommentSection" class="pd-input">
+                <label for="innovation-companies"></label>
+                <textarea
+                  class="form-input"
+                  id="innovation-companies"
+                  [attr.placeholder]="'SHARED_PROJECT_SETTINGS.COMPANIES.PLACEHOLDER' | translate"
+                  rows="5"
+                  [(ngModel)]="innovation.settings.companies.description"
+                  (change)="updateSettings()">
+                </textarea>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.companies.description.length | characterCountdown:500)}">
+                  {{ innovation.settings.companies.description.length | characterCountdown:500 }}
+                </div>
+              </div>
+
+            </ng-container>
+            <!-- /Companies comment -->
+
+          </div>
+          <!-- /Type of enterprises -->
+
+          <!-- Professional profiles -->
+          <div class="pd-ques">
+
+            <span class="shape rect">4</span>
+            <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL' | translate }}</span>
+
+            <ng-container *ngIf="!canEdit && innovation.settings.professionals.exclude.length === 0 && !innovation.settings.professionals.description">
+              <div class="pd-para">
+                <p class="text">{{ 'SHARED_PROJECT_SETTINGS.NOT_ANSWER' | translate }}</p>
+              </div>
+            </ng-container>
+
+            <!-- Description -->
+            <ng-container *ngIf="!canEdit && !!innovation.settings.professionals.description">
+              <div class="pd-input">
+                <p class="text">{{ innovation.settings.professionals.description }}</p>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+              <div class="pd-input">
+                <label for="innovation-pros"></label>
+                <textarea
+                  class="form-input"
+                  id="innovation-pros"
+                  [attr.placeholder]="'SHARED_PROJECT_SETTINGS.PROFESSIONALS.PLACEHOLDER' | translate"
+                  rows="5"
+                  [(ngModel)]="innovation.settings.professionals.description"
+                  (change)="updateSettings()">
+                </textarea>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.professionals.description.length | characterCountdown:500)}">
+                  {{ innovation.settings.professionals.description.length | characterCountdown:500 }}
+                </div>
+              </div>
+            </ng-container>
+            <!-- /Description -->
+
+            <!-- Exclude professional -->
+            <ng-container *ngIf="!canEdit && innovation.settings.professionals.exclude.length > 0">
+              <p class="pd-para">
+                <span class="text text-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
+              </p>
+              <div class="pd-input">
+                <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">
+                  {{ professionalExclude.text }}
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+
+              <p class="pd-para">
+                <span class="text-link" (click)="(displayPersonsToExcludeSection = !displayPersonsToExcludeSection) && $event.preventDefault()">
+                  {{'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}
+                  <i
+                    class="fas"
+                    [ngClass]="{ 'fa-angle-down' : displayPersonsToExcludeSection, 'fa-angle-right' : !displayPersonsToExcludeSection  }">
+                  </i>
+                </span>
+              </p>
+
+              <ng-container *ngIf="displayPersonsToExcludeSection">
+                <div class="pd-input">
+                  <app-input-list (update)="addPeopleToExclude($event)" [config]="getConfig('excludedPeople')"></app-input-list>
+                </div>
+              </ng-container>
+
+            </ng-container>
+            <!-- /Exclude professional -->
+
+          </div>
+          <!-- /Professional profiles -->
+
+          <!-- Keyword and other stuffs -->
+          <div [ngStyle]="{ 'padding-top': innovation.settings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
+
+            <span class="shape rect">5</span>
+            <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</span>
+
+            <ng-container *ngIf="!canEdit">
+              <div class="pd-input">
+                <p class="text" *ngIf="!innovation.settings.comments">{{ 'SHARED_PROJECT_SETTINGS.NOT_ANSWER' | translate }}</p>
+                <p class="text" *ngIf="innovation.settings.comments">{{ innovation.settings.comments }}</p>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="canEdit">
+              <div class="pd-input">
+                <label for="other-comments"></label>
+                <textarea
+                  class="form-input"
+                  id="other-comments"
+                  [attr.placeholder]="'SHARED_PROJECT_SETTINGS.OTHER.PLACEHOLDER' | translate"
+                  rows="5"
+                  [(ngModel)]="innovation.settings.comments"
+                  (change)="updateSettings()">
+                </textarea>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.comments.length | characterCountdown:500)}">
+                  {{ innovation.settings.comments.length | characterCountdown:500 }}
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="adminMode">
+
+              <p class="pd-para">
+                <span class="text-link" (click)="(displayKeywordsSection = !displayKeywordsSection) && $event.preventDefault()">
+                  {{ 'SHARED_PROJECT_SETTINGS.KEYWORDS.LABEL' | translate }}
+                  <i
+                    class="fas"
+                    [ngClass]="{ 'fa-angle-down' : displayKeywordsSection, 'fa-angle-right' : !displayKeywordsSection  }">
+                  </i>
+                </span>
+              </p>
+
+              <ng-container *ngIf="displayKeywordsSection">
+                <div class="pd-input">
+                  <app-input-list
+                    (update)="addKeywordToExclude($event)"
+                    [canEdit]="true"
+                    id="keywords"
+                    [config]="getConfig('keywords')">
+                  </app-input-list>
+                </div>
+              </ng-container>
+
+            </ng-container>
+          </div>
+          <!-- /Keyword and other stuffs -->
+
+        </div>
+      </div>
+      <!-- /question section -->
+
+      <!-- bot section -->
+      <ng-container *ngIf="!adminSide">
+        <div class="column col-mx-auto col-4 hide-md section-pad rm-pad-bottom">
+          <app-message-space [widthMax]="'321px'">
+            {{ 'SHARED_PROJECT_SETTINGS.BOT.HELP' | translate }}
+          </app-message-space>
+        </div>
+      </ng-container>
+      <!-- /bot section -->
+
     </div>
-    <!-- /bot section -->
+    <!-- /Two columns -->
 
-
-  </div>
-  <!-- /Two columns -->
-
-
-</div>
+  </section>
+</ng-container>

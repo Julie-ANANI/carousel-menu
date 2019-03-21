@@ -13,6 +13,7 @@ import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
+import { countries } from '../../../../models/static-data/country';
 
 @Component({
   selector: 'app-user-form',
@@ -25,8 +26,10 @@ export class UserFormComponent implements OnInit {
   @Input() set sidebarState(value: string) {
     if (value === undefined || value ===  'active') {
       this.buildForm();
-      this._userForm.reset();
       this._editInstanceDomain = false;
+      this._displayCountrySuggestion = false;
+    } else {
+      this._userForm.reset();
     }
   }
 
@@ -34,8 +37,12 @@ export class UserFormComponent implements OnInit {
       For type 'professional', put the data into the attribute user and patch it to the formData
    */
   @Input() set pro(value: Professional) {
-    this._pro = value;
-    this.loadProfessional();
+    if (value) {
+      this._selectedProject = null;
+      value.country = this.getCountryName(value.country);
+      this._pro = value;
+      this.loadProfessional();
+    }
   };
 
   @Input() set campaign(value: Campaign) {
@@ -46,9 +53,12 @@ export class UserFormComponent implements OnInit {
      For type 'editUser', put the data into the attribute user and patch it to the formData
   */
   @Input() set user(value: User) {
-    this._selectedProject = null;
-    this._user = value;
-    this.loadEditUser();
+    if (value) {
+      this._selectedProject = null;
+      value.country = this.getCountryName(value.country);
+      this._user = value;
+      this.loadEditUser();
+    }
   };
 
   @Input() set type(type: string) {
@@ -101,6 +111,8 @@ export class UserFormComponent implements OnInit {
     identifier: 'name',
     canOrder: false
   };
+
+  private _countries = countries;
 
   constructor(@Inject(PLATFORM_ID) private platform: Object,
               private formBuilder: FormBuilder,
@@ -184,6 +196,13 @@ export class UserFormComponent implements OnInit {
 
 
   onClickSave() {
+
+    for (let code in this._countries) {
+      if (this._countries[code] === this._userForm.get('country').value) {
+        this._userForm.value['country'] = code;
+      }
+    }
+
     if (this._isEditUser) {
       const user = new User(this._userForm.value);
       user.id = this._user.id;
@@ -274,8 +293,21 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+
   removeTag(tag: any) {
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
+  }
+
+
+  getCountryName(value: string) {
+    for (let code in this._countries) {
+      if (code === value) {
+        return this._countries[code];
+      }
+    }
+
+    return value;
+
   }
 
   get isSuperAdmin(): boolean {
@@ -341,6 +373,10 @@ export class UserFormComponent implements OnInit {
 
   get displayCountrySuggestion(): boolean {
     return this._displayCountrySuggestion;
+  }
+
+  get countries(): any {
+    return this._countries;
   }
 
 }

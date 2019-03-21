@@ -19,7 +19,7 @@ import { SidebarInterface } from '../../interfaces/sidebar-interface';
 export class UserAnswerComponent implements OnInit {
 
   @Input() set sidebarState(value: SidebarInterface) {
-    if (value === undefined || 'active') {
+    if (value === undefined || value === 'active') {
       this.reinitializeVariables();
     }
   }

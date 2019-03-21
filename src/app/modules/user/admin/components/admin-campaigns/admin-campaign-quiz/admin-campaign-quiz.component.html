@@ -1,25 +1,88 @@
-<div id="admin-campaign-quiz-component">
+<ng-container *ngIf="campaign">
+  <section id="admin-campaign-quiz-component">
 
-  <div class="column col-xs-12 col-11 col-mx-auto">
+    <!-- section stats -->
+    <ul class="stat">
 
-    <!-- section no quiz -->
-    <div *ngIf="noResult" class="section-container remove-bottom">
-      <app-message-space [widthMax]="'354px'">
-        {{ 'CAMPAIGNS.QUIZ_PAGE.BOT' | translate }}
-      </app-message-space>
+      <!-- stat col 1 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.PROFESSIONALS' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.FIND' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('professional') }}</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.NOT_REACHED' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('notReached') }}%</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.STARS' | translate }}</h5>
+          <span class="stat-value">--</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.DUPLICATE' | translate }}</h5>
+          <span class="stat-value">--</span>
+        </div>
+      </li>
+
+      <!-- stat col 2 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.EMAILS' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.GOOD' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('good') }}%</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.UNSURE' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('unsure') }}%</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.BAD' | translate }}</h5>
+          <span class="stat-value">{{ getCampaignStat('bad') }}%</span>
+        </div>
+      </li>
+
+      <!-- stat col 3 -->
+      <li class="stat-container fluid">
+        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.COST' | translate }}</h5>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.REQUEST' | translate }}</h5>
+          <span class="stat-value">--</span>
+        </div>
+        <div class="stat-body">
+          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.EMAILS' | translate }}</h5>
+          <span class="stat-value">--</span>
+        </div>
+      </li>
+
+    </ul>
+
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <!-- section no quiz -->
+      <ng-container *ngIf="noResult">
+        <div class="section-pad">
+          <app-message-space [widthMax]="'354px'">
+            {{ 'CAMPAIGNS.QUIZ_PAGE.BOT' | translate }}
+          </app-message-space>
+        </div>
+      </ng-container>
+
+
+      <!-- section quiz -->
+      <ng-container *ngIf="!noResult">
+        <div class="section-quiz section-light-pad">
+          <p class="text">{{ 'CAMPAIGNS.QUIZ_PAGE.HEADING' | translate }}</p>
+          <ul>
+            <li *ngFor="let url of quizLinks">
+              <a [href]="url" target="_blank">{{ url }}</a>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+
     </div>
 
+  </section>
+</ng-container>
 
-    <!-- section quiz -->
-    <div *ngIf="!noResult" class="section-quiz">
-      <p>{{ 'CAMPAIGNS.QUIZ_PAGE.HEADING' | translate }}</p>
-      <ul>
-        <li *ngFor="let url of quizLinks">
-          <a [href]="url" target="_blank">{{ url }}</a>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-
-</div>

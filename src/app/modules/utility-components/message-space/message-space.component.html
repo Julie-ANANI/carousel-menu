@@ -1,5 +1,4 @@
-<div id="message-space-component">
-
+<section id="message-space-component" class="text-center">
   <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px' }">
     <div class="message-content">
       <ng-content></ng-content>
@@ -7,5 +6,4 @@
     <div class="triangle"></div>
   </div>
   <div><img [src]="imageSrc ? imageSrc : defaultSrc" class="bot-wrapper" alt=" "></div>
-
-</div>
+</section>

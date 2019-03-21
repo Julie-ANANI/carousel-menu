@@ -26,6 +26,8 @@ export class AdminSignaturesLibraryComponent implements OnInit {
     sort: '{"id":-1}'
   };
 
+  private _modalAdd = false;
+
   constructor(private _templatesService: TemplatesService,
               private _notificationsService: TranslateNotificationsService) {}
 
@@ -73,6 +75,12 @@ export class AdminSignaturesLibraryComponent implements OnInit {
     };
   }
 
+
+  onClickAdd() {
+    this._modalAdd = true;
+  }
+
+
   public updateSignature(signature: EmailSignature) {
     this._templatesService.saveSignature(signature).pipe(first()).subscribe((updatedSignature: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
@@ -99,6 +107,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
       this._newSignatureName = null;
       this.editSignature(newSignature);
       this.getSignatures();
+      this._modalAdd = false;
     });
   }
 
@@ -111,4 +120,13 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   get config(): any { return this._config; }
   set config(value: any) { this._config = value; }
   set signatureToEdit(value: any) { this._signatureToEdit = value; }
+
+  get modalAdd(): boolean {
+    return this._modalAdd;
+  }
+
+  set modalAdd(value: boolean) {
+    this._modalAdd = value;
+  }
+
 }

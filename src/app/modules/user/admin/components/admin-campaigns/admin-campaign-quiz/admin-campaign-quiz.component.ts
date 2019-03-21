@@ -24,7 +24,7 @@ export class AdminCampaignQuizComponent implements OnInit {
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
 
-    if (this._campaign.innovation && this._campaign.innovation.quizId) {
+    if (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId) {
       this._quizLinks = ['fr', 'en'].map((l) => {
         return QuizService.getQuizUrl(this._campaign, l);
       });

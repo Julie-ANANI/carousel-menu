@@ -5,6 +5,7 @@
   .section-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
 
     .language-wrapper{
@@ -13,29 +14,31 @@
       align-items: center;
 
       .form-label, .text-link {
-        margin-right: 0.9375rem;
-        margin-bottom: 0.9375rem;
+        margin-right: 0.75rem;
+        margin-bottom: 0.75rem;
       }
 
       .text-link {
-        color: $meta;
+        color: $meta-color;
+        padding-bottom: $unit-o;
 
         &.active {
-          color: $primary;
+          color: $primary-color;
           text-decoration: none;
           cursor: default;
         }
 
-      }
+        &:hover {
+          color: $primary-color;
+          text-decoration: none;
+        }
 
-      .text-link:hover {
-        color: $primary;
       }
 
     }
 
     .form-switch {
-      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
     }
 
   }
@@ -45,26 +48,17 @@
   }
 
   .form-group {
-    margin-bottom: 1.57rem;
+    margin-bottom: 1.25rem;
   }
 
   .section-content {
     display: flex;
     flex-direction: column;
-    padding-top: 0.6rem;
+    padding-top: 0.5rem;
 
-    .form-input {
-      max-width: 350px;
-    }
-
-    p {
-      font-size: 0.9375rem;
-    }
-
-    .variable-tiny-mce{
-      padding-top: 0.6rem;
-      font-size: 0.75rem;
-      color: $meta;
+    .text.text-notify{
+      padding-top: 0.5rem;
+      font-size: $font-size-sm;
       font-weight: 600;
     }
 

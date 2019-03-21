@@ -1,0 +1,170 @@
+@import "../variables";
+@import "../mixins";
+
+
+.title-hero, .title-primary, .title-secondary, .title-header {
+  font-weight: 600;
+  line-height: $line-height;
+  word-break: break-word;
+  color: inherit;
+  margin-bottom: 0.75rem;
+}
+
+
+// Title for the hero container of the page
+.title-hero {
+  font-size: 2.3rem;
+}
+
+
+// Section title.
+.title-primary {
+  font-size: 1.7rem;
+}
+
+
+// Sub-section or any secondary title.
+.title-secondary {
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+
+
+// Modal, sidebar etc.
+.title-header {
+  font-size: 1rem;
+  color: $light-color;
+}
+
+
+// Primary Text link
+.text-link {
+  @include text-link-variant($link-color);
+}
+
+
+// Delete Text link
+.text-delete-link {
+  @include text-link-variant($alert-color);
+}
+
+
+// Different types of text
+.text {
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  cursor: default;
+
+  &.text-question {
+    font-size: 0.9rem;
+  }
+
+  &.text-success {
+    color: $success-color;
+  }
+
+  &.text-warning {
+    color: $primary-color;
+  }
+
+  &.text-error, &.text-alert {
+    color: $alert-color;
+  }
+
+  &.text-notify {
+    color: $meta-color;
+  }
+
+  &.text-secondary {
+    color: $secondary-color;
+  }
+
+  &.text-label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+}
+
+
+// Character text remaining
+.char-remaining {
+  font-size: $font-size-sm;
+  color: $success-color;
+  font-weight: $font-weight-normal;
+  position: absolute;
+  right: $unit-2;
+  top: 0;
+}
+
+
+// Text overflow utilities
+.text-ellipsis {
+  @include text-ellipsis();
+}
+
+.text-clip {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.text-break {
+  hyphens: auto;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+
+// Text alignment utilities
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+
+// Text transform utilities
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+
+// Text style utilities
+.text-normal {
+  font-weight: normal;
+}
+
+.text-medium {
+  font-weight: 600;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
