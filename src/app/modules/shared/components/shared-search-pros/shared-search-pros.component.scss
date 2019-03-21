@@ -10,6 +10,27 @@
       flex: 0 1 50%;
       padding-right: 5%;
 
+      .popover {
+
+        .popover-container {
+          width: 230px;
+
+          .card {
+            margin: 0;
+
+            .card-body {
+              padding: 10px 5px;
+              font-size: 12px;
+              color: $background-color;
+              font-weight: 600;
+            }
+
+          }
+
+        }
+
+      }
+
       .heading-wrapper {
         display: flex;
         align-items: center;
@@ -41,16 +62,10 @@
           }
 
           .popover-container {
-            width: 230px;
 
             .card {
-              margin: 0;
 
               .card-body {
-                padding: 10px 5px;
-                font-size: 12px;
-                color: $background-color;
-                font-weight: 600;
 
                 ul {
                   margin: 0;
@@ -116,14 +131,38 @@
 
     }
 
-    .loader-wrapper, .analysis-wrapper {
+    .loader-wrapper, .analysis-wrapper, .suggested-wrapper, .profile-wrapper {
       padding-top: 25px;
     }
 
-    .analysis-content {
+    .loader-wrapper {
+
+      .loading::after {
+        border-color: $primary-color;
+        border-right-color: transparent;
+        border-top-color: transparent;
+      }
+
+    }
+
+    .analysis-content, .suggested-content, .profile-content {
+      font-size: 14px;
+      font-weight: 600;
+      color: $background-color;
       padding-top: 2px;
       padding-bottom: 25px;
       border-bottom: 1px solid $border-color;
+
+      ul {
+        list-style: none;
+
+        li {
+          padding: 0;
+          margin-top: 8px;
+        }
+
+      }
+
     }
 
     .analysis-wrapper {
@@ -140,16 +179,10 @@
       .analysis-content {
 
         ul {
-          list-style: none;
 
           li {
             display: flex;
             justify-content: space-between;
-            padding: 0;
-            margin-top: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: $background-color;
 
             .text-pros {
               margin-right: 25px;
@@ -174,9 +207,58 @@
 
     }
 
+    .suggested-wrapper {
+
+      .suggested-content {
+
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+
+          li {
+            padding-right: 8px;
+            margin-right: 8px;
+            border-right: 2px solid $border-color;
+          }
+
+        }
+
+      }
+
+    }
+
+    .profile-wrapper {
+
+      .profile-content {
+        border-bottom: none;
+        padding-bottom: 0;
+
+        ul {
+
+          li {
+            margin-bottom: 15px;
+
+            .text-title:hover {
+              color: $primary-color;
+              cursor: pointer;
+            }
+
+            .popover .popover-container {
+              width: 250px;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
   }
 
 }
+
 
 @media (max-width: $size-md) {
 
@@ -187,6 +269,7 @@
 
       .search-wrapper {
         flex: 1 !important;
+        padding-bottom: 25px;
         padding-right: 15% !important;
       }
 
@@ -195,6 +278,7 @@
   }
 
 }
+
 
 @media (max-width: $size-sm) {
 

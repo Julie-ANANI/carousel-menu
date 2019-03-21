@@ -148,6 +148,9 @@ export const ERROR = {
       'DELETED': 'The batch has been deleted successfully.',
       'FREEZED': 'The batch has been frozen successfully.',
       'UPDATED': 'The batch has been updated successfully.',
+    },
+    'SEARCH': {
+      'SETTINGS_UPDATED': 'The settings have been updated successfully.'
     }
   },
 

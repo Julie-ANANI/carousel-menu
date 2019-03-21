@@ -95,8 +95,8 @@
         </ng-container>
         <!-- /loader -->
 
-        <!-- display cat result *ngIf="catProcessDone && !displayLoader" -->
-        <ng-container>
+        <!-- display cat result -->
+        <ng-container *ngIf="catProcessDone && !displayLoader">
 
           <!-- analysis -->
           <div class="analysis-wrapper">
@@ -112,13 +112,58 @@
               <ul>
                 <li *ngFor="let suggestion of suggestions">
                   <div class="display-flex"><span class="text-pros">{{ suggestion.expected_result }} pros</span><div [innerHTML]="suggestion.search_keywords"></div></div>
-                  <div (click)="onClickPlus(suggestion.keywords)" [ngClass]="{ 'inactive':  }"><i class="fas fa-plus-circle"></i></div>
+                  <div (click)="onClickPlus(suggestion.keywords)" [ngStyle]="{ 'visibility':  checkKeywords(suggestion.keywords) }"><i class="fas fa-plus-circle"></i></div>
                 </li>
               </ul>
             </div>
 
           </div>
           <!-- /analysis -->
+
+          <!-- suggested -->
+          <div class="suggested-wrapper">
+
+            <div class="heading-wrapper">
+              <h2 class="title-secondary">Suggested Keywords</h2>
+            </div>
+
+            <div class="suggested-content">
+              <ul>
+                <li *ngFor="let keyword of catResult.new_keywords">
+                  <span>{{ keyword }}</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /suggested -->
+
+          <!-- star profiles -->
+          <div class="profile-wrapper">
+
+            <div class="heading-wrapper">
+              <h2 class="title-secondary">4 Star Profiles</h2>
+            </div>
+
+            <div class="profile-content">
+              <ul>
+                <li *ngFor="let profile of catResult.profile | keyvalue">
+                  <div class="popover popover-top">
+                    <a [href]="profile.key" target="_blank"><span class="text-title">{{ profile.value.title }}</span></a>
+                    <div class="popover-container">
+                      <div class="card">
+                        <div class="card-body">
+                          <span>{{ profile.value.snippet }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /star profiles -->
 
         </ng-container>
         <!-- /display cat result -->
@@ -188,33 +233,8 @@
 
 
 
-<!--
-<div class="columns">
+<!--<div class="columns">
   <div class="column col-5 col-ml-auto">
-
-    <div *ngIf="catDone" class="cat">
-      &lt;!&ndash; Keywords analysis and expected result &ndash;&gt;
-      <h3>Analysis</h3>
-      <div *ngFor="let s of suggestion"  class="request-analysis">
-        {{s.expected}} professionals found <span [innerHTML]=s.kw > </span>
-      </div>
-
-      &lt;!&ndash; Additional keywords &ndash;&gt;
-      <h4>Suggested keywords</h4>
-      <div class="additional-keywords" [ngStyle]="{ 'display': 'flex' }">
-        <div *ngFor="let kw of catResult.new_keywords" >
-          {{kw}} |
-        </div>
-      </div>
-
-      &lt;!&ndash; Star profiles &ndash;&gt;
-      <h5>4 star profiles:</h5>
-      <div *ngFor="let profile of catResult.profile | keyvalue" class="stars">
-        <p class="tooltip" data-tooltip="ça ne marche pas encore :'("> <a href= "{{ profile.key }}" target="_blank">{{ profile.value.title }}</a> </p>
-      </div>
-    </div>
-
-  </div>
 
   <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.duplicate_status">
     <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
@@ -253,5 +273,4 @@
       </div>
     </div>
   </div>
-</div>
--->
+</div>-->

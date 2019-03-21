@@ -24,8 +24,6 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _more_cat: SidebarInterface = {};
-
   private _googleQuota = 30000;
 
   private _catQuota = 100;
@@ -34,9 +32,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _countriesSettings: any[] = [];
 
-  showText = false;
-
-  catResult: any;
+  private _catResult: any;
 
   private _displayLoader = false;
 
@@ -60,7 +56,7 @@ export class SharedSearchProsComponent implements OnInit {
   private _initParams() {
     this.getGoogleQuota();
 
-    // this.getCatQuota();
+    this.getCatQuota();
 
     this._params = {
       keywords: '',
@@ -94,7 +90,7 @@ export class SharedSearchProsComponent implements OnInit {
       }
     }
 
-    this.catResult = { duplicate_status: 'ok' };
+    this._catResult = { duplicate_status: 'ok' };
 
     this.estimateNumberOfGoogleRequests();
 
@@ -153,12 +149,33 @@ export class SharedSearchProsComponent implements OnInit {
 
   }
 
+  private getTargetCountries(settings: InnovationSettings): Array<string> {
+    let countries: Array<string> = [];
+
+    if (settings && settings.geography) {
+      // On ajoute d'abord les pays appartenants aux continents sélectionnés
+      for (const continent in settings.geography.continentTarget) {
+        if (settings.geography.continentTarget[continent]) {
+          countries = countries.concat(COUNTRIES[continent]);
+        }
+      }
+
+      // Puis on enlève les pays exclus
+      if (settings.geography.exclude) {
+        countries = countries.filter((c: any) => settings.geography.exclude.map((c: any) => c.flag).indexOf(c) === -1);
+      }
+
+    }
+    return countries;
+
+  }
+
 
   /***
    * delete the previous Computer Aided Targeting result
    */
   onReset() {
-    this.catResult = { duplicate_status: 'ok' };
+    this._catResult = { duplicate_status: 'ok' };
     this._suggestions = [];
     this.estimateNumberOfGoogleRequests();
   }
@@ -193,15 +210,15 @@ export class SharedSearchProsComponent implements OnInit {
 
       this.onReset();
 
-      this.catResult.total_result = [];
+      this._catResult.total_result = [];
 
       Object.entries(response.total_result).forEach(([key, value]) => {
-        this.catResult.total_result.push(value);
+        this._catResult.total_result.push(value);
       });
 
-      this.estimateNumberOfGoogleRequests(this.catResult.total_result);
+      this.estimateNumberOfGoogleRequests(this._catResult.total_result);
 
-      this.catResult.keywords_analysis = response.keywords_analysis.kw;
+      this._catResult.keywords_analysis = response.keywords_analysis.kw;
 
       let expected_result;
 
@@ -223,15 +240,15 @@ export class SharedSearchProsComponent implements OnInit {
         this._suggestions.push({expected_result: expected_result, search_keywords: request, keywords: keywords});
       });
 
-      this.catResult.new_keywords = [];
+      this._catResult.new_keywords = [];
 
       Object.entries(response.keywords_analysis.new).forEach(([key, value]) => {
-        this.catResult.new_keywords.push(key);
+        this._catResult.new_keywords.push(key);
       });
 
-      this.catResult.duplicate_status = response.duplicate_status;
+      this._catResult.duplicate_status = response.duplicate_status;
 
-      this.catResult.profile = response.stars;
+      this._catResult.profile = response.stars;
 
       this.getCatQuota();
 
@@ -256,6 +273,15 @@ export class SharedSearchProsComponent implements OnInit {
 
   onClickPlus(search_keywords: string) {
     this._params.keywords += `${search_keywords}\n`;
+  }
+
+
+  checkKeywords(keywords: string): string {
+    if (this._params.keywords.includes(keywords)) {
+      return 'hidden';
+    }
+
+    return 'visible';
   }
 
 
@@ -288,34 +314,10 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
 
-  displayStars() {
-    this._more_cat = {
-      // animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SEARCH.STAR_PROFILES'
-    };
-  }
-
   updateSettings(value: any) {
     this._params = value;
     this.estimateNumberOfGoogleRequests();
-  }
-
-
-  public getTargetCountries(settings: InnovationSettings): Array<string> {
-    let countries: Array<string> = [];
-    if (settings && settings.geography) {
-      // On ajoute d'abord les pays appartenants aux continents sélectionnés
-      for (const continent in settings.geography.continentTarget) {
-        if (settings.geography.continentTarget[continent]) {
-          countries = countries.concat(COUNTRIES[continent]);
-        }
-      }
-      // Puis on enlève les pays exclus
-      if (settings.geography.exclude) {
-        countries = countries.filter((c: any) => settings.geography.exclude.map((c: any) => c.flag).indexOf(c) === -1);
-      }
-    }
-    return countries;
+    this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.SEARCH.SETTINGS_UPDATED');
   }
 
   get suggestions(): Array<{ expected_result: number; search_keywords: string; keywords: string }> {
@@ -334,9 +336,6 @@ export class SharedSearchProsComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get more_cat(): any {
-    return this._more_cat;
-  }
 
   get googleQuota(): number {
     return this._googleQuota;
@@ -351,7 +350,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   get catProcessDone(): any {
-    return this.catResult.keywords_analysis;
+    return this._catResult.keywords_analysis;
   }
 
   set params(value: any) {
@@ -360,6 +359,10 @@ export class SharedSearchProsComponent implements OnInit {
 
   get displayLoader(): boolean {
     return this._displayLoader;
+  }
+
+  get catResult(): any {
+    return this._catResult;
   }
 
 }
