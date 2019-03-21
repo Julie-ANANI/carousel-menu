@@ -11,8 +11,7 @@ export class SpinnerLoaderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   getLogo(): string {
     return environment.logoURL;

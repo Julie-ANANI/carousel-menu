@@ -148,6 +148,9 @@ export const ERROR = {
       'DELETED': 'Le batch a été supprimé avec succès.',
       'FREEZED': 'Le batch a été congelé avec succès.',
       'UPDATED': 'Le batch a été mis à jour avec succès.',
+    },
+    'SEARCH': {
+      'SETTINGS_UPDATED': 'Les paramètres ont été mis à jour avec succès.'
     }
   },
 

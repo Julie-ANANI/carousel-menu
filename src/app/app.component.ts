@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this._setFavicon();
+
     initTranslation(this.translateService);
 
     if (this.authService.isAcceptingCookies) {
