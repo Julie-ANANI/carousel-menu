@@ -320,6 +320,7 @@ export class SharedSearchProsComponent implements OnInit {
     this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.SEARCH.SETTINGS_UPDATED');
   }
 
+
   get suggestions(): Array<{ expected_result: number; search_keywords: string; keywords: string }> {
     return this._suggestions;
   }
