@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { TranslateService } from '@ngx-translate/core';
-import {SwellrtBackend} from "../../../../swellrt-client/services/swellrt-backend";
+// import {SwellrtBackend} from "../../../../swellrt-client/services/swellrt-backend";
 
 @Component({
   selector: 'app-project',
@@ -26,13 +26,14 @@ export class ProjectComponent implements OnInit {
               private translateTitleService: TranslateTitleService,
               private router: Router,
               private translateService: TranslateService,
-              private _swellRtBackend: SwellrtBackend) { }
+              //private _swellRtBackend: SwellrtBackend
+              ) { }
 
   ngOnInit() {
 
-    let xxx = this._swellRtBackend.get();
+    //let xxx = this._swellRtBackend.get();
 
-    console.log(xxx);
+    //console.log(xxx);
 
     this.activatedRoute.data.subscribe((response) => {
       if (response) {
