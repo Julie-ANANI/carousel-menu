@@ -32,12 +32,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._backOfficeValue = !this._backOfficeValue;
   }
 
+
   /***
    * to toggle the value of menu options display.
    */
   toggleMenuState() {
     this._displayMenuOptions = !this._displayMenuOptions;
   }
+
 
   /***
    * set the menu display value false when click on link
@@ -46,9 +48,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._displayMenuOptions = false;
   }
 
+
   canShow(reqLevel: number): boolean {
     return reqLevel && ( this.authService.adminLevel & reqLevel) === reqLevel;
   }
+
 
   get backOfficeValue(): boolean {
     return this._backOfficeValue;
@@ -66,12 +70,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this._displayMenuOptions;
   }
 
-  ngOnDestroy(): void {
-    this._backOfficeValue = false;
+  isMainDomain(): boolean {
+    return environment.domain === 'umi';
   }
 
-  public isMainDomain(): boolean {
-    return environment.domain === 'umi';
+  ngOnDestroy(): void {
+    this._backOfficeValue = false;
   }
 
 }
