@@ -6,6 +6,7 @@ import { User } from '../../../models/user.model';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
+import { TranslateTitleService } from '../../../services/title/title.service';
 
 @Component({
   selector: 'app-welcome',
@@ -19,18 +20,23 @@ export class WelcomeComponent implements OnInit {
 
   private _tokenEmail: string;
 
-  constructor(private _authService: AuthService,
-              private _userService: UserService,
-              private _router: Router,
-              private _translateService: TranslateService) {}
+  constructor(private authService: AuthService,
+              private userService: UserService,
+              private router: Router,
+              private translateService: TranslateService,
+              private translateTitleService: TranslateTitleService,) {
+
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.WELCOME');
+
+  }
 
   ngOnInit() {
-    this._user = this._authService.user;
+    this._user = this.authService.user;
 
     if (!this._user) {
-      this._router.navigate(['/logout']);
+      this.router.navigate(['/logout']);
     } else if ( this._user.emailVerified ) {
-      this._router.navigate(['/']);
+      this.router.navigate(['/']);
     }
 
   }
@@ -38,23 +44,25 @@ export class WelcomeComponent implements OnInit {
   acceptTerms(event: Event): void {
     event.preventDefault();
 
-    this._authService.user.state = 'confirmed';
+    this.authService.user.state = 'confirmed';
 
-    this._userService.activate(this._authService.user.state, this._tokenEmail).pipe(first()).subscribe((res: any) => {
-        if (res.emailVerified === true) {
-          this._authService.emailVerified = true;
-        }
-        this._authService.isConfirmed = true;
-        this._router.navigate(['/']);
-      }, (error: any) => {
-        this._router.navigate(['/logout']);
-      });
+    this.userService.activate(this.authService.user.state, this._tokenEmail).pipe(first()).subscribe((res: any) => {
+      if (res.emailVerified === true) {
+        this.authService.emailVerified = true;
+      }
+      this.authService.isConfirmed = true;
+      this.router.navigate(['/']);
+      }, () => {
+      this.router.navigate(['/logout']);
+    });
 
   }
+
 
   get name(): string {
     return this._user ? this._user['name'] : '';
   }
+
 
   get isAdmin(): boolean {
     if (this._user) {
@@ -65,6 +73,7 @@ export class WelcomeComponent implements OnInit {
     }
   }
 
+
   get tokenEmail(): string {
     return this._tokenEmail;
   }
@@ -74,7 +83,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   get translate (): TranslateService {
-    return this._translateService;
+    return this.translateService;
   }
 
   isMainDomain(): boolean {
