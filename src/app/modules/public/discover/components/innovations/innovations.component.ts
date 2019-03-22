@@ -9,9 +9,9 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
-import { AuthService } from '../../../../../services/auth/auth.service';
+// import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { UserService } from '../../../../../services/user/user.service';
+// import { UserService } from '../../../../../services/user/user.service';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
 import { InnovCard } from '../../../../../models/innov-card';
@@ -97,7 +97,7 @@ export class InnovationsComponent implements OnInit {
 
   private _suggestedTags: Array<Tag> = []; // array containing suggested tags id for the selected tag
 
-  private _userId: string; // id of the logged user
+  // private _userId: string; // id of the logged user
 
   private _userSuggestedInnovations: Array<Innovation> = [];
 
@@ -107,8 +107,8 @@ export class InnovationsComponent implements OnInit {
               private translateService: TranslateService,
               private localStorage: LocalStorageService,
               private activatedRoute: ActivatedRoute,
-              private authService: AuthService,
-              private userService: UserService,
+              // private authService: AuthService,
+              // private userService: UserService,
               private innovationService: InnovationService,
               private innovationFrontService: InnovationFrontService) {}
 
@@ -126,10 +126,11 @@ export class InnovationsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
         this.applyInnoRecommendation(params['innovation']);
-      } else if (this.authService.isAuthenticated) {
-        this._userId = this.authService.userId;
-        this.applyUserRecommendation();
       }
+      // else if (this.authService.isAuthenticated) {
+      //   this._userId = this.authService.userId;
+      //   this.applyUserRecommendation();
+      // }
     });
 
   }
@@ -674,14 +675,14 @@ export class InnovationsComponent implements OnInit {
     }
   }
 
-  private applyUserRecommendation() {
-
-    this.userService.getRecommendation(this._userId).subscribe((response) => {
-      response.forEach((innovation_id: string) => {
-        this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === innovation_id));
-      });
-    });
-  }
+  // private applyUserRecommendation() {
+  //
+  //   this.userService.getRecommendation(this._userId).subscribe((response) => {
+  //     response.forEach((innovation_id: string) => {
+  //       this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === innovation_id));
+  //     });
+  //   });
+  // }
 
   private applyInnoRecommendation(idInno: string) {
     this.innovationService.getRecommendation(idInno).subscribe((response) => {
