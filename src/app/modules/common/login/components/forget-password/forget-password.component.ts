@@ -23,10 +23,13 @@ export class ForgetPasswordComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private translateNotificationsService: TranslateNotificationsService,
-              private userService: UserService) {}
+              private userService: UserService) {
+
+    this.translateTitleService.setTitle('FORGET_PASSWORD.TITLE');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('FORGET_PASSWORD.TITLE');
     this.buildForm();
   }
 
@@ -38,7 +41,7 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
 
-  onSubmit() {
+  onClickSubmit() {
     if (this._formData.valid) {
       this.userService.resetPassword(this._formData.get('email').value).pipe(first()).subscribe(() => {
         this._emailSent = true;
