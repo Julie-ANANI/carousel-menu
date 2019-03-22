@@ -2,40 +2,46 @@
 
 #projects-list-component {
 
-  .card-project {
-    margin-bottom: 1.5rem;
+  .card-wrapper {
+    margin-bottom: -1.5rem;
 
-    .card-content {
-      display: inline-flex;
-      width: 100%;
+    .card-project {
+      margin-bottom: 1.5rem;
 
-      img {
-        border-radius: $border-radius;
-        margin-right: $unit-5;
-      }
-
-      img:hover {
-        box-shadow: $box-shadow-hover;
-        cursor: pointer;
-      }
-
-      .project-description {
-        border-bottom: $border-width solid $border-color;
+      .card-content {
+        display: inline-flex;
         width: 100%;
 
-        a span {
-          font-size: 1.1rem;
+        img {
+          border-radius: $border-radius;
+          margin-right: $unit-5;
+
+          &:hover {
+            box-shadow: $box-shadow-hover-umi;
+            cursor: pointer;
+          }
+
         }
 
-        .text {
-          font-weight: $font-weight-medium;
-          font-size: $font-size-sm;
-          margin-top: 0.75rem;
-          margin-bottom: $unit-2;
-        }
+        .project-description {
+          border-bottom: $border-width solid $border-color;
+          width: 100%;
 
-        .icon {
-          margin-left: 0;
+          a span {
+            font-size: 1.1rem;
+          }
+
+          .text {
+            font-weight: $font-weight-medium;
+            font-size: $font-size-sm;
+            margin-top: 0.75rem;
+            margin-bottom: $unit-2;
+          }
+
+          .icon {
+            margin-left: 0;
+          }
+
         }
 
       }

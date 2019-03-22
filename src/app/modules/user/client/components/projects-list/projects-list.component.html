@@ -25,14 +25,18 @@
         <div class="section-pad rm-pad-bottom">
 
           <!-- projects -->
-          <div [@listAnimation]="innovations.length">
+          <div class="card-wrapper" [@listAnimation]="innovations.length">
             <div *ngFor="let innovation of innovations" class="card-project">
               <div class="card-content">
+
                 <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
+
                 <div class="project-description">
+
                   <a [routerLink]="getRelevantLink(innovation)">
                     <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
                   </a>
+
                   <p class="text text-notify">
                     {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
                     •
@@ -42,7 +46,9 @@
                     |
                     <span class="icon icon-delete" (click)="onClickDelete($event, innovation._id)"><i class="fas fa-trash-alt"></i></span>
                   </p>
+
                 </div>
+
               </div>
             </div>
           </div>
@@ -76,3 +82,4 @@
     <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>
+<!-- /delete project confirmation modal -->
