@@ -171,7 +171,6 @@ export class BarChartComponent implements OnInit {
     this.filterService.addFilter({
       status: this.question.controlType === 'radio' ? 'RADIO' : 'CHECKBOX',
       questionId: this.question.identifier,
-      questionTitle: this.question.title,
       value: data.identifier
     });
   }
@@ -184,16 +183,6 @@ export class BarChartComponent implements OnInit {
     event.preventDefault();
     this.showDetails = !this.showDetails;
     this.answerButtonClicked.emit(this.showDetails);
-  }
-
-  public addTagFilter(event: Event, tag: Tag) {
-    event.preventDefault();
-    this.filterService.addFilter({
-      status: 'TAG',
-      questionId: this.question.identifier + 'Comment',
-      questionTitle: tag.label,
-      value: tag._id
-    });
   }
 
 

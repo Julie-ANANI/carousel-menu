@@ -97,8 +97,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this.filterService.addFilter({
       status: 'TAG',
-      questionId: this.tagId,
-      questionTitle: tag.label,
+      questionId: this.question.identifier,
       value: tag._id
     });
   }

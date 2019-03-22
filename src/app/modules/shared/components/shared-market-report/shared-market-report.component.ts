@@ -543,8 +543,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         {
           status: 'COUNTRIES',
           value: event.continents,
-          questionId: 'worldmap',
-          questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+          questionId: 'worldmap'
         }
       );
     } else {
@@ -558,8 +557,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this.filterService.addFilter({
       status: 'PROFESSIONALS',
       value: proFilter && Array.isArray(proFilter.value) ? [...proFilter.value, answer._id] : [answer._id],
-      questionId: 'professionals',
-      questionTitle: {en: 'Professionals', fr: 'Professionnels'}
+      questionId: 'professionals'
     });
   }
 

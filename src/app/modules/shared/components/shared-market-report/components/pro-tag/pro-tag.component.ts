@@ -39,7 +39,6 @@ export class ProfessionalTagComponent implements OnInit {
     this.filterService.addFilter({
       status: 'TAG',
       questionId: this.tagId,
-      questionTitle: tag.label,
       value: tag._id
     });
   }

@@ -18,6 +18,7 @@ import { AnswersLimiterPipe } from './pipes/AnswersLimiter.pipe';
 import { CommonService } from '../../../../services/common/common.service';
 import { FilterService } from './services/filters.service';
 import { ResponseService } from './services/response.service';
+import { TagsService } from './services/tags.service';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 import { ModalModule } from '../../../utility-components/modal/modal.module';
 
@@ -68,7 +69,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   providers: [
     CommonService,
     FilterService,
-    ResponseService
+    ResponseService,
+    TagsService
   ],
   declarations: [
     SharedMarketReportComponent,

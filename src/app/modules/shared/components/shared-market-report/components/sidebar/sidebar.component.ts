@@ -4,12 +4,14 @@ import { PageScrollConfig } from 'ngx-page-scroll';
 import { FilterService } from '../../services/filters.service';
 import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { TagsService } from '../../services/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { SharedWorldmapService } from '../../../shared-worldmap/shared-worldmap.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { SharedFilter } from '../../models/shared-filter';
+import { Tag } from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-market-report-sidebar',
@@ -21,6 +23,16 @@ export class SidebarComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
+    // calculate tagsList
+    const tagsDict = this._answers.reduce(function (acc, answer) {
+      answer.tags.forEach((tag) => {
+        if (!acc[tag._id]) {
+          acc[tag._id] = tag;
+        }
+      });
+      return acc;
+    }, {});
+    this.tagService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
   }
 
   @Input() set isAdmin(value: boolean) {
@@ -61,6 +73,7 @@ export class SidebarComponent implements OnInit {
               private filterService: FilterService,
               private innovationCommonService: InnovationCommonService,
               private innovationService: InnovationService,
+              private tagService: TagsService,
               private translateNotificationsService: TranslateNotificationsService,
               private worldmapService: SharedWorldmapService) {
     PageScrollConfig.defaultDuration = 600;
@@ -103,7 +116,7 @@ export class SidebarComponent implements OnInit {
       if (result) {
         this.filterService.addFilter({
           status: 'CUSTOM',
-          questionTitle: {en: result.name},
+          questionId: name,
           value: result.answers
         });
       }
@@ -141,6 +154,11 @@ export class SidebarComponent implements OnInit {
     this.worldmapService.selectContinent(event.target['name'], event.target['checked']);
   }
 
+  public checkTag(event: Event) {
+    event.preventDefault();
+    this.tagService.checkTag(event.target['name'], event.target['checked']);
+  }
+
   get answers(): Array<Answer> {
     return this._answers;
   }
@@ -149,12 +167,8 @@ export class SidebarComponent implements OnInit {
     return this.worldmapService.continentsList;
   }
 
-  get isAdmin(): boolean {
-    return this._isAdmin;
-  }
-
-  get isOwner(): boolean {
-    return this._isOwner;
+  get filteredContinents() {
+    return this.filterService.filters['worldmap'] ? this.filterService.filters['worldmap'].value : null;
   }
 
   get filterName(): string {
@@ -169,12 +183,24 @@ export class SidebarComponent implements OnInit {
     return this._innovation;
   }
 
+  get isAdmin(): boolean {
+    return this._isAdmin;
+  }
+
+  get isOwner(): boolean {
+    return this._isOwner;
+  }
+
   get questions(): Array<Question> {
     return this._questions;
   }
 
   get sharedFiltersList(): Array<SharedFilter> {
     return this._sharedFiltersList;
+  }
+
+  get selectedTags(): {[t: string]: boolean} {
+    return this.tagService.selectedTags;
   }
 
   get showExportModal(): boolean {
@@ -193,8 +219,8 @@ export class SidebarComponent implements OnInit {
     this._showEndInnovationModal = value;
   }
 
-  get filteredContinents() {
-    return this.filterService.filters['worldmap'] ? this.filterService.filters['worldmap'].value : null;
+  get tagsList(): Array<Tag> {
+    return this.tagService.tagsList;
   }
 
 }

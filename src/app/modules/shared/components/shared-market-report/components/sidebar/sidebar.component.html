@@ -55,7 +55,7 @@
       <i class="icon icon-arrow-right" aria-hidden="true"></i>
     </a>
     <span *ngFor="let c of continentsList">
-      <input type="checkbox" [name]="c" (change)="checkCountry($event, c)" [checked]="filteredContinents ? filteredContinents[c] : true">
+      <input type="checkbox" [name]="c" (change)="checkCountry($event)" [checked]="filteredContinents ? filteredContinents[c] : true">
       <label [for]="c">{{ ('CONTINENTS.' + c) | translate }}</label>
     </span>
   </p>
@@ -64,10 +64,10 @@
       {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
       <i class="icon icon-arrow-right" aria-hidden="true"></i>
     </a>
-    <!--<span *ngFor="let t of answerTags">
-                <input type="checkbox" id="scales" name="scales" checked>
-                <label for="scales">Scales</label>
-              </span>-->
+    <span *ngFor="let t of tagsList">
+      <input type="checkbox" [name]="t._id" (change)="checkTag($event)" [checked]="selectedTags[t._id]">
+      <label [for]="t._id">{{ t.label | multiling:lang }}</label>
+    </span>
   </p>
   <p *ngFor="let question of questions">
     <a [href]="'#' + question.identifier | removespaces" pageScroll>
