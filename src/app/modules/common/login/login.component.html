@@ -19,7 +19,7 @@
 
           <!-- details -->
           <div class="credentials-wrapper">
-            <form (submit)="onContinue()"  [formGroup]="formData">
+            <form (submit)="onClickContinue()" [formGroup]="formData">
 
               <div class="form-group has-error">
                 <label class="form-label" for="login-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
@@ -46,10 +46,13 @@
                 <span class="form-input-hint" *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
               </div>
 
-              <!-- Login button and forget password -->
+              <!-- login button and forget password -->
               <div class="submit-wrapper">
                 <div class="login-button">
-                  <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</button>
+                  <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">
+                    <span *ngIf="displayLoading" class="loading loading-white"></span>
+                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                  </button>
                 </div>
                 <p>{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }} <span class="text-link gtm-change-password" routerLink="forgetpassword">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</span></p>
               </div>
@@ -57,7 +60,7 @@
             </form>
           </div>
 
-          <!-- LinkedIn -->
+          <!-- linkedIn -->
           <ng-container *ngIf="checkIsMainDomain()">
             <div class="linkedIn-wrapper">
 
@@ -65,8 +68,10 @@
                 <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
               </div>
 
-              <button class="btn btn-secondary gtm-signin-linkedin" (click)="linkedInEvent()">
-                <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+              <button class="btn btn-secondary gtm-signin-linkedin" (click)="onClickLinkedIn()">
+                <span *ngIf="displayLoadingLinkedIn" class="loading loading-white"></span>
+                <span *ngIf="!displayLoadingLinkedIn"><i class="fab fa-1x fa-linkedin-in"></i></span>
+                  {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
               </button>
 
             </div>
@@ -74,14 +79,14 @@
 
         </div>
 
-        <!-- Sign up -->
+        <!-- sign up -->
         <div class="text-center">
           <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '0.4rem' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
           <button type="button" class="btn btn-sm ghost-primary" routerLink="/register">{{ 'LOG_IN.SIGN_UP' | translate }}</button>
         </div>
 
       </section>
-      <!-- /Login -->
+      <!-- /login -->
 
     </div>
   </section>

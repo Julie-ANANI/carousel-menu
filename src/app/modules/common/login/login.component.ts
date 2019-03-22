@@ -23,14 +23,22 @@ export class LoginComponent implements OnInit {
 
   private _linkedInState: string = Date.now().toString();
 
+  private _displayLoading = false;
+
+  private _displayLoadingLinkedIn = false;
+
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router,) { }
+              private router: Router) {
+
+    this.translateTitleService.setTitle('LOG_IN.TITLE');
+
+  }
+
 
   ngOnInit() {
-    this.translateTitleService.setTitle('LOG_IN.TITLE');
     this.buildForm();
     this.linkedInUrl();
   }
@@ -59,7 +67,9 @@ export class LoginComponent implements OnInit {
   }
 
 
-  linkedInEvent() {
+  onClickLinkedIn() {
+    this._displayLoadingLinkedIn = true;
+
     const data = {
       domain: environment.domain,
       state: this._linkedInState
@@ -67,6 +77,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{console.log(_);
       }, (err) => {
+      this._displayLoadingLinkedIn = false;
       console.error(err);
       }, () => {
         window.open(this._linkedInLink, '_self');
@@ -75,10 +86,14 @@ export class LoginComponent implements OnInit {
   }
 
 
-  onContinue() {
+  onClickContinue() {
     if (this._formData.valid) {
+
+      this._displayLoading = true;
+
       const user = new User(this._formData.value);
       user.domain = environment.domain;
+
       this.authService.login(user).pipe(first()).subscribe(() => {
 
         if (this.authService.isAuthenticated) {
@@ -97,6 +112,7 @@ export class LoginComponent implements OnInit {
 
         }
       }, () => {
+        this._displayLoading = false;
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
       });
@@ -130,6 +146,14 @@ export class LoginComponent implements OnInit {
 
   get linkedInLink(): string {
     return this._linkedInLink;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
+  }
+
+  get displayLoadingLinkedIn(): boolean {
+    return this._displayLoadingLinkedIn;
   }
 
 }

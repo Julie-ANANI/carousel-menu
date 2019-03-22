@@ -37,4 +37,14 @@
 
   }
 
+  &.loading-white {
+
+    &::after {
+      border: $border-width-lg solid $light-color;
+      border-right-color: transparent;
+      border-top-color: transparent;
+    }
+
+  }
+
 }

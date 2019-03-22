@@ -7,7 +7,6 @@
     min-height: 100vh;
     flex-direction: column;
 
-
     .cover-image {
       background-attachment: fixed;
       background-repeat: no-repeat;
@@ -15,7 +14,6 @@
       background-position: center center;
       min-height: 100vh;
     }
-
 
     .section-login {
       display: flex;
@@ -50,6 +48,16 @@
 
             .login-button {
               padding-bottom: 0.7rem;
+
+              .btn {
+                min-width: 150px;
+              }
+
+              .loading {
+                position: absolute;
+                left: 25px;
+              }
+
             }
 
             p, .text-link {
@@ -69,6 +77,14 @@
             padding-bottom: 1.25rem;
           }
 
+          .btn {
+            min-width: 250px;
+          }
+
+          .loading {
+            margin-right: 20px;
+          }
+
         }
 
       }
@@ -80,8 +96,6 @@
 
 }
 
-
-/********************************** Media ***************************************/
 
 @media (max-width: $size-sm) {
 

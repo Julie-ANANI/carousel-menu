@@ -8,6 +8,7 @@ import { LoginComponent } from "./login.component";
 import { LoginRoutingModule } from "./login-routing.module";
 import { ForgetPasswordModule } from "./components/forget-password/forget-password.module";
 import { ResetPasswordModule } from './components/reset-password/reset-password.module';
+import { SpinnerLoaderModule } from '../../utility-components/spinner-loader/spinner-loader.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ResetPasswordModule } from './components/reset-password/reset-password.
     ForgetPasswordModule,
     FormsModule,
     ReactiveFormsModule,
-    ResetPasswordModule
+    ResetPasswordModule,
+    SpinnerLoaderModule
   ],
   declarations: [
     LoginComponent,
