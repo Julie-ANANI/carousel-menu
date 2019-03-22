@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
               private translateNotificationsService: TranslateNotificationsService,
               private router: Router) {
 
-    this.translateTitleService.setTitle('LOG_IN.TITLE');
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
 
   }
 

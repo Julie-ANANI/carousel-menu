@@ -28,7 +28,7 @@ export class ResetPasswordComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private router: Router) {
 
-    this.translateTitleService.setTitle('RESET_PASSWORD.TITLE');
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.RESET');
 
   }
 

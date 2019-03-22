@@ -112,6 +112,13 @@ export const COMMON = {
 
   'TOP_PROFILE': 'Profil haut',
 
+  'PAGE_TITLE': {
+    'LOG_IN': 'Connexion',
+    'RESET': 'Réinitialiser le mot de passe',
+    'FORGET': 'Demander le mot de passe',
+    'LOG_OUT': 'Se déconnecter',
+  },
+
   'LABEL': {
     'ACTIVITY_FIELDS': 'Champs d\'activité',
     'FIRSTNAME': 'Prénom',

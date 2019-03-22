@@ -25,7 +25,7 @@ export class ForgetPasswordComponent implements OnInit {
               private translateNotificationsService: TranslateNotificationsService,
               private userService: UserService) {
 
-    this.translateTitleService.setTitle('FORGET_PASSWORD.TITLE');
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.FORGET');
 
   }
 

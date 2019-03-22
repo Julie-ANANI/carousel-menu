@@ -114,6 +114,13 @@ export const COMMON = {
 
   'TOP_PROFILE': 'Top profile',
 
+  'PAGE_TITLE': {
+    'LOG_IN': 'Login',
+    'RESET': 'Reset Password',
+    'FORGET': 'Request Password Reset',
+    'LOG_OUT': 'Sign Out',
+  },
+
   'LABEL': {
     'ACTIVITY_FIELDS': 'Activity Fields',
     'FIRSTNAME': 'First Name',
