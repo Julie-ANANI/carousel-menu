@@ -17,6 +17,7 @@ import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
 import { InnovationCommonService } from '../../services/innovation/innovation-common.service';
 import { InnovationFrontService } from '../../services/innovation/innovation-front.service';
+import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinner-loader.module';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { InnovationFrontService } from '../../services/innovation/innovation-fro
     TranslateModule.forChild(),
     UserRoutingModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    SpinnerLoaderModule
   ],
   declarations: [
     UserComponent,

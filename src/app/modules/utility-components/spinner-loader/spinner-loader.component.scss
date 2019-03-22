@@ -1,4 +1,4 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/src/variables";
 
 #spinner-loader-component {
   height: 100vh;
@@ -11,16 +11,10 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: white;
+  background-color: $bg-color-light;
 
   .logo-wrapper {
-    margin-bottom: .9375rem;
+    margin-bottom: $unit-5;
   }
 
-}
-
-.loading::after {
-  border-color: $primary-color;
-  border-right-color: transparent;
-  border-top-color: transparent;
 }

@@ -1,10 +1,9 @@
-import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Subject } from 'rxjs';
-import { ScrollService } from '../../services/scroll/scroll.service';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 
 // declare let swellrt: any;
@@ -23,29 +22,43 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private _adminSide = false;
 
+  private _displayLoading = false;
+
+  private _pages: Array<string> = ['/projects', '/discover', '/synthesis','/account', '/admin', '/users', '/professionals', '/community', '/libraries', '/monitoring', '/settings'];
+
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private loaderService: LoaderService,
-              private scrollService: ScrollService,
               private location: Location,
               // private _swellrtBackend: SwellrtBackend,
-              private router: Router) { }
+              private router: Router) {
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.scrollService.setScrollValue(window.pageYOffset || window.scrollY || 0);
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events.subscribe((event) => {
+
+        if (event instanceof NavigationEnd) {
+          this._adminSide = this.location.path().slice(5, 11) === '/admin';
+
+          setTimeout(() => {
+            this._displayLoading = false;
+          }, 300);
+
+        } else if (event instanceof NavigationStart || !this.router.navigated) {
+
+          this._pages.forEach((page: string) => {
+            if (this.location.path().endsWith(page)) {
+              this._displayLoading = true;
+            }
+          });
+
+        }
+      });
+    }
+
   }
 
   ngOnInit(): void {
 
     this._adminSide = this.location.path().slice(5, 11) === '/admin';
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this._adminSide = this.location.path().slice(5, 11) === '/admin';
-        }
-      });
-    }
 
     this.loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
@@ -102,6 +115,7 @@ export class UserComponent implements OnInit, OnDestroy {
       });
   }*/
 
+
   get displayLoader(): boolean {
     return this._displayLoader;
   }
@@ -112,6 +126,14 @@ export class UserComponent implements OnInit, OnDestroy {
 
   get adminSide(): boolean {
     return this._adminSide;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
+  }
+
+  get pages(): Array<string> {
+    return this._pages;
   }
 
   ngOnDestroy(): void {
