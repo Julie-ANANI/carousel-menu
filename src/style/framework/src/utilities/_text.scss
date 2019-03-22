@@ -67,23 +67,27 @@
 }
 
 .text-success {
-  color: $success-color !important;
+  color: $text-success-color !important;
 }
 
 .text-warning {
-  color: $primary-color !important;
+  color: $text-primary-color !important;
 }
 
 .text-error, .text-alert {
-  color: $alert-color !important;
+  color: $text-alert-color !important;
 }
 
 .text-notify {
-  color: $meta-color !important;
+  color: $text-meta-color !important;
 }
 
 .text-secondary {
-  color: $secondary-color !important;
+  color: $text-secondary-color !important;
+}
+
+.text-background {
+  color: $text-background-color !important;
 }
 
 

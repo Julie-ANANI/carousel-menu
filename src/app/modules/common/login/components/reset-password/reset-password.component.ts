@@ -26,10 +26,13 @@ export class ResetPasswordComponent implements OnInit {
               private userService: UserService,
               private authService: AuthService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+
+    this.translateTitleService.setTitle('RESET_PASSWORD.TITLE');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('RESET_PASSWORD.TITLE');
     this.buildForm();
   }
 
@@ -44,11 +47,14 @@ export class ResetPasswordComponent implements OnInit {
   }
 
 
-  onSubmit() {
+  onClickSubmit() {
     if (this._formData.valid && this._formData.get('email')!.value) {
+
       if (this._formData.get('password')!.value === this._formData.get('passwordConfirm')!.value) {
+
         this.activatedRoute.params.subscribe(params => {
           const tokenEmail = params['tokenEmail'];
+
           this.userService.updatePassword({
             email: this._formData.get('email')!.value,
             password: this._formData.get('password')!.value,
@@ -58,14 +64,16 @@ export class ResetPasswordComponent implements OnInit {
               this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
               this.router.navigate(['/']);
             },
-            err => {
-              this.translateNotificationsService.error('ERROR.ERROR', err.message);
-            });
+            () => {
+              this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+          });
         });
+
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
       }
     }
+
     else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
