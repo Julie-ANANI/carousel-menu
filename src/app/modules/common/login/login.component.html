@@ -51,7 +51,7 @@
                 <div class="login-button">
                   <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">
                     <span *ngIf="displayLoading" class="loading loading-white"></span>
-                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                    {{ 'COMMON.BUTTON.CONTINUE' | translate }}
                   </button>
                 </div>
                 <p>{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }} <span class="text-link gtm-change-password" routerLink="forgetpassword">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</span></p>
@@ -82,7 +82,7 @@
         <!-- sign up -->
         <div class="text-center">
           <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '0.4rem' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
-          <button type="button" class="btn btn-sm ghost-primary" routerLink="/register">{{ 'LOG_IN.SIGN_UP' | translate }}</button>
+          <button type="button" class="btn btn-sm ghost-primary" routerLink="/register">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
         </div>
 
       </section>

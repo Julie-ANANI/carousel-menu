@@ -89,6 +89,7 @@ export const COMMON = {
     'RESET': 'Reset Password',
     'FORGET': 'Request Password Reset',
     'LOG_OUT': 'Sign Out',
+    'SIGN_UP': 'Sign Up'
   },
 
   'LABEL': {
@@ -167,7 +168,9 @@ export const COMMON = {
     'SEND': 'Send',
     'PRINT': 'Print',
     'PREVIEW': 'Preview',
-    'SUBMIT': 'Submit'
+    'SUBMIT': 'Submit',
+    'SIGN_IN': 'Sign In',
+    'SIGN_UP': 'Sign Up'
   },
 
   'TABLE' : {
