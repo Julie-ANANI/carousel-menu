@@ -1,10 +1,15 @@
 <main class="container fluid" id="not-found-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
-    <section class="no-result-wrapper">
+    <section>
+
       <img src="https://res.cloudinary.com/umi/image/upload/v1532725851/app/default-images/not-found.svg" class="bot-image" alt=" ">
+
       <h1 class="title-primary">404 ERROR</h1>
-      <p>{{ 'COMMON.PAGE_NOT_FOUND' | translate }}</p>
-      <p class="text-link" routerLink="/">{{ 'ERROR.BACK_TO_HOME' | translate }}</p>
+
+      <p class="text">{{ 'COMMON.NOT_FOUND.PAGE_NOT_FOUND' | translate }}</p>
+
+      <p class="text-link" routerLink="/">{{ 'COMMON.NOT_FOUND.TEXT' | translate }}</p>
+
     </section>
   </div>
 </main>

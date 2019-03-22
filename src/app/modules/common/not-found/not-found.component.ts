@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateTitleService } from "../../../services/title/title.service";
 
 @Component({
@@ -7,12 +7,12 @@ import { TranslateTitleService } from "../../../services/title/title.service";
   styleUrls: ['./not-found.component.scss']
 })
 
-export class NotFoundComponent implements OnInit {
+export class NotFoundComponent {
 
-  constructor(private translateTitleService: TranslateTitleService) {}
+  constructor(private translateTitleService: TranslateTitleService) {
 
-  ngOnInit() {
     this.translateTitleService.setTitle('Page Not Found');
+
   }
 
 }

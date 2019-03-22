@@ -1,3 +1,5 @@
+@import "../../../../style/framework/src/variables";
+
 #not-found-component {
   display: flex;
   flex-direction: column;
@@ -5,22 +7,26 @@
   align-items: center;
   min-height: 100vh;
 
-  .no-result-wrapper {
+  section {
     margin-top: 0;
     text-align: center;
 
     .bot-image {
       height: 12.37rem;
-      margin-bottom: .9375rem;
+      margin-bottom: 0.75rem;
     }
 
     .title-primary {
       color: #FF795D;
-      font-size: 2.7rem;
+      font-size: 2.16rem;
+    }
+
+    p {
+      margin-bottom: 0;
     }
 
     .text-link {
-      padding-top: 1.57rem;
+      padding-top: 1.25rem;
     }
 
   }

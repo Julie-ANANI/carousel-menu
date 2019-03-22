@@ -9,13 +9,11 @@ export const COMMON = {
   'CHANGE': 'Changer',
   'DELETE': 'Supprimer',
   'SUBMIT': 'Confirmer',
-
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
   'SIGN_OUT': 'Se déconnecter',
   'LOG_OUT': 'Se déconnecter',
   'GENERATE': 'Générer',
-
   'ADD': 'Ajouter',
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
@@ -48,10 +46,6 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
-  'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
-
-
-
   'SHARED_REPORTS': 'Rapports partagés',
 
   'BLACKLIST': {
@@ -68,19 +62,6 @@ export const COMMON = {
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   'OLD_PASSWORD': 'Ancien mot de passe',
   'NEW_PASSWORD': 'Nouveau mot de passe',
   'CONFIRM_PASSWORD': 'Confirmez le mot de passe',
@@ -90,19 +71,9 @@ export const COMMON = {
   'NEW_PASSWORD_PLACEHOLDER': '9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
 
-
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
-
-
-
-
-
-
   'DOMAIN': 'Domaine',
-
-
-
 
   'TERMS': {
     'A': 'En cliquant sur "Continuer", j\'accepte',
@@ -223,8 +194,6 @@ export const COMMON = {
     'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 
-
-
   'LINKS': 'Liens',
   'HELP': 'Aide',
   'OR': 'Ou',
@@ -326,6 +295,11 @@ export const COMMON = {
 
   'LOGOUT': {
     'TEXT': 'Vous serez redirigé automatiquement vers la page de connexion.'
+  },
+
+  'NOT_FOUND': {
+    'TEXT': 'Retour à la page d\'accueil.',
+    'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
   },
 
   'CAMPAIGN': {

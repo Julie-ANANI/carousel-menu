@@ -8,7 +8,6 @@ export const COMMON = {
   'SEND': 'Send',
   'CHANGE': 'Change',
   'DELETE': 'Delete',
-
   'LOG_IN': 'Sign In',
   'SIGN_UP': 'Sign Up',
   'LOG_OUT': 'Sign out',
@@ -17,7 +16,6 @@ export const COMMON = {
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
-
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'GENERATE': 'Generate',
@@ -47,10 +45,6 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
-  'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
-
-
-
   'SHARED_REPORTS': 'Shared Reports',
 
   'BLACKLIST': {
@@ -69,19 +63,6 @@ export const COMMON = {
   'NEVER': 'Never',
 
   'COMMENT': 'Comment',
-
-
-
-
-
-
-
-
-
-
-
-
-
   'OLD_PASSWORD': 'Old Password',
   'NEW_PASSWORD': 'New Password',
   'CONFIRM_PASSWORD': 'Confirm Password',
@@ -93,18 +74,7 @@ export const COMMON = {
 
 
   'PASSWORD_CONFIRM': 'Password confirmation',
-
-
-
-
-
-
-
-
   'DOMAIN': 'Domain',
-
-
-
 
   'TERMS': {
     'A': 'By clicking "Continue" I agree to',
@@ -326,7 +296,12 @@ export const COMMON = {
   },
 
   'LOGOUT': {
-    'TEXT': 'You will be redirected automatically to the login page.'
+    'TEXT': 'You will be redirected automatically to the login page.',
+  },
+
+  'NOT_FOUND': {
+    'TEXT': 'Back to homepage.',
+    'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
   },
 
   'CAMPAIGN': {

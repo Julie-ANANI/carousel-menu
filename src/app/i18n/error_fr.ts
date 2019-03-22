@@ -28,8 +28,6 @@ export const ERROR = {
     'TARGETING_FORM': 'Il manque quelques informations dans l\'onglet "Ciblage".'
   },
 
-  'BACK_TO_HOME': 'Retour à la page d\'accueil.',
-
   'LOGIN': {
     'WELCOME': 'Bienvenue !',
     'LOGGED_IN': 'Bienvenue chez nous !',

@@ -28,8 +28,6 @@ export const ERROR = {
     'TARGETING_FORM': 'Please answer the fields of the targeting form.'
   },
 
-  'BACK_TO_HOME': 'Back to homepage.',
-
   'LOGIN': {
     'WELCOME': 'Welcome back!',
     'LOGGED_IN': 'You have been logged in successfully.',
