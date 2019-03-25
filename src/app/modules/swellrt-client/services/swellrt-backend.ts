@@ -1,4 +1,3 @@
-/*
 import {Injectable} from "@angular/core";
 import {User} from "../../../models/user.model";
 
@@ -104,17 +103,4 @@ export class SwellrtBackend {
       .then( service => { return service.close({id: id})})
       .catch( err => {`There's an error closing the document: ${err}`});
   }
-
-  /*getUserSRT(userId: string) {
-    return this.service
-      .then(s => {
-        return s.getUser({id:userId});
-      })
-      .catch(err=>{
-        console.error(err);
-    });
-  }*/
-
-
 }
-*/

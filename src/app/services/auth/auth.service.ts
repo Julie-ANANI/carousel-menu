@@ -8,7 +8,7 @@ import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-import {SwellrtBackend} from "../../modules/swellrt-client/services/swellrt-backend";
+import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
 
 
 @Injectable()
@@ -33,7 +33,7 @@ export class AuthService {
               private _http: HttpClient,
               private _cookieService: CookieService,
               private _router: Router,
-              private _swellRtService: SwellrtBackend) {
+              private _swellRtService: SwellrtBackend ) {
   /**
      Les cookies <hasBeenAuthenticated> et <hasBeenAdmin> sont utiles quand l'application essaye d'accéder à une route
      sans que la session ait été récupérée du serveur via la fonction <initializeSession()>. Ceci évite que si l'on
