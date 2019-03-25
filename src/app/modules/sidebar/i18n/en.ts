@@ -14,7 +14,8 @@ export const SIDEBAR = {
     'NEW_BATCH': 'New Batch Manually',
     'EDIT_BATCH': 'Edit Batch',
     'ADD_AMBASSDOR': 'Add Ambassador',
-    'CHANGE_PASSWORD': 'Change Password'
+    'CHANGE_PASSWORD': 'Change Password',
+    'INSIGHT': 'Insight'
   },
 
   'LABELS': {

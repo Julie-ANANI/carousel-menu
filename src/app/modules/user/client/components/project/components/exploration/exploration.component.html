@@ -1,4 +1,5 @@
 <ng-container *ngIf="innovation">
+
   <section class="section-light-pad rm-pad-bottom animate-page" id="exploration-component">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
@@ -6,7 +7,7 @@
       <ng-container *ngIf="innovation.status === 'EDITING' || innovation.status === 'SUBMITTED'">
         <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h2>
         <div class="section-light-pad rm-pad-bottom">
-          <app-message-space [widthMax]="'321px'">{{ getMessage() | translate }}</app-message-space>
+          <app-message-space [widthMax]="'337px'">{{ getMessage() | translate }}</app-message-space>
         </div>
       </ng-container>
        <!-- /project under editing and submitted status -->
@@ -17,7 +18,7 @@
         <!-- section title -->
         <div class="section-title flex-between">
           <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h2>
-          <a class="btn btn-primary gtm-exploration-contact-operator" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
+          <a class="btn btn-primary gtm-exploration-contact-operator" href="{{ contactUrl }}"><span>{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</span></a>
         </div>
         <!-- /section title -->
 
@@ -67,81 +68,83 @@
         <!-- /section comment -->
 
         <!-- section analytics -->
-        <div class="section-analytics" *ngIf="false">
-          <h3 class="title-secondary">{{'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate}}</h3>
-          <div class="analytic-content">
+        <ng-container *ngIf="false">
+          <div class="section-analytics">
+            <h3 class="title-secondary">{{'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate}}</h3>
+            <div class="analytic-content">
 
-            <!-- reached -->
-            <div class="analytic-body">
-              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
-              <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
-            </div>
+              <!-- reached -->
+              <div class="analytic-body">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
+              </div>
 
-            <div class="analytic-body pd-top">
-              <svg width="80px" height="38px" viewBox="0 0 80 38">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-701.000000, -810.000000)">
-                    <g transform="translate(701.000000, 810.000000)">
-                      <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                      <text class="svg-text">
-                        <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>
-                      </text>
+              <div class="analytic-body pd-top">
+                <svg width="80px" height="38px" viewBox="0 0 80 38">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-701.000000, -810.000000)">
+                      <g transform="translate(701.000000, 810.000000)">
+                        <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                        <text class="svg-text">
+                          <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>
+                        </text>
+                      </g>
                     </g>
                   </g>
-                </g>
-              </svg>
-            </div>
+                </svg>
+              </div>
 
-            <!-- emails -->
-            <div class="analytic-body">
-              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
-              <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
-            </div>
+              <!-- emails -->
+              <div class="analytic-body">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
+              </div>
 
-            <div class="analytic-body pd-top">
-              <svg width="80px" height="38px" viewBox="0 0 80 38">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-701.000000, -810.000000)">
-                    <g transform="translate(701.000000, 810.000000)">
-                      <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                      <text class="svg-text">
-                        <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>
-                      </text>
+              <div class="analytic-body pd-top">
+                <svg width="80px" height="38px" viewBox="0 0 80 38">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-701.000000, -810.000000)">
+                      <g transform="translate(701.000000, 810.000000)">
+                        <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                        <text class="svg-text">
+                          <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>
+                        </text>
+                      </g>
                     </g>
                   </g>
-                </g>
-              </svg>
-            </div>
+                </svg>
+              </div>
 
-            <!-- clicks -->
-            <div class="analytic-body">
-              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
-              <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
-            </div>
+              <!-- clicks -->
+              <div class="analytic-body">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
+              </div>
 
-            <div class="analytic-body pd-top">
-              <svg width="80px" height="38px" viewBox="0 0 80 38">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-701.000000, -810.000000)">
-                    <g transform="translate(701.000000, 810.000000)">
-                      <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                      <text class="svg-text">
-                        <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>
-                      </text>
+              <div class="analytic-body pd-top">
+                <svg width="80px" height="38px" viewBox="0 0 80 38">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-701.000000, -810.000000)">
+                      <g transform="translate(701.000000, 810.000000)">
+                        <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                        <text class="svg-text">
+                          <tspan x="27.4760742" y="24">{{ percentage(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>
+                        </text>
+                      </g>
                     </g>
                   </g>
-                </g>
-              </svg>
-            </div>
+                </svg>
+              </div>
 
-            <!-- answers -->
-            <div class="analytic-body">
-              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-              <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
-            </div>
+              <!-- answers -->
+              <div class="analytic-body">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
+              </div>
 
+            </div>
           </div>
-        </div>
+        </ng-container>
         <!-- /section analytics -->
 
         <!-- section click rate -->
@@ -183,17 +186,19 @@
 
     </div>
   </section>
+
+
+  <!-- sidebar to view user answer -->
+  <app-sidebar [(template)]="sidebarValue">
+    <app-user-answer
+      [adminMode]="false"
+      [sidebarState]="sidebarValue.animate_state"
+      [(userAnswer)]="modalAnswer"
+      [questions]="questions"
+      [projectId]="innovation._id">
+    </app-user-answer>
+  </app-sidebar>
+  <!-- /sidebar to view user answer -->
+
+
 </ng-container>
-
-
-<!-- sidebar to view user answer -->
-<app-sidebar [(template)]="sidebarValue">
-  <app-user-answer
-    [adminMode]="false"
-    [sidebarState]="sidebarValue.animate_state"
-    [(userAnswer)]="modalAnswer"
-    [questions]="questions"
-    [projectId]="innovation._id">
-  </app-user-answer>
-</app-sidebar>
-<!-- /sidebar to view user answer -->
