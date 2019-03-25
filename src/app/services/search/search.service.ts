@@ -134,4 +134,11 @@ export class SearchService {
   };
     return this._http.get('/search/get', {params: query});
   }
+
+  public getProKeywords(personId: string) {
+    const query = {
+      path: `/person/${personId}/getKeywords`,
+    };
+    return this._http.get('/search/get', {params: query});
+  }
 }
