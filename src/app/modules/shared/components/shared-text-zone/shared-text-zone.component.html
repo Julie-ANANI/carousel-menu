@@ -2,7 +2,9 @@
 
   <!-- Il faut utiliser [hidden] avec *ngIf l'editeur tinymce n'est pas instancié -->
   <div [hidden]="readonly">
-    <textarea id="{{htmlId}}" rows="10" cols="70" [(ngModel)]="text"></textarea>
+    <label>
+      <textarea id="{{ htmlId }}" rows="10" cols="70" [(ngModel)]="text"></textarea>
+    </label>
   </div>
 
   <div [hidden]="!readonly">

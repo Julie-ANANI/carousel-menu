@@ -19,7 +19,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
-    this.canEdit = value.status === 'EDITING';
+    this._canEdit = value.status === 'EDITING';
   }
 
   private _innovation: Innovation;
@@ -40,7 +40,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _submitModal = false;
 
-  canEdit = false;
+  private _canEdit = false;
 
   constructor(private router: Router,
               private innovationService: InnovationService,
@@ -250,6 +250,10 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get submitModal(): boolean {
     return this._submitModal;
+  }
+
+  get canEdit(): boolean {
+    return this._canEdit;
   }
 
   ngOnDestroy(): void {

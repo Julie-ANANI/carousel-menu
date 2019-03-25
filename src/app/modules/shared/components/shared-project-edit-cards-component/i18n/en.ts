@@ -72,8 +72,8 @@ export const SHARED_PROJECT_EDIT = {
   'MEDIA': {
     'LABEL': 'Would you like to add images or videos to better illustrate your project?',
     'SUB_LABEL': '(We highly recommended and projects with media attached tend to have a much better response rate.)',
-    'MAIN': 'Main media',
-    'SECONDARY': 'Secondary medias',
+    'MAIN': 'Main Media',
+    'SECONDARY': 'Secondary Medias',
     'UPLOAD_PICTURE': 'Upload Picture',
     'UPLOAD_VIDEO': 'Upload Video',
     'SLIDE': 'drag the file here',

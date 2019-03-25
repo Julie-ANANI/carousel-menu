@@ -1,4 +1,5 @@
 <ng-container *ngIf="innovation">
+
   <section id="shared-project-edit-cards-component" class="animate-page">
 
     <!-- language section -->
@@ -520,7 +521,7 @@
                 </div>
 
                 <div class="or-wrapper">
-                  <span class="text text-notify">{{ 'COMMON.OR' | translate }}</span>
+                  <span class="text text-notify text-medium">{{ 'COMMON.OR' | translate }}</span>
                 </div>
 
                 <div class="video-upload-wrapper">
@@ -539,17 +540,19 @@
 
 
   </section>
+
+
+  <!-- modal to ask user to sure about deleting the innovation card the project -->
+  <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
+    {{ 'COMMON.LANG.' + innovation.innovationCards[selectedCardIndex].lang | uppercase | translate }}
+    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+      <button class="btn btn-sm btn-primary" (click)="onClickConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    </div>
+  </app-modal>
+  <!-- /modal to ask user to sure about deleting the innovation card the project -->
+
+
 </ng-container>
-
-
-<!-- modal to ask user to sure about deleting the innovation card the project -->
-<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-  {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
-  {{ 'COMMON.LANG.' + innovation.innovationCards[selectedCardIndex].lang | uppercase | translate }}
-  {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
-</app-modal>
-<!-- /modal to ask user to sure about deleting the innovation card the project -->
