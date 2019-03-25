@@ -2,36 +2,40 @@
 
 #synthesis-list-component {
 
-  .card-report {
-    margin-bottom: 1.5rem;
+  .report-wrapper {
+    margin-bottom: -1.5rem;
 
-    .card-content {
-      display: inline-flex;
-      width: 100%;
+    .card-report {
+      margin-bottom: 1.5rem;
 
-      img {
-        border-radius: $border-radius;
-        margin-right: $unit-5;
-      }
-
-      img:hover {
-        box-shadow: $box-shadow-hover;
-        cursor: pointer;
-      }
-
-      .report-description {
-        border-bottom: $border-width solid $border-color;
+      .card-content {
+        display: inline-flex;
         width: 100%;
 
-        a span {
-          font-size: 1.1rem;
+        img {
+          border-radius: $border-radius;
+          margin-right: $unit-5;
         }
 
-        .text {
-          font-weight: $font-weight-medium;
-          font-size: $font-size-sm;
-          margin-top: 0.75rem;
-          margin-bottom: $unit-2;
+        img:hover {
+          box-shadow: $box-shadow-hover-umi;
+          cursor: pointer;
+        }
+
+        .report-description {
+          border-bottom: $border-width solid $border-color;
+          width: 100%;
+
+          a span {
+            font-size: 1.1rem;
+          }
+
+          .text {
+            font-weight: $font-weight-medium;
+            font-size: $font-size-sm;
+            margin-top: 0.75rem;
+          }
+
         }
 
       }

@@ -53,16 +53,19 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
                private innovationService: InnovationService,
                private translateNotificationsService: TranslateNotificationsService,
                private translateService: TranslateService,
-               private innovationFrontService: InnovationFrontService) { }
+               private innovationFrontService: InnovationFrontService) {
+
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.SHARED_REPORTS');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
     this._totalReports = [];
     this.getUserReports();
   }
 
   private getUserReports() {
-    this._subscriptions.push(this.userService.getSharedWithMe(this.config).subscribe((reports: any) => {
+    this._subscriptions.push(this.userService.getSharedWithMe(this._config).subscribe((reports: any) => {
       this.getSharedReports(reports.sharedgraph || []);
       this._noResult = reports.length === 0;
     }, () => {

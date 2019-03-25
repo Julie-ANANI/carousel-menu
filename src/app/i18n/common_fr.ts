@@ -46,7 +46,6 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
-  'SHARED_REPORTS': 'Rapports partagés',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
@@ -90,7 +89,8 @@ export const COMMON = {
     'LOG_OUT': 'Se déconnecter',
     'SIGN_UP': 'S\'Inscrire',
     'WELCOME': 'Bienvenus',
-    'ACCOUNT': 'Profil'
+    'ACCOUNT': 'Profil',
+    'SHARED_REPORTS': 'Rapports partagés',
   },
 
   'LABEL': {
