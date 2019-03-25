@@ -8,6 +8,7 @@ import { Table } from '../../../table/models/table';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
+import {Router} from "@angular/router";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -37,9 +38,9 @@ export class SharedProsListComponent {
 
   editUser: {[propString: string]: boolean} = {};
 
-  private _tableInfos: Table = null;
+  private _tableInfos: any = null;
 
-  private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS'];
+  private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS', 'Convert to ambassador'];
 
   private _total = 0;
 
@@ -61,7 +62,8 @@ export class SharedProsListComponent {
 
   constructor(private professionalsService: ProfessionalsService,
               private translateNotificationsService: TranslateNotificationsService,
-              private searchService: SearchService) { }
+              private searchService: SearchService,
+              private _router: Router) { }
 
   loadPros(config: any): void {
     this._config = config;
@@ -82,7 +84,13 @@ export class SharedProsListComponent {
           _isSelectable: true,
           _isEditable: true,
           _actions: this._actions,
+          _editIndex: 2,
           _columns: [
+            {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES',
+              _choices: [
+                {_name: 'false', _alias: null},
+                {_name: 'true', _alias: 'Yes',
+                  _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}]},
             {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
@@ -111,7 +119,13 @@ export class SharedProsListComponent {
           _isSelectable: true,
           _isEditable: true,
           _actions: this._actions,
+          _editIndex: 2,
           _columns: [
+            {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES',
+              _choices: [
+                {_name: 'false', _alias: 'No',_class:'img-responsive badge-sm'},
+                {_name: 'true', _alias: 'Yes',_class:'img-responsive badge-sm',
+                  _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}]},
             {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
@@ -119,7 +133,6 @@ export class SharedProsListComponent {
             {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'},
             {_attrs: ['sent'], _name: 'TABLE.HEADING.CONTACT', _type: 'CHECK'}]
         };
-
       });
     }
 
@@ -176,6 +189,17 @@ export class SharedProsListComponent {
         this.editTags(action._rows);
         break;
       }
+      case 1:
+        if(action._rows.length) {
+          if(action._rows.length > 1) {
+            console.log("Look man, I could do this action just for the first one...");
+          }
+          const link = `/user/admin/community/members/${action._rows[0]._id}`;
+          this._router.navigate([link]);
+        } else {
+          console.error("What? empty rows? How did you do that?");
+        }
+        break;
     }
   }
 

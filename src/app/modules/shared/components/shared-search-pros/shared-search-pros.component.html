@@ -1,60 +1,276 @@
-<div class="columns">
+<ng-container *ngIf="campaign">
+  <section id="shared-search-pros-component">
+    <div class="search-section">
+
+      <!-- search wrapper -->
+      <div class="search-wrapper">
+
+        <!-- heading -->
+        <div class="heading-wrapper">
+
+          <h2 class="title-secondary">Rocket Testing</h2>
+
+          <span class="text-link" (click)="onReset()">Reset</span>
+
+          <span class="line">|</span>
+
+          <div class="popover popover-top">
+
+            <span class="text-help">Help</span>
+
+            <div class="popover-container">
+              <div class="card">
+                <div class="card-body">
+
+                  <div class="display-flex align-center">
+                    <div class="shape circle circle-xs circle-success"></div>
+                    <span>Relevant</span>
+                  </div>
+
+                  <div class="display-flex align-center">
+                    <div class="shape circle circle-xs circle-progress"></div>
+                    <span>Average</span>
+                  </div>
+
+                  <div class="display-flex align-center">
+                    <div class="shape circle circle-xs circle-alert"></div>
+                    <span>Overused</span>
+                  </div>
+
+                  <div class="display-flex align-center">
+                    <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
+                    <span>Too much pros duplicated</span>
+                  </div>
+
+                  <hr class="hr">
+
+                  <ul>
+                    <li>No capital letters or "s".</li>
+                    <li>Numbers can't be processed.</li>
+                    <li>Please enter at least 2 request.</li>
+                  </ul>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- /heading -->
+
+        <!-- input -->
+        <div class="input-wrapper">
+
+          <div class="form-group">
+            <textarea
+              type="text"
+              class="form-input"
+              name="cat-keywords"
+              rows="5"
+              [(ngModel)]="params.catKeywords"
+              placeholder="Search here using Computer Aided Targeting. One request per line.">
+            </textarea>
+            <ng-container *ngIf="params.catKeywords">
+              <span class="search-button-wrapper" (click)="onClickSearchCat($event)"><i class="fas fa-search"></i></span>
+            </ng-container>
+          </div>
+
+          <div class="remaining-wrapper">
+            <div class="display-flex align-center">
+              <span class="shape circle circle-xs" [ngClass]="getCatCircleClass()"></span>
+              <span>Search Requests</span>
+            </div>
+            <div><span>Remaining for today: {{ catQuota }}</span></div>
+          </div>
+
+        </div>
+        <!-- /input -->
+
+        <!-- loader -->
+        <ng-container *ngIf="displayLoader">
+          <div class="loader-wrapper">
+            <div class="loading loading-lg"></div>
+          </div>
+        </ng-container>
+        <!-- /loader -->
+
+        <!-- display cat result -->
+        <ng-container *ngIf="catProcessDone && !displayLoader">
+
+          <!-- analysis -->
+          <div class="analysis-wrapper">
+
+            <div class="heading-wrapper">
+              <h2 class="title-secondary">Analysis</h2>
+              <ng-container *ngIf="catResult && catResult.duplicate_status !== 'ok'">
+                <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
+              </ng-container>
+            </div>
+
+            <div class="analysis-content">
+              <ul>
+                <li *ngFor="let suggestion of suggestions">
+                  <div class="display-flex"><span class="text-pros">{{ suggestion.expected_result }} pros</span><div [innerHTML]="suggestion.search_keywords"></div></div>
+                  <div (click)="onClickPlus(suggestion.keywords)" [ngStyle]="{ 'visibility':  checkKeywords(suggestion.keywords) }"><i class="fas fa-plus-circle"></i></div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /analysis -->
+
+          <!-- suggested -->
+          <div class="suggested-wrapper">
+
+            <div class="heading-wrapper">
+              <h2 class="title-secondary">Suggested Keywords</h2>
+            </div>
+
+            <div class="suggested-content">
+              <ul>
+                <li *ngFor="let keyword of catResult.new_keywords">
+                  <span>{{ keyword }}</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /suggested -->
+
+          <!-- star profiles -->
+          <div class="profile-wrapper">
+
+            <div class="heading-wrapper">
+              <h2 class="title-secondary">4 Star Profiles</h2>
+            </div>
+
+            <div class="profile-content">
+              <ul>
+                <li *ngFor="let profile of catResult.profile | keyvalue">
+                  <div class="popover popover-top">
+                    <a [href]="profile.key" target="_blank"><span class="text-title">{{ profile.value.title }}</span></a>
+                    <div class="popover-container">
+                      <div class="card">
+                        <div class="card-body">
+                          <span>{{ profile.value.snippet }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /star profiles -->
+
+        </ng-container>
+        <!-- /display cat result -->
+
+      </div>
+      <!-- /search wrapper -->
+
+      <!-- search wrapper -->
+      <div class="search-wrapper">
+
+        <!-- heading -->
+        <div class="heading-wrapper">
+          <h2 class="title-secondary">Rocket Launching</h2>
+          <span class="text-link" (click)="onClickSettings()">Settings</span>
+        </div>
+        <!-- /heading -->
+
+        <!-- input -->
+        <div class="input-wrapper">
+
+          <div class="form-group">
+            <textarea
+              type="text"
+              class="form-input"
+              name="keywords"
+              rows="5"
+              (ngModelChange)="estimateNumberOfGoogleRequests()"
+              [(ngModel)]="params.keywords"
+              placeholder="Search here like 'Google'. One request per line.">
+            </textarea>
+            <ng-container *ngIf="params.keywords">
+              <span class="search-button-wrapper" (click)="onClickSearch($event)"><i class="fas fa-search"></i></span>
+            </ng-container>
+          </div>
+
+          <div class="remaining-wrapper">
+            <div class="display-flex align-center">
+              <span class="shape circle circle-xs" [ngClass]="getCircleClass()"></span>
+              <span>Search Emails</span>
+            </div>
+            <div><span>Remaining requests: {{ googleQuota }}</span></div>
+          </div>
+
+        </div>
+        <!-- /input -->
+
+      </div>
+      <!-- /search wrapper -->
+
+    </div>
+  </section>
+</ng-container>
+
+
+<!-- sidebar to advanced search -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-search
+    [params]="params"
+    (paramsChange)="updateSettings($event)">
+  </app-sidebar-search>
+</app-sidebar>
+<!-- /sidebar to advanced search -->
+
+
+
+
+
+
+
+<!--<div class="columns">
   <div class="column col-5 col-ml-auto">
 
-    <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
-      <app-sidebar-search
-        [params]="params"
-        (paramsChange)="updateSettings($event)">
-      </app-sidebar-search>
-    </app-sidebar>
-
-    <div class="flex-container" id="input-search">
-
-      <textarea
-        type="text"
-        class="form-input"
-        name="keywords"
-        rows="4"
-        (ngModelChange)="estimateNumberOfGoogleRequests()"
-        [(ngModel)]="params.keywords"
-        required
-        placeholder="Recherche 'Google-like', une requête par ligne"></textarea>
-
-      <button
-        (click)="search($event)"
-        class="btn-round btn-primary"
-        translate>
-        <i class="fas fa-search"></i>
-      </button>
-
-    </div>
-
-    <div class="tips">
-      <a (click)="changeSettings() && $event.preventDefault()">Settings</a>
-
-      <div class="label label-success" *ngIf="googleQuota > 10000">{{ googleQuota }} remaining requests
-        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
-      </div>
-
-      <div class="label label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} remaining requests
-        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
-      </div>
-
-      <div class="label label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} remaining requests
-        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="column col-2 col-mr-auto">
-    <div class="bot-wrapper text-center">
-      <span class="bot-rect" *ngIf="estimatedNumberOfGoogleRequests">This search will use <strong>{{estimatedNumberOfGoogleRequests}} requests max</strong></span>
-      <span class="bot-rect" *ngIf="!estimatedNumberOfGoogleRequests">Nice day, what are you gonna search today?</span>
+  <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.duplicate_status">
+    <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
+      <span class="bot-rect">
+        <span *ngIf="estimatedNumberOfGoogleRequests">
+          {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
+          <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span
+            *ngIf="catResult.total_result">max</span></strong>.
+        <a *ngIf="!catResult.keywords_analysis && campaign" (click)="cat($event)">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
+        </span>
+        <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
+      </span>
       <br>
       <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-advice.svg" width=""
+                height="120">
+      </div>
+    </div>
+
+    <div class="bot-wrapper text-center" *ngSwitchCase="'not ok'">
+      <span class="bot-rect">{{ 'SEARCH.ROBOT.NOT_OK' | translate }}<br/>
+        <span *ngIf="estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.SEARCH_USE' | translate }} <strong>{{ 'SEARCH.ROBOT.APPROX' | translate }} {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }}</strong>.</span>
+      </span>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120">
+      </div>
+    </div>
+
+    <div class="bot-wrapper text-center" *ngSwitchCase="'error'">
+      <span class="bot-rect"> {{ 'SEARCH.ROBOT.ERROR' | translate }}</span>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width=""
+                height="120">
+      </div>
     </div>
   </div>
-
-</div>
+</div>-->

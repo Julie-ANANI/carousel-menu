@@ -17,6 +17,10 @@ export class SearchService {
     return this._http.post('/search/searchPros', params);
   }
 
+  public cat(campaignId: string, requests: string, starProfiles: number): Observable<any> {
+    return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests, starProfiles: starProfiles});
+  }
+
   public metadataSearch(keywords: string): Observable<any> {
     const query = {
       params: JSON.stringify({keywords: keywords}),
@@ -115,6 +119,19 @@ export class SearchService {
     const query = {
       path: '/search/mail/relaunch',
     };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public computerAidedTargeting(keywords: string[]): Observable<any> {
+    return this._http.post('/search/cat', {keywords});
+  }
+
+  public updateCatStats(usedRequests: number): Observable<any> {
+    const params: any = {usedRequests: usedRequests};
+    const query = {
+      params: JSON.stringify(params),
+      path: '/stats/cat'
+  };
     return this._http.get('/search/get', {params: query});
   }
 }

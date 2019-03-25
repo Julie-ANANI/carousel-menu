@@ -15,6 +15,7 @@ export interface Table {
   readonly _reloadColumns?: boolean;
   readonly _columns: Column[];
   readonly _actions?: string[];
+  readonly _editIndex?: number;
   _content: any[];
   _total: number;
 }

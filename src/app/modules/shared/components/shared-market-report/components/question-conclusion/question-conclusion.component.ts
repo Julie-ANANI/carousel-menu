@@ -55,7 +55,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   constructor(private innovationService: InnovationService,
               private translateService: TranslateService,
-              private filterService: FilterService,) {}
+              private filterService: FilterService) { }
 
   ngOnInit() {
     if (this.question && this.question.identifier) {
