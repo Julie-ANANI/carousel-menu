@@ -8,38 +8,45 @@
 #setup-component {
 
   .section-header {
-    padding-top: 1.25rem;
 
-    .content {
-      display: flex;
+    .content-wrapper {
       flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
 
       .title-primary {
         font-size: 1.35rem;
       }
 
-      .buttons-wrapper {
-        display: flex;
+      .button-wrapper {
+        list-style: none;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        margin-top: 0;
+        margin-left: 0;
         margin-bottom: 0.75rem;
 
-        span {
+        li {
+          margin-top: 0;
           margin-right: $unit-5;
           margin-bottom: $unit-2;
           position: relative;
+
+          &:last-child {
+            margin-right: 0;
+          }
+
         }
 
         .shape {
           position: absolute;
-          width: 25px;
-          height: 25px;
           right: 0;
           margin-top: -12px;
           margin-right: -11px;
           visibility: hidden;
+          z-index: $zindex-0;
+
+          &.circle {
+            width: 25px;
+            height: 25px;
+          }
 
           .fas {
             color: $light-color;
@@ -63,11 +70,12 @@
           .ghost-primary {
             border-color: $success-color !important;
             color: #262831 !important;
-          }
 
-          .ghost-primary:hover {
-            background-color: $hover-background-color !important;
-            box-shadow: none;
+            &:hover {
+              background-color: $hover-background-color !important;
+              box-shadow: none;
+            }
+
           }
 
           .shape {
@@ -102,7 +110,7 @@
 
       .fa-check {
         margin-right: 0;
-        font-size: 14px;
+        font-size: $font-size-sm;
       }
 
       .complete {
@@ -128,7 +136,7 @@
       position: sticky;
       background-color: white;
       top: 0;
-      box-shadow: $box-shadow;
+      box-shadow: $box-shadow-hover-umi;
       z-index: 11;
     }
 

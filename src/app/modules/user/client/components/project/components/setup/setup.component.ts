@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { ScrollService } from '../../../../../../../services/scroll/scroll.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -43,8 +42,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   canEdit = false;
 
-  constructor(private scrollService: ScrollService,
-              private router: Router,
+  constructor(private router: Router,
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
               private activatedRoute: ActivatedRoute,
@@ -54,10 +52,6 @@ export class SetupComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.getCurrentPage();
       }
-    });
-
-    this.scrollService.scrollValue.pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
-      this._scrollOn = value > 50;
     });
 
     this.innovationFrontService.getSelectedInnovationIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: number) => {
@@ -81,6 +75,15 @@ export class SetupComponent implements OnInit, OnDestroy {
   private getCurrentPage() {
     const url = this.router.routerState.snapshot.url.split('/');
     this._currentPage = url.length > 0 ? url[5] : 'targeting';
+  }
+
+
+  /***
+   * we are getting the scroll value for the sticky bar.
+   */
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this._scrollOn = window.pageYOffset > 50 || window.scrollY > 50;
   }
 
 

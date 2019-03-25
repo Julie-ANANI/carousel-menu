@@ -1,4 +1,5 @@
 <ng-container *ngIf="innovation">
+
   <section class="animate-page" id="setup-component">
 
     <!-- project under submitted status -->
@@ -32,40 +33,40 @@
     </ng-container>
 
     <!-- header section -->
-    <div class="section-header" [ngClass]="{ 'sticky': scrollOn }">
+    <div class="section-header section-light-pad rm-pad-bottom" [ngClass]="{ 'sticky': scrollOn }">
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="content">
+        <div class="flex-between content-wrapper">
 
           <!-- title -->
           <h2 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
 
           <!-- buttons -->
-          <div class="buttons-wrapper">
-            <span>
+          <ul class="flex-start button-wrapper">
+            <li>
               <button class="btn ghost-primary gtm-print-card" (click)="onClickPrint($event)">
                 {{ 'COMMON.BUTTON.PRINT' | translate }}
               </button>
-            </span>
-            <span>
+            </li>
+            <li>
               <button class="btn ghost-primary gtm-preview-card" (click)="onClickPreview($event)">
                 {{ 'COMMON.BUTTON.PREVIEW' | translate }}
               </button>
-            </span>
-            <span [ngClass]="buttonSaveClass">
-              <div class="shape circle circle-md"><i class="fas fa-save"></i></div>
+            </li>
+            <li [ngClass]="buttonSaveClass">
+              <div class="shape circle"><i class="fas fa-save"></i></div>
               <button class="btn btn-primary ghost-primary" (click)="onClickSave($event)">
                 {{ 'COMMON.BUTTON.SAVE' | translate }}
               </button>
-            </span>
-            <span [ngStyle]="{ 'margin-right': '0' }">
+            </li>
+            <li>
               <button
                 [disabled]="innovation.status !== 'EDITING'"
                 (click)="onClickSubmit()"
                 class="btn btn-primary gtm-submit-project">
                 {{ 'COMMON.BUTTON.SUBMIT' | translate }}
               </button>
-            </span>
-          </div>
+            </li>
+          </ul>
 
         </div>
       </div>
@@ -84,7 +85,7 @@
           </li>
           <li class="tab-item">
             <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
-              <div class="shape circle circle-md ro pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
+              <div class="shape circle circle-md pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
               {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
             </a>
           </li>
@@ -123,25 +124,27 @@
     <!-- /different section -->
 
   </section>
+
+
+  <!-- innovation preview sidebar -->
+  <app-sidebar [(template)]="sidebarValue">
+    <app-innovation-preview [projectCard]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
+  </app-sidebar>
+  <!-- /innovation preview sidebar -->
+
+
+  <!-- modal to ask user to sure about submitting the project -->
+  <app-modal [(showModal)]="submitModal" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL.CONTENT' | translate }}
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+      <button class="btn btn-primary btn-sm" (click)="onClickConfirm()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    </div>
+  </app-modal>
+  <!-- /modal to ask user to sure about submitting the project -->
+
+
 </ng-container>
-
-
-<!-- innovation preview sidebar -->
-<app-sidebar [(template)]="sidebarValue">
-  <app-innovation-preview [projectCard]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
-</app-sidebar>
-<!-- /innovation preview sidebar -->
-
-
-<!-- modal to ask user to sure about submitting the project -->
-<app-modal [(showModal)]="submitModal" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
-  {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL.CONTENT' | translate }}
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-primary btn-sm" (click)="onClickConfirm()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
-</app-modal>
-<!-- /modal to ask user to sure about submitting the project -->
 
 
 <!-- print innovation -->

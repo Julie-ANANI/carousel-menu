@@ -12,7 +12,6 @@ import { UserService } from '../../services/user/user.service';
 import { InnovationService } from '../../services/innovation/innovation.service';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
-import { ScrollService } from '../../services/scroll/scroll.service';
 import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
 import { InnovationCommonService } from '../../services/innovation/innovation-common.service';
@@ -36,7 +35,6 @@ import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinne
     InnovationService,
     InnovationResolver,
     AutocompleteService,
-    ScrollService,
     ShareService,
     AnswerService,
     InnovationCommonService,
