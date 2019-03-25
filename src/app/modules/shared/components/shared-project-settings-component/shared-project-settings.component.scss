@@ -40,6 +40,7 @@
   .text-secondary {
     font-weight: $font-weight-medium;
     font-size: $font-size-sm;
+    color: $secondary-color !important;
   }
 
   .text-link:hover {

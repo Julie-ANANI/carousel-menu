@@ -34,14 +34,14 @@ export class SharedWorldmapComponent implements OnInit{
 
   @Input() set initialConfiguration(initialConfiguration: any) {
     this._continents = initialConfiguration || {
-          africa: false,
-          americaNord: false,
-          americaSud: false,
-          asia: false,
-          europe: false,
-          oceania: false,
-          russia: false
-        };
+      africa: false,
+      americaNord: false,
+      americaSud: false,
+      asia: false,
+      europe: false,
+      oceania: false,
+      russia: false
+    };
   }
 
   @Output() updateContinent = new EventEmitter<any>();
@@ -126,6 +126,5 @@ export class SharedWorldmapComponent implements OnInit{
   public onHoverChange(continent: string): void {
     this.hoveredContinent.emit(continent);
   }
-
 
 }

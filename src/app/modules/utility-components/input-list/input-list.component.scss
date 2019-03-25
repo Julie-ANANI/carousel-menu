@@ -59,12 +59,23 @@
     display: flex;
     align-items: center;
     color: rgba(255, 255, 255, 0.7);
-    padding: 0.85rem;
+    padding: $unit-3 $unit-4;
     background: #11A751;
     border: none;
   }
 
-  .fa-thumbs-up, .fa-thumbs-down {
+  .fa-angle-up, .fa-angle-down {
+    font-size: 1.4rem;
+    padding-top: $unit-2;
+    padding-bottom: $unit-2;
+  }
+
+  .fa-pencil-alt, .fa-at {
+    padding-top: 0.7rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .fa-thumbs-up, .fa-thumbs-down, .fa-angle-up, .fa-angle-down {
 
     &.active {
       color: $light-color;
@@ -73,18 +84,6 @@
     &:hover {
       cursor: pointer;
       color: $light-color;
-    }
-
-  }
-
-  .popover-container {
-    padding: $unit-4;
-    background: $hover-background-color;
-    box-shadow: $box-shadow-hover-umi;
-    border-radius: $border-radius;
-
-    .btn {
-      margin-top: $unit-4;
     }
 
   }

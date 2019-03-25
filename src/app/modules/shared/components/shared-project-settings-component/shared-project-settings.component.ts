@@ -54,7 +54,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private translateService: TranslateService,
-              private innovationFrontService: InnovationFrontService) {}
+              private innovationFrontService: InnovationFrontService) { }
 
   ngOnInit(): void {
     this.getCommentSections();
@@ -136,7 +136,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
    */
   addCountryToExclude(event: {value: Array<string>}): void {
     this._innovation.settings.geography.exclude = event.value;
-    // this.showGeographyError = this.innovationSettings.geography.exclude.length === 0;
     this.updateSettings();
   }
 

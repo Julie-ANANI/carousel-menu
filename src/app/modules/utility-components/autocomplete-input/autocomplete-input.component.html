@@ -24,12 +24,18 @@
 
     <ng-container *ngIf="!adminMode">
       <li>
+
         <span [innerHTML]="answer[identifier]"></span>
-        <i *ngIf="canOrder" class="fa fa-chevron-up c-hand" aria-label="Up" role="button" (click)="up($event, i)"></i>
-        <i *ngIf="canOrder" class="fa fa-chevron-down c-hand" aria-label="Down" role="button" (click)="down($event, i)"></i>
+
+        <ng-container *ngIf="canOrder">
+          <i class="fas fa-angle-up" aria-label="Up" role="button" (click)="up($event, i)"></i>
+          <i class="fas fa-angle-down" aria-label="Down" role="button" (click)="down($event, i)"></i>
+        </ng-container>
+
         <a class="delete" aria-label="Close" role="button" (click)="rmProposition($event, i)">
           <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
         </a>
+
       </li>
     </ng-container>
 
@@ -44,13 +50,17 @@
           <i class="fas fa-pencil-alt"></i>
 
           <div class="popover-container">
-            <div class="form-group">
-              <label>
-                <input type="text" id="autocomplete-text" class="form-input" [(ngModel)]="answer[identifier]" name="text"/>
-              </label>
-            </div>
-            <div class="text-center">
-              <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
+            <div class="card">
+              <div class="card-body">
+                <div class="form-group">
+                  <label>
+                    <input autocomplete="off" type="text" id="autocomplete-text" class="form-input" [(ngModel)]="answer[identifier]" name="text"/>
+                  </label>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <button class="btn btn-primary btn-xs" type="submit" (click)="updateItem($event)">Update</button>
+              </div>
             </div>
           </div>
 
@@ -61,12 +71,16 @@
           <i class="fas fa-at" [ngClass]="{'active': answer.domain && answer.domain.length > 0}"></i>
 
           <div class="popover-container">
-            <div class="form-group">
-              <label class="form-label" for="domain">Domain Name</label>
-              <input type="text" id="domain" class="form-input" [(ngModel)]="answer.domain" name="domain"/>
-            </div>
-            <div class="text-center">
-              <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
+            <div class="card">
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="form-label" for="domain">Domain Name</label>
+                  <input autocomplete="off" type="text" id="domain" class="form-input" [(ngModel)]="answer.domain" name="domain"/>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <button class="btn btn-primary btn-xs" type="submit" (click)="updateItem($event)">Update</button>
+              </div>
             </div>
           </div>
 

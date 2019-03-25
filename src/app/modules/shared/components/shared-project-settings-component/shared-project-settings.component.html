@@ -56,7 +56,7 @@
                 {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.COMMENT' | translate }}
               </span>
             </p>
-            <div class="pd-input"><p class="text default">{{ innovation.settings.geography.comments }}</p></div>
+            <div class="pd-input"><p class="text">{{ innovation.settings.geography.comments }}</p></div>
           </ng-container>
 
           <ng-container *ngIf="canEdit">
@@ -70,20 +70,22 @@
               </span>
             </p>
 
-            <div *ngIf="displayCountriesCommentSection" class="pd-input">
-              <label for="countries-comments"></label>
-              <textarea
-                class="form-input"
-                id="countries-comments"
-                [attr.placeholder]="'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
-                rows="5"
-                [(ngModel)]="innovation.settings.geography.comments"
-                (change)="updateSettings()">
-              </textarea>
-              <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.geography.comments.length | characterCountdown:500)}">
-                {{ innovation.settings.geography.comments.length | characterCountdown:500 }}
+            <ng-container *ngIf="displayCountriesCommentSection">
+              <div class="pd-input">
+                <label for="countries-comments"></label>
+                <textarea
+                  class="form-input"
+                  id="countries-comments"
+                  [attr.placeholder]="'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
+                  rows="5"
+                  [(ngModel)]="innovation.settings.geography.comments"
+                  (change)="updateSettings()">
+                </textarea>
+                <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.geography.comments.length | characterCountdown:500)}">
+                  {{ innovation.settings.geography.comments.length | characterCountdown:500 }}
+                </div>
               </div>
-            </div>
+            </ng-container>
 
           </ng-container>
           <!-- /Comment countries -->
@@ -96,7 +98,7 @@
 
             <ng-container *ngIf="!canEdit">
               <div class="pd-input">
-                <p class="text default">{{ innovation.settings.market.comments }}</p>
+                <p class="text">{{ innovation.settings.market.comments }}</p>
               </div>
             </ng-container>
 
@@ -191,9 +193,11 @@
               <p class="pd-top">
                 <span class="text text-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.COMMENT' | translate }}</span>
               </p>
-              <div *ngIf="!canEdit && innovation.settings.companies.description" class="pd-input">
-                <p class="text">{{ innovation.settings.companies.description }}</p>
-              </div>
+              <ng-container *ngIf="!canEdit && innovation.settings.companies.description">
+                <div class="pd-input">
+                  <p class="text">{{ innovation.settings.companies.description }}</p>
+                </div>
+              </ng-container>
             </ng-container>
 
             <ng-container *ngIf="canEdit">
@@ -208,20 +212,22 @@
                 </span>
               </p>
 
-              <div *ngIf="displayCompanyCommentSection" class="pd-input">
-                <label for="innovation-companies"></label>
-                <textarea
-                  class="form-input"
-                  id="innovation-companies"
-                  [attr.placeholder]="'SHARED_PROJECT_SETTINGS.COMPANIES.PLACEHOLDER' | translate"
-                  rows="5"
-                  [(ngModel)]="innovation.settings.companies.description"
-                  (change)="updateSettings()">
-                </textarea>
-                <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.companies.description.length | characterCountdown:500)}">
-                  {{ innovation.settings.companies.description.length | characterCountdown:500 }}
+              <ng-container *ngIf="displayCompanyCommentSection">
+                <div class="pd-input">
+                  <label for="innovation-companies"></label>
+                  <textarea
+                    class="form-input"
+                    id="innovation-companies"
+                    [attr.placeholder]="'SHARED_PROJECT_SETTINGS.COMPANIES.PLACEHOLDER' | translate"
+                    rows="5"
+                    [(ngModel)]="innovation.settings.companies.description"
+                    (change)="updateSettings()">
+                  </textarea>
+                  <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.companies.description.length | characterCountdown:500)}">
+                    {{ innovation.settings.companies.description.length | characterCountdown:500 }}
+                  </div>
                 </div>
-              </div>
+              </ng-container>
 
             </ng-container>
             <!-- /Companies comment -->
