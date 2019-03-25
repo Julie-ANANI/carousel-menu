@@ -1,141 +1,142 @@
-<section class="section-container s-print animate-page" id="market-report" [ngStyle]="{ 'background-color': (innovation?.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
+<ng-container *ngIf="innovation">
+  <section class="animate-page" id="market-report" [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5' }">
 
-
-  <!-- Project status not done client side -->
-  <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !innovation?.previewMode">
-    <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
-      <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
-      <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
-        <app-message-space [widthMax]="'320px'">
-          {{ getMessage() | translate }}
-        </app-message-space>
-      </div>
-    </div>
-  </ng-container>
-
-
-  <!-- Project status not submitted admin side -->
-  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
-    <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
-      <div class="text-center">
-        <app-message-space [widthMax]="'430px'">
-          {{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}
-        </app-message-space>
-      </div>
-    </div>
-  </ng-container>
-
-
-  <!-- Project status submitted and client side -->
-  <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || innovation?.previewMode">
-
-    <!-- Display spinner off -->
-    <ng-container>
-
-      <!-- Message -->
-      <div *ngIf="innovation?.previewMode && innovation?.status !== 'DONE'" class="msg-wrapper">
+    <!-- project status not done client side -->
+    <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode">
+      <div class="section-light-pad rm-pad-bottom">
         <div class="column col-xs-12 col-11 col-mx-auto">
-          <div *ngIf="!adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
-          <div *ngIf="adminSide" class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.PREVIEW_MODE' | translate }}</div>
+          <h1 class="title-primary">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
+          <div class="section-light-pad rm-pad-bottom">
+            <app-message-space [widthMax]="'337px'">
+              {{ getMessage() | translate }}
+            </app-message-space>
+          </div>
         </div>
       </div>
+    </ng-container>
+    <!-- project status not done client side -->
 
-      <div *ngIf="innovation?.status === 'DONE' && adminSide" class="msg-wrapper">
+    <!-- project status not submitted admin side -->
+    <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
+      <div class="section-pad rm-pad-bottom">
         <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.DONE' | translate }}</div>
+          <app-message-space [widthMax]="'337px'">
+            {{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}
+          </app-message-space>
         </div>
       </div>
-      <!-- /Message -->
+    </ng-container>
+    <!-- /project status not submitted admin side -->
 
-      <!-- Sticky bar -->
+    <!-- project status submitted -->
+    <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || innovation?.previewMode">
+
+      <!-- message -->
+      <ng-container *ngIf="innovation?.previewMode && innovation?.status !== 'DONE'">
+
+        <ng-container *ngIf="!adminSide">
+          <div class="banner banner-success">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
+        </ng-container>
+
+        <ng-container *ngIf="adminSide">
+          <div class="banner banner-success">{{ 'MARKET_REPORT.MESSAGE_ADMIN.PREVIEW_MODE' | translate }}</div>
+        </ng-container>
+
+      </ng-container>
+
+      <ng-container *ngIf="innovation?.status === 'DONE' && adminSide">
+        <div class="banner banner-success">{{ 'MARKET_REPORT.MESSAGE_ADMIN.DONE' | translate }}</div>
+      </ng-container>
+      <!-- /message -->
+
+      <!-- sticky bar -->
       <div class="sticky-wrapper" [ngClass]="{ 'scroll-sticky-wrapper': scrollOn && !wordpress }">
         <div class="column col-xs-12 col-11 col-mx-auto content-wrapper">
 
-          <!-- Detail view and visible to client -->
-          <div *ngIf="!wordpress" class="toggle-option">
+          <!-- detail view and visible to client -->
+          <ng-container *ngIf="!wordpress">
+            <div class="toggle-option">
 
-            <!-- Client side -->
-            <ng-container *ngIf="!adminSide">
-              <label class="form-switch gtm-synthesis-detail-view" for="showDetails">
-                <input
-                  type="checkbox"
-                  name="showDetails"
-                  id="showDetails"
-                  (change)="toggleDetails($event)"
-                  [checked]="showDetails">
-                <i class="form-icon"></i>
-                {{ 'MARKET_REPORT.STICKY_BAR.DETAIL_VIEW' | translate }}
-              </label>
-            </ng-container>
-            <!-- /Client side -->
+              <!-- client side -->
+              <ng-container *ngIf="!adminSide">
+                <label class="form-switch gtm-synthesis-detail-view" for="showDetails">
+                  <input
+                    type="checkbox"
+                    name="showDetails"
+                    id="showDetails"
+                    (change)="toggleDetails($event)"
+                    [checked]="showDetails">
+                  <i class="form-icon"></i>
+                  {{ 'MARKET_REPORT.STICKY_BAR.DETAIL_VIEW' | translate }}
+                </label>
+              </ng-container>
+              <!-- /client side -->
 
-            <!-- Admin side -->
-            <ng-container *ngIf="adminSide">
-              <label class="form-switch" for="previewMode">
-                <input
-                  type="checkbox"
-                  name="previewMode"
-                  id="previewMode"
-                  (change)="enablePreviewMode($event)"
-                  [checked]="previewMode || innovation?.status === 'DONE'"
-                  [disabled]="innovation?.status === 'DONE'">
-                <i class="form-icon"></i>
-                {{ 'MARKET_REPORT.STICKY_BAR.CLIENT_VISIBLE' | translate }}
-              </label>
-            </ng-container>
-            <!-- /Admin side -->
+              <!-- admin side -->
+              <ng-container *ngIf="adminSide">
+                <label class="form-switch" for="previewMode">
+                  <input
+                    type="checkbox"
+                    name="previewMode"
+                    id="previewMode"
+                    (change)="enablePreviewMode($event)"
+                    [checked]="previewMode || innovation?.status === 'DONE'"
+                    [disabled]="innovation?.status === 'DONE'">
+                  <i class="form-icon"></i>
+                  {{ 'MARKET_REPORT.STICKY_BAR.CLIENT_VISIBLE' | translate }}
+                </label>
+              </ng-container>
+              <!-- /admin side -->
 
-          </div>
-          <!-- /Detail view and visible to client -->
+            </div>
+          </ng-container>
+          <!-- /detail view and visible to client -->
 
-          <!-- Filter view -->
+          <!-- filter view -->
           <div class="filter-wrapper" [ngStyle]="{ 'border-right': sharable ? 'none' : 'block' }">
             <p>{{ 'MARKET_REPORT.STICKY_BAR.FILTER' | translate }}</p>
             <ul>
               <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
-                <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
+                <a><i class="fas fa-times"></i>{{ filters[fKey].questionTitle | multiling:userLang }}</a>
               </li>
             </ul>
           </div>
-          <!-- /Filter view -->
+          <!-- /filter view -->
 
-          <!-- Buttons -->
+          <!-- buttons -->
           <div class="button-wrapper" [ngStyle]="{ 'display': sharable ? 'none' : 'inline-flex' }">
+
             <ng-container *ngIf="!adminSide">
-              <button
-                class="btn ghost-primary gtm-share-synthesis"
-                (click)="shareSynthesis($event)">
+
+              <button class="btn ghost-primary gtm-share-synthesis" (click)="shareSynthesis($event)">
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
               </button>
-              <button
-                *ngIf="isOwner"
-                class="btn btn-primary gtm-export-synthesis"
-                (click)="displayModal($event, 'exportInnovation')">
-                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_EXPORT' | translate }}
-              </button>
+
+              <ng-container *ngIf="isOwner">
+                <button class="btn btn-primary gtm-export-synthesis" (click)="displayModal($event, 'exportInnovation')">
+                  {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_EXPORT' | translate }}
+                </button>
+              </ng-container>
+
             </ng-container>
+
             <ng-container *ngIf="adminSide">
-              <button
-                class="btn btn-primary"
-                (click)="displayModal($event, 'endInnovation')">
+              <button class="btn btn-primary btn-sm" (click)="displayModal($event, 'endInnovation')">
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_END' | translate }}
               </button>
             </ng-container>
+
           </div>
-          <!-- /Buttons -->
+          <!-- /buttons -->
 
         </div>
       </div>
-      <!-- /Sticky bar -->
+      <!-- /sticky bar -->
 
-
-      <!-- Menu button -->
+      <!-- menu button -->
       <div class="menu-wrapper menu-button-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
-        <div
-          class="menu-item-wrapper"
-          [ngStyle]="{ 'display': displayMenuWrapper ? 'block' : 'none' }"
-          (mouseenter)="displayMenu($event)"
-          (mouseleave)="hideMenu($event)">
+
+        <div class="menu-item-wrapper" [ngStyle]="{ 'display': displayMenuWrapper ? 'block' : 'none' }" (mouseenter)="displayMenu($event)" (mouseleave)="hideMenu($event)">
           <ul>
             <li
               *ngIf="innovation.executiveReport?.totalSections > 0 || adminSide"
@@ -143,7 +144,7 @@
               pageScroll
               pageScrollOffset="135"
               href="#executive-report">
-              Executive report
+              <span>Executive report</span>
             </li>
             <li
               *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide"
@@ -151,14 +152,14 @@
               pageScroll
               pageScrollOffset="135"
               href="#key-learning">
-              {{ 'MARKET_REPORT.KEY_LEARNING' | translate }}
+              <span>{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</span>
             </li>
             <li
               [ngClass]="{ 'active': activeSection === 'professionals' }"
               pageScroll
               pageScrollOffset="135"
               href="#professionals">
-              {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+              <span>{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</span>
             </li>
             <li
               *ngFor="let question of questions"
@@ -166,7 +167,7 @@
               pageScrollOffset="135"
               [href]="'#' + question.identifier | removespaces"
               [ngClass]="{'active': activeSection === question.identifier}">
-              {{ question.title | multiling:lang }}
+              <span>{{ question.title | multiling:userLang }}</span>
             </li>
             <li
               *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
@@ -174,19 +175,15 @@
               pageScroll
               pageScrollOffset="135"
               href="#conclusion">
-              {{ 'MARKET_REPORT.CONCLUSION' | translate }}
+              <span>{{ 'MARKET_REPORT.CONCLUSION' | translate }}</span>
             </li>
           </ul>
         </div>
-        <button
-          class="btn btn-secondary"
-          (mouseenter)="displayMenu($event)"
-          (mouseleave)="hideMenu($event)">
-          Menu
-        </button>
-      </div>
-      <!-- /Menu button -->
 
+        <button class="btn btn-secondary" (mouseenter)="displayMenu($event)" (mouseleave)="hideMenu($event)">Menu</button>
+
+      </div>
+      <!-- /menu button -->
 
       <!-- Answer sections -->
       <section id="answer-wrapper">
@@ -212,11 +209,11 @@
                 <h1>{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
                 <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
                 <img class="image-wrapper" [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
-              <div *ngIf="isMainDomain()">
+                <div *ngIf="isMainDomain()">
                   <h6 *ngIf="innovation.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
                   <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
                   <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
-              </div>
+                </div>
                 <span
                   *ngIf="innovation.executiveReport?.objective"
                   class="goal-text">
@@ -704,24 +701,22 @@
       </section>
       <!-- /Answer sections -->
 
-
     </ng-container>
+    <!-- /project status submitted -->
 
 
-  </ng-container>
-  <!-- /Project status submitted and client side -->
+  </section>
+</ng-container>
 
 
-</section>
+<!--
 
-
-
-<!-- Modal to ask operator to sure about ending the project, and to client to print -->
+&lt;!&ndash; Modal to ask operator to sure about ending the project, and to client to print &ndash;&gt;
 <div class="modal" [ngClass]="{ 'active': openModal }">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
 
-    <!-- Header -->
+    &lt;!&ndash; Header &ndash;&gt;
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
       <div class="modal-title">
@@ -736,9 +731,9 @@
 
       </div>
     </div>
-    <!-- /Header -->
+    &lt;!&ndash; /Header &ndash;&gt;
 
-    <!-- Body -->
+    &lt;!&ndash; Body &ndash;&gt;
     <div class="modal-body">
       <div class="content">
 
@@ -748,10 +743,10 @@
 
         <ng-container *ngIf="innovationExport">
 
-          <!-- Export options -->
+          &lt;!&ndash; Export options &ndash;&gt;
           <div class="export-options">
 
-            <!-- RESP Pdf -->
+            &lt;!&ndash; RESP Pdf &ndash;&gt;
             <div class="options">
               <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
               <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
@@ -764,7 +759,7 @@
               </div>
             </div>
 
-              <!-- CSV -->
+              &lt;!&ndash; CSV &ndash;&gt;
               <div class="options">
                   <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
                   <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
@@ -777,7 +772,7 @@
                   </div>
               </div>
 
-            <!-- Executive report -->
+            &lt;!&ndash; Executive report &ndash;&gt;
             <div class="options">
               <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
               <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
@@ -791,9 +786,9 @@
             </div>
 
           </div>
-          <!-- Export options -->
+          &lt;!&ndash; Export options &ndash;&gt;
 
-          <!-- Export consent -->
+          &lt;!&ndash; Export consent &ndash;&gt;
           <label class="form-checkbox export" for="market-report-consent">
             <input
               type="checkbox"
@@ -804,19 +799,19 @@
               [checked]="innovation.ownerConsent.value">
             <i class="form-icon"></i><span class="export-consent">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}</span>
           </label>
-          <!-- /Export consent -->
+          &lt;!&ndash; /Export consent &ndash;&gt;
 
         </ng-container>
 
       </div>
     </div>
-    <!-- /Body -->
+    &lt;!&ndash; /Body &ndash;&gt;
 
-    <!-- Footer -->
+    &lt;!&ndash; Footer &ndash;&gt;
     <div class="modal-footer">
 
       <ng-container *ngIf="innovationEndModal">
-        <!-- End innovation -->
+        &lt;!&ndash; End innovation &ndash;&gt;
         <button
           class="btn btn-primary btn-sm"
           (click)="endInnovation($event, 'DONE')">
@@ -826,7 +821,7 @@
 
       <ng-container *ngIf="innovationExport">
 
-        <!-- Cancel button -->
+        &lt;!&ndash; Cancel button &ndash;&gt;
         <button
           class="btn ghost-edit btn-sm export-cancel-button"
           [ngStyle]="{ 'margin-right': '.6rem' }"
@@ -834,7 +829,7 @@
           {{ 'MARKET_REPORT.MODAL.BUTTON_CANCEL' | translate }}
         </button>
 
-        <!-- Download button -->
+        &lt;!&ndash; Download button &ndash;&gt;
         <button
           class="btn ghost-primary btn-sm"
           [disabled]="exportType === '' || !innovation.ownerConsent.value"
@@ -845,12 +840,13 @@
       </ng-container>
 
     </div>
-    <!-- /Footer -->
+    &lt;!&ndash; /Footer &ndash;&gt;
 
   </div>
 </div>
-<!-- /Modal to ask operator to sure about ending the project, and to client to print -->
+&lt;!&ndash; /Modal to ask operator to sure about ending the project, and to client to print &ndash;&gt;
 
+-->
 
 <!-- Insight preview -->
 <app-sidebar *ngIf="!wordpress" [(template)]="sidebarTemplateValue">

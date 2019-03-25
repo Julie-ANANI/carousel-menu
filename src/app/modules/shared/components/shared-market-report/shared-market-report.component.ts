@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input, AfterViewInit, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, Location } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -36,7 +36,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this._innovation = value;
   }
 
-  @Input() adminMode: boolean;
+  @Input() set modeAdmin(value: boolean) {
+    this.adminMode = value;
+  }
+
+  @Input() set sideAdmin(value: boolean) {
+    this._adminSide = value;
+  }
 
   @Input() sharable = false;
 
@@ -46,7 +52,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _innovation: Innovation = {};
 
-  private _adminSide: boolean;
+  private _adminSide = false;
 
   private _isOwner: boolean;
 
@@ -63,6 +69,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private _countries: Array<string> = [];
 
   private _questions: Array<Question> = [];
+
+  adminMode: boolean;
 
   private _campaignsStats: {
     nbPros: number,
@@ -100,9 +108,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _companies: Array<Clearbit>;
 
-  public activeSection: string;
+  activeSection: string;
 
-  public objectKeys = Object.keys;
+  objectKeys = Object.keys;
 
   private _mapInitialConfiguration: {[continent: string]: boolean};
 
@@ -110,7 +118,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
               private translateService: TranslateService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
-              private location: Location,
               private innovationService: InnovationService,
               private authService: AuthService,
               private shareService: ShareService,
@@ -130,7 +137,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is calling all the initial functions.
    */
   private initializeReport() {
-    this.isAdminSide();
+    this.checkIsOwner();
     this.initializeVariable();
     this.getAnswers();
     this.getCampaign();
@@ -169,13 +176,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
 
-  /**
-   * This function is checking the are we on the admin side, and if yes than also
-   * checking the admin level.
-   */
-  private isAdminSide() {
-    this._adminSide = this.location.path().slice(5, 11) === '/admin';
-    this.adminMode = this.authService.adminLevel > 2;
+  private checkIsOwner() {
     this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
 
@@ -189,7 +190,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * here we are registering the index of the lang of the user and according to that we display the innovation.
      * @type {number}
      */
-    const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.lang);
+    const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.userLang);
     this._currentInnovationIndex = index !== -1 ? index : 0;
 
     /***
@@ -489,7 +490,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     let subject = '';
     const url = this.getInnovationUrl() + '/share/synthesis/' + projectID + '/' + shareKey;
 
-    if (this.lang === 'en') {
+    if (this.userLang === 'en') {
 
       subject = 'Results - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
 
@@ -499,7 +500,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     }
 
-    if (this.lang === 'fr') {
+    if (this.userLang === 'fr') {
 
       subject = 'Résultats - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
 
@@ -602,11 +603,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   getIntroSrc(): string {
 
-    if (this.lang === 'en') {
+    if (this.userLang === 'en') {
       return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-en.png';
     }
 
-    if (this.lang === 'fr') {
+    if (this.userLang === 'fr') {
       return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-fr.png';
     }
 
@@ -826,7 +827,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * getting the current lang of the user.
    * @returns {string}
    */
-  get lang(): string {
+  get userLang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
 
