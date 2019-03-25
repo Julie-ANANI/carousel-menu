@@ -31,6 +31,8 @@ export class AdminUsersComponent implements OnInit {
 
   private _total = 0;
 
+  private _me: boolean = false;
+
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
     limit: '10',
@@ -75,6 +77,12 @@ export class AdminUsersComponent implements OnInit {
       }, () => {
       this.translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
     });
+    this.userService.getSelf().pipe(first())
+      .subscribe(result => {
+        this._me = result && result.email === 'jdcruz-gomez@umi.us';
+      }, err => {
+        console.error(err);
+      });
   }
 
 
@@ -148,6 +156,19 @@ export class AdminUsersComponent implements OnInit {
       : console.log('l\'Action' + action + 'n\'existe pas !');
   }
 
+  public synchronizeSRTUsers() {
+    this.userService.createSwellUsers().pipe(first())
+      .subscribe(result => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+        console.log(result);
+      }, err => {
+        console.error(err);
+      });
+  }
+
+  public isJuan(): boolean {
+    return this._me;
+  }
 
   set config(value: any) {
     this._config = value;
