@@ -8,18 +8,17 @@
 
   .create-button {
     padding-top: 3.2rem;
-    text-align: center;
   }
 
   .section-info {
+    margin-bottom: -0.4rem;
 
     .fas {
       color: $meta-color;;
     }
 
     .text {
-      padding-top: .4rem;
-      margin-bottom: 0.4rem;
+      padding-top: 0.4rem;
       width: 221px;
       display: inline-block;
     }
