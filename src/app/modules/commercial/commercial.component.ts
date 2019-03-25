@@ -42,6 +42,19 @@ export class CommercialComponent implements OnInit {
   }
 
   private computeStats(): TagStats {
+    const countriesCount = this._selectedTagsStats.reduce((acc, stats) => {
+      stats.geographicalRepartition.forEach((cc) => {
+        if (acc[cc.country]) {
+          acc[cc.country] += cc.count;
+        } else {
+          acc[cc.country] = cc.count;
+        }
+      });
+      return acc;
+    }, {});
+    const geographicalRepartition = Object.keys(countriesCount).map((c) => {
+      return {country: c, count: countriesCount[c]};
+    });
     return this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
@@ -49,7 +62,7 @@ export class CommercialComponent implements OnInit {
       acc.countDiff = acc.countDiff + stats.countDiff;
       acc.countLeads = acc.countLeads + stats.countLeads;
       return acc;
-    }, {totalInnovations: 0, totalAnswers: 0, countNeed: 0, countDiff: 0, countLeads: 0, geographicalRepartition: []});
+    }, {totalInnovations: 0, totalAnswers: 0, countNeed: 0, countDiff: 0, countLeads: 0, geographicalRepartition: geographicalRepartition});
   }
 
   public selectTag() {
