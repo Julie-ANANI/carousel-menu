@@ -122,6 +122,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   ngOnInit() {
     this.filterService.reset();
     this.initializeReport();
+    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
     PageScrollConfig.defaultDuration = 800;
   }
 
@@ -176,7 +177,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private isAdminSide() {
     this._adminSide = this.location.path().slice(5, 11) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
-    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
 
 
@@ -210,11 +210,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * @type {boolean}
      * @user
      */
-    if (this.wordpress) {
-      this._showDetails = false;
-    } else {
-      this._showDetails = true;
-    }
+    this._showDetails = !this.wordpress;
 
 
     /***

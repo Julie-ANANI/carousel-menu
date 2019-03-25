@@ -171,6 +171,14 @@
       </div>
     </div>
 
+    <!-- Display all keywords associated to the professional -->
+    <div *ngIf="isProfessional && campaign" class="pro-quiz-wrapper">
+      <a class="text-link" *ngIf="!proKeywords" (click)="showKeywords()">Voir keywords</a>
+      <ul *ngIf="proKeywords">
+        <li *ngFor="let keywords of proKeywords">{{ keywords }}</li>
+      </ul>
+    </div>
+
     <!-- link to quiz URI -->
     <div *ngIf="isProfessional && campaign" class="pro-quiz-wrapper">
       <a (click)="openQuizUri(pro, $event)" class="text-link">{{ 'COMMON.ADD-ANSWER' | translate }}</a>
