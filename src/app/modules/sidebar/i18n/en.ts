@@ -13,7 +13,8 @@ export const SIDEBAR = {
     'ADD_PRO': 'Add Professional',
     'NEW_BATCH': 'New Batch Manually',
     'EDIT_BATCH': 'Edit Batch',
-    'ADD_AMBASSDOR': 'Add Ambassador'
+    'ADD_AMBASSDOR': 'Add Ambassador',
+    'CHANGE_PASSWORD': 'Change Password'
   },
 
   'LABELS': {

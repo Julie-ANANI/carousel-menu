@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { distinctUntilChanged, first } from 'rxjs/operators';
-import {countries} from '../../../../../models/static-data/country';
+import { countries } from '../../../../../models/static-data/country';
 
 @Component({
   selector: 'app-account',
@@ -47,10 +47,13 @@ export class AccountComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private translateTitleService: TranslateTitleService,
-              private autoCompleteService: AutocompleteService) { }
+              private autoCompleteService: AutocompleteService) {
+
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.ACCOUNT');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('MY_ACCOUNT.TITLE');
     this.buildForm();
     this.patchForm();
   }
@@ -116,7 +119,7 @@ export class AccountComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'MY_ACCOUNT.CHANGE'
+      title: 'SIDEBAR.TITLE.CHANGE_PASSWORD'
     };
 
   }

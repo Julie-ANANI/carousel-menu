@@ -89,7 +89,8 @@ export const COMMON = {
     'FORGET': 'Demander le mot de passe',
     'LOG_OUT': 'Se déconnecter',
     'SIGN_UP': 'S\'Inscrire',
-    'WELCOME': 'Bienvenus'
+    'WELCOME': 'Bienvenus',
+    'ACCOUNT': 'Profil'
   },
 
   'LABEL': {

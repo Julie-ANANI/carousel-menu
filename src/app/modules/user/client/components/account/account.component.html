@@ -1,5 +1,5 @@
-<section class="section-pad animate-page" id="account-component">
-  <div class="column col-xs-12 col-11 col-mx-auto">
+<section class="column col-xs-12 col-11 col-mx-auto animate-page" id="account-component">
+  <div class="section-pad">
     <div class="profile-wrapper">
 
       <!-- left section -->
@@ -27,11 +27,11 @@
 
         <!-- Label Ambassador & linkedIn-->
         <ng-container *ngIf="userProvider === 'hubspot'">
-          <span class="label label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</span>
+          <div class="label label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</div>
         </ng-container>
 
         <ng-container *ngIf="userProvider === 'external'">
-          <span class="label label-edit">LinkedIn</span>
+          <div class="label label-edit">LinkedIn</div>
         </ng-container>
         <!-- /Label Ambassador & linkedIn -->
 
@@ -42,7 +42,7 @@
         <ul class="user-actions">
           <li (click)="showPasswordSidebar($event)">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</li>
           <li (click)="onDelete($event)">{{ 'MY_ACCOUNT.DELETE' | translate }}</li>
-          <!--<li><a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a></li>-->
+          <li><a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a></li>
         </ul>
 
       </div>
@@ -221,10 +221,11 @@
 </section>
 
 
-<!-- Change password sidebar -->
+<!-- change password sidebar -->
 <app-sidebar [(template)]="sidebarValue">
   <app-user-change-password [sidebarState]="sidebarValue.animate_state" (passwordUpdate)="updatePassword($event)"></app-user-change-password>
 </app-sidebar>
+<!-- /change password sidebar -->
 
 
 <!-- modal to delete account -->
@@ -237,6 +238,6 @@
     <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>
-
+<!-- /modal to delete account -->
 
 

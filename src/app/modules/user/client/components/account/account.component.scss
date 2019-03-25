@@ -44,7 +44,7 @@
 
       h1 {
         margin-top: 0.75rem;
-        margin-bottom: .1rem;
+        margin-bottom: 0.1rem;
         font-size: $font-size-lg;
       }
 
@@ -74,7 +74,7 @@
           padding: $unit-2;
         }
 
-        li:hover {
+        li:hover, a:hover {
           background-color: $primary-color;
           color: $light-color;
           cursor: pointer;

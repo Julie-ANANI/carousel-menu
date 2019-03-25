@@ -90,7 +90,8 @@ export const COMMON = {
     'FORGET': 'Request Password Reset',
     'LOG_OUT': 'Sign Out',
     'SIGN_UP': 'Sign Up',
-    'WELCOME': 'Welcome'
+    'WELCOME': 'Welcome',
+    'ACCOUNT': 'Profile'
   },
 
   'LABEL': {
