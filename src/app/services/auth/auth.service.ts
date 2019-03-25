@@ -8,6 +8,8 @@ import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import {SwellrtBackend} from "../../modules/swellrt-client/services/swellrt-backend";
+
 
 @Injectable()
 export class AuthService {
@@ -30,7 +32,8 @@ export class AuthService {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _http: HttpClient,
               private _cookieService: CookieService,
-              private _router: Router) {
+              private _router: Router,
+              private _swellRtService: SwellrtBackend) {
   /**
      Les cookies <hasBeenAuthenticated> et <hasBeenAdmin> sont utiles quand l'application essaye d'accéder à une route
      sans que la session ait été récupérée du serveur via la fonction <initializeSession()>. Ceci évite que si l'on
@@ -59,6 +62,15 @@ export class AuthService {
     }
   }
 
+  private stopSwellRTSession() {
+    this._swellRtService.logout()
+      .then( result => {
+        console.log("On the bay, bye bye bye!");
+      }, err => {
+        console.error(`Hmmm I'm having problems logging out from swell: ${err.message}`);
+      });
+  }
+
   public login(user: User): Observable<User> {
     return this._http.post('/auth/login', user.toJSON())
       .pipe(
@@ -85,6 +97,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._cookieService.removeAll();
           this._user = null;
+          this.stopSwellRTSession();
           clearInterval(this._cookieObserver);
           return res;
         }),

@@ -1,7 +1,9 @@
 import { Component, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { SwellrtBackend } from "../../../swellrt-client/services/swellrt-backend";
 
 declare const tinymce: any;
+declare let swellrt: any
 
 @Component({
   selector: 'app-text-zone',
@@ -26,7 +28,14 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   private editor: any;
   private _htmlId: string;
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object) {
+  private _sharedDocument: any;
+  private _sharedEditor: any;
+  private _sharedText: any;
+  //private _name: string;
+
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _swellRTBackend: SwellrtBackend
+  ) {
     this._contentHash = 0;
   }
 
@@ -52,20 +61,170 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
         setup: (editor: any) => {
           this.editor = editor;
           this._contentHash = this.hashString(this._text);
-          editor.on('Blur', () => {
-            const actualHash = this._contentHash;
-            const content = editor.getContent();
-            this._contentHash = this.hashString(content);
-            if (this._contentHash !== actualHash) {
-              this.onTextChange.emit({id: this.elementId, content: content});
-            }
-          });
+          editor
+            .on('Blur', () => {
+              const actualHash = this._contentHash;
+              const content = editor.getContent();
+              this._contentHash = this.hashString(content);
+              if (this._contentHash !== actualHash) {
+                this.onTextChange.emit({id: this.elementId, content: content});
+              }
+              /*if(this._sharedEditor) {
+                this._sharedEditor.set('text', this._text);
+              }
+              console.log("Goodbye motherfucker!");*/
+            })
+            .on('click', () => {
+              this.startCollaborativeEditor();
+              /*this._swellRTBackend.openDocument( this.elementId.toString() )
+                .then(result=>{
+                  if(result) {
+                    swellrt.Editor.configure({
+                      traceUserAgent: true,
+                      logPanel: document.getElementById("log")
+                    });
+
+                    this._sharedDocument = result;
+                    if(!this._sharedDocument.node(this.elementId)) {
+                      this._sharedDocument.put(this.elementId, swellrt.Map.create());
+                    }
+                    this._sharedDocument.setPublic(true);
+
+                    this._sharedEditor = swellrt.Editor.create(document.getElementById(this.elementId.toString()));
+                    this._sharedEditor.setSelectionHandler((range, editor, selection) => {
+                      console.log('selection changed '+ range);
+                    });
+                    this._sharedEditor.edit(true);
+
+                    this._sharedtext = swellrt.Text.create(this._text);
+
+
+                    this._sharedDocument.node(this.elementId).put('txt', this._sharedtext);
+
+                    this._sharedEditor.set(this._sharedtext);
+
+                    console.log("Clicked motherfucker!:" + this.elementId);
+                    console.log(this._sharedDocument.getParticipants());
+                  }
+
+                }, err=>{
+                  console.error(err);
+                });*/
+            })
         },
       });
       if (this._text && this.editor) {
         this.editor.setContent(this._text);
       }
     }
+  }
+
+  _configEditor(name) {
+    // clean previous editor state
+    this._sharedEditor.clean();
+    if (!name) {
+      // create a new text
+      this._sharedText = swellrt.Text.create(this._text);
+      //isLocal = true;
+      //configButton("saveBtn","Save...");
+    } else {
+      this._sharedText = this._sharedDocument.get('documents.'+name);
+      //isLocal = false;
+      //configButton("saveBtn","Save", true);
+      //revisionsText = text.getPlaybackTextFor(swell.TextWeb.REV_HISTORY);
+      //renderRevisionList();
+    }
+    this._sharedEditor.set(this._sharedText);
+    this._sharedEditor.edit(true);
+  }
+
+  public autoSaveRT() {
+    // Add text document to the collaborative object
+    // Be careful! text var is still the old reference
+    this._sharedDocument.node('documents').put('text', this._sharedText);
+    // Set up the editor with the new text object
+    this._configEditor('text');
+  }
+
+  public startCollaborativeEditor() {
+    this._swellRTBackend.openDocument( this.elementId.toString() )
+      .then(_object => {
+        this._sharedDocument = _object;
+        if (!this._sharedDocument.node('documents')) {
+          // Create a live map
+          this._sharedDocument.put('documents', swellrt.Map.create());
+          // Make public after initialization
+          this._sharedDocument.setPublic(true);
+        }
+
+        swellrt.Editor.configure({
+          traceUserAgent: true,
+          logPanel: document.getElementById("log")
+        });
+
+        let editorElement = document.getElementById("editor");
+        this._sharedEditor = swellrt.Editor.create(editorElement);
+
+        this._sharedEditor.setSelectionHandler((range, editor, selection) => {
+          console.log('selection changed '+ range);
+        });
+
+        this._configEditor(null);
+
+        this.autoSaveRT();
+      }, err => {
+        console.error(err);
+      });
+
+
+
+
+    // this._swellRTBackend.openDocument( this.elementId.toString() )
+    //   .then(result=> {
+    //     if (result) {
+    //       this._sharedDocument = result;
+    //       if (!this._sharedDocument.node('documents')) {
+    //         // Create a live map
+    //         this._sharedDocument.put('documents', swellrt.Map.create());
+    //         // Make public after initialization
+    //         this._sharedDocument.setPublic(true);
+    //       }
+    //
+    //       // Configure the actual editor
+    //       this._sharedEditor = swellrt.Editor.create(document.getElementById("editor"));
+    //       this._sharedEditor.setSelectionHandler((range, editor, selection) => {
+    //         console.log('selection changed '+ range);
+    //       });
+    //
+    //       //Configure function
+    //       // clean previous editor state
+    //       this._sharedEditor.clean();
+    //       if (!this._name) {
+    //         // create a new text
+    //         this._sharedtext = swellrt.Text.create("Write here your document. This text is not stored yet!");
+    //         /*isLocal = true;
+    //         configButton("saveBtn","Save...");*/
+    //       } else {
+    //         this._sharedtext = this._sharedDocument.get('documents.txt');
+    //         /*isLocal = false;
+    //         configButton("saveBtn","Save", true);
+    //         revisionsText = text.getPlaybackTextFor(swell.TextWeb.REV_HISTORY);
+    //         renderRevisionList();*/
+    //       }
+    //       // Show the text in the editor,
+    //       // edit mode is disabled by default
+    //       this._sharedEditor.set(this._sharedtext);
+    //       // Show title for new document
+    //       //configTitle(name);
+    //       // Show Edit button
+    //       //configButton("editBtn", "Edit On");
+    //       this._sharedEditor.edit(true);
+    //       //////////
+    //
+    //     }
+    //   }, err => {
+    //     console.error(err);
+    //   });
   }
 
   ngOnDestroy() {
