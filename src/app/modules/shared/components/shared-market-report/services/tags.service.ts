@@ -7,7 +7,11 @@ const GENERIC_FILTER_NAME = 'tags';
 @Injectable()
 export class TagsService {
 
+  private _answersTagsLists: {[questionId: string]: Array<Tag>} = {};
+
   private _tagsList: Array<Tag>;
+
+  private _selectedAnswersTags: {[questionId: string]: {[id: string]: boolean}} = {};
 
   private _selectedTags: {[id: string]: boolean} = {};
 
@@ -28,8 +32,44 @@ export class TagsService {
     }
   }
 
-  get selectedTags() {
+  public checkAnswerTag(questionIdentifier: string, tagId: string, value: boolean) {
+    this._selectedAnswersTags[questionIdentifier][tagId] = value;
+    // check if there is no filtered tag
+    const removeFilter = value && this._answersTagsLists[questionIdentifier].every((t) => {
+      return this._selectedAnswersTags[questionIdentifier][t._id] === true;
+    });
+    if (removeFilter) {
+      this.filterService.deleteFilter(questionIdentifier);
+    } else {
+      this.filterService.addFilter({
+        status: 'TAG',
+        questionId: questionIdentifier,
+        value: this._selectedAnswersTags[questionIdentifier]
+      });
+    }
+  }
+
+  public setAnswerTags(questionId: string, value: Array<Tag>) {
+    this._answersTagsLists[questionId] = value;
+    this._selectedAnswersTags[questionId] = value.reduce(function (acc, tag) {
+      acc[tag._id] = true;
+      return acc;
+    }, {});
+    this.filterService.deleteFilter(questionId);
+  }
+
+  get answersTagsLists(): {readonly [questionId: string]: Array<Tag>} {
+    /* to update value, please use setAnswerTags() method */
+    return this._answersTagsLists;
+  }
+
+  get selectedTags(): {readonly [id: string]: boolean} {
+    /* to update value, please use checkTag() method */
     return this._selectedTags;
+  }
+
+  get selectedAnswersTags(): {readonly [questionId: string]: {readonly [id: string]: boolean}} {
+    return this._selectedAnswersTags;
   }
 
   get tagsList(): Array<Tag> {

@@ -74,6 +74,15 @@
       {{ question.title | multiling:lang }}
       <i class="icon icon-arrow-right" aria-hidden="true"></i>
     </a>
+    <!-- Textarea filters -->
+    <ng-container *ngIf="question.controlType === 'textarea'">
+      <span *ngFor="let t of answersTagsLists[question.identifier]">
+        <!--(change)="checkAnswerTag($event)" -->
+        <input type="checkbox" [name]="t._id" (change)="checkAnswerTag($event, question.identifier)"
+               [checked]="selectedAnswersTags[question.identifier][t._id]">
+        <label [for]="t._id">{{ t.label | multiling:lang }}</label>
+      </span>
+    </ng-container>
   </p>
   <p>
     <a href="#conclusion" pageScroll>

@@ -159,8 +159,17 @@ export class SidebarComponent implements OnInit {
     this.tagService.checkTag(event.target['name'], event.target['checked']);
   }
 
+  public checkAnswerTag(event: Event, questionIdentifier: string) {
+    event.preventDefault();
+    this.tagService.checkAnswerTag(questionIdentifier, event.target['name'], event.target['checked']);
+  }
+
   get answers(): Array<Answer> {
     return this._answers;
+  }
+
+  get answersTagsLists(): {[questionId: string]: Array<Tag>} {
+    return this.tagService.answersTagsLists;
   }
 
   get continentsList(): Array<string> {
@@ -201,6 +210,10 @@ export class SidebarComponent implements OnInit {
 
   get selectedTags(): {[t: string]: boolean} {
     return this.tagService.selectedTags;
+  }
+
+  get selectedAnswersTags(): {[questionId: string]: {[t: string]: boolean}} {
+    return this.tagService.selectedAnswersTags;
   }
 
   get showExportModal(): boolean {

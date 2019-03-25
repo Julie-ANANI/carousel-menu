@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FilterService } from '../../services/filters.service';
 import { TagsService } from '../../services/tags.service';
 import { Answer } from '../../../../../../models/answer';
 import { Tag } from '../../../../../../models/tag';
@@ -19,8 +18,7 @@ export class ProfessionalTagComponent implements OnInit {
 
   private _tags: Array<Tag>;
 
-  constructor(private filterService: FilterService,
-              private tagService: TagsService) {}
+  constructor(private tagService: TagsService) {}
 
   ngOnInit() {
     if (this.questionId) {
@@ -35,14 +33,10 @@ export class ProfessionalTagComponent implements OnInit {
     this.modalAnswerChange.emit(answer);
   }
 
-  public newFilter(event: Event, tag: Tag) {
+  public checkTag(event: Event, tag: Tag) {
     event.preventDefault();
     if (this.questionId) {
-      this.filterService.addFilter({
-        status: 'TAG',
-        questionId: this.questionId,
-        value: tag._id
-      });
+      this.tagService.checkAnswerTag(this.questionId, tag._id, false);
     } else {
       this.tagService.checkTag(tag._id, false);
     }
