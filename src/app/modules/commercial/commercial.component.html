@@ -33,11 +33,15 @@
 
     <p>Answers: {{stats.totalAnswers}}.</p>
 
-    <p>Market Need: {{stats.countNeed}} / {{stats.totalAnswers}}</p>
+    <p>Market Need: {{stats.countNeed}} / {{stats.totalCountNeed}}</p>
 
-    <p>Differentiation: {{stats.countDiff}} / {{stats.totalAnswers}}</p>
+    <p>Differentiation: {{stats.countDiff}} / {{stats.totalCountDiff}}</p>
 
     <p>Generated Leads: {{stats.countLeads}} / {{stats.totalAnswers}}</p>
+
+    <ng-container *ngFor="let cc of stats.geographicalRepartition">
+      <p>{{cc.country}}: {{cc.count}}</p>
+    </ng-container>
 
   </section>
 

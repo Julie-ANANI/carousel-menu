@@ -18,6 +18,9 @@
     </app-shared-table>
     <!-- /section table -->
 
+      <div *ngIf="isJuan()">
+          <button (click)="synchronizeSRTUsers()">Update everybody</button>
+      </div>
   </div>
 </section>
 

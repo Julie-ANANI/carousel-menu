@@ -129,6 +129,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   ngOnInit() {
     this.filterService.reset();
     this.initializeReport();
+    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
     PageScrollConfig.defaultDuration = 800;
   }
 
@@ -137,7 +138,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is calling all the initial functions.
    */
   private initializeReport() {
-    this.checkIsOwner();
     this.initializeVariable();
     this.getAnswers();
     this.getCampaign();
@@ -176,11 +176,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
 
-  private checkIsOwner() {
-    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
-  }
-
-
   /***
    *This function is to initialize the variables regarding the innovation and the projectt.
    */
@@ -211,11 +206,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * @type {boolean}
      * @user
      */
-    if (this.wordpress) {
-      this._showDetails = false;
-    } else {
-      this._showDetails = true;
-    }
+    this._showDetails = !this.wordpress;
 
 
     /***

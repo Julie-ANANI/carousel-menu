@@ -8,7 +8,6 @@ import { takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-// import {SwellrtBackend} from "../../../../swellrt-client/services/swellrt-backend";
 
 @Component({
   selector: 'app-project',
@@ -35,7 +34,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private router: Router,
               private translateService: TranslateService,
               private innovationFrontService: InnovationFrontService,
-              //private _swellRtBackend: SwellrtBackend,
               private translateNotificationsService: TranslateNotificationsService) {
 
     this.activatedRoute.data.subscribe((response) => {

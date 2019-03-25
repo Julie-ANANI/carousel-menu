@@ -3,10 +3,10 @@ import { takeUntil } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Subject } from 'rxjs';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-// import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
+import { SwellrtBackend } from "../swellrt-client/services/swellrt-backend";
+import { UserService } from "../../services/user/user.service";
 
-// declare let swellrt: any;
+declare let swellrt;
 
 @Component({
   selector: 'app-user',
@@ -29,7 +29,8 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private loaderService: LoaderService,
               private location: Location,
-              // private _swellrtBackend: SwellrtBackend,
+              private _userService: UserService,
+              private _swellrtBackend: SwellrtBackend,
               private router: Router) {
 
     if (isPlatformBrowser(this.platformId)) {
@@ -68,17 +69,33 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     });
 
-    // this.startSwellRTClient();
+    this.startSwellRTClient();
 
-    // this.verifyUser();
+    this.startSwellRTSession();
 
     this.loaderService.stopLoading();
 
   }
 
-  /*private startSwellRTClient() {
+
+  private startSwellRTSession() {
+    this._userService.getSelf().subscribe(user=>{
+      this._swellRTBackend.startSwellRTSession(user)
+        .then(result=>{
+          //TODO add some notification? maybe?
+          console.log(`The session for ${result.id} has been started`);
+        }, err=>{
+          console.error(`The session for user ${user.id} couldn't be started! ${err}`);
+        });
+    }, err=>{
+      console.error(`The session for user couldn't be started! ${err}`);
+    });
+  }
+
+
+  private startSwellRTClient() {
     // Try to start the swellrt client
-    this._swellrtBackend.bind(new Promise(
+    this._swellRTBackend.bind(new Promise(
       (resolve, reject) => {
         let connected = false;
         swellrt.onReady(server=>{
@@ -97,23 +114,7 @@ export class UserComponent implements OnInit, OnDestroy {
         }, 15000);
       }
     ));
-  }*/
-
-  /*private verifyUser() {
-    this._swellrtBackend.loginSwellRT()
-    //this._swellrtBackend.createUser(null)
-      .then(p=>{
-        console.log(p);
-        this.getUserProfile();
-      });
   }
-
-  private getUserProfile() {
-    this._swellrtBackend.getUserSRT("")
-      .then(p => {
-        console.log(p);
-      });
-  }*/
 
 
   get displayLoader(): boolean {

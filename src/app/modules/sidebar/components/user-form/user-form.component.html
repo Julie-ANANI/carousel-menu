@@ -200,6 +200,16 @@
         </div>
       </ng-container>
 
+      <!-- Display all keywords associated to the professional -->
+      <ng-container *ngIf="isProfessional && campaign">
+        <div class="pro-quiz-wrapper">
+          <a class="text-link" *ngIf="!proKeywords" (click)="showKeywords()">Voir keywords</a>
+          <ul *ngIf="proKeywords">
+            <li *ngFor="let keywords of proKeywords">{{ keywords }}</li>
+          </ul>
+        </div>
+      </ng-container>
+
       <!-- link to quiz URI -->
       <ng-container *ngIf="isProfessional && campaign">
         <div class="pro-quiz-wrapper">

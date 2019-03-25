@@ -124,7 +124,7 @@
                     <app-text-zone
                       id="summary"
                       [data]="innovationCard.summary"
-                      [elementId]="'summary' + innovationCard.lang"
+                      [elementId]="generateComponentId('summary' + innovationCard.lang)"
                       (onTextChange)="updateData($event)">
                     </app-text-zone>
 
@@ -169,7 +169,7 @@
                     <app-text-zone
                       id="problem"
                       [data]="innovationCard.problem"
-                      [elementId]="'problem' + innovationCard.lang"
+                      [elementId]="generateComponentId('problem' + innovationCard.lang)"
                       (onTextChange)="updateData($event)">
                     </app-text-zone>
 
@@ -213,7 +213,7 @@
 
                     <app-text-zone
                       [data]="innovationCard.solution"
-                      [elementId]="'solution' + innovationCard.lang"
+                      [elementId]="generateComponentId('solution' + innovationCard.lang)"
                       (onTextChange)="updateData($event)">
                     </app-text-zone>
 

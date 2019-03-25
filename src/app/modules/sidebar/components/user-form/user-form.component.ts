@@ -14,6 +14,7 @@ import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
+import { SearchService } from "../../../../services/search/search.service";
 
 @Component({
   selector: 'app-user-form',
@@ -114,10 +115,13 @@ export class UserFormComponent implements OnInit {
 
   private _countries = countries;
 
+  private _proKeywords: Array<string> = null;
+
   constructor(@Inject(PLATFORM_ID) private platform: Object,
               private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private translateService: TranslateService,
+              private searchService: SearchService,
               private userService: UserService,
               private _authService: AuthService) {}
 
@@ -169,6 +173,7 @@ export class UserFormComponent implements OnInit {
       this._userForm.get('companyName').setValue(this._pro.company);
       this._tags = this._pro.tags;
       this._userForm.patchValue(this._pro);
+      this._proKeywords = null;
     }
   }
 
@@ -284,6 +289,12 @@ export class UserFormComponent implements OnInit {
     this.endEditInstanceDomain(event);
   }
 
+  showKeywords() {
+    this.searchService.getProKeywords(this._pro.personId).pipe(first()).subscribe((keywords: Array<string>) => {
+      this._proKeywords = keywords;
+    });
+  }
+
 
   changeRole(event: Event) {
     if (event.target['checked']) {
@@ -377,6 +388,10 @@ export class UserFormComponent implements OnInit {
 
   get countries(): any {
     return this._countries;
+  }
+
+  get proKeywords(): Array<string> {
+    return this._proKeywords;
   }
 
 }

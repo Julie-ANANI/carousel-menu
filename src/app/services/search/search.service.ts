@@ -135,10 +135,9 @@ export class SearchService {
     return this._http.get('/search/get', {params: query});
   }
 
-  // Function to delete once we used it to update the database
-  public updateDatabase(): Observable<any> {
+  public getProKeywords(personId: string) {
     const query = {
-      path: '/request/updateDatabase',
+      path: `/person/${personId}/getKeywords`,
     };
     return this._http.get('/search/get', {params: query});
   }

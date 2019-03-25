@@ -53,7 +53,7 @@ export class AdminCampaignProsComponent implements OnInit {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
 
     this._config = {
-      fields: 'language firstName lastName company email emailConfidence country jobTitle',
+      fields: 'language firstName lastName company email emailConfidence country jobTitle personId',
       limit: '10',
       offset: '0',
       search: '{}',
