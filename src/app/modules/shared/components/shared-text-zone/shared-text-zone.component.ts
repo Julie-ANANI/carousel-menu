@@ -75,41 +75,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
               console.log("Goodbye motherfucker!");*/
             })
             .on('click', () => {
-              this.startCollaborativeEditor();
-              /*this._swellRTBackend.openDocument( this.elementId.toString() )
-                .then(result=>{
-                  if(result) {
-                    swellrt.Editor.configure({
-                      traceUserAgent: true,
-                      logPanel: document.getElementById("log")
-                    });
-
-                    this._sharedDocument = result;
-                    if(!this._sharedDocument.node(this.elementId)) {
-                      this._sharedDocument.put(this.elementId, swellrt.Map.create());
-                    }
-                    this._sharedDocument.setPublic(true);
-
-                    this._sharedEditor = swellrt.Editor.create(document.getElementById(this.elementId.toString()));
-                    this._sharedEditor.setSelectionHandler((range, editor, selection) => {
-                      console.log('selection changed '+ range);
-                    });
-                    this._sharedEditor.edit(true);
-
-                    this._sharedtext = swellrt.Text.create(this._text);
-
-
-                    this._sharedDocument.node(this.elementId).put('txt', this._sharedtext);
-
-                    this._sharedEditor.set(this._sharedtext);
-
-                    console.log("Clicked motherfucker!:" + this.elementId);
-                    console.log(this._sharedDocument.getParticipants());
-                  }
-
-                }, err=>{
-                  console.error(err);
-                });*/
+              //this.startCollaborativeEditor();
             })
         },
       });
