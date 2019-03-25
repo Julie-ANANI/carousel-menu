@@ -3,10 +3,10 @@
  */
 export const SEARCH = {
   "COUNTRY_LIST": "Country list",
+  "REQUESTS": "requests",
   "NORESULT": "No result :-(",
   "PRO": "Professional",
   "SELECTED": "selected",
-  "COMPUTEMAILS": "Recompute emails",
   "ADDTOCAMPAIGN": "Add to a campaign",
   "ADDTOCAMPAIGN2": "Add to the campaign",
   "SEARCHMAILS": "Search emails",
@@ -21,24 +21,28 @@ export const SEARCH = {
   "NEW": "New search",
   "ADDTOQUEUE": "Add to queue",
   "STOPREQUEST": "Stop the request",
-  "ADVANCEDSEARCH": "Advanced Search",
+  "SETTINGS": "Settings",
+  "APPLY": "Apply",
+  "IGNORE": "Ignore",
+  "STAR_PROFILES": "Stars Profiles: ",
   "COUNTRY": "Country",
   "LANGUAGE": "Language",
   "NUMBER": "Search :",
   "SMART": "Smart Search",
   "REGIONS": "Regions",
   "ENGINE": "Use :",
-  "HELP": {
-    "TITLE": "Help",
-    "SUBTITLE": "For a more accurate search",
-    "EXCLUDE": "Use \"-\" to exclude a keyword",
-    "EXCLUDEEXAMPLE": "drone -shooting",
-    "IMPORTANT": "Use \"!\" pour ensure a keyword is present in the results",
-    "IMPORTANTEXAMPLE": "drone !wired",
-    "OR": "Use \"OR\" to search for one keyword or the other",
-    "OREXAMPLE": "drone OR aerial security system",
-    "EXACT": "Use the double quotes to search for an exact expression",
-    "EXACTEXAMPLE": "\"Computer Aided Design for electronics\""
+  "REMAINING_REQUESTS": "remaining requests",
+  "ROBOT": {
+    "HELLO": "Nice day, what are you gonna search today?",
+    "SPARSE": "Warning: do not do more requests in this field!",
+    "NOT_OK": "Warning : not enough unique results and/or too much duplicates !",
+    "OK": "These requests look nice!",
+    "ERROR": "There is not enough request for CAT to function properly",
+    "OVEREXPLOITED": "There are too many similar requests, delete some !",
+    "SUGGESTED": "Here are some keywords that may be useful !",
+    "SEARCH_USE": "This search will use",
+    "APPROX": "approximatively",
+    "MORE_INFO": "Get more info"
   },
   "PERSON": {
     "FULLNAME": "Full Name",
@@ -57,7 +61,7 @@ export const SEARCH = {
     "PROFILE": "Profile",
     "PATTERNS": "Patterns"
   },
-  "INPUT": "'Google-like' Search",
+  "INPUT": "'Google-like' Search, on request per line",
   "TOOLTIPS": {
     "EDITCOMPANY": "Edit company",
     "EDITPRO": "Edit",
@@ -116,5 +120,12 @@ export const SEARCH = {
   "DELETEPRO": {
     "TITLE": "Delete",
     "WARNING": "Warning ! These professionals won't appear in the results anymore."
+  },
+  'POPOVER': {
+    'REQUEST': 'No capital letters or "s" to artificially multiply the number of requests.',
+    'PRACTICE' : 'Good request practices for CAT to work.',
+    'KEYWORDS' : 'Keywords with numeric character will not be taken into account in the CAT process.',
+    'MAX': '100 max request per day.',
+    'SPELLING': 'New keywords can be strange due to spelling or typing mistakes in professional descriptions.'
   }
 };

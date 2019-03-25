@@ -8,6 +8,26 @@ path, g {
   stroke-width: 0.7px;
 }
 
+.intensity0 {
+  fill: #E2E2E2;
+  transition-duration: 2s;
+}
+
+.intensity1 {
+  fill: #97E8B9;
+  transition-duration: 2s;
+}
+
+.intensity2 {
+  fill: #9BDE56;
+  transition-duration: 2s;
+}
+
+.intensity3 {
+  fill: #39CB74;
+  transition-duration: 2s;
+}
+
 g.selected, path.selected, .selected g, .selected path {
   fill: #2ECC71;
 }
@@ -21,12 +41,40 @@ g.disabled, path.disabled, .disabled g, .disabled path {
 }
 
 #countryTooltip {
-  height: 25px;
+  height: 35px;
   width: fit-content;
-  position: relative;
+  position: absolute;
   background: white;
-  border-radius: 5px;
-  padding: 5px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  padding: 2px 5px;
+  box-shadow: 2px 1px 4px 0 rgba(0,0,0,0.21);
+  font-weight: 600;
+  text-align: center;
+
+  h3 {
+    color: #97A4B1;
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+  }
+
+  p {
+    color: #4F5D6B;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
 }
 
+#countryTooltip:after {
+  content:'';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  height: 0;
+  border-top: solid 5px white;
+  border-left: solid 5px transparent;
+  border-right: solid 5px transparent;
+}

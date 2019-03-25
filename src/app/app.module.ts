@@ -26,7 +26,7 @@ import { MouseService } from './services/mouse/mouse.service';
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
-import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backend";
+// import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backend";
 
 @NgModule({
   imports: [
@@ -60,7 +60,7 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
-    SwellrtBackend
+    // SwellrtBackend
   ],
   bootstrap: [
     AppComponent

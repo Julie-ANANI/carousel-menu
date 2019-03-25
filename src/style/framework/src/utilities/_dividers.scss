@@ -1,0 +1,33 @@
+@import "../variables";
+
+.or-divider {
+  color: $meta-color;
+  font-size: 0.7rem;
+
+  &::after {
+    content: '';
+    display: inline-flex;
+    vertical-align: middle;
+    width: 130px;
+    height: 1px;
+    background: $meta-color;
+  }
+
+
+  &::before {
+    content: '';
+    display: inline-flex;
+    vertical-align: middle;
+    width: 130px;
+    height: 1px;
+    background: $meta-color;
+  }
+
+
+}
+
+
+.hr {
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+}
