@@ -3,8 +3,9 @@ import { takeUntil } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Subject } from 'rxjs';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { SwellrtBackend } from "../swellrt-client/services/swellrt-backend";
 import { UserService } from "../../services/user/user.service";
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { SwellrtBackend } from '../swellrt-client/services/swellrt-backend';
 
 declare let swellrt;
 
@@ -30,7 +31,7 @@ export class UserComponent implements OnInit, OnDestroy {
               private loaderService: LoaderService,
               private location: Location,
               private _userService: UserService,
-              private _swellrtBackend: SwellrtBackend,
+              private _swellRTBackend: SwellrtBackend,
               private router: Router) {
 
     if (isPlatformBrowser(this.platformId)) {
