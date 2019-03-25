@@ -11,7 +11,6 @@ export class AdminSearchDemoComponent {
 
   private _keywords: string;
   private _pros: Array<any> = [];
-  public modalUpdate = false;
   private _metadata: any = {};
   public continentTarget = {
     "americaSud": true,
@@ -24,19 +23,6 @@ export class AdminSearchDemoComponent {
   };
 
   constructor(private _searchService: SearchService) {}
-
-  public searchPros(event: Event) {
-    event.preventDefault();
-    this._searchService.inHouseSearch(this._keywords).pipe(first()).subscribe((pros: any) => {
-      this._pros = pros.map(pro => {
-        pro.isLoading = true;
-        return pro;
-      });
-      this._pros.forEach((pro, index) => {
-        this.formatPro(pro, index);
-      });
-    });
-  }
 
   public formatPro(pro, index) {
     if (!pro.person.company) {
@@ -96,12 +82,6 @@ export class AdminSearchDemoComponent {
       this._pros.forEach((pro, index) => {
         this.formatPro(pro, index);
       });
-    });
-  }
-
-  public updateDatabase() {
-    this._searchService.updateDatabase().pipe(first()).subscribe(_=> {
-      console.log("OK");
     });
   }
 
