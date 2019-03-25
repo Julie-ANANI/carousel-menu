@@ -52,12 +52,13 @@
 
               <ng-container *ngIf="innovation.comments">
                 <h3 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h3>
-                <div class="text" [innerHtml]="innovation.comments">Comment</div>
+                <div class="text" [innerHtml]="innovation.comments"></div>
               </ng-container>
 
               <ng-container *ngIf="innovation.operator?.name">
-                <div class="operator-wrapper">
-                  <span class="text">{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span> {{ innovation.operator?.name }}
+                <div class="operator-wrapper text">
+                  <span class="text-medium">{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span>
+                  <span>{{ innovation.operator?.name }}</span>
                 </div>
               </ng-container>
 
