@@ -4,7 +4,7 @@
 
   .title-hero {
     font-size: 1.6rem;
-    margin-bottom: $unit-5;
+    margin-bottom: 1rem;
   }
 
   .info-wrapper {
@@ -36,7 +36,7 @@
         a {
           background-color: #747d88;
           border: none;
-          font-weight: 600;
+          font-weight: $font-weight-medium;
           border-top-right-radius: $border-width-xl;
           border-top-left-radius: $border-width-xl;
         }

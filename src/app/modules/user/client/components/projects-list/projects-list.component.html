@@ -1,6 +1,7 @@
 <ng-container *ngIf="innovations">
-  <section class="column col-xs-12 col-11 col-mx-auto" id="projects-list-component">
-    <div class="section-pad">
+
+  <section class="section-pad animate-page" id="projects-list-component">
+    <div class="column col-xs-12 col-11 col-mx-auto">
 
       <!-- section add button -->
       <div class="text-right">
@@ -71,15 +72,16 @@
 
     </div>
   </section>
+
+
+  <!-- delete project confirmation modal -->
+  <app-modal [(showModal)]="deleteModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+    {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+      <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    </div>
+  </app-modal>
+  <!-- /delete project confirmation modal -->
+
 </ng-container>
-
-
-<!-- delete project confirmation modal -->
-<app-modal [(showModal)]="deleteModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-  {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
-</app-modal>
-<!-- /delete project confirmation modal -->
