@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
       //linkElement.setAttribute('src', '/swellrt-beta.js');
       linkElement.setAttribute('src', `http://localhost:9898/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
     } else {
-      linkElement.setAttribute('src', `https://swellrt:9899/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
+      linkElement.setAttribute('src', `https://swellrt.umi.us:9899/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
     }
     document.head.appendChild( linkElement );
   }
