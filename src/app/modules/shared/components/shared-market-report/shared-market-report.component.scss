@@ -426,31 +426,32 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: -1.2rem;
+    margin-bottom: -$unit-5;
 
-    .profile {
-      display: inline-flex;
-      background: white;
-      border: 1px solid $border-color;
+    .card {
+      margin-bottom: $unit-5;
       min-height: 11.875rem;
-      padding: .95rem 1rem .6rem 1rem;
-      border-radius: .18rem;
-      margin-bottom: 1.2rem;
-      flex: 0 1 calc(50% - 1rem);
 
       img {
+        position: absolute;
+        top: 10px;
+        left: 10px;
         visibility: hidden;
       }
 
-    }
+      .card-body {
+        padding: 0.5rem;
+        height: 100%;
+        width: 100%;
+      }
 
-    .profile:hover {
-      color: $border-color;
-      box-shadow: $box-shadow-hover;
+      &:hover {
 
-      img {
-        visibility: visible;
-        cursor: pointer;
+        img {
+          visibility: visible;
+          cursor: pointer;
+        }
+
       }
 
     }
@@ -610,22 +611,6 @@
       z-index: 11;
       padding-top: 0;
       padding-bottom: 0;
-    }
-
-  }
-
-}
-
-@media (min-width: $size-xl) {
-
-  #market-report {
-
-    .professional-wrapper {
-
-      .profile {
-        flex: 0 1 calc(32% - 1rem) !important;
-      }
-
     }
 
   }

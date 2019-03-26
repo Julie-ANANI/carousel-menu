@@ -12,6 +12,7 @@ import { Tag } from '../../../../../../models/tag';
 export class ProfessionalTagComponent implements OnInit {
 
   @Input() answer: Answer;
+
   @Input() tagId: string;
 
   @Output() modalAnswerChange = new EventEmitter<any>();

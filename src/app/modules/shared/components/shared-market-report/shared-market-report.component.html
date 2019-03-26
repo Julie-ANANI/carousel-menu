@@ -639,27 +639,22 @@
         <!-- /map -->
 
         <!-- professionals -->
-        <section class="section-light-container report-professionals-print">
+        <section class="section-light-pad" id="professional-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="professional-wrapper">
-              <div *ngFor="let answer of filteredAnswers" class="profile">
-                <img
-                  src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png"
-                  height="13px"
-                  width="20px"
-                  style="margin-top: .125rem"
-                  (click)="filterPro(answer, $event)">
-                <app-pro-tag
-                  [answer]="answer"
-                  (modalAnswerChange)="seeAnswer($event)"
-                  [ngStyle]="{ 'width': '100%', 'height': '100%' }">
-                </app-pro-tag>
+              <div *ngFor="let answer of filteredAnswers" class="card card-responsive relative">
+
+                <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" (click)="filterPro(answer, $event)" alt=" ">
+
+                <div class="card-body">
+                  <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                </div>
+
               </div>
             </div>
           </div>
         </section>
         <!-- /professionals -->
-
 
         <!-- Other question and answers -->
         <div class="column col-xs-12 col-11 col-mx-auto report-other-sections-print">
