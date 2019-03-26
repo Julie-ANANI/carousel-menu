@@ -59,10 +59,21 @@ export class CommercialComponent implements OnInit {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
       acc.countNeed = acc.countNeed + stats.countNeed;
+      acc.totalCountNeed = acc.totalCountNeed + stats.totalCountNeed;
       acc.countDiff = acc.countDiff + stats.countDiff;
+      acc.totalCountDiff = acc.totalCountDiff + stats.totalCountDiff;
       acc.countLeads = acc.countLeads + stats.countLeads;
       return acc;
-    }, {totalInnovations: 0, totalAnswers: 0, countNeed: 0, countDiff: 0, countLeads: 0, geographicalRepartition: geographicalRepartition});
+    }, {
+      totalInnovations: 0,
+      totalAnswers: 0,
+      countNeed: 0,
+      totalCountNeed: 0,
+      countDiff: 0,
+      totalCountDiff: 0,
+      countLeads: 0,
+      geographicalRepartition: geographicalRepartition
+    });
   }
 
   public selectTag() {

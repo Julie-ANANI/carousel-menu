@@ -12,7 +12,11 @@ export interface TagStats {
 
   countNeed: number;
 
+  totalCountNeed: number;
+
   countDiff: number;
+
+  totalCountDiff: number;
 
   countLeads: number;
 
