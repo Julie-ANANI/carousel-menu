@@ -190,7 +190,7 @@
 
         <!-- main page -->
         <ng-container *ngIf="showDetails">
-          <section class="section-pad rm-pad-bottom text-center display-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+          <section class="section-pad rm-pad-bottom text-center d-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
             <div class="column col-xs-12 col-11 col-mx-auto">
               <div class="section-pad full bg-white front-page-print">
 
@@ -200,7 +200,7 @@
                 </div>
 
                 <!-- body -->
-                <div class="display-flex body-wrapper">
+                <div class="d-flex body-wrapper">
 
                   <h6 class="text-executive">Executive report</h6>
 
@@ -239,7 +239,7 @@
 
         <!-- main page goal -->
         <ng-container *ngIf="adminSide">
-          <section class="section-light-pad rm-pad-bottom" id="innovation-goal">
+          <section class="section-light-pad" id="innovation-goal">
             <div class="column col-xs-12 col-11 col-mx-auto">
               <div class="section-pad bg-white full">
 
@@ -272,9 +272,9 @@
 
         <!-- executive template generation -->
         <ng-container *ngIf="adminSide">
-          <section class="section-light-pad rm-pad-bottom">
+          <section class="section-light-pad">
             <div class="column col-xs-12 col-11 col-mx-auto">
-              <div class="section-pad full display-flex executive-generate-wrapper bg-white">
+              <div class="section-pad full d-flex executive-generate-wrapper bg-white">
 
                 <!-- heading -->
                 <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h2>
@@ -313,27 +313,25 @@
         </ng-container>
         <!-- /executive report -->
 
+        <!-- executive Report delete button -->
+        <ng-container *ngIf="innovation.executiveReport.totalSections > 0 && adminSide">
+          <section class="section-light-pad text-center">
+            <button class="btn ghost-delete btn-sm" (click)="deleteExecutiveTemplate($event)">
+              {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}
+            </button>
+          </section>
+        </ng-container>
+        <!-- /executive Report delete button -->
 
-        <!-- Executive Report Delete Button -->
-        <section *ngIf="innovation.executiveReport.totalSections > 0 && adminSide" class="text-center" [ngStyle]="{ 'padding-top': '1.57rem', 'padding-bottom': '1.57rem' }">
-          <button
-            class="btn ghost-delete"
-            (click)="deleteExecutiveTemplate($event)">
-            {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}
-          </button>
-        </section>
-
-
-        <!-- UMI Intro -->
-        <section
-          *ngIf="showDetails && getDomainName() === 'umi'"
-          class="section-light-container umi-intro-print"
-          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <img [src]="getIntroSrc()" class="img-responsive" alt=" ">
-          </div>
-        </section>
-        <!-- /UMI Intro -->
+        <!-- UMI intro -->
+        <ng-container *ngIf="showDetails && getDomainName() === 'umi'">
+          <section class="section-pad umi-intro-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <img [src]="getIntroSrc()" alt=" " class="img-responsive">
+            </div>
+          </section>
+        </ng-container>
+        <!-- /UMI intro -->
 
 
         <!-- Innovation detail -->
