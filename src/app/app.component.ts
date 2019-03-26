@@ -7,8 +7,6 @@ import { TranslateNotificationsService } from './services/notifications/notifica
 import { MouseService } from './services/mouse/mouse.service';
 import { environment } from '../environments/environment';
 
-declare let window;
-
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
@@ -37,7 +35,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this._setFavicon();
-    this._setSwellRTScript();
+    //this._setSwellRTScript();
 
     initTranslation(this.translateService);
 
@@ -78,7 +76,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private _setSwellRTScript() {
+  /*private _setSwellRTScript() {
     let SWELL_CONTEXT = "swellrt_beta";
     let SWELL_JS_MODULE = "swellrt_beta.nocache.js";
 
@@ -116,7 +114,7 @@ export class AppComponent implements OnInit {
       }
     }
     document.head.appendChild( linkElement );
-  }
+  }*/
 
 }
 
