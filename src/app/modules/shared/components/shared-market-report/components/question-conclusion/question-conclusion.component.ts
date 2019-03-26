@@ -6,7 +6,7 @@ import { Question } from '../../../../../../models/question';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
-import { FilterService } from '../../services/filters.service';
+import { TagsService } from '../../services/tags.service';
 import { environment } from "../../../../../../../environments/environment";
 
 @Component({
@@ -55,7 +55,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   constructor(private innovationService: InnovationService,
               private translateService: TranslateService,
-              private filterService: FilterService) { }
+              private tagService: TagsService) { }
 
   ngOnInit() {
     if (this.question && this.question.identifier) {
@@ -95,11 +95,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   addTagFilter(event: Event, tag: Tag) {
     event.preventDefault();
-    this.filterService.addFilter({
-      status: 'TAG',
-      questionId: this.question.identifier,
-      value: tag._id
-    });
+    this.tagService.checkAnswerTag(this.question.identifier, tag._id, false);
   }
 
   public isMainDomain(): boolean {
