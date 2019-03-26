@@ -31,7 +31,7 @@
               </p>
             </div>
 
-            <div *ngIf="project?.status !== 'EDITING' && project?.status !== 'DONE'">
+            <div *ngIf="project && project.status && project?.status !== 'EDITING' && project?.status !== 'DONE'">
               <div *ngIf="project?.status === 'SUBMITTED'" [ngStyle]="{ 'margin-right': '30px' , 'display': 'inline-flex' }">
                 <button class="btn btn-primary" (click)="validateProject()">
                   Validation du projet
@@ -48,10 +48,12 @@
         </div>
       </div>
 
-      <app-shared-project-edit-cards
-        [project]="project"
-        (pitchChange)="updateProject($event)">
-      </app-shared-project-edit-cards>
+        <div class="column col-11 centered">
+            <app-shared-project-edit-cards
+                [project]="project"
+                (pitchChange)="updateProject($event)">
+            </app-shared-project-edit-cards>
+        </div>
 
     </div>
   </div>

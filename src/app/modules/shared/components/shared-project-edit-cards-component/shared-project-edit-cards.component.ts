@@ -22,7 +22,7 @@ declare const tinymce: any;
 export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this._innovation =  JSON.parse(JSON.stringify(value));
+    this._innovation =  value ? JSON.parse(JSON.stringify(value)) : value;
   }
 
   @Input() set editable(value: boolean) {
