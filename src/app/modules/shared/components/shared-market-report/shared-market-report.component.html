@@ -333,115 +333,126 @@
         </ng-container>
         <!-- /UMI intro -->
 
+        <!-- innovation detail -->
+        <ng-container *ngIf="showDetails">
+          <section class="section-light-pad report-innovation-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <div class="section-pad full innovation-wrapper text bg-white">
 
-        <!-- Innovation detail -->
-        <section
-          *ngIf="showDetails"
-          class="section-light-container report-innovation-print"
-          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-container full innovation-wrapper white-background">
+                <!-- column 1 -->
+                <div class="summary-wrapper">
 
-              <!-- Column 1 -->
-              <div class="summary-wrapper">
-                <h1 class="main-heading">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
-                <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
-                <div class="img-wrapper">
-                  <img
-                    [src]="getSrc()"
-                    [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-                    height="146" width="220px">
+                  <h2 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h2>
+
+                  <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
+
+                  <div class="img-wrapper">
+                    <img [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" height="146px" width="220px">
+                  </div>
+
+                  <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
+
+                  <ul class="advantage-wrapper">
+                    <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex]?.advantages;">
+                      {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
+                    </li>
+                  </ul>
+
                 </div>
-                <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
-                <ul class="advantage-wrapper">
-                  <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex]?.advantages;">
-                    {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
-                  </li>
-                </ul>
-              </div>
 
-              <!-- Column 2 -->
-              <div class="issue-wrapper">
-                <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-                <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.problem"></div>
-              </div>
+                <!-- column 2 -->
+                <div class="issue-wrapper">
+                  <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
+                  <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.problem"></div>
+                </div>
 
-              <!-- Column 3 -->
-              <div class="solution-wrapper">
-                <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-                <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.solution"></div>
-              </div>
+                <!-- column 3 -->
+                <div class="solution-wrapper">
+                  <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
+                  <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.solution"></div>
+                </div>
 
+              </div>
             </div>
-          </div>
-        </section>
-        <!-- /Innovation detail -->
+          </section>
+        </ng-container>
+        <!-- /innovation detail -->
 
+        <!-- innovation targeting -->
+        <ng-container *ngIf="showDetails">
+          <section class="section-light-pad report-targeting-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <div class="section-pad full targeting-wrapper bg-white text">
 
-        <!-- Innovation targeting -->
-        <section
-          *ngIf="showDetails"
-          class="section-light-container report-targeting-print"
-          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-container full targeting-wrapper white-background">
+                <!-- column 1 -->
+                <div class="map-wrapper">
 
-              <!-- Column 1 -->
-              <div class="map-wrapper">
-                <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h1>
-                <p class="sc-ques">{{ 'MARKET_REPORT.TARGET_COUNTRIES' | translate }}</p>
-                <app-worldmap
-                  [initialConfiguration]="continentTarget"
-                  [countriesColor]="'#2ECC71'"
-                  [isEditable]="false"
-                  [width]="'auto'">
-                </app-worldmap>
-                <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">
-                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
-                  <div *ngFor="let country of innovation.settings.geography.exclude" class="answer-wrapper">
-                    {{ country.name }}
+                  <h2 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h2>
+
+                  <p class="title-secondary">{{ 'MARKET_REPORT.TARGET_COUNTRIES' | translate }}</p>
+
+                  <app-worldmap
+                    [initialConfiguration]="continentTarget"
+                    [countriesColor]="'#2ECC71'"
+                    [isEditable]="false"
+                    [width]="'auto'">
+                  </app-worldmap>
+
+                  <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">
+                    <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
+                    <div *ngFor="let country of innovation.settings.geography.exclude" class="label label-answer">
+                      {{ country.name }}
+                    </div>
                   </div>
+
+                  <div *ngIf="innovation.settings.market.comments.length > 0" class="question-wrapper">
+                    <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.MARKET.LABEL' | translate }}</p>
+                    <p>{{ innovation.settings.market.comments }}</p>
+                  </div>
+
                 </div>
-                <div *ngIf="innovation.settings.market.comments.length > 0" class="question-wrapper">
-                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</p>
-                  <p>{{ innovation.settings.market.comments }}</p>
+
+                <!-- column 2 -->
+                <div class="c2-answer-wrapper">
+
+                  <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">
+                    <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}</p>
+                    <div *ngFor="let companyInclude of innovation.settings.companies.include" class="label label-answer">
+                      {{ companyInclude.name }}
+                    </div>
+                  </div>
+
+                  <div *ngIf="innovation.settings.companies.exclude.length > 0" class="question-wrapper">
+                    <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}</p>
+                    <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="label label-answer">
+                      {{ companyExclude.name }}
+                    </div>
+                  </div>
+
+                  <div *ngIf="innovation.settings.professionals.description.length > 0" class="question-wrapper">
+                    <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL' | translate }}</p>
+                    <p>{{ innovation.settings.professionals.description }}</p>
+                  </div>
+
+                  <div *ngIf="innovation.settings.professionals.exclude.length > 0" class="question-wrapper">
+                    <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
+                    <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">
+                      {{ professionalExclude.text }}
+                    </div>
+                  </div>
+
+                  <div *ngIf="innovation.settings.comments.length > 0" class="question-wrapper">
+                    <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</p>
+                    <p>{{ innovation.settings.comments }}</p>
+                  </div>
+
                 </div>
+
               </div>
-
-              <!-- Column 2 -->
-              <div class="c2-answer-wrapper">
-                <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">
-                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</p>
-                  <div *ngFor="let companyInclude of innovation.settings.companies.include" class="answer-wrapper">
-                    {{ companyInclude.name }}
-                  </div>
-                </div>
-                <div *ngIf="innovation.settings.companies.exclude.length > 0" class="question-wrapper">
-                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</p>
-                  <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="answer-wrapper">
-                    {{ companyExclude.name }}
-                  </div>
-                </div>
-                <div *ngIf="innovation.settings.professionals.description.length > 0" class="question-wrapper">
-                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</p>
-                  <p>{{ innovation.settings.professionals.description }}</p>
-                </div>
-                <div *ngIf="innovation.settings.professionals.exclude.length > 0" class="question-wrapper">
-                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
-                  <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="answer-wrapper">
-                    {{ professionalExclude.text }}
-                  </div>
-                </div>
-                <div *ngIf="innovation.settings.comments.length > 0" class="question-wrapper">
-                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</p>
-                  <p>{{ innovation.settings.comments }}</p>
-                </div>
-              </div>
-
             </div>
-          </div>
-        </section>
-        <!-- /Innovation targeting -->
+          </section>
+        </ng-container>
+        <!-- /innovation targeting -->
 
 
         <!-- Innovation analytics -->

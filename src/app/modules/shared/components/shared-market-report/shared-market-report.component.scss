@@ -7,6 +7,11 @@
     font-size: 1.35rem;
   }
 
+  .title-secondary {
+    font-size: 1.1rem;
+    color: $secondary-color;
+  }
+
   .bg-white {
     background-color: $bg-color-light;
     border-radius: $border-radius;
@@ -252,12 +257,6 @@
   .executive-generate-wrapper {
     flex-direction: column;
 
-    .title-secondary {
-      font-weight: normal;
-      font-size: 1.2rem;
-      color: $secondary-color;
-    }
-
     .template-outer-wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -309,48 +308,29 @@
     display: flex;
     justify-content: space-between;
 
-    .section-heading {
-      font-weight: normal;
-      font-size: 1.5rem;
-    }
-
     .summary-wrapper {
-      padding-right: .9375rem;
+      padding-right: 0.75rem;
       flex: 1;
 
-      .section-heading {
-        margin-bottom: .95rem;
-      }
-
       .img-wrapper {
-        padding-top: 1.57rem;
-        padding-bottom: 1.2rem;
+        padding-top: 1.25rem;
+        padding-bottom: $unit-5;
       }
 
       .advantage-wrapper {
-        margin: 0;
-
-        li {
-          margin: 0;
-          padding: .375rem .5rem .375rem .3rem;
-        }
-
-        li:last-child {
-          padding-bottom: 0;
-        }
-
+        margin-bottom: 0;
       }
 
     }
 
     .issue-wrapper {
-      padding-left: .95rem;
-      padding-right: .95rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
       flex: 1;
     }
 
     .solution-wrapper {
-      padding-left: .95rem;
+      padding-left: 0.75rem;
       flex: 1;
     }
 
@@ -359,41 +339,31 @@
   .targeting-wrapper {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 1.57rem;
 
     .map-wrapper {
-      padding-right: .95rem;
+      padding-right: 0.75rem;
       flex: 1;
     }
 
     .question-wrapper {
-      padding-bottom: 1.57rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .label {
+      margin-left: 0;
+      margin-top: 0;
     }
 
     p {
-      padding-bottom: 0;
+      margin-bottom: 0;
     }
 
-    .sc-ques {
-      color: $secondary-color;
-      padding-bottom: 1.57rem;
-      font-size: 1.5rem;
-      font-weight: normal;
-    }
-
-    .answer-wrapper {
-      background: #F8F4F4;
-      color: $dark-color;
-      padding: .5rem .95rem;
-      border-radius: .18rem;
-      display: inline-flex;
-      margin-right: .6rem;
-      margin-bottom: .6rem;
-      font-size: .85rem;
+    .title-secondary {
+      margin-bottom: 0.75rem;
     }
 
     .c2-answer-wrapper {
-      padding-left: .95rem;
+      padding-left: 0.75rem;
       flex: 1;
     }
 
@@ -608,7 +578,7 @@
       }
 
       .issue-wrapper, .solution-wrapper {
-        padding-top: 1.57rem !important;
+        padding-top: 1.25rem !important;
       }
 
     }
