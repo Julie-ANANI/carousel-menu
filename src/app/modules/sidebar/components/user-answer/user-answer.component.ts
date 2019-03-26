@@ -1,13 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Question } from '../../../../models/question';
 import { Answer } from '../../../../models/answer';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Tag } from '../../../../models/tag';
-import { InnovCard } from '../../../../models/innov-card';
 import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 @Component({
@@ -16,7 +14,7 @@ import { SidebarInterface } from '../../interfaces/sidebar-interface';
   styleUrls: ['./user-answer.component.scss']
 })
 
-export class UserAnswerComponent implements OnInit {
+export class UserAnswerComponent {
 
   @Input() set sidebarState(value: SidebarInterface) {
     if (value === undefined || 'active') {
@@ -45,8 +43,6 @@ export class UserAnswerComponent implements OnInit {
 
   private _floor: any;
 
-  private _displayEmail = false;
-
   private _editJob = false;
 
   private _editCompany = false;
@@ -59,47 +55,8 @@ export class UserAnswerComponent implements OnInit {
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private innovationService: InnovationService) { }
-
-  ngOnInit() {
-    // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
-
+              private translateNotificationsService: TranslateNotificationsService) {
     this._floor = Math.floor;
-
-    // On regarde si on a une question 'étoiles'
-    const starQuestions = this.questions.filter(q => q && q.controlType === 'stars');
-
-    if (starQuestions.length) {
-      // Si question 'étoiles', on récupère les advantages
-      // TODO: merge the 2 following subscribers in only one
-      this.innovationService.getInnovationCardByLanguage(this._innovationId, 'en').pipe(first()).subscribe((cardEn: InnovCard) => {
-        this.innovationService.getInnovationCardByLanguage(this._innovationId, 'fr').pipe(first()).subscribe((cardFr: InnovCard) => {
-          // puis on les assigne aux questions stars
-          starQuestions.forEach(question => {
-            question.options = [];
-            let i = 0;
-            let advantagesLeft = true;
-            while (advantagesLeft) {
-              if ((cardFr && cardFr.advantages && cardFr.advantages[i] && cardFr.advantages[i].text)
-                || (cardEn && cardEn.advantages && cardEn.advantages[i] && cardEn.advantages[i].text)) {
-                question.options.push({
-                  identifier: i.toString(),
-                  label: {
-                    fr: cardFr && cardFr.advantages && cardFr.advantages[i] ? cardFr.advantages[i].text : '',
-                    en: cardEn && cardEn.advantages && cardEn.advantages[i] ? cardEn.advantages[i].text : ''
-                  }
-                });
-                i++;
-              } else {
-                advantagesLeft = false;
-              }
-            }
-          })
-        });
-      });
-    }
-
   }
 
 
@@ -161,7 +118,7 @@ export class UserAnswerComponent implements OnInit {
       this._modalAnswer.originalAnswerReference = this._modalAnswer.originalAnswerReference || 'oldQuiz';
       this._modalAnswer.quizReference = this._modalAnswer.quizReference || 'oldQuiz';
 
-      this.answerService.save(this._modalAnswer._id, this._modalAnswer).pipe(first()).subscribe(() => {
+      this.answerService.save(this._modalAnswer._id, this._modalAnswer).subscribe(() => {
         this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
         this.answerUpdated.emit(true);
         }, () => {
@@ -187,7 +144,6 @@ export class UserAnswerComponent implements OnInit {
 
     if (this._editMode) {
       this._modalAnswer.status = status;
-      this._displayEmail = (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL');
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.NOT_MODIFIED.USER_ANSWER');
     }
@@ -248,34 +204,6 @@ export class UserAnswerComponent implements OnInit {
 
   }
 
-  public meta2Question(): any {
-    /*
-    readonly label: Multiling;
-  readonly title: Multiling;
-  readonly _id?: string;
-  readonly subtitle: Multiling;
-  identifier: string;
-  controlType: 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
-  canComment: boolean;
-  readonly parameters?: {
-    type: 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
-    addon: string;
-    min: number;
-    max: number;
-    step: number;
-  }
-     */
-    let question = {
-      label: "Reply message",
-      title: "Reply message",
-      subtitle: "-",
-      identifier: "randomstring",
-      controlType: 'textarea',
-      canComment: false
-    };
-    return question;
-  }
-
   get meta(): any {
     return this._modalAnswer['meta'] || {};
   }
@@ -290,10 +218,6 @@ export class UserAnswerComponent implements OnInit {
 
   get floor(): any {
     return this._floor;
-  }
-
-  get displayEmail(): boolean {
-    return this._displayEmail;
   }
 
   get editJob(): boolean {
