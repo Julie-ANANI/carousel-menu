@@ -5,7 +5,6 @@ import { Question } from '../../../../../../models/question';
 import { Innovation } from '../../../../../../models/innovation';
 import { Tag } from '../../../../../../models/tag';
 import { ResponseService } from '../../services/response.service';
-import { TagsService } from '../../services/tags.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import { Location } from '@angular/common';
 import {InnovationCommonService} from '../../../../../../services/innovation/innovation-common.service';
@@ -68,8 +67,7 @@ export class QuestionSectionComponent implements OnInit {
               private responseService: ResponseService,
               private location: Location,
               private formBuilder: FormBuilder,
-              private innovationCommonService: InnovationCommonService,
-              private tagService: TagsService) {}
+              private innovationCommonService: InnovationCommonService) {}
 
   ngOnInit() {
 
@@ -113,10 +111,7 @@ export class QuestionSectionComponent implements OnInit {
 
       this._answersToShow = this.responseService.getAnswersToShow(this.answersReceived, this.questionReceived);
 
-      this._tags = this.responseService.getTagsList(this._answersToShow, this.questionReceived);
-      if (this.questionReceived.controlType === 'textarea') {
-        this.tagService.setAnswerTags(this.questionReceived.identifier, this._tags);
-      }
+      this._tags = ResponseService.getTagsList(this._answersToShow, this.questionReceived);
 
       // filter comments
       switch (this.questionReceived.controlType) {

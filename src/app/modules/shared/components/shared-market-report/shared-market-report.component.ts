@@ -21,6 +21,7 @@ import { Share } from '../../../../models/share';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
+import { TagsService } from './services/tags.service';
 import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
 
 @Component({
@@ -102,6 +103,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private filterService: FilterService,
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService,
+              private tagService: TagsService,
               private worldmapService: SharedWorldmapService) { }
 
   ngOnInit() {
@@ -253,6 +255,29 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         }
         return acc;
       }, []);
+
+      /*
+       * compute tag list globally
+       */
+      const tagsDict = response.answers.reduce(function (acc, answer) {
+        answer.tags.forEach((tag) => {
+          if (!acc[tag._id]) {
+            acc[tag._id] = tag;
+          }
+        });
+        return acc;
+      }, {});
+      this.tagService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
+
+      /*
+       * compute tags lists for each questions of type textarea
+       */
+      this._questions.forEach((question) => {
+        if (question.controlType === 'textarea') {
+          const tags = ResponseService.getTagsList(response.answers, question);
+          this.tagService.setAnswerTags(question.identifier, tags);
+        }
+      });
 
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');

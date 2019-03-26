@@ -180,7 +180,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * this functions is to get the tags list for the particular question.
    */
   getTags() {
-    this._tags = this.responseService.getTagsList(this._answers, this._questionSelected);
+    this._tags = ResponseService.getTagsList(this._answers, this._questionSelected);
   }
 
 

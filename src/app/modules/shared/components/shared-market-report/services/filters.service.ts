@@ -60,15 +60,16 @@ export class FilterService {
       const filter = this._filters[filterKey];
       switch (filter.status) {
         case 'TAG':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            if (filter.questionId !== 'tags' && Array.isArray(answer.answerTags[filter.questionId])) {
-              return answer.answerTags[filter.questionId].some((t: Tag) => filter.value[t._id]);
-            } else if (filter.questionId === 'tags') {
+          if (filter.questionId === 'tags') {
+            filteredAnswers = filteredAnswers.filter((answer) => {
               return answer.tags.some((t: Tag) => filter.value[t._id]);
-            } else {
-              return false;
-            }
-          });
+            });
+          } else {
+            filteredAnswers = filteredAnswers.filter((answer) => {
+              return Array.isArray(answer.answerTags[filter.questionId])
+                && answer.answerTags[filter.questionId].some((t: Tag) => filter.value[t._id]);
+            });
+          }
           break;
         case 'CHECKBOX':
           filteredAnswers = filteredAnswers.filter((answer) => {

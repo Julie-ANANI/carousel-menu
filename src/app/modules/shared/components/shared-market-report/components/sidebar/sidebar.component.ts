@@ -23,16 +23,6 @@ export class SidebarComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
-    // calculate tagsList
-    const tagsDict = this._answers.reduce(function (acc, answer) {
-      answer.tags.forEach((tag) => {
-        if (!acc[tag._id]) {
-          acc[tag._id] = tag;
-        }
-      });
-      return acc;
-    }, {});
-    this.tagService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
   }
 
   @Input() set isAdmin(value: boolean) {

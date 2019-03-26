@@ -16,6 +16,40 @@ export class ResponseService {
   constructor() {
   }
 
+  /***
+   * Return the list of tags on every user answers for a given question
+   * @param answers
+   * @param question
+   */
+  static getTagsList(answers: Array<Answer>, question: Question): Array<Tag> {
+
+    let tags: Array<Tag>;
+    const tagId = question.identifier + (question.controlType !== 'textarea' ? 'Comment' : '');
+
+    tags = answers.reduce((tagsList, answer) => {
+
+      const answerTags = answer.answerTags[tagId];
+
+      if (Array.isArray(answerTags)) {
+        answerTags.forEach((t) => {
+          const previousTag = tagsList.find((t2) => t2._id === t._id);
+
+          if (previousTag) {
+            previousTag['count'] += 1;
+          } else {
+            t['count'] = 1;
+            tagsList.push(t);
+          }
+
+        });
+      }
+      return tagsList;
+    }, []).sort((a, b) => b.count - a.count);
+
+    return tags;
+
+  }
+
   setExecutiveAnswers(value: Array<Answer>) {
     this.executiveAnswers.next(value);
   }
@@ -169,42 +203,6 @@ export class ResponseService {
     } else {
       return '#2ECC71';
     }
-  }
-
-
-  /***
-   * this function is to get the tags list with the tag count for the
-   * question that is passed in the passed answers.
-   * @param answers
-   * @param question
-   */
-  getTagsList(answers: Array<Answer>, question: Question): Array<Tag> {
-
-    let tags: Array<Tag>;
-    const tagId = question.identifier + (question.controlType !== 'textarea' ? 'Comment' : '');
-
-    tags = answers.reduce((tagsList, answer) => {
-
-      const answerTags = answer.answerTags[tagId];
-
-      if (Array.isArray(answerTags)) {
-        answerTags.forEach((t) => {
-          const previousTag = tagsList.find((t2) => t2._id === t._id);
-
-          if (previousTag) {
-            previousTag['count'] += 1;
-          } else {
-            t['count'] = 1;
-            tagsList.push(t);
-          }
-
-        });
-      }
-      return tagsList;
-    }, []).sort((a, b) => b.count - a.count);
-
-    return tags;
-
   }
 
 }
