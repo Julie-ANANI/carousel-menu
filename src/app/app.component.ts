@@ -7,6 +7,8 @@ import { TranslateNotificationsService } from './services/notifications/notifica
 import { MouseService } from './services/mouse/mouse.service';
 import { environment } from '../environments/environment';
 
+declare let window;
+
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
@@ -77,11 +79,37 @@ export class AppComponent implements OnInit {
   }
 
   private _setSwellRTScript() {
+    let SWELL_CONTEXT = "swellrt_beta";
+    let SWELL_JS_MODULE = "swellrt_beta.nocache.js";
+
+    window.swell = {
+
+      ready: function(handler) {
+        if (!handler || typeof handler !== "function")
+          return;
+
+        if (window.swellrt.runtime) {
+          handler(window.swell.runtime.get());
+        } else {
+          if (!window._lh)
+            window._lh = [];
+          window._lh.push(handler);
+        }
+      }
+    }
+
+    // Some alias
+    window.swellrt = window.swell;
+    window.swell.onReady = window.swell.ready;
+
     const linkElement = document.createElement('script');
+    linkElement.setAttribute('type', 'text/javascript');
+    linkElement.setAttribute('id', 'swellrt');
     if(environment.local) {
-      linkElement.setAttribute('src', 'http://localhost:9898/swellrt.js');
+      //linkElement.setAttribute('src', '/swellrt-beta.js');
+      linkElement.setAttribute('src', `http://localhost:9898/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
     } else {
-      linkElement.setAttribute('src', 'http://swelrt:9898/swellrt.js');
+      linkElement.setAttribute('src', `http://swellrt:9898/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
     }
     document.head.appendChild( linkElement );
   }
