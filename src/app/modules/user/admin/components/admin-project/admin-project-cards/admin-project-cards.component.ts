@@ -25,7 +25,9 @@ export class AdminProjectCardsComponent implements OnInit {
     this.innovationService
       .get(this.activatedRoute.snapshot.parent.data['innovation']._id)
       .subscribe((result: Innovation) => {
-        this.project = result;
+        if(result) {
+          this.project = result;
+        }
       });
   }
 

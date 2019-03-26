@@ -1,68 +1,67 @@
-<ng-container *ngIf="campaign">
-  <section id="shared-search-pros-component">
-    <div class="search-section">
+<section id="shared-search-pros-component">
+  <div class="search-section">
 
-      <!-- search wrapper -->
-      <div class="search-wrapper">
+    <!-- search wrapper -->
+    <div class="search-wrapper">
 
-        <!-- heading -->
-        <div class="heading-wrapper">
+      <!-- heading -->
+      <div class="heading-wrapper">
 
-          <h2 class="title-secondary">Rocket Testing</h2>
+        <h2 class="title-secondary">Rocket Testing</h2>
 
-          <span class="text-link" (click)="onReset()">Reset</span>
+        <span class="text-link" (click)="onReset()">Reset</span>
 
-          <span class="line">|</span>
+        <span class="line">|</span>
 
-          <div class="popover popover-top">
+        <div class="popover popover-top">
 
-            <span class="text-help">Help</span>
+          <span class="text-help">Help</span>
 
-            <div class="popover-container">
-              <div class="card">
-                <div class="card-body">
+          <div class="popover-container">
+            <div class="card">
+              <div class="card-body">
 
-                  <div class="d-flex align-center">
-                    <div class="shape circle circle-xs circle-success"></div>
-                    <span>Relevant</span>
-                  </div>
-
-                  <div class="d-flex align-center">
-                    <div class="shape circle circle-xs circle-progress"></div>
-                    <span>Average</span>
-                  </div>
-
-                  <div class="d-flex align-center">
-                    <div class="shape circle circle-xs circle-alert"></div>
-                    <span>Overused</span>
-                  </div>
-
-                  <div class="d-flex align-center">
-                    <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
-                    <span>Too much pros duplicated</span>
-                  </div>
-
-                  <hr class="hr">
-
-                  <ul>
-                    <li>No capital letters or "s".</li>
-                    <li>Numbers can't be processed.</li>
-                    <li>Please enter at least 2 request.</li>
-                  </ul>
-
+                <div class="d-flex align-center">
+                  <div class="shape circle circle-xs circle-success"></div>
+                  <span>Relevant</span>
                 </div>
+
+                <div class="d-flex align-center">
+                  <div class="shape circle circle-xs circle-progress"></div>
+                  <span>Average</span>
+                </div>
+
+                <div class="d-flex align-center">
+                  <div class="shape circle circle-xs circle-alert"></div>
+                  <span>Overused</span>
+                </div>
+
+                <div class="d-flex align-center">
+                  <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
+                  <span>Too much pros duplicated</span>
+                </div>
+
+                <hr class="hr">
+
+                <ul>
+                  <li>No capital letters or "s".</li>
+                  <li>Numbers can't be processed.</li>
+                  <li>Please enter at least 2 request.</li>
+                </ul>
+
               </div>
             </div>
-
           </div>
 
         </div>
-        <!-- /heading -->
 
-        <!-- input -->
-        <div class="input-wrapper">
+      </div>
+      <!-- /heading -->
 
-          <div class="form-group">
+      <!-- input -->
+      <div class="input-wrapper">
+
+        <div class="form-group">
             <textarea
               type="text"
               class="form-input"
@@ -71,120 +70,120 @@
               [(ngModel)]="params.catKeywords"
               placeholder="Search here using Computer Aided Targeting. One request per line.">
             </textarea>
-            <ng-container *ngIf="params.catKeywords">
-              <span class="search-button-wrapper" (click)="onClickSearchCat($event)"><i class="fas fa-search"></i></span>
+          <ng-container *ngIf="params.catKeywords">
+            <span class="search-button-wrapper" (click)="onClickSearchCat($event)"><i class="fas fa-search"></i></span>
+          </ng-container>
+        </div>
+
+        <div class="remaining-wrapper">
+          <div class="d-flex align-center">
+            <span class="shape circle circle-xs" [ngClass]="getCatCircleClass()"></span>
+            <span>Search Requests</span>
+          </div>
+          <div><span>Remaining for today: {{ catQuota }}</span></div>
+        </div>
+
+      </div>
+      <!-- /input -->
+
+      <!-- loader -->
+      <ng-container *ngIf="displayLoader">
+        <div class="loader-wrapper">
+          <div class="loading loading-lg"></div>
+        </div>
+      </ng-container>
+      <!-- /loader -->
+
+      <!-- display cat result -->
+      <ng-container *ngIf="catProcessDone && !displayLoader">
+
+        <!-- analysis -->
+        <div class="analysis-wrapper">
+
+          <div class="heading-wrapper">
+            <h2 class="title-secondary">Analysis</h2>
+            <ng-container *ngIf="catResult && catResult.duplicate_status !== 'ok'">
+              <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
             </ng-container>
           </div>
 
-          <div class="remaining-wrapper">
-            <div class="d-flex align-center">
-              <span class="shape circle circle-xs" [ngClass]="getCatCircleClass()"></span>
-              <span>Search Requests</span>
-            </div>
-            <div><span>Remaining for today: {{ catQuota }}</span></div>
+          <div class="analysis-content">
+            <ul>
+              <li *ngFor="let suggestion of suggestions">
+                <div class="d-flex"><span class="text-pros">{{ suggestion.expected_result }} pros</span><div [innerHTML]="suggestion.search_keywords"></div></div>
+                <div (click)="onClickPlus(suggestion.keywords)" [ngStyle]="{ 'visibility':  checkKeywords(suggestion.keywords) }"><i class="fas fa-plus-circle"></i></div>
+              </li>
+            </ul>
           </div>
 
         </div>
-        <!-- /input -->
+        <!-- /analysis -->
 
-        <!-- loader -->
-        <ng-container *ngIf="displayLoader">
-          <div class="loader-wrapper">
-            <div class="loading loading-lg"></div>
+        <!-- suggested -->
+        <div class="suggested-wrapper">
+
+          <div class="heading-wrapper">
+            <h2 class="title-secondary">Suggested Keywords</h2>
           </div>
-        </ng-container>
-        <!-- /loader -->
 
-        <!-- display cat result -->
-        <ng-container *ngIf="catProcessDone && !displayLoader">
-
-          <!-- analysis -->
-          <div class="analysis-wrapper">
-
-            <div class="heading-wrapper">
-              <h2 class="title-secondary">Analysis</h2>
-              <ng-container *ngIf="catResult && catResult.duplicate_status !== 'ok'">
-                <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
-              </ng-container>
-            </div>
-
-            <div class="analysis-content">
-              <ul>
-                <li *ngFor="let suggestion of suggestions">
-                  <div class="d-flex"><span class="text-pros">{{ suggestion.expected_result }} pros</span><div [innerHTML]="suggestion.search_keywords"></div></div>
-                  <div (click)="onClickPlus(suggestion.keywords)" [ngStyle]="{ 'visibility':  checkKeywords(suggestion.keywords) }"><i class="fas fa-plus-circle"></i></div>
-                </li>
-              </ul>
-            </div>
-
+          <div class="suggested-content">
+            <ul>
+              <li *ngFor="let keyword of catResult.new_keywords">
+                <span>{{ keyword }}</span>
+              </li>
+            </ul>
           </div>
-          <!-- /analysis -->
 
-          <!-- suggested -->
-          <div class="suggested-wrapper">
+        </div>
+        <!-- /suggested -->
 
-            <div class="heading-wrapper">
-              <h2 class="title-secondary">Suggested Keywords</h2>
-            </div>
+        <!-- star profiles -->
+        <div class="profile-wrapper">
 
-            <div class="suggested-content">
-              <ul>
-                <li *ngFor="let keyword of catResult.new_keywords">
-                  <span>{{ keyword }}</span>
-                </li>
-              </ul>
-            </div>
-
+          <div class="heading-wrapper">
+            <h2 class="title-secondary">4 Star Profiles</h2>
           </div>
-          <!-- /suggested -->
 
-          <!-- star profiles -->
-          <div class="profile-wrapper">
-
-            <div class="heading-wrapper">
-              <h2 class="title-secondary">4 Star Profiles</h2>
-            </div>
-
-            <div class="profile-content">
-              <ul>
-                <li *ngFor="let profile of catResult.profile | keyvalue">
-                  <div class="popover popover-top">
-                    <a [href]="profile.key" target="_blank"><span class="text-title">{{ profile.value.title }}</span></a>
-                    <div class="popover-container">
-                      <div class="card">
-                        <div class="card-body">
-                          <span>{{ profile.value.snippet }}</span>
-                        </div>
+          <div class="profile-content">
+            <ul>
+              <li *ngFor="let profile of catResult.profile | keyvalue">
+                <div class="popover popover-top">
+                  <a [href]="profile.key" target="_blank"><span class="text-title">{{ profile.value.title }}</span></a>
+                  <div class="popover-container">
+                    <div class="card">
+                      <div class="card-body">
+                        <span>{{ profile.value.snippet }}</span>
                       </div>
                     </div>
                   </div>
-                </li>
-              </ul>
-            </div>
-
+                </div>
+              </li>
+            </ul>
           </div>
-          <!-- /star profiles -->
 
-        </ng-container>
-        <!-- /display cat result -->
-
-      </div>
-      <!-- /search wrapper -->
-
-      <!-- search wrapper -->
-      <div class="search-wrapper">
-
-        <!-- heading -->
-        <div class="heading-wrapper">
-          <h2 class="title-secondary">Rocket Launching</h2>
-          <span class="text-link" (click)="onClickSettings()">Settings</span>
         </div>
-        <!-- /heading -->
+        <!-- /star profiles -->
 
-        <!-- input -->
-        <div class="input-wrapper">
+      </ng-container>
+      <!-- /display cat result -->
 
-          <div class="form-group">
+    </div>
+    <!-- /search wrapper -->
+
+    <!-- search wrapper -->
+    <div class="search-wrapper">
+
+      <!-- heading -->
+      <div class="heading-wrapper">
+        <h2 class="title-secondary">Rocket Launching</h2>
+        <span class="text-link" (click)="onClickSettings()">Settings</span>
+      </div>
+      <!-- /heading -->
+
+      <!-- input -->
+      <div class="input-wrapper">
+
+        <div class="form-group">
             <textarea
               type="text"
               class="form-input"
@@ -194,28 +193,27 @@
               [(ngModel)]="params.keywords"
               placeholder="Search here like 'Google'. One request per line.">
             </textarea>
-            <ng-container *ngIf="params.keywords">
-              <span class="search-button-wrapper" (click)="onClickSearch($event)"><i class="fas fa-search"></i></span>
-            </ng-container>
-          </div>
-
-          <div class="remaining-wrapper">
-            <div class="d-flex align-center">
-              <span class="shape circle circle-xs" [ngClass]="getCircleClass()"></span>
-              <span>Search Emails</span>
-            </div>
-            <div><span>Remaining requests: {{ googleQuota }}</span></div>
-          </div>
-
+          <ng-container *ngIf="params.keywords">
+            <span class="search-button-wrapper" (click)="onClickSearch($event)"><i class="fas fa-search"></i></span>
+          </ng-container>
         </div>
-        <!-- /input -->
+
+        <div class="remaining-wrapper">
+          <div class="d-flex align-center">
+            <span class="shape circle circle-xs" [ngClass]="getCircleClass()"></span>
+            <span>Search Emails</span>
+          </div>
+          <div><span>Remaining requests: {{ googleQuota }}</span></div>
+        </div>
 
       </div>
-      <!-- /search wrapper -->
+      <!-- /input -->
 
     </div>
-  </section>
-</ng-container>
+    <!-- /search wrapper -->
+
+  </div>
+</section>
 
 
 <!-- sidebar to advanced search -->

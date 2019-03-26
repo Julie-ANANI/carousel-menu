@@ -27,37 +27,19 @@ export class StarsComponent implements OnInit {
 
   executiveReportView = false;
 
-
-
   private _answers: Array<Answer> = [];
   private _notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
-  private _starsOptions: Array<{identifier: number, label: Multiling}> = [];
 
   constructor(private translateService: TranslateService) {}
 
   ngOnInit() {
-    // add list of benefits in stars questions
-    const maxLength = this.innovation.innovationCards.reduce((acc, val) => {
-      const length = val.advantages.length;
-      return length > acc ? length : acc;
-    }, 0);
-    for (let i = 0; i < maxLength; i++) {
-      const option = {identifier: i, label: {}};
-      this.innovation.innovationCards.forEach((innovCard) => {
-        if (Array.isArray(innovCard.advantages) && i < innovCard.advantages.length) {
-          option.label[innovCard.lang] = innovCard.advantages[i].text;
-        }
-      });
-      this._starsOptions.push(option);
-    }
-
     this.updateAnswersData();
   }
 
   private updateAnswersData(): void {
     if (this.question && this.question.identifier) {
 
-      this._notesData = this._starsOptions.map((x: any) => {
+      this._notesData = this.question.options.map((x: any) => {
         return {
           label: x.label,
           sum: 0,

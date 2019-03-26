@@ -99,7 +99,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
 
-  private getGoogleQuota() {
+  public getGoogleQuota() {
     this.searchService.dailyStats().pipe(first()).subscribe((result: any) => {
       this._googleQuota = 30000;
       if (result.hours) {
@@ -111,7 +111,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
 
-  private estimateNumberOfGoogleRequests(totalResultsArray?: Array<number>) {
+  public estimateNumberOfGoogleRequests(totalResultsArray?: Array<number>) {
     totalResultsArray = totalResultsArray || this._params.keywords.split('\n').filter((k: string) => k).fill(1000000);
 
     this._estimatedNumberOfGoogleRequests = totalResultsArray.reduce((acc: number, curr: number) => {

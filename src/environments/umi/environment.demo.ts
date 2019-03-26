@@ -1,4 +1,5 @@
 export const environment = {
+  local: false,
   production: true,
   apiUrl: 'https://demo.umi.us/api',
   clientUrl: 'https://umicli-demo.umi.us',

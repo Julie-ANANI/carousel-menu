@@ -5,6 +5,7 @@
 // The cookie expiration time is 48h by default
 
 export const environment = {
+  local: true,
   production: false,
   apiUrl: '',
   clientUrl: '',
