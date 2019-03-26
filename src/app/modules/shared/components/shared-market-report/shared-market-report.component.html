@@ -594,10 +594,13 @@
                 [stats]="{ nbAnswers: answers.length, percentage: 0 }">
               </app-question-conclusion>
 
-              <div *ngIf="adminSide" class="abstract-wrapper">
-                <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.ABSTRACT' | translate }}</h1>
-                <div class="form-group">
-                  <label class="form-label" for="market-report-professionals">
+              <ng-container *ngIf="adminSide">
+                <div class="abstract-wrapper section-pad full">
+
+                  <h2 class="title-primary">Abstract</h2>
+
+                  <div class="form-group relative">
+                    <label for="market-report-professionals"></label>
                       <textarea
                         class="form-input"
                         id="market-report-professionals"
@@ -607,15 +610,13 @@
                         (focusout)="update($event)"
                         maxlength="160">
                       </textarea>
-                  </label>
-                  <div class="charRemaining">
-                      <span
-                        [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
-                        {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}
-                      </span>
+                    <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
+                      <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>
+                    </div>
                   </div>
+
                 </div>
-              </div>
+              </ng-container>
 
             </div>
           </div>
