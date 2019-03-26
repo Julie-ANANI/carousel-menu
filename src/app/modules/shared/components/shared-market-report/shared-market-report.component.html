@@ -192,7 +192,7 @@
         <ng-container *ngIf="showDetails">
           <section class="section-pad rm-pad-bottom text-center d-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
             <div class="column col-xs-12 col-11 col-mx-auto">
-              <div class="section-pad full bg-white front-page-print">
+              <div class="section-pad full text bg-white main-page">
 
                 <!-- logo -->
                 <div class="logo-wrapper">
@@ -206,18 +206,18 @@
 
                   <h1>{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
 
-                  <div class="summary text" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
+                  <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
 
                   <img class="image-wrapper" [src]="getSrc()" [alt]=" ">
 
                   <ng-container *ngIf="isMainDomain()">
-                    <h6 *ngIf="innovation.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
-                    <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
-                    <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
+                    <h6 *ngIf="innovation.owner?.name" class="text-owner text-medium text">{{ getOwnerName() }}</h6>
+                    <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle text-normal text">{{ innovation.owner?.jobTitle }}</h6>
+                    <h6 *ngIf="innovation.owner?.email" class="text-email text-normal text">{{ innovation.owner?.email }}</h6>
                   </ng-container>
 
                   <div *ngIf="innovation.executiveReport?.objective" class="goal-text">
-                    {{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}
+                    <span>{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}</span>
                   </div>
 
                 </div>
@@ -241,7 +241,7 @@
         <ng-container *ngIf="adminSide">
           <section class="section-light-pad" id="innovation-goal">
             <div class="column col-xs-12 col-11 col-mx-auto">
-              <div class="section-pad bg-white full">
+              <div class="section-pad bg-white full objective">
 
                 <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h2>
 
@@ -327,7 +327,7 @@
         <ng-container *ngIf="showDetails && getDomainName() === 'umi'">
           <section class="section-pad umi-intro-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
             <div class="column col-xs-12 col-11 col-mx-auto">
-              <img [src]="getIntroSrc()" alt=" " class="img-responsive">
+              <img [src]="getIntroSrc()" alt=" " class="img-responsive umi-intro">
             </div>
           </section>
         </ng-container>
@@ -537,14 +537,18 @@
                 <!-- companies contact -->
                 <ng-container *ngIf="innovation.settings.companies.include.length > 0">
                   <div class="company-wrapper section-light-pad rm-pad-top">
+
                     <h2 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
+
                     <ul class="name-wrapper">
                       <li *ngFor="let company of innovation.settings.companies.include; let i = index;">
                         {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
                       </li>
                     </ul>
+
                   </div>
                 </ng-container>
+                <!-- /companies contact -->
 
               </div>
             </div>
@@ -552,52 +556,48 @@
         </ng-container>
         <!-- /innovation analytics -->
 
+        <!-- key learning section -->
+        <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">
+          <section class="section-light-pad" id="key-learning">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <div class="section-pad full key-learning-wrapper bg-white text">
 
-        <!-- Key learning section -->
-        <section
-          *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide"
-          class="section-light-container report-key-learnings-print"
-          id="key-learning">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="keyLearning-wrapper">
-              <div class="section-container full">
-                <h1 class="main-heading">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h1>
-                <p *ngIf="isMainDomain()" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+                <h2 class="title-primary">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h2>
+
+                <ng-container *ngIf="isMainDomain()">
+                  <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>
+                </ng-container>
+
                 <app-text-zone
                   [elementId]="'keyLearning'"
                   [readonly]="!adminSide"
                   [data]="innovation.marketReport?.keyLearning?.conclusion"
                   (onTextChange)="saveOperatorComment($event, 'keyLearning')">
                 </app-text-zone>
+
               </div>
             </div>
-          </div>
-        </section>
-        <!-- /Key learning section -->
+          </section>
+        </ng-container>
+        <!-- /key learning section -->
 
-
-        <!-- Origin Comment and Professional Responses -->
-        <section class="section-light-container report-origin-print" id="professionals">
+        <!-- origin comment and professional responses -->
+        <section class="section-light-pad" id="professionals">
           <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="origin-wrapper">
-              <div>
+            <div class="origin-wrapper bg-white text">
 
-                <!--<div *ngFor="let item of answersOrigins | keyvalue">
-                  <b>{{ ('CONTINENTS.' + item.key) | translate }}</b>: {{item.value}}
-                </div>-->
+              <app-question-conclusion
+                [innovation]="innovation"
+                [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
+                [readonly]="!adminSide"
+                [originAnswers]="answersOrigins"
+                [stats]="{ nbAnswers: answers.length, percentage: 0 }">
+              </app-question-conclusion>
 
-                <app-question-conclusion
-                  [innovation]="innovation"
-                  [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
-                  [readonly]="!adminSide"
-                  [originAnswers]="answersOrigins"
-                  [stats]="{ nbAnswers: answers.length, percentage: 0 }">
-                </app-question-conclusion>
-
-                <div *ngIf="adminSide" class="abstract-wrapper">
-                  <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.ABSTRACT' | translate }}</h1>
-                  <div class="form-group">
-                    <label class="form-label" for="market-report-professionals">
+              <div *ngIf="adminSide" class="abstract-wrapper">
+                <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.ABSTRACT' | translate }}</h1>
+                <div class="form-group">
+                  <label class="form-label" for="market-report-professionals">
                       <textarea
                         class="form-input"
                         id="market-report-professionals"
@@ -607,21 +607,20 @@
                         (focusout)="update($event)"
                         maxlength="160">
                       </textarea>
-                    </label>
-                    <div class="charRemaining">
+                  </label>
+                  <div class="charRemaining">
                       <span
                         [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
                         {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}
                       </span>
-                    </div>
                   </div>
                 </div>
-
               </div>
+
             </div>
           </div>
         </section>
-        <!-- /Origin Comment and Professional Responses -->
+        <!-- /origin comment and professional responses -->
 
 
         <!-- Map -->

@@ -17,6 +17,10 @@
     border-radius: $border-radius;
   }
 
+  .text {
+    font-size: 0.75rem;
+  }
+
   .sticky-wrapper {
     background-color: white;
     padding-top: 0.75rem;
@@ -192,7 +196,6 @@
       }
 
       .summary {
-        font-weight: normal;
         width: 80%;
       }
 
@@ -206,15 +209,6 @@
         margin-bottom: 0.144rem;
       }
 
-      .text-owner {
-        font-size: $font-size-md;
-      }
-
-      .text-jobTitle, .text-email {
-        font-size: 0.75rem;
-        font-weight: normal;
-      }
-
       .goal-text {
         display: inline-flex;
         justify-content: center;
@@ -226,7 +220,7 @@
         margin-right: auto;
         margin-top: 1.25rem;
         font-weight: $font-weight-medium;
-        font-size: $font-size-md;
+        font-size: 0.75rem;
         padding: 0.55rem 0.75rem;
       }
 
@@ -237,7 +231,6 @@
       display: flex;
       justify-content: space-between;
       padding-top: 0.5rem;
-      font-size: $font-size-md;
       font-weight: $font-weight-medium;
       color: $background-color;
 
@@ -448,9 +441,7 @@
   }
 
   .origin-wrapper {
-    background-color: white;
-    border-radius: .18rem;
-    color: $dark-color;
+    border-radius: $border-radius;
   }
 
   .professional-wrapper {
@@ -488,25 +479,20 @@
 
   }
 
-  .conclusion-wrapper, .keyLearning-wrapper, .goal-wrapper {
-    background-color: white;
-    border-radius: .18rem;
-    color: $dark-color;
-
-    .main-heading {
-      color: $dark-color;
-    }
+  .conclusion-wrapper, .key-learning-wrapper, .goal-wrapper {
+    border-radius: $border-radius;
 
     .op-text {
       color: $primary-color;
-      font-weight: 600;
-      padding-bottom: 1.57rem;
+      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
   }
 
-  .keyLearning-wrapper, .conclusion-wrapper {
-    box-shadow: $box-shadow;
+  .key-learning-wrapper, .conclusion-wrapper, .main-page, .objective, .executive-generate-wrapper, .umi-intro, .innovation-wrapper, .targeting-wrapper,
+  .exploration-wrapper {
+    box-shadow: $box-shadow-umi;
   }
 
 }

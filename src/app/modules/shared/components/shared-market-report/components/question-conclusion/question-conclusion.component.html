@@ -1,22 +1,30 @@
-<!-- Market report -->
+<!-- market report -->
 <ng-container *ngIf="!executiveReportView">
-  <div class="ques-conclusion-wrapper">
+  <section id="question-conclusion-component">
 
-    <!-- Conclusion -->
-    <div class="umi-synthesis">
+    <!-- conclusion -->
+    <div class="conclusion-wrapper section-pad full">
 
-      <h1 *ngIf="question?.title" class="main-heading">{{ question?.title | multiling:lang }}</h1>
+      <ng-container *ngIf="question?.title">
+        <h3 class="title-primary">{{ question?.title | multiling:lang }}</h3>
+      </ng-container>
 
-      <h2 *ngIf="question?.label" class="section-heading">{{ question?.label | multiling:lang }}</h2>
+      <ng-container *ngIf="question?.label">
+        <h4 class="title-secondary">{{ question?.label | multiling:lang }}label</h4>
+      </ng-container>
 
-      <div *ngIf="receivedTags.length > 0" class="tags-outer-wrapper">
-        <div *ngFor="let tag of receivedTags" class="tags-wrapper" (click)="addTagFilter($event, tag)">
-          #{{ tag.label | multiling:lang }}
-          <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
+      <ng-container *ngIf="receivedTags.length > 0">
+        <div class="tag-wrapper section-light-pad rm-pad-top">
+          <div *ngFor="let tag of receivedTags" class="label label-tag" (click)="addTagFilter($event, tag)">
+            #{{ tag.label | multiling:lang }}
+            <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
+          </div>
         </div>
-      </div>
+      </ng-container>
 
-      <p class="op-text" *ngIf="isMainDomain()">{{ 'COMMON.UMI_WORD' | translate }}</p>
+      <ng-container *ngIf="isMainDomain()">
+        <h5 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h5>
+      </ng-container>
 
       <app-text-zone
         [elementId]="domSectionId"
@@ -25,48 +33,52 @@
         (onTextChange)="keyupHandlerFunction($event)">
       </app-text-zone>
 
-      <div class="answer-origin" *ngIf="answersOrigin !== null">
-        <h1>Geographical Distribution:</h1>
-        <div *ngFor="let item of answersOrigin | keyvalue">
-          {{ ('CONTINENTS.' + item.key) | translate }}: {{ item.value }}
+      <ng-container *ngIf="answersOrigin !== null">
+        <div class="answer-origin section-light-pad rm-pad-bottom">
+
+          <h3 class="title-secondary">Geographical Distribution:</h3>
+
+          <ul>
+            <li *ngFor="let item of answersOrigin | keyvalue">
+              {{ ('CONTINENTS.' + item.key) | translate }}: {{ item.value }}
+            </li>
+          </ul>
+
         </div>
-      </div>
+      </ng-container>
 
     </div>
-    <!-- /Conclusion -->
-
-    <!--<div class="divider-wrapper"></div>-->
+    <!-- /conclusion -->
 
     <ng-container [ngSwitch]="question?.controlType">
+      <div class="stat-wrapper section-pad full text-center flex-centered">
 
-      <!-- Pie chart -->
-      <div *ngSwitchCase="'radio'" class="stat-wrapper pie-chart-print">
-        <app-piechart [pieChart]="pieChart"></app-piechart>
+        <!-- pie chart -->
+        <ng-container *ngSwitchCase="'radio'">
+          <app-piechart [pieChart]="pieChart"></app-piechart>
+        </ng-container>
+
+        <!-- ou encadré bleu -->
+        <ng-container *ngSwitchDefault>
+          <app-market-report-bluesquare
+            [numberFocus]="stats.nbAnswers"
+            [percentage]="stats.percentage"
+            [subtitle]="question.subtitle | multiling:lang">
+          </app-market-report-bluesquare>
+        </ng-container>
+
       </div>
-
-      <!-- ou encadré bleu -->
-      <div *ngSwitchDefault class="stat-wrapper">
-        <app-market-report-bluesquare
-          [numberFocus]="stats.nbAnswers"
-          [percentage]="stats.percentage"
-          [subtitle]="question.subtitle | multiling:lang">
-        </app-market-report-bluesquare>
-      </div>
-
     </ng-container>
 
-  </div>
+  </section>
 </ng-container>
-<!-- /Market report -->
+<!-- /market report -->
 
 
-<!-- Executive report -->
+<!-- executive report -->
 <ng-container *ngIf="executiveReportView && question?.controlType === 'radio' && pieChart">
-  <div class="stat-wrapper pie-chart-print">
-    <app-piechart
-      [pieChart]="pieChart"
-      [executiveReport]="true">
-    </app-piechart>
+  <div class="stat-wrapper section-pad full text-center flex-centered pie-chart-print">
+    <app-piechart [pieChart]="pieChart" [executiveReport]="true"></app-piechart>
   </div>
 </ng-container>
-<!-- Executive report -->
+<!-- executive report -->

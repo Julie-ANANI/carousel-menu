@@ -34,7 +34,7 @@ export const MARKET_REPORT = {
 
   'COMMENT_HEADING': 'Space for your comments',
 
-  'KEY_LEARNING': 'Key learnings',
+  'KEY_LEARNING': 'Key Learnings',
 
   'STICKY_BAR': {
     'DETAIL_VIEW': 'Detail View',

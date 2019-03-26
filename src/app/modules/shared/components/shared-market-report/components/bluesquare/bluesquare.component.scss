@@ -1,37 +1,21 @@
-.bluesquare-response-wrapper {
+@import "../../../../../../../style/framework/src/variables";
+
+#bluesquare-component {
   min-width: 280px;
   max-width: 320px;
-  color: white;
-  font-size: .85rem;
-  font-weight: 600;
+  color: $light-color;
 
-  .number-answers {
-    font-size: 6.1875rem;
+  h4 {
+    margin-bottom: 0;
+  }
+
+  .number {
+    font-size: 5rem;
     font-weight: 300;
-    color: white;
-
-    .subtitle {
-      font-size: .85rem;
-      padding-bottom: 0;
-      font-weight: 600;
-    }
-
   }
 
-  hr {
-    margin: 1.57rem;
-    width: 80%;
-    border-color: white;
-    border-radius: .18rem;
-  }
-
-  .number-ratio {
-    text-align: center;
-
-    p {
-      padding-bottom: 0;
-    }
-
+  .subtitle {
+    font-size: $font-size-sm;
   }
 
 }
