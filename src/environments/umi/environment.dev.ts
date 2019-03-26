@@ -1,6 +1,7 @@
 // 10 minutes for the expiration time
 
 export const environment = {
+  local: false,
   production: true,
   apiUrl: 'https://dev.umi.us/api', // 'http://umiapplication:3000/api'
   clientUrl: 'https://umicli-dev.umi.us',

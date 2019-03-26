@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this._setFavicon();
+    this._setSwellRTScript();
 
     initTranslation(this.translateService);
 
@@ -73,6 +74,16 @@ export class AppComponent implements OnInit {
       }
       document.head.appendChild( linkElement );
     }
+  }
+
+  private _setSwellRTScript() {
+    const linkElement = document.createElement('script');
+    if(environment.local) {
+      linkElement.setAttribute('src', 'http://localhost:9898/swellrt.js');
+    } else {
+      linkElement.setAttribute('src', 'http://swelrt:9898/swellrt.js');
+    }
+    document.head.appendChild( linkElement );
   }
 
 }
