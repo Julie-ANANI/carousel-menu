@@ -1,16 +1,16 @@
-<div id="executive-professional-wrapper">
+<section id="executive-professional-wrapper">
 
-  <!-- Heading -->
-  <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.PROFESSIONAL_HEADING' | translate }}</h1>
-  <!-- /Heading -->
+  <!-- heading -->
+  <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.PROFESSIONAL_HEADING' | translate }}</h2>
+  <!-- /heading -->
 
-  <!-- Response, map and abstract -->
+  <!-- response, map and abstract -->
   <div class="section-2-wrapper">
 
-    <!-- Icon and response -->
-    <h1 class="sub-title text-center">{{ answers.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}</h1>
+    <!-- icon and response -->
+    <h2 class="sub-title text-center">{{ answers.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}</h2>
 
-    <!-- Map -->
+    <!-- map -->
     <div class="map-wrapper">
       <app-worldmap
         [countries]="targetCountries"
@@ -20,73 +20,69 @@
       </app-worldmap>
     </div>
 
-    <!-- Abstract prof -->
-    <div class="abstract-professional">{{ professionalAbstract }}</div>
+    <!-- abstract prof -->
+    <div class="abstract-professional text-break">{{ professionalAbstract }}</div>
 
   </div>
-  <!-- /Response, map and abstract -->
+  <!-- /response, map and abstract -->
 
-  <!-- Top profile -->
+  <!-- top profile -->
   <div class="professional-profile-wrapper">
 
     <div *ngFor="let answer of professionalsAnswer | slice:0:4" class="profile">
 
-      <!-- Icons -->
+      <!-- icons -->
       <div class="icons">
 
-        <!-- User -->
+        <!-- user -->
         <i class="fas fa-user"></i>
 
-        <!-- Flag -->
+        <!-- flag -->
         <div *ngIf="answer.country?.flag" [ngStyle]="{ 'margin-top': '15px' }">
           <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
         </div>
 
       </div>
-      <!-- /Icons -->
+      <!-- /icons -->
 
-      <!-- Prof Details -->
+      <!-- prof details -->
       <div class="details">
 
-        <!-- Job -->
+        <!-- job -->
         <p class="job">
           <span *ngIf="answer.professional?.jobTitle">
             {{ answer.professional.jobTitle || 'job' }}
           </span>
         </p>
 
-        <!-- Company -->
+        <!-- company -->
         <p class="company">
           <span *ngIf="answer.professional.company?.name || answer.professional?.company">
             {{ answer.professional.company?.name || answer.professional?.company || 'company' }}
           </span>
         </p>
 
-        <!-- Tag -->
+        <!-- tag -->
         <ng-container *ngIf="answer.answer?.tags.length > 0">
           <div *ngFor="let tag of answer.answer?.tags | slice:0:2" class="tag">
-            <span>#{{ tag.label | multiling:lang  }}</span>
+            <span>#{{ tag.label | multiling:userLang  }}</span>
           </div>
         </ng-container>
 
       </div>
-      <!-- /Details -->
+      <!-- /details -->
 
     </div>
 
   </div>
-  <!-- /Top profile -->
+  <!-- /top profile -->
 
-  <!-- Remaining text -->
+  <!-- remaining text -->
   <p class="remaining-text text-center">
     {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }}
-    <span
-      pageScroll
-      pageScrollOffset="135"
-      href="#professionals"
-      class="text-link">
-        {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
+    <span pageScroll pageScrollOffset="135" href="#professionals" class="text-link">
+      {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
     </span>
   </p>
 
-</div>
+</section>

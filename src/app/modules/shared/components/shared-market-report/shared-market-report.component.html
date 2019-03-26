@@ -188,131 +188,130 @@
       <!-- Answer sections -->
       <section id="answer-wrapper">
 
+        <!-- main page -->
+        <ng-container *ngIf="showDetails">
+          <section class="section-pad rm-pad-bottom text-center display-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <div class="section-pad full bg-white front-page-print">
 
-        <!-- Main page -->
-        <section
-          *ngIf="showDetails"
-          class="section-container front-wrapper"
-          id="main-page"
-          [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-container full white-background front-page-print">
-
-              <!-- Logo -->
-              <div class="header-wrapper">
-                <img src="{{ getLogo() }}" alt="UMI" height="38px">
-              </div>
-
-              <!-- Project name -->
-              <div class="body-wrapper">
-                <h6 class="text-executive">Executive report</h6>
-                <h1>{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
-                <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
-                <img class="image-wrapper" [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
-                <div *ngIf="isMainDomain()">
-                  <h6 *ngIf="innovation.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
-                  <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
-                  <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
+                <!-- logo -->
+                <div class="logo-wrapper">
+                  <img src="{{ getLogo() }}" alt="UMI" height="38px">
                 </div>
-                <span
-                  *ngIf="innovation.executiveReport?.objective"
-                  class="goal-text">
-                  {{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}
-                </span>
-              </div>
 
-              <!-- Link -->
-              <div class="footer-wrapper">
-                <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
-                <div class="text-right">
-                  <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>
-                  <p><a [href]="getMailto()">{{getContact()}}</a> <span *ngIf="isMainDomain()">| 06 49 34 47 32 </span> | {{getCompanyURL()}}</p>
+                <!-- body -->
+                <div class="display-flex body-wrapper">
+
+                  <h6 class="text-executive">Executive report</h6>
+
+                  <h1>{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
+
+                  <div class="summary text" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
+
+                  <img class="image-wrapper" [src]="getSrc()" [alt]=" ">
+
+                  <ng-container *ngIf="isMainDomain()">
+                    <h6 *ngIf="innovation.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
+                    <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
+                    <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
+                  </ng-container>
+
+                  <div *ngIf="innovation.executiveReport?.objective" class="goal-text">
+                    {{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}
+                  </div>
+
                 </div>
-              </div>
 
+                <!-- link -->
+                <div class="footer-wrapper">
+                  <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
+                  <div class="text-right">
+                    <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>
+                    <p><a [href]="getMailto()">{{getContact()}}</a> <span *ngIf="isMainDomain()">| 06 49 34 47 32 </span> | {{getCompanyURL()}}</p>
+                  </div>
+                </div>
+
+              </div>
             </div>
-          </div>
-        </section>
-        <!-- /Main page -->
+          </section>
+        </ng-container>
+        <!-- /main page -->
 
+        <!-- main page goal -->
+        <ng-container *ngIf="adminSide">
+          <section class="section-light-pad rm-pad-bottom" id="innovation-goal">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <div class="section-pad bg-white full">
 
-        <!-- Main page goal -->
-        <section *ngIf="adminSide" class="section-light-container" id="innovation-goal">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="goal-wrapper">
-              <div class="section-container full">
-                <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h1>
-                <div class="form-group">
-                  <label class="form-label" for="market-report-objective">
-                    <textarea
-                      class="form-imput"
-                      id="market-report-objective"
-                      [ngStyle]="{ 'width': '100%' }"
-                      [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
-                      rows="5"
-                      [(ngModel)]="innovation.executiveReport.objective"
-                      (focusout)="update($event)"
-                      maxlength="120">
+                <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h2>
+
+                <div class="form-group relative">
+
+                  <label for="market-report-objective"></label>
+                  <textarea
+                    class="form-input"
+                    id="market-report-objective"
+                    [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
+                    rows="5"
+                    [(ngModel)]="innovation.executiveReport.objective"
+                    (focusout)="update($event)"
+                    maxlength="120">
                     </textarea>
-                  </label>
-                  <div class="charRemaining">
-                    <span [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
-                      {{ innovation.executiveReport?.objective.length | characterCountdown:120 }}
-                    </span>
+
+                  <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
+                    <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>
                   </div>
+
                 </div>
+
               </div>
             </div>
-          </div>
-        </section>
-        <!-- /Main page goal -->
+          </section>
+        </ng-container>
+        <!-- /main page goal -->
 
+        <!-- executive template generation -->
+        <ng-container *ngIf="adminSide">
+          <section class="section-light-pad rm-pad-bottom">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <div class="section-pad full display-flex executive-generate-wrapper bg-white">
 
-        <!-- Executive template generation -->
-        <section *ngIf="adminSide" class="section-light-container">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-container full executive-generate-wrapper white-background">
+                <!-- heading -->
+                <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h2>
 
-              <!-- Heading -->
-              <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h1>
+                <!-- sub heading -->
+                <h3 class="title-secondary text-center">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h3>
 
-              <!-- Sub heading -->
-              <h2 class="section-heading">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h2>
-
-              <!-- SidebarInterface options -->
-              <div class="template-outer-wrapper">
-                <div *ngFor="let template of executiveTemplates" class="template">
-                  <img [src]="template.imageSrc" alt=" ">
-                  <div
-                    class="btn-radio"
-                    [ngClass]="{ 'active': numberOfSections === template.value }"
-                    (click)="assignSectionValue($event, template.value)">
-                    <span>•</span>
+                <!-- templates -->
+                <div class="template-outer-wrapper">
+                  <div *ngFor="let template of executiveTemplates" class="template">
+                    <img [src]="template.imageSrc" alt=" ">
+                    <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)">
+                      <span>•</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Buttons -->
-              <div class="text-center">
-                <button
-                  class="btn ghost-primary"
-                  [disabled]="innovation?.executiveReport.totalSections > 0 || numberOfSections === 0"
-                  (click)="generateExecutiveTemplate($event)">
-                  {{ 'MARKET_REPORT.EXECUTIVE.VALID_BUTTON' | translate }}
-                </button>
-              </div>
+                <!-- button -->
+                <div class="text-center">
+                  <button class="btn ghost-primary btn-sm" [disabled]="innovation?.executiveReport.totalSections > 0 || numberOfSections === 0" (click)="generateExecutiveTemplate($event)">
+                    Valid Template
+                  </button>
+                </div>
 
+              </div>
             </div>
-          </div>
-        </section>
-        <!-- /Executive template generation -->
+          </section>
+        </ng-container>
+        <!-- /executive template generation -->
 
-
-        <!-- Executive report -->
-        <section *ngIf="innovation.executiveReport.totalSections > 0" id="executive-report">
-          <app-executive-report [project]="innovation"></app-executive-report>
-        </section>
-        <!-- /Executive report -->
+        <!-- executive report -->
+        <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
+          <section id="executive-report">
+            <app-executive-report [project]="innovation"></app-executive-report>
+          </section>
+        </ng-container>
+        <!-- /executive report -->
 
 
         <!-- Executive Report Delete Button -->
