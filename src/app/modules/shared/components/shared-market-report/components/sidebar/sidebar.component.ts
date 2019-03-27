@@ -176,6 +176,22 @@ export class SidebarComponent implements OnInit {
     this.tagService.checkAnswerTag(questionIdentifier, event.target['name'], event.target['checked']);
   }
 
+  public deleteProfessionalFilter(event: Event, id: string) {
+    event.preventDefault();
+    const filterValue = this.filterService.filters['professionals'].value;
+    delete filterValue[id];
+    const removeFilter = Object.keys(filterValue).length === 0;
+    if (removeFilter) {
+      this.filterService.deleteFilter('professionals');
+    } else {
+      this.filterService.addFilter({
+        status: 'PROFESSIONALS',
+        questionId: 'professionals',
+        value: filterValue
+      });
+    }
+  }
+
   get answers(): Array<Answer> {
     return this._answers;
   }

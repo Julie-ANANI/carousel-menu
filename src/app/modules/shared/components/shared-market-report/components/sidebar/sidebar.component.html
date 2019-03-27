@@ -40,15 +40,6 @@
 
   <hr/>
 
-  <!--
-  <p>{{ 'MARKET_REPORT.MENU_BAR.FILTER' | translate }}</p>
-  <ul>
-    <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
-      <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
-    </li>
-  </ul>
-  <hr />
-  -->
   <p>
     <a href="#professionals" pageScroll>
       {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
@@ -68,6 +59,12 @@
       <input type="checkbox" [name]="t._id" (change)="checkTag($event)" [checked]="selectedTags[t._id]">
       <label [for]="t._id">{{ t.label | multiling:lang }}</label>
     </span>
+    <ng-container *ngIf="filters['professionals']">
+      <span *ngFor="let a of filters['professionals'].value | keyvalue">
+      <i class="fa fa-trash" aria-hidden="true" (click)="deleteProfessionalFilter($event, a.key)"></i>
+      {{ a.value.professional.firstName }} {{ a.value.professional.lastName }}
+    </span>
+    </ng-container>
   </p>
   <p *ngFor="let question of questions">
     <a [href]="'#' + question.identifier | removespaces" pageScroll>

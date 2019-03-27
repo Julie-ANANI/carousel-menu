@@ -88,8 +88,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _companies: Array<Clearbit>;
 
-  public objectKeys = Object.keys;
-
   private _mapInitialConfiguration: {[continent: string]: boolean};
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
@@ -577,10 +575,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   filterPro(answer: Answer, event: Event) {
     event.preventDefault();
-    const proFilter = this.filterService.filters['professionals'];
+    let proFiltered = {};
+    if (this.filterService.filters['professionals']) {
+      proFiltered = this.filterService.filters['professionals'].value;
+    }
+    proFiltered[answer._id] = answer;
     this.filterService.addFilter({
       status: 'PROFESSIONALS',
-      value: proFilter && Array.isArray(proFilter.value) ? [...proFilter.value, answer._id] : [answer._id],
+      value: proFiltered,
       questionId: 'professionals'
     });
   }

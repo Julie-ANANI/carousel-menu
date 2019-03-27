@@ -80,7 +80,7 @@ export class FilterService {
           });
           break;
         case 'PROFESSIONALS':
-          filteredAnswers = filteredAnswers.filter((answer) => filter.value.indexOf(answer._id) === -1 );
+          filteredAnswers = filteredAnswers.filter((answer) => !filter.value[answer._id]);
           break;
         case 'RADIO':
           filteredAnswers = filteredAnswers.filter((answer) => {
