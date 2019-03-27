@@ -1,41 +1,60 @@
-<div class="pro-tag-wrapper">
+<section id="pro-tag-component" class="d-flex text-center">
 
-  <!-- Top profile -->
-  <div *ngIf="answer?.profileQuality === 2" class="label label-success">Top profile</div>
-
-  <!-- Flag -->
-  <div *ngIf="answer?.country && answer?.country.flag" class="flag-wrapper">
-    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
-  </div>
-
-  <!-- Professional detail -->
-  <div class="detail-wrapper">
-
-    <!-- Name -->
-    <p class="name-wrapper">
-      <span class="text-link" (click)="seeAnswer($event, answer)">
-          <span *ngIf="answer?.professional && answer?.professional?.firstName">{{ answer?.professional?.firstName[0] | uppercase }}{{ answer?.professional?.firstName | slice:1 }} {{ answer?.professional?.lastName }}</span>
-          <span *ngIf="!answer?.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
-      </span>
-    </p>
-
-    <!-- Job -->
-    <p *ngIf="answer.job || answer?.professional?.jobTitle" class="job-wrapper">
-      {{ answer.job || answer?.professional?.jobTitle }}
-    </p>
-
-    <!-- Company -->
-    <p *ngIf="answer.company?.name || answer.professional?.company" class="company-wrapper">
-      {{ answer?.company?.name || answer?.professional?.company }}
-    </p>
-
-  </div>
-
-  <!-- Tag -->
-  <div *ngIf="tags?.length > 0">
-    <div *ngFor="let tag of tags" class="tag-wrapper" [title]="tag.description | multiling:lang">
-      <span (click)="newFilter($event, tag)">#{{ tag.label | multiling:lang }}</span>
+  <!-- top profile -->
+  <ng-container *ngIf="answer?.profileQuality === 2">
+    <div class="label label-success">
+      <span>Top Profile</span>
     </div>
-  </div>
+  </ng-container>
 
-</div>
+  <!-- flag -->
+  <ng-container *ngIf="answer?.country && answer?.country.flag">
+    <div class="flag-wrapper">
+      <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+    </div>
+  </ng-container>
+
+  <!-- detail -->
+  <div class="detail-wrapper d-flex text-center">
+
+    <!-- name -->
+    <ng-container *ngIf="!answer?.professional?.firstName">
+      <p class="text-medium">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</p>
+    </ng-container>
+
+    <ng-container *ngIf="answer?.professional && answer?.professional?.firstName">
+      <p>
+        <span class="text-link" (click)="seeAnswer($event, answer)">
+          {{ answer?.professional?.firstName | FormatText }} {{ answer?.professional?.lastName }}
+        </span>
+      </p>
+    </ng-container>
+    <!-- /name -->
+
+    <!-- job -->
+    <ng-container *ngIf="answer.job || answer?.professional?.jobTitle">
+      <p class="text text-background">
+        {{ answer.job || answer?.professional?.jobTitle }}
+      </p>
+    </ng-container>
+
+    <!-- company -->
+    <ng-container *ngIf="answer.company?.name || answer.professional?.company">
+      <p class="text-notify text-medium">
+        {{ answer?.company?.name || answer?.professional?.company }}
+      </p>
+    </ng-container>
+
+  </div>
+  <!-- /detail -->
+
+  <!-- tag -->
+  <ng-container *ngIf="tags?.length > 0">
+    <div class="tag-wrapper">
+      <div *ngFor="let tag of tags" class="label label-tag" [title]="tag.description | multiling:userLang" (click)="newFilter($event, tag)">
+        <span>#{{ tag.label | multiling:userLang }}</span>
+      </div>
+    </div>
+  </ng-container>
+
+</section>

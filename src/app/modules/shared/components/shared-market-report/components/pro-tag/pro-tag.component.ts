@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Tag } from '../../../../../../models/tag';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pro-tag',
@@ -19,7 +20,8 @@ export class ProfessionalTagComponent implements OnInit {
 
   private _tags: Array<Tag>;
 
-  constructor(private filterService: FilterService) {}
+  constructor(private _filterService: FilterService,
+              private _translateService: TranslateService) { }
 
   ngOnInit() {
     if (this.tagId) {
@@ -29,7 +31,7 @@ export class ProfessionalTagComponent implements OnInit {
     }
   }
 
-  seeAnswer(event: Event, answer: Answer) {
+  public seeAnswer(event: Event, answer: Answer) {
     event.preventDefault();
     this.modalAnswerChange.emit(answer);
   }
@@ -37,7 +39,7 @@ export class ProfessionalTagComponent implements OnInit {
   public newFilter(event: Event, tag: Tag) {
     event.preventDefault();
 
-    this.filterService.addFilter({
+    this._filterService.addFilter({
       status: 'TAG',
       questionId: this.tagId,
       questionTitle: tag.label,
@@ -47,6 +49,10 @@ export class ProfessionalTagComponent implements OnInit {
 
   get tags() {
     return this._tags;
+  }
+
+  get userLang() {
+    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
 }

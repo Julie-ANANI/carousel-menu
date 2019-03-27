@@ -24,6 +24,7 @@
       .label.label-tag {
 
         &:hover {
+          cursor: pointer;
           background-color: $primary-color;
         }
 
