@@ -35,6 +35,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this._setFavicon();
+    //this._setSwellRTScript();
+
     initTranslation(this.translateService);
 
     if (this.authService.isAcceptingCookies) {
@@ -44,7 +46,6 @@ export class AppComponent implements OnInit {
         }
       );
     }
-
   }
 
   /***
@@ -74,6 +75,46 @@ export class AppComponent implements OnInit {
       document.head.appendChild( linkElement );
     }
   }
+
+  /*private _setSwellRTScript() {
+    let SWELL_CONTEXT = "swellrt_beta";
+    let SWELL_JS_MODULE = "swellrt_beta.nocache.js";
+
+    window.swell = {
+
+      ready: function(handler) {
+        if (!handler || typeof handler !== "function")
+          return;
+
+        if (window.swellrt.runtime) {
+          handler(window.swell.runtime.get());
+        } else {
+          if (!window._lh)
+            window._lh = [];
+          window._lh.push(handler);
+        }
+      }
+    }
+
+    // Some alias
+    window.swellrt = window.swell;
+    window.swell.onReady = window.swell.ready;
+
+    const linkElement = document.createElement('script');
+    linkElement.setAttribute('type', 'text/javascript');
+    linkElement.setAttribute('id', 'swellrt');
+    if(environment.local) {
+      //linkElement.setAttribute('src', '/swellrt-beta.js');
+      linkElement.setAttribute('src', `http://localhost:9898/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
+    } else {
+      if(environment.apiUrl === 'https://dev.umi.us') {
+        linkElement.setAttribute('src', `https://swellrtdev.umi.us:9899/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
+      } else {
+        linkElement.setAttribute('src', `https://swellrt.umi.us:9899/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
+      }
+    }
+    document.head.appendChild( linkElement );
+  }*/
 
 }
 

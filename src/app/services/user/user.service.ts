@@ -76,4 +76,7 @@ export class UserService {
     return this._http.get<Array<Tag>>('/user/' + userId + '/match');
   }
 
+  public createSwellUsers(): Observable<any> {
+    return this._http.post('/misc/swellrt/synchronizeUsers', {});
+  }
 }

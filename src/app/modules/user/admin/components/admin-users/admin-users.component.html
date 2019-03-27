@@ -17,6 +17,9 @@
       (performAction)="performActions($event)">
     </app-shared-table>
 
+      <div *ngIf="isJuan()">
+          <button (click)="synchronizeSRTUsers()">Update everybody</button>
+      </div>
   </div>
 </section>
 

@@ -13,8 +13,7 @@ export class ResponseService {
 
   filteredAnswers = new Subject <Array<Answer>>();
 
-  constructor() {
-  }
+  constructor() { }
 
   /***
    * Return the list of tags on every user answers for a given question

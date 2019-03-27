@@ -101,7 +101,7 @@
               <div *ngIf="canEdit" class="form-group pd-input">
                 <app-text-zone
                   [data]="innovationCard.summary"
-                  [elementId]="'summary' + innovationCard.lang"
+                  [elementId]="generateComponentId('summary' + innovationCard.lang)"
                   (onTextChange)="updateData($event)">
                 </app-text-zone>
                 <!-- todo: add placeholders
@@ -137,7 +137,7 @@
               <div *ngIf="canEdit" class="form-group pd-input">
                 <app-text-zone
                   [data]="innovationCard.problem"
-                  [elementId]="'problem' + innovationCard.lang"
+                  [elementId]="generateComponentId('problem' + innovationCard.lang)"
                   (onTextChange)="updateData($event)">
                 </app-text-zone>
                 <!-- todo: add placeholders
@@ -173,7 +173,7 @@
               <div *ngIf="canEdit" class="form-group pd-input">
                 <app-text-zone
                   [data]="innovationCard.solution"
-                  [elementId]="'solution' + innovationCard.lang"
+                  [elementId]="generateComponentId('solution' + innovationCard.lang)"
                   (onTextChange)="updateData($event)">
                 </app-text-zone>
                 <!-- todo: add placeholders

@@ -13,7 +13,7 @@ export class PresetService {
     differentiation: 'radio',
     strengths: 'textarea',
     objections: 'textarea',
-    applications: 'list',
+    applications: 'textarea',
     leads: 'checkbox',
     competition: 'textarea',
     benefits: 'stars'

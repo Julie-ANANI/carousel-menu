@@ -31,6 +31,7 @@ export class SharedProsListOldComponent {
 
   private _total = 0;
   private _pros: Array <SelectedProfessional>;
+  private _proKeywords: Array<string> = null;
 
   constructor(private _searchService: SearchService) { }
 
@@ -83,6 +84,16 @@ export class SharedProsListOldComponent {
     });
   }
 
+  showKeywords(personId) {
+    this._searchService.getProKeywords(personId).pipe(first()).subscribe((keywords: Array<string>) => {
+      this._proKeywords = keywords;
+    });
+  }
+
+  hideKeywords() {
+    this._proKeywords = null;
+  }
+
   get nbSelected(): number {
     if (this.smartSelect) {
       return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
@@ -93,6 +104,7 @@ export class SharedProsListOldComponent {
   }
   get total() { return this._total; }
   get pros() { return this._pros; }
+  get proKeywords(): Array<string> { return this._proKeywords; }
   get config() { return this._config; }
   get paginationConfig(): PaginationInterface { return this._paginationConfig; }
 }

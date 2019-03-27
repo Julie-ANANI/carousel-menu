@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Input, OnDestroy, PLATFORM_ID } from '@angul
 import { Location } from '@angular/common';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PageScrollConfig } from 'ngx-page-scroll';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { FilterService } from './services/filters.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -102,11 +103,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService,
               private tagService: TagsService,
-              private worldmapService: SharedWorldmapService) { }
+              private worldmapService: SharedWorldmapService) {
+    PageScrollConfig.defaultDuration = 800;
+  }
 
   ngOnInit() {
     this.filterService.reset();
     this.initializeReport();
+    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
 
 
@@ -152,7 +156,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   private isAdminSide() {
     this._adminSide = this.location.path().slice(5, 11) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
-    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
 
 
@@ -186,7 +189,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      * @type {boolean}
      * @user
      */
-    this._showDetails = !!this.wordpress;
+    this._showDetails = !this.wordpress;
 
 
     /***

@@ -31,6 +31,7 @@
     <td><app-country-flag [country]="pro.country"></app-country-flag></td>
     <td>
       <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-link"></i></a>
+      <i class="fa fa-list" (click)="showKeywords(pro._id)"></i>
       <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
     </td>
     <td>{{ pro.jobTitle }}</td>
@@ -56,3 +57,21 @@
   </tfoot>
 </table>
 
+<!-- MODAL : Keywords du pro -->
+<div class="modal" [ngClass]="{'active': proKeywords}">
+  <div class="modal-overlay" (click)="(hideKeywords()) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(hideKeywords()) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Keywords</div>
+    </div>
+    <div class="modal-body">
+      <ul>
+        <li *ngFor="let keywords of proKeywords">{{ keywords }}</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="(hideKeywords()) && $event.preventDefault()">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    </div>
+  </div>
+</div>

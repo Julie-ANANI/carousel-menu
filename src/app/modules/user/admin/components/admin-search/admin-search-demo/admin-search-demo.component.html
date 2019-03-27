@@ -3,7 +3,7 @@
 <div class="columns">
   <div class="column col-5 col-mx-auto">
 
-    <div class="flex-container" id="input-search">
+    <div id="input-search">
 
       <input
         type="text"
@@ -12,27 +12,23 @@
         [(ngModel)]="keywords"
         placeholder="Recherche"/>
 
-      <button
-        (click)="searchPros($event)"
-        class="btn-round btn-primary"
-        translate>
-        <i class="fas fa-search"></i>
-      </button>
-
-      <button
-        (click)="searchMetadata($event)"
-        class="btn-round btn-primary"
-        translate>
-        <i class="fas fa-search"></i>
-      </button>
-
+        <i (click)="searchMetadata($event)" class="fas fa-search"></i>
     </div>
   </div>
 
+
   <div class="column col-9 col-mx-auto">
-      <admin-search-map
+    <div *ngIf="metadata.world" id="totalPros">
+      <h1>
+        <span *ngIf="metadata.world === 20000">+</span>
+        <span *ngIf="metadata.world < 100">< </span>
+        {{ metadata.world }}
+      </h1>
+      <h2 class="subtitle">{{ 'COMMON.PROFESSIONALS' | translate }}</h2>
+    </div>
+    <admin-search-map
         [width]="'auto'"
-        [countriesData]="data">
+        [countriesData]="metadata">
       </admin-search-map>
   </div>
 
@@ -80,17 +76,6 @@
       </div>
     </div>
     <a *ngIf="pros.length" href="https://clearbit.com">Logos provided by Clearbit</a>
-    <a style="font-size: 8px" (click)="modalUpdate = true">Update database</a>
   </div>
 
 </div>
-
-<!-- modal to delete batch -->
-<app-modal [(showModal)]="modalUpdate" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-  Mise à jour de la base de données. Si tu ne t'appelles pas Bastien merci de ne pas cliquer sur confirmer :)
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="updateDatabase()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
-</app-modal>
-<!-- /modal to delete batch -->
