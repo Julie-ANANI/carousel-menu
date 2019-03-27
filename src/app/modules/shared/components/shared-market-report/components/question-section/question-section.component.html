@@ -1,6 +1,6 @@
-<section class="question-section-wrapper s-question-print" [id]="questionReceived.identifier | removespaces">
+<section class="question-section-component" [id]="questionReceived.identifier | removespaces">
 
-  <!-- If the question type is checkbox or radio -->
+  <!-- if the question type is checkbox or radio -->
   <ng-container *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
     <app-bar-chart
       [answers]="answersToShow"
@@ -14,8 +14,9 @@
       (answerButtonClicked)="answerBtnClicked($event)">
     </app-bar-chart>
   </ng-container>
+  <!-- /if the question type is checkbox or radio -->
 
-  <!-- If the question type is not checkbox and radio -->
+  <!-- if the question type is not checkbox and radio -->
   <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'">
     <div class="header">
       <div>
@@ -58,8 +59,9 @@
       </div>
     </div>
   </ng-container>
+  <!-- /if the question type is not checkbox and radio -->
 
-  <!-- If the question type is list or clearbit -->
+  <!-- if the question type is list or clearbit -->
   <ng-container *ngIf="questionReceived.controlType === 'list' || questionReceived.controlType === 'clearbit'">
 
     <!-- Answer button -->

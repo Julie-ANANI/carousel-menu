@@ -256,7 +256,7 @@
                     [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
                     rows="5"
                     [(ngModel)]="innovation.executiveReport.objective"
-                    (focusout)="update($event)"
+                    (blur)="update($event)"
                     maxlength="120">
                     </textarea>
 
@@ -609,7 +609,7 @@
                         [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.PROFESSIONAL' | translate"
                         rows="5"
                         [(ngModel)]="innovation.executiveReport.professionalAbstract"
-                        (focusout)="update($event)"
+                        (blur)="update($event)"
                         maxlength="160">
                       </textarea>
                     <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
@@ -658,10 +658,10 @@
         </section>
         <!-- /professionals -->
 
-        <!-- Other question and answers -->
-        <div class="column col-xs-12 col-11 col-mx-auto report-other-sections-print">
+        <!-- other question and answers -->
+        <div class="column col-xs-12 col-11 col-mx-auto">
           <div *ngFor="let question of questions">
-            <div class="section-light-container">
+            <div class="section-light-pad">
               <app-question-section
                 [project]="innovation"
                 [question]="question"
@@ -673,7 +673,7 @@
             </div>
           </div>
         </div>
-        <!-- /Other question and answers -->
+        <!-- /other question and answers -->
 
         <!-- conclusion -->
         <ng-container *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide">

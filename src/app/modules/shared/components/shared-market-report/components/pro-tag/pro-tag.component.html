@@ -52,7 +52,7 @@
   <ng-container *ngIf="tags?.length > 0">
     <div class="tag-wrapper">
       <div *ngFor="let tag of tags" class="label label-tag" [title]="tag.description | multiling:userLang" (click)="newFilter($event, tag)">
-        <span>#{{ tag.label | multiling:userLang }}</span>
+        <i class="fas fa-tag"></i><span class="label-text">{{ tag.label | multiling:userLang }}</span>
       </div>
     </div>
   </ng-container>
