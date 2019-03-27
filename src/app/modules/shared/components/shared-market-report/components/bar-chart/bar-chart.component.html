@@ -60,44 +60,48 @@
       <ng-container *ngIf="showDetails">
         <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="data-wrapper">
 
-          <!-- Row 1 -->
-          <div class="row1-wrapper">
+          <ng-container *ngIf="filter ? filter.value[barData.identifier] : true">
 
-            <div class="filter-name-wrapper">
-              <span class="bar-filter" (click)="filterAnswer(barData, $event)">
-                <img src="https://res.cloudinary.com/umi/image/upload/v1533115302/app/default-images/filter-icon.png" height="16px" width="24px">
-              </span>
-              <span class="bar-name">{{ barData.label | multiling:lang }}</span>
+            <!-- Row 1 -->
+            <div class="row1-wrapper">
+
+              <div class="filter-name-wrapper">
+                <span class="bar-filter" (click)="filterAnswer(barData, $event)">
+                  <img src="https://res.cloudinary.com/umi/image/upload/v1533115302/app/default-images/filter-icon.png" height="16px" width="24px">
+                </span>
+                <span class="bar-name">{{ barData.label | multiling:lang }}</span>
+              </div>
+
+              <div class="response-arrow-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
+                <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+                <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+              </div>
+
+            </div>
+            <!-- /Row 1 -->
+
+            <!-- Row 2 -->
+            <div class="row2-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
+              <app-progress-bar
+                [width]="barData.absolutePercentage"
+                [backgroundColor]="barData.color">
+              </app-progress-bar>
+            </div>
+            <!-- /Row 2 -->
+
+            <!-- Row 3 -->
+            <div *ngIf="showAnswers[i]" class="answer-wrapper">
+              <div *ngFor="let answer of barData.answers">
+                <app-market-comment
+                  [answer]="answer"
+                  [ngStyle]="{ 'width': '100%' }"
+                  [questionId]="question.identifier+'Comment'"
+                  (modalAnswerChange)="seeAnswer($event)">
+                </app-market-comment>
+              </div>
             </div>
 
-            <div class="response-arrow-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
-              <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
-              <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
-            </div>
-
-          </div>
-          <!-- /Row 1 -->
-
-          <!-- Row 2 -->
-          <div class="row2-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
-            <app-progress-bar
-              [width]="barData.absolutePercentage"
-              [backgroundColor]="barData.color">
-            </app-progress-bar>
-          </div>
-          <!-- /Row 2 -->
-
-          <!-- Row 3 -->
-          <div *ngIf="showAnswers[i]" class="answer-wrapper">
-            <div *ngFor="let answer of barData.answers">
-              <app-market-comment
-                [answer]="answer"
-                [ngStyle]="{ 'width': '100%' }"
-                [questionId]="question.identifier+'Comment'"
-                (modalAnswerChange)="seeAnswer($event)">
-              </app-market-comment>
-            </div>
-          </div>
+          </ng-container>
 
         </div>
       </ng-container>

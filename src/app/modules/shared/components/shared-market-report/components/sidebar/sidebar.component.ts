@@ -144,6 +144,28 @@ export class SidebarComponent implements OnInit {
     this.worldmapService.selectContinent(event.target['name'], event.target['checked']);
   }
 
+  public checkOption(event: Event, question: Question) {
+    event.preventDefault();
+    const checked = event.target['checked'];
+    let filterValue;
+    if (this.filterService.filters[question.identifier]) {
+      filterValue = this.filterService.filters[question.identifier].value;
+    } else {
+      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {});
+    }
+    filterValue[event.target['name']] = checked;
+    const removeFilter = checked && Object.keys(filterValue).every((k) => filterValue[k] === true);
+    if (removeFilter) {
+      this.filterService.deleteFilter(question.identifier);
+    } else {
+      this.filterService.addFilter({
+        status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
+        questionId: question.identifier,
+        value: filterValue
+      });
+    }
+  }
+
   public checkTag(event: Event) {
     event.preventDefault();
     this.tagService.checkTag(event.target['name'], event.target['checked']);
@@ -176,6 +198,10 @@ export class SidebarComponent implements OnInit {
 
   set filterName(value: string) {
     this._filterName = value;
+  }
+
+  get filters() {
+    return this.filterService.filters;
   }
 
   get innovation(): Innovation {

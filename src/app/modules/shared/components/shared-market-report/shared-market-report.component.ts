@@ -273,10 +273,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
        * compute tags lists for each questions of type textarea
        */
       this._questions.forEach((question) => {
-        if (question.controlType === 'textarea') {
-          const tags = ResponseService.getTagsList(response.answers, question);
-          this.tagService.setAnswerTags(question.identifier, tags);
-        }
+        const tags = ResponseService.getTagsList(response.answers, question);
+        const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
+        this.tagService.setAnswerTags(identifier, tags);
       });
 
     }, () => {

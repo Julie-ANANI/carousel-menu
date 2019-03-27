@@ -77,10 +77,17 @@
     <!-- Textarea filters -->
     <ng-container *ngIf="question.controlType === 'textarea'">
       <span *ngFor="let t of answersTagsLists[question.identifier]">
-        <!--(change)="checkAnswerTag($event)" -->
         <input type="checkbox" [name]="t._id" (change)="checkAnswerTag($event, question.identifier)"
                [checked]="selectedAnswersTags[question.identifier][t._id]">
         <label [for]="t._id">{{ t.label | multiling:lang }}</label>
+      </span>
+    </ng-container>
+    <!-- checkbox/radio filters -->
+    <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
+      <span *ngFor="let o of question.options">
+        <input type="checkbox" [name]="o.identifier" (change)="checkOption($event, question)"
+               [checked]="filters[question.identifier] ? filters[question.identifier].value[o.identifier] : true">
+        <label [for]="o.identifier">{{ o.label | multiling:lang }}</label>
       </span>
     </ng-container>
   </p>

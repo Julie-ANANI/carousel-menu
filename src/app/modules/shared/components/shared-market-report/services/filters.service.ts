@@ -21,31 +21,7 @@ export class FilterService {
   }
 
   public addFilter(filter: Filter) {
-    switch (filter.status) {
-      case 'CHECKBOX':
-      case 'RADIO':
-        if (this._filters[filter.questionId]
-          && Array.isArray(this._filters[filter.questionId].value)) {
-          // if filter already exist, we search if the value already exist
-          const idx = this._filters[filter.questionId].value.indexOf(filter.value);
-          if (idx === -1) {
-            // If value dosen't exist we push it in the filter
-            this._filters[filter.questionId].value.push(filter.value);
-          } else {
-            // if value already exist, we remove it from the filter
-            this._filters[filter.questionId].value.splice(idx, 1);
-            // and if the filter doesn't filter anything, we remove it
-            if (this._filters[filter.questionId].value.length === 0) {
-              delete this._filters[filter.questionId];
-            }
-          }
-        } else {
-          this._filters[filter.questionId] = {...filter, value: [filter.value]};
-        }
-        break;
-      default:
-        this._filters[filter.questionId] = filter;
-    }
+    this._filters[filter.questionId] = filter;
     this._filtersUpdate.next();
   }
 
@@ -73,7 +49,11 @@ export class FilterService {
           break;
         case 'CHECKBOX':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] && filter.value.some((val: string) => answer.answers[filter.questionId][val]);
+            if (answer.answers[filter.questionId]) {
+              return Object.keys(filter.value).some((k) => filter.value[k] && answer.answers[filter.questionId][k]);
+            } else {
+              return false;
+            }
           });
           break;
         case 'CLEARBIT':
@@ -104,7 +84,7 @@ export class FilterService {
           break;
         case 'RADIO':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return filter.value.indexOf(answer.answers[filter.questionId]) !== -1;
+            return filter.value[answer.answers[filter.questionId]];
           });
           break;
         default:

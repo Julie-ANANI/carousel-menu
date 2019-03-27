@@ -168,11 +168,23 @@ export class BarChartComponent implements OnInit {
 
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();
-    this.filterService.addFilter({
-      status: this.question.controlType === 'radio' ? 'RADIO' : 'CHECKBOX',
-      questionId: this.question.identifier,
-      value: data.identifier
-    });
+    let filterValue;
+    if (this.filterService.filters[this.question.identifier]) {
+      filterValue = this.filterService.filters[this.question.identifier].value;
+    } else {
+      filterValue = this.question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {});
+    }
+    filterValue[data.identifier] = !filterValue[data.identifier];
+    const removeFilter = Object.keys(filterValue).every((k) => filterValue[k] === true);
+    if (removeFilter) {
+      this.filterService.deleteFilter(this.question.identifier);
+    } else {
+      this.filterService.addFilter({
+        status: <'CHECKBOX'|'RADIO'> this.question.controlType.toUpperCase(),
+        questionId: this.question.identifier,
+        value: filterValue
+      });
+    }
   }
 
   public seeAnswer(event: Answer) {
@@ -208,6 +220,9 @@ export class BarChartComponent implements OnInit {
     return this.responseService.getColor(length, limit);
   }
 
+  get filter() {
+    return this.filterService.filters[this.question.identifier];
+  }
 
   get barsData(): Array<BarData> {
     return this._barsData;

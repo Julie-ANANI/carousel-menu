@@ -95,7 +95,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   addTagFilter(event: Event, tag: Tag) {
     event.preventDefault();
-    this.tagService.checkAnswerTag(this.question.identifier, tag._id, false);
+    this.tagService.checkAnswerTag(this.tagId, tag._id, false);
   }
 
   public isMainDomain(): boolean {
