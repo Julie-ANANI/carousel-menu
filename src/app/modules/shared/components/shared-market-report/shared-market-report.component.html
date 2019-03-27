@@ -1,5 +1,7 @@
 <ng-container *ngIf="innovation">
-  <section class="animate-page" id="market-report" [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5' }">
+
+  <section class="animate-page section-light-pad rm-pad-top" id="market-report"
+           [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5' }">
 
     <!-- project status not done client side -->
     <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode">
@@ -673,38 +675,42 @@
         </div>
         <!-- /Other question and answers -->
 
+        <!-- conclusion -->
+        <ng-container *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide">
+          <section class="section-light-pad" id="conclusion">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+              <div class="section-pad full bg-white text conclusion-wrapper">
 
-        <!-- Conclusion -->
-        <section
-          *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
-          class="section-light-container report-conclusion-print"
-          id="conclusion">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="conclusion-wrapper">
-              <div class="section-container full">
-                <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
-                <p *ngIf="isMainDomain()" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+                <h2 class="title-primary">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h2>
+
+                <ng-container *ngIf="isMainDomain()">
+                  <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>
+                </ng-container>
+
                 <app-text-zone
                   [elementId]="'finalConclusion'"
                   [readonly]="!adminSide"
                   [data]="innovation.marketReport?.finalConclusion?.conclusion"
                   (onTextChange)="saveOperatorComment($event, 'finalConclusion')">
                 </app-text-zone>
+
               </div>
             </div>
-          </div>
-        </section>
-        <!-- /Conclusion -->
-
+          </section>
+        </ng-container>
+        <!-- /conclusion -->
 
       </section>
-      <!-- /Answer sections -->
+      <!-- /answer sections -->
 
     </ng-container>
     <!-- /project status submitted -->
 
-
   </section>
+
+
+
+
 </ng-container>
 
 
