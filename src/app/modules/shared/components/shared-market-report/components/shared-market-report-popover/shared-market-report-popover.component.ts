@@ -10,9 +10,10 @@ import { Filter } from '../../models/filter';
 
 export class SharedMarketReportPopoverComponent {
 
-  @Input() public answers: Array<Answer>;
+  @Input()  answers: Array<Answer>;
 
   @Output() addFilter = new EventEmitter<Filter>();
+
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }

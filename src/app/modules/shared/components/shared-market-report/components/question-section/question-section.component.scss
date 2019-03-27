@@ -2,16 +2,52 @@
 
 .question-section-component {
 
+  .header-wrapper {
+    background-color: $bg-color-light;
+  }
+
+  .title-primary {
+    font-size: 1.35rem;
+  }
+
+  .icon-size {
+    font-size: 22px;
+  }
+
+  .clearbit-list-wrapper {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: -$unit-5;
+
+    .clearbit-comment-wrapper, .clearbit-icon-wrapper {
+      flex: 1;
+    }
+
+    .clearbit-comment-wrapper {
+      margin-right: 0.75rem;
+    }
+
+    .clearbit-icon-wrapper {
+      margin-bottom: $unit-5;
+    }
+
+  }
+
+  .card {
+    margin-bottom: $unit-5;
+
+    .card-body {
+      padding: 1.25rem;
+      height: 100%;
+      width: 100%;
+    }
+
+  }
+
 }
 
 
 .question-section-wrapper {
-
-  .header {
-    background-color: white;
-    border-radius: .18rem;
-    color: $dark-color;
-  }
 
   .tags {
     padding-bottom: 1.57rem;
@@ -72,18 +108,6 @@
 
   .cli-wrapper {
     flex: 1;
-  }
-
-  .answer-button-wrapper {
-    text-align: center;
-    margin-top: 1.57rem;
-
-    .btn i {
-      margin-left: .6rem;
-      margin-right: 0;
-      margin-top: 0;
-    }
-
   }
 
   .comment-button-wrapper{

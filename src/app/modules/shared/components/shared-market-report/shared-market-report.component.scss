@@ -594,6 +594,11 @@
 
     .professional-wrapper {
       flex-direction: column;
+
+      .card {
+        min-height: 100% !important;
+      }
+
     }
 
   }

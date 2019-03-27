@@ -9,12 +9,8 @@
   .header-wrapper {
     background-color: $bg-color-light;
 
-    .abstract-wrapper {
-
-      .title-primary {
-        font-size: 1.35rem;
-      }
-
+    .title-primary {
+      font-size: 1.35rem;
     }
 
   }
@@ -101,6 +97,11 @@
 
     .answer-wrapper {
       flex-direction: column;
+
+      .card {
+        min-height: 100% !important;
+      }
+
     }
 
   }

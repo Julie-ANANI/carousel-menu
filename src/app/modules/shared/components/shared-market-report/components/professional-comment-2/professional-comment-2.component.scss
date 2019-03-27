@@ -1,20 +1,23 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/src/variables";
 
-.fcp-wrapper {
-  display: flex;
-  color: $meta-color;
-  font-size: .875rem;
-  font-weight: 600;
+#professional-comment-2-component {
+  height: 100%;
+  font-size: $font-size-sm;
 
-  .flag {
-    margin-top: .06rem;
-    margin-right: .9375rem;
+  .detail-wrapper {
+    align-items: center;
+
+    .flag-wrapper {
+      margin-bottom: $unit-2;
+      margin-right: 0.75rem;
+    }
+
+  }
+
+  .text {
+    font-size: 0.75rem;
+    margin-bottom: 0;
   }
 
 }
 
-.p-comment {
-  font-size: .875rem;
-  color: $text-dark;
-  padding-bottom: 0;
-}
