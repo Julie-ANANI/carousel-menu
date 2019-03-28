@@ -212,6 +212,59 @@ textarea.form-input {
     width: $unit-4;
   }
 
+  input {
+
+    &:active + .form-icon {
+      background: $border-color;
+    }
+
+  }
+
+}
+
+
+.form-checkbox {
+
+  input {
+
+    &:checked + .form-icon {
+
+      &::before {
+        background-clip: padding-box;
+        border: $border-width-lg solid $light-color;
+        border-left-width: 0;
+        border-top-width: 0;
+        content: "";
+        height: 12px;
+        left: 50%;
+        margin-left: -4px;
+        margin-top: -8px;
+        position: absolute;
+        top: 50%;
+        transform: rotate(45deg);
+        width: 8px;
+      }
+    }
+
+    &:indeterminate + .form-icon {
+      background: $primary-color;
+      border-color: $primary-color;
+
+      &::before {
+        background: $bg-color-light;
+        content: "";
+        height: 2px;
+        left: 50%;
+        margin-left: -5px;
+        margin-top: -1px;
+        position: absolute;
+        top: 50%;
+        width: 10px;
+      }
+    }
+
+  }
+
 }
 
 

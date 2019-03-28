@@ -476,6 +476,55 @@
 
 }
 
+.export-option {
+  flex-direction: column;
+  margin: $unit-2;
+
+  .text {
+    margin-bottom: $unit-1;
+  }
+
+  .sub-heading {
+    font-size: $font-size-sm;
+  }
+
+  img {
+    width: 56px;
+    height: 66px;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn, img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn.btn-radio {
+
+    &:hover {
+      background-color: $primary-color;
+      border-color: $primary-color;
+
+      span {
+        color: $light-color;
+      }
+
+    }
+
+    &.active {
+      background-color: $success-color;
+      border-color: $success-color;
+
+      span {
+        color: $light-color;
+      }
+
+    }
+
+  }
+
+}
+
 
 @media (max-width: $size-md) {
 

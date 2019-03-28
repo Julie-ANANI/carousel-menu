@@ -33,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarUserAnswerModule } from '../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { ModalModule } from '../../../utility-components/modal/modal.module';
 
 
 /***
@@ -73,7 +74,8 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     ReactiveFormsModule,
     SidebarUserAnswerModule,
     CountryFlagModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    ModalModule
   ],
   providers: [
     CommonService,

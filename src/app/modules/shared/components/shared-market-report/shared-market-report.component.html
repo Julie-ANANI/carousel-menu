@@ -709,6 +709,81 @@
   </section>
 
 
+  <!-- modal to ask operator to sure about ending the project, and to client to print -->
+  <app-modal [(showModal)]="openModal" [modalTitle]="innovationEndModal ? 'MARKET_REPORT.MODAL.END_INNOVATION_TITLE' : 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_TITLE'">
+
+    <ng-container *ngIf="innovationEndModal">
+      {{ 'MARKET_REPORT.MODAL.END_INNOVATION_CONTENT' | translate }}
+    </ng-container>
+
+    <ng-container *ngIf="innovationExport">
+
+      <div class="flex-between">
+
+        <!-- RESP Pdf -->
+        <div class="d-inline-flex export-option text-center">
+          <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
+          <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png" alt=" ">
+          <div class="btn btn-radio" [ngClass]="{ 'active': 'respReport' === exportType }" (click)="assignExportType($event, 'respReport')">
+            <span>•</span>
+          </div>
+        </div>
+
+        <!-- CSV -->
+        <div class="d-inline-flex export-option text-center">
+          <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
+          <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png" alt=" ">
+          <div class="btn btn-radio" [ngClass]="{ 'active': 'excel' === exportType }" (click)="assignExportType($event, 'excel')">
+            <span>•</span>
+          </div>
+        </div>
+
+        <!-- Executive report -->
+        <div class="d-inline-flex export-option text-center">
+          <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
+          <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png" alt=" ">
+          <div class="btn btn-radio" [ngClass]="{ 'active': 'executiveReport' === exportType }" (click)="assignExportType($event, 'executiveReport')">
+            <span>•</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- export consent -->
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input
+            type="checkbox"
+            value="true"
+            name="market-report-consent"
+            (change)="toggleConsent($event)"
+            [checked]="innovation.ownerConsent.value">
+          <i class="form-icon"></i><span [ngStyle]="{ 'font-size': '0.7rem' }">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}</span>
+        </label>
+      </div>
+      <!-- /export consent -->
+
+    </ng-container>
+
+
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+
+      <ng-container *ngIf="innovationEndModal">
+        <button class="btn btn-sm btn-primary" (click)="endInnovation($event, 'DONE')">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+      </ng-container>
+
+      <ng-container *ngIf="innovationExport">
+        <button class="btn btn-sm btn-primary" (click)="exportInnovation($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+      </ng-container>
+
+    </div>
+  </app-modal>
+  <!-- /modal to ask operator to sure about ending the project, and to client to print -->
+
   <!-- insight preview -->
   <ng-container *ngIf="!wordpress">
     <app-sidebar [(template)]="sidebarTemplateValue">
@@ -719,144 +794,5 @@
 
 </ng-container>
 
-
-<!--
-
-&lt;!&ndash; Modal to ask operator to sure about ending the project, and to client to print &ndash;&gt;
-<div class="modal" [ngClass]="{ 'active': openModal }">
-  <div class="modal-overlay" (click)="closeModal($event)"></div>
-  <div class="modal-container">
-
-    &lt;!&ndash; Header &ndash;&gt;
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">
-
-        <ng-container *ngIf="innovationEndModal">
-          {{ 'MARKET_REPORT.MODAL.END_INNOVATION_TITLE' | translate }}
-        </ng-container>
-
-        <ng-container *ngIf="innovationExport">
-          {{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_TITLE' | translate }}
-        </ng-container>
-
-      </div>
-    </div>
-    &lt;!&ndash; /Header &ndash;&gt;
-
-    &lt;!&ndash; Body &ndash;&gt;
-    <div class="modal-body">
-      <div class="content">
-
-        <ng-container *ngIf="innovationEndModal">
-          {{ 'MARKET_REPORT.MODAL.END_INNOVATION_CONTENT' | translate }}
-        </ng-container>
-
-        <ng-container *ngIf="innovationExport">
-
-          &lt;!&ndash; Export options &ndash;&gt;
-          <div class="export-options">
-
-            &lt;!&ndash; RESP Pdf &ndash;&gt;
-            <div class="options">
-              <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
-              <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
-              <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png">
-              <div
-                class="btn-radio"
-                [ngClass]="{ 'active': 'respReport' === exportType }"
-                (click)="assignExportType($event, 'respReport')">
-                <span>•</span>
-              </div>
-            </div>
-
-              &lt;!&ndash; CSV &ndash;&gt;
-              <div class="options">
-                  <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
-                  <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
-                  <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png">
-                  <div
-                    class="btn-radio"
-                    [ngClass]="{ 'active': 'excel' === exportType }"
-                    (click)="assignExportType($event, 'excel')">
-                    <span>•</span>
-                  </div>
-              </div>
-
-            &lt;!&ndash; Executive report &ndash;&gt;
-            <div class="options">
-              <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
-              <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
-              <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png">
-              <div
-                class="btn-radio"
-                [ngClass]="{ 'active': 'executiveReport' === exportType }"
-                (click)="assignExportType($event, 'executiveReport')">
-                <span>•</span>
-              </div>
-            </div>
-
-          </div>
-          &lt;!&ndash; Export options &ndash;&gt;
-
-          &lt;!&ndash; Export consent &ndash;&gt;
-          <label class="form-checkbox export" for="market-report-consent">
-            <input
-              type="checkbox"
-              id="market-report-consent"
-              value="true"
-              name="market-report-consent"
-              (change)="toggleConsent($event)"
-              [checked]="innovation.ownerConsent.value">
-            <i class="form-icon"></i><span class="export-consent">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}</span>
-          </label>
-          &lt;!&ndash; /Export consent &ndash;&gt;
-
-        </ng-container>
-
-      </div>
-    </div>
-    &lt;!&ndash; /Body &ndash;&gt;
-
-    &lt;!&ndash; Footer &ndash;&gt;
-    <div class="modal-footer">
-
-      <ng-container *ngIf="innovationEndModal">
-        &lt;!&ndash; End innovation &ndash;&gt;
-        <button
-          class="btn btn-primary btn-sm"
-          (click)="endInnovation($event, 'DONE')">
-          {{ 'MARKET_REPORT.MODAL.BUTTON_CONFIRM' | translate }}
-        </button>
-      </ng-container>
-
-      <ng-container *ngIf="innovationExport">
-
-        &lt;!&ndash; Cancel button &ndash;&gt;
-        <button
-          class="btn ghost-edit btn-sm export-cancel-button"
-          [ngStyle]="{ 'margin-right': '.6rem' }"
-          (click)="closeModal($event)">
-          {{ 'MARKET_REPORT.MODAL.BUTTON_CANCEL' | translate }}
-        </button>
-
-        &lt;!&ndash; Download button &ndash;&gt;
-        <button
-          class="btn ghost-primary btn-sm"
-          [disabled]="exportType === '' || !innovation.ownerConsent.value"
-          (click)="exportInnovation($event)">
-          {{ 'MARKET_REPORT.MODAL.BUTTON_DOWNLOAD' | translate }}
-        </button>
-
-      </ng-container>
-
-    </div>
-    &lt;!&ndash; /Footer &ndash;&gt;
-
-  </div>
-</div>
-&lt;!&ndash; /Modal to ask operator to sure about ending the project, and to client to print &ndash;&gt;
-
--->
 
 

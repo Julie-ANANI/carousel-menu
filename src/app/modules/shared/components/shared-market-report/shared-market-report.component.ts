@@ -392,6 +392,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   displayModal(event: Event, value: string) {
     event.preventDefault();
     this._openModal = true;
+    this._innovationExport = false;
+    this._innovationEndModal = false;
 
     if (value === 'endInnovation') {
       this._innovationEndModal = true;
@@ -401,18 +403,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       this._innovationExport = true;
     }
 
-  }
-
-
-  /***
-   * This function is to close the modal.
-   * @param {Event} event
-   */
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._openModal = false;
-    this._innovationEndModal = false;
-    this._innovationExport = false;
   }
 
 
@@ -949,6 +939,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get openModal(): boolean {
     return this._openModal;
+  }
+
+  set openModal(value: boolean) {
+    this._openModal = value;
   }
 
   get innovationExport(): boolean {
