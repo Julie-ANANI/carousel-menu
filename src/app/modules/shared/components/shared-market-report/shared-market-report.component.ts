@@ -22,8 +22,9 @@ import { Share } from '../../../../models/share';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
-import { TagsService } from './services/tags.service';
+import { TagsFiltersService } from './services/tags-filter.service';
 import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
+import { WorldmapFiltersService } from './services/worldmap-filter.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -89,8 +90,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _companies: Array<Clearbit>;
 
-  private _mapInitialConfiguration: {[continent: string]: boolean};
-
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateService: TranslateService,
               private answerService: AnswerService,
@@ -102,8 +101,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private filterService: FilterService,
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService,
-              private tagService: TagsService,
-              private worldmapService: SharedWorldmapService) {
+              private tagService: TagsFiltersService,
+              private worldmapService: SharedWorldmapService,
+              private worldmapFilterService: WorldmapFiltersService) {
     PageScrollConfig.defaultDuration = 800;
   }
 
@@ -318,15 +318,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is to reset the map configuration.
    */
   private resetMap() {
-    this._mapInitialConfiguration = {
-      africa: true,
-      americaNord: true,
-      americaSud: true,
-      asia: true,
-      europe: true,
-      oceania: true,
-      russia: true
-    };
+    this.worldmapFilterService.reset();
   }
 
 
@@ -560,20 +552,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   /***
    * This function is to filter by the countries.
-   * @param {{continents: {[continent: string]: string}, allChecked: boolean}} event
+   * @param {{continents: {[continent: string]: boolean}, allChecked: boolean}} event
    */
-  filterByContinents(event: {continents: {[continent: string]: string}, allChecked: boolean}): void {
-    if (!event.allChecked) {
-      this.filterService.addFilter(
-        {
-          status: 'COUNTRIES',
-          value: event.continents,
-          questionId: 'worldmap'
-        }
-      );
-    } else {
-      this.filterService.deleteFilter('worldmap');
-    }
+  filterByContinents(event: {continents: {[continent: string]: boolean}, allChecked: boolean}): void {
+    this.worldmapFilterService.selectContinents(event);
   }
 
   filterPro(answer: Answer, event: Event) {
@@ -747,8 +729,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._today;
   }
 
-  get mapInitialConfiguration(): { [p: string]: boolean } {
-    return this._mapInitialConfiguration;
+  get mapSelectedContinents(): { [p: string]: boolean } {
+    return this.worldmapFilterService.selectedContinents;
   }
 
   get answersOrigins(): {[c: string]: number} {

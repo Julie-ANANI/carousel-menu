@@ -6,7 +6,7 @@ import { Question } from '../../../../../../models/question';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
-import { TagsService } from '../../services/tags.service';
+import { TagsFiltersService } from '../../services/tags-filter.service';
 import { environment } from "../../../../../../../environments/environment";
 
 @Component({
@@ -55,7 +55,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   constructor(private innovationService: InnovationService,
               private translateService: TranslateService,
-              private tagService: TagsService) { }
+              private tagService: TagsFiltersService) { }
 
   ngOnInit() {
     if (this.question && this.question.identifier) {

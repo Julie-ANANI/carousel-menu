@@ -1,28 +1,19 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class SharedWorldmapService {
 
-  private _continentsList = [  'africa', 'americaNord', 'americaSud', 'asia', 'europe', 'oceania', 'russia'];
+  private static _continentsList = [  'africa', 'americaNord', 'americaSud', 'asia', 'europe', 'oceania', 'russia'];
 
   private _countries: {[country: string]: string} = {}; // a mapping of countries -> continent
 
-  private _selectedContinents:  {[c: string]: boolean} = {
-    africa: false,
-    americaNord: false,
-    americaSud: false,
-    asia: false,
-    europe: false,
-    oceania: false,
-    russia: false
-  };
-
-  private _newContinentSelected = new Subject<string>();
+  public static areAllContinentChecked(selectedContinents: {[c: string]: boolean}): boolean {
+    return SharedWorldmapService._continentsList.every((c) => selectedContinents[c] === true);
+  }
 
   public loadCountriesFromViewContainerRef (viewContainerRef: ViewContainerRef) {
     if (Object.keys(this._countries).length === 0) {
-      this._continentsList.forEach((continent) => {
+      SharedWorldmapService._continentsList.forEach((continent) => {
         const continent_elem = viewContainerRef.element.nativeElement.getElementsByClassName(continent);
         Array.prototype.forEach.call(continent_elem, (continent_el: HTMLElement) => {
           const countries_elems = continent_el.getElementsByTagName('path');
@@ -54,28 +45,8 @@ export class SharedWorldmapService {
     }, {});
   }
 
-  public selectContinent(continent: string, value: boolean) {
-    this._selectedContinents[continent] = value;
-    this._newContinentSelected.next(continent);
-  }
-
-  /**
-   * Checks whether all the continents have been selected
-   */
-  public areAllContinentChecked(): boolean {
-    return this._continentsList.every((c) => this._selectedContinents[c] === true);
-  }
-
-  get continentsList(): Array<string> {
-    return this._continentsList;
-  }
-
-  get selectedContinents(): {[c: string]: boolean} {
-    return this._selectedContinents;
-  }
-
-  get newContinentSelected(): Observable<string> {
-    return this._newContinentSelected.asObservable();
+  static get continentsList(): Array<string> {
+    return SharedWorldmapService._continentsList;
   }
 
 }

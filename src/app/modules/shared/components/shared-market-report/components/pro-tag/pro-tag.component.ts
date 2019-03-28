@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { TagsService } from '../../services/tags.service';
+import { TagsFiltersService } from '../../services/tags-filter.service';
 import { Answer } from '../../../../../../models/answer';
 import { Tag } from '../../../../../../models/tag';
 
@@ -18,7 +18,7 @@ export class ProfessionalTagComponent implements OnInit {
 
   private _tags: Array<Tag>;
 
-  constructor(private tagService: TagsService) {}
+  constructor(private tagService: TagsFiltersService) {}
 
   ngOnInit() {
     if (this.questionId) {

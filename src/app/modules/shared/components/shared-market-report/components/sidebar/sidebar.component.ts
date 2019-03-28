@@ -4,14 +4,15 @@ import { PageScrollConfig } from 'ngx-page-scroll';
 import { FilterService } from '../../services/filters.service';
 import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { TagsService } from '../../services/tags.service';
+import { TagsFiltersService } from '../../services/tags-filter.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { SharedWorldmapService } from '../../../shared-worldmap/shared-worldmap.service';
+import { WorldmapFiltersService } from '../../services/worldmap-filter.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { SharedFilter } from '../../models/shared-filter';
 import { Tag } from '../../../../../../models/tag';
+import {SharedWorldmapService} from "../../../shared-worldmap/shared-worldmap.service";
 
 @Component({
   selector: 'app-market-report-sidebar',
@@ -63,9 +64,9 @@ export class SidebarComponent implements OnInit {
               private filterService: FilterService,
               private innovationCommonService: InnovationCommonService,
               private innovationService: InnovationService,
-              private tagService: TagsService,
+              private tagService: TagsFiltersService,
               private translateNotificationsService: TranslateNotificationsService,
-              private worldmapService: SharedWorldmapService) {
+              private worldmapFilterService: WorldmapFiltersService) {
     PageScrollConfig.defaultDuration = 600;
   }
 
@@ -141,7 +142,7 @@ export class SidebarComponent implements OnInit {
 
   public checkCountry(event: Event) {
     event.preventDefault();
-    this.worldmapService.selectContinent(event.target['name'], event.target['checked']);
+    this.worldmapFilterService.selectContinent(event.target['name'], event.target['checked']);
   }
 
   public checkOption(event: Event, question: Question) {
@@ -201,7 +202,7 @@ export class SidebarComponent implements OnInit {
   }
 
   get continentsList(): Array<string> {
-    return this.worldmapService.continentsList;
+    return SharedWorldmapService.continentsList;
   }
 
   get filteredContinents() {
