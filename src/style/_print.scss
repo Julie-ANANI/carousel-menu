@@ -121,17 +121,258 @@
   /********************************** Market report ***************************************/
 
   #market-report {
-    padding-bottom: 0 !important;
-    background-color: white !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    background-color: $bg-color-light !important;
 
+    .text, .text-link {
+      font-size: 14px !important;
+    }
 
-    .sticky-wrapper, .menu-button-print, .report-innovation-print, .report-targeting-print, .report-analytics-print, .report-key-learnings-print
-    , .report-professionals-print, .report-map-print, .report-origin-print, .report-other-sections-print, .report-conclusion-print
-    , .msg-wrapper, .scroll-sticky-wrapper {
+    .column {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .sticky-wrapper, .menu-wrapper, #key-learning, #professionals, #market-map, #professional-print, #questions, #conclusion {
       display: none !important;
     }
 
-    .front-wrapper {
+    #main-page, #umi-intro {
+      display: flex !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .main-page, .umi-intro {
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    .main-page {
+      padding: 25px !important;
+
+      .title-primary {
+        font-size: 42px !important;
+      }
+
+      .summary {
+        font-size: 14px !important;
+      }
+
+      .goal-text {
+        font-size: 12px !important;
+      }
+
+      .footer-wrapper {
+
+        p {
+          font-size: 14px !important;
+        }
+
+      }
+
+    }
+
+    #umi-intro {
+      padding-top: 10px !important;
+
+      .umi-intro {
+        margin: auto;
+        max-width: 90% !important;
+      }
+
+    }
+
+
+    #executive-report {
+
+      #executive-report-wrapper {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        height: 100%;
+
+        .title-primary {
+          font-size: 20px !important;
+        }
+
+        .sub-title, .abstract-professional, .details, .conclusion-text, .operator-contact .name, .operator-contact .job, .operator-contact .phone
+        , .section-second h6, .remaining-text, .abstract-wrapper {
+          font-size: 12px !important;
+        }
+
+        .operator-contact .job, .operator-contact .phone, .operator-contact .text-link, .section-second .address, .remaining-text .text-link {
+          font-size: 11px !important;
+        }
+
+        .page-first, .second-page-wrapper {
+          flex-direction: row !important;
+          height: 804px !important;
+        }
+
+        .section-wrapper {
+          width: 33.33% !important;
+        }
+
+        .section {
+          padding: 20px !important;
+          display: inline-flex !important;
+        }
+
+        .sections {
+          width: 66.67% !important;
+        }
+
+        .section-2, .section-4 {
+          height: 50% !important;
+          display: flex !important;
+          border-bottom: 1px solid $border-color !important;
+        }
+
+        .section-4 {
+          width: 50% !important;
+          border-left: 1px solid $border-color !important;
+        }
+
+        .section-2:last-child {
+          border-bottom: none !important;
+        }
+
+        .section-4:last-child, .section-4:nth-child(3) {
+          border-bottom: none !important;
+        }
+
+        .section-4:nth-child(1), .section-4:nth-child(3) {
+          border-left: none !important;
+        }
+
+        .second-page {
+          padding-top: 0 !important;
+
+          .second-page-wrapper {
+            min-height: 100% !important;
+          }
+
+        }
+
+        #executive-professional-wrapper {
+          justify-content: flex-start !important;
+          padding: 20px !important;
+          border-right: 1px solid #E0E0E0 !important;
+
+          .title-primary {
+            margin-bottom: 10px !important;
+          }
+
+          .section-2-wrapper {
+            margin-bottom: 10px !important;
+          }
+
+          .professional-profile-wrapper {
+            margin-bottom: 0 !important;
+
+            .profile {
+              margin-bottom: 10px !important;
+
+              .details {
+
+                p {
+                  margin: 0 0 2px 0 !important;
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+        #executive-section-wrapper {
+
+          .executive-piechart {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+
+            .percentage {
+              margin-bottom: 10px !important;
+            }
+
+            .chart-pie {
+              width: 300px !important;
+              margin-bottom: 10px !important;
+            }
+
+            .data {
+              margin-right: 5px !important;
+              margin-bottom: 5px !important;
+            }
+
+          }
+
+          .title-wrapper {
+            margin-bottom: 15px !important;
+          }
+
+          .content-wrapper {
+            height: 229px !important;
+            justify-content: flex-start !important;
+            margin-bottom: 10px !important;
+          }
+
+          .tag {
+            margin-bottom: 5px !important;
+          }
+
+          .tag:last-child {
+            margin-bottom: 0 !important;
+          }
+
+          .executive-star-wrapper {
+            margin-bottom: 0 !important;
+
+            .note-label, .star-label-wrapper {
+              margin-bottom: 5px !important;
+            }
+
+          }
+
+          .executive-bar-chart-wrapper {
+
+            .row-1-wrapper, .row-2-wrapper, .row-3-wrapper, .margin, .executive-answer-wrapper {
+              margin-bottom: 5px !important;
+            }
+
+          }
+
+        }
+
+        #executive-conclusion-wrapper {
+
+          .section-first, .section-second {
+            padding: 20px !important;
+          }
+
+          .title-primary, .conclusion-text {
+            margin-bottom: 10px !important;
+          }
+
+          .logo-address {
+            margin-top: 20px !important;
+          }
+
+        }
+
+      }
+
+    }
+
+
+    /*.front-wrapper {
       display: flex !important;
     }
 
@@ -141,61 +382,6 @@
       padding-bottom: 0 !important;
     }
 
-
-    .column {
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-    }
-
-
-    #main-page {
-
-      .column {
-        height: 100vh !important;
-      }
-
-      .header-wrapper {
-        padding-top: 30px;
-      }
-
-      .front-page-print {
-        height: 100%;
-        padding: 15px;
-        page-break-inside: avoid;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-
-        .body-wrapper {
-          min-height: unset;
-          flex: 1;
-
-          h1 {
-            font-size: 42px !important;
-          }
-
-          .summary {
-            font-size: 14px !important;
-          }
-
-        }
-
-        .text-owner, .text-jobTitle, .text-email, .footer-wrapper {
-          font-size: 12px !important;
-        }
-
-        .footer-wrapper {
-          width: 100%;
-          padding-left: 5px !important;
-          padding-right: 5px !important;
-        }
-
-      }
-
-    }
 
 
     #executive-report-wrapper {
@@ -381,15 +567,7 @@
     }
 
 
-    .umi-intro-print {
-      display: flex !important;
-
-      .img-responsive {
-        height: 19cm !important;
-        margin: auto;
-      }
-
-    }
+  */
 
   }
 
