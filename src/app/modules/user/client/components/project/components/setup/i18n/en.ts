@@ -1,11 +1,10 @@
-import { PITCH } from '../components/pitch/i18n/en';
 import { SURVEY } from '../components/survey/i18n/en';
-import { TARGETING } from '../components/targeting/i18n/en';
 
 export const SETUP = {
   'TITLE': 'Project details',
 
   'SAVE_PROJECT': 'Save',
+
   'SUBMIT_PROJECT': 'Submit',
 
   'MESSAGE': {
@@ -17,7 +16,7 @@ export const SETUP = {
     },
     'EVALUATING': 'Market exploration is under progress. You can\'t make changes in your project anymore.',
     'REVIEWING': {
-      'A': 'Your project needs to be modified. Please',
+      'A': 'Your project needs to be modified. Please ',
       'B': 'read',
       'C': 'our comments that we have sent you by mail.'
     },
@@ -26,12 +25,12 @@ export const SETUP = {
   },
 
   'PITCH_TAB': 'Pitch',
+
   'TARGETING_TAB': 'Targeting',
+
   'SURVEY_TAB': 'Survey',
 
-  'PITCH': PITCH,
   'SURVEY': SURVEY,
-  'TARGETING': TARGETING,
 
   'PREVIEW': 'Preview',
 

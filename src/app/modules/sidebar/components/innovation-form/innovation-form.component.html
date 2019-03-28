@@ -13,8 +13,7 @@
     </div>
     <button type="button"
             class="btn btn-primary"
-            (click)="onSubmit()"
-            [disabled]="(!isChange) || (!statusValid)">
+            (click)="onSubmit()">
       {{(isStatus || isMail) ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
     </button>
   </div>
@@ -22,15 +21,12 @@
   <app-shared-project-edit-cards
     [project]="project"
     [editable]="true"
-    (pitchChange)="projectEdit($event)"
     [sideAdmin]="true"
     [modeAdmin]="true"
     *ngIf="isPitch">
   </app-shared-project-edit-cards>
 
   <app-shared-project-settings
-    [projectSettings]="project.settings"
-    (settingsChange)="settingsEdit($event)"
     *ngIf="isTargeting"
     [modeAdmin]="true"
     [sideAdmin]="true"

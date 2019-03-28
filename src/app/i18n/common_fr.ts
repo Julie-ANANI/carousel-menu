@@ -9,13 +9,11 @@ export const COMMON = {
   'CHANGE': 'Changer',
   'DELETE': 'Supprimer',
   'SUBMIT': 'Confirmer',
-
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
   'SIGN_OUT': 'Se déconnecter',
   'LOG_OUT': 'Se déconnecter',
   'GENERATE': 'Générer',
-
   'ADD': 'Ajouter',
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
@@ -48,11 +46,6 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
-  'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
-  'SEARCH_BY': 'Recherche par',
-  'SEARCH_PLACEHOLDER': 'Rechercher ici',
-
-  'SHARED_REPORTS': 'Rapports partagés',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
@@ -68,19 +61,6 @@ export const COMMON = {
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 
-
-
-
-
-  'PHONE': 'Téléphone',
-
-  'ACTIVITY_FIELDS': 'Champs d\'activité',
-  'ACTIVITY_FIELDS_PLACEHOLDER': 'Entrez votre secteur d\'activité',
-
-  'TECHNOLOGIES': 'Technologies',
-  'TECHNOLOGIES_PLACEHOLDER': 'Entrez la technologie',
-
-
   'OLD_PASSWORD': 'Ancien mot de passe',
   'NEW_PASSWORD': 'Nouveau mot de passe',
   'CONFIRM_PASSWORD': 'Confirmez le mot de passe',
@@ -90,19 +70,9 @@ export const COMMON = {
   'NEW_PASSWORD_PLACEHOLDER': '9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
 
-
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
-
-
-
-
-
-
   'DOMAIN': 'Domaine',
-
-
-
 
   'TERMS': {
     'A': 'En cliquant sur "Continuer", j\'accepte',
@@ -112,12 +82,25 @@ export const COMMON = {
 
   'TOP_PROFILE': 'Profil haut',
 
+  'PAGE_TITLE': {
+    'LOG_IN': 'Connexion',
+    'RESET': 'Réinitialiser le mot de passe',
+    'FORGET': 'Demander le mot de passe',
+    'LOG_OUT': 'Se déconnecter',
+    'SIGN_UP': 'S\'Inscrire',
+    'WELCOME': 'Bienvenus',
+    'ACCOUNT': 'Profil',
+    'SHARED_REPORTS': 'Rapports partagés',
+  },
+
   'LABEL': {
+    'ACTIVITY_FIELDS': 'Champs d\'activité',
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
     'EMAIL': 'Email',
     'PASSWORD': 'Mot de passe',
     'PROS_CONTACT': 'Nombre de pros',
+    'PHONE': 'Téléphone',
     'JOBTITLE': 'Poste',
     'COMPANY': 'Nom de l\'entreprise',
     'COUNTRY': 'Pays',
@@ -134,6 +117,8 @@ export const COMMON = {
     'SELECT_WORKFLOW': 'Sélectionner le workflow',
     'SELECT': 'Sélectionnez',
     'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
+    'TECHNOLOGIES': 'Technologies',
+    'SEARCH_BY': 'Recherche par',
   },
 
   'PLACEHOLDER': {
@@ -143,6 +128,9 @@ export const COMMON = {
     'COMPANY': 'Entrez le nom de votre entreprise',
     'COUNTRY': 'Entrez votre pays',
     'CAMPAIGN': 'Entrez le nom de la campagne',
+    'ACTIVITY_FIELDS': 'Entrez votre secteur d\'activité',
+    'TECHNOLOGIES': 'Entrez la technologie',
+    'SEARCH': 'Rechercher ici',
   },
 
   'REQUIRED': {
@@ -179,6 +167,11 @@ export const COMMON = {
     'IMPORT': 'Importer',
     'EXPORT': 'Exporter',
     'SEND': 'Envoyer',
+    'PRINT': 'Imprimer',
+    'PREVIEW': 'Prévisualiser',
+    'SUBMIT': 'Soumettre',
+    'SIGN_IN': 'Se Connecter',
+    'SIGN_UP': 'Commencer'
   },
 
   'PROJECT': {
@@ -205,8 +198,6 @@ export const COMMON = {
     'SELECTED_ROWS': 'ligne(s) sélectionnée(s)',
     'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
-
-
 
   'LINKS': 'Liens',
   'HELP': 'Aide',
@@ -311,6 +302,11 @@ export const COMMON = {
     'TEXT': 'Vous serez redirigé automatiquement vers la page de connexion.'
   },
 
+  'NOT_FOUND': {
+    'TEXT': 'Retour à la page d\'accueil.',
+    'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
+  },
+
   'CAMPAIGN': {
     'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
     'DELETE_BOARD': {
@@ -320,10 +316,12 @@ export const COMMON = {
   },
 
   'MODAL': {
-    'TITLE_DELETE': 'Supprimer le forum',
-    'TITLE_CONFIRMATION': 'Confirmation le forum',
-    'TITLE_IMPORT': 'Conseil d\'importation',
-    'TITLE_BATCH': 'Batch le forum',
+    'TITLE_DELETE': 'Supprimer',
+    'TITLE_CONFIRMATION': 'Confirmation',
+    'TITLE_IMPORT': 'Importation',
+    'TITLE_BATCH': 'Batch',
+    'TITLE_SHARE': 'Partage',
+    'TITLE_CREATE': 'Création'
   },
 
 };

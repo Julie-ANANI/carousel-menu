@@ -1,28 +1,18 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/src/variables";
 
-.star-wrapper {
+#star-component {
+  margin-bottom: -1.25rem;
+  font-size: $font-size-md;
 
-  div {
-    margin-bottom: 1.57rem;
+  .data-wrapper {
+    margin-bottom: 1.25rem;
 
-    .note-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.12rem;
-      color: $background-color;
-      margin-bottom: 1.57rem;
-      font-weight: 600;
-
-      .vote-wrapper {
-        font-size: .875rem;
-        color: $meta-color;
-      }
-
+    .star-label-wrapper {
+      margin-bottom: 0.75rem;
     }
 
-    .no-grade-wrapper {
-      font-size: .875rem;
-      color: $meta-color;
+    .text-notify {
+      font-size: $font-size-sm;
     }
 
   }
@@ -31,27 +21,20 @@
 
 
 .executive-star-wrapper {
-  margin-bottom: 10px;
+  margin-bottom: -10px;
+  font-size: 12px;
 
-  .note-label {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 12px;
-    color: $text-dark;
-    margin-bottom: 8px;
+  .data-wrapper {
+    margin-bottom: 10px;
 
-    .vote-wrapper {
-      font-size: 11px;
-      color: $meta-color;
-      font-weight: 600;
+    .star-label-wrapper {
+      margin-bottom: 8px;
     }
 
-  }
+    .text-notify {
+      font-size: 11px;
+    }
 
-  .no-grade-wrapper {
-    font-size: 12px;
-    color: $meta-color;
   }
 
 }

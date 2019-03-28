@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from "@angular/forms";
+
 import { AdminWorkflowsLibraryComponent } from "./admin-workflows-library.component";
 import { AdminEditWorkflowModule } from "../../admin-edit-workflow/admin-edit-workflow.module";
-import { FormsModule } from "@angular/forms";
+import { ModalModule } from '../../../../../utility-components/modal/modal.module';
+import { MessageSpaceModule } from '../../../../../utility-components/message-space/message-space.module';
 
 
 @NgModule({
@@ -11,7 +14,9 @@ import { FormsModule } from "@angular/forms";
     CommonModule,
     TranslateModule.forChild(),
     AdminEditWorkflowModule,
-    FormsModule
+    FormsModule,
+    ModalModule,
+    MessageSpaceModule
   ],
   declarations: [
     AdminWorkflowsLibraryComponent

@@ -1,22 +1,39 @@
-<!-- Name -->
-<p class="name">
-  <span class="text-link" (click)="seeAnswer(answer)">
-    <span *ngIf="answer?.professional && answer?.professional?.firstName">{{ answer?.professional?.firstName[0] | uppercase }}{{ answer?.professional?.firstName | slice:1 }} {{ answer?.professional?.lastName }}</span>
-    <span *ngIf="!answer?.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
-  </span>
-</p>
+<section id="professional-comment-2-component">
 
-<!-- Flag, Company and position -->
-<div class="fcp-wrapper">
-  <span class="flag"><app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag></span>
-  <p *ngIf="answer.job || answer?.professional?.jobTitle || answer.company?.name || answer?.professional?.company">
-    <span *ngIf="answer.job || answer?.professional?.jobTitle">{{ answer.job || answer?.professional?.jobTitle }}</span>
-    <span *ngIf="answer.job || answer?.professional?.jobTitle && answer.company?.name || answer?.professional?.company">-</span>
-    <span *ngIf="answer.company?.name || answer?.professional?.company">{{ answer.company?.name || answer?.professional?.company }}</span>
-  </p>
-</div>
+  <!-- name -->
+  <ng-container *ngIf="!answer?.professional?.firstName">
+    <p class="text-medium">
+      <span>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
+    </p>
+  </ng-container>
 
-<!-- Professional comment -->
-<p *ngIf="answer.answers[questionId]?.length > 0" class="p-comment">
-  {{ answer.answers[questionId] }}
-</p>
+  <ng-container *ngIf="answer?.professional && answer?.professional?.firstName">
+    <p>
+      <span class="text-link" (click)="seeAnswer(answer)">
+        {{ answer?.professional?.firstName | FormatText }} {{ answer?.professional?.lastName }}
+      </span>
+    </p>
+  </ng-container>
+  <!-- /name -->
+
+  <div class="detail-wrapper d-flex text-notify text-medium">
+
+    <div class="flag-wrapper">
+      <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+    </div>
+
+    <ng-container *ngIf="answer.job || answer?.professional?.jobTitle || answer.company?.name || answer?.professional?.company">
+      <p>
+        <ng-container *ngIf="answer.job || answer?.professional?.jobTitle">{{ answer.job || answer?.professional?.jobTitle }}</ng-container>
+        <ng-container *ngIf="answer.job || answer?.professional?.jobTitle && answer.company?.name || answer?.professional?.company">-</ng-container>
+        <ng-container *ngIf="answer.company?.name || answer?.professional?.company">{{ answer.company?.name || answer?.professional?.company }}</ng-container>
+      </p>
+    </ng-container>
+
+  </div>
+
+  <ng-container *ngIf="answer.answers[questionId]?.length > 0">
+    <p class="text">{{ answer.answers[questionId] }}</p>
+  </ng-container>
+
+</section>

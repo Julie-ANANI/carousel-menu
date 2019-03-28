@@ -1,89 +1,90 @@
-<div id="innovation-preview-component">
+<section id="innovation-preview-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
 
-  <div
-    *ngIf="innovationCard && innovationCard.problem === ''
-    && innovationCard.summary === ''
-    && innovationCard.title === ''
-    && innovationCard.advantages.length === 0"
-    class="text-center"
-    [ngStyle]="{ 'padding-top': '3.15rem' }">
-    <app-message-space>
-      {{ 'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE' | translate }}
-    </app-message-space>
-  </div>
+    <!-- nothing to show -->
+    <ng-container *ngIf="innovationCard && innovationCard.problem === '' && innovationCard.summary === ''
+    && innovationCard.title === '' && innovationCard.advantages.length === 0">
+      <app-message-space [widthMax]="'321px'">
+        {{ 'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE' | translate }}
+      </app-message-space>
+    </ng-container>
+    <!-- /nothing to show -->
 
+    <!-- innovation card -->
+    <ng-container *ngIf="innovationCard && (innovationCard.problem !== '' || innovationCard.summary !== ''
+    || innovationCard.title !== '' || innovationCard.advantages.length !== 0)">
 
-  <div
-    *ngIf="innovationCard && (innovationCard.problem !== ''
-    || innovationCard.summary !== ''
-    || innovationCard.title !== ''
-    || innovationCard.advantages.length !== 0)">
+      <!-- section header -->
+      <div class="section-header">
 
-    <!-- Hero section -->
-    <div class="hero-container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+        <!-- innovation title -->
+        <h1 class="title-primary">{{ innovationCard.title }}</h1>
 
-        <!-- Title -->
-        <h1 class="main-heading">{{ innovationCard.title }}</h1>
+        <!-- batch date -->
+        <ng-container *ngIf="getDate">
+          <h6 class="text text-notify">{{ 'DASHBOARD.SENDINGDATE' | translate }} {{ getDate | date: dateFormat }}</h6>
+        </ng-container>
 
-        <!-- Batch date -->
-        <h6 *ngIf="getDate">{{ 'DASHBOARD.SENDINGDATE' | translate }} {{ getDate | date: dateFormat }}</h6>
+        <!-- innovation summary -->
+        <div *ngIf="innovationCard.summary" class="summary-wrapper" [innerHTML]="innovationCard.summary"></div>
 
-        <!-- Summary -->
-        <div class="summary" [innerHtml]="innovationCard.summary"></div>
+      </div>
+      <!-- /section header -->
 
-        <!-- Media -->
-        <div class="media-wrapper">
-          <div *ngFor="let media of innovationCard.media">
+      <!-- section images -->
+      <ng-container *ngIf="innovationCard.media && innovationCard.media.length > 0">
+        <div class="section-images">
+          <div *ngFor="let media of innovationCard.media" class="media-wrapper">
 
-            <!-- Video -->
-            <div *ngIf="media?.type === 'VIDEO'" class="gap">
-              <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)" width="220" height="146" frameborder="0"></iframe>
-            </div>
+            <!-- if image -->
+            <ng-container *ngIf="media?.type === 'PHOTO'">
+              <img [src]="getSrc(media)" [alt]=" ">
+            </ng-container>
 
-            <!-- Image -->
-            <div *ngIf="media?.type === 'PHOTO'" class="gap">
-              <img [src]="media.url" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" width="220" height="146">
-            </div>
+            <!-- if video -->
+            <ng-container *ngIf="media?.type === 'VIDEO'">
+              <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                      height="119px" [ngStyle]="{ 'left': 'O', 'width': '180px', 'border-width': '0' }"></iframe>
+            </ng-container>
 
           </div>
         </div>
+      </ng-container>
+      <!-- /section images -->
 
-      </div>
-    </div>
+      <!-- section benefits -->
+      <ng-container *ngIf="innovationCard.advantages && innovationCard.advantages.length > 0">
+        <div class="section-benefits">
+          <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
+          <ul class="benefit-wrapper">
+            <li *ngFor="let advantage of innovationCard.advantages">
+              {{ advantage.text | FormatText }}
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+      <!-- /section benefits -->
 
+      <!-- section issue -->
+      <ng-container *ngIf="innovationCard.problem">
+        <div class="section-issue">
+          <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
+          <div class="issue-wrapper" [innerHTML]="innovationCard.problem"></div>
+        </div>
+      </ng-container>
+      <!-- /section issue -->
 
-    <!-- Advantage section -->
-    <div class="section-container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
-        <ul class="advantage">
-          <li *ngFor="let advantage of innovationCard.advantages;">
-            {{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}
-          </li>
-        </ul>
-      </div>
-    </div>
+      <!-- section solution -->
+      <ng-container *ngIf="innovationCard.solution">
+        <div class="section-solution">
+          <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
+          <div class="solution-wrapper" [innerHTML]="innovationCard.solution"></div>
+        </div>
+      </ng-container>
+      <!-- /section solution -->
 
-
-    <!-- Issue section -->
-    <div class="section-container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
-        <div [innerHtml]="innovationCard.problem"></div>
-      </div>
-    </div>
-
-
-    <!-- Solution section -->
-    <div class="section-container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
-        <div [innerHtml]="innovationCard.solution"></div>
-      </div>
-    </div>
+    </ng-container>
+    <!-- /innovation card -->
 
   </div>
-
-
-</div>
+</section>

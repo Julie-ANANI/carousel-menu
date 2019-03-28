@@ -1,145 +1,89 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/src/variables";
 
-.piechart {
-  font-size: .85rem;
-  font-weight: 600;
+.pie-chart {
   max-width: 320px;
+  min-width: 280px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
 
-  .percentage {
-    padding-bottom: 0;
-    margin-bottom: 1.57rem;
+  .percentage, .chart-pie {
+    margin-bottom: 0.75rem;
   }
 
   .chart-pie {
-    margin-bottom: 1.57rem;
     margin-left: auto;
     margin-right: auto;
     height: auto !important;
+    max-width: 320px !important;
   }
 
-  .pie-data {
-    display: inline-block;
-    margin-bottom: -.6rem;
+  .pie-data-wrapper {
 
-    .data {
-      display: inline-flex;
-      margin-bottom: .5rem;
-      margin-right: .5rem;
-      flex-wrap: wrap;
-      font-size: .85rem;
-      vertical-align: middle;
+    ul {
+      margin: 0;
+      list-style: none;
 
-      .circles {
-        width: 13px;
-        height: 13px;
-        margin-top: .18rem;
-      }
+      li {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: $unit-2 $unit-2 0 0;
 
-      .response, .circles, .text{
-        margin-right: .18rem;
+        .circle, .response, .text-label {
+          margin-right: $unit-2;
+        }
+
+        .circle {
+          width: 12px;
+          height: 12px;
+          border-radius: 25px;
+        }
+
       }
 
     }
 
   }
 
-
 }
 
-.executive-piechart {
+.executive-pie-chart {
   font-size: 14px;
-  max-width: unset;
-  width: 100%;
+  font-weight: $font-weight-medium;
+
+  .percentage, .chart-pie {
+    margin-bottom: 5px;
+  }
 
   .percentage {
     font-size: 12px;
     color: $meta-color;
-    margin-bottom: 5px;
-    font-weight: 600;
   }
 
-  .chart-pie {
-    margin-bottom: 5px;
-  }
+  .pie-data-wrapper {
 
-  .pie-data {
-    margin-bottom: -2px;
+    ul {
 
-    .data {
-      display: inline-flex;
-      margin-bottom: 2px;
-      margin-right: 5px;
-      flex-wrap: wrap;
-      font-size: 11px;
-      vertical-align: middle;
+      li {
+        margin: 5px 5px 0 0;
+        vertical-align: middle;
 
-      .circles {
-        width: 10px;
-        height: 10px;
-        margin-top: 3px;
+        .circle, .response, .text-label {
+          margin-right: 5px;
+        }
+
       }
 
-      .response, .circles, .text{
-        margin-right: 3px;
-      }
-
-    }
-
-    .data:last-child {
-      margin-right: 0;
     }
 
   }
 
 }
 
-/********************************** Media ***************************************/
+@media (max-width: $size-md) {
 
-@media (max-width: 840px) {
-
-  .piechart {
+  .pie-chart {
     max-width: 100% !important;
   }
 
 }
-
-@media (max-width: 600px) {
-
-  .chart-pie {
-    width: 100% !important;
-  }
-
-}
-
-@media (min-width: 601px) {
-
-  .piechart {
-
-    .chart-pie {
-      width: 320px !important;
-    }
-
-  }
-
-  .executive-piechart {
-
-    .chart-pie {
-      width: 100% !important;
-    }
-
-  }
-
-}
-
-@media (min-width: 840px) {
-
-  .executive-piechart {
-
-    .chart-pie {
-      width: 320px !important;
-    }
-
-  }
-
-}
-

@@ -1,80 +1,86 @@
-<div id="header-unauth-component">
+<header id="header-unauth-component" class="header header-primary">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar">
 
-      <div class="menu-view">
+      <!-- logo -->
+      <div class="mobile-menu">
 
-        <!-- logo -->
-        <div class="pad">
+        <div class="logo">
           <a routerLink="/" class="gtm-menu-logo">
-            <img src="{{ getLogo() }}" [alt]=" " height="28px">
+            <img src="{{ getLogo() }}" [alt]=" " width="110px" height="33px">
           </a>
         </div>
 
         <!-- buttons -->
-        <div class="pad">
-          <button type="button" class="btn ghost-primary btn-xs" [ngStyle]="{ 'margin-right': '.6rem' }" (click)="onClickSignIn($event)" id="button-signIn">{{ 'COMMON.LOG_IN' | translate }}</button>
+        <div class="button-wrapper">
+          <button type="button" class="btn ghost-primary btn-xs" [ngStyle]="{ 'margin-right': '.5rem' }" (click)="onClickSignIn($event)" id="button-signIn">{{ 'COMMON.LOG_IN' | translate }}</button>
           <button type="button" class="btn btn-primary btn-xs" (click)="onClickSignUp($event)">{{ 'COMMON.SIGN_UP' | translate }}</button>
         </div>
 
-        <!-- sign in wrapper -->
-        <div class="signIn-wrapper" [ngStyle]="{ 'display': toggleSignInForm ? 'block' : 'none' }" id="header-unauth-signInForm">
-          <div class="column col-xs-12 col-11 col-mx-auto">
+      </div>
 
-            <!-- heading -->
-            <div class="text-center">
-              <h1 class="title-primary">{{ 'LOG_IN.HEADING' | translate }}</h1>
+      <!-- sign in wrapper -->
+      <div class="signIn-wrapper" [ngStyle]="{ 'display': toggleSignInForm ? 'block' : 'none' }" id="header-unauth-signInForm">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+
+          <!-- heading -->
+          <div class="text-center">
+            <h1 class="title-primary">{{ 'LOG_IN.HEADING' | translate }}</h1>
+          </div>
+
+          <!-- form -->
+          <form novalidate [formGroup]="formData" (submit)="onClickContinue()">
+
+            <!-- email address -->
+            <div class="form-group has-error">
+              <label class="form-label" for="header-unauth-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+              <input
+                type="email"
+                id="header-unauth-email"
+                class="form-input"
+                formControlName="email"
+                placeholder="john@catco.com">
+              <ng-container *ngIf="formData.get('email').touched">
+                <ng-container *ngIf="formData.get('email').hasError('required')">
+                  <span class="form-input-hint">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                </ng-container>
+                <ng-container *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+                  <span class="form-input-hint">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+                </ng-container>
+               </ng-container>
             </div>
 
-            <!-- form -->
-            <form novalidate [formGroup]="formData" (submit)="onClickContinue()">
+            <!-- password -->
+            <div class="form-group has-error">
+              <label class="form-label" for="header-unauth-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
+              <input
+                class="form-input"
+                type="password"
+                id="header-unauth-password"
+                formControlName="password"
+                [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
+              <ng-container *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+                <span class="form-input-hint">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
+              </ng-container>
+            </div>
 
-              <!-- email address -->
-              <div class="form-group">
-                <label class="form-label" for="header-unauth-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
-                <input
-                  type="email"
-                  id="header-unauth-email"
-                  class="form-input"
-                  formControlName="email"
-                  placeholder="john@catco.com">
-                <span *ngIf="formData.get('email').touched">
-                  <span class="form-error" *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-                  <span class="form-error" *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
-                </span>
-              </div>
+            <!-- login button -->
+            <div class="login-button text-center">
+              <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</button>
+            </div>
 
-              <!-- password -->
-              <div class="form-group">
-                <label class="form-label" for="header-unauth-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
-                <input
-                  class="form-input"
-                  type="password"
-                  id="header-unauth-password"
-                  formControlName="password"
-                  [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
-                <span class="form-error" *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
-              </div>
+          </form>
 
-              <!-- login button -->
-              <div class="login-button text-center">
-                <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</button>
-              </div>
-
-            </form>
-
-          </div>
         </div>
-        <!-- /sign in wrapper -->
-
       </div>
+      <!-- /sign in wrapper -->
 
     </nav>
   </div>
-</div>
+</header>
 
 <!-- sign up sidebar -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [(template)]="sidebarValue">
   <app-signup-form [sidebarState]="sidebarValue.animate_state" (finalOutput)="createUser($event)"></app-signup-form>
 </app-sidebar>
 <!-- /sign up sidebar -->

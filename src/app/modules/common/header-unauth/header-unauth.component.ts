@@ -33,11 +33,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private mouseService: MouseService,
-              private formBuilder: FormBuilder) { }
-
-  ngOnInit() {
-
-    this.buildForm();
+              private formBuilder: FormBuilder) {
 
     this.mouseService.getClickEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((event: Event) => {
       if (event && event.target && event.target['id'] !== 'button-signIn' && event.target['id'] !== 'header-unauth-signInForm'
@@ -48,6 +44,11 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
         this._formData.reset();
       }
     });
+
+  }
+
+  ngOnInit() {
+    this.buildForm();
   }
 
 
@@ -132,15 +133,6 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
 
   /***
-   * this closes the sign up sidebar.
-   * @param value
-   */
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-  }
-
-
-  /***
    * this function is to register the new client.
    * @param formValue
    */
@@ -174,6 +166,10 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get toggleSignInForm(): boolean {

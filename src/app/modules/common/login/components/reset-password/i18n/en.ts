@@ -1,5 +1,5 @@
 export const RESET_PASSWORD = {
-  'TITLE': 'Reset Password',
+
 
   'HEADING_A': 'Update your password.',
   'HEADING_B': 'Enter your email address below and we\'ll get you back on track.',

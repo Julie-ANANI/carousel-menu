@@ -1,0 +1,397 @@
+@import "framework/src/variables";
+
+@media print and (color) {
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body, .main-wrapper, .body-wrapper {
+    width: 100%;
+    height: 20.95cm;
+    margin: 0;
+    padding: 0;
+    flex: unset !important;
+    min-height: unset !important;
+  }
+
+  app-modal, app-header, app-footer, app-sidebar {
+    display: none !important;
+  }
+
+  p {
+    margin-bottom: 4px;
+  }
+
+  ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 4px;
+
+    li {
+      margin-top: 4px;
+    }
+
+  }
+
+
+  /********************************** Innovation Card ***************************************/
+
+  #setup-component, .header, #project-component .section-header {
+    display: none !important;
+  }
+
+  #project-component {
+    padding-bottom: 0 !important;
+  }
+
+  #innovation-card-print {
+    display: flex !important;
+    color: $text-primary-color;
+    font-size: 13px;
+    width: 100%;
+    height: 20.95cm;
+
+    .column-1, .column-2, .column-3 {
+      width: 33.33%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+
+      .title {
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: normal;
+      }
+
+    }
+
+    .column-1 {
+      background-color: #D8D8D8;
+
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 25px;
+      }
+
+      .image-wrapper {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+
+      .advantage-wrapper {
+
+        .title {
+          font-weight: normal;
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
+
+        .summary-text {
+          margin-bottom: 0;
+        }
+
+        .advantages {
+
+          li:first-child {
+            margin-top: 0;
+          }
+
+        }
+
+      }
+
+    }
+
+    .issue-text, .solution-text {
+      margin-bottom: -4px;
+    }
+
+  }
+
+
+  /********************************** Market report ***************************************/
+
+  #market-report {
+    padding-bottom: 0 !important;
+    background-color: white !important;
+
+
+    .sticky-wrapper, .menu-button-print, .report-innovation-print, .report-targeting-print, .report-analytics-print, .report-key-learnings-print
+    , .report-professionals-print, .report-map-print, .report-origin-print, .report-other-sections-print, .report-conclusion-print
+    , .msg-wrapper, .scroll-sticky-wrapper {
+      display: none !important;
+    }
+
+    .front-wrapper {
+      display: flex !important;
+    }
+
+
+    #executive-report-wrapper, #main-page, .umi-intro-print {
+      padding-top: 0;
+      padding-bottom: 0 !important;
+    }
+
+
+    .column {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+
+    #main-page {
+
+      .column {
+        height: 100vh !important;
+      }
+
+      .header-wrapper {
+        padding-top: 30px;
+      }
+
+      .front-page-print {
+        height: 100%;
+        padding: 15px;
+        page-break-inside: avoid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .body-wrapper {
+          min-height: unset;
+          flex: 1;
+
+          h1 {
+            font-size: 42px !important;
+          }
+
+          .summary {
+            font-size: 14px !important;
+          }
+
+        }
+
+        .text-owner, .text-jobTitle, .text-email, .footer-wrapper {
+          font-size: 12px !important;
+        }
+
+        .footer-wrapper {
+          width: 100%;
+          padding-left: 5px !important;
+          padding-right: 5px !important;
+        }
+
+      }
+
+    }
+
+
+    #executive-report-wrapper {
+     height: 100%;
+
+     .main-heading {
+       font-size: 20px !important;
+     }
+
+     .sub-title, .abstract-professional, .details, .conclusion-text, .operator-contact .name, .operator-contact .job, .operator-contact .phone
+     , .section-second h6, .remaining-text, .abstract-wrapper {
+       font-size: 12px !important;
+     }
+
+     .operator-contact .job, .operator-contact .phone, .operator-contact .text-link, .section-second .address, .remaining-text .text-link {
+       font-size: 11px !important;
+     }
+
+     .page-first, .second-page-wrapper {
+       flex-direction: row !important;
+       height: 792px !important;
+     }
+
+     .page-first {
+
+       #executive-professional-wrapper {
+         justify-content: flex-start !important;
+         padding: 20px !important;
+         border-right: 1px solid #E0E0E0 !important;
+
+         .main-heading {
+           margin-bottom: 10px !important;
+         }
+
+         .section-2-wrapper {
+           margin-bottom: 10px !important;
+         }
+
+         .professional-profile-wrapper {
+           margin-bottom: 0 !important;
+
+           .profile {
+             margin-bottom: 10px !important;
+
+             .details {
+
+               p {
+                 padding: 0 0 2px 0 !important;
+               }
+
+             }
+
+           }
+
+         }
+
+       }
+
+     }
+
+     .section-wrapper {
+       width: 33.33% !important;
+     }
+
+     .section {
+       padding: 20px !important;
+       display: inline-flex !important;
+     }
+
+     .sections {
+       width: 66.67% !important;
+     }
+
+     .section-2, .section-4 {
+       height: 50% !important;
+       display: flex !important;
+       border-bottom: 1px solid $border-color !important;
+     }
+
+     .section-4 {
+       width: 50% !important;
+       border-left: 1px solid $border-color !important;
+     }
+
+     .section-2:last-child {
+       border-bottom: none !important;
+     }
+
+     .section-4:last-child, .section-4:nth-child(3) {
+       border-bottom: none !important;
+     }
+
+     .section-4:nth-child(1), .section-4:nth-child(3) {
+       border-left: none !important;
+     }
+
+     .second-page {
+       padding-top: 0 !important;
+
+       .second-page-wrapper {
+         min-height: 100% !important;
+       }
+
+     }
+
+     #executive-section-wrapper {
+
+       .executive-piechart {
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         height: 100%;
+
+         .percentage {
+           margin-bottom: 10px !important;
+         }
+
+         .chart-pie {
+           width: 300px !important;
+           margin-bottom: 10px !important;
+         }
+
+         .data {
+           margin-right: 5px !important;
+           margin-bottom: 5px !important;
+         }
+
+       }
+
+       .title-wrapper {
+         margin-bottom: 15px !important;
+       }
+
+       .content-wrapper {
+         height: 229px !important;
+         justify-content: flex-start !important;
+         margin-bottom: 10px !important;
+       }
+
+       .tag {
+         margin-bottom: 5px !important;
+       }
+
+       .tag:last-child {
+         margin-bottom: 0 !important;
+       }
+
+       .executive-star-wrapper {
+         margin-bottom: 0 !important;
+
+         .note-label {
+           margin-bottom: 5px !important;
+         }
+
+       }
+
+       .executive-bar-chart-wrapper {
+
+         .row-1-wrapper, .row-2-wrapper, .row-3-wrapper {
+           margin-bottom: 5px !important;
+         }
+
+       }
+
+     }
+
+     #executive-conclusion-wrapper {
+
+       .section-first, .section-second {
+         padding: 20px !important;
+       }
+
+       .main-heading, .conclusion-text {
+         margin-bottom: 10px !important;
+       }
+
+       .logo-address {
+         margin-top: 20px !important;
+       }
+
+     }
+
+    }
+
+
+    .umi-intro-print {
+      display: flex !important;
+
+      .img-responsive {
+        height: 19cm !important;
+        margin: auto;
+      }
+
+    }
+
+  }
+
+
+}

@@ -7,6 +7,7 @@ import { Share } from '../../../../../models/share';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-synthesis-list',
@@ -51,16 +52,20 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
                private userService: UserService,
                private innovationService: InnovationService,
                private translateNotificationsService: TranslateNotificationsService,
-               private translateService: TranslateService) { }
+               private translateService: TranslateService,
+               private innovationFrontService: InnovationFrontService) {
+
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.SHARED_REPORTS');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
     this._totalReports = [];
     this.getUserReports();
   }
 
   private getUserReports() {
-    this._subscriptions.push(this.userService.getSharedWithMe(this.config).subscribe((reports: any) => {
+    this._subscriptions.push(this.userService.getSharedWithMe(this._config).subscribe((reports: any) => {
       this.getSharedReports(reports.sharedgraph || []);
       this._noResult = reports.length === 0;
     }, () => {
@@ -116,13 +121,12 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    * @param report
    * @returns {string}
    */
-  getMedia(report: any) {
-    let src = 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
-
-    if (report.media && report.media.type === 'PHOTO') {
-      src = report.media.url;
+  getMedia(report: any): string {
+    if (report.media) {
+      return this.innovationFrontService.getMediaSrc(report.media, 'mediaSrc', '120', '100');
+    } else {
+      return 'https://res.cloudinary.com/umi/image/upload/c_fill,h_100,w_120/v1542811700/app/default-images/icons/no-image.png';
     }
-    return src;
   }
 
   get dateFormat(): string {

@@ -11,6 +11,7 @@ import { environment } from '../../../../../../environments/environment';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
 import { Media } from '../../../../../models/media';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-discover-description',
@@ -57,7 +58,8 @@ export class DiscoverDescriptionComponent implements OnInit {
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
-              private innovationService: InnovationService) { }
+              private innovationService: InnovationService,
+              private innovationFrontService: InnovationFrontService) { }
 
   ngOnInit() {
 
@@ -142,30 +144,12 @@ export class DiscoverDescriptionComponent implements OnInit {
 
 
   getSrc(media: Media): string {
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/app/default-images/image-not-available.png';
-    const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/';
-    const suffix = '.jpg';
-    return media.url === '' ? defaultSrc :  prefix + media.cloudinary.public_id + suffix;
+    return this.innovationFrontService.getMediaSrc(media, 'mediaSrc', '280', '177');
   }
 
 
   getRelatedSrc(innovCard: InnovCard): string {
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/app/default-images/image-not-available.png';
-    const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_177,w_280/';
-    const suffix = '.jpg';
-    let src = '';
-
-    if (innovCard.principalMedia && innovCard.principalMedia.type === 'PHOTO' && innovCard.principalMedia.cloudinary.public_id) {
-      src = prefix + innovCard.principalMedia.cloudinary.public_id + suffix;
-    } else if (innovCard.media.length > 0) {
-      const index = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
-      if (index !== -1) {
-        src = prefix + innovCard.media[index].cloudinary.public_id + suffix;
-      }
-    }
-
-    return src === '' ? defaultSrc : src;
-
+    return this.innovationFrontService.getMediaSrc(innovCard, 'default', '280', '177');
   }
 
 

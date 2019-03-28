@@ -2,18 +2,47 @@
 /* normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Spectre.css v0.4.7 | MIT License | github.com/picturepan2/spectre */
 
+
 // Variables
 @import "variables";
 @import "mixins";
 
 
+// Reset and dependencies
+@import "normalize";
+@import "base";
+
+
 // Elements
+@import "typography";
+@import "tables";
+@import "banners";
+@import "buttons";
+@import "forms";
+@import "header";
+@import "labels";
 @import "stats";
+@import "media";
+
+
+// Layout
+@import "layout";
 
 
 // Components
+@import "avatars";
+@import "badges";
+@import "bars";
+@import "cards";
+@import "modal";
+@import "navbar";
 @import "popovers";
+@import "tabs";
+@import "tooltip";
+
 
 
 // Utilities
+@import "animation";
+@import "container";
 @import "utilities";

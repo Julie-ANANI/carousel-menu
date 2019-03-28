@@ -1,0 +1,40 @@
+@import "framework/src/variables";
+@import "framework/src/mixins";
+
+
+/*
+    Ng2 auto complete npm module style.
+ */
+
+
+.ng2-auto-complete-wrapper {
+  display: inline-flex;
+  flex: 1;
+  max-width: 100%;
+}
+
+.ng2-auto-complete > ul {
+  box-shadow: $box-shadow;
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-bottom: 0 !important;
+  list-style: none;
+  z-index: 2;
+  background-color: $bg-color-light;
+  border: none !important;
+  border-radius: $border-radius !important;
+}
+
+.ng2-auto-complete > ul li {
+  @include control-transition();
+  padding: $unit-2 !important;
+  font-size: $font-size-sm;
+  margin-top: $unit-1 !important;
+  color: $text-primary !important;
+}
+
+.ng2-auto-complete > ul li:hover, .ng2-auto-complete > ul li.selected {
+  background:  $bg-dropdown-color !important;
+  border-color: $bg-dropdown-color !important;
+  cursor: pointer;
+}

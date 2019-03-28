@@ -1,48 +1,11 @@
-/*
-    Spectre framework
- */
-
-@import "../node_modules/spectre.css/src/spectre.scss";
-@import "../node_modules/spectre.css/src/spectre-icons.scss";
-@import "../node_modules/spectre.css/src/spectre-exp.scss";
-
-/*
-    Color variable file
- */
-@import "style/variables";
-@import "style/framework/src/variables";
-
-/********************************** Default Styles ***************************************/
-
-.tab-content {
-  width: 100%;
-}
-
-/*
-    Rest style file
- */
 @import "style/framework/src/umi";
-@import "style/general-style";
-@import "style/text-style";
-@import "style/form-style";
-@import "style/modal-style";
-@import "style/tooltip-style";
-@import "style/popover-style";
-@import "style/upload-photo-style";
-
-
-/*
-    In progress...
- */
-@import "style/framework/root";
 @import "style/tinymce-style";
-@import "style/simplenotification-style";
 @import "style/ng2autocomplete-style";
+@import "style/upload-zone-photo";
+@import "style/simple-notification-style";
 
 
-/*
-    Print style
- */
+// print style
 @import "style/print";
 
 

@@ -1,0 +1,93 @@
+@import "variables";
+
+.modal {
+  position: fixed;
+  overflow: hidden;
+  padding: $unit-2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &.active {
+    display: flex;
+    opacity: 1;
+    z-index: 8998;
+  }
+
+  &.inactive {
+    display: none;
+    opacity: 0;
+  }
+
+  .modal-overlay {
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    z-index: 8999;
+    background: $bg-overlay;
+  }
+
+  .modal-container {
+    display: flex;
+    flex-direction: column;
+    box-shadow: $box-shadow;
+    border-radius: 3px;
+    background-color: $bg-color-light;
+    position: fixed;
+    padding: 0;
+    text-align: unset;
+    overflow: hidden;
+    width: 100%;
+    z-index: 1;
+    animation: .2s slideInDown;
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      background-color: $secondary-color;
+      justify-content: space-between;
+      color: $light-color;
+      padding: 1.1rem 1.25rem;
+
+      .title {
+        margin-bottom: 0;
+      }
+
+      .btn {
+        min-width: auto;
+      }
+
+    }
+
+    .modal-body {
+      padding: 1.1rem 1.25rem;
+      font-size: $font-size-md;
+      position: relative;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 2rem 0 0 0 !important;
+      text-align: right !important;
+
+      .btn-cancel {
+        margin-right: .5rem !important;
+      }
+
+    }
+
+  }
+
+}
+
+
+
+

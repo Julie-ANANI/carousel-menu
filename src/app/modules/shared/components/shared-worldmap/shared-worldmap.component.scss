@@ -1,3 +1,5 @@
+@import "../../../../../style/framework/src/variables";
+
 .not-synthesis-wrapper {
 
   path, g {
@@ -6,11 +8,11 @@
   }
 
   g.selected, path.selected, .selected g, .selected path {
-    fill: #2ECC71;
+    fill: $success-color;
   }
 
   g.clickable:not(.selected):hover, path.clickable:not(.selected):hover, .clickable:not(.selected):hover g, .clickable:not(.selected):hover path {
-    fill: #FFB300;
+    fill: $primary-color;
   }
 
   g.disabled, path.disabled, .disabled g, .disabled path {
@@ -22,7 +24,7 @@
 .synthesis-wrapper {
 
   path, g {
-    fill: #97A4B1;
+    fill: $meta-color;
     cursor: pointer;
   }
 

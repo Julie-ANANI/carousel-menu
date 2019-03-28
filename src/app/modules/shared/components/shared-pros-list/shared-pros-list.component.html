@@ -1,32 +1,36 @@
-<!-- section table -->
-<app-shared-table
-  [config]="config"
-  [data]="tableInfos"
-  (configChange)="loadPros($event)"
-  (editRow)="onClickEdit($event)"
-  (removeRows)="deleteProsModal($event)"
-  (performAction)="performActions($event)"
-  (selectRowAction)="selectPro($event)">
-</app-shared-table>
+<section id="pros-list-component">
+  <app-shared-table
+    [config]="config"
+    [data]="tableInfos"
+    (configChange)="loadPros($event)"
+    (editRow)="onClickEdit($event)"
+    (removeRows)="deleteProsModal($event)"
+    (performAction)="performActions($event)"
+    (selectRowAction)="selectPro($event)">
+  </app-shared-table>
+</section>
+
 
 <!-- section sidebar -->
 <app-sidebar [(template)]="sidebarValue">
 
-  <app-user-form
-    *ngIf="isProfessionalForm"
-    [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type"
-    [pro]="currentPro"
-    [campaign]="campaign ? campaign: null"
-    (finalProfessionalData)="updatePro($event)">
-  </app-user-form>
+  <ng-container *ngIf="isProfessionalForm">
+    <app-user-form
+      [sidebarState]="sidebarValue.animate_state"
+      [type]="sidebarValue.type"
+      [pro]="currentPro"
+      [campaign]="campaign ? campaign: null"
+      (finalProfessionalData)="updatePro($event)">
+    </app-user-form>
+  </ng-container>
 
-  <app-tags-form
-    *ngIf="isTagsForm"
-    [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type"
-    (newTags)="addTagsToPro($event)">
-  </app-tags-form>
+  <ng-container *ngIf="isTagsForm">
+    <app-tags-form
+      [sidebarState]="sidebarValue.animate_state"
+      [type]="sidebarValue.type"
+      (newTags)="addTagsToPro($event)">
+    </app-tags-form>
+  </ng-container>
 
 </app-sidebar>
 

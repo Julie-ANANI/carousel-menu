@@ -1,106 +1,128 @@
-<div id="executive-section-wrapper">
+<section id="executive-section-wrapper">
 
-  <!-- Title -->
+  <!-- title -->
   <div class="title-wrapper">
 
-    <!-- Heading and Menu -->
+    <!-- heading and menu -->
     <div class="heading-menu">
 
-      <!-- Heading -->
-      <h1 class="main-heading">{{ questionSelected?.title | multiling:lang }}</h1>
+      <!-- heading -->
+      <h2 class="title-primary">{{ questionSelected?.title | multiling:lang }}</h2>
 
-      <!-- Menu -->
-      <div *ngIf="adminSide" class="menu-icon">
-        <i class="fas fa-bars"></i>
-        <div class="menu-item-wrapper">
-          <ul>
-            <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)">
-              {{ option?.title | multiling:lang }}
-            </li>
-          </ul>
+      <!-- menu -->
+      <ng-container *ngIf="adminSide">
+        <div class="menu-icon">
+
+          <i class="fas fa-bars"></i>
+
+          <div class="menu-item-wrapper">
+            <ul>
+              <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)">
+                {{ option?.title | multiling:lang }}
+              </li>
+            </ul>
+          </div>
+
         </div>
-      </div>
+      </ng-container>
 
     </div>
-    <!-- /Heading and Menu -->
+    <!-- /heading and Menu -->
 
-    <!-- Follow -->
-    <p *ngIf="questionSelected && stats" class="sub-title">
-      <span *ngIf="questionSelected?.controlType !== 'checkbox'">
-        <i class="fas fa-user"></i> {{ stats.nbAnswers || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
-      </span>
-      <span *ngIf="questionSelected?.controlType === 'checkbox'">
-        <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ questionSelected?.title | multiling:lang | lowercase }}
-      </span>
-      <span
-        pageScroll
-        pageScrollOffset="135"
-        [href]="'#' + questionSelected?.identifier"
-        class="text-link">
-        {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
-      </span>
-    </p>
-    <!-- /Follow -->
+    <!-- follow -->
+    <ng-container *ngIf="questionSelected && stats">
+      <p class="sub-title">
+
+        <span *ngIf="questionSelected?.controlType !== 'checkbox'">
+          <i class="fas fa-user"></i> {{ stats.nbAnswers || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
+        </span>
+
+        <span *ngIf="questionSelected?.controlType === 'checkbox'">
+          <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ questionSelected?.title | multiling:lang | lowercase }}
+        </span>
+
+        <span pageScroll pageScrollOffset="135" [href]="'#' + questionSelected?.identifier" class="text-link">
+          {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
+        </span>
+
+      </p>
+    </ng-container>
+    <!-- /follow -->
 
   </div>
-  <!-- /Title -->
+  <!-- /title -->
 
+  <!-- answer display -->
+  <ng-container *ngIf="questionSelected">
+    <div class="content-wrapper">
 
-  <!-- Answer display -->
-  <div *ngIf="questionSelected" class="content-wrapper">
-
-    <!-- If the question type is checkbox or radio -->
-    <ng-container *ngIf="questionSelected?.controlType === 'checkbox' || questionSelected?.controlType === 'radio'">
-      <app-bar-chart
-        [answers]="answersToShow"
-        [innovation]="innovation"
-        [question]="questionSelected"
-        [executiveReport]="true"
-        class="section-bar-chart-wrapper"
-        [stats]="stats">
-      </app-bar-chart>
-    </ng-container>
-    <!-- /If the question type is checkbox or radio -->
-
-
-    <!-- If the question type is star -->
-    <ng-container *ngIf="questionSelected?.controlType === 'stars'">
-      <app-stars
-        [answers]="answersToShow"
-        [innovation]="innovation"
-        [question]="questionSelected"
-        [executiveReport]="true"
-        class="section-star-wrapper">
-      </app-stars>
-    </ng-container>
-    <!-- /If the question type is star -->
-
-    <!-- If the question is not checkbox, radio, stars -->
-    <ng-container *ngIf="questionSelected?.controlType !== 'checkbox' && questionSelected?.controlType !== 'radio' && questionSelected?.controlType !== 'stars'">
-
-      <ng-container *ngIf="tags.length > 0">
-        <div *ngFor="let tag of tags | slice:0:3" class="tag">
-          <div *ngIf="tag.count > 1" class="tag-count">&nbsp;{{ tag.count }}X</div>
-          <div><span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': getColor(questionSelected?.title | multiling:lang ) }">#{{ tag.label | multiling:lang }}</span></div>
-        </div>
+      <!-- if the question type is checkbox or radio -->
+      <ng-container *ngIf="questionSelected?.controlType === 'checkbox' || questionSelected?.controlType === 'radio'">
+        <app-bar-chart
+          [answers]="answersToShow"
+          [innovation]="innovation"
+          [question]="questionSelected"
+          [executiveReport]="true"
+          class="section-bar-chart-wrapper"
+          [stats]="stats">
+        </app-bar-chart>
       </ng-container>
+      <!-- /if the question type is checkbox or radio -->
 
-      <ng-container *ngIf="tags.length === 0">
-        <div class="no-tags">
-          <div class="tag-count">0X</div>
-          <div><span class="tag-outer-wrapper">{{ 'MARKET_REPORT.EXECUTIVE.NO_TAGS' | translate }}</span></div>
-        </div>
+      <!-- if the question type is star -->
+      <ng-container *ngIf="questionSelected?.controlType === 'stars'">
+        <app-stars
+          [answers]="answersToShow"
+          [innovation]="innovation"
+          [question]="questionSelected"
+          [executiveReport]="true"
+          class="section-star-wrapper">
+        </app-stars>
       </ng-container>
+      <!-- /if the question type is star -->
 
-    </ng-container>
-    <!-- If the question is not checkbox, radio, stars -->
+      <!-- if the question is not checkbox, radio, stars -->
+      <ng-container *ngIf="questionSelected?.controlType !== 'checkbox' && questionSelected?.controlType !== 'radio' && questionSelected?.controlType !== 'stars'">
 
+        <ng-container *ngIf="tags.length > 0">
+          <div *ngFor="let tag of tags | slice:0:3" class="tag">
 
-  </div>
-  <!-- /Answer display -->
+            <div *ngIf="tag.count > 1" class="tag-count">&nbsp;{{ tag.count }}X</div>
 
-  <!-- Abstract -->
-  <div *ngIf="questionSelected" class="abstract-wrapper">{{ abstractValue }}</div>
-  <!-- /Abstract -->
+            <div>
+              <span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': getColor(questionSelected?.title | multiling:lang ) }">
+                #{{ tag.label | multiling:lang }}
+              </span>
+            </div>
 
-</div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="tags.length === 0">
+          <div class="no-tags">
+
+            <div class="tag-count">0X</div>
+
+            <div>
+              <span class="tag-outer-wrapper">
+                {{ 'MARKET_REPORT.EXECUTIVE.NO_TAGS' | translate }}
+              </span>
+            </div>
+
+          </div>
+        </ng-container>
+
+      </ng-container>
+      <!-- if the question is not checkbox, radio, stars -->
+
+    </div>
+  </ng-container>
+  <!-- /answer display -->
+
+  <!-- abstract -->
+  <ng-container *ngIf="questionSelected">
+    <div class="abstract-wrapper">{{ abstractValue }}</div>
+  </ng-container>
+  <!-- /abstract -->
+
+</section>

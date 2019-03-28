@@ -4,6 +4,7 @@ import { ResponseService } from '../../../services/response.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Innovation } from '../../../../../../../models/innovation';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-executive-professional',
@@ -27,7 +28,8 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   private _targetCountries: Array<string> = [];
 
-  constructor(private responseService: ResponseService) { }
+  constructor(private responseService: ResponseService,
+              private translateService: TranslateService) { }
 
   ngOnInit() {
     this.getAnswers();
@@ -87,6 +89,10 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   get professionalAbstract(): string {
     return this._professionalAbstract;
+  }
+
+  get userLang() {
+    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
 
   ngOnDestroy(): void {

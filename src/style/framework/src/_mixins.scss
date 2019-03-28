@@ -80,3 +80,9 @@
   }
 
 }
+
+
+// Bar scale variant
+@mixin bar-scale-variant($color-1st, $color-2nd) {
+  background-image: linear-gradient(-180deg, $color-1st 0%, $color-2nd 100%);
+}

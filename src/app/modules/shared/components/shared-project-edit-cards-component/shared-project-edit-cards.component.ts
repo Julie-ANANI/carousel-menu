@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Innovation} from '../../../../models/innovation';
-import {TranslationService} from '../../../../services/translation/translation.service';
-import {forkJoin, Subject} from 'rxjs';
-import {environment} from '../../../../../environments/environment';
-import {Media, Video} from '../../../../models/media';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { Innovation } from '../../../../models/innovation';
+import { TranslationService } from '../../../../services/translation/translation.service';
+import { forkJoin, Subject } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
+import { Media, Video } from '../../../../models/media';
 import { takeUntil } from 'rxjs/operators';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {InnovCard} from '../../../../models/innov-card';
-import {InnovationCommonService} from '../../../../services/innovation/innovation-common.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {DomSanitizer} from '@angular/platform-browser';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { InnovCard } from '../../../../models/innov-card';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 
 declare const tinymce: any;
 
@@ -19,10 +19,10 @@ declare const tinymce: any;
   styleUrls: ['shared-project-edit-cards.component.scss']
 })
 
-export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
+export class SharedProjectEditCardsComponent implements OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this._innovation =  value ? JSON.parse(JSON.stringify(value)) : value;
+    this._innovation = value;
   }
 
   @Input() set editable(value: boolean) {
@@ -36,8 +36,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Input() set sideAdmin(value: boolean) {
     this._adminSide = value;
   }
-
-  @Output() pitchChange = new EventEmitter<Innovation>();
 
   private _innovation: Innovation;
 
@@ -55,19 +53,17 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   private _saveChanges = false;
 
-  private _deleteModal = false;
+  private _modalDelete = false;
 
   private _editors: Array<any> = [];
 
   constructor(private translationService: TranslationService,
               private innovationService: InnovationService,
-              private innovationCommonService: InnovationCommonService,
+              private innovationFrontService: InnovationFrontService,
               private translateNotificationsService: TranslateNotificationsService,
-              public domSanitizer: DomSanitizer) {}
+              public domSanitizer: DomSanitizer) {
 
-  ngOnInit() {
-
-    this.innovationCommonService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+    this.innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       this._saveChanges = response;
     });
 
@@ -83,8 +79,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * in the model.
    */
   private notifyChanges() {
-    this.innovationCommonService.setNotifyChanges(true);
-    this.pitchChange.emit(this._innovation);
+    this.innovationFrontService.setNotifyChanges(true);
   }
 
 
@@ -97,7 +92,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   onLangSelect(event: Event, index: number) {
     event.preventDefault();
     this._selectedCardIndex = index;
-    this.innovationCommonService.setSelectedInnovationIndex(this._selectedCardIndex);
+    this.innovationFrontService.setSelectedInnovationIndex(this._selectedCardIndex);
   }
 
 
@@ -115,7 +110,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         if (this._innovation.innovationCards.length < 2 && this._innovation.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this._innovation._id, new InnovCard({ lang: lang})).subscribe((data: InnovCard) => {
             this._innovation.innovationCards.push(data);
-            this.notifyChanges();
             this._selectedCardIndex = this._innovation.innovationCards.length - 1;
             this.onLangSelect(event, this._selectedCardIndex);
             this.notifyChanges();
@@ -141,13 +135,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    */
   onClickDelete(event: Event) {
     event.preventDefault();
-    this._deleteModal = true;
-  }
-
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._deleteModal = false;
+    this._modalDelete = true;
   }
 
 
@@ -156,7 +144,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * modal, and it deletes the selected lang card.
    * @param event
    */
-  onClickSubmit(event: Event) {
+  onClickConfirm(event: Event) {
     event.preventDefault();
 
     if (this._canEdit) {
@@ -165,12 +153,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           this._innovation.innovationCards = this._innovation.innovationCards.filter((card) => card._id !== this._innovation.innovationCards[this._selectedCardIndex]._id);
           this.notifyChanges();
           this.onLangSelect(event, 0);
-          this.closeModal(event);
-          this.translateNotificationsService.error('ERROR.SUCCESS', 'ERROR.PROJECT.DELETED_TEXT');
+          this._modalDelete = false;
+          this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.DELETED_TEXT');
         }, () => {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
-          this.closeModal(event);
-        })
+          this._modalDelete = false;
+        });
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
@@ -201,11 +189,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         break;
 
       default:
-      // remove html tags from text
-      const text = from_card[model].replace(/<[^>]*>/g, '');
-      this.translationService.translate(text, target_card.lang).subscribe((o) => {
-        target_card[model] = o.translation;
-      });
+        // remove html tags from text
+        const text = from_card[model].replace(/<[^>]*>/g, '');
+        this.translationService.translate(text, target_card.lang).subscribe((o) => {
+          target_card[model] = o.translation;
+        });
 
     }
 
@@ -218,7 +206,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param event
    */
   updateData(event: { id: string, content: string }) {
-    this.notifyChanges();
 
     if (event.id.indexOf('summary') !== -1) {
       this._innovation.innovationCards[this._selectedCardIndex].summary = event.content;
@@ -228,17 +215,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this._innovation.innovationCards[this._selectedCardIndex].solution = event.content;
     }
 
+    this.notifyChanges();
+
   }
 
 
-  getColor(length: number) {
-    if (length <= 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < 250) {
-      return '#f0ad4e';
-    } else {
-      return '#2ECC71';
-    }
+  getColor(length: number, limit: number) {
+    return this.innovationFrontService.getColor(length, limit);
   }
 
 
@@ -262,7 +245,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   getConfig(type: string): any {
     const _inputConfig = {
       'advantages': {
-        placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
+        placeholder: 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
         initialData: this._innovation.innovationCards[this._selectedCardIndex]['advantages']
       }
     };
@@ -270,6 +253,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       placeholder: 'Input',
       initialData: ''
     };
+  }
+
+
+  getSrc(media: Media, requestFor: string): string {
+    return this.innovationFrontService.getMediaSrc(media, requestFor);
   }
 
 
@@ -392,8 +380,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     return this._saveChanges;
   }
 
-  get deleteModal(): boolean {
-    return this._deleteModal;
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
+  }
+
+  get modalDelete(): boolean {
+    return this._modalDelete;
   }
 
   get editors(): Array<any> {

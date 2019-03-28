@@ -78,7 +78,6 @@ export class AdminEditWorkflowComponent {
 
     this._campaignScenario.emails.forEach((email: EmailTemplate) => {
       steps[email.step][email.language] = email;
-      // email.signature = email.signature || {};
       email.defaultSignatureName = 'Karine Caulfield';
       email.status = email.modified ? email.modified.toString() : 'false';
     });
@@ -88,11 +87,9 @@ export class AdminEditWorkflowComponent {
     this._total = this._campaignScenario.emails.length;
 
     let columns = [{_attrs: ['num', `${this._language}.subject`], _name: 'TABLE.HEADING.EMAILS', _type: 'TEXT', _isSortable: false, _choices: null},
-     // {_attrs: [`${this._language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false, _choices: null},
       {_attrs: [`${this._language}.defaultSignatureName`], _name: 'TABLE.HEADING.SIGNATURES', _type: 'TEXT', _isSortable: false, _choices: null}];
 
     if (this._inCampaign) {
-      // columns.push({_attrs: [`${this._language}.modified`], _name: 'Modified', _type: 'CHECK', _isSortable: false, _choices: null});
       columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES',_isSortable: false, _choices: [
           {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label label-draft'},
           {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label label-success'},
@@ -137,10 +134,6 @@ export class AdminEditWorkflowComponent {
         email = emailsObject[email.language];
         email.status = email.modified ? email.modified.toString() : 'false';
         email.defaultSignatureName = 'Karine Caulfield';
-        /*if (emailsObject[email.language].signature) {
-          const fullSignature = this._signatures.find(s => s.name === email.signature.name);
-          email.signature = fullSignature || {};
-        }*/
       }
       return email;
     });

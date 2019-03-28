@@ -2,13 +2,13 @@
 
 <main class="sidebar-container" [@animateSidebar]="state" [ngStyle]="{ 'width': size ? size : '452px'  }">
   <section class="sidebar-content">
-    <div #content class="pad-bottom">
+    <div #content class="padding">
 
       <!-- Header -->
-      <header class="sidebar-header">
+      <header class="header header-secondary">
         <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="header-content">
-            <div>{{ title | translate }}</div>
+          <div class="sidebar-header">
+            <h5 class="title">{{ title | translate }}</h5>
             <button class="btn btn-close" id="close" (click)="toggleState($event, content)"></button>
           </div>
         </div>

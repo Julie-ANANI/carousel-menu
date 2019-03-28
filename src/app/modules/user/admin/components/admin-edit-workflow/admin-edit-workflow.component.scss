@@ -3,24 +3,19 @@
 #admin-edit-workflow-component {
 
   .section-header {
-    color: $meta;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 1.2rem;
+    margin-bottom: $unit-5;
+    color: $meta-color;
 
     .icons-delete, .circle {
-      margin-left: 0.6rem;
-    }
-
-    .circle {
-      width: 20px;
-      height: 20px;
-      margin-right: 0.5rem;
+      margin-left: $unit-2;
     }
 
     .incomplete {
-      background-color: $alert;
+      background-color: $alert-color;
+      border-color: $alert-color;
 
       .fa-check {
         visibility: hidden;
@@ -29,19 +24,21 @@
     }
 
     .complete {
-      background-color: $success;
+      background-color: $success-color;
+      border-color: $success-color;
 
       .fa-check {
+        color: $light-color;
         visibility: visible;
       }
 
     }
 
     .text-link {
-      color: $meta;
+      color: $meta-color;
 
       &.active {
-        color: $primary;
+        color: $primary-color;
         text-decoration: none;
         cursor: default;
       }
@@ -49,7 +46,8 @@
     }
 
     .text-link:hover {
-      color: $primary;
+      color: $primary-color;
+      text-decoration: none;
     }
 
   }

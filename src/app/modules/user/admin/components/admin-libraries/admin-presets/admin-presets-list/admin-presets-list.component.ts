@@ -13,9 +13,13 @@ import { first } from 'rxjs/operators';
 export class AdminPresetsListComponent implements OnInit {
 
   private _presets: Array<Preset>;
-  public selectedPresetIdToBeDeleted: string = null;
-  public selectedPresetToBeCloned: Preset = null;
+
+  selectedPresetIdToBeDeleted: string = null;
+
+  selectedPresetToBeCloned: Preset = null;
+
   private _total: number;
+
   private _config = {
     fields: '',
     limit: '10',
@@ -23,6 +27,10 @@ export class AdminPresetsListComponent implements OnInit {
     search: '{}',
     sort: '{"created":-1}'
   };
+
+  private _modalDelete = false;
+
+  private _modalClone = false;
 
   private _paginationConfig: PaginationInterface = {limit: this._config.limit, offset: this._config.offset};
 
@@ -51,6 +59,14 @@ export class AdminPresetsListComponent implements OnInit {
     this.loadPresets(this._config);
   }
 
+  onClickDelete() {
+    this._modalDelete = true;
+  }
+
+  onClickClone() {
+    this._modalClone = true;
+  }
+
   private _getPresetIndex(presetId: string): number {
     for (const preset of this._presets) {
       if (presetId === preset._id) {
@@ -70,6 +86,7 @@ export class AdminPresetsListComponent implements OnInit {
       .subscribe((_: any) => {
         this._presets.splice(this._getPresetIndex(presetId), 1);
         this.selectedPresetIdToBeDeleted = null;
+        this._modalDelete = false;
       });
   }
 
@@ -77,13 +94,34 @@ export class AdminPresetsListComponent implements OnInit {
     event.preventDefault();
     delete clonedPreset._id;
     this._presetService.create(clonedPreset).pipe(first()).subscribe((preset: any) => {
-      this._router.navigate(['/admin/libraries/questionnaire/' + preset._id])
+      this._router.navigate(['/user/admin/libraries/questionnaire/' + preset._id])
     });
   }
 
   set config(value: any) { this._config = value; }
+
   get config(): any { return this._config; }
+
   get total () { return this._total; }
+
   get paginationConfig(): PaginationInterface { return this._paginationConfig; }
+
   get presets () { return this._presets; }
+
+  get modalDelete(): boolean {
+    return this._modalDelete;
+  }
+
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
+  }
+
+  get modalClone(): boolean {
+    return this._modalClone;
+  }
+
+  set modalClone(value: boolean) {
+    this._modalClone = value;
+  }
+
 }

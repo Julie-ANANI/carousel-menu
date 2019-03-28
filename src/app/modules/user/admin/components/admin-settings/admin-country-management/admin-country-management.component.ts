@@ -13,6 +13,13 @@ import {Table} from '../../../../../table/models/table';
   styleUrls: ['./admin-country-management.component.scss']
 })
 export class AdminCountryManagementComponent implements OnInit {
+  get showDeleteModal(): boolean {
+    return this._showDeleteModal;
+  }
+
+  set showDeleteModal(value: boolean) {
+    this._showDeleteModal = value;
+  }
 
   private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
@@ -30,7 +37,7 @@ export class AdminCountryManagementComponent implements OnInit {
   private _countryList: {filteredCountries: Array<any>, _metadata: any};
   private _currentCountry: any = null;
   public countriesToRemove: any[] = null;
-  public showDeleteModal = false;
+  private _showDeleteModal = false;
 
   constructor(private _emailService: EmailService,
               private _notificationsService: TranslateNotificationsService) { }
@@ -44,7 +51,7 @@ export class AdminCountryManagementComponent implements OnInit {
       }
     };
 
-    this.showDeleteModal = false;
+    this._showDeleteModal = false;
 
     this.loadCountries(null);
   }
@@ -133,13 +140,13 @@ export class AdminCountryManagementComponent implements OnInit {
 
   deleteCountriesModal(countries: any) {
     this.countriesToRemove = [];
-    this.showDeleteModal = true;
+    this._showDeleteModal = true;
     countries.forEach((value: any) => this.countriesToRemove.push(value));
   }
 
   closeModal(event: Event) {
     event.preventDefault();
-    this.showDeleteModal = false;
+    this._showDeleteModal = false;
   }
 
   removeCountries() {
@@ -147,7 +154,7 @@ export class AdminCountryManagementComponent implements OnInit {
       this.removeCountry(country._id);
     }
     this.countriesToRemove = [];
-    this.showDeleteModal = false;
+    this._showDeleteModal = false;
   }
 
   removeCountry(countryId: string) {

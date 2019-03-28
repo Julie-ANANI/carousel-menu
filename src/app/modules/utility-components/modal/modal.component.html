@@ -1,11 +1,10 @@
-<div *ngIf="showModal" (click)="toggleState($event)">
-  <div class="modal-component" [ngClass]="showModal ? 'active' : 'inactive'">
+<section *ngIf="showModal" (click)="toggleState($event)">
+  <div class="modal" [ngClass]="showModal ? 'active' : 'inactive'">
     <div class="modal-overlay">
-
       <div class="modal-container" [ngStyle]="{ 'max-width': maxWidth ? maxWidth : '640px' }">
 
-        <div *ngIf="title" class="header-primary">
-          <div class="title-header">{{ title | translate }}</div>
+        <div *ngIf="title" class="header modal-header">
+          <h5 class="title">{{ title | translate }}</h5>
           <button class="btn btn-close"></button>
         </div>
 
@@ -14,8 +13,7 @@
         </div>
 
       </div>
-
     </div>
   </div>
-</div>
+</section>
 

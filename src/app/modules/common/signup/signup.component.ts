@@ -33,17 +33,17 @@ export class SignupComponent implements OnInit {
               private authService: AuthService,
               private userService: UserService,
               private router: Router) {
-  }
 
-  ngOnInit() {
-    this.translateTitleService.setTitle('COMMON.SIGN_UP');
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.SIGN_UP');
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this._isInvitation = params['invitation'] && params['invitation'] === 'true';
     });
 
-    this.linkedInUrl();
+  }
 
+  ngOnInit() {
+    this.linkedInUrl();
   }
 
 

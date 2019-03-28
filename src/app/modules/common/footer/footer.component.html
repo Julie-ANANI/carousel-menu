@@ -1,16 +1,16 @@
-<div class="container fluid" id="footer-component">
+<section class="header header-primary" id="footer-component">
   <div class="column col-11 col-xs-12 col-mx-auto">
-    <div class="content-wrapper">
+    <nav class="navbar">
 
-      <!-- Logo -->
-      <div class="logo pad">
+      <!-- logo -->
+      <div class="logo">
         <a routerLink="/" class="gtm-menu-logo">
-          <img src="{{ getLogo() }}" height="28px">
+          <img src="{{ getLogo() }}" [alt]=" " width="110px" height="33px">
         </a>
       </div>
 
-      <!-- Info -->
-      <div class="info pad">
+      <!-- info -->
+      <div class="info">
         {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
           <span *ngIf="checkIsMainDomain()">
             |
@@ -26,8 +26,8 @@
           </span>
       </div>
 
-      <!-- Language -->
-      <div class="lang pad">
+      <!-- language -->
+      <div class="lang">
         <label class="form-switch" for="setLang">
           <select class="form-select" id="setLang" (change)="changeLanguage($event)">
             <option *ngFor="let lang of langs" [selected]="lang === currentLang">
@@ -37,7 +37,7 @@
         </label>
       </div>
 
-    </div>
+    </nav>
   </div>
-</div>
+</section>
 

@@ -12,10 +12,11 @@ import { UserService } from '../../services/user/user.service';
 import { InnovationService } from '../../services/innovation/innovation.service';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
-import { ScrollService } from '../../services/scroll/scroll.service';
 import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
 import { InnovationCommonService } from '../../services/innovation/innovation-common.service';
+import { InnovationFrontService } from '../../services/innovation/innovation-front.service';
+import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinner-loader.module';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { InnovationCommonService } from '../../services/innovation/innovation-co
     TranslateModule.forChild(),
     UserRoutingModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    SpinnerLoaderModule
   ],
   declarations: [
     UserComponent,
@@ -33,10 +35,10 @@ import { InnovationCommonService } from '../../services/innovation/innovation-co
     InnovationService,
     InnovationResolver,
     AutocompleteService,
-    ScrollService,
     ShareService,
     AnswerService,
-    InnovationCommonService
+    InnovationCommonService,
+    InnovationFrontService
   ]
 })
 

@@ -1,17 +1,30 @@
-<progress *ngIf="displayLoader" class="progress" max="100"></progress>
+<ng-container *ngIf="displayLoading">
+  <app-spinner-loader></app-spinner-loader>
+</ng-container>
 
 
-<main class="body-wrapper" id="user-component">
+<ng-container *ngIf="!displayLoading">
 
-  <!-- header -->
-  <app-header></app-header>
+  <ng-container *ngIf="displayLoader">
+    <progress class="progress" max="100"></progress>
+  </ng-container>
 
-  <!-- body -->
-  <section class="main-wrapper">
-    <router-outlet></router-outlet>
-  </section>
+  <main class="main-wrapper" id="user-component">
 
-  <!-- footer -->
-  <app-footer></app-footer>
+    <!-- header -->
+    <app-header></app-header>
 
-</main>
+    <!-- body -->
+    <section class="body-wrapper" [ngStyle]=" { 'background': adminSide ? '#F5F5F5' : '#FFFFFF' } ">
+      <router-outlet></router-outlet>
+    </section>
+
+    <!-- footer -->
+    <app-footer></app-footer>
+
+  </main>
+
+</ng-container>
+
+
+

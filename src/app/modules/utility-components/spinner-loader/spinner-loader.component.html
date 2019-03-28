@@ -1,9 +1,11 @@
-<div id="spinner-loader-component">
+<section id="spinner-loader-component">
 
-  <div *ngIf="getDomain() === 'umi'" class="logo-wrapper">
-    <img src="{{ getLogo() }}" alt="UMI" height="40px">
-  </div>
+  <ng-container *ngIf="getDomain() === 'umi'">
+    <div class="logo-wrapper">
+      <img src="{{ getLogo() }}" alt="UMI" height="40px">
+    </div>
+  </ng-container>
 
   <div class="loading loading-lg"></div>
 
-</div>
+</section>

@@ -1,0 +1,67 @@
+@import "variables";
+
+
+// hero container padding
+.hero-pad {
+  padding-top: 3.15rem;
+  padding-bottom: 1.25rem;
+}
+
+
+// section container padding
+.section-pad {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+
+// section light container padding
+.section-light-pad {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+
+// section container with padding all sides.
+.full {
+  padding: 2.5rem;
+}
+
+
+// section light container with padding all sides.
+.full-light {
+  padding: 1.25rem;
+}
+
+
+// remove padding top
+.rm-pad-top {
+  padding-top: 0;
+}
+
+
+// remove padding bottom
+.rm-pad-bottom {
+  padding-bottom: 0;
+}
+
+
+@media (max-width: $size-sm) {
+
+  .full {
+    padding: 1.25rem !important;
+  }
+
+  .full-light {
+    padding: 0.78125rem !important;
+  }
+
+}
+
+@media (min-width: $size-2x) {
+
+  .restrict-container {
+    max-width: 800px !important;
+  }
+
+}

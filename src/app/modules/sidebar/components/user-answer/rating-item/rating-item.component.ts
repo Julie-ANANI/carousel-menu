@@ -9,6 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class RatingItemComponent {
 
   @Input() editMode: boolean;
+
   @Input() prop: string;
 
   @Input() set rating(value: number) {

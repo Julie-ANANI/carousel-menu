@@ -8,7 +8,7 @@ import { Table } from '../../../table/models/table';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -54,16 +54,16 @@ export class SharedProsListComponent {
 
   private _currentPro: Professional = null;
 
-  isProfessionalForm = false;
+  private _isProfessionalForm = false;
 
-  isTagsForm = false;
+  private _isTagsForm = false;
 
   private _modalDelete = false;
 
   constructor(private professionalsService: ProfessionalsService,
               private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
-              private _router: Router) { }
+              private router: Router) { }
 
   loadPros(config: any): void {
     this._config = config;
@@ -195,7 +195,7 @@ export class SharedProsListComponent {
             console.log("Look man, I could do this action just for the first one...");
           }
           const link = `/user/admin/community/members/${action._rows[0]._id}`;
-          this._router.navigate([link]);
+          this.router.navigate([link]);
         } else {
           console.error("What? empty rows? How did you do that?");
         }
@@ -206,14 +206,15 @@ export class SharedProsListComponent {
 
   onClickEdit(pro: Professional) {
     this.professionalsService.get(pro._id).subscribe((professional: Professional) => {
-      this.isProfessionalForm = true;
-      this.isTagsForm = false;
+      this._isProfessionalForm = true;
+      this._isTagsForm = false;
       this._currentPro = professional;
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
         title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
         type: 'professional'
       };
+      this._currentPro = professional;
     });
   }
 
@@ -278,8 +279,8 @@ export class SharedProsListComponent {
 
 
   editTags(pros: Professional[]) {
-    this.isProfessionalForm = false;
-    this.isTagsForm = true;
+    this._isProfessionalForm = false;
+    this._isTagsForm = true;
     this._prosToTag = pros;
 
     this._sidebarValue = {
@@ -352,6 +353,14 @@ export class SharedProsListComponent {
 
   get currentPro(): Professional {
     return this._currentPro;
+  }
+
+  get isProfessionalForm(): boolean {
+    return this._isProfessionalForm;
+  }
+
+  get isTagsForm(): boolean {
+    return this._isTagsForm;
   }
 
 }

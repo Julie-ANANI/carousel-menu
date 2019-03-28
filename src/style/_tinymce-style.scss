@@ -1,0 +1,94 @@
+@import "framework/src/variables";
+
+/*
+    This stylesheet contains the style related to the tinymce panel.
+ */
+
+.mce-panel {
+  border: none;
+}
+
+.mce-tinymce {
+  border: $border-width-lg solid $border !important;
+  border-radius: $border-radius;
+  box-shadow: none !important;
+  width: inherit !important;
+}
+
+.mce-toolbar .mce-btn-group {
+  padding: 0 !important;
+}
+
+.mce-btn.mce-disabled button, .mce-btn.mce-disabled:hover button {
+  opacity: 1 !important;
+}
+
+.mce-btn {
+  padding: $unit-4 !important;
+  background: none !important;
+}
+
+.mce-ico {
+  color: $meta-color !important;
+  cursor: pointer !important;
+}
+
+.mce-foot .mce-btn {
+  padding: $unit-1 !important;
+  border-color: $button-border-color !important;
+}
+
+.mce-primary button {
+  color: $dark-color !important;
+}
+
+.mce-container-body.mce-abs-layout {
+  width: 446px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mce-widget.mce-btn.mce-abs-layout-item.mce-first {
+  left: 280px !important;
+  top: 6px !important;
+}
+
+.mce-widget.mce-btn.mce-abs-layout-item.mce-last.mce-btn-has-text {
+  left: 357px !important;
+  top: 6px !important;
+}
+
+.mce-widget.mce-btn.mce-menubtn.mce-listbox.mce-abs-layout-item.mce-last.mce-btn-has-text {
+  width: 262px !important;
+  height: auto !important;
+  top: 0 !important;
+  left: 120px !important;
+  color: $dark-color !important;
+}
+
+.mce-btn:hover {
+
+  .mce-ico {
+    color: $dark-color !important;
+    background-color: transparent !important;
+  }
+
+}
+
+.mce-btn.mce-active {
+  background: none !important;
+  color: $dark-color !important;
+  border-color: $border-color !important;
+
+  .mce-ico {
+    color: $dark-color !important;
+    background-color: transparent !important;
+  }
+
+}
+
+.mce-btn-group:not(:first-child) {
+  margin-left: 0 !important;
+  border-left: none !important;
+}

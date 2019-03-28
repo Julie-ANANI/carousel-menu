@@ -1,15 +1,14 @@
 @import "../../../../../style/framework/src/variables";
 
 #campaign-form-component {
-  padding-top: 1.875rem;
+  padding-top: 1.5rem;
 
   .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
   }
 
-  .save-button {
+  .save-wrapper {
     padding-bottom: 1.25rem;
-    text-align: right;
   }
 
 }

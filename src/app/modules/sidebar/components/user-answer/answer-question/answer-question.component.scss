@@ -1,4 +1,55 @@
-@import "../../../../../../style/variables";
+@import "../../../../../../style/framework/src/variables";
+
+.pad-top {
+  padding-top: $unit-5;
+}
+
+.sa-thumbs-up {
+  margin-left: $unit-2;
+  color: $success-color;
+}
+
+.sa-thumbs-down {
+  margin-left: $unit-2;
+  color: $alert-color;
+}
+
+.text {
+
+  &.text-question {
+    color: $meta-color;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+}
+
+.answer-wrapper {
+  color: $success-color;
+
+  .response-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .clearbit-wrapper {
+    margin: -$unit-2;
+
+    .label.label-answer {
+
+      img {
+        margin-right: $unit-2;
+      }
+
+    }
+
+  }
+
+}
+
+
+
 
 .ques-label {
   color: $meta-color;
@@ -6,15 +57,9 @@
   padding-bottom: 0;
 }
 
-.response-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.div-top {
-  padding-top: 1.2rem;
-}
+
+
 
 .comment-wrapper {
   display: flex;
@@ -41,7 +86,7 @@
 }
 
 .answer {
-  color: $validation-color;
+  color: $success-color;
 }
 
 .gaping {
@@ -77,7 +122,7 @@
 
 
 .topItem, .badItem {
-  background: $validation-color;
+  background: $success-color;
   color: white;
 
   i {
@@ -158,11 +203,7 @@
   color: #5d5d5d;
 }
 
-.sa-thumbs-up {
-  margin-left: .9375rem;
-  color: #2ECC71;
-  vertical-align: .125rem;
-}
+
 
 .sa-thumbs-down {
   margin-left: .9375rem;

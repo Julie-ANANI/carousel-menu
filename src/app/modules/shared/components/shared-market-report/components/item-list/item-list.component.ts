@@ -23,31 +23,40 @@ export class ItemListComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
-    this.updateAnswersData();
+    this._updateAnswersData();
   }
+
   @Input() public innovation: Innovation;
+
   @Input() public question: Question;
+
   @Input() public readonly: boolean;
+
   @Input() set showDetails(value: boolean) {
     this._details = value;
   }
-  @Input() public stats: any;
+
+  @Input() stats: any;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
+
   @Output() updateNumberOfItems = new EventEmitter<number>();
 
   private _answers: Array<Answer>;
+
   private _details: boolean;
+
   private _listItems: Array<Item>;
+
   private _maxToShow = 6;
 
-  constructor(private filterService: FilterService) { }
+  constructor(private _filterService: FilterService) { }
 
   ngOnInit() {
-    this.updateAnswersData();
+    this._updateAnswersData();
   }
 
-  private updateAnswersData(): void {
+  private _updateAnswersData(): void {
     if (this.question && this.question.identifier) {
 
       const answerItems: {[value: string]: {rating: number, count: number, domain: string, logo: string, answers: Array<Answer>}} = {};
@@ -105,7 +114,7 @@ export class ItemListComponent implements OnInit {
 
   public filterAnswer(item: Item, event: Event) {
     event.preventDefault();
-    this.filterService.addFilter({
+    this._filterService.addFilter({
       status: this.question.controlType === 'clearbit' ? 'CLEARBIT' : 'LIST',
       questionId: this.question.identifier,
       questionTitle: this.question.title,

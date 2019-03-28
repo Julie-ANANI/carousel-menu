@@ -4,7 +4,7 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
 import { FilterService } from '../../services/filters.service';
 import { environment } from "../../../../../../../environments/environment";
@@ -18,15 +18,15 @@ import { environment } from "../../../../../../../environments/environment";
 export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   @Input() set executiveReport(value: boolean) {
-    this.executiveReportView = value;
+    this._executiveReportView = value;
   }
 
   @Input() set tags(value: Array<Tag>) {
-    this.receivedTags = value;
+    this._receivedTags = value;
   }
 
   @Input() set originAnswers(value: any) {
-    this.answersOrigin = value;
+    this._answersOrigin = value;
   }
 
   @Input() readonly = true;
@@ -39,65 +39,60 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   @Input() stats: { nbAnswers: number, percentage: number };
 
-  private ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _domSectionId: string;
 
   private _lang: string;
 
-  executiveReportView = false;
+  private _executiveReportView = false;
 
-  receivedTags: Array<Tag> = [];
+  private _receivedTags: Array<Tag> = [];
 
-  tagId = '';
+  private _tagId = '';
 
-  answersOrigin: {[c: string]: number} = null;
+  private _answersOrigin: {[c: string]: number} = null;
 
-  constructor(private innovationService: InnovationService,
-              private translateService: TranslateService,
-              private filterService: FilterService) { }
+  constructor(private _innovationService: InnovationService,
+              private _translateService: TranslateService,
+              private _filterService: FilterService) { }
 
   ngOnInit() {
+
     if (this.question && this.question.identifier) {
       this._domSectionId = `${this.question.identifier.replace(/\\s/g, '')}-conclusion`;
-      this.tagId = this.question.identifier + (this.question.controlType !== 'textarea' ? 'Comment' : '');
+      this._tagId = this.question.identifier + (this.question.controlType !== 'textarea' ? 'Comment' : '');
     }
 
     if (this.innovation && !this.innovation.marketReport) {
       this.innovation.marketReport = {};
     }
 
-    this._lang = this.translateService.currentLang || 'en';
+    this._lang = this._translateService.currentLang || 'en';
 
-    this.translateService.onLangChange
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((e: LangChangeEvent) => {
-        this._lang = e.lang || 'en';
-      });
+    this._translateService.onLangChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((e: LangChangeEvent) => {
+      this._lang = e.lang || 'en';
+    });
 
   }
 
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
 
   keyupHandlerFunction(event: any) {
     const objToSave = {};
-    objToSave[this.question.identifier] = {
-      conclusion: event['content']
-    };
-    this.innovationService.updateMarketReport(this.innovation._id, objToSave)
-      .subscribe((data: any) => {
-        this.innovation.marketReport = data;
-      });
+
+    objToSave[this.question.identifier] = { conclusion: event['content'] };
+
+    this._innovationService.updateMarketReport(this.innovation._id, objToSave).pipe(first()).subscribe((data: any) => {
+      this.innovation.marketReport = data;
+    });
+
   }
 
   addTagFilter(event: Event, tag: Tag) {
     event.preventDefault();
-    this.filterService.addFilter({
+    this._filterService.addFilter({
       status: 'TAG',
-      questionId: this.tagId,
+      questionId: this._tagId,
       questionTitle: tag.label,
       value: tag._id
     });
@@ -113,6 +108,31 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   get lang() {
     return this._lang;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get executiveReportView(): boolean {
+    return this._executiveReportView;
+  }
+
+  get receivedTags(): Array<Tag> {
+    return this._receivedTags;
+  }
+
+  get tagId(): string {
+    return this._tagId;
+  }
+
+  get answersOrigin(): { [p: string]: number } {
+    return this._answersOrigin;
+  }
+
+  ngOnDestroy() {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

@@ -1,11 +1,11 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/src/variables";
 
 #executive-report-wrapper {
 
   .page-first {
-    background-color: white;
+    background-color: $bg-color-light;
     display: flex;
-    border-radius: 3px;
+    border-radius: $border-radius;
   }
 
   .section-wrapper {
@@ -19,11 +19,10 @@
   }
 
   .second-page {
-    padding-top: 3.15rem;
 
     .second-page-wrapper {
       display: flex;
-      border-right: 3px;
+      border-right: $border-radius;
       background-image: url("https://res.cloudinary.com/umi/image/upload/v1540200786/app/default-images/sections/bg-1.jpg");
       background-position: center center;
       background-repeat: no-repeat;
@@ -37,18 +36,18 @@
     width: 66.67%;
     display: flex;
     flex-wrap: wrap;
-    background-color: white;
+    background-color: $bg-color-light;
   }
 
   .section-2, .section-4 {
     height: 50%;
     display: flex;
-    border-bottom: 1px solid $border-color;
+    border-bottom: $border-width solid $border-color;
   }
 
   .section-4 {
     width: 50%;
-    border-left: 1px solid $border-color;
+    border-left: $border-width solid $border-color;
   }
 
   .section-2:last-child {
@@ -65,7 +64,7 @@
 
 }
 
-/********************************** Media ***************************************/
+
 @media (max-width: 960px) {
 
   #executive-report-wrapper {
@@ -83,7 +82,7 @@
     }
 
     .section-4:nth-child(3) {
-      border-bottom: 1px solid $border-color;
+      border-bottom: $border-width solid $border-color;
     }
 
   }

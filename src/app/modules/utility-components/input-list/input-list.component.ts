@@ -19,14 +19,19 @@ export class InputListComponent {
   }
 
   @Input() canEdit = true;
+
   @Input() adminMode = false;
+
   @Input() isEmail = false;
+
   @Input() isDomain = false;
 
   @Output() update = new EventEmitter<any>();
 
   answer: string;
+
   answerList: Array<any>;
+
   _placeholder: string;
 
   constructor(private translateNotificationsService: TranslateNotificationsService) {}

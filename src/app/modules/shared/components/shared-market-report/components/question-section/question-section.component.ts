@@ -5,9 +5,11 @@ import { Question } from '../../../../../../models/question';
 import { Innovation } from '../../../../../../models/innovation';
 import { Tag } from '../../../../../../models/tag';
 import { ResponseService } from '../../services/response.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
-import {InnovationCommonService} from '../../../../../../services/innovation/innovation-common.service';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { first } from 'rxjs/operators';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-question-section',
@@ -18,12 +20,12 @@ import {InnovationCommonService} from '../../../../../../services/innovation/inn
 export class QuestionSectionComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
-    this.innovation = value;
+    this._innovation = value;
   }
 
   @Input() set answers(value: Array<Answer>) {
-    this.answersReceived = value;
-    this.updateAnswersData();
+    this._answersReceived = value;
+    this._updateAnswersData();
   }
 
   @Input() set showDetails(value: boolean) {
@@ -36,26 +38,8 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   @Input() set question(value: Question) {
-    this.questionReceived = value;
+    this._questionReceived = value;
   }
-
-  innovation: Innovation = {};
-
-  answersReceived: Array<Answer> = [];
-
-  questionReceived: Question;
-
-  adminSide: boolean;
-
-  formQuestionSection: FormGroup;
-
-  private _showDetails: boolean;
-  private _answersWithComment: Array<Answer> = [];
-  private _answersToShow: Array<Answer> = [];
-  private _readonly: boolean;
-  private _tags: Array<Tag>;
-  private _stats: {nbAnswers?: number, percentage?: number};
-  private _showComment: boolean;
 
   @Input() selectedTag: any;
 
@@ -63,11 +47,36 @@ export class QuestionSectionComponent implements OnInit {
 
   @Output() executiveTags = new EventEmitter<Array<Tag>>();
 
-  constructor(private translateService: TranslateService,
-              private responseService: ResponseService,
-              private location: Location,
-              private formBuilder: FormBuilder,
-              private innovationCommonService: InnovationCommonService) {}
+  private _innovation: Innovation = {};
+
+  private _answersReceived: Array<Answer> = [];
+
+  private _questionReceived: Question;
+
+  private _adminSide: boolean;
+
+  private _formQuestionSection: FormGroup;
+
+  private _showDetails: boolean;
+
+  private _answersWithComment: Array<Answer> = [];
+
+  private _answersToShow: Array<Answer> = [];
+
+  private _readonly: boolean;
+
+  private _tags: Array<Tag>;
+
+  private _stats: {nbAnswers?: number, percentage?: number};
+
+  private _showComment: boolean;
+
+  constructor(private _translateService: TranslateService,
+              private _responseService: ResponseService,
+              private _location: Location,
+              private _formBuilder: FormBuilder,
+              private _innovationService: InnovationService,
+              private _translateNotificationService: TranslateNotificationsService) { }
 
   ngOnInit() {
 
@@ -75,13 +84,13 @@ export class QuestionSectionComponent implements OnInit {
      * this is to make visible abstract textarea.
      * @type {boolean}
      */
-    this.adminSide = this.location.path().slice(5, 11) === '/admin';
+    this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
-    this.buildForm();
+    this._buildForm();
 
-    this.patchForm();
+    this._patchForm();
 
-    this.updateAnswersData();
+    this._updateAnswersData();
 
   }
 
@@ -89,9 +98,9 @@ export class QuestionSectionComponent implements OnInit {
   /***
    * Build the form using quesId.
    */
-  private buildForm() {
-    this.formQuestionSection = this.formBuilder.group({
-      [this.questionReceived._id]: ['']
+  private _buildForm() {
+    this._formQuestionSection = this._formBuilder.group({
+      [this._questionReceived._id]: ['']
     });
   }
 
@@ -99,24 +108,24 @@ export class QuestionSectionComponent implements OnInit {
   /***
    * Patch the abstract value for each question.
    */
-  private patchForm() {
-    const value = this.responseService.getInnovationAbstract(this.innovation, this.questionReceived._id);
-    this.formQuestionSection.get(this.questionReceived._id).setValue(value);
+  private _patchForm() {
+    const value = this._responseService.getInnovationAbstract(this._innovation, this._questionReceived._id);
+    this._formQuestionSection.get(this._questionReceived._id).setValue(value);
   }
 
 
-  private updateAnswersData() {
-    if (this.questionReceived && this.questionReceived.identifier) {
-      const id = this.questionReceived.identifier;
+  private _updateAnswersData() {
+    if (this._questionReceived && this._questionReceived.identifier) {
+      const id = this._questionReceived.identifier;
 
-      this._answersToShow = this.responseService.getAnswersToShow(this.answersReceived, this.questionReceived);
+      this._answersToShow = this._responseService.getAnswersToShow(this._answersReceived, this._questionReceived);
 
-      this._tags = this.responseService.getTagsList(this._answersToShow, this.questionReceived);
+      this._tags = this._responseService.getTagsList(this._answersToShow, this._questionReceived);
 
       // filter comments
-      switch (this.questionReceived.controlType) {
+      switch (this._questionReceived.controlType) {
           case 'checkbox':
-          this._answersWithComment = this.answersReceived.filter(function(a) {
+          this._answersWithComment = this._answersReceived.filter(function(a) {
             return !(a.answers[id] && Object.keys(a.answers[id]).some((k) => a.answers[id][k]))
               && a.answers[id + 'Comment']
               && a.answers[id + 'CommentQuality'] !== 0;
@@ -124,7 +133,7 @@ export class QuestionSectionComponent implements OnInit {
           break;
 
           case 'radio':
-          this._answersWithComment = this.answersReceived.filter(function(a) {
+          this._answersWithComment = this._answersReceived.filter(function(a) {
             return !a.answers[id]
             && a.answers[id + 'Comment']
             && a.answers[id + 'CommentQuality'] !== 0;
@@ -132,7 +141,7 @@ export class QuestionSectionComponent implements OnInit {
           break;
 
           default:
-          this._answersWithComment = this.answersReceived.filter(function(a) {
+          this._answersWithComment = this._answersReceived.filter(function(a) {
             return a.answers[id + 'Comment']
               && a.answers[id + 'CommentQuality'] !== 0;
           });
@@ -150,21 +159,24 @@ export class QuestionSectionComponent implements OnInit {
 
       this._stats = {
         nbAnswers: this._answersToShow.length,
-        percentage: Math.round((this._answersToShow.length * 100) / this.answersReceived.length)
+        percentage: Math.round((this._answersToShow.length * 100) / this._answersReceived.length)
       };
 
     }
   }
 
-  updateNumberOfItems(event: number): void {
+
+  public updateNumberOfItems(event: number): void {
     this._stats = {...this._stats, nbAnswers: event};
   }
 
-  seeAnswer(event: Answer) {
+
+  public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
   }
 
-  answerBtnClicked(event: boolean) {
+
+  public answerBtnClicked(event: boolean) {
     this._showComment = event;
   }
 
@@ -174,10 +186,14 @@ export class QuestionSectionComponent implements OnInit {
    * @param {Event} event
    * @param {string} formControlName
    */
-  saveAbstract(event: Event, formControlName: string) {
-    const abstract = this.formQuestionSection.get(formControlName).value;
-    this.innovation = this.responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
-    this.innovationCommonService.saveInnovation(this.innovation);
+  public saveAbstract(event: Event, formControlName: string) {
+    const abstract = this._formQuestionSection.get(formControlName).value;
+    this._innovation = this._responseService.saveInnovationAbstract(this._innovation, abstract, formControlName);
+
+    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe(() => { }, () => {
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
   }
 
 
@@ -187,8 +203,8 @@ export class QuestionSectionComponent implements OnInit {
    * @param {number} limit
    * @returns {string}
    */
-  getColor(length: number, limit: number) {
-    return this.responseService.getColor(length, limit);
+  public getColor(length: number, limit: number) {
+    return this._responseService.getColor(length, limit);
   }
 
 
@@ -221,7 +237,27 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   get lang(): string {
-    return this.translateService.currentLang;
+    return this._translateService.currentLang;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get answersReceived(): Array<Answer> {
+    return this._answersReceived;
+  }
+
+  get questionReceived(): Question {
+    return this._questionReceived;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get formQuestionSection(): FormGroup {
+    return this._formQuestionSection;
   }
 
 }

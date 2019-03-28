@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { environment } from '../../../../../environments/environment';
+import { countries } from '../../../../models/static-data/country';
 
 @Component({
   selector: 'app-signup-form',
@@ -26,6 +27,8 @@ export class SignupFormComponent {
   private _displayCountrySuggestion = false;
 
   private _countriesSuggestion: Array<string> = [];
+
+  private _countries = countries;
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService) { }
@@ -71,6 +74,11 @@ export class SignupFormComponent {
 
 
   onContinue() {
+    for (let code in this._countries) {
+      if (this._countries[code] === this._signupForm.get('country').value) {
+        this._signupForm.value['country'] = code;
+      }
+    }
     this.finalOutput.emit(this._signupForm);
   }
 
@@ -93,6 +101,10 @@ export class SignupFormComponent {
 
   get countriesSuggestion(): Array<string> {
     return this._countriesSuggestion;
+  }
+
+  get countries(): any {
+    return this._countries;
   }
 
 }
