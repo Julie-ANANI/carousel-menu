@@ -107,32 +107,27 @@
   </ng-container>
   <!-- /if the question type is list or clearbit -->
 
-  <!-- Showing answers if the question type is not clearbit, radio, checkbox and list -->
+  <!-- showing answers if the question type is not clearbit, radio, checkbox and list -->
   <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'
   && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
 
-    <!-- Answer button
-    <div class="answer-button-wrapper">
-      <button
-        type="button"
-        class="btn ghost-primary"
-        (click)="showDetails = !showDetails; $event.preventDefault()">
+    <!-- answer button -->
+    <div class="section-light-pad rm-pad-bottom text-center">
+      <button type="button" class="btn ghost-primary" (click)="showDetails = !showDetails; $event.preventDefault()">
         {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-        <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+        <i class="fas icon-size" aria-hidden="true" [ngClass]="showDetails ? 'fa-angle-down' : 'fa-angle-right'"></i>
       </button>
-    </div>-->
+    </div>
 
-    <!-- Now showing the answers that we have for the textarea, scale, toggle and star type -->
+    <!-- now showing the answers that we have for the textarea, scale, toggle and star type -->
     <ng-container *ngIf="showDetails">
 
-      <!-- Star
-      <div *ngIf="questionReceived.controlType === 'stars'" class="star-answer-wrapper">
-        <app-stars
-          [answers]="answersToShow"
-          [innovation]="innovation"
-          [question]="questionReceived">
-        </app-stars>
-      </div>-->
+      <!-- star -->
+      <ng-container *ngIf="questionReceived.controlType === 'stars'">
+        <div class="section-light-pad rm-pad-bottom">
+          <app-stars [answers]="answersToShow" [innovation]="innovation" [question]="questionReceived"></app-stars>
+        </div>
+      </ng-container>
 
       <!-- Rating
       <div *ngIf="questionReceived.controlType === 'scale'" class="rating-answer-wrapper">
@@ -170,6 +165,7 @@
     </ng-container>
 
   </ng-container>
+  <!-- /showing answers if the question type is not clearbit, radio, checkbox and list -->
 
   <!-- Comments that are not related to answers like general comments but not for list and clearbit question type -->
   <ng-container *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'

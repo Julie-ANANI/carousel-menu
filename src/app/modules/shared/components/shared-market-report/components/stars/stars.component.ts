@@ -15,28 +15,30 @@ export class StarsComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
-    this.updateAnswersData();
+    this._updateAnswersData();
   }
 
   @Input() set executiveReport(value: boolean) {
-    this.executiveReportView = value;
+    this._executiveReportView = value;
   }
 
-  @Input() public innovation: Innovation;
-  @Input() public question: Question;
+  @Input() innovation: Innovation;
 
-  executiveReportView = false;
+  @Input() question: Question;
+
+  private _executiveReportView = false;
 
   private _answers: Array<Answer> = [];
+
   private _notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private _translateService: TranslateService) {}
 
   ngOnInit() {
-    this.updateAnswersData();
+    this._updateAnswersData();
   }
 
-  private updateAnswersData(): void {
+  private _updateAnswersData(): void {
     if (this.question && this.question.identifier) {
 
       this._notesData = this.question.options.map((x: any) => {
@@ -72,6 +74,16 @@ export class StarsComponent implements OnInit {
     }
   }
 
-  get lang(): string { return this.translateService.currentLang; }
-  get notesData() { return this._notesData; }
+  get lang(): string {
+    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+  }
+
+  get notesData() {
+    return this._notesData;
+  }
+
+  get executiveReportView(): boolean {
+    return this._executiveReportView;
+  }
+
 }
