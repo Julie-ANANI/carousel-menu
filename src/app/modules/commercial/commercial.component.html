@@ -39,6 +39,13 @@
 
     <p>Generated Leads: {{stats.countLeads}} / {{stats.totalAnswers}}</p>
 
+    <app-worldmap
+      [countries]="countries"
+      [countriesColor]="'#2ECC71'"
+      [isEditable]="false"
+      [width]="'auto'">
+    </app-worldmap>
+
     <ng-container *ngFor="let cc of stats.geographicalRepartition">
       <p>{{cc.country}}: {{cc.count}}</p>
     </ng-container>

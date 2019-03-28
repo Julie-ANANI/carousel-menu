@@ -18,6 +18,9 @@ export class SharedWorldmapComponent implements OnInit{
   @Input() synthesis = false;
 
   @Input() set countries(value: Array<string>) {
+    /*
+     * TODO: Has anyone thought about how to remove a country from the list ?
+     */
     if (Array.isArray(value) && value.length > 0) {
       value.forEach((country) => {
         const country_elems = this._elem.nativeElement.getElementsByClassName(country);
