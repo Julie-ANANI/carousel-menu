@@ -10,7 +10,7 @@
   overflow: hidden;
   left: 0;
   right: 0;
-  background-color: $backgroud-cover-color;
+  //background-color: $backgroud-cover-color;
   z-index: 8996;
 
   .carousel-body {
@@ -68,7 +68,7 @@
         }
 
         .carousel-next-arrow:hover, .carousel-prev-arrow:hover {
-          background-color: $background-hover-icon;
+          //background-color: $background-hover-icon;
           cursor: pointer;
         }
 
@@ -89,7 +89,7 @@
           }
 
           .fa-circle:hover, .active {
-            color: $background-hover-icon !important;
+            //color: $background-hover-icon !important;
             cursor: pointer;
           }
 

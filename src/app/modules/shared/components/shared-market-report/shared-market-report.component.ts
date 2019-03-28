@@ -722,8 +722,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   exportInnovation(event: Event) {
     event.preventDefault();
 
-    this.closeModal(event);
-
     this._innovation.ownerConsent.date = Date.now();
 
     this.innovationCommonService.saveInnovation(this._innovation);
@@ -747,6 +745,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     }
 
     this._exportType = '';
+
+    this._openModal = false;
 
   }
 

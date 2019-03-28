@@ -75,7 +75,7 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     SidebarUserAnswerModule,
     CountryFlagModule,
     MessageSpaceModule,
-    ModalModule
+    ModalModule,
   ],
   providers: [
     CommonService,

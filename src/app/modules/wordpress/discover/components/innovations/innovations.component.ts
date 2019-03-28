@@ -759,6 +759,10 @@ export class InnovationsComponent implements OnInit {
     return this._shareModal;
   }
 
+  set shareModal(value: boolean) {
+    this._shareModal = value;
+  }
+
   get shareUrl(): string {
     return this._shareUrl;
   }
