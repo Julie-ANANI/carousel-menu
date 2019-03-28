@@ -1,0 +1,73 @@
+<div>
+    Hello, this is the editor component
+    <div class="container-fluid">
+
+        <div class="page-header">
+            <h4>
+        <span class="text-swellrt">
+          <span class="text-swell">Swell</span><span class="text-rt">RT</span>
+        </span>
+                <span class="title">Text Pad Demo</span><span class="net-status" id="netStatus"></span>
+            </h4>
+        </div>
+
+        <!--
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <p id="ua"></p>
+            <input id="debugOn" class="btn btn-default" type="submit" value="Debug On" onclick="debugOn()">
+            <input id="debugOff" class="btn btn-default" type="submit" value="Debug Off" onclick="debugOff()">
+          </div>
+        </div>
+      -->
+
+        <div class="row">
+
+            <div class="col-xs-3 col-md-3 document-list">
+                <h4>Documents</h4>
+                <p>
+                    <input id="newBtn" class="btn btn-default" type="submit" value="New" onclick="newDocument()">
+                    <input id="saveBtn" class="btn btn-default" type="submit" value="Save" (click)="saveDocument()">
+                </p>
+                <ul id="documentList" class="list-group">
+
+                    <li *ngFor="let doc of documentList" class="list-group-item">
+                        {{doc}}
+                        <span class="glyphicon glyphicon-pencil pull-right" (click)="configureEditor(doc)">EDIT</span>
+                        <span class="glyphicon glyphicon-trash">REMOVE</span>
+                    </li>
+
+                    <!--<li class="list-group-item">Cras justo odio
+                      <span class="glyphicon glyphicon-pencil pull-right"></span>
+                      <span class="glyphicon glyphicon-trash"></span>
+                    </li>-->
+
+                </ul>
+            </div>
+
+            <div class="col-md-6 col-xs-6">
+                <div>
+                    <h4 style="display:inline-block"><span id="title">(New document)</span></h4>
+                    <input id="editBtn" class="btn btn-default pull-right" type="submit" value="Edit On" (click)="editDocument()">
+                </div>
+                <div id="editor" class="editor-canvas">
+                </div>
+                <div id="viewer" class="editor-canvas">
+                </div>
+            </div>
+
+            <div class="col-md-3 col-xs-3">
+                <h4>Version History</h4>
+                <div id="revlist" style="">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" id="log" style="height:200px; overflow-y: scroll">
+            </div>
+        </div>
+
+    </div><!-- container -->
+</div>

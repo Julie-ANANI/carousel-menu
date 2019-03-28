@@ -1,0 +1,31 @@
+.bg-canvas {
+  background-color: #b8beab;
+}
+.editor-canvas {
+  padding: 10px;
+  font-family: 'Overpass Mono', monospace;
+  font-size: 14px;
+  min-height: 450px;
+  background-color: #F2F2F2;
+}
+.btnInline {
+  margin-left: 14px;
+}
+.btn {
+  margin-right: 8px;
+}
+.document-list {
+}
+
+.caret-bar {
+  border-left-width: 2px;
+  border-color: gray;
+  border-left-style: solid;
+  width: 0.5px;
+}
+
+.caret-label {
+}
+.diffins[diff-version] {
+  background-color: yellow;
+}

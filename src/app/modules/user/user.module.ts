@@ -16,6 +16,7 @@ import { ScrollService } from '../../services/scroll/scroll.service';
 import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
 import { InnovationCommonService } from '../../services/innovation/innovation-common.service';
+import { SwellRTEditorModule } from "../swellrt-client/swellrt-editor.module";
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { InnovationCommonService } from '../../services/innovation/innovation-co
     TranslateModule.forChild(),
     UserRoutingModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    SwellRTEditorModule
   ],
   declarations: [
     UserComponent,
