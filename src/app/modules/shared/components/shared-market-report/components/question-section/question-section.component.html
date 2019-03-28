@@ -147,43 +147,39 @@
         </div>
       </ng-container>
 
-      <!-- Toggle
-      <div *ngIf="questionReceived.controlType === 'toggle'" class="toggle-answer-wrapper">
-        <div class="prof-list-wrapper">
-          <div *ngFor="let answer of answersToShow" class="profile-wrapper">
-            <app-pro-tag
-              [answer]="answer"
-              (modalAnswerChange)="seeAnswer($event)"
-              [ngStyle]="{ 'width': '100%', 'height': '100%' }">
-            </app-pro-tag>
+      <!-- toggle ---->
+      <ng-container *ngIf="questionReceived.controlType === 'toggle'">
+        <div class="toggle-wrapper rm-margin d-flex section-light-pad rm-pad-bottom">
+          <div *ngFor="let answer of answersToShow" class="card card-responsive">
+            <div class="card-body">
+              <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+            </div>
           </div>
         </div>
-      </div>-->
+      </ng-container>
 
     </ng-container>
 
   </ng-container>
   <!-- /showing answers if the question type is not clearbit, radio, checkbox and list -->
 
-  <!-- Comments that are not related to answers like general comments but not for list and clearbit question type -->
-  <ng-container *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'
-  && answersWithComment.length > 0">
+  <!-- comments that are not related to answers like general comments but not for list and clearbit question type -->
+  <ng-container *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit' && answersWithComment.length > 0">
 
-    <!--<div class="comment-button-wrapper">
-      <h5>{{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}</h5>
+    <div class="section-pad rm-pad-bottom">
+      <h5 class="title-secondary">{{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}</h5>
     </div>
--->
-    <!-- Showing the comments when click on comment button
-    <div class="comment-wrapper">
-      <div *ngFor="let answer of answersWithComment" class="comment-outer-wrapper">
-        <app-market-comment-2
-          [answer]="answer"
-          [questionId]="questionReceived.identifier+'Comment'"
-          (modalAnswerChange)="seeAnswer($event)">
-        </app-market-comment-2>
+
+    <!-- showing the comments when click on comment button ---->
+    <div class="comment-wrapper rm-margin">
+      <div *ngFor="let answer of answersWithComment" class="card">
+        <div class="card-body less-padding">
+          <app-market-comment-2 [answer]="answer" [questionId]="questionReceived.identifier+'Comment'" (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
+        </div>
       </div>
-    </div>-->
+    </div>
 
   </ng-container>
+  <!-- /comments that are not related to answers like general comments but not for list and clearbit question type -->
 
 </section>
