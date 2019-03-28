@@ -709,7 +709,13 @@
   </section>
 
 
-
+  <!-- insight preview -->
+  <ng-container *ngIf="!wordpress">
+    <app-sidebar [(template)]="sidebarTemplateValue">
+      <app-user-answer [(userAnswer)]="modalAnswer" [projectId]="innovation._id" [questions]="questions"></app-user-answer>
+    </app-sidebar>
+  </ng-container>
+  <!-- /insight preview -->
 
 </ng-container>
 
@@ -853,13 +859,4 @@
 
 -->
 
-<!-- Insight preview -->
-<app-sidebar *ngIf="!wordpress" [(template)]="sidebarTemplateValue">
-  <app-user-answer
-    [adminMode]="adminSide"
-    [sidebarState]="sidebarTemplateValue.animate_state"
-    [(userAnswer)]="modalAnswer"
-    [projectId]="innovation._id"
-    [questions]="questions">
-  </app-user-answer>
-</app-sidebar>
+

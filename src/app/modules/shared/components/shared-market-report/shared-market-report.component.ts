@@ -37,7 +37,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   @Input() set modeAdmin(value: boolean) {
-    this.adminMode = value;
+    this._adminMode = value;
   }
 
   @Input() set sideAdmin(value: boolean) {
@@ -70,7 +70,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _questions: Array<Question> = [];
 
-  adminMode: boolean;
+  private _adminMode = false;
 
   private _campaignsStats: {
     nbPros: number,
@@ -80,7 +80,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     nbValidatedResp: number
   };
 
-  scrollOn = false;
+  private _scrollOn = false;
 
   private _showDetails: boolean;
 
@@ -108,7 +108,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _companies: Array<Clearbit>;
 
-  activeSection: string;
+  private _activeSection: string;
 
   objectKeys = Object.keys;
 
@@ -340,7 +340,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.scrollOn = window.scrollY !== 0;
+    this._scrollOn = window.scrollY !== 0;
     this._menuButton = (this.getCurrentScroll() > 150);
   }
 
@@ -979,6 +979,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._answersOrigins;
   }
 
+  get activeSection(): string {
+    return this._activeSection;
+  }
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  get scrollOn(): boolean {
+    return this._scrollOn;
+  }
+
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const wrapper = document.getElementById('answer-wrapper');
@@ -989,7 +1000,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
         window.onscroll = () => {
           const scrollPosY = document.body.scrollTop;
           const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().top);
-          this.activeSection = section ? section.id : '';
+          this._activeSection = section ? section.id : '';
         };
       }
     }
