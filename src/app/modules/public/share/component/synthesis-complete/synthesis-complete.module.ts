@@ -7,6 +7,7 @@ import { SynthesisCompleteComponent } from './synthesis-complete.component';
 
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
+import { SpinnerLoaderModule } from '../../../../utility-components/spinner-loader/spinner-loader.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { MessageSpaceModule } from '../../../../utility-components/message-space
     TranslateModule,
     RouterModule,
     SharedMarketReportModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    SpinnerLoaderModule
   ],
   declarations: [
     SynthesisCompleteComponent

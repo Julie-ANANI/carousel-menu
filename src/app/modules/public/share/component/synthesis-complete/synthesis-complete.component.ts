@@ -24,15 +24,20 @@ export class SynthesisCompleteComponent implements OnInit {
 
   private _notFound = false;
 
-  constructor(private translateTitleService: TranslateTitleService,
-              private activatedRoute: ActivatedRoute,
-              private innovationService: InnovationService,
-              private _authService: AuthService) { }
+  displayLoader: boolean;
+
+  constructor(private _translateTitleService: TranslateTitleService,
+              private _activatedRoute: ActivatedRoute,
+              private _innovationService: InnovationService,
+              private _authService: AuthService) {
+
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.SHARED_REPORTS');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
-
-    this.activatedRoute.params.subscribe(params => {
+    this._activatedRoute.params.subscribe(params => {
+      this.displayLoader = true;
       this._projectId = params['projectId'];
       this._shareKey = params['shareKey'];
       this.getProject();
@@ -44,12 +49,15 @@ export class SynthesisCompleteComponent implements OnInit {
    * this function is to get the shared synthesis detail from the server.
    */
   private getProject() {
-    this.innovationService.getSharedSynthesis(this._projectId, this._shareKey).pipe(first()).subscribe((response: any) => {
+    this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).pipe(first()).subscribe((response: any) => {
       this._project = response;
+      this.displayLoader = false;
       }, () => {
+      this.displayLoader = false;
       this._displayReport = false;
       this._notFound = true;
       }, () => {
+      this.displayLoader = false;
       if (this._project !== undefined) {
         this._displayReport = true;
       } else {
