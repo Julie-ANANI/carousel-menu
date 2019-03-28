@@ -70,45 +70,6 @@
     color: white;
   }
 
-  .abstract-wrapper {
-    margin-top: 1.57rem;
-    padding: 3.15rem;
-
-    .main-heading {
-      color: $dark-color;
-    }
-
-    .form-group {
-      margin-bottom: 0 !important;
-    }
-
-    .form-label {
-      padding: 0;
-    }
-
-  }
-
-  .clc-wrapper {
-    margin-right: 1.875rem;
-    flex: 1;
-
-    .clco-wrapper {
-      background-color: white;
-      padding: 1.57rem;
-      border: 1px solid $border-color;
-      border-radius: .18rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .clco-wrapper:hover {
-      box-shadow: $box-shadow-hover;
-    }
-
-  }
-
-  .cli-wrapper {
-    flex: 1;
-  }
 
   .comment-button-wrapper{
     text-align: left;
@@ -123,7 +84,7 @@
 
   }
 
-  .textarea-answer-wrapper, .rating-answer-wrapper, .toggle-answer-wrapper {
+  .textarea-answer-wrapper, .toggle-answer-wrapper {
     margin-top: 1.57rem;
   }
 
@@ -181,13 +142,13 @@
 
 @media (max-width: 840px) {
 
-  .question-section-wrapper {
+  .question-section-component {
 
-    .clear-list-wrapper {
+    .clearbit-list-wrapper {
       flex-direction: column;
 
-      .clc-wrapper {
-        margin-right: 0;
+      .clearbit-comment-wrapper {
+        margin-right: 0 !important;
       }
 
     }

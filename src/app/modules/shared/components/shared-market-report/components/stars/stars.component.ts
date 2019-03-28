@@ -32,7 +32,7 @@ export class StarsComponent implements OnInit {
 
   private _notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
 
-  constructor(private _translateService: TranslateService) {}
+  constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
     this._updateAnswersData();
@@ -78,7 +78,7 @@ export class StarsComponent implements OnInit {
     return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
-  get notesData() {
+  get notesData(): Array<{ label: Multiling; sum: number; percentage: string }> {
     return this._notesData;
   }
 

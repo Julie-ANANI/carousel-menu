@@ -80,3 +80,102 @@
   }
 
 }
+
+
+// Scale bar
+.bar-scale {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .bar-item {
+    @include control-transition();
+    position: relative;
+    width: 35px;
+    height: 450px;
+    background: #D8D8D8;
+    border-radius: 25px;
+    margin: $unit-4 $unit-2;
+
+    .bar-fill {
+      position: absolute;
+      bottom: 0;
+      width: 35px;
+      min-height: 50px;
+      background-image: linear-gradient(-90deg, #edeeef 16%, #d7dee0 100%);
+      border-radius: 25px;
+    }
+
+    &.number1 .bar-fill {
+      @include bar-scale-variant(#CE392D, #B0261B);
+    }
+
+    &.number2 .bar-fill {
+      @include bar-scale-variant(#D75A3E, #C14023);
+    }
+
+    &.number3 .bar-fill {
+      @include bar-scale-variant(#E68034, #CA681E);
+    }
+
+    &.number4 .bar-fill {
+      @include bar-scale-variant(#F4B11B, #C18601);
+    }
+
+    &.number5 .bar-fill {
+      @include bar-scale-variant(#EFD622, #CBB515);
+    }
+
+    &.number6 .bar-fill {
+      @include bar-scale-variant(#D6D556, #B9B837);
+    }
+
+    &.number7 .bar-fill {
+      @include bar-scale-variant(#CBDD51, #99AA24);
+    }
+
+    &.number8 .bar-fill {
+      @include bar-scale-variant(#A8CD4C, #799C24);
+    }
+
+    &.number9 .bar-fill {
+      @include bar-scale-variant(#95C84F, #659C19);
+    }
+
+    &.number10 .bar-fill {
+      @include bar-scale-variant(#9ADA43, #64971C);
+    }
+
+    .bar-stat {
+      position: absolute;
+      bottom: 60px;
+      left: 12px;
+      color: $light-color;
+      text-align: center;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-lg;
+    }
+
+    .bar-picture {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      width: 11px;
+      height: 30px;
+      background: transparent url("https://res.cloudinary.com/umi/image/upload/app/man.svg") no-repeat center;
+      background-size: contain;
+    }
+
+    .bar-score {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      bottom: -35px;
+      font-size: $font-size-lg;
+      color: $text-background-color;
+      font-weight: $font-weight-bold;
+    }
+
+  }
+
+}

@@ -129,13 +129,12 @@
         </div>
       </ng-container>
 
-      <!-- Rating
-      <div *ngIf="questionReceived.controlType === 'scale'" class="rating-answer-wrapper">
-        <app-scale
-          [answers]="answersToShow"
-          [question]="questionReceived">
-        </app-scale>
-      </div>-->
+      <!-- rating -->
+      <ng-container *ngIf="questionReceived.controlType === 'scale'">
+        <div class="section-light-pad rm-pad-bottom">
+          <app-scale [answers]="answersToShow" [question]="questionReceived"></app-scale>
+        </div>
+      </ng-container>
 
       <!-- Textarea or textbox
       <div *ngIf="questionReceived.controlType === 'textarea' || questionReceived.controlType === 'textbox'" class="textarea-answer-wrapper">
