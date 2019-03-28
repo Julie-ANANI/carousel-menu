@@ -77,7 +77,7 @@
 
 <!-- executive report -->
 <ng-container *ngIf="executiveReportView && question?.controlType === 'radio' && pieChart">
-  <div class="stat-wrapper section-pad full text-center flex-centered pie-chart-print">
+  <div class="stat-wrapper text-center flex-centered pie-chart-print">
     <app-piechart [pieChart]="pieChart" [executiveReport]="true"></app-piechart>
   </div>
 </ng-container>
