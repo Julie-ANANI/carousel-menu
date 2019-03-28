@@ -51,12 +51,12 @@ export class AdminCampaignProsComponent implements OnInit {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
 
     this._config = {
-      fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages',
+      fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages campaigns',
       limit: '10',
       offset: '0',
       search: '{}',
       campaigns: this._campaign._id,
-      sort: '{ "created: -1" }'
+      sort: '{ "created": -1 }'
     };
 
   }
@@ -150,6 +150,7 @@ export class AdminCampaignProsComponent implements OnInit {
   onClickExport(event: Event) {
     event.preventDefault();
     const config = {
+      fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country jobTitle messages',
       professionals: [] || 'all',
       campaignId: this._campaign._id,
       query: {

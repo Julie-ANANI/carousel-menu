@@ -131,7 +131,7 @@ export class SharedProsListComponent {
             {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
             {_attrs: ['company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
             {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'},
-            {_attrs: ['sent'], _name: 'TABLE.HEADING.CONTACT', _type: 'CHECK'}]
+            {_attrs: ['messages'], _name: 'TABLE.HEADING.CONTACT', _type: 'ARRAY'}]
         };
       });
     }
