@@ -73,7 +73,7 @@
 
     <!-- now showing the answers, this contains both the answers to show and comments  -->
     <ng-container *ngIf="showDetails">
-      <div class="d-flex section-light-pad rm-pad-bottom clearbit-list-wrapper">
+      <div class="d-flex section-light-pad rm-pad-bottom clearbit-list-wrapper rm-margin">
 
         <ng-container *ngIf="answersWithComment.length > 0">
           <div class="clearbit-comment-wrapper">
@@ -136,17 +136,16 @@
         </div>
       </ng-container>
 
-      <!-- Textarea or textbox
-      <div *ngIf="questionReceived.controlType === 'textarea' || questionReceived.controlType === 'textbox'" class="textarea-answer-wrapper">
-        <div *ngFor="let answer of answersToShow" class="textarea-answer-outer-wrapper">
-          <app-market-comment-2
-            [answer]="answer"
-            [questionId]="questionReceived.identifier"
-            (modalAnswerChange)="seeAnswer($event)"
-            [ngStyle]="{ 'width': '100%' }">
-          </app-market-comment-2>
+      <!-- textarea or textbox -->
+      <ng-container *ngIf="questionReceived.controlType === 'textarea' || questionReceived.controlType === 'textbox'">
+        <div class="section-light-pad rm-pad-bottom rm-margin">
+          <div *ngFor="let answer of answersToShow" class="card">
+            <div class="card-body less-padding">
+              <app-market-comment-2 [answer]="answer" [questionId]="questionReceived.identifier" (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
+            </div>
+          </div>
         </div>
-      </div>-->
+      </ng-container>
 
       <!-- Toggle
       <div *ngIf="questionReceived.controlType === 'toggle'" class="toggle-answer-wrapper">

@@ -14,10 +14,13 @@
     font-size: 22px;
   }
 
+  .rm-margin {
+    margin-bottom: -$unit-5;
+  }
+
   .clearbit-list-wrapper {
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: -$unit-5;
 
     .clearbit-comment-wrapper, .clearbit-icon-wrapper {
       flex: 1;
@@ -138,9 +141,8 @@
 
 }
 
-/********************************** Media ***************************************/
 
-@media (max-width: 840px) {
+@media (max-width: $size-md) {
 
   .question-section-component {
 
@@ -161,7 +163,11 @@
 
 }
 
-@media (max-width: 600px) {
+@media (max-width: $size-sm) {
+
+  .less-padding {
+    padding: 0.75rem $unit-4 !important;
+  }
 
   .comment-outer-wrapper, .textarea-answer-outer-wrapper {
     padding: .9375rem 1rem !important;
