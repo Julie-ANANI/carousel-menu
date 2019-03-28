@@ -29,8 +29,11 @@ export class LogoutComponent implements OnInit {
       setTimeout(() => {
         this.router.navigate(['/login']);
         }, 2000);
-      }, () => {
+    }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 2000);
     });
   }
 
