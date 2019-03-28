@@ -3,10 +3,10 @@ import { takeUntil } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Subject } from 'rxjs';
 import { ScrollService } from '../../services/scroll/scroll.service';
-import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
-import {UserService} from "../../services/user/user.service";
+//import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
+//import {UserService} from "../../services/user/user.service";
 
-declare let swellrt;
+//declare let swellrt;
 
 @Component({
   selector: 'app-user',
@@ -22,8 +22,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(private loaderService: LoaderService,
               private scrollService: ScrollService,
-              private _userService: UserService,
-              private _swellRTBackend: SwellrtBackend) { }
+              /*private _userService: UserService,
+              private _swellRTBackend: SwellrtBackend*/) { }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -40,13 +40,13 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.startSwellRTClient();
-    this.startSwellRTSession();
+    /*this.startSwellRTClient();
+    this.startSwellRTSession();*/
     this.loaderService.stopLoading();
 
   }
 
-  private startSwellRTSession() {
+  /*private startSwellRTSession() {
     this._userService.getSelf().subscribe(user=>{
       this._swellRTBackend.startSwellRTSession(user)
         .then(result=>{
@@ -81,7 +81,7 @@ export class UserComponent implements OnInit, OnDestroy {
         }, 15000);
       }
     ));
-  }
+  }*/
 
   get displayLoader(): boolean {
     return this._displayLoader;
