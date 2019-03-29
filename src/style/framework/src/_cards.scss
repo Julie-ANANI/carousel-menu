@@ -13,6 +13,10 @@
     flex: 0 1 calc(14% - 1rem);
   }
 
+  &.card-responsive-3 {
+    flex: 0 1 calc(25% - 1rem);
+  }
+
   .card-image {
     padding-top: $unit-4;
 
@@ -69,6 +73,10 @@
     flex: 0 1 calc(25% - 1rem) !important;
   }
 
+  .card-responsive-3 {
+    flex: 0 1 calc(33% - 1rem) !important;
+  }
+
 }
 
 @media (min-width: $size-md) and (max-width: $size-lg) {
@@ -77,19 +85,39 @@
     flex: 0 1 calc(33% - 1rem) !important;
   }
 
+  .card-responsive-3 {
+    flex: 0 1 calc(50% - 1rem) !important;
+  }
+
 }
 
-@media (min-width: $size-xs) and (max-width: $size-md) {
+@media (min-width: $size-sm) and (max-width: $size-md) {
 
   .card-responsive {
     flex: 0 1 calc(50% - 1rem) !important;
+  }
+
+  .card-responsive-3 {
+    flex: 0 1 calc(50% - 1rem) !important;
+  }
+
+}
+
+@media (min-width: $size-xs) and (max-width: $size-sm) {
+
+  .card-responsive {
+    flex: 0 1 calc(50% - 1rem) !important;
+  }
+
+  .card-responsive-3 {
+    flex: 1 !important;
   }
 
 }
 
 @media (max-width: $size-xs) {
 
-  .card-responsive {
+  .card-responsive, .card-responsive-3 {
     flex: 1 !important;
   }
 
