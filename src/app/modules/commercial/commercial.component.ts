@@ -10,7 +10,6 @@ import { TagStats } from '../../models/tag-stats';
 @Component({
   selector: 'app-commercial',
   templateUrl: './commercial.component.html',
-  // styleUrls: ['./commercial.component.scss']
 })
 
 export class CommercialComponent implements OnInit {
@@ -53,9 +52,6 @@ export class CommercialComponent implements OnInit {
       });
       return acc;
     }, {});
-    const geographicalRepartition = Object.keys(this._countries).map((c) => {
-      return {country: c, count: this._countries[c]};
-    });
     return this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
@@ -73,7 +69,7 @@ export class CommercialComponent implements OnInit {
       countDiff: 0,
       totalCountDiff: 0,
       countLeads: 0,
-      geographicalRepartition: geographicalRepartition
+      geographicalRepartition: [] // we don't need this here, we already have _countries
     });
   }
 
