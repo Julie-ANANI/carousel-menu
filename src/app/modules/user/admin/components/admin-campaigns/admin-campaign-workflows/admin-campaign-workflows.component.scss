@@ -2,35 +2,6 @@
 
 #admin-campaign-workflows-component {
 
-  .stat {
-
-    .stat-container:first-child {
-      background-color: $secondary-color;
-    }
-
-    .stat-container:nth-child(2) {
-      background-color: #2fa4d4;
-    }
-
-    .stat-container:last-child {
-      background-color: #5faece;
-    }
-
-    .stat-container {
-      border-right: none;
-    }
-
-    .stat-heading, .stat-value {
-      color: $light-color;
-    }
-
-    .stat-sub-heading {
-      opacity: 0.7;
-      color: $light-color;
-    }
-
-  }
-
   .form-group {
     display: flex;
     align-items: center;

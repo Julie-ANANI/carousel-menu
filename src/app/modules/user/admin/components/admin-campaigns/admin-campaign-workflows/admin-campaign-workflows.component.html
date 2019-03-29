@@ -2,52 +2,7 @@
   <section id="admin-campaign-workflows-component">
 
     <!-- section stats -->
-    <ul class="stat">
-
-      <!-- stat col 1 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.RECEPTION' | translate }}</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate }}</h5>
-          <span class="stat-value">{{ getCampaignStat('good_emails') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.RECEIVED' | translate }}</h5>
-          <span class="stat-value">{{ getCampaignStat('received') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.BOUNCES' | translate }}</h5>
-          <span class="stat-value">{{ getCampaignStat('bounces') }}</span>
-        </div>
-      </li>
-
-      <!-- stat col 2 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.INTERACTION' | translate }}</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.OPENED' | translate }}</h5>
-          <span class="stat-value">{{ getCampaignStat('opened') }}%</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.CLICKED' | translate }}</h5>
-          <span class="stat-value">{{ getCampaignStat('clicked') }}%</span>
-        </div>
-      </li>
-
-      <!-- stat col 3 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">{{ 'CAMPAIGNS.STATS.HEADING.DISPLAY' | translate }}</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.EMAIL' | translate }}</h5>
-          <span class="stat-value">{{ getCampaignStat('email') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">{{ 'CAMPAIGNS.STATS.TITLE.QUESTIONNAIRE' | translate }}</h5>
-          <span class="stat-value">{{ getCampaignStat('questionnaire') }}</span>
-        </div>
-      </li>
-
-    </ul>
+    <app-admin-campaign-stats></app-admin-campaign-stats>
     <!-- /section stats -->
 
 
