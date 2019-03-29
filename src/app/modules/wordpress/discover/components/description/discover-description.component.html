@@ -104,7 +104,7 @@
             <span class="text-note"><i class="fas fa-angle-right"></i>{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
 
             <!-- card content -->
-            <div class="card-wrapper">
+            <div class="card-wrapper d-flex text-center">
               <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
 
                 <!-- card image -->
@@ -125,11 +125,11 @@
 
                     <!-- tags -->
                     <ng-container *ngIf="innovation.tags.length > 0">
-                      <ng-container *ngFor="let tag of innovation.tags">
+                      <div *ngFor="let tag of innovation.tags" class="tag-wrapper d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="text text-notify">
                           <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
                         </div>
-                      </ng-container>
+                      </div>
                     </ng-container>
 
                   </div>
