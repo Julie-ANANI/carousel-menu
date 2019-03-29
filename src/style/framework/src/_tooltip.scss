@@ -11,7 +11,7 @@
 
   &::after {
     @include control-transition();
-    background: $bg-overlay;
+    background: $bg-overlay-color;
     border-radius: $border-radius;
     bottom: 100%;
     color: $light-color;
