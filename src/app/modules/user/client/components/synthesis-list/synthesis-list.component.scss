@@ -9,17 +9,17 @@
       margin-bottom: 1.5rem;
 
       .card-content {
-        display: inline-flex;
         width: 100%;
 
         img {
           border-radius: $border-radius;
           margin-right: $unit-5;
-        }
 
-        img:hover {
-          box-shadow: $box-shadow-hover-umi;
-          cursor: pointer;
+          &:hover {
+            box-shadow: $box-shadow-hover-umi;
+            cursor: pointer;
+          }
+
         }
 
         .report-description {
@@ -31,7 +31,6 @@
           }
 
           .text {
-            font-weight: $font-weight-medium;
             font-size: $font-size-sm;
             margin-top: 0.75rem;
           }
