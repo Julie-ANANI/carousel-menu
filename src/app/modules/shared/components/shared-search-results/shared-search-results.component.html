@@ -23,28 +23,21 @@
 </div>
 
 <!-- MODAL : Ajout de pros à une campagne -->
-<div class="modal" [ngClass]="{'active': addToCampaignModal}">
-  <div class="modal-overlay" (click)="(addToCampaignModal = false) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(addToCampaignModal = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'SEARCH.CAMPAIGN.TITLE' | translate }}</div>
-      <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
-    </div>
-    <div class="modal-body foo">
-      <app-autocomplete-input
-        (update)="updateCampaign($event)"
-        [onlyOne]="true"
-        [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}"></app-autocomplete-input>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-link" (click)="(addToCampaignModal = false) && $event.preventDefault()">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-      <button type="submit" class="btn btn-primary" (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length">
-        {{ 'SEARCH.ADD' | translate }}
-      </button>
-      <button type="submit" class="btn btn-primary" (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length">
-        {{ 'SEARCH.CAMPAIGN.ADDANDSEE' | translate }}
-      </button>
-    </div>
+<app-modal [(showModal)]="addToCampaignModal" [modalTitle]="'SEARCH.CAMPAIGN.TITLE'">
+  <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
+
+  <app-autocomplete-input
+    (update)="updateCampaign($event)"
+    [onlyOne]="true"
+    [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}"></app-autocomplete-input>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length">
+      {{ 'SEARCH.CAMPAIGN.ADDANDSEE' | translate }}
+    </button>
+    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length">
+      {{ 'SEARCH.ADD' | translate }}
+    </button>
   </div>
-</div>
+</app-modal>

@@ -291,18 +291,18 @@
     <div class="project-summary">
       <div class="completion">
         <h6>Completion</h6>
-        <span *ngFor="let innov of project.innovationCards">
+        <span *ngFor="let innov of project.innovationCards" class="text-center">
           <label class="form-label">{{innov?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}</label>
           <label>{{innov?.completion?.toFixed(0) || 0}} %</label>
         </span>
       </div>
       <div class="campaign">
         <h6>Campaign</h6>
-        <span>
+        <span class="text-center">
           <label class="form-label">{{'COMMON.PROFESSIONALS' | translate}}</label>
           <label>{{currentCampaign?.stats?.campaign?.nbProfessionals || '?'}}</label>
         </span>
-        <span>
+        <span class="text-center">
           <label class="form-label">{{'PROJECT.CAMPAIGN.INSIGHTS' | translate}}</label>
           <label>{{currentCampaign?.stats?.campaign?.nbResp || '?'}}</label>
         </span>

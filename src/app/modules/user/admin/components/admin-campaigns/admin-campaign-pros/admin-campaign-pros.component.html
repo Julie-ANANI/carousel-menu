@@ -2,61 +2,7 @@
   <section id="admin-campaign-pros-component">
 
     <!-- section stats -->
-    <ul class="stat">
-
-      <!-- stat col 1 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Pros</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Find</h5>
-          <span class="stat-value">{{ getCampaignStat('professional') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Not reached</h5>
-          <span class="stat-value">{{ getCampaignStat('notReached') }}%</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Stars</h5>
-          <span class="stat-value">--</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Duplicate</h5>
-          <span class="stat-value">--</span>
-        </div>
-      </li>
-
-      <!-- stat col 2 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Emails</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Good</h5>
-          <span class="stat-value">{{ getCampaignStat('good') }}%</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Unsure</h5>
-          <span class="stat-value">{{ getCampaignStat('unsure') }}%</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Bad</h5>
-          <span class="stat-value">{{ getCampaignStat('bad') }}%</span>
-        </div>
-      </li>
-
-      <!-- stat col 3 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Cost</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Request</h5>
-          <span class="stat-value">--</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Emails</h5>
-          <span class="stat-value">--</span>
-        </div>
-      </li>
-
-    </ul>
-
+    <app-admin-campaign-stats></app-admin-campaign-stats>
 
     <div class="column col-xs-12 col-11 col-mx-auto">
 
