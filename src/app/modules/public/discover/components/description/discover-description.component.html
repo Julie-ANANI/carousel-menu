@@ -1,5 +1,6 @@
 <ng-container *ngIf="innovationCard && innovationCard.length > 0">
-  <div class="section-pad animate-page" id="discover-description-component">
+
+  <section class="section-pad animate-page" id="discover-description-component">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <ng-container *ngFor="let innovation of innovationCard">
 
@@ -104,7 +105,7 @@
             <span class="text-note"><i class="fas fa-angle-right"></i>{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
 
             <!-- card content -->
-            <div class="card-wrapper">
+            <div class="card-wrapper d-flex text-center">
               <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
 
                 <!-- card image -->
@@ -125,11 +126,11 @@
 
                     <!-- tags -->
                     <ng-container *ngIf="innovation.tags.length > 0">
-                      <ng-container *ngFor="let tag of innovation.tags">
+                      <div *ngFor="let tag of innovation.tags" class="tag-wrapper d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="text text-notify">
                           <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
                         </div>
-                      </ng-container>
+                      </div>
                     </ng-container>
 
                   </div>
@@ -144,10 +145,12 @@
 
       </ng-container>
     </div>
-  </div>
+  </section>
+
+
+  <!-- modal to view image -->
+  <app-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-modal-media>
+  <!-- /modal to view image -->
+
+
 </ng-container>
-
-
-<!-- modal to view image -->
-<app-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-modal-media>
-<!-- /modal to view image -->

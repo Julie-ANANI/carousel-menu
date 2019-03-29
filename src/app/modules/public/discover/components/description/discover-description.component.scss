@@ -185,9 +185,7 @@
     }
 
     .card-wrapper {
-      display: flex;
       justify-content: center;
-      text-align: center;
       margin-left: -$unit-5;
       margin-right: -$unit-5;
       margin-bottom: -1.5rem;
@@ -208,6 +206,17 @@
 
           a:hover {
             color: $text-primary-color;
+          }
+
+          .tag-wrapper {
+            flex-wrap: wrap;
+
+            .text.text-notify {
+              padding-top: $unit-1;
+              padding-right: $unit-2;
+              margin: 0;
+            }
+
           }
 
         }
