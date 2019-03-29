@@ -93,9 +93,12 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin-right: -$unit-5;
+    margin-bottom: -1.5rem;
+
 
     .card {
       padding: $unit-2;
+      margin-right: $unit-5;
       margin-bottom: 1.5rem;
       border-color: transparent;
 
