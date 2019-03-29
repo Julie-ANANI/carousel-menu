@@ -19,7 +19,7 @@ export class CommercialComponent implements OnInit {
   private _selectedTagsStats: Array<TagStats> = [];
   public tagForm: FormGroup;
 
-  private _countries: Array<string> = [];
+  private _countries: {[country: string]: number} = {};
   private _stats: TagStats;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -43,7 +43,7 @@ export class CommercialComponent implements OnInit {
   }
 
   private computeStats(): TagStats {
-    const countriesCount = this._selectedTagsStats.reduce((acc, stats) => {
+    this._countries = this._selectedTagsStats.reduce((acc, stats) => {
       stats.geographicalRepartition.forEach((cc) => {
         if (acc[cc.country]) {
           acc[cc.country] += cc.count;
@@ -53,10 +53,9 @@ export class CommercialComponent implements OnInit {
       });
       return acc;
     }, {});
-    const geographicalRepartition = Object.keys(countriesCount).map((c) => {
-      return {country: c, count: countriesCount[c]};
+    const geographicalRepartition = Object.keys(this._countries).map((c) => {
+      return {country: c, count: this._countries[c]};
     });
-    this._countries = geographicalRepartition.map((o) => o.country);
     return this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;

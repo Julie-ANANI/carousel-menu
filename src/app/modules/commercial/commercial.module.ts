@@ -8,8 +8,8 @@ import { FooterModule } from '../common/footer/footer.module';
 
 import { CommercialComponent } from './commercial.component';
 
+import { AdminSearchMapModule } from '../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CommercialRoutingModule } from './commercial-routing.module';
-import { SharedWorldmapModule } from '../shared/components/shared-worldmap/shared-worldmap.module';
 import { TagsService } from '../../services/tags/tags.service';
 import { PipeModule } from '../../pipe/pipe.module';
 
@@ -20,7 +20,7 @@ import { PipeModule } from '../../pipe/pipe.module';
     TranslateModule.forChild(),
     HeaderModule,
     FooterModule,
-    SharedWorldmapModule,
+    AdminSearchMapModule,
     PipeModule,
     CommercialRoutingModule,
   ],
