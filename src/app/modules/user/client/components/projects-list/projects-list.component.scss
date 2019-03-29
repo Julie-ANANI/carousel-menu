@@ -14,6 +14,8 @@
         img {
           border-radius: $border-radius;
           margin-right: $unit-5;
+          width: 120px;
+          height: 100px;
 
           &:hover {
             box-shadow: $box-shadow-hover-umi;
