@@ -8,7 +8,7 @@
       <h2 class="title-primary">{{ 'DISCOVER.RECOMMENDATION' | translate }}</h2>
 
       <!-- user Innovation cards -->
-      <div class="section-cards" [@cardAnimation]="userInnovations.length">
+      <div class="section-cards d-flex" [@cardAnimation]="userInnovations.length">
         <div *ngFor="let innovation of userInnovations | slice:startingIndex:endingIndex" class="card">
 
           <!-- img -->
@@ -29,8 +29,8 @@
 
               <!-- tags -->
               <ng-container *ngIf="getInnovationTags(innovation).length > 0">
-                <div class="tags-wrapper">
-                  <div *ngFor="let tag of getInnovationTags(innovation)" class="text text-notify">
+                <div class="tags-wrapper d-inline-flex">
+                  <div *ngFor="let tag of getInnovationTags(innovation)" class="text text-notify text-medium">
                     <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
                   </div>
                 </div>
@@ -49,7 +49,7 @@
             <!-- footer -->
             <ng-container *ngIf="getLangs(innovation).length > 0">
               <div class="card-footer">
-                <span class="text text-notify">{{ 'DISCOVER.FOOTER_TEXT' | translate }}</span>
+                <span class="text text-notify text-medium">{{ 'DISCOVER.FOOTER_TEXT' | translate }}</span>
                 <ng-container *ngFor="let lang of getLangs(innovation)">
                   <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
                     <span class="text-link">{{ lang }}</span>
@@ -170,7 +170,7 @@
     <!-- /heading section -->
 
     <!-- innovation cards -->
-    <div class="section-cards" [@cardAnimation]="localInnovations.length">
+    <div class="section-cards d-flex" [@cardAnimation]="localInnovations.length">
       <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card card-responsive">
 
         <!-- img -->
@@ -191,8 +191,8 @@
 
             <!-- tags -->
             <ng-container *ngIf="getInnovationTags(innovation).length > 0">
-              <div class="tags-wrapper">
-                <div *ngFor="let tag of getInnovationTags(innovation)" class="text text-notify">
+              <div class="tags-wrapper d-inline-flex">
+                <div *ngFor="let tag of getInnovationTags(innovation)" class="text text-notify text-medium">
                   <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
                 </div>
               </div>
@@ -211,7 +211,7 @@
           <!-- footer -->
           <ng-container *ngIf="getLangs(innovation).length > 0">
             <div class="card-footer">
-              <span class="text text-notify">{{ 'DISCOVER.FOOTER_TEXT' | translate }}</span>
+              <span class="text text-notify text-medium">{{ 'DISCOVER.FOOTER_TEXT' | translate }}</span>
               <ng-container *ngFor="let lang of getLangs(innovation)">
                 <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
                   <span class="text-link">{{ lang }}</span>
@@ -257,7 +257,7 @@
 
 <!-- modal to share -->
 <app-modal [(showModal)]="modalShare" [modalTitle]="'COMMON.MODAL.TITLE_SHARE'">
-  <h6 class="text discover-modal-heading">{{ 'DISCOVER.MODAL.HEADING' | translate }}</h6>
+  <h6 class="text discover-modal-heading text-medium">{{ 'DISCOVER.MODAL.HEADING' | translate }}</h6>
   <h6 class="text discover-modal-link">{{ shareUrl }}</h6>
 </app-modal>
-
+<!-- /modal to share -->

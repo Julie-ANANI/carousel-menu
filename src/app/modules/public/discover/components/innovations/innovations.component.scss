@@ -18,7 +18,7 @@
     .tags-wrapper {
       display: flex;
       flex-wrap: wrap;
-      margin: -$unit-2;
+      margin: -$unit-1;
 
       .label.label-draft {
         border-radius: 25px;
@@ -90,14 +90,12 @@
   }
 
   .section-cards {
-    display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin-right: -$unit-5;
 
     .card {
       padding: $unit-2;
-      margin-right: $unit-5;
       margin-bottom: 1.5rem;
       border-color: transparent;
 
@@ -108,14 +106,12 @@
         }
 
         .tags-wrapper {
-          display: inline-flex;
-          padding-right: -$unit-2;
+          flex-wrap: wrap;
 
           .text {
             padding-top: $unit-1;
             padding-right: $unit-2;
             font-size: 0.65rem;
-            font-weight: $font-weight-medium;
           }
 
           .fa-tag {
@@ -135,7 +131,7 @@
 
         .text {
           font-size: $font-size-sm;
-          margin-bottom: 0;
+          margin-bottom: -$unit-2;
           color: $text-secondary-color;
         }
 
@@ -145,7 +141,6 @@
 
         .text-notify {
           font-size: 0.65rem;
-          font-weight: $font-weight-medium;
         }
 
       }
@@ -174,7 +169,6 @@
 
 
 .discover-modal-heading {
-  font-weight: $font-weight-medium;
   margin-bottom: 1.25rem;
 }
 
@@ -190,7 +184,7 @@
     .section-heading {
       flex-direction: column;
       align-items: unset !important;
-      justify-content: left !important;
+      justify-content: flex-start !important;
     }
 
     .section-cards {
