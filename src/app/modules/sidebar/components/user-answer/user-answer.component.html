@@ -29,11 +29,11 @@
             <!-- name -->
             <h4>
 
-              <ng-container *ngIf="modalAnswer.professional?.firstName">
-                {{ modalAnswer.professional?.lastName }}
+              <ng-container *ngIf="modalAnswer.professional?.firstName || modalAnswer.professional?.lastName">
+                {{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}
               </ng-container>
 
-              <ng-container *ngIf="!modalAnswer.professional?.firstName">
+              <ng-container *ngIf="!modalAnswer.professional?.firstName && !modalAnswer.professional?.lastName">
                 {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
               </ng-container>
 
