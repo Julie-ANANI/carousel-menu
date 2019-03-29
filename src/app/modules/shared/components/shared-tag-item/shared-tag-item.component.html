@@ -22,11 +22,11 @@
 
   <!-- displaying tags -->
   <ng-container *ngIf="tags?.length > 0">
-    <div class="tags-wrapper">
+    <div class="tags-wrapper d-flex">
       <div *ngFor="let tag of tags" [title]="tag.description | multiling:browserLang()" class="label label-tag">
         <i class="fas fa-tag"></i>
-        <span>{{ tag?.label | multiling:browserLang() }}</span>
-        <i *ngIf="editMode || isAdmin" class="fas fa-times" (click)="removeTagEmitter($event, tag)"></i>
+        <span class="label-text">{{ tag?.label | multiling:browserLang() }}</span>
+        <i *ngIf="editMode || isAdmin" class="fas fa-times label-text" (click)="removeTagEmitter($event, tag)"></i>
       </div>
     </div>
   </ng-container>
