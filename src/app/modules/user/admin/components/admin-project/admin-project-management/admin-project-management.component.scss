@@ -24,6 +24,9 @@
   }
 
   .project-summary {
+
+    font-size: $font-size-md;
+
     div {
       height: 73px;
       padding-left: 20px;
@@ -35,7 +38,7 @@
     }
 
     h6 {
-      font-size: 1rem;
+      font-size: $font-size-md;
       width: 100px;
       color: white;
     }
