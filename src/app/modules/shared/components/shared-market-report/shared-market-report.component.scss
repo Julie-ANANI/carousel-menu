@@ -170,7 +170,7 @@
   #main-page {
     flex-direction: column;
 
-    .body-wrapper {
+    .content-wrapper {
       flex-direction: column;
       min-height: 80vh;
       justify-content: center;
@@ -179,7 +179,7 @@
         margin-bottom: 0.5rem;
       }
 
-      h1 {
+      .title-primary {
         font-size: 2.1rem;
         font-weight: 300;
       }
@@ -211,29 +211,18 @@
       }
 
       .goal-text {
-        display: inline-flex;
-        justify-content: center;
         max-width: 80%;
-        background: $background-color;
-        color: $light-color;
-        border-radius: 25px;
         margin-left: auto;
         margin-right: auto;
         margin-top: 1.25rem;
-        font-weight: $font-weight-medium;
-        font-size: 0.75rem;
-        padding: 0.55rem 0.75rem;
       }
 
     }
 
     .footer-wrapper {
       border-top: $border-width solid $primary-color;
-      display: flex;
       justify-content: space-between;
       padding-top: 0.5rem;
-      font-weight: $font-weight-medium;
-      color: $background-color;
 
       p {
         margin-bottom: 0;

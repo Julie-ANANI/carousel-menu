@@ -1,4 +1,4 @@
-<div class="body-wrapper animate-page" id="discover-component" [ngStyle]="{ 'min-height': !authService.isAuthenticated ? '100vh' : 'inherit' }">
+<div class="main-wrapper animate-page" id="discover-component" [ngStyle]="{ 'min-height': !authService.isAuthenticated ? '100vh' : 'inherit' }">
 
   <!-- unauthenticated header -->
   <ng-container *ngIf="!authService.isAuthenticated">
@@ -7,7 +7,7 @@
   <!-- /unauthenticated header -->
 
   <!-- body -->
-  <div class="main-wrapper">
+  <div class="body-wrapper">
     <router-outlet></router-outlet>
   </div>
 

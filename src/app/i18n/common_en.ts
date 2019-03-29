@@ -92,6 +92,7 @@ export const COMMON = {
     'WELCOME': 'Welcome',
     'ACCOUNT': 'Profile',
     'SHARED_REPORTS': 'Shared Reports',
+    'DISCOVER': 'Discover Innovations'
   },
 
   'LABEL': {
@@ -172,7 +173,8 @@ export const COMMON = {
     'PREVIEW': 'Preview',
     'SUBMIT': 'Submit',
     'SIGN_IN': 'Sign In',
-    'SIGN_UP': 'Sign Up'
+    'SIGN_UP': 'Sign Up',
+    'DELETE': 'Delete'
   },
 
   'TABLE' : {

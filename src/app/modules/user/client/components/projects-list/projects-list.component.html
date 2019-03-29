@@ -14,9 +14,9 @@
       <ng-container *ngIf="noResult">
         <div class="section-pad rm-pad-bottom">
           <app-message-space [widthMax]="'380px'">
-            {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
+            <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}</span>
             <br>
-            {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}
+            <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}</span>
           </app-message-space>
         </div>
       </ng-container>
@@ -28,7 +28,7 @@
           <!-- projects -->
           <div class="card-wrapper" [@listAnimation]="innovations.length">
             <div *ngFor="let innovation of innovations" class="card-project">
-              <div class="card-content">
+              <div class="card-content d-inline-flex">
 
                 <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
 
@@ -38,14 +38,16 @@
                     <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
                   </a>
 
-                  <p class="text text-notify">
+                  <p class="text text-notify text-medium">
                     {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
                     •
                     {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
                     •
                     {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
                     |
-                    <span class="icon icon-delete" (click)="onClickDelete($event, innovation._id)"><i class="fas fa-trash-alt"></i></span>
+                    <span class="icon icon-delete tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" (click)="onClickDelete($event, innovation._id)">
+                      <i class="fas fa-trash-alt"></i>
+                    </span>
                   </p>
 
                 </div>
@@ -76,11 +78,14 @@
 
   <!-- delete project confirmation modal -->
   <app-modal [(showModal)]="deleteModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-    {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
+
+    <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</span>
+
     <div class="modal-footer">
       <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
       <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
     </div>
+
   </app-modal>
   <!-- /delete project confirmation modal -->
 

@@ -136,7 +136,7 @@
       <!-- /sticky bar -->
 
       <!-- menu button -->
-      <div class="menu-wrapper menu-button-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
+      <div class="menu-wrapper gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
 
         <div class="menu-item-wrapper" [ngStyle]="{ 'display': displayMenuWrapper ? 'block' : 'none' }" (mouseenter)="displayMenu($event)" (mouseleave)="hideMenu($event)">
           <ul>
@@ -202,11 +202,11 @@
                 </div>
 
                 <!-- body -->
-                <div class="d-flex body-wrapper">
+                <div class="d-flex content-wrapper">
 
                   <h6 class="text-executive">Executive report</h6>
 
-                  <h1>{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
+                  <h1 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
 
                   <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
 
@@ -218,14 +218,14 @@
                     <h6 *ngIf="innovation.owner?.email" class="text-email text-normal text">{{ innovation.owner?.email }}</h6>
                   </ng-container>
 
-                  <div *ngIf="innovation.executiveReport?.objective" class="goal-text">
+                  <div *ngIf="innovation.executiveReport?.objective" class="goal-text label label-tag">
                     <span>{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}</span>
                   </div>
 
                 </div>
 
                 <!-- link -->
-                <div class="footer-wrapper">
+                <div class="footer-wrapper d-flex text-background text-medium">
                   <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
                   <div class="text-right">
                     <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>
@@ -327,9 +327,9 @@
 
         <!-- UMI intro -->
         <ng-container *ngIf="showDetails && getDomainName() === 'umi'">
-          <section class="section-pad umi-intro-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+          <section class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
             <div class="column col-xs-12 col-11 col-mx-auto">
-              <img [src]="getIntroSrc()" alt=" " class="img-responsive umi-intro">
+              <img [src]="getIntroSrc()" alt="UMI" class="img-responsive umi-intro">
             </div>
           </section>
         </ng-container>
@@ -337,7 +337,7 @@
 
         <!-- innovation detail -->
         <ng-container *ngIf="showDetails">
-          <section class="section-light-pad report-innovation-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+          <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
             <div class="column col-xs-12 col-11 col-mx-auto">
               <div class="section-pad full innovation-wrapper text bg-white">
 
@@ -458,7 +458,7 @@
 
         <!-- innovation analytics -->
         <ng-container *ngIf="showDetails">
-          <section class="section-light-pad report-analytics-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
+          <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
             <div class="column col-xs-12 col-11 col-mx-auto">
               <div class="section-pad full exploration-wrapper bg-white text">
 
@@ -644,7 +644,7 @@
         <section class="section-light-pad" id="professional-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="professional-wrapper d-flex">
-              <div *ngFor="let answer of filteredAnswers" class="card card-responsive relative">
+              <div *ngFor="let answer of filteredAnswers" class="card card-responsive-3 relative">
 
                 <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" (click)="filterPro(answer, $event)" alt=" ">
 
@@ -659,7 +659,7 @@
         <!-- /professionals -->
 
         <!-- other question and answers -->
-        <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="column col-xs-12 col-11 col-mx-auto" id="questions">
           <div *ngFor="let question of questions">
             <div class="section-light-pad">
               <app-question-section

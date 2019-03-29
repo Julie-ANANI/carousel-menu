@@ -10,7 +10,7 @@
       </ng-container>
 
       <ng-container *ngIf="question?.label">
-        <h4 class="title-secondary">{{ question?.label | multiling:lang }}label</h4>
+        <h4 class="title-secondary">{{ question?.label | multiling:lang }}</h4>
       </ng-container>
 
       <ng-container *ngIf="receivedTags.length > 0">
@@ -77,7 +77,7 @@
 
 <!-- executive report -->
 <ng-container *ngIf="executiveReportView && question?.controlType === 'radio' && pieChart">
-  <div class="stat-wrapper section-pad full text-center flex-centered pie-chart-print">
+  <div class="stat-wrapper text-center flex-centered pie-chart-print">
     <app-piechart [pieChart]="pieChart" [executiveReport]="true"></app-piechart>
   </div>
 </ng-container>

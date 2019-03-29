@@ -984,6 +984,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._scrollOn;
   }
 
+  get dateFormat(): string {
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  }
+
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const wrapper = document.getElementById('answer-wrapper');
