@@ -171,7 +171,8 @@ export const COMMON = {
     'PREVIEW': 'Prévisualiser',
     'SUBMIT': 'Soumettre',
     'SIGN_IN': 'Se Connecter',
-    'SIGN_UP': 'Commencer'
+    'SIGN_UP': 'Commencer',
+    'DELETE': 'Supprimer'
   },
 
   'PROJECT': {

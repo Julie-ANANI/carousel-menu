@@ -45,7 +45,9 @@
                     •
                     {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
                     |
-                    <span class="icon icon-delete" (click)="onClickDelete($event, innovation._id)"><i class="fas fa-trash-alt"></i></span>
+                    <span class="icon icon-delete tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" (click)="onClickDelete($event, innovation._id)">
+                      <i class="fas fa-trash-alt"></i>
+                    </span>
                   </p>
 
                 </div>
