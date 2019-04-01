@@ -50,8 +50,11 @@ export class SidebarComponent implements OnInit {
   @Output() closeSidebar = new EventEmitter<SidebarInterface>(); // todo: remove this line
 
   private _title: string; // heading
+
   private _state: string; // animation state
+
   private _size: string; // size
+
   private _type: string; // type
 
   constructor() {}

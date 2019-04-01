@@ -23,7 +23,7 @@ $body-bg-color: $light-color;
 $body-font-color: $dark-color;
 $link-color: $primary-color;
 $bg-color-light: $light-color !default;
-$bg-overlay: rgba(0,0,0,0.75) !default;
+$bg-overlay-color: rgba(0,0,0,0.75) !default;
 $bg-dropdown-color: #F2F2F2 !default;
 $border-meta-color: $meta-color !default;
 
@@ -159,6 +159,10 @@ $zindex-3: 300 !default;
 $zindex-4: 400 !default;
 
 
+// Z-index Sidebar
+$zindexSidebar-0: 7999 !default;
+$zindexSidebar-1: 7998 !default;
+$zindexSidebar-2: 7997 !default;
 
 
 

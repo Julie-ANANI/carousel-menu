@@ -17,6 +17,7 @@ export interface SelectedProfessional extends Professional {
 export class SharedProsListOldComponent {
 
   private _config: any;
+  private _keywordsModal: boolean = false;
   private _paginationConfig: PaginationInterface = {};
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
@@ -87,11 +88,8 @@ export class SharedProsListOldComponent {
   showKeywords(personId) {
     this._searchService.getProKeywords(personId).pipe(first()).subscribe((keywords: Array<string>) => {
       this._proKeywords = keywords;
+      this._keywordsModal = true;
     });
-  }
-
-  hideKeywords() {
-    this._proKeywords = null;
   }
 
   get nbSelected(): number {
@@ -105,6 +103,8 @@ export class SharedProsListOldComponent {
   get total() { return this._total; }
   get pros() { return this._pros; }
   get proKeywords(): Array<string> { return this._proKeywords; }
+  get keywordsModal(): boolean { return this._keywordsModal; }
+  set keywordsModal(value: boolean) { this._keywordsModal = value; }
   get config() { return this._config; }
   get paginationConfig(): PaginationInterface { return this._paginationConfig; }
 }

@@ -1,0 +1,79 @@
+@import "variables";
+
+// Sidebar backdrop
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $zindexSidebar-2;
+
+  &.inactive {
+    display: none;
+    opacity: 0;
+    background: none;
+  }
+
+  &.active {
+    display: block;
+    opacity: 1;
+    background: $bg-overlay-color;
+  }
+
+}
+
+.sidebar {
+  top: 0;
+  height: 100vh;
+  z-index: $zindexSidebar-0;
+  position: fixed;
+  left: 0;
+  width: $control-width-sm;
+  bottom: 0;
+
+  &.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .sidebar-container {
+    width: 100%;
+    height: 100vh;
+    background: $bg-color-light;
+    cursor: default;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  &.sidebar-right {
+    right: 0;
+    left: unset;
+
+    .sidebar-container {
+      float: right;
+      right: 0;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-md) {
+
+  .sidebar {
+    width: 65% !important;
+  }
+
+}
+
+@media (max-width: $size-sm) {
+
+  .sidebar {
+    width: 90% !important;
+  }
+
+}
