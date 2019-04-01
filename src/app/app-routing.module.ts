@@ -11,6 +11,7 @@ import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthes
 
 // Component
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
+import { demoRoutes } from './modules/demo/demo-routing.module';
 
 const appRoutes: Routes = [
   {
@@ -48,6 +49,9 @@ const appRoutes: Routes = [
   },
   {
     path: 'commercial', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/commercial/commercial.module#CommercialModule'
+  },
+  {
+    path: 'demo', canActivate: [AuthGuard, AdminAuthGuard], children: [ ...demoRoutes ]
   },
   {
     path: '', pathMatch: 'full', redirectTo: 'user'

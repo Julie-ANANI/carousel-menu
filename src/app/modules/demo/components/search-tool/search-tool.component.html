@@ -1,0 +1,53 @@
+<div id="search-tool-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section search bar -->
+    <section class="section-search section-pad rm-pad-bottom">
+      <form [formGroup]="searchForm">
+        <div class="form-group relative">
+
+          <label for="search-form-input"></label>
+          <input
+            class="form-input"
+            formControlName="keywords"
+            id="search-form-input"
+            type="text">
+
+          <span class="search-icon absolute text-notify c-hand" (click)="onClickSearch()"><i class="fas fa-search"></i></span>
+
+        </div>
+      </form>
+    </section>
+    <!-- /section search bar -->
+
+    <!-- section showing video when no search -->
+    <ng-container *ngIf="noResult">
+      <div [ngClass]=" { 'disappear': searchStarted } ">
+        <section class="section-light-pad rm-pad-bottom">
+          <div class="video-responsive">
+            <iframe
+              allowfullscreen
+              frameborder="0"
+              mozallowfullscreen
+              src="https://player.vimeo.com/video/313136787?autoplay=1&loop=1"
+              webkitallowfullscreen>
+            </iframe>
+          </div>
+        </section>
+      </div>
+    </ng-container>
+    <!-- /section showing video when no search -->
+
+    <!-- section to show result -->
+    <ng-container *ngIf="!noResult">
+      <div [ngClass]=" { 'appear': searchStopped } ">
+        <section class="section-light-pad">
+
+        </section>
+      </div>
+    </ng-container>
+    <!-- /section to show result -->
+
+
+  </div>
+</div>

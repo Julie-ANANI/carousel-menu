@@ -1,0 +1,49 @@
+@import "../../../../../style/variables";
+
+#search-tool-component {
+
+  .section-search {
+    width: 582px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .form-group {
+
+      &:hover .form-input {
+        box-shadow: $box-shadow-hover;
+      }
+
+      .form-input {
+        border-radius: 25px;
+        border-color: $border-color !important;
+        padding-left: 25px;
+        padding-right: 55px;
+        height: 45px;
+      }
+
+      .search-icon {
+        right: 23px;
+        top: 8px;
+      }
+
+    }
+
+  }
+
+  .video-responsive {
+    max-height: 80vh;
+  }
+
+  .disappear {
+    animation-name: fadeOut;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+  }
+
+  .appear {
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    animation-timing-function: ease-in;
+  }
+
+}
