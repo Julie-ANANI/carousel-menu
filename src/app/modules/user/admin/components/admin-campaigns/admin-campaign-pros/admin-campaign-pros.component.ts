@@ -148,12 +148,14 @@ export class AdminCampaignProsComponent implements OnInit {
       emailConfidence: 100
     };
 
-    this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id).pipe(first()).subscribe((createdPro: Professional) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
-      this._noResult = false;
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
+    this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id)
+      .pipe(first())
+      .subscribe((createdPro: Professional) => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
+        this._noResult = false;
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
 
   }
 

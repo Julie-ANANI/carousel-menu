@@ -66,12 +66,16 @@
 
 }
 
+.text-primary {
+  color: $text-primary-color !important;
+}
+
 .text-success {
   color: $text-success-color !important;
 }
 
 .text-warning {
-  color: $text-primary-color !important;
+  color: $primary-color !important;
 }
 
 .text-error, .text-alert {
