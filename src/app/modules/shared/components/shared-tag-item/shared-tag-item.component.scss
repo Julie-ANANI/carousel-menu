@@ -17,17 +17,12 @@
   }
 
   .tags-wrapper {
-    display: flex;
     flex-wrap: wrap;
-    margin-left: -$unit-2;
-    margin-bottom: -$unit-2;
-    margin-right: -$unit-2;
+    margin-left: -$unit-1;
+    margin-bottom: -$unit-1;
+    margin-right: -$unit-1;
 
     .label.label-tag {
-
-      span {
-        margin-right: $unit-2;
-      }
 
       .fa-times {
         font-size: $font-icon-sm;
