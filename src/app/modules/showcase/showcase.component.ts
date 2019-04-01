@@ -10,11 +10,11 @@ import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
 
 @Component({
-  selector: 'app-commercial',
-  templateUrl: './commercial.component.html',
+  selector: 'app-showcase',
+  templateUrl: './showcase.component.html',
 })
 
-export class CommercialComponent implements OnInit {
+export class ShowcaseComponent implements OnInit {
 
   private _sectorTags: Array<Tag> = [];
   private _selectedTagsStats: Array<TagStats> = [];
