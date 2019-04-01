@@ -3,7 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
+import { AnswerService } from '../../services/answer/answer.service';
 import { TagsService } from '../../services/tags/tags.service';
+import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
 
@@ -19,10 +21,12 @@ export class CommercialComponent implements OnInit {
   public tagForm: FormGroup;
 
   private _countries: {[country: string]: number} = {};
+  private _topAnswers: Array<Answer> = [];
   private _stats: TagStats;
 
   constructor(private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
+              private answerService: AnswerService,
               private tagService: TagsService,
               private translateNotificationService: TranslateNotificationsService,
               private translateService: TranslateService) {
@@ -73,6 +77,21 @@ export class CommercialComponent implements OnInit {
     });
   }
 
+  private reqAnswers(): void {
+    const request = {
+      fields: 'created professional job company',
+      limit: '6',
+      offset: '0',
+      profileQuality: '2',
+      sort: '{"created":-1}'
+    };
+    this.answerService.getAll(request).subscribe((next) => {
+      if (Array.isArray(next.result)) {
+        this._topAnswers = next.result;
+      }
+    });
+  }
+
   public selectTag() {
     const selectedTagId = this.tagForm.get('selectedTag').value;
     const selectedTag = this._sectorTags.find((t) => t._id === selectedTagId);
@@ -80,6 +99,7 @@ export class CommercialComponent implements OnInit {
       this.tagService.getStats(selectedTag._id).subscribe(stats => {
         this._selectedTagsStats.push(stats);
         this._stats = this.computeStats();
+        this.reqAnswers();
       }, err => {
         this.translateNotificationService.error('ERROR.ERROR', err);
       });
@@ -97,6 +117,10 @@ export class CommercialComponent implements OnInit {
   }
 
   get lang(): string { return this.translateService.currentLang; }
+
+  get topAnswers() {
+    return this._topAnswers;
+  }
 
   get sectorTags(): Array<Tag> {
     return this._sectorTags;

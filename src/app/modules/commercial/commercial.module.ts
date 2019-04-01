@@ -10,6 +10,7 @@ import { CommercialComponent } from './commercial.component';
 
 import { AdminSearchMapModule } from '../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CommercialRoutingModule } from './commercial-routing.module';
+import { AnswerService } from '../../services/answer/answer.service';
 import { TagsService } from '../../services/tags/tags.service';
 import { PipeModule } from '../../pipe/pipe.module';
 
@@ -28,6 +29,7 @@ import { PipeModule } from '../../pipe/pipe.module';
     CommercialComponent
   ],
   providers: [
+    AnswerService,
     TagsService,
   ],
   exports: [

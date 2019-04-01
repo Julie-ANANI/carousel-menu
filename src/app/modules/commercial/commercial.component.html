@@ -39,10 +39,19 @@
 
     <p>Generated Leads: {{stats.countLeads}} / {{stats.totalAnswers}}</p>
 
-    <admin-search-map
-      [countriesData]="countries"
-      [width]="'auto'">
-    </admin-search-map>
+    <admin-search-map [countriesData]="countries"></admin-search-map>
+
+    <div>
+      <p> Pro with stars : </p>
+      <ul>
+        <li *ngFor="let answer of topAnswers">
+          {{ answer.professional?.firstName }}
+          {{ answer.professional?.lastName }}
+          {{ answer.job }}
+          {{ answer.company?.name }}
+        </li>
+      </ul>
+    </div>
 
   </section>
 
