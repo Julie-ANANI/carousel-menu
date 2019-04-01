@@ -284,7 +284,7 @@
       <!-- /rejected by gmail -->
 
       <!-- section questions -->
-      <div *ngFor="let question of questions" class="question-wrapper">
+      <ng-container *ngFor="let question of questions">
         <app-answer-question
           [editMode]="editMode"
           [adminMode]="modeAdmin"
@@ -292,7 +292,7 @@
           [fullAnswer]="modalAnswer"
           [innoid]="innovationId">
         </app-answer-question>
-      </div>
+      </ng-container>
       <!-- /section questions -->
 
     </div>
