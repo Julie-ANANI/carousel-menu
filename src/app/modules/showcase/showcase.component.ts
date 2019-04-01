@@ -22,16 +22,17 @@ export class ShowcaseComponent implements OnInit {
 
   private _countries: {[country: string]: number} = {};
   private _topAnswers: Array<Answer> = [];
-  private _stats: TagStats;
+  private _stats: TagStats = {};
+
+  private _maxFirstTertile = 0;
+  private _maxSecondTertile = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
               private answerService: AnswerService,
               private tagService: TagsService,
               private translateNotificationService: TranslateNotificationsService,
-              private translateService: TranslateService) {
-    this._stats = this.computeStats();
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.tagForm = this.formBuilder.group({
@@ -45,7 +46,7 @@ export class ShowcaseComponent implements OnInit {
     }
   }
 
-  private computeStats(): TagStats {
+  private computeCountries(): void {
     this._countries = this._selectedTagsStats.reduce((acc, stats) => {
       stats.geographicalRepartition.forEach((cc) => {
         if (acc[cc.country]) {
@@ -55,7 +56,15 @@ export class ShowcaseComponent implements OnInit {
         }
       });
       return acc;
-    }, {});
+    }, <{[country: string]: number}>{});
+    const countriesList = Object.keys(this._countries);
+    const orderedCountries = countriesList.sort((a, b) => this._countries[a] - this._countries[b]);
+    const tertileSize = (orderedCountries.length / 3);
+    this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
+    this._maxSecondTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
+  }
+
+  private computeStats(): TagStats {
     return this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
@@ -99,6 +108,7 @@ export class ShowcaseComponent implements OnInit {
       this.tagService.getStats(selectedTag._id).subscribe(stats => {
         this._selectedTagsStats.push(stats);
         this._stats = this.computeStats();
+        this.computeCountries();
         this.reqAnswers();
       }, err => {
         this.translateNotificationService.error('ERROR.ERROR', err);
@@ -110,6 +120,8 @@ export class ShowcaseComponent implements OnInit {
     event.preventDefault();
     this._selectedTagsStats = this._selectedTagsStats.filter((t) => t.tag._id !== tagId);
     this._stats = this.computeStats();
+    this.computeCountries();
+    this.reqAnswers();
   }
 
   get countries() {
@@ -132,6 +144,14 @@ export class ShowcaseComponent implements OnInit {
 
   get stats(): TagStats {
     return this._stats;
+  }
+
+  get maxFirstTertile() {
+    return this._maxFirstTertile;
+  }
+
+  get maxSecondTertile() {
+    return this._maxSecondTertile;
   }
 
 }

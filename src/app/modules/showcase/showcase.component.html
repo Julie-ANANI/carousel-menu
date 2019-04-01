@@ -39,7 +39,10 @@
 
     <p>Generated Leads: {{stats.countLeads}} / {{stats.totalAnswers}}</p>
 
-    <admin-search-map [countriesData]="countries"></admin-search-map>
+    <admin-search-map
+      [countriesData]="countries"
+      [quartiles]="[1, maxFirstTertile, maxSecondTertile]">
+    </admin-search-map>
 
     <div>
       <p> Pro with stars : </p>
