@@ -3,8 +3,8 @@
     <div class="column col-xs-12 col-11 col-mx-auto">
 
       <!-- section save -->
-      <ng-container *ngIf="adminMode">
-        <div class="section-save text-right" [ngSwitch]="modalAnswer?.localStatus">
+      <ng-container *ngIf="modeAdmin">
+        <div class="section-light-pad rm-pad-top text-right" [ngSwitch]="modalAnswer?.localStatus">
 
           <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
             {{ 'COMMON.BUTTON.IMPORT' | translate }}
@@ -21,10 +21,9 @@
       <div class="section-details">
 
         <!-- name, flag and rating -->
-        <div class="header-wrapper">
+        <div class="header-wrapper flex-between">
 
-
-          <div class="title-wrapper">
+          <div class="title-wrapper d-flex">
 
             <!-- name -->
             <h4>
@@ -38,13 +37,14 @@
               </ng-container>
 
             </h4>
+            <!-- /name -->
 
             <!-- rating -->
             <ng-container *ngIf="editMode">
               <div class="rating-wrapper">
                 <app-rating-item
-                  [editMode]="adminMode"
-                  [prop]="profile"
+                  [editMode]="modeAdmin"
+                  [prop]="'profile'"
                   [rating]="modalAnswer.profileQuality"
                   (ratingChange)="updateProfileQuality($event)">
                 </app-rating-item>
@@ -55,7 +55,7 @@
             <ng-container *ngIf="!editCountry">
               <div class="country-wrapper flex-between">
                 <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
-                <div *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Country" (click)="onClickEdit('country')">
+                <div *ngIf="modeAdmin && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Country" (click)="onClickEdit('country')">
                   <i class="fas fa-pencil-alt"></i>
                 </div>
               </div>
@@ -64,7 +64,7 @@
           </div>
 
           <!-- edit button -->
-          <ng-container *ngIf="adminMode && modalAnswer.localStatus !== 'draft'">
+          <ng-container *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft'">
             <div class="button-wrapper">
               <label class="form-switch text-medium" for="answer-editMode">
                 <input
@@ -73,19 +73,12 @@
                   id="answer-editMode"
                   (change)="changeMode($event)"
                   [checked]="editMode">
-                <i class="form-icon"></i>
-                {{ 'Edit user' }}
+                <i class="form-icon"></i>{{ 'Edit user' }}
               </label>
             </div>
           </ng-container>
 
         </div>
-
-        <!-- blacklist company -->
-        <ng-container *ngIf="adminMode && modalAnswer.localStatus !== 'draft' && modalAnswer.blacklistedCompany">
-          <div class="icon icon-delete"><i class="fas fa-exclamation-triangle"></i></div>
-          <span class="text text-alert text-medium">Maybe the answer comes from a blacklisted company!</span>
-        </ng-container>
 
         <!-- edit country -->
         <ng-container *ngIf="editCountry">
@@ -99,8 +92,14 @@
           </div>
         </ng-container>
 
+        <!-- blacklist company -->
+        <ng-container *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && modalAnswer.blacklistedCompany">
+          <div class="icon icon-delete"><i class="fas fa-exclamation-triangle"></i></div>
+          <span class="text text-alert text-medium">Maybe the answer comes from a blacklisted company!</span>
+        </ng-container>
+
         <!-- linkedin -->
-        <ng-container *ngIf="adminMode && modalAnswer.professional?.profileUrl">
+        <ng-container *ngIf="modeAdmin && modalAnswer.professional?.profileUrl">
           <div class="linkedin-wrapper">
             <span class="icon icon-secondary picto"><i class="fab fa-linkedin-in"></i></span>
             <a [href]="modalAnswer.professional.profileUrl" target="_blank">
@@ -117,7 +116,9 @@
 
             <ng-container *ngIf="!editJob">
               <span>{{ modalAnswer.job || modalAnswer.professional?.jobTitle }}</span>
-              <span *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Profession" (click)="onClickEdit('job')"><i class="fas fa-pencil-alt"></i></span>
+              <span *ngIf="modeAdmin && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Profession" (click)="onClickEdit('job')">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
             </ng-container>
 
             <ng-container *ngIf="editJob">
@@ -144,7 +145,9 @@
 
             <ng-container *ngIf="!editCompany">
               <span>{{ modalAnswer.company.name || modalAnswer.professional?.company }}</span>
-              <span *ngIf="adminMode && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Company" (click)="onClickEdit('company')"><i class="fas fa-pencil-alt"></i></span>
+              <span *ngIf="modeAdmin && editMode" class="icon icon-meta tooltip" data-tooltip="Modify Company" (click)="onClickEdit('company')">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
             </ng-container>
 
             <ng-container *ngIf="editCompany">
@@ -179,8 +182,8 @@
             <span *ngIf="modalAnswer.created">
               {{ 'ANSWER.RECEIVED.A' | translate }} {{ modalAnswer.created | date }} {{ 'ANSWER.RECEIVED.B' | translate }} {{ modalAnswer.created | slice: 11 : 16  }}
             </span>
-            <span *ngIf="adminMode && modalAnswer.created && modalAnswer.time_elapsed">&nbsp; • &nbsp;</span>
-            <span *ngIf="adminMode && modalAnswer.time_elapsed">
+            <span *ngIf="modeAdmin && modalAnswer.created && modalAnswer.time_elapsed">&nbsp; • &nbsp;</span>
+            <span *ngIf="modeAdmin && modalAnswer.time_elapsed">
               {{ 'ANSWER.RECEIVED.C' | translate }} {{ floor(modalAnswer.time_elapsed/60) }} min. {{ floor(modalAnswer.time_elapsed%60) }} sec.
             </span>
           </div>
@@ -189,7 +192,7 @@
         <!-- ip -->
         <ng-container *ngIf="modalAnswer.ip && editMode">
           <div class="text text-notify text-bold i-wrapper">
-            {{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}
+            <span>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</span>
           </div>
         </ng-container>
 
@@ -213,34 +216,28 @@
       <!-- /section tags -->
 
       <!-- section status -->
-      <ng-container *ngIf="adminMode && modalAnswer.status !== 'REJECTED_GMAIL' && modalAnswer.localStatus !== 'draft'">
-        <div class="section-status">
+      <ng-container *ngIf="modeAdmin && modalAnswer.status !== 'REJECTED_GMAIL' && modalAnswer.localStatus !== 'draft'">
+        <div class="section-status flex-between">
 
           <!-- to reject -->
           <div class="status-rejected">
-            <div class="label label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</div>
-            <button
-              class="btn btn-radio rejected"
-              [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }"
-              (click)="updateStatus($event, 'REJECTED')">
+            <div class="label label-alert"><span>{{ 'ANSWER.STATUS.REJECTED' | translate }}</span></div>
+            <button class="btn btn-radio rejected" [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }" (click)="updateStatus($event, 'REJECTED')">
               <span>•</span>
             </button>
           </div>
 
           <!-- submitted -->
           <div class="status-submitted">
-            <div class="label label-progress">{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</div>
-            <button
-              class="btn btn-radio submitted"
-              [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }"
-              (click)="updateStatus($event, 'SUBMITTED')">
+            <div class="label label-progress"><span>{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span></div>
+            <button class="btn btn-radio submitted" [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }" (click)="updateStatus($event, 'SUBMITTED')">
               <span>•</span>
             </button>
           </div>
 
           <!-- validated -->
           <div class="status-validated">
-            <div class="label label-success">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</div>
+            <div class="label label-success"><span>{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span></div>
             <button
               class="btn btn-radio validated"
               [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
@@ -260,8 +257,7 @@
                   (change)="sendEmail($event, 'VALIDATED')"
                   [disabled]="!editMode"
                   [checked]="modalAnswer.status === 'VALIDATED'">
-                <i class="form-icon"></i>
-                {{ 'ANSWER.STATUS.EMAIL' | translate }}
+                <i class="form-icon"></i>{{ 'ANSWER.STATUS.EMAIL' | translate }}
               </label>
             </div>
           </ng-container>
@@ -271,7 +267,7 @@
       <!-- /section status -->
 
       <!-- rejected by gmail -->
-      <ng-container *ngIf="adminMode && modalAnswer.status === 'REJECTED_GMAIL'">
+      <ng-container *ngIf="modeAdmin && modalAnswer.status === 'REJECTED_GMAIL'">
         <div class="status-gmail">
 
           <div class="label label-alert">
@@ -288,15 +284,15 @@
       <!-- /rejected by gmail -->
 
       <!-- section questions -->
-      <div *ngFor="let question of questions" class="question-wrapper">
+      <ng-container *ngFor="let question of questions">
         <app-answer-question
           [editMode]="editMode"
-          [adminMode]="adminMode"
+          [adminMode]="modeAdmin"
           [question]="question"
           [fullAnswer]="modalAnswer"
           [innoid]="innovationId">
         </app-answer-question>
-      </div>
+      </ng-container>
       <!-- /section questions -->
 
     </div>
