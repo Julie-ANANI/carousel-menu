@@ -36,7 +36,7 @@
     </td>
     <td>{{ pro.jobTitle }}</td>
     <td>
-      <span *ngIf="requestId">{{ pro.company.name }}</span>
+      <span *ngIf="requestId">{{ pro.company['name'] }}</span>
       <span *ngIf="!requestId">{{ pro.company }}</span>
     </td>
     <td>
