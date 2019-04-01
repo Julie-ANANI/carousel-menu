@@ -21,7 +21,7 @@
             <ng-container *ngIf="editMode">
               <div *ngFor="let option of question.options"
                    class="c-hand"
-                   [ngClass]="{ 'inactive': option.identifier !== fullAnswer.answers[question.identifier] }"
+                   [ngClass]="{ 'text-primary': option.identifier !== fullAnswer.answers[question.identifier] }"
                    (click)="selectOption($event, option)">
                 <span>{{ optionLabel(option.identifier) }}</span>
               </div>
