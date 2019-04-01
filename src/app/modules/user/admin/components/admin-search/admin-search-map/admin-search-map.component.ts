@@ -21,7 +21,7 @@ export class AdminSearchMapComponent {
 
   private _countriesData: any = {};
 
-  private _quartiles = {1: 0, 2: 0, 3: 0};
+  private _quartiles: {1: number, 2: number, 3: number};
 
   private _boxStyle: any = {
     opacity: 0

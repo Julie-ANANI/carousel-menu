@@ -58,7 +58,7 @@
 </table>
 
 <app-modal [(showModal)]="keywordsModal" [modalTitle]="'Keywords'">
-  <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
+  <small><strong>{{nbSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
 
   <ul>
     <li *ngFor="let keywords of proKeywords">{{ keywords }}</li>
