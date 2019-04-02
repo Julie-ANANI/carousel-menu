@@ -65,6 +65,8 @@ export class AdminCommunityProjectComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
+  private _config = {};
+
   constructor(private activatedRoute: ActivatedRoute,
               private autoCompleteService: AutocompleteService,
               //private tagsService: TagsService,
@@ -75,8 +77,18 @@ export class AdminCommunityProjectComponent implements OnInit {
               private innovationFrontService: InnovationFrontService) { }
 
   ngOnInit() {
+    //{ $project : { "firstName":1, "lastName":1, "tags.label":1, "country":1,
+    //                     "answers.innovation":1, "answers.status":1, "ambassador.industry":1}}
     this._innovation = this.activatedRoute.snapshot.data['innovation'];
-    console.log(this._innovation);
+    this._config = {
+      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
+      limit: '10',
+      offset: '0',
+      innovations: this._innovation._id,
+      search: '',
+      sort: '{"created":-1}'
+    };
+    console.log(this._config);
     /*this.getAllTags();
     this.initializeVariables();
     this.getAllInnovations();*/
@@ -84,6 +96,10 @@ export class AdminCommunityProjectComponent implements OnInit {
 
   get innovation() {
     return this._innovation;
+  }
+
+  get config() {
+    return this._config;
   }
 
 

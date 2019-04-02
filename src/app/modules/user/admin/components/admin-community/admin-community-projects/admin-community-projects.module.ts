@@ -9,6 +9,7 @@ import { AdminCommunityProjectsComponent } from "./admin-community-projects.comp
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
 import { AdminCommunityProjectComponent } from "./component/admin-community-project/admin-community-project.component";
+import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AdminCommunityProjectComponent } from "./component/admin-community-proj
     TranslateModule.forChild(),
     PipeModule,
     SidebarModule,
-    TableModule
+    TableModule,
+    SharedAmbassadorListModule
   ],
   declarations: [
     AdminCommunityProjectsComponent,
