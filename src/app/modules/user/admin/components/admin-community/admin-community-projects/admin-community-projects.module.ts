@@ -8,6 +8,7 @@ import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { AdminCommunityProjectsComponent } from "./admin-community-projects.component";
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
+import { AdminCommunityProjectComponent } from "./component/admin-community-project/admin-community-project.component";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TableModule } from "../../../../../table/table.module";
     TableModule
   ],
   declarations: [
-    AdminCommunityProjectsComponent
+    AdminCommunityProjectsComponent,
+    AdminCommunityProjectComponent
   ],
   exports: [
     AdminCommunityProjectsComponent
