@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CommercialComponent } from './commercial.component';
+import { ShowcaseComponent } from './showcase.component';
 
 import { TagsResolver } from './services/tags-resolver.service';
 
-const commercialRoutes: Routes = [
+const showcaseRoutes: Routes = [
   {
     path: '',
-    component: CommercialComponent,
+    component: ShowcaseComponent,
     resolve: { tags: TagsResolver }
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(commercialRoutes)
+    RouterModule.forChild(showcaseRoutes)
   ],
   providers: [
     TagsResolver
@@ -25,4 +25,4 @@ const commercialRoutes: Routes = [
   ]
 })
 
-export class CommercialRoutingModule { }
+export class ShowcaseRoutingModule { }

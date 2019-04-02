@@ -3,31 +3,36 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
+import { AnswerService } from '../../services/answer/answer.service';
 import { TagsService } from '../../services/tags/tags.service';
+import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
 
 @Component({
-  selector: 'app-commercial',
-  templateUrl: './commercial.component.html',
+  selector: 'app-showcase',
+  templateUrl: './showcase.component.html',
 })
 
-export class CommercialComponent implements OnInit {
+export class ShowcaseComponent implements OnInit {
 
   private _sectorTags: Array<Tag> = [];
   private _selectedTagsStats: Array<TagStats> = [];
   public tagForm: FormGroup;
 
   private _countries: {[country: string]: number} = {};
-  private _stats: TagStats;
+  private _topAnswers: Array<Answer> = [];
+  private _stats: TagStats = {};
+
+  private _maxFirstTertile = 0;
+  private _maxSecondTertile = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
+              private answerService: AnswerService,
               private tagService: TagsService,
               private translateNotificationService: TranslateNotificationsService,
-              private translateService: TranslateService) {
-    this._stats = this.computeStats();
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.tagForm = this.formBuilder.group({
@@ -41,7 +46,7 @@ export class CommercialComponent implements OnInit {
     }
   }
 
-  private computeStats(): TagStats {
+  private computeCountries(): void {
     this._countries = this._selectedTagsStats.reduce((acc, stats) => {
       stats.geographicalRepartition.forEach((cc) => {
         if (acc[cc.country]) {
@@ -51,7 +56,15 @@ export class CommercialComponent implements OnInit {
         }
       });
       return acc;
-    }, {});
+    }, <{[country: string]: number}>{});
+    const countriesList = Object.keys(this._countries);
+    const orderedCountries = countriesList.sort((a, b) => this._countries[a] - this._countries[b]);
+    const tertileSize = (orderedCountries.length / 3);
+    this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
+    this._maxSecondTertile = this._countries[orderedCountries[Math.floor(2 * tertileSize)]];
+  }
+
+  private computeStats(): TagStats {
     return this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
@@ -73,6 +86,21 @@ export class CommercialComponent implements OnInit {
     });
   }
 
+  private reqAnswers(): void {
+    const request = {
+      fields: 'created professional job company',
+      limit: '6',
+      offset: '0',
+      profileQuality: '2',
+      sort: '{"created":-1}'
+    };
+    this.answerService.getAll(request).subscribe((next) => {
+      if (Array.isArray(next.result)) {
+        this._topAnswers = next.result;
+      }
+    });
+  }
+
   public selectTag() {
     const selectedTagId = this.tagForm.get('selectedTag').value;
     const selectedTag = this._sectorTags.find((t) => t._id === selectedTagId);
@@ -80,6 +108,8 @@ export class CommercialComponent implements OnInit {
       this.tagService.getStats(selectedTag._id).subscribe(stats => {
         this._selectedTagsStats.push(stats);
         this._stats = this.computeStats();
+        this.computeCountries();
+        this.reqAnswers();
       }, err => {
         this.translateNotificationService.error('ERROR.ERROR', err);
       });
@@ -90,6 +120,8 @@ export class CommercialComponent implements OnInit {
     event.preventDefault();
     this._selectedTagsStats = this._selectedTagsStats.filter((t) => t.tag._id !== tagId);
     this._stats = this.computeStats();
+    this.computeCountries();
+    this.reqAnswers();
   }
 
   get countries() {
@@ -97,6 +129,10 @@ export class CommercialComponent implements OnInit {
   }
 
   get lang(): string { return this.translateService.currentLang; }
+
+  get topAnswers() {
+    return this._topAnswers;
+  }
 
   get sectorTags(): Array<Tag> {
     return this._sectorTags;
@@ -108,6 +144,14 @@ export class CommercialComponent implements OnInit {
 
   get stats(): TagStats {
     return this._stats;
+  }
+
+  get maxFirstTertile() {
+    return this._maxFirstTertile;
+  }
+
+  get maxSecondTertile() {
+    return this._maxSecondTertile;
   }
 
 }

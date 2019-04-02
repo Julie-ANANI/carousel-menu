@@ -6,7 +6,6 @@ import { AuthService } from './services/auth/auth.service';
 import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
-import { DiscoverGuard } from './modules/public/discover/guards/discover-guard.service';
 import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthesis-guard.service';
 
 // Component
@@ -27,7 +26,7 @@ const appRoutes: Routes = [
     path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
   },
   {
-    path: 'discover', canActivate: [DiscoverGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+    path: 'discover', loadChildren: './modules/public/discover/discover.module#DiscoverModule'
   },
   {
     path: 'share', canActivate: [ShareSynthesisGuard], loadChildren: './modules/public/share/share.module#ShareModule'
@@ -45,10 +44,13 @@ const appRoutes: Routes = [
     path: 'auth', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
   },
   {
+    path: 'user/discover', redirectTo: 'discover'
+  },
+  {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
   },
   {
-    path: 'commercial', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/commercial/commercial.module#CommercialModule'
+    path: 'showcase', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/showcase/showcase.module#ShowcaseModule'
   },
   {
     path: 'demo', canActivate: [AuthGuard, AdminAuthGuard], children: [ ...demoRoutes ]
@@ -78,7 +80,6 @@ const config: ExtraOptions = {
     AuthGuard,
     NonAuthGuard,
     AdminAuthGuard,
-    DiscoverGuard,
     ShareSynthesisGuard
   ]
 })

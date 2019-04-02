@@ -1,4 +1,4 @@
-<main class="body-wrapper" id="commercial-component">
+<main class="body-wrapper" id="showcase-component">
 
   <!-- header -->
   <app-header></app-header>
@@ -41,8 +41,21 @@
 
     <admin-search-map
       [countriesData]="countries"
+      [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
       [width]="'auto'">
     </admin-search-map>
+
+    <div>
+      <p> Pro with stars : </p>
+      <ul>
+        <li *ngFor="let answer of topAnswers">
+          {{ answer.professional?.firstName }}
+          {{ answer.professional?.lastName }}
+          {{ answer.job }}
+          {{ answer.company?.name }}
+        </li>
+      </ul>
+    </div>
 
   </section>
 

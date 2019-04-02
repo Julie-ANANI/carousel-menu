@@ -13,6 +13,7 @@ import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
+import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 import { PaginationModule } from '../../utility-components/pagination/pagination.module';
 import { PipeModule } from '../../../pipe/pipe.module';
@@ -23,6 +24,8 @@ import { SearchInputModule } from '../../utility-components/search-input/search-
 import { TagsService } from '../../../services/tags/tags.service';
 import { ModalMediaModule } from '../../utility-components/modal-media/modal-media.module';
 import { ModalModule } from '../../utility-components/modal/modal.module';
+import { HeaderModule } from '../../common/header/header.module';
+
 
 @NgModule({
   imports: [
@@ -36,14 +39,16 @@ import { ModalModule } from '../../utility-components/modal/modal.module';
     FooterModule,
     HeaderUnauthModule,
     ModalMediaModule,
-    ModalModule
+    ModalModule,
+    HeaderModule
   ],
   providers:[
     InnovationService,
     InnovationResolver,
     ShareService,
     UserService,
-    TagsService
+    TagsService,
+    InnovationFrontService
   ],
   declarations: [
     DiscoverComponent,

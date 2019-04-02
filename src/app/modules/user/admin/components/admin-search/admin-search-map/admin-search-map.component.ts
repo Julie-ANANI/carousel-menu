@@ -12,7 +12,10 @@ export class AdminSearchMapComponent {
 
   @Input() set countriesData (value: any) {
     this._countriesData = value;
-    this.computeQuartiles();
+  }
+
+  @Input() set quartiles (value: any) {
+    this._quartiles = value;
   }
 
   @Output() onCountryClick = new EventEmitter<any>();
@@ -21,7 +24,7 @@ export class AdminSearchMapComponent {
 
   private _countriesData: any = {};
 
-  private _quartiles: {1: number, 2: number, 3: number};
+  private _quartiles: [number, number, number];
 
   private _boxStyle: any = {
     opacity: 0
@@ -78,24 +81,14 @@ export class AdminSearchMapComponent {
 
   constructor() {}
 
-  private computeQuartiles(): void {
-    const orderedCountries = Object.keys(this._countriesData).sort((a, b) => this._countriesData[a] - this._countriesData[b]);
-    const quartileSize = (orderedCountries.length / 4);
-    this._quartiles = {
-      1: this._countriesData[orderedCountries[Math.ceil(quartileSize)]],
-      2: this._countriesData[orderedCountries[Math.ceil(2 * quartileSize)]],
-      3: this._countriesData[orderedCountries[Math.ceil(3 * quartileSize)]]
-    };
-  }
-
   public getClass (country: string) {
     let intensity = 0;
     if (this.countriesData[country]) {
-      if (this.countriesData[country] >= this._quartiles[3]) {
+      if (this.countriesData[country] >= this._quartiles[2]) {
         intensity = 3;
-      } else if (this.countriesData[country] >= this._quartiles[2]) {
-        intensity = 2;
       } else if (this.countriesData[country] >= this._quartiles[1]) {
+        intensity = 2;
+      } else if (this.countriesData[country] >= this._quartiles[0]) {
         intensity = 1;
       }
     }
