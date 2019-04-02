@@ -26,7 +26,7 @@ const appRoutes: Routes = [
     path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
   },
   {
-    path: 'discover', canActivate: [DiscoverGuard], loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+    path: 'discover', loadChildren: './modules/public/discover/discover.module#DiscoverModule'
   },
   {
     path: 'share', canActivate: [ShareSynthesisGuard], loadChildren: './modules/public/share/share.module#ShareModule'

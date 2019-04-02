@@ -11,8 +11,8 @@ export class DiscoverGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
-    return this._checkLogin(activatedRouteSnapshot.queryParams, routerStateSnapshot.url, activatedRouteSnapshot.params);
+  canActivate(_activatedRouteSnapshot: ActivatedRouteSnapshot, _routerStateSnapshot: RouterStateSnapshot): boolean {
+    return this._checkLogin(_activatedRouteSnapshot.queryParams, _routerStateSnapshot.url, _activatedRouteSnapshot.params);
   }
 
   private _checkLogin(queryParams: {[key: string]: string}, url: string, params: Params): boolean {
@@ -21,6 +21,8 @@ export class DiscoverGuard implements CanActivate {
       this.router.navigate([url.replace('discover', 'user/discover')]);
     } else if (this.authService.isAuthenticated && queryParams['tag']) {
       this.router.navigate(['/user', 'discover'], { queryParams: queryParams });
+    } else if (this.authService.isAuthenticated) {
+      this.router.navigate([url]);
     }
 
     return true;
