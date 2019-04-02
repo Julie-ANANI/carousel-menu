@@ -5,6 +5,7 @@ import { Professional } from '../../../../models/professional';
 import { SearchService } from '../../../../services/search/search.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { SearchTool } from '../../../../models/search-tool';
 
 @Component({
   selector: 'app-search-tool',
@@ -28,13 +29,17 @@ export class SearchToolComponent implements OnInit{
     "africa": true
   };
 
-  metadata: any = {};
+  metadata: SearchTool = {};
 
   noResult = true;
 
   searchStarted = false;
 
+  searchContinue = false;
+
   searchStopped = false;
+
+  professionalCount: number = 0;
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -60,19 +65,25 @@ export class SearchToolComponent implements OnInit{
   public onClickSearch() {
     const keywords = this.searchForm.get('keywords').value;
 
+    console.log(keywords);
+    console.log(this.metadata);
+
     if (keywords) {
       this.professional = [];
       this.metadata = {};
 
       this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
         this.searchStarted = true;
+        this.searchStopped = false;
+        this.metadata = result.metadata || {};
+
+        console.log(this.metadata);
 
         setTimeout(() => {
           this.noResult = false;
-          this.searchStopped = true;
+          this.searchContinue = true;
+          this._totalProfessional(this.metadata.world);
         }, 2005);
-
-        this.metadata = result.metadata || {};
 
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -80,6 +91,32 @@ export class SearchToolComponent implements OnInit{
 
 
     }
+
+  }
+
+
+  private _totalProfessional(total: number) {
+    total = total > 20000 ? 20000 : total < 100 ? 50 : total;
+    let duration = 2000 / total;
+    let increment = 1;
+    this.professionalCount = 0;
+
+    if (duration < 1) {
+      increment = Math.round(1/duration);
+      duration = 1;
+    }
+
+    const self = this;
+
+    const interval = setInterval(() => {
+      if ( self.professionalCount >= total) {
+        this.searchStopped = true;
+        clearInterval(interval);
+      }
+      else  {
+        self.professionalCount + increment > total ? self.professionalCount = total : self.professionalCount += increment;
+      }
+    }, duration);
 
   }
 

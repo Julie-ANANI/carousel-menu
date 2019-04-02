@@ -46,4 +46,14 @@
     animation-timing-function: ease-in;
   }
 
+  .title-primary {
+    font-size: $font-size-md;
+    letter-spacing: 2px;
+  }
+
+  .title-secondary {
+    font-size: 2.85rem;
+    margin-bottom: 0;
+  }
+
 }

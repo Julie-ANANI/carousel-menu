@@ -3,7 +3,7 @@
 
     <!-- section search bar -->
     <section class="section-search section-pad rm-pad-bottom">
-      <form [formGroup]="searchForm">
+      <form [formGroup]="searchForm" (ngSubmit)="onClickSearch()">
         <div class="form-group relative">
 
           <label for="search-form-input"></label>
@@ -40,11 +40,46 @@
 
     <!-- section to show result -->
     <ng-container *ngIf="!noResult">
-      <div [ngClass]=" { 'appear': searchStopped } ">
-        <section class="section-light-pad">
+      <section class="section-light-pad" [ngClass]=" { 'appear': searchContinue } ">
 
-        </section>
-      </div>
+        <!-- metadata display -->
+        <ng-container *ngIf="metadata">
+          <div class="text-center">
+
+            <h2 class="title-secondary text-background">
+              <ng-container *ngIf="professionalCount < 100">< </ng-container>
+              <ng-container *ngIf="professionalCount === 20000">+ </ng-container>
+              {{ professionalCount }}
+            </h2>
+
+            <h1 class="title-primary text-notify">PROFESSIONALS FOUND</h1>
+
+          </div>
+        </ng-container>
+        <!-- /metadata display -->
+
+        <!-- when searching for professionals -->
+        <ng-container *ngIf="!searchStopped && searchContinue">
+          Video
+        </ng-container>
+        <!-- /when searching for professionals -->
+
+        <!-- when searching for professionals done -->
+        <ng-container *ngIf="searchStopped">
+          <div class="section-light-pad" [ngClass]=" { 'appear': searchStopped } ">
+
+            <!-- display stats -->
+            <div class="text-center">
+            </div>
+
+            <admin-search-map [width]="'auto'" [quartiles]="[50, 100, 200]" [countriesData]="metadata"></admin-search-map>
+
+
+          </div>
+        </ng-container>
+        <!-- /when searching for professionals done -->
+
+      </section>
     </ng-container>
     <!-- /section to show result -->
 

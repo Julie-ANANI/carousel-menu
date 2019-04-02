@@ -9,7 +9,7 @@ import { SearchToolComponent } from './search-tool.component';
 import { SearchService } from '../../../../services/search/search.service';
 import { CommonService } from '../../../../services/common/common.service';
 
-
+import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 
 @NgModule({
   imports: [
@@ -18,7 +18,8 @@ import { CommonService } from '../../../../services/common/common.service';
     RouterModule,
     SearchToolRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminSearchMapModule
   ],
   declarations: [
     SearchToolComponent
