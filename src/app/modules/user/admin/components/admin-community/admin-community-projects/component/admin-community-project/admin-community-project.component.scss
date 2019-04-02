@@ -73,6 +73,16 @@
     justify-content: space-evenly;
   }
 
+  .targeting-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .map-wrapper {
+      padding-right: 0.75rem;
+      flex: 1;
+    }
+  }
+
   .save-wrapper {
 
     .shape {

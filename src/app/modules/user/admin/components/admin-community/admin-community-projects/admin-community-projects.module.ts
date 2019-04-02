@@ -10,6 +10,7 @@ import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
 import { AdminCommunityProjectComponent } from "./component/admin-community-project/admin-community-project.component";
 import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
+import { SharedWorldmapModule } from "../../../../../shared/components/shared-worldmap/shared-worldmap.module";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SharedAmbassadorListModule } from "../../../../../shared/components/sha
     PipeModule,
     SidebarModule,
     TableModule,
-    SharedAmbassadorListModule
+    SharedAmbassadorListModule,
+    SharedWorldmapModule
   ],
   declarations: [
     AdminCommunityProjectsComponent,

@@ -67,6 +67,8 @@ export class AdminCommunityProjectComponent implements OnInit {
 
   private _config = {};
 
+  private _targetCountries = ['CO'];
+
   constructor(private activatedRoute: ActivatedRoute,
               private autoCompleteService: AutocompleteService,
               //private tagsService: TagsService,
@@ -102,6 +104,9 @@ export class AdminCommunityProjectComponent implements OnInit {
     return this._config;
   }
 
+  get targetCountries() {
+    return this._targetCountries;
+  }
 
   /***
    * initializing all the varaibles to its default values.

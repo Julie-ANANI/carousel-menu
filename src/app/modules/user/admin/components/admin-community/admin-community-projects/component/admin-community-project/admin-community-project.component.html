@@ -40,12 +40,15 @@
                     <div class="header-inner-information-wrapper">
                         <div class="outer-label-text">Targeting</div>
                         <div class="header-information-element">
-                            <div class="inner-label-text">Total</div>
-                            <div class="inner-value-text">1</div>
-                        </div>
-                        <div class="header-information-element">
-                            <div class="inner-label-text">From ambassadors</div>
-                            <div class="inner-value-text">1</div>
+                            <div class="inner-label-text">This is a long string because reasons</div>
+                            <div class="map-wrapper">
+                                <app-worldmap
+                                    [countries]="targetCountries"
+                                    [countriesColor]="'#2ECC71'"
+                                    [isEditable]="false"
+                                    [width]="'auto'">
+                                </app-worldmap>
+                            </div>
                         </div>
                     </div>
                 </div>
