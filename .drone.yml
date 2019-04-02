@@ -55,8 +55,6 @@ steps:
   when:
     event:
       - push
-    branch:
-      - master
 
 - name: rancherProdSchneider
   image: peloton/drone-rancher
@@ -72,8 +70,6 @@ steps:
   when:
     event:
       - push
-    branch:
-      - master
 
 
 ## UMI production steps
