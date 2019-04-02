@@ -19,6 +19,7 @@ export class ShowcaseComponent implements OnInit {
   private _sectorTags: Array<Tag> = [];
   private _selectedTagsStats: Array<TagStats> = [];
   public tagForm: FormGroup;
+  public openSectorsModal = false;
 
   private _countries: {[country: string]: number} = {};
   private _topAnswers: Array<Answer> = [];

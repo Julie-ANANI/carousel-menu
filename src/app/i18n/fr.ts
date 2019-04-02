@@ -31,6 +31,7 @@ import { TABLE } from '../modules/table/i18n/fr';
 import { SIDEBAR } from '../modules/sidebar/i18n/fr';
 import { SHARED_PROJECT_SETTINGS } from '../modules/shared/components/shared-project-settings-component/i18n/fr';
 import { SHARED_PROJECT_EDIT } from '../modules/shared/components/shared-project-edit-cards-component/i18n/fr';
+import { SHOWCASE } from '../modules/showcase/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -65,5 +66,6 @@ export const fr = {
   'TABLE': TABLE,
   'SIDEBAR': SIDEBAR,
   'SHARED_PROJECT_SETTINGS': SHARED_PROJECT_SETTINGS,
-  'SHARED_PROJECT_EDIT': SHARED_PROJECT_EDIT
+  'SHARED_PROJECT_EDIT': SHARED_PROJECT_EDIT,
+  'SHOWCASE': SHOWCASE
 };

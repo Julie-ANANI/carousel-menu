@@ -6,28 +6,14 @@
   <!-- body -->
   <section class="main-wrapper">
 
-    <h1>/!\ Commercial (page en construction) /!\</h1>
-
-    <form [formGroup]="tagForm" (ngSubmit)="selectTag()">
-
-      <label class="form-switch" for="chooseTag">
-        <select class="form-select" formControlName="selectedTag" id="chooseTag">
-          <option *ngFor="let tag of sectorTags" [innerText]="tag.label | multiling:lang" [value]="tag._id"></option>
-        </select>
-      </label>
-
-      <button class="btn btn-primary">Add tag</button>
-
-    </form>
-
-    <ul>
-      <li *ngFor="let stats of selectedTagsStats">
+    <h1>
+      <span *ngFor="let stats of selectedTagsStats; let i = index">
         {{stats.tag.label | multiling:lang}}
-        <i class="fas fa-times" (click)="removeStat($event, stats.tag._id)"></i>
-      </li>
-    </ul>
+        <span *ngIf="i !== selectedTagsStats.length - 1"> / </span>
+      </span>
 
-    <hr/>
+    </h1>
+    <span class="text-link" (click)="openSectorsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
 
     <p>Innovations: {{stats.totalInnovations}}.</p>
 
@@ -65,4 +51,26 @@
 
 </main>
 
+<app-modal [(showModal)]="openSectorsModal" [modalTitle]="'SHOWCASE.MODAL.TITLE'">
+
+  <form [formGroup]="tagForm" (ngSubmit)="selectTag()">
+
+    <label class="form-switch" for="chooseTag">
+      <select class="form-select" formControlName="selectedTag" id="chooseTag">
+        <option *ngFor="let tag of sectorTags" [innerText]="tag.label | multiling:lang" [value]="tag._id"></option>
+      </select>
+    </label>
+
+    <button class="btn btn-primary">Add tag</button>
+
+  </form>
+
+  <ul>
+    <li *ngFor="let stats of selectedTagsStats">
+      {{stats.tag.label | multiling:lang}}
+      <i class="fas fa-times" (click)="removeStat($event, stats.tag._id)"></i>
+    </li>
+  </ul>
+
+</app-modal>
 
