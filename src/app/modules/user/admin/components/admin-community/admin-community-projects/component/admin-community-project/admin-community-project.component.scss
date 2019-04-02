@@ -61,6 +61,18 @@
     font-size: 0.95rem;
   }
 
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
   .save-wrapper {
 
     .shape {
