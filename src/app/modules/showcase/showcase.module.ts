@@ -3,17 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { HeaderModule } from '../common/header/header.module';
+import { AdminSearchMapModule } from '../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
+import { CountryFlagModule } from '../utility-components/country-flag/country-flag.module';
 import { FooterModule } from '../common/footer/footer.module';
+import { HeaderModule } from '../common/header/header.module';
+import { ModalModule } from '../utility-components/modal/modal.module';
 
 import { ShowcaseComponent } from './showcase.component';
 
-import { AdminSearchMapModule } from '../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { ShowcaseRoutingModule } from './showcase-routing.module';
 import { AnswerService } from '../../services/answer/answer.service';
 import { TagsService } from '../../services/tags/tags.service';
 import { PipeModule } from '../../pipe/pipe.module';
-import {ModalModule} from "../utility-components/modal/modal.module";
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import {ModalModule} from "../utility-components/modal/modal.module";
     ReactiveFormsModule,
     TranslateModule.forChild(),
     AdminSearchMapModule,
+    CountryFlagModule,
     FooterModule,
     HeaderModule,
     ModalModule,

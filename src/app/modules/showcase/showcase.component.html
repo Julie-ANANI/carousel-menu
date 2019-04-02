@@ -11,37 +11,35 @@
         {{stats.tag.label | multiling:lang}}
         <span *ngIf="i !== selectedTagsStats.length - 1"> / </span>
       </span>
-
     </h1>
     <span class="text-link" (click)="openSectorsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
 
-    <p>Innovations: {{stats.totalInnovations}}.</p>
+    <hr>
 
-    <p>Answers: {{stats.totalAnswers}}.</p>
+    <div class="professionals">
+      {{ stats.totalAnswers }} {{ 'SHOWCASE.PROFESSIONALS' | translate }}
+      <p *ngFor="let answer of topAnswers">
+        <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
+        {{ answer.professional?.firstName }} {{ answer.professional?.lastName }}
+        - {{ answer.job }} - {{ answer.company?.name }}
+      </p>
+    </div>
 
-    <p>Market Need: {{stats.countNeed}} / {{stats.totalCountNeed}}</p>
+    <hr>
 
-    <p>Differentiation: {{stats.countDiff}} / {{stats.totalCountDiff}}</p>
+    <div class="innovations">
+      {{ stats.totalInnovations }} {{ 'SHOWCASE.INNOVATIONS' | translate }}
+    </div>
 
-    <p>Generated Leads: {{stats.countLeads}} / {{stats.totalAnswers}}</p>
+    <hr>
 
-    <admin-search-map
-      [countriesData]="countries"
-      [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
-      [width]="'auto'">
-    </admin-search-map>
-
-    <div>
-      <p> Pro with stars : </p>
-      <ul>
-        <li *ngFor="let answer of topAnswers">
-          {{ answer.professional?.firstName }}
-          {{ answer.professional?.lastName }}
-          {{ answer.job }}
-          {{ answer.company?.name }}
-          {{ answer.country?.flag }}
-        </li>
-      </ul>
+    <div class="map">
+      {{ countriesCount }} {{ 'SHOWCASE.COUNTRIES' | translate }}
+      <admin-search-map
+        [countriesData]="countries"
+        [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
+        [width]="'auto'">
+      </admin-search-map>
     </div>
 
   </section>
@@ -61,7 +59,7 @@
       </select>
     </label>
 
-    <button class="btn btn-primary">Add tag</button>
+    <button class="btn btn-primary" [innerText]="'SHOWCASE.MODAL.BUTTON'" translate></button>
 
   </form>
 
