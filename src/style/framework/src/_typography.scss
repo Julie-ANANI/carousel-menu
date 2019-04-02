@@ -60,11 +60,11 @@ blockquote {
 
 // Lists
 ul, ol {
-  margin: $unit-2 0 $unit-2 $unit-2;
+  margin: $unit-2 0 $unit-2 0;
   padding: 0;
 
   ul, ol {
-    margin: $unit-2 0 $unit-2 $unit-2;
+    margin: $unit-2 0 $unit-2 0;
   }
 
   li {

@@ -1,4 +1,4 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 #search-tool-component {
 
@@ -46,14 +46,54 @@
     animation-timing-function: ease-in;
   }
 
+  .section-result {
+    padding-top: 0.75rem;
+  }
+
   .title-primary {
     font-size: $font-size-md;
     letter-spacing: 2px;
+    margin-bottom: 0;
+    margin-top: 27px;
+    margin-left: 1.25rem;
   }
 
   .title-secondary {
     font-size: 2.85rem;
     margin-bottom: 0;
+    min-width: 211px;
+  }
+
+  .stat-wrapper {
+    font-size: $font-size-sm;
+    flex-wrap: wrap;
+    list-style: none;
+
+    li {
+      margin-left: $unit-2;
+      margin-right: $unit-2;
+    }
+
+    .shape.circle.circle-sm {
+      width: 13px;
+      height: 13px;
+    }
+
+    .circle-2 {
+      border-color: #99E04B;
+      background-color: #99E04B;
+    }
+
+    .circle-3 {
+      border-color: #94E9B8;
+      background-color: #94E9B8;
+    }
+
+    .circle-4 {
+      border-color: #D9D9D9;
+      background-color: #D9D9D9;
+    }
+
   }
 
 }

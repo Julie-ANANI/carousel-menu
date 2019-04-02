@@ -22,7 +22,7 @@
 
     <!-- section showing video when no search -->
     <ng-container *ngIf="noResult">
-      <div [ngClass]=" { 'disappear': searchStarted } ">
+      <div [ngClass]="{ 'disappear': searchStarted }">
         <section class="section-light-pad rm-pad-bottom">
           <div class="video-responsive">
             <iframe
@@ -40,11 +40,11 @@
 
     <!-- section to show result -->
     <ng-container *ngIf="!noResult">
-      <section class="section-light-pad" [ngClass]=" { 'appear': searchContinue } ">
+      <section [ngClass]="{ 'appear': searchContinue }">
 
         <!-- metadata display -->
         <ng-container *ngIf="metadata">
-          <div class="text-center">
+          <div class="text-center flex-centered">
 
             <h2 class="title-secondary text-background">
               <ng-container *ngIf="professionalCount < 100">< </ng-container>
@@ -60,20 +60,46 @@
 
         <!-- when searching for professionals -->
         <ng-container *ngIf="!searchStopped && searchContinue">
-          Video
+          <div class="video-responsive">
+            <iframe
+              allowfullscreen
+              frameborder="0"
+              mozallowfullscreen
+              src="https://player.vimeo.com/video/313136787?autoplay=1&loop=1"
+              webkitallowfullscreen>
+            </iframe>
+          </div>
         </ng-container>
         <!-- /when searching for professionals -->
 
         <!-- when searching for professionals done -->
         <ng-container *ngIf="searchStopped">
-          <div class="section-light-pad" [ngClass]=" { 'appear': searchStopped } ">
+          <div [ngClass]=" { 'appear': searchStopped } ">
 
             <!-- display stats -->
-            <div class="text-center">
+            <ul class="flex-start text-center stat-wrapper">
+              <li>
+                <span class="shape circle circle-sm circle-success"></span>
+                <span class="text-secondary text-medium">> 20 </span>
+              </li>
+              <li>
+                <span class="shape circle circle-sm circle-2"></span>
+                <span class="text-secondary text-medium">500 - 20</span>
+              </li>
+              <li>
+                <span class="shape circle circle-sm circle-3"></span>
+                <span class="text-secondary text-medium">3000 - 500</span>
+              </li>
+              <li>
+                <span class="shape circle circle-sm circle-4"></span>
+                <span class="text-secondary text-medium">< 3000</span>
+              </li>
+            </ul>
+
+            <!-- display map -->
+            <div class="section-light-pad">
+              <admin-search-map [width]="'auto'" [quartiles]="[50, 100, 200]" [countriesData]="metadata"></admin-search-map>
             </div>
-
-            <admin-search-map [width]="'auto'" [quartiles]="[50, 100, 200]" [countriesData]="metadata"></admin-search-map>
-
 
           </div>
         </ng-container>
