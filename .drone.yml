@@ -53,8 +53,8 @@ steps:
     password:
       from_secret: docker_password
   when:
-    event:
-      - push
+    branch:
+      - master
 
 - name: rancherProdSchneider
   image: peloton/drone-rancher
@@ -68,8 +68,8 @@ steps:
     docker_image: "unitedmotionideas/umi-application-front:latest-schneider"
     timeout: 240
   when:
-    event:
-      - push
+    branch:
+      - master
 
 
 ## UMI production steps
