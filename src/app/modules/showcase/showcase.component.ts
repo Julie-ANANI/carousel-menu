@@ -87,14 +87,8 @@ export class ShowcaseComponent implements OnInit {
   }
 
   private reqAnswers(): void {
-    const request = {
-      fields: 'created professional job company',
-      limit: '6',
-      offset: '0',
-      profileQuality: '2',
-      sort: '{"created":-1}'
-    };
-    this.answerService.getAll(request).subscribe((next) => {
+    const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
+    this.answerService.getStarsAnswer(tags_id).subscribe((next) => {
       if (Array.isArray(next.result)) {
         this._topAnswers = next.result;
       }

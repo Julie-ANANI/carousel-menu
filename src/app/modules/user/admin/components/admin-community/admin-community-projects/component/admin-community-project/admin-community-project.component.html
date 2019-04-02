@@ -1,0 +1,66 @@
+<ng-container>
+    <section id="admin-community-project-component">
+
+        <!-- section header -->
+        <div class="section-header">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+
+                <div class="heading-wrapper">
+                    <span class="title-primary title-campaign">{{ innovation['name'] }}</span>&nbsp;
+                    <a [href]="'/user/admin/projects/project/' + innovation['_id'] + '/settings'" class="text-link" target="_blank">See project description</a>
+                </div>
+
+                <div class="header-information-wrapper">
+                        <div class="header-inner-information-wrapper">
+                            <div class="outer-label-text">Ambassadors</div>
+                            <div class="header-information-element">
+                                <div class="inner-label-text">Native</div>
+                                <div class="inner-value-text">1</div>
+                            </div>
+                            <div class="header-information-element">
+                                <div class="inner-label-text">Added</div>
+                                <div class="inner-value-text">1</div>
+                            </div>
+                            <div class="header-information-element">
+                                <div class="inner-label-text">Suggested</div>
+                                <div class="inner-value-text">1</div>
+                            </div>
+                        </div>
+                    <div class="header-inner-information-wrapper">
+                        <div class="outer-label-text">Feedback</div>
+                        <div class="header-information-element">
+                            <div class="inner-label-text">Total</div>
+                            <div class="inner-value-text">1</div>
+                        </div>
+                        <div class="header-information-element">
+                            <div class="inner-label-text">From ambassadors</div>
+                            <div class="inner-value-text">1</div>
+                        </div>
+                    </div>
+                    <div class="header-inner-information-wrapper">
+                        <div class="outer-label-text">Targeting</div>
+                        <div class="header-information-element">
+                            <div class="inner-label-text">Total</div>
+                            <div class="inner-value-text">1</div>
+                        </div>
+                        <div class="header-information-element">
+                            <div class="inner-label-text">From ambassadors</div>
+                            <div class="inner-value-text">1</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- section views -->
+        <div>
+            <div class="column col-xs-12 col-11 col-mx-auto">
+                <!-- section members -->
+                <app-shared-ambassadors-list [config]="config"></app-shared-ambassadors-list>
+                <!-- /section members -->
+            </div>
+        </div>
+
+    </section>
+</ng-container>

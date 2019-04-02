@@ -2,10 +2,10 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 //import {Table} from "../../../../../table/models/table";
 //import { Innovation } from "../../../../../../models/innovation";
 //import { InnovationService } from "../../../../../../services/innovation/innovation.service";
-//import {Router} from "@angular/router";
-import {TranslateTitleService} from "../../../../../../services/title/title.service";
-import {first} from "rxjs/operators";
+import { TranslateTitleService } from "../../../../../../services/title/title.service";
+import { first } from "rxjs/operators";
 import { AdvSearchService } from "../../../../../../services/advsearch/advsearch.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-admin-community-projects',
@@ -23,7 +23,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
   constructor(//private _innovationService: InnovationService,
               private _advSearch: AdvSearchService,
-              //private _router: Router,
+              private _router: Router,
               private _translateTitleService: TranslateTitleService) {
     this._config = {
       fields: '',
@@ -91,10 +91,9 @@ export class AdminCommunityProjectsComponent implements OnInit {
     console.log(event);
   }
 
-  public goToProject(event: Event) {
-    console.log(event);
+  public goToProject(project: any) {
+    this._router.navigate(['/user/admin/community/projects/project/' + project.innovation._id]);
   }
-
 
   get config() {
     return this._config;

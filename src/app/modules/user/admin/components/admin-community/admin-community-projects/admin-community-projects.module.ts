@@ -8,6 +8,8 @@ import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { AdminCommunityProjectsComponent } from "./admin-community-projects.component";
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
+import { AdminCommunityProjectComponent } from "./component/admin-community-project/admin-community-project.component";
+import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
 
 
 @NgModule({
@@ -18,10 +20,12 @@ import { TableModule } from "../../../../../table/table.module";
     TranslateModule.forChild(),
     PipeModule,
     SidebarModule,
-    TableModule
+    TableModule,
+    SharedAmbassadorListModule
   ],
   declarations: [
-    AdminCommunityProjectsComponent
+    AdminCommunityProjectsComponent,
+    AdminCommunityProjectComponent
   ],
   exports: [
     AdminCommunityProjectsComponent
