@@ -123,7 +123,7 @@ export class AdminProjectManagementComponent implements OnInit {
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
 
-    this.projectDomains = [{name: 'umi'}, {name: 'dynergie'}, {name: 'novanexia'}, {name: 'inomer'}, {name: 'multivalente'}];
+    this.projectDomains = [{name: 'umi'}, {name: 'dynergie'}, {name: 'novanexia'}, {name: 'inomer'}, {name: 'multivalente'}, {name: 'novanexia'}, {name: 'schneider'}];
 
     this._domain = this._project.settings.domain;
 
