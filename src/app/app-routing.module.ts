@@ -6,7 +6,6 @@ import { AuthService } from './services/auth/auth.service';
 import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
-import { DiscoverGuard } from './modules/public/discover/guards/discover-guard.service';
 import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthesis-guard.service';
 
 // Component
@@ -44,6 +43,9 @@ const appRoutes: Routes = [
     path: 'auth', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
   },
   {
+    path: 'user/discover', redirectTo: 'discover'
+  },
+  {
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
   },
   {
@@ -74,7 +76,6 @@ const config: ExtraOptions = {
     AuthGuard,
     NonAuthGuard,
     AdminAuthGuard,
-    DiscoverGuard,
     ShareSynthesisGuard
   ]
 })
