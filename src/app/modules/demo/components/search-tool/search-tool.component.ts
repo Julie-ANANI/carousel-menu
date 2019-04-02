@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Professional } from '../../../../models/professional';
 import { SearchService } from '../../../../services/search/search.service';
-import {first} from 'rxjs/operators';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-search-tool',
@@ -48,6 +48,7 @@ export class SearchToolComponent implements OnInit{
   ngOnInit(): void {
     this._buildForm();
   }
+
 
   private _buildForm() {
     this.searchForm = this._formBuilder.group({
