@@ -183,7 +183,7 @@
           </form>
         </ng-container>
 
-        <ng-container *ngIf="answerTags(question.identifier).length > 0">
+        <ng-container *ngIf="answerTags(question.identifier).length > 0 || editMode">
           <div class="pad-top">
             <app-shared-tag-item
               [tags]="answerTags(question.identifier)"
