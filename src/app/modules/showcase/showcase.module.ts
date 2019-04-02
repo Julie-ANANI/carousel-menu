@@ -13,15 +13,17 @@ import { ShowcaseRoutingModule } from './showcase-routing.module';
 import { AnswerService } from '../../services/answer/answer.service';
 import { TagsService } from '../../services/tags/tags.service';
 import { PipeModule } from '../../pipe/pipe.module';
+import {ModalModule} from "../utility-components/modal/modal.module";
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    HeaderModule,
-    FooterModule,
     AdminSearchMapModule,
+    FooterModule,
+    HeaderModule,
+    ModalModule,
     PipeModule,
     ShowcaseRoutingModule
   ],
