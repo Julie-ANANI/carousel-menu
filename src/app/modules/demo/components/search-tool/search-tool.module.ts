@@ -10,6 +10,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { CommonService } from '../../../../services/common/common.service';
 
 import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
+import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { AdminSearchMapModule } from '../../../user/admin/components/admin-searc
     SearchToolRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminSearchMapModule
+    AdminSearchMapModule,
+    CountryFlagModule
   ],
   declarations: [
     SearchToolComponent

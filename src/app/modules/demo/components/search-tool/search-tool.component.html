@@ -82,7 +82,7 @@
             </div>
 
             <!-- display stats -->
-            <ul class="text-center stat-wrapper">
+            <ul class="text-center info-wrapper">
               <li class="flex-start">
                 <span class="shape circle circle-sm circle-success"></span>
                 <span class="text-secondary text-medium">> 20 </span>
@@ -104,6 +104,114 @@
           </div>
         </ng-container>
         <!-- /when searching for professionals done -->
+
+        <!-- displaying stat by continents -->
+        <ng-container *ngIf="searchStopped">
+          <div class="section-pad rm-pad-top" [ngClass]=" { 'appear': searchStopped } ">
+            <div class="stat">
+              <div class="stat-container">
+                <h3 class="stat-heading text-notify">RESULT BY CONTINENTS</h3>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Africa</h4>
+                  <span class="stat-value">--</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Antarctica</h4>
+                  <span class="stat-value">--</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Asia</h4>
+                  <span class="stat-value">--</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Australia</h4>
+                  <span class="stat-value">--</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Europe</h4>
+                  <span class="stat-value">--</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">North America</h4>
+                  <span class="stat-value">--</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">South America</h4>
+                  <span class="stat-value">--</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <!-- /displaying stat by continents -->
+
+        <!-- showing the professionals -->
+        <ng-container *ngIf="searchStopped">
+          <div class="card-wrapper d-flex">
+            <div *ngFor="let professional of professionals | slice:0:proLimit;" class="card card-responsive text-center">
+
+              <ng-container *ngIf="professional.isLoading">
+                <div class="card-body card-cover">
+                  <i class="fa fa-cog fa-3x text-notify fa-spin"></i>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="!professional.isLoading">
+
+                <ng-container *ngIf="professional.person && professional.person.country">
+                  <div class="card-header">
+                    <app-country-flag [country]="professional.person.country" [width]="23" [height]="16"></app-country-flag>
+                  </div>
+                </ng-container>
+
+                <div class="card-body card-cover">
+
+                  <!-- name -->
+                  <ng-container *ngIf="professional.person && (professional.person.firstName || professional.person.lastName)">
+                    <p class="text-medium">
+                      <ng-container *ngIf="professional.person.firstName">{{ professional.person.firstName }} </ng-container>
+                      <ng-container *ngIf="professional.person.lastName">{{ professional.person.lastName }}</ng-container>
+                    </p>
+                  </ng-container>
+                  <!-- /name -->
+
+                  <!-- job -->
+                  <ng-container *ngIf="professional.person && professional.person.job || professional.person.jobTitle">
+                    <p class="text-job text-background">
+                      {{ professional.person.job || professional.person.jobTitle }}
+                    </p>
+                  </ng-container>
+
+                  <!-- email -->
+                  <ng-container *ngIf="professional.person && professional.person.email">
+                    <p class="text-email">
+                      {{ professional.person.email }}
+                    </p>
+                  </ng-container>
+
+                </div>
+
+                <!-- logo -->
+                <ng-container *ngIf="professional.person && professional.person.company && professional.person.company.logoUrl">
+                  <div class="card-footer">
+                    <img [src]="professional.person.company.logoUrl" class="img-responsive" alt=" ">
+                  </div>
+                </ng-container>
+
+              </ng-container>
+
+            </div>
+          </div>
+        </ng-container>
+        <!-- /showing the professionals -->
 
       </section>
     </ng-container>
