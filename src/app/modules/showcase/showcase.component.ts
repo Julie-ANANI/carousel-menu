@@ -61,7 +61,7 @@ export class ShowcaseComponent implements OnInit {
     const orderedCountries = countriesList.sort((a, b) => this._countries[a] - this._countries[b]);
     const tertileSize = (orderedCountries.length / 3);
     this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
-    this._maxSecondTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
+    this._maxSecondTertile = this._countries[orderedCountries[Math.floor(2 * tertileSize)]];
   }
 
   private computeStats(): TagStats {
