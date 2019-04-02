@@ -53,26 +53,21 @@
   .title-primary {
     font-size: $font-size-md;
     letter-spacing: 2px;
-    margin-bottom: 0;
-    margin-top: 27px;
-    margin-left: 1.25rem;
   }
 
   .title-secondary {
     font-size: 2.85rem;
     margin-bottom: 0;
-    min-width: 211px;
+  }
+
+  .map-wrapper {
+    width: 80%;
+    margin-right: $unit-2;
   }
 
   .stat-wrapper {
     font-size: $font-size-sm;
-    flex-wrap: wrap;
     list-style: none;
-
-    li {
-      margin-left: $unit-2;
-      margin-right: $unit-2;
-    }
 
     .shape.circle.circle-sm {
       width: 13px;
