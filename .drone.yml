@@ -37,7 +37,6 @@ steps:
     - push
     branch:
     - development
-
 ## UMI production steps
 - name: dockerProd
   image: plugins/docker
