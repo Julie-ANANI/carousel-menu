@@ -1,8 +1,14 @@
-<div class="main-wrapper animate-page" id="discover-component" [ngStyle]="{ 'min-height': !authService.isAuthenticated ? '100vh' : 'inherit' }">
+<div class="main-wrapper animate-page" id="discover-component">
 
   <!-- unauthenticated header -->
   <ng-container *ngIf="!authService.isAuthenticated">
     <app-header-unauth></app-header-unauth>
+  </ng-container>
+  <!-- /unauthenticated header -->
+
+  <!-- authenticated header -->
+  <ng-container *ngIf="authService.isAuthenticated">
+    <app-header></app-header>
   </ng-container>
   <!-- /unauthenticated header -->
 
@@ -12,8 +18,6 @@
   </div>
 
   <!-- footer -->
-  <ng-container *ngIf="!authService.isAuthenticated">
-    <app-footer></app-footer>
-  </ng-container>
+  <app-footer></app-footer>
 
 </div>
