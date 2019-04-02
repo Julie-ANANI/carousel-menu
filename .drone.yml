@@ -54,7 +54,7 @@ steps:
       from_secret: docker_password
   when:
     event:
-      - push
+      - tag
 
 - name: rancherProdSchneider
   image: peloton/drone-rancher
@@ -65,11 +65,11 @@ steps:
     secret_key:
       from_secret: rancher_secret
     service: "frontstack/umiapplicationfront-schneider"
-    docker_image: "unitedmotionideas/umi-application-front:latest-schneider"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-schneider"
     timeout: 240
   when:
     event:
-      - push
+      - tag
 
 
 ## UMI production steps
