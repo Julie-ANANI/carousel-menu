@@ -22,6 +22,7 @@ export class ShowcaseComponent implements OnInit {
   public openSectorsModal = false;
 
   private _countries: {[country: string]: number} = {};
+  private _countriesCount = 0;
   private _topAnswers: Array<Answer> = [];
   private _stats: TagStats = {};
 
@@ -59,6 +60,7 @@ export class ShowcaseComponent implements OnInit {
       return acc;
     }, <{[country: string]: number}>{});
     const countriesList = Object.keys(this._countries);
+    this._countriesCount = countriesList.length;
     const orderedCountries = countriesList.sort((a, b) => this._countries[a] - this._countries[b]);
     const tertileSize = (orderedCountries.length / 3);
     this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
@@ -91,7 +93,7 @@ export class ShowcaseComponent implements OnInit {
     const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
     this.answerService.getStarsAnswer(tags_id).subscribe((next) => {
       if (Array.isArray(next.result)) {
-        this._topAnswers = next.result;
+        this._topAnswers = next.result.slice(0, 6);
       }
     });
   }
@@ -121,6 +123,10 @@ export class ShowcaseComponent implements OnInit {
 
   get countries() {
     return this._countries;
+  }
+
+  get countriesCount() {
+    return this._countriesCount;
   }
 
   get lang(): string { return this.translateService.currentLang; }
