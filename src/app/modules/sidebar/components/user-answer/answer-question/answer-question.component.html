@@ -330,18 +330,16 @@
 
           </div>
 
-          <ng-container *ngIf="answerTags(question.identifier + 'Comment').length > 0">
-            <div class="pad-top">
-              <app-shared-tag-item
-                [tags]="answerTags(question.identifier + 'Comment')"
-                [editMode]="editMode"
-                [projectId]="innoid"
-                (addTag)="addTag($event, question.identifier + 'Comment')"
-                (createTag)="createTag($event, question.identifier + 'Comment')"
-                (removeTag)="removeTag($event, question.identifier + 'Comment')">
-              </app-shared-tag-item>
-            </div>
-          </ng-container>
+          <div class="pad-top">
+            <app-shared-tag-item
+              [tags]="answerTags(question.identifier + 'Comment')"
+              [editMode]="editMode"
+              [projectId]="innoid"
+              (addTag)="addTag($event, question.identifier + 'Comment')"
+              (createTag)="createTag($event, question.identifier + 'Comment')"
+              (removeTag)="removeTag($event, question.identifier + 'Comment')">
+            </app-shared-tag-item>
+          </div>
 
         </form>
       </ng-container>
