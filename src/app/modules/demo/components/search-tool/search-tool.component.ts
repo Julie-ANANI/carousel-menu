@@ -65,35 +65,14 @@ export class SearchToolComponent implements OnInit{
         this._searchStarted = true;
         this._searchStopped = false;
         this._searchResult = result_sample;
-
-        this._searchResult.pros = this._searchResult.pros.map(pro => {
-          pro.isLoading = true;
-          return pro;
-        });
-
-        setTimeout(() => {
-          this._noResult = false;
-          this._searchContinue = true;
-          this._totalProfessional(this._searchResult.metadata.world);
-        }, 2005);
+        this._updateResults();
       } else {
         this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
           this._searchStarted = true;
           this._searchStopped = false;
           this._searchResult.metadata = result.metadata || {};
           this._searchResult.pros = result.pros;
-
-          this._searchResult.pros = this._searchResult.pros.map(pro => {
-            pro.isLoading = true;
-            return pro;
-          });
-
-          setTimeout(() => {
-            this._noResult = false;
-            this._searchContinue = true;
-            this._totalProfessional(this._searchResult.metadata.world);
-          }, 2005);
-
+          this._updateResults();
         }, () => {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
@@ -101,6 +80,20 @@ export class SearchToolComponent implements OnInit{
       }
     }
 
+  }
+
+
+  private _updateResults() {
+    this._searchResult.pros = this._searchResult.pros.map(pro => {
+      pro.isLoading = true;
+      return pro;
+    });
+
+    setTimeout(() => {
+      this._noResult = false;
+      this._searchContinue = true;
+      this._totalProfessional(this._searchResult.metadata.world);
+    }, 2005);
   }
 
 
