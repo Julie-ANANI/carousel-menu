@@ -5,14 +5,11 @@ import { AdminSearchMailComponent } from './admin-search-mail/admin-search-mail.
 import { AdminSearchHistoryComponent } from './admin-search-history/admin-search-history.component';
 import { AdminSearchQueueComponent } from './admin-search-queue/admin-search-queue.component';
 import { AdminSearchResultsComponent } from './admin-search-results/admin-search-results.component';
-import { AdminSearchDemoComponent } from './admin-search-demo/admin-search-demo.component';
-
 export const searchRoutes: Routes = [
   { path: '', redirectTo: 'pros', pathMatch: 'full'},
   { path: 'pros', component: AdminSearchProsComponent, pathMatch: 'full' },
   { path: 'mail', component: AdminSearchMailComponent, pathMatch: 'full' },
   { path: 'history', component: AdminSearchHistoryComponent, pathMatch: 'full' },
   { path: 'queue', component: AdminSearchQueueComponent, pathMatch: 'full' },
-  { path: 'demo', component: AdminSearchDemoComponent, pathMatch: 'full' },
   { path: 'results/:requestId', component: AdminSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' }
 ];
