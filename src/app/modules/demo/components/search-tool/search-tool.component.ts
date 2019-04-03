@@ -5,7 +5,6 @@ import { SearchService } from '../../../../services/search/search.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/search-tool';
-import { pros_sample } from '../../../../models/static-data/pros_sample';
 
 @Component({
   selector: 'app-search-tool',
@@ -15,13 +14,11 @@ import { pros_sample } from '../../../../models/static-data/pros_sample';
 
 export class SearchToolComponent implements OnInit{
 
-  searchForm: FormGroup;
+  private _searchForm: FormGroup;
 
-  // actualPros: Array<any> = pros_sample; // temp
+  private _slicedPros: Array<any> = [];
 
-  slicedPros: Array<any> = [];
-
-  continentTarget = {
+  private _continentTarget = {
     "americaSud": true,
     "americaNord": true,
     "europe": true,
@@ -31,17 +28,17 @@ export class SearchToolComponent implements OnInit{
     "africa": true
   };
 
-  searchResult: SearchTool = {};
+  private _searchResult: SearchTool = {};
 
-  noResult = true;
+  private _noResult = true;
 
-  searchStarted = false;
+  private _searchStarted = false;
 
-  searchContinue = false;
+  private _searchContinue = false;
 
-  searchStopped = false;
+  private _searchStopped = false;
 
-  professionalCount: number = 0;
+  private _professionalCount: number = 0;
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -54,47 +51,39 @@ export class SearchToolComponent implements OnInit{
 
   ngOnInit(): void {
     this._buildForm();
-
-    // temp
-    /*this.actualPros = this.actualPros.map(pro => {
-      pro.isLoading = true;
-      return pro;
-    });*/
-
   }
 
 
   private _buildForm() {
-    this.searchForm = this._formBuilder.group({
+    this._searchForm = this._formBuilder.group({
       keywords: [''],
     });
   }
 
 
   public onClickSearch() {
-    const keywords = this.searchForm.get('keywords').value;
+    const keywords = this._searchForm.get('keywords').value;
 
     if (keywords) {
       // this.actualPros = [];
-      this.slicedPros = [];
-      this.searchResult = {};
+      this._slicedPros = [];
+      this._searchResult = {};
 
       this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
-        this.searchStarted = true;
-        this.searchStopped = false;
-        this.searchResult.metadata = result.metadata || {};
-        this.searchResult.pros = pros_sample;
-        // this.searchResult.pros = result.pros;
+        this._searchStarted = true;
+        this._searchStopped = false;
+        this._searchResult.metadata = result.metadata || {};
+        this._searchResult.pros = result.pros;
 
-        this.searchResult.pros = this.searchResult.pros.map(pro => {
+        this._searchResult.pros = this._searchResult.pros.map(pro => {
           pro.isLoading = true;
           return pro;
         });
 
         setTimeout(() => {
-          this.noResult = false;
-          this.searchContinue = true;
-          this._totalProfessional(this.searchResult.metadata.world);
+          this._noResult = false;
+          this._searchContinue = true;
+          this._totalProfessional(this._searchResult.metadata.world);
         }, 2005);
 
       }, () => {
@@ -111,7 +100,7 @@ export class SearchToolComponent implements OnInit{
     total = total > 20000 ? 20000 : total < 100 ? 50 : total;
     let duration = 2000 / total;
     let increment = 1;
-    this.professionalCount = 0;
+    this._professionalCount = 0;
 
     if (duration < 1) {
       increment = Math.round(1/duration);
@@ -121,13 +110,13 @@ export class SearchToolComponent implements OnInit{
     const self = this;
 
     const interval = setInterval(() => {
-      if ( self.professionalCount >= total) {
-        this.searchStopped = true;
+      if ( self._professionalCount >= total) {
+        this._searchStopped = true;
         this._loadPros(0, 12);
         clearInterval(interval);
       }
       else  {
-        self.professionalCount + increment > total ? self.professionalCount = total : self.professionalCount += increment;
+        self._professionalCount + increment > total ? self._professionalCount = total : self._professionalCount += increment;
       }
     }, duration);
 
@@ -135,18 +124,18 @@ export class SearchToolComponent implements OnInit{
 
 
   private _loadPros(startLimit: number, endLimit: number) {
-    this.searchResult.pros.slice(startLimit, endLimit).forEach((professional, index) => {
-      this.slicedPros.push(professional);
+    this._searchResult.pros.slice(startLimit, endLimit).forEach((professional, index) => {
+      this._slicedPros.push(professional);
       this._formatPro(professional, index);
     });
   }
 
 
   public onClickSeeMore() {
-    if (this.slicedPros.length < this.searchResult.pros.length) {
-      const dif = this.searchResult.pros.length - this.slicedPros.length;
-      const start = this.slicedPros.length;
-      let end = this.slicedPros.length;
+    if (this._slicedPros.length < this._searchResult.pros.length) {
+      const dif = this._searchResult.pros.length - this._slicedPros.length;
+      const start = this._slicedPros.length;
+      let end = this._slicedPros.length;
 
       if (dif >= 12) {
         end += 12;
@@ -160,36 +149,7 @@ export class SearchToolComponent implements OnInit{
   }
 
 
-  // temp
   private _formatPro(professional: any, index: number) {
-
-    if (!professional.person.company) {
-      professional.person.company = {};
-    }
-
-    if (!professional.person.email) {
-
-      if(!professional.person.company.domain) {
-        professional.person.company.domain = "unknown.com";
-      }
-
-      professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.company.domain}`;
-
-    }
-
-    if(professional.person.company.domain && professional.person.company.domain != "unknown.com") {
-      professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.company.domain}?size=240`;
-    }
-
-    setTimeout(() => {
-      professional.isLoading = false;
-      this.slicedPros[index] = professional;
-    }, Math.floor(Math.random() * 2000) + 1000);
-
-  }
-
-
-/*  private _formatPro(professional: any, index: number) {
 
     if (!professional.person.company) {
       professional.person.company = '';
@@ -206,15 +166,50 @@ export class SearchToolComponent implements OnInit{
     }
 
     if(professional.person.companyDomain && professional.person.companyDomain != "unknown.com") {
-      professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.companyDomain}`;
+      professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.company.domain}?size=240`;
     }
 
     setTimeout(() => {
       professional.isLoading = false;
-      this.slicedPros[index] = professional;
-    }, Math.floor(Math.random() * 360));
+      this._slicedPros[index] = professional;
+    }, Math.floor(Math.random() * 2000) + 1000);
 
-  }*/
+  }
 
+  get searchForm(): FormGroup {
+    return this._searchForm;
+  }
+
+  get slicedPros(): Array<any> {
+    return this._slicedPros;
+  }
+
+  get continentTarget(): { africa: boolean; russia: boolean; americaSud: boolean; oceania: boolean; asia: boolean; americaNord: boolean; europe: boolean } {
+    return this._continentTarget;
+  }
+
+  get searchResult(): SearchTool {
+    return this._searchResult;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
+  }
+
+  get searchStarted(): boolean {
+    return this._searchStarted;
+  }
+
+  get searchContinue(): boolean {
+    return this._searchContinue;
+  }
+
+  get searchStopped(): boolean {
+    return this._searchStopped;
+  }
+
+  get professionalCount(): number {
+    return this._professionalCount;
+  }
 
 }
