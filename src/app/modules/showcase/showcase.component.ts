@@ -26,6 +26,7 @@ export class ShowcaseComponent implements OnInit {
   private _countries: {[country: string]: number} = {};
   private _countriesCount = 0;
   private _topAnswers: Array<Answer> = [];
+  private _topClients: Array<string> = [];
   private _topInnovations: Array<Innovation> = [];
   private _stats: TagStats = {};
 
@@ -113,7 +114,6 @@ export class ShowcaseComponent implements OnInit {
       const config = {
         fields: 'created name principalMedia status',
         limit: '20',
-        offset: '0',
         isPublic: '1',
         status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
         tags: JSON.stringify({ $in: tags_id }),
@@ -129,11 +129,29 @@ export class ShowcaseComponent implements OnInit {
     }
   }
 
+  private reqClients(): void {
+    const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
+    if (tags_id.length > 0) {
+      const config = {
+        fields: 'created owner',
+        tags: JSON.stringify({ $in: tags_id })
+      };
+      this.innovationService.getAll(config).subscribe((next) => {
+        if (Array.isArray(next.result)) {
+          this._topClients = next.result.map((i) => i.owner.companyName);
+        }
+      });
+    } else {
+      this._topClients = [];
+    }
+  }
+
   private recomputeData(): void {
     this.computeStats();
     this.computeCountries();
     this.reqAnswers();
     this.reqInnovations();
+    this.reqClients();
   }
 
   public selectTag() {
@@ -167,6 +185,10 @@ export class ShowcaseComponent implements OnInit {
 
   get topAnswers() {
     return this._topAnswers;
+  }
+
+  get topClients() {
+    return this._topClients;
   }
 
   get topInnovations() {
