@@ -8,6 +8,7 @@
   background-color: $bg-color-light;
   border-radius: $border-radius;
   border: $border-width solid $border-color;
+  word-break: break-word;
 
   &.card-responsive {
     flex: 0 1 calc(14% - 1rem);
