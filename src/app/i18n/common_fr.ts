@@ -91,7 +91,8 @@ export const COMMON = {
     'WELCOME': 'Bienvenus',
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
-    'DISCOVER': 'Découvrez les innovations'
+    'DISCOVER': 'Découvrez les innovations',
+    'PROJECTS': 'Projets'
   },
 
   'LABEL': {

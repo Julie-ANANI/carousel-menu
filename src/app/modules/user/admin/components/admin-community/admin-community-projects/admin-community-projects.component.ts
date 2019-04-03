@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 //import {Table} from "../../../../../table/models/table";
 //import { Innovation } from "../../../../../../models/innovation";
 //import { InnovationService } from "../../../../../../services/innovation/innovation.service";
@@ -21,10 +21,31 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
   @Output() forceParentReload = new EventEmitter <any>();
 
-  constructor(//private _innovationService: InnovationService,
-              private _advSearch: AdvSearchService,
+  constructor(private _advSearch: AdvSearchService,
               private _router: Router,
               private _translateTitleService: TranslateTitleService) {
+
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
+
+    this._setConfig();
+
+    this._configureTable();
+
+  }
+
+  ngOnInit() {
+    this._advSearch.getCommunityInnovations(this._config).pipe(first())
+      .subscribe(projects=>{
+        this.setTableContent(projects, projects.length);
+      }, err=>{
+        console.error(err);
+      }, ()=>{
+        console.log("DONE");
+      });
+  }
+
+
+  private _setConfig() {
     this._config = {
       fields: '',
       limit: '10',
@@ -33,8 +54,12 @@ export class AdminCommunityProjectsComponent implements OnInit {
       status: "EVALUATING",
       sort: '{"created":-1}'
     };
+  }
+
+
+  private _configureTable() {
     this._tableInfos = {
-      _selector: 'admin-projects',
+      _selector: 'admin-community-projects',
       _title: 'TABLE.TITLE.PROJECTS',
       _content: [],
       _total: 0,
@@ -46,9 +71,8 @@ export class AdminCommunityProjectsComponent implements OnInit {
         {_attrs: ['innovation.created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
         {
           _attrs: ['nbAmbassadors', 'nbRecAmbassadors'],
-          _name: 'Ambassador count / Suggested',
+          _name: 'Ambassador Count / Suggested',
           _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'nbAmbassadors', _class: 'label label-success'}, {_attr: 'nbRecAmbassadors', _class: 'label label-meta'} ],
-          _isSortable: false
         },
         {
           _attrs: ['nbAnswers', 'nbAnswersFromAmbassadors'],
@@ -65,18 +89,6 @@ export class AdminCommunityProjectsComponent implements OnInit {
           ]}
       ]
     };
-  }
-
-  ngOnInit() {
-    this._translateTitleService.setTitle('COMMON.PROJECTS');
-    this._advSearch.getCommunityInnovations(this._config).pipe(first())
-      .subscribe(projects=>{
-        this.setTableContent(projects, projects.length);
-      }, err=>{
-        console.error(err);
-      }, ()=>{
-        console.log("DONE");
-      });
   }
 
 
