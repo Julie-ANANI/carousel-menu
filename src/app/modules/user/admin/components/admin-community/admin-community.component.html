@@ -1,18 +1,17 @@
-<section class="section-light-container" id="admin-community-component">
-
+<section id="admin-community-component">
 
   <!-- header section -->
-  <div class="section-header">
+  <div class="section-header section-light-pad rm-pad-bottom">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <!-- Heading -->
-      <h1 class="main-heading">UMI Community</h1>
+      <!-- heading -->
+      <h1 class="title-primary text-background text-normal">Community</h1>
 
-      <!-- Tabs -->
+      <!-- tabs -->
       <ul class="tab">
-        <li class="tab-item" *ngFor="let tab of tabs">
+        <li *ngFor="let tab of tabs" class="tab-item">
           <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
-            {{ tab | translate | FormatText }}
+            {{ tab | FormatText }}
           </a>
         </li>
       </ul>
@@ -21,12 +20,10 @@
   </div>
   <!-- header section -->
 
-
-  <!-- Other sections -->
-  <div class="section-other">
+  <!-- other sections -->
+  <div class="section-light-pad">
     <router-outlet></router-outlet>
   </div>
-  <!-- /Other sections -->
-
+  <!-- /other sections -->
 
 </section>
