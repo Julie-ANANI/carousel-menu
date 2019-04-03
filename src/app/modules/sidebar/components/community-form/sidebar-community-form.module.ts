@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommunityFormComponent } from './community-form.component';
 
 import { SidebarModule } from '../../sidebar.module';
+import {SharedAmbassadorListModule} from "../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { SidebarModule } from '../../sidebar.module';
     ReactiveFormsModule,
     TranslateModule.forChild(),
     SidebarModule,
+    SharedAmbassadorListModule,
   ],
   declarations: [
     CommunityFormComponent
@@ -23,4 +25,4 @@ import { SidebarModule } from '../../sidebar.module';
   ]
 })
 
-export class SidebarCampaignFormModule {}
+export class SidebarCommunityFormModule {}
