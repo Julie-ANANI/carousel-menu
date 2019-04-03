@@ -151,28 +151,32 @@ export class SearchToolComponent implements OnInit{
 
   private _formatPro(professional: any, index: number) {
 
-    if (!professional.person.company) {
-      professional.person.company = '';
-    }
+    if (professional.person) {
 
-    if (!professional.person.email) {
-
-      if(!professional.person.companyDomain) {
-        professional.person.companyDomain = "unknown.com";
+      if (!professional.person.company) {
+        professional.person.company = '';
       }
 
-      professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.companyDomain}`;
+      if (!professional.person.email) {
+
+        if(!professional.person.companyDomain) {
+          professional.person.companyDomain = "unknown.com";
+        }
+
+        professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.companyDomain}`;
+
+      }
+
+      if(professional.person.companyDomain && professional.person.companyDomain != "unknown.com") {
+        professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.company.domain}?size=240`;
+      }
+
+      setTimeout(() => {
+        professional.isLoading = false;
+        this._slicedPros[index] = professional;
+      }, Math.floor(Math.random() * 2000) + 1000);
 
     }
-
-    if(professional.person.companyDomain && professional.person.companyDomain != "unknown.com") {
-      professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.company.domain}?size=240`;
-    }
-
-    setTimeout(() => {
-      professional.isLoading = false;
-      this._slicedPros[index] = professional;
-    }, Math.floor(Math.random() * 2000) + 1000);
 
   }
 

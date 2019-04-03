@@ -22,7 +22,7 @@
 
     <!-- section showing video when no search -->
     <ng-container *ngIf="noResult">
-      <section class="section-pad rm-pad-bottom" [ngClass]="{ 'disappear': searchStarted }">
+      <section class="section-pad rm-pad-bottom" [ngClass]="{ 'animate-disappear': searchStarted }">
         <div class="video-responsive">
           <iframe
             allowfullscreen
@@ -38,7 +38,7 @@
 
     <!-- section to show result -->
     <ng-container *ngIf="!noResult">
-      <section [ngClass]="{ 'appear': searchContinue }">
+      <section [ngClass]="{ 'animate-appear': searchContinue }">
 
         <!-- metadata display -->
         <ng-container *ngIf="searchResult.metadata">
@@ -72,7 +72,7 @@
 
         <!-- when searching for professionals done -->
         <ng-container *ngIf="searchStopped">
-          <div class="flex-centered section-light-pad" [ngClass]=" { 'appear': searchStopped } ">
+          <div class="flex-centered section-light-pad" [ngClass]=" { 'animate-appear': searchStopped } ">
 
             <!-- display map -->
             <div class="map-wrapper">
@@ -105,7 +105,7 @@
 
         <!-- displaying stat by continents -->
         <ng-container *ngIf="searchStopped">
-          <div class="section-pad rm-pad-top" [ngClass]=" { 'appear': searchStopped } ">
+          <div class="section-pad rm-pad-top" [ngClass]=" { 'animate-appear': searchStopped } ">
             <div class="stat">
               <div class="stat-container">
                 <h3 class="stat-heading text-notify">RESULT BY CONTINENTS</h3>
@@ -160,12 +160,12 @@
               <ng-container *ngIf="!professional.isLoading">
 
                 <ng-container *ngIf="professional.person && professional.person.country">
-                  <div class="card-header card-appear">
+                  <div class="card-header animate-card-appear">
                     <app-country-flag [country]="professional.person.country" [width]="23" [height]="16"></app-country-flag>
                   </div>
                 </ng-container>
 
-                <div class="card-body card-cover card-appear">
+                <div class="card-body card-cover animate-card-appear">
 
                   <!-- name -->
                   <ng-container *ngIf="professional.person && (professional.person.firstName || professional.person.lastName)">
@@ -194,7 +194,7 @@
 
                 <!-- logo -->
                 <ng-container *ngIf="professional.person && professional.person.company && professional.person.company.logoUrl">
-                  <div class="card-footer card-appear tooltip" [attr.data-tooltip]="professional.person.company.name">
+                  <div class="card-footer animate-card-appear tooltip" [attr.data-tooltip]="professional.person.company.name">
                     <img [src]="professional.person.company.logoUrl" class="img-responsive" alt=" ">
                   </div>
                 </ng-container>

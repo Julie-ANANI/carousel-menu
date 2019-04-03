@@ -35,19 +35,19 @@
     max-height: 70vh;
   }
 
-  .disappear {
+  .animate-disappear {
     animation-name: fadeOut;
-    animation-duration: 2s;
+    animation-duration: 1s;
     animation-timing-function: ease-out;
   }
 
-  .appear, .card-appear {
+  .animate-appear, .animate-card-appear {
     animation-name: fadeIn;
     animation-duration: 2s;
     animation-timing-function: ease-in;
   }
 
-  .card-appear {
+  .animate-card-appear {
     animation-duration: 0.5s;
   }
 
