@@ -5,7 +5,6 @@ import { SearchService } from '../../../../services/search/search.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/search-tool';
-import { pros_sample } from "../../../../models/static-data/pros_sample";
 
 @Component({
   selector: 'app-search-tool',
@@ -75,7 +74,7 @@ export class SearchToolComponent implements OnInit{
         this._searchStarted = true;
         this._searchStopped = false;
         this._searchResult.metadata = result.metadata || {};
-        this._searchResult.pros = pros_sample;
+        this._searchResult.pros = result.pros;
 
         this._searchResult.pros = this._searchResult.pros.map(pro => {
           pro.isLoading = true;
