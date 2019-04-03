@@ -5,7 +5,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/search-tool';
-import { pros_sample } from "../../../../models/static-data/pros_sample";
+import { result_sample } from "../../../../models/static-data/result_sample";
 
 @Component({
   selector: 'app-search-tool',
@@ -18,16 +18,6 @@ export class SearchToolComponent implements OnInit{
   private _searchForm: FormGroup;
 
   private _slicedPros: Array<any> = [];
-
-  private _continentTarget = {
-    "americaSud": true,
-    "americaNord": true,
-    "europe": true,
-    "russia": true,
-    "asia": true,
-    "oceania": true,
-    "africa": true
-  };
 
   private _searchResult: SearchTool = {};
 
@@ -71,30 +61,39 @@ export class SearchToolComponent implements OnInit{
       this._searchResult = {};
       this._noResult = true;
 
-      this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
+      if (keywords == "TEST") {
         this._searchStarted = true;
         this._searchStopped = false;
-        this._searchResult.metadata = result.metadata || {};
-        this._searchResult.pros = pros_sample;
-
-        this._searchResult.pros = this._searchResult.pros.map(pro => {
-          pro.isLoading = true;
-          return pro;
+        this._searchResult = result_sample;
+        this._updateResults();
+      } else {
+        this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
+          this._searchStarted = true;
+          this._searchStopped = false;
+          this._searchResult.metadata = result.metadata || {};
+          this._searchResult.pros = result.pros;
+          this._updateResults();
+        }, () => {
+          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
 
-        setTimeout(() => {
-          this._noResult = false;
-          this._searchContinue = true;
-          this._totalProfessional(this._searchResult.metadata.world);
-        }, 2005);
-
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-      });
-
-
+      }
     }
 
+  }
+
+
+  private _updateResults() {
+    this._searchResult.pros = this._searchResult.pros.map(pro => {
+      pro.isLoading = true;
+      return pro;
+    });
+
+    setTimeout(() => {
+      this._noResult = false;
+      this._searchContinue = true;
+      this._totalProfessional(this._searchResult.metadata.world);
+    }, 2005);
   }
 
 
@@ -184,10 +183,6 @@ export class SearchToolComponent implements OnInit{
 
   get slicedPros(): Array<any> {
     return this._slicedPros;
-  }
-
-  get continentTarget(): { africa: boolean; russia: boolean; americaSud: boolean; oceania: boolean; asia: boolean; americaNord: boolean; europe: boolean } {
-    return this._continentTarget;
   }
 
   get searchResult(): SearchTool {

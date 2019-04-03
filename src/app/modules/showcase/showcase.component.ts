@@ -4,8 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
 import { AnswerService } from '../../services/answer/answer.service';
+import { InnovationService } from '../../services/innovation/innovation.service';
 import { TagsService } from '../../services/tags/tags.service';
 import { Answer } from '../../models/answer';
+import { Innovation } from '../../models/innovation';
 import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
 
@@ -24,6 +26,7 @@ export class ShowcaseComponent implements OnInit {
   private _countries: {[country: string]: number} = {};
   private _countriesCount = 0;
   private _topAnswers: Array<Answer> = [];
+  private _topInnovations: Array<Innovation> = [];
   private _stats: TagStats = {};
 
   private _maxFirstTertile = 0;
@@ -32,6 +35,7 @@ export class ShowcaseComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
               private answerService: AnswerService,
+              private innovationService: InnovationService,
               private tagService: TagsService,
               private translateNotificationService: TranslateNotificationsService,
               private translateService: TranslateService) {}
@@ -46,6 +50,7 @@ export class ShowcaseComponent implements OnInit {
         this.tagForm.setValue({selectedTag: this._sectorTags[0]._id});
       }
     }
+    this.recomputeData();
   }
 
   private computeCountries(): void {
@@ -67,8 +72,8 @@ export class ShowcaseComponent implements OnInit {
     this._maxSecondTertile = this._countries[orderedCountries[Math.floor(2 * tertileSize)]];
   }
 
-  private computeStats(): TagStats {
-    return this._selectedTagsStats.reduce((acc, stats) => {
+  private computeStats(): void {
+    this._stats = this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
       acc.countNeed = acc.countNeed + stats.countNeed;
@@ -91,11 +96,44 @@ export class ShowcaseComponent implements OnInit {
 
   private reqAnswers(): void {
     const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
-    this.answerService.getStarsAnswer(tags_id).subscribe((next) => {
-      if (Array.isArray(next.result)) {
-        this._topAnswers = next.result.slice(0, 6);
-      }
-    });
+    if (tags_id.length > 0) {
+      this.answerService.getStarsAnswer(tags_id).subscribe((next) => {
+        if (Array.isArray(next.result)) {
+          this._topAnswers = next.result.slice(0, 6);
+        }
+      });
+    } else {
+      this._topAnswers = [];
+    }
+  }
+
+  private reqInnovations(): void {
+    const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
+    if (tags_id.length > 0) {
+      const config = {
+        fields: 'created name principalMedia status',
+        limit: '20',
+        offset: '0',
+        isPublic: '1',
+        status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
+        tags: JSON.stringify({ $in: tags_id }),
+        sort: '{"created":-1}'
+      };
+      this.innovationService.getAll(config).subscribe((next) => {
+        if (Array.isArray(next.result)) {
+          this._topInnovations = next.result.slice(0, 6);
+        }
+      });
+    } else {
+      this._topInnovations = [];
+    }
+  }
+
+  private recomputeData(): void {
+    this.computeStats();
+    this.computeCountries();
+    this.reqAnswers();
+    this.reqInnovations();
   }
 
   public selectTag() {
@@ -104,9 +142,7 @@ export class ShowcaseComponent implements OnInit {
     if (selectedTag && this._selectedTagsStats.findIndex((t) => t.tag._id === selectedTagId) === -1) {
       this.tagService.getStats(selectedTag._id).subscribe(stats => {
         this._selectedTagsStats.push(stats);
-        this._stats = this.computeStats();
-        this.computeCountries();
-        this.reqAnswers();
+        this.recomputeData();
       }, err => {
         this.translateNotificationService.error('ERROR.ERROR', err);
       });
@@ -116,9 +152,7 @@ export class ShowcaseComponent implements OnInit {
   public removeStat(event: Event, tagId: string) {
     event.preventDefault();
     this._selectedTagsStats = this._selectedTagsStats.filter((t) => t.tag._id !== tagId);
-    this._stats = this.computeStats();
-    this.computeCountries();
-    this.reqAnswers();
+    this.recomputeData();
   }
 
   get countries() {
@@ -133,6 +167,10 @@ export class ShowcaseComponent implements OnInit {
 
   get topAnswers() {
     return this._topAnswers;
+  }
+
+  get topInnovations() {
+    return this._topInnovations;
   }
 
   get sectorTags(): Array<Tag> {
