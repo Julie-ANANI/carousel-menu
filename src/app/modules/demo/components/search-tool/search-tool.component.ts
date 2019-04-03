@@ -6,36 +6,20 @@ import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/search-tool';
 import { pros_sample } from '../../../../models/static-data/pros_sample';
-import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-search-tool',
   templateUrl: './search-tool.component.html',
-  styleUrls: ['./search-tool.component.scss'],
-  animations: [
-    trigger('cardAnimation', [
-      transition('* => *', [
-
-        query(':enter', style({ opacity: 0 }), { optional: true }),
-
-        query(':enter', stagger('100ms', [
-          animate('.10s ease-in-out', keyframes([
-              style({ opacity: 0, transform: 'translateX(15%)', offset: 0 }),
-              style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
-            ])
-          )]
-        ), { optional: true }),
-
-      ])
-    ])
-  ]
+  styleUrls: ['./search-tool.component.scss']
 })
 
 export class SearchToolComponent implements OnInit{
 
   searchForm: FormGroup;
 
-  professionals: Array<any> = [];
+  // actualPros: Array<any> = pros_sample; // temp
+
+  slicedPros: Array<any> = [];
 
   continentTarget = {
     "americaSud": true,
@@ -47,7 +31,7 @@ export class SearchToolComponent implements OnInit{
     "africa": true
   };
 
-  metadata: SearchTool = {};
+  searchResult: SearchTool = {};
 
   noResult = true;
 
@@ -58,8 +42,6 @@ export class SearchToolComponent implements OnInit{
   searchStopped = false;
 
   professionalCount: number = 0;
-
-  proLimit: number = 12;
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -72,6 +54,13 @@ export class SearchToolComponent implements OnInit{
 
   ngOnInit(): void {
     this._buildForm();
+
+    // temp
+    /*this.actualPros = this.actualPros.map(pro => {
+      pro.isLoading = true;
+      return pro;
+    });*/
+
   }
 
 
@@ -86,23 +75,18 @@ export class SearchToolComponent implements OnInit{
     const keywords = this.searchForm.get('keywords').value;
 
     if (keywords) {
-      this.professionals = [];
-      this.metadata = {};
+      // this.actualPros = [];
+      this.slicedPros = [];
+      this.searchResult = {};
 
       this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
         this.searchStarted = true;
         this.searchStopped = false;
-        this.metadata = result.metadata || {};
-        this.metadata.person = result.pros;
+        this.searchResult.metadata = result.metadata || {};
+        this.searchResult.pros = pros_sample;
+        // this.searchResult.pros = result.pros;
 
-        this.professionals = result.pros.map(pro => {
-          pro.isLoading = true;
-          return pro;
-        });
-
-        this.professionals = pros_sample;
-
-        this.professionals = result.pros.map(pro => {
+        this.searchResult.pros = this.searchResult.pros.map(pro => {
           pro.isLoading = true;
           return pro;
         });
@@ -110,7 +94,7 @@ export class SearchToolComponent implements OnInit{
         setTimeout(() => {
           this.noResult = false;
           this.searchContinue = true;
-          this._totalProfessional(this.metadata.world);
+          this._totalProfessional(this.searchResult.metadata.world);
         }, 2005);
 
       }, () => {
@@ -139,18 +123,8 @@ export class SearchToolComponent implements OnInit{
     const interval = setInterval(() => {
       if ( self.professionalCount >= total) {
         this.searchStopped = true;
-
-        this.professionals = pros_sample.map(pro => {
-          pro.isLoading = true;
-          return pro;
-        });
-
-        this.professionals.forEach((professional, index) => {
-          this._formatPro(professional, index);
-        });
-
+        this._loadPros(0, 12);
         clearInterval(interval);
-
       }
       else  {
         self.professionalCount + increment > total ? self.professionalCount = total : self.professionalCount += increment;
@@ -160,6 +134,33 @@ export class SearchToolComponent implements OnInit{
   }
 
 
+  private _loadPros(startLimit: number, endLimit: number) {
+    this.searchResult.pros.slice(startLimit, endLimit).forEach((professional, index) => {
+      this.slicedPros.push(professional);
+      this._formatPro(professional, index);
+    });
+  }
+
+
+  public onClickSeeMore() {
+    if (this.slicedPros.length < this.searchResult.pros.length) {
+      const dif = this.searchResult.pros.length - this.slicedPros.length;
+      const start = this.slicedPros.length;
+      let end = this.slicedPros.length;
+
+      if (dif >= 12) {
+        end += 12;
+      } else {
+        end += end;
+      }
+
+      this._loadPros(start, end);
+
+    }
+  }
+
+
+  // temp
   private _formatPro(professional: any, index: number) {
 
     if (!professional.person.company) {
@@ -177,15 +178,43 @@ export class SearchToolComponent implements OnInit{
     }
 
     if(professional.person.company.domain && professional.person.company.domain != "unknown.com") {
-      professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.company.domain}?size=40`;
+      professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.company.domain}?size=240`;
     }
 
     setTimeout(() => {
       professional.isLoading = false;
-      this.professionals[index] = professional;
-    }, index * 360);
+      this.slicedPros[index] = professional;
+    }, Math.floor(Math.random() * 2000) + 1000);
 
   }
+
+
+/*  private _formatPro(professional: any, index: number) {
+
+    if (!professional.person.company) {
+      professional.person.company = '';
+    }
+
+    if (!professional.person.email) {
+
+      if(!professional.person.companyDomain) {
+        professional.person.companyDomain = "unknown.com";
+      }
+
+      professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.companyDomain}`;
+
+    }
+
+    if(professional.person.companyDomain && professional.person.companyDomain != "unknown.com") {
+      professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.companyDomain}`;
+    }
+
+    setTimeout(() => {
+      professional.isLoading = false;
+      this.slicedPros[index] = professional;
+    }, Math.floor(Math.random() * 360));
+
+  }*/
 
 
 }

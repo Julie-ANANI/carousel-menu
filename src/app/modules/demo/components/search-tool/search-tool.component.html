@@ -3,7 +3,7 @@
 
     <!-- section search bar -->
     <section class="section-search section-pad rm-pad-bottom">
-      <form [formGroup]="searchForm" (ngSubmit)="onClickSearch()">
+      <form [formGroup]="searchForm" (ngSubmit)="onClickSearch()" autocomplete="off">
         <div class="form-group relative">
 
           <label for="search-form-input"></label>
@@ -22,19 +22,17 @@
 
     <!-- section showing video when no search -->
     <ng-container *ngIf="noResult">
-      <div [ngClass]="{ 'disappear': searchStarted }">
-        <section class="section-light-pad rm-pad-bottom">
-          <div class="video-responsive">
-            <iframe
-              allowfullscreen
-              frameborder="0"
-              mozallowfullscreen
-              src="https://player.vimeo.com/video/313136787?autoplay=1&loop=1"
-              webkitallowfullscreen>
-            </iframe>
-          </div>
-        </section>
-      </div>
+      <section class="section-pad rm-pad-bottom" [ngClass]="{ 'disappear': searchStarted }">
+        <div class="video-responsive">
+          <iframe
+            allowfullscreen
+            frameborder="0"
+            mozallowfullscreen
+            src="https://player.vimeo.com/video/313136787?autoplay=1&autopause=0&loop=1&muted=1&title=0&portrait=0&byline=0#t="
+            webkitallowfullscreen>
+          </iframe>
+        </div>
+      </section>
     </ng-container>
     <!-- /section showing video when no search -->
 
@@ -43,7 +41,7 @@
       <section [ngClass]="{ 'appear': searchContinue }">
 
         <!-- metadata display -->
-        <ng-container *ngIf="metadata">
+        <ng-container *ngIf="searchResult.metadata">
           <div class="text-center">
 
             <h2 class="title-secondary text-background">
@@ -65,7 +63,7 @@
               allowfullscreen
               frameborder="0"
               mozallowfullscreen
-              src="https://player.vimeo.com/video/313136787?autoplay=1&loop=1"
+              src="https://player.vimeo.com/video/313136787?autoplay=1&autopause=0&loop=1&muted=1&title=0&portrait=0&byline=0#t="
               webkitallowfullscreen>
             </iframe>
           </div>
@@ -74,15 +72,15 @@
 
         <!-- when searching for professionals done -->
         <ng-container *ngIf="searchStopped">
-          <div class="flex-between" [ngClass]=" { 'appear': searchStopped } ">
+          <div class="flex-centered section-light-pad" [ngClass]=" { 'appear': searchStopped } ">
 
             <!-- display map -->
-            <div class="section-light-pad map-wrapper">
-              <admin-search-map [width]="'auto'" [quartiles]="[50, 100, 200]" [countriesData]="metadata"></admin-search-map>
+            <div class="map-wrapper">
+              <admin-search-map [width]="'auto'" [quartiles]="[50, 100, 200]" [countriesData]="searchResult.metadata"></admin-search-map>
             </div>
 
             <!-- display stats -->
-            <ul class="text-center info-wrapper">
+            <ul class="text-center info-wrapper absolute">
               <li class="flex-start">
                 <span class="shape circle circle-sm circle-success"></span>
                 <span class="text-secondary text-medium">> 20 </span>
@@ -114,11 +112,6 @@
 
                 <div class="stat-body">
                   <h4 class="stat-sub-heading">Africa</h4>
-                  <span class="stat-value">--</span>
-                </div>
-
-                <div class="stat-body">
-                  <h4 class="stat-sub-heading">Antarctica</h4>
                   <span class="stat-value">--</span>
                 </div>
 
@@ -156,23 +149,23 @@
         <!-- showing the professionals -->
         <ng-container *ngIf="searchStopped">
           <div class="card-wrapper d-flex">
-            <div *ngFor="let professional of professionals | slice:0:proLimit;" class="card card-responsive text-center">
+            <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
 
               <ng-container *ngIf="professional.isLoading">
                 <div class="card-body card-cover">
-                  <i class="fa fa-cog fa-3x text-notify fa-spin"></i>
+                  <i class="fa fa-cog fa-2x text-notify fa-spin"></i>
                 </div>
               </ng-container>
 
               <ng-container *ngIf="!professional.isLoading">
 
                 <ng-container *ngIf="professional.person && professional.person.country">
-                  <div class="card-header">
+                  <div class="card-header card-appear">
                     <app-country-flag [country]="professional.person.country" [width]="23" [height]="16"></app-country-flag>
                   </div>
                 </ng-container>
 
-                <div class="card-body card-cover">
+                <div class="card-body card-cover card-appear">
 
                   <!-- name -->
                   <ng-container *ngIf="professional.person && (professional.person.firstName || professional.person.lastName)">
@@ -184,7 +177,7 @@
                   <!-- /name -->
 
                   <!-- job -->
-                  <ng-container *ngIf="professional.person && professional.person.job || professional.person.jobTitle">
+                  <ng-container *ngIf="professional.person && (professional.person.job || professional.person.jobTitle)">
                     <p class="text-job text-background">
                       {{ professional.person.job || professional.person.jobTitle }}
                     </p>
@@ -201,7 +194,7 @@
 
                 <!-- logo -->
                 <ng-container *ngIf="professional.person && professional.person.company && professional.person.company.logoUrl">
-                  <div class="card-footer">
+                  <div class="card-footer card-appear tooltip" [attr.data-tooltip]="professional.person.company.name">
                     <img [src]="professional.person.company.logoUrl" class="img-responsive" alt=" ">
                   </div>
                 </ng-container>
@@ -212,6 +205,14 @@
           </div>
         </ng-container>
         <!-- /showing the professionals -->
+
+        <!-- button to show more pros -->
+        <ng-container *ngIf="searchStopped && slicedPros.length !== searchResult.pros.length">
+          <div class="text-center section-pad rm-pad-top">
+            <button class="btn btn-primary" (click)="onClickSeeMore()">See More</button>
+          </div>
+        </ng-container>
+        <!-- /button to show more pros -->
 
       </section>
     </ng-container>
