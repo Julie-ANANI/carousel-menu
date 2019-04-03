@@ -37,7 +37,7 @@
 
   .animate-disappear {
     animation-name: fadeOut;
-    animation-duration: 1s;
+    animation-duration: 100ms;
     animation-timing-function: ease-out;
   }
 
@@ -114,7 +114,7 @@
 
     .card {
       margin-bottom: $unit-5;
-      min-height: 260px;
+      min-height: 250px;
       font-size: 0.75rem;
       padding: $layout-spacing;
 
@@ -132,8 +132,12 @@
       }
 
       .card-footer {
-        margin: 0 auto;
-        max-width: 45px;
+        margin: auto;
+        width: 45px;
+        padding: 0;
+        height: 45px;
+        display: flex;
+        align-items: center;
       }
 
     }

@@ -193,9 +193,9 @@
                 </div>
 
                 <!-- logo -->
-                <ng-container *ngIf="professional.person && professional.person.company && professional.person.company.logoUrl">
-                  <div class="card-footer animate-card-appear tooltip" [attr.data-tooltip]="professional.person.company.name">
-                    <img [src]="professional.person.company.logoUrl" class="img-responsive" alt=" ">
+                <ng-container *ngIf="professional.person && professional.person.company && professional.person.companyLogoUrl">
+                  <div class="card-footer animate-card-appear tooltip" [attr.data-tooltip]="professional.person.company">
+                    <img [src]="professional.person.companyLogoUrl" class="img-responsive" alt=" ">
                   </div>
                 </ng-container>
 

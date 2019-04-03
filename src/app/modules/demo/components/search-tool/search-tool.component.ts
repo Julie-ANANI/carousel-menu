@@ -5,6 +5,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/search-tool';
+import { pros_sample } from "../../../../models/static-data/pros_sample";
 
 @Component({
   selector: 'app-search-tool',
@@ -65,15 +66,16 @@ export class SearchToolComponent implements OnInit{
     const keywords = this._searchForm.get('keywords').value;
 
     if (keywords) {
-      // this.actualPros = [];
+      this._professionalCount = 0;
       this._slicedPros = [];
       this._searchResult = {};
+      this._noResult = true;
 
       this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
         this._searchStarted = true;
         this._searchStopped = false;
         this._searchResult.metadata = result.metadata || {};
-        this._searchResult.pros = result.pros;
+        this._searchResult.pros = pros_sample;
 
         this._searchResult.pros = this._searchResult.pros.map(pro => {
           pro.isLoading = true;
@@ -132,9 +134,21 @@ export class SearchToolComponent implements OnInit{
 
 
   public onClickSeeMore() {
+    const currentNumberOfPros = this._slicedPros.length;
+    const end = currentNumberOfPros + 12 > this._searchResult.pros.length ?
+      this._searchResult.pros.length :
+      currentNumberOfPros + 12;
+    this._slicedPros = this._searchResult.pros.slice(0, end);
+    this._slicedPros.forEach((pro, index) => {
+      if (index >= currentNumberOfPros) {
+        this._formatPro(pro, index);
+      }
+    });
+
+    /*
     if (this._slicedPros.length < this._searchResult.pros.length) {
       const dif = this._searchResult.pros.length - this._slicedPros.length;
-      const start = this._slicedPros.length;
+      const start = this._slicedPros.length + 1;
       let end = this._slicedPros.length;
 
       if (dif >= 12) {
@@ -145,7 +159,7 @@ export class SearchToolComponent implements OnInit{
 
       this._loadPros(start, end);
 
-    }
+    }*/
   }
 
 
@@ -168,7 +182,7 @@ export class SearchToolComponent implements OnInit{
       }
 
       if(professional.person.companyDomain && professional.person.companyDomain != "unknown.com") {
-        professional.person.company.logoUrl = `https://logo.clearbit.com/${professional.person.company.domain}?size=240`;
+        professional.person.companyLogoUrl = `https://logo.clearbit.com/${professional.person.companyDomain}?size=240`;
       }
 
       setTimeout(() => {
