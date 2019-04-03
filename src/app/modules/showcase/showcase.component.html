@@ -45,6 +45,13 @@
       </admin-search-map>
     </div>
 
+    <hr>
+
+    <div class="clients">
+      {{ topClients.length }} {{ 'SHOWCASE.CLIENTS' | translate }}
+      <p *ngFor="let client of topClients" [innerHtml]="client"></p>
+    </div>
+
   </section>
 
   <!-- footer -->
