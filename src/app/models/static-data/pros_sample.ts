@@ -155,6 +155,7 @@ export const pros_sample: Array<any> = [
     ],
     "score": 5.183333333333334,
     "person": {
+      "country": "NL",
       "firstName": "Auke",
       "lastName": "Renard",
       "profileUrl": "https://nl.linkedin.com/in/auke-renard-84b9606",
@@ -612,6 +613,7 @@ export const pros_sample: Array<any> = [
     ],
     "score": 3.9333333333333336,
     "person": {
+      "country": "DE",
       "firstName": "Wilhelm",
       "lastName": "Blömer",
       "profileUrl": "https://de.linkedin.com/in/wilhelm-bl%C3%B6mer-9b781845",
@@ -693,6 +695,7 @@ export const pros_sample: Array<any> = [
     ],
     "score": 3.808333333333333,
     "person": {
+      "country": "PL",
       "firstName": "Jörg",
       "lastName": "Giessler",
       "profileUrl": "https://pl.linkedin.com/in/j%C3%B6rg-giessler-703365a",
@@ -742,6 +745,7 @@ export const pros_sample: Array<any> = [
     ],
     "score": 3.5,
     "person": {
+      "country": "US",
       "firstName": "Sachin",
       "lastName": "Budhabhatti",
       "profileUrl": "https://www.linkedin.com/in/sachinpb",
@@ -768,6 +772,7 @@ export const pros_sample: Array<any> = [
     ],
     "score": 3.4999999999999996,
     "person": {
+      "country": "DE",
       "firstName": "Sotirios Michalitsis phD",
       "lastName": "MD",
       "profileUrl": "https://de.linkedin.com/in/sotirios-michalitsis-md-phd-856a7b6b",
