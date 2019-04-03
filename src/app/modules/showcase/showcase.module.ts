@@ -13,6 +13,7 @@ import { ShowcaseComponent } from './showcase.component';
 
 import { ShowcaseRoutingModule } from './showcase-routing.module';
 import { AnswerService } from '../../services/answer/answer.service';
+import { InnovationService } from '../../services/innovation/innovation.service';
 import { TagsService } from '../../services/tags/tags.service';
 import { PipeModule } from '../../pipe/pipe.module';
 
@@ -34,6 +35,7 @@ import { PipeModule } from '../../pipe/pipe.module';
   ],
   providers: [
     AnswerService,
+    InnovationService,
     TagsService,
   ],
   exports: [

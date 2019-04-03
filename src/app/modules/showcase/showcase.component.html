@@ -29,6 +29,9 @@
 
     <div class="innovations">
       {{ stats.totalInnovations }} {{ 'SHOWCASE.INNOVATIONS' | translate }}
+      <p *ngFor="let inno of topInnovations">
+        {{ inno.name }}
+      </p>
     </div>
 
     <hr>
