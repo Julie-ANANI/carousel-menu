@@ -114,7 +114,7 @@ export class SearchToolComponent implements OnInit{
     const interval = setInterval(() => {
       if ( self._professionalCount >= total) {
         this._searchStopped = true;
-        this._loadPros(0, 12);
+        this._loadPros(12, 12);
         clearInterval(interval);
       }
       else  {
@@ -125,41 +125,25 @@ export class SearchToolComponent implements OnInit{
   }
 
 
-  private _loadPros(startLimit: number, endLimit: number) {
-    this._searchResult.pros.slice(startLimit, endLimit).forEach((professional, index) => {
-      this._slicedPros.push(professional);
-      this._formatPro(professional, index);
+  private _loadPros(displayLimit: number, loadLimit: number) {
+    this._slicedPros = this._searchResult.pros.slice(0, displayLimit);
+
+    this._slicedPros.forEach((professional, index) => {
+      if (index >= (displayLimit - loadLimit)) {
+        this._formatPro(professional, index);
+      }
     });
+
   }
 
 
   public onClickSeeMore() {
     const currentNumberOfPros = this._slicedPros.length;
+
     const end = currentNumberOfPros + 12 > this._searchResult.pros.length ?
-      this._searchResult.pros.length :
-      currentNumberOfPros + 12;
-    this._slicedPros = this._searchResult.pros.slice(0, end);
-    this._slicedPros.forEach((pro, index) => {
-      if (index >= currentNumberOfPros) {
-        this._formatPro(pro, index);
-      }
-    });
+      this._searchResult.pros.length : currentNumberOfPros + 12;
 
-    /*
-    if (this._slicedPros.length < this._searchResult.pros.length) {
-      const dif = this._searchResult.pros.length - this._slicedPros.length;
-      const start = this._slicedPros.length + 1;
-      let end = this._slicedPros.length;
-
-      if (dif >= 12) {
-        end += 12;
-      } else {
-        end += end;
-      }
-
-      this._loadPros(start, end);
-
-    }*/
+    this._loadPros(end, 12);
   }
 
 
