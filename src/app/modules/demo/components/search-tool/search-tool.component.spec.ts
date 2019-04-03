@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShareComponent } from './share.component';
+import { SearchToolComponent } from './search-tool.component';
 
 describe('SearchToolComponent', () => {
-  let component: ShareComponent;
-  let fixture: ComponentFixture<ShareComponent>;
+  let component: SearchToolComponent;
+  let fixture: ComponentFixture<SearchToolComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShareComponent ]
+      declarations: [ SearchToolComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShareComponent);
+    fixture = TestBed.createComponent(SearchToolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

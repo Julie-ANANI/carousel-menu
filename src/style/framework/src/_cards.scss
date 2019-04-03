@@ -8,9 +8,10 @@
   background-color: $bg-color-light;
   border-radius: $border-radius;
   border: $border-width solid $border-color;
+  word-break: break-word;
 
   &.card-responsive {
-    flex: 0 1 calc(14% - 1rem);
+    flex: 0 1 calc(16% - 1rem);
   }
 
   &.card-responsive-3 {
@@ -28,6 +29,8 @@
         height: auto;
         max-width: 100%;
         border-radius: $border-radius;
+        margin-left: auto;
+        margin-right: auto;
       }
 
     }
@@ -49,6 +52,19 @@
     .card-title {
       font-weight: $font-weight-medium;
       font-size: $unit-5;
+    }
+
+  }
+
+  .card-body {
+
+    &.card-cover {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 auto;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
   }

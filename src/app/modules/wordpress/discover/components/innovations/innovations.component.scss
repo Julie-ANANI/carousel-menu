@@ -92,12 +92,10 @@
   .section-cards {
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-right: -$unit-5;
     margin-bottom: -1.5rem;
 
     .card {
-      padding: $unit-2;
-      margin-right: $unit-5;
+      padding: $unit-4;
       margin-bottom: 1.5rem;
       border-color: transparent;
 
@@ -129,17 +127,8 @@
 
       }
 
-      .card-body {
-
-        .text {
-          font-size: $font-size-sm;
-          margin-bottom: -$unit-2;
-          color: $text-secondary-color;
-        }
-
-      }
-
       .card-footer {
+        padding-bottom: 0;
 
         .text-notify {
           font-size: 0.65rem;
@@ -190,7 +179,6 @@
     }
 
     .section-cards {
-      margin-right: 0 !important;
 
       .card {
         margin-left: auto;
@@ -228,10 +216,6 @@
       max-width: 100% !important;
     }
 
-  }
-
-  .section-cards {
-    justify-content: flex-start !important;
   }
 
 }

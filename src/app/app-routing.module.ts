@@ -10,6 +10,7 @@ import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthes
 
 // Component
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
+import { demoRoutes } from './modules/demo/demo-routing.module';
 
 const appRoutes: Routes = [
   {
@@ -50,6 +51,9 @@ const appRoutes: Routes = [
   },
   {
     path: 'showcase', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/showcase/showcase.module#ShowcaseModule'
+  },
+  {
+    path: 'demo', canActivate: [AuthGuard, AdminAuthGuard], children: [ ...demoRoutes ]
   },
   {
     path: '', pathMatch: 'full', redirectTo: 'user'
