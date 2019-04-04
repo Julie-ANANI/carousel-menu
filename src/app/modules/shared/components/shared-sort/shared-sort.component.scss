@@ -1,52 +1,40 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 #sort-component {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 
-  .icons-wrapper {
-    margin-left: 13px;
-    margin-top: 2px;
+  .icon-wrapper {
+    flex-direction: column;
+    margin-left: 12px;
+    margin-top: -6px;
     visibility: hidden;
     transition: all .15s ease-in-out;
 
-    .icons {
-      display: flex;
-      flex-direction: column;
-
-      .icon {
-        height: 12px;
-      }
-
+    .fa-angle-up, .fa-angle-down {
+      font-size: $font-icon-xl;
     }
 
-    .clicked {
+    span {
+      height: 13px;
+    }
 
-      .active {
-        color: $primary-color;
-        visibility: visible;
-      }
+    .active {
+      color: $primary-color;
+      visibility: visible;
+    }
 
-      .inactive {
-        visibility: visible;
-      }
-
+    .inactive {
+      visibility: visible;
     }
 
   }
 
-  .icons-wrapper:hover {
-    visibility: visible;
-  }
 
+  &:hover {
 
-}
+    .icon-wrapper {
+      visibility: visible;
+    }
 
-#sort-component:hover {
-
-  .icons-wrapper {
-    visibility: visible;
   }
 
 }

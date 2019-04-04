@@ -75,7 +75,6 @@ const adminRoutes: Routes = [
             path: '',
             component: AdminCommunityComponent,
             children: [
-              { path: '', redirectTo: 'projects', pathMatch: 'full' },
               ...communityRoutes
             ],
           },
