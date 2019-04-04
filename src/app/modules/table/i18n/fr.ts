@@ -18,7 +18,7 @@ export const TABLE = {
     'NAME': 'Nom',
     'COUNTRY': 'Pays',
     'EMAIL_ADDRESS': 'Adresse e-mail',
-    'JOB_TITLE': 'Titre du poste',
+    'JOB_TITLE': 'Poste',
     'COMPANY': 'Entreprise',
     'CAMPAIGNS': 'Campagnes',
     'CONTACT': 'Contact',

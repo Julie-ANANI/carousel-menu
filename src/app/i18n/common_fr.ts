@@ -80,7 +80,7 @@ export const COMMON = {
   },
 
 
-  'TOP_PROFILE': 'Profil haut',
+  'TOP_PROFILE': 'Top Profil',
 
   'PAGE_TITLE': {
     'LOG_IN': 'Connexion',
@@ -106,7 +106,7 @@ export const COMMON = {
     'COMPANY': 'Nom de l\'entreprise',
     'COUNTRY': 'Pays',
     'DATE': 'Date',
-    'TIME': 'Le temps',
+    'TIME': 'Heure',
     'STARTED': 'Commencé',
     'CONTENT': 'Contenu',
     'OPERATOR': 'Opérateur',
@@ -283,7 +283,7 @@ export const COMMON = {
   },
 
   'MAIL_EDITOR': {
-    'QUESTION': 'Dans quelle langue souhaitez-vous communiquer avec le maître d\'ouvrage ?',
+    'QUESTION': 'Dans quelle langue souhaitez-vous communiquer avec le propriétaire du projet ?',
     'SUBJECT': 'Sujet',
     'SUBJECT_PLACEHOLDER': 'Entrez l\'objet du courrier',
     'MESSAGE': 'Message',

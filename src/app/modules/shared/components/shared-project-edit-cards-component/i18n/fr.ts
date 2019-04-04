@@ -14,12 +14,12 @@ export const SHARED_PROJECT_EDIT = {
     'SET_AS_MAIN_LANG': 'Devenir langue principale',
     'MAIN_LANG': 'Langue principale',
     'MODAL': {
-      'TITLE': 'Comité de confirmation',
+      'TITLE': 'Veuillez confirmer',
       'CONTENT': 'Veuillez vérifier que vous avez rempli tous les champs. Cliquez sur \'Confirmer\' pour envoyer votre projet à la validation.'
     },
 
     'MODAL_DELETE': {
-      'TITLE': 'Supprimer le forum',
+      'TITLE': 'Suppression du projet',
       'CONTENT': {
         'A' : 'Voulez-vous supprimer votre projet en langue',
         'B' : '?'
