@@ -42,13 +42,13 @@ export const CAMPAIGNS = {
 
   'SELECT_DEFAULT': {
     'TITLE': 'Êtes-vous sûr(e) ?',
-    'CONTENT' : ` Certains batchs peuvent être en cours d'envoi, êtes vous certains de vouloir modifier le template de mails par default`
+    'CONTENT' : ` Certains batchs peuvent être en cours d'envoi, êtes vous certains de vouloir modifier le template de mails par défaut ?`
   },
 
   'STARTAB' : {
     'TITLE' : 'Êtes-vous sûr(e) ?',
-    'CONTENT' : ` Le lancement de l'A/B testing n'est pas reversible, vous ne pourrez plus revenir en arrière.
-     L'équipe technique et la direction décline toute responsabilité en cas d'accident.  ;)`
+    'CONTENT' : ` Le lancement de l'A/B testing n'est pas réversible, vous ne pourrez plus revenir en arrière.
+     L'équipe technique et la direction déclinent toute responsabilité en cas d'accident.  ;)`
   },
 
   'ADD_BUTTON': 'Ajouter une campagne',
@@ -80,13 +80,13 @@ export const CAMPAIGNS = {
       'COST': 'Cost',
       'RECEPTION': 'Réception',
       'INTERACTION': 'Interaction',
-      'DISPLAY': 'Afficheur'
+      'DISPLAY': 'Affichages'
     },
     'TITLE': {
-      'LOOK': 'To look at',
-      'VALIDATED': 'Validated',
-      'VALIDATED_WITHOUT': 'Validated no mail',
-      'REJECTED': 'Rejected',
+      'LOOK': 'À valider',
+      'VALIDATED': 'Validée',
+      'VALIDATED_WITHOUT': 'Validée sans email',
+      'REJECTED': 'Rejetée',
       'STANDARD': 'Standard',
       'TOP': 'Top',
       'FILL_RATE': 'Fill rate',
@@ -149,7 +149,7 @@ export const CAMPAIGNS = {
       'TEST_WORKFLOW': 'Test Workflow'
     },
     'BOT': {
-      'MESSAGE_A': 'Vous n\'avez pas des workflows ?',
+      'MESSAGE_A': 'Vous n\'avez pas de workflows ?',
       'MESSAGE_B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
     },
     'MODAL': {

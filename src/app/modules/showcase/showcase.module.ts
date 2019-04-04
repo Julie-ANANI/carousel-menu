@@ -9,6 +9,9 @@ import { FooterModule } from '../common/footer/footer.module';
 import { HeaderModule } from '../common/header/header.module';
 import { ModalModule } from '../utility-components/modal/modal.module';
 
+import { ShowcaseAnswersComponent } from './components/showcase-answers/showcase-answers.component';
+import { ShowcaseClientsComponent } from './components/showcase-clients/showcase-clients.component';
+import { ShowcaseInnovationsComponent } from './components/showcase-innovations/showcase-innovations.component';
 import { ShowcaseComponent } from './showcase.component';
 
 import { ShowcaseRoutingModule } from './showcase-routing.module';
@@ -31,6 +34,9 @@ import { PipeModule } from '../../pipe/pipe.module';
     ShowcaseRoutingModule
   ],
   declarations: [
+    ShowcaseAnswersComponent,
+    ShowcaseClientsComponent,
+    ShowcaseInnovationsComponent,
     ShowcaseComponent
   ],
   providers: [

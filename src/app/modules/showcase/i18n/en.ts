@@ -6,9 +6,17 @@ export const SHOWCASE = {
   'COUNTRIES': 'countries targeted',
   'CLIENTS': 'companies tested their market',
 
-  'MODAL': {
+  'SECTORS_MODAL': {
     'TITLE': 'Sectors choice',
     'BUTTON': 'Add sector'
+  },
+
+  'INNOVATIONS_MODAL': {
+    'TITLE': 'Innovations'
+  },
+
+  'ANSWERS_MODAL': {
+    'TITLE': 'Answers'
   },
 
 };

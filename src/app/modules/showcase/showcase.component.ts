@@ -3,11 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
-import { AnswerService } from '../../services/answer/answer.service';
-import { InnovationService } from '../../services/innovation/innovation.service';
 import { TagsService } from '../../services/tags/tags.service';
-import { Answer } from '../../models/answer';
-import { Innovation } from '../../models/innovation';
 import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
 
@@ -25,9 +21,6 @@ export class ShowcaseComponent implements OnInit {
 
   private _countries: {[country: string]: number} = {};
   private _countriesCount = 0;
-  private _topAnswers: Array<Answer> = [];
-  private _topClients: Array<string> = [];
-  private _topInnovations: Array<Innovation> = [];
   private _stats: TagStats = {};
 
   private _maxFirstTertile = 0;
@@ -35,8 +28,6 @@ export class ShowcaseComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private answerService: AnswerService,
-              private innovationService: InnovationService,
               private tagService: TagsService,
               private translateNotificationService: TranslateNotificationsService,
               private translateService: TranslateService) {}
@@ -95,63 +86,9 @@ export class ShowcaseComponent implements OnInit {
     });
   }
 
-  private reqAnswers(): void {
-    const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
-    if (tags_id.length > 0) {
-      this.answerService.getStarsAnswer(tags_id).subscribe((next) => {
-        if (Array.isArray(next.result)) {
-          this._topAnswers = next.result.slice(0, 6);
-        }
-      });
-    } else {
-      this._topAnswers = [];
-    }
-  }
-
-  private reqInnovations(): void {
-    const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
-    if (tags_id.length > 0) {
-      const config = {
-        fields: 'created name principalMedia status',
-        limit: '20',
-        isPublic: '1',
-        status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
-        tags: JSON.stringify({ $in: tags_id }),
-        sort: '{"created":-1}'
-      };
-      this.innovationService.getAll(config).subscribe((next) => {
-        if (Array.isArray(next.result)) {
-          this._topInnovations = next.result.slice(0, 6);
-        }
-      });
-    } else {
-      this._topInnovations = [];
-    }
-  }
-
-  private reqClients(): void {
-    const tags_id = this._selectedTagsStats.map((st) => st.tag._id);
-    if (tags_id.length > 0) {
-      const config = {
-        fields: 'created owner',
-        tags: JSON.stringify({ $in: tags_id })
-      };
-      this.innovationService.getAll(config).subscribe((next) => {
-        if (Array.isArray(next.result)) {
-          this._topClients = next.result.map((i) => i.owner.companyName);
-        }
-      });
-    } else {
-      this._topClients = [];
-    }
-  }
-
   private recomputeData(): void {
     this.computeStats();
     this.computeCountries();
-    this.reqAnswers();
-    this.reqInnovations();
-    this.reqClients();
   }
 
   public selectTag() {
@@ -159,7 +96,7 @@ export class ShowcaseComponent implements OnInit {
     const selectedTag = this._sectorTags.find((t) => t._id === selectedTagId);
     if (selectedTag && this._selectedTagsStats.findIndex((t) => t.tag._id === selectedTagId) === -1) {
       this.tagService.getStats(selectedTag._id).subscribe(stats => {
-        this._selectedTagsStats.push(stats);
+        this._selectedTagsStats = this._selectedTagsStats.concat(stats);
         this.recomputeData();
       }, err => {
         this.translateNotificationService.error('ERROR.ERROR', err);
@@ -182,18 +119,6 @@ export class ShowcaseComponent implements OnInit {
   }
 
   get lang(): string { return this.translateService.currentLang; }
-
-  get topAnswers() {
-    return this._topAnswers;
-  }
-
-  get topClients() {
-    return this._topClients;
-  }
-
-  get topInnovations() {
-    return this._topInnovations;
-  }
 
   get sectorTags(): Array<Tag> {
     return this._sectorTags;
