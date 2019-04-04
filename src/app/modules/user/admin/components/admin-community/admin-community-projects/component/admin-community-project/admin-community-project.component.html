@@ -64,9 +64,9 @@
 
                     <div class="button-group">
                         <!-- Add manually -->
-                        <button type="button" class="btn ghost-primary btn-sm">Add manually</button>
+                        <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add manually</button>
                         <!-- import -->
-                        <button type="button" class="btn btn-primary btn-sm">See suggestions</button>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="onClickSuggestion($event)">See suggestions</button>
                     </div>
                 </div>
                 <!-- /section buttons -->
@@ -79,3 +79,13 @@
 
     </section>
 </ng-container>
+
+<app-sidebar [(template)]="sidebarStatus">
+
+<community-form
+    [sidebarState]="sidebarStatus.animate_state"
+    [type]="sidebarStatus.type"
+    [config]="sideConfig">
+</community-form>
+
+</app-sidebar>

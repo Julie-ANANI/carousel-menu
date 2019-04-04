@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 //import { countries } from '../../../../../../../../models/static-data/country';
 //import { TagsService } from '../../../../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
+import {SidebarInterface} from "../../../../../../../sidebar/interfaces/sidebar-interface";
 //import { InnovationService } from '../../../../../../../../services/innovation/innovation.service';
 //import { Innovation } from '../../../../../../../../models/innovation';
 
@@ -18,7 +19,11 @@ export class AdminCommunityProjectComponent implements OnInit {
 
   private _config = {};
 
+  private _sideConfig: any;
+
   private _targetCountries = ['CO'];
+
+  private _sidebarStatus: SidebarInterface = {};
 
   constructor(private activatedRoute: ActivatedRoute,
               private translateService: TranslateService) { }
@@ -71,6 +76,45 @@ export class AdminCommunityProjectComponent implements OnInit {
    */
   notifyChanges() {
 
+  }
+
+  public onClickAddManually(event: Event) {
+    this._sideConfig = {
+      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
+      limit: '10',
+      offset: '0',
+      search: '',
+      sort: '{"created":-1}'
+    };
+    this._sidebarStatus = {
+      size: "65%",
+      type: "addToProject",
+      title: "Add manually",
+      animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
+    };
+    console.log(event);
+  }
+
+  public onClickSuggestion(event: Event) {
+    console.log(event);
+    this._sidebarStatus = {
+      size: "65%",
+      type: "addFromSuggestions",
+      title: "See suggestions",
+      animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
+    };
+  }
+
+  get sidebarStatus(): SidebarInterface {
+    return this._sidebarStatus;
+  }
+
+  set sidebarStatus(_value: SidebarInterface) {
+    this._sidebarStatus = _value;
+  }
+
+  get sideConfig(): any {
+    return this._sideConfig;
   }
 
 }

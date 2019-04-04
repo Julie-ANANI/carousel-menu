@@ -8,17 +8,25 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CommunityFormComponent implements OnInit {
 
   @Input() set sidebarState(value: string) {
+    console.log(value);
     if (value === undefined || value === 'active') {
 
     }
   }
 
   @Input() set type(value: string) {
-    this.actionType = value;
+    this._actionType = value;
     this._loadTemplate();
   }
 
-  actionType = '';
+  @Input() set config(value: any) {
+    console.log(value);
+    this._config = value;
+  }
+
+  private _actionType = '';
+
+  private _config: any;
 
   constructor() { }
 
@@ -27,7 +35,9 @@ export class CommunityFormComponent implements OnInit {
 
   private _loadTemplate() {
 
-    switch (this.actionType) {
+    console.log(this._actionType);
+
+    switch (this._actionType) {
 
       case '':
 
@@ -42,7 +52,7 @@ export class CommunityFormComponent implements OnInit {
 
 
   public onSave() {
-    switch (this.actionType) {
+    switch (this._actionType) {
 
       case '':
         break;
@@ -52,6 +62,14 @@ export class CommunityFormComponent implements OnInit {
 
     }
 
+  }
+
+  get actionType() {
+    return this._actionType;
+  }
+
+  get config(): any {
+    return this._config;
   }
 
 }

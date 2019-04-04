@@ -4,6 +4,7 @@ export const SHOWCASE = {
   'PROFESSIONALS': 'answers',
   'INNOVATIONS': 'tested projects',
   'COUNTRIES': 'countries targeted',
+  'CLIENTS': 'companies tested their market',
 
   'MODAL': {
     'TITLE': 'Sectors choice',

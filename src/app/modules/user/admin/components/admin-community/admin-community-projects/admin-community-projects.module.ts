@@ -11,6 +11,7 @@ import { TableModule } from "../../../../../table/table.module";
 import { AdminCommunityProjectComponent } from "./component/admin-community-project/admin-community-project.component";
 import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
 import { SharedWorldmapModule } from "../../../../../shared/components/shared-worldmap/shared-worldmap.module";
+import { SidebarCommunityFormModule } from "../../../../../sidebar/components/community-form/sidebar-community-form.module";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SharedWorldmapModule } from "../../../../../shared/components/shared-wo
     SidebarModule,
     TableModule,
     SharedAmbassadorListModule,
-    SharedWorldmapModule
+    SharedWorldmapModule,
+    SidebarCommunityFormModule
   ],
   declarations: [
     AdminCommunityProjectsComponent,
