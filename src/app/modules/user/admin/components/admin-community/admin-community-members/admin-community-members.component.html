@@ -17,20 +17,22 @@
     <!-- /section buttons -->
 
     <!-- section members -->
-    <app-shared-ambassadors-list [config]="config"></app-shared-ambassadors-list>
+    <div class="section-light-pad rm-pad-bottom">
+      <app-shared-ambassadors-list [config]="config"></app-shared-ambassadors-list>
+    </div>
     <!-- /section members -->
 
   </div>
 </section>
 
 
-<!-- add ambassadors sidebar -->
+<!-- add ambassadors sidebar
 <app-sidebar [(template)]="sidebarValue">
   <add-ambassador-form
     [sidebarState]="sidebarValue.animate_state">
   </add-ambassador-form>
 </app-sidebar>
-<!-- /add ambassadors sidebar -->
+ /add ambassadors sidebar -->
 
 
 
