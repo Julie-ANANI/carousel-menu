@@ -16,23 +16,11 @@
 
     <hr>
 
-    <div class="professionals">
-      {{ stats.totalAnswers }} {{ 'SHOWCASE.PROFESSIONALS' | translate }}
-      <p *ngFor="let answer of topAnswers">
-        <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-        {{ answer.professional?.firstName }} {{ answer.professional?.lastName }}
-        - {{ answer.job }} - {{ answer.company?.name }}
-      </p>
-    </div>
+    <app-showcase-answers [totalAnswers]="stats.totalAnswers" [tagsStats]="selectedTagsStats"></app-showcase-answers>
 
     <hr>
 
-    <div class="innovations">
-      {{ stats.totalInnovations }} {{ 'SHOWCASE.INNOVATIONS' | translate }}
-      <p *ngFor="let inno of topInnovations">
-        {{ inno.name }}
-      </p>
-    </div>
+    <app-showcase-innovations [totalInnovations]="stats.totalInnovations" [tagsStats]="selectedTagsStats"></app-showcase-innovations>
 
     <hr>
 
@@ -47,10 +35,7 @@
 
     <hr>
 
-    <div class="clients">
-      {{ topClients.length }} {{ 'SHOWCASE.CLIENTS' | translate }}
-      <p *ngFor="let client of topClients" [innerHtml]="client"></p>
-    </div>
+    <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
 
   </section>
 
@@ -59,7 +44,7 @@
 
 </main>
 
-<app-modal [(showModal)]="openSectorsModal" [modalTitle]="'SHOWCASE.MODAL.TITLE'">
+<app-modal [(showModal)]="openSectorsModal" [modalTitle]="'SHOWCASE.SECTORS_MODAL.TITLE'">
 
   <form [formGroup]="tagForm" (ngSubmit)="selectTag()">
 
@@ -69,7 +54,7 @@
       </select>
     </label>
 
-    <button class="btn btn-primary" [innerText]="'SHOWCASE.MODAL.BUTTON'" translate></button>
+    <button class="btn btn-primary" [innerText]="'SHOWCASE.SECTORS_MODAL.BUTTON'" translate></button>
 
   </form>
 
@@ -81,4 +66,3 @@
   </ul>
 
 </app-modal>
-

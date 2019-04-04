@@ -1,0 +1,20 @@
+<main class="body-wrapper" id="showcase-innovations-component">
+
+  {{ totalInnovations }} {{ 'SHOWCASE.INNOVATIONS' | translate }}
+
+  <span class="text-link" *ngIf="innovations.length > 6"
+        (click)="openInnovationsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+
+  <p *ngFor="let inno of topInnovations">
+    {{ inno.name }}
+  </p>
+
+</main>
+
+<app-modal [(showModal)]="openInnovationsModal" [modalTitle]="'SHOWCASE.INNOVATIONS_MODAL.TITLE'">
+
+  <p *ngFor="let inno of innovations">
+    {{ inno.name }}
+  </p>
+
+</app-modal>
