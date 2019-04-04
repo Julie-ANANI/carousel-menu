@@ -16,6 +16,10 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
   @Input() suggestions: any; // values that we get from the parent component. By default it is Array<{'text': string}> type.
 
+  @Input() set searchActive(value) {
+    this._searchActive = !!value;
+  }
+
   private _searchField: FormControl; // declare the FormControl as properties of our components.
 
   private _displaySuggestion = true;
@@ -140,10 +144,6 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
   get searchActive(): boolean {
     return this._searchActive;
-  }
-
-  set searchActive(value: boolean) {
-    this._searchActive = value;
   }
 
   get currentFocus(): number {

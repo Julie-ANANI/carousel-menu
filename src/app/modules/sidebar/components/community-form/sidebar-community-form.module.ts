@@ -7,6 +7,7 @@ import { CommunityFormComponent } from './community-form.component';
 
 import { SidebarModule } from '../../sidebar.module';
 import {SharedAmbassadorListModule} from "../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
+import {SearchInputModule} from "../../../utility-components/search-input/search-input.module";
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {SharedAmbassadorListModule} from "../../../shared/components/shared-amba
     TranslateModule.forChild(),
     SidebarModule,
     SharedAmbassadorListModule,
+    SearchInputModule
   ],
   declarations: [
     CommunityFormComponent

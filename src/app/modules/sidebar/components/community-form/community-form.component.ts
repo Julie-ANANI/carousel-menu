@@ -64,6 +64,10 @@ export class CommunityFormComponent implements OnInit {
 
   }
 
+  public onValueTyped(event: Event) {
+    console.log(event);
+  }
+
   get actionType() {
     return this._actionType;
   }
