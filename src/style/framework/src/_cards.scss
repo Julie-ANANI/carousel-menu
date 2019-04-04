@@ -11,7 +11,7 @@
   word-break: break-word;
 
   &.card-responsive {
-    flex: 0 1 calc(14% - 1rem);
+    flex: 0 1 calc(16% - 1rem);
   }
 
   &.card-responsive-3 {
@@ -29,6 +29,8 @@
         height: auto;
         max-width: 100%;
         border-radius: $border-radius;
+        margin-left: auto;
+        margin-right: auto;
       }
 
     }
