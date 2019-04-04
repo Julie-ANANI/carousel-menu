@@ -76,7 +76,7 @@
                                       [ngClass]="{ 'selectable': isSortable(column) }"
                                       (configChange)="changeConfig($event)"
                                       [prop]="getAttrs(column)[0]">
-                                  {{ getName(column) | translate | FormatText }}
+                                  {{ getName(column) | translate }}
                               </app-shared-sort>
 
                               <!-- Not sortable -->
