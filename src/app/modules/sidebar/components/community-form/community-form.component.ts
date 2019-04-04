@@ -65,6 +65,14 @@ export class CommunityFormComponent implements OnInit {
   }
 
   public onValueTyped(event: Event) {
+    this._config = {
+      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
+      limit: '10',
+      offset: '0',
+      search: '',
+      "$text": `{ "$search": "${event}" }`,
+      sort: '{"created":-1}'
+    };
     console.log(event);
   }
 

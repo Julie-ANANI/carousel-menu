@@ -19,7 +19,7 @@ export class AdminCommunityProjectComponent implements OnInit {
 
   private _config = {};
 
-  private _sideConfig: any;
+  private _sideConfig: any = null;
 
   private _targetCountries = ['CO'];
 
@@ -79,13 +79,14 @@ export class AdminCommunityProjectComponent implements OnInit {
   }
 
   public onClickAddManually(event: Event) {
-    this._sideConfig = {
+    /*this._sideConfig = {
       fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
       limit: '10',
       offset: '0',
       search: '',
+      "$text": `{ $search: ${event} }`,
       sort: '{"created":-1}'
-    };
+    };*/
     this._sidebarStatus = {
       size: "65%",
       type: "addToProject",

@@ -10,7 +10,7 @@
                           [searchActive]="true"
                     ></app-search-input>
               </div>
-              <div *ngIf="false">
+              <div *ngIf="!!config">
                   <app-shared-ambassadors-list
                       [config]="config">
                   </app-shared-ambassadors-list>
