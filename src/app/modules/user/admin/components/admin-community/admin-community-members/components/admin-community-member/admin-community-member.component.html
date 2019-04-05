@@ -112,9 +112,10 @@
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- save button -->
-        <div class="save-wrapper text-right" [ngClass]="{ 'active': saveChanges }">
-          <div class="shape circle circle-sm"><i class="fas fa-save"></i></div>
-          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSave()">Save</button>
+        <div class="text-right">
+          <button type="button" class="badge badge-save btn btn-primary btn-sm" [ngClass]="{ 'active': saveChanges }" (click)="onClickSave()">
+            <span>Save</span><i class="fas fa-save"></i>
+          </button>
         </div>
 
         <!-- information -->

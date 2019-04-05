@@ -17,44 +17,6 @@
 
   }
 
-  .save-wrapper {
-
-    .shape {
-      position: absolute;
-      margin-top: -10px;
-      margin-left: -9px;
-      visibility: hidden;
-    }
-
-    &.active {
-
-      .shape {
-        background-color: $success-color;
-        border-color: $success-color;
-        visibility: visible;
-
-        .fa-save {
-          color: $light-color;
-        }
-
-      }
-
-      .btn {
-        border-color: $success-color;
-        background-color: $bg-color-light;
-        color: $text-primary-color;
-        border-width: $border-width-lg;
-
-        &:hover {
-          background-color: $hover-background-color;
-        }
-
-      }
-
-    }
-
-  }
-
   .section-details {
 
     .info-wrapper {
