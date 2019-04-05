@@ -4,17 +4,9 @@ import { Tag } from './tag';
 export interface Professional {
   readonly _id: string;
 
-  readonly firstName: string;
-
-  readonly lastName: string;
-
-  readonly jobTitle: string;
-
   readonly personId: string;
 
   readonly messages: Array<any>;
-
-  readonly profileUrl: string;
 
   readonly campaigns: Campaign[];
 
@@ -22,7 +14,15 @@ export interface Professional {
 
   readonly urlCompany?: string;
 
-  readonly email: string;
+  profileUrl: string;
+
+  email: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  jobTitle: string;
 
   language?: string;
 
