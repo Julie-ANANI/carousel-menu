@@ -108,7 +108,7 @@ export const COMMON = {
     'COUNTRY': 'Pays',
     'DATE': 'Date',
     'TIME': 'Heure',
-    'STARTED': 'Commencé',
+    'STARTED': 'Lancé',
     'CONTENT': 'Contenu',
     'OPERATOR': 'Opérateur',
     'ADMIN': 'Affecter comme administrateur',
