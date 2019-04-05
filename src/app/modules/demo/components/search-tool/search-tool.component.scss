@@ -35,6 +35,10 @@
     max-height: 70vh;
   }
 
+  .video-machine {
+    max-height: 50vh;
+  }
+
   .animate-disappear {
     animation-name: fadeOut;
     animation-duration: 50ms;
@@ -136,8 +140,17 @@
         width: 45px;
         padding: 0;
         height: 45px;
-        display: flex;
-        align-items: center;
+
+        &.no-logo {
+          width: 100%;
+          font-size: $font-size-sm;
+
+          .text-link {
+            color: $text-primary-color;
+          }
+
+        }
+
       }
 
     }
