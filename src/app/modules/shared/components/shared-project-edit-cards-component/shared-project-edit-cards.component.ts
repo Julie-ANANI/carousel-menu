@@ -257,7 +257,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
 
   getSrc(media: Media, requestFor: string): string {
-    return this.innovationFrontService.getMediaSrc(media, requestFor);
+    return InnovationFrontService.getMediaSrc(media, requestFor);
   }
 
 

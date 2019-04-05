@@ -62,8 +62,7 @@ export class ProjectsListComponent implements OnInit {
               private userService: UserService,
               private translateTitleService: TranslateTitleService,
               private translateNotificationService: TranslateNotificationsService,
-              private innovationService: InnovationService,
-              private innovationFrontService: InnovationFrontService) {}
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
@@ -112,7 +111,7 @@ export class ProjectsListComponent implements OnInit {
 
     } else {
       const findIndex = innovation.innovationCards.findIndex((card) => card.lang === this.translateService.currentLang);
-      return this.innovationFrontService.getMediaSrc(innovation.innovationCards[findIndex], 'default', '120', '100');
+      return InnovationFrontService.getMediaSrc(innovation.innovationCards[findIndex], 'default', '120', '100');
     }
 
   }

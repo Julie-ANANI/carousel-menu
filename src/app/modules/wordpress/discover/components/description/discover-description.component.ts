@@ -58,8 +58,7 @@ export class DiscoverDescriptionComponent implements OnInit {
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
-              private innovationService: InnovationService,
-              private innovationFrontService: InnovationFrontService) { }
+              private innovationService: InnovationService) { }
 
   ngOnInit() {
 
@@ -144,12 +143,12 @@ export class DiscoverDescriptionComponent implements OnInit {
 
 
   getSrc(media: Media): string {
-    return this.innovationFrontService.getMediaSrc(media, 'mediaSrc', '280', '177');
+    return InnovationFrontService.getMediaSrc(media, 'mediaSrc', '280', '177');
   }
 
 
   getRelatedSrc(innovCard: InnovCard): string {
-    return this.innovationFrontService.getMediaSrc(innovCard, 'default', '280', '177');
+    return InnovationFrontService.getMediaSrc(innovCard, 'default', '280', '177');
   }
 
 

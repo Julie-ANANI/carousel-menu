@@ -109,8 +109,7 @@ export class InnovationsComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private authService: AuthService,
               private userService: UserService,
-              private innovationService: InnovationService,
-              private innovationFrontService: InnovationFrontService) {}
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
@@ -556,7 +555,7 @@ export class InnovationsComponent implements OnInit {
     /*
      * return default uri
      */
-    return this.innovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
+    return InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
 
   }
 

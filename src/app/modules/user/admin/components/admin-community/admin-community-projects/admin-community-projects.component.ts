@@ -25,9 +25,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
-
     this._setConfig();
-
     this._configureTable();
 
   }

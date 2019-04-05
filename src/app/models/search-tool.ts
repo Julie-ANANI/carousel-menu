@@ -3,14 +3,12 @@ import { Professional } from './professional';
 export interface SearchTool {
   metadata?: {
     world?: number;
-    continent?: {
-      Asia?: number;
-      Africa?: number;
-      Australia?: number;
-      Europe?: number;
-      'North America'?: number;
-      'South America'?: number;
-    }
+    asia?: number;
+    africa?: number;
+    oceania?: number;
+    europe?: number;
+    northAmerica?: number;
+    southAmerica?: number;
   },
 
   pros?: Array<{

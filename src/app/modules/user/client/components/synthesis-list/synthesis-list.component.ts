@@ -52,8 +52,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
                private _userService: UserService,
                private _innovationService: InnovationService,
                private _translateNotificationsService: TranslateNotificationsService,
-               private _translateService: TranslateService,
-               private _innovationFrontService: InnovationFrontService) {
+               private _translateService: TranslateService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.SHARED_REPORTS');
 
@@ -123,7 +122,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    */
   public getMedia(report: any): string {
     if (report.media) {
-      return this._innovationFrontService.getMediaSrc(report.media, 'mediaSrc', '120', '100');
+      return InnovationFrontService.getMediaSrc(report.media, 'mediaSrc', '120', '100');
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/c_fill,h_100,w_120/v1542811700/app/default-images/icons/no-image.png';
     }

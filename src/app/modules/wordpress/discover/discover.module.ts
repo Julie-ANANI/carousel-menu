@@ -11,7 +11,6 @@ import { InnovationsComponent } from './components/innovations/innovations.compo
 import { InnovationService } from '../../../services/innovation/innovation.service';
 import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
-import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
@@ -44,7 +43,6 @@ import { ModalModule } from '../../utility-components/modal/modal.module';
     ShareService,
     UserService,
     TagsService,
-    InnovationFrontService
   ],
   declarations: [
     DiscoverComponent,
