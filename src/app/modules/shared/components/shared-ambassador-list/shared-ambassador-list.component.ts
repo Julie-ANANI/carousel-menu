@@ -1,11 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import { Tag } from '../../../../models/tag';
 import { AdvSearchService } from "../../../../services/advsearch/advsearch.service";
 import { Router } from '@angular/router';
+import { ListConfigurations } from "./list-configurations";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -19,12 +18,19 @@ export interface SelectedProfessional extends Professional {
 
 export class SharedAmbassadorListComponent {
 
-  @Input() requestId: string;
-
-  @Input() campaign: Campaign;
-
   @Input() set config(value: any) {
     this.loadPros(value);
+  }
+
+  @Input() set listType(value: string) {
+    switch(value) {
+      case('suggestions'):
+        this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
+        break;
+      case('default'):
+      default:
+        this._tableInfos = ListConfigurations.getByDefaultConfig();
+    }
   }
 
   @Output() selectedProsChange = new EventEmitter<any>();
@@ -43,10 +49,6 @@ export class SharedAmbassadorListComponent {
 
   private _pros: Array<SelectedProfessional>;
 
-  private _prosToRemove: Professional[] = [];
-
-  private _prosToTag: Professional[] = [];
-
   private _sidebarValue: SidebarInterface = {};
 
   private _currentPro: Professional = null;
@@ -61,37 +63,29 @@ export class SharedAmbassadorListComponent {
               private route: Router) { }
 
   loadPros(config: any): void {
+    // At this point the table should be configured (actions and everything)
+    // We need "just" to gather the data and inject it to the table so we can
+    // allow th table to show data
+
     this._config = config;
 
-    this._advSearchService.getCommunityMembers(this.configToString()).pipe(first()).subscribe((pros: any) => {
-      this._pros = pros.result;
-      this._pros.forEach(pro => {
-        pro.sent = pro.messages && pro.messages.length > 0;
-      });
+    this._advSearchService.getCommunityMembers(this.configToString())
+      .pipe(first())
+      .subscribe((pros: any) => {
+        this._pros = pros.result;
+        this._pros.forEach(pro => {
+          pro.sent = pro.messages && pro.messages.length > 0;
+        });
 
-      this._total = pros._metadata.totalCount;
+        this._total = pros._metadata.totalCount;
 
-      this._tableInfos = {
-        _selector: 'admin-ambassador',
-        _title: 'TABLE.TITLE.AMBASSADORS',
-        _content: this._pros,
-        _total: this._total,
-        _isFiltrable: false,
-        _isLocal: true,
-        _isHeadable: false,
-        _isDeletable: true,
-        _isSelectable: true,
-        _actions: this._actions,
-        _columns: [
-          //"tags.label":1, "country":1,"answers.innovation":1, "answers.status":1, "ambassador.industry":1
-          {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-          {_attrs: ['tags'], _name: 'TABLE.HEADING.SECTORS', _type: 'TAG-LIST'},
-          {_attrs: ['ambassador.industry'], _name: 'TABLE.HEADING.INDUSTRY', _type: 'TEXT'},
-          {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY-NAME'},
-          {_attrs: ['answers'], _name: 'TABLE.HEADING.FEEDBACK', _type: 'ARRAY'}]
-      };
+        this._tableInfos._content = this._pros;
+        this._tableInfos._total = this._total;
+        this._tableInfos._actions = this._actions;
 
-    });
+        // TODO this is ugly AF, shouldn't the table component to be able to update just the data without reloading everything?
+        this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));
+     });
 
   }
 
@@ -141,12 +135,6 @@ export class SharedAmbassadorListComponent {
 
 
   performActions(action: any) {
-    switch (this._actions.findIndex(value => action._action === value)) {
-      case 0: {
-        this.editTags(action._rows);
-        break;
-      }
-    }
   }
 
 
@@ -166,75 +154,9 @@ export class SharedAmbassadorListComponent {
     this.editUser[pro._id] = false;
   }
 
-
-  deleteProsModal(pros: Professional[]) {
-    this._modalDelete = true;
-    this._prosToRemove = pros;
-  }
-
-
   onClickSubmit(event: Event) {
     event.preventDefault();
-
-    for (const pro of this._prosToRemove) {
-      if (this.isCampaignProsLis()) {
-        this.removeProsFromCampaign(pro._id)
-      } else {
-        this.removePro(pro._id);
-      }
-    }
-
-    this._prosToRemove = [];
-    this._modalDelete = false;
-
   }
-
-
-  private removePro(userId: string) {
-
-  }
-
-  private removeProsFromCampaign(userId: string) {
-
-  }
-
-
-  editTags(pros: Professional[]) {
-    this.isProfessionalForm = false;
-    this.isTagsForm = true;
-    this._prosToTag = pros;
-
-    this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SIDEBAR.TITLE.ADD_TAGS',
-      type: 'addTags'
-    };
-
-  }
-
-
-  addTagsToPro(tags: Tag[]) {
-    this._prosToTag.forEach((value, index) => {
-      if (!this._prosToTag[index].tags) {
-        this._prosToTag[index].tags = [];
-      }
-      tags.forEach(value1 => {
-        if (!(value.tags.find(value2 => {
-          return value2._id === value1._id
-        }))) {
-          this._prosToTag[index].tags.push(value1);
-        }
-      })
-    });
-
-    this._prosToTag.forEach(value => this.updatePro(value));
-
-  }
-
-  public isCampaignProsLis(): boolean {
-    return !!this.campaign;
-  }
-
   get total() {
     return this._total;
   }
@@ -249,14 +171,6 @@ export class SharedAmbassadorListComponent {
 
   get tableInfos(): any {
     return this._tableInfos;
-  }
-
-  get prosToRemove(): Professional[] {
-    return this._prosToRemove;
-  }
-
-  get prosToTag(): Professional[] {
-    return this._prosToTag;
   }
 
   set sidebarValue(value: SidebarInterface) {
