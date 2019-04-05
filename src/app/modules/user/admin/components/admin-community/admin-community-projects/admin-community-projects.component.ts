@@ -128,7 +128,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
 
   public onClickShow(project: any) {
-    this._router.navigate(['/user/admin/community/projects/project/' + project.innovation._id]);
+    this._router.navigate(['/user/admin/community/projects/' + project.innovation._id]);
   }
 
   get config() {
