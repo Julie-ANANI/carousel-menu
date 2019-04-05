@@ -43,7 +43,7 @@ export class SharedAmbassadorListComponent {
 
   private _tableInfos: any = null;
 
-  private _actions: string[] = [];
+  //private _actions: string[] = [];
 
   private _total = 0;
 
@@ -81,7 +81,7 @@ export class SharedAmbassadorListComponent {
 
         this._tableInfos._content = this._pros;
         this._tableInfos._total = this._total;
-        this._tableInfos._actions = this._actions;
+        //this._tableInfos._actions = this._actions;
 
         // TODO this is ugly AF, shouldn't the table component to be able to update just the data without reloading everything?
         this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));

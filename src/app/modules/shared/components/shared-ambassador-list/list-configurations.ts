@@ -34,12 +34,12 @@ export class ListConfigurations {
       _isHeadable: false,
       _isDeletable: true,
       _isSelectable: true,
-      _actions: ['addAmbassador'],
+      _actions: ['Add to the project'],
       _columns: [
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
         {_attrs: ['tags'], _name: 'TABLE.HEADING.SECTORS', _type: 'TAG-LIST'},
         {_attrs: ['ambassador.industry'], _name: 'TABLE.HEADING.INDUSTRY', _type: 'TEXT'},
-        {_attrs: ['status'], _name: 'TABLE.HEADING.COUNTRY', _type: 'LABEL'}]
+        {_attrs: ['status'], _name: 'Added to project', _type: 'MULTI-LABEL'}]
     };
     return _tableInfos;
   }
