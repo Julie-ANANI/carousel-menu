@@ -5,16 +5,17 @@
   <span class="text-link" *ngIf="innovations.length > 6"
         (click)="openInnovationsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
 
-  <p *ngFor="let inno of topInnovations">
-    {{ inno.name }}
+  <p *ngFor="let card of topCards">
+    <img [src]="card.principalMedia?.url" [alt]="card.title" />
+    {{ card.title }}
   </p>
 
 </main>
 
 <app-modal [(showModal)]="openInnovationsModal" [modalTitle]="'SHOWCASE.INNOVATIONS_MODAL.TITLE'">
 
-  <p *ngFor="let inno of innovations">
-    {{ inno.name }}
+  <p *ngFor="let card of topCards">
+    {{ card.title }}
   </p>
 
 </app-modal>
