@@ -69,8 +69,7 @@ export class AdminCommunityMemberComponent implements OnInit {
               private _translateService: TranslateService,
               private _professionalService: ProfessionalsService,
               private _translateNotificationService: TranslateNotificationsService,
-              private _innovationService: InnovationService,
-              private _innovationFrontService: InnovationFrontService) { }
+              private _innovationService: InnovationService) { }
 
   ngOnInit() {
     this._professional = this._activatedRoute.snapshot.data['professional'];
@@ -321,7 +320,7 @@ export class AdminCommunityMemberComponent implements OnInit {
 
 
   public getImageSrc(innovation: InnovCard): string {
-    return this._innovationFrontService.getMediaSrc(innovation, 'default', '209', '130');
+    return InnovationFrontService.getMediaSrc(innovation, 'default', '209', '130');
   }
 
 

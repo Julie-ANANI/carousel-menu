@@ -103,8 +103,7 @@ export class InnovationsComponent implements OnInit {
               private _translateService: TranslateService,
               private _localStorage: LocalStorageService,
               private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _innovationFrontService: InnovationFrontService) {
+              private _innovationService: InnovationService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
 
@@ -528,7 +527,7 @@ export class InnovationsComponent implements OnInit {
     /*
      * return default uri
      */
-    return this._innovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
+    return InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
   }
 
 

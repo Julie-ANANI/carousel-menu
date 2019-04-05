@@ -13,7 +13,6 @@ import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
-import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 import { PaginationModule } from '../../utility-components/pagination/pagination.module';
 import { PipeModule } from '../../../pipe/pipe.module';
@@ -47,8 +46,7 @@ import { HeaderModule } from '../../common/header/header.module';
     InnovationResolver,
     ShareService,
     UserService,
-    TagsService,
-    InnovationFrontService
+    TagsService
   ],
   declarations: [
     DiscoverComponent,

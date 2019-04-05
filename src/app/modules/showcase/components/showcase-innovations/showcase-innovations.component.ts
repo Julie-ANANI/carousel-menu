@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
 import { TagStats } from '../../../../models/tag-stats';
@@ -21,13 +22,15 @@ export class ShowcaseInnovationsComponent {
 
   private _innovations: Array<Innovation> = [];
   private _topInnovations: Array<Innovation> = [];
-  private _topCards: Array<InnovCard> = [];
+  private _topCards: Array<{title: string, media: string}> = [];
 
   constructor(private innovationService: InnovationService,
               private translateService: TranslateService) {
+
     this.translateService.onLangChange.subscribe((_event: LangChangeEvent) => {
       this.computeCards();
     });
+
   }
 
   private reqInnos(value: Array<TagStats>): void {
@@ -56,16 +59,16 @@ export class ShowcaseInnovationsComponent {
   private computeCards(): void {
     this._topCards = this._topInnovations.map((inno) => {
       let innovationCard = inno.innovationCards.find((card: InnovCard) => card.lang === this.translateService.currentLang);
-      if (innovationCard) {
-        return innovationCard;
-      } else {
+      if (!innovationCard) {
         innovationCard = inno.innovationCards.find((card: InnovCard) => card.lang === this.translateService.defaultLang);
-        if (innovationCard) {
-          return innovationCard;
-        } else {
-          return inno.innovationCards[0];
+        if (!innovationCard) {
+          innovationCard = inno.innovationCards[0];
         }
       }
+      return {
+        title: innovationCard.title,
+        media: InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200')
+      };
     });
   }
 

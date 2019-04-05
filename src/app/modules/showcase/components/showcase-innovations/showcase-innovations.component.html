@@ -6,7 +6,7 @@
         (click)="openInnovationsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
 
   <p *ngFor="let card of topCards">
-    <img [src]="card.principalMedia?.url" [alt]="card.title" />
+    <img [src]="card.media" [alt]="card.title" />
     {{ card.title }}
   </p>
 
