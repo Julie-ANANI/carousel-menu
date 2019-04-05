@@ -160,15 +160,11 @@ export class SearchToolComponent implements OnInit{
 
       if (!professional.person.email) {
 
-        if(!professional.person.companyDomain) {
-          professional.person.companyDomain = "unknown.com";
-        }
-
-        professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.companyDomain}`;
+        professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.companyDomain || "unknown.com"}`;
 
       }
 
-      if(professional.person.companyDomain && professional.person.companyDomain != "unknown.com") {
+      if(professional.person.companyDomain) {
         professional.person.companyLogoUrl = `https://logo.clearbit.com/${professional.person.companyDomain}?size=240`;
       }
 
