@@ -47,6 +47,10 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _innovationsSuggested: Array<InnovCard> = [];
 
+  private _emailTableInfo: any = [];
+
+  private _projectTableInfo: any = [];
+
   private _configTag = {
     limit: '0',
     offset: '0',
@@ -63,24 +67,115 @@ export class AdminCommunityMemberComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
+  private _configProject = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
+
+  private _configEmail = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _autoCompleteService: AutocompleteService,
               private _tagsService: TagsService,
               private _translateService: TranslateService,
               private _professionalService: ProfessionalsService,
               private _translateNotificationService: TranslateNotificationsService,
-              private _innovationService: InnovationService) { }
+              private _innovationService: InnovationService) {
+
+    this._configureEmailTable();
+    this._configureProjectTable();
+
+  }
 
   ngOnInit() {
     this._professional = this._activatedRoute.snapshot.data['professional'];
     this._getAllTags();
     this._initializeVariables();
+    this._getEmails();
+    this._getProjects();
     this._getAllInnovations();
   }
 
 
+  private _configureEmailTable() {
+    this._projectTableInfo = {
+      _selector: 'admin-community-member-email',
+      _title: 'Emails',
+      _content: [],
+      _total: 0,
+      _isHeadable: true,
+      _isShowable: true,
+      _columns: [
+        {
+          _attrs: [''],
+          _name: 'Emails',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: [''],
+          _name: 'Open',
+          _type: 'MULTI-CHOICES',
+          _isSortable: false,
+          _choices: [
+            {_name: '', _alias: '', _class: 'label label-alert'},
+            {_name: '', _alias: '',  _class: 'label label-success'},
+          ]
+        },
+        {
+          _attrs: [''],
+          _name: 'Click',
+          _type: 'MULTI-CHOICES',
+          _isSortable: false,
+          _choices: [
+            {_name: '', _alias: '', _class: 'label label-alert'},
+            {_name: '', _alias: '',  _class: 'label label-success'},
+          ]
+        }
+      ]
+    };
+  }
+
+
+  private _configureProjectTable() {
+    this._projectTableInfo = {
+      _selector: 'admin-community-member-project',
+      _title: 'Projects',
+      _content: [],
+      _total: 0,
+      _isHeadable: true,
+      _isShowable: true,
+      _columns: [
+        {
+          _attrs: [''],
+          _name: 'Projects',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: ['', ''],
+          _name: 'Feedback',
+          _type: 'MULTI-LABEL',
+          _isSortable: false,
+          _multiLabels: [
+            {_attr: '', _class: 'label label-success'},
+            {_attr: '', _class: 'label label-draft'}
+          ],
+        }
+      ]
+    };
+  }
+
+
   /***
-   * initializing all the varaibles to its default values.
+   * initializing all the variables to its default values.
    */
   private _initializeVariables() {
     this._saveChanges = false;
@@ -89,6 +184,32 @@ export class AdminCommunityMemberComponent implements OnInit {
     this._languages = lang;
     this._countries = countries;
   }
+
+
+  private _getEmails() {
+    // this._emailTableContent(emails, total);
+  }
+
+
+  /*private _emailTableContent(emails: Array<any>, total: number) {
+   const tableInfos = this.emailTableInfo;
+   tableInfos._content = emails;
+   tableInfos._total = total;
+   this.emailTableInfo = JSON.parse(JSON.stringify(tableInfos));
+ }*/
+
+
+  private _getProjects() {
+    // this._projectTableContent(projects, total);
+  }
+
+
+  /*private _projectTableContent(projects: Array<any>, total: number) {
+    const tableInfos = this.projectTableInfo;
+    tableInfos._content = projects;
+    tableInfos._total = total;
+    this.projectTableInfo = JSON.parse(JSON.stringify(tableInfos));
+  }*/
 
 
   /***
@@ -325,7 +446,25 @@ export class AdminCommunityMemberComponent implements OnInit {
 
 
   /***
-   * whent the user clicks on the push button.
+   * when the clicks on the show button in the email table.
+   * @param value
+   */
+  public onClickEmailShow(value: any) {
+
+  }
+
+
+  /***
+   * when the clicks on the show button in the project table.
+   * @param value
+   */
+  public onClickProjectShow(value: any) {
+
+  }
+
+
+  /***
+   * when the user clicks on the push button.
    * @param innovation
    */
   public onClickPush(innovation: InnovCard) {
@@ -383,6 +522,22 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   get configInnovation(): { offset: string; $or: string; limit: string; isPublic: string; sort: string; fields: string } {
     return this._configInnovation;
+  }
+
+  get emailTableInfo(): any {
+    return this._emailTableInfo;
+  }
+
+  get projectTableInfo(): any {
+    return this._projectTableInfo;
+  }
+
+  get configProject(): { search: string; offset: string; limit: string; sort: string; fields: string } {
+    return this._configProject;
+  }
+
+  get configEmail(): { search: string; offset: string; limit: string; sort: string; fields: string } {
+    return this._configEmail;
   }
 
 }

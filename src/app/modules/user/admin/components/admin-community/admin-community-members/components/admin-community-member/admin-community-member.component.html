@@ -366,6 +366,22 @@
         </div>
         <!-- /information -->
 
+        <!-- emails -->
+        <ng-container>
+          <div class="section-light-pad rm-pad-bottom">
+            <app-shared-table [config]="configEmail" [data]="" (editRow)="onClickEmailShow($event)"></app-shared-table>
+          </div>
+        </ng-container>
+        <!-- emails -->
+
+        <!-- participated in projects -->
+        <ng-container>
+          <div class="section-light-pad rm-pad-bottom">
+            <app-shared-table [config]="configProject" [data]="" (editRow)="onClickProjectShow($event)"></app-shared-table>
+          </div>
+        </ng-container>
+        <!-- participated in projects -->
+
         <!-- project suggested -->
         <ng-container *ngIf="innovationsSuggested.length > 0">
           <div class="suggested-wrapper section-light-pad rm-pad-bottom">
