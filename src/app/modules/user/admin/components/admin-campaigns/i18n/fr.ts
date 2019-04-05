@@ -62,7 +62,7 @@ export const CAMPAIGNS = {
 
   'STATUS': 'statut',
 
-  'UPDATE_BUTTON': 'État de la mise à jour',
+  'UPDATE_BUTTON': 'Mettre les stats à jour',
 
   'CLONE_BUTTON': 'Clone',
 

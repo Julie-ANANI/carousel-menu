@@ -151,7 +151,8 @@ export const COMMON = {
     'COUNTRY': 'Le pays est requis.',
     'URL': 'Le profil est requis.',
     'PROS_CONTACT': 'Value should be greater then 0.',
-    'BATCH_IMMEDIATE': 'Laissez ce champ vide pour envoyer le batch immédiatement. Le batch sera envoyé dans 7 minutes.'
+    'BATCH_IMMEDIATE': 'Laissez ce champ vide pour envoyer le batch immédiatement.',
+    'BATCH_DELAY': 'L\'heure choisie doit être au minimum dans 7 minutes, sinon le batch risque de ne pas être envoyé'
   },
 
   'INVALID': {

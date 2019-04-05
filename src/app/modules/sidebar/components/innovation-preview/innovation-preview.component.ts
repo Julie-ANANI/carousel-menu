@@ -46,11 +46,10 @@ export class InnovationPreviewComponent {
   private _innovationCard: InnovCard;
 
   constructor(private domSanitizer1: DomSanitizer,
-              private translateService: TranslateService,
-              private innovationFrontService: InnovationFrontService) {}
+              private translateService: TranslateService) {}
 
   getSrc(media: Media): string {
-    return this.innovationFrontService.getMediaSrc(media, 'mediaSrc', '180', '119');
+    return InnovationFrontService.getMediaSrc(media, 'mediaSrc', '180', '119');
   }
 
   get domSanitizer() {

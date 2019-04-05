@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../models/innovation';
+import { InnovCard } from '../../../../models/innov-card';
 import { TagStats } from '../../../../models/tag-stats';
 
 @Component({
@@ -13,6 +16,25 @@ export class ShowcaseInnovationsComponent {
   @Input() totalInnovations: number;
 
   @Input() set tagsStats(value: Array<TagStats>) {
+    this.reqInnos(value);
+  }
+  public openInnovationsModal = false;
+
+  private _innovations: Array<Innovation> = [];
+  private _topInnovations: Array<Innovation> = [];
+  private _cards: Array<{title: string, media: string}> = [];
+  private _topCards: Array<{title: string, media: string}> = [];
+
+  constructor(private innovationService: InnovationService,
+              private translateService: TranslateService) {
+
+    this.translateService.onLangChange.subscribe((_event: LangChangeEvent) => {
+      this.computeCards();
+    });
+
+  }
+
+  private reqInnos(value: Array<TagStats>): void {
     const tags_id = value.map((st) => st.tag._id);
     if (tags_id.length > 0) {
       const config = {
@@ -26,25 +48,39 @@ export class ShowcaseInnovationsComponent {
         if (Array.isArray(next.result)) {
           this._innovations = next.result;
           this._topInnovations = next.result.slice(0, 6);
+          this.computeCards();
         }
       });
     } else {
       this._topInnovations = [];
+      this.computeCards();
     }
   }
-  public openInnovationsModal = false;
 
-  private _innovations: Array<Innovation> = [];
-  private _topInnovations: Array<Innovation> = [];
-
-  constructor(private innovationService: InnovationService) {}
-
-  get innovations() {
-    return this._innovations;
+  private computeCards(): void {
+    const innovationToCard = (inno: Innovation) => {
+      let innovationCard = inno.innovationCards.find((card: InnovCard) => card.lang === this.translateService.currentLang);
+      if (!innovationCard) {
+        innovationCard = inno.innovationCards.find((card: InnovCard) => card.lang === this.translateService.defaultLang);
+        if (!innovationCard) {
+          innovationCard = inno.innovationCards[0];
+        }
+      }
+      return {
+        title: innovationCard.title,
+        media: InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200')
+      };
+    };
+    this._topCards = this._topInnovations.map(innovationToCard);
+    this._cards = this._innovations.map(innovationToCard);
   }
 
-  get topInnovations() {
-    return this._topInnovations;
+  get cards() {
+    return this._cards;
+  }
+
+  get topCards() {
+    return this._topCards;
   }
 
 }

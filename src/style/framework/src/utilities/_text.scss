@@ -158,15 +158,15 @@
 
 // Text style utilities
 .text-normal {
-  font-weight: normal;
+  font-weight: normal !important;
 }
 
 .text-medium {
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
 .text-bold {
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .text-italic {

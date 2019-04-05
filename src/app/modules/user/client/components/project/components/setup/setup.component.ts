@@ -195,7 +195,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
 
   getImageSrc(innovCard: InnovCard): string {
-    return this.innovationFrontService.getMediaSrc(innovCard, 'default', '180', '119');
+    return InnovationFrontService.getMediaSrc(innovCard, 'default', '180', '119');
   }
 
 
