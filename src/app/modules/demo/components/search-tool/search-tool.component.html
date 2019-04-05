@@ -76,26 +76,26 @@
 
             <!-- display map -->
             <div class="map-wrapper">
-              <admin-search-map [width]="'auto'" [quartiles]="[1, 100, 200]" [countriesData]="searchResult.metadata"></admin-search-map>
+              <admin-search-map [width]="'auto'" [quartiles]="scale" [countriesData]="searchResult.metadata"></admin-search-map>
             </div>
 
             <!-- display stats -->
             <ul class="text-center info-wrapper absolute">
               <li class="flex-start">
-                <span class="shape circle circle-sm circle-success"></span>
-                <span class="text-secondary text-medium">> 20 </span>
+                <span class="shape circle circle-sm circle-4"></span>
+                <span class="text-secondary text-medium">< {{ scale[0] }} </span>
               </li>
               <li class="flex-start">
                 <span class="shape circle circle-sm circle-2"></span>
-                <span class="text-secondary text-medium">500 - 20</span>
+                <span class="text-secondary text-medium">{{ scale[0] }} - {{ scale[1] }}</span>
               </li>
               <li class="flex-start">
                 <span class="shape circle circle-sm circle-3"></span>
-                <span class="text-secondary text-medium">3000 - 500</span>
+                <span class="text-secondary text-medium">{{ scale[1] }} - {{ scale[2] }}</span>
               </li>
               <li class="flex-start">
-                <span class="shape circle circle-sm circle-4"></span>
-                <span class="text-secondary text-medium">< 3000</span>
+                <span class="shape circle circle-sm circle-success"></span>
+                <span class="text-secondary text-medium">> {{ scale[2] }}</span>
               </li>
             </ul>
 
@@ -121,11 +121,6 @@
                 </div>
 
                 <div class="stat-body">
-                  <h4 class="stat-sub-heading">Oceania</h4>
-                  <span class="stat-value">{{ searchResult.metadata.oceania }}</span>
-                </div>
-
-                <div class="stat-body">
                   <h4 class="stat-sub-heading">Europe</h4>
                   <span class="stat-value">{{ searchResult.metadata.europe }}</span>
                 </div>
@@ -133,6 +128,11 @@
                 <div class="stat-body">
                   <h4 class="stat-sub-heading">North America</h4>
                   <span class="stat-value">{{ searchResult.metadata.northAmerica }}</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Oceania</h4>
+                  <span class="stat-value">{{ searchResult.metadata.oceania }}</span>
                 </div>
 
                 <div class="stat-body">

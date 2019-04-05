@@ -23,6 +23,8 @@ export class SearchToolComponent implements OnInit{
 
   private _noResult = true;
 
+  private _scale: Array<number> = [];
+
   private _searchStarted = false;
 
   private _searchContinue = false;
@@ -65,6 +67,7 @@ export class SearchToolComponent implements OnInit{
         this._searchStarted = true;
         this._searchStopped = false;
         this._searchResult = result_sample;
+        this._scale = [3, 50, 100];
         this._updateResults();
       } else {
         this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
@@ -72,6 +75,7 @@ export class SearchToolComponent implements OnInit{
           this._searchStopped = false;
           this._searchResult.metadata = result.metadata || {};
           this._searchResult.pros = result.pros;
+          if (result.scale) this._scale = result.scale;
           this._updateResults();
         }, () => {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -207,6 +211,10 @@ export class SearchToolComponent implements OnInit{
 
   get professionalCount(): number {
     return this._professionalCount;
+  }
+
+  get scale(): Array<number>{
+    return this._scale;
   }
 
 }
