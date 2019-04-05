@@ -12,7 +12,8 @@
               </div>
               <div *ngIf="!!config">
                   <app-shared-ambassadors-list
-                      [config]="config">
+                          [listType]="'suggestions'"
+                          [config]="config">
                   </app-shared-ambassadors-list>
               </div>
           </ng-container>
