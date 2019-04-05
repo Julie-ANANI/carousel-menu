@@ -3,4 +3,133 @@
 .badge {
   position: relative;
   white-space: nowrap;
+
+  &[data-badge], &:not([data-badge]) {
+
+    &::after {
+      background: $primary-color;
+      background-clip: padding-box;
+      border-radius: .5rem;
+      box-shadow: 0 0 0 .1rem $bg-color-light;
+      color: $light-color;
+      content: attr(data-badge);
+      display: inline-block;
+      transform: translate(-.1rem, -.5rem);
+    }
+
+  }
+
+  &[data-badge] {
+
+    &::after {
+      font-size: $font-size-sm;
+      height: .9rem;
+      line-height: 1;
+      min-width: .9rem;
+      padding: .1rem .2rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+  }
+
+  &:not([data-badge]), &[data-badge=""] {
+
+    &::after {
+      height: 6px;
+      min-width: 6px;
+      padding: 0;
+      width: 6px;
+    }
+
+  }
+
+  // Badges for Buttons
+  &.btn {
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+    }
+
+  }
+
+  // Badges for Avatars
+  &.avatar {
+
+    &::after {
+      position: absolute;
+      top: 14.64%;
+      right: 14.64%;
+      transform: translate(50%, -50%);
+      z-index: $zindex-1;
+    }
+
+  }
+
+  &.avatar-xs {
+
+    &::after {
+      content: "";
+      height: $unit-2;
+      min-width: $unit-2;
+      padding: 0;
+      width: $unit-2;
+    }
+
+  }
+
+  // Badges for save
+  &.badge-save {
+
+    &::after {
+      display: none;
+    }
+
+    i {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      background: $meta-color;
+      color: $light-color;
+      transform: translate(50%, -50%);
+      box-shadow: 0 0 0 .1rem $bg-color-light;
+    }
+
+    &.inactive {
+
+      i {
+        display: none;
+      }
+
+    }
+
+    &.active {
+      background-color: $bg-color-light;
+      border-color: $success-color;
+      color: $text-primary-color;
+      border-width: $border-width-lg;
+
+      i {
+        display: inline-flex;
+        background: $success-color;
+      }
+
+      &:hover {
+        background-color: $hover-background-color;
+      }
+
+    }
+
+  }
+
 }
