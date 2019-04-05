@@ -96,6 +96,15 @@ export class AdminCampaignBatchComponent implements OnInit {
     }
   }
 
+  public updateStats() {
+    this.campaignService.updateStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
+      this.getBatches()
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+  }
+
 
   private checkBatch() {
     if (this.localStorage.getItem(`auto-batch-${this._campaign._id}`)) {

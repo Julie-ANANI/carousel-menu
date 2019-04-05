@@ -57,6 +57,7 @@
             (change)="onKeyboardPress($event)"
             [value]="mailTime">
           <div *ngIf="isNewBatch" class="text text-alert">{{ 'COMMON.REQUIRED.BATCH_IMMEDIATE' | translate }}</div>
+          <div *ngIf="isNewBatch" class="text text-alert">{{ 'COMMON.REQUIRED.BATCH_DELAY' | translate }}</div>
         </div>
       </ng-container>
 

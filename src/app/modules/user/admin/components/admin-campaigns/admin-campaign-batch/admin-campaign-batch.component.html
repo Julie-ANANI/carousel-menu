@@ -6,6 +6,7 @@
 
       <!-- stat col 1 -->
       <li class="stat-container fluid">
+        <a (click)="updateStats()"><i class="fa fa-sync"></i></a>
         <h5 class="stat-heading">Emails</h5>
         <div class="stat-body">
           <h5 class="stat-sub-heading">To send</h5>
@@ -144,6 +145,9 @@
                 <i class="form-icon"></i>{{ 'CAMPAIGNS.BATCH_PAGE.AUTO_BATCH_LABEL' | translate }}
               </label>
             </div>
+            <a (click)="activateSidebar('newBatch')">
+              <i class="fas fa-plus"></i>New Batch
+            </a>
 
           </div>
 

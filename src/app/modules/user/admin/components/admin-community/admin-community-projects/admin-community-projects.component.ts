@@ -25,9 +25,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
-
     this._setConfig();
-
     this._configureTable();
 
   }
@@ -130,7 +128,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
 
   public onClickShow(project: any) {
-    this._router.navigate(['/user/admin/community/projects/project/' + project.innovation._id]);
+    this._router.navigate(['/user/admin/community/projects/' + project.innovation._id]);
   }
 
   get config() {
