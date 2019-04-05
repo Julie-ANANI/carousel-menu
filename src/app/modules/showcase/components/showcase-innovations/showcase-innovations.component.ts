@@ -22,6 +22,7 @@ export class ShowcaseInnovationsComponent {
 
   private _innovations: Array<Innovation> = [];
   private _topInnovations: Array<Innovation> = [];
+  private _cards: Array<{title: string, media: string}> = [];
   private _topCards: Array<{title: string, media: string}> = [];
 
   constructor(private innovationService: InnovationService,
@@ -57,7 +58,7 @@ export class ShowcaseInnovationsComponent {
   }
 
   private computeCards(): void {
-    this._topCards = this._topInnovations.map((inno) => {
+    const innovationToCard = (inno: Innovation) => {
       let innovationCard = inno.innovationCards.find((card: InnovCard) => card.lang === this.translateService.currentLang);
       if (!innovationCard) {
         innovationCard = inno.innovationCards.find((card: InnovCard) => card.lang === this.translateService.defaultLang);
@@ -69,11 +70,13 @@ export class ShowcaseInnovationsComponent {
         title: innovationCard.title,
         media: InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200')
       };
-    });
+    };
+    this._topCards = this._topInnovations.map(innovationToCard);
+    this._cards = this._innovations.map(innovationToCard);
   }
 
-  get innovations() {
-    return this._innovations;
+  get cards() {
+    return this._cards;
   }
 
   get topCards() {
