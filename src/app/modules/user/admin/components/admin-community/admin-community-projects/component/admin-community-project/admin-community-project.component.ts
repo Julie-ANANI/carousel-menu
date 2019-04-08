@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SidebarInterface } from "../../../../../../../sidebar/interfaces/sidebar-interface";
 import { Innovation } from '../../../../../../../../models/innovation';
@@ -9,7 +9,7 @@ import { Innovation } from '../../../../../../../../models/innovation';
   styleUrls: ['./admin-community-project.component.scss']
 })
 
-export class AdminCommunityProjectComponent implements OnInit {
+export class AdminCommunityProjectComponent {
 
   private _innovation: Innovation;
 
@@ -26,10 +26,6 @@ export class AdminCommunityProjectComponent implements OnInit {
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
     this._setConfig();
 
-  }
-
-  ngOnInit() {
-    console.log(this._config);
   }
 
 

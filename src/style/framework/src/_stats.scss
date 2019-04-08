@@ -86,3 +86,19 @@
   }
 
 }
+
+@media (max-width: $size-xs) {
+
+  .stat {
+    flex-direction: column;
+
+    .stat-container {
+      border-right: none !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      border-bottom: $border-width solid $border-color;
+    }
+
+  }
+
+}
