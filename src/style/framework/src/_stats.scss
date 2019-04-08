@@ -11,11 +11,11 @@
     display: flex;
     flex: 1;
     align-items: center;
+    text-align: center;
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 0;
     padding: 0.75rem 0.75rem 0.5rem 0;
-    text-align: center;
     border-right: $border-width solid $border-color;
 
     .stat-heading {
@@ -80,7 +80,23 @@
     }
 
     .stat-container {
-      justify-content: center !important;
+      flex-direction: column;
+    }
+
+  }
+
+}
+
+@media (max-width: $size-xs) {
+
+  .stat {
+    flex-direction: column;
+
+    .stat-container {
+      border-right: none !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      border-bottom: $border-width solid $border-color;
     }
 
   }

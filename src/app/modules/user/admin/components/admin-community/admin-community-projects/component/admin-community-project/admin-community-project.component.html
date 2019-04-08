@@ -1,91 +1,98 @@
-<ng-container>
-    <section id="admin-community-project-component">
+<ng-container *ngIf="innovation">
 
-        <!-- section header -->
-        <div class="section-header">
-            <div class="column col-xs-12 col-11 col-mx-auto">
+  <section id="admin-community-project-component" class="section-light-pad rm-pad-top">
 
-                <div class="heading-wrapper">
-                    <span class="title-primary title-campaign">{{ innovation['name'] }}</span>&nbsp;
-                    <a [href]="'/user/admin/projects/project/' + innovation['_id'] + '/settings'" class="text-link" target="_blank">See project description</a>
-                </div>
+    <!-- section header -->
+    <div class="section-header section-light-pad rm-pad-bottom">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-                <div class="header-information-wrapper">
-                        <div class="header-inner-information-wrapper">
-                            <div class="outer-label-text">Ambassadors</div>
-                            <div class="header-information-element">
-                                <div class="inner-label-text">Native</div>
-                                <div class="inner-value-text">1</div>
-                            </div>
-                            <div class="header-information-element">
-                                <div class="inner-label-text">Added</div>
-                                <div class="inner-value-text">1</div>
-                            </div>
-                            <div class="header-information-element">
-                                <div class="inner-label-text">Suggested</div>
-                                <div class="inner-value-text">1</div>
-                            </div>
-                        </div>
-                    <div class="header-inner-information-wrapper">
-                        <div class="outer-label-text">Feedback</div>
-                        <div class="header-information-element">
-                            <div class="inner-label-text">Total</div>
-                            <div class="inner-value-text">1</div>
-                        </div>
-                        <div class="header-information-element">
-                            <div class="inner-label-text">From ambassadors</div>
-                            <div class="inner-value-text">1</div>
-                        </div>
-                    </div>
-                    <div class="header-inner-information-wrapper">
-                        <div class="outer-label-text">Targeting</div>
-                        <div class="header-information-element">
-                            <div class="inner-label-text">This is a long string because reasons</div>
-                            <div class="map-wrapper">
-                                <app-worldmap
-                                    [countries]="targetCountries"
-                                    [countriesColor]="'#2ECC71'"
-                                    [isEditable]="false"
-                                    [width]="'auto'">
-                                </app-worldmap>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <!-- project name -->
+        <div class="name-wrapper d-flex">
+          <h1 class="title-primary text-background">{{ innovation.name }}</h1>
+          <a [href]="'/user/admin/projects/project/' + innovation._id + '/settings'" target="_blank" class="text-link">see project description</a>
         </div>
 
-        <!-- section views -->
-        <div>
-            <div class="column col-xs-12 col-11 col-mx-auto">
-                <!-- section buttons -->
-                <div class="button-wrapper">
+        <!-- stat -->
+        <ul class="stat">
 
-                    <div class="button-group">
-                        <!-- Add manually -->
-                        <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add manually</button>
-                        <!-- import -->
-                        <button type="button" class="btn btn-primary btn-sm" (click)="onClickSuggestion($event)">See suggestions</button>
-                    </div>
-                </div>
-                <!-- /section buttons -->
-
-                <!-- section members -->
-                <app-shared-ambassadors-list [listType]="'default'" [config]="config"></app-shared-ambassadors-list>
-                <!-- /section members -->
+          <!-- ambassador -->
+          <li class="stat-container">
+            <h5 class="stat-heading">Ambassador</h5>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Native</h5>
+              <span class="stat-value">1</span>
             </div>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Added</h5>
+              <span class="stat-value">3</span>
+            </div>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Suggested</h5>
+              <span class="stat-value">4</span>
+            </div>
+          </li>
+
+          <!-- feedback -->
+          <li class="stat-container">
+            <h5 class="stat-heading">Feedback</h5>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">Total</h5>
+              <span class="stat-value" [ngStyle]="{ 'color': checkThreshold(18) }">18</span>
+            </div>
+            <div class="stat-body">
+              <h5 class="stat-sub-heading">From Ambassador</h5>
+              <span class="stat-value">3</span>
+            </div>
+          </li>
+
+          <!-- ambassador -->
+          <li class="stat-container map-wrapper">
+            <h5 class="stat-heading">Targeting</h5>
+            <div class="stat-body">
+              <app-worldmap
+                [countries]="targetCountries"
+                [countriesColor]="'#4F5D6B'"
+                [isEditable]="false"
+                [width]="'140px'">
+              </app-worldmap>
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+    <!-- /section header -->
+
+    <!-- section details -->
+    <div class="section-details section-light-pad rm-pad-bottom">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        <!-- buttons -->
+        <div class="text-right">
+          <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add Manually</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSuggestion($event)">See Suggestions</button>
         </div>
 
-    </section>
+        <!-- section table -->
+        <div class="section-light-pad rm-pad-bottom">
+          <app-shared-ambassadors-list [listType]="'default'" [config]="config"></app-shared-ambassadors-list>
+        </div>
+
+      </div>
+    </div>
+    <!-- /section details -->
+
+  </section>
+
+
+  <app-sidebar [(template)]="sidebarStatus">
+    <community-form
+      [sidebarState]="sidebarStatus.animate_state"
+      [type]="sidebarStatus.type"
+      [config]="sideConfig">
+    </community-form>
+  </app-sidebar>
+
 </ng-container>
 
-<app-sidebar [(template)]="sidebarStatus">
-
-<community-form
-    [sidebarState]="sidebarStatus.animate_state"
-    [type]="sidebarStatus.type"
-    [config]="sideConfig">
-</community-form>
-
-</app-sidebar>
