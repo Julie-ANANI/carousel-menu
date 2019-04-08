@@ -23,15 +23,9 @@
     <!-- section showing video when no search -->
     <ng-container *ngIf="noResult">
       <section class="section-pad rm-pad-bottom" [ngClass]="{ 'animate-disappear': searchStarted }">
-        <div class="video-responsive">
-          <iframe
-            allowfullscreen
-            frameborder="0"
-            mozallowfullscreen
-            src="https://player.vimeo.com/video/313136787?autoplay=1&autopause=0&loop=1&muted=1&title=0&portrait=0&byline=0#t="
-            webkitallowfullscreen>
-          </iframe>
-        </div>
+        <video class="video-responsive" autoplay loop>
+          <source src="https://res.cloudinary.com/umi/video/upload/v1554473766/app/videos/search-tool/demo.mp4" type="video/mp4">
+        </video>
       </section>
     </ng-container>
     <!-- /section showing video when no search -->
@@ -56,19 +50,13 @@
         </ng-container>
         <!-- /metadata display -->
 
-        <!-- when searching for professionals
+        <!-- when searching for professionals -->
         <ng-container *ngIf="!searchStopped && searchContinue">
-          <div class="video-responsive">
-            <iframe
-              allowfullscreen
-              frameborder="0"
-              mozallowfullscreen
-              src="https://player.vimeo.com/video/313136787?autoplay=1&autopause=0&loop=1&muted=1&title=0&portrait=0&byline=0#t="
-              webkitallowfullscreen>
-            </iframe>
-          </div>
+          <video class="video-responsive video-machine" autoplay loop>
+            <source src="https://res.cloudinary.com/umi/video/upload/v1554473159/app/videos/search-tool/machine-search.mp4" type="video/mp4">
+          </video>
         </ng-container>
-        /when searching for professionals -->
+        <!-- /when searching for professionals -->
 
         <!-- when searching for professionals done -->
         <ng-container *ngIf="searchStopped">
@@ -170,14 +158,19 @@
                   <!-- name -->
                   <ng-container *ngIf="professional.person && (professional.person.firstName || professional.person.lastName)">
                     <p class="text-medium">
-                      <a [href]="professional.person.profileUrl" class="text-link" *ngIf="professional.person.profileUrl" target="_blank">
-                        <ng-container *ngIf="professional.person.firstName">{{ professional.person.firstName }} </ng-container>
-                        <ng-container *ngIf="professional.person.lastName">{{ professional.person.lastName }}</ng-container>
-                      </a>
+
+                      <ng-container *ngIf="professional.person.profileUrl">
+                        <a [href]="professional.person.profileUrl" class="text-link" target="_blank">
+                          <ng-container *ngIf="professional.person.firstName">{{ professional.person.firstName }} </ng-container>
+                          <ng-container *ngIf="professional.person.lastName">{{ professional.person.lastName }}</ng-container>
+                        </a>
+                      </ng-container>
+
                       <ng-container *ngIf="!professional.person.profileUrl">
                         <ng-container *ngIf="professional.person.firstName">{{ professional.person.firstName }} </ng-container>
                         <ng-container *ngIf="professional.person.lastName">{{ professional.person.lastName }}</ng-container>
                       </ng-container>
+
                     </p>
                   </ng-container>
                   <!-- /name -->
@@ -200,22 +193,33 @@
 
                 <!-- logo -->
                 <ng-container *ngIf="professional.person && professional.person.company">
-                  <div class="card-footer animate-card-appear">
-                    <ng-container *ngIf="professional.person.companyLogoUrl">
-                      <a class="tooltip" [href]="'http://'+professional.person.companyDomain" target="_blank" [attr.data-tooltip]="professional.person.company">
+
+                  <ng-container *ngIf="professional.person.companyLogoUrl">
+                    <div class="card-footer animate-card-appear tooltip flex-centered" [attr.data-tooltip]="professional.person.company">
+                      <a [href]="getCompanyUrl(professional.person.companyDomain)" target="_blank">
                         <img [src]="professional.person.companyLogoUrl" class="img-responsive" alt=" ">
                       </a>
-                    </ng-container>
-                    <ng-container *ngIf="!professional.person.companyLogoUrl">
-                      <a *ngIf="professional.person.companyDomain" [href]="'http://'+professional.person.companyDomain" target="_blank">
-                        {{ professional.person.company }}
-                      </a>
-                      <ng-container *ngIf="!professional.person.companyDomain">
-                        {{ professional.person.company }}
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="!professional.person.companyLogoUrl">
+                    <div class="card-footer animate-card-appear flex-centered text-center no-logo">
+
+                      <ng-container *ngIf="professional.person.companyDomain">
+                        <a [href]="getCompanyUrl(professional.person.companyDomain)" class="text-link" target="_blank">
+                          {{ professional.person.company }}
+                        </a>
                       </ng-container>
-                    </ng-container>
-                  </div>
+
+                      <ng-container *ngIf="!professional.person.companyDomain">
+                        <span>{{ professional.person.company }}</span>
+                      </ng-container>
+
+                    </div>
+                  </ng-container>
+
                 </ng-container>
+                <!-- /logo -->
 
               </ng-container>
 

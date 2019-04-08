@@ -4,7 +4,7 @@
   [data]="tableInfos"
   (configChange)="loadPros($event)"
   (editRow)="onClickEdit($event)"
-  (removeRows)="deleteProsModal($event)"
+  (removeRows)="modalDelete = true"
   (performAction)="performActions($event)"
   (selectRowAction)="selectPro($event)">
 </app-shared-table>

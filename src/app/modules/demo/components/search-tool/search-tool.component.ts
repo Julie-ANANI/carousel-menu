@@ -159,9 +159,7 @@ export class SearchToolComponent implements OnInit{
       }
 
       if (!professional.person.email) {
-
         professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.companyDomain || "unknown.com"}`;
-
       }
 
       if(professional.person.companyDomain) {
@@ -176,6 +174,12 @@ export class SearchToolComponent implements OnInit{
     }
 
   }
+
+
+  public getCompanyUrl(domain: string): string {
+    return `http://${domain}`;
+  }
+
 
   get searchForm(): FormGroup {
     return this._searchForm;

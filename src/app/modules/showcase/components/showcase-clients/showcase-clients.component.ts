@@ -18,7 +18,15 @@ export class ShowcaseClientsComponent {
       };
       this.innovationService.getAll(config).subscribe((next) => {
         if (Array.isArray(next.result)) {
-          this._topClients = next.result.map((i) => i.owner.companyName);
+          // we calculate the list of companies without duplicates
+          const companies = next.result
+            .map((i) => i.owner.companyName)
+            .reduce((acc, comp) => {
+              acc[comp] = true;
+              return acc;
+            }, {});
+          delete companies[''];
+          this._topClients = Object.keys(companies);
         }
       });
     } else {
