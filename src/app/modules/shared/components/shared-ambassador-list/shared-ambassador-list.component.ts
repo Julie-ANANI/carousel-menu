@@ -43,7 +43,7 @@ export class SharedAmbassadorListComponent {
 
   private _tableInfos: any = null;
 
-  //private _actions: string[] = [];
+  private _actions: string[] = [];
 
   private _total = 0;
 
@@ -133,8 +133,24 @@ export class SharedAmbassadorListComponent {
     return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
 
-
   performActions(action: any) {
+    switch (this._actions.findIndex(value => action._action === value)) {
+      case 0:
+        console.log(action._rows);
+        break;
+      case 1:
+          /*if(action._rows.length) {
+            if(action._rows.length > 1) {
+              console.log("Look man, I could do this action just for the first one...");
+            }
+            const link = `/user/admin/community/members/${action._rows[0]._id}`;
+            this.router.navigate([link]);
+          } else {
+            console.error("What? empty rows? How did you do that?");
+          }*/
+          console.log(action);
+        break;
+    }
   }
 
 
