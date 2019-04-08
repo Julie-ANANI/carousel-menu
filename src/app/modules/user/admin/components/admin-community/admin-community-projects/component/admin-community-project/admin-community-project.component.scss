@@ -1,120 +1,53 @@
 @import "../../../../../../../../../style/framework/src/variables";
 
 #admin-community-project-component {
-  padding-bottom: 25px;
 
   .section-header {
     background-color: $bg-color-light;
-    padding-top: 25px;
 
     .name-wrapper {
       border-bottom: $border-width solid $border-color;
+      flex-wrap: wrap;
 
       h1 {
-        color: $text-background-color;
-        font-size: 23px;
-        margin-bottom: 20px;
+        font-size: 1.15rem;
+        margin-right: $unit-2;
+        margin-bottom: 0;
+      }
+
+      .text-link {
+        vertical-align: baseline;
+        margin-top: 0.5rem;
+        margin-bottom: $unit-5;
       }
 
     }
 
-  }
-
-  .header-information-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-
-  .header-inner-information-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: baseline;
-  }
-
-  .header-information-element {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .outer-label-text {
-    font-size: 1.1rem;
-  }
-
-  .outer-label-text::after {
-    content: '\2003';
-  }
-
-  .inner-label-text {
-    font-size: 0.70rem;
-    color: $meta-color;
-  }
-
-  .inner-label-text::after {
-    content: '\2003';
-  }
-
-  .inner-value-text {
-    font-size: 0.95rem;
-  }
-
-  .button-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-
-  .button-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  .targeting-wrapper {
-    display: flex;
-    justify-content: space-between;
-
-    .map-wrapper {
-      padding-right: 0.75rem;
-      flex: 1;
-    }
-  }
-
-  .save-wrapper {
-
-    .shape {
-      position: absolute;
-      margin-top: -10px;
-      margin-left: -9px;
-      visibility: hidden;
+    .stat .map-wrapper {
+      justify-content: flex-start;
     }
 
-    &.active {
+  }
 
-      .shape {
-        background-color: $success-color;
-        border-color: $success-color;
-        visibility: visible;
+  .section-details {
 
-        .fa-save {
-          color: $light-color;
-        }
+    .btn.ghost-primary {
+      margin-right: $unit-3;
+    }
 
-      }
+  }
 
-      .btn {
-        border-color: $success-color;
-        background-color: $bg-color-light;
-        color: $text-primary-color;
-        border-width: $border-width-lg;
+}
 
-        &:hover {
-          background-color: $hover-background-color;
-        }
 
+@media (max-width: $size-sm) {
+
+  #admin-community-project-component{
+
+    .stat {
+
+      .map-wrapper {
+        // justify-content: space-between !important;
       }
 
     }
