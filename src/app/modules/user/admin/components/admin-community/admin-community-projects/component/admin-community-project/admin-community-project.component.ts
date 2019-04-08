@@ -53,11 +53,9 @@ export class AdminCommunityProjectComponent {
       title: "Add Manually",
       animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
     };
-    console.log(event);
   }
 
   public onClickSuggestion(event: Event) {
-    console.log(event);
     this._sidebarStatus = {
       size: "726px",
       type: "addFromSuggestions",

@@ -5,8 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminSearchMapModule } from '../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CountryFlagModule } from '../utility-components/country-flag/country-flag.module';
-import { FooterModule } from '../common/footer/footer.module';
-import { HeaderModule } from '../common/header/header.module';
 import { ModalModule } from '../utility-components/modal/modal.module';
 
 import { ShowcaseAnswersComponent } from './components/showcase-answers/showcase-answers.component';
@@ -27,8 +25,6 @@ import { PipeModule } from '../../pipe/pipe.module';
     TranslateModule.forChild(),
     AdminSearchMapModule,
     CountryFlagModule,
-    FooterModule,
-    HeaderModule,
     ModalModule,
     PipeModule,
     ShowcaseRoutingModule

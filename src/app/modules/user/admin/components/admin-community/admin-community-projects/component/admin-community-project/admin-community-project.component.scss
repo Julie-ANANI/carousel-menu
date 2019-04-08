@@ -25,6 +25,11 @@
 
     .stat .map-wrapper {
       justify-content: flex-start;
+
+      .stat-body {
+        margin-bottom: 0;
+      }
+
     }
 
   }
