@@ -1,46 +1,35 @@
 <main class="body-wrapper" id="showcase-component">
 
-  <!-- header -->
-  <app-header></app-header>
+  <h1>
+    <span *ngFor="let stats of selectedTagsStats; let i = index">
+      {{stats.tag.label | multiling:lang}}
+      <span *ngIf="i !== selectedTagsStats.length - 1"> / </span>
+    </span>
+  </h1>
+  <span class="text-link" (click)="openSectorsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
 
-  <!-- body -->
-  <section class="main-wrapper">
+  <hr>
 
-    <h1>
-      <span *ngFor="let stats of selectedTagsStats; let i = index">
-        {{stats.tag.label | multiling:lang}}
-        <span *ngIf="i !== selectedTagsStats.length - 1"> / </span>
-      </span>
-    </h1>
-    <span class="text-link" (click)="openSectorsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+  <app-showcase-answers [totalAnswers]="stats.totalAnswers" [tagsStats]="selectedTagsStats"></app-showcase-answers>
 
-    <hr>
+  <hr>
 
-    <app-showcase-answers [totalAnswers]="stats.totalAnswers" [tagsStats]="selectedTagsStats"></app-showcase-answers>
+  <app-showcase-innovations [totalInnovations]="stats.totalInnovations" [tagsStats]="selectedTagsStats"></app-showcase-innovations>
 
-    <hr>
+  <hr>
 
-    <app-showcase-innovations [totalInnovations]="stats.totalInnovations" [tagsStats]="selectedTagsStats"></app-showcase-innovations>
+  <div class="map">
+    {{ countriesCount }} {{ 'SHOWCASE.COUNTRIES' | translate }}
+    <admin-search-map
+      [countriesData]="countries"
+      [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
+      [width]="'auto'">
+    </admin-search-map>
+  </div>
 
-    <hr>
+  <hr>
 
-    <div class="map">
-      {{ countriesCount }} {{ 'SHOWCASE.COUNTRIES' | translate }}
-      <admin-search-map
-        [countriesData]="countries"
-        [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
-        [width]="'auto'">
-      </admin-search-map>
-    </div>
-
-    <hr>
-
-    <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
-
-  </section>
-
-  <!-- footer -->
-  <app-footer></app-footer>
+  <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
 
 </main>
 
