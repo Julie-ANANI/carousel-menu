@@ -7,8 +7,7 @@
 
   <p *ngFor="let answer of topAnswers">
     <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-    {{ answer.professional?.firstName }} {{ answer.professional?.lastName }}
-    - {{ answer.job }} - {{ answer.company?.name }}
+    {{ answer.job }} - {{ answer.company?.name }}
   </p>
 
 </main>
@@ -17,8 +16,7 @@
 
   <p *ngFor="let answer of answers">
     <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-    {{ answer.professional?.firstName }} {{ answer.professional?.lastName }}
-    - {{ answer.job }} - {{ answer.company?.name }}
+    {{ answer.job }} - {{ answer.company?.name }}
   </p>
 
 </app-modal>
