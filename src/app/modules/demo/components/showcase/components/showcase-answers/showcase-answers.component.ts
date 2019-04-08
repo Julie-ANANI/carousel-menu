@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { AnswerService } from '../../../../services/answer/answer.service';
-import { Answer } from '../../../../models/answer';
-import { TagStats } from '../../../../models/tag-stats';
+import {TagStats} from '../../../../../../models/tag-stats';
+import {Answer} from '../../../../../../models/answer';
+import {AnswerService} from '../../../../../../services/answer/answer.service';
 
 @Component({
   selector: 'app-showcase-answers',
