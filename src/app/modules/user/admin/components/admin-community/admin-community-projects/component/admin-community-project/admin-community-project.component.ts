@@ -21,6 +21,8 @@ export class AdminCommunityProjectComponent {
 
   private _sidebarStatus: SidebarInterface = {};
 
+  private _totalThreshold: number;
+
   constructor(private _activatedRoute: ActivatedRoute) {
 
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
@@ -41,8 +43,8 @@ export class AdminCommunityProjectComponent {
   }
 
 
-  public checkThreshold(value: number): string {
-    return value > 20 ? '#4F5D6B' : '#EA5858';
+  public checkThreshold(): string {
+    return this._totalThreshold > 20 ? '#4F5D6B' : '#EA5858';
   }
 
 
@@ -86,6 +88,10 @@ export class AdminCommunityProjectComponent {
 
   get targetCountries() {
     return this._targetCountries;
+  }
+
+  get totalThreshold(): number {
+    return this._totalThreshold;
   }
 
 }

@@ -37,7 +37,7 @@
             <h5 class="stat-heading">Feedback</h5>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Total</h5>
-              <span class="stat-value" [ngStyle]="{ 'color': checkThreshold(18) }">18</span>
+              <span class="stat-value" [ngStyle]="{ 'color': checkThreshold() }">{{ totalThreshold }}</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">From Ambassador</h5>
