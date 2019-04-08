@@ -47,25 +47,15 @@ export class AdminCommunityProjectComponent {
 
 
   public onClickAddManually(event: Event) {
-    /*this._sideConfig = {
-      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
-      limit: '10',
-      offset: '0',
-      search: '',
-      "$text": `{ $search: ${event} }`,
-      sort: '{"created":-1}'
-    };*/
     this._sidebarStatus = {
       size: "726px",
       type: "addToProject",
       title: "Add Manually",
       animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
     };
-    console.log(event);
   }
 
   public onClickSuggestion(event: Event) {
-    console.log(event);
     this._sidebarStatus = {
       size: "726px",
       type: "addFromSuggestions",
