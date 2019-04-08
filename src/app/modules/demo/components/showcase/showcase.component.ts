@@ -1,49 +1,129 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service'
-import {Tag} from '../../../../models/tag';
-import {TagStats} from '../../../../models/tag-stats';
+import { Tag } from '../../../../models/tag';
+import { TagStats } from '../../../../models/tag-stats';
 
 @Component({
   selector: 'app-showcase',
   templateUrl: './showcase.component.html',
+  styleUrls: ['./showcase.component.scss']
 })
 
 export class ShowcaseComponent implements OnInit {
 
   private _sectorTags: Array<Tag> = [];
+
   private _selectedTagsStats: Array<TagStats> = [];
-  public tagForm: FormGroup;
+
+  tagForm: FormGroup;
+
   public openSectorsModal = false;
 
   private _countries: {[country: string]: number} = {};
+
   private _countriesCount = 0;
+
   private _stats: TagStats = {};
 
   private _maxFirstTertile = 0;
+
   private _maxSecondTertile = 0;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder,
-              private tagService: TagsService,
-              private translateNotificationService: TranslateNotificationsService,
-              private translateService: TranslateService) {}
+  tagSelected: boolean = false;
 
-  ngOnInit() {
-    this.tagForm = this.formBuilder.group({
-      selectedTag: ['', Validators.required],
-    });
-    if (Array.isArray(this.activatedRoute.snapshot.data['tags'])) {
-      this._sectorTags = this.activatedRoute.snapshot.data['tags'];
+  private _modalShow: boolean = false;
+
+  modalTags: boolean = false;
+
+  modalInnovations: boolean = false;
+
+  defaultLang = 'en';
+
+  tagsSelected: Array<Tag> = [];
+
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _formBuilder: FormBuilder,
+              private _tagService: TagsService,
+              private _translateNotificationService: TranslateNotificationsService,
+              private _translateService: TranslateService) {
+
+    this._buildTagForm();
+
+    if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
+      this._sectorTags = this._activatedRoute.snapshot.data['tags'];
       if (this._sectorTags.length > 0) {
-        this.tagForm.setValue({selectedTag: this._sectorTags[0]._id});
+        this.tagForm.setValue({ selectedTag: this._sectorTags[0]._id });
       }
     }
+
+  }
+
+  ngOnInit() {
+
+
     this.recomputeData();
   }
+
+
+  private _buildTagForm() {
+    this.tagForm = this._formBuilder.group({
+      selectedTag: [''],
+    });
+  }
+
+  private _reinitializeVariables() {
+    this.modalTags = false;
+    this.modalInnovations = false;
+  }
+
+
+  public modifyTags(open: string) {
+    this._reinitializeVariables();
+
+    switch (open) {
+
+      case 'modalTags':
+        this.modalTags = true;
+        break;
+
+      case 'modalInnovations':
+        this.modalInnovations = true;
+        break;
+
+      default:
+        // do nothing...
+
+    }
+
+    this._modalShow = true;
+
+  }
+
+
+  public onChangeTag(event: Event, tag: Tag) {
+    if (event.target['checked']) {
+      this.tagsSelected.push(tag);
+    } else {
+      const index = this.tagsSelected.findIndex((selectedTag) => selectedTag._id === tag._id);
+      this.tagsSelected.splice(index, 1);
+    }
+  }
+
+
+  public getCheckedTag(tagId: string): boolean {
+    const index = this._selectedTagsStats.findIndex((item) => item.tag._id === tagId);
+    return index !== -1;
+  }
+
+
+  public onClickApply(event: Event) {
+    event.preventDefault();
+  }
+
 
   private computeCountries(): void {
     this._countries = this._selectedTagsStats.reduce((acc, stats) => {
@@ -95,11 +175,11 @@ export class ShowcaseComponent implements OnInit {
     const selectedTagId = this.tagForm.get('selectedTag').value;
     const selectedTag = this._sectorTags.find((t) => t._id === selectedTagId);
     if (selectedTag && this._selectedTagsStats.findIndex((t) => t.tag._id === selectedTagId) === -1) {
-      this.tagService.getStats(selectedTag._id).subscribe(stats => {
+      this._tagService.getStats(selectedTag._id).subscribe(stats => {
         this._selectedTagsStats = this._selectedTagsStats.concat(stats);
         this.recomputeData();
       }, err => {
-        this.translateNotificationService.error('ERROR.ERROR', err);
+        this._translateNotificationService.error('ERROR.ERROR', err);
       });
     }
   }
@@ -118,7 +198,7 @@ export class ShowcaseComponent implements OnInit {
     return this._countriesCount;
   }
 
-  get lang(): string { return this.translateService.currentLang; }
+  get lang(): string { return this._translateService.currentLang; }
 
   get sectorTags(): Array<Tag> {
     return this._sectorTags;
@@ -138,6 +218,14 @@ export class ShowcaseComponent implements OnInit {
 
   get maxSecondTertile() {
     return this._maxSecondTertile;
+  }
+
+  get modalShow(): boolean {
+    return this._modalShow;
+  }
+
+  set modalShow(value: boolean) {
+    this._modalShow = value;
   }
 
 }

@@ -1,0 +1,42 @@
+@import "../../../../../style/framework/src/variables";
+
+#showcase-component {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+
+  .mar {
+    margin-top: 5px;
+  }
+
+  .header-wrapper {
+
+  }
+
+}
+
+.title-secondary {
+  border-bottom: $border-width solid $border-color;
+  margin-bottom: 0;
+  padding-bottom: $layout-spacing;
+}
+
+.tags-wrapper {
+  flex-wrap: wrap;
+  padding-top: $unit-2;
+
+  .card {
+    margin-top: $unit-2;
+    margin-bottom: $unit-2;
+    border: none;
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    .form-checkbox {
+      font-size: $font-size-sm;
+    }
+
+  }
+
+}

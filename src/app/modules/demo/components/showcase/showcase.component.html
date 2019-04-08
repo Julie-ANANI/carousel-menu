@@ -1,4 +1,52 @@
-<main class="body-wrapper" id="showcase-component">
+<div id="showcase-component" class="section-pad animate-page">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <ng-container *ngIf="!tagSelected">
+      <div class="section-pad rm-pad-bottom">
+        <app-message-space>
+          <span><span class="text-link" (click)="modifyTags('modalTags')">Choose</span> tags to create your own Showcase.</span>
+        </app-message-space>
+      </div>
+    </ng-container>
+
+    <!-- section header -->
+    <ng-container *ngIf="tagSelected">
+
+    </ng-container>
+
+  </div>
+</div>
+
+<app-modal [(showModal)]="modalShow" [widthMax]="'70vw'">
+
+  <ng-container *ngIf="modalTags">
+    <h2 class="text text-background title-secondary text-medium">Select Tags</h2>
+
+    <div class="flex-between tags-wrapper">
+      <div *ngFor="let tag of sectorTags" class="card card-responsive">
+        <label class="form-checkbox">
+          <input
+            (change)="onChangeTag($event, tag)"
+            [checked]="getCheckedTag(tag._id)"
+            [id]="tag._id"
+            [name]="tag.label | multiling:defaultLang"
+            [value]="tag._id"
+            type="checkbox">
+          <i class="form-icon"></i><span>{{ tag.label | multiling:defaultLang | FormatText }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-cancel">Cancel</button>
+      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
+    </div>
+
+  </ng-container>
+
+</app-modal>
+
+<!--<main class="body-wrapper" >
 
   <h1>
     <span *ngFor="let stats of selectedTagsStats; let i = index">
@@ -54,4 +102,4 @@
     </li>
   </ul>
 
-</app-modal>
+</app-modal>-->

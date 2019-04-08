@@ -17,6 +17,7 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { PipeModule } from '../../../../pipe/pipe.module';
+import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { PipeModule } from '../../../../pipe/pipe.module';
     CountryFlagModule,
     ModalModule,
     PipeModule,
-    ShowcaseRoutingModule
+    ShowcaseRoutingModule,
+    MessageSpaceModule
   ],
   declarations: [
     ShowcaseAnswersComponent,
