@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TagStats } from '../../../../models/tag-stats';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { TagStats } from '../../../../../../models/tag-stats';
 
 @Component({
   selector: 'app-showcase-clients',

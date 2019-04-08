@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import { Innovation } from '../../../../models/innovation';
-import { InnovCard } from '../../../../models/innov-card';
-import { TagStats } from '../../../../models/tag-stats';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { Innovation } from '../../../../../../models/innovation';
+import { InnovCard } from '../../../../../../models/innov-card';
+import { TagStats } from '../../../../../../models/tag-stats';
 
 @Component({
   selector: 'app-showcase-innovations',

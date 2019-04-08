@@ -4,8 +4,8 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { TagsService } from '../../../services/tags/tags.service';
-import { Tag } from '../../../models/tag';
+import { TagsService } from '../../../../../services/tags/tags.service';
+import { Tag } from '../../../../../models/tag';
 
 const SECTOR_TAGS_KEY = makeStateKey('sector-tags');
 

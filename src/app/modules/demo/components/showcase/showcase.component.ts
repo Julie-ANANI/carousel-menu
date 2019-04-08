@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
-import { TagsService } from '../../services/tags/tags.service';
-import { Tag } from '../../models/tag';
-import { TagStats } from '../../models/tag-stats';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TagsService } from '../../../../services/tags/tags.service'
+import {Tag} from '../../../../models/tag';
+import {TagStats} from '../../../../models/tag-stats';
 
 @Component({
   selector: 'app-showcase',

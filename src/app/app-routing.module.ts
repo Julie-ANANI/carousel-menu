@@ -50,9 +50,6 @@ const appRoutes: Routes = [
     path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
   },
   {
-    path: 'showcase', canActivate: [AuthGuard, AdminAuthGuard], loadChildren: './modules/showcase/showcase.module#ShowcaseModule'
-  },
-  {
     path: 'demo', canActivate: [AuthGuard, AdminAuthGuard], children: [ ...demoRoutes ]
   },
   {
