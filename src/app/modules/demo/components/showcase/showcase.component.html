@@ -20,7 +20,7 @@
           <!-- labels -->
           <h1 class="title-primary text-normal">
             <ng-container *ngFor="let tagStat of selectedTagsStats; let i = index;">
-              {{ tagStat.tag.label | multiling:defaultLang }}
+              {{ tagStat.tag.label | multiling:defaultLang | FormatText }}
               <ng-container *ngIf=" i !== selectedTagsStats.length - 1 "> / </ng-container>
             </ng-container>
           </h1>
