@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { ModalModule } from '../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 
 import { ShowcaseAnswersComponent } from './components/showcase-answers/showcase-answers.component';
 import { ShowcaseClientsComponent } from './components/showcase-clients/showcase-clients.component';
