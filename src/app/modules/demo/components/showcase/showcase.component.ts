@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service'
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-showcase',
@@ -13,15 +12,11 @@ import { TagStats } from '../../../../models/tag-stats';
   styleUrls: ['./showcase.component.scss']
 })
 
-export class ShowcaseComponent implements OnInit {
+export class ShowcaseComponent {
 
-  private _sectorTags: Array<Tag> = [];
+  private readonly _sectorTags: Array<Tag> = [];
 
   private _selectedTagsStats: Array<TagStats> = [];
-
-  tagForm: FormGroup;
-
-  public openSectorsModal = false;
 
   private _countries: {[country: string]: number} = {};
 
@@ -33,118 +28,71 @@ export class ShowcaseComponent implements OnInit {
 
   private _maxSecondTertile = 0;
 
-  tagSelected: boolean = false;
-
   private _modalShow: boolean = false;
 
-  modalTags: boolean = false;
+  private _defaultLang = 'en';
 
-  modalInnovations: boolean = false;
-
-  defaultLang = 'en';
-
-  tagsSelected: Array<Tag> = [];
+  private _loadingStats: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _formBuilder: FormBuilder,
               private _tagService: TagsService,
-              private _translateNotificationService: TranslateNotificationsService,
-              private _translateService: TranslateService) {
-
-    this._buildTagForm();
+              private _translateNotificationService: TranslateNotificationsService) {
 
     if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
       this._sectorTags = this._activatedRoute.snapshot.data['tags'];
-      if (this._sectorTags.length > 0) {
-        this.tagForm.setValue({ selectedTag: this._sectorTags[0]._id });
+
+      if (!this.sectorTags.length) {
+        this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
       }
-    }
-
-  }
-
-  ngOnInit() {
-
-
-    this.recomputeData();
-  }
-
-
-  private _buildTagForm() {
-    this.tagForm = this._formBuilder.group({
-      selectedTag: [''],
-    });
-  }
-
-  private _reinitializeVariables() {
-    this.modalTags = false;
-    this.modalInnovations = false;
-  }
-
-
-  public modifyTags(open: string) {
-    this._reinitializeVariables();
-
-    switch (open) {
-
-      case 'modalTags':
-        this.modalTags = true;
-        break;
-
-      case 'modalInnovations':
-        this.modalInnovations = true;
-        break;
-
-      default:
-        // do nothing...
 
     }
 
+  }
+
+  public modifyTag() {
     this._modalShow = true;
-
   }
 
 
   public onChangeTag(event: Event, tag: Tag) {
+    this._loadingStats = true;
+
     if (event.target['checked']) {
-      this.tagsSelected.push(tag);
+      this._getTagStat(event, tag);
     } else {
-      const index = this.tagsSelected.findIndex((selectedTag) => selectedTag._id === tag._id);
-      this.tagsSelected.splice(index, 1);
+      this._removeTag(tag._id);
     }
+
   }
 
 
-  public getCheckedTag(tagId: string): boolean {
-    const index = this._selectedTagsStats.findIndex((item) => item.tag._id === tagId);
-    return index !== -1;
+  private _removeTag(tagId: string) {
+    this._selectedTagsStats = this._selectedTagsStats.filter((item) => item.tag._id !== tagId);
+    this._recomputeData();
   }
 
 
-  public onClickApply(event: Event) {
+  private _getTagStat(event: Event, tag: Tag) {
     event.preventDefault();
+
+    this._tagService.getStats(tag._id).pipe(first()).subscribe((stats) => {
+      this._selectedTagsStats = this._selectedTagsStats.concat(stats);
+      this._recomputeData();
+    }, () => {
+      this._loadingStats = false;
+      this._translateNotificationService.error('ERROR.ERROR_EN', `We are having trouble while finding the stats for ${tag.label.en} tag.`);
+    });
+
   }
 
 
-  private computeCountries(): void {
-    this._countries = this._selectedTagsStats.reduce((acc, stats) => {
-      stats.geographicalRepartition.forEach((cc) => {
-        if (acc[cc.country]) {
-          acc[cc.country] += cc.count;
-        } else {
-          acc[cc.country] = cc.count;
-        }
-      });
-      return acc;
-    }, <{[country: string]: number}>{});
-    const countriesList = Object.keys(this._countries);
-    this._countriesCount = countriesList.length;
-    const orderedCountries = countriesList.sort((a, b) => this._countries[a] - this._countries[b]);
-    const tertileSize = (orderedCountries.length / 3);
-    this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
-    this._maxSecondTertile = this._countries[orderedCountries[Math.floor(2 * tertileSize)]];
+  private _recomputeData() {
+    this._computeStats();
+    this._computeCountries();
   }
 
-  private computeStats(): void {
+
+  private _computeStats() {
     this._stats = this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
@@ -166,28 +114,33 @@ export class ShowcaseComponent implements OnInit {
     });
   }
 
-  private recomputeData(): void {
-    this.computeStats();
-    this.computeCountries();
-  }
 
-  public selectTag() {
-    const selectedTagId = this.tagForm.get('selectedTag').value;
-    const selectedTag = this._sectorTags.find((t) => t._id === selectedTagId);
-    if (selectedTag && this._selectedTagsStats.findIndex((t) => t.tag._id === selectedTagId) === -1) {
-      this._tagService.getStats(selectedTag._id).subscribe(stats => {
-        this._selectedTagsStats = this._selectedTagsStats.concat(stats);
-        this.recomputeData();
-      }, err => {
-        this._translateNotificationService.error('ERROR.ERROR', err);
+  private _computeCountries() {
+    this._countries = this._selectedTagsStats.reduce( (acc, stats) => {
+      stats.geographicalRepartition.forEach((cc) => {
+        if (acc[cc.country]) {
+          acc[cc.country] += cc.count;
+        } else {
+          acc[cc.country] = cc.count;
+        }
       });
-    }
-  }
+      return acc;
+    }, <{ [country: string]: number }> {} );
 
-  public removeStat(event: Event, tagId: string) {
-    event.preventDefault();
-    this._selectedTagsStats = this._selectedTagsStats.filter((t) => t.tag._id !== tagId);
-    this.recomputeData();
+    const countriesList = Object.keys(this._countries);
+
+    this._countriesCount = countriesList.length;
+
+    const orderedCountries = countriesList.sort((a, b) => this._countries[a] - this._countries[b]);
+
+    const tertileSize = (orderedCountries.length / 3);
+
+    this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
+
+    this._maxSecondTertile = this._countries[orderedCountries[Math.floor(2 * tertileSize)]];
+
+    this._loadingStats = false;
+
   }
 
   get countries() {
@@ -197,8 +150,6 @@ export class ShowcaseComponent implements OnInit {
   get countriesCount() {
     return this._countriesCount;
   }
-
-  get lang(): string { return this._translateService.currentLang; }
 
   get sectorTags(): Array<Tag> {
     return this._sectorTags;
@@ -226,6 +177,14 @@ export class ShowcaseComponent implements OnInit {
 
   set modalShow(value: boolean) {
     this._modalShow = value;
+  }
+
+  get defaultLang(): string {
+    return this._defaultLang;
+  }
+
+  get loadingStats(): boolean {
+    return this._loadingStats;
   }
 
 }
