@@ -1,4 +1,5 @@
 import { emailRegEx, phoneRegEx } from '../utils/regex';
+import { Clearbit } from './clearbit';
 import { Model } from './model';
 
 export class User extends Model {
@@ -16,7 +17,7 @@ export class User extends Model {
   private _isOperator: boolean;
   private _roles: string;
   private _state: 'unconfirmed' | 'confirmed';
-  private _companyName: string;
+  private _company: Clearbit;
   private _jobTitle: string;
   private _country: string;
   private _provider: string;
@@ -155,12 +156,12 @@ export class User extends Model {
     this._state = value;
   }
 
-  get companyName(): string {
-    return this._companyName;
+  get company(): Clearbit {
+    return this._company;
   }
 
-  set companyName(value: string) {
-    this._companyName = value;
+  set company(value: Clearbit) {
+    this._company = value;
   }
 
   get jobTitle(): string {

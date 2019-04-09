@@ -20,7 +20,7 @@ export class ShowcaseClientsComponent {
         if (Array.isArray(next.result)) {
           // we calculate the list of companies without duplicates
           const companies = next.result
-            .map((i) => i.owner.companyName)
+            .map((i) => i.owner.company.name)
             .reduce((acc, comp) => {
               acc[comp] = true;
               return acc;

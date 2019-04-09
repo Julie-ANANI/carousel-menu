@@ -108,19 +108,25 @@
             </div>
 
             <!-- Company -->
-            <div class="form-group">
-              <label class="form-label" for="account-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+            <div class="form-group" formGroupName="company">
+              <label class="form-label" for="account-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
               <input
+                auto-complete
                 class="form-input"
-                formControlName="companyName"
-                id="account-companyName"
-                type="text"
+                formControlName="name"
+                id="account-company"
+                [min-chars]="2"
+                [list-formatter]="autocompleteCompanyListFormatter"
+                [display-property-name]="'name'"
+                (valueChanged)="formData.get('company').reset(formData.get('company.name').value)"
+                [source]="companiesSuggestions"
                 [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
-            </div>
 
           </div>
 
-          <!-- Job & Country -->
+        </div>
+
+        <!-- Job & Country -->
           <div class="input-group inline">
 
             <!-- Job -->

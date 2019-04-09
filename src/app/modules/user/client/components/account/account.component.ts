@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from '../../../../../services/user/user.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { User } from '../../../../../models/user.model';
@@ -10,6 +11,7 @@ import { AutocompleteService } from '../../../../../services/autocomplete/autoco
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { countries } from '../../../../../models/static-data/country';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -44,6 +46,7 @@ export class AccountComponent implements OnInit {
   constructor(private userService: UserService,
               private translateNotificationsService: TranslateNotificationsService,
               private authService: AuthService,
+              private sanitizer: DomSanitizer,
               private formBuilder: FormBuilder,
               private router: Router,
               private translateTitleService: TranslateTitleService,
@@ -63,6 +66,7 @@ export class AccountComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
+      company: this.formBuilder.group({name: [''], domain: [''], logo: ['']}),
       companyName: [''],
       jobTitle: [''],
       phone: [''],
@@ -124,9 +128,18 @@ export class AccountComponent implements OnInit {
 
   }
 
+  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+    return this.autoCompleteService.get({query: searchString, type: 'company'});
+  };
+
+  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
+    return this.sanitizer.bypassSecurityTrustHtml(`<span>${data.name}</span>`);
+  };
 
   onSubmit() {
     if (this._formData.valid) {
+
+      console.log(this._formData.value);
 
       for (let code in this._countries) {
         if (this._countries[code] === this._formData.get('country').value) {
@@ -136,7 +149,7 @@ export class AccountComponent implements OnInit {
 
       const user = new User(this._formData.value);
 
-      this.userService.update(user).pipe(first()).subscribe((response: User) => {
+      this.userService.update(user).subscribe((response: User) => {
         this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
         this._name = response.name;
         this._jobTitle = response.jobTitle;
