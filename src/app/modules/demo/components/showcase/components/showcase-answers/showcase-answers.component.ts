@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
@@ -11,7 +11,7 @@ import { Answer } from '../../../../../../models/answer';
   styleUrls: ['./showcase-answers.component.scss']
 })
 
-export class ShowcaseAnswersComponent implements OnInit {
+export class ShowcaseAnswersComponent {
 
   @Input() set totalAnswers(value: number) {
     this._count = value;
@@ -52,10 +52,6 @@ export class ShowcaseAnswersComponent implements OnInit {
 
     this._adminPass = this._authService.adminLevel > 2
 
-  }
-
-
-  ngOnInit(): void {
   }
 
 
