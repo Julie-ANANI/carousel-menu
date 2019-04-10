@@ -27,17 +27,24 @@
 
         <div class="flex-start">
 
-          <app-country-flag [country]="answer.country.flag" [width]="30" [height]="20"></app-country-flag>
+          <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
 
           <p class="text-notify text-medium">{{ answer.company?.name }}</p>
 
-        </div>
+        </div>-->
 
       </div>
 
     </div>
   </div>
   <!-- /section answers -->
+
+  <!-- section see more -->
+  <ng-container *ngIf="answers.length > 6">
+    <div class="text-right section-light-pad rm-pad-bottom">
+      <span class="text-link" (click)="openModal($event)">See More</span>
+    </div>
+  </ng-container>
 
 </section>
 
@@ -47,32 +54,36 @@
 
   <div class="card-wrapper d-flex">
     <ng-container *ngFor="let answer of answers">
-      <div class="card card-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) }">
+      <div class="card card-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && adminPass }">
 
         <i class="fas fa-check-circle"></i>
 
-        <label class="absolute">
-          <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
-        </label>
+        <ng-container *ngIf="adminPass">
+          <label class="absolute">
+            <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
+          </label>
+        </ng-container>
 
         <h4 class="text-background text-medium">{{ answer.job }}</h4>
 
         <div class="flex-start">
 
-          <app-country-flag [country]="answer.country.flag" [width]="30" [height]="20"></app-country-flag>
+          <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
 
           <p class="text-notify text-medium">{{ answer.company?.name }}</p>
 
-        </div>
+        </div>-->
 
       </div>
     </ng-container>
   </div>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">Cancel</button>
-    <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
-  </div>
+  <ng-container *ngIf="adminPass">
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-cancel">Cancel</button>
+      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
+    </div>
+  </ng-container>
 
 </app-modal>
 <!-- /modal to select the answers -->

@@ -50,7 +50,7 @@ export class ShowcaseAnswersComponent {
               private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this._adminPass = this._authService.adminLevel > 2
+    this._adminPass = this._authService.adminLevel > 2;
 
   }
 

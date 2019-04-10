@@ -108,6 +108,7 @@
 
 .tags-wrapper {
   flex-wrap: wrap;
+  justify-content: space-between;
 
   .card {
     margin-top: $unit-2;
