@@ -3,7 +3,7 @@ export const professional_sample: any = [
     "firstName": "Detlef",
     "lastName": "Schumann",
     "profileUrl": "https://de.linkedin.com/in/drdetlefschumann",
-    "jobTitle": "New Business Development Manager I Regenerative Materials",
+    "jobTitle": "New Business",
     "email": "detlef.schumann@dsm.com",
     "company": "DSM Biomedical",
     "companyDomain": "dsm.com",
