@@ -86,3 +86,18 @@
 @mixin bar-scale-variant($color-1st, $color-2nd) {
   background-image: linear-gradient(-180deg, $color-1st 0%, $color-2nd 100%);
 }
+
+
+// Avatar mixin
+@mixin avatar-base($size: $unit-8) {
+  font-size: $size / 2;
+  height: $size;
+  width: $size;
+}
+
+
+// Label style
+@mixin label-variant($color: $light-color, $bg-color: $primary-color) {
+  background-color: $bg-color;
+  color: $color;
+}
