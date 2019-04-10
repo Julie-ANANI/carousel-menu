@@ -1,22 +1,78 @@
-<main class="body-wrapper" id="showcase-answers-component">
+<section id="showcase-answers-component" class="relative animate-appear">
 
-  {{ totalAnswers }} {{ 'SHOWCASE.PROFESSIONALS' | translate }}
+  <!-- bar icon -->
+  <ng-container *ngIf="adminPass && answers.length > 0">
+    <div class="icon icon-meta absolute" (click)="openModal($event)">
+      <i class="fas fa-2x fa-bars"></i>
+    </div>
+  </ng-container>
 
-  <span class="text-link" *ngIf="answers.length > 6"
-        (click)="openAnswersModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+  <!-- heading 1st -->
+  <h2 class="text text-notify">Contributors</h2>
 
-  <p *ngFor="let answer of topAnswers">
-    <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-    {{ answer.job }} - {{ answer.company?.name }}
-  </p>
+  <!-- heading count -->
+  <h3 class="text-normal">{{ count }} <span> respondents</span></h3>
 
-</main>
+  <!-- section answers -->
+  <div *ngFor="let answer of topAnswers" class="card-wrapper">
+    <div *ngIf="!answer.isLoading" class="d-flex animate-appear">
 
-<app-modal [(showModal)]="openAnswersModal" [modalTitle]="'SHOWCASE.ANSWERS_MODAL.TITLE'">
+      <figure class="avatar avatar-lg avatar-meta">
+        <i class="fas fa-user"></i>
+      </figure>
 
-  <p *ngFor="let answer of answers">
-    <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-    {{ answer.job }} - {{ answer.company?.name }}
-  </p>
+      <div class="info-wrapper">
+
+        <h4 class="text-background text-medium">{{ answer?.job }}</h4>
+
+        <div class="flex-start">
+
+          <app-country-flag [country]="answer?.country" [width]="30" [height]="20"></app-country-flag>
+
+          <p class="text-notify text-medium">{{ answer?.company }}</p>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- /section answers -->
+
+</section>
+
+
+<!-- modal to select the answers -->
+<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'">
+
+  <div class="card-wrapper d-flex">
+    <ng-container *ngFor="let answer of answers">
+      <div class="card card-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) }">
+
+        <i class="fas fa-check-circle"></i>
+
+        <label class="absolute">
+          <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
+        </label>
+
+        <h4 class="text-background text-medium">{{ answer?.job }}</h4>
+
+        <div class="flex-start">
+
+          <app-country-flag [country]="answer?.country" [width]="30" [height]="20"></app-country-flag>
+
+          <p class="text-notify text-medium">{{ answer?.company }}</p>
+
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">Cancel</button>
+    <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
+  </div>
 
 </app-modal>
+<!-- /modal to select the answers -->

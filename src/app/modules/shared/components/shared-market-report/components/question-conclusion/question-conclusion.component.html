@@ -15,7 +15,7 @@
 
       <ng-container *ngIf="receivedTags.length > 0">
         <div class="tag-wrapper section-light-pad rm-pad-top">
-          <div *ngFor="let tag of receivedTags" class="label label-tag" (click)="addTagFilter($event, tag)" [title]="tag.description | multiling:lang">
+          <div *ngFor="let tag of receivedTags" class="label label-tag label-rounded" (click)="addTagFilter($event, tag)" [title]="tag.description | multiling:lang">
             <i class="fas fa-tag"></i><span class="label-text">{{ tag.label | multiling:lang }}</span>
             <span *ngIf="tag.count > 1" class="label-text">(x{{ tag.count }})</span>
           </div>

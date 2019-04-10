@@ -39,13 +39,7 @@
     max-height: 50vh;
   }
 
-  .animate-disappear {
-    animation-name: fadeOut;
-    animation-duration: 50ms;
-    animation-timing-function: ease-out;
-  }
-
-  .animate-appear, .animate-card-appear {
+  .animate-card-appear {
     animation-name: fadeIn;
     animation-duration: 2s;
     animation-timing-function: ease-in;

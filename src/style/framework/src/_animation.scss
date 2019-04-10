@@ -459,3 +459,15 @@
   animation-duration: 50ms;
   animation-timing-function: ease-in-out;
 }
+
+.animate-appear {
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+}
+
+.animate-disappear {
+  animation-name: fadeOut;
+  animation-duration: 50ms;
+  animation-timing-function: ease-in-out;
+}
