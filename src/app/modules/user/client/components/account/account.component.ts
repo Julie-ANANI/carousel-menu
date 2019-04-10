@@ -67,7 +67,6 @@ export class AccountComponent implements OnInit {
       lastName: ['', [Validators.required]],
       email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
       company: this.formBuilder.group({name: [''], domain: [''], logo: ['']}),
-      companyName: [''],
       jobTitle: [''],
       phone: [''],
       country: [''],
@@ -138,8 +137,6 @@ export class AccountComponent implements OnInit {
 
   onSubmit() {
     if (this._formData.valid) {
-
-      console.log(this._formData.value);
 
       for (let code in this._countries) {
         if (this._countries[code] === this._formData.get('country').value) {

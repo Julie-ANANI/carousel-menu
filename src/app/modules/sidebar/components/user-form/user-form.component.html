@@ -134,7 +134,7 @@
       </div>
 
       <!-- job -->
-      <div class="form-group has-error">
+      <div class="form-group">
         <label class="form-label" for="user-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
         <input
           class="form-input"
@@ -142,27 +142,27 @@
           id="user-form-jobTitle"
           type="text"
           [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
-        <span class="form-input-hint" *ngIf="userForm.get('jobTitle').touched && userForm.get('jobTitle').invalid && userForm.get('jobTitle').hasError('required')">
-          {{ 'COMMON.REQUIRED.JOBTITLE' | translate }}
-        </span>
       </div>
 
       <!-- company -->
-      <div class="form-group has-error">
-        <label class="form-label" for="user-form-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+      <div class="form-group" formGroupName="company">
+        <label class="form-label" for="user-form-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
         <input
+          auto-complete
           class="form-input"
-          formControlName="companyName"
-          id="user-form-companyName"
-          type="text"
+          formControlName="name"
+          id="user-form-company"
+          [min-chars]="2"
+          [accept-user-input]="false"
+          [display-property-name]="'name'"
+          [list-formatter]="autocompleteCompanyListFormatter"
+          [source]="companiesSuggestions"
           [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
-        <span class="form-input-hint" *ngIf="userForm.get('companyName').touched && userForm.get('companyName').invalid && userForm.get('companyName').hasError('required')">
-          {{ 'COMMON.REQUIRED.COMPANY' | translate }}
-        </span>
+        <!-- (valueChanged)="userForm.get('company').reset(userForm.get('company.name').value || {})" -->
       </div>
 
       <!-- country -->
-      <div class="form-group has-error">
+      <div class="form-group">
         <label class="form-label" for="user-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
         <input
           class="form-input"
@@ -179,9 +179,6 @@
             {{ suggestion }}
           </li>
         </ul>
-        <span class="form-input-hint" *ngIf="userForm.get('country').touched && userForm.get('country').invalid && userForm.get('country').hasError('required')">
-          {{ 'COMMON.REQUIRED.COUNTRY' | translate }}
-        </span>
       </div>
 
       <!-- url -->

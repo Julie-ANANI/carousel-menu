@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../../../models/user.model';
 import { Innovation } from '../../../../models/innovation';
@@ -8,13 +9,13 @@ import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
-import { environment } from '../../../../../environments/environment';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
 import { SearchService } from "../../../../services/search/search.service";
+import { Observable} from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -120,6 +121,7 @@ export class UserFormComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platform: Object,
               private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
+              private sanitizer: DomSanitizer,
               private translateService: TranslateService,
               private searchService: SearchService,
               private userService: UserService,
@@ -134,10 +136,10 @@ export class UserFormComponent implements OnInit {
     this._userForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      companyName: ['', [Validators.required]],
-      jobTitle: ['', [Validators.required]],
+      company: this.formBuilder.group({name: [''], domain: [''], logo: ['']}),
+      jobTitle: [''],
       email: ['', [Validators.required, Validators.email]],
-      country: ['', [Validators.required]],
+      country: [''],
       roles: [''],
       isOperator: [false],
       profileUrl: [null],
@@ -170,7 +172,6 @@ export class UserFormComponent implements OnInit {
 
   private loadProfessional() {
     if (this._pro && this._userForm) {
-      this._userForm.get('companyName').setValue(this._pro.company);
       this._tags = this._pro.tags;
       this._userForm.patchValue(this._pro);
       this._proKeywords = null;
@@ -188,8 +189,8 @@ export class UserFormComponent implements OnInit {
 
 
   private loadInnovations(): void {
-    if(this._user.id) {
-      this.userService.getInnovations(this._user.id).pipe(first()).subscribe((innovations: any) => {
+    if (this._user.id) {
+      this.userService.getInnovations(this._user.id).subscribe((innovations: any) => {
         this._projects = innovations.result;
       });
     }
@@ -198,6 +199,14 @@ export class UserFormComponent implements OnInit {
   selectProject(event: any) {
     this._selectedProject = event.target.value;
   }
+
+  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+    return this.autoCompleteService.get({query: searchString, type: 'company'});
+  };
+
+  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
+    return this.sanitizer.bypassSecurityTrustHtml(`<span>${data.name}</span>`);
+  };
 
 
   onClickSave() {
@@ -215,7 +224,7 @@ export class UserFormComponent implements OnInit {
     } else if (this._isProfessional && this._type === 'professional') {
       const pro = this._userForm.value;
       pro._id = this._pro._id;
-      pro.company = this._userForm.get('companyName').value;
+      pro.company = this._userForm.get('company.name').value;
       pro.tags = this._tags;
       this.finalProfessionalData.emit(pro);
     } else if (this._isProfessional && this._type === 'addPro') {
@@ -344,10 +353,6 @@ export class UserFormComponent implements OnInit {
 
   get authService(): AuthService {
     return this._authService;
-  }
-
-  get companyName(): string {
-    return environment.companyShortName;
   }
 
   get tags(): Tag[] {
