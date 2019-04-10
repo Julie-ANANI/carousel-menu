@@ -83,6 +83,7 @@
 
   // Badges for save
   &.badge-save {
+    white-space: normal;
 
     &::after {
       display: none;

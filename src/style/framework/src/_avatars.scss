@@ -3,15 +3,16 @@
 
 .avatar {
   @include avatar-base();
-  background: $primary-color;
+  @include avatar-variant(rgba($light-color, .85), $primary-color);
   border-radius: 50%;
-  color: rgba($light-color, .85);
   display: inline-flex;
   font-weight: 300;
   line-height: 1.25;
   margin: 0;
   position: relative;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 
   &.avatar-xs {
     @include avatar-base($unit-4);
@@ -27,6 +28,10 @@
 
   &.avatar-xl {
     @include avatar-base($unit-16);
+  }
+
+  &.avatar-meta {
+    @include avatar-variant($light-color, $meta-color);
   }
 
   img {
