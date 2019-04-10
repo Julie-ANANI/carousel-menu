@@ -10,22 +10,22 @@ export const professional_sample: any = [
     "country": "NL"
   },
   {
-    "country": "US",
     "firstName": "Hendrik Pieter Delport.",
     "lastName": "MD.",
     "profileUrl": "https://be.linkedin.com/in/hendrik-pieter-delport-md-phd-5a311815",
     "jobTitle": "Medico-Legal Expert and Independent Orthopaedic Consultant - Researcher",
     "company": "KU Leuven bij BVBA Dr Delport Ortho-Expert",
-    "companyDomain": ""
+    "companyDomain": "",
+    "country": "US",
   },
   {
-    "country": "UK",
     "firstName": "Eric",
     "lastName": "Breemans",
     "profileUrl": "https://nl.linkedin.com/in/eric-breemans-5502154",
     "jobTitle": "Orthopedic surgeon Orthopedium Delft",
     "company": "Kliniek Orthopedium Delft en Schiedam",
-    "companyDomain": ""
+    "companyDomain": "",
+    "country": "UK",
   },
   {
     "country": "NL",
@@ -38,17 +38,16 @@ export const professional_sample: any = [
     "companyDomain": "ave-orthopedischeklinieken.nl"
   },
   {
-    "country": "AF",
     "firstName": "Hamid",
     "lastName": "Reza Seyyed Hosseinzadeh",
     "profileUrl": "https://www.linkedin.com/in/seyyedhosseinzadeh",
     "jobTitle": "Associate Professor of Orthopaedics at Rowan University",
     "email": "hamid@rowan.edu",
     "company": "Rowan University",
-    "companyDomain": "rowanu.com"
+    "companyDomain": "rowanu.com",
+    "country": "NL",
   },
   {
-    "country": "AE",
     "firstName": "Hardik",
     "lastName": "International",
     "profileUrl": "https://in.linkedin.com/in/hardik-international-1513a5b9",
@@ -57,7 +56,6 @@ export const professional_sample: any = [
     "companyDomain": "makeinindia.com"
   },
   {
-    "country": "BM",
     "firstName": "GAUTAM",
     "lastName": "SHETTY",
     "profileUrl": "https://in.linkedin.com/in/gautam-shetty-26876413",
@@ -66,32 +64,12 @@ export const professional_sample: any = [
     "companyDomain": "mullajikneeclinic.com"
   },
   {
-    "country": "BD",
-    "firstName": "Saurabh",
-    "lastName": "Sagar Mehta",
-    "profileUrl": "https://uk.linkedin.com/in/saurabh-sagar-mehta-9104a469",
-    "jobTitle": "Consultant Orthopaedic Surgeon (Upper Limb -Shoulder, Elbow, Wrist and Hand), University Hospital of North Midlands, UK",
-    "email": "saurabh.sagar-mehta@uhnm.nhs.uk",
-    "company": "University Hospital of North Midlands",
-    "companyDomain": "uhnm.nhs.uk"
-  },
-  {
-    "country": "CA",
-    "firstName": "Jorge",
-    "lastName": "Ochoa",
-    "profileUrl": "https://www.linkedin.com/in/jorge-a-ochoa-6828291",
-    "jobTitle": "Seasoned Medical Device Consultant",
-    "email": "jochoa@exponent.com",
-    "company": "Exponent Failure Analysis Associates",
-    "companyDomain": "exponent.com"
-  },
-  {
-    "country": "CH",
-    "firstName": "Wout",
-    "lastName": "Delbroek",
-    "profileUrl": "https://be.linkedin.com/in/woutdelbroek",
-    "jobTitle": "Key Account Manager I Business Development BeLux at Philips Handheld Diagnostics",
-    "company": "PHILIPS HEALTHTECH INCUBATOR",
-    "companyDomain": "saxocon.eu"
+    "firstName": "Fergus",
+    "lastName": "MacLeod",
+    "profileUrl": "https://uk.linkedin.com/in/fergusmacleod",
+    "jobTitle": "VP, EMEA at RTI Surgical",
+    "email": "fmacleod@rtix.com",
+    "company": "RTI Surgical",
+    "companyDomain": "rtix.com"
   }
 ];
