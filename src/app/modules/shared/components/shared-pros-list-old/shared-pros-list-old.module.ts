@@ -10,7 +10,7 @@ import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-in
 import { SharedSmartSelectModule } from '../shared-smart-select/shared-smart-select.module';
 import { PaginationModule} from '../../../utility-components/pagination/pagination.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { ModalModule } from "../../../utility-components/modal/modal.module";
+import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 
 @NgModule({
   imports: [

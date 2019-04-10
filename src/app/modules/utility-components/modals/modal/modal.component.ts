@@ -13,6 +13,10 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.show = value;
   }
 
+  @Input() set modalPosition(value: string) {
+    this._position = value;
+  }
+
   @Input() set widthMax(value: string) {
     this._maxWidth = value;
   }
@@ -30,6 +34,8 @@ export class ModalComponent implements OnInit, OnDestroy {
   private _maxWidth: string;
 
   private _title: string;
+
+  private _position = '';
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object, private el: ElementRef) {
     this.element = this.el.nativeElement;
@@ -60,6 +66,10 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   get title(): string {
     return this._title;
+  }
+
+  get position(): string {
+    return this._position;
   }
 
   ngOnDestroy(): void {

@@ -1,57 +1,121 @@
-<main class="body-wrapper" id="showcase-component">
+<ng-container *ngIf="sectorTags.length">
 
-  <h1>
-    <span *ngFor="let stats of selectedTagsStats; let i = index">
-      {{stats.tag.label | multiling:lang}}
-      <span *ngIf="i !== selectedTagsStats.length - 1"> / </span>
-    </span>
-  </h1>
-  <span class="text-link" (click)="openSectorsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+  <div id="showcase-component" class="section-pad animate-page">
+    <div class="column col-xs-12 col-11 col-mx-auto">
 
-  <hr>
+      <ng-container *ngIf="selectedTagsStats.length === 0">
+        <div class="section-pad rm-pad-bottom">
+          <app-message-space>
+            <span><span class="text-link" (click)="modifyTag()">Choose</span> tags to create your own Showcase.</span>
+          </app-message-space>
+        </div>
+      </ng-container>
 
-  <app-showcase-answers [totalAnswers]="stats.totalAnswers" [tagsStats]="selectedTagsStats"></app-showcase-answers>
+      <!-- section stat -->
+      <ng-container *ngIf="selectedTagsStats.length > 0">
 
-  <hr>
+        <!-- header section -->
+        <section class="section-header text-center">
 
-  <app-showcase-innovations [totalInnovations]="stats.totalInnovations" [tagsStats]="selectedTagsStats"></app-showcase-innovations>
+          <!-- labels -->
+          <h1 class="title-primary text-normal">
+            <ng-container *ngFor="let tagStat of selectedTagsStats; let i = index;">
+              {{ tagStat.tag.label | multiling:defaultLang | FormatText }}
+              <ng-container *ngIf=" i !== selectedTagsStats.length - 1 "> / </ng-container>
+            </ng-container>
+          </h1>
 
-  <hr>
+          <!-- modify tag link -->
+          <span class="text-link" (click)="modifyTag()">Modify</span>
 
-  <div class="map">
-    {{ countriesCount }} {{ 'SHOWCASE.COUNTRIES' | translate }}
-    <admin-search-map
-      [countriesData]="countries"
-      [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
-      [width]="'auto'">
-    </admin-search-map>
+        </section>
+        <!-- /header section -->
+
+        <!-- horizontal line -->
+        <hr class="hr hr-main">
+
+        <!-- section answer and innovations -->
+        <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+
+          <!-- answers wrapper -->
+          <div class="answer-wrapper">
+            <app-showcase-answers [totalAnswers]="stats.totalAnswers" [tagsStats]="selectedTagsStats"></app-showcase-answers>
+          </div>
+
+          <!-- innovations wrapper -->
+          <div class="innovation-wrapper">
+            <app-showcase-innovations [totalInnovations]="stats.totalInnovations" [tagsStats]="selectedTagsStats"></app-showcase-innovations>
+          </div>
+
+        </section>
+        <!-- /section answer and innovations -->
+
+        <!-- section map -->
+        <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+          <div class="map-wrapper">
+
+            <h2 class="text text-notify">Targeted</h2>
+
+            <h3 class="text-normal">{{ countriesCount }} <span> countries surveyed</span> </h3>
+
+            <admin-search-map
+              [countriesData]="countries"
+              [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
+              [width]="'100%'">
+            </admin-search-map>
+
+          </div>
+        </section>
+        <!-- /section map -->
+
+        <!-- section company -->
+        <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+          <div class="client-wrapper">
+            <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
+          </div>
+        </section>
+        <!-- /section company -->
+
+      </ng-container>
+      <!-- /section stat -->
+
+    </div>
   </div>
 
-  <hr>
 
-  <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
+  <!-- modal to modify the tags -->
+  <app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
 
-</main>
+    <h2 class="text text-background title-secondary text-medium">Select Tags</h2>
 
-<app-modal [(showModal)]="openSectorsModal" [modalTitle]="'SHOWCASE.SECTORS_MODAL.TITLE'">
+    <ng-container *ngIf="selectedTagsStats.length">
+      <div class="selected-wrapper">
+        <div *ngFor="let selected of selectedTagsStats" class="label label-tag">
+          <span>{{ selected.tag.label.en }}</span>
+        </div>
+      </div>
+    </ng-container>
 
-  <form [formGroup]="tagForm" (ngSubmit)="selectTag()">
+    <hr class="hr">
 
-    <label class="form-switch" for="chooseTag">
-      <select class="form-select" formControlName="selectedTag" id="chooseTag">
-        <option *ngFor="let tag of sectorTags" [innerText]="tag.label | multiling:lang" [value]="tag._id"></option>
-      </select>
-    </label>
+    <div class="flex-between tags-wrapper">
+      <div *ngFor="let tag of sectorTags" class="card card-responsive">
+        <label class="form-checkbox">
+          <input
+            (change)="onChangeTag($event, tag)"
+            [name]="tag.label | multiling:defaultLang"
+            [disabled]="loadingStats"
+            type="checkbox">
+          <i class="form-icon"></i><span>{{ tag.label | multiling:defaultLang | FormatText }}</span>
+        </label>
+      </div>
+    </div>
 
-    <button class="btn btn-primary" [innerText]="'SHOWCASE.SECTORS_MODAL.BUTTON'" translate></button>
+  </app-modal>
 
-  </form>
+</ng-container>
 
-  <ul>
-    <li *ngFor="let stats of selectedTagsStats">
-      {{stats.tag.label | multiling:lang}}
-      <i class="fas fa-times" (click)="removeStat($event, stats.tag._id)"></i>
-    </li>
-  </ul>
 
-</app-modal>
+
+
+

@@ -13,7 +13,7 @@ import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-li
 import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.component';
 import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-project-questionnaire/admin-project-questionnaire.module';
 import { PaginationModule } from '../../../../../utility-components/pagination/pagination.module';
-import { ModalModule } from '../../../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
 
 @NgModule({
   imports: [

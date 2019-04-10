@@ -176,7 +176,7 @@ export const COMMON = {
     'SUBMIT': 'Submit',
     'SIGN_IN': 'Sign In',
     'SIGN_UP': 'Sign Up',
-    'DELETE': 'Delete'
+    'DELETE': 'Delete',
   },
 
   'TABLE' : {

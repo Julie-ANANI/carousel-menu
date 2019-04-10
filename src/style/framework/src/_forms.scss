@@ -456,6 +456,11 @@ textarea.form-input {
       border-color: $form-success-color;
     }
 
+    &:not(:checked) + .form-icon {
+      background: $bg-color-light none;
+      border-color: $form-border-color;
+    }
+
   }
 
 }
@@ -522,7 +527,7 @@ textarea.form-input {
     color: $form-disabled-text;
     border-color: $form-disabled-color;
     cursor: not-allowed;
-    opacity: 1;
+    opacity: .5;
   }
 
 }
@@ -542,7 +547,7 @@ input {
     & + .form-icon {
       background: $bg-color-light none;
       cursor: not-allowed;
-      opacity: 1;
+      opacity: .5;
     }
 
   }
