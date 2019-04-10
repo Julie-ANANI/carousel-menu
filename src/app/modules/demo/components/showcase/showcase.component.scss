@@ -44,7 +44,7 @@
       border-radius: 8px;
       padding: 1.25rem;
       animation-name: fadeIn;
-      animation-duration: 2s;
+      animation-duration: 1s;
       animation-timing-function: ease-in-out;
     }
 
@@ -108,7 +108,8 @@
 
 .tags-wrapper {
   flex-wrap: wrap;
-  justify-content: space-between;
+  margin-right: -$unit-5;
+  margin-bottom: -$unit-2;
 
   .card {
     margin-top: $unit-2;

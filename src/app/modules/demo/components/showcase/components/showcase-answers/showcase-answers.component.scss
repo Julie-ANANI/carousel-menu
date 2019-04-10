@@ -59,7 +59,8 @@
 
 .card-wrapper {
   flex-wrap: wrap;
-  justify-content: space-between;
+  margin-right: -$unit-5;
+  margin-bottom: -$unit-5;
 
   .card {
     padding: $layout-spacing;
