@@ -73,7 +73,7 @@ export class ShowcaseAnswersComponent {
         setTimeout(() => {
           answer.isLoading = false;
           this._topAnswers[index] = answer;
-        }, Math.floor(Math.random() * 2000) + 1000);
+        }, Math.floor(Math.random() * 100) + 100);
       });
     }
   }

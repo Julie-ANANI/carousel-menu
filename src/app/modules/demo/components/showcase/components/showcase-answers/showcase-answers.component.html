@@ -23,13 +23,13 @@
 
       <div class="info-wrapper">
 
-        <h4 class="text-background text-medium">{{ answer?.job }}</h4>
+        <h4 class="text-background text-medium">{{ answer.job }}</h4>
 
         <div class="flex-start">
 
-          <app-country-flag [country]="answer?.country" [width]="30" [height]="20"></app-country-flag>
+          <app-country-flag [country]="answer.country.flag" [width]="30" [height]="20"></app-country-flag>
 
-          <p class="text-notify text-medium">{{ answer?.company }}</p>
+          <p class="text-notify text-medium">{{ answer.company?.name }}</p>
 
         </div>
 
@@ -55,13 +55,13 @@
           <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
         </label>
 
-        <h4 class="text-background text-medium">{{ answer?.job }}</h4>
+        <h4 class="text-background text-medium">{{ answer.job }}</h4>
 
         <div class="flex-start">
 
-          <app-country-flag [country]="answer?.country" [width]="30" [height]="20"></app-country-flag>
+          <app-country-flag [country]="answer.country.flag" [width]="30" [height]="20"></app-country-flag>
 
-          <p class="text-notify text-medium">{{ answer?.company }}</p>
+          <p class="text-notify text-medium">{{ answer.company?.name }}</p>
 
         </div>
 
