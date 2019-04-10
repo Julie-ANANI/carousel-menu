@@ -38,6 +38,11 @@
       name="scenarioName"
       placeholder="Enter the workflow name"
       class="form-input">
+    <label class="form-label" for="add-workflow-signature">Workflow default signature</label>
+      <select class="form-select" id="add-workflow-signature" [ngModel]="scenarioSignature" (ngModelChange)="changeScenarioSignature($event)">
+          <option [ngValue]="null" selected>Select one signature</option>
+          <option *ngFor="let signature of signatures" [ngValue]="signature">{{signature.name}}</option>
+      </select>
   </div>
 
   <div class="modal-footer">

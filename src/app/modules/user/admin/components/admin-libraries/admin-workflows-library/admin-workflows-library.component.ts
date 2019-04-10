@@ -16,6 +16,8 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
 
   private _newScenarioName: string = null;
 
+  private _scenarioSignature: EmailSignature;
+
   private _signatures: Array<EmailSignature> = [];
 
   private _scenarios: Array<EmailScenario> = [];
@@ -54,7 +56,8 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
       subject: `${step.toLowerCase()} mail - ${language}`,
       content: 'content',
       modified: false,
-      nameWorkflow: this._newScenarioName
+      nameWorkflow: this._newScenarioName,
+      signature: this._scenarioSignature
     }
   }
 
@@ -136,4 +139,13 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
     this._modalAdd = value;
   }
 
+  get scenarioSignature() {
+    return this._scenarioSignature;
+  }
+
+  public changeScenarioSignature(selection: any) {
+    if(selection) {
+      this._scenarioSignature = selection;
+    }
+  }
 }
