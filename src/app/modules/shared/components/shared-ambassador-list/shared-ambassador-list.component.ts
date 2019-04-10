@@ -26,6 +26,7 @@ export class SharedAmbassadorListComponent {
     switch(value) {
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
+        this._actions = ['Add to the project'];
         break;
       case('default'):
       default:
@@ -136,6 +137,11 @@ export class SharedAmbassadorListComponent {
   performActions(action: any) {
     switch (this._actions.findIndex(value => action._action === value)) {
       case 0:
+        // This is the add to the project case: the idea is to add the selected pros to the active project
+        // If one or more professionals already belong to the project, just add the remaining ones.
+        // We need to verify in the back whether a "Kate" campaign exists, otherwise we need to create one and
+        // get the id...
+
         console.log(action._rows);
         break;
       case 1:

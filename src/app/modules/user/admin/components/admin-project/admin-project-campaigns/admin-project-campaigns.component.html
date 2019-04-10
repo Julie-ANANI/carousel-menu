@@ -28,6 +28,7 @@
               <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">
                 <span>{{ campaign.title }}</span>
               </a>
+              <span *ngIf="campaign.type === 'COMMUNITY'" class="label label-success">{{campaign.type}}</span>
               <span *ngIf="getAuthorizationLevel(2)" class="text-link" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
               <p class="text text-notify">
                 {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
