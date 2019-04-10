@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { AdvSearchService } from "../../../../services/advsearch/advsearch.service";
 import { Router } from '@angular/router';
 import { ListConfigurations } from "./list-configurations";
+import { InnovationService } from "../../../../services/innovation/innovation.service";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -34,6 +35,18 @@ export class SharedAmbassadorListComponent {
     }
   }
 
+  /**
+   * The context is a set of variables not directly related to the data in the table
+   * but that can help find other information to operate with. For example, what's the
+   * innovation or the campaign where the professionals will be added.
+   * Of course, the context can be null, in which case the operation will be performed
+   * at the whole collection scope.
+   * @param value
+   */
+  @Input() set context(value: any) {
+    this._context = value;
+  }
+
   @Output() selectedProsChange = new EventEmitter<any>();
 
   private _config: any;
@@ -54,13 +67,12 @@ export class SharedAmbassadorListComponent {
 
   private _currentPro: Professional = null;
 
-  isProfessionalForm = false;
-
-  isTagsForm = false;
-
   private _modalDelete = false;
 
+  private _context: any = null;
+
   constructor(private _advSearchService: AdvSearchService,
+              private _innovationService: InnovationService,
               private route: Router) { }
 
   loadPros(config: any): void {
@@ -143,6 +155,19 @@ export class SharedAmbassadorListComponent {
         // get the id...
 
         console.log(action._rows);
+        const pros = action._rows.map(pro => { return {_id: pro._id.toString()}; });
+        const innovationId = this._context ? this._context.innovationId : null;
+        if(innovationId) {
+          this._innovationService.addProsFromCommunity(pros, innovationId).pipe(first())
+            .subscribe(result => {
+              console.log(result);
+            }, err => {
+              console.error(err);
+            });
+        } else {
+          //Silently fail
+          console.error("Innovation id canno be null");
+        }
         break;
       case 1:
           /*if(action._rows.length) {

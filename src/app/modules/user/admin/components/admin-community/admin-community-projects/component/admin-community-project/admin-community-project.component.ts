@@ -15,6 +15,8 @@ export class AdminCommunityProjectComponent {
 
   private _config = {};
 
+  private _context: any = null;
+
   private _sideConfig: any = null;
 
   private _targetCountries = ['CO'];
@@ -26,6 +28,9 @@ export class AdminCommunityProjectComponent {
   constructor(private _activatedRoute: ActivatedRoute) {
 
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
+    this._context = {
+      innovationId: this._innovation._id.toString()
+    };
     this._setConfig();
 
   }
@@ -94,5 +99,8 @@ export class AdminCommunityProjectComponent {
     return this._totalThreshold;
   }
 
+  get context() {
+    return this._context;
+  }
 }
 
