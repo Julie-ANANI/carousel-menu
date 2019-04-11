@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'community-form',
@@ -6,6 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./community-form.component.scss']
 })
 export class CommunityFormComponent implements OnInit {
+
+  @Output('callbackNotification')
+  _callbackNotification = new EventEmitter<any>();
 
   @Input() set context(value: any) {
     this._context = value;
@@ -23,7 +26,6 @@ export class CommunityFormComponent implements OnInit {
   }
 
   @Input() set config(value: any) {
-    console.log(value);
     this._config = value;
   }
 
@@ -33,14 +35,17 @@ export class CommunityFormComponent implements OnInit {
 
   private _context: any = null;
 
+  private _parentCb: any = null;
+
   constructor() { }
 
   ngOnInit() {
+    console.log(this._parentCb && typeof this._parentCb === 'function');
   }
 
   public onValueTyped(event: Event) {
     this._config = {
-      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
+      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry campaigns._id campaigns.innovation campaigns.type innovations._id',
       limit: '10',
       offset: '0',
       search: '',
@@ -59,5 +64,9 @@ export class CommunityFormComponent implements OnInit {
 
   get context() {
     return this._context;
+  }
+
+  public callbackNotification(event: Event) {
+    this._callbackNotification.emit(event);
   }
 }

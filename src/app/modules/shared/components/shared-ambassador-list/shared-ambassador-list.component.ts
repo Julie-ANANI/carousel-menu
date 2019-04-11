@@ -19,6 +19,9 @@ export interface SelectedProfessional extends Professional {
 
 export class SharedAmbassadorListComponent {
 
+  @Output('callbackNotification')
+  callbackNotification = new EventEmitter<any>();
+
   @Input() set config(value: any) {
     this.loadPros(value);
   }
@@ -71,6 +74,7 @@ export class SharedAmbassadorListComponent {
 
   private _context: any = null;
 
+
   constructor(private _advSearchService: AdvSearchService,
               private _innovationService: InnovationService,
               private route: Router) { }
@@ -88,6 +92,9 @@ export class SharedAmbassadorListComponent {
         this._pros = pros.result;
         this._pros.forEach(pro => {
           pro.sent = pro.messages && pro.messages.length > 0;
+          if(pro['innovations'] && !!pro['innovations'].find( inno => { return this._context['innovationId'] === inno._id;} ) ) {
+            pro['self'] = true;
+          }
         });
 
         this._total = pros._metadata.totalCount;
@@ -153,20 +160,37 @@ export class SharedAmbassadorListComponent {
         // If one or more professionals already belong to the project, just add the remaining ones.
         // We need to verify in the back whether a "Kate" campaign exists, otherwise we need to create one and
         // get the id...
-
-        console.log(action._rows);
         const pros = action._rows.map(pro => { return {_id: pro._id.toString()}; });
         const innovationId = this._context ? this._context.innovationId : null;
+        const resultObj = {
+          origin: "AMBASSADOR-ADD"
+        };
         if(innovationId) {
           this._innovationService.addProsFromCommunity(pros, innovationId).pipe(first())
             .subscribe(result => {
-              console.log(result);
+              // Verify the result
+              if(!!result) {
+                // Notify the parent
+                // Close the sidebar (let the parent do that!)
+                // Notify the client
+                resultObj['result'] = {status:'success', value: result};
+              } else {
+                // Inform the parent and close the sidebar
+                resultObj['result'] = {status:'error', message: "Empty result!"};
+              }
+              this.callbackNotification.emit(resultObj);
             }, err => {
+              // Inform the parent and close the sidebar
               console.error(err);
+              resultObj['result'] = {status:'error', message: JSON.stringify(err)};
+              this.callbackNotification.emit(resultObj);
             });
         } else {
           //Silently fail
-          console.error("Innovation id canno be null");
+          console.error("Innovation id cannot be null");
+          // Inform the parent and close the sidebar
+          resultObj['result'] = {status:'error', message: "Innovation id cannot be null"};
+          this.callbackNotification.emit(resultObj);
         }
         break;
       case 1:

@@ -39,7 +39,7 @@ export class ListConfigurations {
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
         {_attrs: ['tags'], _name: 'TABLE.HEADING.SECTORS', _type: 'TAG-LIST'},
         {_attrs: ['ambassador.industry'], _name: 'TABLE.HEADING.INDUSTRY', _type: 'TEXT'},
-        {_attrs: ['status'], _name: 'Added to project', _type: 'TEXT'}]
+        {_attrs: ['self'], _name: 'Added to project', _type: 'TEXT'}]
     };
     return _tableInfos;
   }
