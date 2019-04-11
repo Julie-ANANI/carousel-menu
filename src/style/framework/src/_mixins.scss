@@ -101,7 +101,7 @@
 }
 
 
-// Label style
+// Label mixin
 @mixin label-variant($color: $light-color, $bg-color: $primary-color) {
   background-color: $bg-color;
   color: $color;
