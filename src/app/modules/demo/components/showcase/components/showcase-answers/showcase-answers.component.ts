@@ -86,8 +86,7 @@ export class ShowcaseAnswersComponent {
 
 
   public activeAnswer(value: Answer) {
-    const index = this._selectedAnswers.findIndex((item: Answer) => item._id === value._id);
-    return index !== -1;
+    return this._selectedAnswers.some((item: Answer) => item._id === value._id);
   }
 
 
