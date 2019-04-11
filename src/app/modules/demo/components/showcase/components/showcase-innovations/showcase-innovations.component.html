@@ -1,21 +1,78 @@
-<main class="body-wrapper" id="showcase-innovations-component">
+<section id="showcase-innovations-component" class="relative d-flex">
 
-  {{ totalInnovations }} {{ 'SHOWCASE.INNOVATIONS' | translate }}
+  <!-- bar icon -->
+  <ng-container *ngIf="adminPass && innovations.length > 0">
+    <div class="icon icon-meta absolute" (click)="openModal($event)">
+      <i class="fas fa-2x fa-bars"></i>
+    </div>
+  </ng-container>
 
-  <span class="text-link" *ngIf="cards.length > 6"
-        (click)="openInnovationsModal = true" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+  <!-- section heading -->
+  <div class="section-heading">
 
-  <p *ngFor="let card of topCards">
-    <img [src]="card.media" [alt]="card.title" />
-    {{ card.title }}
-  </p>
+    <!-- heading 1st -->
+    <h2 class="text text-notify">Market Test</h2>
 
-</main>
+    <!-- heading count -->
+    <h3 class="text-normal">{{ count }} <span> project tested</span></h3>
 
-<app-modal [(showModal)]="openInnovationsModal" [modalTitle]="'SHOWCASE.INNOVATIONS_MODAL.TITLE'">
+  </div>
+  <!-- /section heading -->
 
-  <p *ngFor="let card of cards">
-    {{ card.title }}
-  </p>
+  <!-- section innovations -->
+  <div class="section-card d-flex text-center">
+    <div *ngFor="let innovationCard of topCards" class="card card-3 animate-appear">
+
+      <figure class="card-image">
+        <img [src]="innovationCard.media" alt=" ">
+      </figure>
+
+      <div class="card-header">
+        <div class="card-title text-background"><span>{{ innovationCard.title }}</span></div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /section innovations -->
+
+  <!-- section see more -->
+  <div class="text-right section-light-pad rm-pad-bottom">
+    <a [href]="discoverLink" class="text-link" target="_blank">See More</a>
+  </div>
+
+</section>
+
+
+<!-- modal to select innovations -->
+<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'">
+
+  <div class="section-card d-flex text-center">
+    <ng-container *ngFor="let innovationCard of cards">
+      <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard) }">
+
+        <i class="fas fa-check-circle"></i>
+
+        <label class="absolute">
+          <input type="checkbox" (change)="onChangeInnovation($event, innovationCard)" [checked]="activeInnovation(innovationCard)">
+        </label>
+
+        <figure class="card-image">
+          <img [src]="innovationCard.media" alt=" ">
+        </figure>
+
+        <div class="card-header">
+          <div class="card-title text-background"><span>{{ innovationCard.title }}</span></div>
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">Cancel</button>
+    <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
+  </div>
 
 </app-modal>
+<!-- /modal to select innovations -->
