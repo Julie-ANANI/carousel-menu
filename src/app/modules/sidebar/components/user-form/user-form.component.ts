@@ -16,6 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
 import { SearchService } from "../../../../services/search/search.service";
 import { Observable} from 'rxjs';
+import {Clearbit} from "../../../../models/clearbit";
 
 @Component({
   selector: 'app-user-form',
@@ -79,6 +80,8 @@ export class UserFormComponent implements OnInit {
   private _isSelf =  false;
 
   private _userForm: FormGroup;
+
+  private _company: Clearbit;
 
   private _countriesSuggestion: Array<string> = [];
 
@@ -174,6 +177,7 @@ export class UserFormComponent implements OnInit {
     if (this._pro && this._userForm) {
       this._tags = this._pro.tags;
       this._userForm.patchValue(this._pro);
+      this._company = { name: this._pro.company };
       this._proKeywords = null;
     }
   }
@@ -183,6 +187,7 @@ export class UserFormComponent implements OnInit {
     if (this._user) {
       this._isSelf = this._authService.userId === this._user.id;
       this._userForm.patchValue(this._user);
+      this._company = this._user.company;
       this.loadInnovations();
     }
   }
@@ -216,6 +221,8 @@ export class UserFormComponent implements OnInit {
         this._userForm.value['country'] = code;
       }
     }
+
+    this._userForm.get('company').reset(this._company);
 
     if (this._isEditUser) {
       const user = new User(this._userForm.value);
@@ -397,6 +404,14 @@ export class UserFormComponent implements OnInit {
 
   get proKeywords(): Array<string> {
     return this._proKeywords;
+  }
+
+  get company() {
+    return this._company;
+  }
+
+  set company(value: Clearbit) {
+    this._company = value;
   }
 
 }

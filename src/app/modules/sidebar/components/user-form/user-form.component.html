@@ -145,12 +145,13 @@
       </div>
 
       <!-- company -->
-      <div class="form-group" formGroupName="company">
+      <div class="form-group">
         <label class="form-label" for="user-form-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
         <input
           auto-complete
           class="form-input"
-          formControlName="name"
+          [(ngModel)]="company"
+          [ngModelOptions]="{standalone: true}"
           id="user-form-company"
           [min-chars]="2"
           [accept-user-input]="false"
@@ -158,7 +159,6 @@
           [list-formatter]="autocompleteCompanyListFormatter"
           [source]="companiesSuggestions"
           [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
-        <!-- (valueChanged)="userForm.get('company').reset(userForm.get('company.name').value || {})" -->
       </div>
 
       <!-- country -->
