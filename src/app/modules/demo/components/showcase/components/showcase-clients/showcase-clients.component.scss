@@ -1,0 +1,86 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#showcase-clients-component {
+  height: 100%;
+  flex-direction: column;
+
+  .icon {
+    right: 0;
+  }
+
+  .section-heading {
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-family: $font-family-oswald;
+      color: $secondary-color;
+      font-size: 1.85rem;
+
+      span {
+        color: #3E5164;
+      }
+
+    }
+
+  }
+
+}
+
+.section-card {
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  margin-bottom: -$unit-5;
+  margin-right: -$unit-5;
+
+  .card {
+    margin-bottom: $unit-5;
+    margin-right: $unit-5;
+    flex: 1 0 100px;
+    max-width: calc(17% - 1rem);
+    border: none;
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    .card-header {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      .card-title {
+        font-size: 0.75rem;
+      }
+
+    }
+
+  }
+
+  .modal-card {
+    border: $border-width-lg solid $border-color;
+
+    label {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      input[type="checkbox"] {
+        display: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+
+    &.active {
+      border-color: $success-color;
+    }
+
+  }
+
+}
