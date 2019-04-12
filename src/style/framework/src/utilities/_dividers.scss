@@ -31,3 +31,11 @@
   border: $border-width solid $border-color;
   border-radius: $border-radius;
 }
+
+
+.divider {
+  background-color: $border-color;
+  margin: $unit-2 0;
+  height: 1px;
+  overflow: hidden;
+}
