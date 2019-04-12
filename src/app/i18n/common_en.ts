@@ -282,10 +282,6 @@ export const COMMON = {
     'BY_UPDATE_DATE': 'Default'
   },
 
-  'HEADER': {
-    'SHARED_REPORTS': 'Shared reports'
-  },
-
   'MAIL_EDITOR': {
     'QUESTION': 'Which language would you like to communicate with the project owner?',
     'SUBJECT': 'Subject',

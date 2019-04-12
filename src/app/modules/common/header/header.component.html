@@ -19,17 +19,161 @@
       <div class="navigation-wrapper" id="navigation">
         <ul class="menu">
 
+          <!-- example page -->
+          <li class="menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
+            <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+               routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
+              <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
+            </a>
+          </li>
+
+          <!-- innovations page -->
+          <li class="menu-item" *ngIf="!backOfficeValue">
+            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
+              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
+            </a>
+          </li>
+
+          <!-- reports page -->
+          <li class="menu-item" *ngIf="!backOfficeValue">
+            <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
+              <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
+            </a>
+          </li>
+
+          <!-- project page -->
+          <li class="menu-item" *ngIf="!backOfficeValue">
+            <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
+              <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
+            </a>
+          </li>
+
+          <!-- admin dashboard page -->
+          <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
+            <a [routerLink]="'/user/admin'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <!-- admin user page -->
+          <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
+            <a routerLinkActive="active" [routerLink]="'/user/admin/users'" (click)="onClickLink()">
+              <span>Users</span>
+            </a>
+          </li>
+
+          <!-- admin professional page -->
+          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
+            <a routerLinkActive="active" [routerLink]="'/user/admin/professionals'" (click)="onClickLink()">
+              <span>Professionals</span>
+            </a>
+          </li>
+
+          <!-- admin community page -->
+          <!--<li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
+            <a routerLinkActive="active" [routerLink]="'/user/admin/community'" (click)="onClickLink()">
+              <span>Community</span>
+            </a>
+          </li>-->
+
+          <!-- admin projects page -->
+          <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
+            <a routerLinkActive="active" [routerLink]="'/user/admin/projects'" (click)="onClickLink()">
+              <span>Projects</span>
+            </a>
+          </li>
+
+          <!-- admin library page -->
+          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
+            <a routerLinkActive="active" [routerLink]="'/user/admin/libraries'" (click)="onClickLink()">
+              <span>Libraries</span>
+            </a>
+          </li>
+
+          <!-- admin monitoring page -->
+          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
+            <a routerLinkActive="active" [routerLink]="'/user/admin/monitoring'" (click)="onClickLink()">
+              <span>Monitoring</span>
+            </a>
+          </li>
+
+          <!-- admin settings page -->
+          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
+            <a routerLinkActive="active" [routerLink]="'/user/admin/settings'" (click)="onClickLink()">
+              <span>Settings</span>
+            </a>
+          </li>
+
+          <!-- language select dropdown -->
           <li class="menu-item">
-            <div class="header-account-dropdown" id="header-account-dropdown">
+            <div class="dropdown" id="header-lang-dropdown">
+
+            </div>
+          </li>
+
+          <!-- avatar account and dropdown -->
+          <li class="menu-item">
+            <div class="header-account-dropdown dropdown" id="header-account-dropdown">
+
               <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
-                <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? name : ''">
+                <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
                   <ng-container *ngIf="hasProfilePic()">
                     <img [src]="profilePicture" class="img-responsive" alt=" ">
                   </ng-container>
                 </figure>
               </a>
+
+              <!-- dropdown -->
+              <ul class="dropdown-menu dropdown-right">
+
+                <li class="drop-item drop-item-user">
+                  <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account drop-item-user">
+                    <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                      <ng-container *ngIf="hasProfilePic()">
+                        <img [src]="profilePicture" class="img-responsive" alt=" ">
+                      </ng-container>
+                    </figure>
+                    <span class="d-flex">
+                      <span class="text-medium text-ellipsis">{{ name }}</span>
+                      <span class="text-email text-ellipsis">{{ email }}</span>
+                    </span>
+                  </a>
+                </li>
+
+                <!-- account page -->
+                <li class="drop-item">
+                  <a [routerLink]="'/user/account'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-account text-background">
+                    {{ 'HEADER.MY_ACCOUNT' | translate }}
+                  </a>
+                </li>
+
+                <!-- admin side -->
+                <li class="drop-item" *ngIf="!backOfficeValue && canShow(1)">
+                  <a [routerLink]="'/user/admin'" routerLinkActive="active" (click)="toggleBackOfficeState(); onClickLink();" class="text-background">
+                    Admin Side
+                  </a>
+                </li>
+
+                <!-- client side -->
+                <li class="drop-item" *ngIf="backOfficeValue && canShow(1)">
+                  <a routerLinkActive="active" [routerLink]="'/user/projects'" (click)="toggleBackOfficeState(); onClickLink();" class="text-background">
+                    Client Side
+                  </a>
+                </li>
+
+                <li class="divider"></li>
+
+                <!-- log out -->
+                <li class="drop-item">
+                  <a [routerLink]="'/logout'" (click)="onClickLink()" class="text-background">{{ 'HEADER.LOG_OUT' | translate }}</a>
+                </li>
+
+              </ul>
+              <!-- dropdown -->
+
             </div>
           </li>
+          <!-- /avatar account and dropdown  -->
 
         </ul>
       </div>

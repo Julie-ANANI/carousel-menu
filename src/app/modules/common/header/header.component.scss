@@ -1,7 +1,7 @@
 @import "../../../../style/framework/src/variables";
 
 #header-component {
-  border: $border-width solid $border-color;
+  border: 1px solid $border-light-color;
 
   .navbar {
 
@@ -19,9 +19,42 @@
 
         a {
           opacity: 1;
+        }
 
-          &:hover {
+        .dropdown-menu {
 
+          .drop-item {
+            padding: 0;
+
+            a {
+              padding: 0.5rem 1.1rem;
+            }
+
+            .drop-item-user {
+              display: flex;
+              align-items: center;
+
+              span:after {
+                display: none;
+              }
+
+              .d-flex {
+                margin-left: $unit-2;
+                flex-direction: column;
+                color: $text-background-color;
+
+                .text-email {
+                  font-size: 0.65rem;
+                }
+
+              }
+
+            }
+
+          }
+
+          .divider {
+            margin: 0.5rem 1.1rem;
           }
 
         }
@@ -39,7 +72,7 @@
 
   #header-component {
 
-    .navbar {
+   /* .navbar {
       flex-direction: column;
     }
 
@@ -59,7 +92,7 @@
     .mobile-toggle {
       display: flex !important;
     }
-
+*/
   }
 
 }
@@ -72,9 +105,9 @@
       display: none !important;
     }
 
-    .navigation-wrapper {
+    /*.navigation-wrapper {
       display: inline-flex !important;
-    }
+    }*/
 
   }
 

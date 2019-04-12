@@ -19,29 +19,37 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _profilePicture: string;
 
+  userInitial: string;
+
+  email: string;
+
   name: string;
 
   constructor(private _authService: AuthService,
-              private location: Location,
+              private _location: Location,
               private _userService: UserService) {
 
     this._userService.getSelf().subscribe((response: User) => {
-      this.name = response.firstName && response.lastName ? `${response.firstName.slice(0, 1)}${response.lastName.slice(0, 1)}` :
+      this.userInitial = response.firstName && response.lastName ? `${response.firstName.slice(0, 1)}${response.lastName.slice(0, 1)}` :
         response.firstName.slice(0, 2);
+      this.email = response.email;
+      this.name = response.name;
       this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
     });
+
+    this._backOfficeValue = this._location.path().slice(5, 11) === '/admin';
 
   }
 
   ngOnInit() {
-    this._backOfficeValue = this.location.path().slice(5, 11) === '/admin';
+
   }
 
 
   /***
    * to toggle the back office value.
    */
-  toggleBackOfficeState() {
+  public toggleBackOfficeState() {
     this._backOfficeValue = !this._backOfficeValue;
   }
 
@@ -49,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   /***
    * to toggle the value of menu options display.
    */
-  toggleMenuState() {
+  public toggleMenuState() {
     this._displayMenuOptions = !this._displayMenuOptions;
   }
 
@@ -62,9 +70,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
 
-  canShow(reqLevel: number): boolean {
+  public canShow(reqLevel: number): boolean {
     return reqLevel && ( this.authService.adminLevel & reqLevel) === reqLevel;
   }
+
 
   public getLogo(): string {
     return environment.logoURL;
@@ -74,8 +83,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return environment.companyShortName;
   }
 
+
   public hasProfilePic(): boolean {
     return !!this._profilePicture && this._profilePicture !== '';
+  }
+
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi';
   }
 
   get backOfficeValue(): boolean {
@@ -88,10 +102,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get displayMenuOptions(): boolean {
     return this._displayMenuOptions;
-  }
-
-  isMainDomain(): boolean {
-    return environment.domain === 'umi';
   }
 
   get profilePicture(): string {
