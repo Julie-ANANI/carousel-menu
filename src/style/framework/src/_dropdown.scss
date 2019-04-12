@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .dropdown {
   position: relative;
@@ -17,14 +18,18 @@
     border-radius: 2px;
     list-style: none;
     overflow-y: auto;
-    transition: all 0.5s cubic-bezier(.7,0,.3,1);
     opacity: 0;
     display: none;
 
     .drop-item {
+      @include control-transition();
       margin: 0;
       font-weight: normal;
       padding: 0.5rem 1.1rem;
+
+      a {
+        display: block;
+      }
 
       &:hover {
         cursor: pointer;

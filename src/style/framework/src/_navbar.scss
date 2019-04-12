@@ -45,6 +45,7 @@
     font-weight: $font-weight-medium;
 
     .menu {
+      display: flex;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -58,14 +59,39 @@
         padding: 0 $unit-3;
 
         a {
-          @include control-transition();
+          display: inline-flex;
+          height: 100%;
+          width: 100%;
+          align-items: center;
           color: inherit;
-          opacity: 0.5;
+          position: relative;
+          transition: all 0.25s ease-out;
 
-          &:hover, &:focus, &:active, &.active {
+          span:after {
+            display: block;
+            position: absolute;
+            left: 0;
+            transform: scaleX(0);
+            content: '';
+            width: 100%;
+            height: 2px;
+            bottom: 22px;
+            visibility: hidden;
+            transform-origin: bottom left;
+            transition: all 0.25s ease-out;
+          }
+
+          &:hover {
+            cursor: pointer;
             text-decoration: none;
             color: $primary-color;
-            opacity: 1;
+
+            span:after {
+              visibility: visible;
+              background-color: $primary-color;
+              transform: scaleX(1);
+            }
+
           }
 
         }
