@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Location } from '@angular/common';
+import { UserService } from '../../../services/user/user.service';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -11,16 +13,27 @@ import { Location } from '@angular/common';
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private _backOfficeValue: boolean; // if true, then display back office menu options.
+  private _backOfficeValue: boolean = false; // if true, then display back office menu options.
 
-  private _displayMenuOptions: boolean; // on small devices if true then display menu options.
+  private _displayMenuOptions: boolean = false; // on small devices if true then display menu options.
+
+  private _profilePicture: string;
+
+  name: string;
 
   constructor(private _authService: AuthService,
-              private location: Location) { }
+              private location: Location,
+              private _userService: UserService) {
+
+    this._userService.getSelf().subscribe((response: User) => {
+      this.name = response.firstName && response.lastName ? `${response.firstName.slice(0, 1)}${response.lastName.slice(0, 1)}` :
+        response.firstName.slice(0, 2);
+      this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
+    });
+
+  }
 
   ngOnInit() {
-    this._displayMenuOptions = false;
-    this._backOfficeValue = false;
     this._backOfficeValue = this.location.path().slice(5, 11) === '/admin';
   }
 
@@ -44,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   /***
    * set the menu display value false when click on link
    */
-  onClickLink() {
+  public onClickLink() {
     this._displayMenuOptions = false;
   }
 
@@ -53,13 +66,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return reqLevel && ( this.authService.adminLevel & reqLevel) === reqLevel;
   }
 
+  public getLogo(): string {
+    return environment.logoURL;
+  }
+
+  public getCompany(): string {
+    return environment.companyShortName;
+  }
+
+  public hasProfilePic(): boolean {
+    return !!this._profilePicture && this._profilePicture !== '';
+  }
 
   get backOfficeValue(): boolean {
     return this._backOfficeValue;
-  }
-
-  getLogo(): string {
-    return environment.logoURL;
   }
 
   get authService(): AuthService {
@@ -72,6 +92,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isMainDomain(): boolean {
     return environment.domain === 'umi';
+  }
+
+  get profilePicture(): string {
+    return this._profilePicture;
   }
 
   ngOnDestroy(): void {

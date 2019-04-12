@@ -1,5 +1,40 @@
 @import "../../../../style/framework/src/variables";
 
+#header-component {
+  border: $border-width solid $border-color;
+
+  .navbar {
+
+    .mobile-menu {
+
+      .logo {
+        padding-top: 5px;
+      }
+
+    }
+
+    .navigation-wrapper {
+
+      .header-account-dropdown {
+
+        a {
+          opacity: 1;
+
+          &:hover {
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
 @media (max-width: $size-md) {
 
   #header-component {
