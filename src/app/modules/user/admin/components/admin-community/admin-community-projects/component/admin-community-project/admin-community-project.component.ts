@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SidebarInterface } from "../../../../../../../sidebar/interfaces/sidebar-interface";
 import { Innovation } from '../../../../../../../../models/innovation';
+import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
 
 @Component({
   selector: 'admin-community-project',
@@ -25,7 +26,8 @@ export class AdminCommunityProjectComponent {
 
   private _totalThreshold: number;
 
-  constructor(private _activatedRoute: ActivatedRoute) {
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _translateNotificationsService: TranslateNotificationsService) {
 
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
     this._context = {
@@ -69,6 +71,20 @@ export class AdminCommunityProjectComponent {
       title: "See Suggestions",
       animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
     };
+  }
+
+  public actionsResultCallback(response: Event) {
+    if(!!response) {
+      if(response['result'].status === 'error') {
+        this._translateNotificationsService.error('ERROR.ERROR', response['result'].message);
+      } else {
+        const message = `Operation done!`; // TODO Use a real informative message
+        this._translateNotificationsService.success('ERROR.SUCCESS', message);
+      }
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', "Empty result");
+    }
+    this._sidebarStatus.animate_state = 'inactive';
   }
 
   get sidebarStatus(): SidebarInterface {

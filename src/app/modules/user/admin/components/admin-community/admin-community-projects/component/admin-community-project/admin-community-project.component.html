@@ -91,7 +91,8 @@
       [sidebarState]="sidebarStatus.animate_state"
       [type]="sidebarStatus.type"
       [config]="sideConfig"
-      [context]="context">
+      [context]="context"
+      (callbackNotification)="actionsResultCallback($event)">
     </community-form>
   </app-sidebar>
 
