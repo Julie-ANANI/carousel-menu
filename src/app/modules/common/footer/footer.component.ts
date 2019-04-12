@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie';
-import { environment } from "../../../../environments/environment";
-import { initTranslation, TranslateService } from "../../../i18n/i18n";
+import { Component } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-footer',
@@ -9,80 +8,30 @@ import { initTranslation, TranslateService } from "../../../i18n/i18n";
   styleUrls: ['./footer.component.scss']
 })
 
-export class FooterComponent implements OnInit {
+export class FooterComponent {
 
   private _companyName: string = environment.companyName;
 
-  private _langs: Array<string>;
+  constructor (private _translateService: TranslateService) { }
 
-  private _currentLang: string;
-
-  constructor (private translateService: TranslateService,
-               private cookieService: CookieService) { }
-
-  ngOnInit(): void {
-    initTranslation(this.translateService);
-    this.lang();
-  }
-
-  private lang () {
-    this._langs = this.translate.getLangs();
-    this._currentLang = this.translateService.currentLang;
-  }
-
-  /***
-   * This is to change the lang, it is called when the user select an option.
-   * @param event
-   */
-  changeLanguage(event: any) {
-    if (event.target.value === 'French') {
-      this.propagateTranslation('fr');
-      this._currentLang = 'fr';
-    } else {
-      this.propagateTranslation('en');
-      this._currentLang = 'en';
-    }
-  }
-
-  /***
-   * Setting the lang and the cookie.
-   * @param {string} lang
-   */
-  private propagateTranslation(lang: string) {
-    this.cookieService.put('user_lang', lang || 'en');
-    this.translate.use(lang || 'en');
-  }
-
-  checkIsMainDomain(): boolean {
-    return environment.domain === 'umi';
-  }
-
-  get companyName(): string {
-    return `${ this._companyName } ${ this.checkIsMainDomain() ? '' : ' by United Motion Ideas' }`;
-  }
-
-  getLogo(): string {
-    return environment.logoURL;
-  }
-
-  get translate(): TranslateService {
-    return this.translateService;
-  }
-
-  get copyrightDate(): string {
+  public get copyrightDate(): string {
     return (new Date()).getFullYear().toString();
   }
 
-  get langs(): Array<string> {
-    return this._langs;
+  private static _checkIsMainDomain(): boolean {
+    return environment.domain === 'umi';
   }
 
-  get currentLang(): string {
-    return this._currentLang;
+  public get companyName(): string {
+    return `${ this._companyName } ${ FooterComponent._checkIsMainDomain() ? '' : ' by United Motion Ideas' }`;
   }
 
-  set currentLang(value: string) {
-    this._currentLang = value;
+  public getTermsLink(): string {
+    return this._translateService.currentLang === 'en' ? 'https://www.umi.us/terms/' : 'https://www.umi.us/fr/mentions-legales/';
+  }
+
+  public getPrivacyLink(): string {
+    return this._translateService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/confidentialite/';
   }
 
 }
