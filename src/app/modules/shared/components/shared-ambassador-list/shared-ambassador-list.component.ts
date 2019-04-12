@@ -93,7 +93,9 @@ export class SharedAmbassadorListComponent {
         this._pros.forEach(pro => {
           pro.sent = pro.messages && pro.messages.length > 0;
           if(pro['innovations'] && !!pro['innovations'].find( inno => { return this._context['innovationId'] === inno._id;} ) ) {
-            pro['self'] = true;
+            pro['self'] = 'true';
+          } else {
+            pro['self'] = 'false';
           }
         });
 
