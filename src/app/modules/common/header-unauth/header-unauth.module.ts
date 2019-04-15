@@ -11,6 +11,7 @@ import { AutocompleteService } from '../../../services/autocomplete/autocomplete
 
 import { SidebarModule}  from '../../sidebar/sidebar.module';
 import { SidebarSignupFormModule } from '../../sidebar/components/signup-form/sidebar-signup-form.module';
+import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SidebarSignupFormModule } from '../../sidebar/components/signup-form/si
     FormsModule,
     ReactiveFormsModule,
     SidebarModule,
-    SidebarSignupFormModule
+    SidebarSignupFormModule,
+    ModalModule
   ],
   declarations: [
     HeaderUnauthComponent
