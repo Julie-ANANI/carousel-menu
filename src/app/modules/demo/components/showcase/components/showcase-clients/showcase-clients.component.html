@@ -1,7 +1,76 @@
-<main class="body-wrapper" id="showcase-clients-component">
+<section id="showcase-clients-component" class="relative d-flex">
 
-  {{ topClients.length }} {{ 'SHOWCASE.CLIENTS' | translate }}
+  <!-- bar icon -->
+  <ng-container *ngIf="adminPass && topClients.length > 0">
+    <div class="icon icon-meta absolute" (click)="openModal($event)">
+      <i class="fas fa-2x fa-bars"></i>
+    </div>
+  </ng-container>
 
-  <p *ngFor="let client of topClients" [innerHtml]="client"></p>
+  <!-- section heading -->
+  <div class="section-heading">
 
-</main>
+    <!-- heading 1st -->
+    <h2 class="text text-notify">Clients</h2>
+
+    <!-- heading count -->
+    <h3 class="text-normal">{{ totalClients.length }} <span> companies tested their market</span></h3>
+
+  </div>
+  <!-- /section heading -->
+
+  <!-- section innovations -->
+  <div class="section-card d-flex text-center">
+    <div *ngFor="let client of topClients" class="card flex-centered animate-appear">
+
+      <div class="card-header">
+        <div class="card-title text-background"><span>{{ client }}</span></div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /section innovations -->
+
+  <!-- section see more -->
+  <ng-container *ngIf="topClients.length > 6">
+    <div class="text-right section-light-pad rm-pad-bottom">
+      <span class="text-link" (click)="openModal($event)">See More</span>
+    </div>
+  </ng-container>
+
+</section>
+
+
+<!-- modal to select clients -->
+<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'">
+
+  <div class="section-card d-flex text-center">
+    <ng-container *ngFor="let client of totalClients">
+      <div class="card flex-centered modal-card badge badge-save" [ngClass]="{ 'active': activeClient(client) && adminPass }">
+
+        <i class="fas fa-check-circle"></i>
+
+        <ng-container *ngIf="adminPass">
+          <label class="absolute">
+            <input type="checkbox" (change)="onChangeClient($event, client)" [checked]="activeClient(client)">
+          </label>
+        </ng-container>
+
+        <div class="card-header">
+          <div class="card-title text-background"><span>{{ client }}</span></div>
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+
+  <ng-container *ngIf="adminPass">
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-cancel">Cancel</button>
+      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
+    </div>
+  </ng-container>
+
+</app-modal>
+<!-- /modal to select innovations -->
