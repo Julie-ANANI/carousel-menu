@@ -2,42 +2,26 @@
   <div class="column col-11 col-xs-12 col-mx-auto">
     <nav class="navbar">
 
-      <!-- logo -->
-      <div class="logo">
-        <a routerLink="/" class="gtm-menu-logo">
-          <img src="{{ getLogo() }}" [alt]=" " width="110px" height="33px">
+      <!-- copyright -->
+      <div class="copyright-wrapper">
+        <span>© {{ copyrightDate }} {{ companyName }}</span>
+      </div>
+
+      <!-- terms and privacy -->
+      <div class="privacy-wrapper text-medium">
+
+        <a [href]="getTermsLink()" target="_blank" rel="noopener" class="gtm-legal-notice c-hand">
+          {{ 'FOOTER.TERMS' | translate }}
         </a>
-      </div>
 
-      <!-- info -->
-      <div class="info">
-        {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
-          <span *ngIf="checkIsMainDomain()">
-            |
-            <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
-               target="_blank" rel="noopener" class="gtm-legal-notice">
-              {{ 'FOOTER.LEGAL_NOTICE' | translate }}
-            </a>
-            |
-            <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')"
-               target="_blank" rel="noopener" class="gtm-end-user-licence-agreement">
-              {{ 'FOOTER.TERMS' | translate }}
-            </a>
-          </span>
-      </div>
+        |
 
-      <!-- language -->
-      <div class="lang">
-        <label class="form-switch" for="setLang">
-          <select class="form-select" id="setLang" (change)="changeLanguage($event)">
-            <option *ngFor="let lang of langs" [selected]="lang === currentLang">
-              {{ 'COMMON.LANG.' + lang |  uppercase | translate }}
-            </option>
-          </select>
-        </label>
+        <a [href]="getPrivacyLink()" target="_blank" rel="noopener" class="gtm-end-user-licence-agreement c-hand">
+          {{ 'FOOTER.PRIVACY' | translate }}
+        </a>
+
       </div>
 
     </nav>
   </div>
 </section>
-

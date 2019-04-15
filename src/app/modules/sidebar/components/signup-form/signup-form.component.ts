@@ -4,6 +4,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { environment } from '../../../../../environments/environment';
 import { countries } from '../../../../models/static-data/country';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-signup-form',
@@ -15,7 +16,7 @@ export class SignupFormComponent {
 
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
-      this.buildForm();
+      this._buildForm();
       this._signupForm.reset();
     }
   }
@@ -30,12 +31,15 @@ export class SignupFormComponent {
 
   private _countries = countries;
 
-  constructor(private formBuilder: FormBuilder,
-              private autoCompleteService: AutocompleteService) { }
+  private _displayLoading: boolean = false;
+
+  constructor(private _formBuilder: FormBuilder,
+              private _autoCompleteService: AutocompleteService,
+              private _translatesService: TranslateService) { }
 
 
-  private buildForm() {
-    this._signupForm = this.formBuilder.group( {
+  private _buildForm() {
+    this._signupForm = this._formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       companyName: ['', [Validators.required]],
@@ -47,11 +51,11 @@ export class SignupFormComponent {
   }
 
 
-  onSuggestCountries() {
+  public onSuggestCountries() {
     this._signupForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
       this._displayCountrySuggestion = true;
       this._countriesSuggestion = [];
-      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
+      this._autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
           this._displayCountrySuggestion = false;
         } else {
@@ -67,25 +71,36 @@ export class SignupFormComponent {
   }
 
 
-  onValueSelect(value: string) {
+  public onValueSelect(value: string) {
     this._signupForm.get('country').setValue(value);
     this._displayCountrySuggestion = false;
   }
 
 
-  onContinue() {
+  public onContinue() {
+
+    this._displayLoading = true;
+
     for (let code in this._countries) {
       if (this._countries[code] === this._signupForm.get('country').value) {
         this._signupForm.value['country'] = code;
       }
     }
+
     this.finalOutput.emit(this._signupForm);
+
   }
 
 
-  checkIsMainDomain(): boolean {
+  public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
+
+
+  public getTermsLink(): string {
+    return this._translatesService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/confidentialite/';
+  }
+
 
   get companyName(): string {
     return environment.companyShortName;
@@ -105,6 +120,10 @@ export class SignupFormComponent {
 
   get countries(): any {
     return this._countries;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
   }
 
 }
