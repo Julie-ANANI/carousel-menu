@@ -1,52 +1,62 @@
-<div class="section-container">
-  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
-
-    <app-workflow
-      [id]="getId()"
-      [emailsObject]="emailToEdit"
-      (emailChange)="updateEmail($event)"
-      [signatures]="signatures"
-      [inputLanguage]="language">
-    </app-workflow>
-  </app-sidebar>
+<section id="admin-emails-library-component">
 
   <div class="text-right">
-    <button (click)="newEmailName = 'email'" class="btn btn-primary">
-      Créer un nouvel email
-    </button>
+    <button type="button" (click)="onClickAdd()" class="btn btn-primary">Add</button>
   </div>
 
-  <!--
-  <a [ngClass]="{'text-warning': language === 'en'}" (click)="changeLanguage('en')">EN</a>
-  <a [ngClass]="{'text-warning': language === 'fr'}" (click)="changeLanguage('fr')">FR</a>-->
-
-  <app-shared-table
-    [config]="config"
-    (configChange)="getEmails($event)"
-    [data]="tableInfos"
-    (editRow)="editEmail($event)"
-    (removeRows)="removeEmails($event)">
-  </app-shared-table>
-
-  <!-- MODAL : Création d'un nouvel email -->
-  <div class="modal" [ngClass]="{'active': newEmailName != null}">
-    <div class="modal-overlay" (click)="(newEmailName = null) && $event.preventDefault()"></div>
-    <div class="modal-container">
-      <div class="modal-header">
-        <div class="modal-title h5">Créer un nouvel email</div>
-      </div>
-      <div class="modal-body">
-        <div class="content">
-          Choisissez un nom pour le nouvel email
-          <input class="form-input" type="text" [(ngModel)]="newEmailName"/>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" (click)="createEmail()">Créer</button>
-        <button class="btn btn-link" (click)="(newEmailName = null) && $event.preventDefault()">
-          {{ 'COMMON.BUTTON.CANCEL' | translate }}
-        </button>
-      </div>
+  <ng-container *ngIf="emails.length > 0">
+    <div class="section-light-pad rm-pad-bottom">
+      <app-shared-table
+        [config]="config"
+        (configChange)="getEmails($event)"
+        [data]="tableInfos"
+        (editRow)="editEmail($event)"
+        (removeRows)="removeEmails($event)">
+      </app-shared-table>
     </div>
-</div>
-</div>
+  </ng-container>
+
+  <ng-container *ngIf="emails.length === 0">
+    <div class="section-pad rm-pad-bottom">
+      <app-message-space [widthMax]="'320px'">
+        Don't have any emails? Create the email by clicking on "Add" button.
+      </app-message-space>
+    </div>
+  </ng-container>
+
+</section>
+
+
+<!-- sidebar to edit email -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-workflow
+    [id]="getId()"
+    [emailsObject]="emailToEdit"
+    (emailChange)="updateEmail($event)"
+    [signatures]="signatures"
+    [inputLanguage]="language">
+  </app-workflow>
+</app-sidebar>
+<!-- /sidebar to edit email -->
+
+<!-- modal to add the new email -->
+<app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+
+  <div class="form-group">
+    <label class="form-label" for="add-email">Email Name</label>
+    <input
+      type="text"
+      id="add-email"
+      [(ngModel)]="newEmailName"
+      name="emailName"
+      placeholder="Enter the email name"
+      class="form-input">
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()" [disabled]="!newEmailName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to add the new email -->

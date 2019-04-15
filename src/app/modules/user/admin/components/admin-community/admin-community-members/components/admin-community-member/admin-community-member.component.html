@@ -1,13 +1,13 @@
 <ng-container *ngIf="professional">
-  <section id="admin-community-member-component">
+  <section id="admin-community-member-component" class="section-light-pad rm-pad-top">
 
     <!-- section header -->
-    <div class="section-header">
+    <div class="section-header section-light-pad rm-pad-bottom">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- name -->
         <div class="name-wrapper">
-          <h1>
+          <h1 class="title-primary text-background">
             <ng-container *ngIf="professional.firstName">{{ professional.firstName }}</ng-container>
             <ng-container *ngIf="professional.lastName"> {{ professional.lastName }}</ng-container>
           </h1>
@@ -108,20 +108,21 @@
     <!-- /section header -->
 
     <!-- section details -->
-    <div class="section-details">
+    <div class="section-details section-light-pad rm-pad-bottom">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- save button -->
-        <div class="save-wrapper text-right" [ngClass]="{ 'active': saveChanges }">
-          <div class="shape circle circle-sm"><i class="fas fa-save"></i></div>
-          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSave()">Save</button>
+        <div class="text-right">
+          <button type="button" class="badge badge-save btn btn-primary btn-sm" [ngClass]="{ 'active': saveChanges }" (click)="onClickSave()">
+            <span>Save</span><i class="fas fa-save"></i>
+          </button>
         </div>
 
         <!-- information -->
-        <div class="info-wrapper">
+        <div class="info-wrapper d-flex">
 
           <!-- column 1 -->
-          <div class="info-body">
+          <div class="info-body d-flex">
 
             <!-- first name -->
             <div class="form-group">
@@ -257,7 +258,7 @@
                 (keypress)="onSuggestCountries(country.value)">
               <ul
                 *ngIf="country.value"
-                class="suggestion"
+                class="input-suggestion"
                 [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
                 <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onChangeCountry(suggestion)">
                   {{ suggestion }}
@@ -318,7 +319,7 @@
           </div>
 
           <!-- column 3 -->
-          <div class="info-body">
+          <div class="info-body tag-info-body">
             <ng-container *ngIf="tagsRest.length > 0 || tagsProfessional.length > 0">
 
               <label class="form-label">Sector Tags</label>
@@ -365,26 +366,42 @@
         </div>
         <!-- /information -->
 
+        <!-- emails -->
+        <ng-container>
+          <div class="section-light-pad rm-pad-bottom">
+            <app-shared-table [config]="configEmail" [data]="" (editRow)="onClickEmailShow($event)"></app-shared-table>
+          </div>
+        </ng-container>
+        <!-- emails -->
+
+        <!-- participated in projects -->
+        <ng-container>
+          <div class="section-light-pad rm-pad-bottom">
+            <app-shared-table [config]="configProject" [data]="" (editRow)="onClickProjectShow($event)"></app-shared-table>
+          </div>
+        </ng-container>
+        <!-- participated in projects -->
+
         <!-- project suggested -->
         <ng-container *ngIf="innovationsSuggested.length > 0">
-          <div class="suggested-wrapper">
+          <div class="suggested-wrapper section-light-pad rm-pad-bottom">
 
             <!-- heading -->
-            <h5>Project Suggested</h5>
+            <h5 class="title-secondary text-notify text-normal">Project Suggested</h5>
 
             <!-- innovations -->
-            <div class="card-wrapper">
+            <div class="card-wrapper d-flex text-center">
               <div *ngFor="let innovation of innovationsSuggested | slice:0:5;" class="card">
 
                 <!-- image -->
-                <div class="card-image">
+                <div class="card-image relative">
                   <img [src]="getImageSrc(innovation)" alt=" ">
-                  <button type="button" class="btn btn-primary btn-sm" (click)="onClickPush(innovation)">Push it</button>
+                  <button type="button" class="btn btn-primary btn-xs absolute" (click)="onClickPush(innovation)">Push it</button>
                 </div>
 
                 <!-- card header -->
                 <div class="card-header">
-                  <div class="card-title">{{ innovation.title }}</div>
+                  <div class="card-title text-secondary text-normal"><span>{{ innovation.title }}</span></div>
                 </div>
 
               </div>

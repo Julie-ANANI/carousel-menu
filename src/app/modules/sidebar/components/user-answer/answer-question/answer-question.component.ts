@@ -16,8 +16,11 @@ import { Tag } from '../../../../../models/tag';
 export class AnswerQuestionComponent {
 
   @Input() innoid: string;
+
   @Input() question: Question;
+
   @Input() editMode: boolean;
+
   @Input() adminMode: boolean;
 
   @Input() set fullAnswer(value: Answer) {
@@ -26,6 +29,7 @@ export class AnswerQuestionComponent {
   }
 
   _commenting: boolean;
+
   _fullAnswer: Answer;
 
   constructor(private _translateService: TranslateService,

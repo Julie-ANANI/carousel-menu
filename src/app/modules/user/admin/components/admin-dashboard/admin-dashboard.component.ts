@@ -30,7 +30,7 @@ export class AdminDashboardComponent implements OnInit {
 
   public nbDaysOfStats = 1;
 
-  sidebarTemplateValue: SidebarInterface = {};
+  private _sidebarTemplateValue: SidebarInterface = {};
 
   private _selectedInnovation: InnovCard;
 
@@ -123,15 +123,15 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  getNextWeek() {
-    this._dateNow.setDate(this._dateNow.getDate() + 7);
+  onClickLast() {
+    this._dateNow.setDate(this._dateNow.getDate() - 7);
     this.dashboardService.getNextDateSend(this._dateNow.toString()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });
   }
 
-  getLastWeek() {
-    this._dateNow.setDate(this._dateNow.getDate() - 7);
+  onClickNext() {
+    this._dateNow.setDate(this._dateNow.getDate() + 7);
     this.dashboardService.getNextDateSend(this._dateNow.toString()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });
@@ -185,18 +185,14 @@ export class AdminDashboardComponent implements OnInit {
     if (this._selectedBatch !== null) {
       this.innovationService.getInnovationCard(this._selectedBatch.innovation.innovationCards[0].id).pipe(first()).subscribe((card: any) => {
         this._selectedInnovation = card;
-        this.sidebarTemplateValue = {
-          animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-          title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
+        this._sidebarTemplateValue = {
+          animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+          title: 'SIDEBAR.TITLE.PREVIEW',
           size: '726px'
         };
       });
     }
 
-  }
-
-  closeSidebar(value: SidebarInterface) {
-    this.sidebarTemplateValue.animate_state = value.animate_state;
   }
 
   get refreshNeededEmitter(): Subject<any> {
@@ -225,6 +221,14 @@ export class AdminDashboardComponent implements OnInit {
 
   get spinnerDisplay(): boolean {
     return this._spinnerDisplay;
+  }
+
+  get sidebarTemplateValue(): SidebarInterface {
+    return this._sidebarTemplateValue;
+  }
+
+  set sidebarTemplateValue(value: SidebarInterface) {
+    this._sidebarTemplateValue = value;
   }
 
 }

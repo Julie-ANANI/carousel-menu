@@ -1,0 +1,155 @@
+@import "variables";
+@import "mixins";
+
+.navbar, .sidebar-navbar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 75px;
+  position: relative;
+
+  .mobile-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 75px;
+    margin: 0;
+    font-size: $font-size-md;
+    color: $text-background-color;
+    font-weight: $font-weight-medium;
+
+    i {
+      font-size: $font-size-md;
+      margin-right: $unit-2;
+    }
+
+  }
+
+  .logo {
+    height: 75px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navigation-wrapper, .sidebar-navigation-wrapper {
+    font-size: $font-size-sm;
+    color: $background-color;
+    font-weight: $font-weight-medium;
+
+    .menu {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      .menu-item, .sidebar-menu-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 75px;
+        margin: 0;
+        padding: 0 $unit-3;
+
+        a {
+          display: inline-flex;
+          height: 100%;
+          width: 100%;
+          align-items: center;
+          color: inherit;
+          position: relative;
+          transition: all 0.25s ease-out;
+
+          > span:after {
+            display: block;
+            position: absolute;
+            left: 0;
+            transform: scaleX(0);
+            content: '';
+            width: 100%;
+            height: 2px;
+            bottom: 22px;
+            visibility: hidden;
+            transform-origin: bottom left;
+            transition: all 0.25s ease-out;
+          }
+
+          &:hover {
+            cursor: pointer;
+            text-decoration: none;
+            color: $primary-color;
+
+            > span:after {
+              visibility: visible;
+              background-color: $primary-color;
+              transform: scaleX(1);
+            }
+
+          }
+
+        }
+
+      }
+
+      .menu-item:last-child {
+        padding-right: 0;
+      }
+
+    }
+
+  }
+
+}
+
+.sidebar-navbar {
+  min-height: unset;
+
+  .sidebar-navigation-wrapper {
+    width: 100%;
+
+    .menu {
+      flex-direction: column;
+
+      .sidebar-menu-item {
+        height: unset;
+        width: 100%;
+        display: flex;
+        padding: 0;
+        border-bottom: 1px solid $border-color;
+
+        &.sidebar-item-user {
+          background-color: $bg-dropdown-color;
+          border-bottom: none;
+
+          .d-flex {
+            margin-left: $unit-2;
+            flex-direction: column;
+            color: $text-background-color;
+            word-break: break-all;
+            max-width: 160px;
+
+            .text-email {
+              font-size: 0.65rem;
+            }
+
+          }
+
+        }
+
+        span:after {
+          display: none !important;
+        }
+
+        a {
+          padding: $unit-3 1.1rem;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+

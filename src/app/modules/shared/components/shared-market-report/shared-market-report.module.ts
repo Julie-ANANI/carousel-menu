@@ -9,7 +9,6 @@ import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module'
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { RouterModule } from '@angular/router';
-import { ProgressBarModule } from '../../../utility-components/progress-bar/progress-bar.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { SidebarUserAnswerModule } from '../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
@@ -21,7 +20,8 @@ import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
-import { ModalModule } from '../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
+
 
 /***
  * Components
@@ -58,7 +58,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     NgxPageScrollModule,
     SidebarModule,
     RouterModule,
-    ProgressBarModule,
     SharedLoaderModule,
     FormsModule,
     ReactiveFormsModule,

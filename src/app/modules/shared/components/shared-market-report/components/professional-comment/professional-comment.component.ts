@@ -9,8 +9,9 @@ import { Answer } from '../../../../../../models/answer';
 
 export class SharedMarketCommentComponent {
 
-  @Input() public answer: Answer;
-  @Input() public questionId: string;
+  @Input() answer: Answer;
+
+  @Input() questionId: string;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 

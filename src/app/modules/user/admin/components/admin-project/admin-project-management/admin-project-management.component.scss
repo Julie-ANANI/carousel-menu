@@ -1,4 +1,4 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/src/variables";
 
 #admin-followed {
   margin-top: 20px;
@@ -16,7 +16,7 @@
     min-height: 40px;
     display: flex;
     justify-content: space-between;
-    align-items: left;
+    align-items: flex-end;
 
     label.form-switch {
       width: 33%;
@@ -24,6 +24,9 @@
   }
 
   .project-summary {
+
+    font-size: $font-size-md;
+
     div {
       height: 73px;
       padding-left: 20px;
@@ -35,7 +38,7 @@
     }
 
     h6 {
-      font-size: 1rem;
+      font-size: $font-size-md;
       width: 100px;
       color: white;
     }
@@ -131,7 +134,7 @@
       margin-left: 5px;
     }
     .happy {
-      color: $validation-color;
+      color: $success-color;
     }
     .normal {
       color: $progress-color;

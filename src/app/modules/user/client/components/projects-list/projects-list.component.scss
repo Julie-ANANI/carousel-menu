@@ -2,66 +2,44 @@
 
 #projects-list-component {
 
-  .section-no-project {
-    padding-top: 3.15rem;
-    text-align: center;
-  }
+  .card-wrapper {
+    margin-bottom: -1.5rem;
 
+    .card-project {
+      margin-bottom: 1.5rem;
 
-  .section-projects-list {
-    padding-top: 3.15rem;
+      .card-content {
+        width: 100%;
 
-    .project-wrapper {
+        img {
+          border-radius: $border-radius;
+          margin-right: $unit-5;
+          width: 120px;
+          height: 100px;
 
-      .content-outer {
-        margin-bottom: 1.57rem;
-
-        .content {
-          display: inline-flex;
-          width: 100%;
-
-          img {
-            border-radius: 3px;
-            width: 120px;
-            height: 100px;
-            margin-right: 1.2rem;
-          }
-
-          img:hover {
-            box-shadow: $box-shadow-hover;
+          &:hover {
+            box-shadow: $box-shadow-hover-umi;
             cursor: pointer;
           }
 
-          .project-description {
-            border-bottom: 1px solid $border;
-            width: 100%;
+        }
 
-            span {
-              font-size: 1.4rem;
-            }
+        .project-description {
+          border-bottom: $border-width solid $border-color;
+          width: 100%;
 
-            span:hover {
-              color: $primary;
-              cursor: pointer;
-            }
+          a span {
+            font-size: 1.1rem;
+          }
 
-            .date-text {
-              margin-top: 0.95rem;
-              font-size: 0.875rem;
-              color: $meta;
-              font-weight: 600;
-            }
+          .text {
+            font-size: $font-size-sm;
+            margin-top: 0.75rem;
+            margin-bottom: $unit-2;
+          }
 
-            .text-link {
-              font-size: 0.875rem;
-              font-weight: 600;
-              color: $alert;
-            }
-
-            .text-link:hover {
-              color: $alert;
-            }
-
+          .icon {
+            margin-left: 0;
           }
 
         }

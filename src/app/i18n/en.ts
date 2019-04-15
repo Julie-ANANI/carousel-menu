@@ -29,6 +29,9 @@ import { RESET_PASSWORD } from '../modules/common/login/components/reset-passwor
 import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/en';
 import { TABLE } from '../modules/table/i18n/en';
 import { SIDEBAR } from '../modules/sidebar/i18n/en';
+import { SHARED_PROJECT_SETTINGS } from '../modules/shared/components/shared-project-settings-component/i18n/en';
+import { SHARED_PROJECT_EDIT } from '../modules/shared/components/shared-project-edit-cards-component/i18n/en';
+import { SHOWCASE } from '../modules/demo/components/showcase/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -61,5 +64,8 @@ export const en = {
   'RESET_PASSWORD': RESET_PASSWORD,
   'EDIT_WORKFLOW': EDIT_WORKFLOW,
   'TABLE': TABLE,
-  'SIDEBAR': SIDEBAR
+  'SIDEBAR': SIDEBAR,
+  'SHARED_PROJECT_SETTINGS': SHARED_PROJECT_SETTINGS,
+  'SHARED_PROJECT_EDIT': SHARED_PROJECT_EDIT,
+  'SHOWCASE': SHOWCASE
 };

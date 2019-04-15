@@ -1,4 +1,38 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/src/variables";
+
+#pro-tag-component {
+  align-items: center;
+  font-size: $font-size-sm;
+  flex-direction: column;
+  height: 100%;
+
+  .flag-wrapper {
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-wrapper {
+    flex-direction: column;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+
+    .text {
+      font-size: 0.75rem;
+    }
+
+  }
+
+  .tag-wrapper {
+    margin: -$unit-1;
+
+    .label.label-tag:hover {
+      background-color: $primary-color;
+      cursor: pointer;
+    }
+
+  }
+
+}
 
 .pro-tag-wrapper {
   height: 100%;
@@ -14,9 +48,7 @@
     margin-bottom: .6rem;
   }
 
-  .flag-wrapper {
-    margin-bottom: .6rem;
-  }
+
 
   .detail-wrapper {
     flex: 1 0 auto;
@@ -26,20 +58,6 @@
     text-align: center;
     flex-direction: column;
 
-    .name-wrapper {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    .job-wrapper {
-      font-size: 0.9375rem;
-      color: $background-color;
-    }
-
-    .company-wrapper {
-      color: $meta-color;
-      font-weight: 600;
-    }
 
   }
 

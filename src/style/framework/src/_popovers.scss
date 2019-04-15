@@ -1,13 +1,13 @@
 @import "variables";
+@import "cards";
 
 .popover {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
 
   .popover-container {
     left: 50%;
     opacity: 0;
-    padding: $layout-spacing;
     position: absolute;
     top: 0;
     transform: translate(-50%, -50%) scale(0);
@@ -69,6 +69,7 @@
 
   .card {
     border: 0;
+    padding: $layout-spacing;
   }
 
 }

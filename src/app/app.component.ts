@@ -6,6 +6,8 @@ import { initTranslation, TranslateService } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { environment } from '../environments/environment';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -26,27 +28,35 @@ export class AppComponent implements OnInit {
     clickToClose: true
   };
 
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateService: TranslateService,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private mouseService: MouseService) {}
+              private mouseService: MouseService) {
 
-  ngOnInit(): void {
-
-    this._setFavicon();
-    //this._setSwellRTScript();
+    this.setFavicon();
 
     initTranslation(this.translateService);
 
+  }
+
+
+  ngOnInit(): void {
+
+    //this._setSwellRTScript();
+
     if (this.authService.isAcceptingCookies) {
-      this.authService.initializeSession().subscribe(() => {
+      this.authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
         }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {timeOut: 0})
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR', { timeOut: 0 })
         }
       );
     }
+
   }
+
 
   /***
    * This is to listen the click event on the page.
@@ -56,12 +66,9 @@ export class AppComponent implements OnInit {
     this.mouseService.setClickEvent(event);
   }
 
-  get notificationsOptions(): Options {
-    return this._notificationsOptions;
-  }
 
   // Favicon
-  private _setFavicon() {
+  private setFavicon() {
     if (isPlatformBrowser(this.platformId)) {
       const linkElement = document.createElement('link');
       linkElement.setAttribute('id', 'theicon');
@@ -115,6 +122,15 @@ export class AppComponent implements OnInit {
     }
     document.head.appendChild( linkElement );
   }*/
+
+
+  get notificationsOptions(): Options {
+    return this._notificationsOptions;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
 
 }
 

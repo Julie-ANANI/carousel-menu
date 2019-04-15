@@ -1,6 +1,8 @@
 export const ERROR = {
   'ERROR': 'Oups..',
 
+  'ERROR_EN': 'Oups...',
+
   'SUCCESS': 'Succès',
 
   'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment. Veuillez réessayer !',
@@ -10,6 +12,8 @@ export const ERROR = {
   'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
 
   'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau !',
+
+  'FETCHING_ERROR_EN': 'We are having trouble while fetching the data. Please try to reload the page again!',
 
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Veuillez réessayer !',
 
@@ -27,8 +31,6 @@ export const ERROR = {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
     'TARGETING_FORM': 'Il manque quelques informations dans l\'onglet "Ciblage".'
   },
-
-  'BACK_TO_HOME': 'Retour à la page d\'accueil.',
 
   'LOGIN': {
     'WELCOME': 'Bienvenue !',
@@ -146,7 +148,7 @@ export const ERROR = {
       'STOPPED': 'Le batch a été arrêté avec succès.',
       'ALREADY_STARTED': 'Le batch a déjà été lancé. Il ne peut pas être défait.',
       'DELETED': 'Le batch a été supprimé avec succès.',
-      'FREEZED': 'Le batch a été congelé avec succès.',
+      'FREEZED': 'Le batch a été mis en pause avec succès.',
       'UPDATED': 'Le batch a été mis à jour avec succès.',
     },
     'SEARCH': {

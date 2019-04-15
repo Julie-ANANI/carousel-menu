@@ -1,42 +1,55 @@
 @import "../../../../../../../../style/framework/src/variables";
+@import "../../../../../../../../style/framework/src/mixins";
 
 #innovation-card-print {
   display: none;
 }
 
-
 #setup-component {
-  padding-top: 0;
-  padding-bottom: 0;
-
 
   .section-header {
-    padding-top: 1.57rem;
 
-    .content {
-      display: flex;
+    .content-wrapper {
       flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
 
-      .buttons-wrapper {
-        display: flex;
+      .title-primary {
+        font-size: 1.35rem;
+      }
+
+      .button-wrapper {
+        list-style: none;
         flex-wrap: wrap;
-        justify-content: flex-start;
-        margin-bottom: .9375rem;
+        margin-top: 0;
+        margin-left: 0;
+        margin-bottom: 0.75rem;
 
-        span {
-          margin-right: 1.2rem;
-          margin-bottom: .6rem;
+        li {
+          margin-top: 0;
+          margin-right: $unit-5;
+          margin-bottom: $unit-2;
+          position: relative;
+
+          &:last-child {
+            margin-right: 0;
+          }
+
         }
 
-        .circle-check {
+        .shape {
+          position: absolute;
+          right: 0;
           margin-top: -12px;
-          margin-left: -11px;
+          margin-right: -11px;
           visibility: hidden;
+          z-index: $zindex-0;
 
-          i {
-            color: white;
+          &.circle {
+            width: 25px;
+            height: 25px;
+          }
+
+          .fas {
+            color: $light-color;
           }
 
         }
@@ -44,9 +57,9 @@
         .save-disabled {
 
           .ghost-primary {
-            border-color: $border !important;
-            color: $button-disabled-text !important;
-            background-color: $border !important;
+            border-color: $button-border-color !important;
+            color: $button-disabled-text-color !important;
+            background-color: $button-disabled-bg-color !important;
             cursor: not-allowed;
           }
 
@@ -55,21 +68,20 @@
         .save-active {
 
           .ghost-primary {
-            border-color: $success !important;
-            color: #262831  !important;
+            border-color: $success-color !important;
+            color: #262831 !important;
+
+            &:hover {
+              background-color: $hover-background-color !important;
+              box-shadow: none;
+            }
+
           }
 
-          .ghost-primary:hover {
-            background-color: $hover-background !important;
-            box-shadow: none;
-          }
-
-          .circle-check {
-            background: $success !important;
+          .shape {
+            background-color: $success-color !important;
+            border-color: $success-color;
             visibility: visible;
-            animation-name: fadeIn;
-            animation-duration: .5s;
-            animation-timing-function: ease-in-out;
           }
 
         }
@@ -79,7 +91,6 @@
     }
 
   }
-
 
   .section-tabs {
 
@@ -87,37 +98,26 @@
 
       .tab-item {
         min-width: 150px;
-      }
-
-      a {
-        border-bottom-width: 4px;
-        margin-right: 1.2rem;
-
-        .btn-round {
-          display: inline-flex;
-          width: 35px;
-          height: 35px;
-          margin-right: 0.9375rem;
-        }
-
+        margin-right: $unit-5;
       }
 
       .pitch-check, .targeting-check, .survey-check {
-        background: $border;
-        color: $text-primary;
-        font-weight: 600;
+        background: $border-color;
+        color: $text-primary-color;
+        font-weight: $font-weight-medium;
         font-size: 10px;
       }
 
       .fa-check {
         margin-right: 0;
-        font-size: 14px;
+        font-size: $font-size-sm;
       }
 
       .complete {
-        background-color: $success;
-        transition: all 0.15s ease-in-out;
-        color: white;
+        @include control-transition();
+        background-color: $success-color;
+        color: $light-color;
+        border-color: $success-color;
       }
 
     }
@@ -125,17 +125,10 @@
   }
 
 
-  .section-different {
-    padding-top: 3.15rem;
-  }
-
-
 }
 
 
-/********************************** Media ***************************************/
-
-@media (min-width: 840px) {
+@media (min-width: $size-md) {
 
   #setup-component {
 
@@ -143,7 +136,7 @@
       position: sticky;
       background-color: white;
       top: 0;
-      box-shadow: $box-shadow;
+      box-shadow: $box-shadow-hover-umi;
       z-index: 11;
     }
 

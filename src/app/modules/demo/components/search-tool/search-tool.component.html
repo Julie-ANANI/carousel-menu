@@ -1,0 +1,244 @@
+<div id="search-tool-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- section search bar -->
+    <section class="section-search section-pad rm-pad-bottom">
+      <form [formGroup]="searchForm" (ngSubmit)="onClickSearch()" autocomplete="off">
+        <div class="form-group relative">
+
+          <label for="search-form-input"></label>
+          <input
+            class="form-input"
+            formControlName="keywords"
+            id="search-form-input"
+            type="text">
+
+          <span class="search-icon absolute text-notify c-hand" (click)="onClickSearch()"><i class="fas fa-search"></i></span>
+
+        </div>
+      </form>
+    </section>
+    <!-- /section search bar -->
+
+    <!-- section showing video when no search -->
+    <ng-container *ngIf="noResult">
+      <section class="section-pad rm-pad-bottom" [ngClass]="{ 'animate-disappear': searchStarted }">
+        <video class="video-responsive" autoplay loop>
+          <source src="https://res.cloudinary.com/umi/video/upload/v1554473766/app/videos/search-tool/demo.mp4" type="video/mp4">
+        </video>
+      </section>
+    </ng-container>
+    <!-- /section showing video when no search -->
+
+    <!-- section to show result -->
+    <ng-container *ngIf="!noResult">
+      <section [ngClass]="{ 'animate-appear': searchContinue }">
+
+        <!-- metadata display -->
+        <ng-container *ngIf="searchResult.metadata">
+          <div class="text-center">
+
+            <h2 class="title-secondary text-background">
+              <ng-container *ngIf="professionalCount < 100">< </ng-container>
+              <ng-container *ngIf="professionalCount === 20000">+ </ng-container>
+              {{ professionalCount }}
+            </h2>
+
+            <h1 class="title-primary text-notify">PROFESSIONALS</h1>
+
+          </div>
+        </ng-container>
+        <!-- /metadata display -->
+
+        <!-- when searching for professionals -->
+        <ng-container *ngIf="!searchStopped && searchContinue">
+          <video class="video-responsive video-machine" autoplay loop>
+            <source src="https://res.cloudinary.com/umi/video/upload/v1554473159/app/videos/search-tool/machine-search.mp4" type="video/mp4">
+          </video>
+        </ng-container>
+        <!-- /when searching for professionals -->
+
+        <!-- when searching for professionals done -->
+        <ng-container *ngIf="searchStopped">
+          <div class="flex-centered section-light-pad" [ngClass]=" { 'animate-appear': searchStopped } ">
+
+            <!-- display map -->
+            <div class="map-wrapper">
+              <admin-search-map [width]="'auto'" [quartiles]="scale" [countriesData]="searchResult.metadata"></admin-search-map>
+            </div>
+
+            <!-- display stats -->
+            <ul class="text-center info-wrapper absolute">
+              <li class="flex-start">
+                <span class="shape circle circle-sm circle-4"></span>
+                <span class="text-secondary text-medium">< {{ scale[0] }} </span>
+              </li>
+              <li class="flex-start">
+                <span class="shape circle circle-sm circle-2"></span>
+                <span class="text-secondary text-medium">{{ scale[0] }} - {{ scale[1] }}</span>
+              </li>
+              <li class="flex-start">
+                <span class="shape circle circle-sm circle-3"></span>
+                <span class="text-secondary text-medium">{{ scale[1] }} - {{ scale[2] }}</span>
+              </li>
+              <li class="flex-start">
+                <span class="shape circle circle-sm circle-success"></span>
+                <span class="text-secondary text-medium">> {{ scale[2] }}</span>
+              </li>
+            </ul>
+
+          </div>
+        </ng-container>
+        <!-- /when searching for professionals done -->
+
+        <!-- displaying stat by continents -->
+        <ng-container *ngIf="searchStopped">
+          <div class="section-pad rm-pad-top" [ngClass]=" { 'animate-appear': searchStopped } ">
+            <div class="stat">
+              <div class="stat-container">
+                <h3 class="stat-heading text-notify">RESULT BY CONTINENT</h3>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Africa</h4>
+                  <span class="stat-value">{{ searchResult.metadata.africa }}</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Asia</h4>
+                  <span class="stat-value">{{ searchResult.metadata.asia }}</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Europe</h4>
+                  <span class="stat-value">{{ searchResult.metadata.europe }}</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">North America</h4>
+                  <span class="stat-value">{{ searchResult.metadata.northAmerica }}</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">Oceania</h4>
+                  <span class="stat-value">{{ searchResult.metadata.oceania }}</span>
+                </div>
+
+                <div class="stat-body">
+                  <h4 class="stat-sub-heading">South America</h4>
+                  <span class="stat-value">{{ searchResult.metadata.southAmerica }}</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <!-- /displaying stat by continents -->
+
+        <!-- showing the professionals -->
+        <ng-container *ngIf="searchStopped">
+          <div class="card-wrapper d-flex">
+            <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
+
+              <ng-container *ngIf="professional.isLoading">
+                <div class="card-body card-cover">
+                  <i class="fa fa-cog fa-2x text-notify fa-spin"></i>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="!professional.isLoading">
+
+                <ng-container *ngIf="professional.person && professional.person.country">
+                  <div class="card-header animate-card-appear">
+                    <app-country-flag [country]="professional.person.country" [width]="23" [height]="16"></app-country-flag>
+                  </div>
+                </ng-container>
+
+                <div class="card-body card-cover animate-card-appear">
+
+                  <!-- name -->
+                  <ng-container *ngIf="professional.person && (professional.person.firstName || professional.person.lastName)">
+                    <p class="text-medium">
+
+                      <ng-container *ngIf="professional.person.profileUrl">
+                        <a [href]="professional.person.profileUrl" class="text-link" target="_blank">
+                          <ng-container *ngIf="professional.person.firstName">{{ professional.person.firstName }} </ng-container>
+                          <ng-container *ngIf="professional.person.lastName">{{ professional.person.lastName }}</ng-container>
+                        </a>
+                      </ng-container>
+
+                      <ng-container *ngIf="!professional.person.profileUrl">
+                        <ng-container *ngIf="professional.person.firstName">{{ professional.person.firstName }} </ng-container>
+                        <ng-container *ngIf="professional.person.lastName">{{ professional.person.lastName }}</ng-container>
+                      </ng-container>
+
+                    </p>
+                  </ng-container>
+                  <!-- /name -->
+
+                  <!-- job -->
+                  <ng-container *ngIf="professional.person && (professional.person.job || professional.person.jobTitle)">
+                    <p class="text-job text-background">
+                      {{ professional.person.job || professional.person.jobTitle }}
+                    </p>
+                  </ng-container>
+
+                  <!-- email -->
+                  <ng-container *ngIf="professional.person && professional.person.email">
+                    <p class="text-email">
+                      {{ professional.person.email }}
+                    </p>
+                  </ng-container>
+
+                </div>
+
+                <!-- logo -->
+                <ng-container *ngIf="professional.person && professional.person.company">
+
+                  <ng-container *ngIf="professional.person.companyLogoUrl">
+                    <div class="card-footer animate-card-appear tooltip flex-centered" [attr.data-tooltip]="professional.person.company">
+                      <a [href]="getCompanyUrl(professional.person.companyDomain)" target="_blank">
+                        <img [src]="professional.person.companyLogoUrl" class="img-responsive" alt=" ">
+                      </a>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="!professional.person.companyLogoUrl">
+                    <div class="card-footer animate-card-appear flex-centered text-center no-logo">
+
+                      <ng-container *ngIf="professional.person.companyDomain">
+                        <a [href]="getCompanyUrl(professional.person.companyDomain)" class="text-link" target="_blank">
+                          {{ professional.person.company }}
+                        </a>
+                      </ng-container>
+
+                      <ng-container *ngIf="!professional.person.companyDomain">
+                        <span>{{ professional.person.company }}</span>
+                      </ng-container>
+
+                    </div>
+                  </ng-container>
+
+                </ng-container>
+                <!-- /logo -->
+
+              </ng-container>
+
+            </div>
+          </div>
+        </ng-container>
+        <!-- /showing the professionals -->
+
+        <!-- button to show more pros -->
+        <ng-container *ngIf="searchStopped && slicedPros.length !== searchResult.pros.length">
+          <div class="text-center section-pad rm-pad-top">
+            <button class="btn btn-primary" (click)="onClickSeeMore()">See More</button>
+          </div>
+        </ng-container>
+        <!-- /button to show more pros -->
+
+      </section>
+    </ng-container>
+    <!-- /section to show result -->
+
+  </div>
+</div>

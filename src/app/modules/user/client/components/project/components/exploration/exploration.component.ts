@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../../../../services/answer/answer.service';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
@@ -50,12 +50,10 @@ export class ExplorationComponent implements OnInit {
   private _tableInfos: Table = null;
 
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   constructor(private translateService: TranslateService,
@@ -77,6 +75,7 @@ export class ExplorationComponent implements OnInit {
         _isShowable: true,
         _isLocal: true,
         _total: response.answers.length,
+        _isNoTitle: true,
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
           {_attrs: ['job'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
@@ -93,7 +92,7 @@ export class ExplorationComponent implements OnInit {
       }, []);
 
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
 
     this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((results: any) => {
@@ -116,7 +115,7 @@ export class ExplorationComponent implements OnInit {
             }, { nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0 });
         }
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
 
 
@@ -167,7 +166,7 @@ export class ExplorationComponent implements OnInit {
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'MARKET_REPORT.INSIGHT',
+      title: 'SIDEBAR.TITLE.INSIGHT',
       size: '726px'
     };
 
@@ -219,7 +218,7 @@ export class ExplorationComponent implements OnInit {
     return this._tableInfos;
   }
 
-  get config(): { limit: number; offset: number; search: {}; sort: { created: number } } {
+  get config(): { search: string; offset: string; limit: string; sort: string } {
     return this._config;
   }
 

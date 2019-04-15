@@ -1,6 +1,8 @@
 export const ERROR = {
   'ERROR': 'Oups...',
 
+  'ERROR_EN': 'Oups...',
+
   'SUCCESS': 'Success',
 
   'CANNOT_REACH': 'We are unable to reach the server at the moment. Please try again!',
@@ -10,6 +12,8 @@ export const ERROR = {
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
   'FETCHING_ERROR': 'We are having trouble while fetching the data. Please try to reload the page again!',
+
+  'FETCHING_ERROR_EN': 'We are having trouble while fetching the data. Please try to reload the page again!',
 
   'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try it again!',
 
@@ -27,8 +31,6 @@ export const ERROR = {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',
     'TARGETING_FORM': 'Please answer the fields of the targeting form.'
   },
-
-  'BACK_TO_HOME': 'Back to homepage.',
 
   'LOGIN': {
     'WELCOME': 'Welcome back!',

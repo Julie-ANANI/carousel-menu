@@ -7,6 +7,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   animations: [
+
     trigger(('animateSidebar'), [
       state('inactive', style({
         opacity: 0,
@@ -19,6 +20,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
       transition('inactive => active', animate('400ms ease-in')),
       transition('active => inactive', animate('700ms ease-out')),
     ]),
+
     trigger(('animateSidebarBackdrop'), [
       state('inactive', style({
         display: 'none',
@@ -33,6 +35,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
       transition('inactive => active', animate('.5ms ease-in-out')),
       transition('active => inactive', animate('700ms ease-in-out')),
     ])
+
   ]
 })
 
@@ -47,8 +50,11 @@ export class SidebarComponent implements OnInit {
   @Output() closeSidebar = new EventEmitter<SidebarInterface>(); // todo: remove this line
 
   private _title: string; // heading
+
   private _state: string; // animation state
+
   private _size: string; // size
+
   private _type: string; // type
 
   constructor() {}

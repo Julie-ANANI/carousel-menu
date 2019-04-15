@@ -62,7 +62,7 @@ export class AuthService {
     }
   }
 
-  private stopSwellRTSession() {
+  public stopSwellRTSession() {
     this._swellRtService.logout()
       .then( result => {
         console.log("On the bay, bye bye bye!");
@@ -97,7 +97,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._cookieService.removeAll();
           this._user = null;
-          this.stopSwellRTSession();
+          //this.stopSwellRTSession();
           clearInterval(this._cookieObserver);
           return res;
         }),

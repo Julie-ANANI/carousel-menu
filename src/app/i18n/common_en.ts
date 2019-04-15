@@ -8,7 +8,6 @@ export const COMMON = {
   'SEND': 'Send',
   'CHANGE': 'Change',
   'DELETE': 'Delete',
-
   'LOG_IN': 'Sign In',
   'SIGN_UP': 'Sign Up',
   'LOG_OUT': 'Sign out',
@@ -17,7 +16,6 @@ export const COMMON = {
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
-
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'GENERATE': 'Generate',
@@ -47,11 +45,6 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
-  'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
-  'SEARCH_BY': 'Search by',
-  'SEARCH_PLACEHOLDER': 'Search here',
-
-  'SHARED_REPORTS': 'Shared Reports',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
@@ -69,19 +62,6 @@ export const COMMON = {
   'NEVER': 'Never',
 
   'COMMENT': 'Comment',
-
-
-
-
-  'PHONE': 'Phone Number',
-
-  'ACTIVITY_FIELDS': 'Activity Fields',
-  'ACTIVITY_FIELDS_PLACEHOLDER': 'Enter your activity field',
-
-  'TECHNOLOGIES': 'Technologies',
-  'TECHNOLOGIES_PLACEHOLDER': 'Enter the technology',
-
-
   'OLD_PASSWORD': 'Old Password',
   'NEW_PASSWORD': 'New Password',
   'CONFIRM_PASSWORD': 'Confirm Password',
@@ -93,18 +73,7 @@ export const COMMON = {
 
 
   'PASSWORD_CONFIRM': 'Password confirmation',
-
-
-
-
-
-
-
-
   'DOMAIN': 'Domain',
-
-
-
 
   'TERMS': {
     'A': 'By clicking "Continue" I agree to',
@@ -114,13 +83,29 @@ export const COMMON = {
 
   'TOP_PROFILE': 'Top profile',
 
+  'PAGE_TITLE': {
+    'LOG_IN': 'Login',
+    'RESET': 'Reset Password',
+    'FORGET': 'Request Password Reset',
+    'LOG_OUT': 'Sign Out',
+    'SIGN_UP': 'Sign Up',
+    'WELCOME': 'Welcome',
+    'ACCOUNT': 'Profile',
+    'SHARED_REPORTS': 'Shared Reports',
+    'DISCOVER': 'Discover Innovations',
+    'PROJECTS': 'Projects'
+  },
+
   'LABEL': {
+    'ACTIVITY_FIELDS': 'Activity Fields',
     'FIRSTNAME': 'First Name',
     'LASTNAME': 'Last Name',
     'EMAIL': 'E-mail Address',
     'PASSWORD': 'Password',
     'PROS_CONTACT': 'Pros Number',
+    'PHONE': 'Phone Number',
     'JOBTITLE': 'Job Title',
+    'TECHNOLOGIES': 'Technologies',
     'COMPANY': 'Company Name',
     'COUNTRY': 'Country',
     'DATE': 'Date',
@@ -136,6 +121,7 @@ export const COMMON = {
     'SELECT_WORKFLOW': 'Select the workflow',
     'SELECT': 'Select',
     'CHOOSE_LANGUAGE': 'Choose Language:',
+    'SEARCH_BY': 'Search by',
   },
 
   'PLACEHOLDER': {
@@ -145,6 +131,9 @@ export const COMMON = {
     'COMPANY': 'Enter your company name',
     'COUNTRY': 'Enter your country',
     'CAMPAIGN': 'Enter the campaign name',
+    'ACTIVITY_FIELDS': 'Enter your activity field',
+    'TECHNOLOGIES': 'Enter the technology',
+    'SEARCH': 'Search here',
   },
 
   'REQUIRED': {
@@ -163,7 +152,8 @@ export const COMMON = {
     'COUNTRY': 'Country is required.',
     'URL': 'Profile is required.',
     'PROS_CONTACT': 'Value should be greater than 0.',
-    'BATCH_IMMEDIATE': 'Leave it blank to send the batch immediately. The batch will be sent after 7 minutes.'
+    'BATCH_IMMEDIATE': 'Leave it blank to send the batch immediately.',
+    'BATCH_DELAY': 'The chosen hour must in at least 7 minutes, otherwise the batch may not be sent.'
   },
 
   'INVALID': {
@@ -181,6 +171,12 @@ export const COMMON = {
     'IMPORT': 'Import',
     'EXPORT': 'Export',
     'SEND': 'Send',
+    'PRINT': 'Print',
+    'PREVIEW': 'Preview',
+    'SUBMIT': 'Submit',
+    'SIGN_IN': 'Sign In',
+    'SIGN_UP': 'Sign Up',
+    'DELETE': 'Delete',
   },
 
   'TABLE' : {
@@ -286,10 +282,6 @@ export const COMMON = {
     'BY_UPDATE_DATE': 'Default'
   },
 
-  'HEADER': {
-    'SHARED_REPORTS': 'Shared reports'
-  },
-
   'MAIL_EDITOR': {
     'QUESTION': 'Which language would you like to communicate with the project owner?',
     'SUBJECT': 'Subject',
@@ -309,7 +301,12 @@ export const COMMON = {
   },
 
   'LOGOUT': {
-    'TEXT': 'You will be redirected automatically to the login page.'
+    'TEXT': 'You will be redirected automatically to the login page.',
+  },
+
+  'NOT_FOUND': {
+    'TEXT': 'Back to homepage.',
+    'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
   },
 
   'CAMPAIGN': {
@@ -324,7 +321,9 @@ export const COMMON = {
     'TITLE_DELETE': 'Delete Board',
     'TITLE_CONFIRMATION': 'Confirmation Board',
     'TITLE_IMPORT': 'Import Board',
-    'TITLE_BATCH': 'Batch Board'
+    'TITLE_BATCH': 'Batch Board',
+    'TITLE_SHARE': 'Share Board',
+    'TITLE_CREATE': 'Creation Board'
   },
 
 };

@@ -1,26 +1,40 @@
+@import "../../../../style/framework/src/variables";
+
 #welcome-page {
 
-  .content-wrapper, .admin-text-wrapper, .happy-text-wrapper {
-    padding-top: 1.57rem;
+  .title-primary {
+    font-size: 1.4rem;
+    color: $text-background-color;
   }
 
-  .happy-text-wrapper, .terms-wrapper {
-    padding-bottom: 1.57rem;
+  .title-secondary {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-background-color;
   }
 
-  .form-input {
-    width: 60%;
+  .section-terms {
+
+    .text-link {
+      font-size: $font-size-md;
+      margin-left: $unit-h;
+    }
+
+  }
+
+  .form-group {
+    max-width: 60%;
   }
 
 }
 
-/********************************** Media ***************************************/
-@media (max-width: 600px) {
+
+@media (max-width: $size-sm) {
 
   #welcome-page {
 
-    .form-input {
-      width: 100%;
+    .form-group {
+      max-width: 100%;
     }
 
   }
@@ -31,8 +45,8 @@
 
   #welcome-page {
 
-    .form-input {
-      width: 30%;
+    .form-group {
+      max-width: 30%;
     }
 
   }

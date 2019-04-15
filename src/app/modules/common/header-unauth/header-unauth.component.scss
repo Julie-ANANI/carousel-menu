@@ -1,71 +1,58 @@
 @import "../../../../style/framework/src/variables";
 
 #header-unauth-component {
-  background: $background;
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: white;
-
-  .pad {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
+  border: 1px solid $border-light-color;
 
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    position: relative;
 
-    .menu-view {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
+    .logo {
+      padding-top: 5px;
     }
 
-    .signIn-wrapper {
-      position: absolute;
-      top: 85%;
-      right: 0;
-      width: 380px;
-      min-height: 300px;
-      text-align: left;
-      background-color: white;
-      z-index: 2;
-      box-shadow: $box-shadow-hover;
-      transition: all 0.35s ease-in-out;
-      border-radius: 3px;
-      padding-top: 1.57rem;
-      padding-bottom: 1.57rem;
-      display: none;
+    .navigation-wrapper {
 
-      .login-button {
-        padding-top: 0.9375rem;
-        padding-bottom: 0.6rem;
+      .header-lang-dropdown {
+
+        a {
+          height: 35px;
+
+          span:after {
+            bottom: 3px;
+          }
+
+          .fa-angle-down {
+            margin-left: $unit-2;
+          }
+
+        }
+
+        .dropdown-menu {
+          width: 46px;
+          right: -7px;
+          padding: 0;
+
+          .drop-item{
+            padding: 0.5rem;
+          }
+
+        }
+
+        &:hover {
+
+          .fa-angle-down {
+            color: $primary-color !important;
+          }
+
+          span:after {
+            visibility: visible;
+            background-color: $primary-color;
+            transform: scaleX(1);
+          }
+
+        }
+
       }
 
-      .title-primary {
-        color: $text-background;
-      }
-
-    }
-
-  }
-
-}
-
-
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
-
-  #header-unauth-component {
-
-    .signIn-wrapper {
-      width: 80vw !important;
     }
 
   }

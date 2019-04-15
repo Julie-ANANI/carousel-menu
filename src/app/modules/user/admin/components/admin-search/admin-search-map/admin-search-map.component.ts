@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'admin-search-map',
@@ -6,16 +6,26 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['admin-search-map.component.scss']
 })
 
-export class AdminSearchMapComponent implements OnInit{
+export class AdminSearchMapComponent {
 
   @Input() width = '800px';
+
   @Input() set countriesData (value: any) {
     this._countriesData = value;
-  };
+  }
+
+  @Input() set quartiles (value: any) {
+    this._quartiles = value;
+  }
+
   @Output() onCountryClick = new EventEmitter<any>();
 
   private _hoverInfo: any = null;
+
   private _countriesData: any = {};
+
+  private _quartiles: [number, number, number];
+
   private _boxStyle: any = {
     opacity: 0
   };
@@ -71,17 +81,15 @@ export class AdminSearchMapComponent implements OnInit{
 
   constructor() {}
 
-  ngOnInit() {}
-
   public getClass (country: string) {
     let intensity = 0;
     if (this.countriesData[country]) {
-      if (this.countriesData[country] > 200) {
-        intensity = 3
-      } else if (this.countriesData[country] > 100) {
-        intensity = 2
-      } else if (this.countriesData[country] > 50) {
-        intensity = 1
+      if (this.countriesData[country] >= this._quartiles[2]) {
+        intensity = 3;
+      } else if (this.countriesData[country] >= this._quartiles[1]) {
+        intensity = 2;
+      } else if (this.countriesData[country] >= this._quartiles[0]) {
+        intensity = 1;
       }
     }
     return `country intensity${intensity} ${country}`;

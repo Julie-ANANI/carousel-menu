@@ -7,6 +7,7 @@ import { Share } from '../../../../../models/share';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-synthesis-list',
@@ -47,24 +48,27 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   private _noResult = false;
 
-  constructor( private translateTitleService: TranslateTitleService,
-               private userService: UserService,
-               private innovationService: InnovationService,
-               private translateNotificationsService: TranslateNotificationsService,
-               private translateService: TranslateService) { }
+  constructor( private _translateTitleService: TranslateTitleService,
+               private _userService: UserService,
+               private _innovationService: InnovationService,
+               private _translateNotificationsService: TranslateNotificationsService,
+               private _translateService: TranslateService) {
 
-  ngOnInit() {
-    this.translateTitleService.setTitle('COMMON.SHARED_REPORTS');
-    this._totalReports = [];
-    this.getUserReports();
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.SHARED_REPORTS');
+
   }
 
-  private getUserReports() {
-    this._subscriptions.push(this.userService.getSharedWithMe(this.config).subscribe((reports: any) => {
-      this.getSharedReports(reports.sharedgraph || []);
-      this._noResult = reports.length === 0;
+  ngOnInit() {
+    this._totalReports = [];
+    this._getUserReports();
+  }
+
+  private _getUserReports() {
+    this._subscriptions.push(this._userService.getSharedWithMe(this._config).subscribe((reports: any) => {
+      this._getSharedReports(reports.sharedgraph || []);
+      this._noResult = reports.sharedgraph.length === 0;
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }));
   }
 
@@ -73,9 +77,9 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    * this function is getting the shared reports of the user and we are
    * pushing those to totalReports variable.
    */
-  private getSharedReports(receivedReports: any) {
+  private _getSharedReports(receivedReports: any) {
     receivedReports.forEach((info: Share) => {
-      this._subscriptions.push(this.innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
+      this._subscriptions.push(this._innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
         const report: Share = {
           name: result.name,
           owner: result.owner,
@@ -90,7 +94,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
         this._totalReports.push(report);
 
         }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       })
       );
     });
@@ -102,7 +106,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    * @param report
    * @returns {string}
    */
-  getRelevantLink(report: any): string {
+  public getRelevantLink(report: any): string {
     if (report) {
       return `${environment.clientUrl}${report.link}`;
     } else {
@@ -116,17 +120,16 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    * @param report
    * @returns {string}
    */
-  getMedia(report: any) {
-    let src = 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
-
-    if (report.media && report.media.type === 'PHOTO') {
-      src = report.media.url;
+  public getMedia(report: any): string {
+    if (report.media) {
+      return InnovationFrontService.getMediaSrc(report.media, 'mediaSrc', '120', '100');
+    } else {
+      return 'https://res.cloudinary.com/umi/image/upload/c_fill,h_100,w_120/v1542811700/app/default-images/icons/no-image.png';
     }
-    return src;
   }
 
   get dateFormat(): string {
-    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   get totalReports(): any {

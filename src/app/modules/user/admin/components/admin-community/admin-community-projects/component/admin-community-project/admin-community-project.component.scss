@@ -1,0 +1,62 @@
+@import "../../../../../../../../../style/framework/src/variables";
+
+#admin-community-project-component {
+
+  .section-header {
+    background-color: $bg-color-light;
+
+    .name-wrapper {
+      border-bottom: $border-width solid $border-color;
+      flex-wrap: wrap;
+
+      h1 {
+        font-size: 1.15rem;
+        margin-right: $unit-2;
+        margin-bottom: 0;
+      }
+
+      .text-link {
+        vertical-align: baseline;
+        margin-top: 0.5rem;
+        margin-bottom: $unit-5;
+      }
+
+    }
+
+    .stat .map-wrapper {
+      justify-content: flex-start;
+
+      .stat-body {
+        margin-bottom: 0;
+      }
+
+    }
+
+  }
+
+  .section-details {
+
+    .btn.ghost-primary {
+      margin-right: $unit-3;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #admin-community-project-component{
+
+    .stat {
+
+      .map-wrapper {
+        // justify-content: space-between !important;
+      }
+
+    }
+
+  }
+
+}

@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject, Input, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { Location } from '@angular/common';
+import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { PageScrollConfig } from 'ngx-page-scroll';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { FilterService } from './services/filters.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -17,8 +16,6 @@ import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ShareService } from '../../../../services/share/share.service';
-import { Share } from '../../../../models/share';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
@@ -38,7 +35,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._innovation = value;
   }
 
-  @Input() adminMode: boolean;
+  @Input() set modeAdmin(value: boolean) {
+    this._adminMode = value;
+  }
+
+  @Input() set sideAdmin(value: boolean) {
+    this._adminSide = value;
+  }
 
   @Input() sharable = false;
 
@@ -48,7 +51,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = {};
 
-  private _adminSide: boolean;
+  private _adminSide = false;
 
   private _isOwner: boolean;
 
@@ -66,6 +69,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _questions: Array<Question> = [];
 
+  private _adminMode = false;
+
   private _campaignsStats: {
     nbPros: number,
     nbProsSent: number,
@@ -74,7 +79,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     nbValidatedResp: number
   };
 
+  private _scrollOn = false;
+
   private _showDetails: boolean;
+
+  private _openModal = false;
 
   private _today: Number;
 
@@ -94,10 +103,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private translateService: TranslateService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
-              private location: Location,
               private innovationService: InnovationService,
               private authService: AuthService,
-              private shareService: ShareService,
               private filterService: FilterService,
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService,
@@ -118,7 +125,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is calling all the initial functions.
    */
   private initializeReport() {
-    this.isAdminSide();
     this.initializeVariable();
     this.getAnswers();
     this.getCampaign();
@@ -149,16 +155,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
 
-  /**
-   * This function is checking the are we on the admin side, and if yes than also
-   * checking the admin level.
-   */
-  private isAdminSide() {
-    this._adminSide = this.location.path().slice(5, 11) === '/admin';
-    this.adminMode = this.authService.adminLevel > 2;
-  }
-
-
   /***
    *This function is to initialize the variables regarding the innovation and the projectt.
    */
@@ -168,7 +164,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      * here we are registering the index of the lang of the user and according to that we display the innovation.
      * @type {number}
      */
-    const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.lang);
+    const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.userLang);
     this._currentInnovationIndex = index !== -1 ? index : 0;
 
     /***
@@ -331,6 +327,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    }
   }
 
+
   /***
    * This function toggles the view.
    * @param {Event} event
@@ -364,22 +361,22 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
 
   /***
-   * This function is called when the user clicks on the share synthesis button. We call the
-   * share service to get the objectId and share key for this innovation, so that he can share
-   * this innovation with other. Then we call the "openMailTo()".
+   * This function will make the project end and synthesis will be available to the client.
    * @param {Event} event
+   * @param {"DONE"} status
    */
-  shareSynthesis(event: Event) {
-    event.preventDefault();
+  endInnovation(event: Event, status: 'DONE'): void {
+    this._innovationEndModal = false;
+    this._openModal = false;
 
-    this.shareService.shareSynthesis(this._innovation._id).subscribe((response: Share) => {
-      this.openMailTo(response.objectId, response.shareKey);
+    this.innovationService.endProject(this._innovation._id).subscribe((response) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+      this._innovation = response;
+      this.innovationCommonService.setInnovation(this._innovation);
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
-
   }
-
 
   /***
    * This function generates the message and open the mailto for the client to share the
@@ -392,7 +389,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     let subject = '';
     const url = this.getInnovationUrl() + '/share/synthesis/' + projectID + '/' + shareKey;
 
-    if (this.lang === 'en') {
+    if (this.userLang === 'en') {
 
       subject = 'Results - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
 
@@ -402,7 +399,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
     }
 
-    if (this.lang === 'fr') {
+    if (this.userLang === 'fr') {
 
       subject = 'Résultats - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
 
@@ -505,11 +502,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    */
   getIntroSrc(): string {
 
-    if (this.lang === 'en') {
+    if (this.userLang === 'en') {
       return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-en.png';
     }
 
-    if (this.lang === 'fr') {
+    if (this.userLang === 'fr') {
       return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-fr.png';
     }
 
@@ -584,6 +581,105 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
 
+  /***
+   * this function assign the value to exportType when we select one of the options
+   * from the modal.
+   * @param event
+   * @param type
+   */
+  assignExportType(event: Event, type: string) {
+    event.preventDefault();
+    this._exportType = type;
+  }
+
+
+  /***
+   * this function is to toggle the consent value based on the checbox is
+   * checked or not.
+   * @param event
+   */
+  toggleConsent(event: Event) {
+    event.preventDefault();
+    this._innovation.ownerConsent.value = !!event.target['checked'];
+  }
+
+
+  /***
+   * this function calls the respective function based on the value of the
+   * exportType. It is called by the Download button.
+   * @param event
+   */
+  exportInnovation(event: Event) {
+    event.preventDefault();
+
+    this._innovation.ownerConsent.date = Date.now();
+
+    this.innovationCommonService.saveInnovation(this._innovation);
+
+    switch (this._exportType) {
+
+      case('excel'):
+        this.downloadExcel(event);
+        break;
+
+      case('executiveReport'):
+        this.printExecutiveReport(event);
+        break;
+
+      case('respReport'):
+        this.printAnswers(event);
+        break;
+
+      default:
+        // Do nothing
+    }
+
+    this._exportType = '';
+
+  }
+
+
+  /***
+   * this function will download the excel file.
+   * @param event
+   */
+  private downloadExcel(event: Event) {
+    event.preventDefault();
+    window.open( this.answerService.getExportUrl(this._innovation._id, true));
+  }
+
+  /***
+   * this function will download the response.
+   * @param event
+   */
+  private printAnswers(event: Event) {
+
+    event.preventDefault();
+
+    this.answerService.getReportHTML(this._innovation._id, 'en').subscribe(html => {
+        const reportWindow = window.open('', '');
+        reportWindow.document.write(html);
+        setTimeout(() => {
+          reportWindow.focus();
+          reportWindow.print();
+          reportWindow.close();
+        }, 500);
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
+  }
+
+
+  /***
+   * This functions is called when the user selects the executive report option.
+   * @param {Event} event
+   */
+  private printExecutiveReport(event: Event) {
+    event.preventDefault();
+    window.print();
+  }
+
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
   }
@@ -600,7 +696,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * getting the current lang of the user.
    * @returns {string}
    */
-  get lang(): string {
+  get userLang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
 
@@ -713,6 +809,18 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isOwner;
   }
 
+  get openModal(): boolean {
+    return this._openModal;
+  }
+
+  set openModal(value: boolean) {
+    this._openModal = value;
+  }
+
+  get innovationExport(): boolean {
+    return this._innovationExport;
+  }
+
   get numberOfSections(): number {
     return this._numberOfSections;
   }
@@ -735,6 +843,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get answersOrigins(): {[c: string]: number} {
     return this._answersOrigins;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  get dateFormat(): string {
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   ngOnDestroy(): void {

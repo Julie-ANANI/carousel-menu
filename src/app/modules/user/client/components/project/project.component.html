@@ -1,71 +1,69 @@
-<section *ngIf="innovation" class="section-container animate-page" id="project-component">
+<ng-container *ngIf="innovation">
 
-  <!-- header section -->
-  <div class="section-header">
-    <div class="column col-xs-12 col-11 col-mx-auto">
+  <section class="section-pad animate-page rm-pad-top" id="project-component">
 
-      <!-- heading -->
-      <h1 class="title-hero">{{ innovation.name[0] | uppercase }}{{ innovation.name | slice:1 }}</h1>
+    <!-- header section -->
+    <div class="header header-hero">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <!-- info -->
-      <div class="info-wrapper">
-        <img [src]="offerTypeImage" alt=" ">
-        <span class="project-info">
-          {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
-          &nbsp;•&nbsp;
-          {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
-          &nbsp;•&nbsp;
-          {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-          <span class="text-link gtm-edit-collaborators" (click)="editCollaborator($event)">
-            {{ 'COMMON.EDIT' | translate | lowercase}}
+        <!-- heading -->
+        <h1 class="title-hero">{{ innovation.name | FormatText }}</h1>
+
+        <!-- info -->
+        <div class="info-wrapper">
+          <img [src]="offerTypeImage" alt=" ">
+          <span class="text text-notify">
+            {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
+            &nbsp;•&nbsp;
+            {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
+            &nbsp;•&nbsp;
+            {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+            <span class="text-link gtm-edit-collaborators" (click)="editCollaborator($event)">{{ 'COMMON.EDIT' | translate | lowercase}}</span>
           </span>
-        </span>
+        </div>
+
+        <!-- tabs -->
+        <div class="tab-container">
+          <ul class="tab">
+            <li class="tab-item">
+              <a [routerLink]="['setup']" routerLinkActive="active" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
+                <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
+              </a>
+            </li>
+            <li class="tab-item">
+              <a [routerLink]="['exploration']" routerLinkActive="active" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
+                <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
+              </a>
+            </li>
+            <li class="tab-item">
+              <a [routerLink]="['synthesis']" routerLinkActive="active" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
+                <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
       </div>
-
-      <!-- tabs -->
-      <div class="tab-container">
-        <ul class="tab">
-          <li class="tab-item">
-            <a [routerLink]="['setup']" routerLinkActive="active" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
-              <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
-            </a>
-          </li>
-          <li class="tab-item">
-            <a [routerLink]="['exploration']" routerLinkActive="active" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
-              <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
-            </a>
-          </li>
-          <li class="tab-item">
-            <a [routerLink]="['synthesis']" routerLinkActive="active" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
-              <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
-            </a>
-          </li>
-        </ul>
-      </div>
-
-
     </div>
-  </div>
-  <!-- /header section -->
+    <!-- /header section -->
 
-  <!-- setup section -->
-  <ng-container *ngIf="currentPage === 'setup'">
-    <app-setup [project]="innovation"></app-setup>
-  </ng-container>
-  <!-- /setup section -->
+    <!-- setup section -->
+    <ng-container *ngIf="currentPage === 'setup'">
+      <app-setup [project]="innovation"></app-setup>
+    </ng-container>
+    <!-- /setup section -->
 
-  <!-- exploration section -->
-  <ng-container *ngIf="currentPage === 'exploration'">
-    <app-exploration [project]="innovation"></app-exploration>
-  </ng-container>
-  <!-- /exploration section -->
+    <!-- exploration section -->
+    <ng-container *ngIf="currentPage === 'exploration'">
+      <app-exploration [project]="innovation"></app-exploration>
+    </ng-container>
+    <!-- /exploration section -->
 
-  <!-- synthesis section -->
-  <ng-container *ngIf="currentPage === 'synthesis'">
-    <app-shared-market-report [project]="innovation"></app-shared-market-report>
-  </ng-container>
+    <!-- synthesis section -->
+    <ng-container *ngIf="currentPage === 'synthesis'">
+      <app-shared-market-report [project]="innovation"></app-shared-market-report>
+    </ng-container>
   <!-- /synthesis section -->
-
 
   <!-- TODO: remove currentPage parameter & use router-outlet -->
   <!-- <router-outlet></router-outlet> -->
@@ -73,9 +71,15 @@
 </section>
 
 
-<!-- collaborator sidebar -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
-  <app-collaborator [project]="innovation" (collaboratorAdded)="addCollaborators($event)"></app-collaborator>
-</app-sidebar>
-<!-- /collaborator sidebar -->
+  <!-- collaborator sidebar -->
+  <app-sidebar [(template)]="sidebarValue">
+    <app-collaborator
+      [sidebarState]="sidebarValue.animate_state"
+      [project]="innovation"
+      (collaboratorAdded)="addCollaborators($event)">
+    </app-collaborator>
+  </app-sidebar>
+  <!-- /collaborator sidebar -->
+
+</ng-container>
 

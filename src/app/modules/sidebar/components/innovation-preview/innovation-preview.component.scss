@@ -1,55 +1,84 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 #innovation-preview-component {
+  padding-top: 1.5rem;
 
-  .hero-container {
-    background-color: $background-color;
+  .title-primary, .title-secondary {
+    color: #3E5164;
+    font-weight: $font-weight-normal;
+    font-size: 1.3rem;
+    margin-top: 0.5rem;
+    font-family: Oswald, sans-serif;
+    margin-bottom: $unit-h;
+  }
 
-    h1, h6 {
-      color: white;
+  .summary-wrapper, .issue-wrapper, .solution-wrapper {
+    padding-top: $unit-5;
+    color: $background-color;
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
+    margin-bottom: 0;
+  }
+
+  .section-header {
+    padding-bottom: 1.5rem;
+
+    .title-primary {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
     }
 
-    h6 {
-      font-size: 1.12rem;
+    .text {
+      font-size: $font-size-sm;
     }
 
-    .summary {
-      padding-left: .3rem;
-      color: white;
+    .summary-wrapper {
+      padding-top: 0.5rem;
+      margin-bottom: 0;
     }
+
+  }
+
+  .section-images {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 
     .media-wrapper {
-      display: flex;
-      flex-wrap: wrap;
+      display: inline-flex;
+      margin: 0.5rem 0.5rem $unit-5 0.5rem;
+    }
 
-      .gap {
-        margin-top: .9375rem;
-        margin-right: 1.57rem;
+  }
+
+  .section-benefits, .section-issue {
+    padding-bottom: $unit-5;
+  }
+
+  .section-benefits {
+    font-size: $font-size-md;
+
+    .benefit-wrapper {
+      margin-top: $unit-3;
+      margin-bottom: 0;
+
+      li {
+        color: $background-color;
       }
 
     }
 
   }
 
-  .advantage {
+}
 
-    li {
-      color: $dark-color;
-      padding:  .375rem .5rem .375rem .18rem;
-    }
+@media (max-width: $size-xs) {
 
-    li:last-child {
-      padding-bottom: 0;
-    }
+  #innovation-preview-component {
 
-  }
-
-  .section-container {
-    padding-top: 1.57rem;
-    padding-bottom: 0;
-
-    p {
-      padding-bottom: 0;
+    .section-images .media-wrapper {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
     }
 
   }

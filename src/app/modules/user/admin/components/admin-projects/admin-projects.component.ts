@@ -30,12 +30,13 @@ export class AdminProjectsComponent implements OnInit {
 
   constructor(private innovationService: InnovationService,
               private router: Router,
-              private translateTitleService: TranslateTitleService) {}
+              private translateTitleService: TranslateTitleService) { }
 
   ngOnInit(): void {
     this.translateTitleService.setTitle('COMMON.PROJECTS');
     this.loadProjects(this._config);
   }
+
 
   loadProjects(config: any): void {
     this._config = config;

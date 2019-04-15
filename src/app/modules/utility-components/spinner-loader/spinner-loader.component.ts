@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'spinner-loader',
+  selector: 'app-spinner-loader',
   templateUrl: './spinner-loader.component.html',
   styleUrls: ['./spinner-loader.component.scss']
 })
 
-export class SpinnerLoaderComponent implements OnInit {
+export class SpinnerLoaderComponent {
 
   constructor() { }
-
-  ngOnInit() { }
 
   getLogo(): string {
     return environment.logoURL;

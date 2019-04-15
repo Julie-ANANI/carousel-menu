@@ -4,18 +4,6 @@
   @include clearfix();
 }
 
-.display-flex {
-  display: flex;
-}
-
-.display-inline-flex {
-  display: inline-flex;
-}
-
-.display-block {
-  display: block;
-}
-
 .float-left {
   float: left !important;
 }
@@ -62,5 +50,11 @@
 .flex-between {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }

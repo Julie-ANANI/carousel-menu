@@ -7,9 +7,11 @@ import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { ResponseService } from '../../services/response.service';
 import { BarData } from '../../models/bar-data';
+import { first } from 'rxjs/operators';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-bar-chart',
@@ -19,42 +21,52 @@ import { BarData } from '../../models/bar-data';
 
 export class BarChartComponent implements OnInit {
 
+  @Input() innovation: Innovation;
+
   @Input() set executiveReport(value: boolean) {
-    this.executiveReportView = value;
+    this._executiveReportView = value;
   }
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
-    this.updateAnswersData();
+    this._updateAnswersData();
   }
 
   @Input() tags: Array<Tag>;
-  @Input() innovation: Innovation;
+
   @Input() question: Question;
+
   @Input() readonly: boolean;
+
   @Input() stats: any;
+
   @Input() showDetails: boolean;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
+
   @Output() answerButtonClicked = new EventEmitter<boolean>();
 
-  adminSide: boolean;
+  private _adminSide: boolean;
 
-  formBarChart: FormGroup;
+  private _formBarChart: FormGroup;
 
-  executiveReportView = false;
+  private _executiveReportView = false;
 
   private _answers: Array<Answer>;
+
   private _barsData: Array<BarData> = [];
+
   private _pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
-  public showAnswers: {[index: string]: string} = {};
+
+  private _showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService,
-              private filterService: FilterService,
-              private location: Location,
-              private formBuilder: FormBuilder,
-              private innovationCommonService: InnovationCommonService,
-              private responseService: ResponseService) {}
+              private _filterService: FilterService,
+              private _location: Location,
+              private _formBuilder: FormBuilder,
+              private _innovationService: InnovationService,
+              private _translateNotificationService: TranslateNotificationsService,
+              private _responseService: ResponseService) { }
 
   ngOnInit() {
 
@@ -62,20 +74,22 @@ export class BarChartComponent implements OnInit {
      * this is to make visible abstract textarea.
      * @type {boolean}
      */
-    this.adminSide = this.location.path().slice(5, 11) === '/admin';
+    this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
-    this.updateAnswersData();
+    this._updateAnswersData();
 
-    this.buildForm();
-    this.patchForm();
+    this._buildForm();
+
+    this._patchForm();
+
   }
 
 
   /***
    * Build the form using quesId.
    */
-  private buildForm() {
-    this.formBarChart = this.formBuilder.group({
+  private _buildForm() {
+    this._formBarChart = this._formBuilder.group({
       [this.question._id]: ['']
     });
   }
@@ -84,14 +98,13 @@ export class BarChartComponent implements OnInit {
   /***
    * Patch the abstract value for each question.
    */
-  private patchForm() {
-    const value = this.responseService.getInnovationAbstract(this.innovation, this.question._id);
-    this.formBarChart.get(this.question._id).setValue(value);
+  private _patchForm() {
+    const value = this._responseService.getInnovationAbstract(this.innovation, this.question._id);
+    this._formBarChart.get(this.question._id).setValue(value);
   }
 
 
-
-  private updateAnswersData(): void {
+  private _updateAnswersData(): void {
     if (this.question && this.question.identifier && Array.isArray(this.question.options)) {
 
       // Calcul bar Data
@@ -166,20 +179,21 @@ export class BarChartComponent implements OnInit {
 
   }
 
+
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();
     let filterValue;
-    if (this.filterService.filters[this.question.identifier]) {
-      filterValue = this.filterService.filters[this.question.identifier].value;
+    if (this._filterService.filters[this.question.identifier]) {
+      filterValue = this._filterService.filters[this.question.identifier].value;
     } else {
       filterValue = this.question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {});
     }
     filterValue[data.identifier] = !filterValue[data.identifier];
     const removeFilter = Object.keys(filterValue).every((k) => filterValue[k] === true);
     if (removeFilter) {
-      this.filterService.deleteFilter(this.question.identifier);
+      this._filterService.deleteFilter(this.question.identifier);
     } else {
-      this.filterService.addFilter({
+      this._filterService.addFilter({
         status: <'CHECKBOX'|'RADIO'> this.question.controlType.toUpperCase(),
         questionId: this.question.identifier,
         value: filterValue
@@ -187,26 +201,31 @@ export class BarChartComponent implements OnInit {
     }
   }
 
+
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
   }
 
-  toggleAnswer(event: Event) {
+
+  public toggleAnswer(event: Event) {
     event.preventDefault();
     this.showDetails = !this.showDetails;
     this.answerButtonClicked.emit(this.showDetails);
   }
-
 
   /***
    * This function is to save the abstract in the innovation object.
    * @param {Event} event
    * @param {string} formControlName
    */
-  saveAbstract(event: Event, formControlName: string) {
-    const abstract = this.formBarChart.get(formControlName).value;
-    this.innovation = this.responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
-    this.innovationCommonService.saveInnovation(this.innovation);
+  public saveAbstract(event: Event, formControlName: string) {
+    const abstract = this._formBarChart.get(formControlName).value;
+    this.innovation = this._responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
+
+    this._innovationService.save(this.innovation._id, this.innovation).pipe(first()).subscribe(() => { }, () => {
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
   }
 
 
@@ -216,12 +235,12 @@ export class BarChartComponent implements OnInit {
    * @param {number} limit
    * @returns {string}
    */
-  getColor(length: number, limit: number) {
-    return this.responseService.getColor(length, limit);
+  public getColor(length: number, limit: number) {
+    return this._responseService.getColor(length, limit);
   }
 
   get filter() {
-    return this.filterService.filters[this.question.identifier];
+    return this._filterService.filters[this.question.identifier];
   }
 
   get barsData(): Array<BarData> {
@@ -234,6 +253,22 @@ export class BarChartComponent implements OnInit {
 
   get pieChart() {
     return this._pieChart;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get formBarChart(): FormGroup {
+    return this._formBarChart;
+  }
+
+  get executiveReportView(): boolean {
+    return this._executiveReportView;
+  }
+
+  get showAnswers(): { [p: string]: string } {
+    return this._showAnswers;
   }
 
 }

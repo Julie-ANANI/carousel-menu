@@ -1,12 +1,13 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Subject } from 'rxjs';
-import { ScrollService } from '../../services/scroll/scroll.service';
-import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
-import {UserService} from "../../services/user/user.service";
+import { isPlatformBrowser, Location } from '@angular/common';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+//import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
+//import {UserService} from "../../services/user/user.service";
 
-declare let swellrt;
+//declare let swellrt;
 
 @Component({
   selector: 'app-user',
@@ -20,17 +21,46 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private loaderService: LoaderService,
-              private scrollService: ScrollService,
-              private _userService: UserService,
-              private _swellRTBackend: SwellrtBackend) { }
+  private _adminSide = false;
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.scrollService.setScrollValue(window.pageYOffset || window.scrollY || 0);
+  private _displayLoading = false;
+
+  private _pages: Array<string> = ['/projects', '/discover', '/synthesis','/account', '/admin', '/users', '/professionals', '/community', '/libraries', '/monitoring', '/settings'];
+
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private loaderService: LoaderService,
+              private location: Location,
+              // private _userService: UserService,
+              // private _swellRTBackend: SwellrtBackend,
+              private router: Router) {
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events.subscribe((event) => {
+
+        if (event instanceof NavigationEnd) {
+          this._adminSide = this.location.path().slice(5, 11) === '/admin';
+
+          setTimeout(() => {
+            this._displayLoading = false;
+          }, 300);
+
+        } else if (event instanceof NavigationStart || !this.router.navigated) {
+
+          this._pages.forEach((page: string) => {
+            if (this.location.path().endsWith(page)) {
+              this._displayLoading = true;
+            }
+          });
+
+        }
+      });
+    }
+
   }
 
   ngOnInit(): void {
+
+    this._adminSide = this.location.path().slice(5, 11) === '/admin';
 
     this.loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
@@ -40,13 +70,13 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.startSwellRTClient();
-    this.startSwellRTSession();
+    /*this.startSwellRTClient();
+    this.startSwellRTSession();*/
     this.loaderService.stopLoading();
 
   }
 
-  private startSwellRTSession() {
+  /*private startSwellRTSession() {
     this._userService.getSelf().subscribe(user=>{
       this._swellRTBackend.startSwellRTSession(user)
         .then(result=>{
@@ -81,7 +111,7 @@ export class UserComponent implements OnInit, OnDestroy {
         }, 15000);
       }
     ));
-  }
+  }*/
 
   get displayLoader(): boolean {
     return this._displayLoader;
@@ -91,10 +121,21 @@ export class UserComponent implements OnInit, OnDestroy {
     return this._ngUnsubscribe;
   }
 
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
+  }
+
+  get pages(): Array<string> {
+    return this._pages;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
-
 
 }

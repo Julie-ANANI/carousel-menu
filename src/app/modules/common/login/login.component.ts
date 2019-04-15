@@ -20,17 +20,25 @@ export class LoginComponent implements OnInit {
   private _formData: FormGroup;
 
   private _linkedInLink: string;
+
   private _linkedInState: string = Date.now().toString();
+
+  private _displayLoading = false;
+
+  private _displayLoadingLinkedIn = false;
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private authService: AuthService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router,) {
+              private router: Router) {
+
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
+
   }
 
+
   ngOnInit() {
-    this.translateTitleService.setTitle('LOG_IN.TITLE');
     this.buildForm();
     this.linkedInUrl();
   }
@@ -51,29 +59,41 @@ export class LoginComponent implements OnInit {
       callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
       scope: 'r_emailaddress r_liteprofile r_basicprofile'
     };
+
     this._linkedInState = RandomUtil.generateUUID();
+
     this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
+
   }
 
-  public linkedInEvent() {
+
+  onClickLinkedIn() {
+    this._displayLoadingLinkedIn = true;
+
     const data = {
       domain: environment.domain,
       state: this._linkedInState
     };
-    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
-        console.log(_);
-      }, err=>{
-        console.error(err);
-      }, ()=>{
+
+    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{console.log(_);
+      }, (err) => {
+      this._displayLoadingLinkedIn = false;
+      console.error(err);
+      }, () => {
         window.open(this._linkedInLink, '_self');
     });
+
   }
 
 
-  onContinue() {
+  onClickContinue() {
     if (this._formData.valid) {
+
+      this._displayLoading = true;
+
       const user = new User(this._formData.value);
       user.domain = environment.domain;
+
       this.authService.login(user).pipe(first()).subscribe(() => {
 
         if (this.authService.isAuthenticated) {
@@ -92,6 +112,7 @@ export class LoginComponent implements OnInit {
 
         }
       }, () => {
+        this._displayLoading = false;
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
       });
@@ -125,6 +146,14 @@ export class LoginComponent implements OnInit {
 
   get linkedInLink(): string {
     return this._linkedInLink;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
+  }
+
+  get displayLoadingLinkedIn(): boolean {
+    return this._displayLoadingLinkedIn;
   }
 
 }

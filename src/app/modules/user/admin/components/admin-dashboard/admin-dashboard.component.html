@@ -1,16 +1,13 @@
-<section class="section-light-container" id="admin-dashboard-component">
+<section class="section-light-pad" id="admin-dashboard-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
-
 
     <!-- When loading -->
     <div *ngIf="spinnerDisplay" class="section-spinner">
       <app-shared-loader></app-shared-loader>
     </div>
 
-
     <!-- Loading finished -->
     <ng-container *ngIf="adminLevel > 2 && !spinnerDisplay">
-
 
       <!-- Section operator -->
       <div class="section-operator">
@@ -30,10 +27,7 @@
             [(ngModel)]="operatorId"
             (ngModelChange)="newOperatorSelected($event)">
             <option value="">{{ 'DASHBOARD.STATS.ALL_OPERATORS' | translate }}</option>
-            <option
-              *ngFor="let operator of operators"
-              [ngValue]="operator._id"
-              [selected]="operatorId === operator._id">
+            <option *ngFor="let operator of operators" [ngValue]="operator._id" [selected]="operatorId === operator._id">
               {{ operator.firstName + ' ' + operator.lastName }}
             </option>
           </select>
@@ -44,72 +38,108 @@
 
 
       <!-- Section table -->
-      <div class="section-table">
+      <div class="section-light-pad rm-pad-bottom">
         <app-admin-projects-list [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
       </div>
       <!-- /Section table -->
 
 
-      <!-- Section batch -->
-      <div class="section-batch">
+      <!-- section batch -->
+      <ng-container *ngIf="weekBatches && weekBatches.length > 0">
+        <div class="section-batch">
 
-        <div class="label-week">
-          <button type="button" class="btn ghost-edit btn-xs" (click)="getLastWeek()">{{ 'DASHBOARD.LAST_WEEK' | translate }}</button>
-          <div class="label-wrapper">
-            <div class="label label-success">{{ 'DASHBOARD.MAIL_LABEL.FIRST' | translate }}</div>
-            <div class="label label-draft">{{ 'DASHBOARD.MAIL_LABEL.SECOND' | translate }}</div>
-            <div class="label label-meta">{{ 'DASHBOARD.MAIL_LABEL.THIRD' | translate }}</div>
+          <!-- navigate labels -->
+          <div class="navigate-wrapper">
+            <button type="button" class="btn ghost-edit btn-xs" (click)="onClickLast()">Last Week</button>
+            <div class="label-wrapper">
+              <div class="label label-success">First mail</div>
+              <div class="label label-draft">Second mail</div>
+              <div class="label label-meta">Third mail</div>
+            </div>
+            <button type="button" class="btn ghost-edit btn-xs" (click)="onClickNext()">Next Week</button>
           </div>
-          <button type="button" class="btn ghost-edit btn-xs" (click)="getNextWeek()">{{ 'DASHBOARD.NEXT_WEEK' | translate }}</button>
-        </div>
 
-        <div class="batch-wrapper">
-          <div *ngFor="let days of weekBatches; let index1 = index" class="batch-content">
-            <div *ngFor="let batches of days; let index2 = index">
-              <p *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
-              <ng-container *ngIf="index2 !== 0">
-                <div *ngIf="index2 < 4" class="batch-body">
-                  <label *ngIf="getState(batches) === 0" class="label label-success" (click)="showPreview($event, batches)">
-                    {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
-                  </label>
-                  <label *ngIf="getState(batches) === 1" class="label label-draft" (click)="showPreview($event, batches)">
-                    {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
-                  </label>
-                  <label *ngIf="getState(batches) === 2" class="label label-meta" (click)="showPreview($event, batches)">
-                    {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
-                  </label>
-                </div>
-                <div *ngIf="index2 === 4" class="batch-body">
-                  <div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">
-                    <span>{{ 'DASHBOARD.SEE_MORE' | translate }}</span>
-                    <div class="popover-container">
-                      <div class="card">
-                        <div class="card-body">
-                          <div *ngFor="let batchesOver of days; let index3 = index">
-                            <div *ngIf="index3 > 0" class="batch-body">
-                              <label *ngIf="getState(batchesOver) === 0" class="label label-success" (click)="showPreview($event, batches)">
-                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
-                              </label>
-                              <label *ngIf="getState(batchesOver) === 1" class="label label-draft" (click)="showPreview($event, batches)">
-                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
-                              </label>
-                              <label *ngIf="getState(batchesOver) === 2" class="label label-meta" (click)="showPreview($event, batches)">
-                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
-                              </label>
+          <div class="batch-wrapper">
+            <div *ngFor="let days of weekBatches; let index1 = index" class="batch">
+              <div *ngFor="let batches of days; let index2 = index">
+
+                <p class="text text-center" *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
+
+                <ng-container *ngIf="index2 !== 0">
+
+                  <ng-container *ngIf="index2 < 4">
+                    <div class="batch-body">
+
+                      <ng-container *ngIf="getState(batches) === 0">
+                        <div class="label label-success" (click)="showPreview($event, batches)">
+                          {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
+                        </div>
+                      </ng-container>
+
+                      <ng-container *ngIf="getState(batches) === 1">
+                        <div class="label label-draft" (click)="showPreview($event, batches)">
+                          {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
+                        </div>
+                      </ng-container>
+
+                      <ng-container *ngIf="getState(batches) === 2">
+                        <div class="label label-meta" (click)="showPreview($event, batches)">
+                          {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
+                        </div>
+                      </ng-container>
+
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="index2 === 4">
+                    <div class="batch-body">
+                      <div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">
+
+                        <div class="text-link">see more...</div>
+
+                        <div class="popover-container popover-sm">
+                          <div class="card">
+                            <div class="card-body">
+                              <div *ngFor="let batchesOver of days; let index3 = index">
+                                <div *ngIf="index3 > 0" class="batch-body">
+
+                                  <ng-container *ngIf="getState(batchesOver) === 0">
+                                    <div class="label label-success" (click)="showPreview($event, batches)">
+                                      {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                                    </div>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="getState(batchesOver) === 1">
+                                    <div class="label label-draft" (click)="showPreview($event, batches)">
+                                      {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                                    </div>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="getState(batchesOver) === 2">
+                                    <div class="label label-meta" (click)="showPreview($event, batches)">
+                                      {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                                    </div>
+                                  </ng-container>
+
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
+
                       </div>
                     </div>
-                  </div>
-                </div>
-              </ng-container>
+                  </ng-container>
+
+                </ng-container>
+
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
-      <!-- /Section batch -->
+        </div>
+      </ng-container>
+      <!-- /section batch -->
 
 
     </ng-container>
@@ -120,45 +150,12 @@
 </section>
 
 
-<!-- Innovation preview sidebar-->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+<!-- innovation preview sidebar-->
+<app-sidebar [(template)]="sidebarTemplateValue">
   <app-innovation-preview
     [projectCard]="selectedInnovation"
     [batchInfo]="{ batchSelected:this.selectedBatch, date: this.dateNow }">
   </app-innovation-preview>
 </app-sidebar>
-<!-- /Innovation preview sidebar-->
+<!-- /innovation preview sidebar-->
 
-<!--
-<div>
-      <i class="fa fa-arrow-circle-left" style="font-size:36px"(click)="getLastWeek()"></i>
-      <br>
-      <br>
-      <label class="label-1st">
-        First Mail
-      </label>
-      <br>
-      <br>
-      <label class="label-2nd" >
-        Second Mail
-      </label>
-      <br>
-      <br>
-      <label class="label-3rd">
-        Third Mail
-      </label>
-    </div>
--->
-
-<!--
-  <div class="emails-stats" *ngIf="adminLevel > 2">
-    <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
-      <option [value]="1">Comparer...</option>
-      <option [value]="30">Dernier mois</option>
-      <option [value]="365">Dernière année</option>
-    </select>
-    <div>Pros trouvés : <span>{{ statistics.percentFoundPros }}</span></div>
-    <div>Emails trouvés : <span>{{ statistics.percentFoundEmails }}%</span></div>
-    <div>Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
-    <div>Emails reçus : <span>{{ statistics.percentReceivedEmails }}%</span></div>
-  </div>-->

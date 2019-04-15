@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 
@@ -8,7 +8,7 @@ import { Question } from '../../../../../../models/question';
   styleUrls: ['./executive-report.component.scss']
 })
 
-export class ExecutiveReportComponent implements OnInit {
+export class ExecutiveReportComponent {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
@@ -26,9 +26,6 @@ export class ExecutiveReportComponent implements OnInit {
   private _secondPageSections = [4, 5, 6, 7];
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   get executiveReport(): any {
     return this._executiveReport;

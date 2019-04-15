@@ -65,7 +65,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._adminMode = this.authService.adminLevel > 2;
     this.loadAnswers();
 
-    if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
+    if (this._campaign && this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
       this._campaign.innovation.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
       });
@@ -77,9 +77,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   private loadAnswers() {
     this.campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
       this._answers = result.answers.localAnswers;
-      if (this._answers.length === 0) {
-        this._noResult = true;
-      }
+      this._noResult = this._answers.length === 0;
       this.loadTable();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');

@@ -13,6 +13,7 @@ import { ProgressBarModule } from '../utility-components/progress-bar/progress-b
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { CountryFlagModule } from '../utility-components/country-flag/country-flag.module';
 import { PipeModule } from '../../pipe/pipe.module';
+import { MessageSpaceModule } from '../utility-components/message-space/message-space.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { PipeModule } from '../../pipe/pipe.module';
     ProgressBarModule,
     SharedLoaderModule,
     CountryFlagModule,
+    MessageSpaceModule
   ],
   declarations: [
     TableComponent

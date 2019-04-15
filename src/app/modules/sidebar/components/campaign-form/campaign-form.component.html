@@ -1,21 +1,25 @@
-<div class="column col-xs-12 col-11 col-mx-auto" id="campaign-form-component">
-  <form novalidate [formGroup]="campaignForm" (ngSubmit)="onSave()" autocomplete="off">
+<section id="campaign-form-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <form novalidate [formGroup]="campaignForm" (ngSubmit)="onSave()" autocomplete="off">
 
-    <!-- save button -->
-    <div class="save-button">
-      <button class="btn btn-primary" type="submit">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
-    </div>
+      <!-- save button -->
+      <div class="save-wrapper text-right">
+        <button class="btn btn-primary" type="submit">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+      </div>
 
-    <!-- campaign name -->
-    <div *ngIf="isEditName" class="form-group">
-      <label class="form-label" for="campaign-form-title">{{ 'COMMON.LABEL.CAMPAIGN_NAME' | translate }}</label>
-      <input
-        class="form-input"
-        formControlName="title"
-        id="campaign-form-title"
-        type="text"
-        [placeholder]="'COMMON.PLACEHOLDER.CAMPAIGN' | translate">
-    </div>
+      <!-- campaign name -->
+      <ng-container *ngIf="isEditName">
+        <div class="form-group">
+          <label class="form-label" for="campaign-form-title">{{ 'COMMON.LABEL.CAMPAIGN_NAME' | translate }}</label>
+          <input
+            class="form-input"
+            formControlName="title"
+            id="campaign-form-title"
+            type="text"
+            placeholder="Enter the campaign name">
+        </div>
+      </ng-container>
 
-  </form>
-</div>
+    </form>
+  </div>
+</section>

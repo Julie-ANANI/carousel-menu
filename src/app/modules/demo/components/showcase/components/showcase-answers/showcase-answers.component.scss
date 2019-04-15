@@ -1,0 +1,105 @@
+@import "../../../../../../../style/framework/src/variables";
+@import "../../../../../../../style/framework/src/mixins";
+
+#showcase-answers-component {
+  height: 100%;
+
+  .icon {
+    right: 0;
+  }
+
+  h2 {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    font-family: $font-family-oswald;
+    color: $secondary-color;
+    font-size: 1.85rem;
+
+    span {
+      color: #3E5164;
+    }
+
+  }
+
+  .card-wrapper {
+    @include control-transition();
+    border-bottom: $border-width solid $border-color;
+    padding-top: 0.5rem;
+    padding-left: $unit-2;
+    padding-bottom: 0.5rem;
+    min-height: 70px;
+    margin-bottom: 0;
+
+    .info-wrapper {
+      margin-left: $unit-5;
+      max-width: 73%;
+
+      h4 {
+        margin-bottom: $unit-1;
+        font-size: 0.75rem;
+      }
+
+      p {
+        margin-left: $unit-2;
+        font-size: 0.65rem;
+        margin-top: -3px;
+        margin-bottom: 0;
+      }
+
+    }
+
+  }
+
+}
+
+.card-wrapper {
+  flex-wrap: wrap;
+  margin-right: -$unit-5;
+  margin-bottom: -$unit-5;
+
+  .card {
+    padding: $layout-spacing;
+    margin-bottom: $unit-5;
+    border-width: $border-width-lg;
+
+    label {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      input[type="checkbox"] {
+        display: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+
+    &.active {
+      border-color: $success-color;
+    }
+
+    h4 {
+      margin-bottom: $unit-2;
+      font-size: 0.6rem;
+    }
+
+    p {
+      margin-left: $unit-2;
+      font-size: 0.6rem;
+      margin-top: -3px;
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      box-shadow: none;
+    }
+
+  }
+
+}

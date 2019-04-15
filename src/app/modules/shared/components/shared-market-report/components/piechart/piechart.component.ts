@@ -21,36 +21,39 @@ export class PiechartComponent implements OnInit, OnDestroy {
   }
 
   @Input() set executiveReport(value: boolean) {
-    this.executiveReportView = value;
+    this._executiveReportView = value;
   }
 
-  executiveReportView = false;
+  private _executiveReportView = false;
 
   private _datasets: Array<{data: Array<number>}>;
+
   private _colors: Array<{backgroundColor: Array<string>}>;
+
   private _labels: {[prop: string]: Array<string>};
+
   private _lang: string;
+
   private _percentage: number;
+
   private _labelPercentage: Array<{percentage: Array<string>}>;
-  private ngUnsubscribe: Subject<any> = new Subject();
+
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _isBrowser: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private translateService: TranslateService) {
+              private _translateService: TranslateService) {
+
     this._isBrowser = isPlatformBrowser(this.platformId);
+
   }
 
   ngOnInit() {
-    this._lang = this.translateService.currentLang || 'en';
-    this.translateService.onLangChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((e: any) => {
+    this._lang = this._translateService.currentLang || 'en';
+    this._translateService.onLangChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((e: any) => {
       this._lang = e.lang;
     });
-  }
-
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
   }
 
   get datasets() {
@@ -79,6 +82,19 @@ export class PiechartComponent implements OnInit, OnDestroy {
 
   get isBrowser(): boolean {
     return this._isBrowser;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get executiveReportView(): boolean {
+    return this._executiveReportView;
+  }
+
+  ngOnDestroy() {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

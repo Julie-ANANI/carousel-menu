@@ -9,7 +9,7 @@ import { TableModule } from '../../../../table/table.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
-import { ModalModule } from '../../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
 @NgModule({
   imports: [

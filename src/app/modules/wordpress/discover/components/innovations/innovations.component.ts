@@ -15,6 +15,7 @@ import { UserService } from '../../../../../services/user/user.service';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
 import { InnovCard } from '../../../../../models/innov-card';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 
 @Component({
@@ -24,11 +25,11 @@ import { InnovCard } from '../../../../../models/innov-card';
     trigger('tagAnimation', [
       transition('* => *', [
 
-        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' })),
+        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
 
         query('.tag-content', stagger('50ms', [
           animate('.15s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
-        ])),
+        ]), { optional: true }),
 
       ])
     ]),
@@ -527,44 +528,34 @@ export class InnovationsComponent implements OnInit {
    */
   getImageSrc(innovation: Innovation): string {
 
-    let src = '';
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
-
-
-    if (innovation.principalMedia && innovation.principalMedia.url && innovation.principalMedia.type === 'PHOTO') {
-      src = innovation.principalMedia.url;
-    } else if (innovation.innovationCards) {
-      const index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.browserLang());
-      if (index !== -1) {
-        if (innovation.innovationCards[index].principalMedia && innovation.innovationCards[index].principalMedia.url
-          && innovation.innovationCards[index].principalMedia.type === 'PHOTO') {
-          src = innovation.innovationCards[index].principalMedia.url;
-        } else {
-          if (innovation.innovationCards[index].media.length > 0) {
-            const photoIndex = innovation.innovationCards[index].media.findIndex((image) => image.type === 'PHOTO');
-            if (photoIndex !== -1) {
-              src = innovation.innovationCards[index].media[photoIndex].url;
-            }
-          }
-        }
-      }
+    /*const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/app/default-images/image-not-available.png';
+        const prefix = 'https://res.cloudinary.com/umi/image/upload/c_fill,h_200,w_279/';
+        const suffix = '.jpg';*/
+    /*
+     * Search a default innovationCard
+     */
+    let innovationCard = innovation.innovationCards.find((card: InnovCard) => card.lang === this.translateService.currentLang);
+    if (!innovationCard && this.translateService.currentLang !== this.translateService.defaultLang) {
+      innovationCard = innovation.innovationCards.find((card: InnovCard) => card.lang === this.translateService.defaultLang);
     }
-
-    if (src === '') {
-      const index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang !== this.browserLang());
-      if (index !== -1) {
-        if (innovation.innovationCards[index].media.length > 0) {
-          const photoIndex = innovation.innovationCards[index].media.findIndex((image) => image.type === 'PHOTO');
-          if (photoIndex !== -1) {
-            src = innovation.innovationCards[index].media[photoIndex].url;
-          }
-        }
-      } else {
-        src = defaultSrc;
-      }
+    if (!innovationCard && Array.isArray(innovation.innovationCards) && innovation.innovationCards.length > 0) {
+      innovationCard = innovation.innovationCards[0];
     }
-
-    return src;
+    /*
+     * Search default media
+     */
+    /*if (innovationCard && innovationCard.principalMedia && innovationCard.principalMedia.type === 'PHOTO') {
+      return prefix + innovationCard.principalMedia.cloudinary.public_id + suffix;
+    } else if (Array.isArray(innovationCard.media) && innovationCard.media.length > 0) {
+      const media = innovationCard.media.find((image) => image.type === 'PHOTO');
+      if (media && media.cloudinary && media.cloudinary.public_id) {
+        return prefix + media.cloudinary.public_id + suffix;
+      }
+    }*/
+    /*
+     * return default uri
+     */
+    return InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
 
   }
 
@@ -765,6 +756,10 @@ export class InnovationsComponent implements OnInit {
 
   get shareModal(): boolean {
     return this._shareModal;
+  }
+
+  set shareModal(value: boolean) {
+    this._shareModal = value;
   }
 
   get shareUrl(): string {

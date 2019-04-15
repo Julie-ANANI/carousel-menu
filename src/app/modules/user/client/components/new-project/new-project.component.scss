@@ -1,12 +1,31 @@
-@import "../../../../../../style/variables";
+@import "../../../../../../style/framework/src/variables";
 
 #new-project-component {
 
   .ques-2, .ques-3, .section-info {
-    padding-top: 4.06rem;
+    padding-top: 3.25rem;
   }
 
-  .ques-3 {
+  .create-button {
+    padding-top: 3.2rem;
+  }
+
+  .section-info {
+    margin-bottom: -0.4rem;
+
+    .fas {
+      color: $meta-color;;
+    }
+
+    .text {
+      padding-top: 0.4rem;
+      width: 221px;
+      display: inline-block;
+    }
+
+  }
+
+  /*.ques-3 {
 
     .selection-wrapper {
       display: flex;
@@ -77,33 +96,13 @@
       border-color: $validation-color;
     }
 
-  }
-
-
-  .create-button {
-    padding-top: 4rem;
-    text-align: center;
-  }
-
-  .section-info {
-
-    .fas {
-      color: $meta-color;;
-    }
-
-    .text {
-      padding-top: .6rem;
-      width: 221px;
-      display: inline-block;
-    }
-
-  }
+  }*/
 
 }
 
-/********************************** Media ***************************************/
 
-@media (max-width: 320px) {
+
+/*@media (max-width: 320px) {
 
   .offers {
     width: 293px !important;
@@ -119,11 +118,7 @@
 
 }
 
-@media (max-width: 600px) {
-
-  .tooltips {
-    display: none;
-  }
+@media (max-width: $size-sm) {
 
   .image-wrapper {
     display: none;
@@ -131,7 +126,7 @@
 
 }
 
-@media (min-width: 600px) {
+@media (min-width: $size-sm) {
 
   .selection-wrapper label {
     margin-right: 1.2rem;
@@ -143,13 +138,13 @@
 
 }
 
-@media (min-width: 840px) {
+@media (min-width: $size-md) {
 
   .selection-wrapper label {
     margin-right: 1.57rem;
   }
 
 }
-
+*/
 
 

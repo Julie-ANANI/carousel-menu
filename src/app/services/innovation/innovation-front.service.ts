@@ -237,7 +237,7 @@ export class InnovationFrontService {
    * @param requestFor
    * @param source => innovationCard || Media.
    */
-  getMediaSrc(source: any, requestFor = 'default', width = '240', height = '159'): string {
+  public static getMediaSrc(source: any, requestFor = 'default', width = '240', height = '159'): string {
     const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
     const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
     const suffix = '.jpg';
@@ -266,7 +266,7 @@ export class InnovationFrontService {
           break;
 
         default:
-        // Do nothing...
+          // Do nothing...
 
       }
 
@@ -286,3 +286,4 @@ export class InnovationFrontService {
   }
 
 }
+

@@ -1,7 +1,6 @@
 @import "../../../../style/framework/src/variables";
 
 #message-space-component {
-  text-align: center;
 
   .message-wrapper, .bot-wrapper {
     margin-left: auto;
@@ -15,16 +14,15 @@
   }
 
   .message-wrapper {
-    margin-bottom: 0.9375rem;
+    margin-bottom: 0.75rem;
 
     .message-content {
-      padding: 1.2rem 0.95rem;
-      border-radius: 0.18rem;
+      padding: 1rem 0.75rem;
+      border-radius: $border-radius;
       color: #FFFFFF;
       background: $background;
-      font-size: 0.875rem;
-      justify-content: center;
-      font-weight: 600;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
       position: relative;
     }
 
@@ -41,7 +39,7 @@
   }
 
   .bot-wrapper {
-    height: 9.37rem;
+    height: 7.496rem;
   }
 
 }

@@ -1,22 +1,19 @@
 <div class="videos-upload text-center">
 
   <div class="logos">
-    <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-youtube.png'" height="28">
-    <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_31/app/logo-vimeo.png'" height="24">
+    <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_28/app/logo-youtube.png'" height="28px" alt=" ">
+    <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_24/app/logo-vimeo.png'" height="24px" alt=" ">
   </div>
 
   <input
     type="text"
     class="form-input"
-    [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.MEDIA.URL' | translate"
+    [attr.placeholder]="'SHARED_PROJECT_EDIT.MEDIA.URL' | translate"
     [(ngModel)]="videoUrlInput">
 
   <button class="btn btn-primary" (click)="videoUrlInput ? addVideo($event) : ''">
-    <i class="fas fa-upload"></i>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.UPLOAD_VIDEO' | translate }}
+    <i class="fas fa-upload"></i>{{ 'SHARED_PROJECT_EDIT.MEDIA.UPLOAD_VIDEO' | translate }}
   </button>
 
 </div>
 
-<!--
-  <p class="para">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.URL' | translate }}</p>
--->

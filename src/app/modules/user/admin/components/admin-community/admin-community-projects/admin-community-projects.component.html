@@ -1,15 +1,24 @@
-<section class="section-light-container" id="admin-community-members-component">
+<section id="admin-community-members-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
-      <section class="section-light-container" id="admin-projects-component">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-              <app-shared-table
-                  [config]="config"
-                  (configChange)="loadProjects($event)"
-                  [data]="tableInfos"
-                  (editRow)="goToProject($event)">
-              </app-shared-table>
-          </div>
-      </section>
-  </div>
 
+    <!-- section bot when no result -->
+    <ng-container *ngIf="noResult">
+      <div class="section-light-pad rm-pad-bottom">
+        <app-message-space>
+          <span>Don't have any projects to show.</span>
+        </app-message-space>
+      </div>
+    </ng-container>
+
+    <!-- section table -->
+    <ng-container *ngIf="!noResult">
+      <app-shared-table
+        [config]="config"
+        (configChange)="configChanges($event)"
+        [data]="tableInfos"
+        (editRow)="onClickShow($event)">
+      </app-shared-table>
+    </ng-container>
+
+  </div>
 </section>

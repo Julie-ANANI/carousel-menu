@@ -8,6 +8,7 @@ import { AdminSignaturesLibraryComponent } from "./admin-signatures-library.comp
 
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { SidebarSignatureModule } from '../../../../../sidebar/components/sidebar-signature/sidebar-signature.module';
+import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SidebarSignatureModule } from '../../../../../sidebar/components/sideba
     FormsModule,
     SidebarModule,
     TableModule,
-    SidebarSignatureModule
+    SidebarSignatureModule,
+    ModalModule
   ],
   declarations: [
     AdminSignaturesLibraryComponent

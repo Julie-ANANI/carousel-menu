@@ -8,8 +8,8 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
-import { Subject } from 'rxjs';
 import { distinctUntilChanged, first } from 'rxjs/operators';
+import { countries } from '../../../../../models/static-data/country';
 
 @Component({
   selector: 'app-account',
@@ -22,9 +22,10 @@ export class AccountComponent implements OnInit {
   private _formData: FormGroup;
 
   private _name: string;
+
   private _jobTitle: string;
 
-  private _accountDeletionAsked = false;
+  private _modalDelete = false;
 
   private _userProvider: string;
 
@@ -36,7 +37,7 @@ export class AccountComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _sidebarState = new Subject<string>();
+  private _countries = countries;
 
   // TODO : description, location
 
@@ -46,10 +47,13 @@ export class AccountComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private translateTitleService: TranslateTitleService,
-              private autoCompleteService: AutocompleteService) {}
+              private autoCompleteService: AutocompleteService) {
+
+    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.ACCOUNT');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('MY_ACCOUNT.TITLE');
     this.buildForm();
     this.patchForm();
   }
@@ -69,8 +73,10 @@ export class AccountComponent implements OnInit {
     });
   }
 
+
   private patchForm() {
     this.userService.getSelf().subscribe((response: User) => {
+      response.country = this.getCountryName(response.country);
       this._formData.patchValue(response);
       this._name = response.name;
       this._jobTitle = response.jobTitle;
@@ -80,6 +86,7 @@ export class AccountComponent implements OnInit {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
+
 
   onSuggestCountries() {
     this._formData.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
@@ -100,85 +107,88 @@ export class AccountComponent implements OnInit {
     });
   }
 
+
   onValueSelect(value: string) {
     this._formData.get('country').setValue(value);
     this._displayCountrySuggestion = false;
   }
+
 
   showPasswordSidebar(event: Event) {
     event.preventDefault();
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'MY_ACCOUNT.CHANGE'
+      title: 'SIDEBAR.TITLE.CHANGE_PASSWORD'
     };
 
   }
 
-  closeSidebar(value: SidebarInterface) {
-    this._sidebarValue.animate_state = value.animate_state;
-    this._sidebarState.next('inactive');
-  }
 
   onSubmit() {
-
     if (this._formData.valid) {
+
+      for (let code in this._countries) {
+        if (this._countries[code] === this._formData.get('country').value) {
+          this._formData.value['country'] = code;
+        }
+      }
+
       const user = new User(this._formData.value);
-      this.userService.update(user).pipe(first()).subscribe(
-        (response: User) => {
-          this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          this._name = response.name;
-          this._jobTitle = response.jobTitle;
-          this._userProvider = response.provider;
-          this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
-          this._formData.patchValue(response);
+
+      this.userService.update(user).pipe(first()).subscribe((response: User) => {
+        this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
+        this._name = response.name;
+        this._jobTitle = response.jobTitle;
+        this._userProvider = response.provider;
+        this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
+        response.country = this.getCountryName(response.country);
+        this._formData.patchValue(response);
         }, (error: any) => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-        });
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
     }
     else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
-
   }
+
 
   addSector(event: {value: Array<string>}) {
     this._formData.get('sectors')!.setValue(event.value);
   }
 
+
   addTechnology(event: {value: Array<string>}) {
     this._formData.get('technologies')!.setValue(event.value);
   }
 
+
   onDelete(event: Event) {
     event.preventDefault();
-    this._accountDeletionAsked = true;
+    this._modalDelete = true;
   }
 
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._accountDeletionAsked = false;
-  }
 
-  deleteAccount (event: Event) {
-    event.preventDefault();
-
+  onClickSubmit(event: Event) {
     this.userService.delete().pipe(first()).subscribe((_: any) => {
       this.authService.logout().pipe(first()).subscribe(() => {
         this.translateNotificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       });
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
-
   }
+
 
   hasProfilePic(): boolean {
     return !!this._profilePicture && this._profilePicture !== '';
   }
 
-  changePassword(value: FormGroup) {
+
+  updatePassword(value: FormGroup) {
     const email = this._formData.get('email').value;
     const newPassword = value.value.newPassword;
     const confirmPassword = value.value.confirmPassword;
@@ -197,6 +207,19 @@ export class AccountComponent implements OnInit {
     }
 
   }
+
+
+  getCountryName(value: string) {
+    for (let code in this._countries) {
+      if (code === value) {
+        return this._countries[code];
+      }
+    }
+
+    return value;
+
+  }
+
 
   get profilePicture(): string {
     return this._profilePicture;
@@ -218,8 +241,12 @@ export class AccountComponent implements OnInit {
     return this._jobTitle;
   }
 
-  get accountDeletionAsked(): boolean {
-    return this._accountDeletionAsked;
+  get modalDelete(): boolean {
+    return this._modalDelete;
+  }
+
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
   }
 
   get userProvider(): string {
@@ -238,13 +265,12 @@ export class AccountComponent implements OnInit {
     return this._sidebarValue;
   }
 
-  get sidebarState(): Subject<string> {
-    return this._sidebarState;
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
-  set sidebarState(value: Subject<string>) {
-    this._sidebarState = value;
+  get countries(): any {
+    return this._countries;
   }
-
 
 }

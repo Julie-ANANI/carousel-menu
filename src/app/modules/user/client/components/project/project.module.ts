@@ -6,8 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
-import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
-import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
 import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
@@ -25,7 +23,7 @@ import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-ans
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedProjectDescriptionModule } from '../../../../shared/components/shared-project-description/shared-project-description.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
-import { ModalModule } from '../../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
 
 @NgModule({
@@ -51,8 +49,6 @@ import { ModalModule } from '../../../../utility-components/modal/modal.module';
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
-    TargetingComponent,
-    PitchComponent,
     SurveyComponent,
     HistoryProjectComponent,
     ProjectEditExample1Component,

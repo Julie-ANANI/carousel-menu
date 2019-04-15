@@ -1,38 +1,42 @@
-<div id="table-component">
+<section id="table-component">
   <div class="table-wrapper">
 
+    <!-- info row -->
+    <ng-container *ngIf="!isNoTitle || isFiltrable">
+      <div class="table-header">
 
-    <!-- Info row -->
-    <div *ngIf="!isNoTitle || isFiltrable" class="info-wrapper">
+        <!-- number of result and title -->
+        <ng-container *ngIf="!isNoTitle">
+          <h6 class="text text-notify">{{ total }} {{ title | translate }}</h6>
+        </ng-container>
 
-      <!-- Number of result and title -->
-      <h1 *ngIf="!isNoTitle"  class="main-heading">{{ total }} {{ title | translate }}</h1>
+        <!-- if we want to filter by columns (not local) -->
+        <ng-container *ngIf="isFiltrable">
+          <div class="filter-wrapper">
+            <app-shared-multi-filter
+              [config]="config"
+              (configChange)="changeConfig($event)"
+              [props]="columns">
+            </app-shared-multi-filter>
+          </div>
+        </ng-container>
 
-      <!-- If we want to filter by columns (not local) -->
-      <div class="filter-wrapper">
-        <app-shared-multi-filter
-          *ngIf="isFiltrable"
-          [config]="config"
-          (configChange)="changeConfig($event)"
-          [props]="columns">
-        </app-shared-multi-filter>
       </div>
-
-    </div>
-    <!-- /Info row -->
+    </ng-container>
+    <!-- /info row -->
 
 
     <!-- No result -->
-    <div *ngIf="total === 0" class="no-result-wrapper">
-      <img src="https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg" class="img-responsive bot-image" alt=" ">
+    <div *ngIf="total === 0" class="section-light-pad rm-pad-bottom">
       <ng-container *ngIf="!fetchingResult">
-        <h1 class="main-heading">{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h1>
-        <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>
-        <p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>
+        <app-message-space [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'" [widthMax]="'338px'">
+          {{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }} {{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}
+        </app-message-space>
       </ng-container>
       <ng-container *ngIf="fetchingResult">
-        <p>{{ 'ERROR.FETCHING_RESULT.MESSAGE.A' | translate }}</p>
-        <p>{{ 'ERROR.FETCHING_RESULT.MESSAGE.B' | translate }}</p>
+        <app-message-space [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'" [widthMax]="'310px'">
+          {{ 'ERROR.FETCHING_RESULT.MESSAGE.A' | translate }} {{ 'ERROR.FETCHING_RESULT.MESSAGE.B' | translate }}
+        </app-message-space>
       </ng-container>
     </div>
 
@@ -72,11 +76,11 @@
                                       [ngClass]="{ 'selectable': isSortable(column) }"
                                       (configChange)="changeConfig($event)"
                                       [prop]="getAttrs(column)[0]">
-                                  {{ getName(column) | translate | FormatText }}
+                                  {{ getName(column) | translate }}
                               </app-shared-sort>
 
                               <!-- Not sortable -->
-                              <span *ngIf="!isSortable(column)">{{ getName(column) | translate | FormatText }}</span>
+                              <span *ngIf="!isSortable(column)">{{ getName(column) | translate }}</span>
 
                           </th>
 
@@ -90,10 +94,10 @@
                               <label>
                                   <input type="checkbox" (change)="selectAll($event); onSelectAction()" [checked]="true"/>
                                   <div *ngIf="selectedRows === total" class="square-checkbox active">
-                                      <i class="icon icon-check"></i>
+                                    <i class="fas fa-check"></i>
                                   </div>
                                   <div *ngIf="selectedRows < total" class="square-checkbox">
-                                      <i class="icon icon-minus"></i>
+                                    <i class="fas fa-minus"></i>
                                   </div>
                               </label>
                           </th>
@@ -101,7 +105,7 @@
                           <th class="all" [attr.colspan]="isSelectable ? columns.length : columns.length -1">
               <span class="selected-text">
                 {{ selectedRows }} {{ 'COMMON.TABLE.SELECTED_ROWS' | translate }}
-                <i class="icon icon-arrow-right"></i>
+                <i class="fas fa-angle-right"></i>
               </span>
                               <div [ngStyle]="{ display: 'inline-flex' }" *ngIf="(selectedRows < total) || (total <= content.length)">
                                   <button
@@ -134,7 +138,7 @@
                           <label>
                               <input type="checkbox" (click)="selectRow(key); onSelectAction()" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
                               <div class="square-checkbox active">
-                                  <i class="icon icon-check"></i>
+                                <i class="fas fa-check"></i>
                               </div>
                           </label>
                       </td>
@@ -255,17 +259,18 @@
               </table>
               <!-- /Table -->
 
-              <!-- Pagination -->
-              <div *ngIf="!isNotPaginable" class="pagination-wrapper">
-                  <app-pagination
-                          *ngIf="!isNotPaginable"
-                          [configValue]="paginationConfig"
-                          (configChange)="changePaginationConfig($event)"
-                          [total]="total"
-                          [propertyName]="selector">
-                  </app-pagination>
-              </div>
-              <!-- /Pagination -->
+      <!-- Pagination -->
+      <ng-container *ngIf="!isNotPaginable">
+        <div class="flex-end section-light-pad rm-pad-bottom">
+          <app-pagination
+            [configValue]="paginationConfig"
+            (configChange)="changePaginationConfig($event)"
+            [total]="total"
+            [propertyName]="selector">
+          </app-pagination>
+        </div>
+      </ng-container>
+      <!-- /Pagination -->
 
           </ng-container>
 
@@ -274,4 +279,4 @@
 
 
   </div>
-</div>
+</section>

@@ -20,7 +20,7 @@ export class SharedSearchResultsComponent implements OnInit {
   private _request: any;
   private _selection: any;
   private _chosenCampaign: Array<any>;
-  public addToCampaignModal = false;
+  private _addToCampaignModal = false;
   public config: any = {
     limit: 10,
     offset: 0,
@@ -136,4 +136,6 @@ export class SharedSearchResultsComponent implements OnInit {
   get request() { return this._request; }
   get chosenCampaign(): Array<any> { return this._chosenCampaign; }
   set chosenCampaign(value: Array<any>) { this._chosenCampaign = value; }
+  get addToCampaignModal () { return this._addToCampaignModal; }
+  set addToCampaignModal (value: boolean) { this._addToCampaignModal = value; }
 }

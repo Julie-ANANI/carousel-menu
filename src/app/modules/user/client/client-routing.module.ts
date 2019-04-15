@@ -24,10 +24,6 @@ const clientRoutes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'discover',
-        loadChildren: '../../public/discover/discover.module#DiscoverModule'
-      },
-      {
         path: 'synthesis',
         children: [
           { path: '', component: SynthesisListComponent, pathMatch: 'full' },

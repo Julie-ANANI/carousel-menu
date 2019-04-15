@@ -1,40 +1,34 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 #shared-tag-item-component {
 
-  .form-input.ng-touched.ng-invalid{
-    border-color: #E0E0E0;
+  .form-input.ng-touched.ng-invalid {
+    border-color: $form-border-color;
   }
 
-  .tag-input-wrapper {
+  .form-group {
     display: flex;
     justify-content: space-between;
-    margin-bottom: .6rem;
+
+    label {
+      display: none;
+    }
+
   }
 
   .tags-wrapper {
-    margin-bottom: .6rem;
+    flex-wrap: wrap;
+    margin-left: -$unit-1;
+    margin-bottom: -$unit-1;
+    margin-right: -$unit-1;
 
-    .tags-content {
-      display: inline-flex;
-      background-color: $background-color;
-      color: white;
-      border-radius: 25px;
-      justify-content: space-between;
-      padding: .35rem .9375rem;
-      font-weight: 600;
-      align-items: center;
-      font-size: .6875rem;
-      margin: .35rem;
+    .label.label-tag {
 
-      .tags-body {
+      .fa-times {
+        font-size: $font-icon-sm;
 
-        .fa-times {
+        &:hover {
           cursor: pointer;
-          margin-left: .6rem;
-          font-size: .75rem;
-          font-weight: 600;
-          vertical-align: middle;
         }
 
       }
@@ -42,6 +36,5 @@
     }
 
   }
-
 
 }

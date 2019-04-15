@@ -47,6 +47,10 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _innovationsSuggested: Array<InnovCard> = [];
 
+  private _emailTableInfo: any = [];
+
+  private _projectTableInfo: any = [];
+
   private _configTag = {
     limit: '0',
     offset: '0',
@@ -63,27 +67,117 @@ export class AdminCommunityMemberComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private autoCompleteService: AutocompleteService,
-              private tagsService: TagsService,
-              private translateService: TranslateService,
-              private professionalService: ProfessionalsService,
-              private translateNotificationService: TranslateNotificationsService,
-              private innovationService: InnovationService,
-              private innovationFrontService: InnovationFrontService) { }
+  private _configProject = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
+
+  private _configEmail = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
+
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _autoCompleteService: AutocompleteService,
+              private _tagsService: TagsService,
+              private _translateService: TranslateService,
+              private _professionalService: ProfessionalsService,
+              private _translateNotificationService: TranslateNotificationsService,
+              private _innovationService: InnovationService) {
+
+    this._configureEmailTable();
+    this._configureProjectTable();
+
+  }
 
   ngOnInit() {
-    this._professional = this.activatedRoute.snapshot.data['professional'];
-    this.getAllTags();
-    this.initializeVariables();
-    this.getAllInnovations();
+    this._professional = this._activatedRoute.snapshot.data['professional'];
+    this._getAllTags();
+    this._initializeVariables();
+    this._getEmails();
+    this._getProjects();
+    this._getAllInnovations();
+  }
+
+
+  private _configureEmailTable() {
+    this._projectTableInfo = {
+      _selector: 'admin-community-member-email',
+      _title: 'Emails',
+      _content: [],
+      _total: 0,
+      _isHeadable: true,
+      _isShowable: true,
+      _columns: [
+        {
+          _attrs: [''],
+          _name: 'Emails',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: [''],
+          _name: 'Open',
+          _type: 'MULTI-CHOICES',
+          _isSortable: false,
+          _choices: [
+            {_name: '', _alias: '', _class: 'label label-alert'},
+            {_name: '', _alias: '',  _class: 'label label-success'},
+          ]
+        },
+        {
+          _attrs: [''],
+          _name: 'Click',
+          _type: 'MULTI-CHOICES',
+          _isSortable: false,
+          _choices: [
+            {_name: '', _alias: '', _class: 'label label-alert'},
+            {_name: '', _alias: '',  _class: 'label label-success'},
+          ]
+        }
+      ]
+    };
+  }
+
+
+  private _configureProjectTable() {
+    this._projectTableInfo = {
+      _selector: 'admin-community-member-project',
+      _title: 'Projects',
+      _content: [],
+      _total: 0,
+      _isHeadable: true,
+      _isShowable: true,
+      _columns: [
+        {
+          _attrs: [''],
+          _name: 'Projects',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: ['', ''],
+          _name: 'Feedback',
+          _type: 'MULTI-LABEL',
+          _isSortable: false,
+          _multiLabels: [
+            {_attr: '', _class: 'label label-success'},
+            {_attr: '', _class: 'label label-draft'}
+          ],
+        }
+      ]
+    };
   }
 
 
   /***
-   * initializing all the varaibles to its default values.
+   * initializing all the variables to its default values.
    */
-  private initializeVariables() {
+  private _initializeVariables() {
     this._saveChanges = false;
     this._experiences = ambassadorExperiences;
     this._positions = ambassadorPosition;
@@ -92,20 +186,47 @@ export class AdminCommunityMemberComponent implements OnInit {
   }
 
 
+  private _getEmails() {
+    // this._emailTableContent(emails, total);
+  }
+
+
+  /*private _emailTableContent(emails: Array<any>, total: number) {
+   const tableInfos = this.emailTableInfo;
+   tableInfos._content = emails;
+   tableInfos._total = total;
+   this.emailTableInfo = JSON.parse(JSON.stringify(tableInfos));
+ }*/
+
+
+  private _getProjects() {
+    // this._projectTableContent(projects, total);
+  }
+
+
+  /*private _projectTableContent(projects: Array<any>, total: number) {
+    const tableInfos = this.projectTableInfo;
+    tableInfos._content = projects;
+    tableInfos._total = total;
+    this.projectTableInfo = JSON.parse(JSON.stringify(tableInfos));
+  }*/
+
+
   /***
    * checking the browser lang to get the tag label of same lang.
    */
-  browserLang(): string {
-    return this.translateService.getBrowserLang() || 'en';
+  public browserLang(): string {
+    return this._translateService.getBrowserLang() || 'en';
   }
 
 
   /***
    * getting all the tags from the server to show under the lable sector tags.
    */
-  private getAllTags() {
+  private _getAllTags() {
     const activeLang = this.browserLang();
-    this.tagsService.getAll(this._configTag).pipe(first()).subscribe((response) => {
+
+    this._tagsService.getAll(this._configTag).pipe(first()).subscribe((response) => {
       if (response) {
         response.result.forEach((tag) => {
           const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
@@ -124,14 +245,15 @@ export class AdminCommunityMemberComponent implements OnInit {
         });
       }
     });
+
   }
 
 
-  private getAllInnovations() {
+  private _getAllInnovations() {
 
     this._innovationsSuggested = [];
 
-    this.innovationService.getAll(this._configInnovation).pipe(first()).subscribe((response) => {
+    this._innovationService.getAll(this._configInnovation).pipe(first()).subscribe((response) => {
       if (response) {
         response.result.forEach((innovation: Innovation) => {
           innovation.tags.forEach((tag) => {
@@ -157,15 +279,15 @@ export class AdminCommunityMemberComponent implements OnInit {
   /***
    * to save the changes in professional object to the server.
    */
-  onClickSave() {
+  public onClickSave() {
     //Convert the professional into an ambassador
     this._professional.ambassador.is = this._professional.ambassador.is || true;
-    this.professionalService.save(this._professional._id, this._professional).pipe(first()).subscribe(() => {
+    this._professionalService.save(this._professional._id, this._professional).pipe(first()).subscribe(() => {
       this._saveChanges = false;
-      this.translateNotificationService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
-      this.getAllInnovations();
+      this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+      this._getAllInnovations();
     }, () => {
-      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
     });
   }
 
@@ -173,7 +295,7 @@ export class AdminCommunityMemberComponent implements OnInit {
   /***
    * to notify the user if they perform any update in the professional object.
    */
-  notifyChanges() {
+  public notifyChanges() {
     this._saveChanges = true;
   }
 
@@ -182,7 +304,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when changing the value of the motivation.
    * @param event
    */
-  onChangeMotivation(event: Event) {
+  public onChangeMotivation(event: Event) {
     if (event && event.target && event.target['value']) {
       this._professional.ambassador.motivations = event.target['value'];
       this.notifyChanges();
@@ -194,7 +316,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when changing the value of the motivation.
    * @param event
    */
-  onChangeQualification(event: Event) {
+  public onChangeQualification(event: Event) {
     if (event && event.target && event.target['value']) {
       this._professional.ambassador.qualification = event.target['value'];
       this.notifyChanges();
@@ -206,7 +328,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when changing the value of the motivation.
    * @param event
    */
-  onChangeActivity(event: Event) {
+  public onChangeActivity(event: Event) {
     if (event && event.target && event.target['value']) {
       this._professional.ambassador.activity = event.target['value'];
       this.notifyChanges();
@@ -218,7 +340,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when changing the value of the experience filed.
    * @param value
    */
-  onChangeExperience(value: string) {
+  public onChangeExperience(value: string) {
     this.notifyChanges();
     this._professional.ambassador.experience = value;
   }
@@ -228,7 +350,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when changing the value of the position level filed.
    * @param value
    */
-  onChangePosition(value: string) {
+  public onChangePosition(value: string) {
     this.notifyChanges();
     this._professional.ambassador.positionLevel = value;
   }
@@ -238,7 +360,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when changing the value of the language filed.
    * @param value
    */
-  onChangeLang(value: string) {
+  public onChangeLang(value: string) {
     this.notifyChanges();
     this._professional.language = value;
   }
@@ -249,11 +371,11 @@ export class AdminCommunityMemberComponent implements OnInit {
    * according to the input.
    * @param input
    */
-  onSuggestCountries(input: string) {
+  public onSuggestCountries(input: string) {
     if (input !== '') {
       this._displayCountrySuggestion = true;
       this._countriesSuggestion = [];
-      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
+      this._autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
           this._displayCountrySuggestion = false;
         } else {
@@ -273,7 +395,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when user selects the value from the suggested countries.
    * @param value
    */
-  onChangeCountry(value: string) {
+  public onChangeCountry(value: string) {
     for (let code in this._countries) {
       if (this._countries[code] === value) {
         this._professional.country = code;
@@ -288,7 +410,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * activate the tag that is associated with the professional.
    * @param tagId
    */
-  onCheckTag(tagId: string): boolean {
+  public onCheckTag(tagId: string): boolean {
     if (tagId) {
       const find = this._professional.tags.find((tag) => tag._id === tagId);
       if (find) {
@@ -305,7 +427,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * @param event
    * @param tag
    */
-  onChangeTag(event: Event, tag: Tag) {
+  public onChangeTag(event: Event, tag: Tag) {
 
     if (event.target['checked']) {
       this._professional.tags.push(tag);
@@ -318,16 +440,34 @@ export class AdminCommunityMemberComponent implements OnInit {
   }
 
 
-  getImageSrc(innovation: InnovCard): string {
-    return this.innovationFrontService.getMediaSrc(innovation, 'default', '209', '130');
+  public getImageSrc(innovation: InnovCard): string {
+    return InnovationFrontService.getMediaSrc(innovation, 'default', '209', '130');
   }
 
 
   /***
-   * whent the user clicks on the push button.
+   * when the clicks on the show button in the email table.
+   * @param value
+   */
+  public onClickEmailShow(value: any) {
+
+  }
+
+
+  /***
+   * when the clicks on the show button in the project table.
+   * @param value
+   */
+  public onClickProjectShow(value: any) {
+
+  }
+
+
+  /***
+   * when the user clicks on the push button.
    * @param innovation
    */
-  onClickPush(innovation: InnovCard) {
+  public onClickPush(innovation: InnovCard) {
 
   }
 
@@ -382,6 +522,22 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   get configInnovation(): { offset: string; $or: string; limit: string; isPublic: string; sort: string; fields: string } {
     return this._configInnovation;
+  }
+
+  get emailTableInfo(): any {
+    return this._emailTableInfo;
+  }
+
+  get projectTableInfo(): any {
+    return this._projectTableInfo;
+  }
+
+  get configProject(): { search: string; offset: string; limit: string; sort: string; fields: string } {
+    return this._configProject;
+  }
+
+  get configEmail(): { search: string; offset: string; limit: string; sort: string; fields: string } {
+    return this._configEmail;
   }
 
 }

@@ -34,7 +34,7 @@ export const MARKET_REPORT = {
 
   'COMMENT_HEADING': 'Space for your comments',
 
-  'KEY_LEARNING': 'Key learnings',
+  'KEY_LEARNING': 'Key Learnings',
 
   'MENU_BAR': {
     'BUTTON_END': 'End Project',
@@ -128,10 +128,10 @@ export const MARKET_REPORT = {
   'SEE_ANSWERS': 'Show answer',
   'BTN_EDITION_MODE': 'Go to Edition mode',
   'BTN_VIEW_MODE': 'Go to view mode',
-  'BTN_ANSWERS_OPEN': 'Show answers',
-  'BTN_ANSWERS_CLOSE': 'Hide answers',
+  'BTN_ANSWERS_OPEN': 'Show Answers',
+  'BTN_ANSWERS_CLOSE': 'Hide Answers',
   'BTN_COMMENTS_OPEN': 'Comments',
-  'BTN_COMMENTS_CLOSE': 'Hide comments ({{length}})',
+  'BTN_COMMENTS_CLOSE': 'Hide Comments ({{length}})',
   'BTN_RECOMPUTE': 'Recompute infographics',
   'VOTES': 'votes',
   'GRADE': 'Rating',

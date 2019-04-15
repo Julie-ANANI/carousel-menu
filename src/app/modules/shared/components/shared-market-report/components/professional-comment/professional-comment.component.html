@@ -1,21 +1,22 @@
-<div class="professional-comment-wrapper">
+<section id="professional-comment-component" class="d-flex">
 
   <!-- User details -->
   <app-pro-tag
     [answer]="answer"
     [questionId]="questionId"
     (modalAnswerChange)="seeAnswer(answer)"
-    [ngStyle]="{ 'width': '100%', 'height': '100%' }">
   </app-pro-tag>
 
-  <!-- Comments and divider -->
+  <!-- divider -->
+  <ng-container *ngIf="answer.answers[questionId]?.length > 0">
+    <hr class="hr">
+  </ng-container>
 
-  <!-- Divider -->
-  <div *ngIf="answer.answers[questionId]?.length > 0" class="divider-wrapper"></div>
+  <!-- comment -->
+  <ng-container *ngIf="answer.answers[questionId]?.length > 0">
+    <div class="comment-wrapper text-center">
+      <span>{{ answer.answers[questionId] }}</span>
+    </div>
+  </ng-container>
 
-  <!-- Comment -->
-  <div *ngIf="answer.answers[questionId]?.length > 0" class="comment-wrapper">
-    {{ answer.answers[questionId] }}
-  </div>
-
-</div>
+</section>

@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InnovationSettings } from '../../../../models/innov-settings';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
-import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import { Innovation } from '../../../../models/innovation';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -10,11 +11,10 @@ import { InnovationCommonService } from '../../../../services/innovation/innovat
   styleUrls: ['shared-project-settings.component.scss']
 })
 
-export class SharedProjectSettingsComponent implements OnInit {
+export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
-  @Input() set projectSettings(value: InnovationSettings) {
-    this._innovationSettings = JSON.parse(JSON.stringify(value));
-    this.getCommentSections();
+  @Input() set project(value: Innovation) {
+    this._innovation = value;
   }
 
   @Input() set editable(value: boolean) {
@@ -29,9 +29,7 @@ export class SharedProjectSettingsComponent implements OnInit {
     this._adminSide = value;
   }
 
-  @Output() settingsChange = new EventEmitter<InnovationSettings>();
-
-  private _innovationSettings: InnovationSettings;
+  private _innovation: Innovation = {};
 
   private _canEdit = false;
 
@@ -53,18 +51,20 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   private _displayCompanyCommentSection = false;
 
-  constructor(private translateService: TranslateService,
-              private innovationCommonService: InnovationCommonService) {}
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
-  ngOnInit() {
+  constructor(private translateService: TranslateService,
+              private innovationFrontService: InnovationFrontService) { }
+
+  ngOnInit(): void {
+    this.getCommentSections();
   }
 
-
   private getCommentSections() {
-    this._displayCountriesCommentSection = this._innovationSettings.geography && this._innovationSettings.geography.comments && this._innovationSettings.geography.comments.length > 0;
-    this._displayCompanyCommentSection = this._innovationSettings.companies.description.length > 0;
-    this._displayPersonsToExcludeSection = this._innovationSettings.professionals && this._innovationSettings.professionals.exclude && this._innovationSettings.professionals.exclude.length > 0;
-    this._displayKeywordsSection = this._innovationSettings.keywords.length > 0;
+    this._displayCountriesCommentSection = this._innovation.settings.geography && this._innovation.settings.geography.comments && this._innovation.settings.geography.comments.length > 0;
+    this._displayCompanyCommentSection = this._innovation.settings.companies.description.length > 0;
+    this._displayPersonsToExcludeSection = this._innovation.settings.professionals && this._innovation.settings.professionals.exclude && this._innovation.settings.professionals.exclude.length > 0;
+    this._displayKeywordsSection = this._innovation.settings.keywords.length > 0;
   }
 
 
@@ -77,39 +77,39 @@ export class SharedProjectSettingsComponent implements OnInit {
   getConfig(type: string): any {
     const _inputConfig = {
       'countries': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this._innovationSettings && this._innovationSettings.geography ? this._innovationSettings.geography.exclude || [] : [],
+        placeholder: 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
+        initialData: this._innovation.settings && this._innovation.settings.geography ? this._innovation.settings.geography.exclude || [] : [],
         type: 'countries'
       },
       'excludedPeople': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this._innovationSettings && this._innovationSettings.professionals ? this._innovationSettings.professionals.exclude || [] : []
+        placeholder: 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
+        initialData: this._innovation.settings && this._innovation.settings.professionals ? this._innovation.settings.professionals.exclude || [] : []
       },
       'excludedCompanies': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this._innovationSettings && this._innovationSettings.companies ? this._innovationSettings.companies.exclude || [] : [],
+        placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
+        initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.exclude || [] : [],
         type: 'company'
       },
       'includedCompanies': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
-        initialData: this._innovationSettings && this._innovationSettings.companies ? this._innovationSettings.companies.include || [] : [],
+        placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
+        initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.include || [] : [],
         type: 'company'
       },
       'keywords': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.PLACEHOLDER',
-        initialData: this._innovationSettings ? this._innovationSettings.keywords || [] : []
+        placeholder: 'SHARED_PROJECT_SETTINGS.KEYWORDS.PLACEHOLDER',
+        initialData: this._innovation.settings ? this._innovation.settings.keywords || [] : []
       },
       'domainBL': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.DOMAINS_PLACEHOLDER',
-        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.domains, (val: string) => {return {text: val}; }) : []
+        placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.DOMAINS_PLACEHOLDER',
+        initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.domains, (val: string) => {return {text: val}; }) : []
       },
       'emailBL': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.EMAILS_PLACEHOLDER',
-        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.emails, (val: string) => {return {text: val}; }) : []
+        placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.EMAILS_PLACEHOLDER',
+        initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.emails, (val: string) => {return {text: val}; }) : []
       },
       'peopleBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this._innovationSettings && this._innovationSettings.blacklist ? _.map(this._innovationSettings.blacklist.people, (val: string) => {return {text: val}; }) : []
+        initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.people, (val: string) => {return {text: val}; }) : []
       }
     };
     return _inputConfig[type] || {
@@ -125,7 +125,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   continentModificationDrain(event: any) {
     if (event) {
-      this._innovationSettings.geography.continentTarget = event.continents;
+      this._innovation.settings.geography.continentTarget = event.continents;
       this.updateSettings();
     }
   }
@@ -135,14 +135,13 @@ export class SharedProjectSettingsComponent implements OnInit {
    * Add a country to the exclusion list
    */
   addCountryToExclude(event: {value: Array<string>}): void {
-    this._innovationSettings.geography.exclude = event.value;
-    // this.showGeographyError = this.innovationSettings.geography.exclude.length === 0;
+    this._innovation.settings.geography.exclude = event.value;
     this.updateSettings();
   }
 
 
   get continentTarget(): any {
-    return this._innovationSettings ? this._innovationSettings.geography.continentTarget : {};
+    return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
   }
 
 
@@ -167,7 +166,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addCompanyToExclude(event: {value: Array<string>}): void {
-    this._innovationSettings.companies.exclude = event.value;
+    this._innovation.settings.companies.exclude = event.value;
     this.updateSettings();
   }
 
@@ -183,7 +182,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addCompanyToInclude(event: {value: Array<string>}): void {
-    this._innovationSettings.companies.include = event.value;
+    this._innovation.settings.companies.include = event.value;
     this.updateSettings();
   }
 
@@ -209,7 +208,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addPeopleToExclude(event: {value: Array<string>}): void {
-    this._innovationSettings.professionals.exclude = event.value;
+    this._innovation.settings.professionals.exclude = event.value;
     this.updateSettings();
   }
 
@@ -225,12 +224,12 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   get comments(): string {
-    return this._innovationSettings ? this._innovationSettings.comments : '';
+    return this._innovation.settings ? this._innovation.settings.comments : '';
   }
 
 
   set comments(value: string) {
-    this._innovationSettings.comments = value;
+    this._innovation.settings.comments = value;
     this.updateSettings();
   }
 
@@ -246,39 +245,32 @@ export class SharedProjectSettingsComponent implements OnInit {
 
 
   addKeywordToExclude(event: {value: Array<string>}): void {
-    this._innovationSettings.keywords = event.value;
+    this._innovation.settings.keywords = event.value;
     this.updateSettings();
   }
 
 
   addDomainToExclude(event: {value: Array<string>}): void {
-    this._innovationSettings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
+    this._innovation.settings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
 
   addEMailToExclude(event: {value: Array<string>}): void {
-    this._innovationSettings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
+    this._innovation.settings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
 
   updateSettings() {
     if (this._canEdit) {
-      this.innovationCommonService.setNotifyChanges(true);
-      this.settingsChange.emit(this._innovationSettings);
+      this.innovationFrontService.setNotifyChanges(true);
     }
   }
 
 
   getColor(length: number) {
-    if (length <= 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < 250) {
-      return '#f0ad4e';
-    } else {
-      return '#2ECC71';
-    }
+    return this.innovationFrontService.getColor(length, 500);
   }
 
 
@@ -286,8 +278,8 @@ export class SharedProjectSettingsComponent implements OnInit {
     return this.translateService.currentLang;
   }
 
-  get innovationSettings(): InnovationSettings {
-    return this._innovationSettings;
+  get innovation(): Innovation {
+    return this._innovation;
   }
 
   get canEdit(): boolean {
@@ -300,6 +292,11 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   get adminSide(): boolean {
     return this._adminSide;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

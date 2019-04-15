@@ -1,0 +1,33 @@
+<section id="community-form-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <div [ngSwitch]="actionType">
+          <ng-container *ngSwitchCase="'addToProject'">
+              <div>
+                  <app-search-input
+                          (finalValueEmit)="onValueTyped($event)"
+                          [suggestions]="[]"
+                          [searchActive]="true"
+                    ></app-search-input>
+              </div>
+              <div *ngIf="!!config">
+                  <app-shared-ambassadors-list
+                          (callbackNotification)="callbackNotification($event)"
+                          [listType]="'suggestions'"
+                          [config]="config"
+                          [context]="context">
+                  </app-shared-ambassadors-list>
+              </div>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'addFromSuggestions'">
+              Add from suggestions
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+              Create a new ambassador
+          </ng-container>
+      </div>
+
+  </div>
+</section>

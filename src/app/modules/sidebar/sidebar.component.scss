@@ -1,82 +1,23 @@
 @import "../../../style/framework/src/variables";
 
-.sidebar-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 7997;
-}
-
-.sidebar-container {
-  top: 0;
-  height: 100vh;
-  z-index: 7999;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-
-  .sidebar-content {
-    width: 100%;
-    height: 100vh;
-    background: #FFFFFF;
-    float: right;
-    right: 0;
-    cursor: default;
-    overflow: auto;
-    overflow-x: hidden;
-  }
-
-  .pad-bottom {
-    padding-bottom: 3.15rem;
-  }
-
-  .sidebar-header {
-    background-color: $secondary;
-    min-height: 4.625rem;
-    color: white;
-    padding-top: 0.9375rem;
-    padding-bottom: 0.9375rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    position: sticky;
-    top: 0;
-    z-index: 7998;
-    cursor: default;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .fa-times:hover {
-      cursor: pointer;
-    }
-
-  }
-
-}
-
-/********************************** Media ***************************************/
-
-@media (max-width: 840px) {
+.sidebar {
 
   .sidebar-container {
-    width: 65% !important;
-  }
 
-}
+    .sidebar-header {
+      color: $light-color;
+      padding: 1.1rem 0;
 
-@media (max-width: 600px) {
+      .title {
+        margin-bottom: 0;
+      }
 
-  .sidebar-container {
-    width: 90% !important;
+      .btn {
+        min-width: 0;
+      }
+
+    }
+
   }
 
 }

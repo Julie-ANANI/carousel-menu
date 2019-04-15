@@ -17,6 +17,7 @@ import { AdminPresetsModule } from './admin-presets/admin-presets.module';
 import { TableModule } from '../../../../table/table.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-form/sidebar-email-form.module';
+import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-fo
     AdminCountryManagementModule,
     TableModule,
     SidebarModule,
-    SidebarEmailFormModule
+    SidebarEmailFormModule,
+    ModalModule
   ],
   declarations: [
     AdminLibrariesComponent,

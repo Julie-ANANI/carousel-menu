@@ -1,24 +1,25 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
 
 #market-report {
-  padding-top: 0;
+  margin-bottom: -2.5rem;
 
-  .white-background {
-    background-color: white;
-    border-radius: 0.18rem;
+  .title-primary {
+    font-size: 1.35rem;
   }
 
-  .msg-wrapper {
-    background-color: $validation-color;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
+  .title-secondary {
+    font-size: 1.1rem;
+    color: $secondary-color;
+  }
 
-    .content {
-      padding-top: .95rem;
-      padding-bottom: .95rem;
-    }
+  .bg-white {
+    background-color: $bg-color-light;
+    border-radius: $border-radius;
+  }
 
+  .text {
+    font-size: 0.75rem;
   }
 
   .flex-container {
@@ -31,44 +32,36 @@
     background-color: white;
   }
 
-  .front-wrapper {
-    display: flex;
+  #main-page {
     flex-direction: column;
-    text-align: center;
-    padding-bottom: 1.57rem;
 
-    .body-wrapper {
-      display: flex;
+    .content-wrapper {
       flex-direction: column;
       min-height: 80vh;
       justify-content: center;
 
       .text-executive, h1 {
-        margin-bottom: .6rem;
+        margin-bottom: 0.5rem;
       }
 
-      h1 {
-        color: $text-dark;
-        font-size: 2.625rem;
+      .title-primary {
+        font-size: 2.1rem;
         font-weight: 300;
       }
 
       .text-executive {
         color: $meta-color;
-        font-size: 1.06rem;
+        font-size: 0.848rem;
         display: none;
       }
 
       .summary, .image-wrapper {
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 1.2rem;
+        margin-bottom: $unit-5;
       }
 
       .summary {
-        font-weight: normal;
-        font-size: 1rem;
-        color: $text-dark;
         width: 80%;
       }
 
@@ -78,48 +71,27 @@
       }
 
       .text-owner, .text-jobTitle, .text-email {
-        color: $dark-color;
-        margin-bottom: .18rem;
-      }
-
-      .text-owner {
-        font-size: 1rem;
-      }
-
-      .text-jobTitle, .text-email {
-        font-size: .9375rem;
-        font-weight: normal;
+        color: $text-primary-color;
+        margin-bottom: 0.144rem;
       }
 
       .goal-text {
-        display: inline-flex;
-        justify-content: center;
         max-width: 80%;
-        background: $background-color;
-        color: white;
-        border-radius: 25px;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 1.57rem;
-        font-weight: 600;
-        font-size: 1rem;
-        padding: .6875rem .9375rem;
+        margin-top: 1.25rem;
       }
 
     }
 
     .footer-wrapper {
-      border-top: 1px solid $primary-color;
-      display: flex;
+      border-top: $border-width solid $primary-color;
       justify-content: space-between;
-      padding-top: .6rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: $background-color;
+      padding-top: 0.5rem;
 
       p {
-        padding-bottom: 0;
-        font-size: .75rem;
+        margin-bottom: 0;
+        font-size: $font-size-sm;
       }
 
       a:hover {
@@ -130,22 +102,8 @@
 
   }
 
-  .goal-wrapper {
-
-    .charRemaining span {
-      margin-top: -2rem;
-    }
-
-  }
-
   .executive-generate-wrapper {
-    display: flex;
     flex-direction: column;
-
-    .section-heading {
-      font-weight: normal;
-      font-size: 1.5rem;
-    }
 
     .template-outer-wrapper {
       display: flex;
@@ -154,32 +112,36 @@
 
       .template {
         display: inline-flex;
-        margin-bottom: 1.57rem;
+        margin-bottom: 1.25rem;
         flex-direction: column;
         align-items: center;
 
         img {
           width: auto;
           height: 216px;
-          margin-bottom: .6rem;
+          margin-bottom: 0.5rem;
         }
 
-        .btn-radio:hover {
-          background-color: $primary-color;
-          border-color: $primary-color;
+        .btn.btn-radio {
 
-          span {
-            color: white;
+          &:hover {
+            background-color: $primary-color;
+            border-color: $primary-color;
+
+            span {
+              color: $light-color;
+            }
+
           }
 
-        }
+          &.active {
+            background-color: $success-color;
+            border-color: $success-color;
 
-        .btn-radio.active {
-          background-color: $validation-color;
-          border-color: $validation-color;
+            span {
+              color: $light-color;
+            }
 
-          span {
-            color: white;
           }
 
         }
@@ -194,48 +156,29 @@
     display: flex;
     justify-content: space-between;
 
-    .section-heading {
-      font-weight: normal;
-      font-size: 1.5rem;
-    }
-
     .summary-wrapper {
-      padding-right: .9375rem;
+      padding-right: 0.75rem;
       flex: 1;
 
-      .section-heading {
-        margin-bottom: .95rem;
-      }
-
       .img-wrapper {
-        padding-top: 1.57rem;
-        padding-bottom: 1.2rem;
+        padding-top: 1.25rem;
+        padding-bottom: $unit-5;
       }
 
       .advantage-wrapper {
-        margin: 0;
-
-        li {
-          margin: 0;
-          padding: .375rem .5rem .375rem .3rem;
-        }
-
-        li:last-child {
-          padding-bottom: 0;
-        }
-
+        margin-bottom: 0;
       }
 
     }
 
     .issue-wrapper {
-      padding-left: .95rem;
-      padding-right: .95rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
       flex: 1;
     }
 
     .solution-wrapper {
-      padding-left: .95rem;
+      padding-left: 0.75rem;
       flex: 1;
     }
 
@@ -244,41 +187,31 @@
   .targeting-wrapper {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 1.57rem;
 
     .map-wrapper {
-      padding-right: .95rem;
+      padding-right: 0.75rem;
       flex: 1;
     }
 
     .question-wrapper {
-      padding-bottom: 1.57rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .label {
+      margin-left: 0;
+      margin-top: 0;
     }
 
     p {
-      padding-bottom: 0;
+      margin-bottom: 0;
     }
 
-    .sc-ques {
-      color: $secondary-color;
-      padding-bottom: 1.57rem;
-      font-size: 1.5rem;
-      font-weight: normal;
-    }
-
-    .answer-wrapper {
-      background: #F8F4F4;
-      color: $dark-color;
-      padding: .5rem .95rem;
-      border-radius: .18rem;
-      display: inline-flex;
-      margin-right: .6rem;
-      margin-bottom: .6rem;
-      font-size: .85rem;
+    .title-secondary {
+      margin-bottom: 0.75rem;
     }
 
     .c2-answer-wrapper {
-      padding-left: .95rem;
+      padding-left: 0.75rem;
       flex: 1;
     }
 
@@ -287,37 +220,34 @@
   .exploration-wrapper {
     display: flex;
     flex-direction: column;
-    padding-bottom: 1.57rem;
 
-    .section-heading {
-      font-weight: normal;
-      font-size: 1.5rem;
-    }
 
     .analytic-wrapper {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
+      margin-bottom: -1.25rem;
 
       h5 {
         margin-bottom: 0;
       }
 
       .pd-top {
-        padding-top: 2.0625rem;
+        padding-top: 1.65rem;
       }
 
       .info-analytic-wrapper {
-        margin-bottom: 1.57rem;
+        margin-bottom: 1.25rem;
 
         p {
           color: $meta-color;
+          margin-bottom: 0.7rem;
         }
 
         .svg-text {
-          font-size: .75rem;
-          font-weight: 600;
-          fill: #FFFFFF;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-medium;
+          fill: $light-color;
         }
 
       }
@@ -325,14 +255,14 @@
     }
 
     .company-wrapper {
-      padding-bottom: 1.57rem;
 
       .name-wrapper {
         list-style: none;
+        margin: 0;
 
         li {
-          padding-top: 0;
-          padding-left: 0;
+          margin-top: 0;
+          margin-bottom: $unit-2;
           display: inline-flex;
           width: 25%;
         }
@@ -343,94 +273,114 @@
 
   }
 
-  .abstract-wrapper {
-    margin-top: 1.57rem;
-    padding: 3.15rem;
-
-    .main-heading {
-      color: $dark-color;
-    }
-
-    .form-group {
-      margin-bottom: 0 !important;
-    }
-
-    .form-label {
-      padding: 0;
-    }
-
-    .charRemaining span {
-      margin-top: -1.57rem;
-    }
-
-  }
-
   .origin-wrapper {
-    background-color: white;
-    border-radius: .18rem;
-    color: $dark-color;
+    border-radius: $border-radius;
   }
 
   .professional-wrapper {
-    display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: -1.2rem;
+    margin-bottom: -$unit-5;
 
-    .profile {
-      display: inline-flex;
-      background: white;
-      border: 1px solid $border-color;
-      min-height: 11.875rem;
-      padding: .95rem 1rem .6rem 1rem;
-      border-radius: .18rem;
-      margin-bottom: 1.2rem;
-      flex: 0 1 calc(50% - 1rem);
+    .card {
+      margin-bottom: $unit-5;
+      min-height: 9.5rem;
 
       img {
+        position: absolute;
+        top: 10px;
+        left: 10px;
         visibility: hidden;
       }
 
-    }
+      .card-body {
+        padding: 0.5rem;
+        height: 100%;
+        width: 100%;
+      }
 
-    .profile:hover {
-      color: $border-color;
-      box-shadow: $box-shadow-hover;
+      &:hover {
 
-      img {
-        visibility: visible;
-        cursor: pointer;
+        img {
+          visibility: visible;
+          cursor: pointer;
+        }
+
       }
 
     }
 
   }
 
-  .conclusion-wrapper, .keyLearning-wrapper, .goal-wrapper {
-    background-color: white;
-    border-radius: .18rem;
-    color: $dark-color;
-
-    .main-heading {
-      color: $dark-color;
-    }
+  .conclusion-wrapper, .key-learning-wrapper, .goal-wrapper {
+    border-radius: $border-radius;
 
     .op-text {
       color: $primary-color;
-      font-weight: 600;
-      padding-bottom: 1.57rem;
+      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
   }
 
-  .keyLearning-wrapper, .conclusion-wrapper {
-    box-shadow: $box-shadow;
+  .key-learning-wrapper, .conclusion-wrapper, .main-page, .objective, .executive-generate-wrapper, .umi-intro, .innovation-wrapper, .targeting-wrapper,
+  .exploration-wrapper {
+    box-shadow: $box-shadow-umi;
   }
 
 }
 
-/********************************** Media ***************************************/
-@media (max-width: 840px) {
+.export-option {
+  flex-direction: column;
+  margin: $unit-2;
+
+  .text {
+    margin-bottom: $unit-1;
+  }
+
+  .sub-heading {
+    font-size: $font-size-sm;
+  }
+
+  img {
+    width: 56px;
+    height: 66px;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn, img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn.btn-radio {
+
+    &:hover {
+      background-color: $primary-color;
+      border-color: $primary-color;
+
+      span {
+        color: $light-color;
+      }
+
+    }
+
+    &.active {
+      background-color: $success-color;
+      border-color: $success-color;
+
+      span {
+        color: $light-color;
+      }
+
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-md) {
 
   #market-report {
 
@@ -442,18 +392,18 @@
       }
 
       .filter-wrapper {
-        border-top: 1px solid $border-color;
-        border-bottom: 1px solid $border-color;
+        border-top: $border-width solid $border-color;
+        border-bottom: $border-width solid $border-color;
         border-left: none !important;
         border-right: none !important;
         padding-left: 0 !important;
       }
 
       .button-wrapper {
-        padding-top: .6rem;
+        padding-top: 0.5rem;
 
         .btn {
-          margin: .6rem .6rem .6rem 0 !important;
+          margin: 0.5rem 0.5rem 0.5rem 0 !important;
         }
 
       }
@@ -463,8 +413,8 @@
     .front-wrapper {
 
       .body-wrapper {
-        padding-top: 1.57rem;
-        padding-bottom: 1.57rem;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
 
         .summary {
           width: 100% !important;
@@ -477,7 +427,7 @@
 
         .text-right {
           text-align: left !important;
-          padding-top: .6rem;
+          padding-top: 0.5rem;
         }
 
       }
@@ -493,7 +443,7 @@
       }
 
       .issue-wrapper, .solution-wrapper {
-        padding-top: 1.57rem !important;
+        padding-top: 1.25rem !important;
       }
 
     }
@@ -503,7 +453,7 @@
 
       .c2-answer-wrapper {
         padding-left: 0 !important;
-        padding-top: .95rem;
+        padding-top: 0.75rem;
       }
 
     }
@@ -511,7 +461,7 @@
     .exploration-wrapper {
 
       .info-analytic-wrapper {
-        margin-right: 1.57rem;
+        margin-right: 1.25rem;
       }
 
       .company-wrapper .name-wrapper li {
@@ -524,7 +474,7 @@
 
 }
 
-@media (max-width: 600px) {
+@media (max-width: $size-sm) {
 
   #market-report {
 
@@ -546,22 +496,28 @@
 
     .professional-wrapper {
       flex-direction: column;
+
+      .card {
+        min-height: 100% !important;
+      }
+
     }
 
   }
 
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 841px) {
 
   #market-report {
 
-    .professional-wrapper {
-
-      .profile {
-        flex: 0 1 calc(32% - 1rem) !important;
-      }
-
+    .scroll-sticky-wrapper {
+      position: sticky;
+      top: 0;
+      box-shadow: $box-shadow-hover-umi;
+      z-index: 11;
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
   }

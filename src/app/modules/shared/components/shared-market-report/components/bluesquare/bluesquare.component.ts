@@ -9,7 +9,9 @@ import { Component, Input } from '@angular/core';
 export class BluesquareComponent {
 
   @Input() numberFocus: number;
+
   @Input() subtitle: string;
+
   @Input() percentage: number;
 
   constructor() {}

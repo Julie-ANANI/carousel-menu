@@ -7,7 +7,6 @@
     min-height: 100vh;
     flex-direction: column;
 
-
     .cover-image {
       background-attachment: fixed;
       background-repeat: no-repeat;
@@ -15,7 +14,6 @@
       background-position: center center;
       min-height: 100vh;
     }
-
 
     .section-login {
       display: flex;
@@ -31,30 +29,40 @@
         display: inline-flex;
         flex-direction: column;
         width: 100%;
-        padding-top: 1.57rem;
-        padding-bottom: 1.57rem;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
         margin-right: auto;
         margin-left: auto;
 
         .title-primary {
-          font-size: 1.75rem;
-          color: $text-background;
+          font-size: 1.4rem;
+          color: $text-background-color;
         }
 
         .credentials-wrapper {
           width: 80%;
 
           .submit-wrapper {
-            padding-top: 1.2rem;
+            padding-top: 1rem;
             text-align: center;
 
             .login-button {
-              padding-bottom: 0.875rem;
+              padding-bottom: 0.7rem;
+
+              .btn {
+                min-width: 150px;
+              }
+
+              .loading {
+                position: absolute;
+                left: 25px;
+              }
+
             }
 
             p, .text-link {
-              font-size: 0.875rem;
-              padding-bottom: 0;
+              font-size: 0.7rem;
+              margin-bottom: 0;
             }
 
           }
@@ -62,15 +70,19 @@
         }
 
         .linkedIn-wrapper {
-          padding-top: 1.2rem;
+          padding-top: 0.8rem;
           text-align: center;
 
           .or-wrapper {
-            padding-bottom: 1.57rem;
+            padding-bottom: 1.25rem;
           }
 
-          .btn i {
-            margin-top: -2px;
+          .btn {
+            min-width: 250px;
+          }
+
+          .loading {
+            margin-right: 20px;
           }
 
         }
@@ -85,9 +97,7 @@
 }
 
 
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
+@media (max-width: $size-sm) {
 
   #login-component {
 

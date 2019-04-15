@@ -1,81 +1,104 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/src/variables";
 
 #header-component {
-  background: $background-color;
-  font-weight: 600;
-  font-size: .85rem;
-  color: white;
-
-  .pad {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
+  border: 1px solid $border-light-color;
 
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    position: relative;
 
-    .menu-view {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+    .logo {
+      padding-top: 5px;
     }
 
-    .navbar-toggle-icon {
-      display: none;
-      position: absolute;
-      right: 0;
+    .navigation-wrapper {
 
-      .fa-bars {
-        color: #FFFFFF;
-      }
-
-    }
-
-    .menu-item-wrapper {
-      display: none;
-    }
-
-    .navbar-nav {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: inline-flex;
-      flex-wrap: wrap;
-
-      .navbar-item {
-        margin-left: .6rem;
-        margin-right: .6rem;
+      .header-lang-dropdown {
 
         a {
-          opacity: .5;
-          font-weight: 600;
-          transition: all 0.15s ease-in-out;
+          height: 35px;
+
+          span:after {
+            bottom: 3px;
+          }
+
+          .fa-angle-down {
+            margin-left: $unit-2;
+          }
+
         }
 
-        a:hover {
-          opacity: 1;
-          color: $primary-color;
-          cursor: pointer;
+        .dropdown-menu {
+          width: 46px;
+          right: -7px;
+          padding: 0;
+
+          .drop-item{
+            padding: 0.5rem;
+          }
+
         }
 
-        a.active {
-          opacity: 1;
-          color: $primary-color;
+        &:hover {
+
+          .fa-angle-down {
+            color: $primary-color !important;
+          }
+
+          span:after {
+            visibility: visible;
+            background-color: $primary-color;
+            transform: scaleX(1);
+          }
+
         }
 
       }
 
-      .navbar-item:first-child {
-        margin-left: 0;
-      }
+      .header-account-dropdown {
 
-      .navbar-item:last-child {
-        margin-right: 0;
+        a {
+          opacity: 1;
+        }
+
+        .dropdown-menu {
+
+          .drop-item {
+            padding: 0;
+
+            a {
+              padding: 0.5rem 1.1rem;
+            }
+
+            .drop-item-user {
+              display: flex;
+              align-items: center;
+
+              span:after {
+                display: none;
+              }
+
+              .d-flex {
+                margin-left: $unit-2;
+                flex-direction: column;
+                color: $text-background-color;
+                word-break: break-all;
+                max-width: 195px;
+
+                .text-email {
+                  font-size: 0.65rem;
+                }
+
+              }
+
+            }
+
+          }
+
+          .divider {
+            margin: 0.5rem 1.1rem;
+          }
+
+        }
+
       }
 
     }
@@ -84,34 +107,27 @@
 
 }
 
-/********************************** Media ***************************************/
 
-@media (max-width: 840px) {
+.sidebar {
+  width: 260px !important;
+}
+
+
+@media (max-width: $size-md) {
 
   #header-component {
 
-    .navbar-toggle-icon {
-      display: block !important;
+    .mobile-toggle {
+      display: flex !important;
+      margin-left: 0.5rem;
     }
 
-    .navbar {
-      flex-direction: column;
-      align-items: flex-start !important;
+    .menu-item {
+      display: none !important;
     }
 
-    .menu-item-wrapper {
-      width: 100%;
-    }
-
-    .navbar-nav {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-
-      .navbar-item {
-        margin: 1.2rem 0 !important;
-      }
-
+    .header-lang-dropdown {
+      display: inline-flex !important;
     }
 
   }
@@ -123,8 +139,12 @@
 
   #header-component {
 
-    .menu-item-wrapper {
-      display: flex !important;
+    .mobile-toggle {
+      display: none !important;
+    }
+
+    .menu-item {
+      display: inline-flex !important;
     }
 
   }

@@ -1,76 +1,42 @@
-@import "../../../../../../../style/variables";
+@import "../../../../../../../style/framework/src/variables";
 
-.item-list-wrapper {
+#item-list-component {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: -$unit-5;
+  font-size: 0.75rem;
 
-  .items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  .card {
+    margin-bottom: $unit-5;
+    min-height: 6rem;
+    flex: 0 1 calc(32% - 1rem);
 
-    .item {
-      display: inline-flex;
-      background: white;
-      border: 1px solid $border-color;
-      padding: .6rem;
-      border-radius: .18rem;
-      min-height: 7.5rem;
-      margin-bottom: 1.2rem;
-      flex: 0 1 calc(32% - 1rem);
+    .card-body {
+      padding: 0.75rem;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
 
-      .content {
-        display: inline-flex;
-        justify-content: space-between;
-        height: 100%;
-        width: 100%;
+      .filter-wrapper, .popup-wrapper {
+        position: absolute;
+        top: 7px;
+        visibility: hidden;
+      }
 
-        .filter, .popup {
-          visibility: hidden;
-          height: 19px;
-          width: 20px;
-          cursor: pointer;
-        }
+      .filter-wrapper {
+        left: 16px;
+      }
 
-        .value {
-          text-align: center;
-
-          .label {
-            background-color: $validation-color;
-            width: 71px;
-            margin-left: auto;
-            margin-right: auto;
-            color: white;
-            font-size: .75rem;
-            font-weight: 600;
-            border-radius: .18rem;
-            height: 1.65rem;
-            padding-top: .25rem;
-          }
-
-          p {
-            padding-top: 1.57rem;
-            font-size: 1rem;
-            color: $background-color;
-          }
-
-        }
-
-        .popup {
-          cursor: default;
-        }
-
+      .popup-wrapper {
+        right: 16px;
       }
 
     }
 
-    .item:hover{
-      box-shadow: $box-shadow-hover;
+    &:hover {
 
-      .content {
-
-        .filter, .popup {
-          visibility: visible;
-        }
-
+      .filter-wrapper, .popup-wrapper {
+        visibility: visible !important;
       }
 
     }
@@ -79,13 +45,14 @@
 
 }
 
-/********************************** Media ***************************************/
-@media (max-width: 600px) {
 
-  .item-list-wrapper {
+@media (max-width: $size-sm) {
 
-    .items {
-      flex-direction: column;
+  #item-list-component {
+    flex-direction: column;
+
+    .card {
+      min-height: 100% !important;
     }
 
   }

@@ -19,6 +19,12 @@ import { first } from 'rxjs/operators';
 
 export class TagsFormComponent {
 
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || value === 'active') {
+      this._tags = [];
+    }
+  }
+
   @Input() set tags(tags: Array<Tag>) {
     this._tags = [...tags];
   }
@@ -30,12 +36,6 @@ export class TagsFormComponent {
 
   @Input() set project(value: Innovation) {
     this._innovationId = value._id;
-  }
-
-  @Input() set sidebarState(value: string) {
-    if (value === undefined || value === 'active') {
-      this._tags = [];
-    }
   }
 
   @Input() set type(type: string) {

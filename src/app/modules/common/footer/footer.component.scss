@@ -1,51 +1,16 @@
-@import "../../../../style/variables";
+@import "../../../../style/framework/src/variables";
 
 #footer-component {
-  background: $background-color;
-  font-size: 0.85rem;
-  color: white;
+  min-height: 50px;
 
-  .content-wrapper {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
+  .navbar {
+    min-height: 50px;
+    font-size: $font-size-sm;
 
-    .pad {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-    }
-
-    .info {
-      transition: all 0.35s ease-in-out;
+    .privacy-wrapper {
 
       a {
-        color: white;
-      }
-
-      a:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-
-    }
-
-    .lang {
-
-      .form-switch {
-        padding: 0;
-      }
-
-      .form-select {
-        margin-top: 0;
-        min-width: 100px;
-        min-height: 2.8rem;
-        padding-top: .4375rem;
-        padding-bottom: .5rem;
-      }
-
-      .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
-        border-color: $border-color;
+        transition: all 0.5s ease;
       }
 
     }
@@ -54,4 +19,25 @@
 
 }
 
+@media (max-width: $size-sm) {
 
+  #footer-component {
+
+    .navbar {
+      flex-direction: column;
+
+      .copyright-wrapper {
+        margin-bottom: 0.75rem;
+        order: 2;
+      }
+
+      .privacy-wrapper {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+    }
+
+  }
+  
+}

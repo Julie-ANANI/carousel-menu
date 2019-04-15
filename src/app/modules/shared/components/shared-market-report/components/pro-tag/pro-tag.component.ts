@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TagsFiltersService } from '../../services/tags-filter.service';
 import { Answer } from '../../../../../../models/answer';
 import { Tag } from '../../../../../../models/tag';
@@ -12,13 +13,15 @@ import { Tag } from '../../../../../../models/tag';
 export class ProfessionalTagComponent implements OnInit {
 
   @Input() answer: Answer;
+
   @Input() questionId: string;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   private _tags: Array<Tag>;
 
-  constructor(private tagService: TagsFiltersService) {}
+  constructor(private tagService: TagsFiltersService,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     if (this.questionId) {
@@ -28,7 +31,7 @@ export class ProfessionalTagComponent implements OnInit {
     }
   }
 
-  seeAnswer(event: Event, answer: Answer) {
+  public seeAnswer(event: Event, answer: Answer) {
     event.preventDefault();
     this.modalAnswerChange.emit(answer);
   }
@@ -44,6 +47,10 @@ export class ProfessionalTagComponent implements OnInit {
 
   get tags() {
     return this._tags;
+  }
+
+  get userLang() {
+    return this.translateService.currentLang;
   }
 
 }

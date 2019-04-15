@@ -1,29 +1,38 @@
-<section class="section-container animate-page" id="account-page-wrapper">
+<section class="section-pad animate-page" id="account-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="profile-wrapper">
 
-      <!-- Picture left section -->
-      <div class="left-content text-center">
+      <!-- left section -->
+      <div class="left-content-wrapper">
 
         <!-- Profile pics -->
-        <div *ngIf="hasProfilePic()" class="profile-pic">
+        <ng-container *ngIf="hasProfilePic()">
+          <div class="profile-pic">
             <img [src]="profilePicture" alt=" ">
-        </div>
+          </div>
+        </ng-container>
 
-        <div *ngIf="!hasProfilePic()" class="profile-pic-def">
-            <h1>{{ formData.get('firstName').value | slice:0:1 }}{{ formData.get('lastName').value | slice:0:1 }}</h1>
-        </div>
+        <ng-container *ngIf="!hasProfilePic()">
+          <div class="profile-pic-def">
+            <h2>{{ formData.get('firstName').value | slice:0:1 }}{{ formData.get('lastName').value | slice:0:1 }}</h2>
+          </div>
+        </ng-container>
         <!-- /Profile pics -->
 
         <!-- Name -->
-        <h5>{{ name }}</h5>
+        <h1>{{ name }}</h1>
 
         <!-- Job -->
         <h6>{{ jobTitle }}</h6>
 
-        <!-- Label Ambassador & linkedIn -->
-        <p class="user-label" *ngIf="userProvider === 'hubspot'"><span class="label label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</span></p>
-        <p class="user-label" *ngIf="userProvider === 'external'"><span  class="label label-editing">LinkedIn</span></p>
+        <!-- Label Ambassador & linkedIn-->
+        <ng-container *ngIf="userProvider === 'hubspot'">
+          <div class="label label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</div>
+        </ng-container>
+
+        <ng-container *ngIf="userProvider === 'external'">
+          <div class="label label-edit">LinkedIn</div>
+        </ng-container>
         <!-- /Label Ambassador & linkedIn -->
 
         <!-- hr -->
@@ -37,25 +46,25 @@
         </ul>
 
       </div>
-      <!-- /Picture left section -->
+      <!-- /left section -->
 
-      <!-- Data right section -->
-      <div class="right-content">
+      <!-- right section -->
+      <div class="right-content-wrapper">
 
         <!-- Title -->
-        <div class="title text-center">
-          <h6>{{ 'MY_ACCOUNT.TITLE' | translate }}</h6>
+        <div class="title-wrapper">
+          <h3>{{ 'MY_ACCOUNT.TITLE' | translate }}</h3>
           <p>{{ 'MY_ACCOUNT.PARA' | translate }}</p>
         </div>
 
         <!-- Form -->
-        <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData" class="details-form">
+        <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData" class="form-wrapper">
 
-          <!-- First name &  Last name -->
-          <div class="group">
+          <!-- first name &  last name -->
+          <div class="input-group inline">
 
-            <!-- First name -->
-            <div class="form-group">
+            <!-- first name -->
+            <div class="form-group has-error">
               <label class="form-label" for="account-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
               <input
                 class="form-input"
@@ -63,13 +72,13 @@
                 id="account-firstName"
                 type="text"
                 placeholder="John">
-              <div class="form-error" *ngIf="formData.get('firstName').touched && formData.get('firstName').invalid">
-                <span *ngIf="formData.get('firstName').hasError('required')">{{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}</span>
-              </div>
+              <span class="form-input-hint" *ngIf="formData.get('firstName').touched && formData.get('firstName').invalid && formData.get('firstName').hasError('required')">
+                {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
+              </span>
             </div>
 
-            <!-- Last name -->
-            <div class="form-group">
+            <!-- last name -->
+            <div class="form-group has-error">
               <label class="form-label" for="account-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
               <input
                 class="form-input"
@@ -77,18 +86,17 @@
                 id="account-lastName"
                 type="text"
                 placeholder="Doe">
-              <div class="form-error" *ngIf="formData.get('lastName').touched && formData.get('lastName').invalid">
-                <span *ngIf="formData.get('lastName').hasError('required')">{{ 'COMMON.REQUIRED.LASTNAME' | translate }}</span>
-              </div>
+              <span class="form-input-hint" *ngIf="formData.get('lastName').touched && formData.get('lastName').invalid && formData.get('lastName').hasError('required')">
+                {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
+              </span>
             </div>
 
           </div>
-          <!-- /First name &  Last name -->
 
-          <!-- Email & Company -->
-          <div class="group">
+          <!-- email & company -->
+          <div class="input-group inline">
 
-            <!-- Email -->
+            <!-- email -->
             <div class="form-group">
               <label class="form-label" for="account-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
               <input
@@ -111,10 +119,9 @@
             </div>
 
           </div>
-          <!-- /Email & Company -->
 
           <!-- Job & Country -->
-          <div class="group">
+          <div class="input-group inline">
 
             <!-- Job -->
             <div class="form-group">
@@ -138,25 +145,21 @@
                 [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
                 (click)="onSuggestCountries()"
                 autocomplete="off">
-              <ul
-                *ngIf="formData.get('country').value"
-                class="suggestion"
-                [ngStyle]="{ 'display': displayCountrySuggestion ? 'flex' : 'none' }">
+              <ul *ngIf="formData.get('country').value" class="input-suggestion" [ngStyle]="{ 'display': displayCountrySuggestion ? 'flex' : 'none' }">
                 <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
-                  <a><span>{{ suggestion }}</span></a>
+                  {{ suggestion }}
                 </li>
               </ul>
             </div>
 
           </div>
-          <!-- /Job & Country -->
 
-          <!-- Phone & lang -->
-          <div class="group">
+          <!-- phone & lang -->
+          <div class="input-group inline">
 
-            <!-- Phone -->
+            <!-- phone -->
             <div class="form-group">
-              <label class="form-label" for="account-phone">{{ 'COMMON.PHONE' | translate }}</label>
+              <label class="form-label" for="account-phone">{{ 'COMMON.LABEL.PHONE' | translate }}</label>
               <input
                 class="form-input"
                 formControlName="phone"
@@ -165,7 +168,7 @@
                 placeholder="+33 55 90 56 876">
             </div>
 
-            <!-- Language -->
+            <!-- language -->
             <div class="form-group">
               <label class="form-label" for="lang">{{ 'COMMON.LANGUAGE' | translate }}</label>
               <select class="form-select" id="lang" name="lang" formControlName="language">
@@ -175,82 +178,66 @@
             </div>
 
           </div>
-          <!-- /Phone & lang -->
 
-          <!-- Sector & Technology -->
-          <div class="group">
+          <!-- sector & technology -->
+          <div class="input-group inline">
 
-            <!-- Business -->
+            <!-- sector -->
             <div class="form-group">
-              <label class="form-label">{{ 'COMMON.ACTIVITY_FIELDS' | translate }}</label>
-              <div class="input">
+              <label class="form-label">{{ 'COMMON.LABEL.ACTIVITY_FIELDS' | translate }}</label>
+              <div class="input-gap">
                 <app-input-list
                   (update)="addSector($event)"
-                  [config]="{ placeholder: ('COMMON.ACTIVITY_FIELDS_PLACEHOLDER' | translate), initialData: formData.get('sectors').value }">
+                  [config]="{ placeholder: ('COMMON.PLACEHOLDER.ACTIVITY_FIELDS' | translate), initialData: formData.get('sectors').value }">
                 </app-input-list>
               </div>
             </div>
 
-            <!-- Technologies -->
+            <!-- technologies -->
             <div class="form-group">
-              <label class="form-label">{{ 'COMMON.TECHNOLOGIES' | translate }}</label>
-              <div class="input">
+              <label class="form-label">{{ 'COMMON.LABEL.TECHNOLOGIES' | translate }}</label>
+              <div class="input-gap">
                 <app-input-list
                   (update)="addTechnology($event)"
-                  [config]="{ placeholder: ('COMMON.TECHNOLOGIES_PLACEHOLDER' | translate), initialData: formData.get('technologies').value }">
+                  [config]="{ placeholder: ('COMMON.PLACEHOLDER.TECHNOLOGIES' | translate), initialData: formData.get('technologies').value }">
                 </app-input-list>
               </div>
             </div>
 
           </div>
-          <!-- /Sector & Technology -->
 
-          <!-- Save button -->
-          <div class="save text-center">
-            <button class="btn btn-primary" type="submit" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+          <!-- save button -->
+          <div class="save-wrapper text-center">
+            <button class="btn btn-primary" type="submit" [disabled]="formData.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
           </div>
-          <!-- /Save button -->
 
         </form>
-        <!-- /Form -->
 
       </div>
-      <!-- /Data right section -->
+      <!-- /right section -->
 
     </div>
   </div>
 </section>
 
 
-<!-- Change password sidebar -->
-<app-sidebar [template]="sidebarValue" (closeSidebar)="closeSidebar($event)">
-  <app-user-change-password
-    [sidebarState]="sidebarState"
-    (changePasswordData)="changePassword($event)">
-  </app-user-change-password>
+<!-- change password sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-user-change-password [sidebarState]="sidebarValue.animate_state" (passwordUpdate)="updatePassword($event)"></app-user-change-password>
 </app-sidebar>
+<!-- /change password sidebar -->
 
 
-<!-- MODAL : Are you sure you want to delete your account ? -->
-<div class="modal" [ngClass]="{'active': accountDeletionAsked}">
-  <div class="modal-overlay" (click)="closeModal($event)"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'MY_ACCOUNT.DELETE_MODAL.BOARD_TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        <span>{{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}</span>
-        <br><br>
-        <span>{{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}</span>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn ghost-edit btn-sm" (click)="closeModal($event)">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-      <button class="btn btn-primary btn-sm" (click)="deleteAccount($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-    </div>
+<!-- modal to delete account -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+  {{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}
+  <br><br>
+  {{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-</div>
+</app-modal>
+<!-- /modal to delete account -->
 
 

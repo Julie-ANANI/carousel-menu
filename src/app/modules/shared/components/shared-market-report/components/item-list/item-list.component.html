@@ -1,28 +1,35 @@
-<div class="item-list-wrapper">
-  <div class="items">
-    <div *ngFor="let item of listItems; let i = index" [ngClass]="{ 'top-profil': item.rating === 2 }" class="item s-item-print">
-      <div class="content">
+<section id="item-list-component" class="d-flex">
+  <div *ngFor="let item of listItems; let i = index" [ngClass]="{ 'top-profil': item.rating === 2 }" class="card">
+    <div class="card-body flex-centered text-center relative">
 
-        <!-- Filter icon -->
-        <div class="filter" (click)="filterAnswer(item, $event)">
-          <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" style="margin-top: .125rem">
-        </div>
+      <!-- filter icon -->
+      <div class="filter-wrapper c-hand" (click)="filterAnswer(item, $event)">
+        <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" style="margin-top: .125rem" alt=" ">
+      </div>
 
-        <!-- Value and count -->
-        <div class="value">
-          <div *ngIf="item.count > 1" class="label label-success">{{ item.count }}x</div>
-          <p [attr.data-tooltip]="item.value" [ngClass]="{ 'tooltip': item.logo }">
-            <img *ngIf="item.logo" [src]="item.logo" width="80px" height="80px"/>
-            <span *ngIf="!item.logo">{{ item.value }}</span>
-          </p>
+      <ng-container *ngIf="item.count > 1">
+        <div class="label label-success">
+          <span>{{ item.count }}x</span>
         </div>
+      </ng-container>
 
-        <!-- Respoand -->
-        <div class="popup">
-          <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
-        </div>
+      <div [attr.data-tooltip]="item.value" [ngClass]="{ 'tooltip': item.logo }">
+
+        <ng-container *ngIf="item.logo">
+          <img [src]="item.logo" width="80px" height="80px" alt=" ">
+        </ng-container>
+
+        <ng-container *ngIf="!item.logo">
+          <span class="text-background">{{ item.value }}</span>
+        </ng-container>
 
       </div>
+
+      <!-- respond -->
+      <div class="popup-wrapper">
+        <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
+      </div>
+
     </div>
   </div>
-</div>
+</section>

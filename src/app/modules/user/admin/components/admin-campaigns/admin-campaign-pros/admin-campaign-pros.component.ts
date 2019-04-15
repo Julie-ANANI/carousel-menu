@@ -41,6 +41,8 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
+  private _noResult = false;
+
   constructor(private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,
               private professionalsService: ProfessionalsService,
@@ -51,14 +53,25 @@ export class AdminCampaignProsComponent implements OnInit {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
 
     this._config = {
-      fields: 'language firstName lastName company email emailConfidence country jobTitle personId',
+      fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages campaigns',
       limit: '10',
       offset: '0',
       search: '{}',
       campaigns: this._campaign._id,
-      sort: '{ "created: -1" }'
+      sort: '{ "created": -1 }'
     };
 
+    this.getProfessionals();
+
+  }
+
+
+  private getProfessionals() {
+    this.professionalsService.getAll(this._config).pipe(first()).subscribe((response: any) => {
+      this._noResult = response._metadata.totalCount === 0;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
   }
 
 
@@ -81,6 +94,7 @@ export class AdminCampaignProsComponent implements OnInit {
     this.professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file).pipe(first()).subscribe((res: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
       this._importModal = false;
+      this._noResult = false;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
@@ -94,6 +108,7 @@ export class AdminCampaignProsComponent implements OnInit {
         .pipe(first()).subscribe((answer: any) => {
           const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
           this.translateNotificationsService.success('ERROR.SUCCESS', message);
+          this._noResult = false;
         }, () => {
           this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
@@ -133,11 +148,14 @@ export class AdminCampaignProsComponent implements OnInit {
       emailConfidence: 100
     };
 
-    this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id).pipe(first()).subscribe((createdPro: Professional) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
+    this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id)
+      .pipe(first())
+      .subscribe((createdPro: Professional) => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
+        this._noResult = false;
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
 
   }
 
@@ -150,6 +168,7 @@ export class AdminCampaignProsComponent implements OnInit {
   onClickExport(event: Event) {
     event.preventDefault();
     const config = {
+      fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country jobTitle messages',
       professionals: [] || 'all',
       campaignId: this._campaign._id,
       query: {
@@ -210,6 +229,10 @@ export class AdminCampaignProsComponent implements OnInit {
 
   get newPro(): any {
     return this._newPro;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
   }
 
 }

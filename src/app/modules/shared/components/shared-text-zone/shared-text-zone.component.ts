@@ -12,7 +12,9 @@ declare let swellrt: any
 })
 
 export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit {
+
   @Input() readonly = false;
+
   @Input() set data(value: string) {
     this._text = value;
     this._contentHash = this.hashString(value);
@@ -20,12 +22,17 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       this.editor.setContent(this._text);
     }
   }
+
   @Input() elementId: String;
+
   @Output() onTextChange = new EventEmitter<any>();
 
   private _contentHash: number;
+
   private _text: string;
+
   private editor: any;
+
   private _htmlId: string;
 
   private _sharedDocument: any;
@@ -211,9 +218,13 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
     return hash;
   }
 
-  public get htmlId(): string { return this._htmlId; }
+  public get htmlId(): string {
+    return this._htmlId;
+  }
 
-  public get text(): string { return this._text; }
+  public get text(): string {
+    return this._text;
+  }
 
   public set text(value: string) {
     this._text = value; // This is in case tinymce fails, then we will be able to use the textarea

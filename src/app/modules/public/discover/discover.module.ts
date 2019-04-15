@@ -22,6 +22,9 @@ import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.mod
 import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
 import { TagsService } from '../../../services/tags/tags.service';
 import { ModalMediaModule } from '../../utility-components/modal-media/modal-media.module';
+import { ModalModule } from '../../utility-components/modals/modal/modal.module';
+import { HeaderModule } from '../../common/header/header.module';
+
 
 @NgModule({
   imports: [
@@ -34,7 +37,9 @@ import { ModalMediaModule } from '../../utility-components/modal-media/modal-med
     SharedLoaderModule,
     FooterModule,
     HeaderUnauthModule,
-    ModalMediaModule
+    ModalMediaModule,
+    ModalModule,
+    HeaderModule
   ],
   providers:[
     InnovationService,

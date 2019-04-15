@@ -1,7 +1,10 @@
-<div id="shared-tag-item-component">
+<section id="shared-tag-item-component">
 
-    <form *ngIf="editMode" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
-      <div class="tag-input-wrapper">
+  <!-- add tag input -->
+  <ng-container *ngIf="editMode">
+    <form [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
+      <div class="form-group">
+        <label for="shared-tag-item"></label>
         <input
           auto-complete
           formControlName="tag"
@@ -11,24 +14,31 @@
           [attr.placeholder]="'COMMON.TAG_LABEL.TAG_PLACEHOLDER' | translate"
           id="shared-tag-item"
           class="form-input">
-        <button class="btn-round btn-primary" [disabled]="!canAdd" [ngStyle]="{ 'font-size': '16px' }"><i class="fas fa-plus"></i></button>
+        <button class="btn btn-round btn-primary" [disabled]="!canAdd"><i class="fas fa-plus"></i></button>
       </div>
     </form>
+  </ng-container>
+  <!-- /add tag input -->
 
-    <div *ngIf="tags?.length > 0" class="tags-wrapper">
-      <div *ngFor="let tag of tags" class="tags-content" [title]="tag.description | multiling:lang">
-        <div class="tags-body">
-          #{{ tag?.label | multiling:lang }}
-          <i *ngIf="editMode || isAdmin" class="fas fa-times" (click)="removeTagEmitter($event, tag)"></i>
-        </div>
+  <!-- displaying tags -->
+  <ng-container *ngIf="tags?.length > 0">
+    <div class="tags-wrapper d-flex">
+      <div *ngFor="let tag of tags" [title]="tag.description | multiling:browserLang()" class="label label-tag label-rounded">
+        <i class="fas fa-tag"></i>
+        <span class="label-text">{{ tag?.label | multiling:browserLang() }}</span>
+        <i *ngIf="editMode || isAdmin" class="fas fa-times label-text" (click)="removeTagEmitter($event, tag)"></i>
       </div>
     </div>
+  </ng-container>
+  <!-- /displaying tags -->
 
-</div>
+</section>
 
+<!-- modal to create new tag -->
 <app-modal [(showModal)]="showModal">
   <h1>Create a new Tag</h1>
   <p>Do you want to create a new tag: "{{tagForm.get('tag').value}}" ?</p>
   <button type="button" (click)="createNewTag();">Create new tag</button>
   <button type="button" (click)="showModal = false">Close</button>
 </app-modal>
+<!-- /modal to create new tag -->

@@ -15,11 +15,11 @@ export class SurveyComponent implements OnInit {
     this._innovation = value;
   }
 
-  private _url: string;
+  private _url = '';
 
   private _innovation: Innovation;
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
     if (this._innovation.quizId) {

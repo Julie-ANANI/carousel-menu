@@ -1,4 +1,4 @@
-<div class="section-container" id="admin-followed" [formGroup]="formData">
+<div class="section-light-pad" id="admin-followed" [formGroup]="formData">
 
   <h6>Setup</h6>
 
@@ -154,7 +154,7 @@
       </div>
 
       <!-- Project preset edition -->
-      <div class="project-line" [ngClass]="{disabled: !hasPreset()}">
+      <div class="project-line">
         <label class="form-switch" for="editPreset">
           <input
             type="checkbox"
@@ -291,18 +291,18 @@
     <div class="project-summary">
       <div class="completion">
         <h6>Completion</h6>
-        <span *ngFor="let innov of project.innovationCards">
+        <span *ngFor="let innov of project.innovationCards" class="text-center">
           <label class="form-label">{{innov?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}</label>
           <label>{{innov?.completion?.toFixed(0) || 0}} %</label>
         </span>
       </div>
       <div class="campaign">
         <h6>Campaign</h6>
-        <span>
+        <span class="text-center">
           <label class="form-label">{{'COMMON.PROFESSIONALS' | translate}}</label>
           <label>{{currentCampaign?.stats?.campaign?.nbProfessionals || '?'}}</label>
         </span>
-        <span>
+        <span class="text-center">
           <label class="form-label">{{'PROJECT.CAMPAIGN.INSIGHTS' | translate}}</label>
           <label>{{currentCampaign?.stats?.campaign?.nbResp || '?'}}</label>
         </span>
@@ -685,9 +685,9 @@
 
   </div>
 
-  <button class="btn btn-sm ghost-delete" (click)="deleteProjectModal()">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' |
+  <!--<button class="btn btn-sm ghost-delete" (click)="deleteProjectModal()">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' |
     translate }}
-  </button>
+  </button>-->
 
 </div>
 
@@ -721,7 +721,8 @@
   </app-tags-form>
 </app-sidebar>
 
-<!-- Modal to ask admin to sure about deleting the project -->
+
+<!-- Modal to ask admin to sure about deleting the project
 <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
@@ -733,9 +734,9 @@
       <div class="content">
         {{ 'PROJECT_MODULE.SETUP.DELETE_PROJECT_MODAL.CONTENT' | translate }}
         <ul>
-          <!-- Property 'usersToRemove' does not exist on type 'AdminProjectManagementComponent'.
+          &lt;!&ndash; Property 'usersToRemove' does not exist on type 'AdminProjectManagementComponent'.
             <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
-          -->
+          &ndash;&gt;
         </ul>
       </div>
     </div>
@@ -745,4 +746,4 @@
       </button>
     </div>
   </div>
-</div>
+</div>-->

@@ -1,12 +1,12 @@
-@import "../../../style/variables";
+@import "../../../style/framework/src/variables";
 
-.body-wrapper {
+.main-wrapper {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
 
-.main-wrapper {
+.body-wrapper {
   flex: 1 0 auto;
 }
 

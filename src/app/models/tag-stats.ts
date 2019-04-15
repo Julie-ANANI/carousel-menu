@@ -6,21 +6,21 @@ export interface TagStats {
 
   tag?: Tag;
 
-  totalInnovations: number;
+  totalInnovations?: number;
 
-  totalAnswers: number;
+  totalAnswers?: number;
 
-  countNeed: number;
+  countNeed?: number;
 
-  totalCountNeed: number;
+  totalCountNeed?: number;
 
-  countDiff: number;
+  countDiff?: number;
 
-  totalCountDiff: number;
+  totalCountDiff?: number;
 
-  countLeads: number;
+  countLeads?: number;
 
-  geographicalRepartition: Array<{ country: string, count: number }>;
+  geographicalRepartition?: Array<{ country: string, count: number }>;
 
   readonly created?: Date;
 
