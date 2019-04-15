@@ -82,14 +82,9 @@ export class ExportModalComponent {
     return this._exportType;
   }
 
-  set exportType(value: ExportType) {
-    this._exportType = value;
-  }
-
   get innovation(): Innovation {
     return this._innovation;
   }
-
 
   get showExportModal(): boolean {
     return this._showExportModal;

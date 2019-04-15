@@ -79,17 +79,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     nbValidatedResp: number
   };
 
-  private _scrollOn = false;
-
   private _showDetails: boolean;
-
-  private _openModal = false;
 
   private _today: Number;
 
   private _numberOfSections: number;
-
-  private _exportType = '';
 
   private _executiveTemplates: Array<Executive>;
 
@@ -361,59 +355,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
 
   /***
-   * This function will make the project end and synthesis will be available to the client.
-   * @param {Event} event
-   * @param {"DONE"} status
-   */
-  endInnovation(event: Event, status: 'DONE'): void {
-    this._innovationEndModal = false;
-    this._openModal = false;
-
-    this.innovationService.endProject(this._innovation._id).subscribe((response) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this._innovation = response;
-      this.innovationCommonService.setInnovation(this._innovation);
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-  }
-
-  /***
-   * This function generates the message and open the mailto for the client to share the
-   * innovation.
-   * @param {string} projectID
-   * @param {string} shareKey
-   */
-  private openMailTo(projectID: string, shareKey: string) {
-    let message = '';
-    let subject = '';
-    const url = this.getInnovationUrl() + '/share/synthesis/' + projectID + '/' + shareKey;
-
-    if (this.userLang === 'en') {
-
-      subject = 'Results - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
-
-      message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
-        this._innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
-        'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
-
-    }
-
-    if (this.userLang === 'fr') {
-
-      subject = 'Résultats - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
-
-      message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
-        this._innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
-        'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
-    }
-
-    window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
-
-  }
-
-
-  /***
    * This function is getting the image source according to the current lang of the user.
    * @returns {string}
    */
@@ -580,106 +521,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   }
 
-
-  /***
-   * this function assign the value to exportType when we select one of the options
-   * from the modal.
-   * @param event
-   * @param type
-   */
-  assignExportType(event: Event, type: string) {
-    event.preventDefault();
-    this._exportType = type;
-  }
-
-
-  /***
-   * this function is to toggle the consent value based on the checbox is
-   * checked or not.
-   * @param event
-   */
-  toggleConsent(event: Event) {
-    event.preventDefault();
-    this._innovation.ownerConsent.value = !!event.target['checked'];
-  }
-
-
-  /***
-   * this function calls the respective function based on the value of the
-   * exportType. It is called by the Download button.
-   * @param event
-   */
-  exportInnovation(event: Event) {
-    event.preventDefault();
-
-    this._innovation.ownerConsent.date = Date.now();
-
-    this.innovationCommonService.saveInnovation(this._innovation);
-
-    switch (this._exportType) {
-
-      case('excel'):
-        this.downloadExcel(event);
-        break;
-
-      case('executiveReport'):
-        this.printExecutiveReport(event);
-        break;
-
-      case('respReport'):
-        this.printAnswers(event);
-        break;
-
-      default:
-        // Do nothing
-    }
-
-    this._exportType = '';
-
-  }
-
-
-  /***
-   * this function will download the excel file.
-   * @param event
-   */
-  private downloadExcel(event: Event) {
-    event.preventDefault();
-    window.open( this.answerService.getExportUrl(this._innovation._id, true));
-  }
-
-  /***
-   * this function will download the response.
-   * @param event
-   */
-  private printAnswers(event: Event) {
-
-    event.preventDefault();
-
-    this.answerService.getReportHTML(this._innovation._id, 'en').subscribe(html => {
-        const reportWindow = window.open('', '');
-        reportWindow.document.write(html);
-        setTimeout(() => {
-          reportWindow.focus();
-          reportWindow.print();
-          reportWindow.close();
-        }, 500);
-      }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-      });
-
-  }
-
-
-  /***
-   * This functions is called when the user selects the executive report option.
-   * @param {Event} event
-   */
-  private printExecutiveReport(event: Event) {
-    event.preventDefault();
-    window.print();
-  }
-
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
   }
@@ -809,24 +650,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isOwner;
   }
 
-  get openModal(): boolean {
-    return this._openModal;
-  }
-
-  set openModal(value: boolean) {
-    this._openModal = value;
-  }
-
-  get innovationExport(): boolean {
-    return this._innovationExport;
-  }
-
   get numberOfSections(): number {
     return this._numberOfSections;
-  }
-
-  get exportType(): string {
-    return this._exportType;
   }
 
   get executiveTemplates(): Array<Executive> {
