@@ -75,7 +75,7 @@ export class SearchToolComponent implements OnInit{
           this._searchStopped = false;
           this._searchResult.metadata = result.metadata || {};
           this._searchResult.pros = result.pros;
-          if (result.scale) this._scale = result.scale;
+          this._scale = result.scale || [50, 200, 1500];
           this._updateResults();
         }, () => {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
