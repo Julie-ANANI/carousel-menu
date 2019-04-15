@@ -2,18 +2,13 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar" id="header-navbar">
 
-      <!-- logo and mobile menu  -->
-      <div class="mobile-menu" id="mobile-menu">
-
-        <!-- logo -->
-        <div class="logo" id="logo">
-          <a routerLink="/" class="gtm-menu-logo">
-            <img [src]="getLogo()" [alt]="getCompany()" width="110px" height="33px">
-          </a>
-        </div>
-
+      <!-- logo -->
+      <div class="logo" id="logo">
+        <a routerLink="/" class="gtm-menu-logo">
+          <img [src]="getLogo()" [alt]="getCompany()" width="110px" height="33px">
+        </a>
       </div>
-      <!-- /logo and mobile menu  -->
+      <!-- /logo -->
 
       <!-- navigation -->
       <div class="navigation-wrapper" id="navigation">
@@ -27,96 +22,70 @@
             </a>
           </li>
 
-          <!-- innovations page -->
-          <li class="menu-item" *ngIf="!backOfficeValue">
-            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
-              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
-            </a>
-          </li>
+          <!-- client routes -->
+          <ng-container *ngFor="let route of clientRoutes">
+            <li class="menu-item" *ngIf="!backOfficeValue">
+              <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
+                <span>{{ route.pageName | translate }}</span>
+              </a>
+            </li>
+          </ng-container>
 
-          <!-- reports page -->
-          <li class="menu-item" *ngIf="!backOfficeValue">
-            <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
-              <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
-            </a>
-          </li>
-
-          <!-- project page -->
-          <li class="menu-item" *ngIf="!backOfficeValue">
-            <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
-              <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
-            </a>
-          </li>
-
-          <!-- admin dashboard page -->
-          <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
-            <a [routerLink]="'/user/admin'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
-              <span>Dashboard</span>
-            </a>
-          </li>
-
-          <!-- admin user page -->
-          <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
-            <a routerLinkActive="active" [routerLink]="'/user/admin/users'" (click)="onClickLink()">
-              <span>Users</span>
-            </a>
-          </li>
-
-          <!-- admin professional page -->
-          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-            <a routerLinkActive="active" [routerLink]="'/user/admin/professionals'" (click)="onClickLink()">
-              <span>Professionals</span>
-            </a>
-          </li>
-
-          <!-- admin community page -->
-          <!--<li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-            <a routerLinkActive="active" [routerLink]="'/user/admin/community'" (click)="onClickLink()">
-              <span>Community</span>
-            </a>
-          </li>-->
-
-          <!-- admin projects page -->
-          <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
-            <a routerLinkActive="active" [routerLink]="'/user/admin/projects'" (click)="onClickLink()">
-              <span>Projects</span>
-            </a>
-          </li>
-
-          <!-- admin library page -->
-          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-            <a routerLinkActive="active" [routerLink]="'/user/admin/libraries'" (click)="onClickLink()">
-              <span>Libraries</span>
-            </a>
-          </li>
-
-          <!-- admin monitoring page -->
-          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-            <a routerLinkActive="active" [routerLink]="'/user/admin/monitoring'" (click)="onClickLink()">
-              <span>Monitoring</span>
-            </a>
-          </li>
-
-          <!-- admin settings page -->
-          <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-            <a routerLinkActive="active" [routerLink]="'/user/admin/settings'" (click)="onClickLink()">
-              <span>Settings</span>
-            </a>
-          </li>
+          <!-- admin routes -->
+          <ng-container *ngFor="let route of adminRoutes">
+            <li class="menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel)">
+              <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
+                <span>{{ route.pageName }}</span>
+              </a>
+            </li>
+          </ng-container>
 
           <!-- language select dropdown -->
-          <li class="menu-item">
+          <li class="menu-item header-lang-dropdown">
             <div class="dropdown" id="header-lang-dropdown">
+
+              <a>
+                <span>
+                  <img
+                    [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
+                    [alt]="currentLang.toUpperCase()">
+                    <i class="fas fa-angle-down text-background"></i>
+                </span>
+              </a>
+
+              <!-- dropdown -->
+              <ul class="dropdown-menu dropdown-right">
+
+                <li class="drop-item text-center" (click)="setLang('fr')">
+                  <img
+                    [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'"
+                    [alt]="currentLang.toUpperCase()">
+                </li>
+
+                <li class="drop-item text-center" (click)="setLang('en')">
+                  <img
+                    [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'"
+                    [alt]="currentLang.toUpperCase()">
+                </li>
+
+              </ul>
 
             </div>
           </li>
 
+          <!-- mobile toggle icon -->
+          <li class="mobile-toggle" (click)="toggleMenuState()">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+          </li>
+          <!-- /mobile toggle icon -->
+
           <!-- avatar account and dropdown -->
-          <li class="menu-item">
-            <div class="header-account-dropdown dropdown" id="header-account-dropdown">
+          <li class="menu-item header-account-dropdown">
+            <div class="dropdown" id="header-account-dropdown">
 
               <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
-                <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                <figure class="avatar avatar-lg avatar-user text-medium" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
                   <ng-container *ngIf="hasProfilePic()">
                     <img [src]="profilePicture" class="img-responsive" alt=" ">
                   </ng-container>
@@ -128,35 +97,50 @@
 
                 <li class="drop-item drop-item-user">
                   <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account drop-item-user">
+
                     <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
                       <ng-container *ngIf="hasProfilePic()">
                         <img [src]="profilePicture" class="img-responsive" alt=" ">
                       </ng-container>
                     </figure>
+
                     <span class="d-flex">
                       <span class="text-medium text-ellipsis">{{ name }}</span>
                       <span class="text-email text-ellipsis">{{ email }}</span>
                     </span>
+
                   </a>
                 </li>
 
                 <!-- account page -->
                 <li class="drop-item">
-                  <a [routerLink]="'/user/account'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-account text-background">
+                  <a
+                    [routerLink]="'/user/account'"
+                    routerLinkActive="active"
+                    (click)="onClickLink()"
+                    class="gtm-menu-my-account text-background">
                     {{ 'HEADER.MY_ACCOUNT' | translate }}
                   </a>
                 </li>
 
                 <!-- admin side -->
                 <li class="drop-item" *ngIf="!backOfficeValue && canShow(1)">
-                  <a [routerLink]="'/user/admin'" routerLinkActive="active" (click)="toggleBackOfficeState(); onClickLink();" class="text-background">
+                  <a
+                    [routerLink]="'/user/admin'"
+                    routerLinkActive="active"
+                    (click)="toggleBackOfficeState(); onClickLink();"
+                    class="text-background">
                     Admin Side
                   </a>
                 </li>
 
                 <!-- client side -->
                 <li class="drop-item" *ngIf="backOfficeValue && canShow(1)">
-                  <a routerLinkActive="active" [routerLink]="'/user/projects'" (click)="toggleBackOfficeState(); onClickLink();" class="text-background">
+                  <a
+                    routerLinkActive="active"
+                    [routerLink]="'/user/projects'"
+                    (click)="toggleBackOfficeState(); onClickLink();"
+                    class="text-background">
                     Client Side
                   </a>
                 </li>
@@ -165,7 +149,9 @@
 
                 <!-- log out -->
                 <li class="drop-item">
-                  <a [routerLink]="'/logout'" (click)="onClickLink()" class="text-background">{{ 'HEADER.LOG_OUT' | translate }}</a>
+                  <a [routerLink]="'/logout'" (click)="onClickLink()" class="text-background">
+                    {{ 'HEADER.LOG_OUT' | translate }}
+                  </a>
                 </li>
 
               </ul>
@@ -179,140 +165,107 @@
       </div>
       <!-- /navigation -->
 
-
     </nav>
   </div>
 </header>
 
-<!--
 
-&lt;!&ndash; &ndash;&gt;
-<div class="mobile-menu">
+<!-- sidebar for mobile device -->
+<div class="sidebar-backdrop" [@animateSidebarBackdrop]="sidebarValues.animate_state" id="header-sidebar" (click)="closeSidebar()"></div>
 
-  &lt;!&ndash; logo &ndash;&gt;
-  <div class="logo">
-    <a routerLink="/" class="gtm-menu-logo">
-      <img src="{{ getLogo() }}" [alt]=" " width="110px" height="33px">
-    </a>
+<div class="sidebar" [@animateSidebar]="sidebarValues.animate_state">
+  <div class="sidebar-container">
+    <nav class="sidebar-navbar">
+      <div class="sidebar-navigation-wrapper" id="sidebar-navigation">
+        <ul class="menu">
+
+          <!-- account and pic -->
+          <li class="sidebar-menu-item sidebar-item-user">
+            <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
+
+              <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                <ng-container *ngIf="hasProfilePic()">
+                  <img [src]="profilePicture" class="img-responsive" alt=" ">
+                </ng-container>
+              </figure>
+
+              <span class="d-flex">
+                <span class="text-medium text-ellipsis">{{ name }}</span>
+                <span class="text-email text-ellipsis text-normal">{{ email }}</span>
+              </span>
+
+            </a>
+          </li>
+
+          <!-- example page -->
+          <li class="sidebar-menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
+            <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+               routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
+              <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
+            </a>
+          </li>
+
+          <!-- client routes -->
+          <ng-container *ngFor="let route of clientRoutes">
+            <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
+              <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
+                <span>{{ route.pageName | translate }}</span>
+              </a>
+            </li>
+          </ng-container>
+
+          <!-- admin routes -->
+          <ng-container *ngFor="let route of adminRoutes">
+            <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel)">
+              <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
+                <span>{{ route.pageName }}</span>
+              </a>
+            </li>
+          </ng-container>
+
+          <!-- account page -->
+          <li class="sidebar-menu-item">
+            <a
+              [routerLink]="'/user/account'"
+              routerLinkActive="active"
+              (click)="onClickLink()"
+              class="gtm-menu-my-account text-background">
+              {{ 'HEADER.MY_ACCOUNT' | translate }}
+            </a>
+          </li>
+
+          <!-- admin side -->
+          <li class="sidebar-menu-item" *ngIf="!backOfficeValue && canShow(1)">
+            <a
+              [routerLink]="'/user/admin'"
+              routerLinkActive="active"
+              (click)="toggleBackOfficeState(); onClickLink();"
+              class="text-background">
+              Admin Side
+            </a>
+          </li>
+
+          <!-- client side -->
+          <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(1)">
+            <a
+              routerLinkActive="active"
+              [routerLink]="'/user/projects'"
+              (click)="toggleBackOfficeState(); onClickLink();"
+              class="text-background">
+              Client Side
+            </a>
+          </li>
+
+          <!-- log out -->
+          <li class="sidebar-menu-item">
+            <a [routerLink]="'/logout'" (click)="onClickLink()" class="text-background">
+              {{ 'HEADER.LOG_OUT' | translate }}
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
   </div>
-
-  &lt;!&ndash; toggle icon on mobile &ndash;&gt;
-  <div class="mobile-toggle" (click)="toggleMenuState()">
-    <i class="fas fa-bars"></i>
-    <span>{{ 'HEADER.MENU' | translate }}</span>
-  </div>
-
 </div>
-
-&lt;!&ndash; navigation links &ndash;&gt;
-<div class="navigation-wrapper" [ngStyle]="{ 'display': displayMenuOptions ? 'flex' : 'none' }">
-  <ul class="menu">
-
-    &lt;!&ndash; Client example &ndash;&gt;
-    <li class="menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
-      <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
-        <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
-      </a>
-    </li>
-    &lt;!&ndash; &ndash;&gt;
-
-    &lt;!&ndash; Client discover &ndash;&gt;
-    <li class="menu-item" *ngIf="!backOfficeValue">
-      <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
-        <span>{{ 'COMMON.DISCOVER' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Client shared reports &ndash;&gt;
-    <li class="menu-item" *ngIf="!backOfficeValue">
-      <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
-        <span>{{ 'COMMON.HEADER.SHARED_REPORTS' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Client projects -&ndash;&gt;
-    <li class="menu-item" *ngIf="!backOfficeValue">
-      <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
-        <span>{{ 'COMMON.MY_PROJECTS' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Client account &ndash;&gt;
-    <li class="menu-item" *ngIf="!backOfficeValue">
-      <a [routerLink]="'/user/account'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-account">
-        <span>{{ 'COMMON.MY_ACCOUNT' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Back office dashboard &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
-      <a [routerLink]="'/user/admin'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
-        <span>Dashboard</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Back office users &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
-      <a routerLinkActive="active" [routerLink]="'/user/admin/users'" (click)="onClickLink()">
-        <span>{{ 'COMMON.USERS' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Back office professional &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-      <a routerLinkActive="active" [routerLink]="'/user/admin/professionals'" (click)="onClickLink()">
-        <span>{{ 'COMMON.PROFESSIONALS' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Back office ambassadors/community program
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-      <a routerLinkActive="active" [routerLink]="'/user/admin/community'" (click)="onClickLink()">
-        <span>{{ 'COMMON.COMMUNITY' | translate }}</span>
-      </a>
-    </li>&ndash;&gt;
-
-    &lt;!&ndash; Back office projects &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
-      <a routerLinkActive="active" [routerLink]="'/user/admin/projects'" (click)="onClickLink()">
-        <span>{{ 'COMMON.PROJECTS' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Back office library &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-      <a routerLinkActive="active" [routerLink]="'/user/admin/libraries'" (click)="onClickLink()">
-        <span>Libraries</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; BAck office monitoring &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-      <a routerLinkActive="active" [routerLink]="'/user/admin/monitoring'" (click)="onClickLink()">
-        <span>Monitoring</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; Back office setting &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(3)">
-      <a routerLinkActive="active" [routerLink]="'/user/admin/settings'" (click)="onClickLink()">
-        <span>{{ 'COMMON.PRESETS' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; To go client side &ndash;&gt;
-    <li class="menu-item" *ngIf="backOfficeValue && canShow(1)">
-      <a routerLinkActive="active" [routerLink]="'/user/projects'" (click)="toggleBackOfficeState(); onClickLink();">
-        <span>{{ 'COMMON.CLIENT_SIDE' | translate }}</span>
-      </a>
-    </li>
-
-    &lt;!&ndash; To go admin side &ndash;&gt;
-    <li class="menu-item" *ngIf="!backOfficeValue && canShow(1)">
-      <a [routerLink]="'/user/admin'" routerLinkActive="active" (click)="toggleBackOfficeState(); onClickLink();">
-        <span>{{ 'COMMON.ADMIN' | translate }}</span>
-      </a>
-    </li>
-
-  </ul>
-</div>-->
+<!-- /sidebar for mobile device -->
