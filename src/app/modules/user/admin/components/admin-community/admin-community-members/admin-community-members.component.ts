@@ -27,7 +27,7 @@ export class AdminCommunityMembersComponent {
 
   private _setConfig() {
     this._config = {
-      fields: 'language firstName lastName company country jobTitle campaigns tags messages',
+      fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.industry',
       limit: '10',
       offset: '0',
       search: '{ "ambassador.is": true }',
