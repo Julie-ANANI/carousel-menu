@@ -73,6 +73,10 @@
 
   }
 
+  &.rounded {
+    border-radius: 25px;
+  }
+
   // Radio button like form-radio
   &.btn-radio {
     width: 22px;

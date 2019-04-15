@@ -1,48 +1,58 @@
 @import "../../../../style/framework/src/variables";
-@import "../../../../style/framework/src/mixins";
 
 #header-unauth-component {
+  border: 1px solid $border-light-color;
 
-  .mobile-menu {
-    width: 100%;
-  }
+  .navbar {
 
-  .signIn-wrapper {
-    position: absolute;
-    top: 85%;
-    right: 0;
-    width: 380px;
-    min-height: 300px;
-    text-align: left;
-    background-color: $bg-color-light;
-    z-index: 2;
-    box-shadow: $box-shadow-hover-umi;
-    border-radius: $border-radius;
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-    display: none;
-
-    .login-button {
-      padding-top: 0.75rem;
-      padding-bottom: 0.5rem;
+    .logo {
+      padding-top: 5px;
     }
 
-    .title-primary {
-      font-size: 1.4rem;
-      color: $text-background-color;
-    }
+    .navigation-wrapper {
 
-  }
+      .header-lang-dropdown {
 
-}
+        a {
+          height: 35px;
 
+          span:after {
+            bottom: 3px;
+          }
 
-@media (max-width: $size-sm) {
+          .fa-angle-down {
+            margin-left: $unit-2;
+          }
 
-  #header-unauth-component {
+        }
 
-    .signIn-wrapper {
-      width: 80vw !important;
+        .dropdown-menu {
+          width: 46px;
+          right: -7px;
+          padding: 0;
+
+          .drop-item{
+            padding: 0.5rem;
+          }
+
+        }
+
+        &:hover {
+
+          .fa-angle-down {
+            color: $primary-color !important;
+          }
+
+          span:after {
+            visibility: visible;
+            background-color: $primary-color;
+            transform: scaleX(1);
+          }
+
+        }
+
+      }
+
     }
 
   }

@@ -62,22 +62,22 @@ export class DiscoverDescriptionComponent implements OnInit {
               private _shareService: ShareService,
               private _domSanitizer1: DomSanitizer,
               private _translateService: TranslateService,
-              private _innovationService: InnovationService) { }
-
-  ngOnInit() {
+              private _innovationService: InnovationService) {
 
     this._activatedRoute.params.subscribe(params => {
       this._id = params['projectId'];
       this._lang = params['lang'];
-
     });
 
-    this._loadInnovation();
+    this._innovation = this._activatedRoute.snapshot.data.innovation;
 
   }
 
+  ngOnInit() {
+    this._loadInnovation();
+  }
+
   private _loadInnovation() {
-    this._innovation = this._activatedRoute.snapshot.data.innovation;
 
     if ((this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE') {
       this._quizButtonDisplay = 'none';
@@ -88,6 +88,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     this._getAllTags();
     this._getAllShareLinks();
     this._getOperatorDetails();
+
   }
 
 

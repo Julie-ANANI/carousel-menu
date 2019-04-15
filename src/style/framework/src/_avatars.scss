@@ -34,6 +34,10 @@
     @include avatar-variant($light-color, $meta-color);
   }
 
+  &.avatar-user {
+    @include avatar-variant($text-background-color, #e0e0e0);
+  }
+
   img {
     border-radius: 50%;
     height: 100%;
