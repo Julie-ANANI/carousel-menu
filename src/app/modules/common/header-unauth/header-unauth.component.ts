@@ -154,8 +154,12 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
     }
   }
 
-  getLogo(): string {
+  public getLogo(): string {
     return environment.logoURL;
+  }
+
+  public getCompany(): string {
+    return environment.companyShortName;
   }
 
   get sidebarValue(): SidebarInterface {

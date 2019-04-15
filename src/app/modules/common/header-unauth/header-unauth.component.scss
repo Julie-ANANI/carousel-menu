@@ -2,6 +2,7 @@
 @import "../../../../style/framework/src/mixins";
 
 #header-unauth-component {
+  border: 1px solid $border-light-color;
 
   .mobile-menu {
     width: 100%;
