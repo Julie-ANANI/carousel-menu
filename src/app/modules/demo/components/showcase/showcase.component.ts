@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { Tag } from '../../../../models/tag';
@@ -38,12 +39,13 @@ export class ShowcaseComponent {
               private _translateNotificationService: TranslateNotificationsService) {
 
     if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
-      this._sectorTags = this._activatedRoute.snapshot.data['tags'];
-
-      if (!this.sectorTags.length) {
-        this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
-      }
-
+      this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1, t2) => {
+        const label1 = MultilingPipe.prototype.transform(t1.label, this._translateService.currentLang);
+        const label2 = MultilingPipe.prototype.transform(t2.label, this._translateService.currentLang);
+        return label1.localeCompare(label2);
+      });
+    } else {
+      this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
     }
 
   }
