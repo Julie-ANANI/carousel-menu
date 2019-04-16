@@ -1,6 +1,7 @@
 export const SHOWCASE = {
 
-  'NO_TAGS': 'Choisissez les secteurs qui vous intéressent.',
+  'NO_TAGS_CLICKABLE': 'Choisissez',
+  'NO_TAGS': 'les secteurs qui vous intéressent.',
   'MODIFY': 'Modifier',
   'SEE_MORE': 'Voir plus',
 

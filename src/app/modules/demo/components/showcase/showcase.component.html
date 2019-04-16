@@ -4,7 +4,8 @@
     <ng-container *ngIf="selectedTagsStats.length === 0">
       <div class="section-pad rm-pad-bottom">
         <app-message-space>
-          <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.NO_TAGS'" translate></span>
+            <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.NO_TAGS_CLICKABLE'" translate></span>
+            {{'SHOWCASE.NO_TAGS' | translate}}
         </app-message-space>
       </div>
     </ng-container>
