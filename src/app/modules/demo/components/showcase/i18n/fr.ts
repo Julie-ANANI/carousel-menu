@@ -11,7 +11,7 @@ export const SHOWCASE = {
   'COUNTRIES_TITLE': 'Ciblage',
   'COUNTRIES': 'pays ciblés',
   'CLIENTS_TITLE': 'Clients',
-  'CLIENTS': 'entreprises ont testé leur marché',
+  'CLIENTS': 'Quelques entreprises qui ont testé leur marché',
 
   'SECTORS_MODAL': {
     'TITLE': 'Choix des secteurs'

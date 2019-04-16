@@ -11,7 +11,7 @@ export const SHOWCASE = {
   'COUNTRIES_TITLE': 'Targeted',
   'COUNTRIES': 'countries surveyed',
   'CLIENTS_TITLE': 'Clients',
-  'CLIENTS': 'companies tested their market',
+  'CLIENTS': 'Some of the companies that tested their market',
 
   'SECTORS_MODAL': {
     'TITLE': 'Select Sector'
