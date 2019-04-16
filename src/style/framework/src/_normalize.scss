@@ -229,7 +229,10 @@ audio:not([controls]) {
  */
 
 img {
-  border-style: none;
+  border: 0;
+  vertical-align: middle;
+  max-width: 100%;
+  height: auto;
 }
 
 /**

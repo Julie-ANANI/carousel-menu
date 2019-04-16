@@ -20,6 +20,22 @@
 }
 
 
+.img-overlay {
+
+  &:hover {
+    background: $bg-overlay-color;
+
+    img {
+      transition: all 0.3s ease;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+
+  }
+
+}
+
+
 // video responsive
 .video-responsive {
   display: block;
