@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { animate, query, style, transition, trigger, stagger } from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
@@ -10,7 +9,7 @@ import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+// import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
 import { InnovCard } from '../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
@@ -19,32 +18,6 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 @Component({
   templateUrl: './innovations.component.html',
   styleUrls: ['./innovations.component.scss'],
-  animations: [
-    trigger('tagAnimation', [
-      transition('* => *', [
-
-        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
-
-        query('.tag-content', stagger('100ms', [
-          animate('.15s ease', style({ opacity: 1, transform: 'translateX(0)' })),
-        ]), { optional: true }),
-
-      ])
-    ]),
-
-    trigger('cardAnimation', [
-      transition('* => *', [
-
-        query(':enter', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
-
-        query(':enter', stagger('100ms', [
-          animate('.15s ease', style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 })
-          )]
-        ), { optional: true }),
-
-      ])
-    ])
-  ]
 })
 
 export class InnovationsComponent implements OnInit {
@@ -54,15 +27,13 @@ export class InnovationsComponent implements OnInit {
     limit: '0',
     offset: '0',
     isPublic: '1',
-    $or: '[{"status":"EVALUATING"},{"status":"DONE"}]',
-    sort: '{"created":-1}'
+    $or: '[{ "status": "EVALUATING" },{ "status": "DONE" }]',
+    sort: '{ "created": -1 }'
   }; // config to get the innovations from the server.
 
   private _totalInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
 
-  private _totalResults: number; // hold the total number of innovations we get from the server.
-
-  private _localResults: number; // hold the total number of innovations.
+  private _totalLocalResults: number; // hold the total number of innovations.
 
   private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
@@ -74,7 +45,7 @@ export class InnovationsComponent implements OnInit {
 
   private _innovationTitles: Array<{text: string}> = []; // to store the innovation title to send to the search field.
 
-  private _paginationValue: PaginationInterface = { limit: 50, offset: this._config.offset }; // to pass the value in the pagination component.
+  // private _paginationValue: PaginationInterface = {}; // to pass the value in the pagination component.
 
   private _startingIndex: number; // starting index of the innovation.
 
@@ -96,7 +67,9 @@ export class InnovationsComponent implements OnInit {
 
   userLang = '';
 
-  highlightSectorTags: Array<Tag> = [];
+  displayLoading: boolean = true;
+
+  selectedFilters: Array<Tag> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -109,7 +82,6 @@ export class InnovationsComponent implements OnInit {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
 
     this._totalInnovations = this._activatedRoute.snapshot.data.innovations;
-    this._totalResults = this._totalInnovations.length;
 
     this._activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
@@ -120,23 +92,35 @@ export class InnovationsComponent implements OnInit {
     this.userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
 
     this._translateService.onLangChange.subscribe(() => {
-      this.userLang = this._translateService.currentLang;
-      this._reinitializeVariables();
+      this.displayLoading = true;
+      this._initializeFunctions();
     });
 
   }
 
   ngOnInit() {
-    this._getAllSectorTags();
-    this._checkStoredFilters();
-    this._getTitles();
-    this._checkSharedResult();
-    this._initialize();
+    // this._paginationValue = { limit: 50, offset: this._config.offset };
+    this._initializeFunctions()
   }
 
 
-  private _reinitializeVariables() {
-    this._sortTags();
+  private _initializeFunctions() {
+    this._getAllSectorTags();
+    this._getInnovationTitles();
+    this._initializeInnovations();
+    this._stopLoading();
+    //this._sortTags();
+    //this._checkStoredFilters();
+    //this._checkSharedResult();
+  }
+
+
+  private _applyInnoRecommendation(idInno: string) {
+    this._innovationService.getRecommendation(idInno).subscribe((response) => {
+      response.forEach((inno_similar: Innovation) => {
+        this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
+      });
+    });
   }
 
 
@@ -145,6 +129,7 @@ export class InnovationsComponent implements OnInit {
    * sectorTags.
    */
   private _getAllSectorTags() {
+    this._sectorTags = [];
 
     this._totalInnovations.forEach((innovation) => {
       innovation.tags.forEach((tag: Tag) => {
@@ -157,16 +142,74 @@ export class InnovationsComponent implements OnInit {
       });
     });
 
-    this._sortTags();
+  }
+
+
+  /***
+   * this functions is to get the titles of the innovation for the search
+   * field.
+   */
+  private _getInnovationTitles() {
+    this._innovationTitles = [];
+    let index = 0;
+
+    this._totalInnovations.forEach((innovation: Innovation) => {
+      if (innovation.innovationCards.length > 1) {
+        const userLangIndex = innovation.innovationCards.findIndex((card) => card.lang === this.userLang);
+        if (userLangIndex !== -1) {
+          index = userLangIndex;
+        }
+      } else {
+        const indexEn = innovation.innovationCards.findIndex((card) => card.lang === 'en');
+        if (indexEn !== -1) {
+          index = indexEn;
+        } else {
+          index = 0;
+        }
+      }
+
+      this._innovationTitles.push({text: innovation.innovationCards[index].title});
+
+    });
 
   }
 
 
   /***
+   * this function first check the length of the appliedFilters and do the
+   * respective functionality.
+   */
+  private _initializeInnovations() {
+    this._startingIndex = 0;
+    this._endingIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
+  }
+
+
+  public onSelectFilters(filters: Array<Tag>) {
+    this.selectedFilters = filters;
+
+    if (this.selectedFilters.length > 0) {
+      // this._applyFilters();
+    } else {
+      this._localInnovations = this._totalInnovations;
+      this._totalLocalResults = this._localInnovations.length;
+    }
+
+  }
+
+
+  private _stopLoading() {
+    setTimeout(() => {
+      this.displayLoading = false;
+    }, 500);
+  }
+
+  /***
    * this function is to sort the tag based on the user lang.
    * @private
    */
-  private _sortTags() {
+ /* private _sortTags() {
+
     this._sectorTags = this._sectorTags.sort((a: Tag, b: Tag) => {
 
       const labelA = MultilingPipe.prototype.transform(a.label, this.userLang).toLowerCase();
@@ -184,13 +227,15 @@ export class InnovationsComponent implements OnInit {
 
     });
 
-  }
+    this._getHighlightedTags();
+
+  }*/
 
 
   /***
    * this function checks do we have any filters stored in session storage.
    */
-  private _checkStoredFilters() {
+  /*private _checkStoredFilters() {
     if (isPlatformBrowser(this._platformId)) {
       const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
       if (sessionValues.length > 0) {
@@ -199,7 +244,7 @@ export class InnovationsComponent implements OnInit {
         this._appliedFilters = [];
       }
     }
-  }
+  }*/
 
 
 
@@ -211,7 +256,7 @@ export class InnovationsComponent implements OnInit {
   /***
    * this function is to check if we contain any params or not.
    */
-  private _checkSharedResult() {
+/*  private _checkSharedResult() {
     this._activatedRoute.queryParams.subscribe((params: any) => {
       if (params['tag']) {
         this._appliedFilters = [];
@@ -237,46 +282,11 @@ export class InnovationsComponent implements OnInit {
 
       }
     });
-  }
+  }*/
 
 
 
-  /***
-   * this functions is to get the titles of the innovation for the search
-   * field.
-   */
-  private _getTitles() {
-    this._innovationTitles = [];
-    let index = 0;
-
-    this._totalInnovations.forEach((innovation: Innovation) => {
-      if (innovation.innovationCards.length > 1) {
-        const browserLangIndex = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
-        if (browserLangIndex !== -1) {
-          index = browserLangIndex;
-        }
-      } else {
-        const indexEn = innovation.innovationCards.findIndex((card) => card.lang === 'en');
-        if (indexEn !== -1) {
-          index = indexEn;
-        } else {
-          index = 0;
-        }
-      }
-
-      this._innovationTitles.push({text: innovation.innovationCards[index].title});
-
-    });
-
-  }
-
-
-  /***
-   * this function first check the length of the appliedFilters and do the
-   * respective functionality.
-   */
-  private _initialize() {
-
+/*  private _initializeInnovations() {
     this._startingIndex = 0;
     this._endingIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
 
@@ -288,7 +298,8 @@ export class InnovationsComponent implements OnInit {
     }
 
 
-  }
+  }*/
+
 
 
   /***
@@ -393,10 +404,10 @@ export class InnovationsComponent implements OnInit {
         }
       });
 
-      this._localResults = this._localInnovations.length;
+      this._totalLocalResults = this._localInnovations.length;
 
     } else {
-      this._initialize();
+      this._initializeInnovations();
     }
 
   }
@@ -425,10 +436,10 @@ export class InnovationsComponent implements OnInit {
         }
       });
 
-      this._localResults = this._localInnovations.length;
+      this._totalLocalResults = this._localInnovations.length;
 
     } else {
-      this._initialize();
+      this._initializeInnovations();
     }
   }
 
@@ -514,8 +525,8 @@ export class InnovationsComponent implements OnInit {
         });
       });
     } else {
-      this._checkStoredFilters();
-      this._initialize();
+      //this._checkStoredFilters();
+      this._initializeInnovations();
     }
 
     this._noResultFound = this._localInnovations.length === 0;
@@ -641,9 +652,9 @@ export class InnovationsComponent implements OnInit {
       this._startingIndex = tempOffset;
       this._endingIndex = tempLimit;
 
-      if (paginationValues.limit >= this._localResults) {
+      if (paginationValues.limit >= this._totalLocalResults) {
         this._startingIndex = 0;
-        this._endingIndex = this._localResults;
+        this._endingIndex = this._totalLocalResults;
       } else {
         if (paginationValues.offset === 0) {
           this._startingIndex = 0;
@@ -654,6 +665,8 @@ export class InnovationsComponent implements OnInit {
         }
       }
     }
+
+    console.log(paginationValues);
 
   }
 
@@ -674,13 +687,7 @@ export class InnovationsComponent implements OnInit {
   }
 
 
-  private _applyInnoRecommendation(idInno: string) {
-    this._innovationService.getRecommendation(idInno).subscribe((response) => {
-      response.forEach((inno_similar: Innovation) => {
-        this._userSuggestedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
-      });
-    });
-  }
+
 
 
   public browserLang(): string {
@@ -695,12 +702,8 @@ export class InnovationsComponent implements OnInit {
     return this._totalInnovations;
   }
 
-  get totalResults(): number {
-    return this._totalResults;
-  }
-
-  get localResults(): number {
-    return this._localResults;
+  get totalLocalResults(): number {
+    return this._totalLocalResults;
   }
 
   get sectorTags(): Array<Tag> {
@@ -719,9 +722,9 @@ export class InnovationsComponent implements OnInit {
     return this._innovationTitles;
   }
 
-  get paginationValue(): PaginationInterface {
+  /*get paginationValue(): PaginationInterface {
     return this._paginationValue;
-  }
+  }*/
 
   get startingIndex(): number {
     return this._startingIndex;
