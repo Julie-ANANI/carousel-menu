@@ -64,6 +64,14 @@ figcaption,
 figure,
 main { /* 1 */
   display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  font-size: 100%;
+  font-style: inherit;
+  font-weight: inherit;
 }
 
 /**

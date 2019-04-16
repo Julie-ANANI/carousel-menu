@@ -1,4 +1,4 @@
-<section id="signup-form-component">
+<section id="signup-form-component" class="section-light-pad rm-pad-bottom">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <form novalidate [formGroup]="signupForm" (ngSubmit)="onContinue()" autocomplete="off">
 
@@ -115,15 +115,18 @@
       <ng-container *ngIf="checkIsMainDomain()">
         <div class="text text-notify text-center">
           {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
-          <a href="https://www.umi.us/end-user-license-agreement/" target="_blank" rel="noopener">
+          <a [href]="getTermsLink()" target="_blank" rel="noopener">
             <span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span>
           </a>
         </div>
       </ng-container>
 
       <!-- Submit button -->
-      <div class="signup-wrapper text-center">
-        <button class="btn btn-primary gtm-signup-email-validated" type="submit" [disabled]="signupForm.invalid">{{ 'COMMON.BUTTON.CONTINUE' | translate }}</button>
+      <div class="signup-wrapper section-light-pad rm-pad-bottom text-center">
+        <button class="btn btn-primary gtm-signup-email-validated" type="submit" [disabled]="signupForm.invalid">
+          <span *ngIf="displayLoading" class="loading loading-white"></span>
+          {{ 'COMMON.BUTTON.CONTINUE' | translate }}
+        </button>
       </div>
 
     </form>

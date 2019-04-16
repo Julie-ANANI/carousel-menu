@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { User } from '../../../models/user.model';
-import { first, takeUntil } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserService } from '../../../services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MouseService } from '../../../services/mouse/mouse.service';
-import { Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie';
+import { initTranslation } from '../../../i18n/i18n';
 
 @Component({
   selector: 'app-header-unauth',
@@ -17,7 +18,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./header-unauth.component.scss']
 })
 
-export class HeaderUnauthComponent implements OnInit, OnDestroy {
+export class HeaderUnauthComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
@@ -25,38 +26,70 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
 
   private _formData: FormGroup;
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
+  private _currentLang: string;
 
-  constructor(private translateNotificationsService: TranslateNotificationsService,
-              private authService: AuthService,
-              private userService: UserService,
+  private _flag: string;
+
+  private _modalSignIn: boolean = false;
+
+  constructor(private _translateNotificationsService: TranslateNotificationsService,
+              private _authService: AuthService,
+              private _userService: UserService,
               private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private mouseService: MouseService,
-              private formBuilder: FormBuilder) {
+              private _activatedRoute: ActivatedRoute,
+              private _formBuilder: FormBuilder,
+              private _translateService: TranslateService,
+              private _cookieService: CookieService) {
 
-    this.mouseService.getClickEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((event: Event) => {
-      if (event && event.target && event.target['id'] !== 'button-signIn' && event.target['id'] !== 'header-unauth-signInForm'
-        && event.target['parentNode']['id'] !== 'header-unauth-signInForm'
-        && event.target['parentNode']['offsetParent']
-        && event.target['parentNode']['offsetParent']['id'] !== 'header-unauth-signInForm') {
-        this._toggleSignInForm = false;
-        this._formData.reset();
-      }
-    });
-
+    initTranslation(this._translateService);
+    this._currentLang = this._translateService.currentLang;
+    this._setFlag();
   }
 
   ngOnInit() {
-    this.buildForm();
+    this._buildForm();
   }
 
 
-  private buildForm() {
-    this._formData = this.formBuilder.group({
+  private _buildForm() {
+    this._formData = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+  }
+
+
+  private _setFlag() {
+    this._flag = this._currentLang === 'en' ? 'US' : 'FR';
+  }
+
+
+  /***
+   * set the lang as current lang.
+   * @param lang
+   */
+  public setLang(lang: string) {
+
+    if (lang === 'fr') {
+      this._propagateTranslation(lang);
+      this._currentLang = lang;
+    } else {
+      this._propagateTranslation(lang);
+      this._currentLang = lang;
+    }
+
+    this._setFlag();
+
+  }
+
+
+  /***
+   * Setting the lang and the cookie.
+   * @param {string} lang
+   */
+  private _propagateTranslation(lang: string) {
+    this._cookieService.put('user_lang', lang || 'en');
+    this._translateService.use(lang || 'en');
   }
 
 
@@ -65,9 +98,9 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
    * it will open the form wrapper.
    * @param event
    */
-  onClickSignIn(event: Event) {
+  public onClickSignIn(event: Event) {
     event.preventDefault();
-    this._toggleSignInForm = !this._toggleSignInForm;
+    this._modalSignIn = true;
   }
 
 
@@ -75,21 +108,21 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
    * this function is called when the user clicks on the continue buttion in the
    * sign in form wrapper and redirect the user according to the requested page.
    */
-  onClickContinue() {
+  public onClickContinue() {
     if (this._formData.valid) {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this.authService.login(user).pipe(first()).subscribe(() => {
-        this.checkUrlToRedirect();
+      this._authService.login(user).pipe(first()).subscribe(() => {
+        this._checkUrlToRedirect();
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
       });
 
     } else {
       if (this._formData.untouched && this._formData.pristine) {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
     }
   }
@@ -98,12 +131,12 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
   /***
    * this function is to check url to redirect the user.
    */
-  private checkUrlToRedirect() {
+  private _checkUrlToRedirect() {
     const url = this.router.url;
 
     if (url.includes('/share/synthesis')) {
       this.router.navigate([url.replace('/share', '/user')], {
-        queryParams: this.activatedRoute.snapshot.queryParams
+        queryParams: this._activatedRoute.snapshot.queryParams
       });
     }
   }
@@ -114,7 +147,7 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
    * fill the details to register in the framework.
    * @param event
    */
-  onClickSignUp(event: Event) {
+  public onClickSignUp(event: Event) {
     event.preventDefault();
 
     this._sidebarValue = {
@@ -130,32 +163,38 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
    * this function is to register the new client.
    * @param formValue
    */
-  createUser(formValue: FormGroup) {
+  public createUser(formValue: FormGroup) {
     if (formValue.valid) {
       const user = new User(formValue.value);
       user.domain = environment.domain;
 
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       } else {
-        this.userService.create(user).pipe(first()).subscribe(() => {
-          this.authService.login(user).pipe(first()).subscribe(() => {
+        this._userService.create(user).pipe(first()).subscribe(() => {
+          this._authService.login(user).pipe(first()).subscribe(() => {
             this.router.navigate(['/welcome']);
           }, () => {
-            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
           });
         }, () => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
+          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
         });
       }
 
     } else {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
 
-  getLogo(): string {
+
+  public getLogo(): string {
     return environment.logoURL;
+  }
+
+
+  public getCompany(): string {
+    return environment.companyShortName;
   }
 
   get sidebarValue(): SidebarInterface {
@@ -174,9 +213,20 @@ export class HeaderUnauthComponent implements OnInit, OnDestroy {
     return this._formData;
   }
 
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
+  get currentLang(): string {
+    return this._currentLang;
+  }
+
+  get flag(): string {
+    return this._flag;
+  }
+
+  get modalSignIn(): boolean {
+    return this._modalSignIn;
+  }
+
+  set modalSignIn(value: boolean) {
+    this._modalSignIn = value;
   }
 
 }

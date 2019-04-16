@@ -1,9 +1,8 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#showcase-innovations-component {
-  flex-direction: column;
-  justify-content: space-between;
+#showcase-clients-component {
   height: 100%;
+  flex-direction: column;
 
   .icon {
     right: 0;
@@ -37,6 +36,10 @@
   margin-right: -$unit-5;
 
   .card {
+    margin-bottom: $unit-5;
+    margin-right: $unit-5;
+    flex: 1 0 100px;
+    max-width: calc(17% - 1rem);
     border: none;
 
     &:hover {
@@ -44,6 +47,7 @@
     }
 
     .card-header {
+      padding-top: 0;
       padding-bottom: 0;
 
       .card-title {
@@ -55,17 +59,7 @@
   }
 
   .modal-card {
-    flex: 0 1 158px;
-    margin-right: $unit-5;
-    margin-bottom: $unit-5;
-
-    .card-image {
-      padding-top: 0;
-    }
-
-    .card-header .card-title {
-      font-size: 0.5rem;
-    }
+    border: $border-width-lg solid $border-color;
 
     label {
       top: 0;
