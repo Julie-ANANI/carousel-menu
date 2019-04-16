@@ -58,7 +58,7 @@
     <!-- /user innovation cards -->
 
     <!-- tags section -->
-    <ng-container *ngIf="allTags.length > 0">
+    <ng-container *ngIf="sectorTags.length > 0">
       <div class="section-tags">
 
         <!-- heading -->
@@ -71,7 +71,7 @@
 
         <!-- tags -->
         <div class="tags-wrapper" @tagAnimation>
-          <div *ngFor="let tag of allTags | slice:0:moreTagsIndex;" class="tag-content">
+          <div *ngFor="let tag of sectorTags | slice:0:moreTagsIndex;" class="tag-content">
             <div [ngClass]="{ 'active': getCheckedFilter(tag._id) }" class="label label-draft">
               <label>
                 <input
@@ -81,16 +81,16 @@
                   [value]="tag.label | multiling:browserLang()"
                   (change)="toggleFilter($event, tag)"
                   [checked]="getCheckedFilter(tag._id)">
-                {{ tag?.label | multiling:browserLang() | FormatText }}
+                {{ tag?.label | multiling:userLang | FormatText }}
               </label>
             </div>
           </div>
         </div>
 
         <!-- more tag label -->
-        <div class="more-tag-wrapper" [ngStyle]="{ 'display': allTags.length > 22 ? 'flex' : 'none' }">
+        <div class="more-tag-wrapper" [ngStyle]="{ 'display': sectorTags.length > 22 ? 'flex' : 'none' }">
         <span
-          [ngStyle]="{ 'visibility': allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
+          [ngStyle]="{ 'visibility': sectorTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
           class="text-link"
           (click)="onClickMore($event)">
           {{ 'DISCOVER.SEE_MORE' | translate }}
@@ -128,7 +128,7 @@
                   [value]="suggested_tag.label | multiling:browserLang()"
                   (change)="toggleSimilarFilter($event, suggested_tag)"
                   [checked]="getCheckedSimilarFilter(suggested_tag._id)">
-                {{ suggested_tag?.label | multiling:browserLang() | FormatText }}
+                {{ suggested_tag?.label | multiling:userLang | FormatText }}
               </label>
             </div>
           </div>

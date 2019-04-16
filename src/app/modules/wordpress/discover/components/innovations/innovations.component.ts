@@ -151,7 +151,7 @@ export class InnovationsComponent implements OnInit {
 
   /***
    * this function searches for the tags of type sector and push them to the attribute
-   * allTags.
+   * sectorTags.
    */
   private getAllTags() {
 
@@ -433,7 +433,7 @@ export class InnovationsComponent implements OnInit {
 
 
   /***
-   * this function checks the length of the allTags and according to that display the tags
+   * this function checks the length of the sectorTags and according to that display the tags
    * when click on See more sectors.
    * @param event
    */

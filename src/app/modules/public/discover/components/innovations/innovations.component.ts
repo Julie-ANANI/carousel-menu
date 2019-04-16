@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
+import { animate, query, style, transition, trigger, stagger } from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
@@ -25,8 +25,8 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 
         query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
 
-        query('.tag-content', stagger('50ms', [
-          animate('.15s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        query('.tag-content', stagger('100ms', [
+          animate('.15s ease', style({ opacity: 1, transform: 'translateX(0)' })),
         ]), { optional: true }),
 
       ])
@@ -35,13 +35,10 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
     trigger('cardAnimation', [
       transition('* => *', [
 
-        query(':enter', style({ opacity: 0 }), { optional: true }),
+        query(':enter', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
 
-        query(':enter', stagger('50ms', [
-          animate('.5s ease-in-out', keyframes([
-              style({ opacity: 0, transform: 'translateX(15%)', offset: 0 }),
-              style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
-            ])
+        query(':enter', stagger('100ms', [
+          animate('.15s ease', style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 })
           )]
         ), { optional: true }),
 
@@ -67,7 +64,7 @@ export class InnovationsComponent implements OnInit {
 
   private _localResults: number; // hold the total number of innovations.
 
-  private _allTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
+  private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
   private _appliedFilters: Array<Tag> = []; // hold all the filters that are selected by the user.
 
@@ -77,7 +74,7 @@ export class InnovationsComponent implements OnInit {
 
   private _innovationTitles: Array<{text: string}> = []; // to store the innovation title to send to the search field.
 
-  private _paginationValue: PaginationInterface = {}; // to pass the value in the pagination component.
+  private _paginationValue: PaginationInterface = { limit: 50, offset: this._config.offset }; // to pass the value in the pagination component.
 
   private _startingIndex: number; // starting index of the innovation.
 
@@ -97,7 +94,11 @@ export class InnovationsComponent implements OnInit {
 
   private _userSuggestedInnovations: Array<Innovation> = [];
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+  userLang = '';
+
+  highlightSectorTags: Array<Tag> = [];
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _tagsService: TagsService,
               private _translateService: TranslateService,
@@ -107,17 +108,8 @@ export class InnovationsComponent implements OnInit {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
 
-  }
-
-  ngOnInit() {
-    this._paginationValue = { limit: 50, offset: this._config.offset };
-    this._checkStoredFilters();
     this._totalInnovations = this._activatedRoute.snapshot.data.innovations;
     this._totalResults = this._totalInnovations.length;
-    this._getTitles();
-    this._getAllTags();
-    this._checkSharedResult();
-    this._initialize();
 
     this._activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
@@ -125,36 +117,41 @@ export class InnovationsComponent implements OnInit {
       }
     });
 
+    this.userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
+
+    this._translateService.onLangChange.subscribe(() => {
+      this.userLang = this._translateService.currentLang;
+      this._reinitializeVariables();
+    });
+
+  }
+
+  ngOnInit() {
+    this._getAllSectorTags();
+    this._checkStoredFilters();
+    this._getTitles();
+    this._checkSharedResult();
+    this._initialize();
   }
 
 
-  /***
-   * this function checks do we have any filters stored in session storage.
-   */
-  private _checkStoredFilters() {
-    if (isPlatformBrowser(this.platformId)) {
-      const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
-      if (sessionValues.length > 0) {
-        this._appliedFilters = sessionValues;
-      } else {
-        this._appliedFilters = [];
-      }
-    }
+  private _reinitializeVariables() {
+    this._sortTags();
   }
 
 
   /***
    * this function searches for the tags of type sector and push them to the attribute
-   * allTags.
+   * sectorTags.
    */
-  private _getAllTags() {
+  private _getAllSectorTags() {
 
     this._totalInnovations.forEach((innovation) => {
       innovation.tags.forEach((tag: Tag) => {
         if (tag.type === 'SECTOR') {
-          const index = this._allTags.findIndex((item: Tag) => item._id === tag._id);
-          if (index === -1) {
-            this._allTags.push(tag);
+          const find = this._sectorTags.find((item: Tag) => item._id === tag._id);
+          if (!find) {
+            this._sectorTags.push(tag);
           }
         }
       });
@@ -165,11 +162,15 @@ export class InnovationsComponent implements OnInit {
   }
 
 
+  /***
+   * this function is to sort the tag based on the user lang.
+   * @private
+   */
   private _sortTags() {
-    this._allTags = this._allTags.sort((a: Tag, b: Tag) => {
+    this._sectorTags = this._sectorTags.sort((a: Tag, b: Tag) => {
 
-      const labelA = MultilingPipe.prototype.transform(a.label, this.browserLang()).toLowerCase();
-      const labelB =  MultilingPipe.prototype.transform(b.label, this.browserLang()).toLowerCase();
+      const labelA = MultilingPipe.prototype.transform(a.label, this.userLang).toLowerCase();
+      const labelB =  MultilingPipe.prototype.transform(b.label, this.userLang).toLowerCase();
 
       if ( labelA > labelB) {
         return 1;
@@ -186,9 +187,25 @@ export class InnovationsComponent implements OnInit {
   }
 
 
-  public browserLang(): string {
-    return this._translateService.getBrowserLang() || 'en';
+  /***
+   * this function checks do we have any filters stored in session storage.
+   */
+  private _checkStoredFilters() {
+    if (isPlatformBrowser(this._platformId)) {
+      const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
+      if (sessionValues.length > 0) {
+        this._appliedFilters = sessionValues;
+      } else {
+        this._appliedFilters = [];
+      }
+    }
   }
+
+
+
+
+
+
 
 
   /***
@@ -199,20 +216,20 @@ export class InnovationsComponent implements OnInit {
       if (params['tag']) {
         this._appliedFilters = [];
         if (typeof params['tag'] === 'string') {
-          const index = this._allTags.findIndex((tag: Tag) => tag._id === params['tag']);
+          const index = this._sectorTags.findIndex((tag: Tag) => tag._id === params['tag']);
           if (index !== -1) {
             const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === params['tag']);
             if (existTagIndex === -1) {
-              this._appliedFilters.push(this._allTags[index]);
+              this._appliedFilters.push(this._sectorTags[index]);
             }
           }
         } else {
           params['tag'].forEach((tagId: string) => {
-            const index = this._allTags.findIndex((tag: Tag) => tag._id === tagId);
+            const index = this._sectorTags.findIndex((tag: Tag) => tag._id === tagId);
             if (index !== -1) {
               const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === tagId);
               if (existTagIndex === -1) {
-                this._appliedFilters.push(this._allTags[index]);
+                this._appliedFilters.push(this._sectorTags[index]);
               }
             }
           });
@@ -420,22 +437,22 @@ export class InnovationsComponent implements OnInit {
    * this function stores the appliedFilters in the session storage.
    */
   private _storeFilters() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       sessionStorage.setItem('discover-filters', JSON.stringify(this._appliedFilters));
     }
   }
 
 
   /***
-   * this function checks the length of the allTags and according to that display the tags
+   * this function checks the length of the sectorTags and according to that display the tags
    * when click on See more sectors.
    * @param event
    */
   public onClickMore(event: Event) {
     event.preventDefault();
 
-    if (this._moreTagsIndex < this._allTags.length) {
-      const diff = this._allTags.length - this._moreTagsIndex;
+    if (this._moreTagsIndex < this._sectorTags.length) {
+      const diff = this._sectorTags.length - this._moreTagsIndex;
       if (diff >= 22) {
         this._moreTagsIndex += 22;
       } else {
@@ -615,7 +632,7 @@ export class InnovationsComponent implements OnInit {
    * @param paginationValues
    */
   public onChangePagination(paginationValues: PaginationInterface) {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       window.scroll(0, 0);
 
       const tempOffset = parseInt(paginationValues.offset, 10);
@@ -665,6 +682,11 @@ export class InnovationsComponent implements OnInit {
     });
   }
 
+
+  public browserLang(): string {
+    return this._translateService.getBrowserLang();
+  }
+
   get config() {
     return this._config;
   }
@@ -681,8 +703,8 @@ export class InnovationsComponent implements OnInit {
     return this._localResults;
   }
 
-  get allTags(): Array<Tag> {
-    return this._allTags;
+  get sectorTags(): Array<Tag> {
+    return this._sectorTags;
   }
 
   get appliedFilters(): Array<Tag> {
