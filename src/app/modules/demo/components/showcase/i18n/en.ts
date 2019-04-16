@@ -1,22 +1,20 @@
 export const SHOWCASE = {
 
+  'NO_TAGS': 'Choose sectors to create your own Showcase.',
   'MODIFY': 'Modify',
-  'PROFESSIONALS': 'answers',
-  'INNOVATIONS': 'tested projects',
-  'COUNTRIES': 'countries targeted',
+  'SEE_MORE': 'See more',
+
+  'PROFESSIONALS_TITLE': 'Contributors',
+  'PROFESSIONALS': 'respondents',
+  'INNOVATIONS_TITLE': 'Market Tests',
+  'INNOVATIONS': 'projects tested',
+  'COUNTRIES_TITLE': 'Targeted',
+  'COUNTRIES': 'countries surveyed',
+  'CLIENTS_TITLE': 'Clients',
   'CLIENTS': 'companies tested their market',
 
   'SECTORS_MODAL': {
-    'TITLE': 'Sectors choice',
-    'BUTTON': 'Add sector'
-  },
-
-  'INNOVATIONS_MODAL': {
-    'TITLE': 'Innovations'
-  },
-
-  'ANSWERS_MODAL': {
-    'TITLE': 'Answers'
+    'TITLE': 'Select Sector'
   },
 
 };

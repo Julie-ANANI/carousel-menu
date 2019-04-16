@@ -111,10 +111,6 @@ export class ShowcaseClientsComponent {
     this._modalShow = value;
   }
 
-  get selectedClients(): Array<string> {
-    return this._selectedClients;
-  }
-
   get totalClients(): Array<string> {
     return this._totalClients;
   }

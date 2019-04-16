@@ -11,10 +11,10 @@
   <div class="section-heading">
 
     <!-- heading 1st -->
-    <h2 class="text text-notify">Clients</h2>
+    <h2 class="text text-notify" [innerText]="'SHOWCASE.CLIENTS_TITLE'" translate></h2>
 
     <!-- heading count -->
-    <h3 class="text-normal">{{ totalClients.length }} <span> companies tested their market</span></h3>
+    <h3 class="text-normal">{{ totalClients.length }} <span [innerText]="'SHOWCASE.CLIENTS'" translate></span></h3>
 
   </div>
   <!-- /section heading -->
@@ -34,7 +34,7 @@
   <!-- section see more -->
   <ng-container *ngIf="topClients.length > 6">
     <div class="text-right section-light-pad rm-pad-bottom">
-      <span class="text-link" (click)="openModal($event)">See More</span>
+      <span class="text-link" (click)="openModal($event)" [innerText]="'SHOWCASE.SEE_MORE'" translate></span>
     </div>
   </ng-container>
 
@@ -67,8 +67,8 @@
 
   <ng-container *ngIf="adminPass">
     <div class="modal-footer">
-      <button class="btn btn-sm btn-cancel">Cancel</button>
-      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
+      <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
     </div>
   </ng-container>
 
