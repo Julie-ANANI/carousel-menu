@@ -35,8 +35,8 @@
 
               <!-- if image -->
               <ng-container *ngIf="media?.type === 'PHOTO'">
-                <figure>
-                  <img [src]="getSrc(media)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate">
+                <figure class="img-overlay">
+                  <img [src]="getSrc(media)" [alt]=" " width="280" height="177" class="img-responsive img-fit-cover">
                 </figure>
               </ng-container>
 
@@ -115,13 +115,13 @@
               <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
 
                 <!-- card image -->
-                <figure>
+                <div class="card-image">
                   <a [href]="[getLink(innovation.innovationCard)]">
-                    <div class="card-image">
-                      <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]=" ">
-                    </div>
+                    <figure class="img-overlay">
+                      <img [src]="getRelatedSrc(innovation.innovationCard)" alt=" " width="280" height="177">
+                    </figure>
                   </a>
-                </figure>
+                </div>
 
                 <!-- card header -->
                 <div class="card-header">

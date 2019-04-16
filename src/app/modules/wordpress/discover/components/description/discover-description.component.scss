@@ -67,6 +67,11 @@
 
     .media-wrapper {
       margin: 0.5rem 0.5rem 1.5rem;
+
+      img {
+        height: 177px;
+      }
+
     }
 
   }
@@ -161,10 +166,15 @@
 
     .card-wrapper {
       justify-content: center;
+      margin-left: -$unit-2;
+      margin-right: -$unit-2;
 
       .card {
         flex: 0 1 310px;
+        max-width: 310px;
         padding: $unit-2;
+        margin-left: $unit-2;
+        margin-right: $unit-2;
         border: none;
 
         .card-header {
@@ -195,10 +205,6 @@
 
         }
 
-        &:hover {
-          box-shadow: none;
-        }
-
       }
 
     }
@@ -215,6 +221,12 @@
 
       .card-wrapper {
         flex-direction: column;
+
+        .card {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+
       }
 
     }
