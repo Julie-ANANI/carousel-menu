@@ -1,0 +1,148 @@
+@import "../../../../../style/framework/src/variables";
+
+#showcase-component {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+
+  .mar {
+    margin-top: 5px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    .title-primary {
+      color: #3E5164;
+      font-size: 2.3rem;
+      font-family: $font-family-oswald;
+      margin-bottom: 0;
+      margin-right: $unit-2;
+    }
+
+    .text-link {
+      font-size: $font-size-md;
+      margin-bottom: 8px;
+    }
+
+  }
+
+  .hr-main {
+    border-color: $primary-color;
+    border-width: 2px;
+    width: 140px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-wrapper {
+    align-items: stretch;
+
+    .answer-wrapper, .innovation-wrapper, .map-wrapper, .client-wrapper {
+      background-color: $bg-color-light;
+      border-radius: 8px;
+      padding: 2.5rem;
+      animation-name: fadeIn;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+    }
+
+    .answer-wrapper {
+      flex: 1;
+      max-width: 400px;
+      margin-right: 1.25rem;
+    }
+
+    .innovation-wrapper {
+      flex: 2;
+      max-width: 800px;
+    }
+
+    .map-wrapper, .client-wrapper {
+      flex: 1;
+      max-width: 1225px;
+    }
+
+    .map-wrapper {
+
+      h2 {
+        margin-bottom: 0;
+      }
+
+      h3 {
+        font-family: $font-family-oswald;
+        color: $secondary-color;
+        font-size: 1.85rem;
+
+        span {
+          color: #3E5164;
+        }
+
+      }
+
+    }
+
+    .client-wrapper {
+      min-height: 220px;
+    }
+
+  }
+
+}
+
+.title-secondary {
+  margin-bottom: 0;
+  padding-bottom: $unit-1;
+}
+
+.selected-wrapper {
+  margin-left: -$unit-2;
+
+  .label {
+    margin: $unit-2;
+    border-radius: $border-width-lg;
+  }
+
+}
+
+.tags-wrapper {
+  flex-wrap: wrap;
+  margin-right: -$unit-5;
+  margin-bottom: -$unit-2;
+
+  .card {
+    margin-top: $unit-2;
+    margin-bottom: $unit-2;
+    border: none;
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    .form-checkbox {
+      font-size: $font-size-sm;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-md) {
+
+  #showcase-component {
+
+    .section-wrapper {
+      flex-direction: column;
+
+      .answer-wrapper {
+        margin-right: 0 !important;
+        margin-bottom: 1.25rem;
+      }
+
+    }
+
+  }
+
+}

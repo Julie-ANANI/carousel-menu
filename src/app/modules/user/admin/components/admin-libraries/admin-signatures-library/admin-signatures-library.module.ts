@@ -8,7 +8,7 @@ import { AdminSignaturesLibraryComponent } from "./admin-signatures-library.comp
 
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { SidebarSignatureModule } from '../../../../../sidebar/components/sidebar-signature/sidebar-signature.module';
-import { ModalModule } from '../../../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
 
 
 @NgModule({

@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { AdvSearchService } from "../../../../services/advsearch/advsearch.service";
 import { Router } from '@angular/router';
 import { ListConfigurations } from "./list-configurations";
+import { InnovationService } from "../../../../services/innovation/innovation.service";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -18,6 +19,9 @@ export interface SelectedProfessional extends Professional {
 
 export class SharedAmbassadorListComponent {
 
+  @Output('callbackNotification')
+  callbackNotification = new EventEmitter<any>();
+
   @Input() set config(value: any) {
     this.loadPros(value);
   }
@@ -26,11 +30,24 @@ export class SharedAmbassadorListComponent {
     switch(value) {
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
+        this._actions = ['Add to the project'];
         break;
       case('default'):
       default:
         this._tableInfos = ListConfigurations.getByDefaultConfig();
     }
+  }
+
+  /**
+   * The context is a set of variables not directly related to the data in the table
+   * but that can help find other information to operate with. For example, what's the
+   * innovation or the campaign where the professionals will be added.
+   * Of course, the context can be null, in which case the operation will be performed
+   * at the whole collection scope.
+   * @param value
+   */
+  @Input() set context(value: any) {
+    this._context = value;
   }
 
   @Output() selectedProsChange = new EventEmitter<any>();
@@ -43,7 +60,7 @@ export class SharedAmbassadorListComponent {
 
   private _tableInfos: any = null;
 
-  //private _actions: string[] = [];
+  private _actions: string[] = [];
 
   private _total = 0;
 
@@ -53,13 +70,13 @@ export class SharedAmbassadorListComponent {
 
   private _currentPro: Professional = null;
 
-  isProfessionalForm = false;
-
-  isTagsForm = false;
-
   private _modalDelete = false;
 
+  private _context: any = null;
+
+
   constructor(private _advSearchService: AdvSearchService,
+              private _innovationService: InnovationService,
               private route: Router) { }
 
   loadPros(config: any): void {
@@ -75,6 +92,11 @@ export class SharedAmbassadorListComponent {
         this._pros = pros.result;
         this._pros.forEach(pro => {
           pro.sent = pro.messages && pro.messages.length > 0;
+          if(pro['innovations'] && !!pro['innovations'].find( inno => { return this._context['innovationId'] === inno._id;} ) ) {
+            pro['self'] = 'true';
+          } else {
+            pro['self'] = 'false';
+          }
         });
 
         this._total = pros._metadata.totalCount;
@@ -133,8 +155,59 @@ export class SharedAmbassadorListComponent {
     return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
 
-
   performActions(action: any) {
+    switch (this._actions.findIndex(value => action._action === value)) {
+      case 0:
+        // This is the add to the project case: the idea is to add the selected pros to the active project
+        // If one or more professionals already belong to the project, just add the remaining ones.
+        // We need to verify in the back whether a "Kate" campaign exists, otherwise we need to create one and
+        // get the id...
+        const pros = action._rows.map(pro => { return {_id: pro._id.toString()}; });
+        const innovationId = this._context ? this._context.innovationId : null;
+        const resultObj = {
+          origin: "AMBASSADOR-ADD"
+        };
+        if(innovationId) {
+          this._innovationService.addProsFromCommunity(pros, innovationId).pipe(first())
+            .subscribe(result => {
+              // Verify the result
+              if(!!result) {
+                // Notify the parent
+                // Close the sidebar (let the parent do that!)
+                // Notify the client
+                resultObj['result'] = {status:'success', value: result};
+              } else {
+                // Inform the parent and close the sidebar
+                resultObj['result'] = {status:'error', message: "Empty result!"};
+              }
+              this.callbackNotification.emit(resultObj);
+            }, err => {
+              // Inform the parent and close the sidebar
+              console.error(err);
+              resultObj['result'] = {status:'error', message: JSON.stringify(err)};
+              this.callbackNotification.emit(resultObj);
+            });
+        } else {
+          //Silently fail
+          console.error("Innovation id cannot be null");
+          // Inform the parent and close the sidebar
+          resultObj['result'] = {status:'error', message: "Innovation id cannot be null"};
+          this.callbackNotification.emit(resultObj);
+        }
+        break;
+      case 1:
+          /*if(action._rows.length) {
+            if(action._rows.length > 1) {
+              console.log("Look man, I could do this action just for the first one...");
+            }
+            const link = `/user/admin/community/members/${action._rows[0]._id}`;
+            this.router.navigate([link]);
+          } else {
+            console.error("What? empty rows? How did you do that?");
+          }*/
+          console.log(action);
+        break;
+    }
   }
 
 

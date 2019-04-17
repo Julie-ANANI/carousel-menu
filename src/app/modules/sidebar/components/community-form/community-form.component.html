@@ -12,8 +12,10 @@
               </div>
               <div *ngIf="!!config">
                   <app-shared-ambassadors-list
+                          (callbackNotification)="callbackNotification($event)"
                           [listType]="'suggestions'"
-                          [config]="config">
+                          [config]="config"
+                          [context]="context">
                   </app-shared-ambassadors-list>
               </div>
           </ng-container>

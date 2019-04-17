@@ -21,7 +21,7 @@
     <!-- /section search bar -->
 
     <!-- section showing video when no search -->
-    <ng-container *ngIf="noResult">
+    <ng-container *ngIf="!searchStarted && !searchStopped">
       <section class="section-pad rm-pad-bottom" [ngClass]="{ 'animate-disappear': searchStarted }">
         <video class="video-responsive" autoplay loop>
           <source src="https://res.cloudinary.com/umi/video/upload/v1554473766/app/videos/search-tool/demo.mp4" type="video/mp4">
@@ -31,11 +31,11 @@
     <!-- /section showing video when no search -->
 
     <!-- section to show result -->
-    <ng-container *ngIf="!noResult">
-      <section [ngClass]="{ 'animate-appear': searchContinue }">
+    <ng-container>
+      <section [ngClass]="{ 'animate-appear': searchStarted }">
 
         <!-- metadata display -->
-        <ng-container *ngIf="searchResult.metadata">
+        <ng-container *ngIf="professionalCount">
           <div class="text-center">
 
             <h2 class="title-secondary text-background">
@@ -51,7 +51,7 @@
         <!-- /metadata display -->
 
         <!-- when searching for professionals -->
-        <ng-container *ngIf="!searchStopped && searchContinue">
+        <ng-container *ngIf="!searchStopped && searchStarted">
           <video class="video-responsive video-machine" autoplay loop>
             <source src="https://res.cloudinary.com/umi/video/upload/v1554473159/app/videos/search-tool/machine-search.mp4" type="video/mp4">
           </video>

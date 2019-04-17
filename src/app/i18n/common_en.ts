@@ -176,7 +176,7 @@ export const COMMON = {
     'SUBMIT': 'Submit',
     'SIGN_IN': 'Sign In',
     'SIGN_UP': 'Sign Up',
-    'DELETE': 'Delete'
+    'DELETE': 'Delete',
   },
 
   'TABLE' : {
@@ -280,10 +280,6 @@ export const COMMON = {
     'BY_DOMAIN': 'Domain',
     'BY_CREATION_DATE': 'Date',
     'BY_UPDATE_DATE': 'Default'
-  },
-
-  'HEADER': {
-    'SHARED_REPORTS': 'Shared reports'
   },
 
   'MAIL_EDITOR': {

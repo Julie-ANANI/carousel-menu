@@ -21,7 +21,7 @@ import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
 import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
 import { TagsService } from '../../../services/tags/tags.service';
-import { ModalModule } from '../../utility-components/modal/modal.module';
+import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 
 
 @NgModule({

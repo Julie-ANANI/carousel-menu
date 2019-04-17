@@ -7,23 +7,22 @@
     font-weight: $font-weight-normal;
     font-size: 2rem;
     margin-top: 0.5rem;
-    font-family: Oswald, sans-serif;
+    font-family: $font-family-oswald;
     margin-bottom: $unit-h;
   }
 
   .summary-wrapper, .issue-wrapper, .solution-wrapper {
     padding-top: $unit-5;
-    color: $background-color;
+    color: $text-background-color;
     font-size: $font-size-md;
     font-weight: $font-weight-normal;
-    margin-bottom: 0;
+    margin-bottom: -$unit-2;
   }
 
   .section-header {
     padding-bottom: 1.5rem;
 
     a {
-      display: flex;
       align-items: center;
 
       .fa-angle-left {
@@ -34,7 +33,6 @@
 
       .text-link {
         color: #777777;
-        font-weight: $font-weight-normal;
 
         &:hover, &:focus {
           color: $primary-color;
@@ -49,42 +47,26 @@
       margin-bottom: 0;
     }
 
-    .summary-wrapper {
-      padding-top: 0.5rem;
+    .label.label-tag {
+      margin: 0;
+      padding-left: 0;
+      padding-top: 0;
+      background-color: $bg-color-light;
+      font-size: 0.65rem;
     }
 
-  }
-
-  .text.text-notify {
-    display: inline-flex;
-    color: #777777;
-    font-weight: $font-weight-normal;
-    align-items: center;
-    font-size: $font-size-xs;
-    margin-right: 0.75rem;
-    margin-bottom: $unit-4;
-    margin-top: $unit-4;
-
-    i {
-      margin-right: $unit-h;
-      font-size: 0.5rem;
+    .summary-wrapper {
+      padding-top: 0.5rem;
+      margin-bottom: -$unit-2;
     }
 
   }
 
   .section-images {
-    display: flex;
-    justify-content: center;
     flex-wrap: wrap;
 
     .media-wrapper {
-      display: inline-flex;
-      margin: 0.5rem $unit-5 1.5rem;
-
-      img:hover {
-        cursor: pointer;
-      }
-
+      margin: 0.5rem 0.5rem 1.5rem;
     }
 
   }
@@ -111,14 +93,12 @@
   .section-share {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    border-top: $border-width solid #f1f1f1;
-    border-bottom: $border-width solid #f1f1f1;
+    border-top: $border-width solid $border-light-color;
+    border-bottom: $border-width solid $border-light-color;
 
     .button-wrapper {
-      text-align: center;
 
       .btn {
-        border-radius: 25px;
         margin: 0.5rem;
       }
 
@@ -126,11 +106,10 @@
 
     .share-wrapper {
       margin-top: 0.75rem;
-      text-align: center;
 
       .title-secondary {
         font-size: $font-size-sm;
-        color: $background-color;
+        color: $text-background-color;
       }
 
       .btn-round {
@@ -151,13 +130,13 @@
       }
 
       .btn-mail {
-        background-color: $background-color;
-        border-color: $background-color;
+        background-color: $text-background-color;
+        border-color: $text-background-color;
       }
 
       .btn-linkedin:hover, .btn-linkedin:focus, .btn-twitter:hover, .btn-twitter:focus, .btn-mail:hover, .btn-mail:focus {
         box-shadow: $box-shadow-hover;
-        color: white;
+        color: $light-color;
       }
 
     }
@@ -168,11 +147,8 @@
     padding-top: 1.5rem;
 
     .text-note {
-      display: flex;
-      align-items: center;
-      font-family: Oswald, sans-serif;
+      font-family: $font-family-oswald;
       font-size: $font-size-sm;
-      color: $background-color;
       padding-bottom: 0.75rem;
 
       .fa-angle-right {
@@ -185,39 +161,42 @@
 
     .card-wrapper {
       justify-content: center;
-      margin-left: -$unit-5;
-      margin-right: -$unit-5;
-      margin-bottom: -1.5rem;
 
       .card {
-        flex: 0 1 280px;
+        flex: 0 1 310px;
         padding: $unit-2;
-        margin-left: $unit-5;
-        margin-right: $unit-5;
-        border-color: transparent;
+        border: none;
 
         .card-header {
+          padding-bottom: 0;
+
+          a:hover {
+            transition: all 0.3s ease;
+            color: $primary-color;
+          }
 
           h6 {
             margin-bottom: 0;
-            font-size: $font-size-md;
-          }
-
-          a:hover {
-            color: $text-primary-color;
+            font-size: 0.75rem;
           }
 
           .tag-wrapper {
             flex-wrap: wrap;
 
-            .text.text-notify {
-              padding-top: $unit-1;
-              padding-right: $unit-2;
+            .label.label-tag {
               margin: 0;
+              padding-left: 0;
+              padding-top: 0;
+              background-color: $bg-color-light;
+              font-size: 0.65rem;
             }
 
           }
 
+        }
+
+        &:hover {
+          box-shadow: none;
         }
 
       }
@@ -236,14 +215,6 @@
 
       .card-wrapper {
         flex-direction: column;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-
-        .card {
-          margin-right: auto !important;
-          margin-left: auto !important;
-        }
-
       }
 
     }
@@ -252,16 +223,3 @@
 
 }
 
-
-@media (max-width: $size-xs) {
-
-  #discover-description-component {
-
-    .section-images .media-wrapper {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-
-  }
-
-}

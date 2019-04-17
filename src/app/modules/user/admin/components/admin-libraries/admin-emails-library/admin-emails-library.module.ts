@@ -8,7 +8,7 @@ import { AdminEmailsLibraryComponent } from "./admin-emails-library.component";
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
 import { SidebarWorkflowFormModule } from '../../../../../sidebar/components/workflow-form/sidebar-workflow-form.module';
-import { ModalModule } from '../../../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
 import { MessageSpaceModule } from '../../../../../utility-components/message-space/message-space.module';
 
 @NgModule({

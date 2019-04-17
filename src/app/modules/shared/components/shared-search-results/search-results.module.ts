@@ -9,7 +9,7 @@ import { SharedProsListModule } from '../shared-pros-list/shared-pros-list.modul
 import { SharedProsListOldModule } from '../shared-pros-list-old/shared-pros-list-old.module';
 import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { ModalModule } from "../../../utility-components/modal/modal.module";
+import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 
 @NgModule({
   imports: [

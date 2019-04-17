@@ -28,6 +28,7 @@
               <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">
                 <span>{{ campaign.title }}</span>
               </a>
+              <span *ngIf="campaign.type === 'COMMUNITY'" class="label label-success">{{campaign.type}}</span>
               <span *ngIf="getAuthorizationLevel(2)" class="text-link" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
               <p class="text text-notify">
                 {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
@@ -37,11 +38,11 @@
                 {{ campaign.status | FormatText }} {{ 'CAMPAIGNS.STATUS' | translate }}
                 <ng-container *ngIf="getAuthorizationLevel(2)">
                   |
-                  <span class="text-link" (click)="OnClickUpdateStatus($event, campaign)">{{ 'CAMPAIGNS.UPDATE_BUTTON' | translate }}</span>
+                  <span class="text-link" (click)="onClickUpdateStatus($event, campaign)">{{ 'CAMPAIGNS.UPDATE_BUTTON' | translate }}</span>
                   <!--|
                   <span class="text text-notify clone">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>-->
                   |
-                  <span (click)="OnClickDelete($event, campaign)" class="icon icon-delete tooltip" data-tooltip="Delete Campaign">
+                  <span (click)="onClickDelete($event, campaign)" class="icon icon-delete tooltip" data-tooltip="Delete Campaign">
                     <i class="fas fa-trash-alt"></i>
                   </span>
                 </ng-container>

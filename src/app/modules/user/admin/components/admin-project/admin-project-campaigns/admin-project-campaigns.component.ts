@@ -133,7 +133,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
   }
 
 
-  OnClickUpdateStatus(event: Event, campaign: Campaign) {
+  onClickUpdateStatus(event: Event, campaign: Campaign) {
     event.preventDefault();
 
     this.campaignService.updateStats(campaign._id).pipe(first()).subscribe((stats: any) => {
@@ -146,7 +146,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
   };
 
 
-  OnClickDelete(event: Event, campaign: Campaign) {
+  onClickDelete(event: Event, campaign: Campaign) {
     event.preventDefault();
     this._selectCampaign = campaign;
     this._activateModal = true;

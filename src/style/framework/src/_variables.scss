@@ -6,7 +6,6 @@ $disabled-color: #DBDBDB !default;
 $meta-color: #97A4B1 !default;
 $dark-color: #333333 !default;
 $background-color: #4F5D6B !default;
-$border-color: #E0E0E0 !default;
 $hover-background-color: #FFF9EB !default;
 $light-color: #FFFFFF !default;
 $disabled-text-color: #A9A9A9 !default
@@ -22,9 +21,17 @@ $warning-color: #FFB300 !default;
 $body-bg-color: $light-color;
 $body-font-color: $dark-color;
 $link-color: $primary-color;
+
+
+// background variables
 $bg-color-light: $light-color !default;
 $bg-overlay-color: rgba(0,0,0,0.75) !default;
 $bg-dropdown-color: #F2F2F2 !default;
+
+
+//border variables
+$border-color: #E0E0E0 !default;
+$border-light-color: #f1f1f1 !default;
 $border-meta-color: $meta-color !default;
 
 
@@ -69,6 +76,7 @@ $box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37) !default;
 $box-shadow-umi: 0px 0px 25px 0px rgba(0,0,0,0.15) !default;
 $box-shadow-hover: 0 2px 8px 2px rgba(20,23,28,.15) !default;
 $box-shadow-hover-umi: 0px 0px 55px 0px rgba(0,0,0,0.31) !default;
+$box-shadow-dropdown: 0 4px 16px rgba(20,23,28,0.25) !default;
 
 
 // table variables
@@ -83,6 +91,7 @@ $table-tr-background-color: #FFFBF1 !default;
 $base-font-family: 'Open Sans', sans-serif, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
 $fallback-font-family: "Helvetica Neue", sans-serif !default;
 $body-font-family: $base-font-family, $fallback-font-family !default;
+$font-family-oswald: Oswald, sans-serif !default;
 
 
 // Unit sizes

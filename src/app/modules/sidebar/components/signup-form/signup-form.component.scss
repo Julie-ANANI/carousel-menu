@@ -1,7 +1,6 @@
 @import "../../../../../style/framework/src/variables";
 
 #signup-form-component {
-  padding-top: 1.25rem;
 
   .form-group {
     margin-bottom: $unit-5;
@@ -15,7 +14,16 @@
   }
 
   .signup-wrapper {
-    padding-top: 1.25rem;
+
+    .btn {
+      min-width: 150px;
+    }
+
+    .loading {
+      position: absolute;
+      left: 25px;
+    }
+
   }
 
 }
