@@ -120,17 +120,6 @@
                   </a>
                 </li>
 
-                <!-- account page -->
-                <li class="drop-item">
-                  <a
-                    [routerLink]="'/user/account'"
-                    routerLinkActive="active"
-                    (click)="onClickLink()"
-                    class="gtm-menu-my-account text-background">
-                    {{ 'HEADER.MY_ACCOUNT' | translate }}
-                  </a>
-                </li>
-
                 <!-- admin side -->
                 <li class="drop-item" *ngIf="!backOfficeValue && canShow(1)">
                   <a
@@ -150,6 +139,17 @@
                     (click)="toggleBackOfficeState(); onClickLink();"
                     class="text-background">
                     Client Side
+                  </a>
+                </li>
+
+                <!-- account page -->
+                <li class="drop-item">
+                  <a
+                    [routerLink]="'/user/account'"
+                    routerLinkActive="active"
+                    (click)="onClickLink()"
+                    class="gtm-menu-my-account text-background">
+                    {{ 'HEADER.MY_ACCOUNT' | translate }}
                   </a>
                 </li>
 
