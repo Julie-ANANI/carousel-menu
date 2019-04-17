@@ -32,7 +32,7 @@
 
 .section-community {
   padding-top: $unit-5;
-  background-color: $secondary-color;
+  background-image: $primary-gradient-color;
 
   .flex-between {
     min-height: 140px;
@@ -42,7 +42,7 @@
       margin-bottom: $unit-5;
 
       .fa-paper-plane {
-        color: $primary-color;
+        color: $light-color;
         font-size: 100px;
         margin-right: 2.5rem;
       }
@@ -51,7 +51,7 @@
         padding-right: 2.5rem;
         color: $light-color;
         font-family: $font-family-oswald;
-        font-size: 2rem;
+        font-size: 1.4rem;
       }
 
     }

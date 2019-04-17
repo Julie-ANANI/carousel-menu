@@ -52,9 +52,9 @@ export const DISCOVER = {
 
   'LEARN_MORE': 'En savoir plus',
 
-  'LATEST': 'Dernières nouvelles',
+  'LATEST': 'Récent',
 
-  'TRENDING': 'Tendances',
+  'TRENDING': 'Tendance',
 
   'BUTTON_COMMUNITY': 'Découvrir la communauté',
 
