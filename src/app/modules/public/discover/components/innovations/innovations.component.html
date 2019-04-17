@@ -9,7 +9,10 @@
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- section filter -->
-        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
+        <div class="section-light-pad rm-pad-bottom">
+          <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
+        </div>
+        <!-- /section filter -->
 
         <!-- section recommended innovations -->
         <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated">

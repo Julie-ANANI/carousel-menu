@@ -24,23 +24,23 @@ export class InnovationsComponent implements OnInit {
     sort: '{ "created": -1 }'
   };
 
-  private readonly _totalInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
+  private _totalInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
 
-  private readonly _recommendedInnovations: Array<Innovation> = [];
+  private _recommendedInnovations: Array<Innovation> = [];
 
   private _latestInnovations: Array<Innovation> = [];
 
   private _trendingInnovations: Array<Innovation> = [];
 
-  sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
+  private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
-  userLang = '';
+  private _userLang = '';
 
-  displayLoading: boolean = true;
+  private _displayLoading: boolean = true;
 
   selectedFilters: Array<Tag> = [];
 
-  userAuthenticated: boolean = false;
+  private _userAuthenticated: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -65,9 +65,9 @@ export class InnovationsComponent implements OnInit {
 
     this._getTrendingInnovations();
 
-    this.userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
+    this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
 
-    this.userAuthenticated = this._authService.isAuthenticated;
+    this._userAuthenticated = this._authService.isAuthenticated;
 
   }
 
@@ -117,14 +117,14 @@ export class InnovationsComponent implements OnInit {
    * sectorTags.
    */
   private _getAllSectorTags() {
-    this.sectorTags = [];
+    this._sectorTags = [];
 
     this._totalInnovations.forEach((innovation) => {
       innovation.tags.forEach((tag: Tag) => {
         if (tag.type === 'SECTOR') {
-          const find = this.sectorTags.find((item: Tag) => item._id === tag._id);
+          const find = this._sectorTags.find((item: Tag) => item._id === tag._id);
           if (!find) {
-            this.sectorTags.push(tag);
+            this._sectorTags.push(tag);
           }
         }
       });
@@ -147,7 +147,7 @@ export class InnovationsComponent implements OnInit {
 
   private _stopLoading() {
     setTimeout(() => {
-      this.displayLoading = false;
+      this._displayLoading = false;
     }, 500);
   }
 
@@ -158,7 +158,7 @@ export class InnovationsComponent implements OnInit {
 
 
   public getCommunityUrl(): string {
-    return this.userLang === 'fr' ? 'https://www.umi.us/fr/communaute/' : 'https://www.umi.us/community/';
+    return this._userLang === 'fr' ? 'https://www.umi.us/fr/communaute/' : 'https://www.umi.us/community/';
   }
 
 
@@ -181,6 +181,22 @@ export class InnovationsComponent implements OnInit {
 
   get trendingInnovations(): Array<Innovation> {
     return this._trendingInnovations;
+  }
+
+  get sectorTags(): Array<Tag> {
+    return this._sectorTags;
+  }
+
+  get userLang(): string {
+    return this._userLang;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
+  }
+
+  get userAuthenticated(): boolean {
+    return this._userAuthenticated;
   }
 
 }
