@@ -29,3 +29,56 @@
   }
 
 }
+
+.section-community {
+  padding-top: $unit-5;
+  background-color: $secondary-color;
+
+  .flex-between {
+    min-height: 140px;
+
+    .message-wrapper {
+      align-items: center;
+      margin-bottom: $unit-5;
+
+      .fa-paper-plane {
+        color: $primary-color;
+        font-size: 100px;
+        margin-right: 2.5rem;
+      }
+
+      span {
+        padding-right: 2.5rem;
+        color: $light-color;
+        font-family: $font-family-oswald;
+        font-size: 2rem;
+      }
+
+    }
+
+    .btn-primary {
+      margin-bottom: $unit-5;
+      box-shadow: $box-shadow;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-md) {
+
+  .section-community {
+
+    .flex-between {
+      flex-wrap: wrap;
+    }
+
+  }
+
+}

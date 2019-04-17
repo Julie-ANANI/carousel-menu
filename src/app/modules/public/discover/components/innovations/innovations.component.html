@@ -38,4 +38,24 @@
     </section>
   </ng-container>
 
+  <!-- footer banner -->
+  <ng-container *ngIf="!displayLoading">
+    <div class="section-community">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="flex-between">
+
+          <div class="message-wrapper d-flex">
+            <i class="fas fa-paper-plane"></i>
+            <span>{{ 'DISCOVER.COMMUNITY_TEXT' | translate }}</span>
+          </div>
+
+          <a [href]="getCommunityUrl()" target="_blank" rel="noopener">
+            <button type="button" class="btn btn-primary rounded">{{ 'DISCOVER.BUTTON_COMMUNITY' | translate }}</button>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
 </ng-container>

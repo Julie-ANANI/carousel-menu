@@ -56,6 +56,10 @@ export const DISCOVER = {
 
   'LATEST': 'Latest',
 
-  'TRENDING': 'Trending'
+  'TRENDING': 'Trending',
+
+  'BUTTON_COMMUNITY': 'Become an Ambassador',
+
+  'COMMUNITY_TEXT': 'Want to get the latest innovations in your mailbox?',
 
 };

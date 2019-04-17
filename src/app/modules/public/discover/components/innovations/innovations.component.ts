@@ -156,6 +156,12 @@ export class InnovationsComponent implements OnInit {
     return this._translateService.getBrowserLang();
   }
 
+
+  public getCommunityUrl(): string {
+    return this.userLang === 'fr' ? 'https://www.umi.us/fr/communaute/' : 'https://www.umi.us/community/';
+  }
+
+
   get config() {
     return this._config;
   }
