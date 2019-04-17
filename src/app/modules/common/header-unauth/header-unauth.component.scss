@@ -53,6 +53,20 @@
 
       }
 
+      .contact-button {
+
+        .btn.ghost-edit {
+          color: $text-background-color;
+          border-color: transparent;
+
+          &:hover {
+            border-color: $border-meta-color;
+          }
+
+        }
+
+      }
+
     }
 
   }

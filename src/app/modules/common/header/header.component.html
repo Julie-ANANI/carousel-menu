@@ -73,6 +73,14 @@
             </div>
           </li>
 
+          <!-- contact us -->
+          <li class="menu-item contact-button">
+            <a href="https://www.umi.us/contact/" target="_blank">
+              <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
+            </a>
+          </li>
+          <!-- /contact us -->
+
           <!-- mobile toggle icon -->
           <li class="mobile-toggle" (click)="toggleMenuState()">
             <i class="fas fa-bars"></i>
@@ -253,6 +261,13 @@
               (click)="toggleBackOfficeState(); onClickLink();"
               class="text-background">
               Client Side
+            </a>
+          </li>
+
+          <!-- contact us -->
+          <li class="sidebar-menu-item">
+            <a href="https://www.umi.us/contact/" target="_blank">
+              {{ 'HEADER.CONTACT_US' | translate }}
             </a>
           </li>
 
