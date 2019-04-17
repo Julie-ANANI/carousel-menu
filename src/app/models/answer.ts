@@ -6,11 +6,11 @@ export interface Answer {
   readonly _id?: string;
   readonly campaign: string;
   readonly innovation: string;
-  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED' | 'REJECTED_GMAIL';
+  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT';
   quizReference?: string;
   originalAnswerReference?: string;
   tags: Array<Tag>;
-  answerTags: {[qestionID: string]: Array<Tag>}
+  answerTags: {[qestionID: string]: Array<Tag>};
   profileQuality?: number;
   time_elapsed?: number;
   country: {flag: string, domain?: string, name?: string};

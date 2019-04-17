@@ -9,6 +9,8 @@ export const TABLE = {
     'VALIDATED_NO_MAIL': 'Valider sans envoyer de mail',
     'SUBMITTED': 'A regarder',
     'REJECTED_GMAIL': 'Rejeté par Mail',
+    'REJECTED_UMIBOT': 'Rejeté automatiquement',
+    'VALIDATED_UMIBOT': 'Validé automatiquement'
   },
 
   'HEADING': {
