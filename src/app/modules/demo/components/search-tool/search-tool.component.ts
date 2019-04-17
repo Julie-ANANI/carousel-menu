@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
+import {SidebarInterface} from "../../../sidebar/interfaces/sidebar-interface";
 
 @Component({
   selector: 'app-search-tool',
@@ -25,11 +26,11 @@ export class SearchToolComponent implements OnInit{
 
   private _searchStarted = false;
 
-  private _searchContinue = false;
-
   private _searchStopped = false;
 
   private _professionalCount: number = 0;
+
+  private _sidebarValue: SidebarInterface = {};
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -90,7 +91,6 @@ export class SearchToolComponent implements OnInit{
       });
 
       setTimeout(() => {
-        this._searchContinue = true;
         this._totalProfessional(this._searchResult.metadata.world);
       }, 2005);
     }
@@ -171,6 +171,14 @@ export class SearchToolComponent implements OnInit{
 
   }
 
+  onClickMenu() {
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'Advanced Search',
+      size: '300px'
+    };
+  }
+
 
   public getCompanyUrl(domain: string): string {
     return `http://${domain}`;
@@ -193,10 +201,6 @@ export class SearchToolComponent implements OnInit{
     return this._searchStarted;
   }
 
-  get searchContinue(): boolean {
-    return this._searchContinue;
-  }
-
   get searchStopped(): boolean {
     return this._searchStopped;
   }
@@ -207,6 +211,14 @@ export class SearchToolComponent implements OnInit{
 
   get scale(): Array<number>{
     return this._scale;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
 }
