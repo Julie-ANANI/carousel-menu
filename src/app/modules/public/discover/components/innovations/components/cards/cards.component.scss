@@ -1,0 +1,118 @@
+@import "../../../../../../../../style/framework/src/variables";
+
+#cards-component {
+
+  .card-wrapper {
+    flex-wrap: wrap;
+    margin-bottom: -$unit-5;
+
+    .card {
+      border: none;
+      overflow: hidden;
+      background-color: transparent;
+
+      a {
+        font-size: $font-size-xs;
+        color: $text-primary-color;
+        padding: $unit-4;
+
+        .card-image {
+
+          .hover-button {
+            min-height: 35px;
+            width: 133px;
+            top: 50%;
+            left: 50%;
+            opacity: 0;
+            margin-top: -21px;
+            margin-left: -70px;
+            font-size: $font-size-sm;
+            border: 2px solid $light-color;
+            border-radius: 31.5px;
+            visibility: hidden;
+            transition: all 0.3s ease;
+          }
+
+        }
+
+        .card-header {
+          padding-left: $unit-2;
+          padding-right: $unit-2;
+
+          .card-title {
+            margin-bottom: 0;
+
+            h6 {
+              font-size: 0.75rem;
+            }
+
+          }
+
+        }
+
+        .card-body {
+          justify-content: center;
+          flex-wrap: wrap;
+          padding-top: 0;
+
+          .label {
+            padding: 0;
+            font-size: 0.65rem;
+
+            &.label-tag {
+              background-color: $bg-color-light;
+            }
+
+          }
+
+        }
+
+      }
+
+      &.card-responsive {
+        margin-bottom: $unit-5;
+      }
+
+      &:hover {
+        box-shadow: $box-shadow-hover-umi;
+        cursor: pointer;
+
+        .hover-button {
+          opacity: 1 !important;
+          visibility: visible !important;
+          color: $light-color;
+          background-color: rgba(0,0,0,0.21);
+        }
+
+        figure {
+          background: $bg-overlay-color;
+
+          img {
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            cursor: pointer;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-xs) {
+
+  .card-wrapper {
+    justify-content: center;
+
+    .card-responsive {
+      max-width: 300px !important;
+    }
+
+  }
+
+}

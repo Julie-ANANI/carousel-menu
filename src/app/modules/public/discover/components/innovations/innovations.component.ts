@@ -3,13 +3,10 @@ import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
-import { PaginationInterface } from '../../../../utility-components/pagination/interfaces/pagination';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-// import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { environment } from '../../../../../../environments/environment';
 import { InnovCard } from '../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
@@ -45,12 +42,6 @@ export class InnovationsComponent implements OnInit {
 
   private _innovationTitles: Array<{text: string}> = []; // to store the innovation title to send to the search field.
 
-  // private _paginationValue: PaginationInterface = {}; // to pass the value in the pagination component.
-
-  private _startingIndex: number; // starting index of the innovation.
-
-  private _endingIndex: number; // upto which index we have to show the innovation.
-
   private _moreTagsIndex = 22; // to display the number of label item.
 
   private _noResultFound = false; // when no result is while respect to search filed.
@@ -75,13 +66,14 @@ export class InnovationsComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _tagsService: TagsService,
               private _translateService: TranslateService,
-              private _localStorage: LocalStorageService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
 
     this._totalInnovations = this._activatedRoute.snapshot.data.innovations;
+
+    this._userSuggestedInnovations = this._totalInnovations.slice(0, 4); //temp
 
     this._activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
@@ -91,27 +83,12 @@ export class InnovationsComponent implements OnInit {
 
     this.userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
 
-    this._translateService.onLangChange.subscribe(() => {
-      this.displayLoading = true;
-      this._initializeFunctions();
-    });
-
   }
 
   ngOnInit() {
-    // this._paginationValue = { limit: 50, offset: this._config.offset };
-    this._initializeFunctions()
-  }
-
-
-  private _initializeFunctions() {
     this._getAllSectorTags();
     this._getInnovationTitles();
-    this._initializeInnovations();
     this._stopLoading();
-    //this._sortTags();
-    //this._checkStoredFilters();
-    //this._checkSharedResult();
   }
 
 
@@ -175,16 +152,6 @@ export class InnovationsComponent implements OnInit {
   }
 
 
-  /***
-   * this function first check the length of the appliedFilters and do the
-   * respective functionality.
-   */
-  private _initializeInnovations() {
-    this._startingIndex = 0;
-    this._endingIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
-  }
-
-
   public onSelectFilters(filters: Array<Tag>) {
     this.selectedFilters = filters;
 
@@ -203,103 +170,6 @@ export class InnovationsComponent implements OnInit {
       this.displayLoading = false;
     }, 500);
   }
-
-  /***
-   * this function is to sort the tag based on the user lang.
-   * @private
-   */
- /* private _sortTags() {
-
-    this._sectorTags = this._sectorTags.sort((a: Tag, b: Tag) => {
-
-      const labelA = MultilingPipe.prototype.transform(a.label, this.userLang).toLowerCase();
-      const labelB =  MultilingPipe.prototype.transform(b.label, this.userLang).toLowerCase();
-
-      if ( labelA > labelB) {
-        return 1;
-      }
-
-      if (labelA < labelB) {
-        return -1;
-      }
-
-      return 0;
-
-    });
-
-    this._getHighlightedTags();
-
-  }*/
-
-
-  /***
-   * this function checks do we have any filters stored in session storage.
-   */
-  /*private _checkStoredFilters() {
-    if (isPlatformBrowser(this._platformId)) {
-      const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
-      if (sessionValues.length > 0) {
-        this._appliedFilters = sessionValues;
-      } else {
-        this._appliedFilters = [];
-      }
-    }
-  }*/
-
-
-
-
-
-
-
-
-  /***
-   * this function is to check if we contain any params or not.
-   */
-/*  private _checkSharedResult() {
-    this._activatedRoute.queryParams.subscribe((params: any) => {
-      if (params['tag']) {
-        this._appliedFilters = [];
-        if (typeof params['tag'] === 'string') {
-          const index = this._sectorTags.findIndex((tag: Tag) => tag._id === params['tag']);
-          if (index !== -1) {
-            const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === params['tag']);
-            if (existTagIndex === -1) {
-              this._appliedFilters.push(this._sectorTags[index]);
-            }
-          }
-        } else {
-          params['tag'].forEach((tagId: string) => {
-            const index = this._sectorTags.findIndex((tag: Tag) => tag._id === tagId);
-            if (index !== -1) {
-              const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === tagId);
-              if (existTagIndex === -1) {
-                this._appliedFilters.push(this._sectorTags[index]);
-              }
-            }
-          });
-        }
-
-      }
-    });
-  }*/
-
-
-
-/*  private _initializeInnovations() {
-    this._startingIndex = 0;
-    this._endingIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
-
-    if (this._appliedFilters.length > 0) {
-      this._applyFilters();
-    } else {
-      this._localInnovations = this._totalInnovations;
-      this._localResults = this._localInnovations.length;
-    }
-
-
-  }*/
-
 
 
   /***
@@ -407,7 +277,7 @@ export class InnovationsComponent implements OnInit {
       this._totalLocalResults = this._localInnovations.length;
 
     } else {
-      this._initializeInnovations();
+      //this._initializeInnovations();
     }
 
   }
@@ -439,7 +309,7 @@ export class InnovationsComponent implements OnInit {
       this._totalLocalResults = this._localInnovations.length;
 
     } else {
-      this._initializeInnovations();
+      //this._initializeInnovations();
     }
   }
 
@@ -526,7 +396,7 @@ export class InnovationsComponent implements OnInit {
       });
     } else {
       //this._checkStoredFilters();
-      this._initializeInnovations();
+      //this._initializeInnovations();
     }
 
     this._noResultFound = this._localInnovations.length === 0;
@@ -638,40 +508,6 @@ export class InnovationsComponent implements OnInit {
 
 
   /***
-   * when there is change in the pagination we detect the change and
-   * update the innovation cards with the new limit and offset value.
-   * @param paginationValues
-   */
-  public onChangePagination(paginationValues: PaginationInterface) {
-    if (isPlatformBrowser(this._platformId)) {
-      window.scroll(0, 0);
-
-      const tempOffset = parseInt(paginationValues.offset, 10);
-      const tempLimit = parseInt(paginationValues.limit, 10);
-
-      this._startingIndex = tempOffset;
-      this._endingIndex = tempLimit;
-
-      if (paginationValues.limit >= this._totalLocalResults) {
-        this._startingIndex = 0;
-        this._endingIndex = this._totalLocalResults;
-      } else {
-        if (paginationValues.offset === 0) {
-          this._startingIndex = 0;
-          this._endingIndex = tempLimit;
-        } else if (paginationValues.offset > 0) {
-          this._startingIndex = tempOffset;
-          this._endingIndex += tempOffset;
-        }
-      }
-    }
-
-    console.log(paginationValues);
-
-  }
-
-
-  /***
    * Update the list of recommended tags based on the most recent applied filter. If there is no filter selected,
    * we set the recommended list to [].
    */
@@ -720,18 +556,6 @@ export class InnovationsComponent implements OnInit {
 
   get innovationTitles(): Array<{ text: string }> {
     return this._innovationTitles;
-  }
-
-  /*get paginationValue(): PaginationInterface {
-    return this._paginationValue;
-  }*/
-
-  get startingIndex(): number {
-    return this._startingIndex;
-  }
-
-  get endingIndex(): number {
-    return this._endingIndex;
   }
 
   get moreTagsIndex(): number {

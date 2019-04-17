@@ -5,270 +5,29 @@
   </ng-container>
 
   <ng-container *ngIf="!displayLoading">
-    <section id="innovations-component" class="section-pad">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+    <section id="innovations-component">
+      <div class="section-light-pad">
+        <div class="column col-xs-12 col-11 col-mx-auto">
 
-        <!-- section recommended innovations -->
-        <app-cards [allInnovations]="userInnovations" [startingIndex]="0" [endingIndex]="4"></app-cards>
+          <!-- section recommended innovations -->
+          <div class="section-light-pad">
+            <h2 class="title-secondary text-background">{{ 'DISCOVER.RECOMMENDATION' | translate }}</h2>
+            <app-cards [allInnovations]="userInnovations"></app-cards>
+          </div>
+          <!-- /section recommended innovations -->
 
-        <!-- section filter -->
-        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
+          <!-- section filter -->
+          <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
 
-        <!-- section all innovations -->
-        <app-cards [allInnovations]="localInnovations" [startingIndex]="startingIndex" [endingIndex]="endingIndex"></app-cards>
+          <!-- section all innovations
+          <div class="section-light-pad">
+            <app-cards [allInnovations]="localInnovations" [pagination]="false"></app-cards>
+          </div>
+          /section all innovations -->
 
-
+        </div>
       </div>
     </section>
   </ng-container>
 
 </ng-container>
-
-
-
-
-<!--<section  class="section-pad">
-  <div class="column col-xs-12 col-11 col-mx-auto">-->
-
-    <!-- recommendation heading section
-    <ng-container *ngIf="userInnovations.length > 0">-->
-
-      <!-- heading
-      <h2 class="title-primary">{{ 'DISCOVER.RECOMMENDATION' | translate }}</h2>-->
-
-      <!-- user Innovation cards
-      <div class="section-cards d-flex" [@cardAnimation]="userInnovations.length">
-        <div *ngFor="let innovation of userInnovations | slice:startingIndex:endingIndex" class="card"> -->
-
-          <!-- img
-          <div class="card-image">
-            <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-              <img [src]="getImageSrc(innovation)" alt=" ">
-            </a>
-          </div> -->
-
-          <!-- header
-          <div class="card-header card-justify">
-            <div class="card-title">-->
-
-              <!-- title
-              <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-                <h6>{{ getInnovationDetail('title', innovation) }}</h6>
-              </a>-->
-
-              <!-- tags
-              <ng-container *ngIf="getInnovationTags(innovation).length > 0">
-                <div class="tags-wrapper d-inline-flex">
-                  <div *ngFor="let tag of getInnovationTags(innovation)" class="text text-notify text-medium">
-                    <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
-                  </div>
-                </div>
-              </ng-container>
-
-            </div>
-          </div>-->
-
-          <!-- footer
-          <ng-container *ngIf="getLangs(innovation).length > 0">
-            <div class="card-footer">
-              <span class="text text-notify text-medium">{{ 'DISCOVER.FOOTER_TEXT' | translate }}</span>
-              <ng-container *ngFor="let lang of getLangs(innovation)">
-                <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
-                  <span class="text-link">{{ lang }}</span>
-                </a>
-              </ng-container>
-            </div>
-          </ng-container>
-
-        </div>
-      </div>
-
-    </ng-container>
-    /user innovation cards -->
-
-    <!-- tags section
-    <ng-container *ngIf="sectorTags.length > 0">
-      <div class="section-tags">-->
-
-        <!-- heading
-        <ng-container *ngIf="appliedFilters.length === 0">
-          <h6 class="text text-notify">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h6>
-        </ng-container>
-        <ng-container *ngIf="appliedFilters.length > 0">
-          <h6 class="text text-notify">{{ appliedFilters.length }} {{ 'DISCOVER.TAGS.HEADING_2' | translate }}</h6>
-        </ng-container>-->
-
-        <!-- tags
-        <div class="tags-wrapper" @tagAnimation>
-          <div *ngFor="let tag of sectorTags | slice:0:moreTagsIndex;" class="tag-content">
-            <div [ngClass]="{ 'active': getCheckedFilter(tag._id) }" class="label label-draft">
-              <label>
-                <input
-                  type="checkbox"
-                  [id]="tag._id"
-                  [name]="tag.label | multiling:browserLang()"
-                  [value]="tag.label | multiling:browserLang()"
-                  (change)="toggleFilter($event, tag)"
-                  [checked]="getCheckedFilter(tag._id)">
-                {{ tag?.label | multiling:userLang | FormatText }}
-              </label>
-            </div>
-          </div>
-        </div>-->
-
-        <!-- more tag label
-        <div class="more-tag-wrapper" [ngStyle]="{ 'display': sectorTags.length > 22 ? 'flex' : 'none' }">
-        <span
-          [ngStyle]="{ 'visibility': sectorTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
-          class="text-link"
-          (click)="onClickMore($event)">
-          {{ 'DISCOVER.SEE_MORE' | translate }}
-        </span>
-
-          <span
-            [ngStyle]="{ 'visibility': moreTagsIndex > 22 ? 'visible' : 'hidden' }"
-            class="text-link"
-            (click)="onClickClose($event)">
-         {{ 'DISCOVER.CLOSE' | translate }}
-            <i class="fas fa-angle-up"></i>
-        </span>
-        </div>
-
-      </div>
-    </ng-container>
-     /tags section -->
-
-    <!-- suggested tags section
-    <ng-container *ngIf="suggestedTags.length > 0">
-      <div class="section-suggested-tags"> -->
-
-        <!-- heading
-        <h6 class="text text-notify">{{ 'DISCOVER.SUGGESTED_TAGS' | translate }}</h6>-->
-
-        <!-- Suggested Tags
-        <div class="tags-wrapper" @tagAnimation>
-          <div *ngFor="let suggested_tag of suggestedTags" class="tag-content">
-            <div [ngClass]="{ 'active': getCheckedSimilarFilter(suggested_tag._id) }" class="label label-draft">
-              <label>
-                <input
-                  type="checkbox"
-                  [id]="suggested_tag._id"
-                  [name]="suggested_tag.label | multiling:browserLang()"
-                  [value]="suggested_tag.label | multiling:browserLang()"
-                  (change)="toggleSimilarFilter($event, suggested_tag)"
-                  [checked]="getCheckedSimilarFilter(suggested_tag._id)">
-                {{ suggested_tag?.label | multiling:userLang | FormatText }}
-              </label>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </ng-container>
-     /suggested tags section  -->
-
-    <!-- share result section
-    <ng-container *ngIf="appliedFilters.length > 0">
-      <div class="section-share">
-        <button type="button" class="btn ghost-secondary btn-xs" (click)="onClickShare($event)">{{ 'DISCOVER.BUTTON_SHARE' | translate }}</button>
-      </div>
-    </ng-container>
-     /share result section -->
-
-    <!-- heading section
-    <div class="section-heading">-->
-
-      <!-- heading
-      <h1 class="title-primary">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>-->
-
-      <!-- search
-      <div class="search-wrapper">
-        <app-search-input [suggestions]="innovationTitles" (finalValueEmit)="onValueTyped($event)"></app-search-input>
-      </div>-->
-
-<!--    </div>-->
-    <!-- /heading section -->
-
-    <!-- innovation cards -->
-    <!--<div class="section-cards d-flex" [@cardAnimation]="localInnovations.length">
-      <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card card-responsive">-->
-
-        <!-- img
-        <div class="card-image">
-          <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-            <img [src]="getImageSrc(innovation)" alt=" ">
-          </a>
-        </div>-->
-
-        <!-- header
-        <div class="card-header card-justify">
-          <div class="card-title">-->
-
-            <!-- title
-            <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-              <h6>{{ getInnovationDetail('title', innovation) }}</h6>
-            </a>-->
-
-            <!-- tags
-            <ng-container *ngIf="getInnovationTags(innovation).length > 0">
-              <div class="tags-wrapper d-inline-flex">
-                <div *ngFor="let tag of getInnovationTags(innovation)" class="text text-notify text-medium">
-                  <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
-                </div>
-              </div>
-            </ng-container>-->
-
-         <!-- </div>
-        </div>-->
-
-        <!-- footer
-        <ng-container *ngIf="getLangs(innovation).length > 0">
-          <div class="card-footer">
-            <span class="text text-notify text-medium">{{ 'DISCOVER.FOOTER_TEXT' | translate }}</span>
-            <ng-container *ngFor="let lang of getLangs(innovation)">
-              <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
-                <span class="text-link">{{ lang }}</span>
-              </a>
-            </ng-container>
-          </div>
-        </ng-container>
-
-      </div>
-    </div>-->
-    <!-- /innovation cards -->
-
-    <!-- no result found on search
-    <ng-container *ngIf="noResultFound">
-      <div class="section-no-result flex-centered">
-        <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png"
-             class="img-responsive" alt=" ">
-        <h4>{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h4>
-        <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>
-        <p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>
-      </div>
-    </ng-container>
-     /no result found on search -->
-
-    <!-- pagination section
-    <ng-container *ngIf="localResults > 0 && !noResultFound">
-      <div class="section-light-pad rm-pad-bottom flex-end">
-        <app-pagination
-          [total]="localResults"
-          [propertyName]="'discover-page'"
-          [configValue]="paginationValue"
-          (configChange)="onChangePagination($event)">
-        </app-pagination>
-      </div>
-    </ng-container>
-    pagination section -->
-
-<!--  </div>
-</section>-->
-
-
-<!-- modal to share
-<app-modal [(showModal)]="modalShare" [modalTitle]="'COMMON.MODAL.TITLE_SHARE'">
-  <h6 class="text discover-modal-heading text-medium">{{ 'DISCOVER.MODAL.HEADING' | translate }}</h6>
-  <h6 class="text discover-modal-link">{{ shareUrl }}</h6>
-</app-modal>
- /modal to share -->

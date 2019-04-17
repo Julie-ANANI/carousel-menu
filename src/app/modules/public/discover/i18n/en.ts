@@ -48,7 +48,10 @@ export const DISCOVER = {
   'NO_INNOVATION': 'We are unable to find innovations based on your query.',
   'STAGE': 'Stage',
 
-  'RECOMMENDATION': 'Projects that may interest you',
+  'RECOMMENDATION': 'Recommended',
+
   'SUGGESTED_TAGS': 'Related sector(s)',
+
+  'LEARN_MORE': 'Learn more'
 
 };
