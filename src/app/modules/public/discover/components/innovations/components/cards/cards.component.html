@@ -2,7 +2,7 @@
   <section id="cards-component">
 
     <!-- section cards -->
-    <div class="card-wrapper d-flex text-center" [@cardAnimation]="totalInnovations">
+    <div class="card-wrapper d-flex text-center">
       <div *ngFor="let innovation of innovations | slice:startIndex:endIndex" class="card card-responsive">
         <a [href]="[getInnovationDetail('url', innovation)]" target="_blank">
 

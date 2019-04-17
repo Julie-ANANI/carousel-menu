@@ -52,6 +52,8 @@ export const DISCOVER = {
 
   'LEARN_MORE': 'En savoir plus',
 
-  'LATEST': 'Dernières nouvelles'
+  'LATEST': 'Dernières nouvelles',
+
+  'TRENDING': 'Tendances'
 
 };

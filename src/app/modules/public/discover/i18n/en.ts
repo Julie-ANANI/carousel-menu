@@ -54,6 +54,8 @@ export const DISCOVER = {
 
   'LEARN_MORE': 'Learn more',
 
-  'LATEST': 'Latest'
+  'LATEST': 'Latest',
+
+  'TRENDING': 'Trending'
 
 };

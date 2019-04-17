@@ -1,6 +1,5 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { PaginationInterface } from '../../../../../../utility-components/pagination/interfaces/pagination';
 import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -12,23 +11,7 @@ import {Tag} from '../../../../../../../models/tag';
 @Component({
   selector: 'app-cards',
   templateUrl: './cards.component.html',
-  styleUrls: ['./cards.component.scss'],
-  animations: [
-
-    trigger('cardAnimation', [
-      transition('* => *', [
-
-        query(':enter', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
-
-        query(':enter', stagger('100ms', [
-          animate('.15s ease', style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 })
-          )]
-        ), { optional: true }),
-
-      ])
-    ])
-
-  ]
+  styleUrls: ['./cards.component.scss']
 })
 
 export class CardsComponent implements OnInit {

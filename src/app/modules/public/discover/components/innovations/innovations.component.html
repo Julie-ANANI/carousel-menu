@@ -12,24 +12,27 @@
         <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
 
         <!-- section recommended innovations -->
-        <div class="section-light-pad rm-pad-bottom">
-          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
-          <app-cards [allInnovations]="userInnovations"></app-cards>
-        </div>
+        <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated">
+          <div class="section-light-pad rm-pad-bottom">
+            <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
+            <app-cards [allInnovations]="recommendedInnovations"></app-cards>
+          </div>
+        </ng-container>
         <!-- /section recommended innovations -->
 
         <!-- section latest innovations -->
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
-          <app-cards [allInnovations]="userInnovations"></app-cards>
+          <app-cards [allInnovations]="latestInnovations"></app-cards>
         </div>
-        <!-- /section recommended innovations -->
+        <!-- /section latest innovations -->
 
-        <!-- section all innovations
-        <div class="section-light-pad">
-          <app-cards [allInnovations]="localInnovations" [pagination]="false"></app-cards>
+        <!-- section trending innovations -->
+        <div class="section-light-pad rm-pad-bottom">
+          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
+          <app-cards [allInnovations]="trendingInnovations" [pagination]="true"></app-cards>
         </div>
-        /section all innovations -->
+        <!-- /section all innovations -->
 
       </div>
     </section>
