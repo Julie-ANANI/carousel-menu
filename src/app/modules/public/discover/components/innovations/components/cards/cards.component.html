@@ -35,7 +35,7 @@
     </div>
 
     <!-- section pagination -->
-    <ng-container *ngIf="isPagination">
+    <ng-container *ngIf="isPagination && totalInnovations > 10">
       <div class="section-light-pad rm-pad-bottom flex-end">
         <app-pagination
           [total]="totalInnovations"
