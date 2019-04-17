@@ -209,6 +209,11 @@ export class HeaderComponent implements OnDestroy {
   }
 
 
+  public getContactUrl(): string {
+    return this._currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
+  }
+
+
   get backOfficeValue(): boolean {
     return this._backOfficeValue;
   }

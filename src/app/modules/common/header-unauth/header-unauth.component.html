@@ -50,7 +50,7 @@
 
           <!-- contact us -->
           <li class="menu-item contact-button">
-            <a href="https://www.umi.us/contact/" target="_blank">
+            <a [href]="getContactUrl()" rel="noopener"target="_blank">
               <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
             </a>
           </li>
