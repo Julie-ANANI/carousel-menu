@@ -19,7 +19,7 @@ import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
-import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
+import { SearchInputModule } from '../../utility-components/search-inputs/search-template-1/search-input.module';
 import { TagsService } from '../../../services/tags/tags.service';
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 
