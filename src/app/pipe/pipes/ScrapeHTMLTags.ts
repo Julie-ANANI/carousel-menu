@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class ScrapeHTMLTags implements PipeTransform {
 
-  decodeEntities (str: string) {
+  static decodeEntities (str: string) {
     const el = document.createElement('textarea');
 
     el.innerHTML = str
@@ -20,7 +20,7 @@ export class ScrapeHTMLTags implements PipeTransform {
 
     const regex = /<\/?[\w\s="/.':;#-\/?]+>/gi;
 
-    value = this.decodeEntities(value);
+    value = ScrapeHTMLTags.decodeEntities(value);
 
     if (value) {
       return value.replace(regex, "");
