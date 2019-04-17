@@ -1,43 +1,43 @@
 @import "../../../../style/framework/src/variables";
 
 #footer-component {
+  min-height: 50px;
 
-  .info, .lang {
-    display: flex;
-    align-items: center;
-    min-height: 75px;
-  }
+  .navbar {
+    min-height: 50px;
+    font-size: $font-size-sm;
 
-  .info {
-    transition: all 0.35s ease-in-out;
-    font-size: 0.7rem;
+    .privacy-wrapper {
 
-    a {
-      color: white;
-    }
+      a {
+        transition: all 0.5s ease;
+      }
 
-    a:hover {
-      text-decoration: underline;
-      cursor: pointer;
     }
 
   }
 
-  .lang {
+}
 
-    .form-switch {
-      padding: 0;
-    }
+@media (max-width: $size-sm) {
 
-    .form-select {
-      margin-top: 0;
-      min-width: 100px;
-    }
+  #footer-component {
 
-    .form-select:focus {
-      border-color: $border-color;
+    .navbar {
+      flex-direction: column;
+
+      .copyright-wrapper {
+        margin-bottom: 0.75rem;
+        order: 2;
+      }
+
+      .privacy-wrapper {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
     }
 
   }
-
+  
 }

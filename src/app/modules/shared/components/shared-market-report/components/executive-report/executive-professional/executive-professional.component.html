@@ -50,15 +50,15 @@
 
         <!-- job -->
         <p class="job">
-          <span *ngIf="answer.professional?.jobTitle">
-            {{ answer.professional.jobTitle || 'job' }}
+          <span *ngIf="answer.job">
+            {{ answer.job }}
           </span>
         </p>
 
         <!-- company -->
         <p class="company">
-          <span *ngIf="answer.professional.company?.name || answer.professional?.company">
-            {{ answer.professional.company?.name || answer.professional?.company || 'company' }}
+          <span *ngIf="answer.company?.name || answer.professional?.company">
+            {{ answer.company?.name || answer.professional?.company }}
           </span>
         </p>
 

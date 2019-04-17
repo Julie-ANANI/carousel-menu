@@ -125,7 +125,7 @@ export class TagsFormComponent {
       this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       this._needToSetOriginalTag = false;
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ASSOCIATED');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ERROR');
     });
 
   }

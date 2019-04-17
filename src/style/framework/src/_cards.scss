@@ -11,7 +11,16 @@
   word-break: break-word;
 
   &.card-responsive {
-    flex: 0 1 calc(16% - 1rem);
+    margin-right: $unit-5;
+    flex: 1 0 300px;
+    max-width: calc(17% - 1rem);
+  }
+
+  &.card-3 {
+    flex: 1 0 420px;
+    max-width: calc(25% - 1rem);
+    margin-right: $unit-5;
+    margin-bottom: $unit-5;
   }
 
   &.card-responsive-3 {
@@ -20,19 +29,19 @@
 
   .card-image {
     padding-top: $unit-4;
+    margin: 0;
 
     &:first-child {
       padding-top: 0;
+    }
 
-      img {
-        display: block;
-        height: auto;
-        max-width: 100%;
-        border-radius: $border-radius;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
+    img {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      border-radius: $border-radius;
+      margin-left: auto;
+      margin-right: auto;
     }
 
   }
@@ -86,7 +95,11 @@
 @media (max-width: $size-2x) {
 
   .card-responsive {
-    flex: 0 1 calc(25% - 1rem) !important;
+    max-width: calc(25% - 1rem) !important;
+  }
+
+  .card-3 {
+    max-width: calc(33% - 1rem) !important;
   }
 
   .card-responsive-3 {
@@ -98,7 +111,11 @@
 @media (min-width: $size-md) and (max-width: $size-lg) {
 
   .card-responsive {
-    flex: 0 1 calc(33% - 1rem) !important;
+    max-width: calc(33% - 1rem) !important;
+  }
+
+  .card-3 {
+    max-width: calc(50% - 1rem) !important;
   }
 
   .card-responsive-3 {
@@ -110,7 +127,11 @@
 @media (min-width: $size-sm) and (max-width: $size-md) {
 
   .card-responsive {
-    flex: 0 1 calc(50% - 1rem) !important;
+    max-width: calc(50% - 1rem) !important;
+  }
+
+  .card-3 {
+    max-width: calc(50% - 1rem) !important;
   }
 
   .card-responsive-3 {
@@ -122,11 +143,17 @@
 @media (min-width: $size-xs) and (max-width: $size-sm) {
 
   .card-responsive {
-    flex: 0 1 calc(50% - 1rem) !important;
+    max-width: calc(50% - 1rem) !important;
+  }
+
+  .card-3 {
+    margin-left: auto;
+    margin-right: auto !important;
+    max-width: calc(80% - 1rem) !important;
   }
 
   .card-responsive-3 {
-    flex: 1 !important;
+    flex: 100% !important;
   }
 
 }
@@ -134,7 +161,14 @@
 @media (max-width: $size-xs) {
 
   .card-responsive, .card-responsive-3 {
-    flex: 1 !important;
+    flex: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .card-3 {
+    margin-left: auto;
+    margin-right: auto !important;
+    max-width: calc(90% - 1rem) !important;
   }
 
 }

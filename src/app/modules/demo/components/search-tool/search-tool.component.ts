@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { SearchService } from '../../../../services/search/search.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { SearchTool } from '../../../../models/search-tool';
+import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
 
 @Component({
@@ -20,8 +20,6 @@ export class SearchToolComponent implements OnInit{
   private _slicedPros: Array<any> = [];
 
   private _searchResult: SearchTool = {};
-
-  private _noResult = true;
 
   private _scale: Array<number> = [];
 
@@ -61,21 +59,18 @@ export class SearchToolComponent implements OnInit{
       this._professionalCount = 0;
       this._slicedPros = [];
       this._searchResult = {};
-      this._noResult = true;
+      this._searchStarted = true;
+      this._searchStopped = false;
 
       if (keywords == "TEST") {
-        this._searchStarted = true;
-        this._searchStopped = false;
         this._searchResult = result_sample;
         this._scale = [3, 50, 100];
         this._updateResults();
       } else {
         this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
-          this._searchStarted = true;
-          this._searchStopped = false;
           this._searchResult.metadata = result.metadata || {};
           this._searchResult.pros = result.pros;
-          if (result.scale) this._scale = result.scale;
+          this._scale = result.scale || [50, 200, 1500];
           this._updateResults();
         }, () => {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -88,16 +83,17 @@ export class SearchToolComponent implements OnInit{
 
 
   private _updateResults() {
-    this._searchResult.pros = this._searchResult.pros.map(pro => {
-      pro.isLoading = true;
-      return pro;
-    });
+    if (this._searchResult.pros) {
+      this._searchResult.pros = this._searchResult.pros.map(pro => {
+        pro.isLoading = true;
+        return pro;
+      });
 
-    setTimeout(() => {
-      this._noResult = false;
-      this._searchContinue = true;
-      this._totalProfessional(this._searchResult.metadata.world);
-    }, 2005);
+      setTimeout(() => {
+        this._searchContinue = true;
+        this._totalProfessional(this._searchResult.metadata.world);
+      }, 2005);
+    }
   }
 
 
@@ -191,10 +187,6 @@ export class SearchToolComponent implements OnInit{
 
   get searchResult(): SearchTool {
     return this._searchResult;
-  }
-
-  get noResult(): boolean {
-    return this._noResult;
   }
 
   get searchStarted(): boolean {

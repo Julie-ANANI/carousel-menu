@@ -1,0 +1,119 @@
+<div id="showcase-component" class="section-pad">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <ng-container *ngIf="selectedTagsStats.length === 0">
+      <div class="section-pad rm-pad-bottom">
+        <app-message-space>
+            <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.NO_TAGS_CLICKABLE'" translate></span>
+            {{'SHOWCASE.NO_TAGS' | translate}}
+        </app-message-space>
+      </div>
+    </ng-container>
+
+    <!-- section stat -->
+    <ng-container *ngIf="selectedTagsStats.length > 0">
+
+      <!-- header section -->
+      <section class="section-header text-center">
+
+        <!-- labels -->
+        <h1 class="title-primary text-normal">
+          <ng-container *ngFor="let tagStat of selectedTagsStats; let i = index;">
+            {{ tagStat.tag.label | multiling:currentLang | FormatText }}
+            <ng-container *ngIf=" i !== selectedTagsStats.length - 1 "> / </ng-container>
+          </ng-container>
+        </h1>
+
+        <!-- modify tag link -->
+        <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+
+      </section>
+      <!-- /header section -->
+
+      <!-- horizontal line -->
+      <hr class="hr hr-main">
+
+      <!-- section answer and innovations -->
+      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+
+        <!-- answers wrapper -->
+        <div class="answer-wrapper">
+          <app-showcase-answers [totalAnswers]="stats.totalAnswers" [tagsStats]="selectedTagsStats"></app-showcase-answers>
+        </div>
+
+        <!-- innovations wrapper -->
+        <div class="innovation-wrapper">
+          <app-showcase-innovations [totalInnovations]="stats.totalInnovations" [tagsStats]="selectedTagsStats"></app-showcase-innovations>
+        </div>
+
+      </section>
+      <!-- /section answer and innovations -->
+
+      <!-- section map -->
+      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+        <div class="map-wrapper">
+
+          <h2 class="text text-notify" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate>Targeted</h2>
+
+          <h3 class="text-normal">{{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span> </h3>
+
+          <admin-search-map
+            [countriesData]="countries"
+            [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
+            [width]="'100%'">
+          </admin-search-map>
+
+        </div>
+      </section>
+      <!-- /section map -->
+
+      <!-- section company -->
+      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+        <div class="client-wrapper">
+          <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
+        </div>
+      </section>
+      <!-- /section company -->
+
+    </ng-container>
+    <!-- /section stat -->
+
+  </div>
+</div>
+
+
+<!-- modal to modify the tags -->
+<app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
+
+  <h2 class="text text-background title-secondary text-medium" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+
+  <ng-container *ngIf="selectedTagsStats.length">
+    <div class="selected-wrapper">
+      <div *ngFor="let selected of selectedTagsStats" class="label label-tag label-rounded">
+        <span>{{ selected.tag.label | multiling:currentLang }}</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <hr class="hr">
+
+  <div class="d-flex tags-wrapper">
+    <div *ngFor="let tag of sectorTags" class="card card-responsive">
+      <label class="form-checkbox">
+        <input
+          (change)="onChangeTag($event, tag)"
+          [name]="tag.label | multiling:currentLang"
+          [disabled]="loadingStats"
+          type="checkbox">
+        <i class="form-icon"></i><span>{{ tag.label | multiling:currentLang | FormatText }}</span>
+      </label>
+    </div>
+  </div>
+
+</app-modal>
+
+
+
+
+
+

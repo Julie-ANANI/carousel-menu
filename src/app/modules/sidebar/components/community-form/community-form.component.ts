@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'community-form',
@@ -6,6 +6,13 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./community-form.component.scss']
 })
 export class CommunityFormComponent implements OnInit {
+
+  @Output('callbackNotification')
+  _callbackNotification = new EventEmitter<any>();
+
+  @Input() set context(value: any) {
+    this._context = value;
+  }
 
   @Input() set sidebarState(value: string) {
     console.log(value);
@@ -16,11 +23,9 @@ export class CommunityFormComponent implements OnInit {
 
   @Input() set type(value: string) {
     this._actionType = value;
-    this._loadTemplate();
   }
 
   @Input() set config(value: any) {
-    console.log(value);
     this._config = value;
   }
 
@@ -28,52 +33,25 @@ export class CommunityFormComponent implements OnInit {
 
   private _config: any;
 
+  private _context: any = null;
+
+  private _parentCb: any = null;
+
   constructor() { }
 
   ngOnInit() {
-  }
-
-  private _loadTemplate() {
-
-    console.log(this._actionType);
-
-    switch (this._actionType) {
-
-      case '':
-
-        break;
-
-      default:
-      // do nothing...
-
-    }
-
-  }
-
-
-  public onSave() {
-    switch (this._actionType) {
-
-      case '':
-        break;
-
-      default:
-      // do nothing...
-
-    }
-
+    console.log(this._parentCb && typeof this._parentCb === 'function');
   }
 
   public onValueTyped(event: Event) {
     this._config = {
-      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
+      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry campaigns._id campaigns.innovation campaigns.type innovations._id',
       limit: '10',
       offset: '0',
       search: '',
       "$text": `{ "$search": "${event}" }`,
       sort: '{"created":-1}'
     };
-    console.log(event);
   }
 
   get actionType() {
@@ -84,4 +62,11 @@ export class CommunityFormComponent implements OnInit {
     return this._config;
   }
 
+  get context() {
+    return this._context;
+  }
+
+  public callbackNotification(event: Event) {
+    this._callbackNotification.emit(event);
+  }
 }

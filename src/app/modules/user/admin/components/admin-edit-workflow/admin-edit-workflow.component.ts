@@ -78,7 +78,7 @@ export class AdminEditWorkflowComponent {
 
     this._campaignScenario.emails.forEach((email: EmailTemplate) => {
       steps[email.step][email.language] = email;
-      email.defaultSignatureName = 'Karine Caulfield';
+      email.defaultSignatureName = email.signature ? email.signature.name : 'Karine Caulfield'; //TODO why a workflow wouldn't have a signature??
       email.status = email.modified ? email.modified.toString() : 'false';
     });
 

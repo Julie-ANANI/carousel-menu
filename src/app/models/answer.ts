@@ -23,4 +23,5 @@ export interface Answer {
   readonly answers: any;
   readonly created?: Date;
   readonly updated?: Date;
+  isLoading?: boolean;
 }

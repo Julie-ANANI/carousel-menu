@@ -23,7 +23,7 @@ import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-ans
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedProjectDescriptionModule } from '../../../../shared/components/shared-project-description/shared-project-description.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
-import { ModalModule } from '../../../../utility-components/modal/modal.module';
+import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
 
 @NgModule({

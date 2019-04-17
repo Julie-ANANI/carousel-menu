@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-//import { countries } from '../../../../../../../../models/static-data/country';
-//import { TagsService } from '../../../../../../../../services/tags/tags.service';
-import { TranslateService } from '@ngx-translate/core';
-import {SidebarInterface} from "../../../../../../../sidebar/interfaces/sidebar-interface";
-//import { InnovationService } from '../../../../../../../../services/innovation/innovation.service';
-//import { Innovation } from '../../../../../../../../models/innovation';
+import { SidebarInterface } from "../../../../../../../sidebar/interfaces/sidebar-interface";
+import { Innovation } from '../../../../../../../../models/innovation';
+import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
 
 @Component({
   selector: 'admin-community-project',
@@ -13,11 +10,13 @@ import {SidebarInterface} from "../../../../../../../sidebar/interfaces/sidebar-
   styleUrls: ['./admin-community-project.component.scss']
 })
 
-export class AdminCommunityProjectComponent implements OnInit {
+export class AdminCommunityProjectComponent {
 
-  private _innovation: any;
+  private _innovation: Innovation;
 
   private _config = {};
+
+  private _context: any = null;
 
   private _sideConfig: any = null;
 
@@ -25,85 +24,67 @@ export class AdminCommunityProjectComponent implements OnInit {
 
   private _sidebarStatus: SidebarInterface = {};
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private translateService: TranslateService) { }
+  private _totalThreshold: number;
 
-  ngOnInit() {
-    this._innovation = this.activatedRoute.snapshot.data['innovation'];
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _translateNotificationsService: TranslateNotificationsService) {
+
+    this._innovation = this._activatedRoute.snapshot.data['innovation'];
+    this._context = {
+      innovationId: this._innovation._id.toString()
+    };
+    this._setConfig();
+
+  }
+
+
+  private _setConfig() {
     this._config = {
       fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
       limit: '10',
       offset: '0',
       innovations: this._innovation._id,
       search: '',
-      sort: '{"created":-1}'
+      sort: '{ "created": -1 }'
     };
-    console.log(this._config);
-    /*this.getAllTags();
-    this.initializeVariables();
-    this.getAllInnovations();*/
-  }
-
-  get innovation() {
-    return this._innovation;
-  }
-
-  get config() {
-    return this._config;
-  }
-
-  get targetCountries() {
-    return this._targetCountries;
   }
 
 
-  /***
-   * checking the browser lang to get the tag label of same lang.
-   */
-  browserLang(): string {
-    return this.translateService.getBrowserLang() || 'en';
+  public checkThreshold(): string {
+    return this._totalThreshold > 20 ? '#4F5D6B' : '#EA5858';
   }
 
-  /***
-   * to save the changes in professional object to the server.
-   */
-  onClickSave() {
-  }
-
-
-  /***
-   * to notify the user if they perform any update in the professional object.
-   */
-  notifyChanges() {
-
-  }
 
   public onClickAddManually(event: Event) {
-    /*this._sideConfig = {
-      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
-      limit: '10',
-      offset: '0',
-      search: '',
-      "$text": `{ $search: ${event} }`,
-      sort: '{"created":-1}'
-    };*/
     this._sidebarStatus = {
-      size: "65%",
+      size: "726px",
       type: "addToProject",
-      title: "Add manually",
+      title: "Add Manually",
       animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
     };
-    console.log(event);
   }
 
   public onClickSuggestion(event: Event) {
-    console.log(event);
     this._sidebarStatus = {
-      size: "65%",
+      size: "726px",
       type: "addFromSuggestions",
-      title: "See suggestions",
+      title: "See Suggestions",
       animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
     };
+  }
+
+  public actionsResultCallback(response: Event) {
+    if(!!response) {
+      if(response['result'].status === 'error') {
+        this._translateNotificationsService.error('ERROR.ERROR', response['result'].message);
+      } else {
+        const message = `Operation done!`; // TODO Use a real informative message
+        this._translateNotificationsService.success('ERROR.SUCCESS', message);
+      }
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', "Empty result");
+    }
+    this._sidebarStatus.animate_state = 'inactive';
   }
 
   get sidebarStatus(): SidebarInterface {
@@ -118,5 +99,24 @@ export class AdminCommunityProjectComponent implements OnInit {
     return this._sideConfig;
   }
 
+  get innovation() {
+    return this._innovation;
+  }
+
+  get config() {
+    return this._config;
+  }
+
+  get targetCountries() {
+    return this._targetCountries;
+  }
+
+  get totalThreshold(): number {
+    return this._totalThreshold;
+  }
+
+  get context() {
+    return this._context;
+  }
 }
 

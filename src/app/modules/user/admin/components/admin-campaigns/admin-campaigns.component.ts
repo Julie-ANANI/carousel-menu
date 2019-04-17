@@ -15,6 +15,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./admin-campaigns.component.scss']
 })
 
+// TODO deprecate this thing, who's using this component? Why it's still here?
 export class AdminCampaignsComponent implements OnInit {
 
   private _innovation: Innovation;
@@ -49,6 +50,7 @@ export class AdminCampaignsComponent implements OnInit {
         .pipe(first())
         .subscribe((campaigns: any) => {
               this._campaigns = campaigns.result;
+              console.log(this._campaigns);
             },
           (error: any) => this._notificationsService.error('ERROR', error.message)
         );

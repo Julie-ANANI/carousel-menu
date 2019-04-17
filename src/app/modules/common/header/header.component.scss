@@ -1,33 +1,139 @@
 @import "../../../../style/framework/src/variables";
 
-@media (max-width: $size-md) {
+#header-component {
+  border: 1px solid $border-light-color;
 
-  #header-component {
+  .navbar {
 
-    .navbar {
-      flex-direction: column;
+    .logo {
+      padding-top: 5px;
     }
 
-    .menu-item {
-      display: flex;
-      flex-direction: column;
-    }
+    .navigation-wrapper {
 
-    .menu-item:last-child {
-      padding-right: 0.6rem;
-    }
+      .header-lang-dropdown {
 
-    .mobile-menu {
-      width: 100%;
-    }
+        a {
+          height: 35px;
 
-    .mobile-toggle {
-      display: flex !important;
+          span:after {
+            bottom: 3px;
+          }
+
+          .fa-angle-down {
+            margin-left: $unit-2;
+          }
+
+        }
+
+        .dropdown-menu {
+          width: 46px;
+          right: -7px;
+          padding: 0;
+
+          .drop-item{
+            padding: 0.5rem;
+          }
+
+        }
+
+        &:hover {
+
+          .fa-angle-down {
+            color: $primary-color !important;
+          }
+
+          span:after {
+            visibility: visible;
+            background-color: $primary-color;
+            transform: scaleX(1);
+          }
+
+        }
+
+      }
+
+      .header-account-dropdown {
+
+        a {
+          opacity: 1;
+        }
+
+        .dropdown-menu {
+
+          .drop-item {
+            padding: 0;
+
+            a {
+              padding: 0.5rem 1.1rem;
+            }
+
+            .drop-item-user {
+              display: flex;
+              align-items: center;
+
+              span:after {
+                display: none;
+              }
+
+              .d-flex {
+                margin-left: $unit-2;
+                flex-direction: column;
+                color: $text-background-color;
+                word-break: break-all;
+                max-width: 195px;
+
+                .text-email {
+                  font-size: 0.65rem;
+                }
+
+              }
+
+            }
+
+          }
+
+          .divider {
+            margin: 0.5rem 1.1rem;
+          }
+
+        }
+
+      }
+
     }
 
   }
 
 }
+
+
+.sidebar {
+  width: 260px !important;
+}
+
+
+@media (max-width: $size-md) {
+
+  #header-component {
+
+    .mobile-toggle {
+      display: flex !important;
+      margin-left: 0.5rem;
+    }
+
+    .menu-item {
+      display: none !important;
+    }
+
+    .header-lang-dropdown {
+      display: inline-flex !important;
+    }
+
+  }
+
+}
+
 
 @media (min-width: 841px) {
 
@@ -37,7 +143,7 @@
       display: none !important;
     }
 
-    .navigation-wrapper {
+    .menu-item {
       display: inline-flex !important;
     }
 

@@ -101,7 +101,8 @@ export const result_sample: any = {
         "jobTitle": "New Business Development Manager I Regenerative Materials",
         "email": "detlef.schumann@dsm.com",
         "company": "DSM Biomedical",
-        "companyDomain": "dsm.com"
+        "companyDomain": "dsm.com",
+        "country": "NL"
       }
     },
     {
@@ -149,7 +150,8 @@ export const result_sample: any = {
         "profileUrl": "https://be.linkedin.com/in/hendrik-pieter-delport-md-phd-5a311815",
         "jobTitle": "Medico-Legal Expert and Independent Orthopaedic Consultant - Researcher",
         "company": "KU Leuven bij BVBA Dr Delport Ortho-Expert",
-        "companyDomain": ""
+        "companyDomain": "",
+        "country": "US",
       }
     },
     {
@@ -181,7 +183,8 @@ export const result_sample: any = {
         "profileUrl": "https://nl.linkedin.com/in/eric-breemans-5502154",
         "jobTitle": "Orthopedic surgeon Orthopedium Delft",
         "company": "Kliniek Orthopedium Delft en Schiedam",
-        "companyDomain": ""
+        "companyDomain": "",
+        "country": "UK",
       }
     },
     {
@@ -260,7 +263,8 @@ export const result_sample: any = {
         "jobTitle": "Associate Professor of Orthopaedics at Rowan University",
         "email": "hamid@rowan.edu",
         "company": "Rowan University",
-        "companyDomain": "rowanu.com"
+        "companyDomain": "rowanu.com",
+        "country": "NL",
       }
     },
     {
