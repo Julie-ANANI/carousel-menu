@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { environment } from '../../../../../../environments/environment';
 import { InnovCard } from '../../../../../models/innov-card';
-import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 
 @Component({
@@ -404,107 +403,11 @@ export class InnovationsComponent implements OnInit {
   }
 
 
-  /***
-   * this function is to get image src.
-   * @param innovation
-   */
-  public getImageSrc(innovation: Innovation): string {
-    /*
-     * Search a default innovationCard
-     */
-    let innovationCard = innovation.innovationCards.find((card: InnovCard) => card.lang === this._translateService.currentLang);
-
-    if (!innovationCard && this._translateService.currentLang !== this._translateService.defaultLang) {
-      innovationCard = innovation.innovationCards.find((card: InnovCard) => card.lang === this._translateService.defaultLang);
-    }
-
-    if (!innovationCard && Array.isArray(innovation.innovationCards) && innovation.innovationCards.length > 0) {
-      innovationCard = innovation.innovationCards[0];
-    }
-
-    /*
-     * return default uri
-     */
-    return InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200');
-  }
 
 
-  /***
-   * this function is to return the detail of the innovation card based on the parameter toReturn.
-   * @param toReturn
-   * @param innovation
-   */
-  public getInnovationDetail(toReturn: string, innovation: Innovation): string {
-    let value = '';
-    let index = 0;
-
-    if (innovation.innovationCards.length > 1) {
-      const browserLangIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.browserLang());
-      if (browserLangIndex !== -1) {
-        index = browserLangIndex;
-      }
-    } else {
-      const indexEn = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === 'en');
-      if (indexEn !== -1) {
-        index = indexEn;
-      } else {
-        index = 0;
-      }
-    }
 
 
-    if (toReturn === 'title') {
-      value = innovation.innovationCards[index].title;
-    }
 
-    if (toReturn === 'summary') {
-      value = innovation.innovationCards[index].summary;
-    }
-
-    if (toReturn === 'reference') {
-      value = innovation.innovationCards[index].innovation_reference;
-    }
-
-    if (toReturn === 'lang') {
-      value = innovation.innovationCards[index].lang;
-    }
-
-    return value;
-
-  }
-
-
-  /***
-   * this function is to return the sector tags associated with the particular
-   * innovation.
-   * @param innovation
-   */
-  public getInnovationTags(innovation: Innovation): Array<Tag> {
-    let tags: Array<Tag>;
-    tags = innovation.tags.filter((items) => {
-      return items.type === 'SECTOR';
-    });
-    return tags;
-  }
-
-
-  /***
-   * this function is to get the all the langs of the particular innovation.
-   * @param innovation
-   */
-  public getLangs(innovation: Innovation): Array<string> {
-    const langs: Array<string> = [];
-
-    if (innovation.innovationCards.length > 1) {
-      innovation.innovationCards.forEach((card: InnovCard) => {
-        if (card.lang !== this.browserLang()) {
-          langs.push(card.lang);
-        }
-      });
-    }
-
-    return langs.sort();
-  }
 
 
   /***

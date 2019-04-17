@@ -50,5 +50,8 @@ export const DISCOVER = {
 
   'SUGGESTED_TAGS': 'Secteur(s) associé(s)',
 
+  'LEARN_MORE': 'En savoir plus',
+
+  'LATEST': 'Dernières nouvelles'
 
 };

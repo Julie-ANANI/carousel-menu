@@ -6,26 +6,31 @@
 
   <ng-container *ngIf="!displayLoading">
     <section id="innovations-component">
-      <div class="section-light-pad">
-        <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-          <!-- section recommended innovations -->
-          <div class="section-light-pad">
-            <h2 class="title-secondary text-background">{{ 'DISCOVER.RECOMMENDATION' | translate }}</h2>
-            <app-cards [allInnovations]="userInnovations"></app-cards>
-          </div>
-          <!-- /section recommended innovations -->
+        <!-- section filter -->
+        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
 
-          <!-- section filter -->
-          <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
-
-          <!-- section all innovations
-          <div class="section-light-pad">
-            <app-cards [allInnovations]="localInnovations" [pagination]="false"></app-cards>
-          </div>
-          /section all innovations -->
-
+        <!-- section recommended innovations -->
+        <div class="section-light-pad rm-pad-bottom">
+          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
+          <app-cards [allInnovations]="userInnovations"></app-cards>
         </div>
+        <!-- /section recommended innovations -->
+
+        <!-- section latest innovations -->
+        <div class="section-light-pad rm-pad-bottom">
+          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
+          <app-cards [allInnovations]="userInnovations"></app-cards>
+        </div>
+        <!-- /section recommended innovations -->
+
+        <!-- section all innovations
+        <div class="section-light-pad">
+          <app-cards [allInnovations]="localInnovations" [pagination]="false"></app-cards>
+        </div>
+        /section all innovations -->
+
       </div>
     </section>
   </ng-container>
