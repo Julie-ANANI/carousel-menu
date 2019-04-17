@@ -1,0 +1,34 @@
+<section id="filter-component">
+
+  <!-- section action -->
+  <div class="flex-between">
+
+    <div class="search-wrapper">
+
+    </div>
+
+    <div class="share-wrapper">
+      <button type="button" class="btn btn-sm rounded btn-primary" (click)="onClickShare($event)">
+        <i class="fas fa-share-alt"></i>
+        {{ 'DISCOVER.BUTTON_SHARE' | translate }}
+      </button>
+    </div>
+
+  </div>
+  <!-- /section action -->
+
+
+</section>
+
+
+<!-- modal share -->
+<app-modal [(showModal)]="modalShare">
+  <div class="modal-share-wrapper">
+
+    <h3 class="text-center text-background text-normal">{{ 'DISCOVER.MODAL_SHARE.TITLE' | translate }}</h3>
+
+    <p>{{ shareUrl }}</p>
+
+  </div>
+</app-modal>
+<!-- /modal share -->

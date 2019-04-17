@@ -3,27 +3,12 @@ import { Tag } from '../../../../../../../models/tag';
 import { MultilingPipe } from '../../../../../../../pipe/pipes/multiling.pipe';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
-import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import {environment} from '../../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss'],
-  animations: [
-
-    trigger('tagAnimation', [
-      transition('* => *', [
-
-        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' }), { optional: true }),
-
-        query('.tag-content', stagger('100ms', [
-          animate('.15s ease', style({ opacity: 1, transform: 'translateX(0)' })),
-        ]), { optional: true }),
-
-      ])
-    ])
-
-  ]
+  styleUrls: ['./filters.component.scss']
 })
 
 export class FiltersComponent implements OnInit {
@@ -38,6 +23,12 @@ export class FiltersComponent implements OnInit {
 
   @Output() appliedFilters = new EventEmitter<Array<Tag>>();
 
+  private _userLang = '';
+
+  private _modalShare: boolean = false;
+
+  shareUrl: string;
+
   allFilters: Array<Tag> = [];
 
   selectedFilters: Array<Tag> = [];
@@ -48,12 +39,10 @@ export class FiltersComponent implements OnInit {
 
   highLightTags: Array<Tag> = [];
 
-  userLang = '';
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateService: TranslateService) {
 
-  constructor(private _translateService: TranslateService,
-              @Inject(PLATFORM_ID) protected _platformId: Object,) {
-
-    this.userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
+    this._userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
 
   }
 
@@ -72,8 +61,8 @@ export class FiltersComponent implements OnInit {
 
     this.allFilters = this.allFilters.sort((a: Tag, b: Tag) => {
 
-      const labelA = MultilingPipe.prototype.transform(a.label, this.userLang).toLowerCase();
-      const labelB =  MultilingPipe.prototype.transform(b.label, this.userLang).toLowerCase();
+      const labelA = MultilingPipe.prototype.transform(a.label, this._userLang).toLowerCase();
+      const labelB =  MultilingPipe.prototype.transform(b.label, this._userLang).toLowerCase();
 
       if ( labelA > labelB) {
         return 1;
@@ -122,6 +111,20 @@ export class FiltersComponent implements OnInit {
   }
 
 
+  public onClickShare(event: Event) {
+    event.preventDefault();
+    this._modalShare = true;
+    this._getShareLink();
+  }
+
+
+  private _getShareLink() {
+    if (this.selectedFilters.length === 0) {
+      this.shareUrl = this._getClientUrl();
+    }
+  }
+
+
   private _sendSelectedFilters() {
     this.appliedFilters.emit(this.selectedFilters);
   }
@@ -131,5 +134,21 @@ export class FiltersComponent implements OnInit {
     return this._translateService.getBrowserLang();
   }
 
+
+  private _getClientUrl(): string {
+    return `${environment.clientUrl}/discover`;
+  }
+
+  get modalShare(): boolean {
+    return this._modalShare;
+  }
+
+  set modalShare(value: boolean) {
+    this._modalShare = value;
+  }
+
+  get userLang(): string {
+    return this._userLang;
+  }
 
 }

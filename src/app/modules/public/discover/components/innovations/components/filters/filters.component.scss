@@ -1,0 +1,39 @@
+@import "../../../../../../../../style/framework/src/variables";
+
+#filter-component {
+
+  .flex-between {
+
+    .share-wrapper, .search-wrapper {
+      margin-bottom: 0.5rem;
+    }
+
+    .share-wrapper {
+
+      .btn {
+        min-width: 120px;
+
+        i {
+          margin-left: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+.modal-share-wrapper {
+
+  h3 {
+    margin-bottom: 1.25rem;
+  }
+
+  p {
+    font-size: $font-size-sm;
+  }
+
+}

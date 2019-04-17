@@ -9,10 +9,8 @@ export const DISCOVER = {
 
   'BUTTON_SHARE': 'Partager la page',
 
-  'MODAL': {
-    'TITLE': 'Partage',
-    'HEADING': 'Ce lien vous permet de partager cette page à vos collègues avec les filtres que vous avez activés.',
-    'CONTENT': 'Copy this Url:'
+  'MODAL_SHARE': {
+    'TITLE': 'Partagez cette page avec vos collègues',
   },
 
 

@@ -7,10 +7,8 @@ export const DISCOVER = {
 
   'BUTTON_SHARE': 'SHARE',
 
-  'MODAL': {
-    'TITLE': 'Share Board',
-    'HEADING': 'This link allows you to share this page with your colleagues with the filters you have enabled.',
-    'CONTENT': 'Copy this Url:'
+  'MODAL_SHARE': {
+    'TITLE': 'Share this page with your colleagues',
   },
 
   'NO_INNOVATION': 'We are unable to find innovations based on your query.',
