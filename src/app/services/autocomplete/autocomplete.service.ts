@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-interface AutocompleteObject {_id: string; name: string; domain: string; flag: string}
+interface AutocompleteObject {_id: string; name: string; domain: string; flag: string; logo: string}
 
 @Injectable()
 export class AutocompleteService {
