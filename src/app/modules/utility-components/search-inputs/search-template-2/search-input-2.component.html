@@ -1,0 +1,24 @@
+<section id="search-input-component">
+  <form novalidate class="search-wrapper" [ngClass]="{ 'active': searchActive}" autocomplete="off">
+
+    <input
+      type="search"
+      [attr.placeholder]= "'COMMON.SEARCH_INNOVATION' | translate "
+      [formControl]="searchField"
+      (keydown)="onKeyboardPress($event)">
+
+    <i class="fas fa-times search-cross-icon" (click)="clearInput($event)" [ngStyle]="{ 'display': crossIcon ? 'block' : 'none' }"></i>
+
+    <button class="btn btn-round btn-primary" type="button" (click)="closeSearch($event)">
+      <i class="fas fa-search search-icon"></i>
+    </button>
+
+    <ul *ngIf="searchField.value" class="input-suggestion" [ngStyle]="{'display': displaySuggestion ? 'flex' : 'none' }">
+      <li *ngFor="let suggestion of localSuggestions; let i = index;" (click)="onValueSelect(suggestion)" [ngClass]="{ 'is-focused': i === currentFocus }">
+        {{ suggestion.text }}
+      </li>
+    </ul>
+
+  </form>
+</section>
+
