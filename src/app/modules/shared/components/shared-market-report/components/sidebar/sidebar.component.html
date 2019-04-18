@@ -44,7 +44,7 @@
     <p>
       <a href="#professionals" pageScroll>
         {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
-        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+        <i class="fas fa-angle-right" aria-hidden="true"></i>
       </a>
       <span *ngFor="let c of continentsList">
         <input type="checkbox" [name]="c" (change)="checkCountry($event)" [checked]="filteredContinents ? filteredContinents[c] : true">
@@ -54,7 +54,7 @@
     <p>
       <a href="#professionals" pageScroll>
         {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
-        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+        <i class="fas fa-angle-right" aria-hidden="true"></i>
       </a>
       <span *ngFor="let t of tagsList">
         <input type="checkbox" [name]="t._id" (change)="checkTag($event)" [checked]="selectedTags[t._id]">
@@ -70,7 +70,7 @@
     <p *ngFor="let question of questions">
       <a [href]="'#' + question.identifier | removespaces" pageScroll>
         {{ question.title | multiling:lang }}
-        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+        <i class="fas fa-angle-right" aria-hidden="true"></i>
       </a>
       <!-- Textarea filters -->
       <ng-container *ngIf="question.controlType === 'textarea'">
@@ -92,7 +92,7 @@
     <p>
       <a href="#conclusion" pageScroll>
         {{ 'MARKET_REPORT.CONCLUSION' | translate }}
-        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+        <i class="fas fa-angle-right" aria-hidden="true"></i>
       </a>
     </p>
   </div>
