@@ -2,6 +2,7 @@
 
 #innovations-component {
   max-width: $size-2x;
+  min-height: 100vh;
   margin-left: auto;
   margin-right: auto;
   padding-top: 1.25rem;
@@ -26,6 +27,11 @@
 
     }
 
+  }
+
+  .no-result-heading {
+    margin-bottom: 0.75rem;
+    font-size: $font-size-lg;
   }
 
 }

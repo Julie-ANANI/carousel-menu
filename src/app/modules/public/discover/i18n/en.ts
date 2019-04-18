@@ -31,6 +31,10 @@ export const DISCOVER = {
 
   'TOOLTIP_TEXT_COPIED': 'Copied to clipboard',
 
-  'FILTER_TEXT': 'See all tags'
+  'FILTER_TEXT': 'See all tags',
+
+  'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search innovations...',
+
+  'RESULT_FOUND': 'results for '
 
 };

@@ -4,6 +4,7 @@ import { MultilingPipe } from '../../../../../../../pipe/pipes/multiling.pipe';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
 import {environment} from '../../../../../../../../environments/environment';
+import {FilterService} from '../../services/filter.service';
 
 @Component({
   selector: 'app-filters',
@@ -45,7 +46,8 @@ export class FiltersComponent implements OnInit {
 
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateService: TranslateService) {
+              private _translateService: TranslateService,
+              private _filterService: FilterService) {
 
     this._userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
 
@@ -119,6 +121,11 @@ export class FiltersComponent implements OnInit {
   public showAllTags(event: Event) {
     event.preventDefault();
     this._modalTag = true;
+  }
+
+
+  public searchOutput(value: string) {
+    this._filterService.setSearchOutput(value);
   }
 
 

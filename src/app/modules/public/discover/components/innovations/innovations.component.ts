@@ -6,6 +6,8 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
+import { FilterService } from './services/filter.service';
+import {InnovCard} from '../../../../../models/innov-card';
 
 
 @Component({
@@ -32,22 +34,29 @@ export class InnovationsComponent implements OnInit {
 
   private _trendingInnovations: Array<Innovation> = [];
 
+  searchedInnovations: Array<Innovation> = [];
+
   private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
   private _userLang = '';
 
-  private _displayLoading: boolean = true;
-
   selectedFilters: Array<Tag> = [];
 
   private _userAuthenticated: boolean = false;
+
+  searchingInnovations: boolean = false;
+
+  noResultFound: boolean = false;
+
+  searchKey: string;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _translateService: TranslateService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
-              private _authService: AuthService) {
+              private _authService: AuthService,
+              private _filterService: FilterService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
 
@@ -69,11 +78,14 @@ export class InnovationsComponent implements OnInit {
 
     this._userAuthenticated = this._authService.isAuthenticated;
 
+    this._filterService.getSearchOutput().subscribe((searchKey: string) => {
+      this._searchInnovations(searchKey);
+    });
+
   }
 
   ngOnInit() {
     this._getAllSectorTags();
-    this._stopLoading();
   }
 
 
@@ -145,10 +157,35 @@ export class InnovationsComponent implements OnInit {
   }
 
 
-  private _stopLoading() {
-    setTimeout(() => {
-      this._displayLoading = false;
-    }, 500);
+  private _searchInnovations(input: string) {
+    this.searchedInnovations = [];
+
+    if (input) {
+      this.searchingInnovations = true;
+
+      this._totalInnovations.forEach((innovation: Innovation) => {
+        innovation.innovationCards.forEach((card: InnovCard) => {
+
+          const find = card.title.toLowerCase().includes(input.toLowerCase());
+
+          if (find) {
+            const innovationIndex = this.searchedInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
+            if (innovationIndex === -1) {
+              this.searchedInnovations.push(innovation);
+            }
+          }
+
+        });
+      });
+
+      this.searchKey = input;
+
+      this.noResultFound = this.searchedInnovations.length === 0;
+
+    } else {
+      this.searchingInnovations = false;
+    }
+
   }
 
 
@@ -189,10 +226,6 @@ export class InnovationsComponent implements OnInit {
 
   get userLang(): string {
     return this._userLang;
-  }
-
-  get displayLoading(): boolean {
-    return this._displayLoading;
   }
 
   get userAuthenticated(): boolean {

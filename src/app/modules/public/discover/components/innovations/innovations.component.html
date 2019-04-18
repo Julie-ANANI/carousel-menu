@@ -1,64 +1,78 @@
 <ng-container *ngIf="totalInnovations.length > 0">
 
-  <ng-container *ngIf="displayLoading">
-    <app-spinner-loader></app-spinner-loader>
-  </ng-container>
+  <section id="innovations-component">
+    <div class="column col-xs-12 col-11 col-mx-auto">
 
-  <ng-container *ngIf="!displayLoading">
-    <section id="innovations-component">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+      <!-- section filter -->
+      <div class="section-light-pad rm-pad-bottom">
+        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
+      </div>
+      <!-- /section filter -->
 
-        <!-- section filter -->
+      <!-- section recommended innovations -->
+      <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated && !searchingInnovations">
         <div class="section-light-pad rm-pad-bottom">
-          <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
+          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
+          <app-cards [allInnovations]="recommendedInnovations"></app-cards>
         </div>
-        <!-- /section filter -->
+      </ng-container>
+      <!-- /section recommended innovations -->
 
-        <!-- section recommended innovations -->
-        <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated">
-          <div class="section-light-pad rm-pad-bottom">
-            <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
-            <app-cards [allInnovations]="recommendedInnovations"></app-cards>
-          </div>
-        </ng-container>
-        <!-- /section recommended innovations -->
-
-        <!-- section latest innovations -->
+      <!-- section latest innovations -->
+      <ng-container *ngIf="!searchingInnovations">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
           <app-cards [allInnovations]="latestInnovations"></app-cards>
         </div>
-        <!-- /section latest innovations -->
+      </ng-container>
+      <!-- /section latest innovations -->
 
-        <!-- section trending innovations -->
+      <!-- section trending innovations -->
+      <ng-container *ngIf="!searchingInnovations">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
           <app-cards [allInnovations]="trendingInnovations" [pagination]="true"></app-cards>
         </div>
-        <!-- /section all innovations -->
+      </ng-container>
+      <!-- /section all innovations -->
 
-      </div>
-    </section>
-  </ng-container>
+      <!-- section when searching innovation -->
+      <ng-container *ngIf="searchingInnovations">
+
+        <div *ngIf="!noResultFound" class="section-light-pad rm-pad-bottom">
+          <h3 class="no-result-heading text-background text-normal">{{ searchedInnovations.length }} {{ 'DISCOVER.RESULT_FOUND' | translate }} {{ searchKey }}</h3>
+          <app-cards [allInnovations]="searchedInnovations" [search]="true"></app-cards>
+        </div>
+
+
+        <div *ngIf="noResultFound">
+          <div class="no-result">
+
+          </div>
+        </div>
+
+      </ng-container>
+      <!-- /section when searching innovation -->
+
+    </div>
+  </section>
 
   <!-- footer banner -->
-  <ng-container *ngIf="!displayLoading">
-    <div class="section-community">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="flex-between">
+  <div class="section-community">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="flex-between">
 
-          <div class="message-wrapper d-flex">
-            <i class="fas fa-paper-plane"></i>
-            <span>{{ 'DISCOVER.COMMUNITY_TEXT' | translate }}</span>
-          </div>
-
-          <a [href]="getCommunityUrl()" target="_blank" rel="noopener">
-            <button type="button" class="btn btn-primary rounded">{{ 'DISCOVER.BUTTON_COMMUNITY' | translate }}</button>
-          </a>
-
+        <div class="message-wrapper d-flex">
+          <i class="fas fa-paper-plane"></i>
+          <span>{{ 'DISCOVER.COMMUNITY_TEXT' | translate }}</span>
         </div>
+
+        <a [href]="getCommunityUrl()" target="_blank" rel="noopener">
+          <button type="button" class="btn btn-primary rounded">{{ 'DISCOVER.BUTTON_COMMUNITY' | translate }}</button>
+        </a>
+
       </div>
     </div>
-  </ng-container>
+  </div>
 
 </ng-container>

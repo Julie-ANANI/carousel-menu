@@ -34,6 +34,10 @@ export const DISCOVER = {
 
   'TOOLTIP_TEXT_COPIED': 'Copié dans le presse-papiers',
 
-  'FILTER_TEXT': 'Voir tous les tags'
+  'FILTER_TEXT': 'Voir tous les tags',
+
+  'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour rechercher....',
+
+  'RESULT_FOUND' : 'résultats pour ',
 
 };
