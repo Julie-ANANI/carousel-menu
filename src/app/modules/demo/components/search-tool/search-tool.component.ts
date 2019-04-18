@@ -6,7 +6,8 @@ import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
-import {SidebarInterface} from "../../../sidebar/interfaces/sidebar-interface";
+import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
+import { AuthService } from "../../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-search-tool',
@@ -37,6 +38,7 @@ export class SearchToolComponent implements OnInit{
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
               private _searchService: SearchService,
+              private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('Search Tool | UMI');
@@ -70,7 +72,8 @@ export class SearchToolComponent implements OnInit{
         this._scale = [3, 50, 100];
         this._updateResults();
       } else {
-        this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
+       const user = this._authService.getUserInfo().name;
+        this._searchService.metadataSearch(keywords, user).pipe(first()).subscribe((result: any) => {
           this._requestId = result._id;
           this._searchResult.metadata = result.metadata || {};
           this._searchResult.pros = result.pros;

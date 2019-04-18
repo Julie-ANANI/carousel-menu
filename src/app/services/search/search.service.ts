@@ -21,9 +21,9 @@ export class SearchService {
     return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests, starProfiles: starProfiles});
   }
 
-  public metadataSearch(keywords: string): Observable<any> {
+  public metadataSearch(keywords: string, user: string): Observable<any> {
     const query = {
-      params: JSON.stringify({keywords: keywords}),
+      params: JSON.stringify({keywords: keywords, user: user}),
       path: '/search/metadata'
     };
     return this._http.get('/search/get', {params: query});
