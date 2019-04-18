@@ -29,12 +29,9 @@ export class SearchService {
     return this._http.get('/search/get', {params: query});
   }
 
-  public inHouseSearch(keywords: string, country?: string): Observable<any> {
-    const params: any = {keywords: keywords};
-    if (country) params.country = country;
+  public saveMetadataRequest(requestId: any): Observable<any> {
     const query = {
-      params: JSON.stringify(params),
-      path: '/search/inhouse'
+      path: `/metadataRequest/${requestId}/keep`
     };
     return this._http.get('/search/get', {params: query});
   }
