@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { PaginationInterface } from '../../../../../../utility-components/pagination/interfaces/pagination';
 import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
@@ -11,23 +11,24 @@ import { Tag } from '../../../../../../../models/tag';
 @Component({
   selector: 'app-cards',
   templateUrl: './cards.component.html',
-  styleUrls: ['./cards.component.scss']
+  styleUrls: ['./cards.component.scss'],
 })
 
-export class CardsComponent implements OnInit {
+export class CardsComponent {
 
   @Input() set allInnovations(value: Array<Innovation>) {
-    if (value) {
-      this._innovations = value;
-      this._totalInnovations = value.length;
-    }
+    this._innovations = value;
+    this._totalInnovations = value.length;
   }
 
   @Input() set pagination(value: boolean) {
-    if (value) {
-      this._isPagination = value;
-      this._endIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
-    }
+    this._isPagination = value;
+    this._endIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
+  }
+
+  @Input() set search(value: boolean) {
+    this._isSearching = value;
+    this._endIndex = this._totalInnovations;
   }
 
   private _paginationValue: PaginationInterface = {};
@@ -38,27 +39,19 @@ export class CardsComponent implements OnInit {
 
   private _startIndex: number = 0;
 
-  private _endIndex: number;
+  private _endIndex: number = 4;
 
   private _isPagination: boolean = false;
 
   private _userLang = '';
+
+  private _isSearching: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _localStorage: LocalStorageService,
               private _translateService: TranslateService) {
 
     this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
-
-  }
-
-  ngOnInit() {
-
-    if (!this._isPagination) {
-      this._endIndex = 4;
-    } else {
-      this._paginationValue = { limit: 50, offset: 0 };
-    }
 
   }
 
@@ -187,6 +180,10 @@ export class CardsComponent implements OnInit {
 
   get userLang(): string {
     return this._userLang;
+  }
+
+  get isSearching(): boolean {
+    return this._isSearching;
   }
 
 }
