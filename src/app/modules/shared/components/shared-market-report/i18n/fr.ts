@@ -1,6 +1,8 @@
 export const MARKET_REPORT = {
   'TITLE': 'Potentiel marché de votre projet',
 
+  'RESET_FILTERS': 'Réinitialiser tous les filtres',
+
   'MESSAGE': {
     'SUBMITTED': 'Votre innovation est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',

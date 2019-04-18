@@ -15,7 +15,7 @@ export class FilterService {
     this.reset();
   }
 
-  reset(): void {
+  public reset(): void {
     this._filters = {};
     this._filtersUpdate.next();
   }

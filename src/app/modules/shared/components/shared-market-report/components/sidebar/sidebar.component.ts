@@ -193,6 +193,11 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  public resetFilters(event: Event) {
+    event.preventDefault();
+    this.filterService.reset();
+  }
+
   get answers(): Array<Answer> {
     return this._answers;
   }
@@ -219,6 +224,10 @@ export class SidebarComponent implements OnInit {
 
   get filters() {
     return this.filterService.filters;
+  }
+
+  get filtersCount() {
+    return Object.keys(this.filterService.filters).length;
   }
 
   get innovation(): Innovation {

@@ -41,6 +41,9 @@
   <hr/>
 
   <div class="menu-wrapper">
+    <p *ngIf="filtersCount > 0" class="reset-filter">
+      <span (click)="resetFilters($event)" [innerText]="'MARKET_REPORT.RESET_FILTERS'" translate></span>
+    </p>
     <p>
       <a href="#professionals" pageScroll>
         {{ 'MARKET_REPORT.MAP.TITLE' | translate }}

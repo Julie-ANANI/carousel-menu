@@ -1,6 +1,8 @@
 export const MARKET_REPORT = {
   'TITLE': 'Market potential of your project',
 
+  'RESET_FILTERS': 'Reset all filters',
+
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
     'EDITING': 'Please finish setup of your project and submit it.',
