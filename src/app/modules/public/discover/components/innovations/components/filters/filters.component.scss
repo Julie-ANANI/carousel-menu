@@ -8,6 +8,23 @@
       margin-bottom: 0.5rem;
     }
 
+    .search-wrapper {
+
+      .filter-icon {
+        font-size: $font-size-sm;
+
+        span {
+          margin-left: $unit-2;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+      }
+
+    }
+
     .share-wrapper {
 
       .btn {

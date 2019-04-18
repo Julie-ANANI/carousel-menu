@@ -5,10 +5,19 @@
 
     <div class="search-wrapper">
 
+      <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)">
+        <i class="fas fa-sliders-h"></i>
+        <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
+      </div>
+
+      <div class="search-bar">
+
+      </div>
+
     </div>
 
     <div class="share-wrapper">
-      <button type="button" class="btn btn-sm rounded btn-primary" (click)="onClickShare($event)">
+      <button type="button" class="btn btn-sm rounded btn-secondary" (click)="onClickShare($event)">
         <i class="fas fa-share-alt"></i>
         {{ 'DISCOVER.BUTTON_SHARE' | translate }}
       </button>
@@ -21,8 +30,14 @@
 </section>
 
 
+<!-- modal tags -->
+<app-modal [(showModal)]="modalTag" [modalPosition]="'250px'">
+
+</app-modal>
+<!-- /modal tags -->
+
 <!-- modal share -->
-<app-modal [(showModal)]="modalShare">
+<app-modal [(showModal)]="modalShare" [modalPosition]="'250px'">
   <div class="modal-share-wrapper">
 
     <div class="flex-centered">

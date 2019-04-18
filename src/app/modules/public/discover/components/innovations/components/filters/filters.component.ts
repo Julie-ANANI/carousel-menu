@@ -27,7 +27,11 @@ export class FiltersComponent implements OnInit {
 
   private _modalShare: boolean = false;
 
-  shareUrl: string;
+  private _modalTag: boolean = false;
+
+  private _shareUrl: string;
+
+  private _urlCopied: boolean = false;
 
   allFilters: Array<Tag> = [];
 
@@ -39,7 +43,6 @@ export class FiltersComponent implements OnInit {
 
   highLightTags: Array<Tag> = [];
 
-  urlCopied: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService) {
@@ -113,9 +116,20 @@ export class FiltersComponent implements OnInit {
   }
 
 
+  public showAllTags(event: Event) {
+    event.preventDefault();
+    this._modalTag = true;
+  }
+
+
+  /***
+   * this function will open the share modal to share the
+   * page url.
+   * @param event
+   */
   public onClickShare(event: Event) {
     event.preventDefault();
-    this.urlCopied = false;
+    this._urlCopied = false;
     this._modalShare = true;
     this._getShareLink();
   }
@@ -123,7 +137,7 @@ export class FiltersComponent implements OnInit {
 
   private _getShareLink() {
     if (this.selectedFilters.length === 0) {
-      this.shareUrl = this._getClientUrl();
+      this._shareUrl = this._getClientUrl();
     }
   }
 
@@ -143,14 +157,18 @@ export class FiltersComponent implements OnInit {
       textbox.style.left = '0';
       textbox.style.top = '0';
       textbox.style.opacity = '0';
-      textbox.value = this.shareUrl;
+      textbox.value = this._shareUrl;
       document.body.appendChild(textbox);
       textbox.focus();
       textbox.select();
       document.execCommand('copy');
       document.body.removeChild(textbox);
 
-      this.urlCopied = true;
+      this._urlCopied = true;
+
+      setTimeout(() => {
+        this.closeBanner(event);
+      }, 8000)
 
     }
 
@@ -159,7 +177,7 @@ export class FiltersComponent implements OnInit {
 
   public closeBanner(event: Event) {
     event.preventDefault();
-    this.urlCopied = false;
+    this._urlCopied = false;
   }
 
 
@@ -183,6 +201,22 @@ export class FiltersComponent implements OnInit {
 
   set modalShare(value: boolean) {
     this._modalShare = value;
+  }
+
+  get modalTag(): boolean {
+    return this._modalTag;
+  }
+
+  set modalTag(value: boolean) {
+    this._modalTag = value;
+  }
+
+  get shareUrl(): string {
+    return this._shareUrl;
+  }
+
+  get urlCopied(): boolean {
+    return this._urlCopied;
   }
 
   get userLang(): string {

@@ -29,6 +29,8 @@ export const DISCOVER = {
 
   'TOOLTIP_TEXT': 'Click to copy to clipboard',
 
-  'TOOLTIP_TEXT_COPIED': 'Copied to clipboard'
+  'TOOLTIP_TEXT_COPIED': 'Copied to clipboard',
+
+  'FILTER_TEXT': 'See all tags'
 
 };
