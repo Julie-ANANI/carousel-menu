@@ -26,10 +26,14 @@
     display: flex;
   }
 
-  .sidebar {
-    min-height: 100vh;
+  #sidebar-synthesis {
+    height: 100vh;
+    overflow-y: scroll;
     width: 180px;
+    min-width: 180px;
     background-color: white;
+    position: sticky;
+    top: 0;
   }
 
   #main-page {
