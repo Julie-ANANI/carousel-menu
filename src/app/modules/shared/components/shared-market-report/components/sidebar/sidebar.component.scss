@@ -1,3 +1,48 @@
 #app-market-report-sidebar {
 
+  font-size: 15px;
+
+  .views-wrapper {
+
+    ul {
+      list-style-type: none;
+      margin-left: 20px;
+    }
+
+    li {
+
+      i {
+        color: red;
+      }
+
+      a {
+        margin-left: 10px;
+      }
+
+    }
+
+    input {
+      margin: 10px;
+    }
+
+  }
+
+  .menu-wrapper {
+
+    padding: 0 10px;
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    span {
+      display: block;
+    }
+
+    label {
+      margin-left: 10px;
+    }
+
+  }
+
 }

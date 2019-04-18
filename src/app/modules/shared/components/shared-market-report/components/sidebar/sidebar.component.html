@@ -32,7 +32,7 @@
         <input type="text" class="form-control" [placeholder]="'MARKET_REPORT.MENU_BAR.PLACEHOLDER_VIEW' | translate"
                required [(ngModel)]="filterName" [ngModelOptions]="{standalone: true}" #name="ngModel">
       </div>
-      <button class="btn btn-success" type="submit"
+      <button class="btn ghost-primary" type="submit"
               [disabled]="!shareFilterForm.form.valid"
               [textContent]="'MARKET_REPORT.MENU_BAR.SUBMIT_VIEW'" translate></button>
     </form>
@@ -40,60 +40,62 @@
 
   <hr/>
 
-  <p>
-    <a href="#professionals" pageScroll>
-      {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
-      <i class="icon icon-arrow-right" aria-hidden="true"></i>
-    </a>
-    <span *ngFor="let c of continentsList">
-      <input type="checkbox" [name]="c" (change)="checkCountry($event)" [checked]="filteredContinents ? filteredContinents[c] : true">
-      <label [for]="c">{{ ('CONTINENTS.' + c) | translate }}</label>
-    </span>
-  </p>
-  <p>
-    <a href="#professionals" pageScroll>
-      {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
-      <i class="icon icon-arrow-right" aria-hidden="true"></i>
-    </a>
-    <span *ngFor="let t of tagsList">
-      <input type="checkbox" [name]="t._id" (change)="checkTag($event)" [checked]="selectedTags[t._id]">
-      <label [for]="t._id">{{ t.label | multiling:lang }}</label>
-    </span>
-    <ng-container *ngIf="filters['professionals']">
-      <span *ngFor="let a of filters['professionals'].value | keyvalue">
-      <i class="fa fa-trash" aria-hidden="true" (click)="deleteProfessionalFilter($event, a.key)"></i>
-      {{ a.value.professional.firstName }} {{ a.value.professional.lastName }}
-    </span>
-    </ng-container>
-  </p>
-  <p *ngFor="let question of questions">
-    <a [href]="'#' + question.identifier | removespaces" pageScroll>
-      {{ question.title | multiling:lang }}
-      <i class="icon icon-arrow-right" aria-hidden="true"></i>
-    </a>
-    <!-- Textarea filters -->
-    <ng-container *ngIf="question.controlType === 'textarea'">
-      <span *ngFor="let t of answersTagsLists[question.identifier]">
-        <input type="checkbox" [name]="t._id" (change)="checkAnswerTag($event, question.identifier)"
-               [checked]="selectedAnswersTags[question.identifier][t._id]">
+  <div class="menu-wrapper">
+    <p>
+      <a href="#professionals" pageScroll>
+        {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
+        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+      </a>
+      <span *ngFor="let c of continentsList">
+        <input type="checkbox" [name]="c" (change)="checkCountry($event)" [checked]="filteredContinents ? filteredContinents[c] : true">
+        <label [for]="c">{{ ('CONTINENTS.' + c) | translate }}</label>
+      </span>
+    </p>
+    <p>
+      <a href="#professionals" pageScroll>
+        {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+      </a>
+      <span *ngFor="let t of tagsList">
+        <input type="checkbox" [name]="t._id" (change)="checkTag($event)" [checked]="selectedTags[t._id]">
         <label [for]="t._id">{{ t.label | multiling:lang }}</label>
       </span>
-    </ng-container>
-    <!-- checkbox/radio filters -->
-    <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
-      <span *ngFor="let o of question.options">
-        <input type="checkbox" [name]="o.identifier" (change)="checkOption($event, question)"
-               [checked]="filters[question.identifier] ? filters[question.identifier].value[o.identifier] : true">
-        <label [for]="o.identifier">{{ o.label | multiling:lang }}</label>
+      <ng-container *ngIf="filters['professionals']">
+        <span *ngFor="let a of filters['professionals'].value | keyvalue">
+        <i class="fa fa-trash" aria-hidden="true" (click)="deleteProfessionalFilter($event, a.key)"></i>
+        {{ a.value.professional.firstName }} {{ a.value.professional.lastName }}
       </span>
-    </ng-container>
-  </p>
-  <p>
-    <a href="#conclusion" pageScroll>
-      {{ 'MARKET_REPORT.CONCLUSION' | translate }}
-      <i class="icon icon-arrow-right" aria-hidden="true"></i>
-    </a>
-  </p>
+      </ng-container>
+    </p>
+    <p *ngFor="let question of questions">
+      <a [href]="'#' + question.identifier | removespaces" pageScroll>
+        {{ question.title | multiling:lang }}
+        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+      </a>
+      <!-- Textarea filters -->
+      <ng-container *ngIf="question.controlType === 'textarea'">
+        <span *ngFor="let t of answersTagsLists[question.identifier]">
+          <input type="checkbox" [name]="t._id" (change)="checkAnswerTag($event, question.identifier)"
+                 [checked]="selectedAnswersTags[question.identifier][t._id]">
+          <label [for]="t._id">{{ t.label | multiling:lang }}</label>
+        </span>
+      </ng-container>
+      <!-- checkbox/radio filters -->
+      <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
+        <span *ngFor="let o of question.options">
+          <input type="checkbox" [name]="o.identifier" (change)="checkOption($event, question)"
+                 [checked]="filters[question.identifier] ? filters[question.identifier].value[o.identifier] : true">
+          <label [for]="o.identifier">{{ o.label | multiling:lang }}</label>
+        </span>
+      </ng-container>
+    </p>
+    <p>
+      <a href="#conclusion" pageScroll>
+        {{ 'MARKET_REPORT.CONCLUSION' | translate }}
+        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+      </a>
+    </p>
+  </div>
 </div>
 
 <app-market-report-export-modal
