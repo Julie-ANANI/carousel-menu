@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-sidebar-search-tool',
@@ -9,7 +9,6 @@ export class SidebarSearchToolComponent {
 
   @Output() onSaveRequest = new EventEmitter <any>();
   @Output() close = new EventEmitter <any>();
-  @Input() params: any;
 
   constructor() {}
 
