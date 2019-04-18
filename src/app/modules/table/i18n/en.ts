@@ -8,6 +8,8 @@ export const TABLE = {
     'VALIDATED_NO_MAIL': 'Validate without sending mail',
     'SUBMITTED': 'To look at',
     'REJECTED_GMAIL': 'Rejected by Mail',
+    'REJECTED_UMIBOT': 'Automatically rejected',
+    'VALIDATED_UMIBOT': 'Automatically validated'
   },
 
   'HEADING': {
