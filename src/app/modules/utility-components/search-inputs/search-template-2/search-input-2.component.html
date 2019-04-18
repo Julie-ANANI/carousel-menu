@@ -1,3 +1,25 @@
+<section class="search-wrapper" id="search-input-2-component" [ngClass]="{ 'active': searchActive }">
+
+  <form novalidate autocomplete="off" class="d-flex" >
+
+    <span class="search-icon text-notify">
+      <i class="fas fa-search"></i>
+    </span>
+
+    <input
+      type="search"
+      [formControl]="searchField"
+      [attr.placeholder]="placeholder | translate">
+
+  </form>
+
+  <div class="close-icon text-notify">
+    <i class="fas fa-times"></i>
+  </div>
+
+</section>
+
+<!--
 <section id="search-input-component">
   <form novalidate class="search-wrapper" [ngClass]="{ 'active': searchActive}" autocomplete="off">
 
@@ -21,4 +43,5 @@
 
   </form>
 </section>
+-->
 

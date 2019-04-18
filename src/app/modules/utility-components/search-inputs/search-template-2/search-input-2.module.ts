@@ -8,7 +8,7 @@ import { SearchInput2Component } from './search-input-2.component';
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     ReactiveFormsModule,
     FormsModule
   ],
