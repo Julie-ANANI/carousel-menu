@@ -27,4 +27,8 @@ export const DISCOVER = {
 
   'COMMUNITY_TEXT': 'Want to get the latest innovations in your mailbox?',
 
+  'TOOLTIP_TEXT': 'Click to copy to clipboard',
+
+  'TOOLTIP_TEXT_COPIED': 'Copied to clipboard'
+
 };

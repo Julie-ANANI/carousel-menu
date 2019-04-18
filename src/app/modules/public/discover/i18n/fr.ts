@@ -30,4 +30,8 @@ export const DISCOVER = {
 
   'COMMUNITY_TEXT': 'Vous souhaitez recevoir nos dernières innovations par email ?',
 
+  'TOOLTIP_TEXT': 'Cliquez pour copier dans le presse-papiers',
+
+  'TOOLTIP_TEXT_COPIED': 'Copié dans le presse-papiers'
+
 };

@@ -25,9 +25,19 @@
 <app-modal [(showModal)]="modalShare">
   <div class="modal-share-wrapper">
 
-    <h3 class="text-center text-background text-normal">{{ 'DISCOVER.MODAL_SHARE.TITLE' | translate }}</h3>
+    <div class="flex-centered">
 
-    <p>{{ shareUrl }}</p>
+      <h3 class="text-background text-normal">{{ 'DISCOVER.MODAL_SHARE.TITLE' | translate }}</h3>
+
+      <div class="banner banner-success c-hand" [ngStyle]="{ 'visibility': urlCopied ? 'visible' : 'hidden' }" (click)="closeBanner($event)">
+        <span>{{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}</span>
+      </div>
+
+    </div>
+
+    <p class="popover">
+      <span class="tooltip c-hand" [attr.data-tooltip]="'DISCOVER.TOOLTIP_TEXT' | translate" (click)="OnClickCopy($event)">{{ shareUrl }}</span>
+    </p>
 
   </div>
 </app-modal>

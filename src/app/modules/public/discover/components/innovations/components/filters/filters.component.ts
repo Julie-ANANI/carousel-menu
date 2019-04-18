@@ -39,6 +39,8 @@ export class FiltersComponent implements OnInit {
 
   highLightTags: Array<Tag> = [];
 
+  urlCopied: boolean = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService) {
 
@@ -113,6 +115,7 @@ export class FiltersComponent implements OnInit {
 
   public onClickShare(event: Event) {
     event.preventDefault();
+    this.urlCopied = false;
     this._modalShare = true;
     this._getShareLink();
   }
@@ -122,6 +125,41 @@ export class FiltersComponent implements OnInit {
     if (this.selectedFilters.length === 0) {
       this.shareUrl = this._getClientUrl();
     }
+  }
+
+
+  /***
+   * this function is to copy the share url to clipboard when the user clicks on it.
+   * @param event
+   * @constructor
+   */
+  public OnClickCopy(event: Event) {
+    event.preventDefault();
+
+    if (isPlatformBrowser(this._platformId)) {
+
+      let textbox = document.createElement('textarea');
+      textbox.style.position = 'fixed';
+      textbox.style.left = '0';
+      textbox.style.top = '0';
+      textbox.style.opacity = '0';
+      textbox.value = this.shareUrl;
+      document.body.appendChild(textbox);
+      textbox.focus();
+      textbox.select();
+      document.execCommand('copy');
+      document.body.removeChild(textbox);
+
+      this.urlCopied = true;
+
+    }
+
+  }
+
+
+  public closeBanner(event: Event) {
+    event.preventDefault();
+    this.urlCopied = false;
   }
 
 

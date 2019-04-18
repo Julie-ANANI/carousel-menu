@@ -463,11 +463,11 @@
 .animate-appear {
   animation-name: fadeIn;
   animation-duration: 2s;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: ease;
 }
 
 .animate-disappear {
   animation-name: fadeOut;
   animation-duration: 50ms;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: ease;
 }
