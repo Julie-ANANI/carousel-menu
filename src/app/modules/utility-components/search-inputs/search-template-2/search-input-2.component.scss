@@ -12,10 +12,6 @@
   form {
     align-items: center;
 
-    .search-icon {
-      z-index: $zindex-0;
-    }
-
     input[type="search"] {
       width: 50px;
       border: none;
@@ -45,7 +41,7 @@
 
   }
 
-  &:hover {
+  &:hover, &.active {
     cursor: pointer;
     border-bottom-color: $border-color;
 
@@ -55,6 +51,18 @@
         width: 268px;
         transform: scaleX(1);
         cursor: pointer;
+      }
+
+    }
+
+  }
+
+  &.active {
+
+    form {
+
+      input[type="search"] {
+        cursor: text;
       }
 
     }
