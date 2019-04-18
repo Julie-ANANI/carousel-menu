@@ -248,7 +248,7 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-search-tool
     [params]="params"
-    (paramsChange)="updateSettings($event)">
+    (onSaveRequest)="saveRequest()">
   </app-sidebar-search-tool>
 </app-sidebar>
 <!-- /sidebar for advanced settings -->

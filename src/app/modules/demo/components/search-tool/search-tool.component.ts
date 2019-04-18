@@ -32,6 +32,8 @@ export class SearchToolComponent implements OnInit{
 
   private _sidebarValue: SidebarInterface = {};
 
+  private _requestId: string = null;
+
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
               private _searchService: SearchService,
@@ -69,6 +71,7 @@ export class SearchToolComponent implements OnInit{
         this._updateResults();
       } else {
         this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
+          this._requestId = result._id;
           this._searchResult.metadata = result.metadata || {};
           this._searchResult.pros = result.pros;
           this._scale = result.scale || [50, 200, 1500];
@@ -171,7 +174,7 @@ export class SearchToolComponent implements OnInit{
 
   }
 
-  onClickMenu() {
+  public onClickMenu() {
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'Advanced Search',
@@ -179,6 +182,15 @@ export class SearchToolComponent implements OnInit{
     };
   }
 
+  public saveRequest() {
+    if (this._requestId) {
+      this._searchService.saveMetadataRequest(this._requestId).pipe(first()).subscribe((result: any) => {
+        this._translateNotificationsService.success("ERROR.SUCCESS", "ERROR.CAMPAIGN.SEARCH.REQUEST_SAVED");
+      });
+    } else {
+      this._translateNotificationsService.error("ERROR.ERROR", "ERROR.CAMPAIGN.SEARCH.NO_REQUEST");
+    }
+  }
 
   public getCompanyUrl(domain: string): string {
     return `http://${domain}`;

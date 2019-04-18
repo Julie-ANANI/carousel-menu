@@ -7,10 +7,15 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class SidebarSearchToolComponent {
 
-  @Output() paramsChange = new EventEmitter <any>();
+  @Output() onSaveRequest = new EventEmitter <any>();
   @Output() close = new EventEmitter <any>();
   @Input() params: any;
 
   constructor() {}
+
+  public saveRequest() {
+    this.onSaveRequest.emit();
+  }
+
 }
 
