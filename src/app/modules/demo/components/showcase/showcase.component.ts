@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TagsService } from '../../../../services/tags/tags.service'
+import { TagsService } from '../../../../services/tags/tags.service';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-showcase',
@@ -14,7 +15,7 @@ import { first } from 'rxjs/operators';
 
 export class ShowcaseComponent {
 
-  private readonly _sectorTags: Array<Tag> = [];
+  private readonly _sectorTags: Array<Tag>;
 
   private _selectedTagsStats: Array<TagStats> = [];
 
@@ -30,21 +31,21 @@ export class ShowcaseComponent {
 
   private _modalShow: boolean = false;
 
-  private _defaultLang = 'en';
-
   private _loadingStats: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _tagService: TagsService,
+              private _translateService: TranslateService,
               private _translateNotificationService: TranslateNotificationsService) {
 
     if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
-      this._sectorTags = this._activatedRoute.snapshot.data['tags'];
-
-      if (!this.sectorTags.length) {
-        this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
-      }
-
+      this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1, t2) => {
+        const label1 = MultilingPipe.prototype.transform(t1.label, this._translateService.currentLang);
+        const label2 = MultilingPipe.prototype.transform(t2.label, this._translateService.currentLang);
+        return label1.localeCompare(label2);
+      });
+    } else {
+      this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
     }
 
   }
@@ -75,7 +76,7 @@ export class ShowcaseComponent {
   private _getTagStat(event: Event, tag: Tag) {
     event.preventDefault();
 
-    this._tagService.getStats(tag._id).pipe(first()).subscribe((stats) => {
+    this._tagService.getStats(tag._id).subscribe((stats) => {
       this._selectedTagsStats = this._selectedTagsStats.concat(stats);
       this._recomputeData();
     }, () => {
@@ -179,8 +180,8 @@ export class ShowcaseComponent {
     this._modalShow = value;
   }
 
-  get defaultLang(): string {
-    return this._defaultLang;
+  get currentLang(): string {
+    return this._translateService.currentLang;
   }
 
   get loadingStats(): boolean {
