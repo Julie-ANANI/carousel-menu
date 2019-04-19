@@ -209,23 +209,7 @@ export class SearchToolComponent implements OnInit{
     };
   }
 
-  public sidebarAction(action: string) {
-    switch (action) {
-      case 'SAVE':
-        this._saveRequest();
-        break;
-      case 'DOWNLOAD':
-        this._downloadRequest();
-        break;
-      case 'UPLOAD':
-        this._uploadRequest();
-        break;
-      default:
-        console.log("ACTION INCONNUE !");
-    }
-  }
-
-  private _downloadRequest() {
+  public downloadRequest() {
     const keywords = this._searchForm.get('keywords').value;
     if (keywords) {
       const jsonFile = JSON.stringify({
@@ -238,11 +222,21 @@ export class SearchToolComponent implements OnInit{
     }
   }
 
-  private _uploadRequest() {
-    console.log("UP");
+  public uploadRequest(file: File) {
+    const reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
+    reader.onload = evt => {
+      const request = JSON.parse(evt.target.result);
+      this._searchForm.setValue({keywords: request.keywords});
+      this._loadResults(request);
+      this._requestAlreadyLoaded = true;
+    };
+    reader.onerror = evt => {
+      console.log('error reading file');
+    };
   }
 
-  private _saveRequest() {
+  public saveRequest() {
     if (this._requestId) {
       this._searchService.saveMetadataRequest(this._requestId).pipe(first()).subscribe((result: any) => {
         this._translateNotificationsService.success("ERROR.SUCCESS", "ERROR.CAMPAIGN.SEARCH.REQUEST_SAVED");

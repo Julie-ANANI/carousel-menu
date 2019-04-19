@@ -4,13 +4,14 @@
     {{'COMMON.SAVE' | translate}}
   </button>
 
-  <button (click)="downloadRequest()" class="btn btn-primary">
+  <button (click)="downloadRequest()" class="btn btn-sm ghost-primary">
     {{'COMMON.DOWNLOAD' | translate}}
   </button>
 
-  <button (click)="uploadRequest()" class="btn btn-primary">
-    {{'COMMON.UPLOAD' | translate}}
-  </button>
+  <label class="btn btn-sm ghost-primary">
+    <input #fileupload type="file" [hidden]="true" (change)="uploadRequest(fileupload.files[0], $event)" />
+    Import
+  </label>
 
 
   <app-shared-table
