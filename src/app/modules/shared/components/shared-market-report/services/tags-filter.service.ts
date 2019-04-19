@@ -17,6 +17,21 @@ export class TagsFiltersService {
 
   constructor(private filterService: FilterService) { }
 
+  /*
+   * This function select every known tags but does not update the corresponding filters
+   * It's useful when deleting all filters at once
+   */
+  public reselectEveryTags(): void {
+    Object.keys(this._selectedTags).forEach((t) => {
+      this._selectedTags[t] = true;
+    });
+    Object.keys(this._selectedAnswersTags).forEach((q) => {
+      Object.keys(this._selectedAnswersTags[q]).forEach((t) => {
+        this._selectedAnswersTags[q][t] = true;
+      });
+    });
+  }
+
   public checkTag(id: string, value: boolean) {
     this._selectedTags[id] = value;
     // check if there is no filtered tag

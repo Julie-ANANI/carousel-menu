@@ -195,6 +195,7 @@ export class SidebarComponent implements OnInit {
 
   public resetFilters(event: Event) {
     event.preventDefault();
+    this.tagService.reselectEveryTags();
     this.filterService.reset();
   }
 
