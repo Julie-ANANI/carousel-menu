@@ -206,6 +206,7 @@ export class SidebarComponent implements OnInit {
     event.preventDefault();
     this._activatedCustomFilters = [];
     this.tagService.reselectEveryTags();
+    this.worldmapFilterService.reset();
     this.filterService.reset();
   }
 
