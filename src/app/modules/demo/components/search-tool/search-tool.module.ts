@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchToolComponent } from './search-tool.component';
 import { SearchService } from '../../../../services/search/search.service';
 import { CommonService } from '../../../../services/common/common.service';
+import { DownloadService } from "../../../../services/download/download.service";
 
 import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
@@ -32,7 +33,8 @@ import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-sea
   ],
   providers: [
     SearchService,
-    CommonService
+    CommonService,
+    DownloadService
   ]
 })
 

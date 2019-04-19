@@ -8,6 +8,7 @@ import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
 import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
 import { AuthService } from "../../../../services/auth/auth.service";
+import { DownloadService } from "../../../../services/download/download.service";
 
 @Component({
   selector: 'app-search-tool',
@@ -41,6 +42,7 @@ export class SearchToolComponent implements OnInit{
               private _formBuilder: FormBuilder,
               private _searchService: SearchService,
               private _authService: AuthService,
+              private _downloadService: DownloadService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('Search Tool | UMI');
@@ -110,7 +112,6 @@ export class SearchToolComponent implements OnInit{
     this._searchResult.pros = result.pros;
     this._scale = result.scale || [50, 200, 1500];
   }
-
 
   private _updateResults() {
     if (this._searchResult.pros) {
@@ -208,7 +209,40 @@ export class SearchToolComponent implements OnInit{
     };
   }
 
-  public saveRequest() {
+  public sidebarAction(action: string) {
+    switch (action) {
+      case 'SAVE':
+        this._saveRequest();
+        break;
+      case 'DOWNLOAD':
+        this._downloadRequest();
+        break;
+      case 'UPLOAD':
+        this._uploadRequest();
+        break;
+      default:
+        console.log("ACTION INCONNUE !");
+    }
+  }
+
+  private _downloadRequest() {
+    const keywords = this._searchForm.get('keywords').value;
+    if (keywords) {
+      const jsonFile = JSON.stringify({
+        keywords: keywords,
+        pros: this._searchResult.pros,
+        metadata: this._searchResult.metadata,
+        scale: this._scale,
+      });
+      this._downloadService.saveJson(jsonFile, keywords);
+    }
+  }
+
+  private _uploadRequest() {
+    console.log("UP");
+  }
+
+  private _saveRequest() {
     if (this._requestId) {
       this._searchService.saveMetadataRequest(this._requestId).pipe(first()).subscribe((result: any) => {
         this._translateNotificationsService.success("ERROR.SUCCESS", "ERROR.CAMPAIGN.SEARCH.REQUEST_SAVED");

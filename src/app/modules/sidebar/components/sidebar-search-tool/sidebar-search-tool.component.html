@@ -1,8 +1,16 @@
 <div class="column col-11 col-mx-auto">
-  <a (click)="saveRequest()">
-    <i class="fas fa-save"></i>
-    Save this request
-  </a>
+
+  <button (click)="saveRequest()" class="btn btn-primary">
+    {{'COMMON.SAVE' | translate}}
+  </button>
+
+  <button (click)="downloadRequest()" class="btn btn-primary">
+    {{'COMMON.DOWNLOAD' | translate}}
+  </button>
+
+  <button (click)="uploadRequest()" class="btn btn-primary">
+    {{'COMMON.UPLOAD' | translate}}
+  </button>
 
 
   <app-shared-table

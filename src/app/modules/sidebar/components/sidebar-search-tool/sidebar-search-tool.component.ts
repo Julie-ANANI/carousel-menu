@@ -9,7 +9,7 @@ import {Table} from "../../../table/models/table";
 })
 export class SidebarSearchToolComponent {
 
-  @Output() onSaveRequest = new EventEmitter <any>();
+  @Output() onButtonClick = new EventEmitter <string>();
   @Output() onLoadRequest = new EventEmitter <any>();
   @Output() close = new EventEmitter <any>();
 
@@ -72,7 +72,15 @@ export class SidebarSearchToolComponent {
   }
 
   public saveRequest() {
-    this.onSaveRequest.emit();
+    this.onButtonClick.emit('SAVE');
+  }
+
+  public downloadRequest() {
+    this.onButtonClick.emit('DOWNLOAD');
+  }
+
+  public uploadRequest() {
+    this.onButtonClick.emit('UPLOAD');
   }
 
   get total() {
