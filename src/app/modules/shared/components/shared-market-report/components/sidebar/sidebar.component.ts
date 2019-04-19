@@ -56,6 +56,8 @@ export class SidebarComponent implements OnInit {
 
   private _sharedFiltersList: Array<SharedFilter> = [];
 
+  private _activatedCustomFilters: Array<string> = [];
+
   private _showExportModal: boolean;
 
   private _showEndInnovationModal: boolean;
@@ -110,10 +112,17 @@ export class SidebarComponent implements OnInit {
           questionId: name,
           value: result.answers
         });
+        this._activatedCustomFilters.push(name);
       }
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
+  }
+
+  public unloadFilter(event: Event, name: string) {
+    event.preventDefault();
+    this._activatedCustomFilters = this._activatedCustomFilters.filter((f) => name !== f);
+    this.filterService.deleteFilter(name);
   }
 
   public deleteCustomFilter(name: string) {
@@ -195,8 +204,13 @@ export class SidebarComponent implements OnInit {
 
   public resetFilters(event: Event) {
     event.preventDefault();
+    this._activatedCustomFilters = [];
     this.tagService.reselectEveryTags();
     this.filterService.reset();
+  }
+
+  get activatedCustomFilters() {
+    return this._activatedCustomFilters;
   }
 
   get answers(): Array<Answer> {

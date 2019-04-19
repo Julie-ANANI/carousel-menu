@@ -44,6 +44,15 @@
     <p *ngIf="filtersCount > 0" class="reset-filter">
       <span (click)="resetFilters($event)" [innerText]="'MARKET_REPORT.RESET_FILTERS'" translate></span>
     </p>
+    <p *ngIf="activatedCustomFilters.length > 0">
+      <span>
+        {{ 'MARKET_REPORT.CUSTOM_FILTERS' | translate }}
+      </span>
+      <span *ngFor="let filter of activatedCustomFilters" (click)="unloadFilter($event, filter)">
+        <i class="fas fa-times" aria-hidden="true"></i>
+        {{ filter }}
+      </span>
+    </p>
     <p>
       <a href="#professionals" pageScroll>
         {{ 'MARKET_REPORT.MAP.TITLE' | translate }}

@@ -1,6 +1,7 @@
 export const MARKET_REPORT = {
   'TITLE': 'Potentiel marché de votre projet',
 
+  'CUSTOM_FILTERS': 'Filtres personnalisés',
   'RESET_FILTERS': 'Réinitialiser tous les filtres',
 
   'MESSAGE': {
