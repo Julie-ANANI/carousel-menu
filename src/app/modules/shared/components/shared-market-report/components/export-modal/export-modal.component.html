@@ -1,43 +1,40 @@
 <app-modal [modalTitle]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_TITLE'" [(showModal)]="showExportModal">
 
   <!-- Export options -->
-  <div class="export-options">
+  <div class="flex-between">
 
     <!-- RESP Pdf -->
-    <div class="options">
-      <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
-      <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
+    <div class="d-inline-flex export-option text-center" (click)="assignExportType($event, exportTypeEnum.respReport)">
+      <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
+      <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
       <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png">
       <div
-        class="btn-radio"
-        [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }"
-        (click)="assignExportType($event, exportTypeEnum.respReport)">
+        class="btn btn-radio"
+        [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
         <span>•</span>
       </div>
     </div>
 
     <!-- CSV -->
-    <div class="options">
-      <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
-      <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
+    <div class="d-inline-flex export-option text-center" (click)="assignExportType($event, exportTypeEnum.csv)">
+      <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
+      <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
       <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png">
       <div
-        class="btn-radio"
-        [ngClass]="{ 'active': exportTypeEnum.csv === exportType }"
-        (click)="assignExportType($event, exportTypeEnum.csv)">
+        class="btn btn-radio"
+        [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
         <span>•</span>
       </div>
     </div>
 
     <!-- Executive report -->
-    <div class="options">
-      <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
-      <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
+    <div class="d-inline-flex export-option text-center" (click)="assignExportType($event, exportTypeEnum.executiveReport)">
+      <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
+      <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
       <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png">
       <div
-        class="btn-radio"
-        [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }"
-        (click)="assignExportType($event, exportTypeEnum.executiveReport)">
+        class="btn btn-radio"
+        [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }">
         <span>•</span>
       </div>
     </div>
