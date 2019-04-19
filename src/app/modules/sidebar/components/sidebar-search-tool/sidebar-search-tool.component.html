@@ -3,5 +3,13 @@
     <i class="fas fa-save"></i>
     Save this request
   </a>
+
+
+  <app-shared-table
+    [config]="config"
+    [data]="tableInfos"
+    (configChange)="loadHistory($event)"
+    (editRow)="onClickEdit($event)">
+  </app-shared-table>
 </div>
 

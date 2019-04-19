@@ -5,12 +5,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarSearchToolComponent } from './sidebar-search-tool.component';
 
 import { SidebarModule } from '../../sidebar.module';
+import { TableModule } from "../../../table/table.module";
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    SidebarModule
+    SidebarModule,
+    TableModule
   ],
   declarations: [
    SidebarSearchToolComponent

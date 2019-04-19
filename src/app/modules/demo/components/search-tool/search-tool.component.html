@@ -247,7 +247,8 @@
 <!-- sidebar for advanced settings -->
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-search-tool
-    (onSaveRequest)="saveRequest()">
+    (onSaveRequest)="saveRequest()"
+    (onLoadRequest)="loadRequest($event)">
   </app-sidebar-search-tool>
 </app-sidebar>
 <!-- /sidebar for advanced settings -->
