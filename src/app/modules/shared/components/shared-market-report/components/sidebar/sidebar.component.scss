@@ -38,7 +38,11 @@
     }
 
     a {
+      display: block;
       cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     span {
