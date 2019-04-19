@@ -142,7 +142,9 @@ export class AdminCampaignAnswersComponent implements OnInit {
               {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
               {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label label-progress'},
               {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label label-alert'},
-              {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label label-alert'}
+              {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label label-alert'},
+              {_name: 'VALIDATED_UMIBOT', _alias: 'TABLE.STATUS.VALIDATED_UMIBOT', _class: 'label label-progress'},
+              {_name: 'REJECTED_UMIBOT', _alias: 'TABLE.STATUS.REJECTED_UMIBOT', _class: 'label label-progress'}
             ]},
         ]
       };
@@ -175,7 +177,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
 
-  private updateStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
+  private updateStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL'
+    | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT') {
     rows.forEach((row: Answer) => {
       row.status = status;
       this.answerService.save(row._id, row).pipe(first()).subscribe(() => {

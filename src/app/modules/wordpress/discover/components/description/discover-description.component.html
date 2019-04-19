@@ -1,5 +1,5 @@
 <ng-container *ngIf="innovationCard && innovationCard.length > 0">
-  <div class="section-pad animate-page" id="discover-description-component">
+  <div class="section-pad" id="discover-description-component">
     <div class="column col-xs-12 col-11 col-mx-auto" >
       <ng-container *ngFor="let innovation of innovationCard">
 
@@ -7,8 +7,8 @@
         <div class="section-header">
 
           <!-- back to innovations -->
-          <a routerLink="/discover">
-            <i class="fas fa-angle-left"></i><span class="text-link">{{ 'DISCOVERDESCRIPTION.BACK' | translate }}</span>
+          <a routerLink="/discover" class="d-inline-flex">
+            <i class="fas fa-angle-left"></i><span class="text-link text-normal">{{ 'DISCOVERDESCRIPTION.BACK' | translate }}</span>
           </a>
 
           <!-- innovation title -->
@@ -16,7 +16,10 @@
 
           <!-- innovation tags -->
           <ng-container *ngIf="tags.length > 0">
-            <div *ngFor="let tag of tags" class="text text-notify"><i class="fas fa-tag"></i>{{ tag }}</div>
+            <div *ngFor="let tag of tags" class="label label-tag text-notify">
+              <i class="fas fa-tag"></i>
+              <span class="label-text">{{ tag }}</span>
+            </div>
           </ng-container>
 
           <!-- innovation summary -->
@@ -27,12 +30,14 @@
 
         <!-- section images -->
         <ng-container *ngIf="innovation.media && innovation.media.length > 0">
-          <div class="section-images">
-            <div *ngFor="let media of innovation.media" class="media-wrapper">
+          <div class="d-flex section-images">
+            <div *ngFor="let media of innovation.media" class="d-inline-flex media-wrapper">
 
               <!-- if image -->
               <ng-container *ngIf="media?.type === 'PHOTO'">
-                <img [src]="getSrc(media)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate">
+                <figure>
+                  <img [src]="getSrc(media)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate">
+                </figure>
               </ng-container>
 
               <!-- if video -->
@@ -51,7 +56,7 @@
           <div class="section-benefits">
             <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
             <ul class="benefit-wrapper">
-              <li *ngFor="let advantage of innovation.advantages">
+              <li *ngFor="let advantage of innovation.advantages" class="text-background">
                 {{ advantage.text | FormatText }}
               </li>
             </ul>
@@ -78,12 +83,12 @@
         <!-- /section solution -->
 
         <!-- section share -->
-        <div class="section-share">
+        <div class="section-share text-center">
 
           <!-- actions button -->
           <div class="button-wrapper">
-            <a class="btn btn-primary" [href]="contactUsUrl" target="_blank">{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}</a>
-            <a [href]="quizUrl" target="_blank" class="btn ghost-edit" [ngStyle]="{ 'display': quizButtonDisplay }">{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}</a>
+            <a class="btn btn-primary rounded" [href]="contactUsUrl" target="_blank">{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}</a>
+            <a [href]="quizUrl" target="_blank" class="btn ghost-edit rounded" [ngStyle]="{ 'display': quizButtonDisplay }">{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}</a>
           </div>
 
           <!-- share buttons -->
@@ -101,33 +106,38 @@
         <ng-container *ngIf="innovationsRelated.length > 0">
           <div class="section-related">
 
-            <span class="text-note"><i class="fas fa-angle-right"></i>{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
+            <div class="flex-start text-note">
+              <i class="fas fa-angle-right"></i><span class="text-background">{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
+            </div>
 
             <!-- card content -->
             <div class="card-wrapper d-flex text-center">
               <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
 
                 <!-- card image -->
-                <a [href]="[getLink(innovation.innovationCard)]">
-                  <div class="card-image">
-                    <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]=" ">
-                  </div>
-                </a>
+                <figure>
+                  <a [href]="[getLink(innovation.innovationCard)]">
+                    <div class="card-image">
+                      <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]=" ">
+                    </div>
+                  </a>
+                </figure>
 
                 <!-- card header -->
                 <div class="card-header">
                   <div class="card-title">
 
                     <!-- title -->
-                    <a [href]="[getLink(innovation.innovationCard)]" target="_blank">
+                    <a [href]="[getLink(innovation.innovationCard)]">
                       <h6>{{ innovation.innovationCard.title }}</h6>
                     </a>
 
                     <!-- tags -->
                     <ng-container *ngIf="innovation.tags.length > 0">
                       <div *ngFor="let tag of innovation.tags" class="tag-wrapper d-inline-flex">
-                        <div *ngIf="tag.type === 'SECTOR'" class="text text-notify">
-                          <i class="fas fa-tag"></i>{{ tag?.label | multiling:browserLang() | FormatText }}
+                        <div *ngIf="tag.type === 'SECTOR'" class="label label-tag text-notify text-normal">
+                          <i class="fas fa-tag"></i>
+                          <span class="label-text">{{ tag?.label | multiling:browserLang() | FormatText }}</span>
                         </div>
                       </div>
                     </ng-container>

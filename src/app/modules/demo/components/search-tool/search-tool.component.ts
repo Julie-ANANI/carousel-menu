@@ -6,6 +6,9 @@ import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
+import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
+import { AuthService } from "../../../../services/auth/auth.service";
+import { DownloadService } from "../../../../services/download/download.service";
 
 @Component({
   selector: 'app-search-tool',
@@ -21,21 +24,25 @@ export class SearchToolComponent implements OnInit{
 
   private _searchResult: SearchTool = {};
 
-  private _noResult = true;
-
   private _scale: Array<number> = [];
 
   private _searchStarted = false;
-
-  private _searchContinue = false;
 
   private _searchStopped = false;
 
   private _professionalCount: number = 0;
 
+  private _sidebarValue: SidebarInterface = {};
+
+  private _requestId: string = null;
+
+  private _requestAlreadyLoaded: boolean = false;
+
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
               private _searchService: SearchService,
+              private _authService: AuthService,
+              private _downloadService: DownloadService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('Search Tool | UMI');
@@ -55,49 +62,68 @@ export class SearchToolComponent implements OnInit{
 
 
   public onClickSearch() {
-    const keywords = this._searchForm.get('keywords').value;
+    if (this._requestAlreadyLoaded) {
+      this._searchStarted = true;
+      this._updateResults();
+    } else {
 
-    if (keywords) {
-      this._professionalCount = 0;
-      this._slicedPros = [];
-      this._searchResult = {};
-      this._noResult = true;
+      const keywords = this._searchForm.get('keywords').value;
 
-      if (keywords == "TEST") {
+      if (keywords) {
+        this._professionalCount = 0;
+        this._slicedPros = [];
+        this._searchResult = {};
         this._searchStarted = true;
         this._searchStopped = false;
-        this._searchResult = result_sample;
-        this._scale = [3, 50, 100];
-        this._updateResults();
-      } else {
-        this._searchService.metadataSearch(keywords).pipe(first()).subscribe((result: any) => {
-          this._searchStarted = true;
-          this._searchStopped = false;
-          this._searchResult.metadata = result.metadata || {};
-          this._searchResult.pros = result.pros;
-          this._scale = result.scale || [50, 200, 1500];
-          this._updateResults();
-        }, () => {
-          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-        });
 
+        if (keywords == "TEST") {
+          this._searchResult = result_sample;
+          this._scale = [3, 50, 100];
+          this._updateResults();
+        } else {
+          const user = this._authService.getUserInfo().name;
+          this._searchService.metadataSearch(keywords, user).pipe(first()).subscribe((result: any) => {
+            this._loadResults(result);
+            this._updateResults();
+          }, () => {
+            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+          });
+
+        }
       }
     }
-
   }
 
+  public loadRequest(requestId) {
+    this._searchService.getMetadataRequest(requestId).pipe(first()).subscribe((request: any) => {
+      this._searchForm.setValue({keywords: request.keywords});
+      this._loadResults(request);
+      this._requestAlreadyLoaded = true;
+    });
+  }
+
+  private _loadResults(result) {
+    this._requestId = result._id;
+    this._professionalCount = 0;
+    this._slicedPros = [];
+    this._searchStopped = false;
+    this._searchStarted = false;
+    this._searchResult.metadata = result.metadata || {};
+    this._searchResult.pros = result.pros;
+    this._scale = result.scale || [50, 200, 1500];
+  }
 
   private _updateResults() {
-    this._searchResult.pros = this._searchResult.pros.map(pro => {
-      pro.isLoading = true;
-      return pro;
-    });
+    if (this._searchResult.pros) {
+      this._searchResult.pros = this._searchResult.pros.map(pro => {
+        pro.isLoading = true;
+        return pro;
+      });
 
-    setTimeout(() => {
-      this._noResult = false;
-      this._searchContinue = true;
-      this._totalProfessional(this._searchResult.metadata.world);
-    }, 2005);
+      setTimeout(() => {
+        this._totalProfessional(this._searchResult.metadata.world);
+      }, 2005);
+    }
   }
 
 
@@ -175,6 +201,50 @@ export class SearchToolComponent implements OnInit{
 
   }
 
+  public onClickMenu() {
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'History',
+      size: '730px'
+    };
+  }
+
+  public downloadRequest() {
+    const keywords = this._searchForm.get('keywords').value;
+    if (keywords) {
+      const jsonFile = JSON.stringify({
+        keywords: keywords,
+        pros: this._searchResult.pros,
+        metadata: this._searchResult.metadata,
+        scale: this._scale,
+      });
+      this._downloadService.saveJson(jsonFile, keywords);
+    }
+  }
+
+  public uploadRequest(file: File) {
+    const reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
+    reader.onload = evt => {
+      const request = JSON.parse(evt.target.result);
+      this._searchForm.setValue({keywords: request.keywords});
+      this._loadResults(request);
+      this._requestAlreadyLoaded = true;
+    };
+    reader.onerror = evt => {
+      console.log('error reading file');
+    };
+  }
+
+  public saveRequest() {
+    if (this._requestId) {
+      this._searchService.saveMetadataRequest(this._requestId).pipe(first()).subscribe((result: any) => {
+        this._translateNotificationsService.success("ERROR.SUCCESS", "ERROR.CAMPAIGN.SEARCH.REQUEST_SAVED");
+      });
+    } else {
+      this._translateNotificationsService.error("ERROR.ERROR", "ERROR.CAMPAIGN.SEARCH.NO_REQUEST");
+    }
+  }
 
   public getCompanyUrl(domain: string): string {
     return `http://${domain}`;
@@ -193,16 +263,8 @@ export class SearchToolComponent implements OnInit{
     return this._searchResult;
   }
 
-  get noResult(): boolean {
-    return this._noResult;
-  }
-
   get searchStarted(): boolean {
     return this._searchStarted;
-  }
-
-  get searchContinue(): boolean {
-    return this._searchContinue;
   }
 
   get searchStopped(): boolean {
@@ -215,6 +277,14 @@ export class SearchToolComponent implements OnInit{
 
   get scale(): Array<number>{
     return this._scale;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
 }

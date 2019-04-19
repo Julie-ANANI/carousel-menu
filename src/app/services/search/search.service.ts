@@ -21,20 +21,17 @@ export class SearchService {
     return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests, starProfiles: starProfiles});
   }
 
-  public metadataSearch(keywords: string): Observable<any> {
+  public metadataSearch(keywords: string, user: string): Observable<any> {
     const query = {
-      params: JSON.stringify({keywords: keywords}),
+      params: JSON.stringify({keywords: keywords, user: user}),
       path: '/search/metadata'
     };
     return this._http.get('/search/get', {params: query});
   }
 
-  public inHouseSearch(keywords: string, country?: string): Observable<any> {
-    const params: any = {keywords: keywords};
-    if (country) params.country = country;
+  public saveMetadataRequest(requestId: any): Observable<any> {
     const query = {
-      params: JSON.stringify(params),
-      path: '/search/inhouse'
+      path: `/metadataRequest/${requestId}/keep`
     };
     return this._http.get('/search/get', {params: query});
   }
@@ -80,6 +77,11 @@ export class SearchService {
   public getRequests(config: {[header: string]: string | string[]}): Observable<any> {
     config = this._commonService.configToString(config);
     return this._http.get('/search/queryRessourceAPI/request', {params: config});
+  }
+
+  public getMetadataRequests(config: any): Observable<any> {
+    config = this._commonService.configToString(config);
+    return this._http.get('/search/queryRessourceAPI/metadatarequest', {params: config});
   }
 
   public searchMails(config: any): Observable<any> {

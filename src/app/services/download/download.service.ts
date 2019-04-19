@@ -15,4 +15,9 @@ export class DownloadService {
     const file = <Blob> new Blob([csv]);
     return FileSaver.saveAs(file, `${fileName}.csv`);
   }
+
+  public saveJson(json: string, fileName: string): Observable<Blob> {
+    const file = <Blob> new Blob([json]);
+    return FileSaver.saveAs(file, `${fileName}.json`);
+  }
 }

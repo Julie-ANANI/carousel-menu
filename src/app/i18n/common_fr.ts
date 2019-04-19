@@ -1,5 +1,7 @@
 export const COMMON = {
   'SAVE': 'Sauvegarder',
+  'DOWNLOAD': 'Télécharger',
+  'UPLOAD': 'Uploader',
   'IMPORT': 'Importer',
   'SAVE_DRAFT': 'Sauvegarder en brouillon',
   'LAST_SAVED_AT': 'Sauvegardé à',

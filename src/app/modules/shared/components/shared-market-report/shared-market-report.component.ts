@@ -515,7 +515,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
     this._sidebarTemplateValue = {
       animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: this._adminSide ? 'COMMON.SIDEBAR.EDIT_INSIGHT' : 'Insight',
+      title: 'Insight',
       size: '726px'
     };
 

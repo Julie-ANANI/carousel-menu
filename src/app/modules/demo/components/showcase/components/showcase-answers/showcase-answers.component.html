@@ -8,10 +8,10 @@
   </ng-container>
 
   <!-- heading 1st -->
-  <h2 class="text text-notify">Contributors</h2>
+  <h2 class="text text-notify" [innerText]="'SHOWCASE.PROFESSIONALS_TITLE'" translate></h2>
 
   <!-- heading count -->
-  <h3 class="text-normal">{{ count }} <span> respondents</span></h3>
+  <h3 class="text-normal">{{ count }} <span [innerText]="'SHOWCASE.PROFESSIONALS'" translate></span></h3>
 
   <!-- section answers -->
   <div *ngFor="let answer of topAnswers" class="card-wrapper">
@@ -42,7 +42,7 @@
   <!-- section see more -->
   <ng-container *ngIf="answers.length > 6">
     <div class="text-right section-light-pad rm-pad-bottom">
-      <span class="text-link" (click)="openModal($event)">See More</span>
+      <span class="text-link" (click)="openModal($event)" [innerText]="'SHOWCASE.SEE_MORE'" translate></span>
     </div>
   </ng-container>
 
@@ -80,8 +80,8 @@
 
   <ng-container *ngIf="adminPass">
     <div class="modal-footer">
-      <button class="btn btn-sm btn-cancel">Cancel</button>
-      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)">Apply</button>
+      <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
     </div>
   </ng-container>
 

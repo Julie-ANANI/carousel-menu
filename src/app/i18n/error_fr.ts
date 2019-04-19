@@ -152,7 +152,9 @@ export const ERROR = {
       'UPDATED': 'Le batch a été mis à jour avec succès.',
     },
     'SEARCH': {
-      'SETTINGS_UPDATED': 'Les paramètres ont été mis à jour avec succès.'
+      'SETTINGS_UPDATED': 'Les paramètres ont été mis à jour avec succès.',
+      'REQUEST_SAVED': 'La requête a été sauvegardée avec succès.',
+      'NO_REQUEST': "Il n'y a pas de requête à sauvegarder !"
     }
   },
 
