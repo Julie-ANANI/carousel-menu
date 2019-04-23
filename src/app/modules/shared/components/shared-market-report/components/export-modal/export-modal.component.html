@@ -42,6 +42,17 @@
   </div>
   <!-- Export options -->
 
+  <!-- Export filter if there is filters -->
+  <label *ngIf="filters" class="form-checkbox export" for="market-report-filter">
+    <input
+      type="checkbox"
+      id="market-report-filter"
+      [(ngModel)]="useFilters"
+      name="market-report-filter">
+    <i class="form-icon"></i><span class="export-consent">{{ 'MARKET_REPORT.MODAL.EXPORT_WITH_FILTERS' | translate }}</span>
+  </label>
+  <!-- /Export filter -->
+
   <!-- Export consent -->
   <label class="form-checkbox export" for="market-report-consent">
     <input
