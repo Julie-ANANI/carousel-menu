@@ -26,13 +26,12 @@ export class ShowcaseClientsComponent {
 
           // we calculate the list of companies without duplicates
           const companies = next.result
+            .filter((i) => i.owner.company && i.owner.company.name)
             .map((i) => i.owner.company.name)
             .reduce((acc, comp) => {
               acc[comp] = true;
               return acc;
             }, {});
-
-          delete companies[''];
 
           this._totalClients = Object.keys(companies);
           this._selectedClients = this._totalClients.slice(0, 8);
