@@ -10,8 +10,9 @@ import { FilterService } from './services/filter.service';
 
 
 @Component({
+  selector: 'app-innovations',
   templateUrl: './innovations.component.html',
-  styleUrls: ['./innovations.component.scss'],
+  styleUrls: ['./innovations.component.scss']
 })
 
 export class InnovationsComponent implements OnInit {
@@ -130,19 +131,7 @@ export class InnovationsComponent implements OnInit {
    * sectorTags.
    */
   private _getAllSectorTags() {
-    this._sectorTags = [];
-
-    this._totalInnovations.forEach((innovation) => {
-      innovation.tags.forEach((tag: Tag) => {
-        if (tag.type === 'SECTOR') {
-          const find = this._sectorTags.find((item: Tag) => item._id === tag._id);
-          if (!find) {
-            this._sectorTags.push(tag);
-          }
-        }
-      });
-    });
-
+    this._sectorTags = FilterService.getAllSectorTags(this._totalInnovations);
   }
 
 

@@ -11,7 +11,7 @@ import { Tag } from '../../../../../../../models/tag';
 @Component({
   selector: 'app-cards',
   templateUrl: './cards.component.html',
-  styleUrls: ['./cards.component.scss'],
+  styleUrls: ['./cards.component.scss']
 })
 
 export class CardsComponent {

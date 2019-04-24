@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { Tag } from '../../../../../../../models/tag';
-import { MultilingPipe } from '../../../../../../../pipe/pipes/multiling.pipe';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../../../../../../environments/environment';
@@ -44,8 +43,6 @@ export class FiltersComponent implements OnInit {
 
   private _suggestedTags: Array<Tag> = [];
 
-  private _highlight: Array<string> = ['construction', 'software', 'industry', 'energy', 'healthcare', 'chemistry', 'transportation', 'services', 'environment', 'aerospace', 'network', 'it'];
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _filterService: FilterService,
@@ -57,58 +54,36 @@ export class FiltersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._initializeFunctions();
-  }
-
-
-  private _initializeFunctions() {
     this._checkStoredFilters();
     this._checkSharedResult();
+    this._getSuggestedTags();
     this._sendSelectedFilters();
   }
 
 
+  /***
+   * this function is to sort tags based on the type.
+   * @param type
+   * @private
+   */
   private _sortTags(type: string) {
-    const userLang = this._userLang;
-
-    function sortTag(tags: Array<Tag>) {
-
-      return tags.sort((a: Tag, b: Tag) => {
-
-        const labelA = MultilingPipe.prototype.transform(a.label, userLang).toLowerCase();
-        const labelB =  MultilingPipe.prototype.transform(b.label, userLang).toLowerCase();
-
-        if ( labelA > labelB) {
-          return 1;
-        }
-
-        if (labelA < labelB) {
-          return -1;
-        }
-
-        return 0;
-
-      });
-    }
-
     switch (type) {
 
       case 'allTags':
-        this._allTags = sortTag(this._allTags);
+        this._allTags = FilterService.sortTags(this._allTags, this._userLang);
         break;
 
       case 'suggested':
-        this._suggestedTags = sortTag(this._suggestedTags);
+        this._suggestedTags = FilterService.sortTags(this._suggestedTags, this._userLang);
         break;
 
       case 'highlight':
-        this._highLightTags = sortTag(this._highLightTags);
+        this._highLightTags = FilterService.sortTags(this._highLightTags, this._userLang);
         break;
 
       default:
       // do nothing...
     }
-
   }
 
 
@@ -117,17 +92,8 @@ export class FiltersComponent implements OnInit {
    * @private
    */
   private _getHighlightedTags() {
-    this._highLightTags = [];
-
-    this._allTags.forEach((tag: Tag) => {
-      const include = this._highlight.includes(tag.label.en.toLowerCase());
-      if (include) {
-        this._highLightTags.push(tag);
-      }
-    });
-
+    this._highLightTags = FilterService.getHighlightedTags(this._allTags);
     this._sortTags('highlight');
-
   }
 
 
@@ -139,7 +105,6 @@ export class FiltersComponent implements OnInit {
       const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
       if (sessionValues.length > 0) {
         this._selectedTags = sessionValues;
-        this._getSuggestedTags();
       }
     }
   }
@@ -185,7 +150,7 @@ export class FiltersComponent implements OnInit {
     this._suggestedTags = [];
 
     if (this._selectedTags.length !== 0 ) {
-      this._tagsService.getSimilarTags(this._selectedTags[this._selectedTags.length - 1]._id).subscribe((response) => {
+      this._tagsService.getSimilarTags(this._selectedTags[this._selectedTags.length - 1]._id).subscribe((response: Array<any>) => {
         if (response) {
           response.forEach((tag: Tag) => {
             const find = this._selectedTags.find((selectTag: Tag) => selectTag._id === tag._id);
@@ -263,28 +228,11 @@ export class FiltersComponent implements OnInit {
 
 
   /***
-   * this function is to generate the share link of the page.
-   * @private
-   */
-  private _getShareLink() {
-    if (this._selectedTags.length === 0) {
-      this._shareUrl = FiltersComponent._getClientUrl();
-    } else {
-      let tags = '';
-      this._selectedTags.forEach((tag: Tag) => {
-        tags += 'tag=' + tag._id + '&';
-      });
-      this._shareUrl = `${FiltersComponent._getClientUrl()}?${tags.slice(0, tags.length - 1)}`;
-    }
-  }
-
-
-  /***
    * this function is to copy the share url to clipboard when the user clicks on it.
    * @param event
    * @constructor
    */
-  public OnClickCopy(event: Event) {
+  public onClickCopy(event: Event) {
     event.preventDefault();
 
     if (isPlatformBrowser(this._platformId)) {
@@ -309,6 +257,23 @@ export class FiltersComponent implements OnInit {
 
     }
 
+  }
+
+
+  /***
+   * this function is to generate the share link of the page.
+   * @private
+   */
+  private _getShareLink() {
+    if (this._selectedTags.length === 0) {
+      this._shareUrl = FiltersComponent._getClientUrl();
+    } else {
+      let tags = '';
+      this._selectedTags.forEach((tag: Tag) => {
+        tags += 'tag=' + tag._id + '&';
+      });
+      this._shareUrl = `${FiltersComponent._getClientUrl()}?${tags.slice(0, tags.length - 1)}`;
+    }
   }
 
 
@@ -380,10 +345,6 @@ export class FiltersComponent implements OnInit {
 
   get suggestedTags(): Array<Tag> {
     return this._suggestedTags;
-  }
-
-  get highlight(): Array<string> {
-    return this._highlight;
   }
 
 }

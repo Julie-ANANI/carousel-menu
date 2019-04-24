@@ -97,7 +97,7 @@
     <h3 class="text-background text-normal">{{ 'DISCOVER.MODAL_SHARE.TITLE' | translate }}</h3>
 
     <div *ngIf="!urlCopied">
-      <button type="button" class="btn btn-sm ghost-edit" (click)="OnClickCopy($event)">{{ 'DISCOVER.TOOLTIP_TEXT' | translate }}</button>
+      <button type="button" class="btn btn-sm ghost-edit" (click)="onClickCopy($event)">{{ 'DISCOVER.TOOLTIP_TEXT' | translate }}</button>
     </div>
 
     <div *ngIf="urlCopied">
