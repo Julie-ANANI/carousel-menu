@@ -139,6 +139,9 @@
         <!-- showing the professionals -->
         <ng-container *ngIf="searchStopped">
           <div class="card-wrapper d-flex">
+            <button (click)="findNewResults()" class="btn btn-primary" *ngIf = !slicedPros.length>
+              Search on the web
+            </button>
             <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
 
               <ng-container *ngIf="professional.isLoading">

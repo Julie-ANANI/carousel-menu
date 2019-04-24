@@ -247,6 +247,14 @@ export class SearchToolComponent implements OnInit{
     }
   }
 
+  public findNewResults() {
+    const keywords = this._searchForm.get('keywords').value;
+    this._searchService.findNewResults(this._requestId, keywords).pipe(first()).subscribe((result: any) => {
+      this._loadResults(result);
+      this._updateResults();
+    });
+  }
+
   public getCompanyUrl(domain: string): string {
     return `http://${domain}`;
   }
