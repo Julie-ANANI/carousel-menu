@@ -15,6 +15,7 @@ import { NotFoundModule } from './modules/common/not-found/not-found.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Services
+import { ErrorService } from './services/error/error.service';
 import { LocalStorageService } from './services/localStorage/localStorage.service';
 import { TranslationService } from "./services/translation/translation.service";
 import { TranslateTitleService } from './services/title/title.service';
@@ -52,6 +53,7 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     AppComponent
   ],
   providers: [
+    ErrorService,
     LocalStorageService,
     TranslationService,
     TranslateTitleService,
