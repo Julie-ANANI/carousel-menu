@@ -40,14 +40,19 @@
       <ng-container *ngIf="searchingInnovations">
 
         <div *ngIf="!noResultFound" class="section-light-pad rm-pad-bottom">
-          <h3 class="no-result-heading text-background text-normal">{{ searchedInnovations.length }} {{ 'DISCOVER.RESULT_FOUND' | translate }} {{ searchKey }}</h3>
+          <h3 class="result-heading text-background text-normal">
+            {{ searchedInnovations.length }} {{ 'DISCOVER.RESULT_FOUND' | translate }} {{ searchKey }}
+          </h3>
           <app-cards [allInnovations]="searchedInnovations" [search]="true"></app-cards>
         </div>
 
 
-        <div *ngIf="noResultFound">
-          <div class="no-result">
-
+        <div *ngIf="noResultFound" class="text-center">
+          <div class="no-result-wrapper">
+            <img src="https://res.cloudinary.com/umi/image/upload/c_scale,q_auto:best,w_500/v1541075335/app/default-images/icons/no_result.png"
+                 [attr.alt]="'DISCOVER.NO_RESULT' | translate" class="img-responsive animate-zoomIn">
+            <h4 class="text-background">{{ 'DISCOVER.NO_RESULT_HEADING' | translate }}</h4>
+            <p>{{ 'DISCOVER.NO_RESULT_TEXT' | translate }}</p>
           </div>
         </div>
 

@@ -29,9 +29,29 @@
 
   }
 
-  .no-result-heading {
+  .result-heading {
     margin-bottom: 0.75rem;
     font-size: $font-size-lg;
+  }
+
+  .no-result-wrapper {
+    padding-top: 5rem;
+
+    img, p {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h4 {
+      padding-top: $unit-2;
+    }
+
+    p {
+      margin-bottom: 0;
+      font-size: $font-size-sm;
+      max-width: 328px;
+    }
+
   }
 
 }

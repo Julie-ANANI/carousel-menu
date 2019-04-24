@@ -3,8 +3,8 @@ import { Tag } from '../../../../../../../models/tag';
 import { MultilingPipe } from '../../../../../../../pipe/pipes/multiling.pipe';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
-import {environment} from '../../../../../../../../environments/environment';
-import {FilterService} from '../../services/filter.service';
+import { environment } from '../../../../../../../../environments/environment';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-filters',
@@ -144,7 +144,7 @@ export class FiltersComponent implements OnInit {
 
   private _getShareLink() {
     if (this.selectedFilters.length === 0) {
-      this._shareUrl = this._getClientUrl();
+      this._shareUrl = FiltersComponent._getClientUrl();
     }
   }
 
@@ -174,7 +174,7 @@ export class FiltersComponent implements OnInit {
       this._urlCopied = true;
 
       setTimeout(() => {
-        this.closeBanner(event);
+        this._closeBanner(event);
       }, 8000)
 
     }
@@ -182,7 +182,7 @@ export class FiltersComponent implements OnInit {
   }
 
 
-  public closeBanner(event: Event) {
+  private _closeBanner(event: Event) {
     event.preventDefault();
     this._urlCopied = false;
   }
@@ -198,7 +198,7 @@ export class FiltersComponent implements OnInit {
   }
 
 
-  private _getClientUrl(): string {
+  private static _getClientUrl(): string {
     return `${environment.clientUrl}/discover`;
   }
 

@@ -35,6 +35,12 @@ export const DISCOVER = {
 
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search innovations...',
 
-  'RESULT_FOUND': 'results for '
+  'RESULT_FOUND': 'results for ',
+
+  'NO_RESULT': 'No result found',
+
+  'NO_RESULT_HEADING': 'Something wrong here...',
+
+  'NO_RESULT_TEXT': 'Sorry, we couldn\'t find any results (as you can see) try again with some different keywords.'
 
 };

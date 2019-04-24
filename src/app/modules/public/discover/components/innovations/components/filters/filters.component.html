@@ -42,12 +42,12 @@
 
     <h3 class="text-background text-normal">{{ 'DISCOVER.MODAL_SHARE.TITLE' | translate }}</h3>
 
-    <div class="banner d-inline-flex banner-success c-hand" [ngStyle]="{ 'visibility': urlCopied ? 'visible' : 'hidden' }" (click)="closeBanner($event)">
-      <span>{{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}</span>
+    <div *ngIf="!urlCopied">
+      <button type="button" class="btn btn-sm ghost-edit" (click)="OnClickCopy($event)">{{ 'DISCOVER.TOOLTIP_TEXT' | translate }}</button>
     </div>
 
-    <div>
-      <button type="button" class="btn btn-sm ghost-edit" (click)="OnClickCopy($event)">{{ 'DISCOVER.TOOLTIP_TEXT' | translate }}</button>
+    <div *ngIf="urlCopied">
+      <button type="button" class="btn btn-sm ghost-success c-not-allowed">{{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}</button>
     </div>
 
   </div>

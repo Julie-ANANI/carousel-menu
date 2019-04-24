@@ -40,4 +40,11 @@ export const DISCOVER = {
 
   'RESULT_FOUND' : 'résultats pour ',
 
+  'NO_RESULT': 'Aucun résultat trouvé',
+
+  'NO_RESULT_HEADING': 'Quelque chose ne va pas ici...',
+
+  'NO_RESULT_TEXT': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir), essayez à nouveau avec des mots-clés différents.'
+
+
 };
