@@ -29,11 +29,16 @@
     <h3 class="text-notify">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
     <div class="d-flex sector-wrapper">
-      <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': false }">
+      <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand animate-appear" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
         <label class="c-hand">
           <input
+            (change)="toggleFilter($event, tag)"
+            [checked]="checkFilter(tag._id)"
+            [id]="tag._id"
+            [name]="tag.label | multiling:userLang"
+            [value]="tag.label | multiling:userLang"
             type="checkbox">
-          {{ tag?.label | multiling:userLang | FormatText }}
+          {{ tag.label | multiling:userLang | FormatText }}
         </label>
       </div>
     </div>
@@ -69,7 +74,7 @@
 
   <!-- selected sectors -->
   <div *ngIf="selectedTags.length > 0" class="sector-selected d-flex">
-    <div *ngFor="let tag of selectedTags" class="label label-meta c-hand">
+    <div *ngFor="let tag of selectedTags" class="label label-meta c-hand animate-appear" (click)="removeFilter(tag._id)">
       <span>{{ tag?.label | multiling:userLang | FormatText }}</span><i class="fas fa-times"></i>
     </div>
   </div>
@@ -83,6 +88,7 @@
 
 </app-modal>
 <!-- /modal tags -->
+
 
 <!-- modal share -->
 <app-modal [(showModal)]="modalShare" [modalPosition]="'250px'">

@@ -42,11 +42,11 @@
         <div *ngIf="!noResultFound" class="section-light-pad rm-pad-bottom">
           <h3 class="result-heading text-background text-normal">
             {{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }}
-            <ng-container *ngIf="searchKey">
+            <ng-container *ngIf="searchKey && selectedFilters.length === 0">
               {{ 'DISCOVER.FOR' | translate }} {{ searchKey }}
             </ng-container>
           </h3>
-          <app-cards [allInnovations]="filteredInnovations" [search]="true"></app-cards>
+          <app-cards [allInnovations]="filteredInnovations" [search]="true" [lastIndex]="filteredInnovations.length"></app-cards>
         </div>
 
 

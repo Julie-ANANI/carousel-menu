@@ -6,6 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../../../../../../environments/environment';
 import { FilterService } from '../../services/filter.service';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-filters',
@@ -17,7 +18,7 @@ export class FiltersComponent implements OnInit {
 
   @Input() set tags(value: Array<Tag>) {
     if (value) {
-      this.allTags = value;
+      this._allTags = value;
       this._sortTags('allTags');
       this._getHighlightedTags();
     }
@@ -35,22 +36,21 @@ export class FiltersComponent implements OnInit {
 
   private _urlCopied: boolean = false;
 
-  allTags: Array<Tag> = [];
+  private _allTags: Array<Tag> = [];
 
-  selectedTags: Array<Tag> = [];
+  private _selectedTags: Array<Tag> = [];
 
-  selectedSimilarTags: Array<Tag> = [];
+  private _highLightTags: Array<Tag> = [];
 
-  highLightTags: Array<Tag> = [];
+  private _suggestedTags: Array<Tag> = [];
 
-  suggestedTags: Array<Tag> = [];
-
-  highlight: Array<string> = ['construction', 'software', 'industry', 'energy', 'healthcare', 'chemistry', 'transportation', 'services', 'environment', 'aerospace', 'network', 'it', 'sector-tag-1', 'sector-tag-2'];
+  private _highlight: Array<string> = ['construction', 'software', 'industry', 'energy', 'healthcare', 'chemistry', 'transportation', 'services', 'environment', 'aerospace', 'network', 'it'];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _filterService: FilterService,
-              private _tagsService: TagsService) {
+              private _tagsService: TagsService,
+              private _activatedRoute: ActivatedRoute) {
 
     this._userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
 
@@ -63,6 +63,7 @@ export class FiltersComponent implements OnInit {
 
   private _initializeFunctions() {
     this._checkStoredFilters();
+    this._checkSharedResult();
     this._sendSelectedFilters();
   }
 
@@ -93,15 +94,15 @@ export class FiltersComponent implements OnInit {
     switch (type) {
 
       case 'allTags':
-        this.allTags = sortTag(this.allTags);
+        this._allTags = sortTag(this._allTags);
         break;
 
       case 'suggested':
-        this.suggestedTags = sortTag(this.suggestedTags);
+        this._suggestedTags = sortTag(this._suggestedTags);
         break;
 
       case 'highlight':
-        this.highLightTags = sortTag(this.highLightTags);
+        this._highLightTags = sortTag(this._highLightTags);
         break;
 
       default:
@@ -116,12 +117,12 @@ export class FiltersComponent implements OnInit {
    * @private
    */
   private _getHighlightedTags() {
-    this.highLightTags = [];
+    this._highLightTags = [];
 
-    this.allTags.forEach((tag: Tag) => {
-      const include = this.highlight.includes(tag.label.en.toLowerCase());
+    this._allTags.forEach((tag: Tag) => {
+      const include = this._highlight.includes(tag.label.en.toLowerCase());
       if (include) {
-        this.highLightTags.push(tag);
+        this._highLightTags.push(tag);
       }
     });
 
@@ -137,12 +138,42 @@ export class FiltersComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
       if (sessionValues.length > 0) {
-        this.selectedTags = sessionValues;
+        this._selectedTags = sessionValues;
         this._getSuggestedTags();
-      } else {
-        this.selectedTags = [];
       }
     }
+  }
+
+
+  /***
+   * this function is to check if we contain any params or not.
+   */
+  private _checkSharedResult() {
+    this._activatedRoute.queryParams.subscribe((params: any) => {
+      if (params['tag']) {
+        this._selectedTags = [];
+        if (typeof params['tag'] === 'string') {
+          const index = this._allTags.findIndex((tag: Tag) => tag._id === params['tag']);
+          if (index !== -1) {
+            const existTagIndex = this._selectedTags.findIndex((filter: Tag) => filter._id === params['tag']);
+            if (existTagIndex === -1) {
+              this._selectedTags.push(this._allTags[index]);
+            }
+          }
+        } else {
+          params['tag'].forEach((tagId: string) => {
+            const index = this._allTags.findIndex((tag: Tag) => tag._id === tagId);
+            if (index !== -1) {
+              const existTagIndex = this._selectedTags.findIndex((filter: Tag) => filter._id === tagId);
+              if (existTagIndex === -1) {
+                this._selectedTags.push(this._allTags[index]);
+              }
+            }
+          });
+        }
+
+      }
+    });
   }
 
 
@@ -151,11 +182,18 @@ export class FiltersComponent implements OnInit {
    * @private
    */
   private _getSuggestedTags() {
-    if (this.selectedTags.length === 0 ) {
-      this.suggestedTags = [];
-    } else {
-      this._tagsService.getSimilarTags(this.selectedTags[this.selectedTags.length - 1]._id).subscribe((response) => {
-        this.suggestedTags = response;
+    this._suggestedTags = [];
+
+    if (this._selectedTags.length !== 0 ) {
+      this._tagsService.getSimilarTags(this._selectedTags[this._selectedTags.length - 1]._id).subscribe((response) => {
+        if (response) {
+          response.forEach((tag: Tag) => {
+            const find = this._selectedTags.find((selectTag: Tag) => selectTag._id === tag._id);
+            if (!find) {
+              this._suggestedTags.push(tag);
+            }
+          });
+        }
         this._sortTags('suggested');
       });
     }
@@ -167,7 +205,7 @@ export class FiltersComponent implements OnInit {
    * @param id
    */
   public checkFilter(id: string): boolean {
-    return this.selectedTags.some((item) => item._id === id);
+    return this._selectedTags.some((item) => item._id === id);
   }
 
 
@@ -179,14 +217,12 @@ export class FiltersComponent implements OnInit {
   toggleFilter(event: Event, tag: Tag) {
 
     if (event.target['checked']) {
-      this.selectedTags.push(tag);
+      this._selectedTags.push(tag);
+      this._getSuggestedTags();
+      this._sendSelectedFilters();
     } else {
-      this._removeFilter(tag._id);
-      this.selectedSimilarTags = [];
+      this.removeFilter(tag._id);
     }
-
-    this._sendSelectedFilters();
-
   }
 
 
@@ -194,9 +230,11 @@ export class FiltersComponent implements OnInit {
    * this function is to remove the selected filter from the variable selectedTags.
    * @param id
    */
-  private _removeFilter(id: string) {
-    const index = this.selectedTags.findIndex((tag) => tag._id === id);
-    this.selectedTags.splice(index, 1);
+  public removeFilter(id: string) {
+    const index = this._selectedTags.findIndex((tag) => tag._id === id);
+    this._selectedTags.splice(index, 1);
+    this._getSuggestedTags();
+    this._sendSelectedFilters();
   }
 
 
@@ -224,9 +262,19 @@ export class FiltersComponent implements OnInit {
   }
 
 
+  /***
+   * this function is to generate the share link of the page.
+   * @private
+   */
   private _getShareLink() {
-    if (this.selectedTags.length === 0) {
+    if (this._selectedTags.length === 0) {
       this._shareUrl = FiltersComponent._getClientUrl();
+    } else {
+      let tags = '';
+      this._selectedTags.forEach((tag: Tag) => {
+        tags += 'tag=' + tag._id + '&';
+      });
+      this._shareUrl = `${FiltersComponent._getClientUrl()}?${tags.slice(0, tags.length - 1)}`;
     }
   }
 
@@ -271,7 +319,13 @@ export class FiltersComponent implements OnInit {
 
 
   private _sendSelectedFilters() {
-    this.appliedFilters.emit(this.selectedTags);
+
+    if (isPlatformBrowser(this._platformId)) {
+      sessionStorage.setItem('discover-filters', JSON.stringify(this._selectedTags));
+    }
+
+    this.appliedFilters.emit(this._selectedTags);
+
   }
 
 
@@ -310,6 +364,26 @@ export class FiltersComponent implements OnInit {
 
   get userLang(): string {
     return this._userLang;
+  }
+
+  get allTags(): Array<Tag> {
+    return this._allTags;
+  }
+
+  get selectedTags(): Array<Tag> {
+    return this._selectedTags;
+  }
+
+  get highLightTags(): Array<Tag> {
+    return this._highLightTags;
+  }
+
+  get suggestedTags(): Array<Tag> {
+    return this._suggestedTags;
+  }
+
+  get highlight(): Array<string> {
+    return this._highlight;
   }
 
 }

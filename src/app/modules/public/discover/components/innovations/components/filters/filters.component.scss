@@ -2,6 +2,10 @@
 
 #filter-component {
 
+  .animate-appear {
+    animation-duration: 1s;
+  }
+
   .sector-highlighted, .sector-suggested {
     padding-bottom: 2rem;
 

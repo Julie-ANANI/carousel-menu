@@ -28,7 +28,10 @@ export class CardsComponent {
 
   @Input() set search(value: boolean) {
     this._isSearching = value;
-    this._endIndex = this._totalInnovations;
+  }
+
+  @Input() set lastIndex(value: number) {
+    this._endIndex = value;
   }
 
   private _paginationValue: PaginationInterface = {};

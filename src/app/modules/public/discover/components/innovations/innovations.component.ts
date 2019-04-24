@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { FilterService } from './services/filter.service';
-import { InnovCard } from '../../../../../models/innov-card';
 
 
 @Component({
@@ -34,23 +33,23 @@ export class InnovationsComponent implements OnInit {
 
   private _trendingInnovations: Array<Innovation> = [];
 
-  filteredInnovations: Array<Innovation> = [];
+  private _filteredInnovations: Array<Innovation> = [];
 
   private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
   private _userLang = '';
 
-  selectedFilters: Array<Tag> = [];
+  private _selectedFilters: Array<Tag> = [];
 
   private _userAuthenticated: boolean = false;
 
-  searchingInnovations: boolean = false;
+  private _searchingInnovations: boolean = false;
 
-  filterActivated: boolean = false;
+  private _filterActivated: boolean = false;
 
-  noResultFound: boolean = false;
+  private _noResultFound: boolean = false;
 
-  searchKey: string;
+  private _searchKey = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -148,21 +147,9 @@ export class InnovationsComponent implements OnInit {
 
 
   public onSelectFilters(filters: Array<Tag>) {
-    this.selectedFilters = filters;
-    console.log(this.selectedFilters);
-
-    if (this.selectedFilters.length > 0) {
-      this.filterActivated = true;
-
-      if (this.filteredInnovations.length === 0) {
-        this.filteredInnovations = this._totalInnovations;
-      }
-
-
-    } else {
-      this.filterActivated = false;
-    }
-
+    this._selectedFilters = filters;
+    this._filterActivated = this._selectedFilters.length > 0;
+    this._getFilteredInnovations();
   }
 
 
@@ -172,35 +159,15 @@ export class InnovationsComponent implements OnInit {
    * @private
    */
   private _searchInnovations(input: string) {
-    this.filteredInnovations = [];
+    this._searchKey = input;
+    this._searchingInnovations = !!input;
+    this._getFilteredInnovations();
+  }
 
-    if (input) {
-      this.searchingInnovations = true;
 
-      this._totalInnovations.forEach((innovation: Innovation) => {
-        innovation.innovationCards.forEach((card: InnovCard) => {
-
-          const find = card.title.toLowerCase().includes(input.toLowerCase());
-
-          if (find) {
-            const innovationIndex = this.filteredInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
-            if (innovationIndex === -1) {
-              this.filteredInnovations.push(innovation);
-            }
-          }
-
-        });
-      });
-
-      this.searchKey = input;
-
-      this.noResultFound = this.filteredInnovations.length === 0;
-
-    } else {
-      this.searchKey = '';
-      this.searchingInnovations = false;
-    }
-
+  private _getFilteredInnovations() {
+    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this._searchKey);
+    this._noResultFound = this._filteredInnovations.length === 0;
   }
 
 
@@ -245,6 +212,30 @@ export class InnovationsComponent implements OnInit {
 
   get userAuthenticated(): boolean {
     return this._userAuthenticated;
+  }
+
+  get filteredInnovations(): Array<Innovation> {
+    return this._filteredInnovations;
+  }
+
+  get selectedFilters(): Array<Tag> {
+    return this._selectedFilters;
+  }
+
+  get searchingInnovations(): boolean {
+    return this._searchingInnovations;
+  }
+
+  get filterActivated(): boolean {
+    return this._filterActivated;
+  }
+
+  get noResultFound(): boolean {
+    return this._noResultFound;
+  }
+
+  get searchKey(): string {
+    return this._searchKey;
   }
 
 }
