@@ -55,7 +55,8 @@ export const ERROR = {
     'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
     'PROFILE_UPDATE_TEXT': 'Le profil a été mis à jour avec succès.',
     'PROFILE_DELETE_TEXT': 'Le profil a été supprimé avec succès.',
-    'ADDED': 'Le profil a été ajouté avec succès.'
+    'ADDED': 'Le profil a été ajouté avec succès.',
+    'NOT_ADDED': 'Le profil n\'a pas été ajouté. Il appartient peut-être à une autre campagne du projet, ou est blacklisté.'
   },
 
   'PROJECT': {
