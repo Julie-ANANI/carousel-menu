@@ -65,6 +65,7 @@ export class SearchToolComponent implements OnInit{
     if (this._requestAlreadyLoaded) {
       this._searchStarted = true;
       this._updateResults();
+      this._requestAlreadyLoaded = false;
     } else {
 
       const keywords = this._searchForm.get('keywords').value;
