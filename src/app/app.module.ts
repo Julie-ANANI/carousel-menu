@@ -1,5 +1,5 @@
 // Modules externes
-import { NgModule, PLATFORM_ID, Inject } from '@angular/core';
+import { NgModule, PLATFORM_ID, Inject, ErrorHandler } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -24,6 +24,7 @@ import { MouseService } from './services/mouse/mouse.service';
 
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
+import { GlobalErrorHandler } from './handlers/error-handler';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
 import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backend";
@@ -60,6 +61,7 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     SwellrtBackend
   ],
   bootstrap: [
