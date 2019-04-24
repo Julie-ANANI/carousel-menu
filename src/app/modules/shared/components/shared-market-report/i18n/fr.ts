@@ -67,7 +67,6 @@ export const MARKET_REPORT = {
       'AROUND': 'Environ',
       'PAGES': 'pages'
     },
-    'EXPORT_WITH_FILTERS': 'Exporter avec les filtres activés',
     'BUTTON_CONFIRM': 'Confirmer',
     'BUTTON_DOWNLOAD': 'Télécharger',
     'BUTTON_CANCEL': 'Annuler'

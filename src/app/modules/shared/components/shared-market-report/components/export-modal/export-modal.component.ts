@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { FilterService } from '../../services/filters.service';
 import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -19,10 +18,6 @@ export class ExportModalComponent {
 
   @Input() set showModal(value: boolean) {
     this._showExportModal = value;
-    if (value) {
-      this._filters = Object.keys(this.filterService.filters).length > 0;
-      this.useFilters = this._filters;
-    }
   }
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -37,12 +32,7 @@ export class ExportModalComponent {
 
   private _showExportModal: boolean;
 
-  private _filters: boolean;
-
-  public useFilters: boolean;
-
   constructor(private answerService: AnswerService,
-              private filterService: FilterService,
               private innovationCommonService: InnovationCommonService,
               private translateNotificationsService: TranslateNotificationsService) { }
 
@@ -102,10 +92,6 @@ export class ExportModalComponent {
 
   set showExportModal(value: boolean) {
     this.showModalChange.emit(value);
-  }
-
-  get filters(): boolean {
-    return this._filters;
   }
 
 }
