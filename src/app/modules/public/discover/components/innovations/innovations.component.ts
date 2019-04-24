@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { FilterService } from './services/filter.service';
-import {InnovCard} from '../../../../../models/innov-card';
+import { InnovCard } from '../../../../../models/innov-card';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class InnovationsComponent implements OnInit {
 
   private _trendingInnovations: Array<Innovation> = [];
 
-  searchedInnovations: Array<Innovation> = [];
+  filteredInnovations: Array<Innovation> = [];
 
   private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
@@ -45,6 +45,8 @@ export class InnovationsComponent implements OnInit {
   private _userAuthenticated: boolean = false;
 
   searchingInnovations: boolean = false;
+
+  filterActivated: boolean = false;
 
   noResultFound: boolean = false;
 
@@ -147,18 +149,30 @@ export class InnovationsComponent implements OnInit {
 
   public onSelectFilters(filters: Array<Tag>) {
     this.selectedFilters = filters;
+    console.log(this.selectedFilters);
 
     if (this.selectedFilters.length > 0) {
-      // this._applyFilters();
-    } else {
+      this.filterActivated = true;
 
+      if (this.filteredInnovations.length === 0) {
+        this.filteredInnovations = this._totalInnovations;
+      }
+
+
+    } else {
+      this.filterActivated = false;
     }
 
   }
 
 
+  /***
+   * this function is to search the innovation based on the search input field.
+   * @param input
+   * @private
+   */
   private _searchInnovations(input: string) {
-    this.searchedInnovations = [];
+    this.filteredInnovations = [];
 
     if (input) {
       this.searchingInnovations = true;
@@ -169,9 +183,9 @@ export class InnovationsComponent implements OnInit {
           const find = card.title.toLowerCase().includes(input.toLowerCase());
 
           if (find) {
-            const innovationIndex = this.searchedInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
+            const innovationIndex = this.filteredInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
             if (innovationIndex === -1) {
-              this.searchedInnovations.push(innovation);
+              this.filteredInnovations.push(innovation);
             }
           }
 
@@ -180,9 +194,10 @@ export class InnovationsComponent implements OnInit {
 
       this.searchKey = input;
 
-      this.noResultFound = this.searchedInnovations.length === 0;
+      this.noResultFound = this.filteredInnovations.length === 0;
 
     } else {
+      this.searchKey = '';
       this.searchingInnovations = false;
     }
 

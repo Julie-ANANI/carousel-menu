@@ -2,6 +2,25 @@
 
 #filter-component {
 
+  .sector-highlighted, .sector-suggested {
+    padding-bottom: 2rem;
+
+    label input[type="checkbox" i] {
+      display: none;
+    }
+
+    h3 {
+      margin-bottom: 0.6rem;
+      font-size: $font-size-sm;
+    }
+
+    .sector-wrapper {
+      flex-wrap: wrap;
+      margin: -$unit-1;
+    }
+
+  }
+
   .flex-between {
 
     .share-button, .search-wrapper {
@@ -41,6 +60,17 @@
 
       }
 
+    }
+
+  }
+
+  .sector-selected {
+    margin: -$unit-1;
+    flex-wrap: wrap;
+
+    .fas {
+      margin-left: $unit-2;
+      font-size: $font-icon-xs;
     }
 
   }

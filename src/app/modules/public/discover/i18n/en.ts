@@ -27,20 +27,26 @@ export const DISCOVER = {
 
   'COMMUNITY_TEXT': 'Want to get the latest innovations in your mailbox?',
 
-  'TOOLTIP_TEXT': 'Click to copy to clipboard',
+  'TOOLTIP_TEXT': 'Click to copy share link to clipboard',
 
   'TOOLTIP_TEXT_COPIED': 'Copied to clipboard',
 
-  'FILTER_TEXT': 'See all tags',
+  'FILTER_TEXT': 'See all sectors',
 
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search innovations...',
 
-  'RESULT_FOUND': 'results for ',
+  'RESULT': 'results ',
+
+  'FOR': 'for ',
 
   'NO_RESULT': 'No result found',
 
   'NO_RESULT_HEADING': 'Something wrong here...',
 
-  'NO_RESULT_TEXT': 'Sorry, we couldn\'t find any results (as you can see) try again with some different keywords.'
+  'NO_RESULT_TEXT': 'Sorry, we couldn\'t find any results (as you can see) try again with some different keywords.',
+
+  'HIGHLIGHT_SECTOR_HEADING': 'Select one or more sectors to see specific innovations',
+
+  'RELATED_SECTORS': 'Related sector(s)',
 
 };

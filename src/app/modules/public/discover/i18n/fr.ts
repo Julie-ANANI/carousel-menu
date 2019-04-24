@@ -30,21 +30,26 @@ export const DISCOVER = {
 
   'COMMUNITY_TEXT': 'Vous souhaitez recevoir nos dernières innovations par email ?',
 
-  'TOOLTIP_TEXT': 'Cliquez pour copier dans le presse-papiers',
+  'TOOLTIP_TEXT': 'Cliquez pour copier le lien de partage dans le presse-papiers',
 
   'TOOLTIP_TEXT_COPIED': 'Copié dans le presse-papiers',
 
-  'FILTER_TEXT': 'Voir tous les tags',
+  'FILTER_TEXT': 'Voir tous les secteurs',
 
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour rechercher....',
 
-  'RESULT_FOUND' : 'résultats pour ',
+  'RESULT' : 'résultats ',
+
+  'FOR': 'pour ',
 
   'NO_RESULT': 'Aucun résultat trouvé',
 
   'NO_RESULT_HEADING': 'Quelque chose ne va pas ici...',
 
-  'NO_RESULT_TEXT': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir), essayez à nouveau avec des mots-clés différents.'
+  'NO_RESULT_TEXT': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir), essayez à nouveau avec des mots-clés différents.',
 
+  'HIGHLIGHT_SECTOR_HEADING': 'Sélectionnez un ou plusieurs secteurs pour voir les innovations spécifiques',
+
+  'RELATED_SECTORS': 'Secteur(s) associé(s)',
 
 };
