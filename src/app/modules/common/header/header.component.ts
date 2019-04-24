@@ -68,7 +68,6 @@ export class HeaderComponent implements OnDestroy {
   private _sidebarValues: SidebarInterface = {};
 
   private _clientRoutes: Array<Header> = [
-    { pageName: 'HEADER.DISCOVER', pageLink: '/discover', trackingClass: 'gtm-menu-discover' },
     { pageName: 'HEADER.SHARED_REPORTS', pageLink: '/user/synthesis', trackingClass: 'gtm-menu-my-projects' },
     { pageName: 'HEADER.MY_PROJECTS', pageLink: '/user/projects', trackingClass: 'gtm-menu-my-projects' },
     ];
