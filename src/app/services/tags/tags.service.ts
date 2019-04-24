@@ -19,7 +19,7 @@ export class TagsService {
   }
 
   public getStats(id: string): Observable<TagStats> {
-    return this._http.get<TagStats>('/staqsdfts/tag/' + id);
+    return this._http.get<TagStats>('/stats/tag/' + id);
   }
 
   public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Tag>, _metadata: any}> {
