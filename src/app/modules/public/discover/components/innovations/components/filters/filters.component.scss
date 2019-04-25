@@ -8,6 +8,14 @@
 
   .sector-highlighted, .sector-suggested {
 
+    .label {
+      padding: 0;
+    }
+
+    label {
+      padding: $unit-2 $unit-4;
+    }
+
     label input[type="checkbox" i] {
       display: none;
     }
