@@ -1,54 +1,54 @@
 export const DISCOVER = {
 
-  'MENU_BAR_TITLE': 'Discover Innovations',
-
   'TAGS': {
     'HEADING': 'Select one or more sectors to see specific projects',
     'HEADING_2': 'sector(s) selected.'
   },
 
-  'SEE_MORE': 'See more sectors',
+  'BUTTON_SHARE': 'Share',
 
-  'CLOSE': 'Less',
-
-  'BUTTON_SHARE': 'Share this page',
-
-  'MODAL': {
-    'TITLE': 'Share Board',
-    'HEADING': 'This link allows you to share this page with your colleagues with the filters you have enabled.',
-    'CONTENT': 'Copy this Url:'
+  'MODAL_SHARE': {
+    'TITLE': 'Share this page with your colleagues',
   },
 
-  'TITLE': 'Discover',
-
-  'PAGE_DESCRIPTION': 'All of the projects we\'ve worked on',
-
-  'FOOTER_TEXT': 'Also available in: ',
-
-  'CATEGORIES': 'Categories',
-
-  'ELECTRONIC': 'Electronic',
-
-  'AGRICULTURE': 'Agriculture',
-  'AEROSPACE': 'Aerospace',
-  'COMPUTER': 'Computer',
-  'MATHEMATICS': 'Mathematics',
-  'SEARCH_CATEGORY': 'Category',
-  'SHOWING': 'showing',
-  'FROM': 'from',
-  'RESULT': 'results',
-  'STATUS': 'Status',
-
-  'COMPLETED': 'Completed',
-  'IN_PROGRESS': 'In progress',
-  'ADD_FILTERS': 'Add Filters',
-  'APPLY_FILTERS': 'Apply Filters',
-  'CANCEL': 'Cancel',
-  'CLEAR_ALL': 'Clear All',
   'NO_INNOVATION': 'We are unable to find innovations based on your query.',
-  'STAGE': 'Stage',
 
-  'RECOMMENDATION': 'Projects that may interest you',
+  'RECOMMENDATION': 'Recommended',
+
   'SUGGESTED_TAGS': 'Related sector(s)',
+
+  'LEARN_MORE': 'Learn more',
+
+  'LATEST': 'Latest',
+
+  'TRENDING': 'Trending',
+
+  'BUTTON_COMMUNITY': 'Become an Ambassador',
+
+  'COMMUNITY_TEXT': 'Want to get the latest innovations in your mailbox?',
+
+  'TOOLTIP_TEXT': 'Click to copy share link to clipboard',
+
+  'TOOLTIP_TEXT_COPIED': 'Copied to clipboard',
+
+  'FILTER_TEXT': 'See all sectors',
+
+  'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search innovations...',
+
+  'RESULT': 'results ',
+
+  'FOR': 'for ',
+
+  'NO_RESULT': 'No result found',
+
+  'NO_RESULT_HEADING': 'Something wrong here...',
+
+  'NO_RESULT_TEXT': 'Sorry, we couldn\'t find any results (as you can see) try again with some different keywords.',
+
+  'HIGHLIGHT_SECTOR_HEADING': 'Select one or more sectors to see specific innovations',
+
+  'RELATED_SECTORS': 'Suggested sector(s)',
+
+  'ALL_SECTORS': 'All sectors',
 
 };

@@ -13,7 +13,7 @@
   &.card-responsive {
     margin-right: $unit-5;
     flex: 1 0 300px;
-    max-width: calc(17% - 1rem);
+    max-width: calc(25% - 1rem);
   }
 
   &.card-3 {
@@ -28,8 +28,10 @@
   }
 
   .card-image {
-    padding-top: $unit-4;
-    margin: 0;
+    display: block;
+    padding-top: $unit-3;
+    margin-left: auto;
+    margin-right: auto;
 
     &:first-child {
       padding-top: 0;
@@ -39,21 +41,14 @@
       display: block;
       height: auto;
       max-width: 100%;
-      border-radius: $border-radius;
-      margin-left: auto;
-      margin-right: auto;
+      object-fit: cover;
     }
 
   }
 
   .card-header, .card-body, .card-footer {
-    padding-top: $unit-4;
+    padding-top: $unit-3;
     padding-bottom: 0;
-
-    &:last-child {
-      padding-bottom: $unit-4;
-    }
-
   }
 
   .card-header {
@@ -83,10 +78,6 @@
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
-  }
-
-  &:hover {
-    box-shadow: $box-shadow-hover-umi;
   }
 
 }

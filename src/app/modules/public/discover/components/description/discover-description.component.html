@@ -36,8 +36,8 @@
 
               <!-- if image -->
               <ng-container *ngIf="media?.type === 'PHOTO'">
-                <figure>
-                  <img [src]="getSrc(media)" [alt]=" " (click)="mediaToShow($event, media.url)" class="c-hand">
+                <figure class="img-overlay">
+                  <img [src]="getSrc(media)" [alt]=" " (click)="mediaToShow($event, media.url)" width="280" height="177" class="img-responsive img-fit-cover">
                 </figure>
               </ng-container>
 
@@ -116,13 +116,13 @@
               <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
 
                 <!-- card image -->
-                <figure>
+                <div class="card-image">
                   <a [href]="[getLink(innovation.innovationCard)]">
-                    <div class="card-image">
-                      <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]=" ">
-                    </div>
+                    <figure class="img-overlay">
+                      <img [src]="getRelatedSrc(innovation.innovationCard)" alt=" " width="280" height="177">
+                    </figure>
                   </a>
-                </figure>
+                </div>
 
                 <!-- card header -->
                 <div class="card-header">
@@ -138,7 +138,7 @@
                       <div *ngFor="let tag of innovation.tags" class="tag-wrapper d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="label label-tag text-notify text-normal">
                           <i class="fas fa-tag"></i>
-                          <span class="label-text">{{ tag?.label | multiling:browserLang() | FormatText }}</span>
+                          <span class="label-text">{{ tag.label | multiling:lang | FormatText }}</span>
                         </div>
                       </div>
                     </ng-container>
