@@ -17,6 +17,8 @@ export const ERROR = {
 
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Veuillez réessayer !',
 
+  'NO_CONNECTION': 'Il semble que vous n\'êtes pas connecté.',
+
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
 
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',

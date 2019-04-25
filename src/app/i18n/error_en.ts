@@ -17,6 +17,8 @@ export const ERROR = {
 
   'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try it again!',
 
+  'NO_CONNECTION': 'It seems that you are currently offline.',
+
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
 
   'INVALID_DOMAIN': 'You are not allowed to create a super-admin account in this instance.',
