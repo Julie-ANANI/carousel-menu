@@ -44,13 +44,7 @@ export class InnovationsComponent implements OnInit {
 
   private _userAuthenticated: boolean = false;
 
-  private _searchingInnovations: boolean = false;
-
   private _filterActivated: boolean = false;
-
-  private _noResultFound: boolean = false;
-
-  private _searchKey = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -79,10 +73,6 @@ export class InnovationsComponent implements OnInit {
     this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
 
     this._userAuthenticated = this._authService.isAuthenticated;
-
-    this._filterService.getSearchOutput().subscribe((searchKey: string) => {
-      this._searchInnovations(searchKey);
-    });
 
   }
 
@@ -142,21 +132,13 @@ export class InnovationsComponent implements OnInit {
   }
 
 
-  /***
-   * this function is to search the innovation based on the search input field.
-   * @param input
-   * @private
-   */
-  private _searchInnovations(input: string) {
-    this._searchKey = input;
-    this._searchingInnovations = !!input;
-    this._getFilteredInnovations();
+  private _getFilteredInnovations() {
+    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters);
   }
 
 
-  private _getFilteredInnovations() {
-    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this._searchKey);
-    this._noResultFound = this._filteredInnovations.length === 0;
+  public onClickRemove(tagId: string) {
+    this._filterService.setFilterToRemove(tagId);
   }
 
 
@@ -211,20 +193,8 @@ export class InnovationsComponent implements OnInit {
     return this._selectedFilters;
   }
 
-  get searchingInnovations(): boolean {
-    return this._searchingInnovations;
-  }
-
   get filterActivated(): boolean {
     return this._filterActivated;
-  }
-
-  get noResultFound(): boolean {
-    return this._noResultFound;
-  }
-
-  get searchKey(): string {
-    return this._searchKey;
   }
 
 }

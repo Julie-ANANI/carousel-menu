@@ -10,7 +10,7 @@
       <!-- /section filter -->
 
       <!-- section recommended innovations -->
-      <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated && !searchingInnovations && !filterActivated">
+      <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated && !filterActivated">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
           <app-cards [allInnovations]="recommendedInnovations"></app-cards>
@@ -19,7 +19,7 @@
       <!-- /section recommended innovations -->
 
       <!-- section latest innovations -->
-      <ng-container *ngIf="!searchingInnovations && !filterActivated">
+      <ng-container *ngIf="!filterActivated">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
           <app-cards [allInnovations]="latestInnovations"></app-cards>
@@ -28,7 +28,7 @@
       <!-- /section latest innovations -->
 
       <!-- section trending innovations -->
-      <ng-container *ngIf="!searchingInnovations && !filterActivated">
+      <ng-container *ngIf="!filterActivated">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
           <app-cards [allInnovations]="trendingInnovations" [pagination]="true"></app-cards>
@@ -37,28 +37,24 @@
       <!-- /section all innovations -->
 
       <!-- section when searching innovation -->
-      <ng-container *ngIf="searchingInnovations || filterActivated">
+      <ng-container *ngIf="filterActivated">
+        <div class="section-light-pad rm-pad-bottom">
 
-        <div *ngIf="!noResultFound" class="section-light-pad rm-pad-bottom">
-          <h3 class="result-heading text-background text-normal">
-            {{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }}
-            <ng-container *ngIf="searchKey && selectedFilters.length === 0">
-              {{ 'DISCOVER.FOR' | translate }} {{ searchKey }}
-            </ng-container>
-          </h3>
-          <app-cards [allInnovations]="filteredInnovations" [search]="true" [lastIndex]="filteredInnovations.length"></app-cards>
-        </div>
+          <div class="result-heading text-background text-normal d-flex">
 
+            <div class="heading">
+              <span>{{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}</span>
+            </div>
 
-        <div *ngIf="noResultFound" class="text-center">
-          <div class="no-result-wrapper">
-            <img src="https://res.cloudinary.com/umi/image/upload/c_scale,q_auto:best,w_500/v1541075335/app/default-images/icons/no_result.png"
-                 [attr.alt]="'DISCOVER.NO_RESULT' | translate" class="img-responsive animate-zoomIn">
-            <h4 class="text-background">{{ 'DISCOVER.NO_RESULT_HEADING' | translate }}</h4>
-            <p>{{ 'DISCOVER.NO_RESULT_TEXT' | translate }}</p>
+            <div *ngFor="let filter of selectedFilters" class="c-hand filter-wrapper" (click)="onClickRemove(filter._id)">
+              <span>{{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i></span>
+            </div>
+
           </div>
-        </div>
 
+          <app-cards [allInnovations]="filteredInnovations" [search]="true" [lastIndex]="filteredInnovations.length"></app-cards>
+
+        </div>
       </ng-container>
       <!-- /section when searching innovation -->
 

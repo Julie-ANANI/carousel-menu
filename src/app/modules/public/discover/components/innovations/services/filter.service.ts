@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { Innovation } from '../../../../../../models/innovation';
 import { Tag } from '../../../../../../models/tag';
 import { InnovCard } from '../../../../../../models/innov-card';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class FilterService {
 
-  searchOutput: Subject<string> = new Subject<string>();
+  filterRemove: Subject<string> = new Subject<string>();
 
-  static highlight: Array<string> = ['construction', 'software', 'industry', 'energy', 'healthcare', 'chemistry', 'transportation', 'services', 'environment', 'aerospace', 'network', 'it', 'sector-tag-1'];
+  static highlight: Array<string> = ['construction', 'software', 'industry', 'energy', 'healthcare', 'chemistry', 'transportation', 'services', 'environment', 'aerospace', 'network', 'it'];
 
-  setSearchOutput(value: string) {
-    this.searchOutput.next(value);
+  setFilterToRemove(value: string) {
+    this.filterRemove.next(value);
   }
 
 
-  getSearchOutput(): Subject<string> {
-    return this.searchOutput;
+  getFilterToRemove(): Subject<string> {
+    return this.filterRemove;
   }
 
 
@@ -85,7 +85,7 @@ export class FilterService {
   }
 
 
-  static getFilteredInnovations(totalInnovations: Array<Innovation>, selectedTags: Array<Tag>, searchFieldInput: string) {
+  static getFilteredInnovations(totalInnovations: Array<Innovation>, selectedTags: Array<Tag>, searchFieldInput: string = '') {
     let innovations: Array<Innovation> = [];
 
     if (totalInnovations.length > 0) {

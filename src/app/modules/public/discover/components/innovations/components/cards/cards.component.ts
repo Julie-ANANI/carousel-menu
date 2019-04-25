@@ -6,7 +6,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
-import { Tag } from '../../../../../../../models/tag';
 
 @Component({
   selector: 'app-cards',
@@ -102,23 +101,6 @@ export class CardsComponent {
     }
 
     return value;
-
-  }
-
-
-  /***
-   * this function is to return the sector tags associated with the particular
-   * innovation.
-   * @param innovation
-   */
-  public getInnovationTags(innovation: Innovation): Array<Tag> {
-    let tags: Array<Tag>;
-
-    tags = innovation.tags.filter((items) => {
-      return items.type === 'SECTOR';
-    });
-
-    return tags;
 
   }
 

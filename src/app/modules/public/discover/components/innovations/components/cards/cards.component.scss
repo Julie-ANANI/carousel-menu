@@ -4,7 +4,8 @@
 
   .card-wrapper {
     flex-wrap: wrap;
-    margin-bottom: -$unit-5;
+    margin-right: -$unit-5;
+    margin-bottom: -0.75rem;
 
     .card {
       border: none;
@@ -55,27 +56,10 @@
 
         }
 
-        .card-body {
-          justify-content: center;
-          flex-wrap: wrap;
-          padding-top: 0;
-
-          .label {
-            padding: 0;
-            font-size: 0.65rem;
-
-            &.label-tag {
-              background-color: $bg-color-light;
-            }
-
-          }
-
-        }
-
       }
 
       &.card-responsive {
-        margin-bottom: $unit-5;
+        margin-bottom: 0.75rem;
       }
 
       &:hover {
@@ -111,10 +95,12 @@
 @media (max-width: $size-xs) {
 
   .card-wrapper {
+    margin-right: 0 !important;
     justify-content: center;
 
     .card-responsive {
       max-width: 300px !important;
+      margin-right: 0;
     }
 
   }

@@ -5,7 +5,7 @@ export const DISCOVER = {
     'HEADING_2': 'sector(s) selected.'
   },
 
-  'BUTTON_SHARE': 'SHARE',
+  'BUTTON_SHARE': 'Share',
 
   'MODAL_SHARE': {
     'TITLE': 'Share this page with your colleagues',
@@ -47,6 +47,8 @@ export const DISCOVER = {
 
   'HIGHLIGHT_SECTOR_HEADING': 'Select one or more sectors to see specific innovations',
 
-  'RELATED_SECTORS': 'Related sector(s)',
+  'RELATED_SECTORS': 'Suggested sector(s)',
+
+  'ALL_SECTORS': 'All sectors',
 
 };

@@ -50,6 +50,8 @@ export const DISCOVER = {
 
   'HIGHLIGHT_SECTOR_HEADING': 'Sélectionnez un ou plusieurs secteurs pour voir les innovations spécifiques',
 
-  'RELATED_SECTORS': 'Secteur(s) associé(s)',
+  'RELATED_SECTORS': 'Secteur(s) suggéré(s)',
+
+  'ALL_SECTORS': 'Tous les secteurs',
 
 };

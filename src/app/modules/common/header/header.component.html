@@ -86,6 +86,14 @@
             </div>
           </li>
 
+          <!-- contact us -->
+          <li class="menu-item contact-button">
+            <a [href]="getContactUrl()" rel="noopener" target="_blank">
+              <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
+            </a>
+          </li>
+          <!-- /contact us -->
+
           <!-- mobile toggle icon -->
           <li class="mobile-toggle" (click)="toggleMenuState()">
             <i class="fas fa-bars"></i>
@@ -295,6 +303,13 @@
             </li>
 
           </ng-container>
+
+          <!-- contact us -->
+          <li class="sidebar-menu-item">
+            <a [href]="getContactUrl()" rel="noopener" target="_blank">
+              {{ 'HEADER.CONTACT_US' | translate }}
+            </a>
+          </li>
 
           <!-- log out -->
           <li class="sidebar-menu-item">

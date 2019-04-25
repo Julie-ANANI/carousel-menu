@@ -3,7 +3,21 @@
   <!-- highlighted sectors -->
   <div *ngIf="highLightTags.length > 0" class="sector-highlighted">
 
-    <h3 class="text-notify">{{ 'DISCOVER.HIGHLIGHT_SECTOR_HEADING' | translate }}</h3>
+    <div class="flex-between">
+
+      <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)">
+        <i class="fas fa-sliders-h"></i>
+        <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
+      </div>
+
+      <div class="share-button">
+        <button type="button" class="btn btn-sm rounded btn-secondary" (click)="onClickShare($event)">
+          <i class="fas fa-share-alt"></i>
+          {{ 'DISCOVER.BUTTON_SHARE' | translate }}
+        </button>
+      </div>
+
+    </div>
 
     <div class="sector-wrapper d-flex">
       <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
@@ -46,46 +60,31 @@
   </div>
   <!-- /suggested sectors -->
 
-  <!-- section action -->
-  <div class="flex-between">
-
-    <div class="search-wrapper d-flex">
-
-      <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)">
-        <i class="fas fa-sliders-h"></i>
-        <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
-      </div>
-
-      <div class="search-bar">
-        <app-search-input-2 [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'" (searchFieldOutput)="searchOutput($event)"></app-search-input-2>
-      </div>
-
-    </div>
-
-    <div class="share-button">
-      <button type="button" class="btn btn-sm rounded btn-secondary" (click)="onClickShare($event)">
-        <i class="fas fa-share-alt"></i>
-        {{ 'DISCOVER.BUTTON_SHARE' | translate }}
-      </button>
-    </div>
-
-  </div>
-  <!-- /section action -->
-
-  <!-- selected sectors -->
-  <div *ngIf="selectedTags.length > 0" class="sector-selected d-flex">
-    <div *ngFor="let tag of selectedTags" class="label label-meta c-hand animate-appear" (click)="removeFilter(tag._id)">
-      <span>{{ tag?.label | multiling:userLang | FormatText }}</span><i class="fas fa-times"></i>
-    </div>
-  </div>
-  <!-- /selected sectors -->
-
 </section>
 
 
 <!-- modal tags -->
-<app-modal [(showModal)]="modalTag" [modalPosition]="'250px'">
+<app-modal [(showModal)]="modalTag" [modalPosition]="'250px'" [widthMax]="'840px'">
+  <div class="modal-tag-wrapper">
 
+    <h3 class="text-notify">{{ 'DISCOVER.ALL_SECTORS' | translate }}</h3>
+
+    <div class="d-flex sector-wrapper">
+      <div *ngFor="let tag of allTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
+        <label class="c-hand">
+          <input
+            (change)="toggleFilter($event, tag)"
+            [checked]="checkFilter(tag._id)"
+            [id]="tag._id"
+            [name]="tag.label | multiling:userLang"
+            [value]="tag.label | multiling:userLang"
+            type="checkbox">
+          {{ tag.label | multiling:userLang | FormatText }}
+        </label>
+      </div>
+    </div>
+
+  </div>
 </app-modal>
 <!-- /modal tags -->
 

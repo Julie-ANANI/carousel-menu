@@ -138,7 +138,7 @@
                       <div *ngFor="let tag of innovation.tags" class="tag-wrapper d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="label label-tag text-notify text-normal">
                           <i class="fas fa-tag"></i>
-                          <span class="label-text">{{ tag?.label | multiling:browserLang() | FormatText }}</span>
+                          <span class="label-text">{{ tag.label | multiling:lang | FormatText }}</span>
                         </div>
                       </div>
                     </ng-container>

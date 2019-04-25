@@ -45,9 +45,13 @@ export class FiltersComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
-              private _filterService: FilterService,
               private _tagsService: TagsService,
-              private _activatedRoute: ActivatedRoute) {
+              private _activatedRoute: ActivatedRoute,
+              private _filterService: FilterService) {
+
+    this._filterService.getFilterToRemove().subscribe((tagId: string) => {
+      this.removeFilter(tagId);
+    });
 
     this._userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
 
@@ -206,11 +210,6 @@ export class FiltersComponent implements OnInit {
   public showAllTags(event: Event) {
     event.preventDefault();
     this._modalTag = true;
-  }
-
-
-  public searchOutput(value: string) {
-    this._filterService.setSearchOutput(value);
   }
 
 
