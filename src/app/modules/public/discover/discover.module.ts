@@ -26,8 +26,6 @@ import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.mod
 import { ModalMediaModule } from '../../utility-components/modals/modal-media/modal-media.module';
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 import { HeaderModule } from '../../common/header/header.module';
-import { SpinnerLoaderModule } from '../../utility-components/spinner-loader/spinner-loader.module';
-import { SearchInput2Module } from '../../utility-components/search-inputs/search-template-2/search-input-2.module';
 
 
 @NgModule({
@@ -43,8 +41,6 @@ import { SearchInput2Module } from '../../utility-components/search-inputs/searc
     ModalMediaModule,
     ModalModule,
     HeaderModule,
-    SpinnerLoaderModule,
-    SearchInput2Module
   ],
   providers:[
     InnovationService,
