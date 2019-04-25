@@ -58,8 +58,6 @@ export class InnovationsComponent implements OnInit {
 
     this._totalInnovations = this._activatedRoute.snapshot.data.innovations;
 
-    this._recommendedInnovations = this._totalInnovations.slice(4, 8); //temp
-
     this._activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
         this._applyInnoRecommendation(params['innovation']);
