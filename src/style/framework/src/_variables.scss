@@ -65,6 +65,10 @@ $label-edit-color: $secondary-color !default;
 $label-answer-color: #F8F4F4 !default;
 
 
+// gradient variables
+$primary-gradient-color: linear-gradient(240deg, #3199cd 0%, #2bc1ef 100%) !default;
+
+
 // button variables
 $button-disabled-text-color: $disabled-text-color !default;
 $button-disabled-bg-color: $disabled-color !default;

@@ -1,0 +1,67 @@
+@import "../../../../../../../../style/framework/src/variables";
+
+#filter-component {
+
+  .animate-appear {
+    animation-duration: 1s;
+  }
+
+  .sector-highlighted, .sector-suggested {
+    padding-bottom: 1rem;
+
+    label input[type="checkbox" i] {
+      display: none;
+    }
+
+    h3 {
+      margin-bottom: 0.6rem;
+      font-size: $font-size-sm;
+    }
+
+    .sector-wrapper {
+      flex-wrap: wrap;
+      margin: -$unit-1;
+    }
+
+  }
+
+  .sector-highlighted {
+
+    .flex-between {
+
+      .filter-icon, .share-button {
+        margin-bottom: 0.75rem;
+      }
+
+      .filter-icon {
+        font-size: $font-size-sm;
+
+        span {
+          margin-left: $unit-2;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+      }
+
+      .share-button {
+
+        .btn {
+          min-width: 100px;
+
+          i {
+            margin-left: 0;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+

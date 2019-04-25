@@ -93,7 +93,7 @@ export const COMMON = {
     'WELCOME': 'Bienvenus',
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
-    'DISCOVER': 'Découvrez les innovations',
+    'DISCOVER': 'Showroom des innovations | UMI',
     'PROJECTS': 'Projets'
   },
 
@@ -325,5 +325,7 @@ export const COMMON = {
     'TITLE_SHARE': 'Partage',
     'TITLE_CREATE': 'Création'
   },
+
+  'SEARCH_INPUT_2_PLACEHOLDER': 'Commencez à taper pour chercher....',
 
 };

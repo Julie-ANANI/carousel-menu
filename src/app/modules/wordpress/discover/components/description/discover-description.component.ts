@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../../models/innov-card';
 import { Innovation } from '../../../../../models/innovation';
 import { ShareService } from '../../../../../services/share/share.service';
@@ -57,7 +56,6 @@ export class DiscoverDescriptionComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _shareService: ShareService,
               private _domSanitizer1: DomSanitizer,
-              private _translateService: TranslateService,
               private _innovationService: InnovationService) {
 
     this._activatedRoute.params.subscribe(params => {
@@ -91,14 +89,10 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _getAllTags() {
     this._innovation.tags.forEach((tag: Tag) => {
       if (tag.type === 'SECTOR') {
-        this._tags.push(MultilingPipe.prototype.transform(tag.label, this.browserLang()));
+        this._tags.push(MultilingPipe.prototype.transform(tag.label, this._lang));
+        this._tags = this._tags.sort();
       }
     });
-  }
-
-
-  public browserLang(): string {
-    return this._translateService.getBrowserLang() || 'en';
   }
 
 
