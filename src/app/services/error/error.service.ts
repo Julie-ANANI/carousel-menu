@@ -4,6 +4,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { TranslateNotificationsService } from '../notifications/notifications.service';
 import { environment } from '../../../environments/environment';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+  dsn: 'https://d86e9ff2dfbb40eab9632f0a3a599757@sentry.io/1315751'
+});
 
 @Injectable()
 export class ErrorService {
@@ -15,7 +20,15 @@ export class ErrorService {
   }
 
   handleError(error: Error | HttpErrorResponse) {
+    if (environment.production === true) {
+      const eventId = Sentry.captureException(error);
+      Sentry.showReportDialog({ eventId });
+    } else {
+      this.logError(error);
+    }
+  }
 
+  logError(error: Error | HttpErrorResponse): void {
     if (error instanceof HttpErrorResponse) {
       // Server or connection error happened
       if (!navigator.onLine) {
@@ -47,7 +60,6 @@ export class ErrorService {
       console.log({domain, time, route, user, type, message});
       console.log('----- /Client Error -----');
     }
-
   }
 
 }
