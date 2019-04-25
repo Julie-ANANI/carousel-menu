@@ -36,6 +36,7 @@
 
   &.avatar-user {
     @include avatar-variant($text-background-color, #e0e0e0);
+    font-family: $font-family-oswald;
   }
 
   img {
