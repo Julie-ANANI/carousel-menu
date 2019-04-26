@@ -19,16 +19,24 @@ export class ErrorService {
               private translateNotificationService: TranslateNotificationsService) {
   }
 
-  handleError(error: Error | HttpErrorResponse) {
+  public handleError(error: Error | HttpErrorResponse) {
+
     if (environment.production === true) {
+
       const eventId = Sentry.captureException(error);
       Sentry.showReportDialog({ eventId });
+
     } else {
+
       this.logError(error);
+
     }
+
+    console.error(error);
+
   }
 
-  logError(error: Error | HttpErrorResponse): void {
+  private logError(error: Error | HttpErrorResponse): void {
     if (error instanceof HttpErrorResponse) {
       // Server or connection error happened
       if (!navigator.onLine) {
@@ -40,7 +48,7 @@ export class ErrorService {
         const domain = environment.domain;
         const time = new Date().toISOString();
         const route = environment.clientUrl + this.router.url;
-        const user = this.auth.isAuthenticated ? this.auth.getUserInfo().name : '';
+        const user = this.auth.user ? this.auth.user.firstName + ' ' + this.auth.user.lastName : '';
         const type = error.name;
         const message = error.message || error.toString();
         const status = error.status;
@@ -54,7 +62,7 @@ export class ErrorService {
       const domain = environment.domain;
       const time = new Date().toISOString();
       const route = environment.clientUrl + this.router.url;
-      const user = this.auth.isAuthenticated ? this.auth.getUserInfo().name : '';
+      const user = this.auth.user ? this.auth.user.firstName + ' ' + this.auth.user.lastName : '';
       const type = error.name;
       const message = error.message || error.toString();
       console.log({domain, time, route, user, type, message});

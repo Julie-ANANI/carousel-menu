@@ -7,7 +7,7 @@ export class ErrorBackendService extends ErrorService {
 
 
   public handleError(error: Error | HttpErrorResponse): void {
-    // do nothing here
+    console.error(error);
   }
 
 }
