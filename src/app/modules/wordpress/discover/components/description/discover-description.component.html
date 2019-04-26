@@ -43,7 +43,7 @@
               <!-- if video -->
               <ng-container *ngIf="media?.type === 'VIDEO'">
                 <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-                        height="177px" [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
+                        height="177" allowfullscreen [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
               </ng-container>
 
             </div>
