@@ -43,11 +43,11 @@
     <h3 class="text-notify">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
     <div class="d-flex sector-wrapper">
-      <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand animate-appear" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
+      <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand animate-appear" [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
         <label class="c-hand">
           <input
-            (change)="toggleFilter($event, tag)"
-            [checked]="checkFilter(tag._id)"
+            (change)="toggleSimilarFilter($event, tag)"
+            [checked]="checkSimilarFilter(tag._id)"
             [id]="tag._id"
             [name]="tag.label | multiling:userLang"
             [value]="tag.label | multiling:userLang"
@@ -65,6 +65,7 @@
 
 <!-- modal tags -->
 <app-modal [(showModal)]="modalTag" [modalPosition]="'250px'" [widthMax]="'840px'">
+
   <div class="modal-tag-wrapper">
 
     <h3 class="text-notify">{{ 'DISCOVER.ALL_SECTORS' | translate }}</h3>
@@ -85,6 +86,11 @@
     </div>
 
   </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CLOSE' | translate }}</button>
+  </div>
+
 </app-modal>
 <!-- /modal tags -->
 

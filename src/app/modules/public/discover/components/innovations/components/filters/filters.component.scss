@@ -3,7 +3,7 @@
 #filter-component {
 
   .animate-appear {
-    animation-duration: 1s;
+    animation-duration: .5s;
   }
 
   .sector-highlighted, .sector-suggested {
@@ -95,6 +95,16 @@
 
 }
 
+.btn-cancel {
+  color: $meta-color;
+  background-color: $bg-color-light;
+  border: $border-width-lg solid $border-meta-color;
+
+  &:hover {
+    border: $border-width-lg solid lighten($border-meta-color, 15%);
+  }
+
+}
 
 .modal-share-wrapper {
 

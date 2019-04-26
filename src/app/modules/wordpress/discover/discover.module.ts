@@ -12,7 +12,7 @@ import { CardsComponent } from './components/innovations/components/cards/cards.
 import { InnovationService } from '../../../services/innovation/innovation.service';
 import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
-import { FilterService } from './components/innovations/services/filter.service';
+import { FilterService } from '../../public/discover/components/innovations/services/filter.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 

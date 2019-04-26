@@ -177,7 +177,8 @@ export const COMMON = {
     'SUBMIT': 'Soumettre',
     'SIGN_IN': 'Se Connecter',
     'SIGN_UP': 'Commencer',
-    'DELETE': 'Supprimer'
+    'DELETE': 'Supprimer',
+    'CLOSE': 'Fermer'
   },
 
   'PROJECT': {
