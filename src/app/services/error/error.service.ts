@@ -17,29 +17,30 @@ export class ErrorService {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private router: Router,
               private auth: AuthService,
-              private translateNotificationService: TranslateNotificationsService) {
-
-    this.auth.authState.subscribe((user) => {
-      Sentry.configureScope((scope) => {
-        scope.setUser({
-          email: user ? user.email : '',
-          username: user ? `${user.firstName} ${user.lastName}` : '',
-          id: user ? user.id : ''
-        });
-      });
-    });
-
-  }
+              private translateNotificationService: TranslateNotificationsService) {}
 
   public handleError(error: Error | HttpErrorResponse) {
 
     if (environment.production === true) {
 
-      const eventId = Sentry.captureException(error);
+      Sentry.withScope(scope => {
 
-      if (this.auth.adminLevel > 0) {
-        Sentry.showReportDialog({ eventId });
-      }
+        const user = this.auth.user;
+        scope.setUser({
+          email: user ? user.email : '',
+          username: user ? `${user.firstName} ${user.lastName}` : '',
+          id: user ? user.id : ''
+        });
+
+        scope.setTag('route', environment.clientUrl + this.router.url);
+
+        const eventId = Sentry.captureException(error);
+
+        if (this.auth.adminLevel > 0) {
+          Sentry.showReportDialog({ eventId });
+        }
+
+      });
 
     } else {
 

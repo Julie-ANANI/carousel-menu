@@ -14,7 +14,6 @@ import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-ba
 @Injectable()
 export class AuthService {
 
-  private _authState = new Subject<User>();
   private _authenticated = false;
   private _authenticatedSource = new Subject<boolean>();
   private _admin = 0;
@@ -80,7 +79,6 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._user = res;
-          this._authState.next(this._user);
           if (res.isAuthenticated) {
             //this.startCookieObservator();
           }
@@ -99,7 +97,6 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._cookieService.removeAll();
           this._user = null;
-          this._authState.next(null);
           //this.stopSwellRTSession();
           clearInterval(this._cookieObserver);
           return res;
@@ -119,7 +116,6 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._user = res.user || null;
-          this._authState.next(this._user);
           return res;
         }));
   }
@@ -161,9 +157,6 @@ export class AuthService {
     };
   }
 
-  get authState(): Observable<User> {
-    return this._authState.asObservable();
-  }
   get isAuthenticated(): boolean { return this._authenticated; }
   get isConfirmed(): boolean { return this._confirmed; }
   get adminLevel(): number { return this._admin; }
