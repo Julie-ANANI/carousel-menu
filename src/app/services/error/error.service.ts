@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import * as Sentry from '@sentry/browser';
 
 Sentry.init({
+  environment: environment.domain,
   dsn: 'https://d86e9ff2dfbb40eab9632f0a3a599757@sentry.io/1315751'
 });
 
@@ -17,6 +18,17 @@ export class ErrorService {
               private router: Router,
               private auth: AuthService,
               private translateNotificationService: TranslateNotificationsService) {
+
+    this.auth.authState.subscribe((user) => {
+      Sentry.configureScope((scope) => {
+        scope.setUser({
+          email: user ? user.email : '',
+          username: user ? `${user.firstName} ${user.lastName}` : '',
+          id: user ? user.id : ''
+        });
+      });
+    });
+
   }
 
   public handleError(error: Error | HttpErrorResponse) {
