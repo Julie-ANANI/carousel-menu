@@ -17,6 +17,8 @@ export const ERROR = {
 
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Veuillez réessayer !',
 
+  'NO_CONNECTION': 'Il semble que vous n\'êtes pas connecté.',
+
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
 
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
@@ -55,7 +57,8 @@ export const ERROR = {
     'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
     'PROFILE_UPDATE_TEXT': 'Le profil a été mis à jour avec succès.',
     'PROFILE_DELETE_TEXT': 'Le profil a été supprimé avec succès.',
-    'ADDED': 'Le profil a été ajouté avec succès.'
+    'ADDED': 'Le profil a été ajouté avec succès.',
+    'NOT_ADDED': 'Le profil n\'a pas été ajouté. Il appartient peut-être à une autre campagne du projet, ou est blacklisté.'
   },
 
   'PROJECT': {

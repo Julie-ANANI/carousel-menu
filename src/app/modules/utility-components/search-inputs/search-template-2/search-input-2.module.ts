@@ -2,21 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {SearchInputComponent} from './search-input.component';
+
+import { SearchInput2Component } from './search-input-2.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     ReactiveFormsModule,
     FormsModule
   ],
   declarations: [
-    SearchInputComponent
+    SearchInput2Component
   ],
   exports: [
-    SearchInputComponent
+    SearchInput2Component
   ]
 })
 
-export class SearchInputModule {}
+export class SearchInput2Module {}

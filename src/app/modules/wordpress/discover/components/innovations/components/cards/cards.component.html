@@ -1,0 +1,45 @@
+<ng-container *ngIf="totalInnovations > 0">
+  <section id="cards-component">
+
+    <!-- section cards -->
+    <div class="card-wrapper d-flex text-center">
+      <div *ngFor="let innovation of innovations | slice:startIndex:endIndex" class="card card-responsive">
+        <a [href]="[getInnovationDetail('url', innovation)]">
+
+          <div class="card-image relative">
+
+            <figure>
+              <img [src]="getInnovationDetail('imageUrl', innovation)" [alt]="getInnovationDetail('title', innovation)" width="320" height="200">
+            </figure>
+
+            <div class="hover-button absolute flex-centered">
+              <span class="text-medium">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
+            </div>
+
+          </div>
+
+          <div class="card-header">
+            <div class="card-title">
+              <h6>{{ getInnovationDetail('title', innovation) }}</h6>
+            </div>
+          </div>
+
+        </a>
+      </div>
+    </div>
+
+    <!-- section pagination -->
+    <ng-container *ngIf="isPagination && totalInnovations > 10">
+      <div class="section-light-pad rm-pad-bottom flex-end">
+        <app-pagination
+          [total]="totalInnovations"
+          [propertyName]="'discover-page'"
+          [configValue]="paginationValue"
+          (configChange)="onChangePagination($event)">
+        </app-pagination>
+      </div>
+    </ng-container>
+    <!-- /section pagination -->
+
+  </section>
+</ng-container>

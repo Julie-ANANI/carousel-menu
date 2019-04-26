@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { Professional } from '../../../../../../models/professional';
 import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { FormGroup } from '@angular/forms';
@@ -150,8 +149,12 @@ export class AdminCampaignProsComponent implements OnInit {
 
     this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id)
       .pipe(first())
-      .subscribe((createdPro: Professional) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
+      .subscribe((result: any) => {
+        if (result.nbProfessionalsMoved) {
+          this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
+        } else {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.NOT_ADDED');
+        }
         this._noResult = false;
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');

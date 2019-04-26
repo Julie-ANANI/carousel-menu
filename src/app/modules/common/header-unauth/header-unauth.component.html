@@ -48,6 +48,13 @@
           </li>
           <!-- /language select dropdown -->
 
+          <!-- contact us -->
+          <li class="menu-item contact-button">
+            <a [href]="getContactUrl()" rel="noopener"target="_blank">
+              <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
+            </a>
+          </li>
+
           <!-- sign in button -->
           <li class="menu-item">
             <button type="button" class="btn ghost-primary btn-sm" (click)="onClickSignIn($event)">{{ 'COMMON.BUTTON.SIGN_IN' | translate }}</button>

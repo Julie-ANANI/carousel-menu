@@ -1,0 +1,23 @@
+<section class="search-wrapper" id="search-input-2-component" [ngClass]="{ 'active': searchActive }">
+
+  <form novalidate autocomplete="off" class="d-flex" >
+
+    <span class="search-icon text-notify">
+      <i class="fas fa-search"></i>
+    </span>
+
+    <label>
+      <input
+        type="search"
+        [formControl]="searchField"
+        [attr.placeholder]="placeholder | translate">
+    </label>
+
+  </form>
+
+  <div class="close-icon text-notify" [ngStyle]="{ 'visibility': searchActive ? 'visible' : 'hidden' }" (click)="onClickClose($event)">
+    <i class="fas fa-times"></i>
+  </div>
+
+</section>
+

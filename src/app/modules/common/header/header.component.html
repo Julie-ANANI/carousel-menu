@@ -15,29 +15,42 @@
         <ul class="menu">
 
           <!-- example page -->
-          <li class="menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
-            <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
-               routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
-              <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
-            </a>
-          </li>
-
-          <!-- client routes -->
-          <ng-container *ngFor="let route of clientRoutes">
-            <li class="menu-item" *ngIf="!backOfficeValue">
-              <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
-                <span>{{ route.pageName | translate }}</span>
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+            <li class="menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
+              <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+                 routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
+                <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
               </a>
             </li>
           </ng-container>
 
+          <!-- discover page -->
+          <li class="menu-item" *ngIf="!backOfficeValue">
+            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
+              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
+            </a>
+          </li>
+
+          <!-- client routes -->
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+            <ng-container *ngFor="let route of clientRoutes">
+              <li class="menu-item" *ngIf="!backOfficeValue">
+                <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
+                  <span>{{ route.pageName | translate }}</span>
+                </a>
+              </li>
+            </ng-container>
+          </ng-container>
+
           <!-- admin routes -->
-          <ng-container *ngFor="let route of adminRoutes">
-            <li class="menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel)">
-              <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
-                <span>{{ route.pageName }}</span>
-              </a>
-            </li>
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+            <ng-container *ngFor="let route of adminRoutes">
+              <li class="menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel) && authService.user">
+                <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
+                  <span>{{ route.pageName }}</span>
+                </a>
+              </li>
+            </ng-container>
           </ng-container>
 
           <!-- language select dropdown -->
@@ -59,19 +72,27 @@
                 <li class="drop-item text-center" (click)="setLang('fr')">
                   <img
                     [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'"
-                    [alt]="currentLang.toUpperCase()">
+                    alt="FR">
                 </li>
 
                 <li class="drop-item text-center" (click)="setLang('en')">
                   <img
                     [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'"
-                    [alt]="currentLang.toUpperCase()">
+                    alt="EN">
                 </li>
 
               </ul>
 
             </div>
           </li>
+
+          <!-- contact us -->
+          <li class="menu-item contact-button">
+            <a [href]="getContactUrl()" rel="noopener" target="_blank">
+              <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
+            </a>
+          </li>
+          <!-- /contact us -->
 
           <!-- mobile toggle icon -->
           <li class="mobile-toggle" (click)="toggleMenuState()">
@@ -84,68 +105,80 @@
           <li class="menu-item header-account-dropdown">
             <div class="dropdown" id="header-account-dropdown">
 
-              <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
-                <figure class="avatar avatar-lg avatar-user text-medium" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
-                  <ng-container *ngIf="hasProfilePic()">
-                    <img [src]="profilePicture" class="img-responsive" alt=" ">
-                  </ng-container>
+              <ng-container *ngIf="authService.user && authService.user.state === 'unconfirmed'">
+                <figure class="avatar avatar-lg avatar-user text-notify">
+                  <i class="fas fa-user"></i>
                 </figure>
-              </a>
+              </ng-container>
+
+              <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+                <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
+                  <figure class="avatar avatar-lg avatar-user text-medium" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                    <ng-container *ngIf="hasProfilePic()">
+                      <img [src]="profilePicture" class="img-responsive" alt=" ">
+                    </ng-container>
+                  </figure>
+                </a>
+              </ng-container>
 
               <!-- dropdown -->
               <ul class="dropdown-menu dropdown-right">
 
-                <li class="drop-item drop-item-user">
-                  <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account drop-item-user">
+                <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
 
-                    <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
-                      <ng-container *ngIf="hasProfilePic()">
-                        <img [src]="profilePicture" class="img-responsive" alt=" ">
-                      </ng-container>
-                    </figure>
+                  <li class="drop-item drop-item-user">
+                    <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account drop-item-user">
 
-                    <span class="d-flex">
+                      <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                        <ng-container *ngIf="hasProfilePic()">
+                          <img [src]="profilePicture" class="img-responsive" alt=" ">
+                        </ng-container>
+                      </figure>
+
+                      <span class="d-flex">
                       <span class="text-medium text-ellipsis">{{ name }}</span>
                       <span class="text-email text-ellipsis">{{ email }}</span>
                     </span>
 
-                  </a>
-                </li>
+                    </a>
+                  </li>
 
-                <!-- account page -->
-                <li class="drop-item">
-                  <a
-                    [routerLink]="'/user/account'"
-                    routerLinkActive="active"
-                    (click)="onClickLink()"
-                    class="gtm-menu-my-account text-background">
-                    {{ 'HEADER.MY_ACCOUNT' | translate }}
-                  </a>
-                </li>
+                  <!-- admin side -->
+                  <li class="drop-item" *ngIf="!backOfficeValue && canShow(1)">
+                    <a
+                      [routerLink]="'/user/admin'"
+                      routerLinkActive="active"
+                      (click)="toggleBackOfficeState(); onClickLink();"
+                      class="text-background">
+                      Admin Side
+                    </a>
+                  </li>
 
-                <!-- admin side -->
-                <li class="drop-item" *ngIf="!backOfficeValue && canShow(1)">
-                  <a
-                    [routerLink]="'/user/admin'"
-                    routerLinkActive="active"
-                    (click)="toggleBackOfficeState(); onClickLink();"
-                    class="text-background">
-                    Admin Side
-                  </a>
-                </li>
+                  <!-- client side -->
+                  <li class="drop-item" *ngIf="backOfficeValue && canShow(1)">
+                    <a
+                      routerLinkActive="active"
+                      [routerLink]="'/user/projects'"
+                      (click)="toggleBackOfficeState(); onClickLink();"
+                      class="text-background">
+                      Client Side
+                    </a>
+                  </li>
 
-                <!-- client side -->
-                <li class="drop-item" *ngIf="backOfficeValue && canShow(1)">
-                  <a
-                    routerLinkActive="active"
-                    [routerLink]="'/user/projects'"
-                    (click)="toggleBackOfficeState(); onClickLink();"
-                    class="text-background">
-                    Client Side
-                  </a>
-                </li>
+                  <!-- account page -->
+                  <li class="drop-item">
+                    <a
+                      [routerLink]="'/user/account'"
+                      routerLinkActive="active"
+                      (click)="onClickLink()"
+                      class="gtm-menu-my-account text-background">
+                      {{ 'HEADER.MY_ACCOUNT' | translate }}
+                    </a>
+                  </li>
 
-                <li class="divider"></li>
+                  <li class="divider"></li>
+
+                </ng-container>
 
                 <!-- log out -->
                 <li class="drop-item">
@@ -180,79 +213,101 @@
         <ul class="menu">
 
           <!-- account and pic -->
-          <li class="sidebar-menu-item sidebar-item-user">
-            <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+            <li class="sidebar-menu-item sidebar-item-user">
+              <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
 
-              <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
-                <ng-container *ngIf="hasProfilePic()">
-                  <img [src]="profilePicture" class="img-responsive" alt=" ">
-                </ng-container>
-              </figure>
+                <figure class="avatar avatar-lg avatar-user text-medium c-hand" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                  <ng-container *ngIf="hasProfilePic()">
+                    <img [src]="profilePicture" class="img-responsive" alt=" ">
+                  </ng-container>
+                </figure>
 
-              <span class="d-flex">
-                <span class="text-medium text-ellipsis">{{ name }}</span>
-                <span class="text-email text-ellipsis text-normal">{{ email }}</span>
-              </span>
+                <span class="d-flex">
+              <span class="text-medium text-ellipsis">{{ name }}</span>
+              <span class="text-email text-ellipsis text-normal">{{ email }}</span>
+            </span>
 
-            </a>
-          </li>
+              </a>
+            </li>
+          </ng-container>
 
           <!-- example page -->
-          <li class="sidebar-menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
-            <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
-               routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
-              <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+            <li class="sidebar-menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
+              <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+                 routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
+                <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
+              </a>
+            </li>
+          </ng-container>
+
+          <!-- discover page -->
+          <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
+            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
+              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
             </a>
           </li>
 
-          <!-- client routes -->
-          <ng-container *ngFor="let route of clientRoutes">
-            <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
-              <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
-                <span>{{ route.pageName | translate }}</span>
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+
+            <!-- client routes -->
+            <ng-container *ngFor="let route of clientRoutes">
+              <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
+                <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
+                  <span>{{ route.pageName | translate }}</span>
+                </a>
+              </li>
+            </ng-container>
+
+            <!-- admin routes -->
+            <ng-container *ngFor="let route of adminRoutes">
+              <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel)">
+                <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
+                  <span>{{ route.pageName }}</span>
+                </a>
+              </li>
+            </ng-container>
+
+            <!-- account page -->
+            <li class="sidebar-menu-item">
+              <a
+                [routerLink]="'/user/account'"
+                routerLinkActive="active"
+                (click)="onClickLink()"
+                class="gtm-menu-my-account text-background">
+                {{ 'HEADER.MY_ACCOUNT' | translate }}
               </a>
             </li>
-          </ng-container>
 
-          <!-- admin routes -->
-          <ng-container *ngFor="let route of adminRoutes">
-            <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel)">
-              <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
-                <span>{{ route.pageName }}</span>
+            <!-- admin side -->
+            <li class="sidebar-menu-item" *ngIf="!backOfficeValue && canShow(1)">
+              <a
+                [routerLink]="'/user/admin'"
+                routerLinkActive="active"
+                (click)="toggleBackOfficeState(); onClickLink();"
+                class="text-background">
+                Admin Side
               </a>
             </li>
+
+            <!-- client side -->
+            <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(1)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/user/projects'"
+                (click)="toggleBackOfficeState(); onClickLink();"
+                class="text-background">
+                Client Side
+              </a>
+            </li>
+
           </ng-container>
 
-          <!-- account page -->
+          <!-- contact us -->
           <li class="sidebar-menu-item">
-            <a
-              [routerLink]="'/user/account'"
-              routerLinkActive="active"
-              (click)="onClickLink()"
-              class="gtm-menu-my-account text-background">
-              {{ 'HEADER.MY_ACCOUNT' | translate }}
-            </a>
-          </li>
-
-          <!-- admin side -->
-          <li class="sidebar-menu-item" *ngIf="!backOfficeValue && canShow(1)">
-            <a
-              [routerLink]="'/user/admin'"
-              routerLinkActive="active"
-              (click)="toggleBackOfficeState(); onClickLink();"
-              class="text-background">
-              Admin Side
-            </a>
-          </li>
-
-          <!-- client side -->
-          <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(1)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/user/projects'"
-              (click)="toggleBackOfficeState(); onClickLink();"
-              class="text-background">
-              Client Side
+            <a [href]="getContactUrl()" rel="noopener" target="_blank">
+              {{ 'HEADER.CONTACT_US' | translate }}
             </a>
           </li>
 

@@ -65,6 +65,7 @@ export class SearchToolComponent implements OnInit{
     if (this._requestAlreadyLoaded) {
       this._searchStarted = true;
       this._updateResults();
+      this._requestAlreadyLoaded = false;
     } else {
 
       const keywords = this._searchForm.get('keywords').value;
@@ -107,7 +108,6 @@ export class SearchToolComponent implements OnInit{
     this._professionalCount = 0;
     this._slicedPros = [];
     this._searchStopped = false;
-    this._searchStarted = false;
     this._searchResult.metadata = result.metadata || {};
     this._searchResult.pros = result.pros;
     this._scale = result.scale || [50, 200, 1500];
@@ -143,6 +143,7 @@ export class SearchToolComponent implements OnInit{
     const interval = setInterval(() => {
       if ( self._professionalCount >= total) {
         this._searchStopped = true;
+        this._searchStarted = false;
         this._loadPros(12, 12);
         clearInterval(interval);
       }
@@ -244,6 +245,14 @@ export class SearchToolComponent implements OnInit{
     } else {
       this._translateNotificationsService.error("ERROR.ERROR", "ERROR.CAMPAIGN.SEARCH.NO_REQUEST");
     }
+  }
+
+  public findNewResults() {
+    const keywords = this._searchForm.get('keywords').value;
+    this._searchService.findNewResults(this._requestId, keywords).pipe(first()).subscribe((result: any) => {
+      this._loadResults(result);
+      this._updateResults();
+    });
   }
 
   public getCompanyUrl(domain: string): string {

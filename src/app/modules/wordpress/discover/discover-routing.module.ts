@@ -15,7 +15,7 @@ const discoverRoutes: Routes = [
     component: DiscoverComponent,
     children: [
       {
-        path: '',
+        path: ':lang',
         component: InnovationsComponent,
         resolve: { innovations: InnovationsResolver },
         pathMatch: 'full',
@@ -25,7 +25,7 @@ const discoverRoutes: Routes = [
         component: DiscoverDescriptionComponent,
         resolve: { innovation: InnovationResolver },
         pathMatch: 'full'
-      },
+      }
     ]
   },
   {

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { Clearbit } from '../../../../../../models/clearbit';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -26,15 +27,14 @@ export class ShowcaseClientsComponent {
 
           // we calculate the list of companies without duplicates
           const companies = next.result
-            .map((i) => i.owner.company.name)
-            .reduce((acc, comp) => {
-              acc[comp] = true;
+            .filter((i) => i.owner.company && i.owner.company.name)
+            .map((i) => i.owner.company)
+            .reduce((acc, company) => {
+              acc[company.name] = company;
               return acc;
             }, {});
 
-          delete companies[''];
-
-          this._totalClients = Object.keys(companies);
+          this._totalClients = Object.values(companies);
           this._selectedClients = this._totalClients.slice(0, 8);
           this._topClients = this._selectedClients;
 
@@ -47,13 +47,13 @@ export class ShowcaseClientsComponent {
 
   }
 
-  private _topClients: Array<string> = [];
+  private _topClients: Array<Clearbit> = [];
 
-  private _selectedClients: Array<string> = [];
+  private _selectedClients: Array<Clearbit> = [];
 
   private readonly _adminPass: boolean = false;
 
-  private _totalClients: Array<string> = [];
+  private _totalClients: Array<Clearbit> = [];
 
   private _modalShow: boolean = false;
 
@@ -72,12 +72,12 @@ export class ShowcaseClientsComponent {
   }
 
 
-  public activeClient(client: string) {
+  public activeClient(client: Clearbit) {
     return this._selectedClients.some((item) => item === client);
   }
 
 
-  public onChangeClient(event: Event, client: string) {
+  public onChangeClient(event: Event, client: Clearbit) {
     if (event.target['checked']) {
       if (this._selectedClients.length < 8) {
         this._selectedClients.push(client);
@@ -113,7 +113,7 @@ export class ShowcaseClientsComponent {
     this._modalShow = value;
   }
 
-  get totalClients(): Array<string> {
+  get totalClients(): Array<Clearbit> {
     return this._totalClients;
   }
 

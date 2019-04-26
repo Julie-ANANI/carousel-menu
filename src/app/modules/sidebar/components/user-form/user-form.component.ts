@@ -210,7 +210,7 @@ export class UserFormComponent implements OnInit {
   };
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
-    return this.sanitizer.bypassSecurityTrustHtml(`<span>${data.name}</span>`);
+    return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35"/><span>${data.name}</span>`);
   };
 
 

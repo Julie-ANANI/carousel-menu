@@ -3,7 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Subject } from 'rxjs';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 //import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 //import {UserService} from "../../services/user/user.service";
 
@@ -23,10 +23,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private _adminSide = false;
 
-  private _displayLoading = false;
-
-  private _pages: Array<string> = ['/projects', '/discover', '/synthesis','/account', '/admin', '/users', '/professionals', '/community', '/libraries', '/monitoring', '/settings'];
-
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private loaderService: LoaderService,
               private location: Location,
@@ -39,19 +35,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
         if (event instanceof NavigationEnd) {
           this._adminSide = this.location.path().slice(5, 11) === '/admin';
-
-          setTimeout(() => {
-            this._displayLoading = false;
-          }, 300);
-
-        } else if (event instanceof NavigationStart || !this.router.navigated) {
-
-          this._pages.forEach((page: string) => {
-            if (this.location.path().endsWith(page)) {
-              this._displayLoading = true;
-            }
-          });
-
         }
       });
     }
@@ -123,14 +106,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   get adminSide(): boolean {
     return this._adminSide;
-  }
-
-  get displayLoading(): boolean {
-    return this._displayLoading;
-  }
-
-  get pages(): Array<string> {
-    return this._pages;
   }
 
   ngOnDestroy(): void {

@@ -94,7 +94,7 @@ export const COMMON = {
     'WELCOME': 'Welcome',
     'ACCOUNT': 'Profile',
     'SHARED_REPORTS': 'Shared Reports',
-    'DISCOVER': 'Discover Innovations',
+    'DISCOVER': 'Innovation Portfolio | UMI',
     'PROJECTS': 'Projects'
   },
 
@@ -179,6 +179,7 @@ export const COMMON = {
     'SIGN_IN': 'Sign In',
     'SIGN_UP': 'Sign Up',
     'DELETE': 'Delete',
+    'CLOSE': 'Close'
   },
 
   'TABLE' : {
@@ -327,5 +328,7 @@ export const COMMON = {
     'TITLE_SHARE': 'Share Board',
     'TITLE_CREATE': 'Creation Board'
   },
+
+  'SEARCH_INPUT_2_PLACEHOLDER': 'Start typing to search...',
 
 };
