@@ -63,20 +63,9 @@ export class FilterService {
 
     if (tags.length > 0) {
       sortTags = tags.sort((a: Tag, b: Tag) => {
-
         const labelA = MultilingPipe.prototype.transform(a.label, userLang).toLowerCase();
         const labelB =  MultilingPipe.prototype.transform(b.label, userLang).toLowerCase();
-
-        if ( labelA > labelB) {
-          return 1;
-        }
-
-        if (labelA < labelB) {
-          return -1;
-        }
-
-        return 0;
-
+        return labelA.localeCompare(labelB);
       });
     }
 

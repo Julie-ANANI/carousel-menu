@@ -4,7 +4,6 @@ import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { FilterService } from '../../../../public/discover/components/innovations/services/filter.service';
 
@@ -28,8 +27,6 @@ export class InnovationsComponent implements OnInit {
 
   private _totalInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
 
-  private _recommendedInnovations: Array<Innovation> = [];
-
   private _latestInnovations: Array<Innovation> = [];
 
   private _trendingInnovations: Array<Innovation> = [];
@@ -38,7 +35,7 @@ export class InnovationsComponent implements OnInit {
 
   private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
-  private _userLang = '';
+  private _userLang = 'en';
 
   private _selectedFilters: Array<Tag> = [];
 
@@ -50,7 +47,6 @@ export class InnovationsComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _translateService: TranslateService,
               private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
               private _authService: AuthService,
               private _filterService: FilterService) {
 
@@ -58,17 +54,15 @@ export class InnovationsComponent implements OnInit {
 
     this._totalInnovations = this._activatedRoute.snapshot.data.innovations;
 
-    this._activatedRoute.queryParams.subscribe(params => {
-      if (params['innovation']) {
-        this._applyInnoRecommendation(params['innovation']);
-      }
+    this._activatedRoute.params.subscribe(params => {
+      this._userLang = params['lang'];
     });
+
+    this._translateService.use(this._userLang);
 
     this._getLatestInnovations();
 
     this._getTrendingInnovations();
-
-    this._userLang = this.browserLang() || 'en' ;
 
     this._userAuthenticated = this._authService.isAuthenticated;
 
@@ -76,21 +70,6 @@ export class InnovationsComponent implements OnInit {
 
   ngOnInit() {
     this._getAllSectorTags();
-  }
-
-
-  /***
-   * this function is to get the recommend innovations for the
-   * logged user.
-   * @param idInno
-   * @private
-   */
-  private _applyInnoRecommendation(idInno: string) {
-    this._innovationService.getRecommendation(idInno).subscribe((response) => {
-      response.forEach((inno_similar: Innovation) => {
-        this._recommendedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
-      });
-    });
   }
 
 
@@ -139,12 +118,6 @@ export class InnovationsComponent implements OnInit {
     this._filterService.setFilterToRemove(tagId);
   }
 
-
-  public browserLang(): string {
-    return this._translateService.getBrowserLang();
-  }
-
-
   get config() {
     return this._config;
   }
@@ -153,10 +126,6 @@ export class InnovationsComponent implements OnInit {
     return this._totalInnovations;
   }
 
-
-  get recommendedInnovations(): Array<Innovation> {
-    return this._recommendedInnovations;
-  }
 
   get latestInnovations(): Array<Innovation> {
     return this._latestInnovations;
