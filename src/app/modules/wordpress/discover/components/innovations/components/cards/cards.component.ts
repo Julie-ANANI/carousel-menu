@@ -6,6 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cards',
@@ -45,15 +46,18 @@ export class CardsComponent {
 
   private _isPagination: boolean = false;
 
-  private _userLang = '';
+  private _userLang = 'en';
 
   private _isSearching: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _localStorage: LocalStorageService,
-              private _translateService: TranslateService) {
+              private _translateService: TranslateService,
+              private _activatedRoute: ActivatedRoute) {
 
-    this._userLang = this.browserLang() || 'en' ;
+    this._activatedRoute.params.subscribe(params => {
+      this._userLang = params['lang'];
+    });
 
   }
 

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Tag } from '../../../../../../../models/tag';
-import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
 import { FilterService } from '../../../../../../public/discover/components/innovations/services/filter.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-filters',
@@ -22,7 +22,7 @@ export class FiltersComponent implements OnInit {
 
   @Output() appliedFilters = new EventEmitter<Array<Tag>>();
 
-  private _userLang = '';
+  private _userLang = 'en';
 
   private _allTags: Array<Tag> = [];
 
@@ -34,11 +34,13 @@ export class FiltersComponent implements OnInit {
 
   private _suggestedTags: Array<Tag> = [];
 
-  constructor(private _translateService: TranslateService,
-              private _tagsService: TagsService,
-              private _filterService: FilterService) {
+  constructor(private _tagsService: TagsService,
+              private _filterService: FilterService,
+              private _activatedRoute: ActivatedRoute) {
 
-    this._userLang = this._browserLang() || 'en' ;
+    this._activatedRoute.params.subscribe(params => {
+      this._userLang = params['lang'];
+    });
 
     this._filterService.getFilterToRemove().subscribe((tagId: string) => {
       if (this._selectedSimilarTags.length === 0) {
@@ -206,11 +208,6 @@ export class FiltersComponent implements OnInit {
     }
 
     this.appliedFilters.emit(selectTags);
-  }
-
-
-  private _browserLang(): string {
-    return this._translateService.getBrowserLang();
   }
 
 

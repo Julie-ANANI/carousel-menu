@@ -64,7 +64,7 @@
 
 
 <!-- modal tags -->
-<app-modal [(showModal)]="modalTag" [modalPosition]="'250px'" [widthMax]="'90%'" [modalTitle]="'DISCOVER.ALL_SECTORS'">
+<app-modal [(showModal)]="modalTag" [modalPosition]="'150px'" [widthMax]="'90%'" [modalTitle]="'DISCOVER.ALL_SECTORS'">
   <div class="modal-tag-wrapper">
     <div class="d-flex sector-wrapper">
       <div *ngFor="let tag of allTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">

@@ -7,7 +7,7 @@
         <div class="section-header">
 
           <!-- back to innovations -->
-          <a routerLink="/wordpress/discover" class="d-inline-flex">
+          <a (click)="onClickBack()" class="d-inline-flex">
             <i class="fas fa-angle-left"></i><span class="text-link text-normal">{{ 'DISCOVERDESCRIPTION.BACK' | translate }}</span>
           </a>
 
@@ -43,7 +43,7 @@
               <!-- if video -->
               <ng-container *ngIf="media?.type === 'VIDEO'">
                 <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-                        height="177px" [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
+                        height="177" allowfullscreen [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
               </ng-container>
 
             </div>
