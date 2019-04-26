@@ -34,7 +34,7 @@ export const DISCOVER = {
 
   'TOOLTIP_TEXT_COPIED': 'Copié dans le presse-papiers',
 
-  'FILTER_TEXT': 'Voir tous les secteurs',
+  'FILTER_TEXT': 'Voir tous les tags',
 
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour rechercher....',
 
@@ -50,8 +50,8 @@ export const DISCOVER = {
 
   'HIGHLIGHT_SECTOR_HEADING': 'Sélectionnez un ou plusieurs secteurs pour voir les innovations spécifiques',
 
-  'RELATED_SECTORS': 'Secteur(s) suggéré(s)',
+  'RELATED_SECTORS': 'Tag(s) suggéré(s)',
 
-  'ALL_SECTORS': 'Tous les secteurs',
+  'ALL_SECTORS': 'Sélectionnez une ou plusieurs tags',
 
 };

@@ -31,7 +31,7 @@ export const DISCOVER = {
 
   'TOOLTIP_TEXT_COPIED': 'Copied to clipboard',
 
-  'FILTER_TEXT': 'See all sectors',
+  'FILTER_TEXT': 'See all tags',
 
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search innovations...',
 
@@ -47,8 +47,8 @@ export const DISCOVER = {
 
   'HIGHLIGHT_SECTOR_HEADING': 'Select one or more sectors to see specific innovations',
 
-  'RELATED_SECTORS': 'Suggested sector(s)',
+  'RELATED_SECTORS': 'Suggested tag(s)',
 
-  'ALL_SECTORS': 'All sectors',
+  'ALL_SECTORS': 'Select one or more tags',
 
 };

@@ -38,7 +38,7 @@ export class FiltersComponent implements OnInit {
               private _tagsService: TagsService,
               private _filterService: FilterService) {
 
-    this._userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
+    this._userLang = this._browserLang() || 'en' ;
 
     this._filterService.getFilterToRemove().subscribe((tagId: string) => {
       if (this._selectedSimilarTags.length === 0) {

@@ -53,7 +53,7 @@ export class CardsComponent {
               private _localStorage: LocalStorageService,
               private _translateService: TranslateService) {
 
-    this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
+    this._userLang = this.browserLang() || 'en' ;
 
   }
 

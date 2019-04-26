@@ -317,10 +317,21 @@ export class FiltersComponent implements OnInit {
       this._shareUrl = FiltersComponent._getClientUrl();
     } else {
       let tags = '';
-      this._selectedTags.forEach((tag: Tag) => {
+
+      let totalTags = [];
+
+      if (this._selectedSimilarTags.length === 0 ) {
+        totalTags = this._selectedTags;
+      } else {
+        totalTags = this._selectedSimilarTags.concat(this._selectedTags);
+      }
+
+      totalTags.forEach((tag: Tag) => {
         tags += 'tag=' + tag._id + '&';
       });
+
       this._shareUrl = `${FiltersComponent._getClientUrl()}?${tags.slice(0, tags.length - 1)}`;
+
     }
   }
 

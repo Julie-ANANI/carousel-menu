@@ -95,21 +95,15 @@
 
 }
 
-.btn-cancel {
-  color: $meta-color;
-  background-color: $bg-color-light;
-  border: $border-width-lg solid $border-meta-color;
-
-  &:hover {
-    border: $border-width-lg solid lighten($border-meta-color, 15%);
-  }
-
-}
-
 .modal-share-wrapper {
 
   .btn {
     margin-top: 0.75rem;
+  }
+
+  .ghost-edit {
+    border-color: $border-meta-color;
+    color: $meta-color;
   }
 
   .ghost-success {

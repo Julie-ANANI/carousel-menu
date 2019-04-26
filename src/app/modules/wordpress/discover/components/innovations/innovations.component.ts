@@ -68,7 +68,7 @@ export class InnovationsComponent implements OnInit {
 
     this._getTrendingInnovations();
 
-    this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
+    this._userLang = this.browserLang() || 'en' ;
 
     this._userAuthenticated = this._authService.isAuthenticated;
 

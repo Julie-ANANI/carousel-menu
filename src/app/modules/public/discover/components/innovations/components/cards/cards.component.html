@@ -4,7 +4,7 @@
     <!-- section cards -->
     <div class="card-wrapper d-flex text-center">
       <div *ngFor="let innovation of innovations | slice:startIndex:endIndex" class="card card-responsive">
-        <a [href]="[getInnovationDetail('url', innovation)]" target="_blank">
+        <a [href]="[getInnovationDetail('url', innovation)]">
 
           <div class="card-image relative">
 
