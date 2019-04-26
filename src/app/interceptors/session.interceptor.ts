@@ -15,9 +15,11 @@ export class SessionInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(this.setAuthorizationHeader(req))
-      .pipe(catchError((event) => {
-        this.errorService.handleError(event);
-        return throwError(event);
+      .pipe(catchError((error) => {
+        if (error.status !== 401) { // login error
+          this.errorService.handleError(error);
+        }
+        return throwError(error);
       }));
   }
 
