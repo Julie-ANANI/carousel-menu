@@ -36,7 +36,10 @@ export class ErrorService {
     if (environment.production === true) {
 
       const eventId = Sentry.captureException(error);
-      Sentry.showReportDialog({ eventId });
+
+      if (this.auth.adminLevel > 0) {
+        Sentry.showReportDialog({ eventId });
+      }
 
     } else {
 
