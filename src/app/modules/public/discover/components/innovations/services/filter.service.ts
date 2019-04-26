@@ -10,7 +10,7 @@ export class FilterService {
 
   filterRemove: Subject<string> = new Subject<string>();
 
-  static highlight: Array<string> = ['construction', 'software', 'industry', 'energy', 'healthcare', 'chemistry', 'transportation', 'services', 'environment', 'aerospace', 'network', 'it'];
+  static highlight: Array<string> = ['construction', 'software', 'industry', 'energy', 'healthcare', 'chemistry', 'transportation', 'services', 'environment', 'aerospace', 'network', 'it', 'sector-tag-1', 'sector-tag-3'];
 
   setFilterToRemove(value: string) {
     this.filterRemove.next(value);

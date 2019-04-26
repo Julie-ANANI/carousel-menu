@@ -39,6 +39,8 @@ export class FiltersComponent implements OnInit {
 
   private _selectedTags: Array<Tag> = [];
 
+  private _selectedSimilarTags: Array<Tag> = [];
+
   private _highLightTags: Array<Tag> = [];
 
   private _suggestedTags: Array<Tag> = [];
@@ -49,11 +51,20 @@ export class FiltersComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _filterService: FilterService) {
 
-    this._filterService.getFilterToRemove().subscribe((tagId: string) => {
-      this.removeFilter(tagId);
-    });
-
     this._userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
+
+    this._filterService.getFilterToRemove().subscribe((tagId: string) => {
+      if (this._selectedSimilarTags.length === 0) {
+        this.removeFilter(tagId);
+      } else {
+        const find = this._selectedSimilarTags.find((applyTag: Tag) => applyTag._id === tagId);
+        if (find) {
+          this.removeSimilarFilter(tagId)
+        } else {
+          this.removeFilter(tagId);
+        }
+      }
+    });
 
   }
 
@@ -187,6 +198,7 @@ export class FiltersComponent implements OnInit {
 
     if (event.target['checked']) {
       this._selectedTags.push(tag);
+      this._selectedSimilarTags = [];
       this._getSuggestedTags();
       this._sendSelectedFilters();
     } else {
@@ -202,7 +214,44 @@ export class FiltersComponent implements OnInit {
   public removeFilter(id: string) {
     const index = this._selectedTags.findIndex((tag) => tag._id === id);
     this._selectedTags.splice(index, 1);
+    this._selectedSimilarTags = [];
     this._getSuggestedTags();
+    this._sendSelectedFilters();
+  }
+
+
+  /***
+   * this function is to determine which similar filter is active or not.
+   * @param id
+   */
+  public checkSimilarFilter(id: string): boolean {
+    return this._selectedSimilarTags.some((item) => item._id === id);
+  }
+
+
+  /***
+   * based on the similar filter is checked or unchecked we do the respective functions.
+   * @param event
+   * @param tag
+   */
+  toggleSimilarFilter(event: Event, tag: Tag) {
+
+    if (event.target['checked']) {
+      this._selectedSimilarTags.push(tag);
+      this._sendSelectedFilters();
+    } else {
+      this.removeSimilarFilter(tag._id);
+    }
+  }
+
+
+  /***
+   * this function is to remove the selected similar filter from the variable selectedTags.
+   * @param id
+   */
+  public removeSimilarFilter(id: string) {
+    const index = this._selectedSimilarTags.findIndex((tag) => tag._id === id);
+    this._selectedSimilarTags.splice(index, 1);
     this._sendSelectedFilters();
   }
 
@@ -283,12 +332,19 @@ export class FiltersComponent implements OnInit {
 
 
   private _sendSelectedFilters() {
+    let selectTags = [];
+
+    if (this._selectedSimilarTags.length === 0) {
+      selectTags = this._selectedTags;
+    } else {
+      selectTags = this._selectedTags.concat(this._selectedSimilarTags);
+    }
 
     if (isPlatformBrowser(this._platformId)) {
       sessionStorage.setItem('discover-filters', JSON.stringify(this._selectedTags));
     }
 
-    this.appliedFilters.emit(this._selectedTags);
+    this.appliedFilters.emit(selectTags);
 
   }
 
@@ -336,6 +392,10 @@ export class FiltersComponent implements OnInit {
 
   get selectedTags(): Array<Tag> {
     return this._selectedTags;
+  }
+
+  get selectedSimilarTags(): Array<Tag> {
+    return this._selectedSimilarTags;
   }
 
   get highLightTags(): Array<Tag> {
