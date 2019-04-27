@@ -1,4 +1,4 @@
-<section class="section-pad animate-page" id="new-project-component">
+<section class="section-pad restrict-layout" id="new-project-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <form novalidate [formGroup]="formData" (ngSubmit)="onCreateProject()">
 
@@ -40,7 +40,7 @@
               <label for="new-project-companyName"></label>
                 <input
                   type="text"
-                  class="form-input input-md"
+                  class="form-input"
                   name="name"
                   formControlName="name"
                   id="new-project-companyName"
@@ -63,65 +63,13 @@
       </div>
       <!-- /section 1 -->
 
-
-      <!-- Section 2
-      <div class="ques-3">
-        <span class="num-rect">3</span>
-        <span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.INNOVATION_TYPE_LABEL' | translate }}</span>
-        <div class="form-group selection-wrapper" [ngStyle]="{ 'padding-top': '1.2rem' }">
-
-          <label for="apps">
-            <input type="radio" value="apps" name="type" id="apps" formControlName="type">
-            <div class="circle-check"><i class="fas fa-check"></i></div>
-            <div class="offers">
-              <img src="https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg">
-              <ul>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE1' | translate }}</li>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE2' | translate }}</li>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE3' | translate }}</li>
-              </ul>
-            </div>
-          </label>
-
-          <label for="insights">
-            <input type="radio" value="insights" name="type" id="insights" formControlName="type">
-            <div class="circle-check"><i class="fas fa-check"></i></div>
-            <div class="offers">
-              <img src="https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg">
-              <ul>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.INSIGHTS.LINE1' | translate }}</li>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.INSIGHTS.LINE2' | translate }}</li>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.INSIGHTS.LINE3' | translate }}</li>
-              </ul>
-            </div>
-          </label>
-
-          <label for="leads">
-            <input type="radio" value="leads" name="type" id="leads" formControlName="type">
-            <div class="circle-check"><i class="fas fa-check"></i></div>
-            <div class="offers">
-              <img src="https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg">
-              <ul>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.LEADS.LINE1' | translate }}</li>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.LEADS.LINE2' | translate }}</li>
-                <li>{{ 'PROJECT_MODULE.NEW_PROJECT.LEADS.LINE3' | translate }}</li>
-              </ul>
-            </div>
-          </label>
-
-        </div>
-      </div>
-      /Section 2 -->
-
-
       <!-- section 3 -->
       <div class="create-button text-center">
-        <button class="btn btn-lg btn-primary gtm-create-project-validated" type="submit" [disabled]="formData.invalid">
+        <button class="btn btn-lg btn-primary rounded gtm-create-project-validated" type="submit" [disabled]="formData.invalid">
           {{ 'PROJECT_MODULE.NEW_PROJECT.BUTTON_TEXT' | translate }}
         </button>
       </div>
       <!-- /section 3 -->
-
 
       <!-- section 4 -->
       <div class="section-info">
@@ -141,7 +89,6 @@
         </div>
       </div>
       <!-- /section 4 -->
-
 
     </form>
   </div>

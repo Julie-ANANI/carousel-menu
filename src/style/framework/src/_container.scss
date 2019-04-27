@@ -65,7 +65,9 @@
   }
 
   .restrict-layout {
-    max-width: $size-xl !important;
+    max-width: $size-2x !important;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 }
