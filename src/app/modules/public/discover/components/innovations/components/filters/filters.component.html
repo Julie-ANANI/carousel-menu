@@ -40,7 +40,7 @@
   <!-- suggested sectors -->
   <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
 
-    <h3 class="text-notify">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
+    <h3 class="text-notify animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
     <div class="d-flex sector-wrapper">
       <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand animate-appear" [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
