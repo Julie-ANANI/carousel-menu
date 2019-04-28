@@ -132,7 +132,7 @@ export class AccountComponent implements OnInit {
   };
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
-    return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="12" alt=" "/><span>${data.name}</span>`);
+    return this.sanitizer.bypassSecurityTrustHtml(`<img src="${data.logo}" height="22" alt=" "/><span>${data.name}</span>`);
   };
 
   onSubmit() {
