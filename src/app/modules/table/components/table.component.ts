@@ -4,7 +4,7 @@ import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import { PaginationInterface } from '../../utility-components/pagination/interfaces/pagination';
+import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
 import { countries } from "../../../models/static-data/country";
 
 @Component({
@@ -203,7 +203,7 @@ export class TableComponent {
   }
 
   /***
-   * This function is call when the user change the pagination config
+   * This function is call when the user change the paginations config
    * It affects the values and call changeConfig
    * @param value
    */

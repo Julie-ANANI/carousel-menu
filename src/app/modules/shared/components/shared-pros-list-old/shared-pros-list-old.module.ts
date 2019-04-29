@@ -8,7 +8,7 @@ import { SharedProsListOldComponent } from './shared-pros-list-old.component';
 import { SharedSortModule } from '../shared-sort/shared-sort.module';
 import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
 import { SharedSmartSelectModule } from '../shared-smart-select/shared-smart-select.module';
-import { PaginationModule} from '../../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module} from '../../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 
@@ -21,7 +21,7 @@ import { ModalModule } from "../../../utility-components/modals/modal/modal.modu
     SharedFilterInputModule,
     SharedSmartSelectModule,
     FormsModule,
-    PaginationModule,
+    PaginationTemplate1Module,
     CountryFlagModule,
     ModalModule
   ],

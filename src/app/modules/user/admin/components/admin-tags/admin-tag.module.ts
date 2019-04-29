@@ -12,7 +12,7 @@ import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/
 import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/admin-tag-new-modal.component';
 import { RouterModule } from '@angular/router';
 import { AutocompleteInputModule } from '../../../../utility-components/autocomplete-input/autocomplete-input.module';
-import { PaginationModule } from '../../../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../../../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { PaginationModule } from '../../../../utility-components/pagination/pagi
     TranslateModule.forChild(),
     PipeModule,
     AutocompleteInputModule,
-    PaginationModule,
+    PaginationTemplate1Module,
     RouterModule,
     FormsModule,
     ReactiveFormsModule
