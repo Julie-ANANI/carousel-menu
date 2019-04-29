@@ -31,6 +31,13 @@
   font-size: $font-size-sm;
   margin-top: $unit-1 !important;
   color: $text-primary !important;
+
+  img {
+    width: 22px;
+    margin-right: $unit-2;
+    vertical-align: middle;
+  }
+
 }
 
 .ng2-auto-complete > ul li:hover, .ng2-auto-complete > ul li.selected {

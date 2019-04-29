@@ -35,13 +35,13 @@ export class ShowcaseInnovationsComponent {
 
   private _selectedCards: Array<{title: string, _id: string, media: string}> = [];
 
-  private _count: number = 0;
+  private _count = 0;
 
   private readonly _adminPass: boolean = false;
 
   private _discoverLink = '';
 
-  private _modalShow: boolean = false;
+  private _modalShow = false;
 
   constructor(private _innovationService: InnovationService,
               private _translateService: TranslateService,
@@ -169,10 +169,6 @@ export class ShowcaseInnovationsComponent {
     return this._innovations;
   }
 
-  get topInnovations(): Array<Innovation> {
-    return this._topInnovations;
-  }
-
   get count(): number {
     return this._count;
   }
@@ -191,10 +187,6 @@ export class ShowcaseInnovationsComponent {
 
   set modalShow(value: boolean) {
     this._modalShow = value;
-  }
-
-  get selectedCards(): Array<{ title: string; _id: string; media: string }> {
-    return this._selectedCards;
   }
 
 }

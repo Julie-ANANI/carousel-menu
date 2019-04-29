@@ -8,9 +8,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchToolComponent } from './search-tool.component';
 import { SearchService } from '../../../../services/search/search.service';
 import { CommonService } from '../../../../services/common/common.service';
+import { DownloadService } from "../../../../services/download/download.service";
 
 import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
+import { SidebarModule } from "../../../sidebar/sidebar.module";
+import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-search-tool/sidebar-search-tool.module";
 
 @NgModule({
   imports: [
@@ -21,14 +24,17 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
     FormsModule,
     ReactiveFormsModule,
     AdminSearchMapModule,
-    CountryFlagModule
+    CountryFlagModule,
+    SidebarModule,
+    SidebarSearchToolModule
   ],
   declarations: [
     SearchToolComponent
   ],
   providers: [
     SearchService,
-    CommonService
+    CommonService,
+    DownloadService
   ]
 })
 

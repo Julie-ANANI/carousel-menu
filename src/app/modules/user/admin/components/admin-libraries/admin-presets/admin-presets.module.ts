@@ -12,7 +12,7 @@ import { AdminPresetsEditComponent } from './admin-presets-edit/admin-presets-ed
 import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-list.component';
 import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.component';
 import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-project-questionnaire/admin-project-questionnaire.module';
-import { PaginationModule } from '../../../../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../../../../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
 
 @NgModule({
@@ -29,7 +29,7 @@ import { ModalModule } from '../../../../../utility-components/modals/modal/moda
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule,
     SharedPresetModule,
-    PaginationModule,
+    PaginationTemplate1Module,
     ModalModule,
   ],
   declarations: [

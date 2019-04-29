@@ -74,18 +74,22 @@
         </span>
       </div>
 
-      <!-- Company -->
-      <div class="form-group has-error">
-        <label class="form-label" for="signup-form-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+      <!-- company -->
+      <div class="form-group">
+        <label class="form-label" for="user-form-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
         <input
+          auto-complete
           class="form-input"
-          formControlName="companyName"
-          id="signup-form-companyName"
           type="text"
+          [(ngModel)]="company"
+          [ngModelOptions]="{standalone: true}"
+          id="user-form-company"
+          [min-chars]="2"
+          [accept-user-input]="false"
+          [display-property-name]="'name'"
+          [list-formatter]="autocompleteCompanyListFormatter"
+          [source]="companiesSuggestions"
           [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
-        <span class="form-input-hint" *ngIf="signupForm.get('companyName').touched && signupForm.get('companyName').invalid && signupForm.get('companyName').hasError('required')">
-          {{ 'COMMON.REQUIRED.COMPANY' | translate }}
-        </span>
       </div>
 
       <!-- Country -->

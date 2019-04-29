@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { environment } from '../../../../../environments/environment';
+import { Clearbit } from '../../../../models/clearbit';
 import { countries } from '../../../../models/static-data/country';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -31,10 +34,13 @@ export class SignupFormComponent {
 
   private _countries = countries;
 
+  private _company: Clearbit;
+
   private _displayLoading: boolean = false;
 
   constructor(private _formBuilder: FormBuilder,
               private _autoCompleteService: AutocompleteService,
+              private _sanitizer: DomSanitizer,
               private _translatesService: TranslateService) { }
 
 
@@ -42,11 +48,11 @@ export class SignupFormComponent {
     this._signupForm = this._formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      companyName: ['', [Validators.required]],
-      jobTitle: ['', [Validators.required]],
+      company: [{}],
+      jobTitle: [''],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(9)]],
-      country: ['', [Validators.required]]
+      country: ['']
     });
   }
 
@@ -64,7 +70,7 @@ export class SignupFormComponent {
             if (valueIndex === -1) { // if not exist then push into the array.
               this._countriesSuggestion.push(items.name);
             }
-          })
+          });
         }
       });
     });
@@ -87,6 +93,8 @@ export class SignupFormComponent {
       }
     }
 
+    this._signupForm.get('company').reset(this._company);
+
     this.finalOutput.emit(this._signupForm);
 
   }
@@ -100,6 +108,16 @@ export class SignupFormComponent {
   public getTermsLink(): string {
     return this._translatesService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/confidentialite/';
   }
+
+
+  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+    return this._autoCompleteService.get({query: searchString, type: 'company'});
+  };
+
+
+  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
+    return this._sanitizer.bypassSecurityTrustHtml(`<img src="${data.logo}" height="22" alt=" "/><span>${data.name}</span>`);
+  };
 
 
   get companyName(): string {
@@ -120,6 +138,14 @@ export class SignupFormComponent {
 
   get countries(): any {
     return this._countries;
+  }
+
+  get company() {
+    return this._company;
+  }
+
+  set company(value: Clearbit) {
+    this._company = value;
   }
 
   get displayLoading(): boolean {

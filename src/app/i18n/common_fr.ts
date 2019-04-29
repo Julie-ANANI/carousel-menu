@@ -1,5 +1,7 @@
 export const COMMON = {
   'SAVE': 'Sauvegarder',
+  'DOWNLOAD': 'Télécharger',
+  'UPLOAD': 'Uploader',
   'IMPORT': 'Importer',
   'SAVE_DRAFT': 'Sauvegarder en brouillon',
   'LAST_SAVED_AT': 'Sauvegardé à',
@@ -91,7 +93,7 @@ export const COMMON = {
     'WELCOME': 'Bienvenus',
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
-    'DISCOVER': 'Découvrez les innovations',
+    'DISCOVER': 'Showroom des innovations | UMI',
     'PROJECTS': 'Projets'
   },
 
@@ -175,7 +177,8 @@ export const COMMON = {
     'SUBMIT': 'Soumettre',
     'SIGN_IN': 'Se Connecter',
     'SIGN_UP': 'Commencer',
-    'DELETE': 'Supprimer'
+    'DELETE': 'Supprimer',
+    'CLOSE': 'Fermer'
   },
 
   'PROJECT': {
@@ -323,5 +326,7 @@ export const COMMON = {
     'TITLE_SHARE': 'Partage',
     'TITLE_CREATE': 'Création'
   },
+
+  'SEARCH_INPUT_2_PLACEHOLDER': 'Commencez à taper pour chercher....',
 
 };

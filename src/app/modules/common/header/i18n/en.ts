@@ -6,5 +6,6 @@ export const HEADER = {
   'MY_ACCOUNT': 'Account',
   'MY_PROJECTS': 'My Projects',
   'SHARED_REPORTS': 'Shared Reports',
-  'DISCOVER': 'Innovation Portfolio'
+  'DISCOVER': 'Innovation Portfolio',
+  'CONTACT_US': 'Talk to us'
 };

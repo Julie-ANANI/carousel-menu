@@ -1,4 +1,5 @@
 <div id="search-tool-component">
+  <i id = "search-tool-menu" class="fa fa-bars" (click)="onClickMenu()"></i>
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- section search bar -->
@@ -21,7 +22,7 @@
     <!-- /section search bar -->
 
     <!-- section showing video when no search -->
-    <ng-container *ngIf="noResult">
+    <ng-container *ngIf="!searchStarted && !searchStopped">
       <section class="section-pad rm-pad-bottom" [ngClass]="{ 'animate-disappear': searchStarted }">
         <video class="video-responsive" autoplay loop>
           <source src="https://res.cloudinary.com/umi/video/upload/v1554473766/app/videos/search-tool/demo.mp4" type="video/mp4">
@@ -31,11 +32,11 @@
     <!-- /section showing video when no search -->
 
     <!-- section to show result -->
-    <ng-container *ngIf="!noResult">
-      <section [ngClass]="{ 'animate-appear': searchContinue }">
+    <ng-container>
+      <section [ngClass]="{ 'animate-appear': searchStarted }">
 
         <!-- metadata display -->
-        <ng-container *ngIf="searchResult.metadata">
+        <ng-container *ngIf="professionalCount">
           <div class="text-center">
 
             <h2 class="title-secondary text-background">
@@ -51,7 +52,7 @@
         <!-- /metadata display -->
 
         <!-- when searching for professionals -->
-        <ng-container *ngIf="!searchStopped && searchContinue">
+        <ng-container *ngIf="!searchStopped && searchStarted">
           <video class="video-responsive video-machine" autoplay loop>
             <source src="https://res.cloudinary.com/umi/video/upload/v1554473159/app/videos/search-tool/machine-search.mp4" type="video/mp4">
           </video>
@@ -92,6 +93,7 @@
         <!-- /when searching for professionals done -->
 
         <!-- displaying stat by continents -->
+        <!-- NOT YET IMPLEMENTED
         <ng-container *ngIf="searchStopped">
           <div class="section-pad rm-pad-top" [ngClass]=" { 'animate-appear': searchStopped } ">
             <div class="stat">
@@ -131,12 +133,15 @@
               </div>
             </div>
           </div>
-        </ng-container>
+        </ng-container> -->
         <!-- /displaying stat by continents -->
 
         <!-- showing the professionals -->
         <ng-container *ngIf="searchStopped">
           <div class="card-wrapper d-flex">
+            <button (click)="findNewResults()" class="btn btn-primary" *ngIf = !slicedPros.length>
+              Search on the web
+            </button>
             <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
 
               <ng-container *ngIf="professional.isLoading">
@@ -197,7 +202,10 @@
                   <ng-container *ngIf="professional.person.companyLogoUrl">
                     <div class="card-footer animate-card-appear tooltip flex-centered" [attr.data-tooltip]="professional.person.company">
                       <a [href]="getCompanyUrl(professional.person.companyDomain)" target="_blank">
-                        <img [src]="professional.person.companyLogoUrl" class="img-responsive" alt=" ">
+                        <img
+                          [src]="professional.person.companyLogoUrl"
+                          class="img-responsive" [alt]= "professional.person.company"
+                          (error)="professional.person.companyLogoUrl = null">
                       </a>
                     </div>
                   </ng-container>
@@ -242,3 +250,14 @@
 
   </div>
 </div>
+
+<!-- sidebar for advanced settings -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-search-tool
+    (onSaveRequest)="saveRequest()"
+    (onDownload)="downloadRequest()"
+    (onUpload)="uploadRequest($event)"
+    (onLoadRequest)="loadRequest($event)">
+  </app-sidebar-search-tool>
+</app-sidebar>
+<!-- /sidebar for advanced settings -->

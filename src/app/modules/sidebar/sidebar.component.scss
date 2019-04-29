@@ -4,6 +4,10 @@
 
   .sidebar-container {
 
+    .header {
+      background: $primary-gradient-color;
+    }
+
     .sidebar-header {
       color: $light-color;
       padding: 1.1rem 0;

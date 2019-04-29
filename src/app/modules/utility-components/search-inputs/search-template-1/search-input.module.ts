@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { PaginationComponent } from './pagination.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { SearchInputComponent } from './search-input.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule.forChild(),
+    TranslateModule,
     ReactiveFormsModule,
     FormsModule
   ],
   declarations: [
-    PaginationComponent
+    SearchInputComponent
   ],
   exports: [
-    PaginationComponent
+    SearchInputComponent
   ]
 })
 
-export class PaginationModule {}
+export class SearchInputModule {}

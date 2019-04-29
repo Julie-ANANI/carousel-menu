@@ -1,13 +1,13 @@
 <ng-container *ngIf="innovationCard && innovationCard.length > 0">
-  <div class="section-pad" id="discover-description-component">
-    <div class="column col-xs-12 col-11 col-mx-auto" >
+  <section class="section-pad" id="discover-description-component">
+    <div class="column col-xs-12 col-11 col-mx-auto">
       <ng-container *ngFor="let innovation of innovationCard">
 
         <!-- section header -->
         <div class="section-header">
 
           <!-- back to innovations -->
-          <a routerLink="/discover" class="d-inline-flex">
+          <a (click)="onClickBack()" class="d-inline-flex">
             <i class="fas fa-angle-left"></i><span class="text-link text-normal">{{ 'DISCOVERDESCRIPTION.BACK' | translate }}</span>
           </a>
 
@@ -35,15 +35,15 @@
 
               <!-- if image -->
               <ng-container *ngIf="media?.type === 'PHOTO'">
-                <figure>
-                  <img [src]="getSrc(media)" [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate">
+                <figure class="img-overlay">
+                  <img [src]="getSrc(media)" [alt]=" " width="280" height="177" class="img-responsive img-fit-cover">
                 </figure>
               </ng-container>
 
               <!-- if video -->
               <ng-container *ngIf="media?.type === 'VIDEO'">
                 <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-                        height="177px" [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
+                        height="177" allowfullscreen [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
               </ng-container>
 
             </div>
@@ -88,7 +88,7 @@
           <!-- actions button -->
           <div class="button-wrapper">
             <a class="btn btn-primary rounded" [href]="contactUsUrl" target="_blank">{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}</a>
-            <a [href]="quizUrl" target="_blank" class="btn ghost-edit rounded" [ngStyle]="{ 'display': quizButtonDisplay }">{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}</a>
+            <a [href]="quizUrl" target="_blank" class="btn ghost-edit btn rounded" [ngStyle]="{ 'display': quizButtonDisplay }">{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}</a>
           </div>
 
           <!-- share buttons -->
@@ -115,13 +115,13 @@
               <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
 
                 <!-- card image -->
-                <figure>
+                <div class="card-image">
                   <a [href]="[getLink(innovation.innovationCard)]">
-                    <div class="card-image">
-                      <img [src]="getRelatedSrc(innovation.innovationCard)" [alt]=" ">
-                    </div>
+                    <figure class="img-overlay">
+                      <img [src]="getRelatedSrc(innovation.innovationCard)" alt=" " width="280" height="177">
+                    </figure>
                   </a>
-                </figure>
+                </div>
 
                 <!-- card header -->
                 <div class="card-header">
@@ -133,14 +133,14 @@
                     </a>
 
                     <!-- tags -->
-                    <ng-container *ngIf="innovation.tags.length > 0">
-                      <div *ngFor="let tag of innovation.tags" class="tag-wrapper d-inline-flex">
+                    <div *ngIf="innovation.tags.length > 0" class="d-flex tag-wrapper">
+                      <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="label label-tag text-notify text-normal">
                           <i class="fas fa-tag"></i>
-                          <span class="label-text">{{ tag?.label | multiling:browserLang() | FormatText }}</span>
+                          <span class="label-text">{{ tag.label | multiling:lang | FormatText }}</span>
                         </div>
                       </div>
-                    </ng-container>
+                    </div>
 
                   </div>
                 </div>
@@ -154,5 +154,5 @@
 
       </ng-container>
     </div>
-  </div>
+  </section>
 </ng-container>

@@ -1,10 +1,9 @@
-import { Component, OnInit, HostListener, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { AuthService } from './services/auth/auth.service';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
-import { MouseService } from './services/mouse/mouse.service';
 import { environment } from '../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -33,8 +32,7 @@ export class AppComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateService: TranslateService,
               private authService: AuthService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private mouseService: MouseService) {
+              private translateNotificationsService: TranslateNotificationsService) {
 
     this.setFavicon();
 
@@ -55,15 +53,6 @@ export class AppComponent implements OnInit {
       );
     }
 
-  }
-
-
-  /***
-   * This is to listen the click event on the page.
-   */
-  @HostListener('mouseup', ['$event'])
-  onMouseUp(event: any) {
-    this.mouseService.setClickEvent(event);
   }
 
 

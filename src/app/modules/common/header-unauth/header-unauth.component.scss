@@ -11,6 +11,10 @@
 
     .navigation-wrapper {
 
+      .menu {
+        flex-wrap: wrap;
+      }
+
       .header-lang-dropdown {
 
         a {
@@ -47,6 +51,20 @@
             visibility: visible;
             background-color: $primary-color;
             transform: scaleX(1);
+          }
+
+        }
+
+      }
+
+      .contact-button {
+
+        .btn.ghost-edit {
+          color: $text-background-color;
+          border-color: transparent;
+
+          &:hover {
+            border-color: $border-meta-color;
           }
 
         }

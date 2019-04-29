@@ -1,7 +1,7 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
-import { Location } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { UserService } from '../../../services/user/user.service';
 import { User } from '../../../models/user.model';
 import { Header } from './interface/header';
@@ -68,7 +68,6 @@ export class HeaderComponent implements OnDestroy {
   private _sidebarValues: SidebarInterface = {};
 
   private _clientRoutes: Array<Header> = [
-    { pageName: 'HEADER.DISCOVER', pageLink: '/discover', trackingClass: 'gtm-menu-discover' },
     { pageName: 'HEADER.SHARED_REPORTS', pageLink: '/user/synthesis', trackingClass: 'gtm-menu-my-projects' },
     { pageName: 'HEADER.MY_PROJECTS', pageLink: '/user/projects', trackingClass: 'gtm-menu-my-projects' },
     ];
@@ -83,7 +82,8 @@ export class HeaderComponent implements OnDestroy {
     { pageName: 'Settings', pageLink: '/user/admin/settings', adminLevel: 3 }
   ];
 
-  constructor(private _authService: AuthService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _authService: AuthService,
               private _location: Location,
               private _userService: UserService,
               private _translateService: TranslateService,
@@ -140,27 +140,16 @@ export class HeaderComponent implements OnDestroy {
    * @param lang
    */
   public setLang(lang: string) {
+    this._cookieService.put('user_lang', lang || 'en');
 
-    if (lang === 'fr') {
-      this._propagateTranslation(lang);
-      this._currentLang = lang;
+    if (isPlatformBrowser(this._platformId)) {
+      document.location.reload();
     } else {
-      this._propagateTranslation(lang);
       this._currentLang = lang;
+      this._translateService.use(lang || 'en');
+      this._setFlag();
     }
 
-    this._setFlag();
-
-  }
-
-
-  /***
-   * Setting the lang and the cookie.
-   * @param {string} lang
-   */
-  private _propagateTranslation(lang: string) {
-    this._cookieService.put('user_lang', lang || 'en');
-    this._translateService.use(lang || 'en');
   }
 
 
@@ -216,6 +205,11 @@ export class HeaderComponent implements OnDestroy {
 
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
+  }
+
+
+  public getContactUrl(): string {
+    return this._currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
   }
 
 

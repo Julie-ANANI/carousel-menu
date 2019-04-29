@@ -7,20 +7,22 @@ import { DiscoverComponent } from './discover.component';
 import { DiscoverDescriptionComponent } from './components/description/discover-description.component';
 
 import { InnovationsComponent } from './components/innovations/innovations.component';
+import { FiltersComponent } from './components/innovations/components/filters/filters.component';
+import { CardsComponent } from './components/innovations/components/cards/cards.component';
 
 import { InnovationService } from '../../../services/innovation/innovation.service';
 import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
+import { TagsService } from '../../../services/tags/tags.service';
+import { FilterService } from './components/innovations/services/filter.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
-import { PaginationModule } from '../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
-import { SearchInputModule } from '../../utility-components/search-input/search-input.module';
-import { TagsService } from '../../../services/tags/tags.service';
 import { ModalMediaModule } from '../../utility-components/modals/modal-media/modal-media.module';
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 import { HeaderModule } from '../../common/header/header.module';
@@ -31,27 +33,29 @@ import { HeaderModule } from '../../common/header/header.module';
     CommonModule,
     DiscoverRoutingModule,
     TranslateModule.forChild(),
-    PaginationModule,
+    PaginationTemplate1Module,
     PipeModule,
-    SearchInputModule,
     SharedLoaderModule,
     FooterModule,
     HeaderUnauthModule,
     ModalMediaModule,
     ModalModule,
-    HeaderModule
+    HeaderModule,
   ],
   providers:[
     InnovationService,
     InnovationResolver,
     ShareService,
     UserService,
-    TagsService
+    TagsService,
+    FilterService
   ],
   declarations: [
     DiscoverComponent,
     DiscoverDescriptionComponent,
-    InnovationsComponent
+    InnovationsComponent,
+    FiltersComponent,
+    CardsComponent
   ]
 })
 

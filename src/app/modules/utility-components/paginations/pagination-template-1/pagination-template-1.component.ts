@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
-import { PaginationInterface } from './interfaces/pagination';
-import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { PaginationInterface } from '../interfaces/pagination';
+import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-pagination',
-  templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss']
+  templateUrl: './pagination-template-1.component.html',
+  styleUrls: ['./pagination-template-1.component.scss']
 })
 
-export class PaginationComponent implements OnInit {
+export class PaginationTemplate1Component implements OnInit {
 
   @Input() set total(value: number) {
     this._total = value;

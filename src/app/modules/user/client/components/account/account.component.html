@@ -1,4 +1,4 @@
-<section class="section-pad animate-page" id="account-component">
+<section class="section-pad" id="account-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="profile-wrapper">
 
@@ -42,7 +42,6 @@
         <ul class="user-actions">
           <li (click)="showPasswordSidebar($event)">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</li>
           <li (click)="onDelete($event)">{{ 'MY_ACCOUNT.DELETE' | translate }}</li>
-          <li><a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a></li>
         </ul>
 
       </div>
@@ -108,13 +107,20 @@
             </div>
 
             <!-- Company -->
-            <div class="form-group">
-              <label class="form-label" for="account-companyName">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+            <div class="form-group" formGroupName="company">
+              <label class="form-label" for="account-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
               <input
+                auto-complete
                 class="form-input"
-                formControlName="companyName"
-                id="account-companyName"
+                formControlName="name"
+                id="account-company"
                 type="text"
+                [min-chars]="2"
+                [list-formatter]="autocompleteCompanyListFormatter"
+                [display-property-name]="'name'"
+                [accept-user-input]="false"
+                (valueChanged)="formData.get('company').reset(formData.get('company.name').value || {})"
+                [source]="companiesSuggestions"
                 [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
             </div>
 

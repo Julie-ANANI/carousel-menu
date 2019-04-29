@@ -188,8 +188,8 @@
 
                   <!-- If column type is Check -->
                 <ng-container *ngSwitchCase="'CHECK'">
-                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
-                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
+                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="fas fa-times text-error"></i>
+                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="fas fa-check"></i>
                 </ng-container>
 
                   <!-- If column type is Multi-Choices -->

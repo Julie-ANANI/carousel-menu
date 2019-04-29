@@ -17,6 +17,8 @@ export const ERROR = {
 
   'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try it again!',
 
+  'NO_CONNECTION': 'It seems that you are currently offline.',
+
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
 
   'INVALID_DOMAIN': 'You are not allowed to create a super-admin account in this instance.',
@@ -55,7 +57,8 @@ export const ERROR = {
     'OLD_PASSWORD': 'Old password is incorrect.',
     'PROFILE_UPDATE_TEXT': 'The profile has been updated successfully.',
     'PROFILE_DELETE_TEXT': 'The profile has been deleted successfully.',
-    'ADDED': 'The profile has been added successfully.'
+    'ADDED': 'The profile has been added successfully.',
+    'NOT_ADDED': 'The profile has not been added. It may belong to another campaign of the project, or be blacklisted.'
   },
 
   'PROJECT': {
@@ -152,7 +155,9 @@ export const ERROR = {
       'UPDATED': 'The batch has been updated successfully.',
     },
     'SEARCH': {
-      'SETTINGS_UPDATED': 'The settings have been updated successfully.'
+      'SETTINGS_UPDATED': 'The settings have been updated successfully.',
+      'REQUEST_SAVED': 'The request has been saved successfully.',
+      'NO_REQUEST': "There is no request to save !"
     }
   },
 

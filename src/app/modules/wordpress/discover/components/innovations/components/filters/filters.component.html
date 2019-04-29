@@ -1,0 +1,48 @@
+<section id="filter-component">
+
+  <!-- highlighted sectors -->
+  <div *ngIf="highLightTags.length > 0" class="sector-highlighted">
+
+    <div class="sector-wrapper d-flex">
+      <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
+        <label class="c-hand">
+          <input
+            (change)="toggleFilter($event, tag)"
+            [checked]="checkFilter(tag._id)"
+            [id]="tag._id"
+            [name]="tag.label | multiling:userLang"
+            [value]="tag.label | multiling:userLang"
+            type="checkbox">
+          {{ tag.label | multiling:userLang | FormatText }}
+        </label>
+      </div>
+    </div>
+
+  </div>
+  <!-- /highlighted sectors -->
+
+  <!-- suggested sectors -->
+  <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
+
+    <h3 class="text-notify">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
+
+    <div class="d-flex sector-wrapper">
+      <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand animate-appear" [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
+        <label class="c-hand">
+          <input
+            (change)="toggleSimilarFilter($event, tag)"
+            [checked]="checkSimilarFilter(tag._id)"
+            [id]="tag._id"
+            [name]="tag.label | multiling:userLang"
+            [value]="tag.label | multiling:userLang"
+            type="checkbox">
+          {{ tag.label | multiling:userLang | FormatText }}
+        </label>
+      </div>
+    </div>
+
+  </div>
+  <!-- /suggested sectors -->
+
+</section>
+
