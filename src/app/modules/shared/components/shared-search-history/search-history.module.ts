@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedSearchHistoryComponent} from './shared-search-history.component';
 
 import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
-import { PaginationModule } from '../../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { SharedFilterMultiModule } from '../shared-filter-multi/shared-filter-multi.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
@@ -18,7 +18,7 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
     RouterModule,
     SharedFilterInputModule,
     TranslateModule.forChild(),
-    PaginationModule,
+    PaginationTemplate1Module,
     SharedFilterMultiModule,
     CountryFlagModule
   ],

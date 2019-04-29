@@ -1,6 +1,6 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { PaginationInterface } from '../../../../../../utility-components/pagination/interfaces/pagination';
+import { PaginationInterface } from '../../../../../../utility-components/paginations/interfaces/pagination';
 import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovCard } from '../../../../../../../models/innov-card';
@@ -110,7 +110,7 @@ export class CardsComponent {
 
 
   /***
-   * when there is change in the pagination we detect the change and
+   * when there is change in the paginations we detect the change and
    * update the innovation cards with the new limit and offset value.
    * @param value
    */

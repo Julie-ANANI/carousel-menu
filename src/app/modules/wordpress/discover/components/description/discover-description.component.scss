@@ -186,6 +186,8 @@
 
           .tag-wrapper {
             flex-wrap: wrap;
+            justify-content: center;
+            padding-top: $unit-2;
 
             .label.label-tag {
               margin: 0;

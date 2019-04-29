@@ -18,7 +18,7 @@ import { FilterService } from './components/innovations/services/filter.service'
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
-import { PaginationModule } from '../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { FooterModule } from '../../common/footer/footer.module';
@@ -33,7 +33,7 @@ import { HeaderModule } from '../../common/header/header.module';
     CommonModule,
     DiscoverRoutingModule,
     TranslateModule.forChild(),
-    PaginationModule,
+    PaginationTemplate1Module,
     PipeModule,
     SharedLoaderModule,
     FooterModule,

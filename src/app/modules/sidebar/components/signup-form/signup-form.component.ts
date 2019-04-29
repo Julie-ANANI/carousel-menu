@@ -116,7 +116,7 @@ export class SignupFormComponent {
 
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
-    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35"/><span>${data.name}</span>`);
+    return this._sanitizer.bypassSecurityTrustHtml(`<img src="${data.logo}" height="22" alt=" "/><span>${data.name}</span>`);
   };
 
 

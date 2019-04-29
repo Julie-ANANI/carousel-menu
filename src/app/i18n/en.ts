@@ -21,7 +21,7 @@ import { LOG_IN } from '../modules/common/login/i18n/en';
 import { SIGN_UP } from '../modules/common/signup/i18n/en';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
 import { WELCOME } from '../modules/common/welcome/i18n/en';
-import { PAGINATION } from '../modules/utility-components/pagination/i18n/en';
+import { PAGINATION } from '../modules/utility-components/paginations/i18n/en';
 import { SHARE } from '../modules/public/share/i18n/en';
 import { FOOTER } from "../modules/common/footer/i18n/en";
 import { HEADER } from '../modules/common/header/i18n/en';

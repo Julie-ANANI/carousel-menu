@@ -16,7 +16,7 @@ import { FilterService } from '../../public/discover/components/innovations/serv
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
-import { PaginationModule } from '../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { TagsService } from '../../../services/tags/tags.service';
@@ -27,7 +27,7 @@ import { ModalModule } from '../../utility-components/modals/modal/modal.module'
     CommonModule,
     DiscoverRoutingModule,
     TranslateModule.forChild(),
-    PaginationModule,
+    PaginationTemplate1Module,
     PipeModule,
     SharedLoaderModule,
     ModalModule
