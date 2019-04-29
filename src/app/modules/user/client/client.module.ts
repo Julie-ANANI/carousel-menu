@@ -9,7 +9,7 @@ import { ClientComponent } from './client.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
 
-import { PaginationModule } from '../../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { ProjectModule } from './components/project/project.module';
 import { AccountModule } from './components/account/account.module';
 import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';
@@ -24,7 +24,7 @@ import { ModalModule } from '../../utility-components/modals/modal/modal.module'
     CommonModule,
     TranslateModule.forChild(),
     ClientRoutingModule,
-    PaginationModule,
+    PaginationTemplate1Module,
     ReactiveFormsModule,
     ProjectModule,
     AccountModule,

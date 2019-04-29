@@ -134,14 +134,14 @@
                     </a>
 
                     <!-- tags -->
-                    <ng-container *ngIf="innovation.tags.length > 0">
-                      <div *ngFor="let tag of innovation.tags" class="tag-wrapper d-inline-flex">
+                    <div *ngIf="innovation.tags.length > 0" class="tag-wrapper d-flex">
+                      <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="label label-tag text-notify text-normal">
                           <i class="fas fa-tag"></i>
                           <span class="label-text">{{ tag.label | multiling:lang | FormatText }}</span>
                         </div>
                       </div>
-                    </ng-container>
+                    </div>
 
                   </div>
                 </div>

@@ -8,7 +8,7 @@ import { TableComponent } from './components/table.component';
 
 import { SharedFilterMultiModule } from '../shared/components/shared-filter-multi/shared-filter-multi.module';
 import { SharedSortModule } from '../shared/components/shared-sort/shared-sort.module';
-import { PaginationModule } from '../utility-components/pagination/pagination.module';
+import { PaginationTemplate1Module } from '../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { ProgressBarModule } from '../utility-components/progress-bar/progress-bar.module';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { CountryFlagModule } from '../utility-components/country-flag/country-flag.module';
@@ -23,7 +23,7 @@ import { MessageSpaceModule } from '../utility-components/message-space/message-
     SharedSortModule,
     FormsModule,
     TranslateModule.forChild(),
-    PaginationModule,
+    PaginationTemplate1Module,
     PipeModule,
     ProgressBarModule,
     SharedLoaderModule,

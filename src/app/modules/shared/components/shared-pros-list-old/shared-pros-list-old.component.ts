@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import {PaginationInterface} from '../../../utility-components/pagination/interfaces/pagination';
+import {PaginationInterface} from '../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 export interface SelectedProfessional extends Professional {
@@ -52,7 +52,7 @@ export class SharedProsListOldComponent {
   }
 
   /***
-   * This function is call when the user change the pagination config
+   * This function is call when the user change the paginations config
    * It affects the values
    * @param value
    */
