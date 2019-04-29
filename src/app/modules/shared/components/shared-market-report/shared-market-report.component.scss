@@ -21,27 +21,6 @@
     font-size: 0.75rem;
   }
 
-  .filter-option-wrapper {
-    background-color: $bg-color-light;
-    overflow-y: auto;
-    width: 100%;
-    max-width: 233px;
-    top: 0;
-    position: sticky;
-    height: 100vh;
-    border-right: $border-width solid $border-color;
-  }
-
-  #sidebar-synthesis {
-    height: 100vh;
-    overflow-y: scroll;
-    width: 180px;
-    min-width: 180px;
-    background-color: white;
-    position: sticky;
-    top: 0;
-  }
-
   #main-page {
     flex-direction: column;
 
@@ -438,6 +417,10 @@
 @media (max-width: $size-sm) {
 
   #market-report {
+
+    .market-report-wrapper {
+      flex-direction: column;
+    }
 
     .executive-generate-wrapper {
 

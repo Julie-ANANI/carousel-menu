@@ -32,36 +32,35 @@
     <!-- project status submitted -->
     <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || previewMode">
 
-      <div class="restrict-width d-flex">
+      <div class="d-flex market-report-wrapper">
 
-        <!-- filters sidebar -->
-        <div >
+        <!-- filter sidebar -->
+        <aside class="filter-wrapper">
           <app-market-report-sidebar
             [answers]="answers"
             [innovation]="innovation"
             [isAdmin]="adminSide"
             [isOwner]="isOwner"
-            id="sidebar-synthesis"
             [questions]="questions">
           </app-market-report-sidebar>
-        </div>
-        <!-- /filters sidebar -->
+        </aside>
+        <!-- /filter sideBar -->
 
-        <!-- Answer sections
+        <!-- Answer sections -->
         <section id="answer-wrapper">
 
-           main page
+          <!-- main page -->
           <ng-container *ngIf="showDetails">
             <section class="section-pad rm-pad-bottom text-center d-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
               <div class="column col-xs-12 col-11 col-mx-auto">
                 <div class="section-pad full text bg-white main-page">
 
-                   logo
+                  <!-- logo -->
                   <div class="logo-wrapper">
                     <img src="{{ getLogo() }}" alt="UMI" height="38px">
                   </div>
 
-                   body
+                  <!-- body -->
                   <div class="d-flex content-wrapper">
 
                     <h6 class="text-executive">Executive report</h6>
@@ -84,7 +83,7 @@
 
                   </div>
 
-                   link
+                  <!-- link -->
                   <div class="footer-wrapper d-flex text-background text-medium">
                     <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
                     <div class="text-right">
@@ -97,9 +96,9 @@
               </div>
             </section>
           </ng-container>
-           /main page
+          <!-- /main page -->
 
-           main page goal
+          <!-- main page goal -->
           <ng-container *ngIf="adminSide">
             <section class="section-light-pad" id="innovation-goal">
               <div class="column col-xs-12 col-11 col-mx-auto">
@@ -130,21 +129,21 @@
               </div>
             </section>
           </ng-container>
-           /main page goal
+          <!-- /main page goal -->
 
-           executive template generation
+          <!-- executive template generation -->
           <ng-container *ngIf="adminSide">
             <section class="section-light-pad">
               <div class="column col-xs-12 col-11 col-mx-auto">
                 <div class="section-pad full d-flex executive-generate-wrapper bg-white">
 
-                   heading
+                  <!-- heading -->
                   <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h2>
 
-                   sub heading
+                  <!-- sub heading -->
                   <h3 class="title-secondary text-center">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h3>
 
-                   templates
+                  <!-- templates -->
                   <div class="template-outer-wrapper">
                     <div *ngFor="let template of executiveTemplates" class="template">
                       <img [src]="template.imageSrc" alt=" ">
@@ -154,7 +153,7 @@
                     </div>
                   </div>
 
-                   button
+                  <!-- button -->
                   <div class="text-center">
                     <button class="btn ghost-primary btn-sm" [disabled]="innovation?.executiveReport.totalSections > 0 || numberOfSections === 0" (click)="generateExecutiveTemplate($event)">
                       Valid Template
@@ -165,17 +164,17 @@
               </div>
             </section>
           </ng-container>
-           /executive template generation
+          <!-- /executive template generation -->
 
-           executive report
+          <!-- executive report -->
           <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
             <section id="executive-report">
               <app-executive-report [project]="innovation"></app-executive-report>
             </section>
           </ng-container>
-           /executive report
+          <!-- /executive report -->
 
-           executive Report delete button
+          <!-- executive Report delete button -->
           <ng-container *ngIf="innovation.executiveReport.totalSections > 0 && adminSide">
             <section class="section-light-pad text-center">
               <button class="btn ghost-delete btn-sm" (click)="deleteExecutiveTemplate($event)">
@@ -183,9 +182,9 @@
               </button>
             </section>
           </ng-container>
-           /executive Report delete button
+          <!-- /executive Report delete button -->
 
-           UMI intro
+          <!-- UMI intro -->
           <ng-container *ngIf="showDetails && getDomainName() === 'umi'">
             <section class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
               <div class="column col-xs-12 col-11 col-mx-auto">
@@ -193,15 +192,15 @@
               </div>
             </section>
           </ng-container>
-           /UMI intro
+          <!-- /UMI intro -->
 
-           innovation detail
+          <!-- innovation detail -->
           <ng-container *ngIf="showDetails">
             <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
               <div class="column col-xs-12 col-11 col-mx-auto">
                 <div class="section-pad full innovation-wrapper text bg-white">
 
-                   column 1
+                  <!-- column 1 -->
                   <div class="summary-wrapper">
 
                     <h2 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h2>
@@ -222,13 +221,13 @@
 
                   </div>
 
-                   column 2
+                  <!-- column 2 -->
                   <div class="issue-wrapper">
                     <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
                     <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.problem"></div>
                   </div>
 
-                   column 3
+                  <!-- column 3 -->
                   <div class="solution-wrapper">
                     <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
                     <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.solution"></div>
@@ -238,15 +237,15 @@
               </div>
             </section>
           </ng-container>
-           /innovation detail
+          <!-- /innovation detail -->
 
-           innovation targeting
+          <!-- innovation targeting -->
           <ng-container *ngIf="showDetails">
             <section class="section-light-pad report-targeting-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
               <div class="column col-xs-12 col-11 col-mx-auto">
                 <div class="section-pad full targeting-wrapper bg-white text">
 
-                   column 1
+                  <!-- column 1 -->
                   <div class="map-wrapper">
 
                     <h2 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h2>
@@ -274,7 +273,7 @@
 
                   </div>
 
-                   column 2
+                  <!-- column 2 -->
                   <div class="c2-answer-wrapper">
 
                     <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">
@@ -314,21 +313,21 @@
               </div>
             </section>
           </ng-container>
-           /innovation targeting
+          <!-- /innovation targeting -->
 
-           innovation analytics
+          <!-- innovation analytics -->
           <ng-container *ngIf="showDetails && false">
             <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
               <div class="column col-xs-12 col-11 col-mx-auto">
                 <div class="section-pad full exploration-wrapper bg-white text">
 
-                   heading
+                  <!-- heading -->
                   <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h2>
 
-                   analytic
+                  <!-- analytic -->
                   <div class="analytic-wrapper">
 
-                     reached
+                    <!-- reached -->
                     <div class="info-analytic-wrapper">
                       <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
                       <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
@@ -348,7 +347,7 @@
                       </svg>
                     </div>
 
-                     emails
+                    <!-- emails -->
                     <div class="info-analytic-wrapper">
                       <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
                       <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
@@ -368,7 +367,7 @@
                       </svg>
                     </div>
 
-                     clicks
+                    <!-- clicks -->
                     <div class="info-analytic-wrapper">
                       <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
                       <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
@@ -388,7 +387,7 @@
                       </svg>
                     </div>
 
-                     answers
+                    <!-- answers -->
                     <div class="info-analytic-wrapper">
                       <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
                       <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
@@ -396,7 +395,7 @@
 
                   </div>
 
-                   companies contact
+                  <!-- companies contact -->
                   <ng-container *ngIf="innovation.settings.companies.include.length > 0">
                     <div class="company-wrapper section-light-pad rm-pad-top">
 
@@ -410,15 +409,15 @@
 
                     </div>
                   </ng-container>
-                   /companies contact
+                  <!-- /companies contact -->
 
                 </div>
               </div>
             </section>
           </ng-container>
-           /innovation analytics
+          <!-- /innovation analytics -->
 
-           key learning section
+          <!-- key learning section -->
           <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">
             <section class="section-light-pad" id="key-learning">
               <div class="column col-xs-12 col-11 col-mx-auto">
@@ -441,9 +440,9 @@
               </div>
             </section>
           </ng-container>
-           /key learning section
+          <!-- /key learning section -->
 
-           origin comment and professional responses
+          <!-- origin comment and professional responses -->
           <section class="section-light-pad" id="professionals">
             <div class="column col-xs-12 col-11 col-mx-auto">
               <div class="origin-wrapper bg-white text">
@@ -483,9 +482,9 @@
               </div>
             </div>
           </section>
-           /origin comment and professional responses
+          <!-- /origin comment and professional responses -->
 
-           map
+          <!-- map -->
           <section class="section-light-pad" id="market-map">
             <div class="column col-xs-12 col-11 col-mx-auto">
               <div class="map-wrapper">
@@ -500,9 +499,9 @@
               </div>
             </div>
           </section>
-           /map
+          <!-- /map -->
 
-           professionals
+          <!-- professionals -->
           <section class="section-light-pad" id="professional-print">
             <div class="column col-xs-12 col-11 col-mx-auto">
               <div class="professional-wrapper d-flex">
@@ -518,9 +517,9 @@
               </div>
             </div>
           </section>
-           /professionals
+          <!-- /professionals -->
 
-           other question and answers
+          <!-- other question and answers -->
           <div class="column col-xs-12 col-11 col-mx-auto" id="questions">
             <div *ngFor="let question of questions">
               <div class="section-light-pad">
@@ -535,9 +534,9 @@
               </div>
             </div>
           </div>
-           /other question and answers
+          <!-- /other question and answers -->
 
-           conclusion
+          <!-- conclusion -->
           <ng-container *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide">
             <section class="section-light-pad" id="conclusion">
               <div class="column col-xs-12 col-11 col-mx-auto">
@@ -560,10 +559,10 @@
               </div>
             </section>
           </ng-container>
-           /conclusion
+          <!-- /conclusion -->
 
         </section>
-         /Answer sections -->
+        <!-- /Answer sections -->
 
       </div>
 

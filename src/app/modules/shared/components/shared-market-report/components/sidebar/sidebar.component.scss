@@ -1,6 +1,98 @@
 @import '../../../../../../../style/framework/src/variables';
 
 #app-market-report-sidebar {
+  background-color: $bg-color-light;
+  padding: 1.25rem 0.75rem;
+  font-size: $font-size-sm;
+
+  .filter-icon-wrapper {
+    font-size: $font-size-md;
+
+    span {
+      margin-right: $unit-2;
+    }
+
+    i {
+      vertical-align: middle;
+    }
+
+  }
+
+  .divider {
+    margin: $unit-5 0;
+    border-color: $border-meta-color;
+    height: 2px;
+  }
+
+  h6 {
+    font-size: $font-size-sm;
+    margin-bottom: 0.5rem;
+  }
+
+  .client-view-wrapper {
+
+    .different-views {
+      font-size: 0.65rem;
+      margin-bottom: $unit-1;
+
+      .fa-trash-alt {
+        margin-right: $unit-2;
+      }
+
+    }
+
+    form {
+
+      .form-group {
+        margin-top: $unit-2;
+        margin-bottom: $unit-5;
+
+        .form-input {
+          height: 40px;
+          font-size: 0.65rem;
+        }
+
+      }
+
+    }
+
+  }
+
+  .filter-reset-wrapper {
+    padding-bottom: $unit-5;
+
+    .text-link {
+      font-size: $font-size-xs;
+    }
+
+  }
+
+}
+
+@media (min-width: $size-sm) {
+
+  #app-market-report-sidebar {
+    top: 0;
+    position: sticky;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 235px;
+    border-right: $border-width solid $border-color;
+
+
+    .filter-icon-wrapper {
+      display: none;
+    }
+
+  }
+
+}
+
+
+/* {
+
+
 
   font-size: 15px;
 
@@ -63,4 +155,4 @@
 
   }
 
-}
+}*/

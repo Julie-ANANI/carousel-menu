@@ -12,7 +12,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { SharedFilter } from '../../models/shared-filter';
 import { Tag } from '../../../../../../models/tag';
-import {SharedWorldmapService} from "../../../shared-worldmap/shared-worldmap.service";
+import { SharedWorldmapService } from "../../../shared-worldmap/shared-worldmap.service";
 
 @Component({
   selector: 'app-market-report-sidebar',
@@ -69,15 +69,18 @@ export class SidebarComponent implements OnInit {
               private tagService: TagsFiltersService,
               private translateNotificationsService: TranslateNotificationsService,
               private worldmapFilterService: WorldmapFiltersService) {
-    PageScrollConfig.defaultDuration = 600;
+    PageScrollConfig.defaultDuration = 400;
   }
 
   ngOnInit() {
+
     // We put this here because we need the input being resolved before calling this functions
     this.loadSharedFiltersList();
+
     if (this.activatedRoute.snapshot.queryParams['filter']) {
       this.loadFilter(this.activatedRoute.snapshot.queryParams['filter']);
     }
+
   }
 
   public loadSharedFiltersList() {
@@ -85,8 +88,8 @@ export class SidebarComponent implements OnInit {
       if (Array.isArray(results)) {
         this._sharedFiltersList = results;
       }
-    }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 

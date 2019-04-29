@@ -17,10 +17,11 @@
     color: $light-color;
     content: attr(data-tooltip);
     display: block;
-    font-size: $font-icon-xs;
+    font-size: $font-size-xs;
     left: 50%;
     max-width: 320px;
     opacity: 0;
+    font-weight: normal;
     overflow: hidden;
     padding: $unit-1 $unit-2;
     pointer-events: none;

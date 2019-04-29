@@ -2,7 +2,8 @@ export const MARKET_REPORT = {
   'TITLE': 'Potentiel marché de votre projet',
 
   'CUSTOM_FILTERS': 'Filtres personnalisés',
-  'RESET_FILTERS': 'Réinitialiser tous les filtres',
+
+  'RESET_FILTERS': 'Réinitialiser les filtres',
 
   'MESSAGE': {
     'SUBMITTED': 'Votre innovation est en cours de validation. Nous revenons vers vous rapidement !',
@@ -33,10 +34,8 @@ export const MARKET_REPORT = {
 
   'MENU_BAR': {
     'BUTTON_END': 'Clôturer le projet',
-    'BUTTON_EXPORT': 'Exporter',
+
     'FILTER': 'Filtres',
-    'PLACEHOLDER_VIEW': 'Nom de votre vue',
-    'SUBMIT_VIEW': 'Enregistrer',
     'VIEWS': 'Mes vues'
   },
 
@@ -114,24 +113,43 @@ export const MARKET_REPORT = {
 
   // 'TITLE': 'Exploration du potentiel marché',
   'COLLAPSE': 'Tout replier',
+
   'EXPAND': 'Tout déplier',
+
   'FILTERS': 'Filtres',
+
   'SYNTHESIS_FRAME': 'des professionnels',
+
   'PIE_CHART': 'des réponses sont favorables',
+
   'COMMENTS': 'commentaires',
+
   'ANSWER': 'réponse',
+
   'ANSWERS': 'réponses',
+
   'SEE_ANSWERS': 'Voir la réponse',
+
   'BTN_EDITION_MODE': 'Passer en mode édition',
+
   'BTN_VIEW_MODE': 'Passer en mode visualisation',
+
   'BTN_ANSWERS_OPEN': 'Voir les réponses',
+
   'BTN_ANSWERS_CLOSE': 'Masquer les réponses',
+
   'BTN_COMMENTS_OPEN': 'Commentaires',
+
   'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',
+
   'BTN_RECOMPUTE': 'Recalculer la synthèse',
+
   'VOTES': 'votes',
+
   'GRADE': 'Note',
+
   'NO_GRADE': 'Pas de note',
+
   'POPUP': {
     'PROFIL': 'Profil',
     'RECEIVED': 'Reçu le',
@@ -139,10 +157,22 @@ export const MARKET_REPORT = {
     'COUNTRY': 'Pays',
     'BACK': 'Retour'
   },
+
   'PROFESSIONAL': {
     'SIDEBAR': 'Professionnels',
     'TITLE': 'Les professionnels',
     'NUMBER': 'réponses de professionnels',
     'QUESTION': 'Origine des réponses'
-  }
+  },
+
+  'BUTTON_EXPORT': 'Exporter',
+
+  'BUTTON_SAVE_VIEW': 'Enregistrer vue',
+
+  'TOOLTIP_DELETE_VIEW': 'Effacer la vue',
+
+  'TOOLTIP_LOAD_VIEW': 'Cliquez pour charger cette vue',
+
+  'VIEW_PLACEHOLDER': 'Nom de votre vue',
+
 };

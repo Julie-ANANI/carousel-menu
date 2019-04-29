@@ -2,7 +2,8 @@ export const MARKET_REPORT = {
   'TITLE': 'Market potential of your project',
 
   'CUSTOM_FILTERS': 'Custom filters',
-  'RESET_FILTERS': 'Reset all filters',
+
+  'RESET_FILTERS': 'Reset filters',
 
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
@@ -41,11 +42,7 @@ export const MARKET_REPORT = {
 
   'MENU_BAR': {
     'BUTTON_END': 'End Project',
-    'BUTTON_EXPORT': 'Export',
     'FILTER': 'Filters',
-    'PLACEHOLDER_VIEW': 'Name of this view',
-    'SUBMIT_VIEW': 'Save',
-    'VIEWS': 'My views'
   },
 
   'MODAL': {
@@ -121,24 +118,43 @@ export const MARKET_REPORT = {
 
  // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',
+
   'EXPAND': 'Expand',
+
   'FILTERS': 'Filters',
+
   'SYNTHESIS_FRAME': 'from professionals',
+
   'PIE_CHART': 'of responses are favorable',
+
   'COMMENTS': 'comments',
+
   'ANSWER': 'answer',
+
   'ANSWERS': 'answers',
+
   'SEE_ANSWERS': 'Show answer',
+
   'BTN_EDITION_MODE': 'Go to Edition mode',
+
   'BTN_VIEW_MODE': 'Go to view mode',
+
   'BTN_ANSWERS_OPEN': 'Show Answers',
+
   'BTN_ANSWERS_CLOSE': 'Hide Answers',
+
   'BTN_COMMENTS_OPEN': 'Comments',
+
   'BTN_COMMENTS_CLOSE': 'Hide Comments ({{length}})',
+
   'BTN_RECOMPUTE': 'Recompute infographics',
+
   'VOTES': 'votes',
+
   'GRADE': 'Rating',
+
   'NO_GRADE': 'No rating',
+
   'POPUP': {
     'PROFIL': 'Profil',
     'RECEIVED': 'Received at',
@@ -146,5 +162,17 @@ export const MARKET_REPORT = {
     'COUNTRY': 'Country',
     'BACK': 'Back'
   },
+
+  'BUTTON_EXPORT': 'Export',
+
+  'BUTTON_SAVE_VIEW': 'Save View',
+
+  'VIEWS': 'My views',
+
+  'TOOLTIP_DELETE_VIEW': 'Delete view',
+
+  'TOOLTIP_LOAD_VIEW': 'Click to load view',
+
+  'VIEW_PLACEHOLDER': 'Name of your view',
 
 };
