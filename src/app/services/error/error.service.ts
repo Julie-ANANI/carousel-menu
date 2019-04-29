@@ -4,10 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { TranslateNotificationsService } from '../notifications/notifications.service';
 import { environment } from '../../../environments/environment';
+import { version } from '../../../environments/version';
 import * as Sentry from '@sentry/browser';
 
 Sentry.init({
   environment: environment.domain,
+  release: version,
   dsn: 'https://d86e9ff2dfbb40eab9632f0a3a599757@sentry.io/1315751'
 });
 
