@@ -22,8 +22,11 @@
     font-size: 0.75rem;
   }
 
-  .flex-container {
-    display: flex;
+  .filter-option-wrapper {
+    background-color: $bg-color-light;
+    overflow-y: auto;
+    width: 100%;
+
   }
 
   #sidebar-synthesis {
