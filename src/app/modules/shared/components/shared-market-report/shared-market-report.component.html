@@ -1,11 +1,10 @@
 <ng-container *ngIf="innovation">
 
-  <section class="animate-page section-light-pad rm-pad-top" id="market-report"
-           [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5' }">
+  <section id="market-report" [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
 
     <!-- Project status not done client side -->
     <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode">
-      <div class="section-light-pad rm-pad-bottom">
+      <div class="section-light-pad">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
           <div class="section-light-pad rm-pad-bottom">
@@ -20,7 +19,7 @@
 
     <!-- project status not submitted admin side -->
     <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
-      <div class="section-pad rm-pad-bottom">
+      <div class="section-pad">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <app-message-space [widthMax]="'337px'">
             {{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}
@@ -36,15 +35,16 @@
       <div class="restrict-width d-flex">
 
         <!-- filters sidebar -->
-        <aside class="filter-option-wrapper">
+        <div >
           <app-market-report-sidebar
             [answers]="answers"
             [innovation]="innovation"
             [isAdmin]="adminSide"
             [isOwner]="isOwner"
+            id="sidebar-synthesis"
             [questions]="questions">
           </app-market-report-sidebar>
-        </aside>
+        </div>
         <!-- /filters sidebar -->
 
         <!-- Answer sections
