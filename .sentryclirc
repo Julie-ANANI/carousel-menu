@@ -1,0 +1,6 @@
+[defaults]
+org = unitedmotionideas
+project = front-prod
+
+[auth]
+token = tokentokentokentoken
