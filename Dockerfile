@@ -14,7 +14,6 @@ RUN apt-get clean && \
 
 RUN npm install -g @angular/cli
 RUN npm install -g typings
-RUN npm install @sentry/cli
 
 WORKDIR /var/web
 ADD . .
@@ -29,7 +28,8 @@ RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/versi
 RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
 
 # upload source-map to sentry
-RUN sentry-cli releases files $VERSION upload-sourcemaps --ext js --ext map dist/browser
+RUN npm install @sentry/cli
+RUN ./node_modules/.bin/sentry-cli releases files $VERSION upload-sourcemaps --ext js --ext map dist/browser
 
 # delete source-map files
 RUN rm dist/browser/*.js.map
