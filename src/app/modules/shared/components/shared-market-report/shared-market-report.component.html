@@ -1,589 +1,606 @@
-<ng-container *ngIf="innovation">
+<div *ngIf="innovation" id="market-report">
 
-  <section id="market-report" [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
 
-    <!-- Project status not done client side -->
-    <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode">
-      <div class="section-light-pad">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
-          <div class="section-light-pad rm-pad-bottom">
-            <app-message-space [widthMax]="'337px'">
-              {{ getMessage() | translate }}
-            </app-message-space>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-    <!-- project status not done client side -->
-
-    <!-- project status not submitted admin side -->
-    <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
-      <div class="section-pad">
-        <div class="column col-xs-12 col-11 col-mx-auto">
+  <!-- project status not done at client side -->
+  <section *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode" [ngStyle]="{ 'background-color': '#FFFFFF' }">
+    <div class="section-light-pad rm-pad-bottom">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <h1 class="title-primary">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
+        <div class="section-light-pad rm-pad-bottom">
           <app-message-space [widthMax]="'337px'">
-            {{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}
+            <span>{{ getMessage() | translate }}</span>
           </app-message-space>
         </div>
       </div>
-    </ng-container>
-    <!-- /project status not submitted admin side -->
-
-    <!-- project status submitted -->
-    <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || previewMode">
-
-      <div class="d-flex market-report-wrapper">
-
-        <!-- filter sidebar -->
-        <aside class="filter-wrapper">
-          <app-market-report-sidebar
-            [answers]="answers"
-            [innovation]="innovation"
-            [isAdmin]="adminMode"
-            [isAdminSide]="adminSide"
-            [isOwner]="isOwner"
-            [questions]="questions">
-          </app-market-report-sidebar>
-        </aside>
-        <!-- /filter sideBar -->
-
-        <!-- Answer sections -->
-        <section id="answer-wrapper">
-
-          <!-- main page -->
-          <ng-container *ngIf="showDetails">
-            <section class="section-pad rm-pad-bottom text-center d-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad full text bg-white main-page">
-
-                  <!-- logo -->
-                  <div class="logo-wrapper">
-                    <img src="{{ getLogo() }}" alt="UMI" height="38px">
-                  </div>
-
-                  <!-- body -->
-                  <div class="d-flex content-wrapper">
-
-                    <h6 class="text-executive">Executive report</h6>
-
-                    <h1 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
-
-                    <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
-
-                    <img class="image-wrapper" [src]="getSrc()" [alt]=" ">
-
-                    <ng-container *ngIf="isMainDomain()">
-                      <h6 *ngIf="innovation.owner?.name" class="text-owner text-medium text">{{ getOwnerName() }}</h6>
-                      <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle text-normal text">{{ innovation.owner?.jobTitle }}</h6>
-                      <h6 *ngIf="innovation.owner?.email" class="text-email text-normal text">{{ innovation.owner?.email }}</h6>
-                    </ng-container>
-
-                    <div *ngIf="innovation.executiveReport?.objective" class="goal-text label label-tag label-rounded">
-                      <span>{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}</span>
-                    </div>
-
-                  </div>
-
-                  <!-- link -->
-                  <div class="footer-wrapper d-flex text-background text-medium">
-                    <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
-                    <div class="text-right">
-                      <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>
-                      <p><a [href]="getMailto()">{{getContact()}}</a> <span *ngIf="isMainDomain()">| 06 49 34 47 32 </span> | {{getCompanyURL()}}</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /main page -->
-
-          <!-- main page goal -->
-          <ng-container *ngIf="adminSide">
-            <section class="section-light-pad" id="innovation-goal">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad bg-white full objective">
-
-                  <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h2>
-
-                  <div class="form-group relative">
-
-                    <label for="market-report-objective"></label>
-                    <textarea
-                      class="form-input"
-                      id="market-report-objective"
-                      [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
-                      rows="5"
-                      [(ngModel)]="innovation.executiveReport.objective"
-                      (blur)="update($event)"
-                      maxlength="120">
-                      </textarea>
-
-                    <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
-                      <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /main page goal -->
-
-          <!-- executive template generation -->
-          <ng-container *ngIf="adminSide">
-            <section class="section-light-pad">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad full d-flex executive-generate-wrapper bg-white">
-
-                  <!-- heading -->
-                  <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h2>
-
-                  <!-- sub heading -->
-                  <h3 class="title-secondary text-center">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h3>
-
-                  <!-- templates -->
-                  <div class="template-outer-wrapper">
-                    <div *ngFor="let template of executiveTemplates" class="template">
-                      <img [src]="template.imageSrc" alt=" ">
-                      <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)">
-                        <span>•</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- button -->
-                  <div class="text-center">
-                    <button class="btn ghost-primary btn-sm" [disabled]="innovation?.executiveReport.totalSections > 0 || numberOfSections === 0" (click)="generateExecutiveTemplate($event)">
-                      Valid Template
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /executive template generation -->
-
-          <!-- executive report -->
-          <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
-            <section id="executive-report">
-              <app-executive-report [project]="innovation"></app-executive-report>
-            </section>
-          </ng-container>
-          <!-- /executive report -->
-
-          <!-- executive Report delete button -->
-          <ng-container *ngIf="innovation.executiveReport.totalSections > 0 && adminSide">
-            <section class="section-light-pad text-center">
-              <button class="btn ghost-delete btn-sm" (click)="deleteExecutiveTemplate($event)">
-                {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}
-              </button>
-            </section>
-          </ng-container>
-          <!-- /executive Report delete button -->
-
-          <!-- UMI intro -->
-          <ng-container *ngIf="showDetails && getDomainName() === 'umi'">
-            <section class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <img [src]="getIntroSrc()" alt="UMI" class="img-responsive umi-intro">
-              </div>
-            </section>
-          </ng-container>
-          <!-- /UMI intro -->
-
-          <!-- innovation detail -->
-          <ng-container *ngIf="showDetails">
-            <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad full innovation-wrapper text bg-white">
-
-                  <!-- column 1 -->
-                  <div class="summary-wrapper">
-
-                    <h2 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h2>
-
-                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
-
-                    <div class="img-wrapper">
-                      <img [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" height="146px" width="220px">
-                    </div>
-
-                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
-
-                    <ul class="advantage-wrapper">
-                      <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex]?.advantages;">
-                        {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
-                      </li>
-                    </ul>
-
-                  </div>
-
-                  <!-- column 2 -->
-                  <div class="issue-wrapper">
-                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
-                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.problem"></div>
-                  </div>
-
-                  <!-- column 3 -->
-                  <div class="solution-wrapper">
-                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
-                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.solution"></div>
-                  </div>
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /innovation detail -->
-
-          <!-- innovation targeting -->
-          <ng-container *ngIf="showDetails">
-            <section class="section-light-pad report-targeting-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad full targeting-wrapper bg-white text">
-
-                  <!-- column 1 -->
-                  <div class="map-wrapper">
-
-                    <h2 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h2>
-
-                    <p class="title-secondary">{{ 'MARKET_REPORT.TARGET_COUNTRIES' | translate }}</p>
-
-                    <app-worldmap
-                      [initialConfiguration]="continentTarget"
-                      [countriesColor]="'#2ECC71'"
-                      [isEditable]="false"
-                      [width]="'auto'">
-                    </app-worldmap>
-
-                    <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">
-                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
-                      <div *ngFor="let country of innovation.settings.geography.exclude" class="label label-answer">
-                        {{ country.name }}
-                      </div>
-                    </div>
-
-                    <div *ngIf="innovation.settings.market.comments.length > 0" class="question-wrapper">
-                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.MARKET.LABEL' | translate }}</p>
-                      <p>{{ innovation.settings.market.comments }}</p>
-                    </div>
-
-                  </div>
-
-                  <!-- column 2 -->
-                  <div class="c2-answer-wrapper">
-
-                    <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">
-                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}</p>
-                      <div *ngFor="let companyInclude of innovation.settings.companies.include" class="label label-answer">
-                        {{ companyInclude.name }}
-                      </div>
-                    </div>
-
-                    <div *ngIf="innovation.settings.companies.exclude.length > 0" class="question-wrapper">
-                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}</p>
-                      <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="label label-answer">
-                        {{ companyExclude.name }}
-                      </div>
-                    </div>
-
-                    <div *ngIf="innovation.settings.professionals.description.length > 0" class="question-wrapper">
-                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL' | translate }}</p>
-                      <p>{{ innovation.settings.professionals.description }}</p>
-                    </div>
-
-                    <div *ngIf="innovation.settings.professionals.exclude.length > 0" class="question-wrapper">
-                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
-                      <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">
-                        {{ professionalExclude.text }}
-                      </div>
-                    </div>
-
-                    <div *ngIf="innovation.settings.comments.length > 0" class="question-wrapper">
-                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</p>
-                      <p>{{ innovation.settings.comments }}</p>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /innovation targeting -->
-
-          <!-- innovation analytics -->
-          <ng-container *ngIf="showDetails && false">
-            <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad full exploration-wrapper bg-white text">
-
-                  <!-- heading -->
-                  <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h2>
-
-                  <!-- analytic -->
-                  <div class="analytic-wrapper">
-
-                    <!-- reached -->
-                    <div class="info-analytic-wrapper">
-                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
-                      <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
-                    </div>
-                    <div class="info-analytic-wrapper pd-top">
-                      <svg width="80px" height="38px" viewBox="0 0 80 38">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g transform="translate(-701.000000, -810.000000)">
-                            <g transform="translate(701.000000, 810.000000)">
-                              <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                              <text class="svg-text">
-                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>
-                              </text>
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
-                    </div>
-
-                    <!-- emails -->
-                    <div class="info-analytic-wrapper">
-                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
-                      <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
-                    </div>
-                    <div class="info-analytic-wrapper pd-top">
-                      <svg width="80px" height="38px" viewBox="0 0 80 38">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g transform="translate(-701.000000, -810.000000)">
-                            <g transform="translate(701.000000, 810.000000)">
-                              <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                              <text class="svg-text">
-                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>
-                              </text>
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
-                    </div>
-
-                    <!-- clicks -->
-                    <div class="info-analytic-wrapper">
-                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
-                      <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
-                    </div>
-                    <div class="info-analytic-wrapper pd-top">
-                      <svg width="80px" height="38px" viewBox="0 0 80 38">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g transform="translate(-701.000000, -810.000000)">
-                            <g transform="translate(701.000000, 810.000000)">
-                              <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                              <text class="svg-text">
-                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>
-                              </text>
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
-                    </div>
-
-                    <!-- answers -->
-                    <div class="info-analytic-wrapper">
-                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-                      <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
-                    </div>
-
-                  </div>
-
-                  <!-- companies contact -->
-                  <ng-container *ngIf="innovation.settings.companies.include.length > 0">
-                    <div class="company-wrapper section-light-pad rm-pad-top">
-
-                      <h2 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
-
-                      <ul class="name-wrapper">
-                        <li *ngFor="let company of innovation.settings.companies.include; let i = index;">
-                          {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
-                        </li>
-                      </ul>
-
-                    </div>
-                  </ng-container>
-                  <!-- /companies contact -->
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /innovation analytics -->
-
-          <!-- key learning section -->
-          <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">
-            <section class="section-light-pad" id="key-learning">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad full key-learning-wrapper bg-white text">
-
-                  <h2 class="title-primary">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h2>
-
-                  <ng-container *ngIf="isMainDomain()">
-                    <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>
-                  </ng-container>
-
-                  <app-text-zone
-                    [elementId]="'keyLearning'"
-                    [readonly]="!adminSide"
-                    [data]="innovation.marketReport?.keyLearning?.conclusion"
-                    (onTextChange)="saveOperatorComment($event, 'keyLearning')">
-                  </app-text-zone>
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /key learning section -->
-
-          <!-- origin comment and professional responses -->
-          <section class="section-light-pad" id="origin">
-            <div class="column col-xs-12 col-11 col-mx-auto">
-              <div class="origin-wrapper bg-white text">
-
-                <app-question-conclusion
-                  [innovation]="innovation"
-                  [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
-                  [readonly]="!adminSide"
-                  [originAnswers]="answersOrigins"
-                  [stats]="{ nbAnswers: answers.length, percentage: 0 }">
-                </app-question-conclusion>
-
-                <ng-container *ngIf="adminSide">
-                  <div class="abstract-wrapper section-pad full">
-
-                    <h2 class="title-primary">Abstract</h2>
-
-                    <div class="form-group relative">
-                      <label for="market-report-professionals"></label>
-                        <textarea
-                          class="form-input"
-                          id="market-report-professionals"
-                          [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.PROFESSIONAL' | translate"
-                          rows="5"
-                          [(ngModel)]="innovation.executiveReport.professionalAbstract"
-                          (blur)="update($event)"
-                          maxlength="160">
-                        </textarea>
-                      <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
-                        <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>
-                      </div>
-                    </div>
-
-                  </div>
-                </ng-container>
-
-              </div>
-            </div>
-          </section>
-          <!-- /origin comment and professional responses -->
-
-          <!-- map -->
-          <section class="section-light-pad" id="market-map">
-            <div class="column col-xs-12 col-11 col-mx-auto">
-              <div class="map-wrapper">
-                <app-worldmap
-                  (updateContinent)="filterByContinents($event)"
-                  [countries]="countries"
-                  [countriesColor]="'#2ECC71'"
-                  [initialConfiguration]="mapSelectedContinents"
-                  [synthesis]="true"
-                  [width]="'auto'">
-                </app-worldmap>
-              </div>
-            </div>
-          </section>
-          <!-- /map -->
-
-          <!-- professionals -->
-          <section class="section-light-pad" id="professional">
-            <div class="column col-xs-12 col-11 col-mx-auto">
-              <div class="professional-wrapper d-flex">
-                <div *ngFor="let answer of filteredAnswers" class="card card-responsive-3 relative">
-
-                  <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" (click)="filterPro(answer, $event)" alt=" ">
-
-                  <div class="card-body">
-                    <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </section>
-          <!-- /professionals -->
-
-          <!-- other question and answers -->
-          <div class="column col-xs-12 col-11 col-mx-auto" id="questions">
-            <div *ngFor="let question of questions">
-              <div class="section-light-pad">
-                <app-question-section
-                  [project]="innovation"
-                  [question]="question"
-                  [answers]="filteredAnswers"
-                  [showDetails]="showDetails"
-                  [readonly]="!adminSide"
-                  (modalAnswerChange)="seeAnswer($event)">
-                </app-question-section>
-              </div>
-            </div>
-          </div>
-          <!-- /other question and answers -->
-
-          <!-- conclusion -->
-          <ng-container *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide">
-            <section class="section-light-pad" id="conclusion">
-              <div class="column col-xs-12 col-11 col-mx-auto">
-                <div class="section-pad full bg-white text conclusion-wrapper">
-
-                  <h2 class="title-primary">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h2>
-
-                  <ng-container *ngIf="isMainDomain()">
-                    <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>
-                  </ng-container>
-
-                  <app-text-zone
-                    [elementId]="'finalConclusion'"
-                    [readonly]="!adminSide"
-                    [data]="innovation.marketReport?.finalConclusion?.conclusion"
-                    (onTextChange)="saveOperatorComment($event, 'finalConclusion')">
-                  </app-text-zone>
-
-                </div>
-              </div>
-            </section>
-          </ng-container>
-          <!-- /conclusion -->
-
-        </section>
-        <!-- /Answer sections -->
-
-      </div>
-
-    </ng-container>
-    <!-- /Project status submitted and client side -->
-
+    </div>
   </section>
+  <!-- /project status not done at client side -->
 
-  <!-- insight preview -->
-  <ng-container *ngIf="!wordpress">
-    <app-sidebar [(template)]="sidebarTemplateValue">
-      <app-user-answer
-        [(userAnswer)]="modalAnswer"
-        [projectId]="innovation._id"
-        [adminMode]="adminMode"
-        [questions]="questions">
-      </app-user-answer>
-    </app-sidebar>
-  </ng-container>
-  <!-- /insight preview -->
 
-</ng-container>
+  <!-- project status not submitted admin side -->
+  <section *ngIf="innovation.status === 'EDITING' && adminSide">
+    <div class="section-pad rm-pad-bottom">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <app-message-space [widthMax]="'337px'">
+          <span>{{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}</span>
+        </app-message-space>
+      </div>
+    </div>
+  </section>
+  <!-- /project status not submitted admin side -->
+
+
+  <!-- project status done or preview mode or not editing -->
+  <section *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)" [ngStyle]="{ 'background-color': '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
+    <div class="d-flex report-wrapper">
+
+      <!-- filter sidebar -->
+      <aside class="sidebar-filter-wrapper">
+        <app-market-report-sidebar
+          [answers]="answers"
+          [innovation]="innovation"
+          [isAdmin]="adminMode"
+          [isAdminSide]="adminSide"
+          [isOwner]="isOwner"
+          [questions]="questions">
+        </app-market-report-sidebar>
+      </aside>
+      <!-- /filter sideBar -->
+
+
+    </div>
+  </section>
+  <!-- /project status done or preview mode or not editing -->
+
+
+</div>
+
+<!--  <section  [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">-->
+
+<!--    &lt;!&ndash; project status submitted &ndash;&gt;-->
+<!--    <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || previewMode">-->
+
+<!--      <div class="d-flex market-report-wrapper">-->
+
+
+
+<!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
+<!--        <section id="answer-wrapper">-->
+
+<!--          &lt;!&ndash; main page &ndash;&gt;-->
+<!--          <ng-container *ngIf="showDetails">-->
+<!--            <section class="section-pad rm-pad-bottom text-center d-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad full text bg-white main-page">-->
+
+<!--                  &lt;!&ndash; logo &ndash;&gt;-->
+<!--                  <div class="logo-wrapper">-->
+<!--                    <img src="{{ getLogo() }}" alt="UMI" height="38px">-->
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; body &ndash;&gt;-->
+<!--                  <div class="d-flex content-wrapper">-->
+
+<!--                    <h6 class="text-executive">Executive report</h6>-->
+
+<!--                    <h1 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>-->
+
+<!--                    <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>-->
+
+<!--                    <img class="image-wrapper" [src]="getSrc()" [alt]=" ">-->
+
+<!--                    <ng-container *ngIf="isMainDomain()">-->
+<!--                      <h6 *ngIf="innovation.owner?.name" class="text-owner text-medium text">{{ getOwnerName() }}</h6>-->
+<!--                      <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle text-normal text">{{ innovation.owner?.jobTitle }}</h6>-->
+<!--                      <h6 *ngIf="innovation.owner?.email" class="text-email text-normal text">{{ innovation.owner?.email }}</h6>-->
+<!--                    </ng-container>-->
+
+<!--                    <div *ngIf="innovation.executiveReport?.objective" class="goal-text label label-tag label-rounded">-->
+<!--                      <span>{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}</span>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; link &ndash;&gt;-->
+<!--                  <div class="footer-wrapper d-flex text-background text-medium">-->
+<!--                    <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>-->
+<!--                    <div class="text-right">-->
+<!--                      <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>-->
+<!--                      <p><a [href]="getMailto()">{{getContact()}}</a> <span *ngIf="isMainDomain()">| 06 49 34 47 32 </span> | {{getCompanyURL()}}</p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /main page &ndash;&gt;-->
+
+<!--          &lt;!&ndash; main page goal &ndash;&gt;-->
+<!--          <ng-container *ngIf="adminSide">-->
+<!--            <section class="section-light-pad" id="innovation-goal">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad bg-white full objective">-->
+
+<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h2>-->
+
+<!--                  <div class="form-group relative">-->
+
+<!--                    <label for="market-report-objective"></label>-->
+<!--                    <textarea-->
+<!--                      class="form-input"-->
+<!--                      id="market-report-objective"-->
+<!--                      [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"-->
+<!--                      rows="5"-->
+<!--                      [(ngModel)]="innovation.executiveReport.objective"-->
+<!--                      (blur)="update($event)"-->
+<!--                      maxlength="120">-->
+<!--                      </textarea>-->
+
+<!--                    <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">-->
+<!--                      <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /main page goal &ndash;&gt;-->
+
+<!--          &lt;!&ndash; executive template generation &ndash;&gt;-->
+<!--          <ng-container *ngIf="adminSide">-->
+<!--            <section class="section-light-pad">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad full d-flex executive-generate-wrapper bg-white">-->
+
+<!--                  &lt;!&ndash; heading &ndash;&gt;-->
+<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h2>-->
+
+<!--                  &lt;!&ndash; sub heading &ndash;&gt;-->
+<!--                  <h3 class="title-secondary text-center">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h3>-->
+
+<!--                  &lt;!&ndash; templates &ndash;&gt;-->
+<!--                  <div class="template-outer-wrapper">-->
+<!--                    <div *ngFor="let template of executiveTemplates" class="template">-->
+<!--                      <img [src]="template.imageSrc" alt=" ">-->
+<!--                      <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)">-->
+<!--                        <span>•</span>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; button &ndash;&gt;-->
+<!--                  <div class="text-center">-->
+<!--                    <button class="btn ghost-primary btn-sm" [disabled]="innovation?.executiveReport.totalSections > 0 || numberOfSections === 0" (click)="generateExecutiveTemplate($event)">-->
+<!--                      Valid Template-->
+<!--                    </button>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /executive template generation &ndash;&gt;-->
+
+<!--          &lt;!&ndash; executive report &ndash;&gt;-->
+<!--          <ng-container *ngIf="innovation.executiveReport.totalSections > 0">-->
+<!--            <section id="executive-report">-->
+<!--              <app-executive-report [project]="innovation"></app-executive-report>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /executive report &ndash;&gt;-->
+
+<!--          &lt;!&ndash; executive Report delete button &ndash;&gt;-->
+<!--          <ng-container *ngIf="innovation.executiveReport.totalSections > 0 && adminSide">-->
+<!--            <section class="section-light-pad text-center">-->
+<!--              <button class="btn ghost-delete btn-sm" (click)="deleteExecutiveTemplate($event)">-->
+<!--                {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}-->
+<!--              </button>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /executive Report delete button &ndash;&gt;-->
+
+<!--          &lt;!&ndash; UMI intro &ndash;&gt;-->
+<!--          <ng-container *ngIf="showDetails && getDomainName() === 'umi'">-->
+<!--            <section class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <img [src]="getIntroSrc()" alt="UMI" class="img-responsive umi-intro">-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /UMI intro &ndash;&gt;-->
+
+<!--          &lt;!&ndash; innovation detail &ndash;&gt;-->
+<!--          <ng-container *ngIf="showDetails">-->
+<!--            <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad full innovation-wrapper text bg-white">-->
+
+<!--                  &lt;!&ndash; column 1 &ndash;&gt;-->
+<!--                  <div class="summary-wrapper">-->
+
+<!--                    <h2 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h2>-->
+
+<!--                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>-->
+
+<!--                    <div class="img-wrapper">-->
+<!--                      <img [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" height="146px" width="220px">-->
+<!--                    </div>-->
+
+<!--                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>-->
+
+<!--                    <ul class="advantage-wrapper">-->
+<!--                      <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex]?.advantages;">-->
+<!--                        {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}-->
+<!--                      </li>-->
+<!--                    </ul>-->
+
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; column 2 &ndash;&gt;-->
+<!--                  <div class="issue-wrapper">-->
+<!--                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>-->
+<!--                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.problem"></div>-->
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; column 3 &ndash;&gt;-->
+<!--                  <div class="solution-wrapper">-->
+<!--                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>-->
+<!--                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.solution"></div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /innovation detail &ndash;&gt;-->
+
+<!--          &lt;!&ndash; innovation targeting &ndash;&gt;-->
+<!--          <ng-container *ngIf="showDetails">-->
+<!--            <section class="section-light-pad report-targeting-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad full targeting-wrapper bg-white text">-->
+
+<!--                  &lt;!&ndash; column 1 &ndash;&gt;-->
+<!--                  <div class="map-wrapper">-->
+
+<!--                    <h2 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h2>-->
+
+<!--                    <p class="title-secondary">{{ 'MARKET_REPORT.TARGET_COUNTRIES' | translate }}</p>-->
+
+<!--                    <app-worldmap-->
+<!--                      [initialConfiguration]="continentTarget"-->
+<!--                      [countriesColor]="'#2ECC71'"-->
+<!--                      [isEditable]="false"-->
+<!--                      [width]="'auto'">-->
+<!--                    </app-worldmap>-->
+
+<!--                    <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">-->
+<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>-->
+<!--                      <div *ngFor="let country of innovation.settings.geography.exclude" class="label label-answer">-->
+<!--                        {{ country.name }}-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                    <div *ngIf="innovation.settings.market.comments.length > 0" class="question-wrapper">-->
+<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.MARKET.LABEL' | translate }}</p>-->
+<!--                      <p>{{ innovation.settings.market.comments }}</p>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; column 2 &ndash;&gt;-->
+<!--                  <div class="c2-answer-wrapper">-->
+
+<!--                    <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">-->
+<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}</p>-->
+<!--                      <div *ngFor="let companyInclude of innovation.settings.companies.include" class="label label-answer">-->
+<!--                        {{ companyInclude.name }}-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                    <div *ngIf="innovation.settings.companies.exclude.length > 0" class="question-wrapper">-->
+<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}</p>-->
+<!--                      <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="label label-answer">-->
+<!--                        {{ companyExclude.name }}-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                    <div *ngIf="innovation.settings.professionals.description.length > 0" class="question-wrapper">-->
+<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL' | translate }}</p>-->
+<!--                      <p>{{ innovation.settings.professionals.description }}</p>-->
+<!--                    </div>-->
+
+<!--                    <div *ngIf="innovation.settings.professionals.exclude.length > 0" class="question-wrapper">-->
+<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>-->
+<!--                      <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">-->
+<!--                        {{ professionalExclude.text }}-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                    <div *ngIf="innovation.settings.comments.length > 0" class="question-wrapper">-->
+<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</p>-->
+<!--                      <p>{{ innovation.settings.comments }}</p>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /innovation targeting &ndash;&gt;-->
+
+<!--          &lt;!&ndash; innovation analytics &ndash;&gt;-->
+<!--          <ng-container *ngIf="showDetails && false">-->
+<!--            <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad full exploration-wrapper bg-white text">-->
+
+<!--                  &lt;!&ndash; heading &ndash;&gt;-->
+<!--                  <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h2>-->
+
+<!--                  &lt;!&ndash; analytic &ndash;&gt;-->
+<!--                  <div class="analytic-wrapper">-->
+
+<!--                    &lt;!&ndash; reached &ndash;&gt;-->
+<!--                    <div class="info-analytic-wrapper">-->
+<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>-->
+<!--                      <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>-->
+<!--                    </div>-->
+<!--                    <div class="info-analytic-wrapper pd-top">-->
+<!--                      <svg width="80px" height="38px" viewBox="0 0 80 38">-->
+<!--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">-->
+<!--                          <g transform="translate(-701.000000, -810.000000)">-->
+<!--                            <g transform="translate(701.000000, 810.000000)">-->
+<!--                              <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>-->
+<!--                              <text class="svg-text">-->
+<!--                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>-->
+<!--                              </text>-->
+<!--                            </g>-->
+<!--                          </g>-->
+<!--                        </g>-->
+<!--                      </svg>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; emails &ndash;&gt;-->
+<!--                    <div class="info-analytic-wrapper">-->
+<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>-->
+<!--                      <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>-->
+<!--                    </div>-->
+<!--                    <div class="info-analytic-wrapper pd-top">-->
+<!--                      <svg width="80px" height="38px" viewBox="0 0 80 38">-->
+<!--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">-->
+<!--                          <g transform="translate(-701.000000, -810.000000)">-->
+<!--                            <g transform="translate(701.000000, 810.000000)">-->
+<!--                              <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>-->
+<!--                              <text class="svg-text">-->
+<!--                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>-->
+<!--                              </text>-->
+<!--                            </g>-->
+<!--                          </g>-->
+<!--                        </g>-->
+<!--                      </svg>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; clicks &ndash;&gt;-->
+<!--                    <div class="info-analytic-wrapper">-->
+<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>-->
+<!--                      <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>-->
+<!--                    </div>-->
+<!--                    <div class="info-analytic-wrapper pd-top">-->
+<!--                      <svg width="80px" height="38px" viewBox="0 0 80 38">-->
+<!--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">-->
+<!--                          <g transform="translate(-701.000000, -810.000000)">-->
+<!--                            <g transform="translate(701.000000, 810.000000)">-->
+<!--                              <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>-->
+<!--                              <text class="svg-text">-->
+<!--                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>-->
+<!--                              </text>-->
+<!--                            </g>-->
+<!--                          </g>-->
+<!--                        </g>-->
+<!--                      </svg>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; answers &ndash;&gt;-->
+<!--                    <div class="info-analytic-wrapper">-->
+<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>-->
+<!--                      <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; companies contact &ndash;&gt;-->
+<!--                  <ng-container *ngIf="innovation.settings.companies.include.length > 0">-->
+<!--                    <div class="company-wrapper section-light-pad rm-pad-top">-->
+
+<!--                      <h2 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>-->
+
+<!--                      <ul class="name-wrapper">-->
+<!--                        <li *ngFor="let company of innovation.settings.companies.include; let i = index;">-->
+<!--                          {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}-->
+<!--                        </li>-->
+<!--                      </ul>-->
+
+<!--                    </div>-->
+<!--                  </ng-container>-->
+<!--                  &lt;!&ndash; /companies contact &ndash;&gt;-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /innovation analytics &ndash;&gt;-->
+
+<!--          &lt;!&ndash; key learning section &ndash;&gt;-->
+<!--          <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">-->
+<!--            <section class="section-light-pad" id="key-learning">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad full key-learning-wrapper bg-white text">-->
+
+<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h2>-->
+
+<!--                  <ng-container *ngIf="isMainDomain()">-->
+<!--                    <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>-->
+<!--                  </ng-container>-->
+
+<!--                  <app-text-zone-->
+<!--                    [elementId]="'keyLearning'"-->
+<!--                    [readonly]="!adminSide"-->
+<!--                    [data]="innovation.marketReport?.keyLearning?.conclusion"-->
+<!--                    (onTextChange)="saveOperatorComment($event, 'keyLearning')">-->
+<!--                  </app-text-zone>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /key learning section &ndash;&gt;-->
+
+<!--          &lt;!&ndash; origin comment and professional responses &ndash;&gt;-->
+<!--          <section class="section-light-pad" id="origin">-->
+<!--            <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--              <div class="origin-wrapper bg-white text">-->
+
+<!--                <app-question-conclusion-->
+<!--                  [innovation]="innovation"-->
+<!--                  [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"-->
+<!--                  [readonly]="!adminSide"-->
+<!--                  [originAnswers]="answersOrigins"-->
+<!--                  [stats]="{ nbAnswers: answers.length, percentage: 0 }">-->
+<!--                </app-question-conclusion>-->
+
+<!--                <ng-container *ngIf="adminSide">-->
+<!--                  <div class="abstract-wrapper section-pad full">-->
+
+<!--                    <h2 class="title-primary">Abstract</h2>-->
+
+<!--                    <div class="form-group relative">-->
+<!--                      <label for="market-report-professionals"></label>-->
+<!--                        <textarea-->
+<!--                          class="form-input"-->
+<!--                          id="market-report-professionals"-->
+<!--                          [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.PROFESSIONAL' | translate"-->
+<!--                          rows="5"-->
+<!--                          [(ngModel)]="innovation.executiveReport.professionalAbstract"-->
+<!--                          (blur)="update($event)"-->
+<!--                          maxlength="160">-->
+<!--                        </textarea>-->
+<!--                      <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">-->
+<!--                        <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+<!--                </ng-container>-->
+
+<!--              </div>-->
+<!--            </div>-->
+<!--          </section>-->
+<!--          &lt;!&ndash; /origin comment and professional responses &ndash;&gt;-->
+
+<!--          &lt;!&ndash; map &ndash;&gt;-->
+<!--          <section class="section-light-pad" id="market-map">-->
+<!--            <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--              <div class="map-wrapper">-->
+<!--                <app-worldmap-->
+<!--                  (updateContinent)="filterByContinents($event)"-->
+<!--                  [countries]="countries"-->
+<!--                  [countriesColor]="'#2ECC71'"-->
+<!--                  [initialConfiguration]="mapSelectedContinents"-->
+<!--                  [synthesis]="true"-->
+<!--                  [width]="'auto'">-->
+<!--                </app-worldmap>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </section>-->
+<!--          &lt;!&ndash; /map &ndash;&gt;-->
+
+<!--          &lt;!&ndash; professionals &ndash;&gt;-->
+<!--          <section class="section-light-pad" id="professional">-->
+<!--            <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--              <div class="professional-wrapper d-flex">-->
+<!--                <div *ngFor="let answer of filteredAnswers" class="card card-responsive-3 relative">-->
+
+<!--                  <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" (click)="filterPro(answer, $event)" alt=" ">-->
+
+<!--                  <div class="card-body">-->
+<!--                    <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </section>-->
+<!--          &lt;!&ndash; /professionals &ndash;&gt;-->
+
+<!--          &lt;!&ndash; other question and answers &ndash;&gt;-->
+<!--          <div class="column col-xs-12 col-11 col-mx-auto" id="questions">-->
+<!--            <div *ngFor="let question of questions">-->
+<!--              <div class="section-light-pad">-->
+<!--                <app-question-section-->
+<!--                  [project]="innovation"-->
+<!--                  [question]="question"-->
+<!--                  [answers]="filteredAnswers"-->
+<!--                  [showDetails]="showDetails"-->
+<!--                  [readonly]="!adminSide"-->
+<!--                  (modalAnswerChange)="seeAnswer($event)">-->
+<!--                </app-question-section>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          &lt;!&ndash; /other question and answers &ndash;&gt;-->
+
+<!--          &lt;!&ndash; conclusion &ndash;&gt;-->
+<!--          <ng-container *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide">-->
+<!--            <section class="section-light-pad" id="conclusion">-->
+<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
+<!--                <div class="section-pad full bg-white text conclusion-wrapper">-->
+
+<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h2>-->
+
+<!--                  <ng-container *ngIf="isMainDomain()">-->
+<!--                    <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>-->
+<!--                  </ng-container>-->
+
+<!--                  <app-text-zone-->
+<!--                    [elementId]="'finalConclusion'"-->
+<!--                    [readonly]="!adminSide"-->
+<!--                    [data]="innovation.marketReport?.finalConclusion?.conclusion"-->
+<!--                    (onTextChange)="saveOperatorComment($event, 'finalConclusion')">-->
+<!--                  </app-text-zone>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; /conclusion &ndash;&gt;-->
+
+<!--        </section>-->
+<!--        &lt;!&ndash; /Answer sections &ndash;&gt;-->
+
+<!--      </div>-->
+
+<!--    </ng-container>-->
+<!--    &lt;!&ndash; /Project status submitted and client side &ndash;&gt;-->
+
+<!--  </section>-->
+
+<!--  &lt;!&ndash; insight preview &ndash;&gt;-->
+<!--  <ng-container *ngIf="!wordpress">-->
+<!--    <app-sidebar [(template)]="sidebarTemplateValue">-->
+<!--      <app-user-answer-->
+<!--        [(userAnswer)]="modalAnswer"-->
+<!--        [projectId]="innovation._id"-->
+<!--        [adminMode]="adminMode"-->
+<!--        [questions]="questions">-->
+<!--      </app-user-answer>-->
+<!--    </app-sidebar>-->
+<!--  </ng-container>-->
+<!--  &lt;!&ndash; /insight preview &ndash;&gt;-->
+
+<!--</ng-container>-->
 

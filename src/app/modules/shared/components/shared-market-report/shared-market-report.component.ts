@@ -127,20 +127,17 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
 
-  getMessage(): string {
+  public getMessage(): string {
     switch (this._innovation.status) {
 
       case 'EDITING':
         return this._innovation.reviewing ? 'MARKET_REPORT.MESSAGE.REVIEWING' : 'MARKET_REPORT.MESSAGE.EDITING';
-        break;
 
       case 'EVALUATING':
         return 'MARKET_REPORT.MESSAGE.EVALUATING';
-        break;
 
       case 'SUBMITTED':
         return 'MARKET_REPORT.MESSAGE.SUBMITTED';
-        break;
 
       default:
         return '';

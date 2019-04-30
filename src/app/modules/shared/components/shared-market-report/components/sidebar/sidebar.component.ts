@@ -233,8 +233,10 @@ export class SidebarComponent implements OnInit {
         this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       }
     }, () => {
+      this._innovation.previewMode = !this._innovation.previewMode;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
+    this._modalPreviewInnovation = false;
   }
 
 
@@ -249,6 +251,7 @@ export class SidebarComponent implements OnInit {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
+    this._modalEndInnovation = false;
   }
 
 

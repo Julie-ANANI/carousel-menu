@@ -10,6 +10,7 @@
   position: sticky;
   overflow-y: auto;
   overflow-x: hidden;
+  width: 100%;
 
   .filter-icon-wrapper {
     font-size: $font-size-md;
@@ -179,7 +180,7 @@
 
   #app-market-report-sidebar {
     height: 100vh;
-    min-width: 250px;
+    width: 250px;
     border-right: $border-width solid $border-color;
 
     .filter-icon-wrapper {
