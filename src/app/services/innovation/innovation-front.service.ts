@@ -1,6 +1,7 @@
 /***
  * This service is used to perform all the innovation related
- * cross component communication in the app.
+ * cross component communication and also other functions that
+ * are used more than once for the innovation in the app.
  */
 
 import { Injectable } from '@angular/core';

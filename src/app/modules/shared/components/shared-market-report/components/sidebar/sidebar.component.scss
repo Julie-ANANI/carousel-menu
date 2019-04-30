@@ -35,6 +35,25 @@
     margin-bottom: 0.5rem;
   }
 
+  .admin-actions-wrapper {
+
+    .fa-sort-down {
+      font-size: $unit-5;
+    }
+
+    .dropdown-menu {
+      width: 200px;
+      font-size: 0.65rem;
+      padding: $unit-2 0;
+
+      .drop-item {
+        padding: $unit-2;
+      }
+
+    }
+
+  }
+
   .client-view-wrapper {
 
     .different-views {
@@ -64,7 +83,22 @@
 
   }
 
-  .filter-reset-wrapper, .filter-custom-wrapper {
+  .filter-custom-wrapper {
+
+    .different-customs {
+      font-size: 0.65rem;
+      margin-bottom: $unit-1;
+
+      .fa-times {
+        margin-right: $unit-2;
+        color: $primary-color;
+      }
+
+    }
+
+  }
+
+  .filter-reset-wrapper {
     padding-bottom: 0.75rem;
 
     .fa-times {
@@ -127,6 +161,7 @@
         font-size: $font-size-xs;
         color: $text-background-color;
         font-weight: $font-weight-medium;
+        padding-right: 0;
       }
 
       .form-icon {
@@ -144,7 +179,7 @@
 
   #app-market-report-sidebar {
     height: 100vh;
-    min-width: 245px;
+    min-width: 250px;
     border-right: $border-width solid $border-color;
 
     .filter-icon-wrapper {
@@ -154,71 +189,3 @@
   }
 
 }
-
-
-/* {
-
-
-
-  font-size: 15px;
-
-  .views-wrapper {
-
-    ul {
-      list-style-type: none;
-      margin-left: 20px;
-    }
-
-    li {
-
-      i {
-        color: red;
-      }
-
-      a {
-        margin-left: 10px;
-      }
-
-    }
-
-    input {
-      margin: 10px;
-    }
-
-  }
-
-  .menu-wrapper {
-
-    padding: 0 10px;
-
-    p {
-      margin-bottom: 15px;
-    }
-
-    a {
-      display: block;
-      cursor: pointer;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    span {
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    label {
-      margin-left: 10px;
-    }
-
-    .reset-filter {
-      color: $primary-color;
-      cursor: pointer;
-    }
-
-  }
-
-}*/

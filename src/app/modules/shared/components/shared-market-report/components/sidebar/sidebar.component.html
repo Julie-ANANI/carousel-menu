@@ -1,5 +1,6 @@
 <section id="app-market-report-sidebar">
 
+
   <!-- filter icon for small devices -->
   <div class="filter-icon-wrapper text-background">
     <span class="text-medium">Filters</span>
@@ -7,27 +8,43 @@
   </div>
   <!-- /filter icon for small devices -->
 
+
   <!-- filter options -->
   <div class="filter-option-wrapper">
 
-    <!-- end innovation -->
-    <div *ngIf="isAdmin" class="text-center">
-      <button class="btn btn-sm ghost-primary" (click)="showEndInnovationModal = true">End Project</button>
+
+    <!-- different actions for admin -->
+    <div *ngIf="isAdmin && isAdminSide">
+      <div class="dropdown admin-actions-wrapper">
+
+        <span>Actions <i class="fas text-notify fa-sort-down"></i></span>
+
+        <div class="dropdown-menu">
+          <div *ngIf="!innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" [innerHTML]="'Make visible to client'" (click)="modalPreviewInnovation = true"></div>
+          <div *ngIf="innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" [innerHTML]="'Make invisible to client'" (click)="modalPreviewInnovation = true"></div>
+          <div class="drop-item" [innerHTML]="'End project'" (click)="modalEndInnovation = true"></div>
+        </div>
+
+      </div>
+
+      <!--<button class="btn btn-sm ghost-primary" (click)="showEndInnovationModal = true">End Project</button>-->
       <div class="divider"></div>
     </div>
-    <!-- /end innovation -->
+    <!-- /different actions for admin -->
+
 
     <!-- export option -->
     <div *ngIf="isOwner" class="text-center">
-      <button class="btn btn-primary gtm-export-synthesis" (click)="showExportModal = true" [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
+      <button class="btn btn-primary gtm-export-synthesis" (click)="modalExport = true" [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
       <div class="divider"></div>
     </div>
     <!-- /export option -->
 
+
     <!-- views wrapper -->
     <div class="client-view-wrapper">
 
-      <h6>{{ 'MARKET_REPORT.VIEWS' | translate }}</h6>
+      <h6 [innerText]="'MARKET_REPORT.VIEWS'" translate></h6>
 
       <div *ngFor="let filter of sharedFiltersList" class="different-views">
         <i class="fas fa-trash-alt text-alert c-hand tooltip tooltip-right" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_DELETE_VIEW' | translate"
@@ -61,6 +78,25 @@
     </div>
     <!-- /views wrapper -->
 
+
+    <!-- activated custom filters -->
+    <div *ngIf="activatedCustomFilters.length > 0" class="filter-custom-wrapper">
+
+      <h6 [innerText]="'MARKET_REPORT.CUSTOM_FILTERS'" translate></h6>
+
+      <div *ngFor="let filter of activatedCustomFilters" class="different-customs">
+        <span class="c-hand" (click)="unloadFilter($event, filter)">
+          <i class="fas fa-times" aria-hidden="true"></i>
+          <span [innerText]="filter"></span>
+        </span>
+      </div>
+
+      <div class="divider"></div>
+
+    </div>
+    <!-- /activated custom filters -->
+
+
     <!-- reset filters -->
     <div *ngIf="filtersCount > 0" class="filter-reset-wrapper">
       <span class="text-link" (click)="resetFilters($event)">
@@ -70,18 +106,6 @@
     </div>
     <!-- /reset filters -->
 
-    <!-- activated custom filters
-    <div class="filter-custom-wrapper">
-      <div>
-        <span class="text-medium" [innerText]="'MARKET_REPORT.CUSTOM_FILTERS'" translate></span>
-      </div>
-    </div>
-     /activated custom filters -->
-
-    <span *ngFor="let filter of activatedCustomFilters" (click)="unloadFilter($event, filter)">
-        <i class="fas fa-times" aria-hidden="true"></i>
-      {{ filter }}
-      </span>
 
     <!-- map filters -->
     <div class="filter-rest-wrapper">
@@ -107,6 +131,7 @@
     </div>
     <!-- /map filters -->
 
+
     <!-- professional filters -->
     <div class="filter-rest-wrapper filter-professional">
 
@@ -117,7 +142,7 @@
         </div>
       </a>
 
-      <div *ngFor="let tag of tagsList | slice:0:tagsEndIndex" class="form-group">
+      <div *ngFor="let tag of tagsList | slice:0:tagsEndIndex | SortTags:userLang" class="form-group">
         <label class="form-checkbox">
           <input
             type="checkbox"
@@ -149,11 +174,48 @@
     </div>
     <!-- /professional filters -->
 
+
     <!-- questions filters -->
     <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
 
+      <a [href]="'#' + question.identifier | removespaces" pageScroll class="text-primary c-hand">
+        <div class="flex-between">
+          <span>{{ question.title | multiling:userLang | FormatText }}</span>
+          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+        </div>
+      </a>
+
+      <!-- textarea -->
+      <ng-container *ngIf="question.controlType === 'textarea'">
+        <div *ngFor="let answerTag of answersTagsLists[question.identifier] | SortTags:userLang" class="form-group">
+          <label class="form-checkbox">
+            <input
+              type="checkbox"
+              [name]="answerTag._id"
+              (change)="checkAnswerTag($event, question.identifier)"
+              [checked]="selectedAnswersTags[question.identifier][answerTag._id]">
+            <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
+          </label>
+        </div>
+      </ng-container>
+
+      <!-- checkbox/radio -->
+      <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
+        <div *ngFor="let option of question.options | SortTags:userLang" class="form-group">
+          <label class="form-checkbox">
+            <input
+              type="checkbox"
+              [name]="option.identifier"
+              (change)="checkOption($event, question)"
+              [checked]="filters[question.identifier] ? filters[question.identifier].value[option.identifier] : true">
+            <i class="form-icon"></i><span>{{ option.label | multiling:userLang | FormatText }}</span>
+          </label>
+        </div>
+      </ng-container>
+
     </div>
     <!-- /questions filters -->
+
 
     <!-- conclusion filters -->
     <div class="filter-rest-wrapper">
@@ -173,60 +235,44 @@
 </section>
 
 
-<!--<div id="app-market-report-sidebar">
+<!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
+<app-modal [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
 
-  <div class="menu-wrapper">
-    <p *ngIf="activatedCustomFilters.length > 0">
-      <span>
-        {{ 'MARKET_REPORT.CUSTOM_FILTERS' | translate }}
-      </span>
-      <span *ngFor="let filter of activatedCustomFilters" (click)="unloadFilter($event, filter)">
-        <i class="fas fa-times" aria-hidden="true"></i>
-        {{ filter }}
-      </span>
-    </p>
-    <p *ngFor="let question of questions">
-      <a [href]="'#' + question.identifier | removespaces" pageScroll>
-        {{ question.title | multiling:lang }}
-        <i class="fas fa-angle-right" aria-hidden="true"></i>
-      </a>
-      &lt;!&ndash; Textarea filters &ndash;&gt;
-      <ng-container *ngIf="question.controlType === 'textarea'">
-        <span *ngFor="let t of answersTagsLists[question.identifier]">
-          <input type="checkbox" [name]="t._id" (change)="checkAnswerTag($event, question.identifier)"
-                 [checked]="selectedAnswersTags[question.identifier][t._id]">
-          <label [for]="t._id">{{ t.label | multiling:lang }}</label>
-        </span>
-      </ng-container>
-      &lt;!&ndash; checkbox/radio filters &ndash;&gt;
-      <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
-        <span *ngFor="let o of question.options">
-          <input type="checkbox" [name]="o.identifier" (change)="checkOption($event, question)"
-                 [checked]="filters[question.identifier] ? filters[question.identifier].value[o.identifier] : true">
-          <label [for]="o.identifier">{{ o.label | multiling:lang }}</label>
-        </span>
-      </ng-container>
-    </p>
+  <ng-container *ngIf="!innovation.previewMode">
+    <span>Do you really want to make this project visible to the client?</span>
+  </ng-container>
+
+  <ng-container *ngIf="innovation.previewMode">
+    <span>Do you really want to make this project invisible to the client?</span>
+  </ng-container>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-</div>-->
 
+</app-modal>
+<!-- /Modal to ask the admin to confirm for the preview of the innovation at the side of the client -->
+
+
+<!-- Modal to ask the operator to sure about ending the project -->
+<app-modal [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'" [(showModal)]="modalEndInnovation">
+
+  <span>Do you really want to end this project? Please keep in mind that after this you won't be able to make any further changes.</span>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /Modal to ask operator to sure about ending the project -->
+
+
+<!-- Modal to export -->
 <app-market-report-export-modal
   *ngIf="isOwner"
   [innovation]="innovation"
-  [(showModal)]="showExportModal">
+  [(showModal)]="modalExport">
 </app-market-report-export-modal>
-
-<!-- Modal to ask operator to sure about ending the project -->
-<app-modal [modalTitle]="'MARKET_REPORT.MODAL.END_INNOVATION_TITLE'"  [(showModal)]="showEndInnovationModal">
-  <div class="content">
-    {{ 'MARKET_REPORT.MODAL.END_INNOVATION_CONTENT' | translate }}
-  </div>
-  <div class="modal-footer">
-    <button
-      class="btn btn-primary btn-sm"
-      (click)="endInnovation($event)">
-      {{ 'MARKET_REPORT.MODAL.BUTTON_CONFIRM' | translate }}
-    </button>
-  </div>
-</app-modal>
-<!-- /Modal to ask operator to sure about ending the project -->
+<!-- /Modal to export -->

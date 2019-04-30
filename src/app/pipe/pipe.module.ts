@@ -11,6 +11,8 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
 import { FormatText } from './pipes/FormatText';
 import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
+import { SortTags } from './pipes/SortTags';
+import { SortString } from './pipes/SortString';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
     EllipsisPipe,
     DiscoverSummaryPipe,
     FormatText,
-    ScrapeHTMLTags
+    ScrapeHTMLTags,
+    SortTags,
+    SortString
   ],
   exports: [
     CharacterCountdown,
@@ -41,7 +45,9 @@ import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
     EllipsisPipe,
     DiscoverSummaryPipe,
     FormatText,
-    ScrapeHTMLTags
+    ScrapeHTMLTags,
+    SortTags,
+    SortString
   ]
 })
 

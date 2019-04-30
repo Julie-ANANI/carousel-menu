@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { FilterService } from '../../services/filters.service';
-import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TagsFiltersService } from '../../services/tags-filter.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -31,6 +30,10 @@ export class SidebarComponent implements OnInit {
     this._isAdmin = value;
   }
 
+  @Input() set isAdminSide(value: boolean) {
+    this._isAdminSide = value;
+  }
+
   @Input() set isOwner(value: boolean) {
     this._isOwner = value;
   }
@@ -47,6 +50,8 @@ export class SidebarComponent implements OnInit {
 
   private _isAdmin: boolean;
 
+  private _isAdminSide: boolean;
+
   private _isOwner: boolean;
 
   private _filterName = '';
@@ -59,17 +64,18 @@ export class SidebarComponent implements OnInit {
 
   private _activatedCustomFilters: Array<string> = [];
 
-  private _showExportModal: boolean;
+  private _modalEndInnovation: boolean = false;
 
-  private _showEndInnovationModal: boolean;
+  private _modalPreviewInnovation: boolean = false;
 
-  userLang = '';
+  private _modalExport: boolean = false;
 
-  tagsEndIndex = 6;
+  private _userLang = '';
+
+  private _tagsEndIndex = 6;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _filterService: FilterService,
-              private _innovationCommonService: InnovationCommonService,
               private _innovationService: InnovationService,
               private _tagService: TagsFiltersService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -77,7 +83,7 @@ export class SidebarComponent implements OnInit {
               private _translateService: TranslateService) {
 
     PageScrollConfig.defaultDuration = 300;
-    this.userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
   ngOnInit() {
@@ -91,6 +97,7 @@ export class SidebarComponent implements OnInit {
 
   }
 
+
   public loadSharedFiltersList() {
     this._innovationService.getFiltersList(this._innovation._id).subscribe((results) => {
       if (Array.isArray(results)) {
@@ -101,6 +108,7 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+
   public shareNewFilter(event: Event): void {
     event.preventDefault();
     const data = {
@@ -110,10 +118,11 @@ export class SidebarComponent implements OnInit {
     this._innovationService.saveFilter(this._innovation._id, data).subscribe((res) => {
       this._sharedFiltersList.push(res);
       this._filterName = '';
-    }, (error) => {
-      this._translateNotificationsService.error('ERROR.ERROR', error.message);
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
+
 
   public loadFilter(name: string) {
     this._innovationService.getFilter(this._innovation._id, name).subscribe((result) => {
@@ -125,10 +134,11 @@ export class SidebarComponent implements OnInit {
         });
         this._activatedCustomFilters.push(name);
       }
-    }, (error) => {
-      this._translateNotificationsService.error('ERROR.ERROR', error.message);
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
+
 
   public unloadFilter(event: Event, name: string) {
     event.preventDefault();
@@ -136,34 +146,22 @@ export class SidebarComponent implements OnInit {
     this._filterService.deleteFilter(name);
   }
 
+
   public deleteCustomFilter(name: string) {
     this._innovationService.deleteFilter(this._innovation._id, name).subscribe((_result) => {
       this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
-    }, (error) => {
-      this._translateNotificationsService.error('ERROR.ERROR', error.message);
-    });
-  }
-
-  /***
-   * This function will make the project end and synthesis will be available to the client.
-   * @param {Event} event
-   */
-  public endInnovation(event: Event): void {
-    event.preventDefault();
-    this._showEndInnovationModal = false;
-    this._innovationService.endProject(this._innovation._id).subscribe((response) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this._innovation = response;
-      this._innovationCommonService.setInnovation(this._innovation);
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
   }
 
+
+
   public checkCountry(event: Event) {
     event.preventDefault();
     this._worldmapFilterService.selectContinent(event.target['name'], event.target['checked']);
   }
+
 
   public checkOption(event: Event, question: Question) {
     event.preventDefault();
@@ -187,15 +185,18 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+
   public checkTag(event: Event) {
     event.preventDefault();
     this._tagService.checkTag(event.target['name'], event.target['checked']);
   }
 
+
   public checkAnswerTag(event: Event, questionIdentifier: string) {
     event.preventDefault();
     this._tagService.checkAnswerTag(questionIdentifier, event.target['name'], event.target['checked']);
   }
+
 
   public deleteProfessionalFilter(event: Event, id: string) {
     event.preventDefault();
@@ -220,6 +221,36 @@ export class SidebarComponent implements OnInit {
     this._worldmapFilterService.reset();
     this._filterService.reset();
   }
+
+
+  public onClickPreviewConfirm(event: Event) {
+    event.preventDefault();
+    this._innovation.previewMode = !this._innovation.previewMode;
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
+      if (response.previewMode) {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
+      } else {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
+      }
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+  }
+
+
+  /***
+   * This function will make the project end and synthesis will be available to the client.
+   * @param {Event} event
+   */
+  public onClickEndInnovationConfirm(event: Event) {
+    event.preventDefault();
+    this._innovationService.endProject(this._innovation._id).subscribe((response) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+  }
+
 
   get activatedCustomFilters() {
     return this._activatedCustomFilters;
@@ -265,6 +296,10 @@ export class SidebarComponent implements OnInit {
     return this._isAdmin;
   }
 
+  get isAdminSide(): boolean {
+    return this._isAdminSide;
+  }
+
   get isOwner(): boolean {
     return this._isOwner;
   }
@@ -285,24 +320,40 @@ export class SidebarComponent implements OnInit {
     return this._tagService.selectedAnswersTags;
   }
 
-  get showExportModal(): boolean {
-    return this._showExportModal;
-  }
-
-  set showExportModal(value: boolean) {
-    this._showExportModal = value;
-  }
-
-  get showEndInnovationModal(): boolean {
-    return this._showEndInnovationModal;
-  }
-
-  set showEndInnovationModal(value: boolean) {
-    this._showEndInnovationModal = value;
-  }
-
   get tagsList(): Array<Tag> {
     return this._tagService.tagsList;
+  }
+
+  get modalEndInnovation(): boolean {
+    return this._modalEndInnovation;
+  }
+
+  set modalEndInnovation(value: boolean) {
+    this._modalEndInnovation = value;
+  }
+
+  get modalPreviewInnovation(): boolean {
+    return this._modalPreviewInnovation;
+  }
+
+  set modalPreviewInnovation(value: boolean) {
+    this._modalPreviewInnovation = value;
+  }
+
+  get modalExport(): boolean {
+    return this._modalExport;
+  }
+
+  set modalExport(value: boolean) {
+    this._modalExport = value;
+  }
+
+  get userLang(): string {
+    return this._userLang;
+  }
+
+  get tagsEndIndex(): number {
+    return this._tagsEndIndex;
   }
 
 }

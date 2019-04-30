@@ -5,7 +5,7 @@ export const ERROR = {
 
   'SUCCESS': 'Success',
 
-  'CANNOT_REACH': 'We are unable to reach the server at the moment. Please try again!',
+  'CANNOT_REACH': 'We are having trouble while reaching to the server at the moment. Please try again!',
 
   'FORM_ERROR': 'Form error',
 
