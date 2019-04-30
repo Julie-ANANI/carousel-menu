@@ -33,7 +33,7 @@
         <i class="fas fa-trash-alt text-alert c-hand tooltip tooltip-right" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_DELETE_VIEW' | translate"
            aria-hidden="true" (click)="deleteCustomFilter(filter.name)">
         </i>
-        <a class="text-medium text-background c-hand tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate" (click)="loadFilter(filter.name)" [innerHtml]="filter.name"></a>
+        <a class="c-hand text-background tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate" (click)="loadFilter(filter.name)" [innerHtml]="filter.name"></a>
       </div>
 
       <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter($event)">
@@ -62,10 +62,109 @@
     <!-- /views wrapper -->
 
     <!-- reset filters -->
-    <div class="filter-reset-wrapper">
-      <span class="text-link" [innerText]="'MARKET_REPORT.RESET_FILTERS'" translate></span>
+    <div *ngIf="filtersCount > 0" class="filter-reset-wrapper">
+      <span class="text-link" (click)="resetFilters($event)">
+        <i class="fas fa-times"></i>
+        <span [innerText]="'MARKET_REPORT.RESET_FILTERS'" translate></span>
+      </span>
     </div>
     <!-- /reset filters -->
+
+    <!-- activated custom filters
+    <div class="filter-custom-wrapper">
+      <div>
+        <span class="text-medium" [innerText]="'MARKET_REPORT.CUSTOM_FILTERS'" translate></span>
+      </div>
+    </div>
+     /activated custom filters -->
+
+    <span *ngFor="let filter of activatedCustomFilters" (click)="unloadFilter($event, filter)">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      {{ filter }}
+      </span>
+
+    <!-- map filters -->
+    <div class="filter-rest-wrapper">
+
+      <a href="#origin" pageScroll class="text-primary">
+        <div class="flex-between">
+          <span [innerText]="'MARKET_REPORT.MAP.TITLE'" translate></span>
+          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+        </div>
+      </a>
+
+      <div *ngFor="let continent of continentsList" class="form-group">
+        <label class="form-checkbox">
+          <input
+            type="checkbox"
+            [name]="continent"
+            (change)="checkCountry($event)"
+            [checked]="filteredContinents ? filteredContinents[continent] : true">
+          <i class="form-icon"></i><span>{{ ('CONTINENTS.' + continent) | translate }}</span>
+        </label>
+      </div>
+
+    </div>
+    <!-- /map filters -->
+
+    <!-- professional filters -->
+    <div class="filter-rest-wrapper filter-professional">
+
+      <a href="#professional" pageScroll class="text-primary">
+        <div class="flex-between">
+          <span [innerText]="'MARKET_REPORT.PROFESSIONAL.TITLE'" translate></span>
+          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+        </div>
+      </a>
+
+      <div *ngFor="let tag of tagsList | slice:0:tagsEndIndex" class="form-group">
+        <label class="form-checkbox">
+          <input
+            type="checkbox"
+            [name]="tag.label | multiling:userLang"
+            (change)="checkTag($event)"
+            [checked]="selectedTags[tag._id]">
+          <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
+        </label>
+      </div>
+
+      <!-- see more -->
+      <div *ngIf="tagsList && tagsList.length > 6 && tagsList.length !== tagsEndIndex">
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="tagsEndIndex = tagsList.length"></span>
+      </div>
+
+      <!-- see less -->
+      <div *ngIf="tagsList && tagsList.length === tagsEndIndex && tagsEndIndex !== 6">
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="tagsEndIndex = 6"></span>
+      </div>
+
+      <div *ngIf="filters['professionals']" class="professional-hide-wrapper">
+        <div *ngFor="let professional of filters['professionals'].value | keyvalue" (click)="deleteProfessionalFilter($event, professional.key)"
+             class="tooltip c-hand" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_UNHIDE_PROFESSIONAL' | translate">
+          <i class="fas fa-eye-slash text-alert" aria-hidden="true"></i>
+          <span>{{ professional.value.professional?.firstName }} {{ professional.value.professional?.lastName }}</span>
+        </div>
+      </div>
+
+    </div>
+    <!-- /professional filters -->
+
+    <!-- questions filters -->
+    <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
+
+    </div>
+    <!-- /questions filters -->
+
+    <!-- conclusion filters -->
+    <div class="filter-rest-wrapper">
+      <a href="#conclusion" pageScroll class="text-primary">
+        <div class="flex-between">
+          <span [innerText]="'MARKET_REPORT.CONCLUSION'" translate></span>
+          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+        </div>
+      </a>
+    </div>
+    <!-- /conclusion filters -->
 
 
   </div>
@@ -77,9 +176,6 @@
 <!--<div id="app-market-report-sidebar">
 
   <div class="menu-wrapper">
-    <p *ngIf="filtersCount > 0" class="reset-filter">
-      <span (click)="resetFilters($event)" [innerText]="'MARKET_REPORT.RESET_FILTERS'" translate></span>
-    </p>
     <p *ngIf="activatedCustomFilters.length > 0">
       <span>
         {{ 'MARKET_REPORT.CUSTOM_FILTERS' | translate }}
@@ -88,32 +184,6 @@
         <i class="fas fa-times" aria-hidden="true"></i>
         {{ filter }}
       </span>
-    </p>
-    <p>
-      <a href="#professionals" pageScroll>
-        {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
-        <i class="fas fa-angle-right" aria-hidden="true"></i>
-      </a>
-      <span *ngFor="let c of continentsList">
-        <input type="checkbox" [name]="c" (change)="checkCountry($event)" [checked]="filteredContinents ? filteredContinents[c] : true">
-        <label [for]="c">{{ ('CONTINENTS.' + c) | translate }}</label>
-      </span>
-    </p>
-    <p>
-      <a href="#professionals" pageScroll>
-        {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
-        <i class="fas fa-angle-right" aria-hidden="true"></i>
-      </a>
-      <span *ngFor="let t of tagsList">
-        <input type="checkbox" [name]="t._id" (change)="checkTag($event)" [checked]="selectedTags[t._id]">
-        <label [for]="t._id">{{ t.label | multiling:lang }}</label>
-      </span>
-      <ng-container *ngIf="filters['professionals']">
-        <span *ngFor="let a of filters['professionals'].value | keyvalue">
-        <i class="fa fa-trash" aria-hidden="true" (click)="deleteProfessionalFilter($event, a.key)"></i>
-        {{ a.value.professional.firstName }} {{ a.value.professional.lastName }}
-      </span>
-      </ng-container>
     </p>
     <p *ngFor="let question of questions">
       <a [href]="'#' + question.identifier | removespaces" pageScroll>
@@ -136,12 +206,6 @@
           <label [for]="o.identifier">{{ o.label | multiling:lang }}</label>
         </span>
       </ng-container>
-    </p>
-    <p>
-      <a href="#conclusion" pageScroll>
-        {{ 'MARKET_REPORT.CONCLUSION' | translate }}
-        <i class="fas fa-angle-right" aria-hidden="true"></i>
-      </a>
     </p>
   </div>
 </div>-->

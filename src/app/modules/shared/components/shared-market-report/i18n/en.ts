@@ -171,8 +171,14 @@ export const MARKET_REPORT = {
 
   'TOOLTIP_DELETE_VIEW': 'Delete view',
 
-  'TOOLTIP_LOAD_VIEW': 'Click to load view',
+  'TOOLTIP_LOAD_VIEW': 'Load view',
+
+  'TOOLTIP_UNHIDE_PROFESSIONAL': 'Unhide professional',
 
   'VIEW_PLACEHOLDER': 'Name of your view',
+
+  'SEE_MORE': 'See more',
+
+  'SEE_LESS': 'See less',
 
 };

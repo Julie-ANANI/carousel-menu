@@ -4,6 +4,12 @@
   background-color: $bg-color-light;
   padding: 1.25rem 0.75rem;
   font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-background-color;
+  top: 0;
+  position: sticky;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .filter-icon-wrapper {
     font-size: $font-size-md;
@@ -58,11 +64,76 @@
 
   }
 
-  .filter-reset-wrapper {
-    padding-bottom: $unit-5;
+  .filter-reset-wrapper, .filter-custom-wrapper {
+    padding-bottom: 0.75rem;
+
+    .fa-times {
+      margin-right: $unit-2;
+    }
 
     .text-link {
+      font-size: $font-size-sm;
+    }
+
+  }
+
+  .filter-rest-wrapper {
+
+    &.filter-professional {
+      padding-top: $unit-5;
+      padding-bottom: $unit-5;
+
+      .professional-hide-wrapper {
+        padding-top: $unit-2;
+
+        .fa-eye-slash {
+          margin-right: $unit-2;
+        }
+
+        > div {
+          margin-bottom: $unit-h;
+
+          span {
+            font-size: $font-size-xs;
+          }
+
+        }
+
+      }
+
+    }
+
+    &.filter-question {
+      padding-bottom: $unit-5;
+    }
+
+    .flex-between {
+      margin-bottom: 0.5rem;
+    }
+
+    .fa-angle-right {
+      font-size: $font-icon-xl;
+    }
+
+    .text-link {
+      margin-bottom: $unit-1;
       font-size: $font-size-xs;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+
+      .form-checkbox {
+        font-size: $font-size-xs;
+        color: $text-background-color;
+        font-weight: $font-weight-medium;
+      }
+
+      .form-icon {
+        height: 0.7rem;
+        width: 0.7rem;
+      }
+
     }
 
   }
@@ -72,14 +143,9 @@
 @media (min-width: $size-sm) {
 
   #app-market-report-sidebar {
-    top: 0;
-    position: sticky;
     height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-width: 235px;
+    min-width: 245px;
     border-right: $border-width solid $border-color;
-
 
     .filter-icon-wrapper {
       display: none;
