@@ -227,7 +227,7 @@ export class SearchToolComponent implements OnInit{
     const reader = new FileReader();
     reader.readAsText(file, "UTF-8");
     reader.onload = evt => {
-      const request = JSON.parse(evt.target.result);
+      const request = JSON.parse(evt.target['result']);
       this._searchForm.setValue({keywords: request.keywords});
       this._loadResults(request);
       this._requestAlreadyLoaded = true;
