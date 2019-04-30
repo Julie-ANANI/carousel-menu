@@ -30,6 +30,7 @@ RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
 # upload source-map to sentry
 RUN npm install @sentry/cli
 RUN ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps --ext js --ext map dist/browser
+RUN rm -f /var/web/.sentryclirc
 
 # delete source-map files
 RUN rm dist/browser/*.js.map
