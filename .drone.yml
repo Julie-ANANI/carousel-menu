@@ -10,7 +10,6 @@ steps:
     build_args:
     - APP_NAME=umi
     - ENV_NAME=dev
-    - VERSION=latest
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
