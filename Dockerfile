@@ -14,7 +14,7 @@ RUN apt-get clean && \
 
 RUN npm install -g @angular/cli
 RUN npm install -g typings
-RUN npm install @sentry/cli
+RUN npm install -g @sentry/cli
 
 WORKDIR /var/web
 ADD . .
