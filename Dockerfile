@@ -7,7 +7,7 @@ ARG VERSION
 #RUN echo ${APP_NAME}
 #RUN echo "${ENV_NAME}"
 
-RUN echo "!!!!!! Builing with ng build ${APP_NAME} -c=${ENV_NAME} --prod !!!!!!"
+RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_NAME} --prod' !!!!!!"
 
 RUN apt-get clean && \
     apt-get update
@@ -16,19 +16,30 @@ RUN npm install -g @angular/cli
 RUN npm install -g typings
 
 WORKDIR /var/web
-ADD package.json package.json
-ADD .npmrc /var/web/.npmrc
 ADD . .
 
 RUN npm install
-RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
-RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
-#RUN ng build umi -c=dev
-RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
-#RUN ng run umi:server -c=dev
-RUN gzip -k -r dist/browser/
-RUN npm run webpack:server
 RUN rm -f /var/web/.npmrc
+
+# update version
+RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
+
+# build client
+RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
+
+# upload source-map to sentry
+RUN sentry-cli releases files $VERSION upload-sourcemaps --ext js --ext map dist/browser
+
+# delete source-map files
+RUN rm dist/browser/*.js.map
+
+# build server
+RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
+
+# gzip every files for the browser
+RUN gzip -k -r dist/browser/
+
+RUN npm run webpack:server
 
 EXPOSE  3080
 CMD ["npm", "run", "serve:ssr"]
