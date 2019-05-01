@@ -14,15 +14,6 @@
 
   .filter-icon-wrapper {
     font-size: $font-size-md;
-
-    span {
-      margin-right: $unit-2;
-    }
-
-    i {
-      vertical-align: middle;
-    }
-
   }
 
   .divider {
@@ -38,8 +29,9 @@
 
   .admin-actions-wrapper {
 
-    .fa-sort-down {
+    .fa-angle-down {
       font-size: $unit-5;
+      vertical-align: middle;
     }
 
     .dropdown-menu {
@@ -49,6 +41,11 @@
 
       .drop-item {
         padding: $unit-2;
+
+        a {
+          color: inherit;
+        }
+
       }
 
     }

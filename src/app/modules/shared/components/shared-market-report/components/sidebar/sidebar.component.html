@@ -2,9 +2,18 @@
 
 
   <!-- filter icon for small devices -->
-  <div class="filter-icon-wrapper text-background">
-    <span class="text-medium">Filters</span>
-    <i class="fas fa-angle-down"></i>
+  <div class="filter-icon-wrapper flex-between text-background">
+
+    <div>
+      <span class="text-medium" [ngStyle]="{ 'margin-right': '0.4rem' }">Filters</span>
+      <i class="fas fa-angle-down" [ngStyle]="{ 'vertical-align': 'middle', 'font-size': '1rem' }"></i>
+    </div>
+
+    <div>
+      <i class="fas fa-times-circle"></i>
+      <span class="text-medium" [ngStyle]="{ 'margin-left': '0.4rem' }">Close</span>
+    </div>
+
   </div>
   <!-- /filter icon for small devices -->
 
@@ -17,24 +26,42 @@
     <div *ngIf="isAdmin && isAdminSide">
       <div class="dropdown admin-actions-wrapper">
 
-        <span>Actions <i class="fas text-notify fa-sort-down"></i></span>
+        <span>Actions <i class="fas fa-angle-down"></i></span>
 
         <div class="dropdown-menu">
-          <div *ngIf="!innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" [innerHTML]="'Make visible to client'" (click)="modalPreviewInnovation = true"></div>
-          <div *ngIf="innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" [innerHTML]="'Make invisible to client'" (click)="modalPreviewInnovation = true"></div>
-          <div class="drop-item" [innerHTML]="'End project'" (click)="modalEndInnovation = true"></div>
+
+          <div *ngIf="!innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" (click)="modalPreviewInnovation = true">
+            <span>Make project visible to client</span>
+          </div>
+
+          <div *ngIf="innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" (click)="modalPreviewInnovation = true">
+            <span>Make project invisible to client</span>
+          </div>
+
+          <div class="drop-item">
+            <a href="#executive-report" pageScroll>Generate executive report</a>
+          </div>
+
+          <div class="drop-item" (click)="modalEndInnovation = true">
+            <span>End project</span>
+          </div>
+
+          <div class="drop-item" (click)="modalExport = true">
+            <span>Export reports</span>
+          </div>
+
         </div>
 
       </div>
 
-      <!--<button class="btn btn-sm ghost-primary" (click)="showEndInnovationModal = true">End Project</button>-->
       <div class="divider"></div>
+
     </div>
     <!-- /different actions for admin -->
 
 
     <!-- export option -->
-    <div *ngIf="isOwner" class="text-center">
+    <div *ngIf="isOwner && !isAdminSide" class="text-center">
       <button class="btn btn-primary gtm-export-synthesis" (click)="modalExport = true" [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
       <div class="divider"></div>
     </div>
@@ -50,10 +77,10 @@
         <i class="fas fa-trash-alt text-alert c-hand tooltip tooltip-right" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_DELETE_VIEW' | translate"
            aria-hidden="true" (click)="deleteCustomFilter(filter.name)">
         </i>
-        <a class="c-hand text-background tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate" (click)="loadFilter(filter.name)" [innerHtml]="filter.name"></a>
+        <a class="c-hand text-background tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate" (click)="loadFilter(filter.name)">{{ filter.name }}</a>
       </div>
 
-      <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter($event)">
+      <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter()">
 
         <div class="form-group">
           <label>
@@ -87,7 +114,7 @@
       <div *ngFor="let filter of activatedCustomFilters" class="different-customs">
         <span class="c-hand" (click)="unloadFilter($event, filter)">
           <i class="fas fa-times" aria-hidden="true"></i>
-          <span [innerText]="filter"></span>
+          <span>{{ filter }}</span>
         </span>
       </div>
 

@@ -109,8 +109,7 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  public shareNewFilter(event: Event): void {
-    event.preventDefault();
+  public shareNewFilter(): void {
     const data = {
       name: this._filterName,
       answers: this._filterService.filter(this._answers).map((answer) => answer._id)
