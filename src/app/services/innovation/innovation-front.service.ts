@@ -220,7 +220,7 @@ export class InnovationFrontService {
    * this function is to return the color based on the length and limit.
    * @param length
    */
-  getColor(length: number, limit: number): string {
+  public static getColor(length: number, limit: number): string {
     if (length <= 0) {
       return '#EA5858';
     } else if (length > 0 && length < (limit/2)) {

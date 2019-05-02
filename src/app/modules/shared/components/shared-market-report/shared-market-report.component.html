@@ -31,25 +31,68 @@
 
 
   <!-- project status done or preview mode or not editing -->
-  <section *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)" [ngStyle]="{ 'background-color': '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
-    <div class="d-flex report-wrapper">
+  <div *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)" [ngStyle]="{ 'background-color': '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
+    <div class="restrict-width">
+      <div class="columns col-gapless">
 
-      <!-- filter sidebar -->
-      <aside class="sidebar-filter-wrapper">
-        <app-market-report-sidebar
-          [answers]="answers"
-          [innovation]="innovation"
-          [isAdmin]="adminMode"
-          [isAdminSide]="adminSide"
-          [isOwner]="isOwner"
-          [questions]="questions">
-        </app-market-report-sidebar>
-      </aside>
-      <!-- /filter sideBar -->
+        <!-- filter sidebar -->
+        <aside class="column col-2">
+          <app-market-report-sidebar
+            [answers]="answers"
+            [innovation]="innovation"
+            [isAdmin]="adminMode"
+            [isAdminSide]="adminSide"
+            [isOwner]="isOwner"
+            [questions]="questions">
+          </app-market-report-sidebar>
+        </aside>
+        <!-- /filter sideBar -->
 
 
+        <!-- answers section -->
+        <section id="answer-wrapper" class="column col-8">
+
+          <!-- main page -->
+          <section id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'flex' }" class="section-pad rm-pad-bottom text">
+            <app-main-page [project]="innovation" class="full-width"></app-main-page>
+          </section>
+          <!-- /main page -->
+
+          <!-- main page goal -->
+          <section *ngIf="adminSide" class="section-light-pad" id="innovation-goal">
+            <div class="section-pad bg-white full">
+
+              <h2 class="title-primary">Objective</h2>
+
+              <div class="form-group relative">
+
+                <label for="market-report-objective"></label>
+                <textarea
+                  (blur)="update($event)"
+                  [(ngModel)]="innovation.executiveReport.objective"
+                  placeholder="Describe the objective of this innovation within 120 words."
+                  class="form-input"
+                  id="market-report-objective"
+                  maxlength="120"
+                  rows="5">
+                </textarea>
+
+                <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
+                  <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+          <!-- /main page goal -->
+
+        </section>
+
+
+      </div>
     </div>
-  </section>
+  </div>
   <!-- /project status done or preview mode or not editing -->
 
 
@@ -66,88 +109,6 @@
 
 <!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
 <!--        <section id="answer-wrapper">-->
-
-<!--          &lt;!&ndash; main page &ndash;&gt;-->
-<!--          <ng-container *ngIf="showDetails">-->
-<!--            <section class="section-pad rm-pad-bottom text-center d-flex" id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad full text bg-white main-page">-->
-
-<!--                  &lt;!&ndash; logo &ndash;&gt;-->
-<!--                  <div class="logo-wrapper">-->
-<!--                    <img src="{{ getLogo() }}" alt="UMI" height="38px">-->
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash; body &ndash;&gt;-->
-<!--                  <div class="d-flex content-wrapper">-->
-
-<!--                    <h6 class="text-executive">Executive report</h6>-->
-
-<!--                    <h1 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>-->
-
-<!--                    <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>-->
-
-<!--                    <img class="image-wrapper" [src]="getSrc()" [alt]=" ">-->
-
-<!--                    <ng-container *ngIf="isMainDomain()">-->
-<!--                      <h6 *ngIf="innovation.owner?.name" class="text-owner text-medium text">{{ getOwnerName() }}</h6>-->
-<!--                      <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle text-normal text">{{ innovation.owner?.jobTitle }}</h6>-->
-<!--                      <h6 *ngIf="innovation.owner?.email" class="text-email text-normal text">{{ innovation.owner?.email }}</h6>-->
-<!--                    </ng-container>-->
-
-<!--                    <div *ngIf="innovation.executiveReport?.objective" class="goal-text label label-tag label-rounded">-->
-<!--                      <span>{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}</span>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash; link &ndash;&gt;-->
-<!--                  <div class="footer-wrapper d-flex text-background text-medium">-->
-<!--                    <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>-->
-<!--                    <div class="text-right">-->
-<!--                      <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>-->
-<!--                      <p><a [href]="getMailto()">{{getContact()}}</a> <span *ngIf="isMainDomain()">| 06 49 34 47 32 </span> | {{getCompanyURL()}}</p>-->
-<!--                    </div>-->
-<!--                  </div>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /main page &ndash;&gt;-->
-
-<!--          &lt;!&ndash; main page goal &ndash;&gt;-->
-<!--          <ng-container *ngIf="adminSide">-->
-<!--            <section class="section-light-pad" id="innovation-goal">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad bg-white full objective">-->
-
-<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h2>-->
-
-<!--                  <div class="form-group relative">-->
-
-<!--                    <label for="market-report-objective"></label>-->
-<!--                    <textarea-->
-<!--                      class="form-input"-->
-<!--                      id="market-report-objective"-->
-<!--                      [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"-->
-<!--                      rows="5"-->
-<!--                      [(ngModel)]="innovation.executiveReport.objective"-->
-<!--                      (blur)="update($event)"-->
-<!--                      maxlength="120">-->
-<!--                      </textarea>-->
-
-<!--                    <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">-->
-<!--                      <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /main page goal &ndash;&gt;-->
 
 <!--          &lt;!&ndash; executive template generation &ndash;&gt;-->
 <!--          <ng-container *ngIf="adminSide">-->

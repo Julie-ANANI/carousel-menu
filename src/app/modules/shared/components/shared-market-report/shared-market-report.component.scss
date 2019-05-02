@@ -21,74 +21,17 @@
     font-size: 0.75rem;
   }
 
-  #main-page {
-    flex-direction: column;
+  .restrict-width {
+    margin-left: unset;
+  }
 
-    .content-wrapper {
-      flex-direction: column;
-      min-height: 80vh;
-      justify-content: center;
+  .full-width {
+    width: 100%;
+  }
 
-      .text-executive, h1 {
-        margin-bottom: 0.5rem;
-      }
-
-      .title-primary {
-        font-size: 2.1rem;
-        font-weight: 300;
-      }
-
-      .text-executive {
-        color: $meta-color;
-        font-size: 0.848rem;
-        display: none;
-      }
-
-      .summary, .image-wrapper {
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: $unit-5;
-      }
-
-      .summary {
-        width: 80%;
-      }
-
-      .image-wrapper {
-        height: 109.65px;
-        width: 173px;
-      }
-
-      .text-owner, .text-jobTitle, .text-email {
-        color: $text-primary-color;
-        margin-bottom: 0.144rem;
-      }
-
-      .goal-text {
-        max-width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 1.25rem;
-      }
-
-    }
-
-    .footer-wrapper {
-      border-top: $border-width solid $primary-color;
-      justify-content: space-between;
-      padding-top: 0.5rem;
-
-      p {
-        margin-bottom: 0;
-        font-size: $font-size-sm;
-      }
-
-      a:hover {
-        text-decoration: underline;
-      }
-
-    }
-
+  #answer-wrapper {
+    width: 78.6%;
+    padding-left: 1.25rem;
   }
 
   .executive-generate-wrapper {
@@ -314,7 +257,7 @@
 
   .key-learning-wrapper, .conclusion-wrapper, .main-page, .objective, .executive-generate-wrapper, .umi-intro, .innovation-wrapper, .targeting-wrapper,
   .exploration-wrapper {
-    box-shadow: $box-shadow-umi;
+    //box-shadow: $box-shadow-umi;
   }
 
 }

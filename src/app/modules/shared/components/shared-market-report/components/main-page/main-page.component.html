@@ -1,0 +1,51 @@
+<section *ngIf="innovation" class="main-page text-center d-flex">
+  <div class="section-pad full">
+
+
+    <!-- logo -->
+    <div class="logo-wrapper">
+      <img [src]="logo" alt="UMI" height="38px">
+    </div>
+    <!-- logo -->
+
+    <!-- body -->
+    <div class="d-flex content-wrapper">
+
+      <h6 class="text-executive text-notify">Executive Report</h6>
+
+      <h1 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex].title }}</h1>
+
+      <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex].summary"></div>
+
+      <img class="image-wrapper img-responsive img-fit-cover" [src]="getSrc(innovation.innovationCards[currentInnovationIndex])" [alt]=" ">
+
+      <ng-container *ngIf="isMainDomain">
+        <h6 *ngIf="innovation.owner.name" class="text-owner text-medium">{{ ownerName }}</h6>
+        <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle text-normal">{{ innovation.owner?.jobTitle }}</h6>
+        <h6 *ngIf="innovation.owner?.email" class="text-email text-normal">{{ innovation.owner?.email }}</h6>
+      </ng-container>
+
+      <div *ngIf="innovation.executiveReport?.objective"  class="goal-text label label-tag label-rounded">
+        <span>{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}</span>
+      </div>
+
+    </div>
+    <!-- /body -->
+
+
+    <!-- footer -->
+    <div class="footer-wrapper flex-between text-background text-medium">
+
+      <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
+
+      <div class="text-right">
+        <a [href]="companyURL" class="text-link">{{ companyName }}</a>
+        <p><a [href]="mailto">{{ contact }}</a> <span *ngIf="isMainDomain">| 06 49 34 47 32 </span> | {{ companyURL }}</p>
+      </div>
+
+    </div>
+    <!-- /footer -->
+
+
+  </div>
+</section>

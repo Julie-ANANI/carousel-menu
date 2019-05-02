@@ -22,6 +22,7 @@ import { InnovationCommonService } from '../../../../services/innovation/innovat
 import { TagsFiltersService } from './services/tags-filter.service';
 import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
+import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -81,7 +82,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _showDetails: boolean;
 
-  private _today: Number;
+  // private _today: Number;
 
   private _numberOfSections: number;
 
@@ -155,8 +156,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      * here we are registering the index of the lang of the user and according to that we display the innovation.
      * @type {number}
      */
-    const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.userLang);
-    this._currentInnovationIndex = index !== -1 ? index : 0;
+    /*const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.userLang);
+    this._currentInnovationIndex = index !== -1 ? index : 0;*/
 
     /***
      * this is to check, if the admin make the synthesis available before the status is Done.
@@ -168,8 +169,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     /***
      * this is to display on the front page.
      * @type {number}
-     */
-    this._today = Date.now();
+    this._today = Date.now();*/
 
     /***
      * Client side to toggle the full view.
@@ -355,7 +355,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is getting the image source according to the current lang of the user.
    * @returns {string}
    */
-  getSrc(): string {
+  /*public getSrc(): string {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
@@ -372,7 +372,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
     return src;
 
-  }
+  }*/
 
 
   /***
@@ -390,8 +390,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param {number} limit
    * @returns {string}
    */
-  getColor(length: number, limit: number) {
-    return this.responseService.getColor(length, limit);
+  public getColor(length: number, limit: number) {
+    return InnovationFrontService.getColor(length, limit);
   }
 
 
@@ -518,17 +518,17 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   }
 
-  public isMainDomain(): boolean {
+ /* public isMainDomain(): boolean {
     return environment.domain === 'umi';
-  }
+  }*/
 
-  public getContact(): string {
+  /*public getContact(): string {
     return environment.commercialContact;
-  }
+  }*/
 
-  public getMailto(): string {
+  /*public getMailto(): string {
     return `mailto:${environment.commercialContact}`;
-  }
+  }*/
 
   /***
    * getting the current lang of the user.
@@ -607,9 +607,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._modalAnswer = modalAnswer;
   }
 
-  getLogo(): string {
+  /*getLogo(): string {
     return environment.logoSynthURL;
-  }
+  }*/
 
   get adminSide(): boolean {
     return this._adminSide;
@@ -623,21 +623,21 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._sidebarTemplateValue = value;
   }
 
-  getCompanyName(): string {
+  /*getCompanyName(): string {
     return environment.companyShortName;
-  }
+  }*/
 
   getInnovationUrl(): string {
     return environment.clientUrl;
   }
 
-  getCompanyURL(): string {
+  /*getCompanyURL(): string {
     return environment.companyURL;
-  }
+  }*/
 
-  getOwnerName(): string {
+  /*getOwnerName(): string {
     return this._innovation.owner.name || '';
-  }
+  }*/
 
   get innovation(): Innovation {
     return this._innovation;
@@ -655,9 +655,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._executiveTemplates;
   }
 
-  get today(): Number {
+  /*get today(): Number {
     return this._today;
-  }
+  }*/
 
   get mapSelectedContinents(): { [p: string]: boolean } {
     return this.worldmapFilterService.selectedContinents;
@@ -671,9 +671,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._adminMode;
   }
 
-  get dateFormat(): string {
+  /*get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
+  }*/
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
