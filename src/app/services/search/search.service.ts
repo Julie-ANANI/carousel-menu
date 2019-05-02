@@ -29,14 +29,6 @@ export class SearchService {
     return this._http.get('/search/get', {params: query});
   }
 
-  public findNewResults(requestId: string, keywords: string): Observable<any> {
-    const query = {
-      params: JSON.stringify({keywords: keywords}),
-      path: `/metadataRequest/${requestId}/findNewResults`
-    };
-    return this._http.get('/search/get', {params: query});
-  }
-
   public saveMetadataRequest(requestId: any): Observable<any> {
     const query = {
       path: `/metadataRequest/${requestId}/keep`
@@ -148,6 +140,13 @@ export class SearchService {
   public getProKeywords(personId: string) {
     const query = {
       path: `/person/${personId}/getKeywords`,
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public cleanPeople() {
+    const query = {
+      path: `/person/update/database`,
     };
     return this._http.get('/search/get', {params: query});
   }

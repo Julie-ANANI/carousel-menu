@@ -225,7 +225,11 @@
 </app-sidebar>
 <!-- /sidebar to advanced search -->
 
-
+<div *ngIf="!campaign" id = "hiddenLinks">
+  <a (click)="cleanAnswers()">Nettoyer réponses</a>
+  <a (click)="cleanPros()">Nettoyer pros</a>
+  <a (click)="cleanPeople()">Nettoyer people</a>
+</div>
 
 
 
