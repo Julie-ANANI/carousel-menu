@@ -139,7 +139,7 @@
 
 
     <!-- key-learning filters -->
-    <div *ngIf="innovation.marketReport?.keyLearning?.conclusion" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
+    <div *ngIf="innovation.marketReport?.keyLearning?.conclusion || isAdminSide" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
       <a href="#key-learning" pageScroll class="text-primary">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></span>
@@ -261,7 +261,7 @@
 
 
     <!-- conclusion filters -->
-    <div class="filter-rest-wrapper">
+    <div *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || isAdminSide" class="filter-rest-wrapper">
       <a href="#conclusion" pageScroll class="text-primary">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.CONCLUSION'" translate></span>

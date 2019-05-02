@@ -147,7 +147,7 @@
 
               <h2 class="title-primary" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
 
-              <h6 *ngIf="mainDomain" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>
+              <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
 
               <app-text-zone
                 [elementId]="'keyLearning'"
@@ -159,6 +159,25 @@
             </div>
           </section>
           <!-- /key learning section -->
+
+          <!-- conclusion -->
+          <section *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-pad" id="conclusion">
+            <div class="section-pad full bg-white text conclusion-wrapper">
+
+              <h2 class="title-primary" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
+
+              <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+
+              <app-text-zone
+                [elementId]="'finalConclusion'"
+                [readonly]="!adminSide"
+                [data]="innovation.marketReport?.finalConclusion?.conclusion"
+                (onTextChange)="saveOperatorComment($event, 'finalConclusion')">
+              </app-text-zone>
+
+            </div>
+          </section>
+          <!-- /conclusion -->
 
         </section>
 
@@ -279,30 +298,7 @@
 <!--          </div>-->
 <!--          &lt;!&ndash; /other question and answers &ndash;&gt;-->
 
-<!--          &lt;!&ndash; conclusion &ndash;&gt;-->
-<!--          <ng-container *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide">-->
-<!--            <section class="section-light-pad" id="conclusion">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad full bg-white text conclusion-wrapper">-->
 
-<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h2>-->
-
-<!--                  <ng-container *ngIf="isMainDomain()">-->
-<!--                    <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>-->
-<!--                  </ng-container>-->
-
-<!--                  <app-text-zone-->
-<!--                    [elementId]="'finalConclusion'"-->
-<!--                    [readonly]="!adminSide"-->
-<!--                    [data]="innovation.marketReport?.finalConclusion?.conclusion"-->
-<!--                    (onTextChange)="saveOperatorComment($event, 'finalConclusion')">-->
-<!--                  </app-text-zone>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /conclusion &ndash;&gt;-->
 
 <!--        </section>-->
 <!--        &lt;!&ndash; /Answer sections &ndash;&gt;-->
