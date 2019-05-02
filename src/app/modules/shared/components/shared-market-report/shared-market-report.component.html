@@ -141,6 +141,25 @@
           </section>
           <!-- /targeting detail -->
 
+          <!-- key learning section -->
+          <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-pad" id="key-learning">
+            <div class="section-pad full key-learning-wrapper bg-white text">
+
+              <h2 class="title-primary" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
+
+              <h6 *ngIf="mainDomain" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>
+
+              <app-text-zone
+                [elementId]="'keyLearning'"
+                [readonly]="!adminSide"
+                [data]="innovation.marketReport?.keyLearning?.conclusion"
+                (onTextChange)="saveOperatorComment($event, 'keyLearning')">
+              </app-text-zone>
+
+            </div>
+          </section>
+          <!-- /key learning section -->
+
         </section>
 
 
@@ -164,30 +183,7 @@
 <!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
 <!--        <section id="answer-wrapper">-->
 
-<!--          &lt;!&ndash; key learning section &ndash;&gt;-->
-<!--          <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">-->
-<!--            <section class="section-light-pad" id="key-learning">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad full key-learning-wrapper bg-white text">-->
 
-<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h2>-->
-
-<!--                  <ng-container *ngIf="isMainDomain()">-->
-<!--                    <h6 class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h6>-->
-<!--                  </ng-container>-->
-
-<!--                  <app-text-zone-->
-<!--                    [elementId]="'keyLearning'"-->
-<!--                    [readonly]="!adminSide"-->
-<!--                    [data]="innovation.marketReport?.keyLearning?.conclusion"-->
-<!--                    (onTextChange)="saveOperatorComment($event, 'keyLearning')">-->
-<!--                  </app-text-zone>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /key learning section &ndash;&gt;-->
 
 <!--          &lt;!&ndash; origin comment and professional responses &ndash;&gt;-->
 <!--          <section class="section-light-pad" id="origin">-->

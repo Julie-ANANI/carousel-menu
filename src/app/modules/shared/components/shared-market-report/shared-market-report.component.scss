@@ -114,20 +114,15 @@
 
   }
 
-  .conclusion-wrapper, .key-learning-wrapper, .goal-wrapper {
+  .conclusion-wrapper, .key-learning-wrapper {
     border-radius: $border-radius;
 
     .op-text {
-      color: $primary-color;
+      color: $text-background-color;
       font-size: 0.75rem;
       margin-bottom: 0.75rem;
     }
 
-  }
-
-  .key-learning-wrapper, .conclusion-wrapper, .main-page, .objective, .executive-generate-wrapper, .umi-intro, .innovation-wrapper, .targeting-wrapper,
-  .exploration-wrapper {
-    //box-shadow: $box-shadow-umi;
   }
 
 }

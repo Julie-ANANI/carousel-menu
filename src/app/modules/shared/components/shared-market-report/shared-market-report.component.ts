@@ -518,9 +518,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   }
 
- /* public isMainDomain(): boolean {
+  public get mainDomain(): boolean {
     return environment.domain === 'umi';
-  }*/
+  }
 
   /*public getContact(): string {
     return environment.commercialContact;

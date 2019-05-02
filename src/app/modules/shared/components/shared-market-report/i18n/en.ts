@@ -38,7 +38,7 @@ export const MARKET_REPORT = {
 
   'COMMENT_HEADING': 'Space for your comments',
 
-  'KEY_LEARNING': 'Key Learnings',
+  'KEY_LEARNING': 'Key learnings',
 
   'MENU_BAR': {
     'BUTTON_END': 'End Project',

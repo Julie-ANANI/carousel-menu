@@ -138,6 +138,18 @@
     <!-- /reset filters -->
 
 
+    <!-- key-learning filters -->
+    <div *ngIf="innovation.marketReport?.keyLearning?.conclusion" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
+      <a href="#key-learning" pageScroll class="text-primary">
+        <div class="flex-between">
+          <span [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></span>
+          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+        </div>
+      </a>
+    </div>
+    <!-- /key-learning filters -->
+
+
     <!-- map filters -->
     <div class="filter-rest-wrapper">
 
