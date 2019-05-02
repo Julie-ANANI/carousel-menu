@@ -438,7 +438,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is to return the src of the UMI intro image.
    * @returns {string}
    */
-  getIntroSrc(): string {
+  public get introSrc(): string {
 
     if (this.userLang === 'en') {
       return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-en.png';
@@ -547,7 +547,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
 
-  getDomainName(): string {
+  public get domainName(): string {
     return environment.domain;
   }
 

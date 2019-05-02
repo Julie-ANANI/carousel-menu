@@ -53,7 +53,7 @@
         <section id="answer-wrapper" class="column col-8">
 
           <!-- main page -->
-          <section id="main-page" [ngStyle]="{ 'display': sharable ? 'flex' : 'flex' }" class="section-pad rm-pad-bottom text">
+          <section id="main-page" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad rm-pad-bottom text">
             <app-main-page [project]="innovation" class="full-width"></app-main-page>
           </section>
           <!-- /main page -->
@@ -118,12 +118,16 @@
           <!-- /executive report generation -->
 
           <!-- executive report -->
-          <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
-            <section id="executive-report">
-              <app-executive-report [project]="innovation"></app-executive-report>
-            </section>
-          </ng-container>
+          <section *ngIf="innovation.executiveReport.totalSections > 0" id="executive-report">
+            <app-executive-report [project]="innovation"></app-executive-report>
+          </section>
           <!-- /executive report -->
+
+          <!-- umi intro -->
+          <section *ngIf="domainName === 'umi'" class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }">
+            <img [src]="introSrc" alt="UMI" class="img-responsive umi-intro img-fit-cover">
+          </section>
+          <!-- /umi intro -->
 
         </section>
 
@@ -152,15 +156,7 @@
 
 
 
-<!--          &lt;!&ndash; UMI intro &ndash;&gt;-->
-<!--          <ng-container *ngIf="showDetails && getDomainName() === 'umi'">-->
-<!--            <section class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <img [src]="getIntroSrc()" alt="UMI" class="img-responsive umi-intro">-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /UMI intro &ndash;&gt;-->
+
 
 <!--          &lt;!&ndash; innovation detail &ndash;&gt;-->
 <!--          <ng-container *ngIf="showDetails">-->
