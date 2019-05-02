@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { PaginationComponent } from './pagination.component';
+import { PaginationTemplate1Component } from './pagination-template-1.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -12,11 +12,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule
   ],
   declarations: [
-    PaginationComponent
+    PaginationTemplate1Component
   ],
   exports: [
-    PaginationComponent
+    PaginationTemplate1Component
   ]
 })
 
-export class PaginationModule {}
+export class PaginationTemplate1Module {}

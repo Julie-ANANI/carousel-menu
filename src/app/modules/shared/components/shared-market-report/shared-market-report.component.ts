@@ -768,7 +768,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     event.preventDefault();
 
-    this.answerService.getReportHTML(this._innovation._id, 'en').subscribe(html => {
+    this.answerService.getReportHTML(this._innovation._id, this.userLang).subscribe(html => {
         const reportWindow = window.open('', '');
         reportWindow.document.write(html);
         setTimeout(() => {

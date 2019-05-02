@@ -15,13 +15,13 @@ export interface Batch {
   status?: number,
   active: boolean,
   nuggets?: Boolean,
-  stats?: [{
+  stats?: Array<{
     delivered: number,
     opened: number,
     clicked: number,
     bounced: number,
     insights: number
-  }],
+  }>;
   predictions?: Array<{
     opened: number,
     clicked: number,
