@@ -3,11 +3,11 @@ import { isPlatformBrowser } from '@angular/common';
 import { CookieService, CookieOptions } from 'ngx-cookie';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
-import { first, map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
 
 
@@ -32,7 +32,7 @@ export class AuthService {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _http: HttpClient,
               private _cookieService: CookieService,
-              private _router: Router,
+              /*private _router: Router,*/
               private _swellRtService: SwellrtBackend ) {
   /**
      Les cookies <hasBeenAuthenticated> et <hasBeenAdmin> sont utiles quand l'application essaye d'accéder à une route
@@ -52,8 +52,8 @@ export class AuthService {
         if (!this._cookieService.get('hasBeenAuthenticated')) {
           // this._cookieService.get('user')
           console.timeEnd('cookieObs');
-          this.logout().pipe(first()).subscribe(() => {
-            this._router.navigate(['/logout']);
+          this.logout().subscribe(() => {
+            // this._router.navigate(['/logout']);
           }, (err: any) => {
             console.error(err);
           });
@@ -111,21 +111,16 @@ export class AuthService {
   public initializeSession(): Observable<any> {
     return this._http.get('/auth/session')
       .pipe(
-        map((res: any) => {
+        tap((res: any) => {
           this._setAuthenticatedTo(res.isAuthenticated);
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._user = res.user || null;
-          return res;
         }));
   }
 
   public preRegisterDataOAuth2(provider: string, data: any): Observable<any> {
-    return this._http.post(`/auth/preoauth/${provider}`, data)
-      .pipe(
-        map((res: any) => {
-          return res;
-        }));
+    return this._http.post(`/auth/preoauth/${provider}`, data);
   }
 
   private _setConfirmedTo(newValue: boolean): void {

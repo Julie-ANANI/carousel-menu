@@ -1,12 +1,8 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
-import { AuthService } from './services/auth/auth.service';
 import { initTranslation, TranslateService } from './i18n/i18n';
-import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { environment } from '../environments/environment';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -27,12 +23,8 @@ export class AppComponent implements OnInit {
     clickToClose: true
   };
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
-
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private translateService: TranslateService,
-              private authService: AuthService,
-              private translateNotificationsService: TranslateNotificationsService) {
+              private translateService: TranslateService) {
 
     this.setFavicon();
 
@@ -44,14 +36,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     //this._setSwellRTScript();
-
-    if (this.authService.isAcceptingCookies) {
-      this.authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-        }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR', { timeOut: 0 })
-        }
-      );
-    }
 
   }
 
@@ -115,10 +99,6 @@ export class AppComponent implements OnInit {
 
   get notificationsOptions(): Options {
     return this._notificationsOptions;
-  }
-
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
   }
 
 }
