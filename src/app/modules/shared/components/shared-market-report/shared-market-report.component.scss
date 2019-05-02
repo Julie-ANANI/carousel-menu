@@ -80,38 +80,6 @@
 
   }
 
-  .innovation-wrapper {
-    display: flex;
-    justify-content: space-between;
-
-    .summary-wrapper {
-      padding-right: 0.75rem;
-      flex: 1;
-
-      .img-wrapper {
-        padding-top: 1.25rem;
-        padding-bottom: $unit-5;
-      }
-
-      .advantage-wrapper {
-        margin-bottom: 0;
-      }
-
-    }
-
-    .issue-wrapper {
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-      flex: 1;
-    }
-
-    .solution-wrapper {
-      padding-left: 0.75rem;
-      flex: 1;
-    }
-
-  }
-
   .targeting-wrapper {
     display: flex;
     justify-content: space-between;

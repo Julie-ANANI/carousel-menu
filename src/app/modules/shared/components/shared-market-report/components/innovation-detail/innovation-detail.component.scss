@@ -1,0 +1,45 @@
+@import '../../../../../../../style/framework/src/variables';
+
+#innovation-detail {
+  background-color: $bg-color-light;
+  border-right: $border-radius;
+  font-size: inherit;
+
+  .flex-between {
+    align-items: unset;
+  }
+
+  .title-primary {
+    font-size: 1.35rem;
+  }
+
+  .title-secondary {
+    font-size: 1.1rem;
+    color: $secondary-color;
+  }
+
+  .summary-wrapper, .issue-wrapper, .solution-wrapper {
+    padding-right: 0.75rem;
+    flex: 1;
+  }
+
+  .summary-wrapper {
+
+    .image-wrapper {
+      margin-top: 1.25rem;
+      margin-bottom: $unit-5;
+      height: 146px;
+      width: 220px;
+    }
+
+    .advantage-wrapper {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .issue-wrapper {
+    padding-left: 0.75rem;
+  }
+
+}

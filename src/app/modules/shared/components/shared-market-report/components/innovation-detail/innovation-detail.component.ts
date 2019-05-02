@@ -1,16 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { environment } from '../../../../../../../environments/environment';
 import { Innovation } from '../../../../../../models/innovation';
-import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { InnovCard } from '../../../../../../models/innov-card';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.scss']
+  selector: 'app-innovation-detail',
+  templateUrl: './innovation-detail.component.html',
+  styleUrls: ['./innovation-detail.component.scss']
 })
-export class MainPageComponent implements OnInit {
+export class InnovationDetailComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
@@ -19,8 +18,6 @@ export class MainPageComponent implements OnInit {
   private _innovation: Innovation;
 
   private _currentInnovationIndex = 0;
-
-  private _today: number;
 
   private _userLang: string;
 
@@ -31,7 +28,6 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._today = Date.now();
 
     /***
      * here we are registering the index of the lang of the user and according to that we display the innovation.
@@ -47,39 +43,7 @@ export class MainPageComponent implements OnInit {
    * @returns {string}
    */
   public getSrc(innovCard: InnovCard): string {
-    return InnovationFrontService.getMediaSrc(innovCard, 'default', '173', '110');
-  }
-
-  public get logo(): string {
-    return environment.logoSynthURL;
-  }
-
-  public get contact(): string {
-    return environment.commercialContact;
-  }
-
-  public get companyName(): string {
-    return environment.companyShortName;
-  }
-
-  public get companyURL(): string {
-    return environment.companyURL;
-  }
-
-  public get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-  public get isMainDomain(): boolean {
-    return environment.domain === 'umi';
-  }
-
-  public get ownerName(): string {
-    return this._innovation.owner.name || '';
-  }
-
-  public get mailto(): string {
-    return `mailto:${environment.commercialContact}`;
+    return InnovationFrontService.getMediaSrc(innovCard, 'default', '220', '146');
   }
 
   get innovation(): Innovation {
@@ -88,10 +52,6 @@ export class MainPageComponent implements OnInit {
 
   get currentInnovationIndex(): number {
     return this._currentInnovationIndex;
-  }
-
-  get today(): number {
-    return this._today;
   }
 
   get userLang(): string {

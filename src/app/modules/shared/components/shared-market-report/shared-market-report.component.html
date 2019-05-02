@@ -53,7 +53,7 @@
         <section id="answer-wrapper" class="column col-8">
 
           <!-- main page -->
-          <section id="main-page" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad rm-pad-bottom text">
+          <section id="main-page" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
             <app-main-page [project]="innovation" class="full-width"></app-main-page>
           </section>
           <!-- /main page -->
@@ -88,7 +88,7 @@
           <!-- /main page goal -->
 
           <!-- executive report generation -->
-          <section *ngIf="adminSide" class="section-light-pad" id="executive-generate">
+          <section *ngIf="adminSide" class="section-pad" id="executive-generate">
             <div class="section-pad full d-flex executive-generate-wrapper bg-white">
 
               <h2 class="title-primary">Executive Report</h2>
@@ -129,6 +129,13 @@
           </section>
           <!-- /umi intro -->
 
+          <!-- innovation detail -->
+          <section [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
+            <app-innovation-detail [project]="innovation" class="full-width"></app-innovation-detail>
+          </section>
+          <!-- /main page -->
+
+
         </section>
 
 
@@ -151,57 +158,6 @@
 
 <!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
 <!--        <section id="answer-wrapper">-->
-
-
-
-
-
-
-
-<!--          &lt;!&ndash; innovation detail &ndash;&gt;-->
-<!--          <ng-container *ngIf="showDetails">-->
-<!--            <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad full innovation-wrapper text bg-white">-->
-
-<!--                  &lt;!&ndash; column 1 &ndash;&gt;-->
-<!--                  <div class="summary-wrapper">-->
-
-<!--                    <h2 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h2>-->
-
-<!--                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>-->
-
-<!--                    <div class="img-wrapper">-->
-<!--                      <img [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate" height="146px" width="220px">-->
-<!--                    </div>-->
-
-<!--                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>-->
-
-<!--                    <ul class="advantage-wrapper">-->
-<!--                      <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex]?.advantages;">-->
-<!--                        {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}-->
-<!--                      </li>-->
-<!--                    </ul>-->
-
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash; column 2 &ndash;&gt;-->
-<!--                  <div class="issue-wrapper">-->
-<!--                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>-->
-<!--                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.problem"></div>-->
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash; column 3 &ndash;&gt;-->
-<!--                  <div class="solution-wrapper">-->
-<!--                    <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>-->
-<!--                    <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.solution"></div>-->
-<!--                  </div>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /innovation detail &ndash;&gt;-->
 
 <!--          &lt;!&ndash; innovation targeting &ndash;&gt;-->
 <!--          <ng-container *ngIf="showDetails">-->

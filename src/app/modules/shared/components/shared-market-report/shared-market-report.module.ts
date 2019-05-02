@@ -46,6 +46,7 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
 import { ExportModalComponent } from './components/export-modal/export-modal.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { InnovationDetailComponent } from './components/innovation-detail/innovation-detail.component';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { MainPageComponent } from './components/main-page/main-page.component';
     SidebarComponent,
     RemoveSpacesPipe,
     AnswersLimiterPipe,
-    MainPageComponent
+    MainPageComponent,
+    InnovationDetailComponent
   ],
   exports: [
     SharedMarketReportComponent
