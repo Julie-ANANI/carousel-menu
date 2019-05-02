@@ -63,4 +63,8 @@ export class ProfessionalsService {
     formData.append('file', file, file.name);
     return this._http.post('/professional/ambassadors/', formData);
   }
+
+  public cleanPros(): Observable<any> {
+    return this._http.get(`/professional/update/database`);
+  }
 }

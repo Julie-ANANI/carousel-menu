@@ -86,4 +86,8 @@ export class AnswerService {
   public importFromQuiz(answer: any): Observable<any> {
     return this._http.post(`/campaign/${answer.campaignId}/answer`, answer);
   }
+
+  public cleanAnswers(): Observable<any> {
+    return this._http.get(`/answer/update/database`);
+  }
 }
