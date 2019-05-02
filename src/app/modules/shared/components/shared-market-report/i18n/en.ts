@@ -179,4 +179,6 @@ export const MARKET_REPORT = {
 
   'SEE_LESS': 'See less',
 
+  'ORIGIN': 'Origin of responses',
+
 };

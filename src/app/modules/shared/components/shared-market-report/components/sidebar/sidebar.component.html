@@ -140,9 +140,21 @@
 
     <!-- key-learning filters -->
     <div *ngIf="innovation.marketReport?.keyLearning?.conclusion || isAdminSide" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
-      <a href="#key-learning" pageScroll class="text-primary">
+      <a href="#key-learnings" pageScroll class="text-primary">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></span>
+          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+        </div>
+      </a>
+    </div>
+    <!-- /key-learning filters -->
+
+
+    <!-- origin filters -->
+    <div class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
+      <a href="#origin-responses" pageScroll class="text-primary">
+        <div class="flex-between">
+          <span [innerText]="'MARKET_REPORT.ORIGIN'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
         </div>
       </a>
@@ -153,7 +165,7 @@
     <!-- map filters -->
     <div class="filter-rest-wrapper">
 
-      <a href="#origin" pageScroll class="text-primary">
+      <a href="#map" pageScroll class="text-primary">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.MAP.TITLE'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -178,7 +190,7 @@
     <!-- professional filters -->
     <div class="filter-rest-wrapper filter-professional">
 
-      <a href="#professional" pageScroll class="text-primary">
+      <a href="#professionals" pageScroll class="text-primary">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.PROFESSIONAL.TITLE'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>

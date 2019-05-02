@@ -177,6 +177,8 @@ export const MARKET_REPORT = {
 
   'SEE_MORE': 'Voir plus',
 
-  'SEE_LESS': 'Voir moins'
+  'SEE_LESS': 'Voir moins',
+
+  'ORIGIN': 'Origine des réponses',
 
 };
