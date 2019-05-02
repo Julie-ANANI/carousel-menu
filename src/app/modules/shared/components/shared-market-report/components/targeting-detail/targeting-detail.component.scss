@@ -1,6 +1,6 @@
 @import '../../../../../../../style/framework/src/variables';
 
-.innovation-detail {
+.targeting-detail {
   background-color: $bg-color-light;
   border-right: $border-radius;
   font-size: inherit;
@@ -18,28 +18,27 @@
     color: $secondary-color;
   }
 
-  .summary-wrapper, .issue-wrapper, .solution-wrapper {
+  .map-wrapper {
     padding-right: 0.75rem;
     flex: 1;
   }
 
-  .summary-wrapper {
-
-    .image-wrapper {
-      margin-top: 1.25rem;
-      margin-bottom: $unit-5;
-      height: 146px;
-      width: 220px;
-    }
-
-    .advantage-wrapper {
-      margin-bottom: 0;
-    }
-
+  .question-wrapper {
+    padding-bottom: 1.25rem;
   }
 
-  .issue-wrapper {
+  .label {
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .c2-answer-wrapper {
     padding-left: 0.75rem;
+    flex: 1;
   }
 
 }

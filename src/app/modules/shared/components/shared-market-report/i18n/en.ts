@@ -164,7 +164,7 @@ export const MARKET_REPORT = {
 
   'BUTTON_EXPORT': 'Export',
 
-  'BUTTON_SAVE_VIEW': 'Save View',
+  'BUTTON_SAVE_VIEW': 'Save view',
 
   'VIEWS': 'My views',
 

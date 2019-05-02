@@ -47,6 +47,7 @@ import { ExportModalComponent } from './components/export-modal/export-modal.com
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { InnovationDetailComponent } from './components/innovation-detail/innovation-detail.component';
+import { TargetingDetailComponent } from './components/targeting-detail/targeting-detail.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { InnovationDetailComponent } from './components/innovation-detail/innova
     RemoveSpacesPipe,
     AnswersLimiterPipe,
     MainPageComponent,
-    InnovationDetailComponent
+    InnovationDetailComponent,
+    TargetingDetailComponent
   ],
   exports: [
     SharedMarketReportComponent

@@ -109,7 +109,7 @@
 
               <div class="text-center" [ngStyle]="{ 'margin-top': '0.5rem' }">
                 <button class="btn ghost-primary btn-sm" [disabled]="numberOfSections === 0" (click)="generateExecutiveTemplate($event)">
-                  Valid Template
+                  Valid template
                 </button>
               </div>
 
@@ -133,8 +133,13 @@
           <section [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
             <app-innovation-detail [project]="innovation" class="full-width"></app-innovation-detail>
           </section>
-          <!-- /main page -->
+          <!-- /innovation detail -->
 
+          <!-- targeting detail -->
+          <section [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
+            <app-targeting-detail [project]="innovation" [continent]="continentTarget" class="full-width"></app-targeting-detail>
+          </section>
+          <!-- /targeting detail -->
 
         </section>
 
@@ -158,184 +163,6 @@
 
 <!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
 <!--        <section id="answer-wrapper">-->
-
-<!--          &lt;!&ndash; innovation targeting &ndash;&gt;-->
-<!--          <ng-container *ngIf="showDetails">-->
-<!--            <section class="section-light-pad report-targeting-print" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad full targeting-wrapper bg-white text">-->
-
-<!--                  &lt;!&ndash; column 1 &ndash;&gt;-->
-<!--                  <div class="map-wrapper">-->
-
-<!--                    <h2 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h2>-->
-
-<!--                    <p class="title-secondary">{{ 'MARKET_REPORT.TARGET_COUNTRIES' | translate }}</p>-->
-
-<!--                    <app-worldmap-->
-<!--                      [initialConfiguration]="continentTarget"-->
-<!--                      [countriesColor]="'#2ECC71'"-->
-<!--                      [isEditable]="false"-->
-<!--                      [width]="'auto'">-->
-<!--                    </app-worldmap>-->
-
-<!--                    <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">-->
-<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>-->
-<!--                      <div *ngFor="let country of innovation.settings.geography.exclude" class="label label-answer">-->
-<!--                        {{ country.name }}-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="innovation.settings.market.comments.length > 0" class="question-wrapper">-->
-<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.MARKET.LABEL' | translate }}</p>-->
-<!--                      <p>{{ innovation.settings.market.comments }}</p>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash; column 2 &ndash;&gt;-->
-<!--                  <div class="c2-answer-wrapper">-->
-
-<!--                    <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">-->
-<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}</p>-->
-<!--                      <div *ngFor="let companyInclude of innovation.settings.companies.include" class="label label-answer">-->
-<!--                        {{ companyInclude.name }}-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="innovation.settings.companies.exclude.length > 0" class="question-wrapper">-->
-<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}</p>-->
-<!--                      <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="label label-answer">-->
-<!--                        {{ companyExclude.name }}-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="innovation.settings.professionals.description.length > 0" class="question-wrapper">-->
-<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL' | translate }}</p>-->
-<!--                      <p>{{ innovation.settings.professionals.description }}</p>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="innovation.settings.professionals.exclude.length > 0" class="question-wrapper">-->
-<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>-->
-<!--                      <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">-->
-<!--                        {{ professionalExclude.text }}-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="innovation.settings.comments.length > 0" class="question-wrapper">-->
-<!--                      <p class="title-secondary">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</p>-->
-<!--                      <p>{{ innovation.settings.comments }}</p>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /innovation targeting &ndash;&gt;-->
-
-<!--          &lt;!&ndash; innovation analytics &ndash;&gt;-->
-<!--          <ng-container *ngIf="showDetails && false">-->
-<!--            <section class="section-light-pad" [ngStyle]="{ 'display': sharable ? 'flex' : 'none' }">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad full exploration-wrapper bg-white text">-->
-
-<!--                  &lt;!&ndash; heading &ndash;&gt;-->
-<!--                  <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h2>-->
-
-<!--                  &lt;!&ndash; analytic &ndash;&gt;-->
-<!--                  <div class="analytic-wrapper">-->
-
-<!--                    &lt;!&ndash; reached &ndash;&gt;-->
-<!--                    <div class="info-analytic-wrapper">-->
-<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>-->
-<!--                      <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>-->
-<!--                    </div>-->
-<!--                    <div class="info-analytic-wrapper pd-top">-->
-<!--                      <svg width="80px" height="38px" viewBox="0 0 80 38">-->
-<!--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">-->
-<!--                          <g transform="translate(-701.000000, -810.000000)">-->
-<!--                            <g transform="translate(701.000000, 810.000000)">-->
-<!--                              <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>-->
-<!--                              <text class="svg-text">-->
-<!--                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>-->
-<!--                              </text>-->
-<!--                            </g>-->
-<!--                          </g>-->
-<!--                        </g>-->
-<!--                      </svg>-->
-<!--                    </div>-->
-
-<!--                    &lt;!&ndash; emails &ndash;&gt;-->
-<!--                    <div class="info-analytic-wrapper">-->
-<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>-->
-<!--                      <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>-->
-<!--                    </div>-->
-<!--                    <div class="info-analytic-wrapper pd-top">-->
-<!--                      <svg width="80px" height="38px" viewBox="0 0 80 38">-->
-<!--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">-->
-<!--                          <g transform="translate(-701.000000, -810.000000)">-->
-<!--                            <g transform="translate(701.000000, 810.000000)">-->
-<!--                              <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>-->
-<!--                              <text class="svg-text">-->
-<!--                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>-->
-<!--                              </text>-->
-<!--                            </g>-->
-<!--                          </g>-->
-<!--                        </g>-->
-<!--                      </svg>-->
-<!--                    </div>-->
-
-<!--                    &lt;!&ndash; clicks &ndash;&gt;-->
-<!--                    <div class="info-analytic-wrapper">-->
-<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>-->
-<!--                      <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>-->
-<!--                    </div>-->
-<!--                    <div class="info-analytic-wrapper pd-top">-->
-<!--                      <svg width="80px" height="38px" viewBox="0 0 80 38">-->
-<!--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">-->
-<!--                          <g transform="translate(-701.000000, -810.000000)">-->
-<!--                            <g transform="translate(701.000000, 810.000000)">-->
-<!--                              <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>-->
-<!--                              <text class="svg-text">-->
-<!--                                <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>-->
-<!--                              </text>-->
-<!--                            </g>-->
-<!--                          </g>-->
-<!--                        </g>-->
-<!--                      </svg>-->
-<!--                    </div>-->
-
-<!--                    &lt;!&ndash; answers &ndash;&gt;-->
-<!--                    <div class="info-analytic-wrapper">-->
-<!--                      <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>-->
-<!--                      <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash; companies contact &ndash;&gt;-->
-<!--                  <ng-container *ngIf="innovation.settings.companies.include.length > 0">-->
-<!--                    <div class="company-wrapper section-light-pad rm-pad-top">-->
-
-<!--                      <h2 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>-->
-
-<!--                      <ul class="name-wrapper">-->
-<!--                        <li *ngFor="let company of innovation.settings.companies.include; let i = index;">-->
-<!--                          {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}-->
-<!--                        </li>-->
-<!--                      </ul>-->
-
-<!--                    </div>-->
-<!--                  </ng-container>-->
-<!--                  &lt;!&ndash; /companies contact &ndash;&gt;-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /innovation analytics &ndash;&gt;-->
 
 <!--          &lt;!&ndash; key learning section &ndash;&gt;-->
 <!--          <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">-->

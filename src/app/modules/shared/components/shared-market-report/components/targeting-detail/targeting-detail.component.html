@@ -1,0 +1,74 @@
+<section *ngIf="innovation" class="section-pad full targeting-detail">
+  <div class="flex-between">
+
+
+    <!-- column 1 -->
+    <div class="map-wrapper">
+
+      <h2 class="title-primary" [innerText]="'PROJECT_MODULE.SETUP.TARGETING_TAB'" translate></h2>
+
+      <h3 class="title-secondary" [innerText]="'MARKET_REPORT.TARGET_COUNTRIES'" translate [ngStyle]="{ 'margin-bottom': '0' }"></h3>
+
+      <app-worldmap
+        [initialConfiguration]="continentTarget"
+        [countriesColor]="'#2ECC71'"
+        [isEditable]="false"
+        [width]="'auto'">
+      </app-worldmap>
+
+      <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">
+        <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE'" translate></h3>
+        <div *ngFor="let country of innovation.settings.geography.exclude" class="label label-answer">
+          {{ country.name }}
+        </div>
+      </div>
+
+      <div *ngIf="innovation.settings.market.comments.length > 0" class="question-wrapper">
+        <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.MARKET.LABEL'" translate></h3>
+        <p>{{ innovation.settings.market.comments }}</p>
+      </div>
+
+    </div>
+    <!-- /column 1 -->
+
+
+    <!-- column 2 -->
+    <div class="c2-answer-wrapper">
+
+      <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">
+        <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE'" translate></h3>
+        <div *ngFor="let companyInclude of innovation.settings.companies.include" class="label label-answer">
+          {{ companyInclude.name }}
+        </div>
+      </div>
+
+      <div *ngIf="innovation.settings.companies.exclude.length > 0" class="question-wrapper">
+        <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE'" translate></h3>
+        <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="label label-answer">
+          {{ companyExclude.name }}
+        </div>
+      </div>
+
+      <div *ngIf="innovation.settings.professionals.description.length > 0" class="question-wrapper">
+        <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL'" translate></h3>
+        <p>{{ innovation.settings.professionals.description }}</p>
+      </div>
+
+      <div *ngIf="innovation.settings.professionals.exclude.length > 0" class="question-wrapper">
+        <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE'" translate></h3>
+        <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">
+          {{ professionalExclude.text }}
+        </div>
+      </div>
+
+      <div *ngIf="innovation.settings.comments.length > 0" class="question-wrapper">
+        <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.OTHER.LABEL'" translate></h3>
+        <p>{{ innovation.settings.comments }}</p>
+      </div>
+
+    </div>
+    <!-- /column 2 -->
+
+
+  </div>
+</section>
