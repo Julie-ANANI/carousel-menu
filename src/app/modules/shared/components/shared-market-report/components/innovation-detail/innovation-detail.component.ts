@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './innovation-detail.component.html',
   styleUrls: ['./innovation-detail.component.scss']
 })
+
 export class InnovationDetailComponent implements OnInit {
 
   @Input() set project(value: Innovation) {

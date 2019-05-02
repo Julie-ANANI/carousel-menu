@@ -1,28 +1,34 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Innovation} from '../../../../../../models/innovation';
+import { Component, Input } from '@angular/core';
+import { Innovation } from '../../../../../../models/innovation';
 
 @Component({
   selector: 'app-targeting-detail',
   templateUrl: './targeting-detail.component.html',
   styleUrls: ['./targeting-detail.component.scss']
 })
-export class TargetingDetailComponent implements OnInit {
+
+export class TargetingDetailComponent {
 
   @Input() set project(value: Innovation) {
-    this.innovation = value;
+    this._innovation = value;
   }
 
   @Input() set continent(value: any) {
-    this.continentTarget = value;
+    this._continentTarget = value;
   }
 
-  innovation: Innovation;
+  private _innovation: Innovation;
 
-  continentTarget: any;
+  private _continentTarget: any;
 
   constructor() { }
 
-  ngOnInit() {
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get continentTarget(): any {
+    return this._continentTarget;
   }
 
 }
