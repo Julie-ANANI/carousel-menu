@@ -79,6 +79,37 @@
     border-radius: $border-radius;
   }
 
+  #professionals {
+
+    .btn {
+
+      i {
+        font-size: $font-size-lg;
+      }
+
+    }
+
+    .professional-wrapper {
+      transition: all 1s ease;
+      height: 100%;
+    }
+
+    .collapse-wrapper {
+      height: 0;
+      transform: scaleY(0);
+      visibility: hidden;
+      transform-origin: top;
+    }
+
+    .expand-wrapper {
+      height: 100%;
+      transform: scaleY(1);
+      visibility: visible;
+      transform-origin: bottom;
+    }
+
+  }
+
   .professional-wrapper {
     flex-wrap: wrap;
     justify-content: space-between;

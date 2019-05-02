@@ -137,9 +137,13 @@ export const MARKET_REPORT = {
 
   'BTN_VIEW_MODE': 'Go to view mode',
 
-  'BTN_ANSWERS_OPEN': 'Show Answers',
+  'BTN_ANSWERS_OPEN': 'Show answers',
 
-  'BTN_ANSWERS_CLOSE': 'Hide Answers',
+  'BTN_ANSWERS_CLOSE': 'Hide answers',
+
+  'BTN_PROFESSIONAL_OPEN': 'Show professionals',
+
+  'BTN_PROFESSIONAL_CLOSE': 'Hide professionals',
 
   'BTN_COMMENTS_OPEN': 'Comments',
 

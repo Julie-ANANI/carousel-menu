@@ -215,6 +215,26 @@
           </section>
           <!-- /map -->
 
+          <!-- professionals -->
+          <section class="section-pad" id="professionals">
+
+            <div class="text-center">
+              <button type="button" class="btn btn-primary" (click)="toggleProfessional = !toggleProfessional">
+                {{ (toggleProfessional ? 'MARKET_REPORT.BTN_PROFESSIONAL_CLOSE' : 'MARKET_REPORT.BTN_PROFESSIONAL_OPEN') | translate }}
+                <i class="fas" aria-hidden="true" [ngClass]="toggleProfessional ? 'fa-angle-down' : 'fa-angle-right'"></i>
+              </button>
+            </div>
+
+            <div class="section-light-pad">
+              <div class="professional-wrapper" [ngClass]="toggleProfessional ? 'expand-wrapper' : 'collapse-wrapper' ">
+
+              </div>
+            </div>
+
+          </section>
+          <!-- /professionals -->
+
+
           <!-- conclusion -->
           <section *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-pad" id="conclusion">
             <div class="section-pad full bg-white text conclusion-wrapper">

@@ -136,6 +136,10 @@ export const MARKET_REPORT = {
 
   'BTN_ANSWERS_CLOSE': 'Masquer les réponses',
 
+  'BTN_PROFESSIONAL_OPEN': 'Voir les professionnels',
+
+  'BTN_PROFESSIONAL_CLOSE': 'Masquer les professionnels',
+
   'BTN_COMMENTS_OPEN': 'Commentaires',
 
   'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',

@@ -21,7 +21,7 @@ import { InnovationCommonService } from '../../../../services/innovation/innovat
 import { TagsFiltersService } from './services/tags-filter.service';
 import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
-import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -57,8 +57,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _previewMode: boolean;
 
-  private _currentInnovationIndex = 0;
-
   private _answers: Array<Answer> = [];
 
   private _filteredAnswers: Array<Answer> = [];
@@ -79,9 +77,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     nbValidatedResp: number
   };
 
-  private _showDetails: boolean;
-
-  // private _today: Number;
+  private _showDetails: boolean = true;
 
   private _numberOfSections: number;
 
@@ -93,24 +89,26 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _companies: Array<Clearbit>;
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private translateService: TranslateService,
-              private answerService: AnswerService,
+  private _toggleProfessional: boolean = true;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateService: TranslateService,
+              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private innovationService: InnovationService,
-              private authService: AuthService,
-              private filterService: FilterService,
-              private responseService: ResponseService,
-              private innovationCommonService: InnovationCommonService,
-              private tagService: TagsFiltersService,
-              private worldmapService: SharedWorldmapService,
-              private worldmapFilterService: WorldmapFiltersService) {
+              private _innovationService: InnovationService,
+              private _authService: AuthService,
+              private _filterService: FilterService,
+              private _responseService: ResponseService,
+              private _innovationCommonService: InnovationCommonService,
+              private _tagFiltersService: TagsFiltersService,
+              private _sharedWorldmapService: SharedWorldmapService,
+              private _worldmapFiltersService: WorldmapFiltersService) {
   }
 
   ngOnInit() {
-    this.filterService.reset();
+    this._filterService.reset();
     this.initializeReport();
-    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
+    this._isOwner = (this._authService.userId === this._innovation.owner.id) || this._authService.adminLevel > 2;
   }
 
 
@@ -151,30 +149,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   private initializeVariable() {
 
     /***
-     * here we are registering the index of the lang of the user and according to that we display the innovation.
-     * @type {number}
-     */
-    /*const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.userLang);
-    this._currentInnovationIndex = index !== -1 ? index : 0;*/
-
-    /***
      * this is to check, if the admin make the synthesis available before the status is Done.
      * @type {boolean | undefined}
      * @user
      */
     this._previewMode = !!this._innovation.previewMode;
-
-    /***
-     * this is to display on the front page.
-     * @type {number}
-    this._today = Date.now();*/
-
-    /***
-     * Client side to toggle the full view.
-     * @type {boolean}
-     * @user
-     */
-    this._showDetails = !this.wordpress;
 
 
     /***
@@ -193,7 +172,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      * this is when we update the innovation in any sub component,
      * we are listening that update and will update the innovation attribute.
      */
-    this.innovationCommonService.getInnovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: Innovation) => {
+    this._innovationCommonService.getInnovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: Innovation) => {
         if (response) {
           this._innovation = response;
         }
@@ -203,8 +182,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
 
   private updateAnswersToShow(): void {
-    this._filteredAnswers = this.filterService.filter(this._answers);
-    this._answersOrigins = this.worldmapService.getCountriesRepartition(
+    this._filteredAnswers = this._filterService.filter(this._answers);
+    this._answersOrigins = this._sharedWorldmapService.getCountriesRepartition(
       this._filteredAnswers.map(x => x.country.flag || x.professional.country)
     );
   }
@@ -214,7 +193,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is to fetch the answers from the server.
    */
   private getAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
+    this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
       this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -222,12 +201,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       /***
        * passing the non filtered answers to the service to use in the executive report.
        */
-      this.responseService.setExecutiveAnswers(this._answers);
+      this._responseService.setExecutiveAnswers(this._answers);
 
       this._filteredAnswers = this._answers;
 
       this.updateAnswersToShow();
-      this.filterService.filtersUpdate.subscribe(() => this.updateAnswersToShow());
+      this._filterService.filtersUpdate.subscribe(() => this.updateAnswersToShow());
 
       this._companies = response.answers.map((answer: any) => answer.company || {
         name: answer.professional.company
@@ -253,7 +232,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         });
         return acc;
       }, {});
-      this.tagService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
+      this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
 
       /*
        * compute tags lists for each questions of type textarea
@@ -261,7 +240,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       this._questions.forEach((question) => {
         const tags = ResponseService.getTagsList(response.answers, question);
         const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
-        this.tagService.setAnswerTags(identifier, tags);
+        this._tagFiltersService.setAnswerTags(identifier, tags);
       });
 
     }, () => {
@@ -274,7 +253,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is to fetch the campaign from the server.
    */
   private getCampaign() {
-    this.innovationService.campaigns(this._innovation._id).subscribe((results) => {
+    this._innovationService.campaigns(this._innovation._id).subscribe((results) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
           if (campaign.stats) {
@@ -303,7 +282,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is to reset the map configuration.
    */
   private resetMap() {
-    this.worldmapFilterService.reset();
+    this._worldmapFiltersService.reset();
   }
 
 
@@ -312,65 +291,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    */
   private presets() {
    if (this._innovation.preset && this._innovation.preset.sections) {
-     this._questions = this.responseService.getPresets(this._innovation);
+     this._questions = this._responseService.getPresets(this._innovation);
    }
   }
-
-
-  /***
-   * This function toggles the view.
-   * @param {Event} event
-   */
-  toggleDetails(event: Event) {
-    event.preventDefault();
-    this._showDetails = !this._showDetails;
-  }
-
-
-  /***
-   * This function make the market report available to the client but it will be partial report.
-   * @param {Event} event
-   */
-  enablePreviewMode(event: Event) {
-    event.preventDefault();
-
-    this._previewMode =  this._innovation.previewMode = event.target['checked'] === true;
-
-    if (event.target['checked']) {
-      this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
-      });
-    } else {
-      this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
-      });
-    }
-
-  }
-
-
-  /***
-   * This function is getting the image source according to the current lang of the user.
-   * @returns {string}
-   */
-  /*public getSrc(): string {
-    let src = '';
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
-
-    if (this._innovation.innovationCards[this._currentInnovationIndex].principalMedia && this._innovation.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
-      src = this._innovation.innovationCards[this._currentInnovationIndex].principalMedia.url;
-    } else {
-      const index = this._innovation.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
-      src = index === -1 ? defaultSrc : this._innovation.innovationCards[this._currentInnovationIndex].media[index].url;
-    }
-
-    if (src === '' || undefined) {
-      src = defaultSrc;
-    }
-
-    return src;
-
-  }*/
 
 
   /***
@@ -378,7 +301,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param {Event} event
    */
   update(event: Event) {
-    this.innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
@@ -419,19 +342,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._innovation.executiveReport.totalSections = this._numberOfSections;
     this.update(event);
   }
-
-
-  /***
-   * this function is to delete the executive template.
-   * @param event
-   */
-  /*deleteExecutiveTemplate(event: Event) {
-    event.preventDefault();
-    this._innovation.executiveReport.totalSections = 0;
-    this._innovation.executiveReport.sections = [{}];
-    this.update(event);
-    window.location.reload();
-  }*/
 
 
   /***
@@ -478,7 +388,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       conclusion: event['content']
     };
 
-    this.innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe((response) => {
+    this._innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe((response) => {
       this._innovation.marketReport = response;
       this.update(event);
     });
@@ -490,17 +400,17 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param {{continents: {[continent: string]: boolean}, allChecked: boolean}} event
    */
   filterByContinents(event: {continents: {[continent: string]: boolean}, allChecked: boolean}): void {
-    this.worldmapFilterService.selectContinents(event);
+    this._worldmapFiltersService.selectContinents(event);
   }
 
   filterPro(answer: Answer, event: Event) {
     event.preventDefault();
     let proFiltered = {};
-    if (this.filterService.filters['professionals']) {
-      proFiltered = this.filterService.filters['professionals'].value;
+    if (this._filterService.filters['professionals']) {
+      proFiltered = this._filterService.filters['professionals'].value;
     }
     proFiltered[answer._id] = answer;
-    this.filterService.addFilter({
+    this._filterService.addFilter({
       status: 'PROFESSIONALS',
       value: proFiltered,
       questionId: 'professionals'
@@ -522,37 +432,17 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return environment.domain === 'umi';
   }
 
-  /*public getContact(): string {
-    return environment.commercialContact;
-  }*/
-
-  /*public getMailto(): string {
-    return `mailto:${environment.commercialContact}`;
-  }*/
-
   /***
    * getting the current lang of the user.
    * @returns {string}
    */
   get userLang(): string {
-    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
-  }
-
-
-  formatCompanyName(name: string) {
-    if (name) {
-      return `${name[0].toUpperCase()}${name.slice(1)}`;
-    }
-    return '--';
+    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
 
   public get domainName(): string {
     return environment.domain;
-  }
-
-  get currentInnovationIndex(): number {
-    return this._currentInnovationIndex;
   }
 
   get previewMode(): boolean {
@@ -564,7 +454,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
   get filters(): {[questionId: string]: Filter} {
-    return this.filterService.filters;
+    return this._filterService.filters;
   }
 
   get campaignStats() {
@@ -573,10 +463,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get companies() {
     return this._companies;
-  }
-
-  get logoName(): string {
-    return environment.logoSynthURL;
   }
 
   get answers(): Array<Answer> {
@@ -607,10 +493,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._modalAnswer = modalAnswer;
   }
 
-  /*getLogo(): string {
-    return environment.logoSynthURL;
-  }*/
-
   get adminSide(): boolean {
     return this._adminSide;
   }
@@ -622,22 +504,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   set sidebarTemplateValue(value: SidebarInterface) {
     this._sidebarTemplateValue = value;
   }
-
-  /*getCompanyName(): string {
-    return environment.companyShortName;
-  }*/
-
-  getInnovationUrl(): string {
-    return environment.clientUrl;
-  }
-
-  /*getCompanyURL(): string {
-    return environment.companyURL;
-  }*/
-
-  /*getOwnerName(): string {
-    return this._innovation.owner.name || '';
-  }*/
 
   get innovation(): Innovation {
     return this._innovation;
@@ -655,12 +521,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._executiveTemplates;
   }
 
-  /*get today(): Number {
-    return this._today;
-  }*/
-
   get mapSelectedContinents(): { [p: string]: boolean } {
-    return this.worldmapFilterService.selectedContinents;
+    return this._worldmapFiltersService.selectedContinents;
   }
 
   get answersOrigins(): {[c: string]: number} {
@@ -671,9 +533,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._adminMode;
   }
 
-  /*get dateFormat(): string {
-    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }*/
+  get toggleProfessional(): boolean {
+    return this._toggleProfessional;
+  }
+
+  set toggleProfessional(value: boolean) {
+    this._toggleProfessional = value;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
