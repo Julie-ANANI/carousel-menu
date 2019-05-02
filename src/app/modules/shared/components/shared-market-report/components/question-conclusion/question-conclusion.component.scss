@@ -3,7 +3,6 @@
 #question-conclusion-component {
   display: flex;
   justify-content: space-between;
-  box-shadow: $box-shadow-umi;
 
   .conclusion-wrapper {
     flex: 2;
@@ -33,7 +32,7 @@
     }
 
     .op-text {
-      color: $primary-color;
+      color: $text-background-color;
       font-size: 0.75rem;
       margin-bottom: 0.75rem;
     }

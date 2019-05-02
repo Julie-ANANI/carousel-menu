@@ -160,6 +160,46 @@
           </section>
           <!-- /key learning section -->
 
+          <!-- origin comment and professional responses -->
+          <section class="section-pad" id="origin">
+            <div class="origin-wrapper bg-white text">
+              <app-question-conclusion
+                [innovation]="innovation"
+                [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
+                [readonly]="!adminSide"
+                [originAnswers]="answersOrigins"
+                [stats]="{ nbAnswers: answers.length, percentage: 0 }">
+              </app-question-conclusion>
+            </div>
+          </section>
+          <!-- /origin comment and professional responses -->
+
+          <!-- professional abstract -->
+          <section *ngIf="adminSide" class="abstract-wrapper section-pad">
+            <div class="section-pad full bg-white text">
+
+              <h2 class="title-primary">Professional Abstract</h2>
+
+              <div class="form-group relative">
+                <label for="market-report-professionals"></label>
+                <textarea
+                  (blur)="update($event)"
+                  [(ngModel)]="innovation.executiveReport.professionalAbstract"
+                  placeholder="Describe the professional abstract of this innovation within 160 words."
+                  class="form-input"
+                  id="market-report-professionals"
+                  maxlength="160"
+                  rows="5">
+              </textarea>
+                <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
+                  <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>
+                </div>
+              </div>
+
+            </div>
+          </section>
+          <!-- /professional abstract -->
+
           <!-- conclusion -->
           <section *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-pad" id="conclusion">
             <div class="section-pad full bg-white text conclusion-wrapper">
@@ -204,47 +244,7 @@
 
 
 
-<!--          &lt;!&ndash; origin comment and professional responses &ndash;&gt;-->
-<!--          <section class="section-light-pad" id="origin">-->
-<!--            <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--              <div class="origin-wrapper bg-white text">-->
 
-<!--                <app-question-conclusion-->
-<!--                  [innovation]="innovation"-->
-<!--                  [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"-->
-<!--                  [readonly]="!adminSide"-->
-<!--                  [originAnswers]="answersOrigins"-->
-<!--                  [stats]="{ nbAnswers: answers.length, percentage: 0 }">-->
-<!--                </app-question-conclusion>-->
-
-<!--                <ng-container *ngIf="adminSide">-->
-<!--                  <div class="abstract-wrapper section-pad full">-->
-
-<!--                    <h2 class="title-primary">Abstract</h2>-->
-
-<!--                    <div class="form-group relative">-->
-<!--                      <label for="market-report-professionals"></label>-->
-<!--                        <textarea-->
-<!--                          class="form-input"-->
-<!--                          id="market-report-professionals"-->
-<!--                          [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.PROFESSIONAL' | translate"-->
-<!--                          rows="5"-->
-<!--                          [(ngModel)]="innovation.executiveReport.professionalAbstract"-->
-<!--                          (blur)="update($event)"-->
-<!--                          maxlength="160">-->
-<!--                        </textarea>-->
-<!--                      <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">-->
-<!--                        <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-<!--                </ng-container>-->
-
-<!--              </div>-->
-<!--            </div>-->
-<!--          </section>-->
-<!--          &lt;!&ndash; /origin comment and professional responses &ndash;&gt;-->
 
 <!--          &lt;!&ndash; map &ndash;&gt;-->
 <!--          <section class="section-light-pad" id="market-map">-->

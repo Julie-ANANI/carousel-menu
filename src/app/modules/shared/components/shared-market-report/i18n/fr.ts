@@ -103,9 +103,7 @@ export const MARKET_REPORT = {
   },
 
   'EXECUTIVE_PLACEHOLDER': {
-    'GOAL': 'Ecrivez l\'objectif de la mission en max 120 mots.',
     'CONCLUSION': 'Ecrivez votre conclusion en max 1200 mots.',
-    'PROFESSIONAL': 'Ecrivez un résumé en max 160 mots.',
     'SECTION': 'Ecrivez un résumé en max 160 mots.'
   },
 
