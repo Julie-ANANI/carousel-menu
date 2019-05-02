@@ -70,6 +70,8 @@ export class SidebarComponent implements OnInit {
 
   private _modalExport: boolean = false;
 
+  private _modalResetReport: boolean = false;
+
   private _userLang = '';
 
   private _tagsEndIndex = 6;
@@ -225,6 +227,7 @@ export class SidebarComponent implements OnInit {
   public onClickPreviewConfirm(event: Event) {
     event.preventDefault();
     this._innovation.previewMode = !this._innovation.previewMode;
+
     this._innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
       if (response.previewMode) {
         this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
@@ -235,7 +238,30 @@ export class SidebarComponent implements OnInit {
       this._innovation.previewMode = !this._innovation.previewMode;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
+
     this._modalPreviewInnovation = false;
+
+  }
+
+
+  public onClickResetConfirm(event: Event) {
+    event.preventDefault();
+    const totalSections = this._innovation.executiveReport.totalSections;
+    const sections = this._innovation.executiveReport.sections;
+
+    this._innovation.executiveReport.totalSections = 0;
+    this._innovation.executiveReport.sections = [{}];
+
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'The executive report has been reset successfully.');
+    }, () => {
+      this._innovation.executiveReport.totalSections = totalSections;
+      this._innovation.executiveReport.sections = sections;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+
+    this._modalResetReport = false;
+
   }
 
 
@@ -245,12 +271,15 @@ export class SidebarComponent implements OnInit {
    */
   public onClickEndInnovationConfirm(event: Event) {
     event.preventDefault();
-    this._innovationService.endProject(this._innovation._id).subscribe((response) => {
+
+    this._innovationService.endProject(this._innovation._id).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
+
     this._modalEndInnovation = false;
+
   }
 
 
@@ -348,6 +377,14 @@ export class SidebarComponent implements OnInit {
 
   set modalExport(value: boolean) {
     this._modalExport = value;
+  }
+
+  get modalResetReport(): boolean {
+    return this._modalResetReport;
+  }
+
+  set modalResetReport(value: boolean) {
+    this._modalResetReport = value;
   }
 
   get userLang(): string {

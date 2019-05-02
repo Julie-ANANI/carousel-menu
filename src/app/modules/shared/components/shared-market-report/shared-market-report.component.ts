@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Input, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -97,7 +96,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateService: TranslateService,
               private answerService: AnswerService,
-              private translateNotificationsService: TranslateNotificationsService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private innovationService: InnovationService,
               private authService: AuthService,
               private filterService: FilterService,
@@ -106,7 +105,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private tagService: TagsFiltersService,
               private worldmapService: SharedWorldmapService,
               private worldmapFilterService: WorldmapFiltersService) {
-    PageScrollConfig.defaultDuration = 800;
   }
 
   ngOnInit() {
@@ -267,7 +265,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       });
 
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
@@ -296,7 +294,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
       }
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
@@ -340,11 +338,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
     if (event.target['checked']) {
       this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
       });
     } else {
       this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       });
     }
 
@@ -380,7 +378,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param {Event} event
    */
   update(event: Event) {
-    this.innovationCommonService.saveInnovation(this._innovation);
+    this.innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
   }
 
 
@@ -417,7 +418,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._innovation.executiveReport.totalSections = this._numberOfSections;
     this.update(event);
-    window.location.reload();
   }
 
 
@@ -425,13 +425,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * this function is to delete the executive template.
    * @param event
    */
-  deleteExecutiveTemplate(event: Event) {
+  /*deleteExecutiveTemplate(event: Event) {
     event.preventDefault();
     this._innovation.executiveReport.totalSections = 0;
     this._innovation.executiveReport.sections = [{}];
     this.update(event);
     window.location.reload();
-  }
+  }*/
 
 
   /***

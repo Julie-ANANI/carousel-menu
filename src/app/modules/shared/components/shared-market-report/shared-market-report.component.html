@@ -36,7 +36,7 @@
       <div class="columns col-gapless">
 
         <!-- filter sidebar -->
-        <aside class="column col-2">
+        <aside class="column col-2 filter-wrapper">
           <app-market-report-sidebar
             [answers]="answers"
             [innovation]="innovation"
@@ -87,6 +87,44 @@
           </section>
           <!-- /main page goal -->
 
+          <!-- executive report generation -->
+          <section *ngIf="adminSide" class="section-light-pad" id="executive-generate">
+            <div class="section-pad full d-flex executive-generate-wrapper bg-white">
+
+              <h2 class="title-primary">Executive Report</h2>
+
+              <div class="template-outer-wrapper d-flex">
+                <div *ngFor="let template of executiveTemplates" class="card card-responsive">
+
+                  <img [src]="template.imageSrc" alt=" ">
+
+                  <div class="card-header text-center">
+                    <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)">
+                      <span>•</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="text-center" [ngStyle]="{ 'margin-top': '0.5rem' }">
+                <button class="btn ghost-primary btn-sm" [disabled]="numberOfSections === 0" (click)="generateExecutiveTemplate($event)">
+                  Valid Template
+                </button>
+              </div>
+
+            </div>
+          </section>
+          <!-- /executive report generation -->
+
+          <!-- executive report -->
+          <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
+            <section id="executive-report">
+              <app-executive-report [project]="innovation"></app-executive-report>
+            </section>
+          </ng-container>
+          <!-- /executive report -->
+
         </section>
 
 
@@ -110,58 +148,9 @@
 <!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
 <!--        <section id="answer-wrapper">-->
 
-<!--          &lt;!&ndash; executive template generation &ndash;&gt;-->
-<!--          <ng-container *ngIf="adminSide">-->
-<!--            <section class="section-light-pad">-->
-<!--              <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--                <div class="section-pad full d-flex executive-generate-wrapper bg-white">-->
 
-<!--                  &lt;!&ndash; heading &ndash;&gt;-->
-<!--                  <h2 class="title-primary">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h2>-->
 
-<!--                  &lt;!&ndash; sub heading &ndash;&gt;-->
-<!--                  <h3 class="title-secondary text-center">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h3>-->
 
-<!--                  &lt;!&ndash; templates &ndash;&gt;-->
-<!--                  <div class="template-outer-wrapper">-->
-<!--                    <div *ngFor="let template of executiveTemplates" class="template">-->
-<!--                      <img [src]="template.imageSrc" alt=" ">-->
-<!--                      <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)">-->
-<!--                        <span>•</span>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash; button &ndash;&gt;-->
-<!--                  <div class="text-center">-->
-<!--                    <button class="btn ghost-primary btn-sm" [disabled]="innovation?.executiveReport.totalSections > 0 || numberOfSections === 0" (click)="generateExecutiveTemplate($event)">-->
-<!--                      Valid Template-->
-<!--                    </button>-->
-<!--                  </div>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /executive template generation &ndash;&gt;-->
-
-<!--          &lt;!&ndash; executive report &ndash;&gt;-->
-<!--          <ng-container *ngIf="innovation.executiveReport.totalSections > 0">-->
-<!--            <section id="executive-report">-->
-<!--              <app-executive-report [project]="innovation"></app-executive-report>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /executive report &ndash;&gt;-->
-
-<!--          &lt;!&ndash; executive Report delete button &ndash;&gt;-->
-<!--          <ng-container *ngIf="innovation.executiveReport.totalSections > 0 && adminSide">-->
-<!--            <section class="section-light-pad text-center">-->
-<!--              <button class="btn ghost-delete btn-sm" (click)="deleteExecutiveTemplate($event)">-->
-<!--                {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}-->
-<!--              </button>-->
-<!--            </section>-->
-<!--          </ng-container>-->
-<!--          &lt;!&ndash; /executive Report delete button &ndash;&gt;-->
 
 <!--          &lt;!&ndash; UMI intro &ndash;&gt;-->
 <!--          <ng-container *ngIf="showDetails && getDomainName() === 'umi'">-->

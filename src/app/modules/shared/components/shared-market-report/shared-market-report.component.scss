@@ -38,20 +38,16 @@
     flex-direction: column;
 
     .template-outer-wrapper {
-      display: flex;
+      margin-top: 0.5rem;
       flex-wrap: wrap;
-      justify-content: space-between;
+      margin-right: -$unit-5;
 
-      .template {
-        display: inline-flex;
-        margin-bottom: 1.25rem;
-        flex-direction: column;
-        align-items: center;
+      .card {
+        border: none;
+        overflow: hidden;
 
-        img {
-          width: auto;
-          height: 216px;
-          margin-bottom: 0.5rem;
+        &.card-responsive {
+          margin-bottom: 0.75rem;
         }
 
         .btn.btn-radio {
@@ -365,14 +361,6 @@
       flex-direction: column;
     }
 
-    .executive-generate-wrapper {
-
-      .template-outer-wrapper {
-        justify-content: center;
-      }
-
-    }
-
     .exploration-wrapper {
 
       .company-wrapper .name-wrapper li {
@@ -394,19 +382,14 @@
 
 }
 
-@media (min-width: 841px) {
+@media (min-width: $size-sm) {
 
-  #market-report {
-
-    .scroll-sticky-wrapper {
-      position: sticky;
-      top: 0;
-      box-shadow: $box-shadow-hover-umi;
-      z-index: 11;
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-
+  .filter-wrapper {
+    top: 0;
+    position: sticky;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
 }

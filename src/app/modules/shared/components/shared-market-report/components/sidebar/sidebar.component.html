@@ -39,7 +39,11 @@
           </div>
 
           <div class="drop-item">
-            <a href="#executive-report" pageScroll>Generate executive report</a>
+            <a href="#executive-generate" pageScroll>Generate executive report</a>
+          </div>
+
+          <div *ngIf="innovation.executiveReport.totalSections > 0 && isAdminSide" class="drop-item" (click)="modalResetReport = true">
+            <span>Reset executive report</span>
           </div>
 
           <div class="drop-item" (click)="modalEndInnovation = true">
@@ -280,6 +284,22 @@
 
 </app-modal>
 <!-- /Modal to ask the admin to confirm for the preview of the innovation at the side of the client -->
+
+
+
+<!-- Modal to ask the operator to confirm for the reset of the executive report -->
+<app-modal [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'" [(showModal)]="modalResetReport">
+
+  <span>Do you really want to reset the executive report?</span>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /Modal to ask the operator to confirm for the reset of the executive report -->
+
 
 
 <!-- Modal to ask the operator to sure about ending the project -->
