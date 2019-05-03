@@ -102,8 +102,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private _innovationCommonService: InnovationCommonService,
               private _tagFiltersService: TagsFiltersService,
               private _sharedWorldmapService: SharedWorldmapService,
-              private _worldmapFiltersService: WorldmapFiltersService) {
-  }
+              private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {
     this._filterService.reset();
@@ -362,22 +361,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
 
   /***
-   * This function is returning the analytic percentage.
-   * @param {number} value1
-   * @param {number} value2
-   * @returns {number}
-   */
-  percentageCalculation(value1: number, value2: number) {
-    if (value2 === 0 || value2 === undefined) {
-      return 0;
-    } else {
-      const percentage = (value2 / value1) * 100;
-      return percentage === Infinity ? 0 : Math.floor(percentage);
-    }
-  }
-
-
-  /***
    * This function saves the comment of the operator.
    * @param event
    * @param {string} ob
@@ -403,6 +386,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._worldmapFiltersService.selectContinents(event);
   }
 
+
   filterPro(answer: Answer, event: Event) {
     event.preventDefault();
     let proFiltered = {};
@@ -416,6 +400,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       questionId: 'professionals'
     });
   }
+
 
   seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
@@ -431,6 +416,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   public get mainDomain(): boolean {
     return environment.domain === 'umi';
   }
+
 
   /***
    * getting the current lang of the user.

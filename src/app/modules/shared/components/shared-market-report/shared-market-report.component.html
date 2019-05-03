@@ -277,8 +277,8 @@
   <app-sidebar *ngIf="!wordpress" [(template)]="sidebarTemplateValue">
     <app-user-answer
       [(userAnswer)]="modalAnswer"
-      [projectId]="innovation._id"
       [adminMode]="adminMode"
+      [projectId]="innovation._id"
       [questions]="questions">
     </app-user-answer>
   </app-sidebar>
