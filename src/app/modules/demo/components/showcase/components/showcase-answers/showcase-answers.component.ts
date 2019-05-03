@@ -21,7 +21,7 @@ export class ShowcaseAnswersComponent {
     const tags_id = value.map((st) => st.tag._id);
 
     if (tags_id.length > 0) {
-      this._answerService.getStarsAnswer(tags_id).subscribe((response) => {
+      this._answerService.getSectorAnswer(tags_id).subscribe((response) => {
         if (Array.isArray(response.result)) {
           this._answers = response.result;
           this._selectedAnswers = response.result.slice(0, 6);
@@ -131,10 +131,6 @@ export class ShowcaseAnswersComponent {
 
   get adminPass(): boolean {
     return this._adminPass;
-  }
-
-  get selectedAnswers(): Array<Answer> {
-    return this._selectedAnswers;
   }
 
 }
