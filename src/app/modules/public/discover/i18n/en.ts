@@ -41,9 +41,9 @@ export const DISCOVER = {
 
   'NO_RESULT': 'No result found',
 
-  'NO_RESULT_HEADING': 'Something wrong here...',
+  'NO_RESULT_HEADING': 'No result found',
 
-  'NO_RESULT_TEXT': 'Sorry, we couldn\'t find any results (as you can see) try again with some different keywords.',
+  'NO_RESULT_TEXT': 'Try adjusting your search or filter to find what you\'re looking for.',
 
   'HIGHLIGHT_SECTOR_HEADING': 'Select one or more sectors to see specific innovations',
 

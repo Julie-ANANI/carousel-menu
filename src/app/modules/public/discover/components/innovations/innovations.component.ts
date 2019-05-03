@@ -46,7 +46,7 @@ export class InnovationsComponent implements OnInit {
 
   private _filterActivated: boolean = false;
 
-  searchKey = '';
+  private _searchKey = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -133,19 +133,19 @@ export class InnovationsComponent implements OnInit {
 
 
   public onInputField(value: string) {
-    this.searchKey = value;
+    this._searchKey = value;
     this._checkFilterActivation();
     this._getFilteredInnovations();
   }
 
 
   private _checkFilterActivation() {
-    this._filterActivated = this._selectedFilters.length > 0 || this.searchKey !== '';
+    this._filterActivated = this._selectedFilters.length > 0 || this._searchKey !== '';
   }
 
 
   private _getFilteredInnovations() {
-    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this.searchKey);
+    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this._searchKey);
   }
 
 
@@ -163,7 +163,6 @@ export class InnovationsComponent implements OnInit {
     return this._userLang === 'fr' ? 'https://www.umi.us/fr/communaute/' : 'https://www.umi.us/community/';
   }
 
-
   get config() {
     return this._config;
   }
@@ -171,7 +170,6 @@ export class InnovationsComponent implements OnInit {
   get totalInnovations(): Array<Innovation> {
     return this._totalInnovations;
   }
-
 
   get recommendedInnovations(): Array<Innovation> {
     return this._recommendedInnovations;
@@ -207,6 +205,10 @@ export class InnovationsComponent implements OnInit {
 
   get filterActivated(): boolean {
     return this._filterActivated;
+  }
+
+  get searchKey(): string {
+    return this._searchKey;
   }
 
 }

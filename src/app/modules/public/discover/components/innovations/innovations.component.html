@@ -3,11 +3,13 @@
   <section id="innovations-component">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
+
       <!-- section filter -->
       <div class="section-light-pad">
         <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)" (searchFieldOutput)="onInputField($event)"></app-filters>
       </div>
       <!-- /section filter -->
+
 
       <!-- section recommended innovations -->
       <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated && !filterActivated">
@@ -18,6 +20,7 @@
       </ng-container>
       <!-- /section recommended innovations -->
 
+
       <!-- section latest innovations -->
       <ng-container *ngIf="!filterActivated">
         <div class="section-light-pad rm-pad-bottom">
@@ -27,6 +30,7 @@
       </ng-container>
       <!-- /section latest innovations -->
 
+
       <!-- section trending innovations -->
       <ng-container *ngIf="!filterActivated">
         <div class="section-light-pad rm-pad-bottom">
@@ -35,6 +39,7 @@
         </div>
       </ng-container>
       <!-- /section all innovations -->
+
 
       <!-- section when searching innovation -->
       <ng-container *ngIf="filterActivated">
@@ -60,16 +65,20 @@
 
           <app-cards [allInnovations]="filteredInnovations" [search]="true" [lastIndex]="filteredInnovations.length"></app-cards>
 
-          <div *ngIf="filteredInnovations.length === 0" class="section-pad rm-pad-bottom flex-centered">
+          <div *ngIf="filteredInnovations.length === 0" class="section-pad rm-pad-bottom flex-centered no-result-wrapper">
             <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
+            <h3 class="text-normal" [innerText]="'DISCOVER.NO_RESULT_HEADING'" translate></h3>
+            <span class="text-notify text-medium" [innerText]="'DISCOVER.NO_RESULT_TEXT'" translate></span>
           </div>
 
         </div>
       </ng-container>
       <!-- /section when searching innovation -->
 
+
     </div>
   </section>
+
 
   <!-- footer banner -->
   <div class="section-community">
@@ -88,5 +97,7 @@
       </div>
     </div>
   </div>
+  <!-- /footer banner -->
+
 
 </ng-container>
