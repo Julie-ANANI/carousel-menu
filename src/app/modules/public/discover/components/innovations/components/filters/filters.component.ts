@@ -51,17 +51,19 @@ export class FiltersComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _filterService: FilterService) {
 
-    this._userLang = this._translateService.currentLang || this._browserLang() || 'en' ;
+    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en' ;
 
     this._filterService.getFilterToRemove().subscribe((tagId: string) => {
       if (this._selectedSimilarTags.length === 0) {
         this.removeFilter(tagId);
+        this._initialize();
       } else {
         const find = this._selectedSimilarTags.find((applyTag: Tag) => applyTag._id === tagId);
         if (find) {
           this.removeSimilarFilter(tagId)
         } else {
           this.removeFilter(tagId);
+          this._initialize();
         }
       }
     });
@@ -203,6 +205,7 @@ export class FiltersComponent implements OnInit {
       this._sendSelectedFilters();
     } else {
       this.removeFilter(tag._id);
+      this._initialize();
     }
   }
 
@@ -214,6 +217,10 @@ export class FiltersComponent implements OnInit {
   public removeFilter(id: string) {
     const index = this._selectedTags.findIndex((tag) => tag._id === id);
     this._selectedTags.splice(index, 1);
+  }
+
+
+  private _initialize() {
     this._selectedSimilarTags = [];
     this._getSuggestedTags();
     this._sendSelectedFilters();
@@ -238,6 +245,7 @@ export class FiltersComponent implements OnInit {
 
     if (event.target['checked']) {
       this._selectedSimilarTags.push(tag);
+      this._selectedTags.push(tag);
       this._sendSelectedFilters();
     } else {
       this.removeSimilarFilter(tag._id);
@@ -252,6 +260,7 @@ export class FiltersComponent implements OnInit {
   public removeSimilarFilter(id: string) {
     const index = this._selectedSimilarTags.findIndex((tag) => tag._id === id);
     this._selectedSimilarTags.splice(index, 1);
+    this.removeFilter(id);
     this._sendSelectedFilters();
   }
 
@@ -343,27 +352,14 @@ export class FiltersComponent implements OnInit {
 
 
   private _sendSelectedFilters() {
-    let selectTags = [];
-
-    if (this._selectedSimilarTags.length === 0) {
-      selectTags = this._selectedTags;
-    } else {
-      selectTags = this._selectedTags.concat(this._selectedSimilarTags);
-    }
 
     if (isPlatformBrowser(this._platformId)) {
       sessionStorage.setItem('discover-filters', JSON.stringify(this._selectedTags));
     }
 
-    this.appliedFilters.emit(selectTags);
+    this.appliedFilters.emit(this._selectedTags);
 
   }
-
-
-  private _browserLang(): string {
-    return this._translateService.getBrowserLang();
-  }
-
 
   private static _getClientUrl(): string {
     return `${environment.clientUrl}/discover`;

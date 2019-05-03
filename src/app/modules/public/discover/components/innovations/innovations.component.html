@@ -47,7 +47,7 @@
             </div>
 
             <div *ngFor="let filter of selectedFilters" class="c-hand filter-wrapper" (click)="onClickRemove(filter._id)">
-              <span>{{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i></span>
+              <span class="text-medium">{{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i></span>
             </div>
 
           </div>
