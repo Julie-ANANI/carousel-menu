@@ -17,10 +17,6 @@ import { environment } from '../../../../../../../environments/environment';
 
 export class ShowcaseInnovationsComponent {
 
-  @Input() set totalInnovations(value: number) {
-    this._count = value;
-  }
-
   @Input() set tagsStats(value: Array<TagStats>) {
     this._getInnovations(value);
   }
@@ -74,6 +70,7 @@ export class ShowcaseInnovationsComponent {
       this._innovationService.getAll(config).subscribe((response: any) => {
         if (Array.isArray(response.result)) {
           this._innovations = response.result;
+          this._count = this._innovations.length;
           this._topInnovations = response.result.slice(0, 6);
           this._computeCards();
         }
