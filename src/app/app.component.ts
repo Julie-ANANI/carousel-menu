@@ -3,6 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
+import { AuthService } from './services/auth/auth.service';
+import { TranslateNotificationsService } from './services/notifications/notifications.service';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +26,19 @@ export class AppComponent implements OnInit {
   };
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private authService: AuthService,
+              private translateNotificationsService: TranslateNotificationsService,
               private translateService: TranslateService) {
 
     this.setFavicon();
 
     initTranslation(this.translateService);
+
+    if (this.authService.isAcceptingCookies) {
+      this.authService.initializeSession().subscribe(() => {}, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR', { timeOut: 0 });
+      });
+    }
 
   }
 

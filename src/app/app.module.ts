@@ -1,5 +1,5 @@
 // Modules externes
-import { APP_INITIALIZER, NgModule, PLATFORM_ID, Inject, ErrorHandler } from '@angular/core';
+import { NgModule, PLATFORM_ID, Inject, ErrorHandler } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -22,7 +22,6 @@ import { TranslationService } from "./services/translation/translation.service";
 import { TranslateTitleService } from './services/title/title.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
-import { initializeSession } from './app-init-session';
 
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
@@ -65,7 +64,7 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
+    // { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
     SwellrtBackend
   ],
   bootstrap: [
