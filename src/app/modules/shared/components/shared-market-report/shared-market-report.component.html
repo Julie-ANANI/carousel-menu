@@ -225,9 +225,19 @@
               </button>
             </div>
 
-            <div class="section-light-pad">
-              <div class="professional-wrapper" [ngClass]="toggleProfessional ? 'expand-wrapper' : 'collapse-wrapper' ">
+            <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'expand-wrapper' : 'collapse-wrapper' ">
+              <div class="card-wrapper d-flex section-light-pad rm-pad-bottom">
+                <div *ngFor="let answer of filteredAnswers" class="card card-3 relative">
 
+                  <div class="icon icon-delete tooltip tooltip-right c-hand" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translate" (click)="filterPro(answer, $event)">
+                    <i class="fas fa-eye-slash" aria-hidden="true"></i>
+                  </div>
+
+                  <div class="card-body">
+                    <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                  </div>
+
+                </div>
               </div>
             </div>
 
@@ -276,30 +286,6 @@
 
 <!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
 <!--        <section id="answer-wrapper">-->
-
-
-
-
-
-
-
-<!--          &lt;!&ndash; professionals &ndash;&gt;-->
-<!--          <section class="section-light-pad" id="professional">-->
-<!--            <div class="column col-xs-12 col-11 col-mx-auto">-->
-<!--              <div class="professional-wrapper d-flex">-->
-<!--                <div *ngFor="let answer of filteredAnswers" class="card card-responsive-3 relative">-->
-
-<!--                  <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" (click)="filterPro(answer, $event)" alt=" ">-->
-
-<!--                  <div class="card-body">-->
-<!--                    <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>-->
-<!--                  </div>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </section>-->
-<!--          &lt;!&ndash; /professionals &ndash;&gt;-->
 
 <!--          &lt;!&ndash; other question and answers &ndash;&gt;-->
 <!--          <div class="column col-xs-12 col-11 col-mx-auto" id="questions">-->

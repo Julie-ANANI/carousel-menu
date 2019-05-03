@@ -1,18 +1,21 @@
 <section id="pro-tag-component" class="d-flex text-center">
 
+
   <!-- top profile -->
-  <ng-container *ngIf="answer?.profileQuality === 2">
-    <div class="label label-success">
+  <ng-container *ngIf="answer && answer.profileQuality === 2">
+    <div class="label label-meta">
       <span>Top Profile</span>
     </div>
   </ng-container>
 
+
   <!-- flag -->
-  <ng-container *ngIf="answer?.country && answer?.country.flag">
+  <ng-container *ngIf="answer && answer.country && answer.country.flag">
     <div class="flag-wrapper">
       <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
     </div>
   </ng-container>
+
 
   <!-- detail -->
   <div class="detail-wrapper d-flex text-center">
@@ -22,10 +25,10 @@
       <p class="text-medium">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</p>
     </ng-container>
 
-    <ng-container *ngIf="answer?.professional && answer?.professional?.firstName">
+    <ng-container *ngIf="answer && answer.professional && answer.professional.firstName">
       <p>
         <span class="text-link" (click)="seeAnswer($event, answer)">
-          {{ answer?.professional?.firstName | FormatText }} {{ answer?.professional?.lastName }}
+          {{ answer.professional.firstName | FormatText }} {{ answer.professional?.lastName }}
         </span>
       </p>
     </ng-container>
@@ -48,13 +51,15 @@
   </div>
   <!-- /detail -->
 
-  <!-- Tag -->
-  <ng-container *ngIf="tags?.length > 0">
+
+  <!-- tag -->
+  <ng-container *ngIf="tags && tags.length > 0">
     <div class="tag-wrapper">
-      <div *ngFor="let tag of tags" class="label label-tag label-rounded" [title]="tag.description | multiling:userLang" (click)="checkTag($event, tag)">
-        <i class="fas fa-tag"></i><span class="label-text">{{ tag.label | multiling:userLang }}</span>
+      <div *ngFor="let tag of tags" class="label label-success label-rounded c-hand" [title]="tag.description | multiling:userLang" (click)="checkTag($event, tag)">
+        <i class="fas fa-tag"></i><span>{{ tag.label | multiling:userLang }}</span>
       </div>
     </div>
   </ng-container>
+  <!-- /tag -->
 
 </section>

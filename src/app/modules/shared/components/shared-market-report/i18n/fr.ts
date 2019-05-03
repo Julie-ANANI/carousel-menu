@@ -177,6 +177,8 @@ export const MARKET_REPORT = {
 
   'TOOLTIP_UNHIDE_PROFESSIONAL': 'Démasquer le professionnel',
 
+  'TOOLTIP_HIDE_PROFESSIONAL': 'Masquer le professionnel',
+
   'VIEW_PLACEHOLDER': 'Nom de votre vue',
 
   'SEE_MORE': 'Voir plus',
