@@ -75,43 +75,32 @@ export class FilterService {
 
 
   static getFilteredInnovations(totalInnovations: Array<Innovation>, selectedTags: Array<Tag>, searchFieldInput: string = '') {
-    let innovations: Array<Innovation> = [];
-
     if (totalInnovations.length > 0) {
-      totalInnovations.forEach((innovation: Innovation) => {
+      return totalInnovations.filter((innovation: Innovation) => {
 
         if (searchFieldInput) {
-          innovation.innovationCards.forEach((card: InnovCard) => {
-
-            const find = card.title.toLowerCase().includes(searchFieldInput.toLowerCase());
-
-            if (find) {
-              const innovationIndex = innovations.findIndex((inno: Innovation) => inno._id === innovation._id);
-              if (innovationIndex === -1) {
-                innovations.push(innovation);
-              }
-            }
-
+          // we check if there is any card containing searchFieldInput
+          const containSearchFieldInput = innovation.innovationCards.some((card: InnovCard) => {
+            return card.title.toLowerCase().includes(searchFieldInput.toLowerCase());
           });
+          if (!containSearchFieldInput) {
+            return false;
+          }
         }
 
-        if (innovation.tags.length > 0 && selectedTags.length > 0) {
-          innovation.tags.forEach((tag: Tag) => {
-            const index = selectedTags.findIndex((filter: Tag) => filter._id === tag._id);
-            if (index != -1) {
-              const innovationIndex = innovations.findIndex((inno: Innovation) => inno._id === innovation._id);
-              if (innovationIndex === -1) {
-                innovations.push(innovation);
-              }
-            }
-          });
+        if (selectedTags.length > 0) {
+          // we check common tags between innovation.tags & selectedTags
+          const intersection = innovation.tags.filter((t) => selectedTags.some((st) => t._id === st._id));
+          if (intersection.length === 0) {
+            return false;
+          }
         }
+
+        return true;
 
       });
     }
-
-    return innovations;
-
+    return [];
   }
 
 }

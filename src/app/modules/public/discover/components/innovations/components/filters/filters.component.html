@@ -1,13 +1,22 @@
 <section id="filter-component">
 
+
   <!-- highlighted sectors -->
   <div *ngIf="highLightTags.length > 0" class="sector-highlighted">
 
     <div class="flex-between">
 
-      <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)">
-        <i class="fas fa-sliders-h"></i>
-        <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
+      <div class="flex-start action-wrapper">
+
+        <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)">
+          <i class="fas fa-sliders-h"></i>
+          <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
+        </div>
+
+        <div class="search-wrapper">
+          <app-search-input-2 [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'" (searchFieldOutput)="onInputField($event)"></app-search-input-2>
+        </div>
+
       </div>
 
       <div class="share-button">
@@ -37,6 +46,7 @@
   </div>
   <!-- /highlighted sectors -->
 
+
   <!-- suggested sectors -->
   <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
 
@@ -59,6 +69,7 @@
 
   </div>
   <!-- /suggested sectors -->
+
 
 </section>
 

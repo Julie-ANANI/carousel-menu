@@ -24,7 +24,9 @@
     <div *ngFor="let client of topClients" class="card flex-centered animate-appear">
 
       <div class="card-header">
-        <div *ngIf="client.logo" class="card-img"><img [src]="client.logo" [alt]="client.name" height="50"/></div>
+        <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">
+          <img [src]="client.logo" [alt]="client.name"/>
+        </div>
         <div *ngIf="!client.logo" class="card-title text-background"><span>{{ client.name }}</span></div>
       </div>
 
@@ -58,7 +60,9 @@
         </ng-container>
 
         <div class="card-header">
-          <div *ngIf="client.logo" class="card-img"><img [src]="client.logo" [alt]="client.name" height="50"/></div>
+          <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">
+            <img [src]="client.logo" [alt]="client.name"/>
+          </div>
           <div *ngIf="!client.logo" class="card-title text-background"><span>{{ client.name }}</span></div>
         </div>
 

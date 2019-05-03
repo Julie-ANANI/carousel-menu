@@ -7,7 +7,6 @@ import { InnovCard } from '../../../../../../models/innov-card';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-showcase-innovations',
@@ -17,13 +16,11 @@ import { environment } from '../../../../../../../environments/environment';
 
 export class ShowcaseInnovationsComponent {
 
-  @Input() set totalInnovations(value: number) {
-    this._count = value;
-  }
-
   @Input() set tagsStats(value: Array<TagStats>) {
     this._getInnovations(value);
   }
+
+  private _tags: Array<string> = [];
 
   private _innovations: Array<Innovation> = [];
 
@@ -38,8 +35,6 @@ export class ShowcaseInnovationsComponent {
   private _count = 0;
 
   private readonly _adminPass: boolean = false;
-
-  private _discoverLink = '';
 
   private _modalShow = false;
 
@@ -57,23 +52,22 @@ export class ShowcaseInnovationsComponent {
 
 
   private _getInnovations(value: Array<TagStats>): void {
-    const tags_id = value.map((st) => st.tag._id);
+    this._tags = value.map((st) => st.tag._id);
 
-    this._generateLink(tags_id);
-
-    if (tags_id.length > 0) {
+    if (this._tags.length > 0) {
 
       const config = {
         fields: 'created name principalMedia status',
         isPublic: '1',
         status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
-        tags: JSON.stringify({ $in: tags_id }),
+        tags: JSON.stringify({ $in: this._tags }),
         sort: '{"created":-1}'
       };
 
       this._innovationService.getAll(config).subscribe((response: any) => {
         if (Array.isArray(response.result)) {
           this._innovations = response.result;
+          this._count = this._innovations.length;
           this._topInnovations = response.result.slice(0, 6);
           this._computeCards();
         }
@@ -85,18 +79,6 @@ export class ShowcaseInnovationsComponent {
       this._topInnovations = [];
       this._computeCards();
     }
-  }
-
-
-  private _generateLink(tags: Array<string>) {
-    let tagUrl = '';
-
-    tags.forEach((tag) => {
-      tagUrl += 'tag=' + tag + '&';
-    });
-
-    this._discoverLink = `${environment.clientUrl}/discover?${tagUrl}}`;
-
   }
 
 
@@ -113,7 +95,7 @@ export class ShowcaseInnovationsComponent {
 
       }
       return {
-        _id: innovationCard._id,
+        _id: innovation._id,
         title: innovationCard.title,
         media: InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200')
       };
@@ -161,6 +143,10 @@ export class ShowcaseInnovationsComponent {
     return this._cards;
   }
 
+  get tags() {
+    return this._tags;
+  }
+
   get topCards() {
     return this._topCards;
   }
@@ -177,8 +163,8 @@ export class ShowcaseInnovationsComponent {
     return this._adminPass;
   }
 
-  get discoverLink(): string {
-    return this._discoverLink;
+  get lang(): string {
+    return this._translateService.currentLang;
   }
 
   get modalShow(): boolean {
