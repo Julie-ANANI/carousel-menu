@@ -77,7 +77,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     nbValidatedResp: number
   };
 
-  private _showDetails: boolean = true;
+  private _showDetails: boolean = false;
 
   private _numberOfSections: number;
 
@@ -89,7 +89,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _companies: Array<Clearbit>;
 
-  private _toggleProfessional: boolean = true;
+  private _toggleProfessional: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,

@@ -35,6 +35,7 @@
     <div class="restrict-width">
       <div class="columns col-gapless">
 
+
         <!-- filter sidebar -->
         <aside class="column col-2 filter-wrapper">
           <app-market-report-sidebar
@@ -52,11 +53,13 @@
         <!-- answers section -->
         <section id="answer-wrapper" class="column col-8">
 
+
           <!-- main page -->
           <section id="main-page" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
             <app-main-page [project]="innovation" class="full-width"></app-main-page>
           </section>
           <!-- /main page -->
+
 
           <!-- main page goal -->
           <section *ngIf="adminSide" class="section-light-pad" id="innovation-goal">
@@ -86,6 +89,7 @@
             </div>
           </section>
           <!-- /main page goal -->
+
 
           <!-- executive report generation -->
           <section *ngIf="adminSide" class="section-pad" id="executive-generate">
@@ -117,11 +121,13 @@
           </section>
           <!-- /executive report generation -->
 
+
           <!-- executive report -->
           <section *ngIf="innovation.executiveReport.totalSections > 0" id="executive-report">
             <app-executive-report [project]="innovation"></app-executive-report>
           </section>
           <!-- /executive report -->
+
 
           <!-- umi intro -->
           <section *ngIf="domainName === 'umi'" class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }">
@@ -129,17 +135,20 @@
           </section>
           <!-- /umi intro -->
 
+
           <!-- innovation detail -->
           <section [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
             <app-innovation-detail [project]="innovation" class="full-width"></app-innovation-detail>
           </section>
           <!-- /innovation detail -->
 
+
           <!-- targeting detail -->
           <section [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
             <app-targeting-detail [project]="innovation" [continent]="continentTarget" class="full-width"></app-targeting-detail>
           </section>
           <!-- /targeting detail -->
+
 
           <!-- key learning section -->
           <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-pad" id="key-learning">
@@ -160,6 +169,7 @@
           </section>
           <!-- /key learning section -->
 
+
           <!-- origin comment and professional responses -->
           <section class="section-pad" id="origin">
             <div class="origin-wrapper bg-white text">
@@ -173,6 +183,7 @@
             </div>
           </section>
           <!-- /origin comment and professional responses -->
+
 
           <!-- professional abstract -->
           <section *ngIf="adminSide" class="abstract-wrapper section-pad">
@@ -200,6 +211,7 @@
           </section>
           <!-- /professional abstract -->
 
+
           <!-- map -->
           <section class="section-light-pad" id="map">
             <div class="map-wrapper">
@@ -214,6 +226,7 @@
             </div>
           </section>
           <!-- /map -->
+
 
           <!-- professionals -->
           <section class="section-pad" id="professionals">
@@ -263,6 +276,7 @@
             </div>
           </section>
           <!-- /conclusion -->
+
 
         </section>
 
