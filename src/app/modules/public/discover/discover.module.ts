@@ -26,6 +26,7 @@ import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.mod
 import { ModalMediaModule } from '../../utility-components/modals/modal-media/modal-media.module';
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 import { HeaderModule } from '../../common/header/header.module';
+import { SearchInput2Module } from '../../utility-components/search-inputs/search-template-2/search-input-2.module';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { HeaderModule } from '../../common/header/header.module';
     ModalMediaModule,
     ModalModule,
     HeaderModule,
+    SearchInput2Module
   ],
   providers:[
     InnovationService,

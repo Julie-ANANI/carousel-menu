@@ -46,6 +46,8 @@ export class InnovationsComponent implements OnInit {
 
   private _filterActivated: boolean = false;
 
+  searchKey = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _translateService: TranslateService,
@@ -125,13 +127,25 @@ export class InnovationsComponent implements OnInit {
 
   public onSelectFilters(filters: Array<Tag>) {
     this._selectedFilters = filters;
-    this._filterActivated = this._selectedFilters.length > 0;
+    this._checkFilterActivation();
     this._getFilteredInnovations();
   }
 
 
+  public onInputField(value: string) {
+    this.searchKey = value;
+    this._checkFilterActivation();
+    this._getFilteredInnovations();
+  }
+
+
+  private _checkFilterActivation() {
+    this._filterActivated = this._selectedFilters.length > 0 || this.searchKey !== '';
+  }
+
+
   private _getFilteredInnovations() {
-    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters);
+    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this.searchKey);
   }
 
 

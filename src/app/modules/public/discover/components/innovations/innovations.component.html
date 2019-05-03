@@ -5,7 +5,7 @@
 
       <!-- section filter -->
       <div class="section-light-pad">
-        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
+        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)" (searchFieldOutput)="onInputField($event)"></app-filters>
       </div>
       <!-- /section filter -->
 
@@ -43,7 +43,13 @@
           <div class="result-heading text-background text-normal d-flex">
 
             <div class="heading">
-              <span>{{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}</span>
+              <span>
+                {{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
+                <ng-container *ngIf="searchKey">
+                  <span class="text-medium">{{ searchKey }}</span>
+                  <ng-container *ngIf="selectedFilters.length > 0"> | </ng-container>
+                </ng-container>
+              </span>
             </div>
 
             <div *ngFor="let filter of selectedFilters" class="c-hand filter-wrapper" (click)="onClickRemove(filter._id)">
@@ -53,6 +59,10 @@
           </div>
 
           <app-cards [allInnovations]="filteredInnovations" [search]="true" [lastIndex]="filteredInnovations.length"></app-cards>
+
+          <div *ngIf="filteredInnovations.length === 0" class="section-pad rm-pad-bottom flex-centered">
+            <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
+          </div>
 
         </div>
       </ng-container>

@@ -40,24 +40,31 @@
 
     .flex-between {
 
-      .filter-icon, .share-button {
-        margin-bottom: 0.75rem;
-      }
+      .action-wrapper {
+        margin-bottom: 0.35rem;
 
-      .filter-icon {
-        font-size: $font-size-sm;
-
-        span {
-          margin-left: $unit-2;
+        .search-wrapper, .filter-icon {
+          margin-bottom: 0.5rem;
         }
 
-        &:hover {
-          opacity: 0.8;
+        .filter-icon {
+          font-size: $font-size-sm;
+          margin-right: $unit-5;
+
+          span {
+            margin-left: $unit-2;
+          }
+
+          &:hover {
+            opacity: 0.8;
+          }
+
         }
 
       }
 
       .share-button {
+        margin-bottom: 0.75rem;
 
         .btn {
           min-width: 100px;
@@ -110,5 +117,48 @@
     border-color: $success-color;
     color: $success-color;
   }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #filter-component {
+
+    .sector-highlighted {
+
+      .flex-between {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-xs) {
+
+
+  #filter-component {
+
+    .sector-highlighted {
+
+      .flex-between {
+
+        .action-wrapper {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+      }
+
+    }
+
+  }
+
 
 }

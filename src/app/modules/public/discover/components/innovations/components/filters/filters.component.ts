@@ -25,6 +25,8 @@ export class FiltersComponent implements OnInit {
 
   @Output() appliedFilters = new EventEmitter<Array<Tag>>();
 
+  @Output() searchFieldOutput = new EventEmitter<string>();
+
   private _userLang = '';
 
   private _modalShare: boolean = false;
@@ -349,6 +351,16 @@ export class FiltersComponent implements OnInit {
     event.preventDefault();
     this._urlCopied = false;
   }
+
+
+  public onInputField(value: string) {
+    this._selectedTags = [];
+    this._selectedSimilarTags = [];
+    this._suggestedTags = [];
+    this._sendSelectedFilters();
+    this.searchFieldOutput.emit(value);
+  }
+
 
 
   private _sendSelectedFilters() {
