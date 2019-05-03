@@ -1,158 +1,160 @@
 <ng-container *ngIf="innovationCard && innovationCard.length > 0">
-  <section class="section-pad" id="discover-description-component">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <ng-container *ngFor="let innovation of innovationCard">
+  <section class="restrict-width" id="discover-description-component">
+    <div class="section-pad">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <ng-container *ngFor="let innovation of innovationCard">
 
-        <!-- section header -->
-        <div class="section-header">
+          <!-- section header -->
+          <div class="section-header">
 
-          <!-- back to innovations -->
-          <a (click)="onClickBack()" class="d-inline-flex">
-            <i class="fas fa-angle-left"></i><span class="text-link text-normal">{{ 'DISCOVERDESCRIPTION.BACK' | translate }}</span>
-          </a>
+            <!-- back to innovations -->
+            <a (click)="onClickBack()" class="d-inline-flex">
+              <i class="fas fa-angle-left"></i><span class="text-link text-normal">{{ 'DISCOVERDESCRIPTION.BACK' | translate }}</span>
+            </a>
 
-          <!-- innovation title -->
-          <h1 class="title-primary">{{ innovation.title }}</h1>
+            <!-- innovation title -->
+            <h1 class="title-primary">{{ innovation.title }}</h1>
 
-          <!-- innovation tags -->
-          <ng-container *ngIf="tags.length > 0">
-            <div *ngFor="let tag of tags" class="label label-tag text-notify">
-              <i class="fas fa-tag"></i>
-              <span class="label-text">{{ tag }}</span>
-            </div>
-          </ng-container>
+            <!-- innovation tags -->
+            <ng-container *ngIf="tags.length > 0">
+              <div *ngFor="let tag of tags" class="label label-tag text-notify">
+                <i class="fas fa-tag"></i>
+                <span class="label-text">{{ tag }}</span>
+              </div>
+            </ng-container>
 
-          <!-- innovation summary -->
-          <div *ngIf="innovation.summary" class="summary-wrapper" [innerHTML]="innovation.summary"></div>
+            <!-- innovation summary -->
+            <div *ngIf="innovation.summary" class="summary-wrapper" [innerHTML]="innovation.summary"></div>
 
-        </div>
-        <!-- /section header -->
-
-        <!-- section images -->
-        <ng-container *ngIf="innovation.media && innovation.media.length > 0">
-          <div class="d-flex section-images">
-            <div *ngFor="let media of innovation.media" class="d-inline-flex media-wrapper">
-
-              <!-- if image -->
-              <ng-container *ngIf="media?.type === 'PHOTO'">
-                <figure class="img-overlay">
-                  <img [src]="getSrc(media)" [alt]=" " width="280" height="177" class="img-responsive img-fit-cover">
-                </figure>
-              </ng-container>
-
-              <!-- if video -->
-              <ng-container *ngIf="media?.type === 'VIDEO'">
-                <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-                        height="177" allowfullscreen [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
-              </ng-container>
-
-            </div>
           </div>
-        </ng-container>
-        <!-- /section images -->
+          <!-- /section header -->
 
-        <!-- section benefits -->
-        <ng-container *ngIf="innovation.advantages && innovation.advantages.length > 0">
-          <div class="section-benefits">
-            <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
-            <ul class="benefit-wrapper">
-              <li *ngFor="let advantage of innovation.advantages" class="text-background">
-                {{ advantage.text | FormatText }}
-              </li>
-            </ul>
-          </div>
-        </ng-container>
-        <!-- /section benefits -->
+          <!-- section images -->
+          <ng-container *ngIf="innovation.media && innovation.media.length > 0">
+            <div class="d-flex section-images">
+              <div *ngFor="let media of innovation.media" class="d-inline-flex media-wrapper">
 
-        <!-- section issue -->
-        <ng-container *ngIf="innovation.problem">
-          <div class="section-issue">
-            <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
-            <div class="issue-wrapper" [innerHTML]="innovation.problem"></div>
-          </div>
-        </ng-container>
-        <!-- /section issue -->
+                <!-- if image -->
+                <ng-container *ngIf="media?.type === 'PHOTO'">
+                  <figure class="img-overlay">
+                    <img [src]="getSrc(media)" [alt]=" " width="280" height="177" class="img-responsive img-fit-cover">
+                  </figure>
+                </ng-container>
 
-        <!-- section solution -->
-        <ng-container *ngIf="innovation.solution">
-          <div class="section-solution">
-            <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
-            <div class="solution-wrapper" [innerHTML]="innovation.solution"></div>
-          </div>
-        </ng-container>
-        <!-- /section solution -->
-
-        <!-- section share -->
-        <div class="section-share text-center">
-
-          <!-- actions button -->
-          <div class="button-wrapper">
-            <a class="btn btn-primary rounded" [href]="contactUsUrl" target="_blank">{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}</a>
-            <a [href]="quizUrl" target="_blank" class="btn ghost-edit btn rounded" [ngStyle]="{ 'display': quizButtonDisplay }">{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}</a>
-          </div>
-
-          <!-- share buttons -->
-          <div class="share-wrapper">
-            <h3 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SHARE_TITLE' | translate }}</h3>
-            <a [href]="linkedInUrl" target="_blank" class="btn btn-round btn-linkedin"><i class="fab fa-linkedin-in"></i></a>
-            <a [href]="twitterUrl" target="_blank" class="btn btn-round btn-twitter"><i class="fab fa-twitter"></i></a>
-            <a [href]="mailUrl" target="_blank" class="btn btn-round btn-mail"><i class="fas fa-envelope"></i></a>
-          </div>
-
-        </div>
-        <!-- /section share -->
-
-        <!-- section related innovations -->
-        <ng-container *ngIf="innovationsRelated.length > 0">
-          <div class="section-related">
-
-            <div class="flex-start text-note">
-              <i class="fas fa-angle-right"></i><span class="text-background">{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
-            </div>
-
-            <!-- card content -->
-            <div class="card-wrapper d-flex text-center">
-              <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
-
-                <!-- card image -->
-                <div class="card-image">
-                  <a [href]="[getLink(innovation.innovationCard)]">
-                    <figure class="img-overlay">
-                      <img [src]="getRelatedSrc(innovation.innovationCard)" alt=" " width="280" height="177">
-                    </figure>
-                  </a>
-                </div>
-
-                <!-- card header -->
-                <div class="card-header">
-                  <div class="card-title">
-
-                    <!-- title -->
-                    <a [href]="[getLink(innovation.innovationCard)]">
-                      <h6>{{ innovation.innovationCard.title }}</h6>
-                    </a>
-
-                    <!-- tags -->
-                    <div *ngIf="innovation.tags.length > 0" class="d-flex tag-wrapper">
-                      <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
-                        <div *ngIf="tag.type === 'SECTOR'" class="label label-tag text-notify text-normal">
-                          <i class="fas fa-tag"></i>
-                          <span class="label-text">{{ tag.label | multiling:lang | FormatText }}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
+                <!-- if video -->
+                <ng-container *ngIf="media?.type === 'VIDEO'">
+                  <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                          height="177" allowfullscreen [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"></iframe>
+                </ng-container>
 
               </div>
             </div>
+          </ng-container>
+          <!-- /section images -->
+
+          <!-- section benefits -->
+          <ng-container *ngIf="innovation.advantages && innovation.advantages.length > 0">
+            <div class="section-benefits">
+              <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
+              <ul class="benefit-wrapper">
+                <li *ngFor="let advantage of innovation.advantages" class="text-background">
+                  {{ advantage.text | FormatText }}
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+          <!-- /section benefits -->
+
+          <!-- section issue -->
+          <ng-container *ngIf="innovation.problem">
+            <div class="section-issue">
+              <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
+              <div class="issue-wrapper" [innerHTML]="innovation.problem"></div>
+            </div>
+          </ng-container>
+          <!-- /section issue -->
+
+          <!-- section solution -->
+          <ng-container *ngIf="innovation.solution">
+            <div class="section-solution">
+              <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
+              <div class="solution-wrapper" [innerHTML]="innovation.solution"></div>
+            </div>
+          </ng-container>
+          <!-- /section solution -->
+
+          <!-- section share -->
+          <div class="section-share text-center">
+
+            <!-- actions button -->
+            <div class="button-wrapper">
+              <a class="btn btn-primary rounded" [href]="contactUsUrl" target="_blank">{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}</a>
+              <a [href]="quizUrl" target="_blank" class="btn ghost-edit btn rounded" [ngStyle]="{ 'display': quizButtonDisplay }">{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}</a>
+            </div>
+
+            <!-- share buttons -->
+            <div class="share-wrapper">
+              <h3 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SHARE_TITLE' | translate }}</h3>
+              <a [href]="linkedInUrl" target="_blank" class="btn btn-round btn-linkedin"><i class="fab fa-linkedin-in"></i></a>
+              <a [href]="twitterUrl" target="_blank" class="btn btn-round btn-twitter"><i class="fab fa-twitter"></i></a>
+              <a [href]="mailUrl" target="_blank" class="btn btn-round btn-mail"><i class="fas fa-envelope"></i></a>
+            </div>
 
           </div>
-        </ng-container>
-        <!-- /section related innovations -->
+          <!-- /section share -->
 
-      </ng-container>
+          <!-- section related innovations -->
+          <ng-container *ngIf="innovationsRelated.length > 0">
+            <div class="section-related">
+
+              <div class="flex-start text-note">
+                <i class="fas fa-angle-right"></i><span class="text-background">{{ 'DISCOVERDESCRIPTION.RELATED' | translate }}</span>
+              </div>
+
+              <!-- card content -->
+              <div class="card-wrapper d-flex text-center">
+                <div *ngFor="let innovation of innovationsRelated | slice:0:3;" class="card">
+
+                  <!-- card image -->
+                  <div class="card-image">
+                    <a [href]="[getLink(innovation.innovationCard)]">
+                      <figure class="img-overlay">
+                        <img [src]="getRelatedSrc(innovation.innovationCard)" alt=" " width="280" height="177">
+                      </figure>
+                    </a>
+                  </div>
+
+                  <!-- card header -->
+                  <div class="card-header">
+                    <div class="card-title">
+
+                      <!-- title -->
+                      <a [href]="[getLink(innovation.innovationCard)]">
+                        <h6>{{ innovation.innovationCard.title }}</h6>
+                      </a>
+
+                      <!-- tags -->
+                      <div *ngIf="innovation.tags.length > 0" class="d-flex tag-wrapper">
+                        <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
+                          <div *ngIf="tag.type === 'SECTOR'" class="label label-tag text-notify text-normal">
+                            <i class="fas fa-tag"></i>
+                            <span class="label-text">{{ tag.label | multiling:lang | FormatText }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+          <!-- /section related innovations -->
+
+        </ng-container>
+      </div>
     </div>
   </section>
 </ng-container>

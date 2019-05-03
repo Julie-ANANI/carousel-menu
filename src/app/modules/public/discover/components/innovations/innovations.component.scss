@@ -50,6 +50,19 @@
 
   }
 
+  .no-result-wrapper {
+    flex-direction: column;
+
+   h3 {
+     margin-top: $unit-5;
+   }
+
+    span {
+      font-size: 0.75rem;
+    }
+
+  }
+
 }
 
 .section-community {
