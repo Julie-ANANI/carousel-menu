@@ -20,24 +20,34 @@
   <!-- /section heading -->
 
   <!-- section innovations -->
-  <div class="section-card d-flex text-center">
+  <div class="card-wrapper d-flex text-center">
     <div *ngFor="let innovationCard of topCards" class="card card-3 animate-appear">
+      <a [routerLink]="['/discover', innovationCard._id, lang]" target="_blank">
 
-      <figure class="card-image">
-        <img [src]="innovationCard.media" alt=" ">
-      </figure>
+        <div class="card-image relative">
 
-      <div class="card-header">
-        <div class="card-title text-background"><span>{{ innovationCard.title }}</span></div>
-      </div>
+          <figure>
+            <img [src]="innovationCard.media" [alt]="innovationCard.title">
+          </figure>
 
+          <div class="hover-button absolute flex-centered">
+            <span class="text-medium">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
+          </div>
+
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">{{ innovationCard.title }}</div>
+        </div>
+
+      </a>
     </div>
   </div>
   <!-- /section innovations -->
 
   <!-- section see more -->
   <div class="text-right section-light-pad rm-pad-bottom">
-    <a [href]="discoverLink" class="text-link" target="_blank" [innerText]="'SHOWCASE.SEE_MORE'" translate></a>
+    <a [routerLink]="['/discover']" [queryParams]="{tag: tags}" class="text-link" target="_blank" [innerText]="'SHOWCASE.SEE_MORE'" translate></a>
   </div>
 
 </section>

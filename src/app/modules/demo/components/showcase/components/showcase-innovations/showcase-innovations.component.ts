@@ -7,7 +7,6 @@ import { InnovCard } from '../../../../../../models/innov-card';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-showcase-innovations',
@@ -20,6 +19,8 @@ export class ShowcaseInnovationsComponent {
   @Input() set tagsStats(value: Array<TagStats>) {
     this._getInnovations(value);
   }
+
+  private _tags: Array<string> = [];
 
   private _innovations: Array<Innovation> = [];
 
@@ -34,8 +35,6 @@ export class ShowcaseInnovationsComponent {
   private _count = 0;
 
   private readonly _adminPass: boolean = false;
-
-  private _discoverLink = '';
 
   private _modalShow = false;
 
@@ -53,17 +52,15 @@ export class ShowcaseInnovationsComponent {
 
 
   private _getInnovations(value: Array<TagStats>): void {
-    const tags_id = value.map((st) => st.tag._id);
+    this._tags = value.map((st) => st.tag._id);
 
-    this._generateLink(tags_id);
-
-    if (tags_id.length > 0) {
+    if (this._tags.length > 0) {
 
       const config = {
         fields: 'created name principalMedia status',
         isPublic: '1',
         status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
-        tags: JSON.stringify({ $in: tags_id }),
+        tags: JSON.stringify({ $in: this._tags }),
         sort: '{"created":-1}'
       };
 
@@ -85,18 +82,6 @@ export class ShowcaseInnovationsComponent {
   }
 
 
-  private _generateLink(tags: Array<string>) {
-    let tagUrl = '';
-
-    tags.forEach((tag) => {
-      tagUrl += 'tag=' + tag + '&';
-    });
-
-    this._discoverLink = `${environment.clientUrl}/discover?${tagUrl}}`;
-
-  }
-
-
   private _computeCards() {
     const innovationToCard = (innovation: Innovation) => {
       let innovationCard = innovation.innovationCards.find((card: InnovCard) => card.lang === this._translateService.currentLang);
@@ -110,7 +95,7 @@ export class ShowcaseInnovationsComponent {
 
       }
       return {
-        _id: innovationCard._id,
+        _id: innovation._id,
         title: innovationCard.title,
         media: InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200')
       };
@@ -158,6 +143,10 @@ export class ShowcaseInnovationsComponent {
     return this._cards;
   }
 
+  get tags() {
+    return this._tags;
+  }
+
   get topCards() {
     return this._topCards;
   }
@@ -174,8 +163,8 @@ export class ShowcaseInnovationsComponent {
     return this._adminPass;
   }
 
-  get discoverLink(): string {
-    return this._discoverLink;
+  get lang(): string {
+    return this._translateService.currentLang;
   }
 
   get modalShow(): boolean {
