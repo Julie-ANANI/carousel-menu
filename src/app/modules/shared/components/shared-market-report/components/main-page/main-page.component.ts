@@ -26,7 +26,7 @@ export class MainPageComponent implements OnInit {
 
   constructor(private _translateService: TranslateService) {
 
-    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    this._userLang = this._translateService.currentLang;
 
   }
 

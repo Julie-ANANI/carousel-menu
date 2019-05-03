@@ -273,6 +273,18 @@
   <!-- /project status done or preview mode or not editing -->
 
 
+  <!-- insight preview -->
+  <app-sidebar *ngIf="!wordpress" [(template)]="sidebarTemplateValue">
+    <app-user-answer
+      [(userAnswer)]="modalAnswer"
+      [projectId]="innovation._id"
+      [adminMode]="adminMode"
+      [questions]="questions">
+    </app-user-answer>
+  </app-sidebar>
+  <!-- /insight preview -->
+
+
 </div>
 
 <!--  <section  [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">-->
@@ -316,18 +328,7 @@
 
 <!--  </section>-->
 
-<!--  &lt;!&ndash; insight preview &ndash;&gt;-->
-<!--  <ng-container *ngIf="!wordpress">-->
-<!--    <app-sidebar [(template)]="sidebarTemplateValue">-->
-<!--      <app-user-answer-->
-<!--        [(userAnswer)]="modalAnswer"-->
-<!--        [projectId]="innovation._id"-->
-<!--        [adminMode]="adminMode"-->
-<!--        [questions]="questions">-->
-<!--      </app-user-answer>-->
-<!--    </app-sidebar>-->
-<!--  </ng-container>-->
-<!--  &lt;!&ndash; /insight preview &ndash;&gt;-->
+
 
 <!--</ng-container>-->
 
