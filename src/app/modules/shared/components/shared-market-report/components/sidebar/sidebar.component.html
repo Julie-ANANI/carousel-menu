@@ -291,7 +291,7 @@
 
 
 <!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
-<app-modal [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
+<app-modal [modalTitle]="'Confirmation Board'" [(showModal)]="modalPreviewInnovation">
 
   <ng-container *ngIf="!innovation.previewMode">
     <span>Do you really want to make this project visible to the client?</span>
@@ -302,8 +302,8 @@
   </ng-container>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">Cancel</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickPreviewConfirm($event)">Confirm</button>
   </div>
 
 </app-modal>
@@ -312,13 +312,13 @@
 
 
 <!-- Modal to ask the operator to confirm for the reset of the executive report -->
-<app-modal [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'" [(showModal)]="modalResetReport">
+<app-modal [modalTitle]="'Confirmation Board'" [(showModal)]="modalResetReport">
 
   <span>Do you really want to reset the executive report?</span>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">Cancel</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickResetConfirm($event)">Confirm</button>
   </div>
 
 </app-modal>
@@ -327,23 +327,23 @@
 
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-modal [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'" [(showModal)]="modalEndInnovation">
+<app-modal [modalTitle]="'Confirmation Board'" [(showModal)]="modalEndInnovation">
 
   <span>Do you really want to end this project? Please keep in mind that after this you won't be able to make any further changes.</span>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="btn btn-sm btn-cancel">Cancel</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickEndInnovationConfirm($event)">Confirm</button>
   </div>
 
 </app-modal>
 <!-- /Modal to ask operator to sure about ending the project -->
 
 
-<!-- Modal to export -->
+<!-- Modal to ask operator and client to export different reports -->
 <app-market-report-export-modal
   *ngIf="isOwner"
   [innovation]="innovation"
   [(showModal)]="modalExport">
 </app-market-report-export-modal>
-<!-- /Modal to export -->
+<!-- /Modal to ask operator and client to export different reports -->
