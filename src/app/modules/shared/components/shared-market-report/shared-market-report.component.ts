@@ -14,10 +14,8 @@ import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface'
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
-import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
@@ -99,14 +97,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private _authService: AuthService,
               private _filterService: FilterService,
               private _responseService: ResponseService,
-              private _innovationCommonService: InnovationCommonService,
               private _tagFiltersService: TagsFiltersService,
               private _sharedWorldmapService: SharedWorldmapService,
               private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {
     this._filterService.reset();
-    this.initializeReport();
+    this._initializeReport();
     this._isOwner = (this._authService.userId === this._innovation.owner.id) || this._authService.adminLevel > 2;
   }
 
@@ -114,10 +111,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   /***
    * This function is calling all the initial functions.
    */
-  private initializeReport() {
-    this.initializeVariable();
-    this.getAnswers();
-    this.getCampaign();
+  private _initializeReport() {
+    this._initializeVariable();
+    this._getAnswers();
+    this._getCampaign();
     this.resetMap();
     this.presets();
   }
@@ -145,7 +142,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   /***
    *This function is to initialize the variables regarding the innovation and the projectt.
    */
-  private initializeVariable() {
+  private _initializeVariable() {
 
     /***
      * this is to check, if the admin make the synthesis available before the status is Done.
@@ -167,20 +164,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
      */
     this._executiveTemplates = executiveTemplate;
 
-    /***
-     * this is when we update the innovation in any sub component,
-     * we are listening that update and will update the innovation attribute.
-     */
-    this._innovationCommonService.getInnovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: Innovation) => {
-        if (response) {
-          this._innovation = response;
-        }
-      });
-
   }
 
 
-  private updateAnswersToShow(): void {
+  private _updateAnswersToShow(): void {
     this._filteredAnswers = this._filterService.filter(this._answers);
     this._answersOrigins = this._sharedWorldmapService.getCountriesRepartition(
       this._filteredAnswers.map(x => x.country.flag || x.professional.country)
@@ -191,7 +178,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   /***
    * This function is to fetch the answers from the server.
    */
-  private getAnswers() {
+  private _getAnswers() {
     this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
       this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
@@ -204,8 +191,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
       this._filteredAnswers = this._answers;
 
-      this.updateAnswersToShow();
-      this._filterService.filtersUpdate.subscribe(() => this.updateAnswersToShow());
+      this._updateAnswersToShow();
+
+      this._filterService.filtersUpdate.subscribe(() => this._updateAnswersToShow());
 
       this._companies = response.answers.map((answer: any) => answer.company || {
         name: answer.professional.company
@@ -251,7 +239,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   /***
    * This function is to fetch the campaign from the server.
    */
-  private getCampaign() {
+  private _getCampaign() {
     this._innovationService.campaigns(this._innovation._id).subscribe((results) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
@@ -299,7 +287,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is to update the projects.
    * @param {Event} event
    */
-  update(event: Event) {
+  public update(event: Event) {
     this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
@@ -324,7 +312,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param {Event} event
    * @param {number} value
    */
-  assignSectionValue(event: Event, value: number) {
+  public assignSectionValue(event: Event, value: number) {
     event.preventDefault();
     this._numberOfSections = value;
   }
@@ -336,7 +324,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * and call the update function to save it in database.
    * @param {Event} event
    */
-  generateExecutiveTemplate(event: Event) {
+  public generateExecutiveTemplate(event: Event) {
     event.preventDefault();
     this._innovation.executiveReport.totalSections = this._numberOfSections;
     this.update(event);
@@ -365,16 +353,18 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param event
    * @param {string} ob
    */
-  saveOperatorComment(event: any, ob: string) {
+  public saveOperatorComment(event: any, ob: string) {
     const objToSave = {};
+
     objToSave[ob] = {
       conclusion: event['content']
     };
 
-    this._innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe((response) => {
-      this._innovation.marketReport = response;
-      this.update(event);
+    this._innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe(() => {
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
+
   }
 
 
@@ -402,7 +392,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
 
-  seeAnswer(answer: Answer): void {
+  public seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
 
     this._sidebarTemplateValue = {
@@ -413,19 +403,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   }
 
+
   public get mainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
-
-  /***
-   * getting the current lang of the user.
-   * @returns {string}
-   */
-  get userLang(): string {
+  public get userLang(): string {
     return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
-
 
   public get domainName(): string {
     return environment.domain;

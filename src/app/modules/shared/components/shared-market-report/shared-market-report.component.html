@@ -151,7 +151,7 @@
 
 
           <!-- key learning section -->
-          <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-pad" id="key-learning">
+          <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-pad" id="key-learnings">
             <div class="section-pad full key-learning-wrapper bg-white text">
 
               <h2 class="title-primary" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
@@ -171,7 +171,7 @@
 
 
           <!-- origin comment and professional responses -->
-          <section class="section-pad" id="origin">
+          <section class="section-pad" id="origin-responses">
             <div class="origin-wrapper bg-white text">
               <app-question-conclusion
                 [innovation]="innovation"
@@ -258,6 +258,22 @@
           <!-- /professionals -->
 
 
+          <!-- other question sections -->
+          <section id="questions">
+            <div *ngFor="let question of questions">
+              <app-question-section
+                [project]="innovation"
+                [question]="question"
+                [answers]="filteredAnswers"
+                [showDetails]="showDetails"
+                [readonly]="!adminSide"
+                (modalAnswerChange)="seeAnswer($event)">
+              </app-question-section>
+            </div>
+          </section>
+          <!-- /other question sections -->
+
+
           <!-- conclusion -->
           <section *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-pad" id="conclusion">
             <div class="section-pad full bg-white text conclusion-wrapper">
@@ -279,7 +295,7 @@
 
 
         </section>
-
+        <!-- /answers section -->
 
       </div>
     </div>
@@ -300,49 +316,4 @@
 
 
 </div>
-
-<!--  <section  [ngStyle]="{ 'background-color': adminSide ? '#F5F5F5' : (innovation?.status !== 'DONE' && !previewMode) ? 'white' : '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">-->
-
-<!--    &lt;!&ndash; project status submitted &ndash;&gt;-->
-<!--    <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || previewMode">-->
-
-<!--      <div class="d-flex market-report-wrapper">-->
-
-
-
-<!--        &lt;!&ndash; Answer sections &ndash;&gt;-->
-<!--        <section id="answer-wrapper">-->
-
-<!--          &lt;!&ndash; other question and answers &ndash;&gt;-->
-<!--          <div class="column col-xs-12 col-11 col-mx-auto" id="questions">-->
-<!--            <div *ngFor="let question of questions">-->
-<!--              <div class="section-light-pad">-->
-<!--                <app-question-section-->
-<!--                  [project]="innovation"-->
-<!--                  [question]="question"-->
-<!--                  [answers]="filteredAnswers"-->
-<!--                  [showDetails]="showDetails"-->
-<!--                  [readonly]="!adminSide"-->
-<!--                  (modalAnswerChange)="seeAnswer($event)">-->
-<!--                </app-question-section>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          &lt;!&ndash; /other question and answers &ndash;&gt;-->
-
-
-
-<!--        </section>-->
-<!--        &lt;!&ndash; /Answer sections &ndash;&gt;-->
-
-<!--      </div>-->
-
-<!--    </ng-container>-->
-<!--    &lt;!&ndash; /Project status submitted and client side &ndash;&gt;-->
-
-<!--  </section>-->
-
-
-
-<!--</ng-container>-->
 

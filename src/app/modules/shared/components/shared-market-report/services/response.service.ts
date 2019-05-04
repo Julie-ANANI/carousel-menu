@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { Innovation } from '../../../../../models/innovation';
-import {Tag} from '../../../../../models/tag';
+import { Tag } from '../../../../../models/tag';
 
 @Injectable()
 export class ResponseService {
