@@ -1,7 +1,7 @@
-<section class="question-section-component" [id]="questionReceived.identifier | removespaces">
+<section *ngIf="questionReceived" class="question-section-component section-pad" [id]="questionReceived.identifier | removespaces">
 
   <!-- if the question type is checkbox or radio -->
-  <ng-container *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
+  <div *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
     <app-bar-chart
       [answers]="answersToShow"
       [tags]="tags"
@@ -13,8 +13,10 @@
       (modalAnswerChange)="seeAnswer($event)"
       (answerButtonClicked)="answerBtnClicked($event)">
     </app-bar-chart>
-  </ng-container>
+  </div>
   <!-- /if the question type is checkbox or radio -->
+
+  barchart
 
   <!-- if the question type is not checkbox and radio -->
   <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'">

@@ -8,8 +8,8 @@ import { ResponseService } from '../../services/response.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-question-section',
@@ -76,22 +76,16 @@ export class QuestionSectionComponent implements OnInit {
               private _location: Location,
               private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
-              private _translateNotificationService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService) {
 
-  ngOnInit() {
-
-    /***
-     * this is to make visible abstract textarea.
-     * @type {boolean}
-     */
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
+  }
+
+  ngOnInit() {
     this._buildForm();
-
     this._patchForm();
-
     this._updateAnswersData();
-
   }
 
 
@@ -190,8 +184,9 @@ export class QuestionSectionComponent implements OnInit {
     const abstract = this._formQuestionSection.get(formControlName).value;
     this._innovation = this._responseService.saveInnovationAbstract(this._innovation, abstract, formControlName);
 
-    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe(() => { }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
   }
@@ -204,7 +199,7 @@ export class QuestionSectionComponent implements OnInit {
    * @returns {string}
    */
   public getColor(length: number, limit: number) {
-    return this._responseService.getColor(length, limit);
+    return InnovationFrontService.getColor(length, limit);
   }
 
 
