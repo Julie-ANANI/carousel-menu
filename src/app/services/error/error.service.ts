@@ -9,7 +9,8 @@ import * as Sentry from '@sentry/browser';
 Sentry.init({
   environment: environment.domain,
   release: version,
-  dsn: 'https://d86e9ff2dfbb40eab9632f0a3a599757@sentry.io/1315751'
+  dsn: 'https://d86e9ff2dfbb40eab9632f0a3a599757@sentry.io/1315751',
+  defaultIntegrations: false // we don't want the sentry integrations, they provide more shadows than real data
 });
 
 @Injectable()
