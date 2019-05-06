@@ -114,7 +114,7 @@ export class ShowcaseComponent {
       geographicalRepartition: [] // we don't need this here, we already have _countries
     });
     console.log('--------------------------------');
-    console.log(`Answers/Inno: ${this._stats.totalAnswers / this._stats.totalInnovations}`);
+    console.log(`Answers/Inno: ${Math.round(this._stats.totalAnswers / this._stats.totalInnovations)}`);
     console.log(`Need: ${this._stats.countNeed}/${this._stats.totalCountNeed}`);
     console.log(`Diff: ${this._stats.countDiff}/${this._stats.totalCountDiff}`);
     console.log(`Leads: ${this._stats.countLeads}`);
