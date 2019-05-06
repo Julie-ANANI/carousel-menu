@@ -227,7 +227,7 @@ export class SearchToolComponent implements OnInit{
     const reader = new FileReader();
     reader.readAsText(file, "UTF-8");
     reader.onload = evt => {
-      const request = JSON.parse(evt.target.result);
+      const request = JSON.parse(evt.target['result']);
       this._searchForm.setValue({keywords: request.keywords});
       this._loadResults(request);
       this._requestAlreadyLoaded = true;
@@ -245,14 +245,6 @@ export class SearchToolComponent implements OnInit{
     } else {
       this._translateNotificationsService.error("ERROR.ERROR", "ERROR.CAMPAIGN.SEARCH.NO_REQUEST");
     }
-  }
-
-  public findNewResults() {
-    const keywords = this._searchForm.get('keywords').value;
-    this._searchService.findNewResults(this._requestId, keywords).pipe(first()).subscribe((result: any) => {
-      this._loadResults(result);
-      this._updateResults();
-    });
   }
 
   public getCompanyUrl(domain: string): string {

@@ -23,8 +23,8 @@ export class AnswerService {
     return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/', {params: config});
   }
 
-  public getStarsAnswer(tags: Array<string>): Observable<{result: Array<Answer>, _metadata: any}> {
-    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/stars', {params: {tags: tags}});
+  public getSectorAnswer(tags: Array<string>): Observable<{result: Array<Answer>, _metadata: any}> {
+    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/sectors', {params: {tags: tags}});
   }
 
   public remove(answerId: string): Observable<any> {
@@ -85,5 +85,9 @@ export class AnswerService {
 
   public importFromQuiz(answer: any): Observable<any> {
     return this._http.post(`/campaign/${answer.campaignId}/answer`, answer);
+  }
+
+  public cleanAnswers(): Observable<any> {
+    return this._http.get(`/answer/update/database`);
   }
 }

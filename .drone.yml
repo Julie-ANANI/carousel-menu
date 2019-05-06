@@ -46,6 +46,7 @@ steps:
     build_args:
     - APP_NAME=umi
     - ENV_NAME=production
+    - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -80,6 +81,7 @@ steps:
     build_args:
     - APP_NAME=dynergie
     - ENV_NAME=production
+    - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -113,6 +115,7 @@ steps:
     build_args:
     - APP_NAME=multivalente
     - ENV_NAME=production
+    - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -146,6 +149,7 @@ steps:
     build_args:
     - APP_NAME=inomer
     - ENV_NAME=production
+    - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -179,6 +183,7 @@ steps:
     build_args:
     - APP_NAME=novanexia
     - ENV_NAME=production
+    - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -212,6 +217,7 @@ steps:
     build_args:
     - APP_NAME=salveo
     - ENV_NAME=production
+    - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -245,6 +251,7 @@ steps:
     build_args:
       - APP_NAME=schneider
       - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -278,6 +285,7 @@ steps:
     build_args:
       - APP_NAME=bnpparibas
       - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username

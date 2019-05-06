@@ -32,8 +32,6 @@ const authRoutes: Routes = [
   ],
   exports: [
     RouterModule
-  ],
-  providers: [
   ]
 })
 

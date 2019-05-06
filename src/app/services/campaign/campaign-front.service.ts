@@ -63,8 +63,12 @@ export class CampaignFrontService {
         switch (requestFor) {
 
           case 'status':
-            if (answer.status === searchKey) {
+            if (searchKey instanceof Array && searchKey.includes(answer.status)) {
               value += 1;
+            } else {
+              if (answer.status === searchKey) {
+                value += 1;
+              }
             }
             break;
 
@@ -93,7 +97,7 @@ export class CampaignFrontService {
 
     }
 
-    return value
+    return value;
   }
 
 

@@ -35,7 +35,11 @@ export class ShowcaseClientsComponent {
             }, {});
 
           this._totalClients = Object.values(companies);
-          this._selectedClients = this._totalClients.slice(0, 8);
+          this._selectedClients = this._totalClients.sort((a, b) => {
+            if (a.logo && !b.logo) { return -1; }
+            if (!a.logo && b.logo) { return 1; }
+            return 0;
+          }).slice(0, 8);
           this._topClients = this._selectedClients;
 
         }

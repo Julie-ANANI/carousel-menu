@@ -156,7 +156,7 @@ export class NguiAutoCompleteComponent implements OnInit {
     public keyword: string;
 
     private delay = (function() {
-        let timer = 0;
+        let timer;
         return function(callback: any, ms: number) {
             clearTimeout(timer);
             timer = setTimeout(callback, ms);

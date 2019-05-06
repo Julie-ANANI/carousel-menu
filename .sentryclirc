@@ -1,0 +1,6 @@
+[defaults]
+org = unitedmotionideas
+project = front-prod
+
+[auth]
+token = 6f617e0e74094b89bc999c9dc371ce7f7d606b966c5c4c80a6a58e9a2ca65047

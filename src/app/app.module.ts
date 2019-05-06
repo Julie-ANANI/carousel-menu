@@ -15,6 +15,7 @@ import { NotFoundModule } from './modules/common/not-found/not-found.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Services
+import { AuthService } from './services/auth/auth.service';
 import { ErrorService } from './services/error/error.service';
 import { LocalStorageService } from './services/localStorage/localStorage.service';
 import { TranslationService } from "./services/translation/translation.service";
@@ -52,6 +53,7 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     AppComponent
   ],
   providers: [
+    AuthService,
     ErrorService,
     LocalStorageService,
     TranslationService,
@@ -62,6 +64,7 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    // { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
     SwellrtBackend
   ],
   bootstrap: [

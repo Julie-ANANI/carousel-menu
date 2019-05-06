@@ -44,9 +44,9 @@ export const DISCOVER = {
 
   'NO_RESULT': 'Aucun résultat trouvé',
 
-  'NO_RESULT_HEADING': 'Quelque chose ne va pas ici...',
+  'NO_RESULT_HEADING': 'Aucun résultat trouvé',
 
-  'NO_RESULT_TEXT': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir), essayez à nouveau avec des mots-clés différents.',
+  'NO_RESULT_TEXT': 'Essayez d\'ajuster votre recherche ou votre filtre pour trouver ce que vous cherchez.',
 
   'HIGHLIGHT_SECTOR_HEADING': 'Sélectionnez un ou plusieurs secteurs pour voir les innovations spécifiques',
 
