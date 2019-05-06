@@ -268,3 +268,36 @@ steps:
   when:
     event:
       - tag
+
+  ## BNP Paribas production steps
+- name: dockerProdBNP
+  image: plugins/docker
+  settings:
+    auto_tag: true
+    auto_tag_suffix: bnpparibas
+    build_args:
+      - APP_NAME=bnpparibas
+      - ENV_NAME=production
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdBNP
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-bnpparibas"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-bnpparibas"
+    timeout: 240
+  when:
+    event:
+      - tag
