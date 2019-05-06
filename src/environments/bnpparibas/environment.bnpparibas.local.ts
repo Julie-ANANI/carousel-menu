@@ -1,0 +1,17 @@
+export const environment = {
+  local: true,
+  production: false,
+  apiUrl: 'http://localhost:3000/api',
+  clientUrl: 'http://localhost:4200',
+  companyName: 'BNP Paribas (demo)',
+  companyShortName: 'BNP (demo)',
+  domain: 'bnpparibas',
+  quizUrl: 'http://localhost:4200',
+  companyURL: 'https://group.bnpparibas',
+  logoURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/bnpparibas/logo-bnp.png',
+  logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/bnpparibas/logo-bnp.png',
+  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',
+  commercialContact: 'contact@bnpparibas.com',
+  secureCookie: false,
+  cookieTime: 48 * 3600 * 1000
+};
