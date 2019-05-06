@@ -9,14 +9,13 @@
       [question]="questionReceived"
       [readonly]="readonly"
       [stats]="stats"
-      [showDetails]="showDetails"
+      [toggleAnswers]="toggleAnswers"
       (modalAnswerChange)="seeAnswer($event)"
       (answerButtonClicked)="answerBtnClicked($event)">
     </app-bar-chart>
   </div>
   <!-- /if the question type is checkbox or radio -->
 
-  barchart
 
   <!-- if the question type is not checkbox and radio -->
   <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'">
@@ -67,14 +66,14 @@
 
     <!-- answer button -->
     <div class="section-light-pad rm-pad-bottom text-center">
-      <button type="button" class="btn ghost-primary" (click)="showDetails = !showDetails; $event.preventDefault()">
-        {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-        <i class="fas icon-size" aria-hidden="true" [ngClass]="showDetails ? 'fa-angle-down' : 'fa-angle-right'"></i>
+      <button type="button" class="btn ghost-primary" (click)="toggleAnswers = !toggleAnswers; $event.preventDefault()">
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
       </button>
     </div>
 
     <!-- now showing the answers, this contains both the answers to show and comments  -->
-    <ng-container *ngIf="showDetails">
+    <ng-container *ngIf="toggleAnswers">
       <div class="d-flex section-light-pad rm-pad-bottom clearbit-list-wrapper rm-margin">
 
         <ng-container *ngIf="answersWithComment.length > 0">
@@ -115,14 +114,14 @@
 
     <!-- answer button -->
     <div class="section-light-pad rm-pad-bottom text-center">
-      <button type="button" class="btn ghost-primary" (click)="showDetails = !showDetails; $event.preventDefault()">
-        {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-        <i class="fas icon-size" aria-hidden="true" [ngClass]="showDetails ? 'fa-angle-down' : 'fa-angle-right'"></i>
+      <button type="button" class="btn ghost-primary" (click)="toggleAnswers = !toggleAnswers; $event.preventDefault()">
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
       </button>
     </div>
 
     <!-- now showing the answers that we have for the textarea, scale, toggle and star type -->
-    <ng-container *ngIf="showDetails">
+    <ng-container *ngIf="toggleAnswers">
 
       <!-- star -->
       <ng-container *ngIf="questionReceived.controlType === 'stars'">

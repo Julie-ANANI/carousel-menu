@@ -75,7 +75,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     nbValidatedResp: number
   };
 
-  private _showDetails: boolean = false;
+  private _toggleAnswers: boolean = false;
 
   private _numberOfSections: number;
 
@@ -420,8 +420,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._previewMode;
   }
 
-  get showDetails(): boolean {
-    return this._showDetails;
+  get toggleAnswers(): boolean {
+    return this._toggleAnswers;
   }
 
   get filters(): {[questionId: string]: Filter} {

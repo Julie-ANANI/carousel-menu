@@ -28,8 +28,8 @@ export class QuestionSectionComponent implements OnInit {
     this._updateAnswersData();
   }
 
-  @Input() set showDetails(value: boolean) {
-    this._showDetails = value;
+  @Input() set toggleAnswers(value: boolean) {
+    this._toggleAnswers = value;
     this._showComment = value;
   }
 
@@ -57,7 +57,7 @@ export class QuestionSectionComponent implements OnInit {
 
   private _formQuestionSection: FormGroup;
 
-  private _showDetails: boolean;
+  private _toggleAnswers: boolean = false;
 
   private _answersWithComment: Array<Answer> = [];
 
@@ -211,8 +211,8 @@ export class QuestionSectionComponent implements OnInit {
     return this._readonly;
   }
 
-  get showDetails(): boolean {
-    return this._showDetails;
+  get toggleAnswers(): boolean {
+    return this._toggleAnswers;
   }
 
   get answersToShow(): Array<Answer> {

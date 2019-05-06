@@ -104,7 +104,6 @@ export const MARKET_REPORT = {
 
   'EXECUTIVE_PLACEHOLDER': {
     'CONCLUSION': 'Ecrivez votre conclusion en max 1200 mots.',
-    'SECTION': 'Ecrivez un résumé en max 160 mots.'
   },
 
   'TARGET_COUNTRIES': 'Pays ciblés',

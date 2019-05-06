@@ -3,19 +3,20 @@
 #bar-chart-component {
 
   .icon-size {
-    font-size: 22px;
+    font-size: 18px;
   }
 
-  .header-wrapper {
+  .bg-white {
     background-color: $bg-color-light;
+  }
 
-    .title-primary {
-      font-size: 1.35rem;
-    }
-
+  .title-primary {
+    font-size: 1.35rem;
   }
 
   .content-wrapper {
+    transition: all 0.25s ease;
+    height: 100%;
 
     .bar-name {
       font-size: $font-size-lg;
@@ -57,6 +58,17 @@
 
     }
 
+    &.collapse-wrapper {
+      height: 0;
+      transform: scaleY(0);
+      visibility: hidden;
+    }
+
+    &.expand-wrapper {
+      height: 100%;
+      transform: scaleY(1);
+      visibility: visible;
+    }
 
   }
 

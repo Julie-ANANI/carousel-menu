@@ -40,7 +40,7 @@ export class BarChartComponent implements OnInit {
 
   @Input() stats: any;
 
-  @Input() showDetails: boolean;
+  @Input() toggleAnswers: boolean = false;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
@@ -209,8 +209,8 @@ export class BarChartComponent implements OnInit {
 
   public toggleAnswer(event: Event) {
     event.preventDefault();
-    this.showDetails = !this.showDetails;
-    this.answerButtonClicked.emit(this.showDetails);
+    this.toggleAnswers = !this.toggleAnswers;
+    this.answerButtonClicked.emit(this.toggleAnswers);
   }
 
   /***

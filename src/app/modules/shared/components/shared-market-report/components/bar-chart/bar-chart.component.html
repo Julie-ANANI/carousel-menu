@@ -3,8 +3,7 @@
 
 
   <!-- header section -->
-  <div class="header-wrapper">
-
+  <div class="bg-white">
     <app-question-conclusion
       [innovation]="innovation"
       [pieChart]="pieChart"
@@ -13,24 +12,28 @@
       [stats]="stats"
       [tags]="tags">
     </app-question-conclusion>
+  </div>
+  <!-- /header section -->
 
-    <!-- abstract -->
-    <form *ngIf="adminSide" novalidate [formGroup]="formBarChart">
-      <div class="section-pad full">
 
-        <h2 class="title-primary">Abstract</h2>
+  <!-- abstract -->
+  <div *ngIf="adminSide" class="section-pad">
+    <form novalidate [formGroup]="formBarChart">
+      <div class="section-light-pad full-light bg-white full">
+
+        <h2 class="title-primary">{{ question?.identifier | FormatText }} Abstract</h2>
 
         <div class="form-group relative">
           <label [for]="'market-report-' + question._id"></label>
           <textarea
             class="form-input"
             [id]="'market-report-' + question._id"
-            [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.SECTION' | translate"
+            placeholder="Describe the abstract of this question within 160 words."
             [formControlName]="question._id"
             rows="5"
             (blur)="saveAbstract($event, question._id)"
             maxlength="160">
-                </textarea>
+          </textarea>
           <div class="char-remaining" [ngStyle]="{ 'color': getColor((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
             <span>{{ formBarChart.get(question._id).value.length | characterCountdown:160 }}</span>
           </div>
@@ -38,66 +41,65 @@
 
       </div>
     </form>
-    <!-- /abstract -->
-
   </div>
-  <!-- /header section -->
+  <!-- /abstract -->
+
 
   <!-- content section -->
-  <div class="content-wrapper">
+  <div>
 
-    <!-- button to toggle answer display -->
+    <!-- button to toggle answers display -->
     <div class="section-light-pad rm-pad-bottom text-center">
-      <button type="button" class="btn ghost-primary" (click)="toggleAnswer($event)">
-        {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-        <i class="fas icon-size" aria-hidden="true" [ngClass]="showDetails ? 'fa-angle-down' : 'fa-angle-right'"></i>
+      <button type="button" class="btn btn-primary" (click)="toggleAnswer($event)">
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
       </button>
     </div>
 
-    <ng-container *ngIf="showDetails">
-      <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="section-pad rm-pad-bottom">
+    <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
+      <div *ngIf="toggleAnswers">
+        <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="section-pad rm-pad-bottom">
+          <ng-container *ngIf="filter ? filter.value[barData.identifier] : true">
 
-        <ng-container *ngIf="filter ? filter.value[barData.identifier] : true">
-
-          <!-- Row 1 -->
-          <div class="flex-between text-medium">
+            <!-- row 1 -->
+            <div class="flex-between text-medium">
 
               <span class="c-hand" (click)="filterAnswer(barData, $event)">
                 <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" alt=" ">
               </span>
-            <span class="bar-name text-background">{{ barData.label | multiling:lang }}</span>
+              <span class="bar-name text-background">{{ barData.label | multiling:lang }}</span>
 
-            <div class="d-flex text-notify text-medium response-wrapper c-hand" (click)="showAnswers[i] = !showAnswers[i]">
-              <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
-              <span class="icon-size"><i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-down' : 'fa-angle-right'"></i></span>
+              <div class="d-flex text-notify text-medium response-wrapper c-hand" (click)="showAnswers[i] = !showAnswers[i]">
+                <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+                <span class="icon-size"><i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-down' : 'fa-angle-right'"></i></span>
+              </div>
+
             </div>
+            <!-- /Row 1 -->
 
-          </div>
-          <!-- /Row 1 -->
+            <!-- Row 2 -->
+            <div class="bar c-hand" (click)="showAnswers[i] = !showAnswers[i]">
+              <div class="bar-item tooltip" [attr.data-tooltip]="barData.absolutePercentage" [ngStyle]="{ 'width': barData.absolutePercentage , 'background': barData.color }"></div>
+            </div>
+            <!-- /Row 2 -->
 
-          <!-- Row 2 -->
-          <div class="bar c-hand" (click)="showAnswers[i] = !showAnswers[i]">
-            <div class="bar-item tooltip" [attr.data-tooltip]="barData.absolutePercentage" [ngStyle]="{ 'width': barData.absolutePercentage , 'background': barData.color }"></div>
-          </div>
-          <!-- /Row 2 -->
-
-          <!-- Row 3 -->
-          <div *ngIf="showAnswers[i]">
-            <div class="d-flex answer-wrapper section-light-pad rm-pad-bottom">
-              <div *ngFor="let answer of barData.answers" class="card">
-                <app-market-comment
-                  [answer]="answer"
-                  [questionId]="question.identifier+'Comment'"
-                  (modalAnswerChange)="seeAnswer($event)">
-                </app-market-comment>
+            <!-- Row 3 -->
+            <div *ngIf="showAnswers[i]">
+              <div class="d-flex answer-wrapper section-light-pad rm-pad-bottom">
+                <div *ngFor="let answer of barData.answers" class="card">
+                  <app-market-comment
+                    [answer]="answer"
+                    [questionId]="question.identifier+'Comment'"
+                    (modalAnswerChange)="seeAnswer($event)">
+                  </app-market-comment>
+                </div>
               </div>
             </div>
-          </div>
 
-        </ng-container>
-
+          </ng-container>
+        </div>
       </div>
-    </ng-container>
+    </div>
 
   </div>
   <!-- /content section -->
