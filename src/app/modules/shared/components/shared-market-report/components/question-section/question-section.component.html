@@ -33,7 +33,7 @@
 
 
     <!-- abstract -->
-    <div *ngIf="adminSide" class="section-pad">
+    <div *ngIf="adminSide" class="section-light-pad">
       <form novalidate [formGroup]="formQuestionSection">
         <div class="section-light-pad full-light bg-white full">
 
@@ -66,22 +66,22 @@
 
 
   <!-- if the question type is list or clearbit -->
-  <ng-container *ngIf="questionReceived.controlType === 'list' || questionReceived.controlType === 'clearbit'">
+  <div *ngIf="questionReceived.controlType === 'list' || questionReceived.controlType === 'clearbit'">
 
     <!-- answer button -->
     <div class="section-light-pad rm-pad-bottom text-center">
-      <button type="button" class="btn ghost-primary" (click)="toggleAnswers = !toggleAnswers; $event.preventDefault()">
+      <button type="button" class="btn btn-secondary" (click)="toggleAnswers = !toggleAnswers">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
         <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
       </button>
     </div>
 
     <!-- now showing the answers, this contains both the answers to show and comments  -->
-    <ng-container *ngIf="toggleAnswers">
-      <div class="d-flex section-light-pad rm-pad-bottom clearbit-list-wrapper rm-margin">
+    <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
+      <div *ngIf="toggleAnswers">
+        <div class="d-flex section-light-pad rm-pad-bottom clearbit-list-wrapper rm-margin">
 
-        <ng-container *ngIf="answersWithComment.length > 0">
-          <div class="clearbit-comment-wrapper">
+          <div *ngIf="answersWithComment.length > 0" class="clearbit-comment-wrapper">
             <div *ngFor="let answer of answersWithComment" class="card">
               <div class="card-body">
                 <app-market-comment-2
@@ -92,25 +92,26 @@
               </div>
             </div>
           </div>
-        </ng-container>
 
-        <div class="clearbit-icon-wrapper">
-          <app-item-list
-            [answers]="answersToShow"
-            [innovation]="innovation"
-            [question]="questionReceived"
-            [readonly]="readonly"
-            [stats]="stats"
-            (updateNumberOfItems)="updateNumberOfItems($event)"
-            (modalAnswerChange)="seeAnswer($event)">
-          </app-item-list>
+          <div class="clearbit-icon-wrapper">
+            <app-item-list
+              [answers]="answersToShow"
+              [innovation]="innovation"
+              [question]="questionReceived"
+              [readonly]="readonly"
+              [stats]="stats"
+              (updateNumberOfItems)="updateNumberOfItems($event)"
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-item-list>
+          </div>
+
         </div>
-
       </div>
-    </ng-container>
+    </div>
 
-  </ng-container>
+  </div>
   <!-- /if the question type is list or clearbit -->
+
 
   <!-- showing answers if the question type is not clearbit, radio, checkbox and list -->
   <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'
@@ -168,6 +169,7 @@
   </ng-container>
   <!-- /showing answers if the question type is not clearbit, radio, checkbox and list -->
 
+
   <!-- comments that are not related to answers like general comments but not for list and clearbit question type -->
   <ng-container *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit' && answersWithComment.length > 0">
 
@@ -186,5 +188,6 @@
 
   </ng-container>
   <!-- /comments that are not related to answers like general comments but not for list and clearbit question type -->
+
 
 </section>

@@ -1,15 +1,15 @@
 <section class="popover popover-left">
 
-  <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/info.png" width="18px" height="18px" alt=" ">
+  <div class="icon icon-meta c-default">
+    <i class="fas fa-info-circle"></i>
+  </div>
 
-  <ng-container *ngIf="answers && answers.length">
-    <div class="popover-container">
-      <ul class="card">
-        <li *ngFor="let answer of answers; let i = index" class="card-body">
-          <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
-        </li>
-      </ul>
-    </div>
-  </ng-container>
+  <div *ngIf="answers && answers.length" class="popover-container">
+    <ul class="card">
+      <li *ngFor="let answer of answers; let i = index" class="card-body">
+        <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+      </li>
+    </ul>
+  </div>
 
 </section>

@@ -71,8 +71,6 @@ export class QuestionSectionComponent implements OnInit {
 
   private _showComment: boolean;
 
-
-
   constructor(private _translateService: TranslateService,
               private _responseService: ResponseService,
               private _location: Location,

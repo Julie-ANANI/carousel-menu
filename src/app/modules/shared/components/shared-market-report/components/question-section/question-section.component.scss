@@ -25,6 +25,24 @@
     margin-bottom: -$unit-5;
   }
 
+  .content-wrapper {
+    transition: all 0.25s ease;
+    height: 100%;
+
+    &.collapse-wrapper {
+      height: 0;
+      transform: scaleY(0);
+      visibility: hidden;
+    }
+
+    &.expand-wrapper {
+      height: 100%;
+      transform: scaleY(1);
+      visibility: visible;
+    }
+
+  }
+
   .clearbit-list-wrapper {
     flex-wrap: wrap;
     justify-content: space-between;
@@ -47,9 +65,13 @@
     margin-bottom: $unit-5;
 
     .card-body {
-      padding: 1.25rem;
+      padding: 0.75rem;
       height: 100%;
       width: 100%;
+    }
+
+    &:hover {
+      box-shadow: $box-shadow-hover-umi;
     }
 
   }
@@ -62,7 +84,7 @@
       min-height: 9.5rem;
 
       .card-body {
-        padding: 0.75rem;
+        padding: 0.5rem;
       }
 
     }
@@ -96,7 +118,7 @@
 @media (max-width: $size-sm) {
 
   .less-padding {
-    padding: 0.75rem $unit-4 !important;
+    // padding: 0.75rem $unit-4 !important;
   }
 
   .toggle-wrapper {

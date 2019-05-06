@@ -54,6 +54,10 @@
           width: 100%;
         }
 
+        &:hover {
+          box-shadow: $box-shadow-hover-umi;
+        }
+
       }
 
     }
