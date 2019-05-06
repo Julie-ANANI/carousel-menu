@@ -8,7 +8,7 @@ export const environment = {
   domain: 'bnpparibas',
   quizUrl: 'https://quiz.umi.us',
   companyURL: 'https://group.bnpparibas',
-  logoURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/bnpparibas/logo-bnp-dark-bg.png',
+  logoURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/bnpparibas/logo-bnp.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/bnpparibas/logo-bnp.png',
   background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',
   commercialContact: 'contact@bnpparibas.com',
