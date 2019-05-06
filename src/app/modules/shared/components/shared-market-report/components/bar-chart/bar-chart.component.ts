@@ -9,9 +9,9 @@ import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ResponseService } from '../../services/response.service';
 import { BarData } from '../../models/bar-data';
-import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-bar-chart',
@@ -65,7 +65,7 @@ export class BarChartComponent implements OnInit {
               private _location: Location,
               private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
-              private _translateNotificationService: TranslateNotificationsService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _responseService: ResponseService) { }
 
   ngOnInit() {
@@ -222,8 +222,9 @@ export class BarChartComponent implements OnInit {
     const abstract = this._formBarChart.get(formControlName).value;
     this.innovation = this._responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
 
-    this._innovationService.save(this.innovation._id, this.innovation).pipe(first()).subscribe(() => { }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    this._innovationService.save(this.innovation._id, this.innovation).subscribe(() => {
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
   }
@@ -236,7 +237,7 @@ export class BarChartComponent implements OnInit {
    * @returns {string}
    */
   public getColor(length: number, limit: number) {
-    return this._responseService.getColor(length, limit);
+    return InnovationFrontService.getColor(length, limit);
   }
 
   get filter() {
