@@ -58,16 +58,22 @@
 
     <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
       <div *ngIf="toggleAnswers">
-        <div *ngFor="let barData of barsData; let i = index;" [attr.data-index]="i" class="section-pad rm-pad-bottom">
-          <div *ngIf="filter ? filter.value[barData.identifier] : true">
+        <div *ngFor="let barData of barsData; let i = index;" [attr.data-index]="i">
+          <div *ngIf="filter ? filter.value[barData.identifier] : true" class="section-light-pad rm-pad-bottom">
 
             <!-- row 1 -->
             <div class="flex-between text-medium">
 
               <div>
-                <span class="c-hand" (click)="filterAnswer(barData, $event)">
-                  <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" alt=" ">
-                </span>
+                <div (click)="filterAnswer(barData, $event); toggleFilterIcon[i] = false"
+                     (mouseenter)="toggleFilterIcon[i] = true;"
+                     (mouseleave)="toggleFilterIcon[i] = false;"
+                     [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate"
+                     [ngStyle]="{ 'width': '20px' }"
+                     [ngClass]="toggleFilterIcon[i] ? 'icon-delete' : 'icon-meta'"
+                     class="c-hand icon tooltip">
+                  <i class="fas icon-size" [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </div>
                 <span class="bar-name text-background">{{ barData.label | multiling:lang }}</span>
               </div>
 

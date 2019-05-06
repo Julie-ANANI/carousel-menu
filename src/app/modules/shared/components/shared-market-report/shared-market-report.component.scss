@@ -134,12 +134,14 @@
         height: 0;
         transform: scaleY(0);
         visibility: hidden;
+        transform-origin: 100% 0;
       }
 
       &.expand-wrapper {
         height: 100%;
         transform: scaleY(1);
         visibility: visible;
+        transform-origin: 0 100%;
       }
 
     }

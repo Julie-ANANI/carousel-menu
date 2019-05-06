@@ -58,7 +58,9 @@ export class BarChartComponent implements OnInit {
 
   private _pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
 
-  private _showAnswers: {[index: string]: string} = {};
+  private _showAnswers: {[index: string]: boolean} = {};
+
+  private _toggleFilterIcon: {[index: string]: boolean} = {};
 
   constructor(private _translateService: TranslateService,
               private _filterService: FilterService,
@@ -66,22 +68,16 @@ export class BarChartComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _responseService: ResponseService) { }
+              private _responseService: ResponseService) {
 
-  ngOnInit() {
-
-    /***
-     * this is to make visible abstract textarea.
-     * @type {boolean}
-     */
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
+  }
+
+  ngOnInit() {
     this._updateAnswersData();
-
     this._buildForm();
-
     this._patchForm();
-
   }
 
 
@@ -268,8 +264,12 @@ export class BarChartComponent implements OnInit {
     return this._executiveReportView;
   }
 
-  get showAnswers(): { [p: string]: string } {
+  get showAnswers(): { [p: string]: boolean } {
     return this._showAnswers;
+  }
+
+  get toggleFilterIcon(): { [p: string]: boolean } {
+    return this._toggleFilterIcon;
   }
 
 }

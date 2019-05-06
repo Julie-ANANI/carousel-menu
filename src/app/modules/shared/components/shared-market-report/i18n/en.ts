@@ -178,6 +178,8 @@ export const MARKET_REPORT = {
 
   'TOOLTIP_HIDE_PROFESSIONAL': 'Hide professional',
 
+  'TOOLTIP_HIDE_ANSWER': 'Hide answer',
+
   'VIEW_PLACEHOLDER': 'Name of your view',
 
   'SEE_MORE': 'See more',

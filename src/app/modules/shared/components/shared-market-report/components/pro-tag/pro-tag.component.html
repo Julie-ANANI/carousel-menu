@@ -53,13 +53,11 @@
 
 
   <!-- tag -->
-  <ng-container *ngIf="tags && tags.length > 0">
-    <div class="tag-wrapper">
-      <div *ngFor="let tag of tags" class="label label-success label-rounded c-hand" [title]="tag.description | multiling:userLang" (click)="checkTag($event, tag)">
-        <i class="fas fa-tag"></i><span>{{ tag.label | multiling:userLang }}</span>
-      </div>
+  <div *ngIf="tags && tags.length > 0" class="tag-wrapper">
+    <div *ngFor="let tag of tags" class="label label-success label-rounded" [title]="tag.description | multiling:userLang">
+      <i class="fas fa-tag"></i><span>{{ tag.label | multiling:userLang }}</span>
     </div>
-  </ng-container>
+  </div>
   <!-- /tag -->
 
 </section>
