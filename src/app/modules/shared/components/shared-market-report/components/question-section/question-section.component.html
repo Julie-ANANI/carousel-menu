@@ -168,7 +168,7 @@
 
 
   <!-- comments that are not related to answers like general comments but not for list and clearbit question type -->
-  <ng-container *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit' && answersWithComment.length > 0">
+  <div *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit' && answersWithComment.length > 0">
 
     <div class="section-pad rm-pad-bottom">
       <h5 class="title-secondary">{{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}</h5>
@@ -183,7 +183,7 @@
       </div>
     </div>
 
-  </ng-container>
+  </div>
   <!-- /comments that are not related to answers like general comments but not for list and clearbit question type -->
 
 

@@ -119,11 +119,11 @@ export const MARKET_REPORT = {
 
   'PIE_CHART': 'des réponses sont favorables',
 
-  'COMMENTS': 'commentaires',
+  'COMMENTS': 'commentaire(s)',
 
   'ANSWER': 'réponse',
 
-  'ANSWERS': 'réponses',
+  'ANSWERS': 'réponse(s)',
 
   'SEE_ANSWERS': 'Voir la réponse',
 

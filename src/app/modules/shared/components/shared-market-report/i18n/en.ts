@@ -128,7 +128,7 @@ export const MARKET_REPORT = {
 
   'ANSWER': 'answer',
 
-  'ANSWERS': 'answers',
+  'ANSWERS': 'answer(s)',
 
   'SEE_ANSWERS': 'Show answer',
 
@@ -144,7 +144,7 @@ export const MARKET_REPORT = {
 
   'BTN_PROFESSIONAL_CLOSE': 'Hide professionals',
 
-  'BTN_COMMENTS_OPEN': 'Comments',
+  'BTN_COMMENTS_OPEN': 'comment(s)',
 
   'BTN_COMMENTS_CLOSE': 'Hide Comments ({{length}})',
 
