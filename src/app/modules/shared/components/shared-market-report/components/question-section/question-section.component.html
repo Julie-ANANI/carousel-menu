@@ -70,7 +70,7 @@
 
     <!-- answer button -->
     <div class="section-light-pad rm-pad-bottom text-center">
-      <button type="button" class="btn btn-secondary" (click)="toggleAnswers = !toggleAnswers">
+      <button type="button" class="btn btn-primary" (click)="toggleAnswers = !toggleAnswers">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
         <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
       </button>

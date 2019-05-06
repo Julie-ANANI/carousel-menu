@@ -20,11 +20,14 @@
     .tag-wrapper {
       margin: -$unit-1;
 
-      .label.label-tag {
+      .label.label-success {
 
-        &:hover {
-          cursor: pointer;
-          background-color: $primary-color;
+        .fas {
+          font-size: $font-icon-xs;
+        }
+
+        .label-text {
+          margin-left: $unit-1;
         }
 
       }
