@@ -30,16 +30,17 @@ file-drop.drop-container {
 
 }
 
-#dropZone {
+.ngx-file-drop__drop-zone, .ngx-file-drop__content {
+  height: inherit !important;
+  margin: 0 !important;
+  border: none !important;
   width: 100%;
-  height: inherit;
+}
 
-  .content {
-    min-height: 100%;
-    flex-direction: column;
-    text-align: center;
-  }
-
+.ngx-file-drop__content {
+  color: transparent !important;
+  height: 100% !important;
+  flex-direction: column;
 }
 
 file-drop.drop-container:hover {
