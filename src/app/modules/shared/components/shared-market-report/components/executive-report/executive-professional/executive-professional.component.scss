@@ -11,46 +11,44 @@
   background-color: $bg-color-light;
 
   .title-primary {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     font-size: 24px;
   }
 
-  .section-2-wrapper {
-    margin-bottom: 25px;
+  .response-wrapper {
+    margin-bottom: 15px;
 
     .sub-title {
       color: $meta-color;
       font-weight: 600;
       font-size: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
-    .map-wrapper, .abstract-professional {
-      margin-bottom: 15px;
+    .map-wrapper, .abstract-wrapper {
+      margin-bottom: 10px;
     }
 
-    .abstract-professional {
+    .abstract-wrapper {
       color: $text-primary-color;
       font-size: 13px;
       font-weight: normal;
-      max-width: 380px;
     }
 
   }
 
-  .professional-profile-wrapper {
+  .profile-wrapper {
     margin-bottom: 10px;
 
     .profile {
       max-width: 380px;
-      height: 90px;
+      min-height: 90px;
       background-color: #F5F5F5;
-      border-right: 3px;
       margin-bottom: 15px;
       display: flex;
 
-      .icons {
-        height: 100%;
+      .icon-wrapper {
+        height: inherit;
         width: 57px;
         background-color: #DBDBDB;
         display: flex;
@@ -60,11 +58,12 @@
 
         .fa-user {
           color: white;
+          margin-bottom: 10px;
         }
 
       }
 
-      .details {
+      .detail-wrapper {
         padding: 10px;
         font-size: 13px;
         font-weight: 600;
@@ -76,21 +75,20 @@
 
         .company {
           color: $meta-color;
-          margin-bottom: 0;
         }
 
-        .tag {
-          display: inline-flex;
-          background-color: $background-color;
-          color: white;
-          padding: 3px 10px;
-          font-size: 11px;
-          font-weight: 600;
-          border-radius: 25px;
-          margin: 5px 5px 5px 0;
+        .tag-wrapper {
+          display: flex;
+          flex-wrap: wrap;
 
-          .label-text {
-            margin-left: 5px;
+          .fa-tag {
+            font-size: 10px;
+            margin-right: 4px;
+          }
+
+          .label {
+            padding: 8px 10px;
+            font-size: 11px;
           }
 
         }
@@ -105,7 +103,6 @@
     font-size: 16px;
     color: #4F5D6B;
     font-weight: 600;
-    margin-bottom: 0;
 
     .text-link {
       font-size: 14px;
@@ -116,49 +113,49 @@
 }
 
 
-@media (max-width: 960px) {
-
-  #executive-professional-wrapper {
-    border-right: none;
-
-    .section-2-wrapper {
-
-      .abstract-professional {
-        max-width: 100%;
-      }
-
-    }
-
-    .professional-profile-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-right: -10px;
-
-      .profile {
-        width: 380px;
-        margin-right: 10px;
-      }
-
-    }
-
-  }
-
-}
-
-@media (max-width: 420px) {
-
-  #executive-professional-wrapper {
-
-    .professional-profile-wrapper {
-
-      .profile {
-        width: 100%;
-        max-width: 100%;
-      }
-
-    }
-
-  }
-
-}
+//@media (max-width: 960px) {
+//
+//  #executive-professional-wrapper {
+//    border-right: none;
+//
+//    .response-wrapper {
+//
+//      .abstract-wrapper {
+//        max-width: 100%;
+//      }
+//
+//    }
+//
+//    .profile-wrapper {
+//      display: flex;
+//      flex-wrap: wrap;
+//      justify-content: space-between;
+//      margin-right: -10px;
+//
+//      .profile {
+//        width: 380px;
+//        margin-right: 10px;
+//      }
+//
+//    }
+//
+//  }
+//
+//}
+//
+//@media (max-width: 420px) {
+//
+//  #executive-professional-wrapper {
+//
+//    .profile-wrapper {
+//
+//      .profile {
+//        width: 100%;
+//        max-width: 100%;
+//      }
+//
+//    }
+//
+//  }
+//
+//}

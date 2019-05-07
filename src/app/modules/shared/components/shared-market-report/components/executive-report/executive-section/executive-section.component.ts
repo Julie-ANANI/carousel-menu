@@ -79,12 +79,13 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * here we are getting the answers that was set on Market report ts file.
    */
   private getAnswers() {
-    this.responseService.getExecutiveAnswers().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+    /*this.responseService.getExecutiveAnswers().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       if (response !== null) {
         this._answers = response;
         this.getSectionInformation(this._sectionNumber);
       }
-    });
+    });*/
+    this.getSectionInformation(this._sectionNumber);
   }
 
 

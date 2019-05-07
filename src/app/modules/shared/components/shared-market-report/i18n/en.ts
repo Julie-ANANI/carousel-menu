@@ -97,7 +97,7 @@ export const MARKET_REPORT = {
     'REMAINING': {
       'AND': 'and',
       'OTHERS': 'others',
-      'MORE': 'More ...'
+      'MORE': 'more ...'
     },
     'CONCLUSION_HEADING': 'Conclusion',
     'UMI_CONTACT': {

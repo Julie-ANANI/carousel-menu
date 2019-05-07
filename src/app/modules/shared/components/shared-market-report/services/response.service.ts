@@ -9,8 +9,6 @@ import { Tag } from '../../../../../models/tag';
 @Injectable()
 export class ResponseService {
 
-  executiveAnswers = new Subject <Array<Answer>>();
-
   filteredAnswers = new Subject <Array<Answer>>();
 
   constructor() { }
@@ -47,14 +45,6 @@ export class ResponseService {
 
     return tags;
 
-  }
-
-  setExecutiveAnswers(value: Array<Answer>) {
-    this.executiveAnswers.next(value);
-  }
-
-  getExecutiveAnswers(): Subject <Array<Answer>> {
-    return this.executiveAnswers;
   }
 
   setFilteredAnswers(value: Array<Answer>) {

@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../models/innovation';
-import { Question } from '../../../../../../models/question';
+import { Answer } from '../../../../../../models/answer';
+import { AnswerService } from '../../../../../../services/answer/answer.service';
 
 @Component({
   selector: 'app-executive-report',
@@ -8,35 +9,38 @@ import { Question } from '../../../../../../models/question';
   styleUrls: ['./executive-report.component.scss']
 })
 
-export class ExecutiveReportComponent {
+export class ExecutiveReportComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
-    this._executiveReport = value.executiveReport;
+    this._getAnswers();
   }
 
-  private _executiveReport: any = {};
-
   private _innovation: Innovation = {};
-
-  private _question: Question = null;
 
   private _firstPageSections = [0, 1, 2, 3];
 
   private _secondPageSections = [4, 5, 6, 7];
 
-  constructor() { }
+  private _answers: Array<Answer> = [];
 
-  get executiveReport(): any {
-    return this._executiveReport;
+  constructor (private _answerService: AnswerService) { }
+
+  ngOnInit(): void {
+  }
+
+  private _getAnswers() {
+    if (this._innovation) {
+      this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
+        this._answers = response.answers.sort((a, b) => {
+          return b.profileQuality - a.profileQuality;
+        });
+      });
+    }
   }
 
   get innovation(): Innovation {
     return this._innovation;
-  }
-
-  get question(): Question {
-    return this._question;
   }
 
   get firstPageSections(): number[] {
@@ -45,6 +49,10 @@ export class ExecutiveReportComponent {
 
   get secondPageSections(): number[] {
     return this._secondPageSections;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
   }
 
 }

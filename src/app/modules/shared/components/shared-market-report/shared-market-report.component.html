@@ -112,7 +112,7 @@
               </div>
 
               <div class="text-center" [ngStyle]="{ 'margin-top': '0.5rem' }">
-                <button class="btn ghost-primary btn-sm" [disabled]="numberOfSections === 0" (click)="generateExecutiveTemplate($event)">
+                <button class="btn ghost-primary btn-sm" [disabled]="numberOfSections === 0 || innovation.executiveReport.totalSections > 0" (click)="generateExecutiveTemplate($event)">
                   Valid template
                 </button>
               </div>

@@ -1,10 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Answer } from '../../../../../../../models/answer';
-import { ResponseService } from '../../../services/response.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Innovation } from '../../../../../../../models/innovation';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-executive-professional',
@@ -12,13 +9,17 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./executive-professional.component.scss']
 })
 
-export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
+export class ExecutiveProfessionalComponent {
 
   @Input() set project(value: Innovation) {
     this._professionalAbstract = value.executiveReport.professionalAbstract;
   }
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this.getTargetCountries();
+    this.topProfessionalsAnswer();
+  }
 
   private _answers: Array<Answer> = [];
 
@@ -28,22 +29,7 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   private _targetCountries: Array<string> = [];
 
-  constructor(private responseService: ResponseService,
-              private translateService: TranslateService) { }
-
-  ngOnInit() {
-    this.getAnswers();
-  }
-
-  private getAnswers() {
-    this.responseService.getExecutiveAnswers().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      if (response) {
-        this._answers = response;
-        this.getTargetCountries();
-        this.topProfessionalsAnswer();
-      }
-    });
-  }
+  constructor(private _translateService: TranslateService) { }
 
 
   private getTargetCountries() {
@@ -75,6 +61,10 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   }
 
+  public get userLang(): string {
+    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+  }
+
   get answers(): Array<Answer> {
     return this._answers;
   }
@@ -89,15 +79,6 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   get professionalAbstract(): string {
     return this._professionalAbstract;
-  }
-
-  get userLang() {
-    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

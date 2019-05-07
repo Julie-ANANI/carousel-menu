@@ -187,7 +187,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       /***
        * passing the non filtered answers to the service to use in the executive report.
        */
-      this._responseService.setExecutiveAnswers(this._answers);
+      // this._responseService.setExecutiveAnswers(this._answers);
 
       this._filteredAnswers = this._answers;
 
