@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
-import { first } from 'rxjs/operators';
 import {Table} from '../../../../../table/models/table';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
