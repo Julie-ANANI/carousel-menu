@@ -1,8 +1,7 @@
-<file-drop class="drop-container" customstyle="upload-zone" (onFileDrop)="dropped($event)">
+<file-drop class="drop-container text-center" customstyle="upload-zone" (onFileDrop)="dropped($event)">
 
-  <div *ngIf="!loading">
+  <ng-container *ngIf="!loading">
 
-    <!-- let $event propagate here -->
     <input (change)="dropped($event)" type="file" #fileInput>
 
     <button
@@ -13,10 +12,13 @@
 
     <p class="text">{{ 'COMMON.OR' | translate | lowercase }} {{ 'SHARED_PROJECT_EDIT.MEDIA.SLIDE' | translate }}</p>
 
-  </div>
+  </ng-container>
 
-  <div *ngIf="loading">
+  <ng-container *ngIf="loading">
     <div class="loading loading-lg"></div>
-  </div>
+  </ng-container>
 
 </file-drop>
+
+
+
