@@ -36,14 +36,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private innovationFrontService: InnovationFrontService,
               private translateNotificationsService: TranslateNotificationsService) {
 
-    this.activatedRoute.data.subscribe((response) => {
-      if (response) {
-        this._innovation = response['innovation'];
-      }
-    });
+    this._innovation = this.activatedRoute.snapshot.data.innovation;
 
     this.innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      this._saveChanges = response;
+      this._saveChanges = !!response;
     });
 
   }
@@ -143,10 +139,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get currentPage(): string {
     return this._currentPage;
-  }
-
-  get saveChanges(): boolean {
-    return this._saveChanges;
   }
 
   ngOnDestroy(): void {
