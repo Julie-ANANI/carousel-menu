@@ -15,14 +15,16 @@ export class TranslateNotificationsService {
     return this._notificationsService.error(
       title ? this._translateService.instant(title) : '',
       message ? this._translateService.instant(message) : '',
-      config);
+      config
+    );
   }
 
   public success(title: string, message: string, config?: any): Notification {
     return this._notificationsService.success(
       title ? this._translateService.instant(title) : title,
       message ? this._translateService.instant(message) : message,
-      config);
+      config
+    );
   }
 
 }

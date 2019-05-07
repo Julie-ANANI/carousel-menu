@@ -105,7 +105,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, (err: any) => {
-        this.notificationsService.error('ERROR.ERROR', err);
+        this.notificationsService.error('ERROR.ERROR', err.message);
       });
     this._tagForm.get('tag').reset();
   }
@@ -117,7 +117,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       }, (err: any) => {
-        this.notificationsService.error('ERROR.ERROR', err);
+        this.notificationsService.error('ERROR.ERROR', err.message);
       });
   }
 

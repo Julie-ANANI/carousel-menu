@@ -134,7 +134,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
     this._emailDataset.blacklists.forEach(value => {this._emailService.updateBlacklistEntry(value._id, value)
       .subscribe((result: any) => {
       }, (error: any) => {
-        this._notificationsService.error('Error', error);
+        this._notificationsService.error('Error', error.message);
       }); });
   }
 
@@ -146,7 +146,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
   blacklistEditionFinish(email: any) {
     console.log(email);
     this._emailService.updateBlacklistEntry(email._id, email)
-      .pipe(first())
       .subscribe(
         (data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
@@ -166,7 +165,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
           this._more = {animate_state: 'inactive', title: this._more.title};
           this.loadEmails(this._config);
         }, (error: any) => {
-          this._notificationsService.error('Error', error);
+          this._notificationsService.error('Error', error.message);
         });
     });
   }
@@ -179,7 +178,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
           this.resetSearch();
           this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been updated`);
         }, (error: any) => {
-          this._notificationsService.error('Error', error);
+          this._notificationsService.error('Error', error.message);
         });
   }
 
