@@ -179,26 +179,22 @@ export class SearchToolComponent implements OnInit{
 
   private _formatPro(professional: any, index: number) {
 
-    if (professional.person) {
-
-      if (!professional.person.company) {
-        professional.person.company = '';
+      if (!professional.company) {
+        professional.company = '';
       }
 
-      if (!professional.person.email) {
-        professional.person.email = `${professional.person.firstName.toLowerCase()}.${professional.person.lastName.toLowerCase()}@${professional.person.companyDomain || "unknown.com"}`;
+      if (!professional.email) {
+        professional.email = `${professional.firstName.toLowerCase()}.${professional.lastName.toLowerCase()}@${professional.companyDomain || "unknown.com"}`;
       }
 
-      if(professional.person.companyDomain) {
-        professional.person.companyLogoUrl = `https://logo.clearbit.com/${professional.person.companyDomain}?size=240`;
+      if(professional.companyDomain) {
+        professional.companyLogoUrl = `https://logo.clearbit.com/${professional.companyDomain}?size=240`;
       }
 
       setTimeout(() => {
         professional.isLoading = false;
         this._slicedPros[index] = professional;
       }, Math.floor(Math.random() * 2000) + 1000);
-
-    }
 
   }
 
