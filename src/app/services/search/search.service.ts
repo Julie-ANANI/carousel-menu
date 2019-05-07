@@ -143,11 +143,4 @@ export class SearchService {
     };
     return this._http.get('/search/get', {params: query});
   }
-
-  public cleanPeople() {
-    const query = {
-      path: `/person/update/database`,
-    };
-    return this._http.get('/search/get', {params: query});
-  }
 }
