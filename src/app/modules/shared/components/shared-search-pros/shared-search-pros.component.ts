@@ -7,8 +7,6 @@ import { InnovationSettings } from '../../../../models/innov-settings';
 import { COUNTRIES } from './COUNTRIES';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import {AnswerService} from "../../../../services/answer/answer.service";
-import {ProfessionalsService} from "../../../../services/professionals/professionals.service";
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -40,9 +38,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   constructor(private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
-              private authService: AuthService,
-              private answerService: AnswerService,
-              private proService: ProfessionalsService) {
+              private authService: AuthService) {
 
     this.searchService.getCountriesSettings().pipe(first()).subscribe((countriesSettings: any) => {
       this._countriesSettings = countriesSettings.countries;
@@ -306,24 +302,6 @@ export class SharedSearchProsComponent implements OnInit {
     });
 
   }
-
-  // FIXME: à supprimer quand on a fait passer les scripts de nettoyage
-  cleanAnswers() {
-    this.answerService.cleanAnswers().pipe(first()).subscribe((_: any) => {
-      console.log("OK");
-    });
-  }
-  cleanPros() {
-    this.proService.cleanPros().pipe(first()).subscribe((_: any) => {
-      console.log("OK");
-    });
-  }
-  cleanPeople() {
-    this.searchService.cleanPeople().pipe(first()).subscribe((_: any) => {
-      console.log("OK");
-    });
-  }
-
 
   getCatCircleClass(): string {
     return this._catQuota > 50 ? 'circle-success' : (this._catQuota > 10 && this._catQuota <= 50) ? 'circle-progress' : 'circle-alert';
