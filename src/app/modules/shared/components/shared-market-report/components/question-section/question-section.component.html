@@ -111,59 +111,60 @@
 
 
   <!-- showing answers if the question type is not clearbit, radio, checkbox and list -->
-  <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'
-  && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
+  <div *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio' && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
 
     <!-- answer button -->
     <div class="section-light-pad rm-pad-bottom text-center">
-      <button type="button" class="btn ghost-primary" (click)="toggleAnswers = !toggleAnswers; $event.preventDefault()">
+      <button type="button" class="btn btn-primary" (click)="toggleAnswers = !toggleAnswers">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
         <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
       </button>
     </div>
 
     <!-- now showing the answers that we have for the textarea, scale, toggle and star type -->
-    <ng-container *ngIf="toggleAnswers">
+    <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
+      <div *ngIf="toggleAnswers">
 
-      <!-- star -->
-      <ng-container *ngIf="questionReceived.controlType === 'stars'">
-        <div class="section-light-pad rm-pad-bottom">
-          <app-stars [answers]="answersToShow" [innovation]="innovation" [question]="questionReceived"></app-stars>
+        <!-- star -->
+        <div *ngIf="questionReceived.controlType === 'stars'">
+          <div class="section-light-pad rm-pad-bottom">
+            <app-stars [answers]="answersToShow" [innovation]="innovation" [question]="questionReceived"></app-stars>
+          </div>
         </div>
-      </ng-container>
 
-      <!-- rating -->
-      <ng-container *ngIf="questionReceived.controlType === 'scale'">
-        <div class="section-light-pad rm-pad-bottom">
-          <app-scale [answers]="answersToShow" [question]="questionReceived"></app-scale>
+        <!-- rating -->
+        <div *ngIf="questionReceived.controlType === 'scale'">
+          <div class="section-light-pad rm-pad-bottom">
+            <app-scale [answers]="answersToShow" [question]="questionReceived"></app-scale>
+          </div>
         </div>
-      </ng-container>
 
-      <!-- textarea or textbox -->
-      <ng-container *ngIf="questionReceived.controlType === 'textarea' || questionReceived.controlType === 'textbox'">
-        <div class="section-light-pad rm-pad-bottom rm-margin">
-          <div *ngFor="let answer of answersToShow" class="card">
-            <div class="card-body less-padding">
-              <app-market-comment-2 [answer]="answer" [questionId]="questionReceived.identifier" (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
+        <!-- textarea or textbox -->
+        <div *ngIf="questionReceived.controlType === 'textarea' || questionReceived.controlType === 'textbox'">
+          <div class="section-light-pad rm-pad-bottom rm-margin">
+            <div *ngFor="let answer of answersToShow" class="card">
+              <div class="card-body less-padding">
+                <app-market-comment-2 [answer]="answer" [questionId]="questionReceived.identifier" (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
+              </div>
             </div>
           </div>
         </div>
-      </ng-container>
 
-      <!-- toggle ---->
-      <ng-container *ngIf="questionReceived.controlType === 'toggle'">
-        <div class="toggle-wrapper rm-margin d-flex section-light-pad rm-pad-bottom">
-          <div *ngFor="let answer of answersToShow" class="card card-responsive">
-            <div class="card-body">
-              <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+        <!-- toggle ---->
+        <div *ngIf="questionReceived.controlType === 'toggle'">
+          <div class="toggle-wrapper rm-margin d-flex section-light-pad rm-pad-bottom">
+            <div *ngFor="let answer of answersToShow" class="card card-responsive">
+              <div class="card-body">
+                <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+              </div>
             </div>
           </div>
         </div>
-      </ng-container>
 
-    </ng-container>
+      </div>
+    </div>
 
-  </ng-container>
+  </div>
   <!-- /showing answers if the question type is not clearbit, radio, checkbox and list -->
 
 

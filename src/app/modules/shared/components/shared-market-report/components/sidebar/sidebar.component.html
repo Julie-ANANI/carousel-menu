@@ -138,7 +138,19 @@
     <!-- /reset filters -->
 
 
-    <!-- key-learning filters -->
+    <!-- executive report -->
+    <div *ngIf="innovation.executiveReport.totalSections > 0" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
+      <a href="#executive-report" pageScroll class="text-primary">
+        <div class="flex-between">
+          <span>Executive report</span>
+          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+        </div>
+      </a>
+    </div>
+    <!-- /executive report -->
+
+
+    <!-- key-learning -->
     <div *ngIf="innovation.marketReport?.keyLearning?.conclusion || isAdminSide" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
       <a href="#key-learnings" pageScroll class="text-primary">
         <div class="flex-between">
@@ -147,10 +159,10 @@
         </div>
       </a>
     </div>
-    <!-- /key-learning filters -->
+    <!-- /key-learning -->
 
 
-    <!-- origin filters -->
+    <!-- origin -->
     <div class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
       <a href="#origin-responses" pageScroll class="text-primary">
         <div class="flex-between">
@@ -159,7 +171,7 @@
         </div>
       </a>
     </div>
-    <!-- /key-learning filters -->
+    <!-- /origin -->
 
 
     <!-- map filters -->

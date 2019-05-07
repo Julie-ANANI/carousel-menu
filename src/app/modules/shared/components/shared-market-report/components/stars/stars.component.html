@@ -1,28 +1,26 @@
 <!-- market report -->
-<ng-container *ngIf="!executiveReportView">
-  <section id="star-component">
-    <div *ngFor="let note of notesData" class="data-wrapper">
+<section *ngIf="!executiveReportView" id="star-component">
+  <div *ngFor="let note of notesData" class="data-wrapper">
 
-      <div class="flex-between text-medium star-label-wrapper">
+    <div class="flex-between text-medium star-label-wrapper">
 
-        <span class="text-background">{{ note.label | multiling:lang }}</span>
-        <span class="text-notify">{{ 'MARKET_REPORT.GRADE' | translate }}: {{ note.percentage }}</span>
-
-      </div>
-
-      <ng-container *ngIf="note.sum">
-        <div class="bar">
-          <div class="bar-item tooltip" [attr.data-tooltip]="note.sum" [ngStyle]="{ 'width': note.percentage, 'background': '#2ECC71' }"></div>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="!note.sum">
-        <div><span class="text-notify">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span></div>
-      </ng-container>
+      <span class="text-background">{{ note.label | multiling:lang }}</span>
+      <span class="text-notify">{{ 'MARKET_REPORT.GRADE' | translate }}: {{ note.percentage }}</span>
 
     </div>
-  </section>
-</ng-container>
+
+    <ng-container *ngIf="note.sum">
+      <div class="bar">
+        <div class="bar-item tooltip" [attr.data-tooltip]="note.sum" [ngStyle]="{ 'width': note.percentage, 'background': '#2ECC71' }"></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!note.sum">
+      <div><span class="text-notify">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span></div>
+    </ng-container>
+
+  </div>
+</section>
 <!-- /market report -->
 
 

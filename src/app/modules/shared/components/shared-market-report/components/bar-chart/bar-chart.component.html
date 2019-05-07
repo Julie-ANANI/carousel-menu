@@ -59,7 +59,7 @@
     <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
       <div *ngIf="toggleAnswers">
         <div *ngFor="let barData of barsData; let i = index;" [attr.data-index]="i">
-          <div *ngIf="filter ? filter.value[barData.identifier] : true" class="section-light-pad rm-pad-bottom">
+          <div *ngIf="filter ? filter.value[barData.identifier] : true" class="section-light-pad">
 
             <!-- row 1 -->
             <div class="flex-between text-medium">
