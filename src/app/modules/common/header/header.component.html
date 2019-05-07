@@ -24,6 +24,15 @@
             </li>
           </ng-container>
 
+          <!-- client my projects -->
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+            <li class="menu-item" *ngIf="!backOfficeValue">
+              <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
+                <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
+              </a>
+            </li>
+          </ng-container>
+
           <!-- discover page -->
           <li class="menu-item" *ngIf="!backOfficeValue">
             <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
@@ -31,15 +40,13 @@
             </a>
           </li>
 
-          <!-- client routes -->
+          <!-- client shared reports -->
           <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
-            <ng-container *ngFor="let route of clientRoutes">
-              <li class="menu-item" *ngIf="!backOfficeValue">
-                <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
-                  <span>{{ route.pageName | translate }}</span>
-                </a>
-              </li>
-            </ng-container>
+            <li class="menu-item" *ngIf="!backOfficeValue">
+              <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-reports">
+                <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
+              </a>
+            </li>
           </ng-container>
 
           <!-- admin routes -->
@@ -242,6 +249,15 @@
             </li>
           </ng-container>
 
+          <!-- client my projects -->
+          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+            <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
+              <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
+                <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
+              </a>
+            </li>
+          </ng-container>
+
           <!-- discover page -->
           <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
             <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
@@ -251,14 +267,12 @@
 
           <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
 
-            <!-- client routes -->
-            <ng-container *ngFor="let route of clientRoutes">
-              <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
-                <a [routerLink]="route.pageLink" routerLinkActive="active" (click)="onClickLink()" [ngClass]="route.trackingClass">
-                  <span>{{ route.pageName | translate }}</span>
-                </a>
-              </li>
-            </ng-container>
+            <!-- client shared reports -->
+            <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
+              <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-reports">
+                <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
+              </a>
+            </li>
 
             <!-- admin routes -->
             <ng-container *ngFor="let route of adminRoutes">
