@@ -1,14 +1,14 @@
 import { Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { Answer } from '../../../../../../../models/answer';
-import { Question } from '../../../../../../../models/question';
+import { Answer } from '../../../../../models/answer';
+import { Question } from '../../../../../models/question';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ResponseService } from '../../../services/response.service';
-import { Innovation } from '../../../../../../../models/innovation';
+import { ResponseService } from '../../shared-market-report/services/response.service';
+import { Innovation } from '../../../../../models/innovation';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
-import {Tag} from '../../../../../../../models/tag';
+import { InnovationCommonService } from '../../../../../services/innovation/innovation-common.service';
+import {Tag} from '../../../../../models/tag';
 
 @Component({
   selector: 'app-executive-section',

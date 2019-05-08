@@ -21,6 +21,7 @@ import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
+import { SharedExecutiveReportModule } from '../shared-executive-report/shared-executive-report.module';
 
 
 /***
@@ -39,10 +40,6 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
-import { ExecutiveReportComponent } from './components/executive-report/executive-report.component';
-import { ExecutiveConclusionComponent } from './components/executive-report/executive-conclusion/executive-conclusion.component';
-import { ExecutiveProfessionalComponent } from './components/executive-report/executive-professional/executive-professional.component';
-import { ExecutiveSectionComponent } from './components/executive-report/executive-section/executive-section.component';
 import { ExportModalComponent } from './components/export-modal/export-modal.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
@@ -65,6 +62,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     CountryFlagModule,
     MessageSpaceModule,
     ModalModule,
+    SharedExecutiveReportModule
   ],
   providers: [
     CommonService,
@@ -87,10 +85,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
     StarsComponent,
-    ExecutiveReportComponent,
-    ExecutiveConclusionComponent,
-    ExecutiveProfessionalComponent,
-    ExecutiveSectionComponent,
     ExportModalComponent,
     SidebarComponent,
     RemoveSpacesPipe,

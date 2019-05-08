@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Answer } from '../../../../../../../models/answer';
-import { Innovation } from '../../../../../../../models/innovation';
+import { Answer } from '../../../../../models/answer';
+import { Innovation } from '../../../../../models/innovation';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

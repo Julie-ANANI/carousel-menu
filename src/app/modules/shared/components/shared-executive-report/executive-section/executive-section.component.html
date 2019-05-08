@@ -58,26 +58,26 @@
 
       <!-- if the question type is checkbox or radio -->
       <ng-container *ngIf="questionSelected?.controlType === 'checkbox' || questionSelected?.controlType === 'radio'">
-        <app-bar-chart
+        <!--<app-bar-chart
           [answers]="answersToShow"
           [innovation]="innovation"
           [question]="questionSelected"
           [executiveReport]="true"
           class="section-bar-chart-wrapper"
           [stats]="stats">
-        </app-bar-chart>
+        </app-bar-chart>-->
       </ng-container>
       <!-- /if the question type is checkbox or radio -->
 
       <!-- if the question type is star -->
       <ng-container *ngIf="questionSelected?.controlType === 'stars'">
-        <app-stars
+       <!-- <app-stars
           [answers]="answersToShow"
           [innovation]="innovation"
           [question]="questionSelected"
           [executiveReport]="true"
           class="section-star-wrapper">
-        </app-stars>
+        </app-stars>-->
       </ng-container>
       <!-- /if the question type is star -->
 
