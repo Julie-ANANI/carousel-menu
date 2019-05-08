@@ -54,13 +54,6 @@
         <section id="answer-wrapper" class="column col-8">
 
 
-          <!-- main page -->
-          <section id="main-page" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
-            <app-shared-main-page [project]="innovation" class="full-width"></app-shared-main-page>
-          </section>
-          <!-- /main page -->
-
-
           <!-- main page goal -->
           <section *ngIf="adminSide" class="section-light-pad" id="innovation-goal">
             <div class="section-light-pad bg-white full-light">
@@ -127,27 +120,6 @@
             <app-executive-report [project]="innovation"></app-executive-report>
           </section>
           <!-- /executive report -->
-
-
-          <!-- umi intro -->
-          <section *ngIf="domainName === 'umi'" class="section-pad" id="umi-intro" [ngStyle]="{ 'display': sharable ? 'block' : 'block' }">
-            <img [src]="introSrc" alt="UMI" class="img-responsive umi-intro img-fit-cover">
-          </section>
-          <!-- /umi intro -->
-
-
-          <!-- innovation detail -->
-          <section [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
-            <app-shared-innovation-detail [project]="innovation" class="full-width"></app-shared-innovation-detail>
-          </section>
-          <!-- /innovation detail -->
-
-
-          <!-- targeting detail -->
-          <section [ngStyle]="{ 'display': sharable ? 'block' : 'block' }" class="section-pad text">
-            <app-targeting-detail [project]="innovation" [continent]="continentTarget" class="full-width"></app-targeting-detail>
-          </section>
-          <!-- /targeting detail -->
 
 
           <!-- key learning section -->
