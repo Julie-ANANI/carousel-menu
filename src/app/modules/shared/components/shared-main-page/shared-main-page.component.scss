@@ -1,4 +1,4 @@
-@import '../../../../../../../style/framework/src/variables';
+@import '../../../../../style/framework/src/variables';
 
 .main-page {
   background-color: $bg-color-light;
@@ -7,6 +7,7 @@
   font-size: inherit;
 
   .content-wrapper {
+    margin-top: -$unit-5;
     flex-direction: column;
     min-height: 80vh;
     justify-content: center;
