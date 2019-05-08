@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { Innovation } from '../../../../../../models/innovation';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
-  selector: 'app-targeting-detail',
-  templateUrl: './targeting-detail.component.html',
-  styleUrls: ['./targeting-detail.component.scss']
+  selector: 'app-shared-targeting-detail',
+  templateUrl: './shared-targeting-detail.component.html',
+  styleUrls: ['./shared-targeting-detail.component.scss']
 })
 
-export class TargetingDetailComponent {
+export class SharedTargetingDetailComponent {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
