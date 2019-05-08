@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Innovation } from '../../../../../../models/innovation';
-import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
-import { InnovCard } from '../../../../../../models/innov-card';
+import { Innovation } from '../../../../models/innovation';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import { InnovCard } from '../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-innovation-detail',
-  templateUrl: './innovation-detail.component.html',
-  styleUrls: ['./innovation-detail.component.scss']
+  selector: 'app-shared-innovation-detail',
+  templateUrl: './shared-innovation-detail.component.html',
+  styleUrls: ['./shared-innovation-detail.component.scss']
 })
 
-export class InnovationDetailComponent implements OnInit {
+export class SharedInnovationDetailComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;

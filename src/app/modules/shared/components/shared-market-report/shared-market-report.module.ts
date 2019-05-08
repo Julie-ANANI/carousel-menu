@@ -22,6 +22,7 @@ import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { SharedMainPageModule } from '../shared-main-page/shared-main-page.module';
+import { SharedInnovationDetailModule } from '../shared-innovation-detail/shared-innovation-detail.module';
 
 
 /***
@@ -46,7 +47,6 @@ import { ExecutiveProfessionalComponent } from './components/executive-report/ex
 import { ExecutiveSectionComponent } from './components/executive-report/executive-section/executive-section.component';
 import { ExportModalComponent } from './components/export-modal/export-modal.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { InnovationDetailComponent } from './components/innovation-detail/innovation-detail.component';
 import { TargetingDetailComponent } from './components/targeting-detail/targeting-detail.component';
 
 
@@ -68,7 +68,8 @@ import { TargetingDetailComponent } from './components/targeting-detail/targetin
     CountryFlagModule,
     MessageSpaceModule,
     ModalModule,
-    SharedMainPageModule
+    SharedMainPageModule,
+    SharedInnovationDetailModule
   ],
   providers: [
     CommonService,
@@ -99,7 +100,6 @@ import { TargetingDetailComponent } from './components/targeting-detail/targetin
     SidebarComponent,
     RemoveSpacesPipe,
     AnswersLimiterPipe,
-    InnovationDetailComponent,
     TargetingDetailComponent
   ],
   exports: [
