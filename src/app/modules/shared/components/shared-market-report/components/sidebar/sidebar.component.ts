@@ -70,8 +70,6 @@ export class SidebarComponent implements OnInit {
 
   private _modalExport: boolean = false;
 
-  private _modalResetReport: boolean = false;
-
   private _userLang = '';
 
   private _tagsEndIndex = 6;
@@ -244,27 +242,6 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  public onClickResetConfirm(event: Event) {
-    event.preventDefault();
-    const totalSections = this._innovation.executiveReport.totalSections;
-    const sections = this._innovation.executiveReport.sections;
-
-    this._innovation.executiveReport.totalSections = 0;
-    this._innovation.executiveReport.sections = [{}];
-
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'The executive report has been reset successfully.');
-    }, () => {
-      this._innovation.executiveReport.totalSections = totalSections;
-      this._innovation.executiveReport.sections = sections;
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-
-    this._modalResetReport = false;
-
-  }
-
-
   /***
    * This function will make the project end and synthesis will be available to the client.
    * @param {Event} event
@@ -377,14 +354,6 @@ export class SidebarComponent implements OnInit {
 
   set modalExport(value: boolean) {
     this._modalExport = value;
-  }
-
-  get modalResetReport(): boolean {
-    return this._modalResetReport;
-  }
-
-  set modalResetReport(value: boolean) {
-    this._modalResetReport = value;
   }
 
   get userLang(): string {
