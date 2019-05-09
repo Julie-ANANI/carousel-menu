@@ -10,6 +10,7 @@ import { SharedExecutiveReportComponent } from './shared-executive-report.compon
 import { TagComponent } from './executive-section/tag/tag.component';
 import { StarsComponent } from './executive-section/stars/stars.component';
 import { PieChartComponent } from './executive-section/pie-chart/pie-chart.component';
+import { BarChartComponent } from './executive-section/bar-chart/bar-chart.component';
 
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
@@ -35,7 +36,8 @@ import { ChartsModule } from 'ng2-charts';
     SharedExecutiveReportComponent,
     TagComponent,
     StarsComponent,
-    PieChartComponent
+    PieChartComponent,
+    BarChartComponent
   ],
   exports: [
     SharedExecutiveReportComponent

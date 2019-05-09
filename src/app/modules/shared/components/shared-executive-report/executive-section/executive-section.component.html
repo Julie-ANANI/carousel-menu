@@ -64,14 +64,7 @@
 
       <!-- if the question type is checkbox -->
       <ng-container *ngIf="questionSelected?.controlType === 'checkbox'">
-        <!--<app-bar-chart
-          [answers]="answersToShow"
-          [innovation]="innovation"
-          [question]="questionSelected"
-          [executiveReport]="true"
-          class="section-bar-chart-wrapper"
-          [stats]="stats">
-        </app-bar-chart>-->
+        <app-bar-chart [question]="questionSelected" [answers]="answersToShow"></app-bar-chart>
       </ng-container>
       <!-- /if the question type is checkbox -->
 

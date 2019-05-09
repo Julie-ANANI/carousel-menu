@@ -2,18 +2,16 @@
 
 
   <!-- header section -->
-  <ng-container *ngIf="pieChart">
-    <div class="bg-white">
-      <app-question-conclusion
-        [innovation]="innovation"
-        [pieChart]="pieChart"
-        [question]="question"
-        [readonly]="readonly"
-        [stats]="stats"
-        [tags]="tags">
-      </app-question-conclusion>
-    </div>
-  </ng-container>
+  <div class="bg-white">
+    <app-question-conclusion
+      [innovation]="innovation"
+      [pieChart]="pieChart"
+      [question]="question"
+      [readonly]="readonly"
+      [stats]="stats"
+      [tags]="tags">
+    </app-question-conclusion>
+  </div>
   <!-- /header section -->
 
 

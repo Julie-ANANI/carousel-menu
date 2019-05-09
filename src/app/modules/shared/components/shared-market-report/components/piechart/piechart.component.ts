@@ -13,12 +13,11 @@ import { takeUntil } from 'rxjs/operators';
 export class PiechartComponent implements OnInit, OnDestroy {
 
   @Input() set pieChart(value: any) {
-    this._colors = [{backgroundColor: value.colors || []}];
-    this._labels = value.labels || {};
-    this._datasets = [{data: value.data || []}];
-    this._percentage = value.percentage;
-    this._labelPercentage = [{percentage: value.labelPercentage || []}];
+    this._pieChart = value;
+    this._loadData();
   }
+
+  private _pieChart: any;
 
   private _datasets: Array<{data: Array<number>}>;
 
@@ -45,9 +44,29 @@ export class PiechartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._lang = this._translateService.currentLang || 'en';
+
     this._translateService.onLangChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((e: any) => {
       this._lang = e.lang;
     });
+
+    this._loadData();
+
+  }
+
+
+  private _loadData() {
+    if (this._pieChart) {
+      this._colors = [{backgroundColor: this._pieChart.colors || []}];
+      this._labels = this._pieChart.labels || {};
+      this._datasets = [{data: this._pieChart.data || []}];
+      this._percentage = this._pieChart.percentage;
+      this._labelPercentage = [{percentage: this._pieChart.labelPercentage || []}];
+    }
+  }
+
+
+  get pieChart(): any {
+    return this._pieChart;
   }
 
   get datasets() {
