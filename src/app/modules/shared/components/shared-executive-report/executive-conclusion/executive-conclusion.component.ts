@@ -25,11 +25,11 @@ export class ExecutiveConclusionComponent {
 
   private _operator: User;
 
-  public getURL(): string {
+  public companyUrl(): string {
     return environment.companyURL;
   }
 
-  getLogo(): string {
+  public logo(): string {
     return environment.logoSynthURL;
   }
 
