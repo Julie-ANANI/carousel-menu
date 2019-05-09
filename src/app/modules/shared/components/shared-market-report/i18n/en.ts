@@ -92,7 +92,7 @@ export const MARKET_REPORT = {
   },
 
   'EXECUTIVE_TEMPLATE': {
-    'PROFESSIONAL_HEADING': 'Qualified professionals',
+    'PROFESSIONAL_HEADING': 'Panel of professionals',
     'ANSWERS': 'answers',
     'REMAINING': {
       'AND': 'and',

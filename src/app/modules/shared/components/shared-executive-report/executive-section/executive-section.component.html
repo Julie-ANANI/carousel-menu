@@ -1,5 +1,6 @@
 <section id="executive-section-wrapper">
 
+
   <!-- title -->
   <div class="title-wrapper">
 
@@ -7,21 +8,19 @@
     <div class="heading-menu">
 
       <!-- heading -->
-      <h2 class="title-primary">{{ questionSelected?.title | multiling:lang }}</h2>
+      <h2 *ngIf="questionSelected?.title" class="title-primary">{{ questionSelected?.title | multiling:lang }}</h2>
 
       <!-- menu -->
       <ng-container *ngIf="adminSide">
-        <div class="menu-icon">
+        <div class="dropdown">
 
           <i class="fas fa-bars"></i>
 
-          <div class="menu-item-wrapper">
-            <ul>
-              <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)">
-                {{ option?.title | multiling:lang }}
-              </li>
-            </ul>
-          </div>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)" class="drop-item">
+              <span>{{ option?.title | multiling:lang }}</span>
+            </li>
+          </ul>
 
         </div>
       </ng-container>
@@ -41,7 +40,7 @@
           <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ questionSelected?.title | multiling:lang | lowercase }}
         </span>
 
-        <span pageScroll pageScrollOffset="135" [href]="'#' + questionSelected?.identifier" class="text-link">
+        <span pageScroll pageScrollOffset="10" [href]="'#' + questionSelected?.identifier" class="text-link">
           {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
         </span>
 
@@ -51,6 +50,7 @@
 
   </div>
   <!-- /title -->
+
 
   <!-- answer display -->
   <ng-container *ngIf="questionSelected">
@@ -90,7 +90,7 @@
             <div *ngIf="tag.count > 1" class="tag-count">&nbsp;{{ tag.count }}X</div>
 
             <div>
-              <span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': getColor(questionSelected?.title | multiling:lang ) }">
+              <span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': color(questionSelected?.title | multiling:lang ) }">
                 <i class="fas fa-tag"></i>{{ tag.label | multiling:lang }}
               </span>
             </div>
@@ -119,10 +119,14 @@
   </ng-container>
   <!-- /answer display -->
 
+
   <!-- abstract -->
-  <ng-container *ngIf="questionSelected">
-    <div class="abstract-wrapper">{{ abstractValue }}</div>
+  <ng-container *ngIf="questionSelected && abstractValue">
+    <div class="abstract-wrapper">
+      <span>{{ abstractValue }}</span>
+    </div>
   </ng-container>
   <!-- /abstract -->
+
 
 </section>

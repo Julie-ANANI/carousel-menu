@@ -1,14 +1,13 @@
-import { Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ResponseService } from '../../shared-market-report/services/response.service';
 import { Innovation } from '../../../../../models/innovation';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationCommonService } from '../../../../../services/innovation/innovation-common.service';
-import {Tag} from '../../../../../models/tag';
+import { Tag } from '../../../../../models/tag';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-executive-section',
@@ -16,18 +15,21 @@ import {Tag} from '../../../../../models/tag';
   styleUrls: ['./executive-section.component.scss']
 })
 
-export class ExecutiveSectionComponent implements OnInit, OnDestroy {
+export class ExecutiveSectionComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
-    this.getQuestions(value);
+    this._getQuestions(value);
   }
 
   @Input() set section(value: number) {
     this._sectionNumber = value;
   }
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this._getSectionInformation(this._sectionNumber);
+  }
 
   private _answers: Array<Answer> = [];
 
@@ -51,42 +53,17 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   private _tags: Array<Tag> = [];
 
-  constructor(private responseService: ResponseService,
-              private location: Location,
-              private translateService: TranslateService,
-              private innovationCommonService: InnovationCommonService) { }
+  constructor(private _responseService: ResponseService,
+              private _location: Location,
+              private _translateService: TranslateService,
+              private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService) {
 
-  ngOnInit() {
-
-    this.isAdminSide();
-    this.getAnswers();
-
-    /***
-     * this is when we update the innovation in any component,
-     * we are listening that update and will update the innovation attribute.
-     */
-    this.innovationCommonService.getInnovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: Innovation) => {
-      if (response) {
-        this._innovation = response;
-        this.getSectionInformation(this._sectionNumber);
-      }
-    });
+    this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
   }
 
-
-  /***
-   * here we are getting the answers that was set on Market report ts file.
-   */
-  private getAnswers() {
-    /*this.responseService.getExecutiveAnswers().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      if (response !== null) {
-        this._answers = response;
-        this.getSectionInformation(this._sectionNumber);
-      }
-    });*/
-    this.getSectionInformation(this._sectionNumber);
-  }
+  ngOnInit() { }
 
 
   /***
@@ -94,9 +71,9 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * respective arrays.
    * @param {Innovation} value
    */
-  private getQuestions(value: Innovation) {
+  private _getQuestions(value: Innovation) {
     if (value.preset && value.preset.sections) {
-      this.responseService.getPresets(value).forEach((questions) => {
+      this._responseService.getPresets(value).forEach((questions) => {
         const index = this._questions.findIndex((question) => question._id === questions._id);
         if (index === -1) {
           this._questions.push(questions);
@@ -107,24 +84,21 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   }
 
 
-  /**
-   * This function is checking the we are on the admin side.
-   */
-  private isAdminSide() {
-    this._adminSide = this.location.path().slice(5, 11) === '/admin';
-  }
-
-
   /***
    * This function is called when the operator clicked on anyone title
    * then we select that question and save that question id.
    * @param {Event} event
    * @param {Question} option
    */
-  onTitleClicked(event: Event, option: Question) {
+  public onTitleClicked(event: Event, option: Question) {
     this._innovation.executiveReport.sections[this._sectionNumber] = { quesId: option._id };
-    this.innovationCommonService.saveInnovation(this._innovation);
-    this.getSectionInformation(this._sectionNumber);
+
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+
+    this._getSectionInformation(this._sectionNumber);
   }
 
 
@@ -133,7 +107,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * with all the details.
    * @param {number} sectionNumber
    */
-  private getSectionInformation(sectionNumber: number) {
+  private _getSectionInformation(sectionNumber: number) {
 
     if (this._innovation.executiveReport.sections[sectionNumber]) {
 
@@ -141,16 +115,16 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
       if (this._questionSelected) {
 
-        this._answersToShow = this.responseService.getAnswersToShow(this._answers, this._questionSelected);
+        this._answersToShow = this._responseService.getAnswersToShow(this._answers, this._questionSelected);
 
         this._stats = {
           nbAnswers: this._answersToShow.length,
           percentage: Math.round((this._answersToShow.length * 100) / this._answers.length)
         };
 
-        this.getAbstractValue();
+        this._getAbstractValue();
 
-        this.getTags();
+        this._getTags();
 
       }
 
@@ -163,7 +137,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * this function is to get the abstract value from the abstracts array by using
    * quesId.
    */
-  private getAbstractValue() {
+  private _getAbstractValue() {
 
     this._abstractValue = '';
 
@@ -180,7 +154,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   /***
    * this functions is to get the tags list for the particular question.
    */
-  getTags() {
+  private _getTags() {
     this._tags = ResponseService.getTagsList(this._answers, this._questionSelected);
   }
 
@@ -190,7 +164,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * the title of the question.
    * @param identifier
    */
-  getColor(identifier: string): string {
+  public color(identifier: string): string {
     if (identifier.toLowerCase() === 'objections') {
       return '#EA5858';
     } else if (identifier.toLowerCase() === 'points forts' || identifier.toLowerCase() === 'strengths') {
@@ -201,7 +175,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   }
 
   get lang(): string {
-    return this.translateService.currentLang;
+    return this._translateService.currentLang;
   }
 
   get answers(): Array<Answer> {
@@ -248,9 +222,6 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
     return this._tags;
   }
 
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
-  }
-
 }
+
+
