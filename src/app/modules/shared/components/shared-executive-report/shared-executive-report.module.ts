@@ -9,11 +9,13 @@ import { ExecutiveSectionComponent } from './executive-section/executive-section
 import { SharedExecutiveReportComponent } from './shared-executive-report.component';
 import { TagComponent } from './executive-section/tag/tag.component';
 import { StarsComponent } from './executive-section/stars/stars.component';
+import { PieChartComponent } from './executive-section/pie-chart/pie-chart.component';
 
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -24,6 +26,7 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
     SharedWorldmapModule,
     CountryFlagModule,
     NgxPageScrollModule,
+    ChartsModule
   ],
   declarations: [
     ExecutiveConclusionComponent,
@@ -31,7 +34,8 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
     ExecutiveSectionComponent,
     SharedExecutiveReportComponent,
     TagComponent,
-    StarsComponent
+    StarsComponent,
+    PieChartComponent
   ],
   exports: [
     SharedExecutiveReportComponent

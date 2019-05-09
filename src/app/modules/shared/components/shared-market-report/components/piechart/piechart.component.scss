@@ -47,39 +47,6 @@
 
 }
 
-.executive-pie-chart {
-  font-size: 12px;
-  font-weight: $font-weight-medium;
-
-  .percentage, .chart-pie {
-    margin-bottom: 5px;
-  }
-
-  .percentage {
-    font-size: 12px;
-    color: $meta-color;
-  }
-
-  .pie-data-wrapper {
-
-    ul {
-
-      li {
-        margin: 5px 5px 0 0;
-        vertical-align: middle;
-
-        .circle, .response, .text-label {
-          margin-right: 5px;
-        }
-
-      }
-
-    }
-
-  }
-
-}
-
 @media (max-width: $size-md) {
 
   .pie-chart {

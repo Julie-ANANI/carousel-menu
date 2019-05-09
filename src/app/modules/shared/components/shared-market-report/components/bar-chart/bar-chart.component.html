@@ -1,18 +1,19 @@
-<!-- market report -->
-<section *ngIf="!executiveReportView" id="bar-chart-component">
+<section id="bar-chart-component">
 
 
   <!-- header section -->
-  <div class="bg-white">
-    <app-question-conclusion
-      [innovation]="innovation"
-      [pieChart]="pieChart"
-      [question]="question"
-      [readonly]="readonly"
-      [stats]="stats"
-      [tags]="tags">
-    </app-question-conclusion>
-  </div>
+  <ng-container *ngIf="pieChart">
+    <div class="bg-white">
+      <app-question-conclusion
+        [innovation]="innovation"
+        [pieChart]="pieChart"
+        [question]="question"
+        [readonly]="readonly"
+        [stats]="stats"
+        [tags]="tags">
+      </app-question-conclusion>
+    </div>
+  </ng-container>
   <!-- /header section -->
 
 
@@ -114,50 +115,39 @@
   <!-- /content section -->
 
 </section>
-<!-- /market report -->
 
 
-<!-- executive report -->
-<ng-container *ngIf="executiveReportView">
+<!--&lt;!&ndash; executive report &ndash;&gt;-->
+<!--<ng-container >-->
 
-  <ng-container *ngIf="question?.controlType === 'radio'">
-    <app-question-conclusion
-      [innovation]="innovation"
-      [pieChart]="pieChart"
-      [question]="question"
-      [executiveReport]="true"
-      [stats]="stats">
-    </app-question-conclusion>
-  </ng-container>
+<!--  <ng-container *ngIf="question?.controlType === 'checkbox'">-->
+<!--    <div *ngFor="let data of barsData" class="executive-bar-chart-wrapper">-->
 
-  <ng-container *ngIf="question?.controlType === 'checkbox'">
-    <div *ngFor="let data of barsData" class="executive-bar-chart-wrapper">
+<!--      &lt;!&ndash; row 1 &ndash;&gt;-->
+<!--      <div class="flex-between margin">-->
+<!--        <span class="bar-name">{{ data.label | multiling:lang }}</span>-->
+<!--        <span class="bar-count text-notify text-medium">{{ data.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; /row 1 &ndash;&gt;-->
 
-      <!-- row 1 -->
-      <div class="flex-between margin">
-        <span class="bar-name">{{ data.label | multiling:lang }}</span>
-        <span class="bar-count text-notify text-medium">{{ data.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
-      </div>
-      <!-- /row 1 -->
+<!--      &lt;!&ndash; row 2 &ndash;&gt;-->
+<!--      <div class="margin">-->
+<!--        <div class="bar bar-sm">-->
+<!--          <div class="bar-item" [ngStyle]="{ 'width': data.absolutePercentage , 'background': '#FFB300' }"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; /row 2 &ndash;&gt;-->
 
-      <!-- row 2 -->
-      <div class="margin">
-        <div class="bar bar-sm">
-          <div class="bar-item" [ngStyle]="{ 'width': data.absolutePercentage , 'background': '#FFB300' }"></div>
-        </div>
-      </div>
-      <!-- /row 2 -->
+<!--      &lt;!&ndash; row 3 &ndash;&gt;-->
+<!--      <div *ngIf="data.answers.length > 0" class="executive-answer-wrapper flex-start">-->
+<!--        <div *ngFor="let answer of data.answers | answerslimiter | slice:0:3" class="label label-answer text-ellipsis">-->
+<!--          <span>{{ answer?.professional?.company }}</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; /row 3 &ndash;&gt;-->
 
-      <!-- row 3 -->
-      <div *ngIf="data.answers.length > 0" class="executive-answer-wrapper flex-start">
-        <div *ngFor="let answer of data.answers | answerslimiter | slice:0:3" class="label label-answer text-ellipsis">
-          <span>{{ answer?.professional?.company }}</span>
-        </div>
-      </div>
-      <!-- /row 3 -->
+<!--    </div>-->
+<!--  </ng-container>-->
 
-    </div>
-  </ng-container>
-
-</ng-container>
-<!-- /executive report -->
+<!--</ng-container>-->
+<!--&lt;!&ndash; /executive report &ndash;&gt;-->

@@ -6,6 +6,7 @@ import { Section } from '../../../../../models/section';
 import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import { Multiling } from '../../../../../models/multiling';
+import { BarData } from '../models/bar-data';
 
 @Injectable()
 export class ResponseService {
@@ -221,6 +222,108 @@ export class ResponseService {
     }
 
     return notesData;
+
+  }
+
+
+  /***
+   * this function is to get the bars data answer for the question type checkbox and radio.
+   * @param question
+   * @param answers
+   */
+  static getBarsData(question: Question, answers: Array<Answer>) {
+
+    let barsData: Array<BarData> = [];
+
+    if (question && answers) {
+
+      barsData = question.options.map((q) => {
+
+        let filteredAnswers: Array<Answer> = [];
+
+        if (question.controlType === 'checkbox') {
+          filteredAnswers = answers.filter((a) => a.answers[question.identifier] && a.answers[question.identifier][q.identifier]
+            && a.answers[question.identifier + 'Quality'] !== 0);
+        } else if (question.controlType === 'radio')  {
+          filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
+            && a.answers[question.identifier + 'Quality'] !== 0 );
+        }
+
+        filteredAnswers = filteredAnswers.sort((a, b) => {
+          if ((b.answers[question.identifier + 'Quality'] || 1) - (a.answers[question.identifier + 'Quality'] || 1) === 0) {
+            const a_length = a.answers[question.identifier + 'Comment'] ? a.answers[question.identifier + 'Comment'].length : 0;
+            const b_length = b.answers[question.identifier + 'Comment'] ? b.answers[question.identifier + 'Comment'].length : 0;
+            return b_length - a_length;
+          } else {
+            return (b.answers[question.identifier + 'Quality'] || 1) - (a.answers[question.identifier + 'Quality'] || 1);
+          }
+        });
+
+        return { label: q.label, answers: filteredAnswers, absolutePercentage: '0%', relativePercentage: '0%', color: q.color, count: filteredAnswers.length,
+          positive: q.positive, identifier: q.identifier
+        }
+
+      });
+
+      // Then calcul percentages
+      const maxAnswersCount = barsData.reduce((acc, bd) => {
+        return (acc < bd.count) ? bd.count : acc;
+      }, 0);
+
+      barsData.forEach((bd) => {
+        bd.absolutePercentage = `${((bd.count * 100) / answers.length) >> 0}%`;
+        bd.relativePercentage = `${((bd.count * 100) / maxAnswersCount) >> 0}%`;
+      });
+
+
+    }
+
+    return barsData;
+
+  }
+
+
+  /***
+   * this function is to get the pie chart data for the question type radio.
+   * @param barsData
+   * @param answers
+   */
+  static getPieChartData(barsData: Array<BarData>, answers: Array<Answer>) {
+
+    let pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
+
+    if (barsData && barsData.length > 0 && answers && answers.length > 0) {
+
+      let positiveAnswersCount = 0;
+
+      const pieChartData: {data: Array<number>, colors: Array<string>, labels: {fr: Array<string>, en: Array<string>}, percentage?: number, labelPercentage?: Array<string>} = {
+        data: [],
+        colors: [],
+        labels: {fr: [], en: []},
+        labelPercentage: []
+      };
+
+      barsData.forEach((barData) => {
+
+        if (barData.positive) {
+          positiveAnswersCount += barData.count;
+        }
+
+        pieChartData.data.push(barData.count);
+        pieChartData.colors.push(barData.color);
+        pieChartData.labels.fr.push(barData.label.fr);
+        pieChartData.labels.en.push(barData.label.en);
+        pieChartData.labelPercentage.push(barData.absolutePercentage);
+
+      });
+
+      pieChartData.percentage = Math.round((positiveAnswersCount * 100) / answers.length);
+
+      pieChart = pieChartData;
+
+    }
+
+    return pieChart;
 
   }
 

@@ -19,7 +19,7 @@ export class StarsComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
-    this._updateAnswersData();
+    this._loadData();
   }
 
   private _question: Question;
@@ -31,9 +31,10 @@ export class StarsComponent implements OnInit {
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
+    this._loadData();
   }
 
-  private _updateAnswersData(): void {
+  private _loadData(): void {
     if (this._question && this._question.identifier) {
       this._notesData = ResponseService.getStarsAnswers(this._question, this._answers);
     }

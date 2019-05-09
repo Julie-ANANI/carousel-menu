@@ -20,12 +20,6 @@ export class PiechartComponent implements OnInit, OnDestroy {
     this._labelPercentage = [{percentage: value.labelPercentage || []}];
   }
 
-  @Input() set executiveReport(value: boolean) {
-    this._executiveReportView = value;
-  }
-
-  private _executiveReportView = false;
-
   private _datasets: Array<{data: Array<number>}>;
 
   private _colors: Array<{backgroundColor: Array<string>}>;
@@ -86,10 +80,6 @@ export class PiechartComponent implements OnInit, OnDestroy {
 
   get ngUnsubscribe(): Subject<any> {
     return this._ngUnsubscribe;
-  }
-
-  get executiveReportView(): boolean {
-    return this._executiveReportView;
   }
 
   ngOnDestroy() {

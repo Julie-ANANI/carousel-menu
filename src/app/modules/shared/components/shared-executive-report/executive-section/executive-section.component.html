@@ -56,8 +56,14 @@
   <ng-container *ngIf="questionSelected">
     <div class="content-wrapper">
 
-      <!-- if the question type is checkbox or radio -->
-      <ng-container *ngIf="questionSelected?.controlType === 'checkbox' || questionSelected?.controlType === 'radio'">
+      <!-- if the question type is radio -->
+      <ng-container *ngIf="questionSelected?.controlType === 'radio'">
+        <app-pie-chart [question]="questionSelected" [answers]="answersToShow"></app-pie-chart>
+      </ng-container>
+      <!-- /if the question type is radio -->
+
+      <!-- if the question type is checkbox -->
+      <ng-container *ngIf="questionSelected?.controlType === 'checkbox'">
         <!--<app-bar-chart
           [answers]="answersToShow"
           [innovation]="innovation"
@@ -67,7 +73,7 @@
           [stats]="stats">
         </app-bar-chart>-->
       </ng-container>
-      <!-- /if the question type is checkbox or radio -->
+      <!-- /if the question type is checkbox -->
 
       <!-- if the question type is star -->
       <ng-container *ngIf="questionSelected?.controlType === 'stars'">

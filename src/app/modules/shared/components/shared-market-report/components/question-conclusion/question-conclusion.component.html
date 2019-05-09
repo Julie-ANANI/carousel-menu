@@ -1,5 +1,4 @@
-<!-- market report -->
-<section *ngIf="!executiveReportView" id="question-conclusion-component">
+<section id="question-conclusion-component">
 
   <!-- conclusion -->
   <div class="conclusion-wrapper section-pad full">
@@ -60,13 +59,3 @@
   </ng-container>
 
 </section>
-<!-- /market report -->
-
-
-<!-- executive report -->
-<ng-container *ngIf="executiveReportView && question?.controlType === 'radio' && pieChart">
-  <div class="stat-wrapper text-center flex-centered pie-chart-print">
-    <app-piechart [pieChart]="pieChart" [executiveReport]="true"></app-piechart>
-  </div>
-</ng-container>
-<!-- executive report -->

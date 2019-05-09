@@ -4,7 +4,7 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Subject } from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
 import { TagsFiltersService } from '../../services/tags-filter.service';
 import { environment } from "../../../../../../../environments/environment";
@@ -16,10 +16,6 @@ import { environment } from "../../../../../../../environments/environment";
 })
 
 export class QuestionConclusionComponent implements OnInit, OnDestroy {
-
-  @Input() set executiveReport(value: boolean) {
-    this._executiveReportView = value;
-  }
 
   @Input() set tags(value: Array<Tag>) {
     this._receivedTags = value;
@@ -45,14 +41,11 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   private _lang: string;
 
-  private _executiveReportView = false;
-
   private _receivedTags: Array<Tag> = [];
 
   private _tagId = '';
 
   private _answersOrigin: {[c: string]: number} = null;
-
 
   constructor(private _innovationService: InnovationService,
               private _translateService: TranslateService,
@@ -104,10 +97,6 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   get lang() {
     return this._lang;
-  }
-
-  get executiveReportView(): boolean {
-    return this._executiveReportView;
   }
 
   get receivedTags(): Array<Tag> {
