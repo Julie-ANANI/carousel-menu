@@ -83,35 +83,25 @@
 
       <!-- if the question is not checkbox, radio, stars -->
       <ng-container *ngIf="questionSelected?.controlType !== 'checkbox' && questionSelected?.controlType !== 'radio' && questionSelected?.controlType !== 'stars'">
+        <ng-container [ngSwitch]="questionSelected.title | multiling:lang | lowercase ">
 
-        <ng-container *ngIf="tags.length > 0">
-          <div *ngFor="let tag of tags | slice:0:3" class="tag">
+          <ng-container *ngSwitchCase="'strengths'">
+           <app-tag [tags]="tags" [tagColor]="'#2ECC71'"></app-tag>
+          </ng-container>
 
-            <div *ngIf="tag.count > 1" class="tag-count">&nbsp;{{ tag.count }}X</div>
+          <ng-container *ngSwitchCase="'points forts'">
+            <app-tag [tags]="tags" [tagColor]="'#2ECC71'"></app-tag>
+          </ng-container>
 
-            <div>
-              <span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': color(questionSelected?.title | multiling:lang ) }">
-                <i class="fas fa-tag"></i>{{ tag.label | multiling:lang }}
-              </span>
-            </div>
+          <ng-container *ngSwitchCase="'objections'">
+            <app-tag [tags]="tags" [tagColor]="'#EA5858'"></app-tag>
+          </ng-container>
 
-          </div>
+          <ng-container *ngSwitchDefault>
+            <app-tag [tags]="tags"></app-tag>
+          </ng-container>
+
         </ng-container>
-
-        <ng-container *ngIf="tags.length === 0">
-          <div class="no-tags">
-
-            <div class="tag-count">0X</div>
-
-            <div>
-              <span class="tag-outer-wrapper">
-                {{ 'MARKET_REPORT.EXECUTIVE.NO_TAGS' | translate }}
-              </span>
-            </div>
-
-          </div>
-        </ng-container>
-
       </ng-container>
       <!-- if the question is not checkbox, radio, stars -->
 

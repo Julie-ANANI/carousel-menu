@@ -73,7 +73,7 @@ export class ExecutiveSectionComponent implements OnInit {
    */
   private _getQuestions(value: Innovation) {
     if (value.preset && value.preset.sections) {
-      this._responseService.getPresets(value).forEach((questions) => {
+      ResponseService.getPresets(value).forEach((questions) => {
         const index = this._questions.findIndex((question) => question._id === questions._id);
         if (index === -1) {
           this._questions.push(questions);
@@ -156,22 +156,6 @@ export class ExecutiveSectionComponent implements OnInit {
    */
   private _getTags() {
     this._tags = ResponseService.getTagsList(this._answers, this._questionSelected);
-  }
-
-
-  /***
-   * this function is to get the background color for the tags based on
-   * the title of the question.
-   * @param identifier
-   */
-  public color(identifier: string): string {
-    if (identifier.toLowerCase() === 'objections') {
-      return '#EA5858';
-    } else if (identifier.toLowerCase() === 'points forts' || identifier.toLowerCase() === 'strengths') {
-      return '#2ECC71';
-    } else {
-      return '#4F5D6B';
-    }
   }
 
   get lang(): string {

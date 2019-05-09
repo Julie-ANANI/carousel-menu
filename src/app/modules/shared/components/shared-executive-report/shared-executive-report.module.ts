@@ -7,11 +7,13 @@ import { ExecutiveConclusionComponent } from './executive-conclusion/executive-c
 import { ExecutiveProfessionalComponent } from './executive-professional/executive-professional.component';
 import { ExecutiveSectionComponent } from './executive-section/executive-section.component';
 import { SharedExecutiveReportComponent } from './shared-executive-report.component';
+import { TagComponent } from './executive-section/tag/tag.component';
 
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
+
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
     ExecutiveConclusionComponent,
     ExecutiveProfessionalComponent,
     ExecutiveSectionComponent,
-    SharedExecutiveReportComponent
+    SharedExecutiveReportComponent,
+    TagComponent
   ],
   exports: [
     SharedExecutiveReportComponent

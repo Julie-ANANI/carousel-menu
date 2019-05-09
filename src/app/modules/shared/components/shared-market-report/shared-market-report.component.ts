@@ -94,7 +94,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _authService: AuthService,
               private _filterService: FilterService,
-              private _responseService: ResponseService,
               private _tagFiltersService: TagsFiltersService,
               private _sharedWorldmapService: SharedWorldmapService,
               private _worldmapFiltersService: WorldmapFiltersService) { }
@@ -181,11 +180,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
-
-      /***
-       * passing the non filtered answers to the service to use in the executive report.
-       */
-      // this._responseService.setExecutiveAnswers(this._answers);
 
       this._filteredAnswers = this._answers;
 
@@ -276,7 +270,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    */
   private presets() {
    if (this._innovation.preset && this._innovation.preset.sections) {
-     this._questions = this._responseService.getPresets(this._innovation);
+     this._questions = ResponseService.getPresets(this._innovation);
    }
   }
 

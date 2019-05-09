@@ -58,7 +58,7 @@ export class ResponseService {
   /***
    * This function is to get and returns the questions from the innovation.
    */
-   getPresets(innovation: Innovation): Array<Question> {
+  static getPresets(innovation: Innovation): Array<Question> {
 
     let questions: Array<Question>;
 

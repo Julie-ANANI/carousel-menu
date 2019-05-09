@@ -1,0 +1,24 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#tag-component {
+
+  .tag-wrapper {
+
+    .tag {
+      margin-bottom: 3px;
+
+      .tag-count {
+        font-size: 28px;
+        color: $background-color;
+        font-weight: 300;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+    }
+
+  }
+
+}
