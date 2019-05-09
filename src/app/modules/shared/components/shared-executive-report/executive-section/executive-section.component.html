@@ -71,13 +71,7 @@
 
       <!-- if the question type is star -->
       <ng-container *ngIf="questionSelected?.controlType === 'stars'">
-       <!-- <app-stars
-          [answers]="answersToShow"
-          [innovation]="innovation"
-          [question]="questionSelected"
-          [executiveReport]="true"
-          class="section-star-wrapper">
-        </app-stars>-->
+        <app-stars [question]="questionSelected" [answers]="answersToShow"></app-stars>
       </ng-container>
       <!-- /if the question type is star -->
 

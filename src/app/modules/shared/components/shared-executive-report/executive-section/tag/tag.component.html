@@ -1,6 +1,5 @@
-<div *ngIf="tags" id="tag-component">
-
-  <div *ngIf="tags.length > 0" class="tag-wrapper">
+<ng-container *ngIf="tags && tags.length > 0">
+  <div id="tag-component">
     <div *ngFor="let tag of tags | slice:0:3" class="tag">
 
       <div *ngIf="tag.count > 1" class="tag-count">{{ tag.count }}X</div>
@@ -12,5 +11,4 @@
 
     </div>
   </div>
-
-</div>
+</ng-container>

@@ -5,6 +5,7 @@ import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
+import { Multiling } from '../../../../../models/multiling';
 
 @Injectable()
 export class ResponseService {
@@ -174,6 +175,52 @@ export class ResponseService {
     value = abstract ? abstract.value : '';
 
     return value;
+
+  }
+
+
+  /***
+   * this function is to get the notes data answer for the question type star.
+   * @param question
+   * @param answers
+   */
+  static getStarsAnswers(question: Question, answers: Array<Answer>) {
+
+    let notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
+
+    if (question && answers) {
+
+      notesData = question.options.map((x: any) => {
+        return {
+          label: x.label,
+          sum: 0,
+          percentage: '0%'
+        };
+      });
+
+      answers.forEach((answer) => {
+        Object.keys(answer.answers[question.identifier]).forEach((k) => {
+          const idx = parseInt(k, 10);
+          const vote = parseInt(answer.answers[question.identifier][k], 10);
+          if (Number.isInteger(idx) && Number.isInteger(vote) && idx < notesData.length) {
+            // If user didn't vote this characteristic, default value will be 0.
+            notesData[k].sum += vote;
+          }
+        });
+      });
+
+      notesData = notesData.map((noteData) => {
+          if (answers.length > 0) {
+            noteData.percentage = `${Math.round(((noteData.sum / answers.length) || 0) * 20)}%`;
+          }
+          return noteData;
+        }).sort((noteA, noteB) => {
+          return noteB.sum - noteA.sum;
+        });
+
+    }
+
+    return notesData;
 
   }
 

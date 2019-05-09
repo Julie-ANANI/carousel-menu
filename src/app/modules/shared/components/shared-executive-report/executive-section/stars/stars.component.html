@@ -1,0 +1,24 @@
+<ng-container *ngIf="notesData && notesData.length > 0">
+  <div id="stars-component">
+    <div *ngFor="let data of notesData | slice:0:4" class="note">
+
+      <div class="flex-between text-medium label-wrapper">
+        <span class="text-left text-background">{{ data.label | multiling:lang }}</span>
+        <span class="text-right text-notify">{{ 'MARKET_REPORT.GRADE' | translate }}: {{ data.percentage }}</span>
+      </div>
+
+      <ng-container *ngIf="data.sum">
+        <div class="bar bar-sm">
+          <div class="bar-item" [ngStyle]="{ 'width': data.percentage, 'background': '#FFB300' }"></div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!data.sum">
+        <div>
+          <span class="text-notify" [innerText]="'MARKET_REPORT.NO_GRADE'" translate></span>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</ng-container>

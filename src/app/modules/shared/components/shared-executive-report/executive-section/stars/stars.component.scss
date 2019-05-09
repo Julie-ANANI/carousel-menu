@@ -1,0 +1,18 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#stars-component {
+
+  .note {
+    margin-bottom: 10px;
+
+    .label-wrapper {
+      margin-bottom: 8px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+}
