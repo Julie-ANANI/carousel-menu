@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ChartsModule } from 'ng2-charts';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
@@ -22,6 +21,7 @@ import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { SharedExecutiveReportModule } from '../shared-executive-report/shared-executive-report.module';
+import { PieChartModule } from '../../../utility-components/canvas/piechart/pie-chart.module';
 
 
 /***
@@ -29,7 +29,6 @@ import { SharedExecutiveReportModule } from '../shared-executive-report/shared-e
  */
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
-import { PiechartComponent } from './components/piechart/piechart.component';
 import { ProfessionalTagComponent } from './components/pro-tag/pro-tag.component';
 import { SharedMarketReportComponent } from './shared-market-report.component';
 import { SharedMarketCommentComponent } from './components/professional-comment/professional-comment.component';
@@ -47,7 +46,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 @NgModule({
   imports: [
     CommonModule,
-    ChartsModule,
     PipeModule,
     SharedTextZoneModule,
     SharedWorldmapModule,
@@ -62,7 +60,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     CountryFlagModule,
     MessageSpaceModule,
     ModalModule,
-    SharedExecutiveReportModule
+    SharedExecutiveReportModule,
+    PieChartModule
   ],
   providers: [
     CommonService,
@@ -81,7 +80,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     SharedMarketComment2Component,
     ItemListComponent,
     BluesquareComponent,
-    PiechartComponent,
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
     StarsComponent,

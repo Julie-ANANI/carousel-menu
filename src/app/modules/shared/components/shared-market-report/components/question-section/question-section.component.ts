@@ -142,8 +142,7 @@ export class QuestionSectionComponent implements OnInit {
       }
 
       // sort comments
-      this._answersWithComment = this._answersWithComment
-        .sort((a, b) => {
+      this._answersWithComment = this._answersWithComment.sort((a, b) => {
           if ((b.answers[id + 'CommentQuality'] || 1) - (a.answers[id + 'CommentQuality'] || 1) === 0) {
             return b.answers[id + 'Comment'].length - a.answers[id + 'Comment'].length;
           } else {
@@ -182,6 +181,7 @@ export class QuestionSectionComponent implements OnInit {
    */
   public saveAbstract(event: Event, formControlName: string) {
     const abstract = this._formQuestionSection.get(formControlName).value;
+
     this._innovation = this._responseService.saveInnovationAbstract(this._innovation, abstract, formControlName);
 
     this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
@@ -192,13 +192,7 @@ export class QuestionSectionComponent implements OnInit {
   }
 
 
-  /***
-   * This function returns the color according to the length of the input data.
-   * @param {number} length
-   * @param {number} limit
-   * @returns {string}
-   */
-  public getColor(length: number, limit: number) {
+  public color(length: number, limit: number) {
     return InnovationFrontService.getColor(length, limit);
   }
 

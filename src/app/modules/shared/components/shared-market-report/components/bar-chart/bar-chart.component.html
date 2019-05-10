@@ -33,7 +33,7 @@
             placeholder="Describe the abstract of this question within 160 words."
             rows="5">
           </textarea>
-          <div class="char-remaining" [ngStyle]="{ 'color': getColor((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
+          <div class="char-remaining" [ngStyle]="{ 'color': color((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
             <span>{{ formBarChart.get(question._id).value.length | characterCountdown:160 }}</span>
           </div>
         </div>
@@ -111,5 +111,6 @@
 
   </div>
   <!-- /content section -->
+
 
 </section>

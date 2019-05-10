@@ -7,7 +7,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
-import { PieChart } from '../models/pie-chart';
+import { PieChart } from '../../../../../models/pie-chart';
 
 @Injectable()
 export class ResponseService {

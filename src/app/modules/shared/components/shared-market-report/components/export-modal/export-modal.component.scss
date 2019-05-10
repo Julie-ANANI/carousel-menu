@@ -1,51 +1,43 @@
 @import "../../../../../../../style/framework/src/variables";
 
-.export-option {
-
+.option-wrapper {
   flex-direction: column;
-  margin: $unit-2;
+  border: $border-width-lg solid $border-color;
+  border-radius: $border-radius;
+  padding: 0.5rem $unit-5;
+  margin: 0 $unit-2 $unit-5 0;
 
-  .text {
+  &:hover {
+    cursor: pointer;
+    border-color: $primary-color;
+  }
+
+  &.active {
+    border-color: $success-color;
+  }
+
+  h5, h6 {
+    font-size: $font-size-sm;
+    color: $text-background-color;
     margin-bottom: $unit-1;
   }
 
-  .sub-heading {
-    font-size: $font-size-sm;
+  h6 {
+    font-size: $font-size-xs;
   }
 
   img {
     width: 56px;
     height: 66px;
-    margin-bottom: 0.5rem;
-  }
-
-  .btn, img {
     margin-left: auto;
     margin-right: auto;
   }
 
-  .btn.btn-radio {
+}
 
-    &:hover {
-      background-color: $primary-color;
-      border-color: $primary-color;
-
-      span {
-        color: $light-color;
-      }
-
-    }
-
-    &.active {
-      background-color: $success-color;
-      border-color: $success-color;
-
-      span {
-        color: $light-color;
-      }
-
-    }
-
-  }
-
+.form-checkbox {
+  padding-right: 0;
+  font-size: 0.65rem;
+  font-weight: $font-weight-medium;
+  color: $text-meta-color;
 }

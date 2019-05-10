@@ -23,7 +23,7 @@
 
 
     <!-- different actions for admin -->
-    <div *ngIf="isAdmin && isAdminSide">
+    <ng-container *ngIf="isAdmin && isAdminSide">
       <div class="dropdown admin-actions-wrapper">
 
         <span>Actions <i class="fas fa-angle-down"></i></span>
@@ -60,7 +60,7 @@
 
       <div class="divider"></div>
 
-    </div>
+    </ng-container>
     <!-- /different actions for admin -->
 
 
@@ -353,9 +353,7 @@
 
 
 <!-- Modal to ask operator and client to export different reports -->
-<app-market-report-export-modal
-  *ngIf="isOwner"
-  [innovation]="innovation"
-  [(showModal)]="modalExport">
-</app-market-report-export-modal>
+<ng-container *ngIf="isOwner">
+  <app-market-report-export-modal [innovation]="innovation" [(showModal)]="modalExport"></app-market-report-export-modal>
+</ng-container>
 <!-- /Modal to ask operator and client to export different reports -->

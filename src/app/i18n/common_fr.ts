@@ -178,7 +178,8 @@ export const COMMON = {
     'SIGN_IN': 'Se Connecter',
     'SIGN_UP': 'Commencer',
     'DELETE': 'Supprimer',
-    'CLOSE': 'Fermer'
+    'CLOSE': 'Fermer',
+    'DOWNLOAD': 'Télécharger'
   },
 
   'PROJECT': {

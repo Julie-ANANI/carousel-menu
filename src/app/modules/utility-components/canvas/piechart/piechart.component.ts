@@ -1,8 +1,7 @@
-import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { PieChart } from '../../../../models/pie-chart';
 
 @Component({
   selector: 'app-piechart',
@@ -10,14 +9,14 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['piechart.component.scss']
 })
 
-export class PiechartComponent implements OnInit, OnDestroy {
+export class PiechartComponent implements OnInit {
 
-  @Input() set pieChart(value: any) {
+  @Input() set pieChart(value: PieChart) {
     this._pieChart = value;
     this._loadData();
   }
 
-  private _pieChart: any;
+  private _pieChart: PieChart;
 
   private _datasets: Array<{data: Array<number>}>;
 
@@ -31,26 +30,18 @@ export class PiechartComponent implements OnInit, OnDestroy {
 
   private _labelPercentage: Array<{percentage: Array<string>}>;
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
-
   private _isBrowser: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService) {
 
     this._isBrowser = isPlatformBrowser(this.platformId);
+    this._lang = this._translateService.currentLang || 'en';
 
   }
 
   ngOnInit() {
-    this._lang = this._translateService.currentLang || 'en';
-
-    this._translateService.onLangChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((e: any) => {
-      this._lang = e.lang;
-    });
-
     this._loadData();
-
   }
 
 
@@ -65,7 +56,7 @@ export class PiechartComponent implements OnInit, OnDestroy {
   }
 
 
-  get pieChart(): any {
+  get pieChart(): PieChart {
     return this._pieChart;
   }
 
@@ -95,15 +86,6 @@ export class PiechartComponent implements OnInit, OnDestroy {
 
   get isBrowser(): boolean {
     return this._isBrowser;
-  }
-
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
-  }
-
-  ngOnDestroy() {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

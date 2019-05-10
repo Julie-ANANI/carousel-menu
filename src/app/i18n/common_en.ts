@@ -179,7 +179,8 @@ export const COMMON = {
     'SIGN_IN': 'Sign In',
     'SIGN_UP': 'Sign Up',
     'DELETE': 'Delete',
-    'CLOSE': 'Close'
+    'CLOSE': 'Close',
+    'DOWNLOAD': 'Download'
   },
 
   'TABLE' : {

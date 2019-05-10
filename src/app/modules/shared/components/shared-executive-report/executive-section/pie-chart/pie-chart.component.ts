@@ -5,7 +5,7 @@ import { BarData } from '../../../shared-market-report/models/bar-data';
 import { ResponseService } from '../../../shared-market-report/services/response.service';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
-import { PieChart } from '../../../shared-market-report/models/pie-chart';
+import { PieChart } from '../../../../../../models/pie-chart';
 
 @Component({
   selector: 'app-pie-chart',

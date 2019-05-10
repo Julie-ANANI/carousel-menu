@@ -1,61 +1,68 @@
-<section id="question-conclusion-component">
+<ng-container *ngIf="question">
+  <section id="question-conclusion-component" class="d-flex">
 
-  <!-- conclusion -->
-  <div class="conclusion-wrapper section-pad full">
 
-    <h3 *ngIf="question?.title" class="title-primary">{{ question?.title | multiling:lang }}</h3>
+    <!-- conclusion -->
+    <div class="section-pad full conclusion-wrapper">
 
-    <h4 *ngIf="question?.label" class="title-secondary">{{ question?.label | multiling:lang }}</h4>
+      <h3 *ngIf="question?.title" class="title-primary">{{ question?.title | multiling:lang }}</h3>
 
-    <div *ngIf="receivedTags.length > 0" class="tag-wrapper section-light-pad rm-pad-top">
-      <div *ngFor="let tag of receivedTags" class="label label-success label-rounded" [title]="tag.description | multiling:lang">
-        <i class="fas fa-tag"></i><span class="label-text">{{ tag.label | multiling:lang }}</span>
-        <span *ngIf="tag.count > 1" class="label-text">(x{{ tag.count }})</span>
+      <ng-container *ngIf="receivedTags.length > 0">
+        <div class="tag-wrapper">
+          <div *ngFor="let tag of receivedTags" class="label label-tag label-rounded" [title]="tag.description | multiling:lang">
+            <i class="fas fa-tag"></i><span class="label-text">{{ tag.label | multiling:lang }}</span>
+            <span *ngIf="tag.count > 1" class="label-text">(x{{ tag.count }})</span>
+          </div>
+        </div>
+      </ng-container>
+
+      <h4 *ngIf="question?.label" class="title-secondary text-medium">{{ question?.label | multiling:lang }}</h4>
+
+      <h5 *ngIf="isMainDomain()" class="op-text text-background">{{ 'COMMON.UMI_WORD' | translate }}</h5>
+
+      <app-text-zone
+        [elementId]="domSectionId"
+        [readonly]="readonly"
+        [data]="innovation.marketReport[question.identifier]?.conclusion || ''"
+        (onTextChange)="keyupHandlerFunction($event)">
+      </app-text-zone>
+
+      <ng-container *ngIf="answersOrigin !== null">
+        <div class="section-light-pad rm-pad-bottom">
+
+          <h3 class="title-secondary">Geographical Distribution:</h3>
+
+          <ul>
+            <li *ngFor="let item of answersOrigin | keyvalue">
+              <span>{{ ('CONTINENTS.' + item.key) | translate }}: {{ item.value }}</span>
+            </li>
+          </ul>
+
+        </div>
+      </ng-container>
+
+    </div>
+    <!-- /conclusion -->
+
+
+    <!-- stats -->
+    <ng-container [ngSwitch]="question?.controlType">
+      <div class="section-pad stats-wrapper flex-centered text-center">
+
+        <!-- pie chart -->
+        <ng-container *ngSwitchCase="'radio'">
+          <app-piechart [pieChart]="pieChart"></app-piechart>
+        </ng-container>
+
+        <!-- ou encadré bleu -->
+        <ng-container *ngSwitchDefault>
+          <app-bluesquare [numberFocus]="stats.nbAnswers" [percentage]="stats.percentage" [subtitle]="question.subtitle | multiling:lang"></app-bluesquare>
+        </ng-container>
+
       </div>
-    </div>
+    </ng-container>
+    <!-- /stats -->
 
-    <h5 *ngIf="isMainDomain()" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h5>
 
-    <app-text-zone
-      [elementId]="domSectionId"
-      [readonly]="readonly"
-      [data]="innovation.marketReport[question.identifier]?.conclusion || ''"
-      (onTextChange)="keyupHandlerFunction($event)">
-    </app-text-zone>
-
-    <div *ngIf="answersOrigin !== null" class="answer-origin section-light-pad rm-pad-bottom">
-
-      <h3 class="title-secondary">Geographical Distribution:</h3>
-
-      <ul>
-        <li *ngFor="let item of answersOrigin | keyvalue">
-          {{ ('CONTINENTS.' + item.key) | translate }}: {{ item.value }}
-        </li>
-      </ul>
-
-    </div>
-
-  </div>
-  <!-- /conclusion -->
-
-  <ng-container [ngSwitch]="question?.controlType">
-    <div class="stat-wrapper section-pad full text-center flex-centered">
-
-      <!-- pie chart -->
-      <ng-container *ngSwitchCase="'radio'">
-        <app-piechart [pieChart]="pieChart"></app-piechart>
-      </ng-container>
-
-      <!-- ou encadré bleu -->
-      <ng-container *ngSwitchDefault>
-        <app-market-report-bluesquare
-          [numberFocus]="stats.nbAnswers"
-          [percentage]="stats.percentage"
-          [subtitle]="question.subtitle | multiling:lang">
-        </app-market-report-bluesquare>
-      </ng-container>
-
-    </div>
-  </ng-container>
-
-</section>
+  </section>
+</ng-container>

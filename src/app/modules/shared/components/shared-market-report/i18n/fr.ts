@@ -61,14 +61,12 @@ export const MARKET_REPORT = {
       'A': 'Toutes les réponses',
       'EXCEL': 'pour Excel',
       'PDF': 'en PDF',
-      'B': 'Executive Report',
+      'B': 'Executive',
       'C': '4 pages',
       'AROUND': 'Environ',
       'PAGES': 'pages'
     },
     'BUTTON_CONFIRM': 'Confirmer',
-    'BUTTON_DOWNLOAD': 'Télécharger',
-    'BUTTON_CANCEL': 'Annuler'
   },
 
   'MAP': {

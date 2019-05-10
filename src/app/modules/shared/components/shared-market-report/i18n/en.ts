@@ -54,14 +54,12 @@ export const MARKET_REPORT = {
       'A': 'All Answers',
       'EXCEL': 'Excel',
       'PDF': 'in PDF',
-      'B': 'Executive Report',
+      'B': 'Executive',
       'C': '4 pages',
       'AROUND': 'Around',
       'PAGES': 'pages'
     },
     'BUTTON_CONFIRM': 'Confirm',
-    'BUTTON_DOWNLOAD': 'Download',
-    'BUTTON_CANCEL': 'Cancel'
   },
 
   'MAP': {

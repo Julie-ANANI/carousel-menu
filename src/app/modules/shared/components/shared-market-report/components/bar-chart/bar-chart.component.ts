@@ -12,6 +12,7 @@ import { BarData } from '../../models/bar-data';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { PieChart } from '../../../../../../models/pie-chart';
 
 @Component({
   selector: 'app-bar-chart',
@@ -42,7 +43,7 @@ export class BarChartComponent implements OnInit {
 
   @Output() answerButtonClicked = new EventEmitter<boolean>();
 
-  private _adminSide: boolean;
+  private _adminSide: boolean = false;
 
   private _formBarChart: FormGroup;
 
@@ -50,7 +51,7 @@ export class BarChartComponent implements OnInit {
 
   private _barsData: Array<BarData> = [];
 
-  private _pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
+  private _pieChart: PieChart;
 
   private _showAnswers: {[index: string]: boolean} = {};
 
@@ -148,6 +149,7 @@ export class BarChartComponent implements OnInit {
    */
   public saveAbstract(event: Event, formControlName: string) {
     const abstract = this._formBarChart.get(formControlName).value;
+
     this.innovation = this._responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
 
     this._innovationService.save(this.innovation._id, this.innovation).subscribe(() => {
@@ -158,13 +160,7 @@ export class BarChartComponent implements OnInit {
   }
 
 
-  /***
-   * This function returns the color according to the length of the input data.
-   * @param {number} length
-   * @param {number} limit
-   * @returns {string}
-   */
-  public getColor(length: number, limit: number) {
+  public color(length: number, limit: number) {
     return InnovationFrontService.getColor(length, limit);
   }
 
@@ -180,7 +176,7 @@ export class BarChartComponent implements OnInit {
     return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
-  get pieChart() {
+  get pieChart(): PieChart {
     return this._pieChart;
   }
 

@@ -1,49 +1,39 @@
 <app-modal [modalTitle]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_TITLE'" [(showModal)]="showExportModal">
 
-  <!-- Export options -->
+
+  <!-- export options -->
   <div class="flex-between">
 
-    <!-- RESP Pdf -->
-    <div class="d-inline-flex export-option text-center" (click)="assignExportType($event, exportTypeEnum.respReport)">
-      <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
-      <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png">
-      <div
-        class="btn btn-radio"
-        [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
-        <span>•</span>
-      </div>
+    <!-- resp Pdf -->
+    <div class="d-inline-flex option-wrapper text-center" (click)="assignExportType($event, exportTypeEnum.respReport)" [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
+      <h6 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF'" translate></h6>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png" [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
     </div>
+    <!-- /resp Pdf -->
 
-    <!-- CSV -->
-    <div class="d-inline-flex export-option text-center" (click)="assignExportType($event, exportTypeEnum.csv)">
-      <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
-      <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png">
-      <div
-        class="btn btn-radio"
-        [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
-        <span>•</span>
-      </div>
+    <!-- csv -->
+    <div class="d-inline-flex option-wrapper text-center" (click)="assignExportType($event, exportTypeEnum.csv)" [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
+      <h6 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL'" translate></h6>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png" [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
     </div>
+    <!-- /csv -->
 
-    <!-- Executive report -->
-    <div class="d-inline-flex export-option text-center" (click)="assignExportType($event, exportTypeEnum.executiveReport)">
-      <h5 class="text text-background text-normal">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
-      <h6 class="text text-notify text-normal sub-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png">
-      <div
-        class="btn btn-radio"
-        [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }">
-        <span>•</span>
-      </div>
+    <!-- executive report -->
+    <div class="d-inline-flex option-wrapper text-center" (click)="assignExportType($event, exportTypeEnum.executiveReport)" [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B'" translate></h5>
+      <h6 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C'" translate></h6>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png" [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">
     </div>
+    <!-- /executive report -->
 
   </div>
-  <!-- Export options -->
+  <!-- export options -->
 
-  <!-- Export consent -->
-  <label class="form-checkbox export" for="market-report-consent">
+
+  <!-- export consent -->
+  <label class="form-checkbox" for="market-report-consent">
     <input
       type="checkbox"
       id="market-report-consent"
@@ -51,29 +41,17 @@
       name="market-report-consent"
       (change)="toggleConsent($event)"
       [checked]="innovation.ownerConsent.value">
-    <i class="form-icon"></i><span class="export-consent">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}</span>
+    <i class="form-icon"></i>{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}
   </label>
-  <!-- /Export consent -->
+  <!-- /export consent -->
 
-  <!-- Footer -->
+
+  <!-- footer -->
   <div class="modal-footer">
-
-    <!-- Cancel button -->
-    <button
-      class="btn ghost-edit btn-sm export-cancel-button"
-      style="margin-right:0.6rem;"
-      (click)="showExportModal = false">
-      {{ 'MARKET_REPORT.MODAL.BUTTON_CANCEL' | translate }}
-    </button>
-
-    <!-- Download button -->
-    <button
-      class="btn ghost-primary btn-sm"
-      [disabled]="!(exportType && innovation.ownerConsent.value)"
-      (click)="exportInnovation($event)">
-      {{ 'MARKET_REPORT.MODAL.BUTTON_DOWNLOAD' | translate }}
-    </button>
-
+    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+    <button class="btn btn-primary btn-sm" [disabled]="!(exportType && innovation.ownerConsent.value)" (click)="exportInnovation($event)" [innerText]="'COMMON.BUTTON.DOWNLOAD'" translate></button>
   </div>
-  <!-- /Footer -->
+  <!-- /footer -->
+
+
 </app-modal>

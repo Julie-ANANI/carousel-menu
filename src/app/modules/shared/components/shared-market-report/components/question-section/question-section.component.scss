@@ -97,36 +97,36 @@
 }
 
 
-@media (max-width: $size-md) {
-
-  .question-section-component {
-
-    .clearbit-list-wrapper {
-      flex-direction: column;
-
-      .clearbit-comment-wrapper {
-        margin-right: 0 !important;
-      }
-
-    }
-
-  }
-
-}
-
-@media (max-width: $size-sm) {
-
-  .less-padding {
-    padding: 0.75rem $unit-4 !important;
-  }
-
-  .toggle-wrapper {
-    flex-direction: column;
-
-    .card {
-      min-height: 100% !important;
-    }
-
-  }
-
-}
+//@media (max-width: $size-md) {
+//
+//  .question-section-component {
+//
+//    .clearbit-list-wrapper {
+//      flex-direction: column;
+//
+//      .clearbit-comment-wrapper {
+//        margin-right: 0 !important;
+//      }
+//
+//    }
+//
+//  }
+//
+//}
+//
+//@media (max-width: $size-sm) {
+//
+//  .less-padding {
+//    padding: 0.75rem $unit-4 !important;
+//  }
+//
+//  .toggle-wrapper {
+//    flex-direction: column;
+//
+//    .card {
+//      min-height: 100% !important;
+//    }
+//
+//  }
+//
+//}

@@ -8,6 +8,8 @@ import { first, takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
 import { TagsFiltersService } from '../../services/tags-filter.service';
 import { environment } from "../../../../../../../environments/environment";
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { PieChart } from '../../../../../../models/pie-chart';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -27,7 +29,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   @Input() readonly = true;
 
-  @Input() pieChart: any;
+  @Input() pieChart: PieChart;
 
   @Input() innovation: Innovation;
 
@@ -49,7 +51,8 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   constructor(private _innovationService: InnovationService,
               private _translateService: TranslateService,
-              private _tagService: TagsFiltersService) { }
+              private _tagService: TagsFiltersService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
 
@@ -71,18 +74,19 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
   }
 
 
-  keyupHandlerFunction(event: any) {
+  public keyupHandlerFunction(event: any) {
     const objToSave = {};
 
     objToSave[this.question.identifier] = { conclusion: event['content'] };
 
-    this._innovationService.updateMarketReport(this.innovation._id, objToSave).pipe(first()).subscribe((data: any) => {
-      this.innovation.marketReport = data;
+    this._innovationService.updateMarketReport(this.innovation._id, objToSave).pipe(first()).subscribe(() => {
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
   }
 
-  addTagFilter(event: Event, tag: Tag) {
+  public addTagFilter(event: Event, tag: Tag) {
     event.preventDefault();
     this._tagService.checkAnswerTag(this.tagId, tag._id, false);
   }

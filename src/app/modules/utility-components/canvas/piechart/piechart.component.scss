@@ -1,0 +1,40 @@
+@import "../../../../../style/framework/src/variables";
+
+.pie-chart {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  .percentage, .chart-pie {
+    margin-bottom: 0.75rem;
+  }
+
+  .chart-pie {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 320px !important;
+  }
+
+  .pie-data-wrapper {
+    flex-wrap: wrap;
+    margin: 0;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      margin-right: $unit-2;
+      font-size: 0.65rem;
+
+      .circle, .response, .text-label {
+        margin-right: $unit-1;
+      }
+
+      .circle-xs {
+        width: 12px;
+        height: 12px;
+      }
+
+    }
+
+  }
+
+}
