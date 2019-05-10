@@ -40,7 +40,7 @@
           <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ questionSelected?.title | multiling:lang | lowercase }}
         </span>
 
-        <span pageScroll pageScrollOffset="10" [href]="'#' + questionSelected?.identifier" class="text-link">
+        <span pageScroll pageScrollOffset="10" [href]="'#' + questionSelected?.identifier" class="text-link" id="more-text">
           {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
         </span>
 

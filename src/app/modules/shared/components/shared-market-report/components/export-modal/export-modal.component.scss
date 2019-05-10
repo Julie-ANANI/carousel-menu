@@ -1,11 +1,17 @@
 @import "../../../../../../../style/framework/src/variables";
 
+.flex-between {
+  flex-wrap: wrap;
+}
+
 .option-wrapper {
   flex-direction: column;
   border: $border-width-lg solid $border-color;
   border-radius: $border-radius;
   padding: 0.5rem $unit-5;
   margin: 0 $unit-2 $unit-5 0;
+  width: 177.77px;
+  height: 137px;
 
   &:hover {
     cursor: pointer;

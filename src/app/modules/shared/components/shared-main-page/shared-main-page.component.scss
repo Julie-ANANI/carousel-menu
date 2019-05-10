@@ -1,35 +1,36 @@
 @import '../../../../../style/framework/src/variables';
 
 .main-page {
+  padding: 50px;
   background-color: $bg-color-light;
   border-radius: $border-radius;
   flex-direction: column;
   font-size: inherit;
 
   .content-wrapper {
-    margin-top: -$unit-5;
+    margin-top: -20px;
     flex-direction: column;
     min-height: 80vh;
     justify-content: center;
 
     .text-executive, h1 {
-      margin-bottom: 0.5rem;
+      margin-bottom: 10px;
     }
 
     .title-primary {
-      font-size: 2.1rem;
+      font-size: 42px;
       font-weight: 300;
     }
 
     .text-executive {
-      font-size: $font-size-md;
+      font-size: 16px;
       display: none;
     }
 
     .summary, .image-wrapper, .goal-text {
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: $unit-5;
+      margin-bottom: 20px;
     }
 
     .summary {
@@ -42,11 +43,11 @@
     }
 
     .text-owner, .text-jobTitle, .text-email {
-      margin-bottom: $unit-h;
+      margin-bottom: 2px;
     }
 
     .text-email, .text-jobTitle {
-      font-size: $font-size-sm;
+      font-size: 14px;
     }
 
     h6 {
@@ -55,8 +56,9 @@
 
     .goal-text {
       max-width: 70%;
-      margin-top: $unit-5;
+      margin-top: 20px;
       margin-bottom: 0;
+      font-size: 12px;
       line-height: $line-height;
     }
 
@@ -64,11 +66,11 @@
 
   .footer-wrapper {
     border-top: $border-width solid $primary-color;
-    padding-top: 0.5rem;
+    padding-top: 10px;
 
     p {
       margin-bottom: 0;
-      font-size: $font-size-sm;
+      font-size: 14px;
     }
 
     a:hover {

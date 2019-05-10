@@ -22,6 +22,7 @@ import { MessageSpaceModule } from '../../../utility-components/message-space/me
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { SharedExecutiveReportModule } from '../shared-executive-report/shared-executive-report.module';
 import { PieChartModule } from '../../../utility-components/canvas/piechart/pie-chart.module';
+import { SharedMainPageModule } from '../shared-main-page/shared-main-page.module';
 
 
 /***
@@ -43,6 +44,7 @@ import { ExportModalComponent } from './components/export-modal/export-modal.com
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     MessageSpaceModule,
     ModalModule,
     SharedExecutiveReportModule,
-    PieChartModule
+    PieChartModule,
+    SharedMainPageModule
   ],
   providers: [
     CommonService,

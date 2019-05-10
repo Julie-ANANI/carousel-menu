@@ -61,7 +61,7 @@ export const MARKET_REPORT = {
       'A': 'Toutes les réponses',
       'EXCEL': 'pour Excel',
       'PDF': 'en PDF',
-      'B': 'Executive',
+      'B': 'Executive Report',
       'C': '4 pages',
       'AROUND': 'Environ',
       'PAGES': 'pages'

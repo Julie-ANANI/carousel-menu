@@ -40,7 +40,7 @@
 
     <!-- project status done or preview mode or not editing -->
     <ng-container *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)" >
-      <div [ngStyle]="{ 'background-color': '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
+      <div [ngStyle]="{ 'background-color': '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }" id="market-report-container">
         <div class="restrict-width">
           <div class="columns col-gapless">
 
@@ -129,9 +129,23 @@
               <!-- /executive report generation -->
 
 
+              <!-- main page -->
+              <div id="main-page" class="d-none">
+                <app-shared-main-page [project]="innovation"></app-shared-main-page>
+              </div>
+              <!-- /main page -->
+
+
+              <!-- umi intro -->
+              <div *ngIf="domainName === 'umi'" class="d-none" id="umi-intro">
+                <img [src]="introSrc" alt="UMI">
+              </div>
+              <!-- /umi intro -->
+
+
               <!-- executive report -->
               <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
-                <section id="executive-report" class="section-pad">
+                <section id="executive-report" class="section-light-pad">
                   <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
                 </section>
               </ng-container>
