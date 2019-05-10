@@ -113,39 +113,3 @@
   <!-- /content section -->
 
 </section>
-
-
-<!--&lt;!&ndash; executive report &ndash;&gt;-->
-<!--<ng-container >-->
-
-<!--  <ng-container *ngIf="question?.controlType === 'checkbox'">-->
-<!--    <div *ngFor="let data of barsData" class="executive-bar-chart-wrapper">-->
-
-<!--      &lt;!&ndash; row 1 &ndash;&gt;-->
-<!--      <div class="flex-between margin">-->
-<!--        <span class="bar-name">{{ data.label | multiling:lang }}</span>-->
-<!--        <span class="bar-count text-notify text-medium">{{ data.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; /row 1 &ndash;&gt;-->
-
-<!--      &lt;!&ndash; row 2 &ndash;&gt;-->
-<!--      <div class="margin">-->
-<!--        <div class="bar bar-sm">-->
-<!--          <div class="bar-item" [ngStyle]="{ 'width': data.absolutePercentage , 'background': '#FFB300' }"></div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; /row 2 &ndash;&gt;-->
-
-<!--      &lt;!&ndash; row 3 &ndash;&gt;-->
-<!--      <div *ngIf="data.answers.length > 0" class="executive-answer-wrapper flex-start">-->
-<!--        <div *ngFor="let answer of data.answers | answerslimiter | slice:0:3" class="label label-answer text-ellipsis">-->
-<!--          <span>{{ answer?.professional?.company }}</span>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; /row 3 &ndash;&gt;-->
-
-<!--    </div>-->
-<!--  </ng-container>-->
-
-<!--</ng-container>-->
-<!--&lt;!&ndash; /executive report &ndash;&gt;-->

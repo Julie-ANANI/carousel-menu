@@ -27,7 +27,7 @@ import { ChartsModule } from 'ng2-charts';
     SharedWorldmapModule,
     CountryFlagModule,
     NgxPageScrollModule,
-    ChartsModule
+    ChartsModule,
   ],
   declarations: [
     ExecutiveConclusionComponent,

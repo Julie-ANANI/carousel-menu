@@ -5,6 +5,7 @@ import { BarData } from '../../../shared-market-report/models/bar-data';
 import { ResponseService } from '../../../shared-market-report/services/response.service';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
+import { PieChart } from '../../../shared-market-report/models/pie-chart';
 
 @Component({
   selector: 'app-pie-chart',
@@ -27,7 +28,7 @@ export class PieChartComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
-  private _pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
+  private _pieChart: PieChart;
 
   private _barsData: Array<BarData> = [];
 
@@ -87,7 +88,7 @@ export class PieChartComponent implements OnInit {
     return this._answers;
   }
 
-  get pieChart(): { data: Array<number>; colors: Array<string>; labels: { [p: string]: Array<string> }; percentage?: number; labelPercentage?: Array<string> } {
+  get pieChart(): PieChart {
     return this._pieChart;
   }
 

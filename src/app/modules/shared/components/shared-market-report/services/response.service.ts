@@ -7,6 +7,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
+import { PieChart } from '../models/pie-chart';
 
 @Injectable()
 export class ResponseService {
@@ -290,13 +291,13 @@ export class ResponseService {
    */
   static getPieChartData(barsData: Array<BarData>, answers: Array<Answer>) {
 
-    let pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
+    let pieChart: PieChart;
 
     if (barsData && barsData.length > 0 && answers && answers.length > 0) {
 
       let positiveAnswersCount = 0;
 
-      const pieChartData: {data: Array<number>, colors: Array<string>, labels: {fr: Array<string>, en: Array<string>}, percentage?: number, labelPercentage?: Array<string>} = {
+      const pieChartData: PieChart = {
         data: [],
         colors: [],
         labels: {fr: [], en: []},

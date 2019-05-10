@@ -91,7 +91,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     AnswersLimiterPipe,
   ],
   exports: [
-    SharedMarketReportComponent
+    SharedMarketReportComponent,
+    AnswersLimiterPipe
   ]
 })
 

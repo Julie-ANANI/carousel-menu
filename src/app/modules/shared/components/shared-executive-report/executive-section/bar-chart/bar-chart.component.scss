@@ -1,5 +1,30 @@
 @import "../../../../../../../style/framework/src/variables";
 
 #bar-chart-component {
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+
+  .barData {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .bar {
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+
+    .label {
+      font-size: 11px;
+      padding: 4px 8px;
+    }
+
+    .text-ellipsis {
+      width: 130px;
+    }
+
+  }
 
 }

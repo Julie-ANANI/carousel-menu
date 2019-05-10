@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Tag } from '../../../../../models/tag';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-executive-section',

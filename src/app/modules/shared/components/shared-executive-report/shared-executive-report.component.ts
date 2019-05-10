@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
 import { Answer } from '../../../../models/answer';
 import { AnswerService } from '../../../../services/answer/answer.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-executive-report',
@@ -24,7 +25,8 @@ export class SharedExecutiveReportComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
-  constructor (private _answerService: AnswerService) { }
+  constructor (private _answerService: AnswerService,
+               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
   }
@@ -35,6 +37,8 @@ export class SharedExecutiveReportComponent implements OnInit {
         this._answers = response.answers.sort((a, b) => {
           return b.profileQuality - a.profileQuality;
         });
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR_EN');
       });
     }
   }
