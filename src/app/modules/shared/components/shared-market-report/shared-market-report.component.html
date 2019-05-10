@@ -1,291 +1,322 @@
-<div *ngIf="innovation" id="market-report">
+<ng-container *ngIf="innovation">
+  <div id="market-report">
 
 
-  <!-- project status not done at client side -->
-  <section *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode" [ngStyle]="{ 'background-color': '#FFFFFF' }">
-    <div class="section-light-pad rm-pad-bottom">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <h1 class="title-primary">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
+    <!-- project status not done at client side -->
+    <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode">
+      <section [ngStyle]="{ 'background-color': '#FFFFFF' }">
         <div class="section-light-pad rm-pad-bottom">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+
+            <h1 class="title-primary">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
+
+            <div class="section-light-pad rm-pad-bottom">
+
+              <app-message-space [widthMax]="'337px'">
+                <span>{{ getMessage() | translate }}</span>
+              </app-message-space>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </ng-container>
+    <!-- /project status not done at client side -->
+
+
+    <!-- project status not submitted admin side -->
+    <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
+      <section class="section-pad rm-pad-bottom">
+        <div class="column col-xs-12 col-11 col-mx-auto">
           <app-message-space [widthMax]="'337px'">
-            <span>{{ getMessage() | translate }}</span>
+            <span>{{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}</span>
           </app-message-space>
         </div>
-      </div>
-    </div>
-  </section>
-  <!-- /project status not done at client side -->
+      </section>
+    </ng-container>
+    <!-- /project status not submitted admin side -->
 
 
-  <!-- project status not submitted admin side -->
-  <section *ngIf="innovation.status === 'EDITING' && adminSide">
-    <div class="section-pad rm-pad-bottom">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <app-message-space [widthMax]="'337px'">
-          <span>{{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}</span>
-        </app-message-space>
-      </div>
-    </div>
-  </section>
-  <!-- /project status not submitted admin side -->
+    <!-- project status done or preview mode or not editing -->
+    <ng-container *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)" >
+      <div [ngStyle]="{ 'background-color': '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
+        <div class="restrict-width">
+          <div class="columns col-gapless">
 
 
-  <!-- project status done or preview mode or not editing -->
-  <div *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)" [ngStyle]="{ 'background-color': '#F5F5F5', 'margin-bottom': adminSide ? '0' : '-2.5rem' }">
-    <div class="restrict-width">
-      <div class="columns col-gapless">
+            <!-- filter sidebar -->
+            <aside class="column col-2 filter-wrapper">
+              <app-market-report-sidebar
+                [answers]="answers"
+                [innovation]="innovation"
+                [isAdmin]="adminMode"
+                [isAdminSide]="adminSide"
+                [isOwner]="isOwner"
+                [questions]="questions">
+              </app-market-report-sidebar>
+            </aside>
+            <!-- /filter sideBar -->
 
 
-        <!-- filter sidebar -->
-        <aside class="column col-2 filter-wrapper">
-          <app-market-report-sidebar
-            [answers]="answers"
-            [innovation]="innovation"
-            [isAdmin]="adminMode"
-            [isAdminSide]="adminSide"
-            [isOwner]="isOwner"
-            [questions]="questions">
-          </app-market-report-sidebar>
-        </aside>
-        <!-- /filter sideBar -->
+            <!-- answers section -->
+            <section id="answer-wrapper" class="column col-8">
 
 
-        <!-- answers section -->
-        <section id="answer-wrapper" class="column col-8">
+              <!-- main page goal -->
+              <ng-container *ngIf="adminSide">
+                <section class="section-light-pad" id="innovation-goal">
+                  <div class="section-light-pad bg-white full-light">
+
+                    <h2 class="title-primary">Objective</h2>
+
+                    <div class="form-group relative">
+
+                      <label for="market-report-objective"></label>
+
+                      <textarea
+                        (blur)="update($event)"
+                        [(ngModel)]="innovation.executiveReport.objective"
+                        placeholder="Describe the objective of this innovation within 120 words."
+                        class="form-input"
+                        id="market-report-objective"
+                        maxlength="120"
+                        rows="5">
+                      </textarea>
+
+                      <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
+                        <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </section>
+              </ng-container>
+              <!-- /main page goal -->
 
 
-          <!-- main page goal -->
-          <section *ngIf="adminSide" class="section-light-pad" id="innovation-goal">
-            <div class="section-light-pad bg-white full-light">
+              <!-- executive report generation -->
+              <ng-container *ngIf="adminSide">
+                <section class="section-pad" id="executive-generate">
+                  <div class="section-pad full d-flex executive-generate-wrapper bg-white">
 
-              <h2 class="title-primary">Objective</h2>
+                    <h2 class="title-primary">Executive Report</h2>
 
-              <div class="form-group relative">
+                    <div class="template-outer-wrapper d-flex">
+                      <div *ngFor="let template of executiveTemplates" class="card card-responsive">
 
-                <label for="market-report-objective"></label>
-                <textarea
-                  (blur)="update($event)"
-                  [(ngModel)]="innovation.executiveReport.objective"
-                  placeholder="Describe the objective of this innovation within 120 words."
-                  class="form-input"
-                  id="market-report-objective"
-                  maxlength="120"
-                  rows="5">
-                </textarea>
+                        <img [src]="template.imageSrc" alt=" ">
 
-                <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
-                  <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>
+                        <div class="card-header text-center">
+                          <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)">
+                            <span>•</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="text-center" [ngStyle]="{ 'margin-top': '0.5rem' }">
+                      <button class="btn ghost-primary btn-sm" [disabled]="numberOfSections === 0 || innovation.executiveReport.totalSections > 0" (click)="generateExecutiveTemplate($event)">
+                        Valid template
+                      </button>
+                    </div>
+
+                  </div>
+                </section>
+              </ng-container>
+              <!-- /executive report generation -->
+
+
+              <!-- executive report -->
+              <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
+                <section id="executive-report">
+                  <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
+                </section>
+              </ng-container>
+              <!-- /executive report -->
+
+
+              <!-- key learning section -->
+              <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">
+                <section class="section-pad" id="key-learnings">
+                  <div class="section-pad full key-learning-wrapper bg-white text">
+
+                    <h2 class="title-primary" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
+
+                    <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+
+                    <app-text-zone
+                      [elementId]="'keyLearning'"
+                      [readonly]="!adminSide"
+                      [data]="innovation.marketReport?.keyLearning?.conclusion"
+                      (onTextChange)="saveOperatorComment($event, 'keyLearning')">
+                    </app-text-zone>
+
+                  </div>
+                </section>
+              </ng-container>
+              <!-- /key learning section -->
+
+
+              <!-- origin comment and professional responses -->
+              <section class="section-pad" id="origin-responses">
+                <div class="origin-wrapper bg-white text">
+                  <app-question-conclusion
+                    [innovation]="innovation"
+                    [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
+                    [readonly]="!adminSide"
+                    [originAnswers]="answersOrigins"
+                    [stats]="{ nbAnswers: answers.length, percentage: 0 }">
+                  </app-question-conclusion>
+                </div>
+              </section>
+              <!-- /origin comment and professional responses -->
+
+
+              <!-- professional abstract -->
+              <ng-container *ngIf="adminSide">
+                <section class="abstract-wrapper">
+                  <div class="section-light-pad full-light bg-white text">
+
+                    <h2 class="title-primary">Professional Abstract</h2>
+
+                    <div class="form-group relative">
+
+                      <label for="market-report-professionals"></label>
+
+                      <textarea
+                        (blur)="update($event)"
+                        [(ngModel)]="innovation.executiveReport.professionalAbstract"
+                        placeholder="Describe the professional abstract of this innovation within 160 words."
+                        class="form-input"
+                        id="market-report-professionals"
+                        maxlength="160"
+                        rows="5">
+                      </textarea>
+
+                      <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
+                        <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </section>
+              </ng-container>
+              <!-- /professional abstract -->
+
+
+              <!-- map -->
+              <section class="section-light-pad" id="map">
+                <div class="map-wrapper">
+                  <app-worldmap
+                    (updateContinent)="filterByContinents($event)"
+                    [countries]="countries"
+                    [countriesColor]="'#2ECC71'"
+                    [initialConfiguration]="mapSelectedContinents"
+                    [synthesis]="true"
+                    [width]="'auto'">
+                  </app-worldmap>
+                </div>
+              </section>
+              <!-- /map -->
+
+
+              <!-- professionals -->
+              <section class="section-pad" id="professionals">
+
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary" (click)="toggleProfessional = !toggleProfessional">
+                    {{ (toggleProfessional ? 'MARKET_REPORT.BTN_PROFESSIONAL_CLOSE' : 'MARKET_REPORT.BTN_PROFESSIONAL_OPEN') | translate }}
+                    <i class="fas" aria-hidden="true" [ngClass]="toggleProfessional ? 'fa-angle-down' : 'fa-angle-right'"></i>
+                  </button>
                 </div>
 
-              </div>
+                <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'expand-wrapper' : 'collapse-wrapper' ">
+                  <div class="card-wrapper d-flex section-light-pad rm-pad-bottom">
+                    <div *ngFor="let answer of filteredAnswers" class="card card-3 relative">
 
-            </div>
-          </section>
-          <!-- /main page goal -->
+                      <div class="icon icon-delete tooltip tooltip-right c-hand" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translate" (click)="filterPro(answer, $event)">
+                        <i class="fas fa-eye-slash" aria-hidden="true"></i>
+                      </div>
 
+                      <div class="card-body">
+                        <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                      </div>
 
-          <!-- executive report generation -->
-          <section *ngIf="adminSide" class="section-pad" id="executive-generate">
-            <div class="section-pad full d-flex executive-generate-wrapper bg-white">
-
-              <h2 class="title-primary">Executive Report</h2>
-
-              <div class="template-outer-wrapper d-flex">
-                <div *ngFor="let template of executiveTemplates" class="card card-responsive">
-
-                  <img [src]="template.imageSrc" alt=" ">
-
-                  <div class="card-header text-center">
-                    <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)">
-                      <span>•</span>
                     </div>
                   </div>
-
                 </div>
-              </div>
 
-              <div class="text-center" [ngStyle]="{ 'margin-top': '0.5rem' }">
-                <button class="btn ghost-primary btn-sm" [disabled]="numberOfSections === 0 || innovation.executiveReport.totalSections > 0" (click)="generateExecutiveTemplate($event)">
-                  Valid template
-                </button>
-              </div>
-
-            </div>
-          </section>
-          <!-- /executive report generation -->
+              </section>
+              <!-- /professionals -->
 
 
-          <!-- executive report -->
-          <section *ngIf="innovation.executiveReport.totalSections > 0" id="executive-report">
-            <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
-          </section>
-          <!-- /executive report -->
-
-
-          <!-- key learning section -->
-          <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-pad" id="key-learnings">
-            <div class="section-pad full key-learning-wrapper bg-white text">
-
-              <h2 class="title-primary" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
-
-              <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-
-              <app-text-zone
-                [elementId]="'keyLearning'"
-                [readonly]="!adminSide"
-                [data]="innovation.marketReport?.keyLearning?.conclusion"
-                (onTextChange)="saveOperatorComment($event, 'keyLearning')">
-              </app-text-zone>
-
-            </div>
-          </section>
-          <!-- /key learning section -->
-
-
-          <!-- origin comment and professional responses -->
-          <section class="section-pad" id="origin-responses">
-            <div class="origin-wrapper bg-white text">
-              <app-question-conclusion
-                [innovation]="innovation"
-                [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
-                [readonly]="!adminSide"
-                [originAnswers]="answersOrigins"
-                [stats]="{ nbAnswers: answers.length, percentage: 0 }">
-              </app-question-conclusion>
-            </div>
-          </section>
-          <!-- /origin comment and professional responses -->
-
-
-          <!-- professional abstract -->
-          <section *ngIf="adminSide" class="abstract-wrapper">
-            <div class="section-light-pad full-light bg-white text">
-
-              <h2 class="title-primary">Professional Abstract</h2>
-
-              <div class="form-group relative">
-                <label for="market-report-professionals"></label>
-                <textarea
-                  (blur)="update($event)"
-                  [(ngModel)]="innovation.executiveReport.professionalAbstract"
-                  placeholder="Describe the professional abstract of this innovation within 160 words."
-                  class="form-input"
-                  id="market-report-professionals"
-                  maxlength="160"
-                  rows="5">
-              </textarea>
-                <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
-                  <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>
+              <!-- other question sections -->
+              <section id="questions">
+                <div *ngFor="let question of questions">
+                  <app-question-section
+                    [project]="innovation"
+                    [question]="question"
+                    [answers]="filteredAnswers"
+                    [toggleAnswers]="toggleAnswers"
+                    [readonly]="!adminSide"
+                    (modalAnswerChange)="seeAnswer($event)">
+                  </app-question-section>
                 </div>
-              </div>
-
-            </div>
-          </section>
-          <!-- /professional abstract -->
+              </section>
+              <!-- /other question sections -->
 
 
-          <!-- map -->
-          <section class="section-light-pad" id="map">
-            <div class="map-wrapper">
-              <app-worldmap
-                (updateContinent)="filterByContinents($event)"
-                [countries]="countries"
-                [countriesColor]="'#2ECC71'"
-                [initialConfiguration]="mapSelectedContinents"
-                [synthesis]="true"
-                [width]="'auto'">
-              </app-worldmap>
-            </div>
-          </section>
-          <!-- /map -->
+              <!-- conclusion -->
+              <ng-container *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide">
+                <section class="section-pad" id="conclusion">
+                  <div class="section-pad full bg-white text conclusion-wrapper">
 
+                    <h2 class="title-primary" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
 
-          <!-- professionals -->
-          <section class="section-pad" id="professionals">
+                    <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
 
-            <div class="text-center">
-              <button type="button" class="btn btn-primary" (click)="toggleProfessional = !toggleProfessional">
-                {{ (toggleProfessional ? 'MARKET_REPORT.BTN_PROFESSIONAL_CLOSE' : 'MARKET_REPORT.BTN_PROFESSIONAL_OPEN') | translate }}
-                <i class="fas" aria-hidden="true" [ngClass]="toggleProfessional ? 'fa-angle-down' : 'fa-angle-right'"></i>
-              </button>
-            </div>
+                    <app-text-zone
+                      [elementId]="'finalConclusion'"
+                      [readonly]="!adminSide"
+                      [data]="innovation.marketReport?.finalConclusion?.conclusion"
+                      (onTextChange)="saveOperatorComment($event, 'finalConclusion')">
+                    </app-text-zone>
 
-            <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'expand-wrapper' : 'collapse-wrapper' ">
-              <div class="card-wrapper d-flex section-light-pad rm-pad-bottom">
-                <div *ngFor="let answer of filteredAnswers" class="card card-3 relative">
-
-                  <div class="icon icon-delete tooltip tooltip-right c-hand" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translate" (click)="filterPro(answer, $event)">
-                    <i class="fas fa-eye-slash" aria-hidden="true"></i>
                   </div>
-
-                  <div class="card-body">
-                    <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-          </section>
-          <!-- /professionals -->
+                </section>
+              </ng-container>
+              <!-- /conclusion -->
 
 
-          <!-- other question sections -->
-          <section id="questions">
-            <div *ngFor="let question of questions">
-              <app-question-section
-                [project]="innovation"
-                [question]="question"
-                [answers]="filteredAnswers"
-                [toggleAnswers]="toggleAnswers"
-                [readonly]="!adminSide"
-                (modalAnswerChange)="seeAnswer($event)">
-              </app-question-section>
-            </div>
-          </section>
-          <!-- /other question sections -->
+            </section>
+            <!-- /answers section -->
 
-
-          <!-- conclusion -->
-          <section *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-pad" id="conclusion">
-            <div class="section-pad full bg-white text conclusion-wrapper">
-
-              <h2 class="title-primary" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
-
-              <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-
-              <app-text-zone
-                [elementId]="'finalConclusion'"
-                [readonly]="!adminSide"
-                [data]="innovation.marketReport?.finalConclusion?.conclusion"
-                (onTextChange)="saveOperatorComment($event, 'finalConclusion')">
-              </app-text-zone>
-
-            </div>
-          </section>
-          <!-- /conclusion -->
-
-
-        </section>
-        <!-- /answers section -->
-
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
+    <!-- /project status done or preview mode or not editing -->
+
+
+    <!-- insight preview -->
+    <ng-container *ngIf="!wordpress">
+      <app-sidebar [(template)]="sidebarTemplateValue">
+        <app-user-answer
+          [(userAnswer)]="modalAnswer"
+          [adminMode]="adminMode"
+          [projectId]="innovation._id"
+          [questions]="questions">
+        </app-user-answer>
+      </app-sidebar>
+    </ng-container>
+    <!-- /insight preview -->
+
+
   </div>
-  <!-- /project status done or preview mode or not editing -->
+</ng-container>
 
-
-  <!-- insight preview -->
-  <app-sidebar *ngIf="!wordpress" [(template)]="sidebarTemplateValue">
-    <app-user-answer
-      [(userAnswer)]="modalAnswer"
-      [adminMode]="adminMode"
-      [projectId]="innovation._id"
-      [questions]="questions">
-    </app-user-answer>
-  </app-sidebar>
-  <!-- /insight preview -->
-
-
-</div>
 

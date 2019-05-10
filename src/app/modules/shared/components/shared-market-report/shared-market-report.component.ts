@@ -63,7 +63,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _questions: Array<Question> = [];
 
-  private _adminMode = false;
+  private _adminMode: boolean = false;
 
   private _campaignsStats: {
     nbPros: number,
