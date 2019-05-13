@@ -1,5 +1,3 @@
-import { Professional } from '../professional';
-
 export interface SearchTool {
   metadata?: {
     world?: number;
@@ -12,11 +10,15 @@ export interface SearchTool {
   },
 
   pros?: Array<{
-    readonly _id?: string;
-    keywords?: Array<string>;
-    score?: number;
+    readonly country?: string;
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly profileUrl: string;
+    readonly jobTitle: string;
+    email?: string;
+    company?: string;
+    companyDomain?: string;
     isLoading?: boolean;
-    person?: Professional
   }>
 
 }
