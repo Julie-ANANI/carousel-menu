@@ -9,6 +9,7 @@ import { result_sample } from "../../../../models/static-data/result_sample";
 import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
 import { AuthService } from "../../../../services/auth/auth.service";
 import { DownloadService } from "../../../../services/download/download.service";
+import { countries } from "../../../../models/static-data/country";
 
 @Component({
   selector: 'app-search-tool',
@@ -36,7 +37,11 @@ export class SearchToolComponent implements OnInit{
 
   private _requestId: string = null;
 
+  private _selectedCountry: string = null;
+
   private _requestAlreadyLoaded: boolean = false;
+
+  public names: any = countries;
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -144,7 +149,7 @@ export class SearchToolComponent implements OnInit{
       if ( self._professionalCount >= total) {
         this._searchStopped = true;
         this._searchStarted = false;
-        this.loadPros(12, 12);
+        this._loadPros(12, 12);
         clearInterval(interval);
       }
       else  {
@@ -155,9 +160,9 @@ export class SearchToolComponent implements OnInit{
   }
 
 
-  public loadPros(displayLimit: number, loadLimit: number, country?: string) {
-    this._slicedPros = country ?
-      this._searchResult.pros.filter(pro => pro.country === country) :
+  private _loadPros(displayLimit: number, loadLimit: number) {
+    this._slicedPros = this._selectedCountry ?
+      this._searchResult.pros.filter(pro => pro.country === this._selectedCountry) :
       this._searchResult.pros.slice(0, displayLimit);
 
     this._slicedPros.forEach((professional, index) => {
@@ -175,7 +180,7 @@ export class SearchToolComponent implements OnInit{
     const end = currentNumberOfPros + 12 > this._searchResult.pros.length ?
       this._searchResult.pros.length : currentNumberOfPros + 12;
 
-    this.loadPros(end, 12);
+    this._loadPros(end, 12);
   }
 
 
@@ -245,6 +250,16 @@ export class SearchToolComponent implements OnInit{
     }
   }
 
+  public selectCountry(country: string) {
+    this._selectedCountry = country;
+    this._loadPros(12, 12);
+  }
+
+  public resetCountry() {
+    this._selectedCountry = null;
+    this._loadPros(12, 12);
+  }
+
   public getCompanyUrl(domain: string): string {
     return `http://${domain}`;
   }
@@ -276,6 +291,10 @@ export class SearchToolComponent implements OnInit{
 
   get scale(): Array<number>{
     return this._scale;
+  }
+
+  get selectedCountry(): string{
+    return this._selectedCountry;
   }
 
   get sidebarValue(): SidebarInterface {
