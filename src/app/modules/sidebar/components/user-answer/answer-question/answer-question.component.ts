@@ -105,7 +105,7 @@ export class AnswerQuestionComponent {
         this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, (err: any) => {
-        this._notificationsService.error('ERROR.ERROR', err);
+        this._notificationsService.error('ERROR.ERROR', err.message);
       });
   }
 
