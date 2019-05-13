@@ -1,9 +1,8 @@
-<ng-container *ngIf="innovationCard && innovationCard.length > 0">
+<ng-container *ngIf="innovationCard">
 
   <section class="restrict-width" id="discover-description-component">
     <div class="section-pad">
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <ng-container *ngFor="let innovation of innovationCard">
 
           <!-- section header -->
           <div class="section-header">
@@ -14,7 +13,7 @@
             </a>
 
             <!-- innovation title -->
-            <h1 class="title-primary">{{ innovation.title }}</h1>
+            <h1 class="title-primary">{{ innovationCard.title }}</h1>
 
             <!-- innovation tags -->
             <ng-container *ngIf="tags.length > 0">
@@ -25,15 +24,15 @@
             </ng-container>
 
             <!-- innovation summary -->
-            <div *ngIf="innovation.summary" class="summary-wrapper" [innerHTML]="innovation.summary"></div>
+            <div *ngIf="innovationCard.summary" class="summary-wrapper" [innerHTML]="innovationCard.summary"></div>
 
           </div>
           <!-- /section header -->
 
           <!-- section images -->
-          <ng-container *ngIf="innovation.media && innovation.media.length > 0">
+          <ng-container *ngIf="innovationCard.media && innovationCard.media.length > 0">
             <div class="d-flex section-images">
-              <div *ngFor="let media of innovation.media" class="d-inline-flex media-wrapper">
+              <div *ngFor="let media of innovationCard.media" class="d-inline-flex media-wrapper">
 
                 <!-- if image -->
                 <ng-container *ngIf="media?.type === 'PHOTO'">
@@ -54,11 +53,11 @@
           <!-- /section images -->
 
           <!-- section benefits -->
-          <ng-container *ngIf="innovation.advantages && innovation.advantages.length > 0">
+          <ng-container *ngIf="innovationCard.advantages && innovationCard.advantages.length > 0">
             <div class="section-benefits">
               <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
               <ul class="benefit-wrapper">
-                <li *ngFor="let advantage of innovation.advantages" class="text-background">
+                <li *ngFor="let advantage of innovationCard.advantages" class="text-background">
                   {{ advantage.text | FormatText }}
                 </li>
               </ul>
@@ -67,19 +66,19 @@
           <!-- /section benefits -->
 
           <!-- section issue -->
-          <ng-container *ngIf="innovation.problem">
+          <ng-container *ngIf="innovationCard.problem">
             <div class="section-issue">
               <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
-              <div class="issue-wrapper" [innerHTML]="innovation.problem"></div>
+              <div class="issue-wrapper" [innerHTML]="innovationCard.problem"></div>
             </div>
           </ng-container>
           <!-- /section issue -->
 
           <!-- section solution -->
-          <ng-container *ngIf="innovation.solution">
+          <ng-container *ngIf="innovationCard.solution">
             <div class="section-solution">
               <h2 class="title-secondary">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
-              <div class="solution-wrapper" [innerHTML]="innovation.solution"></div>
+              <div class="solution-wrapper" [innerHTML]="innovationCard.solution"></div>
             </div>
           </ng-container>
           <!-- /section solution -->
@@ -154,7 +153,6 @@
           </ng-container>
           <!-- /section related innovations -->
 
-        </ng-container>
       </div>
     </div>
   </section>

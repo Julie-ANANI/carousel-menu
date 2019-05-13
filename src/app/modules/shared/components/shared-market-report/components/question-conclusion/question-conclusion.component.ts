@@ -1,10 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
-import { Subject } from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
 import { FilterService } from '../../services/filters.service';
 import { environment } from "../../../../../../../environments/environment";
@@ -15,7 +13,7 @@ import { environment } from "../../../../../../../environments/environment";
   styleUrls: ['./question-conclusion.component.scss']
 })
 
-export class QuestionConclusionComponent implements OnInit, OnDestroy {
+export class QuestionConclusionComponent implements OnInit {
 
   @Input() set executiveReport(value: boolean) {
     this._executiveReportView = value;
@@ -39,11 +37,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   @Input() stats: { nbAnswers: number, percentage: number };
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
-
   private _domSectionId: string;
-
-  private _lang: string;
 
   private _executiveReportView = false;
 
@@ -68,12 +62,6 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       this.innovation.marketReport = {};
     }
 
-    this._lang = this._translateService.currentLang || 'en';
-
-    this._translateService.onLangChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((e: LangChangeEvent) => {
-      this._lang = e.lang || 'en';
-    });
-
   }
 
 
@@ -82,7 +70,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
     objToSave[this.question.identifier] = { conclusion: event['content'] };
 
-    this._innovationService.updateMarketReport(this.innovation._id, objToSave).pipe(first()).subscribe((data: any) => {
+    this._innovationService.updateMarketReport(this.innovation._id, objToSave).subscribe((data: any) => {
       this.innovation.marketReport = data;
     });
 
@@ -107,11 +95,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
   }
 
   get lang() {
-    return this._lang;
-  }
-
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
+    return this._translateService.currentLang;
   }
 
   get executiveReportView(): boolean {
@@ -128,11 +112,6 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   get answersOrigin(): { [p: string]: number } {
     return this._answersOrigin;
-  }
-
-  ngOnDestroy() {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

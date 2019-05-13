@@ -20,7 +20,7 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 
 export class DiscoverDescriptionComponent implements OnInit {
 
-  private _innovationCard: InnovCard[] = [];
+  private _innovationCard: InnovCard;
 
   private _innovation: Innovation;
 
@@ -72,11 +72,6 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._loadInnovation();
-  }
-
-  private _loadInnovation() {
-
     if ((this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE') {
       this._quizButtonDisplay = 'none';
     }
@@ -86,7 +81,6 @@ export class DiscoverDescriptionComponent implements OnInit {
     this._getAllTags();
     this._getAllShareLinks();
     this._getOperatorDetails();
-
   }
 
 
@@ -122,10 +116,10 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
     }
 
-    this._linkedInUrl = this._shareService.linkedinProjectShareLink(this._innovationCard[0]);
-    this._twitterUrl = this._shareService.twitterProjectShareLink(this._innovationCard[0]);
-    this._mailUrl = this._shareService.mailProjectShareLink(this._innovationCard[0]);
-    this._contactUsUrl = this._shareService.contactOperator(this.innovationCard[0], this._operatorEmail);
+    this._linkedInUrl = this._shareService.linkedinProjectShareLink(this._innovationCard);
+    this._twitterUrl = this._shareService.twitterProjectShareLink(this._innovationCard);
+    this._mailUrl = this._shareService.mailProjectShareLink(this._innovationCard);
+    this._contactUsUrl = this._shareService.contactOperator(this._innovationCard, this._operatorEmail);
   }
 
 
@@ -135,8 +129,10 @@ export class DiscoverDescriptionComponent implements OnInit {
 
 
   private _getInnovationCard() {
-    const innovationCardIndex = this._innovation.innovationCards.findIndex( (card: InnovCard) => card.lang === this._lang);
-    this._innovationCard.push(this._innovation.innovationCards[innovationCardIndex]);
+    this._innovationCard = this._innovation.innovationCards.find( (card: InnovCard) => card.lang === this._lang);
+    if (!this._innovationCard) {
+      this._innovationCard = this._innovation.innovationCards[0];
+    }
   }
 
 
@@ -169,7 +165,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     return this._id;
   }
 
-  get innovationCard(): InnovCard[] {
+  get innovationCard(): InnovCard {
     return this._innovationCard;
   }
 
@@ -227,10 +223,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get innovationsRelated(): Array<{ innovationCard: InnovCard; tags: Array<Tag> }> {
     return this._innovationsRelated;
-  }
-
-  get innovationConfig(): { offset: string; limit: string; sort: string; fields: string } {
-    return this._innovationConfig;
   }
 
 }
