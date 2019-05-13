@@ -204,19 +204,11 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * this function is called when the user edit the summary, problem
    * and solution.
    * @param event
+   * @param id
    */
-  updateData(event: { id: string, content: string }) {
-
-    if (event.id.indexOf('summary') !== -1) {
-      this._innovation.innovationCards[this._selectedCardIndex].summary = event.content;
-    } else if (event.id.indexOf('problem') !== -1) {
-      this._innovation.innovationCards[this._selectedCardIndex].problem = event.content;
-    } else if (event.id.indexOf('solution') !== -1) {
-      this._innovation.innovationCards[this._selectedCardIndex].solution = event.content;
-    }
-
+  updateData(event: { content: string }, id: string) {
+    this._innovation.innovationCards[this._selectedCardIndex][id] = event.content;
     this.notifyChanges();
-
   }
 
 

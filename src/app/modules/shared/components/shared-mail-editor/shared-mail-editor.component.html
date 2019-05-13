@@ -76,7 +76,6 @@
           <div class="form-group">
             <label class="form-label">{{ 'COMMON.MAIL_EDITOR.MESSAGE' | translate }}</label>
             <app-text-zone
-              [elementId]="id"
               [readonly]="!editionMode"
               [data]="email.content || ''"
               (onTextChange)="updateContent($event)">

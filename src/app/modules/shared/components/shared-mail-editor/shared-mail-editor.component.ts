@@ -41,7 +41,7 @@ export class SharedMailEditorComponent implements OnInit {
 
   private _language = 'en';
 
-  private _id = null;
+  private _id;
 
   private _email: EmailTemplate;
 

@@ -27,7 +27,6 @@
       </ng-container>
 
       <app-text-zone
-        [elementId]="domSectionId"
         [readonly]="readonly"
         [data]="innovation.marketReport[question.identifier]?.conclusion || ''"
         (onTextChange)="keyupHandlerFunction($event)">

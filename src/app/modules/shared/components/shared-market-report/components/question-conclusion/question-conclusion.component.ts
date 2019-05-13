@@ -65,9 +65,8 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
 
-  keyupHandlerFunction(event: any) {
+  keyupHandlerFunction(event: {content: string}) {
     const objToSave = {};
-
     objToSave[this.question.identifier] = { conclusion: event['content'] };
 
     this._innovationService.updateMarketReport(this.innovation._id, objToSave).subscribe((data: any) => {

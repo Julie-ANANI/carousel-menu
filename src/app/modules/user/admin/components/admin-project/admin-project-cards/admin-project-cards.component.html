@@ -6,7 +6,6 @@
         <div class="column col-8 centered">
           <h6>Commentaire pour le client :</h6>
           <app-text-zone
-            [elementId]="'comments'"
             [readonly]="false"
             [data]="project?.comments"
             (onTextChange)="commentKeyupHandlerFunction($event)">

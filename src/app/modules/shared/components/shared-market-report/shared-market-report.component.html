@@ -571,7 +571,6 @@
                 </ng-container>
 
                 <app-text-zone
-                  [elementId]="'keyLearning'"
                   [readonly]="!adminSide"
                   [data]="innovation.marketReport?.keyLearning?.conclusion"
                   (onTextChange)="saveOperatorComment($event, 'keyLearning')">
@@ -688,7 +687,6 @@
                 </ng-container>
 
                 <app-text-zone
-                  [elementId]="'finalConclusion'"
                   [readonly]="!adminSide"
                   [data]="innovation.marketReport?.finalConclusion?.conclusion"
                   (onTextChange)="saveOperatorComment($event, 'finalConclusion')">

@@ -124,8 +124,7 @@
                     <app-text-zone
                       id="summary"
                       [data]="innovationCard.summary"
-                      [elementId]="generateComponentId('summary' + innovationCard.lang)"
-                      (onTextChange)="updateData($event)">
+                      (onTextChange)="updateData($event, 'summary')">
                     </app-text-zone>
 
                     <!-- todo: add placeholders
@@ -169,8 +168,7 @@
                     <app-text-zone
                       id="problem"
                       [data]="innovationCard.problem"
-                      [elementId]="generateComponentId('problem' + innovationCard.lang)"
-                      (onTextChange)="updateData($event)">
+                      (onTextChange)="updateData($event, 'problem')">
                     </app-text-zone>
 
                     <!-- todo: add placeholders
@@ -213,8 +211,7 @@
 
                     <app-text-zone
                       [data]="innovationCard.solution"
-                      [elementId]="generateComponentId('solution' + innovationCard.lang)"
-                      (onTextChange)="updateData($event)">
+                      (onTextChange)="updateData($event, 'solution')">
                     </app-text-zone>
 
                     <!-- todo: add placeholders

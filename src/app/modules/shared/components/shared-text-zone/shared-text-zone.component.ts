@@ -1,9 +1,9 @@
-import { Component, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SwellrtBackend } from "../../../swellrt-client/services/swellrt-backend";
 
 declare const tinymce: any;
-declare let swellrt: any
+declare let swellrt: any;
 
 @Component({
   selector: 'app-text-zone',
@@ -11,19 +11,17 @@ declare let swellrt: any
   styleUrls: ['shared-text-zone.component.scss']
 })
 
-export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit {
+export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
   @Input() readonly = false;
 
   @Input() set data(value: string) {
     this._text = value;
-    this._contentHash = this.hashString(value);
+    this._contentHash = SharedTextZoneComponent.hashString(value);
     if (this.editor) {
       this.editor.setContent(this._text);
     }
   }
-
-  @Input() elementId: String;
 
   @Output() onTextChange = new EventEmitter<any>();
 
@@ -33,7 +31,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
 
   private editor: any;
 
-  private _htmlId: string;
+  private _htmlId: string = Math.random().toString(36).substr(2,10);
 
   private _sharedDocument: any;
   private _sharedEditor: any;
@@ -41,13 +39,20 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   //private _name: string;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private _swellRTBackend: SwellrtBackend
-  ) {
+              private _swellRTBackend: SwellrtBackend) {
     this._contentHash = 0;
   }
 
-  ngOnInit() {
-    this._htmlId = this.elementId.replace(/\s/g, '');
+  private static hashString(content: string): number {
+    let hash = 0;
+    let chr;
+    if (!content || content.length === 0) { return hash; }
+    for (let i = 0; i < content.length; i++) {
+      chr   = content.charCodeAt(i);
+      hash  = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
   }
 
   ngAfterViewInit() {
@@ -67,14 +72,14 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
         skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
         setup: (editor: any) => {
           this.editor = editor;
-          this._contentHash = this.hashString(this._text);
+          this._contentHash = SharedTextZoneComponent.hashString(this._text);
           editor
             .on('Blur', () => {
               const actualHash = this._contentHash;
               const content = editor.getContent();
-              this._contentHash = this.hashString(content);
+              this._contentHash = SharedTextZoneComponent.hashString(content);
               if (this._contentHash !== actualHash) {
-                this.onTextChange.emit({id: this.elementId, content: content});
+                this.onTextChange.emit({content: content});
               }
               /*if(this._sharedEditor) {
                 this._sharedEditor.set('text', this._text);
@@ -120,7 +125,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   public startCollaborativeEditor() {
-    this._swellRTBackend.openDocument( this.elementId.toString() )
+    this._swellRTBackend.openDocument( 'id-document' )
       .then(_object => {
         this._sharedDocument = _object;
         if (!this._sharedDocument.node('documents')) {
@@ -206,18 +211,6 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
     }
   }
 
-  private hashString(content: string): number {
-    let hash = 0;
-    let chr;
-    if (!content || content.length === 0) { return hash; }
-    for (let i = 0; i < content.length; i++) {
-      chr   = content.charCodeAt(i);
-      hash  = ((hash << 5) - hash) + chr;
-      hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-  }
-
   public get htmlId(): string {
     return this._htmlId;
   }
@@ -228,7 +221,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
 
   public set text(value: string) {
     this._text = value; // This is in case tinymce fails, then we will be able to use the textarea
-    this.onTextChange.emit({id: this.elementId, content: value});
+    this.onTextChange.emit({content: value});
   }
 
 }
