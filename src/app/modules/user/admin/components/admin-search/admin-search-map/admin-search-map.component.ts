@@ -99,7 +99,7 @@ export class AdminSearchMapComponent {
     event.preventDefault();
     const foo: any = event.srcElement.className;
     const country = foo.baseVal.slice(-2);
-    console.log(country);
+    this.onCountryClick.emit(country);
   }
 
   public hoverCountry(event: any) {
