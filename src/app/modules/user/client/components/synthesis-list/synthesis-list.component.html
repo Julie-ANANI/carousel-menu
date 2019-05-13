@@ -10,15 +10,15 @@
 
     <!-- section reports -->
     <ng-container *ngIf="!noResult">
-      <div class="report-wrapper" [@listAnimation]="totalReports.length">
+      <div class="report-wrapper">
         <div *ngFor="let report of totalReports" class="card-report">
           <div class="card-content d-inline-flex">
 
-            <a [href]="getRelevantLink(report)" target="_blank"><img [src]="getMedia(report)" alt=" "></a>
+            <a [href]="getRelevantLink(report)"><img [src]="getMedia(report)" alt=" "></a>
 
             <div class="report-description">
 
-              <a [href]="getRelevantLink(report)" target="_blank">
+              <a [href]="getRelevantLink(report)">
                 <span>{{ report.name }}</span>
               </a>
 
