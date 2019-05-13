@@ -30,13 +30,12 @@ export class AppComponent implements OnInit {
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private translateService: TranslateService,
-              private authService: AuthService,
-              private translateNotificationsService: TranslateNotificationsService) {
+              private _translateService: TranslateService,
+              private _authService: AuthService,
+              private _translateNotificationsService: TranslateNotificationsService) {
 
     this.setFavicon();
-
-    initTranslation(this.translateService);
+    initTranslation(this._translateService);
 
   }
 
@@ -45,10 +44,10 @@ export class AppComponent implements OnInit {
 
     //this._setSwellRTScript();
 
-    if (this.authService.isAcceptingCookies) {
-      this.authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+    if (this._authService.isAcceptingCookies) {
+      this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
         }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR', { timeOut: 0 })
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR', { timeOut: 0 })
         }
       );
     }

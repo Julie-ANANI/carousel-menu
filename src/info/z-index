@@ -4,9 +4,16 @@
 
 
 /*
+  spinner loader
+*/
+z-index: 88881;
+
+
+
+/*
   progress bar
 */
-z-index: 99999;
+z-index: 88880;
 
 
 // The z-index from 1000 to 9999 are reserved for the elements that are most important and always comes first.
