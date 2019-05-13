@@ -144,7 +144,7 @@ export class SearchToolComponent implements OnInit{
       if ( self._professionalCount >= total) {
         this._searchStopped = true;
         this._searchStarted = false;
-        this._loadPros(12, 12);
+        this.loadPros(12, 12);
         clearInterval(interval);
       }
       else  {
@@ -155,8 +155,10 @@ export class SearchToolComponent implements OnInit{
   }
 
 
-  private _loadPros(displayLimit: number, loadLimit: number) {
-    this._slicedPros = this._searchResult.pros.slice(0, displayLimit);
+  public loadPros(displayLimit: number, loadLimit: number, country?: string) {
+    this._slicedPros = country ?
+      this._searchResult.pros.filter(pro => pro.country === country) :
+      this._searchResult.pros.slice(0, displayLimit);
 
     this._slicedPros.forEach((professional, index) => {
       if (index >= (displayLimit - loadLimit)) {
@@ -173,7 +175,7 @@ export class SearchToolComponent implements OnInit{
     const end = currentNumberOfPros + 12 > this._searchResult.pros.length ?
       this._searchResult.pros.length : currentNumberOfPros + 12;
 
-    this._loadPros(end, 12);
+    this.loadPros(end, 12);
   }
 
 

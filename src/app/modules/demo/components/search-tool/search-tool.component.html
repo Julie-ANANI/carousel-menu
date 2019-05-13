@@ -65,7 +65,12 @@
 
             <!-- display map -->
             <div class="map-wrapper">
-              <admin-search-map [width]="'auto'" [quartiles]="scale" [countriesData]="searchResult.metadata"></admin-search-map>
+              <admin-search-map
+                [width]="'auto'"
+                [quartiles]="scale"
+                [countriesData]="searchResult.metadata"
+                (onCountryClick)="loadPros(12, 12, $event)"
+              ></admin-search-map>
             </div>
 
             <!-- display stats -->
