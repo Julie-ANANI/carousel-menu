@@ -129,7 +129,7 @@ export class SearchToolComponent implements OnInit{
 
   private _totalProfessional(total: number) {
     total = total > 20000 ? 20000 : total < 100 ? 50 : total;
-    let duration = 2000 / total;
+    let duration = 1500 / total;
     let increment = 1;
     this._professionalCount = 0;
 
