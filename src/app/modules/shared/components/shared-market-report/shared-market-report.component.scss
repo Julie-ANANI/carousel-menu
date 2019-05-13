@@ -20,11 +20,6 @@
     width: 100%;
   }
 
-  #answer-wrapper {
-    width: 78.6%;
-    padding-left: 1.25rem;
-  }
-
   .executive-generate-wrapper {
     flex-direction: column;
 
@@ -86,7 +81,7 @@
     }
 
     .professional-wrapper {
-      transition: all 0.25s ease;
+      @include control-transition();
       height: 100%;
 
       .card-wrapper {
@@ -169,6 +164,32 @@
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  #answer-wrapper {
+    width: 70% ;
+    padding-left: 1.25rem;
+  }
+
+}
+
+
+@media (min-width: 961px) {
+
+  #answer-wrapper {
+    width: 78.6%;
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #answer-wrapper {
+    padding-left: $unit-2;
+    padding-right: $unit-2;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 }

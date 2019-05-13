@@ -165,4 +165,9 @@ export const ERROR = {
     'CSV': 'The CSV has been imported successfully.'
   },
 
+  'FILTER': {
+    'ALREADY_EXIST': 'The view with this name already exists.',
+    'ALREADY_ACTIVATED': 'The view is already activated.'
+  }
+
 };

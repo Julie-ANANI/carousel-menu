@@ -65,7 +65,7 @@
 }
 
 
-@media (max-width: 960px) {
+@media (max-width: $size-lg) {
 
   #executive-report-wrapper {
 
@@ -73,18 +73,29 @@
       flex-direction: column;
     }
 
-    .section-wrapper, .sections, .section-4 {
+    .sections, .section-wrapper {
       width: 100%;
     }
 
-    .section-2, .section-4 {
-      height: 100%;
-    }
-
-    .section-4:nth-child(3) {
-      border-bottom: $border-width solid $border-color;
+    .section {
+      min-height: 446px;
     }
 
   }
-  
+
+}
+
+
+@media (max-width: $size-md) {
+
+  #executive-report-wrapper {
+
+    .section {
+      width: 100%;
+      border: $border-width solid $border-color !important;
+    }
+
+
+  }
+
 }

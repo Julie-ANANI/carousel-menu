@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { FilterService } from '../../services/filters.service';
@@ -76,6 +76,8 @@ export class SidebarComponent implements OnInit {
 
   private _tagsEndIndex = 6;
 
+  private _toggleFilterBar: boolean = false;
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _filterService: FilterService,
               private _innovationService: InnovationService,
@@ -87,6 +89,15 @@ export class SidebarComponent implements OnInit {
     PageScrollConfig.defaultDuration = 300;
     this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth > 600) {
+      this._toggleFilterBar = false;
+    }
+  }
+
 
   ngOnInit() {
 
@@ -112,32 +123,54 @@ export class SidebarComponent implements OnInit {
 
 
   public shareNewFilter(): void {
-    const data = {
-      name: this._filterName,
-      answers: this._filterService.filter(this._answers).map((answer) => answer._id)
-    };
-    this._innovationService.saveFilter(this._innovation._id, data).subscribe((res) => {
-      this._sharedFiltersList.push(res);
-      this._filterName = '';
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
+
+    const find = this._sharedFiltersList.find((filter) => filter.name.toLowerCase() === this._filterName.toLowerCase());
+
+    if (!find) {
+
+      const data = {
+        name: this._filterName,
+        answers: this._filterService.filter(this._answers).map((answer) => answer._id)
+      };
+
+      this._innovationService.saveFilter(this._innovation._id, data).subscribe((res) => {
+        this._sharedFiltersList.push(res);
+        this._filterName = '';
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      });
+
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FILTER.ALREADY_EXIST');
+    }
+
   }
 
 
   public loadFilter(name: string) {
-    this._innovationService.getFilter(this._innovation._id, name).subscribe((result) => {
-      if (result) {
-        this._filterService.addFilter({
-          status: 'CUSTOM',
-          questionId: name,
-          value: result.answers
-        });
-        this._activatedCustomFilters.push(name);
-      }
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
+
+    const find = this._activatedCustomFilters.find((filter) => filter.toLowerCase() === name.toLowerCase());
+
+    if (!find) {
+      this._innovationService.getFilter(this._innovation._id, name).subscribe((result) => {
+        if (result) {
+
+          this._filterService.addFilter({
+            status: 'CUSTOM',
+            questionId: name,
+            value: result.answers
+          });
+
+          this._activatedCustomFilters.push(name);
+
+        }
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      });
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FILTER.ALREADY_ACTIVATED');
+    }
+
   }
 
 
@@ -393,6 +426,18 @@ export class SidebarComponent implements OnInit {
 
   get tagsEndIndex(): number {
     return this._tagsEndIndex;
+  }
+
+  set tagsEndIndex(value: number) {
+    this._tagsEndIndex = value;
+  }
+
+  get toggleFilterBar(): boolean {
+    return this._toggleFilterBar;
+  }
+
+  set toggleFilterBar(value: boolean) {
+    this._toggleFilterBar = value;
   }
 
 }

@@ -47,15 +47,15 @@ export class SharedWorldmapComponent implements OnInit{
     };
   }
 
+  @Output() updateContinent = new EventEmitter<any>();
+
+  @Output() hoveredContinent = new EventEmitter<string>();
+
   /* Initialise continents selections with everything to false */
   private _continents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
     acc[cont] = false;
     return acc;
   }, {});
-
-  @Output() updateContinent = new EventEmitter<any>();
-
-  @Output() hoveredContinent = new EventEmitter<string>();
 
   constructor(private _elem: ElementRef,
               private _worldmap: SharedWorldmapService,

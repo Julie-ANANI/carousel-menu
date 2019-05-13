@@ -4,12 +4,12 @@
   <!-- filter icon for small devices -->
   <div class="filter-icon-wrapper flex-between text-background">
 
-    <div>
+    <div (click)="toggleFilterBar = !toggleFilterBar">
       <span class="text-medium" [ngStyle]="{ 'margin-right': '0.4rem' }">Filters</span>
       <i class="fas fa-angle-down" [ngStyle]="{ 'vertical-align': 'middle', 'font-size': '1rem' }"></i>
     </div>
 
-    <div>
+    <div *ngIf="toggleFilterBar" (click)="toggleFilterBar = false;">
       <i class="fas fa-times-circle"></i>
       <span class="text-medium" [ngStyle]="{ 'margin-left': '0.4rem' }">Close</span>
     </div>
@@ -19,7 +19,7 @@
 
 
   <!-- filter options -->
-  <div class="filter-option-wrapper">
+  <div class="filter-option-wrapper" [ngClass]="toggleFilterBar ? 'active' : 'inactive' " id="filter-option">
 
 
     <!-- different actions for admin -->

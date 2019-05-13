@@ -1,14 +1,21 @@
 @import '../../../../../../../style/framework/src/variables';
+@import '../../../../../../../style/framework/src/mixins';
 
 #app-market-report-sidebar {
   background-color: $bg-color-light;
-  padding: 1.25rem 0.75rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem $unit-4;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   color: $text-background-color;
 
   .filter-icon-wrapper {
     font-size: $font-size-md;
+  }
+
+  .filter-option-wrapper {
+    @include control-transition();
   }
 
   .divider {
@@ -169,13 +176,49 @@
 
 }
 
+@media (min-width: $size-xs) {
+
+  #app-market-report-sidebar {
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+  }
+
+}
+
+
 @media (min-width: $size-sm) {
 
   #app-market-report-sidebar {
     border-right: $border-width solid $border-color;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
 
     .filter-icon-wrapper {
       display: none;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #app-market-report-sidebar {
+
+    .filter-option-wrapper {
+
+      &.inactive {
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      &.active {
+        max-height: 100vh;
+        overflow-y: auto;
+        padding-top: $unit-10;
+      }
+
     }
 
   }

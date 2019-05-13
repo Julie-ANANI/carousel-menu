@@ -45,22 +45,16 @@
 
 }
 
-//@media (max-width: $size-md) {
-//
-//  #question-conclusion-component {
-//    flex-direction: column;
-//  }
-//
-//}
-//
-//@media (max-width: $size-sm) {
-//
-//  #question-conclusion-component {
-//
-//    .conclusion-wrapper {
-//      padding: 1.25rem !important;
-//    }
-//
-//  }
-//
-//}
+@media (max-width: $size-lg) {
+
+  #question-conclusion-component {
+    justify-content: unset;
+    flex-direction: column;
+
+    .stats-wrapper {
+      width: 100%;
+    }
+
+  }
+
+}
