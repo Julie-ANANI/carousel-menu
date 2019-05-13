@@ -9,6 +9,7 @@ import { result_sample } from "../../../../models/static-data/result_sample";
 import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
 import { AuthService } from "../../../../services/auth/auth.service";
 import { DownloadService } from "../../../../services/download/download.service";
+import { countries } from "../../../../models/static-data/country";
 
 @Component({
   selector: 'app-search-tool',
@@ -36,7 +37,11 @@ export class SearchToolComponent implements OnInit{
 
   private _requestId: string = null;
 
+  private _selectedCountry: string = null;
+
   private _requestAlreadyLoaded: boolean = false;
+
+  public names: any = countries;
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -129,7 +134,7 @@ export class SearchToolComponent implements OnInit{
 
   private _totalProfessional(total: number) {
     total = total > 20000 ? 20000 : total < 100 ? 50 : total;
-    let duration = 2000 / total;
+    let duration = 1500 / total;
     let increment = 1;
     this._professionalCount = 0;
 
@@ -156,7 +161,9 @@ export class SearchToolComponent implements OnInit{
 
 
   private _loadPros(displayLimit: number, loadLimit: number) {
-    this._slicedPros = this._searchResult.pros.slice(0, displayLimit);
+    this._slicedPros = this._selectedCountry ?
+      this._searchResult.pros.filter(pro => pro.country === this._selectedCountry) :
+      this._searchResult.pros.slice(0, displayLimit);
 
     this._slicedPros.forEach((professional, index) => {
       if (index >= (displayLimit - loadLimit)) {
@@ -243,6 +250,16 @@ export class SearchToolComponent implements OnInit{
     }
   }
 
+  public selectCountry(country: string) {
+    this._selectedCountry = country;
+    this._loadPros(12, 12);
+  }
+
+  public resetCountry() {
+    this._selectedCountry = null;
+    this._loadPros(12, 12);
+  }
+
   public getCompanyUrl(domain: string): string {
     return `http://${domain}`;
   }
@@ -274,6 +291,10 @@ export class SearchToolComponent implements OnInit{
 
   get scale(): Array<number>{
     return this._scale;
+  }
+
+  get selectedCountry(): string{
+    return this._selectedCountry;
   }
 
   get sidebarValue(): SidebarInterface {

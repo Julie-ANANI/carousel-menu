@@ -65,7 +65,12 @@
 
             <!-- display map -->
             <div class="map-wrapper">
-              <admin-search-map [width]="'auto'" [quartiles]="scale" [countriesData]="searchResult.metadata"></admin-search-map>
+              <admin-search-map
+                [width]="'auto'"
+                [quartiles]="scale"
+                [countriesData]="searchResult.metadata"
+                (onCountryClick)="selectCountry($event)"
+              ></admin-search-map>
             </div>
 
             <!-- display stats -->
@@ -138,6 +143,15 @@
 
         <!-- showing the professionals -->
         <ng-container *ngIf="searchStopped">
+          <h3 class="title-tertiary text-notify">{{ 'SEARCH.DEMO.SOME_PROS' | translate }}</h3>
+
+          <div *ngIf="selectedCountry" class="label label-primary label-rounded c-hand">
+            <label class="c-hand">
+              <span class="label-text">{{ names[selectedCountry] }}</span>
+            </label>
+            <i class="fas fa-times" (click)="resetCountry()"></i>
+          </div>
+
           <div class="card-wrapper d-flex">
             <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
 
@@ -234,7 +248,7 @@
         <!-- /showing the professionals -->
 
         <!-- button to show more pros -->
-        <ng-container *ngIf="searchStopped && slicedPros.length !== searchResult.pros.length">
+        <ng-container *ngIf="searchStopped && slicedPros.length !== searchResult.pros.length && !selectedCountry">
           <div class="text-center section-pad rm-pad-top">
             <button class="btn btn-primary" (click)="onClickSeeMore()">See More</button>
           </div>
