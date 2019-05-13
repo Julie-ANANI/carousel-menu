@@ -41,8 +41,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._adminSide = value;
   }
 
-  @Input() wordpress = false; // this is temporary for the site.
-
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _innovation: Innovation = {};
