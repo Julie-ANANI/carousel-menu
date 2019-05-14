@@ -162,8 +162,10 @@
     top: 0;
     position: sticky;
     height: 100vh;
+    background-color: $bg-color-light;
     overflow-y: auto;
     overflow-x: hidden;
+    border-right: $border-width solid $border-color;
   }
 
   #answer-wrapper {
