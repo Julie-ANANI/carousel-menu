@@ -26,6 +26,10 @@ export class SidebarComponent implements OnInit {
     this._answers = value;
   }
 
+  @Input() set reportShared(value: boolean) {
+    this._reportShared = value;
+  }
+
   @Input() set isAdmin(value: boolean) {
     this._isAdmin = value;
   }
@@ -48,6 +52,8 @@ export class SidebarComponent implements OnInit {
 
   private _answers: Array<Answer>;
 
+  private _reportShared: boolean;
+
   private _isAdmin: boolean;
 
   private _isAdminSide: boolean;
@@ -64,19 +70,19 @@ export class SidebarComponent implements OnInit {
 
   private _activatedCustomFilters: Array<string> = [];
 
-  private _modalEndInnovation: boolean = false;
+  private _modalEndInnovation: boolean;
 
-  private _modalPreviewInnovation: boolean = false;
+  private _modalPreviewInnovation: boolean;
 
-  private _modalExport: boolean = false;
+  private _modalExport: boolean;
 
-  private _modalResetReport: boolean = false;
+  private _modalResetReport: boolean;
 
   private _userLang = '';
 
   private _tagsEndIndex = 6;
 
-  private _toggleFilterBar: boolean = false;
+  private _toggleFilterBar: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _filterService: FilterService,
@@ -322,6 +328,10 @@ export class SidebarComponent implements OnInit {
 
   get answers(): Array<Answer> {
     return this._answers;
+  }
+
+  get reportShared(): boolean {
+    return this._reportShared;
   }
 
   get answersTagsLists(): {[questionId: string]: Array<Tag>} {

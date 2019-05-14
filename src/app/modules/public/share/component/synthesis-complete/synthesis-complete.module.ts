@@ -7,7 +7,10 @@ import { SynthesisCompleteComponent } from './synthesis-complete.component';
 
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
-import { SpinnerLoaderModule } from '../../../../utility-components/spinner-loader/spinner-loader.module';
+import { SharedMainPageModule } from '../../../../shared/components/shared-main-page/shared-main-page.module';
+import { SharedInnovationDetailModule } from '../../../../shared/components/shared-innovation-detail/shared-innovation-detail.module';
+import { SharedTargetingDetailModule } from '../../../../shared/components/shared-targeting-detail/shared-targeting-detail.module';
+import { SharedExecutiveReportModule } from '../../../../shared/components/shared-executive-report/shared-executive-report.module';
 
 @NgModule({
   imports: [
@@ -16,7 +19,10 @@ import { SpinnerLoaderModule } from '../../../../utility-components/spinner-load
     RouterModule,
     SharedMarketReportModule,
     MessageSpaceModule,
-    SpinnerLoaderModule
+    SharedMainPageModule,
+    SharedInnovationDetailModule,
+    SharedTargetingDetailModule,
+    SharedExecutiveReportModule
   ],
   declarations: [
     SynthesisCompleteComponent

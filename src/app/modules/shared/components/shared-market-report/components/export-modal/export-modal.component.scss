@@ -1,42 +1,37 @@
 @import "../../../../../../../style/framework/src/variables";
 
-.flex-between {
+.card-wrapper {
   flex-wrap: wrap;
-}
 
-.option-wrapper {
-  flex-direction: column;
-  border: $border-width-xl solid $border-color;
-  border-radius: $border-radius;
-  padding: 0.5rem $unit-5;
-  margin: 0 $unit-2 $unit-5 0;
-  width: 177.77px;
-  height: 137px;
+  .card {
+    border-width: $border-width-xl;
+    padding: 0.5rem $unit-5;
+    margin-bottom: $unit-5;
 
-  &:hover {
-    cursor: pointer;
-    border-color: $primary-color;
-  }
+    &:hover {
+      cursor: pointer;
+      border-color: $primary-color;
+    }
 
-  &.active {
-    border-color: $success-color;
-  }
+    &.active {
+      cursor: default;
+      border-color: $success-color;
+    }
 
-  h5, h6 {
-    font-size: $font-size-sm;
-    color: $text-background-color;
-    margin-bottom: $unit-1;
-  }
+    img {
+      width: 50px;
+      height: 60px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-  h6 {
-    font-size: $font-size-xs;
-  }
+    h5 {
+      margin-top: $unit-2;
+      font-size: $font-size-sm;
+      color: $text-background-color;
+      margin-bottom: 0;
+    }
 
-  img {
-    width: 56px;
-    height: 66px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
 }

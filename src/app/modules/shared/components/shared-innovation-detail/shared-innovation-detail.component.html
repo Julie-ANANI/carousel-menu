@@ -1,43 +1,45 @@
-<section *ngIf="innovation" class="section-pad full innovation-detail">
-  <div class="flex-between">
+<ng-container *ngIf="innovation">
+  <section class="section-pad full innovation-detail">
+    <div class="flex-between">
 
 
-    <!-- column 1 -->
-    <div class="summary-wrapper">
+      <!-- column 1 -->
+      <div class="summary-wrapper">
 
-      <h2 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex].title }}</h2>
+        <h2 class="title-primary">{{ innovation.innovationCards[currentInnovationIndex].title }}</h2>
 
-      <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
+        <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
 
-      <img class="image-wrapper img-responsive img-fit-cover" [src]="getSrc(innovation.innovationCards[currentInnovationIndex])" alt=" ">
+        <img class="image-wrapper img-responsive img-fit-cover" [src]="getSrc(innovation.innovationCards[currentInnovationIndex])" alt=" ">
 
-      <h2 class="title-secondary" [innerText]="'DISCOVERDESCRIPTION.BENEFITS'" translate></h2>
+        <h2 class="title-secondary" [innerText]="'DISCOVERDESCRIPTION.BENEFITS'" translate></h2>
 
-      <ul class="advantage-wrapper">
-        <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex].advantages;">
-          {{ advantage.text | FormatText }}
-        </li>
-      </ul>
+        <ul class="advantage-wrapper">
+          <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex].advantages;">
+            {{ advantage.text | FormatText }}
+          </li>
+        </ul>
+
+      </div>
+      <!-- /column 1 -->
+
+
+      <!-- column 2 -->
+      <div class="issue-wrapper">
+        <h2 class="title-secondary" [innerText]="'DISCOVERDESCRIPTION.ISSUE'" translate></h2>
+        <div [innerHtml]="innovation.innovationCards[currentInnovationIndex].problem"></div>
+      </div>
+      <!-- /column 2 -->
+
+
+      <!-- column 3 -->
+      <div class="solution-wrapper">
+        <h2 class="title-secondary" [innerText]="'DISCOVERDESCRIPTION.SOLUTION'" translate></h2>
+        <div [innerHtml]="innovation.innovationCards[currentInnovationIndex].solution"></div>
+      </div>
+      <!-- /column 3 -->
+
 
     </div>
-    <!-- /column 1 -->
-
-
-    <!-- column 2 -->
-    <div class="issue-wrapper">
-      <h2 class="title-secondary" [innerText]="'DISCOVERDESCRIPTION.ISSUE'" translate></h2>
-      <div [innerHtml]="innovation.innovationCards[currentInnovationIndex].problem"></div>
-    </div>
-    <!-- /column 2 -->
-
-
-    <!-- column 3 -->
-    <div class="solution-wrapper">
-      <h2 class="title-secondary" [innerText]="'DISCOVERDESCRIPTION.SOLUTION'" translate></h2>
-      <div [innerHtml]="innovation.innovationCards[currentInnovationIndex].solution"></div>
-    </div>
-    <!-- /column 3 -->
-
-
-  </div>
-</section>
+  </section>
+</ng-container>

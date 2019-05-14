@@ -52,10 +52,8 @@ export const MARKET_REPORT = {
     'EXPORT_INNOVATION_NOTE': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, the personal data contained in the complete summary must not be used outside of your company.',
     'EXPORT_INNOVATION_CONTENT' : {
       'A': 'All Answers',
-      'EXCEL': 'Excel',
-      'PDF': 'in PDF',
       'B': 'Executive Report',
-      'C': '4 pages',
+      'D': 'Share link',
       'AROUND': 'Around',
       'PAGES': 'pages'
     },

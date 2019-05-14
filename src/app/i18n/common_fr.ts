@@ -94,7 +94,9 @@ export const COMMON = {
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
     'DISCOVER': 'Showroom des innovations | UMI',
-    'PROJECTS': 'Projets'
+    'PROJECTS': 'Projets',
+    'REPORT': 'Rapport',
+    'DISCOVER_DESCRIPTION': 'Innovation | UMI',
   },
 
   'LABEL': {
@@ -179,7 +181,8 @@ export const COMMON = {
     'SIGN_UP': 'Commencer',
     'DELETE': 'Supprimer',
     'CLOSE': 'Fermer',
-    'DOWNLOAD': 'Télécharger'
+    'DOWNLOAD': 'Télécharger',
+    'SHARE': 'Partager',
   },
 
   'PROJECT': {

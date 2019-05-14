@@ -50,6 +50,7 @@
               <app-market-report-sidebar
                 [answers]="answers"
                 [innovation]="innovation"
+                [reportShared]="reportShared"
                 [isAdmin]="adminMode"
                 [isAdminSide]="adminSide"
                 [isOwner]="isOwner"
@@ -147,7 +148,7 @@
 
 
               <!-- executive report -->
-              <ng-container *ngIf="innovation.executiveReport.totalSections > 0">
+              <ng-container *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared">
                 <section id="executive-report" class="section-light-pad">
                   <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
                 </section>
@@ -157,7 +158,7 @@
 
               <!-- key learning section -->
               <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">
-                <section class="section-pad" id="key-learnings">
+                <section class="section-pad" id="key-learnings" [ngClass]="{ 'rm-pad-top': reportShared }">
                   <div class="section-pad full key-learning-wrapper bg-white text">
 
                     <h2 class="title-primary" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
@@ -178,7 +179,7 @@
 
 
               <!-- origin comment and professional responses -->
-              <section class="section-pad" id="origin-responses">
+              <section class="section-pad" id="origin-responses" [ngClass]="{ 'rm-pad-top': reportShared && innovation.marketReport?.keyLearning?.conclusion.length === 0 }">
                 <div class="origin-wrapper bg-white text">
                   <app-question-conclusion
                     [innovation]="innovation"
@@ -324,14 +325,14 @@
 
 
     <!-- insight preview -->
-    <<app-sidebar [(template)]="sidebarTemplateValue">
-    <app-user-answer
-      [(userAnswer)]="modalAnswer"
-      [adminMode]="adminMode"
-      [projectId]="innovation._id"
-      [questions]="questions">
-    </app-user-answer>
-  </app-sidebar>
+    <app-sidebar [(template)]="sidebarTemplateValue">
+      <app-user-answer
+        [(userAnswer)]="modalAnswer"
+        [adminMode]="adminMode"
+        [projectId]="innovation._id"
+        [questions]="questions">
+      </app-user-answer>
+    </app-sidebar>
     <!-- /insight preview -->
 
 

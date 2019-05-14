@@ -1,42 +1,36 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { InnovCard } from '../../models/innov-card';
-import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
+import { Innovation } from '../../models/innovation';
 
 @Injectable()
 export class ShareService {
 
-  constructor(private _http: HttpClient) {}
+  constructor() {}
 
 
-  private _getShareUrl(innovationCard: InnovCard): string {
+  private static _getShareUrl(innovationCard: InnovCard): string {
     return encodeURIComponent(`${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}`);
   }
 
 
-  private _getTitle(innovationCard: InnovCard): string {
+  private static _getTitle(innovationCard: InnovCard): string {
     return innovationCard.title || '';
   }
 
 
-  private _getSummary(innovationCard: InnovCard): string {
+  private static _getSummary(innovationCard: InnovCard): string {
     return  new ScrapeHTMLTags().transform(innovationCard.summary) || '';
-  }
-
-
-  shareSynthesis(projectId: string): Observable<any> {
-    return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }
 
 
   linkedinProjectShareLink(innovationCard: InnovCard): string {
     return 'https://www.linkedin.com/shareArticle' +
       '?mini=true' +
-      '&url=' + this._getShareUrl(innovationCard) +
-      '&title=' + this._getTitle(innovationCard) +
-      '&summary=' + this._getSummary(innovationCard) +
+      '&url=' + ShareService._getShareUrl(innovationCard) +
+      '&title=' + ShareService._getTitle(innovationCard) +
+      '&summary=' + ShareService._getSummary(innovationCard) +
       '&source=' + 'UMI';
   }
 
@@ -44,7 +38,7 @@ export class ShareService {
   twitterProjectShareLink(innovationCard: InnovCard): string {
     const twitterAccount = 'uMotionIdeas';
     return 'http://twitter.com/home' +
-      '?status=' + this._getTitle(innovationCard) + '%20' + this._getShareUrl(innovationCard) + '%20%40' + twitterAccount;
+      '?status=' + ShareService._getTitle(innovationCard) + '%20' + ShareService._getShareUrl(innovationCard) + '%20%40' + twitterAccount;
   }
 
 
@@ -53,7 +47,7 @@ export class ShareService {
       '?app_id=' + '1172496952780763' +
       '&version=' + 'v2.12' +
       'display=popup' +
-      '&link=' + this._getShareUrl(innovationCard);
+      '&link=' + ShareService._getShareUrl(innovationCard);
   }
 
   /*public googleProjectShareLink (project: Innovation, lang: string): string {
@@ -64,9 +58,9 @@ export class ShareService {
 
   mailProjectShareLink(innovationCard: InnovCard): string {
 
-    const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${this._getTitle(innovationCard)}\r\n\r\nSummary - ${this._getSummary(innovationCard)}`);
+    const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle(innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
 
-    return `mailto:?subject=Interesting Innovation - ${this._getTitle(innovationCard)}&body=${message}`;
+    return `mailto:?subject=Interesting Innovation - ${ShareService._getTitle(innovationCard)}&body=${message}`;
 
   }
 
@@ -75,9 +69,47 @@ export class ShareService {
 
     operatorEmail = operatorEmail || 'contact@umi.us';
 
-    const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${this._getTitle(innovationCard)}\r\n\r\nSummary - ${this._getSummary(innovationCard)}`);
+    const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle(innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
 
-    return `mailto:${operatorEmail}?subject=Contacting us - ${this._getTitle(innovationCard)}&body=${message}`;
+    return `mailto:${operatorEmail}?subject=Contacting us - ${ShareService._getTitle(innovationCard)}&body=${message}`;
+
+  }
+
+
+  /***
+   * this is to get the share mail to share the synthesis.
+   * @param innovation
+   * @param lang
+   * @param url
+   */
+  public static reportShareMail(innovation: Innovation, lang: string, url :string): string {
+    let subject: string;
+    let message: string;
+    let innovCard: InnovCard = innovation.innovationCards[0];
+    const ownerName = innovation.owner ? innovation.owner.name : '';
+
+    if (innovation.innovationCards.length > 1) {
+      const cardIndex = innovation.innovationCards.findIndex((card) => card.lang === lang);
+
+      if (cardIndex !== -1) {
+        innovCard = innovation.innovationCards[cardIndex];
+      }
+
+    }
+
+    if (lang === 'fr') {
+      subject = 'Résultat du rapport - ' + ShareService._getTitle(innovCard);
+
+      message = encodeURI(`Bonjour,\r\n\r\nJe vous invite à découvrir les résultats du test marché réalisé par ${environment.companyShortName} pour l\\'innovation ${ShareService._getTitle(innovCard)}.\r\n\r\nAllez sur ce lien: ${url}\r\n\r\nVous pouvez afficher les résultats en filtrant par domaine,  emplacement géographique, personne etc.\r\n\r\nCordialement,\r\n\r\n${ownerName}`);
+
+    } else {
+      subject = 'Report result - ' + ShareService._getTitle(innovCard);
+
+      message = encodeURI(`Hello,\r\n\r\nI invite you to discover the results of the market test carried out by ${environment.companyShortName} for the innovation ${ShareService._getTitle(innovCard)}.\r\n\r\nGo on this link: ${url}\r\n\r\nYou can view the results by filtering by domain, geographical location, person etc.\r\n\r\nCordially,\r\n\r\n${ownerName}`);
+
+    }
+
+    return `mailto:?subject=${subject}&body=${message}`;
 
   }
 

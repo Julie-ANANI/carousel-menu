@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -13,7 +13,6 @@ import { environment } from '../../../../../environments/environment';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { Subject } from 'rxjs';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
@@ -27,25 +26,29 @@ import { InnovationFrontService } from '../../../../services/innovation/innovati
   styleUrls: ['./shared-market-report.component.scss']
 })
 
-export class SharedMarketReportComponent implements OnInit, OnDestroy {
+export class SharedMarketReportComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
   }
 
-  @Input() set modeAdmin(value: boolean) {
+  @Input() set reportShared(value: boolean) {
+    this._reportShared = value;
+  }
+
+  @Input() set adminMode(value: boolean) {
     this._adminMode = value;
   }
 
-  @Input() set sideAdmin(value: boolean) {
+  @Input() set adminSide(value: boolean) {
     this._adminSide = value;
   }
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
-
   private _innovation: Innovation = {};
 
-  private _adminSide = false;
+  private _reportShared: boolean;
+
+  private _adminSide: boolean;
 
   private _isOwner: boolean;
 
@@ -61,7 +64,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _questions: Array<Question> = [];
 
-  private _adminMode: boolean = false;
+  private _adminMode: boolean;
 
   private _campaignsStats: {
     nbPros: number,
@@ -71,7 +74,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     nbValidatedResp: number
   };
 
-  private _toggleAnswers: boolean = false;
+  private _toggleAnswers: boolean;
 
   private _numberOfSections: number;
 
@@ -83,7 +86,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _companies: Array<Clearbit>;
 
-  private _toggleProfessional: boolean = false;
+  private _toggleProfessional: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
@@ -154,7 +157,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._numberOfSections = this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
 
     /***
-     * assinging the value of the executive template.
+     * assigning the value of the executive template.
      * @type {Executive}
      */
     this._executiveTemplates = executiveTemplate;
@@ -470,6 +473,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._innovation;
   }
 
+  get reportShared(): boolean {
+    return this._reportShared;
+  }
+
   get isOwner(): boolean {
     return this._isOwner;
   }
@@ -500,11 +507,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   set toggleProfessional(value: boolean) {
     this._toggleProfessional = value;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

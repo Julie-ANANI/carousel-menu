@@ -3,8 +3,12 @@ import { AnswerService } from '../../../../../../services/answer/answer.service'
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { Share } from '../../../../../../models/share';
+import { environment } from '../../../../../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { ShareService } from '../../../../../../services/share/share.service';
 
-export enum ExportType { csv = 'csv', executiveReport = 'executiveReport', respReport = 'respReport' }
+export enum ExportType { csv = 'csv', executiveReport = 'executiveReport', respReport = 'respReport', shareReport = 'shareReport' }
 
 @Component({
   selector: 'app-market-report-export-modal',
@@ -32,9 +36,16 @@ export class ExportModalComponent {
 
   public exportTypeEnum = ExportType;
 
+  private _userLang = 'en';
+
   constructor(private _answerService: AnswerService,
               private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateService: TranslateService,
+              private _translateNotificationsService: TranslateNotificationsService) {
+
+    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang();
+
+  }
 
 
   public assignExportType(event: Event, type: ExportType) {
@@ -67,16 +78,20 @@ export class ExportModalComponent {
   private _print() {
     switch (this._exportType) {
 
-      case(ExportType.csv):
+      case (ExportType.csv):
         window.open(this._answerService.getExportUrl(this._innovation._id, true));
         break;
 
-      case(ExportType.executiveReport):
+      case (ExportType.executiveReport):
         window.print();
         break;
 
-      case(ExportType.respReport):
+      case (ExportType.respReport):
         this._printRespReport();
+        break;
+
+      case (ExportType.shareReport):
+        this._shareReportLink();
         break;
 
     }
@@ -98,6 +113,15 @@ export class ExportModalComponent {
   }
 
 
+  private _shareReportLink() {
+    this._innovationService.shareSynthesis(this._innovation._id).subscribe((response: Share) => {
+      const url = `${environment.clientUrl}/share/synthesis/${response.objectId}/${response.shareKey}`;
+      window.open(ShareService.reportShareMail(this._innovation, this._userLang, url), '_blank');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+  }
+
   get exportType(): ExportType {
     return this._exportType;
   }
@@ -112,6 +136,10 @@ export class ExportModalComponent {
 
   set showExportModal(value: boolean) {
     this.showModalChange.emit(value);
+  }
+
+  get userLang(): string {
+    return this._userLang;
   }
 
 }

@@ -1,23 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
+
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { RouterModule } from '@angular/router';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { SidebarUserAnswerModule } from '../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { RemoveSpacesPipe } from './pipes/RemoveSpaces.pipe';
-import { AnswersLimiterPipe } from './pipes/AnswersLimiter.pipe';
-import { CommonService } from '../../../../services/common/common.service';
-import { FilterService } from './services/filters.service';
-import { ResponseService } from './services/response.service';
-import { TagsFiltersService } from './services/tags-filter.service';
-import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { SharedExecutiveReportModule } from '../shared-executive-report/shared-executive-report.module';
@@ -25,9 +20,10 @@ import { PieChartModule } from '../../../utility-components/canvas/piechart/pie-
 import { SharedMainPageModule } from '../shared-main-page/shared-main-page.module';
 
 
-/***
- * Components
- */
+import { RemoveSpacesPipe } from './pipes/RemoveSpaces.pipe';
+import { AnswersLimiterPipe } from './pipes/AnswersLimiter.pipe';
+
+
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
 import { ProfessionalTagComponent } from './components/pro-tag/pro-tag.component';
@@ -43,6 +39,12 @@ import { SharedMarketComment2Component } from './components/professional-comment
 import { ExportModalComponent } from './components/export-modal/export-modal.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
+
+import { CommonService } from '../../../../services/common/common.service';
+import { FilterService } from './services/filters.service';
+import { ResponseService } from './services/response.service';
+import { TagsFiltersService } from './services/tags-filter.service';
+import { WorldmapFiltersService } from './services/worldmap-filter.service';
 
 
 @NgModule({
@@ -71,7 +73,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     FilterService,
     ResponseService,
     TagsFiltersService,
-    WorldmapFiltersService
+    WorldmapFiltersService,
+
   ],
   declarations: [
     SharedMarketReportComponent,

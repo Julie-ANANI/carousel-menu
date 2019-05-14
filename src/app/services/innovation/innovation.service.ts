@@ -8,7 +8,7 @@ import { InnovCard } from '../../models/innov-card';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
 import { QuestionReport } from '../../models/market-report';
-import {Professional} from "../../models/professional";
+import { Professional } from "../../models/professional";
 
 @Injectable()
 export class InnovationService {
@@ -152,6 +152,10 @@ export class InnovationService {
     return this._http.post(`/innovation/${innovationId}/addAmbassador`, {
       selectedProfessionals: professionalArray
     });
+  }
+
+  public shareSynthesis(projectId: string): Observable<any> {
+    return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }
 
 }

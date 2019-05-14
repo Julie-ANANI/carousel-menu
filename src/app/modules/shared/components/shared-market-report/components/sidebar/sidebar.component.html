@@ -61,7 +61,7 @@
 
 
     <!-- export option -->
-    <div *ngIf="isOwner && !isAdminSide" class="text-center">
+    <div *ngIf="isOwner && !isAdminSide && !reportShared" class="text-center">
       <button class="btn btn-primary gtm-export-synthesis" (click)="modalExport = true" [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
       <div class="divider"></div>
     </div>
@@ -135,7 +135,7 @@
 
 
     <!-- executive report -->
-    <div *ngIf="innovation.executiveReport.totalSections > 0" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
+    <div *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
       <a href="#executive-report" pageScroll class="text-primary">
         <div class="flex-between">
           <span>Executive report</span>

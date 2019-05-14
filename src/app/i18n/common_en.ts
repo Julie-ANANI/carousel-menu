@@ -95,7 +95,9 @@ export const COMMON = {
     'ACCOUNT': 'Profile',
     'SHARED_REPORTS': 'Shared Reports',
     'DISCOVER': 'Innovation Portfolio | UMI',
-    'PROJECTS': 'Projects'
+    'PROJECTS': 'Projects',
+    'REPORT': 'Report',
+    'DISCOVER_DESCRIPTION': 'Innovation | UMI',
   },
 
   'LABEL': {
@@ -180,7 +182,8 @@ export const COMMON = {
     'SIGN_UP': 'Sign Up',
     'DELETE': 'Delete',
     'CLOSE': 'Close',
-    'DOWNLOAD': 'Download'
+    'DOWNLOAD': 'Download',
+    'SHARE': 'Share',
   },
 
   'TABLE' : {

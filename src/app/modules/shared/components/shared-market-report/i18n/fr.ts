@@ -59,10 +59,8 @@ export const MARKET_REPORT = {
       'personnel contenues dans la synthèse complète ne doivent pas être utilisées en dehors de votre entreprise.',
     'EXPORT_INNOVATION_CONTENT' : {
       'A': 'Toutes les réponses',
-      'EXCEL': 'pour Excel',
-      'PDF': 'en PDF',
       'B': 'Executive Report',
-      'C': '4 pages',
+      'D': 'Partager lien',
       'AROUND': 'Environ',
       'PAGES': 'pages'
     },

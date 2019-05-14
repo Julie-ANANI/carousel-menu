@@ -2,31 +2,41 @@
 
 
   <!-- export options -->
-  <div class="flex-between">
+  <div class="d-flex text-center card-wrapper">
 
     <!-- resp Pdf -->
-    <div class="d-inline-flex option-wrapper text-center" (click)="assignExportType($event, exportTypeEnum.respReport)" [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.respReport)" [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
       <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
-      <h6 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF'" translate></h6>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png" [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
     </div>
     <!-- /resp Pdf -->
 
     <!-- csv -->
-    <div class="d-inline-flex option-wrapper text-center" (click)="assignExportType($event, exportTypeEnum.csv)" [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.csv)" [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
       <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
-      <h6 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL'" translate></h6>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png" [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
     </div>
     <!-- /csv -->
 
     <!-- executive report -->
-    <div class="d-inline-flex option-wrapper text-center" (click)="assignExportType($event, exportTypeEnum.executiveReport)" [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }">
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.executiveReport)"
+         [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">
       <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B'" translate></h5>
-      <h6 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C'" translate></h6>
-      <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png" [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">
     </div>
     <!-- /executive report -->
+
+    <!-- share report -->
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.shareReport)"
+         [ngClass]="{ 'active': exportTypeEnum.shareReport === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1557826918/app/default-images/icons/email.svg"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.D'" translate></h5>
+    </div>
+    <!-- /share report -->
 
   </div>
   <!-- export options -->
@@ -49,7 +59,10 @@
   <!-- footer -->
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-    <button class="btn btn-primary btn-sm" [disabled]="!(exportType && innovation.ownerConsent.value)" (click)="exportInnovation($event)" [innerText]="'COMMON.BUTTON.DOWNLOAD'" translate></button>
+    <button class="btn btn-primary btn-sm" [disabled]="!(exportType && innovation.ownerConsent.value)" (click)="exportInnovation($event)">
+      <ng-container *ngIf="exportType !== exportTypeEnum.shareReport">{{ 'COMMON.BUTTON.DOWNLOAD' | translate }}</ng-container>
+      <ng-container *ngIf="exportType === exportTypeEnum.shareReport">{{ 'COMMON.BUTTON.SHARE' | translate }}</ng-container>
+    </button>
   </div>
   <!-- /footer -->
 
