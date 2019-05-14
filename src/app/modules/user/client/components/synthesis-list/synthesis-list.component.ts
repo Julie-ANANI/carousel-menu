@@ -4,7 +4,6 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { environment } from '../../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Share } from '../../../../../models/share';
-import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
@@ -12,24 +11,7 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 @Component({
   selector: 'app-synthesis-list',
   templateUrl: './synthesis-list.component.html',
-  styleUrls: ['./synthesis-list.component.scss'],
-  animations: [
-    trigger('listAnimation', [
-      transition('* => *', [
-
-        query(':enter', style({ opacity: 0 }), { optional: true }),
-
-        query(':enter', stagger('300ms', [
-          animate('300ms ease-in-out', keyframes([
-              style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
-              style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
-            ])
-          )]
-        ), { optional: true }),
-
-      ])
-    ])
-  ]
+  styleUrls: ['./synthesis-list.component.scss']
 })
 
 export class SynthesisListComponent implements OnInit, OnDestroy {

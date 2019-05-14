@@ -34,9 +34,6 @@ const appRoutes: Routes = [
     path: 'wordpress/discover', loadChildren: './modules/wordpress/discover/discover.module#DiscoverModule'
   },
   {
-    path: 'wordpress/share', loadChildren: './modules/wordpress/share/share.module#ShareModule'
-  },
-  {
     path: 'sample', loadChildren: './modules/public/share/share.module#ShareModule'
   },
   {

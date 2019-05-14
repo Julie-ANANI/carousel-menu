@@ -3,9 +3,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
-import { FilterService } from '../../services/filters.service';
+import { TagsFiltersService } from '../../services/tags-filter.service';
 import { environment } from "../../../../../../../environments/environment";
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { PieChart } from '../../../../../../models/pie-chart';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -14,10 +18,6 @@ import { environment } from "../../../../../../../environments/environment";
 })
 
 export class QuestionConclusionComponent implements OnInit {
-
-  @Input() set executiveReport(value: boolean) {
-    this._executiveReportView = value;
-  }
 
   @Input() set tags(value: Array<Tag>) {
     this._receivedTags = value;
@@ -29,7 +29,7 @@ export class QuestionConclusionComponent implements OnInit {
 
   @Input() readonly = true;
 
-  @Input() pieChart: any;
+  @Input() pieChart: PieChart;
 
   @Input() innovation: Innovation;
 
@@ -39,7 +39,7 @@ export class QuestionConclusionComponent implements OnInit {
 
   private _domSectionId: string;
 
-  private _executiveReportView = false;
+  private _lang: string;
 
   private _receivedTags: Array<Tag> = [];
 
@@ -49,7 +49,8 @@ export class QuestionConclusionComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _translateService: TranslateService,
-              private _filterService: FilterService) { }
+              private _tagService: TagsFiltersService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
 
@@ -62,27 +63,26 @@ export class QuestionConclusionComponent implements OnInit {
       this.innovation.marketReport = {};
     }
 
+    this._lang = this._translateService.currentLang || 'en';
+
   }
 
 
-  keyupHandlerFunction(event: {content: string}) {
+  public keyupHandlerFunction(event: {content: string}) {
     const objToSave = {};
+
     objToSave[this.question.identifier] = { conclusion: event['content'] };
 
-    this._innovationService.updateMarketReport(this.innovation._id, objToSave).subscribe((data: any) => {
-      this.innovation.marketReport = data;
+    this._innovationService.updateMarketReport(this.innovation._id, objToSave).pipe(first()).subscribe(() => {
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
   }
 
-  addTagFilter(event: Event, tag: Tag) {
+  public addTagFilter(event: Event, tag: Tag) {
     event.preventDefault();
-    this._filterService.addFilter({
-      status: 'TAG',
-      questionId: this._tagId,
-      questionTitle: tag.label,
-      value: tag._id
-    });
+    this._tagService.checkAnswerTag(this.tagId, tag._id, false);
   }
 
   public isMainDomain(): boolean {
@@ -94,11 +94,7 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   get lang() {
-    return this._translateService.currentLang;
-  }
-
-  get executiveReportView(): boolean {
-    return this._executiveReportView;
+    return this._lang;
   }
 
   get receivedTags(): Array<Tag> {

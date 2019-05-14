@@ -213,7 +213,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
 
   getColor(length: number, limit: number) {
-    return this.innovationFrontService.getColor(length, limit);
+    return InnovationFrontService.getColor(length, limit);
   }
 
 

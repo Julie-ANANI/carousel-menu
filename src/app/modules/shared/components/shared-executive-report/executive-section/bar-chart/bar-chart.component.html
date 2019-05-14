@@ -1,0 +1,28 @@
+<ng-container *ngIf="barsData && barsData.length > 0">
+  <div id="bar-chart-component">
+    <div *ngFor="let data of barsData | slice:0:4" class="barData">
+
+      <!-- row 1 -->
+      <div class="flex-between">
+        <span class="bar-name">{{ data.label | multiling:lang }}</span>
+        <span class="bar-count text-notify">{{ data.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+      </div>
+      <!-- /row 1 -->
+
+      <!-- row 2 -->
+      <div class="bar bar-sm">
+        <div class="bar-item" [ngStyle]="{ 'width': data.absolutePercentage , 'background': '#FFB300' }"></div>
+      </div>
+      <!-- /row 2 -->
+
+      <!-- row 3 -->
+      <div *ngIf="data.answers && data.answers.length > 0" class="flex-start">
+        <div *ngFor="let answer of data.answers | slice:0:2" class="label label-answer">
+          <span class="text-ellipsis">{{ answer?.professional?.company }}</span>
+        </div>
+      </div>
+      <!-- /row 3 -->
+
+    </div>
+  </div>
+</ng-container>

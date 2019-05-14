@@ -5,7 +5,7 @@ export const ERROR = {
 
   'SUCCESS': 'Success',
 
-  'CANNOT_REACH': 'We are unable to reach the server at the moment. Please try again!',
+  'CANNOT_REACH': 'We are having trouble while reaching to the server at the moment. Please try again!',
 
   'FORM_ERROR': 'Form error',
 
@@ -164,5 +164,10 @@ export const ERROR = {
   'IMPORT': {
     'CSV': 'The CSV has been imported successfully.'
   },
+
+  'FILTER': {
+    'ALREADY_EXIST': 'The view with this name already exists.',
+    'ALREADY_ACTIVATED': 'The view is already activated.'
+  }
 
 };

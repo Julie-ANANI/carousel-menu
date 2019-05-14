@@ -1,33 +1,68 @@
-<ng-container *ngIf="displayLoader">
-  <app-spinner-loader></app-spinner-loader>
-</ng-container>
+<section id="synthesis-complete-component">
 
 
-<ng-container *ngIf="!displayLoader">
-  <section id="synthesis-complete-component">
+  <!-- not found message -->
+  <ng-container *ngIf="notFound">
+    <div class="no-found-wrapper">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <app-message-space [widthMax]="'360px'">
+          <span [innerText]="'SHARE.NOT_FOUND'" translate></span>
+        </app-message-space>
+      </div>
+    </div>
+  </ng-container>
+  <!-- /not found message -->
 
-    <!-- not found message -->
-    <ng-container *ngIf="notFound">
-      <div class="section-pad">
+
+  <!-- message -->
+  <ng-container *ngIf="!notFound && displayReport && authService.adminLevel < 2">
+    <div class="banner banner-success">
+      <span [innerText]="'SHARE.MESSAGE'" translate></span>
+    </div>
+  </ng-container>
+  <!-- /message -->
+
+
+  <!-- market report -->
+  <ng-container *ngIf="displayReport && !notFound">
+    <div class="report-wrapper">
+      <div class="restrict-width">
+
         <div class="column col-xs-12 col-11 col-mx-auto">
-          <app-message-space [widthMax]="'354px'">{{ 'SHARE.NOT_FOUND' | translate }}</app-message-space>
+
+          <!-- main page -->
+          <div class="section-pad">
+            <app-shared-main-page [project]="innovation"></app-shared-main-page>
+          </div>
+
+          <!-- description -->
+          <div class="section-pad">
+            <app-shared-innovation-detail [project]="innovation"></app-shared-innovation-detail>
+          </div>
+
+          <!-- targeting -->
+          <div class="section-pad">
+            <app-shared-targeting-detail [project]="innovation"></app-shared-targeting-detail>
+          </div>
+
+          <!-- executive report -->
+          <div class="section-pad">
+            <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
+          </div>
+
         </div>
-      </div>
-    </ng-container>
 
-    <!-- message -->
-    <ng-container *ngIf="!notFound && displayReport && authService.adminLevel < 2">
-      <div class="banner banner-success">
-        <span>{{ 'SHARE.MESSAGE' | translate }}</span>
-      </div>
-    </ng-container>
 
-    <!-- market report -->
-    <ng-container *ngIf="displayReport && !notFound">
-      <div class="section-pad rm-pad-top">
-        <app-shared-market-report [project]="project" [sharable]="true"></app-shared-market-report>
-      </div>
-    </ng-container>
+        <!-- synthesis -->
+        <div class="section-pad">
+          <app-shared-market-report [project]="innovation" [reportShared]="true" [adminSide]="false" [adminMode]="false"></app-shared-market-report>
+        </div>
 
-  </section>
-</ng-container>
+
+      </div>
+    </div>
+  </ng-container>
+  <!-- /market report -->
+
+
+</section>

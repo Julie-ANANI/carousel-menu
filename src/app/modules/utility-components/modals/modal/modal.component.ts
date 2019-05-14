@@ -37,7 +37,8 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   private _position = '';
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object, private el: ElementRef) {
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private el: ElementRef) {
     this.element = this.el.nativeElement;
   }
 

@@ -24,18 +24,18 @@
         <div class="tab-container">
           <ul class="tab">
             <li class="tab-item">
-              <a [ngClass]="{'active': currentPage === 'setup'}" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
-                <span><i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}</span>
+              <a [routerLink]="['setup']" routerLinkActive="active" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
+                <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
               </a>
             </li>
             <li class="tab-item">
-              <a [ngClass]="{'active': currentPage === 'exploration'}" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
-                <span><i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}</span>
+              <a [routerLink]="['exploration']" routerLinkActive="active" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
+                <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
               </a>
             </li>
             <li class="tab-item">
-              <a [ngClass]="{'active': currentPage === 'synthesis'}" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
-                <span><i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}</span>
+              <a [routerLink]="['synthesis']" routerLinkActive="active" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
+                <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
               </a>
             </li>
           </ul>
@@ -59,11 +59,14 @@
 
     <!-- synthesis section -->
     <ng-container *ngIf="currentPage === 'synthesis'">
-      <app-shared-market-report [project]="innovation"></app-shared-market-report>
+      <app-shared-market-report [project]="innovation" [adminSide]="false" [reportShared]="false"></app-shared-market-report>
     </ng-container>
   <!-- /synthesis section -->
 
-  </section>
+  <!-- TODO: remove currentPage parameter & use router-outlet -->
+  <!-- <router-outlet></router-outlet> -->
+
+</section>
 
 
   <!-- collaborator sidebar -->

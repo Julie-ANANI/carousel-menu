@@ -11,6 +11,7 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { first } from 'rxjs/operators';
 import { Media } from '../../../../../models/media';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
 
 @Component({
   selector: 'app-discover-description',
@@ -60,6 +61,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _shareService: ShareService,
               private _domSanitizer1: DomSanitizer,
+              private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService) {
 
     this._activatedRoute.params.subscribe(params => {
@@ -68,6 +70,8 @@ export class DiscoverDescriptionComponent implements OnInit {
     });
 
     this._innovation = this._activatedRoute.snapshot.data.innovation;
+
+    this._translateTitleService.setTitle(this._innovation.name || 'COMMON.PAGE_TITLE.DISCOVER_DESCRIPTION');
 
   }
 

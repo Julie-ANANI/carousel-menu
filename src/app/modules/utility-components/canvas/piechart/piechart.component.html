@@ -1,0 +1,28 @@
+<section class="pie-chart">
+
+  <p class="percentage">{{ percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}</p>
+
+  <ng-container *ngIf="isBrowser && pieChart">
+    <canvas
+      class="chart chart-pie"
+      baseChart
+      [chartType]="'pie'"
+      [datasets]="datasets"
+      [legend]="false"
+      [colors]="colors"
+      [labels]="labels | multiling:lang">
+    </canvas>
+  </ng-container>
+
+  <ng-container *ngIf="labels">
+    <ul class="pie-data-wrapper flex-centered">
+      <li *ngFor="let label of (labels | multiling:lang); let i = index">
+        <span class="shape circle circle-xs" [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }"></span>
+        <span class="response">{{ datasets[0].data[i] }}</span>
+        <span class="text-label">{{ label }}</span>
+        <span>({{ labelPercentage[0].percentage[i] }})</span>
+      </li>
+    </ul>
+  </ng-container>
+
+</section>

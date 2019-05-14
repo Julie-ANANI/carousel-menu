@@ -1,0 +1,90 @@
+<section id="executive-professional-wrapper">
+
+
+  <!-- heading -->
+  <h2 class="title-primary" [innerText]="'MARKET_REPORT.EXECUTIVE_TEMPLATE.PROFESSIONAL_HEADING'" translate></h2>
+  <!-- /heading -->
+
+
+  <!-- response, map and abstract -->
+  <div class="response-wrapper">
+
+    <!-- icon and response -->
+    <h2 class="sub-title text-center">{{ answers.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}</h2>
+
+    <!-- map -->
+    <div class="map-wrapper">
+      <app-worldmap
+        [countries]="targetCountries"
+        [countriesColor]="'#2ECC71'"
+        [isEditable]="false"
+        [width]="'auto'">
+      </app-worldmap>
+    </div>
+
+    <!-- abstract prof -->
+    <div class="abstract-wrapper text-break" id="professional-abstract">
+      <span>{{ professionalAbstract }}</span>
+    </div>
+
+  </div>
+  <!-- /response, map and abstract -->
+
+
+  <!-- top profile -->
+  <div class="profile-wrapper" id="professional-profiles">
+    <div *ngFor="let answer of professionalsAnswer | slice:0:4" class="profile">
+
+      <!-- icons -->
+      <div class="icon-wrapper">
+
+        <i class="fas fa-user"></i>
+
+        <div *ngIf="answer.country?.flag">
+          <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+        </div>
+
+      </div>
+      <!-- /icons -->
+
+      <!-- prof details -->
+      <div class="detail-wrapper">
+
+        <!-- job -->
+        <p class="job">
+          <ng-container *ngIf="answer.job">{{ answer.job }}</ng-container>
+        </p>
+
+        <!-- company -->
+        <p class="company">
+          <ng-container *ngIf="(answer.company && answer.company.name) || (answer.professional && answer.professional?.company)">
+            {{ answer.company?.name || answer.professional?.company }}
+          </ng-container>
+        </p>
+
+        <!-- tag -->
+        <div *ngIf="answer.tags && answer.tags.length > 0" class="tag-wrapper">
+          <div *ngFor="let tag of answer.tags | slice:0:2" class="label label-success label-rounded">
+            <i class="fas fa-tag"></i>
+            <span>{{ tag.label | multiling:userLang  }}</span>
+          </div>
+        </div>
+
+      </div>
+      <!-- /prof details -->
+
+    </div>
+  </div>
+  <!-- /top profile -->
+
+
+  <!-- remaining text -->
+  <div class="remaining-text text-center">
+    <span>{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }} </span>
+    <span pageScroll pageScrollOffset="135" href="#professionals" class="text-link" [innerText]="'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE'" translate id="professional-more"></span>
+  </div>
+  <!-- /remaining text -->
+
+
+</section>
+

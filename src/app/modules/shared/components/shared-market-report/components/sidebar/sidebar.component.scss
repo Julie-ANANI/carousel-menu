@@ -1,0 +1,226 @@
+@import '../../../../../../../style/framework/src/variables';
+@import '../../../../../../../style/framework/src/mixins';
+
+#app-market-report-sidebar {
+  background-color: $bg-color-light;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem $unit-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-background-color;
+
+  .filter-icon-wrapper {
+    font-size: $font-size-md;
+  }
+
+  .filter-option-wrapper {
+    @include control-transition();
+  }
+
+  .divider {
+    margin: $unit-5 0;
+    border-color: $border-meta-color;
+    height: 2px;
+  }
+
+  h6 {
+    font-size: $font-size-sm;
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-actions-wrapper {
+
+    .fa-angle-down {
+      font-size: $unit-5;
+      vertical-align: middle;
+      margin-left: $unit-1;
+    }
+
+    .dropdown-menu {
+      width: 200px;
+      font-size: 0.65rem;
+      padding: $unit-2 0;
+
+      .drop-item {
+        padding: $unit-2;
+
+        a {
+          color: inherit;
+        }
+
+      }
+
+    }
+
+  }
+
+  .client-view-wrapper {
+
+    .different-views {
+      font-size: 0.65rem;
+      margin-bottom: $unit-1;
+
+      .fa-trash-alt {
+        margin-right: $unit-2;
+      }
+
+    }
+
+    form {
+
+      .form-group {
+        margin-top: $unit-2;
+        margin-bottom: $unit-5;
+
+        .form-input {
+          height: 40px;
+          font-size: 0.65rem;
+        }
+
+      }
+
+    }
+
+  }
+
+  .filter-custom-wrapper {
+
+    .different-customs {
+      font-size: 0.65rem;
+      margin-bottom: $unit-1;
+
+      .fa-times {
+        margin-right: $unit-2;
+        color: $primary-color;
+      }
+
+    }
+
+  }
+
+  .filter-reset-wrapper {
+    padding-bottom: 0.75rem;
+
+    .fa-times {
+      margin-right: $unit-2;
+    }
+
+    .text-link {
+      font-size: $font-size-sm;
+    }
+
+  }
+
+  .filter-rest-wrapper {
+
+    &.filter-professional {
+      padding-top: $unit-5;
+      padding-bottom: $unit-5;
+
+      .professional-hide-wrapper {
+        padding-top: $unit-2;
+
+        .fa-eye-slash {
+          margin-right: $unit-2;
+        }
+
+        > div {
+          margin-bottom: $unit-h;
+
+          span {
+            font-size: $font-size-xs;
+          }
+
+        }
+
+      }
+
+    }
+
+    &.filter-question {
+      padding-bottom: $unit-5;
+    }
+
+    .flex-between {
+      margin-bottom: 0.5rem;
+    }
+
+    .fa-angle-right {
+      font-size: $font-icon-xl;
+    }
+
+    .text-link {
+      margin-bottom: $unit-1;
+      font-size: $font-size-xs;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+
+      .form-checkbox {
+        font-size: $font-size-xs;
+        color: $text-background-color;
+        font-weight: $font-weight-medium;
+        padding-right: 0;
+      }
+
+      .form-icon {
+        height: 0.7rem;
+        width: 0.7rem;
+      }
+
+    }
+
+  }
+
+}
+
+@media (min-width: $size-xs) {
+
+  #app-market-report-sidebar {
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+  }
+
+}
+
+
+@media (min-width: $size-sm) {
+
+  #app-market-report-sidebar {
+    border-right: $border-width solid $border-color;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+
+    .filter-icon-wrapper {
+      display: none;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #app-market-report-sidebar {
+
+    .filter-option-wrapper {
+
+      &.inactive {
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      &.active {
+        max-height: 100vh;
+        overflow-y: auto;
+        padding-top: $unit-10;
+      }
+
+    }
+
+  }
+
+}

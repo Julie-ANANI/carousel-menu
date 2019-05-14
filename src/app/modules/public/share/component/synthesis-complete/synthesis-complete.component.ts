@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
-import { first } from 'rxjs/operators';
+import { InnovCard } from '../../../../../models/innov-card';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-synthesis-complete',
@@ -18,53 +19,75 @@ export class SynthesisCompleteComponent implements OnInit {
 
   private _shareKey: string;
 
-  private _project: Innovation;
+  private _innovation: Innovation;
 
-  private _displayReport = false;
+  private _displayReport: boolean;
 
-  private _notFound = false;
+  private _notFound: boolean;
 
-  displayLoader: boolean;
+  private _pageTitle = 'COMMON.PAGE_TITLE.REPORT';
+
+  private _userLang = 'en';
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
+              private _translateService: TranslateService,
               private _authService: AuthService) {
 
-    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.SHARED_REPORTS');
+    this._setPageTitle();
+
+    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang();
+
+    this._activatedRoute.params.subscribe(params => {
+      this._projectId = params['projectId'];
+      this._shareKey = params['shareKey'];
+      this._getSharedSynthesis();
+    });
 
   }
 
   ngOnInit() {
-    this._activatedRoute.params.subscribe(params => {
-      this.displayLoader = true;
-      this._projectId = params['projectId'];
-      this._shareKey = params['shareKey'];
-      this.getProject();
-    });
-
   }
 
   /***
    * this function is to get the shared synthesis detail from the server.
    */
-  private getProject() {
-    this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).pipe(first()).subscribe((response: any) => {
-      this._project = response;
-      this.displayLoader = false;
+  private _getSharedSynthesis() {
+
+    this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).subscribe((response: any) => {
+      this._innovation = response;
+
+      if (this._innovation) {
+        const userLangIndex = this._innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this._userLang);
+
+        if (userLangIndex !== -1) {
+          this._pageTitle = this._innovation.innovationCards[userLangIndex].title;
+        } else {
+          this._pageTitle = this._innovation.innovationCards[0].title;
+        }
+
+        this._setPageTitle();
+      }
+
       }, () => {
-      this.displayLoader = false;
       this._displayReport = false;
       this._notFound = true;
       }, () => {
-      this.displayLoader = false;
-      if (this._project !== undefined) {
+      if (this._innovation !== undefined) {
         this._displayReport = true;
       } else {
         this._notFound = true;
       }
     });
+
   }
+
+
+  private _setPageTitle() {
+    this._translateTitleService.setTitle(this._pageTitle);
+  }
+
 
   get authService() {
     return this._authService;
@@ -78,8 +101,8 @@ export class SynthesisCompleteComponent implements OnInit {
     return this._shareKey;
   }
 
-  get project(): Innovation {
-    return this._project;
+  get innovation(): Innovation {
+    return this._innovation;
   }
 
   get displayReport(): boolean {
@@ -88,6 +111,14 @@ export class SynthesisCompleteComponent implements OnInit {
 
   get notFound(): boolean {
     return this._notFound;
+  }
+
+  get pageTitle(): string {
+    return this._pageTitle;
+  }
+
+  get userLang(): string {
+    return this._userLang;
   }
 
 }

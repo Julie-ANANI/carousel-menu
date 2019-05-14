@@ -1,31 +1,16 @@
 <section id="item-list-component" class="d-flex">
-  <div *ngFor="let item of listItems; let i = index" [ngClass]="{ 'top-profil': item.rating === 2 }" class="card">
+  <div *ngFor="let item of listItems; let i = index;" class="card">
     <div class="card-body flex-centered text-center relative">
 
-      <!-- filter icon -->
-      <div class="filter-wrapper c-hand" (click)="filterAnswer(item, $event)">
-        <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" style="margin-top: .125rem" alt=" ">
+      <div *ngIf="item.count > 1" class="label label-meta">
+        <span>{{ item.count }}x</span>
       </div>
-
-      <ng-container *ngIf="item.count > 1">
-        <div class="label label-success">
-          <span>{{ item.count }}x</span>
-        </div>
-      </ng-container>
 
       <div [attr.data-tooltip]="item.value" [ngClass]="{ 'tooltip': item.logo }">
-
-        <ng-container *ngIf="item.logo">
-          <img [src]="item.logo" width="80px" height="80px" alt=" ">
-        </ng-container>
-
-        <ng-container *ngIf="!item.logo">
-          <span class="text-background">{{ item.value }}</span>
-        </ng-container>
-
+        <img *ngIf="item.logo" [src]="item.logo" width="50px" height="50px" alt=" " class="img-responsive">
+        <span *ngIf="!item.logo" class="text-background">{{ item.value }}</span>
       </div>
 
-      <!-- respond -->
       <div class="popup-wrapper">
         <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
       </div>

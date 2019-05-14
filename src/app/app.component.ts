@@ -26,17 +26,16 @@ export class AppComponent implements OnInit {
   };
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private authService: AuthService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private translateService: TranslateService) {
+              private _translateService: TranslateService,
+              private _authService: AuthService,
+              private _translateNotificationsService: TranslateNotificationsService) {
 
     this.setFavicon();
-
-    initTranslation(this.translateService);
+    initTranslation(this._translateService);
 
     if (this.authService.isAcceptingCookies) {
       this.authService.initializeSession().subscribe(() => {}, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR', { timeOut: 0 });
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', { timeOut: 0 });
       });
     }
 

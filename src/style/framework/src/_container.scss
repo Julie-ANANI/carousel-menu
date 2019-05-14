@@ -12,6 +12,11 @@
 .section-pad {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+
+  &.full {
+    padding: 2.5rem;
+  }
+
 }
 
 
@@ -19,20 +24,12 @@
 .section-light-pad {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+
+  &.full-light {
+    padding: 1.25rem;
+  }
+
 }
-
-
-// section container with padding all sides.
-.full {
-  padding: 2.5rem;
-}
-
-
-// section light container with padding all sides.
-.full-light {
-  padding: 1.25rem;
-}
-
 
 // remove padding top
 .rm-pad-top {

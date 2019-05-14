@@ -1,0 +1,115 @@
+<section class="section-light-pad" id="executive-report-wrapper">
+
+
+  <!-- when two sections -->
+  <ng-container *ngIf="innovation.executiveReport.totalSections === 2">
+    <div class="col-12">
+      <div class="page-first">
+
+        <!-- professional column -->
+        <div class="section-wrapper">
+          <app-executive-professional [project]="innovation" [answers]="answers"></app-executive-professional>
+        </div>
+        <!-- /professional column -->
+
+        <!-- sections -->
+        <div class="section-wrapper">
+          <div *ngFor="let sectionNumber of firstPageSections | slice:0:innovation.executiveReport.totalSections"
+               class="section"
+               [ngClass]="{ 'section-2': innovation.executiveReport.totalSections === 2 }">
+
+            <app-executive-section
+              [answers]="answers"
+              [project]="innovation"
+              [ngStyle]="{ 'width': '100%' }"
+              [section]="sectionNumber">
+            </app-executive-section>
+
+          </div>
+        </div>
+        <!-- /sections -->
+
+        <!-- conclusion part -->
+        <div class="section-wrapper">
+          <app-executive-conclusion [project]="innovation"></app-executive-conclusion>
+        </div>
+        <!-- /conclusion part -->
+
+      </div>
+    </div>
+  </ng-container>
+  <!-- /when two sections -->
+
+
+  <!-- when more than two sections -->
+  <ng-container *ngIf="innovation.executiveReport.totalSections > 2">
+
+    <!-- first page -->
+    <div class="col-12">
+      <div class="page-first">
+
+        <!-- professional column -->
+        <div class="section-wrapper">
+          <app-executive-professional [project]="innovation" [answers]="answers"></app-executive-professional>
+        </div>
+        <!-- /professional column -->
+
+        <!-- sections -->
+        <div class="sections">
+          <div *ngFor="let sectionNumber of firstPageSections" class="section" [ngClass]="{ 'section-4': innovation.executiveReport.totalSections > 2 }">
+
+            <app-executive-section
+              [project]="innovation"
+              [answers]="answers"
+              [ngStyle]="{ 'width': '100%' }"
+              [section]="sectionNumber">
+            </app-executive-section>
+
+          </div>
+        </div>
+        <!-- /sections -->
+
+      </div>
+    </div>
+    <!-- /first page -->
+
+    <!-- second page -->
+    <div class="col-12">
+      <div class="second-page section-pad rm-pad-bottom">
+        <div class="second-page-wrapper">
+
+          <!-- sections -->
+          <ng-container *ngIf="innovation.executiveReport.totalSections > 4">
+            <div [ngClass]="{ 'section-wrapper': innovation.executiveReport.totalSections === 6, 'sections': innovation.executiveReport.totalSections > 6 }">
+              <div *ngFor="let sectionNumber of secondPageSections | slice:0:(innovation.executiveReport.totalSections - 4)"
+                   class="section"
+                   [ngClass]="{ 'section-2': innovation.executiveReport.totalSections === 6, 'section-4': innovation.executiveReport.totalSections > 6 }">
+
+                <app-executive-section
+                  [project]="innovation"
+                  [answers]="answers"
+                  [ngStyle]="{ 'width': '100%' }"
+                  [section]="sectionNumber">
+                </app-executive-section>
+
+              </div>
+            </div>
+          </ng-container>
+          <!-- /sections -->
+
+          <!-- conclusion part -->
+          <div class="section-wrapper">
+            <app-executive-conclusion [project]="innovation"></app-executive-conclusion>
+          </div>
+          <!-- /conclusion part -->
+
+        </div>
+      </div>
+    </div>
+    <!-- /second page -->
+
+  </ng-container>
+  <!-- /when more than two sections -->
+
+</section>
+

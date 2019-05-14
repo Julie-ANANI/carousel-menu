@@ -8,7 +8,7 @@ import { InnovCard } from '../../models/innov-card';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
 import { QuestionReport } from '../../models/market-report';
-import {Professional} from "../../models/professional";
+import { Professional } from "../../models/professional";
 
 @Injectable()
 export class InnovationService {
@@ -70,6 +70,22 @@ export class InnovationService {
 
   public updateMarketReport(innovationId: string, data: QuestionReport): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/marketReport', { payload: data });
+  }
+
+  public saveFilter(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
+    return this._http.post('/innovation/' + innovationId + '/filter', data);
+  }
+
+  public getFiltersList(innovationId: string): Observable<any> {
+    return this._http.get('/filter/innovation/' + innovationId);
+  }
+
+  public getFilter(innovationId: string, filterName: string): Observable<any> {
+    return this._http.get('/filter/innovation/' + innovationId + '/' + filterName);
+  }
+
+  public deleteFilter(innovationId: string, filterName: string): Observable<any> {
+    return this._http.delete('/filter/innovation/' + innovationId + '/' + filterName);
   }
 
   public updatePreset(innovationId: string, data: any): Observable<any> {
@@ -136,6 +152,10 @@ export class InnovationService {
     return this._http.post(`/innovation/${innovationId}/addAmbassador`, {
       selectedProfessionals: professionalArray
     });
+  }
+
+  public shareSynthesis(projectId: string): Observable<any> {
+    return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }
 
 }

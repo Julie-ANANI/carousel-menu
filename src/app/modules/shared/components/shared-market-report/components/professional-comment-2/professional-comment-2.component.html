@@ -1,19 +1,15 @@
 <section id="professional-comment-2-component">
 
   <!-- name -->
-  <ng-container *ngIf="!answer?.professional?.firstName">
-    <p class="text-medium">
-      <span>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
-    </p>
-  </ng-container>
+  <p *ngIf="!answer?.professional?.firstName" class="text-medium">
+    <span>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
+  </p>
 
-  <ng-container *ngIf="answer?.professional && answer?.professional?.firstName">
-    <p>
+  <p *ngIf="answer?.professional && answer?.professional?.firstName">
       <span class="text-link" (click)="seeAnswer(answer)">
         {{ answer?.professional?.firstName | FormatText }} {{ answer?.professional?.lastName }}
       </span>
-    </p>
-  </ng-container>
+  </p>
   <!-- /name -->
 
   <div class="detail-wrapper d-flex text-notify text-medium">
@@ -22,18 +18,14 @@
       <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
     </div>
 
-    <ng-container *ngIf="answer.job || answer?.professional?.jobTitle || answer.company?.name || answer?.professional?.company">
-      <p>
-        <ng-container *ngIf="answer.job || answer?.professional?.jobTitle">{{ answer.job || answer?.professional?.jobTitle }}</ng-container>
-        <ng-container *ngIf="answer.job || answer?.professional?.jobTitle && answer.company?.name || answer?.professional?.company">-</ng-container>
-        <ng-container *ngIf="answer.company?.name || answer?.professional?.company">{{ answer.company?.name || answer?.professional?.company }}</ng-container>
-      </p>
-    </ng-container>
+    <p *ngIf="answer.job || answer?.professional?.jobTitle || answer.company?.name || answer?.professional?.company">
+      <ng-container *ngIf="answer.job || answer?.professional?.jobTitle">{{ answer.job || answer?.professional?.jobTitle }}</ng-container>
+      <ng-container *ngIf="answer.job || answer?.professional?.jobTitle && answer.company?.name || answer?.professional?.company">-</ng-container>
+      <ng-container *ngIf="answer.company?.name || answer?.professional?.company">{{ answer.company?.name || answer?.professional?.company }}</ng-container>
+    </p>
 
   </div>
 
-  <ng-container *ngIf="answer.answers[questionId]?.length > 0">
-    <p class="text">{{ answer.answers[questionId] }}</p>
-  </ng-container>
+  <p *ngIf="answer.answers[questionId]?.length > 0" class="text">{{ answer.answers[questionId] }}</p>
 
 </section>

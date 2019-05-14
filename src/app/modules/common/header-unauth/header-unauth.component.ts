@@ -7,7 +7,7 @@ import { User } from '../../../models/user.model';
 import { first } from 'rxjs/operators';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserService } from '../../../services/user/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie';
 import { initTranslation } from '../../../i18n/i18n';
@@ -37,8 +37,7 @@ export class HeaderUnauthComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _authService: AuthService,
               private _userService: UserService,
-              private router: Router,
-              private _activatedRoute: ActivatedRoute,
+              private _router: Router,
               private _formBuilder: FormBuilder,
               private _translateService: TranslateService,
               private _cookieService: CookieService) {
@@ -105,7 +104,6 @@ export class HeaderUnauthComponent implements OnInit {
       user.domain = environment.domain;
 
       this._authService.login(user).pipe(first()).subscribe(() => {
-        this._checkUrlToRedirect();
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
@@ -115,20 +113,6 @@ export class HeaderUnauthComponent implements OnInit {
       if (this._formData.untouched && this._formData.pristine) {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
-    }
-  }
-
-
-  /***
-   * this function is to check url to redirect the user.
-   */
-  private _checkUrlToRedirect() {
-    const url = this.router.url;
-
-    if (url.includes('/share/synthesis')) {
-      this.router.navigate([url.replace('/share', '/user')], {
-        queryParams: this._activatedRoute.snapshot.queryParams
-      });
     }
   }
 
@@ -164,9 +148,9 @@ export class HeaderUnauthComponent implements OnInit {
       } else {
         this._userService.create(user).pipe(first()).subscribe(() => {
           this._authService.login(user).pipe(first()).subscribe(() => {
-            this.router.navigate(['/welcome']);
+            this._router.navigate(['/welcome']);
           }, () => {
-            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
           });
         }, () => {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');

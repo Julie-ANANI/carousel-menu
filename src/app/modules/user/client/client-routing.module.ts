@@ -47,8 +47,6 @@ const clientRoutes: Routes = [
   imports: [
     RouterModule.forChild(clientRoutes)
   ],
-  providers: [
-  ],
   exports: [
     RouterModule
   ]

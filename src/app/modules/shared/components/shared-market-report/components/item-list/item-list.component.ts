@@ -5,12 +5,12 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 
 export interface Item {
-  rating: number,
-  count: number,
-  value: string,
-  domain: string,
-  logo: string,
-  answers: Array<Answer>
+  rating: number;
+  count: number;
+  value: string;
+  domain: string;
+  logo: string;
+  answers: Array<Answer>;
 }
 
 @Component({
@@ -47,8 +47,6 @@ export class ItemListComponent implements OnInit {
   private _details: boolean;
 
   private _listItems: Array<Item>;
-
-  private _maxToShow = 6;
 
   constructor(private _filterService: FilterService) { }
 
@@ -117,7 +115,6 @@ export class ItemListComponent implements OnInit {
     this._filterService.addFilter({
       status: this.question.controlType === 'clearbit' ? 'CLEARBIT' : 'LIST',
       questionId: this.question.identifier,
-      questionTitle: this.question.title,
       value: item.value
     });
   }
@@ -132,10 +129,6 @@ export class ItemListComponent implements OnInit {
 
   get details() {
     return this._details;
-  }
-
-  get maxToShow() {
-    return this._maxToShow;
   }
 
 }

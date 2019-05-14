@@ -31,7 +31,7 @@ export const DISCOVERDESCRIPTION = {
 
   'SIDEBAR_BOT_MESSAGE': 'Describe your project first to preview it.',
 
-  'BACK': 'List of projects',
+  'BACK': 'List of innovations',
 
   'SHARE_TITLE': 'PLEASE SHARE THIS',
 

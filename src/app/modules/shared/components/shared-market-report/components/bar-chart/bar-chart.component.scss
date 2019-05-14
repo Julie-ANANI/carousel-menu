@@ -3,19 +3,20 @@
 #bar-chart-component {
 
   .icon-size {
-    font-size: 22px;
+    font-size: 18px;
   }
 
-  .header-wrapper {
+  .bg-white {
     background-color: $bg-color-light;
+  }
 
-    .title-primary {
-      font-size: 1.35rem;
-    }
-
+  .title-primary {
+    font-size: 1.35rem;
   }
 
   .content-wrapper {
+    transition: all 0.25s ease;
+    height: 100%;
 
     .bar-name {
       font-size: $font-size-lg;
@@ -37,7 +38,7 @@
       margin-top: 0.75rem;
     }
 
-    .answer-wrapper {
+    .card-wrapper {
       flex-wrap: wrap;
       justify-content: space-between;
       margin-bottom: -$unit-5;
@@ -48,42 +49,29 @@
         flex: 0 1 calc(50% - 1rem);
 
         .card-body {
-          padding: 0.75rem;
+          padding: 0.5rem;
           height: 100%;
           width: 100%;
+        }
+
+        &:hover {
+          box-shadow: $box-shadow-hover-umi;
         }
 
       }
 
     }
 
+    &.collapse-wrapper {
+      height: 0;
+      transform: scaleY(0);
+      visibility: hidden;
+    }
 
-  }
-
-}
-
-.executive-bar-chart-wrapper {
-  margin-bottom: 10px;
-
-  .margin {
-    margin-bottom: 8px;
-  }
-
-  .bar-name {
-    font-size: 14px;
-  }
-
-  .bar-count {
-    font-size: 12px;
-  }
-
-  .executive-answer-wrapper {
-    overflow: hidden;
-
-    .label {
-      font-size: 13px;
-      padding: 5px 8px;
-      margin: 0 5px 0 0;
+    &.expand-wrapper {
+      height: 100%;
+      transform: scaleY(1);
+      visibility: visible;
     }
 
   }
@@ -95,7 +83,7 @@
 
   #bar-chart-component {
 
-    .answer-wrapper {
+    .card-wrapper {
       flex-direction: column;
 
       .card {

@@ -35,7 +35,7 @@ export class SharedWorldmapComponent implements OnInit{
     }
   }
 
-  @Input() set initialConfiguration(initialConfiguration: any) {
+  @Input() set initialConfiguration(initialConfiguration: {[c: string]: boolean}) {
     this._continents = initialConfiguration || {
       africa: false,
       americaNord: false,
@@ -51,15 +51,11 @@ export class SharedWorldmapComponent implements OnInit{
 
   @Output() hoveredContinent = new EventEmitter<string>();
 
-  private _continents = {
-    africa: false,
-    americaNord: false,
-    americaSud: false,
-    asia: false,
-    europe: false,
-    oceania: false,
-    russia: false
-  };
+  /* Initialise continents selections with everything to false */
+  private _continents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
+    acc[cont] = false;
+    return acc;
+  }, {});
 
   constructor(private _elem: ElementRef,
               private _worldmap: SharedWorldmapService,
@@ -90,11 +86,9 @@ export class SharedWorldmapComponent implements OnInit{
    */
   public switchWorldCheckbox($event: any): void {
     const worldCheckboxValue = $event.target.checked;
-    const keys = Object.keys(this._continents);
-    keys.forEach((continent) => {
+    SharedWorldmapService.continentsList.forEach((continent) => {
       this._continents[continent] = worldCheckboxValue;
     });
-    this.updateContinent.emit({continents: this._continents});
   }
 
 
@@ -104,15 +98,13 @@ export class SharedWorldmapComponent implements OnInit{
    */
   public clickOnContinent(event: Event, continent: string): void {
     event.preventDefault();
-
     if (this.isEditable) {
       this._continents[continent] = !this._continents[continent];
       this.updateContinent.emit({
         continents: this._continents,
-        allChecked: this.areAllContinentChecked()
+        allChecked: SharedWorldmapService.areAllContinentChecked(this._continents)
       });
     }
-
   }
 
 

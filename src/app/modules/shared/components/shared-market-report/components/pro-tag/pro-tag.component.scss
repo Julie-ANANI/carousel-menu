@@ -6,6 +6,10 @@
   flex-direction: column;
   height: 100%;
 
+  .label.label-meta {
+    margin-bottom: $unit-2;
+  }
+
   .flag-wrapper {
     margin-bottom: 0.5rem;
   }
@@ -25,9 +29,15 @@
   .tag-wrapper {
     margin: -$unit-1;
 
-    .label.label-tag:hover {
-      background-color: $primary-color;
-      cursor: pointer;
+    .label.label-success {
+      padding: $unit-2 0.5rem;
+      font-size: 0.55rem;
+
+      .fa-tag {
+        font-size: $font-icon-xs;
+        margin-right: $unit-1;
+      }
+
     }
 
   }

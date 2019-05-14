@@ -1,152 +1,116 @@
-<!-- market report -->
-<ng-container *ngIf="!executiveReportView">
-  <section id="bar-chart-component">
-
-    <!-- header section -->
-    <div class="header-wrapper">
-
-      <app-question-conclusion
-        [innovation]="innovation"
-        [pieChart]="pieChart"
-        [question]="question"
-        [readonly]="readonly"
-        [stats]="stats"
-        [tags]="tags">
-      </app-question-conclusion>
-
-      <!-- abstract -->
-      <ng-container *ngIf="adminSide">
-        <form novalidate [formGroup]="formBarChart">
-          <div class="section-pad full">
-
-            <h2 class="title-primary">Abstract</h2>
-
-            <div class="form-group relative">
-              <label [for]="'market-report-' + question._id"></label>
-                <textarea
-                  class="form-input"
-                  [id]="'market-report-' + question._id"
-                  [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.SECTION' | translate"
-                  [formControlName]="question._id"
-                  rows="5"
-                  (blur)="saveAbstract($event, question._id)"
-                  maxlength="160">
-                </textarea>
-              <div class="char-remaining" [ngStyle]="{ 'color': getColor((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
-                <span>{{ formBarChart.get(question._id).value.length | characterCountdown:160 }}</span>
-              </div>
-            </div>
-
-          </div>
-        </form>
-      </ng-container>
-      <!-- /abstract -->
-
-    </div>
-    <!-- /header section -->
-
-    <!-- content section -->
-    <div class="content-wrapper">
-
-      <!-- button to toggle answer display -->
-      <div class="section-light-pad rm-pad-bottom text-center">
-        <button type="button" class="btn ghost-primary" (click)="toggleAnswer($event)">
-          {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-          <i class="fas icon-size" aria-hidden="true" [ngClass]="showDetails ? 'fa-angle-down' : 'fa-angle-right'"></i>
-        </button>
-      </div>
-
-      <ng-container *ngIf="showDetails">
-        <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="section-pad rm-pad-bottom">
-
-          <!-- row 1 -->
-          <div class="flex-between text-medium">
-
-            <div>
-              <span class="c-hand" (click)="filterAnswer(barData, $event)">
-                <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" alt=" ">
-              </span>
-              <span class="bar-name text-background">{{ barData.label | multiling:lang }}</span>
-            </div>
-
-            <div class="d-flex text-notify text-medium response-wrapper c-hand" (click)="showAnswers[i] = !showAnswers[i]">
-              <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
-              <span class="icon-size"><i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-down' : 'fa-angle-right'"></i></span>
-            </div>
-
-          </div>
-          <!-- /row 1 -->
-
-          <!-- row 2 -->
-          <div class="bar c-hand" (click)="showAnswers[i] = !showAnswers[i]">
-            <div class="bar-item tooltip" [attr.data-tooltip]="barData.absolutePercentage" [ngStyle]="{ 'width': barData.absolutePercentage , 'background': barData.color }"></div>
-          </div>
-          <!-- /row 2 -->
-
-          <!-- row 3 -->
-          <ng-container *ngIf="showAnswers[i]">
-            <div class="d-flex answer-wrapper section-light-pad rm-pad-bottom">
-              <div *ngFor="let answer of barData.answers" class="card">
-                <div class="card-body">
-                  <app-market-comment [answer]="answer" [questionId]="question.identifier+'Comment'" (modalAnswerChange)="seeAnswer($event)"></app-market-comment>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-          <!-- /row 3 -->
-
-        </div>
-      </ng-container>
-
-    </div>
-    <!-- /content section -->
-
-  </section>
-</ng-container>
-<!-- /market report -->
+<section id="bar-chart-component">
 
 
-<!-- executive report -->
-<ng-container *ngIf="executiveReportView">
-
-  <ng-container *ngIf="question?.controlType === 'radio'">
+  <!-- header section -->
+  <div class="bg-white">
     <app-question-conclusion
       [innovation]="innovation"
       [pieChart]="pieChart"
       [question]="question"
-      [executiveReport]="true"
-      [stats]="stats">
+      [readonly]="readonly"
+      [stats]="stats"
+      [tags]="tags">
     </app-question-conclusion>
-  </ng-container>
+  </div>
+  <!-- /header section -->
 
-  <ng-container *ngIf="question?.controlType === 'checkbox'">
-    <div *ngFor="let data of barsData" class="executive-bar-chart-wrapper">
 
-      <!-- row 1 -->
-      <div class="flex-between margin">
-        <span class="bar-name">{{ data.label | multiling:lang }}</span>
-        <span class="bar-count text-notify text-medium">{{ data.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
-      </div>
-      <!-- /row 1 -->
+  <!-- abstract -->
+  <div *ngIf="adminSide" class="section-pad rm-pad-bottom">
+    <form novalidate [formGroup]="formBarChart">
+      <div class="section-light-pad full-light bg-white full">
 
-      <!-- row 2 -->
-      <div class="margin">
-        <div class="bar bar-sm">
-          <div class="bar-item" [ngStyle]="{ 'width': data.absolutePercentage , 'background': '#FFB300' }"></div>
+        <h2 class="title-primary">{{ question?.identifier | FormatText }} Abstract</h2>
+
+        <div class="form-group relative">
+          <label [for]="'market-report-' + question._id"></label>
+          <textarea
+            (blur)="saveAbstract($event, question._id)"
+            [formControlName]="question._id"
+            [id]="'market-report-' + question._id"
+            class="form-input"
+            maxlength="160"
+            placeholder="Describe the abstract of this question within 160 words."
+            rows="5">
+          </textarea>
+          <div class="char-remaining" [ngStyle]="{ 'color': color((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
+            <span>{{ formBarChart.get(question._id).value.length | characterCountdown:160 }}</span>
+          </div>
         </div>
-      </div>
-      <!-- /row 2 -->
 
-      <!-- row 3 -->
-      <div *ngIf="data.answers.length > 0" class="executive-answer-wrapper flex-start">
-        <div *ngFor="let answer of data.answers | answerslimiter | slice:0:3" class="label label-answer text-ellipsis">
-          <span>{{ answer?.professional?.company }}</span>
-        </div>
       </div>
-      <!-- /row 3 -->
+    </form>
+  </div>
+  <!-- /abstract -->
 
+
+  <!-- content section -->
+  <div>
+
+    <!-- button to toggle answers display -->
+    <div class="section-light-pad rm-pad-bottom text-center">
+      <button type="button" class="btn btn-primary" (click)="toggleAnswer($event)">
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
+      </button>
     </div>
-  </ng-container>
 
-</ng-container>
-<!-- /executive report -->
+    <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
+      <div *ngIf="toggleAnswers">
+        <div *ngFor="let barData of barsData; let i = index;" [attr.data-index]="i">
+          <div *ngIf="filter ? filter.value[barData.identifier] : true" class="section-light-pad">
+
+            <!-- row 1 -->
+            <div class="flex-between text-medium">
+
+              <div>
+                <div (click)="filterAnswer(barData, $event); toggleFilterIcon[i] = false"
+                     (mouseenter)="toggleFilterIcon[i] = true;"
+                     (mouseleave)="toggleFilterIcon[i] = false;"
+                     [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate"
+                     [ngStyle]="{ 'width': '20px' }"
+                     [ngClass]="toggleFilterIcon[i] ? 'icon-delete' : 'icon-meta'"
+                     class="c-hand icon tooltip">
+                  <i class="fas icon-size" [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </div>
+                <span class="bar-name text-background">{{ barData.label | multiling:lang }}</span>
+              </div>
+
+              <div class="d-flex text-notify text-medium response-wrapper c-hand" (click)="showAnswers[i] = !showAnswers[i]">
+                <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+                <span class="icon-size"><i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-down' : 'fa-angle-right'"></i></span>
+              </div>
+
+            </div>
+            <!-- /row 1 -->
+
+            <!-- row 2 -->
+            <div class="bar c-hand" (click)="showAnswers[i] = !showAnswers[i]">
+              <div class="bar-item tooltip" [attr.data-tooltip]="barData.absolutePercentage" [ngStyle]="{ 'width': barData.absolutePercentage , 'background': barData.color }"></div>
+            </div>
+            <!-- /row 2 -->
+
+            <!-- row 3 -->
+            <div *ngIf="showAnswers[i]" class="d-flex card-wrapper section-light-pad rm-pad-bottom">
+              <div *ngFor="let answer of barData.answers" class="card">
+                <div class="card-body">
+                  <app-market-comment
+                    [answer]="answer"
+                    [questionId]="question.identifier+'Comment'"
+                    (modalAnswerChange)="seeAnswer($event)">
+                  </app-market-comment>
+                </div>
+              </div>
+            </div>
+            <!-- /row 3 -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /content section -->
+
+
+</section>

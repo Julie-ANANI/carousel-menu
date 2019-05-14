@@ -1,6 +1,7 @@
 /***
  * This service is used to perform all the innovation related
- * cross component communication in the app.
+ * cross component communication and also other functions that
+ * are used more than once for the innovation in the app.
  */
 
 import { Injectable } from '@angular/core';
@@ -219,7 +220,7 @@ export class InnovationFrontService {
    * this function is to return the color based on the length and limit.
    * @param length
    */
-  getColor(length: number, limit: number): string {
+  public static getColor(length: number, limit: number): string {
     if (length <= 0) {
       return '#EA5858';
     } else if (length > 0 && length < (limit/2)) {

@@ -58,7 +58,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private getPage() {
     const url = this.router.routerState.snapshot.url.split('/');
-    this._currentPage = url.length > 0 ? url[4] : 'setup';
+    if (url.length > 4) {
+      const params = url[4].indexOf('?');
+      this._currentPage = params > 0 ? url[4].substring(0, params) : url[4];
+    } else {
+      this._currentPage = 'setup';
+    }
   }
 
 
@@ -139,6 +144,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get currentPage(): string {
     return this._currentPage;
+  }
+
+  get saveChanges(): boolean {
+    return this._saveChanges;
   }
 
   ngOnDestroy(): void {

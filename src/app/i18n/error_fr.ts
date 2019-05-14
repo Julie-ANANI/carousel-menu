@@ -163,6 +163,11 @@ export const ERROR = {
 
   'IMPORT': {
     'CSV': 'Le CSV a été importé avec succès.'
+  },
+
+  'FILTER': {
+    'ALREADY_EXIST': 'La vue avec ce nom existe déjà.',
+    'ALREADY_ACTIVATED': 'La vue est déjà activée.',
   }
 
 };

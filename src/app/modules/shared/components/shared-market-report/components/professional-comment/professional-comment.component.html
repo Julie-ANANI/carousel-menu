@@ -1,17 +1,22 @@
 <section id="professional-comment-component" class="d-flex">
 
-  <app-pro-tag [answer]="answer" [tagId]="questionId" (modalAnswerChange)="seeAnswer(answer)"></app-pro-tag>
+
+  <!-- user details -->
+  <app-pro-tag
+    [answer]="answer"
+    [questionId]="questionId"
+    (modalAnswerChange)="seeAnswer(answer)">
+  </app-pro-tag>
+
 
   <!-- divider -->
-  <ng-container *ngIf="answer.answers[questionId]?.length > 0">
-    <hr class="hr">
-  </ng-container>
+  <hr *ngIf="answer.answers[questionId] && answer.answers[questionId].length > 0" class="hr">
+
 
   <!-- comment -->
-  <ng-container *ngIf="answer.answers[questionId]?.length > 0">
-    <div class="comment-wrapper text-center">
-      <span>{{ answer.answers[questionId] }}</span>
-    </div>
-  </ng-container>
+  <div *ngIf="answer.answers[questionId] && answer.answers[questionId].length > 0" class="comment-wrapper text-center">
+    <span>{{ answer.answers[questionId] }}</span>
+  </div>
+
 
 </section>

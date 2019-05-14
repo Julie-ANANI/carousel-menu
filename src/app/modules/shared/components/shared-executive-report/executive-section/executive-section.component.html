@@ -1,0 +1,115 @@
+<section id="executive-section-wrapper">
+
+
+  <!-- title -->
+  <div class="title-wrapper">
+
+    <!-- heading and menu -->
+    <div class="heading-menu">
+
+      <!-- heading -->
+      <h2 *ngIf="questionSelected?.title" class="title-primary">{{ questionSelected?.title | multiling:lang }}</h2>
+
+      <!-- menu -->
+      <ng-container *ngIf="adminSide">
+        <div class="dropdown">
+
+          <i class="fas fa-bars"></i>
+
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)" class="drop-item">
+              <span>{{ option?.title | multiling:lang }}</span>
+            </li>
+          </ul>
+
+        </div>
+      </ng-container>
+
+    </div>
+    <!-- /heading and Menu -->
+
+    <!-- follow -->
+    <ng-container *ngIf="questionSelected && stats">
+      <p class="sub-title">
+
+        <span *ngIf="questionSelected?.controlType !== 'checkbox'">
+          <i class="fas fa-user"></i> {{ stats.nbAnswers || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
+        </span>
+
+        <span *ngIf="questionSelected?.controlType === 'checkbox'">
+          <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ questionSelected?.title | multiling:lang | lowercase }}
+        </span>
+
+        <span pageScroll pageScrollOffset="10" [href]="'#' + questionSelected?.identifier" class="text-link" id="more-text">
+          {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
+        </span>
+
+      </p>
+    </ng-container>
+    <!-- /follow -->
+
+  </div>
+  <!-- /title -->
+
+
+  <!-- answer display -->
+  <ng-container *ngIf="questionSelected">
+    <div class="content-wrapper">
+
+      <!-- if the question type is radio -->
+      <ng-container *ngIf="questionSelected?.controlType === 'radio'">
+        <app-pie-chart [question]="questionSelected" [answers]="answersToShow"></app-pie-chart>
+      </ng-container>
+      <!-- /if the question type is radio -->
+
+      <!-- if the question type is checkbox -->
+      <ng-container *ngIf="questionSelected?.controlType === 'checkbox'">
+        <app-bar-chart [question]="questionSelected" [answers]="answersToShow" class="full-space"></app-bar-chart>
+      </ng-container>
+      <!-- /if the question type is checkbox -->
+
+      <!-- if the question type is star -->
+      <ng-container *ngIf="questionSelected?.controlType === 'stars'">
+        <app-stars [question]="questionSelected" [answers]="answersToShow" class="full-space"></app-stars>
+      </ng-container>
+      <!-- /if the question type is star -->
+
+      <!-- if the question is not checkbox, radio, stars -->
+      <ng-container *ngIf="questionSelected?.controlType !== 'checkbox' && questionSelected?.controlType !== 'radio' && questionSelected?.controlType !== 'stars'">
+        <ng-container [ngSwitch]="questionSelected.title | multiling:lang | lowercase ">
+
+          <ng-container *ngSwitchCase="'strengths'">
+           <app-tag [tags]="tags" [tagColor]="'#2ECC71'"></app-tag>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'points forts'">
+            <app-tag [tags]="tags" [tagColor]="'#2ECC71'"></app-tag>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'objections'">
+            <app-tag [tags]="tags" [tagColor]="'#EA5858'"></app-tag>
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+            <app-tag [tags]="tags"></app-tag>
+          </ng-container>
+
+        </ng-container>
+      </ng-container>
+      <!-- if the question is not checkbox, radio, stars -->
+
+    </div>
+  </ng-container>
+  <!-- /answer display -->
+
+
+  <!-- abstract -->
+  <ng-container *ngIf="questionSelected && abstractValue">
+    <div class="abstract-wrapper">
+      <span>{{ abstractValue }}</span>
+    </div>
+  </ng-container>
+  <!-- /abstract -->
+
+
+</section>

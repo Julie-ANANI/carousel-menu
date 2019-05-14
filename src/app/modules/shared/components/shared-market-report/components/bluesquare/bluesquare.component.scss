@@ -1,20 +1,14 @@
 @import "../../../../../../../style/framework/src/variables";
 
 #bluesquare-component {
-  min-width: 280px;
-  max-width: 320px;
-  color: $light-color;
 
   h4 {
     margin-bottom: 0;
-  }
-
-  .number {
     font-size: 5rem;
     font-weight: 300;
   }
 
-  .subtitle {
+  span {
     font-size: $font-size-sm;
   }
 

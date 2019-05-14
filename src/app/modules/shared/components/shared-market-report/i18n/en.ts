@@ -1,6 +1,10 @@
 export const MARKET_REPORT = {
   'TITLE': 'Market potential of your project',
 
+  'CUSTOM_FILTERS': 'Custom filters',
+
+  'RESET_FILTERS': 'Reset filters',
+
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
     'EDITING': 'Please finish setup of your project and submit it.',
@@ -34,18 +38,11 @@ export const MARKET_REPORT = {
 
   'COMMENT_HEADING': 'Space for your comments',
 
-  'KEY_LEARNING': 'Key Learnings',
+  'KEY_LEARNING': 'Key learnings',
 
-  'STICKY_BAR': {
-    'DETAIL_VIEW': 'Detail View',
+  'MENU_BAR': {
+    'BUTTON_END': 'End Project',
     'FILTER': 'Filters',
-    'CLIENT_VISIBLE': 'Make Visible To Client',
-    'BUTTON_CSV': 'Export CSV',
-    'BUTTON_PRINT': 'Print Executive Report',
-    'BUTTON_ADMIN': 'Finalize Synthesis',
-    'BUTTON_SHARE': 'Share Synthesis',
-    'BUTTON_EXPORT': 'Export',
-    'BUTTON_END': 'End Project'
   },
 
   'MODAL': {
@@ -55,16 +52,16 @@ export const MARKET_REPORT = {
     'EXPORT_INNOVATION_NOTE': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, the personal data contained in the complete summary must not be used outside of your company.',
     'EXPORT_INNOVATION_CONTENT' : {
       'A': 'All Answers',
-      'EXCEL': 'Excel',
-      'PDF': 'in PDF',
       'B': 'Executive Report',
-      'C': '4 pages',
+      'D': 'Share link',
       'AROUND': 'Around',
       'PAGES': 'pages'
     },
     'BUTTON_CONFIRM': 'Confirm',
-    'BUTTON_DOWNLOAD': 'Download',
-    'BUTTON_CANCEL': 'Cancel'
+  },
+
+  'MAP': {
+    'TITLE': 'Map',
   },
 
   'ANONYMOUS': 'Non Disclosed',
@@ -91,12 +88,12 @@ export const MARKET_REPORT = {
   },
 
   'EXECUTIVE_TEMPLATE': {
-    'PROFESSIONAL_HEADING': 'Qualified professionals',
+    'PROFESSIONAL_HEADING': 'Panel of professionals',
     'ANSWERS': 'answers',
     'REMAINING': {
       'AND': 'and',
       'OTHERS': 'others',
-      'MORE': 'More ...'
+      'MORE': 'more ...'
     },
     'CONCLUSION_HEADING': 'Conclusion',
     'UMI_CONTACT': {
@@ -107,34 +104,54 @@ export const MARKET_REPORT = {
   },
 
   'EXECUTIVE_PLACEHOLDER': {
-    'GOAL': 'Describe the objective of this innovation within 120 words.',
     'CONCLUSION': 'Describe the conclusion of this innovation campaign within 1200 words.',
-    'PROFESSIONAL': 'Describe the professional abstract of this innovation within 160 words.',
-    'SECTION': 'Describe the abstract of this question within 160 words.'
   },
 
   'TARGET_COUNTRIES': 'Targeted countries',
 
  // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',
+
   'EXPAND': 'Expand',
+
   'FILTERS': 'Filters',
+
   'SYNTHESIS_FRAME': 'from professionals',
+
   'PIE_CHART': 'of responses are favorable',
+
   'COMMENTS': 'comments',
+
   'ANSWER': 'answer',
-  'ANSWERS': 'answers',
+
+  'ANSWERS': 'answer(s)',
+
   'SEE_ANSWERS': 'Show answer',
+
   'BTN_EDITION_MODE': 'Go to Edition mode',
+
   'BTN_VIEW_MODE': 'Go to view mode',
-  'BTN_ANSWERS_OPEN': 'Show Answers',
-  'BTN_ANSWERS_CLOSE': 'Hide Answers',
-  'BTN_COMMENTS_OPEN': 'Comments',
+
+  'BTN_ANSWERS_OPEN': 'Show answers',
+
+  'BTN_ANSWERS_CLOSE': 'Hide answers',
+
+  'BTN_PROFESSIONAL_OPEN': 'Show professionals',
+
+  'BTN_PROFESSIONAL_CLOSE': 'Hide professionals',
+
+  'BTN_COMMENTS_OPEN': 'comment(s)',
+
   'BTN_COMMENTS_CLOSE': 'Hide Comments ({{length}})',
+
   'BTN_RECOMPUTE': 'Recompute infographics',
+
   'VOTES': 'votes',
+
   'GRADE': 'Rating',
+
   'NO_GRADE': 'No rating',
+
   'POPUP': {
     'PROFIL': 'Profil',
     'RECEIVED': 'Received at',
@@ -142,5 +159,29 @@ export const MARKET_REPORT = {
     'COUNTRY': 'Country',
     'BACK': 'Back'
   },
+
+  'BUTTON_EXPORT': 'Export',
+
+  'BUTTON_SAVE_VIEW': 'Save view',
+
+  'VIEWS': 'My views',
+
+  'TOOLTIP_DELETE_VIEW': 'Delete view',
+
+  'TOOLTIP_LOAD_VIEW': 'Load view',
+
+  'TOOLTIP_UNHIDE_PROFESSIONAL': 'Unhide professional',
+
+  'TOOLTIP_HIDE_PROFESSIONAL': 'Hide professional',
+
+  'TOOLTIP_HIDE_ANSWER': 'Hide answer',
+
+  'VIEW_PLACEHOLDER': 'Name of your view',
+
+  'SEE_MORE': 'See more',
+
+  'SEE_LESS': 'See less',
+
+  'ORIGIN': 'Origin of responses',
 
 };

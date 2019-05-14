@@ -1,0 +1,43 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#pie-chart-component {
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  overflow: hidden;
+
+  .percentage {
+    margin-bottom: 10px;
+  }
+
+  .chart-pie {
+    margin-left: auto;
+    margin-right: auto;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 280px;
+  }
+
+  .pie-data-wrapper {
+    flex-wrap: wrap;
+    margin: 5px 0 0;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 5px;
+      margin-right: 5px;
+
+      .circle, .response, .text-label {
+        margin-right: 3px;
+      }
+
+      .circle-xs {
+        width: 12px;
+        height: 12px;
+      }
+
+    }
+
+  }
+
+}

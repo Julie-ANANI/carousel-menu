@@ -1,0 +1,70 @@
+<app-modal [modalTitle]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_TITLE'" [(showModal)]="showExportModal">
+
+
+  <!-- export options -->
+  <div class="d-flex text-center card-wrapper">
+
+    <!-- resp Pdf -->
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.respReport)" [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
+    </div>
+    <!-- /resp Pdf -->
+
+    <!-- csv -->
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.csv)" [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
+    </div>
+    <!-- /csv -->
+
+    <!-- executive report -->
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.executiveReport)"
+         [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B'" translate></h5>
+    </div>
+    <!-- /executive report -->
+
+    <!-- share report -->
+    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.shareReport)"
+         [ngClass]="{ 'active': exportTypeEnum.shareReport === exportType }">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1557826918/app/default-images/icons/email.svg"
+           [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">
+      <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.D'" translate></h5>
+    </div>
+    <!-- /share report -->
+
+  </div>
+  <!-- export options -->
+
+
+  <!-- export consent -->
+  <label class="form-checkbox" for="market-report-consent">
+    <input
+      type="checkbox"
+      id="market-report-consent"
+      value="true"
+      name="market-report-consent"
+      (change)="toggleConsent($event)"
+      [checked]="innovation.ownerConsent.value">
+    <i class="form-icon"></i>{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}
+  </label>
+  <!-- /export consent -->
+
+
+  <!-- footer -->
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+    <button class="btn btn-primary btn-sm" [disabled]="!(exportType && innovation.ownerConsent.value)" (click)="exportInnovation($event)">
+      <ng-container *ngIf="exportType !== exportTypeEnum.shareReport">{{ 'COMMON.BUTTON.DOWNLOAD' | translate }}</ng-container>
+      <ng-container *ngIf="exportType === exportTypeEnum.shareReport">{{ 'COMMON.BUTTON.SHARE' | translate }}</ng-container>
+    </button>
+  </div>
+  <!-- /footer -->
+
+
+</app-modal>

@@ -1,0 +1,44 @@
+@import "../../../../../../../style/framework/src/variables";
+
+.card-wrapper {
+  flex-wrap: wrap;
+
+  .card {
+    border-width: $border-width-xl;
+    padding: 0.5rem $unit-5;
+    margin-bottom: $unit-5;
+
+    &:hover {
+      cursor: pointer;
+      border-color: $primary-color;
+    }
+
+    &.active {
+      cursor: default;
+      border-color: $success-color;
+    }
+
+    img {
+      width: 50px;
+      height: 60px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h5 {
+      margin-top: $unit-2;
+      font-size: $font-size-sm;
+      color: $text-background-color;
+      margin-bottom: 0;
+    }
+
+  }
+
+}
+
+.form-checkbox {
+  padding-right: 0;
+  font-size: 0.65rem;
+  font-weight: $font-weight-medium;
+  color: $text-meta-color;
+}

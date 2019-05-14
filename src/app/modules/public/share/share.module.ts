@@ -9,12 +9,13 @@ import { ShareComponent } from './share.component';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
 import { SynthesisCompleteModule } from './component/synthesis-complete/synthesis-complete.module';
 import { FooterModule } from '../../common/footer/footer.module';
+import { HeaderModule } from '../../common/header/header.module';
 
 import { UserService } from '../../../services/user/user.service';
 import { InnovationService } from '../../../services/innovation/innovation.service';
 import { AnswerService } from '../../../services/answer/answer.service';
 import { ShareService } from '../../../services/share/share.service';
-import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
+
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
     ShareRoutingModule,
     RouterModule,
     HeaderUnauthModule,
-    FooterModule
+    FooterModule,
+    HeaderModule
   ],
   declarations: [
     ShareComponent,
@@ -33,8 +35,7 @@ import { InnovationCommonService } from '../../../services/innovation/innovation
     UserService,
     InnovationService,
     AnswerService,
-    ShareService,
-    InnovationCommonService
+    ShareService
   ]
 })
 

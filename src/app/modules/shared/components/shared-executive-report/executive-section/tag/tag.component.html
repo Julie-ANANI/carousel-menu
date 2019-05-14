@@ -1,0 +1,14 @@
+<ng-container *ngIf="tags && tags.length > 0">
+  <div id="tag-component">
+    <div *ngFor="let tag of tags | slice:0:3" class="tag">
+
+      <div *ngIf="tag.count > 1" class="tag-count">{{ tag.count }}X</div>
+
+      <div class="label label-tag label-rounded" [ngStyle]="{ 'background-color': tagColor }">
+        <i class="fas fa-tag"></i>
+        <span class="label-text">{{ tag.label | multiling:userLang }}</span>
+      </div>
+
+    </div>
+  </div>
+</ng-container>

@@ -270,7 +270,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
 
   getColor(length: number) {
-    return this.innovationFrontService.getColor(length, 500);
+    return InnovationFrontService.getColor(length, 500);
   }
 
 

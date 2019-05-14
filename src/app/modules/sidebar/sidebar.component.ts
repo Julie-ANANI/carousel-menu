@@ -18,7 +18,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
         transform: 'translateX(0)'
       })),
       transition('inactive => active', animate('500ms linear')),
-      transition('active => inactive', animate('0ms linear')),
+      transition('active => inactive', animate('200ms linear')),
     ]),
 
     trigger(('animateSidebarBackdrop'), [
@@ -32,8 +32,8 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
         opacity: 1,
         background: 'rgba(0,0,0,0.75)',
       })),
-      transition('inactive => active', animate('.5ms ease-in-out')),
-      transition('active => inactive', animate('0ms ease-in-out')),
+      transition('inactive => active', animate('.5ms linear')),
+      transition('active => inactive', animate('205ms linear')),
     ])
 
   ]

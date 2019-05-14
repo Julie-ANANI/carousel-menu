@@ -13,7 +13,7 @@
   </ng-container>
 
   <div class="world-map" [ngStyle]="{ 'pointer-events': isEditable ? 'auto' : 'none' }">
-    <svg [ngStyle]="{'width': width}" viewBox="0 0 800 330" version="1.1" xmlns="http://www.w3.org/2000/svg" class="map">
+    <svg [ngStyle]="{ 'width': width }" viewBox="0 0 800 330" version="1.1" xmlns="http://www.w3.org/2000/svg" class="map">
       <g class="land world">
         <g class="europe clickable"
            [ngClass]="{ selected: getContinentSelectionStatus('europe') }"
