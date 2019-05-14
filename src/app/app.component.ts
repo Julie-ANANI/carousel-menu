@@ -31,10 +31,11 @@ export class AppComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this.setFavicon();
+
     initTranslation(this._translateService);
 
-    if (this.authService.isAcceptingCookies) {
-      this.authService.initializeSession().subscribe(() => {}, () => {
+    if (this._authService.isAcceptingCookies) {
+      this._authService.initializeSession().subscribe(() => {}, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', { timeOut: 0 });
       });
     }
@@ -43,9 +44,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     //this._setSwellRTScript();
-
   }
 
 

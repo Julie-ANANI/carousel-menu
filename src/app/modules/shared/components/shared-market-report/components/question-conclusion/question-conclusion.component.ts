@@ -3,8 +3,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
-import { Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
 import { Tag } from '../../../../../../models/tag';
 import { TagsFiltersService } from '../../services/tags-filter.service';
 import { environment } from "../../../../../../../environments/environment";
@@ -50,7 +48,11 @@ export class QuestionConclusionComponent implements OnInit {
   constructor(private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _tagService: TagsFiltersService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService) {
+
+    this._lang = this._translateService.currentLang || 'en';
+
+  }
 
   ngOnInit() {
 
@@ -63,8 +65,6 @@ export class QuestionConclusionComponent implements OnInit {
       this.innovation.marketReport = {};
     }
 
-    this._lang = this._translateService.currentLang || 'en';
-
   }
 
 
@@ -73,7 +73,7 @@ export class QuestionConclusionComponent implements OnInit {
 
     objToSave[this.question.identifier] = { conclusion: event['content'] };
 
-    this._innovationService.updateMarketReport(this.innovation._id, objToSave).pipe(first()).subscribe(() => {
+    this._innovationService.updateMarketReport(this.innovation._id, objToSave).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
