@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -43,7 +43,7 @@ export class InnovationsResolver implements Resolve<Array<Innovation>> {
             }
           }),
           catchError(() => {
-            return Observable.empty();
+            return EMPTY;
           })
         );
     }

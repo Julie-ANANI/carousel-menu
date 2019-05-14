@@ -7,7 +7,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { PresetService } from '../services/preset/preset.service';
 import { Preset } from '../models/preset';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 const PRESET_KEY = makeStateKey('preset');
@@ -37,7 +37,7 @@ export class PresetResolver implements Resolve<Preset> {
             }
           }),
           catchError(() => {
-            return Observable.empty();
+            return EMPTY;
           })
         );
     }

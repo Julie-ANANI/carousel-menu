@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Professional } from '../models/professional';
 import { ProfessionalsService } from '../services/professionals/professionals.service';
@@ -34,7 +34,7 @@ export class ProfessionalResolver implements Resolve<Professional> {
             }
           }),
           catchError(() => {
-            return Observable.empty();
+            return EMPTY;
           })
         );
     }

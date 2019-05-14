@@ -7,7 +7,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Innovation } from '../models/innovation';
 import { InnovationService } from '../services/innovation/innovation.service';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 const INNOVATION_KEY = makeStateKey('innovation');
@@ -37,7 +37,7 @@ export class InnovationResolver implements Resolve<Innovation> {
             }
           }),
           catchError(() => {
-            return Observable.empty();
+            return EMPTY;
           })
         );
     }

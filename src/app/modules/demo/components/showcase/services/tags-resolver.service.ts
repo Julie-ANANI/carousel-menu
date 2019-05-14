@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { Tag } from '../../../../../models/tag';
@@ -34,7 +34,7 @@ export class TagsResolver implements Resolve<Array<Tag>> {
             }
           }),
           catchError(() => {
-            return Observable.empty();
+            return EMPTY;
           })
         );
     }

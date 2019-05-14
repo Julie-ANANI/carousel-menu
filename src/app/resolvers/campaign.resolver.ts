@@ -7,7 +7,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { CampaignService } from '../services/campaign/campaign.service';
 import { Campaign } from '../models/campaign';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 const CAMPAIGN_KEY = makeStateKey('campaign');
@@ -37,7 +37,7 @@ export class CampaignResolver implements Resolve<Campaign> {
             }
           }),
           catchError(() => {
-            return Observable.empty();
+            return EMPTY;
           })
         );
     }
