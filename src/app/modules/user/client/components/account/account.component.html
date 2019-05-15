@@ -117,10 +117,8 @@
                 type="text"
                 [min-chars]="2"
                 [list-formatter]="autocompleteCompanyListFormatter"
-                [display-property-name]="'name'"
-                [accept-user-input]="false"
-                (valueChanged)="formData.get('company').reset(formData.get('company.name').value || {})"
                 [source]="companiesSuggestions"
+                (valueChanged)="selectCompany($event)"
                 [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
             </div>
 

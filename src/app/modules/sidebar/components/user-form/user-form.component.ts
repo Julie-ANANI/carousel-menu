@@ -10,13 +10,13 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { distinctUntilChanged, first } from 'rxjs/operators';
+import { Clearbit } from '../../../../models/clearbit';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
 import { SearchService } from "../../../../services/search/search.service";
 import { Observable} from 'rxjs';
-import {Clearbit} from "../../../../models/clearbit";
 
 @Component({
   selector: 'app-user-form',
@@ -213,6 +213,9 @@ export class UserFormComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35"/><span>${data.name}</span>`);
   };
 
+  public selectCompany(c: string | Clearbit) {
+    this._userForm.get('company').reset((typeof c === 'string') ? {name: c} : c);
+  }
 
   onClickSave() {
 
@@ -221,8 +224,6 @@ export class UserFormComponent implements OnInit {
         this._userForm.value['country'] = code;
       }
     }
-
-    this._userForm.get('company').reset(this._company);
 
     if (this._isEditUser) {
       const user = new User(this._userForm.value);

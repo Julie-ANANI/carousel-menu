@@ -75,20 +75,18 @@
       </div>
 
       <!-- company -->
-      <div class="form-group">
+      <div class="form-group" formGroupName="company">
         <label class="form-label" for="user-form-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
         <input
           auto-complete
           class="form-input"
           type="text"
-          [(ngModel)]="company"
-          [ngModelOptions]="{standalone: true}"
+          formControlName="name"
           id="user-form-company"
           [min-chars]="2"
-          [accept-user-input]="false"
-          [display-property-name]="'name'"
           [list-formatter]="autocompleteCompanyListFormatter"
           [source]="companiesSuggestions"
+          (valueChanged)="selectCompany($event)"
           [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
       </div>
 
