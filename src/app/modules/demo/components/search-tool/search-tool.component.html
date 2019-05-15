@@ -1,25 +1,20 @@
 <div id="search-tool-component">
-  <i id = "search-tool-menu" class="fa fa-bars" (click)="onClickMenu()"></i>
   <div class="column col-xs-12 col-11 col-mx-auto">
+
 
     <!-- section search bar -->
     <section class="section-search section-pad rm-pad-bottom">
-      <form [formGroup]="searchForm" (ngSubmit)="onClickSearch()" autocomplete="off">
-        <div class="form-group relative">
-
-          <label for="search-form-input"></label>
-          <input
-            class="form-input"
-            formControlName="keywords"
-            id="search-form-input"
-            type="text">
-
-          <span class="search-icon absolute text-notify c-hand" (click)="onClickSearch()"><i class="fas fa-search"></i></span>
-
-        </div>
-      </form>
+      <app-search-input-3 [searchFieldValue]="searchFieldValue" (searchFieldOutput)="onClickSearch($event)"></app-search-input-3>
     </section>
     <!-- /section search bar -->
+
+
+    <!-- history icon -->
+    <div class="icon icon-meta fixed history-wrapper tooltip" data-tooltip="View history" (click)="onClickHistoryIcon($event)">
+      <i class="fas fa-2x fa-history"></i>
+    </div>
+    <!-- /history icon -->
+
 
     <!-- section showing video when no search -->
     <ng-container *ngIf="!searchStarted && !searchStopped">
@@ -36,19 +31,17 @@
       <section [ngClass]="{ 'animate-appear': searchStarted }">
 
         <!-- metadata display -->
-        <ng-container *ngIf="professionalCount">
-          <div class="text-center">
+        <div class="text-center professional-count-wrapper">
 
-            <h2 class="title-secondary text-background">
-              <ng-container *ngIf="professionalCount < 100">< </ng-container>
-              <ng-container *ngIf="professionalCount === 20000">+ </ng-container>
-              {{ professionalCount }}
-            </h2>
+          <h2 class="title-secondary text-background">
+            <ng-container *ngIf="professionalCount < 100">< </ng-container>
+            <ng-container *ngIf="professionalCount === 20000">+ </ng-container>
+            {{ professionalCount }}
+          </h2>
 
-            <h1 class="title-primary text-notify">PROFESSIONALS</h1>
+          <h1 class="title-primary text-notify" [innerText]="'PROFESSIONAL'"></h1>
 
-          </div>
-        </ng-container>
+        </div>
         <!-- /metadata display -->
 
         <!-- when searching for professionals -->

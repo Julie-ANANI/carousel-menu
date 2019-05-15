@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { first } from 'rxjs/operators';
@@ -18,8 +17,6 @@ import { countries } from "../../../../models/static-data/country";
 })
 
 export class SearchToolComponent implements OnInit{
-
-  private _searchForm: FormGroup;
 
   private _slicedPros: Array<any> = [];
 
@@ -43,8 +40,11 @@ export class SearchToolComponent implements OnInit{
 
   public names: any = countries;
 
+  private _searchFieldValue: string;
+
+  private _searchFieldOutput: string;
+
   constructor(private _translateTitleService: TranslateTitleService,
-              private _formBuilder: FormBuilder,
               private _searchService: SearchService,
               private _authService: AuthService,
               private _downloadService: DownloadService,
@@ -55,58 +55,55 @@ export class SearchToolComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this._buildForm();
   }
 
 
-  private _buildForm() {
-    this._searchForm = this._formBuilder.group({
-      keywords: [''],
-    });
-  }
+  public onClickSearch(keyword: string) {
 
+    this._searchFieldOutput = keyword;
 
-  public onClickSearch() {
     if (this._requestAlreadyLoaded) {
       this._searchStarted = true;
       this._updateResults();
       this._requestAlreadyLoaded = false;
     } else {
 
-      const keywords = this._searchForm.get('keywords').value;
-
-      if (keywords) {
+      if (keyword) {
         this._professionalCount = 0;
         this._slicedPros = [];
         this._searchResult = {};
         this._searchStarted = true;
         this._searchStopped = false;
 
-        if (keywords == "TEST") {
+        if (keyword == "TEST") {
           this._searchResult = result_sample;
           this._scale = [3, 50, 100];
           this._updateResults();
         } else {
           const user = this._authService.getUserInfo().name;
-          this._searchService.metadataSearch(keywords, user).pipe(first()).subscribe((result: any) => {
+          this._searchService.metadataSearch(keyword, user).subscribe((result: any) => {
             this._loadResults(result);
             this._updateResults();
           }, () => {
-            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
           });
 
         }
       }
+
     }
+
   }
+
 
   public loadRequest(requestId) {
     this._searchService.getMetadataRequest(requestId).pipe(first()).subscribe((request: any) => {
-      this._searchForm.setValue({keywords: request.keywords});
+      this._searchFieldValue = request.keywords;
       this._loadResults(request);
       this._requestAlreadyLoaded = true;
     });
   }
+
 
   private _loadResults(result) {
     this._requestId = result._id;
@@ -117,6 +114,7 @@ export class SearchToolComponent implements OnInit{
     this._searchResult.pros = result.pros;
     this._scale = result.scale || [50, 200, 1500];
   }
+
 
   private _updateResults() {
     if (this._searchResult.pros) {
@@ -205,16 +203,19 @@ export class SearchToolComponent implements OnInit{
 
   }
 
-  public onClickMenu() {
+
+  public onClickHistoryIcon(event: Event) {
+    event.preventDefault();
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'History',
-      size: '730px'
+      size: '726px'
     };
   }
 
+
   public downloadRequest() {
-    const keywords = this._searchForm.get('keywords').value;
+    const keywords = this._searchFieldOutput;
     if (keywords) {
       const jsonFile = JSON.stringify({
         keywords: keywords,
@@ -226,23 +227,25 @@ export class SearchToolComponent implements OnInit{
     }
   }
 
+
   public uploadRequest(file: File) {
     const reader = new FileReader();
     reader.readAsText(file, "UTF-8");
     reader.onload = evt => {
       const request = JSON.parse(evt.target['result']);
-      this._searchForm.setValue({keywords: request.keywords});
+      this._searchFieldValue = request.keywords;
       this._loadResults(request);
       this._requestAlreadyLoaded = true;
     };
     reader.onerror = evt => {
-      console.log('error reading file');
+      console.log('Error reading file.');
     };
   }
 
+
   public saveRequest() {
     if (this._requestId) {
-      this._searchService.saveMetadataRequest(this._requestId).pipe(first()).subscribe((result: any) => {
+      this._searchService.saveMetadataRequest(this._requestId).subscribe(() => {
         this._translateNotificationsService.success("ERROR.SUCCESS", "ERROR.CAMPAIGN.SEARCH.REQUEST_SAVED");
       });
     } else {
@@ -250,23 +253,21 @@ export class SearchToolComponent implements OnInit{
     }
   }
 
+
   public selectCountry(country: string) {
     this._selectedCountry = country;
     this._loadPros(12, 12);
   }
+
 
   public resetCountry() {
     this._selectedCountry = null;
     this._loadPros(12, 12);
   }
 
+
   public getCompanyUrl(domain: string): string {
     return `http://${domain}`;
-  }
-
-
-  get searchForm(): FormGroup {
-    return this._searchForm;
   }
 
   get slicedPros(): Array<any> {
@@ -303,6 +304,14 @@ export class SearchToolComponent implements OnInit{
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
+  }
+
+  get searchFieldValue(): string {
+    return this._searchFieldValue;
+  }
+
+  get searchFieldOutput(): string {
+    return this._searchFieldOutput;
   }
 
 }

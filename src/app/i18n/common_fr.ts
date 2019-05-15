@@ -331,6 +331,6 @@ export const COMMON = {
     'TITLE_CREATE': 'Création'
   },
 
-  'SEARCH_INPUT_2_PLACEHOLDER': 'Commencez à taper pour chercher....',
+  'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',
 
 };

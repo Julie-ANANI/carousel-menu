@@ -17,7 +17,7 @@ export class SearchInput2Component implements OnInit, OnDestroy {
 
   @Output() searchFieldOutput = new EventEmitter<string>();
 
-  private _placeholder = 'COMMON.SEARCH_INPUT_2_PLACEHOLDER';
+  private _placeholder = 'COMMON.SEARCH_INPUT_PLACEHOLDER';
 
   private _searchField: FormControl;
 

@@ -333,6 +333,6 @@ export const COMMON = {
     'TITLE_CREATE': 'Creation Board'
   },
 
-  'SEARCH_INPUT_2_PLACEHOLDER': 'Start typing to search...',
+  'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search...',
 
 };
