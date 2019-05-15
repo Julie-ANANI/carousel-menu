@@ -128,7 +128,5 @@ export const SEARCH = {
     'MAX': '100 requêtes max par jour.',
     'SPELLING': 'Les nouveaux mots-clés peuvent être étrange dû à des fautes d\'orthographe ou de frappe dans les descriptions des professionels.'
   },
-  'DEMO': {
-    'SOME_PROS': 'Quelques professionnels que nous avons trouvés'
-  }
+
 };

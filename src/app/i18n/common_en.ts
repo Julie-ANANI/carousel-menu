@@ -184,6 +184,7 @@ export const COMMON = {
     'CLOSE': 'Close',
     'DOWNLOAD': 'Download',
     'SHARE': 'Share',
+    'SEE_MORE': 'See more'
   },
 
   'TABLE' : {
@@ -334,5 +335,9 @@ export const COMMON = {
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search...',
+
+  'TOOLTIP': {
+    'HISTORY': 'History'
+  }
 
 };

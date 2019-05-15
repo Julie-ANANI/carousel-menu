@@ -183,6 +183,7 @@ export const COMMON = {
     'CLOSE': 'Fermer',
     'DOWNLOAD': 'Télécharger',
     'SHARE': 'Partager',
+    'SEE_MORE': 'En voir plus'
   },
 
   'PROJECT': {
@@ -332,5 +333,9 @@ export const COMMON = {
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',
+
+  'TOOLTIP': {
+    'HISTORY': 'Histoire'
+  }
 
 };
