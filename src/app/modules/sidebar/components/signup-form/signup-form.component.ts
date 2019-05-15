@@ -34,8 +34,6 @@ export class SignupFormComponent {
 
   private _countries = countries;
 
-  private _company: Clearbit;
-
   private _displayLoading: boolean = false;
 
   constructor(private _formBuilder: FormBuilder,
@@ -48,7 +46,7 @@ export class SignupFormComponent {
     this._signupForm = this._formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      company: [{}],
+      company: this._formBuilder.group({name: [''], domain: [''], logo: ['']}),
       jobTitle: [''],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(9)]],
@@ -93,8 +91,6 @@ export class SignupFormComponent {
       }
     }
 
-    this._signupForm.get('company').reset(this._company);
-
     this.finalOutput.emit(this._signupForm);
 
   }
@@ -119,6 +115,9 @@ export class SignupFormComponent {
     return this._sanitizer.bypassSecurityTrustHtml(`<img src="${data.logo}" height="22" alt=" "/><span>${data.name}</span>`);
   };
 
+  public selectCompany(c: string | Clearbit) {
+    this._signupForm.get('company').reset((typeof c === 'string') ? {name: c} : c);
+  }
 
   get companyName(): string {
     return environment.companyShortName;
@@ -138,14 +137,6 @@ export class SignupFormComponent {
 
   get countries(): any {
     return this._countries;
-  }
-
-  get company() {
-    return this._company;
-  }
-
-  set company(value: Clearbit) {
-    this._company = value;
   }
 
   get displayLoading(): boolean {

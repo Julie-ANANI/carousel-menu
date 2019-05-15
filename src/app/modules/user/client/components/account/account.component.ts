@@ -12,6 +12,7 @@ import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interfa
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { countries } from '../../../../../models/static-data/country';
 import { Observable } from 'rxjs';
+import {Clearbit} from "../../../../../models/clearbit";
 
 @Component({
   selector: 'app-account',
@@ -134,6 +135,10 @@ export class AccountComponent implements OnInit {
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this.sanitizer.bypassSecurityTrustHtml(`<img src="${data.logo}" height="22" alt=" "/><span>${data.name}</span>`);
   };
+
+  public selectCompany(c: string | Clearbit) {
+    this._formData.get('company').reset((typeof c === 'string') ? {name: c} : c);
+  }
 
   onSubmit() {
     if (this._formData.valid) {
