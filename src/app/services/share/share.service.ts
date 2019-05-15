@@ -100,12 +100,12 @@ export class ShareService {
     if (lang === 'fr') {
       subject = 'Résultat du rapport - ' + ShareService._getTitle(innovCard);
 
-      message = encodeURI(`Bonjour,\r\n\r\nJe vous invite à découvrir les résultats du test marché réalisé par ${environment.companyShortName} pour l\\'innovation ${ShareService._getTitle(innovCard)}.\r\n\r\nAllez sur ce lien: ${url}\r\n\r\nVous pouvez afficher les résultats en filtrant par domaine,  emplacement géographique, personne etc.\r\n\r\nCordialement,\r\n\r\n${ownerName}`);
+      message = encodeURI(`Bonjour,\r\n\r\nJe vous invite à découvrir les résultats du test marché réalisé par ${environment.companyShortName} pour l\\'innovation ${ShareService._getTitle(innovCard)} : ${url}\r\n\r\nVous pouvez afficher les résultats en filtrant par domaine,  emplacement géographique, personne etc.\r\n\r\nCordialement,\r\n\r\n${ownerName}`);
 
     } else {
       subject = 'Report result - ' + ShareService._getTitle(innovCard);
 
-      message = encodeURI(`Hello,\r\n\r\nI invite you to discover the results of the market test carried out by ${environment.companyShortName} for the innovation ${ShareService._getTitle(innovCard)}.\r\n\r\nGo on this link: ${url}\r\n\r\nYou can view the results by filtering by domain, geographical location, person etc.\r\n\r\nCordially,\r\n\r\n${ownerName}`);
+      message = encodeURI(`Hello,\r\n\r\nI invite you to discover the results of the market test carried out by ${environment.companyShortName} for the innovation ${ShareService._getTitle(innovCard)}: ${url}\r\n\r\nYou can view the results by filtering by domain, geographical location, person etc.\r\n\r\nCordially,\r\n\r\n${ownerName}`);
 
     }
 
