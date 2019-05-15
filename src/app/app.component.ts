@@ -5,6 +5,7 @@ import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
+import { LoaderService } from './services/loader/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -25,9 +26,12 @@ export class AppComponent implements OnInit {
     clickToClose: true
   };
 
+  private _displayLoader: boolean = true;
+
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService,
               private _authService: AuthService,
+              private _loaderService: LoaderService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this.setFavicon();
@@ -39,6 +43,12 @@ export class AppComponent implements OnInit {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', { timeOut: 0 });
       });
     }
+
+    this._loaderService.isLoading$.subscribe((loading: boolean) => {
+      setTimeout(() => {
+        this._displayLoader = loading;
+      })
+    });
 
   }
 
@@ -107,6 +117,10 @@ export class AppComponent implements OnInit {
 
   get notificationsOptions(): Options {
     return this._notificationsOptions;
+  }
+
+  get displayLoader(): boolean {
+    return this._displayLoader;
   }
 
 }
