@@ -446,6 +446,19 @@
   }
 }
 
+
+@keyframes loader {
+
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+
+}
+
 /********************************** Animation class ***************************************/
 
 .animate-page {
