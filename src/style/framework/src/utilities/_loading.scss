@@ -48,3 +48,24 @@
   }
 
 }
+
+
+.loading-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 88880;
+  overflow: hidden;
+  background-color: transparent;
+
+  &::after {
+    display: block;
+    content: "";
+    height: 5px;
+    background-color: $primary-color;
+    width: 0;
+    border-radius: 36px;
+    animation: loader 2s infinite ease;
+  }
+
+}
