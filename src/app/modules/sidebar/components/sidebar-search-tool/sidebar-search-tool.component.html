@@ -1,24 +1,38 @@
-<div class="column col-11 col-mx-auto">
-
-  <button (click)="saveRequest()" class="btn btn-primary">
-    {{'COMMON.SAVE' | translate}}
-  </button>
-
-  <button (click)="downloadRequest()" class="btn btn-sm ghost-primary">
-    {{'COMMON.DOWNLOAD' | translate}}
-  </button>
-
-  <label class="btn btn-sm ghost-primary">
-    <input #fileupload type="file" [hidden]="true" (change)="uploadRequest(fileupload.files[0], $event)" />
-    Import
-  </label>
+<section id="search-tool-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
 
 
-  <app-shared-table
-    [config]="config"
-    [data]="tableInfos"
-    (configChange)="loadHistory($event)"
-    (editRow)="onClickEdit($event)">
-  </app-shared-table>
-</div>
+    <!-- section buttons -->
+    <div class="flex-between">
+
+      <div>
+
+        <label class="btn btn-sm ghost-primary" [innerText]="'COMMON.BUTTON.IMPORT'" translate>
+          <input #fileupload type="file" [hidden]="true" (change)="uploadRequest(fileupload.files[0], $event)" />
+        </label>
+
+        <button class="btn btn-sm btn-primary" (click)="downloadRequest()" [disabled]="!searchFieldValue" [innerText]="'COMMON.BUTTON.DOWNLOAD'" translate></button>
+
+      </div>
+
+      <div>
+        <button class="btn btn-sm btn-primary" (click)="saveRequest()" [innerText]="'COMMON.BUTTON.SAVE'" translate></button>
+      </div>
+
+    </div>
+    <!-- /section buttons -->
+
+
+    <!-- section table -->
+    <app-shared-table
+      [config]="config"
+      [data]="tableInfos"
+      (configChange)="loadHistory($event)"
+      (editRow)="onClickEdit($event)">
+    </app-shared-table>
+    <!-- /section table -->
+
+
+  </div>
+</section>
 

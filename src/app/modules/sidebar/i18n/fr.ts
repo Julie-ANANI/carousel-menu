@@ -16,6 +16,7 @@ export const SIDEBAR = {
     'ADD_AMBASSDOR': 'Ajouter des Ambassadeurs',
     'CHANGE_PASSWORD': 'Changer le mot de passe',
     'INSIGHT': 'Insight',
+    'SEARCH_HISTORY': 'Historique de recherche'
   },
 
   'LABELS': {

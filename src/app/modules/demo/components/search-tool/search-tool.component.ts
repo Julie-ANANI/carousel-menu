@@ -101,6 +101,8 @@ export class SearchToolComponent implements OnInit{
       this._searchFieldValue = request.keywords;
       this._loadResults(request);
       this._requestAlreadyLoaded = true;
+    }, () => {
+      this._translateNotificationsService.error("ERROR.ERROR", "ERROR.FETCHING_ERROR");
     });
   }
 
@@ -208,7 +210,7 @@ export class SearchToolComponent implements OnInit{
     event.preventDefault();
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'History',
+      title: 'SIDEBAR.TITLE.SEARCH_HISTORY',
       size: '726px'
     };
   }
@@ -247,6 +249,8 @@ export class SearchToolComponent implements OnInit{
     if (this._requestId) {
       this._searchService.saveMetadataRequest(this._requestId).subscribe(() => {
         this._translateNotificationsService.success("ERROR.SUCCESS", "ERROR.CAMPAIGN.SEARCH.REQUEST_SAVED");
+      }, () => {
+        this._translateNotificationsService.error("ERROR.ERROR", "ERROR.CANNOT_REACH");
       });
     } else {
       this._translateNotificationsService.error("ERROR.ERROR", "ERROR.CAMPAIGN.SEARCH.NO_REQUEST");

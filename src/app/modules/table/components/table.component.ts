@@ -79,7 +79,7 @@ export class TableComponent {
 
   private _selector = '';
 
-  private _title = 'Résultats';
+  private _title = 'TABLE.TITLE.RESULTS';
 
   private _isHeadable = false;
 
@@ -130,7 +130,7 @@ export class TableComponent {
    */
   loadData(value: Table): void  {
     if (value) {
-      this._title = value._title || 'Résultats';
+      this._title = value._title;
 
       this._selector = value._selector;
 

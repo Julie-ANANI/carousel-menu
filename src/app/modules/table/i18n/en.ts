@@ -30,14 +30,17 @@ export const TABLE = {
     'UPDATED': 'Updated',
     'SECTORS': 'Sectors',
     'INDUSTRY': 'Industry',
-    'FEEDBACK': 'Feedback'
+    'FEEDBACK': 'Feedback',
+    'SAVED': 'Saved'
   },
 
   'TITLE': {
     'PROFESSIONALS': 'Professionals',
     'USERS': 'Users',
     'PROJECTS': 'Projects',
-    'AMBASSADORS': 'Ambassadors'
+    'AMBASSADORS': 'Ambassadors',
+    'REQUESTS': 'requests',
+    'RESULTS': 'results'
   }
 
 };
