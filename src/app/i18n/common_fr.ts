@@ -335,7 +335,7 @@ export const COMMON = {
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',
 
   'TOOLTIP': {
-    'HISTORY': 'Histoire'
+    'HISTORY': 'Historique'
   }
 
 };
