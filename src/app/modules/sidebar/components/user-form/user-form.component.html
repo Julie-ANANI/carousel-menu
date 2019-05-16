@@ -90,6 +90,22 @@
         </div>
       </ng-container>
 
+        <!-- email -->
+        <div class="form-group has-error">
+            <label class="form-label" for="user-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+            <input
+                    class="form-input"
+                    formControlName="email"
+                    id="user-form-email"
+                    type="email"
+                    placeholder="john@catco.com"
+                    (change)="onEmailChange()">
+            <span class="form-input-hint" *ngIf="userForm.get('email').touched && userForm.get('email').invalid">
+          <span *ngIf="userForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+          <span *ngIf="userForm.get('email').hasError('email') && userForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+        </span>
+        </div>
+
       <!-- first name -->
       <div class="form-group has-error">
         <label class="form-label" for="user-form-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
@@ -115,21 +131,6 @@
           placeholder="Smith">
         <span class="form-input-hint" *ngIf="userForm.get('lastName').touched && userForm.get('lastName').invalid && userForm.get('lastName').hasError('required')">
           {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
-        </span>
-      </div>
-
-      <!-- email -->
-      <div class="form-group has-error">
-        <label class="form-label" for="user-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
-        <input
-          class="form-input"
-          formControlName="email"
-          id="user-form-email"
-          type="email"
-          placeholder="john@catco.com">
-        <span class="form-input-hint" *ngIf="userForm.get('email').touched && userForm.get('email').invalid">
-          <span *ngIf="userForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-          <span *ngIf="userForm.get('email').hasError('email') && userForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
         </span>
       </div>
 
