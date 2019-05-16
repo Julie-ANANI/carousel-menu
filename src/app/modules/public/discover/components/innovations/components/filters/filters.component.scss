@@ -2,6 +2,12 @@
 
 #filter-component {
 
+  .admin-button {
+    margin-bottom: 0.75rem;
+    font-size: 0.7rem;
+    text-decoration: underline;
+  }
+
   .animate-appear {
     animation-duration: .5s;
   }

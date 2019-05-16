@@ -1,6 +1,7 @@
 <section id="filter-component">
 
   <a *ngIf="isAdmin && selectedTags.length > 0"
+     class="admin-button"
      [routerLink]="['/demo', 'showcase']"
      [queryParams]="{'tag': getSelectedTagsIds()}"
      target="_blank">
@@ -34,7 +35,7 @@
 
     </div>
 
-    <div class="sector-wrapper d-flex">
+    <div *ngIf="highLightTags.length > 0" class="sector-wrapper d-flex">
       <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
         <label class="c-hand">
           <input
