@@ -31,14 +31,17 @@ export const TABLE = {
     'UPDATED': 'Modifié le',
     'SECTORS': 'Secteurs',
     'INDUSTRY': 'Industrie',
-    'FEEDBACK': 'Feedback'
+    'FEEDBACK': 'Feedback',
+    'SAVED': 'Sauvegardé'
   },
 
   'TITLE': {
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
     'PROJECTS': 'Projets',
-    'AMBASSADORS': 'Ambassadeurs'
+    'AMBASSADORS': 'Ambassadeurs',
+    'REQUESTS': 'requests',
+    'RESULTS': 'résultats'
   }
 
 };

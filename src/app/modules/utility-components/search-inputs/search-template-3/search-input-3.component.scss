@@ -1,0 +1,27 @@
+@import "../../../../../style/framework/src/variables";
+
+#search-input-3-component {
+
+  .form-group {
+
+    &:hover .form-input {
+      box-shadow: $box-shadow-hover;
+    }
+
+    .form-input {
+      border-radius: 25px;
+      border-color: $border-color !important;
+      padding-left: 25px;
+      padding-right: 55px;
+      height: 45px;
+      box-shadow: $box-shadow-search-input;
+    }
+
+    .search-icon {
+      right: 23px;
+      top: 8px;
+    }
+
+  }
+
+}

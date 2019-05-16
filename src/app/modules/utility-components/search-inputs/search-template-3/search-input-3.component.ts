@@ -4,15 +4,20 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-search-input-2',
-  templateUrl: './search-input-2.component.html',
-  styleUrls: ['./search-input-2.component.scss']
+  selector: 'app-search-input-3',
+  templateUrl: './search-input-3.component.html',
+  styleUrls: ['./search-input-3.component.scss']
 })
 
-export class SearchInput2Component implements OnInit, OnDestroy {
+export class SearchInput3Component implements OnInit, OnDestroy {
 
-  @Input() set searchPlaceholder(value: string) {
+  @Input() set placeholder(value: string) {
     this._placeholder = value;
+  }
+
+  @Input() set searchFieldValue(value: string) {
+    this._searchFieldValue = value;
+    this._setFieldValue();
   }
 
   @Output() searchFieldOutput = new EventEmitter<string>();
@@ -21,30 +26,28 @@ export class SearchInput2Component implements OnInit, OnDestroy {
 
   private _searchField: FormControl;
 
-  private _searchActive: boolean = false;
-
   private _ngUnsubscribe: Subject<any> = new Subject();
+
+  private _searchFieldValue: string;
 
   constructor() {
     this._searchField = new FormControl();
   }
 
   ngOnInit() {
-    this._searchField.valueChanges.pipe(distinctUntilChanged(), debounceTime(200)).subscribe(input => {
-      this._searchActive = input !== '';
-      this._outputData();
+    this._searchField.valueChanges.pipe(distinctUntilChanged(), debounceTime(200)).subscribe(() => {
+      this.outputData();
     });
   }
 
 
-  public onClickClose(event: Event) {
-    event.preventDefault();
-    this._searchField.setValue('');
+  public outputData() {
+    this.searchFieldOutput.emit(this._searchField.value);
   }
 
 
-  private _outputData() {
-    this.searchFieldOutput.emit(this._searchField.value);
+  private _setFieldValue() {
+    this._searchField.setValue(this._searchFieldValue);
   }
 
 
@@ -56,12 +59,12 @@ export class SearchInput2Component implements OnInit, OnDestroy {
     return this._searchField;
   }
 
-  get searchActive(): boolean {
-    return this._searchActive;
-  }
-
   get ngUnsubscribe(): Subject<any> {
     return this._ngUnsubscribe;
+  }
+
+  get searchFieldValue(): string {
+    return this._searchFieldValue;
   }
 
   ngOnDestroy(): void {

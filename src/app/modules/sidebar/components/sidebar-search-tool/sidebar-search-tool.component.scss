@@ -1,3 +1,17 @@
-.btn {
-  margin: 20px;
+#search-tool-component {
+  padding-top: 1.5rem;
+
+  .flex-between {
+    flex-wrap: wrap;
+
+    .btn {
+      margin-bottom: 1.25rem;
+    }
+
+    .ghost-primary {
+      margin-right: 1rem;
+    }
+
+  }
+
 }

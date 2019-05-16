@@ -14,6 +14,7 @@ import { AdminSearchMapModule } from '../../../user/admin/components/admin-searc
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { SidebarModule } from "../../../sidebar/sidebar.module";
 import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-search-tool/sidebar-search-tool.module";
+import { SearchInput3Module } from '../../../utility-components/search-inputs/search-template-3/search-input-3.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-sea
     AdminSearchMapModule,
     CountryFlagModule,
     SidebarModule,
-    SidebarSearchToolModule
+    SidebarSearchToolModule,
+    SearchInput3Module
   ],
   declarations: [
     SearchToolComponent

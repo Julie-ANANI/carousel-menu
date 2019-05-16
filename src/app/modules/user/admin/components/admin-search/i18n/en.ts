@@ -128,7 +128,5 @@ export const SEARCH = {
     'MAX': '100 max request per day.',
     'SPELLING': 'New keywords can be strange due to spelling or typing mistakes in professional descriptions.'
   },
-  'DEMO': {
-    'SOME_PROS': 'Some professionals that we found'
-  }
+
 };

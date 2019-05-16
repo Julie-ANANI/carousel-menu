@@ -1,0 +1,17 @@
+<section id="search-input-3-component">
+  <form novalidate autocomplete="off">
+    <div class="form-group relative">
+
+      <label>
+        <input
+          class="form-input"
+          type="search"
+          [formControl]="searchField"
+          [attr.placeholder]="placeholder | translate">
+      </label>
+
+      <span class="search-icon absolute text-notify c-hand" (click)="outputData()"><i class="fas fa-search"></i></span>
+
+    </div>
+  </form>
+</section>

@@ -45,6 +45,11 @@
       border-color: $success-color;
     }
 
+    &.circle-white {
+      background-color: $bg-color-light;
+      border-color: $light-color;
+    }
+
     &.circle-alert {
       background-color: $alert-color;
       border-color: $alert-color;

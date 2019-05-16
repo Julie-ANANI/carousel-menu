@@ -16,6 +16,7 @@ import { ShowcaseRoutingModule } from './showcase-routing.module';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TagsService } from '../../../../services/tags/tags.service';
+import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 
@@ -40,6 +41,7 @@ import { MessageSpaceModule } from '../../../utility-components/message-space/me
   providers: [
     AnswerService,
     InnovationService,
+    MultilingPipe,
     TagsService,
   ],
   exports: [
