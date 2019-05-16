@@ -4,12 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShowcaseComponent } from './showcase.component';
 
 import { TagsResolver } from './services/tags-resolver.service';
+import { TagsStatsResolver } from './services/tags-stats-resolver.service';
 
 const showcaseRoutes: Routes = [
   {
     path: '',
     component: ShowcaseComponent,
-    resolve: { tags: TagsResolver }
+    resolve: {
+      tags: TagsResolver,
+      tagsStats: TagsStatsResolver
+    }
   }
 ];
 
@@ -18,7 +22,8 @@ const showcaseRoutes: Routes = [
     RouterModule.forChild(showcaseRoutes)
   ],
   providers: [
-    TagsResolver
+    TagsResolver,
+    TagsStatsResolver
   ],
   exports: [
     RouterModule

@@ -17,7 +17,7 @@ export class ShowcaseComponent {
 
   private readonly _sectorTags: Array<Tag>;
 
-  private _selectedTagsStats: Array<TagStats> = [];
+  private _selectedTagsStats: Array<TagStats>;
 
   private _countries: {[country: string]: number} = {};
 
@@ -46,6 +46,13 @@ export class ShowcaseComponent {
         return label1.localeCompare(label2);
       });
     } else {
+      this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
+    }
+
+    if (Array.isArray(this._activatedRoute.snapshot.data['tagsStats'])) {
+      this._selectedTagsStats = this._activatedRoute.snapshot.data['tagsStats'];
+    } else {
+      this._selectedTagsStats = [];
       this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
     }
 
