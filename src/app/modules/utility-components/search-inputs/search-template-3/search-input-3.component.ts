@@ -36,7 +36,7 @@ export class SearchInput3Component implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._searchField.valueChanges.pipe(distinctUntilChanged(), debounceTime(200)).subscribe(() => {
-      this.outputData();
+      //this.outputData();
     });
   }
 
