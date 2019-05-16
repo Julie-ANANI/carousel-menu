@@ -34,6 +34,9 @@ import { SortString } from './pipes/SortString';
     SortTags,
     SortString
   ],
+  providers: [
+    MultilingPipe,
+  ],
   exports: [
     CharacterCountdown,
     DomSanitizerPipe,
