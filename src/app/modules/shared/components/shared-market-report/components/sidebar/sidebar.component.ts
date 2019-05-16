@@ -226,9 +226,9 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  public checkTag(event: Event) {
+  public checkTag(event: Event, tagId: string) {
     event.preventDefault();
-    this._tagService.checkTag(event.target['name'], event.target['checked']);
+    this._tagService.checkTag(tagId, event.target['checked']);
   }
 
 
