@@ -89,15 +89,15 @@ export class FiltersComponent implements OnInit {
     switch (type) {
 
       case 'allTags':
-        this._allTags = FilterService.sortTags(this._allTags, this._userLang);
+        this._allTags = this._filterService.sortTags(this._allTags, this._userLang);
         break;
 
       case 'suggested':
-        this._suggestedTags = FilterService.sortTags(this._suggestedTags, this._userLang);
+        this._suggestedTags = this._filterService.sortTags(this._suggestedTags, this._userLang);
         break;
 
       case 'highlight':
-        this._highLightTags = FilterService.sortTags(this._highLightTags, this._userLang);
+        this._highLightTags = this._filterService.sortTags(this._highLightTags, this._userLang);
         break;
 
       default:

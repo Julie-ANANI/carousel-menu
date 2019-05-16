@@ -60,6 +60,7 @@ export class TagsFormComponent {
 
   constructor(private tagsService: TagsService,
               private autocompleteService: AutocompleteService,
+              private multiling: MultilingPipe,
               private translateNotificationsService: TranslateNotificationsService,
               private translateService: TranslateService,
               private domSanitizer: DomSanitizer) { }
@@ -100,7 +101,7 @@ export class TagsFormComponent {
 
 
   autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
-    return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
+    return this.multiling.transform(data.name, this.translateService.currentLang);
   };
 
 

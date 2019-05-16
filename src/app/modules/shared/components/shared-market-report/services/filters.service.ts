@@ -21,6 +21,7 @@ export class FilterService {
   }
 
   public addFilter(filter: Filter) {
+    console.log(filter);
     this._filters[filter.questionId] = filter;
     this._filtersUpdate.next();
   }
