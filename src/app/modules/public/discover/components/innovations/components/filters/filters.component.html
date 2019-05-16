@@ -1,8 +1,14 @@
 <section id="filter-component">
 
+  <a *ngIf="isAdmin && selectedTags.length > 0"
+     [routerLink]="['/demo', 'showcase']"
+     [queryParams]="{'tag': getSelectedTagsIds()}"
+     target="_blank">
+    {{ 'DISCOVER.BUTTON_SHOWCASE' | translate }}
+  </a>
 
   <!-- highlighted sectors -->
-  <div *ngIf="highLightTags.length > 0" class="sector-highlighted">
+  <div class="sector-highlighted">
 
     <div class="flex-between">
 
