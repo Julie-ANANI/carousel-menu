@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { LoaderService } from '../../services/loader/loader.service';
 //import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 //import {UserService} from "../../services/user/user.service";
 
@@ -14,7 +15,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 export class UserComponent implements OnInit {
 
-  private _displayLoader = false;
+  private _displayLoader: boolean;
 
   private _adminSide = false;
 
@@ -22,6 +23,7 @@ export class UserComponent implements OnInit {
               private location: Location,
               // private _userService: UserService,
               // private _swellRTBackend: SwellrtBackend,
+              private _loaderService: LoaderService,
               private router: Router) {
 
     if (isPlatformBrowser(this.platformId)) {
@@ -29,9 +31,21 @@ export class UserComponent implements OnInit {
 
         if (event instanceof NavigationEnd) {
           this._adminSide = this.location.path().slice(5, 11) === '/admin';
+          this._displayLoader = false;
         }
+
+        if (event instanceof NavigationStart) {
+          this._displayLoader = true;
+        }
+
       });
     }
+
+    this._loaderService.isLoading$.subscribe((loading: boolean) => {
+      setTimeout(() => {
+        this._displayLoader = loading;
+      })
+    });
 
   }
 
