@@ -17,7 +17,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
   private _config: any;
 
-  private _noResult = false;
+  private _noResult: boolean;
 
   constructor(private _advSearch: AdvSearchService,
               private _router: Router,
@@ -105,6 +105,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
   private _getAllProjects() {
     this._advSearch.getCommunityInnovations(this._config).pipe(first()).subscribe((response) => {
+      console.log(response);
       this._setTableContent(response, response.length);
       this._noResult = response.length === 0;
       }, () => {
