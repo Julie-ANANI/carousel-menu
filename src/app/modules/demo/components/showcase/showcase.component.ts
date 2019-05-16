@@ -17,7 +17,7 @@ export class ShowcaseComponent {
 
   private readonly _sectorTags: Array<Tag>;
 
-  private _selectedTagsStats: Array<TagStats> = [];
+  private _selectedTagsStats: Array<TagStats>;
 
   private _countries: {[country: string]: number} = {};
 
@@ -34,17 +34,25 @@ export class ShowcaseComponent {
   private _loadingStats: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
+              private _multilingPipe: MultilingPipe,
               private _tagService: TagsService,
               private _translateService: TranslateService,
               private _translateNotificationService: TranslateNotificationsService) {
 
     if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
       this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1, t2) => {
-        const label1 = MultilingPipe.prototype.transform(t1.label, this._translateService.currentLang);
-        const label2 = MultilingPipe.prototype.transform(t2.label, this._translateService.currentLang);
+        const label1 = this._multilingPipe.transform(t1.label, this._translateService.currentLang);
+        const label2 = this._multilingPipe.transform(t2.label, this._translateService.currentLang);
         return label1.localeCompare(label2);
       });
     } else {
+      this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
+    }
+
+    if (Array.isArray(this._activatedRoute.snapshot.data['tagsStats'])) {
+      this._selectedTagsStats = this._activatedRoute.snapshot.data['tagsStats'];
+    } else {
+      this._selectedTagsStats = [];
       this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
     }
 
