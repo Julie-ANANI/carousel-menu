@@ -14,6 +14,7 @@ import { SharedAmbassadorListModule } from "../../../../../shared/components/sha
 import { SharedWorldmapModule } from "../../../../../shared/components/shared-worldmap/shared-worldmap.module";
 import { SidebarCommunityFormModule } from "../../../../../sidebar/components/community-form/sidebar-community-form.module";
 import { MessageSpaceModule } from '../../../../../utility-components/message-space/message-space.module';
+import { FetchingErrorModule } from '../../../../../utility-components/errors/fetching-error/fetching-error.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MessageSpaceModule } from '../../../../../utility-components/message-sp
     SharedAmbassadorListModule,
     SharedWorldmapModule,
     SidebarCommunityFormModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    FetchingErrorModule
   ],
   declarations: [
     AdminCommunityProjectsComponent,

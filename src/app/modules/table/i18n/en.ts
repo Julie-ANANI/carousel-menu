@@ -37,8 +37,8 @@ export const TABLE = {
   'TITLE': {
     'PROFESSIONALS': 'Professionals',
     'USERS': 'Users',
-    'PROJECTS': 'Projects',
-    'AMBASSADORS': 'Ambassadors',
+    'PROJECTS': 'projects',
+    'AMBASSADORS': 'ambassadors',
     'REQUESTS': 'requests',
     'RESULTS': 'results'
   }

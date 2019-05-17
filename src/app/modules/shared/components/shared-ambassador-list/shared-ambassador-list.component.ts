@@ -6,6 +6,7 @@ import { AdvSearchService } from "../../../../services/advsearch/advsearch.servi
 import { Router } from '@angular/router';
 import { ListConfigurations } from "./list-configurations";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -19,23 +20,27 @@ export interface SelectedProfessional extends Professional {
 
 export class SharedAmbassadorListComponent {
 
-  @Output('callbackNotification')
-  callbackNotification = new EventEmitter<any>();
-
   @Input() set config(value: any) {
     this.loadPros(value);
   }
 
   @Input() set listType(value: string) {
+
     switch(value) {
+
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
         this._actions = ['Add to the project'];
         break;
+
       case('default'):
+
       default:
         this._tableInfos = ListConfigurations.getByDefaultConfig();
+        break;
+
     }
+
   }
 
   /**
@@ -52,17 +57,15 @@ export class SharedAmbassadorListComponent {
 
   @Output() selectedProsChange = new EventEmitter<any>();
 
+  @Output('callbackNotification') callbackNotification = new EventEmitter<any>();
+
   private _config: any;
-
-  smartSelect: any = null;
-
-  editUser: { [propString: string]: boolean } = {};
 
   private _tableInfos: any = null;
 
-  private _actions: string[] = [];
+  private _actions: Array<string> = [];
 
-  private _total = 0;
+  private _total: number;
 
   private _pros: Array<SelectedProfessional>;
 
@@ -74,45 +77,59 @@ export class SharedAmbassadorListComponent {
 
   private _context: any = null;
 
+  private _fetchingError: boolean;
+
+  smartSelect: any = null;
+
+  editUser: { [propString: string]: boolean } = {};
 
   constructor(private _advSearchService: AdvSearchService,
               private _innovationService: InnovationService,
-              private route: Router) { }
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _router: Router) { }
 
-  loadPros(config: any): void {
-    // At this point the table should be configured (actions and everything)
-    // We need "just" to gather the data and inject it to the table so we can
-    // allow th table to show data
+
+  /***
+   * At this point the table should be configured (actions and everything)
+   * We need "just" to gather the data and inject it to the table so we can
+   * allow the table to show data
+   * @param config
+   */
+  public loadPros(config: any): void {
 
     this._config = config;
 
-    this._advSearchService.getCommunityMembers(this.configToString())
-      .pipe(first())
-      .subscribe((pros: any) => {
-        this._pros = pros.result;
-        this._pros.forEach(pro => {
+    this._advSearchService.getCommunityMembers(this._configToString()).pipe(first()).subscribe((pros: any) => {
+      this._pros = pros.result;
+      this._total = pros._metadata.totalCount;
+
+      if (this._pros && this._pros.length > 0) {
+        this._pros.forEach((pro) => {
+
           pro.sent = pro.messages && pro.messages.length > 0;
+
           if(pro['innovations'] && !!pro['innovations'].find( inno => { return this._context['innovationId'] === inno._id;} ) ) {
             pro['self'] = 'true';
           } else {
             pro['self'] = 'false';
           }
+
         });
+      }
 
-        this._total = pros._metadata.totalCount;
+      this._loadTableData();
 
-        this._tableInfos._content = this._pros;
-        this._tableInfos._total = this._total;
-        //this._tableInfos._actions = this._actions;
-
-        // TODO this is ugly AF, shouldn't the table component to be able to update just the data without reloading everything?
-        this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));
-     });
+    }, () => {
+      this._fetchingError = true;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
 
   }
 
-  private configToString() {
+
+  private _configToString() {
     let config = {};
+
     Object.keys(this._config).forEach(key => {
       if (this._config[key] instanceof Object) {
         config[key] = JSON.stringify(this._config[key]);
@@ -125,38 +142,30 @@ export class SharedAmbassadorListComponent {
   }
 
 
-  selectPro(event): void {
-    this.selectedProsChange.emit({
-      total: event._rows.length,
-      pros: event._rows
-    });
+  private _loadTableData() {
+    this._tableInfos._content = this._pros;
+    this._tableInfos._total = this._total;
+    //this._tableInfos._actions = this._actions;
+    // TODO this is ugly AF, shouldn't the table component to be able to update just the data without reloading everything? // Will be fixed in future.
+    this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));
   }
 
 
-  updateSelection(event: any) {
-    this.smartSelect = event;
-    const config = this._config;
-    config.offset = this.smartSelect.offset;
-    config.limit = this.smartSelect.limit;
-    this.selectedProsChange.emit({
-      total: this.nbSelected,
-      pros: 'all',
-      query: config
-    });
-  }
-
-
-  get nbSelected(): number {
-    if (this.smartSelect) {
-      return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
-        this.total - this.smartSelect.offset :
-        this.smartSelect.limit;
+  /***
+   * this function is to redirect to the component to AdminCommunityMember
+   * which will show all its details. Called by clicking on the show button.
+   * @param pro
+   */
+  onClickEdit(pro: Professional) {
+    if (pro._id) {
+      this._router.navigate([`user/admin/community/members/${pro._id}`]);
     }
-    return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
 
-  performActions(action: any) {
+
+  public performActions(action: any) {
     switch (this._actions.findIndex(value => action._action === value)) {
+
       case 0:
         // This is the add to the project case: the idea is to add the selected pros to the active project
         // If one or more professionals already belong to the project, just add the remaining ones.
@@ -195,31 +204,52 @@ export class SharedAmbassadorListComponent {
           this.callbackNotification.emit(resultObj);
         }
         break;
+
       case 1:
-          /*if(action._rows.length) {
-            if(action._rows.length > 1) {
-              console.log("Look man, I could do this action just for the first one...");
-            }
-            const link = `/user/admin/community/members/${action._rows[0]._id}`;
-            this.router.navigate([link]);
-          } else {
-            console.error("What? empty rows? How did you do that?");
-          }*/
-          console.log(action);
+        /*if(action._rows.length) {
+          if(action._rows.length > 1) {
+            console.log("Look man, I could do this action just for the first one...");
+          }
+          const link = `/user/admin/community/members/${action._rows[0]._id}`;
+          this.router.navigate([link]);
+        } else {
+          console.error("What? empty rows? How did you do that?");
+        }*/
+        console.log(action);
         break;
+
     }
   }
 
 
-  /***
-   * this function is to redirect to the component to AdminCommunityMember
-   * which will show all its details. Called by clicking on the show button.
-   * @param pro
-   */
-  onClickEdit(pro: Professional) {
-    if (pro._id) {
-      this.route.navigate([`user/admin/community/members/${pro._id}`]);
+  selectPro(event): void {
+    this.selectedProsChange.emit({
+      total: event._rows.length,
+      pros: event._rows
+    });
+  }
+
+
+  updateSelection(event: any) {
+    this.smartSelect = event;
+    const config = this._config;
+    config.offset = this.smartSelect.offset;
+    config.limit = this.smartSelect.limit;
+    this.selectedProsChange.emit({
+      total: this.nbSelected,
+      pros: 'all',
+      query: config
+    });
+  }
+
+
+  get nbSelected(): number {
+    if (this.smartSelect) {
+      return (this.smartSelect.limit + this.smartSelect.offset) > this._total ?
+        this._total - this.smartSelect.offset :
+        this.smartSelect.limit;
     }
+    return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
 
 
@@ -227,9 +257,12 @@ export class SharedAmbassadorListComponent {
     this.editUser[pro._id] = false;
   }
 
-  onClickSubmit(event: Event) {
+
+  public deleteAmbassador(event: Event) {
     event.preventDefault();
   }
+
+
   get total() {
     return this._total;
   }
@@ -264,6 +297,10 @@ export class SharedAmbassadorListComponent {
 
   get currentPro(): Professional {
     return this._currentPro;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }

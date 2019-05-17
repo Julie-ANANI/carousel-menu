@@ -1,10 +1,31 @@
 <!-- section table -->
-<app-shared-table
-  [config]="config"
-  [data]="tableInfos"
-  (configChange)="loadPros($event)"
-  (editRow)="onClickEdit($event)"
-  (removeRows)="modalDelete = true"
-  (performAction)="performActions($event)"
-  (selectRowAction)="selectPro($event)">
-</app-shared-table>
+<ng-container *ngIf="!fetchingError">
+  <app-shared-table
+    [config]="config"
+    [data]="tableInfos"
+    (configChange)="loadPros($event)"
+    (editRow)="onClickEdit($event)"
+    (removeRows)="modalDelete = true"
+    (performAction)="performActions($event)"
+    (selectRowAction)="selectPro($event)">
+  </app-shared-table>
+</ng-container>
+
+
+<!-- section fetching error -->
+<ng-container *ngIf="fetchingError">
+  <app-fetching-error></app-fetching-error>
+</ng-container>
+
+
+<!-- modal to ask the operator to confirm to delete the ambassador -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+
+  <span>Currently this functionality is not implemented.</span>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+    <button class="btn btn-sm btn-primary" (click)="deleteAmbassador($event)" [disabled]="true" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+  </div>
+
+</app-modal>

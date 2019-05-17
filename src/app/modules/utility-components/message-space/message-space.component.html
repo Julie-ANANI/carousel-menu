@@ -1,9 +1,9 @@
 <section id="message-space-component" class="text-center">
   <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px' }">
-    <div class="message-content">
+    <div class="message-content" [ngStyle]="{ 'background-color': backgroundColor }">
       <ng-content></ng-content>
     </div>
-    <div class="triangle"></div>
+    <div class="triangle" [ngStyle]="{ 'border-top-color': backgroundColor }"></div>
   </div>
   <div><img [src]="imageSrc ? imageSrc : defaultSrc" class="bot-wrapper" alt=" "></div>
 </section>

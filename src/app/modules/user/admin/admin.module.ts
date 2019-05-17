@@ -5,7 +5,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AdminComponent } from './admin.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
@@ -83,7 +82,6 @@ import { InnovationFrontService } from '../../../services/innovation/innovation-
     AdminCommunityModule
   ],
   declarations: [
-    AdminComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
     AdminSettingsComponent
