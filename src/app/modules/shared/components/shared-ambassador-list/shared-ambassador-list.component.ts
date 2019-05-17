@@ -19,9 +19,6 @@ export interface SelectedProfessional extends Professional {
 
 export class SharedAmbassadorListComponent {
 
-  @Output('callbackNotification')
-  callbackNotification = new EventEmitter<any>();
-
   @Input() set config(value: any) {
     this.loadPros(value);
   }
@@ -51,6 +48,8 @@ export class SharedAmbassadorListComponent {
   }
 
   @Output() selectedProsChange = new EventEmitter<any>();
+
+  @Output('callbackNotification') callbackNotification = new EventEmitter<any>();
 
   private _config: any;
 
