@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from "../../../../../../services/title/title.service";
-import { first } from "rxjs/operators";
-import { AdvSearchService } from "../../../../../../services/advsearch/advsearch.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
+import { Table } from '../../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 @Component({
@@ -13,37 +12,42 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 
 export class AdminCommunityProjectsComponent implements OnInit {
 
-  private _tableInfos: any = null;
+  private _tableInfos: Table = null;
 
-  private _config: any;
+  private _config: any = {
+    fields: '',
+    limit: '',
+    offset: '0',
+    search: '{}',
+    status: "EVALUATING",
+    sort: '{"created":-1}'
+  };
 
-  private _noResult = false;
+  private _totalProjects: Array<any> = [];
 
-  constructor(private _advSearch: AdvSearchService,
-              private _router: Router,
-              private _translateTitleService: TranslateTitleService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+  private _noResult: boolean;
+
+  private _fetchingError: boolean;
+
+  constructor(private _router: Router,
+              private _activatedRoute: ActivatedRoute,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateTitleService: TranslateTitleService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
-    this._setConfig();
-    this._configureTable();
+
+    if (Array.isArray(this._activatedRoute.snapshot.data.projects)) {
+      this._totalProjects = this._activatedRoute.snapshot.data.projects;
+      this._noResult = this._totalProjects.length === 0;
+      this._configureTable();
+    } else {
+      this._fetchingError = true;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }
 
   }
 
   ngOnInit() {
-    this._getAllProjects();
-  }
-
-
-  private _setConfig() {
-    this._config = {
-      fields: '',
-      limit: '10',
-      offset: '0',
-      search: '{}',
-      status: "EVALUATING",
-      sort: '{"created":-1}'
-    };
   }
 
 
@@ -51,11 +55,12 @@ export class AdminCommunityProjectsComponent implements OnInit {
     this._tableInfos = {
       _selector: 'admin-community-projects',
       _title: 'TABLE.TITLE.PROJECTS',
-      _content: [],
-      _total: 0,
+      _content: this._totalProjects,
+      _total: this._totalProjects.length,
       _isHeadable: true,
       _isFiltrable: true,
       _isShowable: true,
+      _isLocal: true,
       _columns: [
         {
           _attrs: ['innovation.name'],
@@ -103,30 +108,6 @@ export class AdminCommunityProjectsComponent implements OnInit {
   }
 
 
-  private _getAllProjects() {
-    this._advSearch.getCommunityInnovations(this._config).pipe(first()).subscribe((response) => {
-      this._setTableContent(response, response.length);
-      this._noResult = response.length === 0;
-      }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
-  }
-
-
-  private _setTableContent(projects: Array<any>, total: number) {
-    const tableInfos = this._tableInfos;
-    tableInfos._content = projects;
-    tableInfos._total = total;
-    this._tableInfos = JSON.parse(JSON.stringify(tableInfos));
-  }
-
-
-  public configChanges(config: any) {
-    this._config = config;
-    this._getAllProjects();
-  }
-
-
   public onClickShow(project: any) {
     this._router.navigate(['/user/admin/community/projects/' + project.innovation._id]);
   }
@@ -139,8 +120,16 @@ export class AdminCommunityProjectsComponent implements OnInit {
     return this._tableInfos;
   }
 
+  get totalProjects(): Array<any> {
+    return this._totalProjects;
+  }
+
   get noResult(): boolean {
     return this._noResult;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }

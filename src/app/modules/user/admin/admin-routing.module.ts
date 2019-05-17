@@ -9,7 +9,6 @@ import { AdminCampaignsComponent } from './components/admin-campaigns/admin-camp
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
-import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
@@ -42,7 +41,6 @@ import { AdminCommunityProjectComponent } from './components/admin-community/adm
 const adminRoutes: Routes = [
   {
     path: '',
-    component: AdminComponent,
     canActivate: [AdminAuthGuard],
     children: [
       {
