@@ -5,39 +5,33 @@
     <div class="text-right">
 
       <!-- import -->
-      <label class="btn ghost-primary btn-sm">
-        <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
-        Import
+      <label class="btn ghost-primary btn-sm" [innerText]="'COMMON.BUTTON.IMPORT'" translate>
+        <input #fileupload type="file" [hidden]="true" (change)="importAmbassadors(fileupload.files[0])">
       </label>
 
-      <!-- add
-      <button type="button" class="btn btn-primary btn-sm" (click)="onClickAdd($event)">Add</button> -->
+      <!-- add -->
+      <button type="button" class="btn btn-primary btn-sm" (click)="addAmbassador($event)"
+              [innerText]="'COMMON.BUTTON.ADD'" translate [ngStyle]="{ 'margin-left': '1rem' }" [disabled]="true">
+      </button>
 
     </div>
     <!-- /section buttons -->
 
-    <!-- section members -->
+    <!-- section members table -->
     <div class="section-light-pad rm-pad-bottom">
       <app-shared-ambassadors-list [listType]="'default'" [config]="config"></app-shared-ambassadors-list>
     </div>
-    <!-- /section members -->
+    <!-- /section members table -->
 
   </div>
 </section>
 
 
-<!-- add ambassadors sidebar
+<!-- add ambassadors sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-  <add-ambassador-form
-    [sidebarState]="sidebarValue.animate_state">
-  </add-ambassador-form>
+
 </app-sidebar>
- /add ambassadors sidebar -->
-
-
-
-
-
+<!-- /add ambassadors sidebar -->
 
 
 <!--<button (click)="onSearchClick($event)" class="btn btn-primary">

@@ -11,7 +11,8 @@ export const communityRoutes: Routes = [
     path: 'projects',
     component: AdminCommunityProjectsComponent,
     pathMatch: 'full' ,
-    resolve: { projects: CommunityProjectsResolver }
+    resolve: { projects: CommunityProjectsResolver },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'members',
