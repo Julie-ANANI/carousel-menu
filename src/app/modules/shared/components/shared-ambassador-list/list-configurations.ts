@@ -1,4 +1,3 @@
-
 export class ListConfigurations {
   static getByDefaultConfig() {
     const _tableInfos = {
@@ -47,4 +46,5 @@ export class ListConfigurations {
     };
     return _tableInfos;
   }
+
 }
