@@ -68,6 +68,8 @@ export class SidebarComponent implements OnInit {
 
   private _sharedFiltersList: Array<SharedFilter> = [];
 
+  public seeMore: {[questionId: string]: boolean} = {};
+
   private _activatedCustomFilters: Array<string> = [];
 
   private _modalEndInnovation: boolean;
@@ -79,8 +81,6 @@ export class SidebarComponent implements OnInit {
   private _modalResetReport: boolean;
 
   private _userLang = '';
-
-  private _tagsEndIndex = 6;
 
   private _toggleFilterBar: boolean;
 
@@ -432,14 +432,6 @@ export class SidebarComponent implements OnInit {
 
   get userLang(): string {
     return this._userLang;
-  }
-
-  get tagsEndIndex(): number {
-    return this._tagsEndIndex;
-  }
-
-  set tagsEndIndex(value: number) {
-    this._tagsEndIndex = value;
   }
 
   get toggleFilterBar(): boolean {

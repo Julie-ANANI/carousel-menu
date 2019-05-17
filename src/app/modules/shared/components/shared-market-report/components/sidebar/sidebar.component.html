@@ -205,7 +205,7 @@
         </div>
       </a>
 
-      <div *ngFor="let tag of tagsList | slice:0:tagsEndIndex | SortTags:userLang" class="form-group">
+      <div *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))" class="form-group">
         <label class="form-checkbox">
           <input
             type="checkbox"
@@ -217,13 +217,13 @@
       </div>
 
       <!-- see more -->
-      <div *ngIf="tagsList && tagsList.length > 6 && tagsList.length !== tagsEndIndex">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="tagsEndIndex = tagsList.length"></span>
+      <div *ngIf="tagsList && tagsList.length > 6 && !seeMore.professionals">
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="seeMore.professionals = true"></span>
       </div>
 
       <!-- see less -->
-      <div *ngIf="tagsList && tagsList.length === tagsEndIndex && tagsEndIndex !== 6">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="tagsEndIndex = 6"></span>
+      <div *ngIf="tagsList && tagsList.length > 6 && seeMore.professionals">
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="seeMore.professionals = false"></span>
       </div>
 
       <div *ngIf="filters['professionals']" class="professional-hide-wrapper">
@@ -250,7 +250,8 @@
 
       <!-- textarea -->
       <ng-container *ngIf="question.controlType === 'textarea'">
-        <div *ngFor="let answerTag of answersTagsLists[question.identifier] | SortTags:userLang" class="form-group">
+        <div *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
+             class="form-group">
           <label class="form-checkbox">
             <input
               type="checkbox"
@@ -259,6 +260,14 @@
               [checked]="selectedAnswersTags[question.identifier][answerTag._id]">
             <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
           </label>
+        </div>
+        <!-- see more -->
+        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
+          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="seeMore[question.identifier] = true"></span>
+        </div>
+        <!-- see less -->
+        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
+          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="seeMore[question.identifier] = false"></span>
         </div>
       </ng-container>
 
