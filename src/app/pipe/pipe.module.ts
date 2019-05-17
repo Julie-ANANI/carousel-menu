@@ -11,7 +11,6 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
 import { FormatText } from './pipes/FormatText';
 import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
-import { SortTags } from './pipes/SortTags';
 import { SortString } from './pipes/SortString';
 
 
@@ -31,7 +30,6 @@ import { SortString } from './pipes/SortString';
     DiscoverSummaryPipe,
     FormatText,
     ScrapeHTMLTags,
-    SortTags,
     SortString
   ],
   providers: [
@@ -49,7 +47,6 @@ import { SortString } from './pipes/SortString';
     DiscoverSummaryPipe,
     FormatText,
     ScrapeHTMLTags,
-    SortTags,
     SortString
   ]
 })
