@@ -16,7 +16,7 @@ export class ProfessionalResolver implements Resolve<Professional> {
               private _professionalService: ProfessionalsService,
               private _transferState: TransferState) {}
 
-  resolve(_activatedRouteSnapshot: ActivatedRouteSnapshot, _routerStateSnapshot: RouterStateSnapshot): Observable<Professional> {
+  resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Professional> {
 
     if (this._transferState.hasKey(PROFESSIONAL_KEY)) {
 
@@ -29,7 +29,7 @@ export class ProfessionalResolver implements Resolve<Professional> {
       });
 
     } else {
-      const professionalId = _activatedRouteSnapshot.paramMap.get('memberId') || '';
+      const professionalId = activatedRouteSnapshot.paramMap.get('memberId') || '';
 
       return this._professionalService.get(professionalId).pipe(
           tap((response) => {

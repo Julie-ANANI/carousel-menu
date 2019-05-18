@@ -333,11 +333,11 @@
                       <input
                         type="checkbox"
                         [id]="tag._id"
-                        [name]="tag.label | multiling:browserLang()"
-                        [value]="tag.label | multiling:browserLang()"
+                        [name]="tag.label | multiling:userLang"
+                        [value]="tag.label | multiling:userLang"
                         (change)="onChangeTag($event, tag)"
                         [checked]="onCheckTag(tag._id)">
-                      <i class="form-icon"></i><span>{{ tag.label | multiling:browserLang() | FormatText }}</span>
+                      <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
                     </label>
                   </div>
                 </ng-container>
@@ -349,11 +349,11 @@
                       <input
                         type="checkbox"
                         [id]="tag._id"
-                        [name]="tag.label | multiling:browserLang()"
-                        [value]="tag.label | multiling:browserLang()"
+                        [name]="tag.label | multiling:userLang"
+                        [value]="tag.label | multiling:userLang"
                         (change)="onChangeTag($event, tag)"
                         [checked]="onCheckTag(tag._id)">
-                      <i class="form-icon"></i><span>{{ tag.label | multiling:browserLang() | FormatText }}</span>
+                      <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
                     </label>
                   </div>
                 </ng-container>
