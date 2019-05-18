@@ -8,7 +8,6 @@ import { AmbassadorExperience, ambassadorExperiences } from '../../../../../../.
 import { ambassadorPosition, AmbassadorPosition } from '../../../../../../../../models/static-data/ambassador-position';
 import { Tag } from '../../../../../../../../models/tag';
 import { TagsService } from '../../../../../../../../services/tags/tags.service';
-import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../../../services/notifications/notifications.service';
@@ -17,6 +16,7 @@ import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationFrontService } from '../../../../../../../../services/innovation/innovation-front.service';
 import { InnovCard } from '../../../../../../../../models/innov-card';
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
+import { Table } from '../../../../../../../table/models/table';
 
 @Component({
   selector: 'admin-community-member',
@@ -42,15 +42,13 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _saveChanges: boolean;
 
-  private _tagsRest: Array<Tag> = [];
-
-  private _tagsProfessional: Array<Tag> = [];
+  private _totalTags: Array<Tag> = [];
 
   private _innovationsSuggested: Array<InnovCard> = [];
 
-  private _emailTableInfo: any = [];
+  private _emailTableInfo: Table = null;
 
-  private _projectTableInfo: any = [];
+  private _projectTableInfo: Table = null;
 
   private _configTag = {
     limit: '0',
@@ -110,7 +108,7 @@ export class AdminCommunityMemberComponent implements OnInit {
 
 
   private _loadProfessional(id: string) {
-    this._professionalService.get(id).pipe(first()).subscribe((response: Professional) => {
+    this._professionalService.get(id).subscribe((response: Professional) => {
       this._professional = response;
       this._translateTitleService.setTitle(`${this._professional.firstName} ${this._professional.lastName} | Professional` || 'Professional | UMI');
       this._getAllTags();
@@ -134,9 +132,9 @@ export class AdminCommunityMemberComponent implements OnInit {
 
 
   private _configureEmailTable() {
-    this._projectTableInfo = {
+    this._emailTableInfo = {
       _selector: 'admin-community-member-email',
-      _title: 'Emails',
+      _title: 'emails',
       _content: [],
       _total: 0,
       _isHeadable: true,
@@ -175,7 +173,7 @@ export class AdminCommunityMemberComponent implements OnInit {
   private _configureProjectTable() {
     this._projectTableInfo = {
       _selector: 'admin-community-member-project',
-      _title: 'Projects',
+      _title: 'projects',
       _content: [],
       _total: 0,
       _isHeadable: true,
@@ -209,24 +207,30 @@ export class AdminCommunityMemberComponent implements OnInit {
    */
   private _getAllTags() {
     const activeLang = this.userLang;
+    let tagsProfessional: Array<Tag> = [];
+    let tagsRest: Array<Tag> = [];
 
-    this._tagsService.getAll(this._configTag).pipe(first()).subscribe((response) => {
+    this._tagsService.getAll(this._configTag).subscribe((response) => {
       if (response) {
         response.result.forEach((tag) => {
           const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
           if (find) {
-            this._tagsProfessional.push(tag);
+            tagsProfessional.push(tag);
           } else {
-            this._tagsRest.push(tag);
+            tagsRest.push(tag);
           }
         });
-        this._tagsProfessional.sort((a,b) => {
+
+        tagsProfessional.sort((a,b) => {
           return a.label[activeLang].localeCompare(b.label[activeLang]);
         });
 
-        this._tagsRest.sort((a,b) => {
+        tagsRest.sort((a,b) => {
           return a.label[activeLang].localeCompare(b.label[activeLang]);
         });
+
+        this._totalTags = tagsProfessional.concat(tagsRest);
+
       }
     }, () => {
       this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
@@ -239,7 +243,7 @@ export class AdminCommunityMemberComponent implements OnInit {
 
     this._innovationsSuggested = [];
 
-    this._innovationService.getAll(this._configInnovation).pipe(first()).subscribe((response) => {
+    this._innovationService.getAll(this._configInnovation).subscribe((response) => {
       if (response) {
         response.result.forEach((innovation: Innovation) => {
           innovation.tags.forEach((tag) => {
@@ -305,7 +309,7 @@ export class AdminCommunityMemberComponent implements OnInit {
   public onClickSave() {
     this._professional.ambassador.is = this._professional.ambassador.is || true;
 
-    this._professionalService.save(this._professional._id, this._professional).pipe(first()).subscribe(() => {
+    this._professionalService.save(this._professional._id, this._professional).subscribe(() => {
       this._saveChanges = false;
       this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
       this._getAllInnovations();
@@ -426,13 +430,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * @param tagId
    */
   public onCheckTag(tagId: string): boolean {
-    if (tagId) {
-      const find = this._professional.tags.find((tag) => tag._id === tagId);
-      if (find) {
-        return true;
-      }
-    }
-    return false;
+    return this._professional.tags.some((tag) => tag._id === tagId);
   }
 
 
@@ -447,7 +445,7 @@ export class AdminCommunityMemberComponent implements OnInit {
     if (event.target['checked']) {
       this._professional.tags.push(tag);
     } else {
-      this._professional.tags.splice(this._professional.tags.indexOf(tag), 1);
+      this._professional.tags = this._professional.tags.filter((tagPro) => tagPro._id !== tag._id)
     }
 
     this.notifyChanges();
@@ -522,16 +520,12 @@ export class AdminCommunityMemberComponent implements OnInit {
     return this._saveChanges;
   }
 
-  get tagsRest(): Array<Tag> {
-    return this._tagsRest;
+  get totalTags(): Array<Tag> {
+    return this._totalTags;
   }
 
   get configTag(): { search: string; offset: string; limit: string; sort: string } {
     return this._configTag;
-  }
-
-  get tagsProfessional(): Array<Tag> {
-    return this._tagsProfessional;
   }
 
   get innovationsSuggested(): Array<InnovCard> {

@@ -25,7 +25,7 @@ import { TableModule } from '../../../../../table/table.module';
     SidebarModule,
     SidebarAdvsearchFormModule,
     SidebarAddAmbassadorFormModule,
-    TableModule
+    TableModule,
   ],
   declarations: [
     AdminCommunityMembersComponent,
