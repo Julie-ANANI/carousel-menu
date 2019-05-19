@@ -1,9 +1,9 @@
 export interface Language {
-  name?: string;
+  type?: string;
   alias?: string;
 }
 
 export const lang: Array<Language> = [
-  { name: 'en', alias: 'English' },
-  { name: 'fr', alias: 'French' },
+  { type: 'en', alias: 'English' },
+  { type: 'fr', alias: 'French' },
 ];

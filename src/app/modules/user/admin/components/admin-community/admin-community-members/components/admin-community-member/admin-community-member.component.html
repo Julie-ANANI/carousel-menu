@@ -291,9 +291,9 @@
                 id="community-member-experience"
                 name="experience"
                 [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional.ambassador?.experience.toLowerCase() || experiences[0].name"
+                [ngModel]="professional.ambassador?.experience || experiences[0].type"
                 (ngModelChange)="onChangeExperience($event)">
-                <option *ngFor="let experience of experiences" [ngValue]="experience.name">{{ experience.alias }}</option>
+                <option *ngFor="let experience of experiences" [ngValue]="experience.type">{{ experience.type }}</option>
               </select>
             </div>
 
@@ -305,9 +305,9 @@
                 id="community-member-position"
                 name="position"
                 [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional.ambassador?.positionLevel.toLowerCase() || positions[0].name"
+                [ngModel]="professional.ambassador?.positionLevel || positions[0].type"
                 (ngModelChange)="onChangePosition($event)">
-                <option *ngFor="let position of positions" [ngValue]="position.name">{{ position.alias }}</option>
+                <option *ngFor="let position of positions" [ngValue]="position.type">{{ position.type }}</option>
               </select>
             </div>
 
@@ -345,9 +345,9 @@
                 id="community-member-language"
                 name="language"
                 [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional?.language || languages[0].name"
+                [ngModel]="professional?.language || languages[0].type"
                 (ngModelChange)="onChangeLang($event)">
-                <option *ngFor="let lang of languages" [ngValue]="lang.name">{{ lang.alias }}</option>
+                <option *ngFor="let lang of languages" [ngValue]="lang.type">{{ lang.alias }}</option>
               </select>
             </div>
 

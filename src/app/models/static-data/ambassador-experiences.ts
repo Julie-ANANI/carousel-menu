@@ -1,13 +1,12 @@
 export interface AmbassadorExperience {
-  name?: string;
-  alias?: string;
+  type?: string;
 }
 
 export const ambassadorExperiences: Array<AmbassadorExperience> = [
-  { name:  'uncategorized', alias: 'Uncategorized' },
-  { name:  'junior', alias: 'Junior' },
-  { name:  'senior', alias: 'Senior' },
-  { name:  'confirmed', alias: 'Confirmed' },
-  { name:  'influencer', alias: 'Influencer' }
+  { type:  'Uncategorized' },
+  { type:  'Junior' },
+  { type:  'Senior' },
+  { type:  'Confirmed' },
+  { type:  'Influencer' }
 ];
 
