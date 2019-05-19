@@ -27,13 +27,6 @@ import { AdminCommunityMemberComponent } from './components/admin-community/admi
 import { AdminCommunityProjectComponent } from './components/admin-community/admin-community-projects/component/admin-community-project/admin-community-project.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 
-
-import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
-import { CampaignResolver } from '../../../resolvers/campaign.resolver';
-import { InnovationResolver } from '../../../resolvers/innovation.resolver';
-import { RequestResolver } from '../../../resolvers/request.resolver';
-
-
 import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 import { monitoringRoutes } from './components/admin-monitoring/admin-monitoring-routing.module';
@@ -41,6 +34,13 @@ import { projectRoutes } from './components/admin-project/admin-project-routing.
 import { librariesRoutes } from './components/admin-libraries/admin-libraries-routing.module';
 import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
+
+import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
+import { CampaignResolver } from '../../../resolvers/campaign.resolver';
+import { InnovationResolver } from '../../../resolvers/innovation.resolver';
+import { RequestResolver } from '../../../resolvers/request.resolver';
+import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
+import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
 
 
 const adminRoutes: Routes = [
@@ -79,7 +79,13 @@ const adminRoutes: Routes = [
           {
             path: 'members/:memberId',
             children: [
-              { path: '', component: AdminCommunityMemberComponent, pathMatch: 'full' }
+              {
+                path: '',
+                component: AdminCommunityMemberComponent,
+                pathMatch: 'full',
+                resolve: { professional: ProfessionalResolver, tagsSector: TagsSectorResolver },
+                runGuardsAndResolvers: 'always'
+              }
             ],
           },
           {

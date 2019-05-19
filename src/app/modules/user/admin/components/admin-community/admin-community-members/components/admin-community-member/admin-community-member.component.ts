@@ -7,7 +7,6 @@ import { lang, Language } from '../../../../../../../../models/static-data/langu
 import { AmbassadorExperience, ambassadorExperiences } from '../../../../../../../../models/static-data/ambassador-experiences';
 import { ambassadorPosition, AmbassadorPosition } from '../../../../../../../../models/static-data/ambassador-position';
 import { Tag } from '../../../../../../../../models/tag';
-import { TagsService } from '../../../../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../../../services/notifications/notifications.service';
@@ -50,12 +49,9 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _projectTableInfo: Table = null;
 
-  private _configTag = {
-    limit: '0',
-    offset: '0',
-    search: '{"type":"SECTOR"}',
-    sort: '{"label":-1}'
-  };
+  fetchingError: boolean;
+
+  allSectorTags: Array<Tag> = [];
 
   private _configInnovation = {
     fields: 'innovationCards principalMedia',
@@ -84,38 +80,41 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _autoCompleteService: AutocompleteService,
-              private _tagsService: TagsService,
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
               private _professionalService: ProfessionalsService,
               private _translateNotificationService: TranslateNotificationsService,
               private _innovationService: InnovationService) {
 
-    this._activatedRoute.params.subscribe(params => {
-      this._loadProfessional(params['memberId']);
-    });
-
     this._initializeVariables();
-    this._configureEmailTable();
-    this._configureProjectTable();
+
+    if (typeof (this._activatedRoute.snapshot.data['professional']) !== 'undefined') {
+      this._professional = this._activatedRoute.snapshot.data['professional'];
+
+      this._translateTitleService.setTitle(`${this._professional.firstName} ${this._professional.lastName} | Professional`);
+
+      if (Array.isArray(this._activatedRoute.snapshot.data['tagsSector'])) {
+        this.allSectorTags = this._activatedRoute.snapshot.data['tagsSector'];
+        this._getAllTags();
+      } else {
+        this.fetchingError = true;
+        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      }
+
+      this._getAllInnovations();
+      this._configureEmailTable();
+      this._configureProjectTable();
+
+    } else {
+      this.fetchingError = true;
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }
 
   }
 
   ngOnInit() {
     this._getEmails();
     this._getProjects();
-  }
-
-
-  private _loadProfessional(id: string) {
-    this._professionalService.get(id).subscribe((response: Professional) => {
-      this._professional = response;
-      this._translateTitleService.setTitle(`${this._professional.firstName} ${this._professional.lastName} | Professional` || 'Professional | UMI');
-      this._getAllTags();
-      this._getAllInnovations();
-    }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
   }
 
 
@@ -210,31 +209,26 @@ export class AdminCommunityMemberComponent implements OnInit {
     let tagsProfessional: Array<Tag> = [];
     let tagsRest: Array<Tag> = [];
 
-    this._tagsService.getAll(this._configTag).subscribe((response) => {
-      if (response) {
-        response.result.forEach((tag) => {
-          const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
-          if (find) {
-            tagsProfessional.push(tag);
-          } else {
-            tagsRest.push(tag);
-          }
-        });
+    if (this.allSectorTags && this.allSectorTags.length > 0) {
+      this.allSectorTags.forEach((tag) => {
+        const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
+        if (find) {
+          tagsProfessional.push(tag);
+        } else {
+          tagsRest.push(tag);
+        }
+      });
 
-        tagsProfessional.sort((a,b) => {
-          return a.label[activeLang].localeCompare(b.label[activeLang]);
-        });
+      tagsProfessional.sort((a,b) => {
+        return a.label[activeLang].localeCompare(b.label[activeLang]);
+      });
 
-        tagsRest.sort((a,b) => {
-          return a.label[activeLang].localeCompare(b.label[activeLang]);
-        });
+      tagsRest.sort((a,b) => {
+        return a.label[activeLang].localeCompare(b.label[activeLang]);
+      });
 
-        this._totalTags = tagsProfessional.concat(tagsRest);
-
-      }
-    }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
+      this._totalTags = tagsProfessional.concat(tagsRest);
+    }
 
   }
 
@@ -522,10 +516,6 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   get totalTags(): Array<Tag> {
     return this._totalTags;
-  }
-
-  get configTag(): { search: string; offset: string; limit: string; sort: string } {
-    return this._configTag;
   }
 
   get innovationsSuggested(): Array<InnovCard> {

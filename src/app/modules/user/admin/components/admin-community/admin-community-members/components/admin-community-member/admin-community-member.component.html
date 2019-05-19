@@ -1,516 +1,527 @@
-<section *ngIf="professional" class="restrict-width" id="admin-community-member-component">
-  <div class="section-light-pad rm-pad-top">
+<section class="restrict-width" id="admin-community-member-component">
 
 
-    <!-- section header -->
-    <div class="section-header section-light-pad rm-pad-bottom">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-
-        <!-- name -->
-        <div class="name-wrapper flex-start">
-
-          <h1 class="title-primary text-background">
-            <ng-container *ngIf="professional.firstName">{{ professional.firstName }}</ng-container>
-            <ng-container *ngIf="professional.lastName"> {{ professional.lastName }}</ng-container>
-          </h1>
-
-          <div *ngIf="professional.ambassador.is" class="tooltip" data-tooltip="Professional">
-            <img src="https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg" alt=" " class="img-responsive">
-          </div>
-
-        </div>
-
-        <!-- stats -->
-        <ul class="stat">
-
-          <!-- feedback -->
-          <li class="stat-container">
-            <h5 class="stat-heading">Feedback</h5>
-            <div class="stat-body">
-              <h5 class="stat-sub-heading">Total</h5>
-              <span class="stat-value">--</span>
-            </div>
-            <div class="stat-body">
-              <h5 class="stat-sub-heading">Partnership</h5>
-              <span class="stat-value">--</span>
-            </div>
-            <div class="stat-body">
-              <h5 class="stat-sub-heading">Solicitations</h5>
-              <span class="stat-value">--</span>
-            </div>
-          </li>
-
-          <!-- rating -->
-          <li class="stat-container">
-            <h5 class="stat-heading">Rating</h5>
-
-            <div class="stat-body">
-              <h5 class="stat-sub-heading">Motivations</h5>
-              <div class="stat-value">
-                <div class="star-rating">
-
-                  <input
-                    type="radio"
-                    name="motivations"
-                    id="motivations-star5"
-                    value="5"
-                    [checked]="professional.ambassador.motivations === 5"
-                    (change)="onChangeMotivation($event)">
-                  <label for="motivations-star5"></label>
-
-                  <input
-                    type="radio"
-                    name="motivations"
-                    id="motivations-star4"
-                    value="4"
-                    [checked]="professional.ambassador.motivations === 4"
-                    (change)="onChangeMotivation($event)">
-                  <label for="motivations-star4"></label>
-
-                  <input
-                    type="radio"
-                    name="motivations"
-                    id="motivations-star3" value="3"
-                    [checked]="professional.ambassador.motivations === 3"
-                    (change)="onChangeMotivation($event)">
-                  <label for="motivations-star3"></label>
-
-                  <input
-                    type="radio"
-                    name="motivations"
-                    id="motivations-star2"
-                    value="2"
-                    [checked]="professional.ambassador.motivations === 2"
-                    (change)="onChangeMotivation($event)">
-                  <label for="motivations-star2"></label>
-
-                  <input
-                    type="radio"
-                    name="motivations"
-                    id="motivations-star1"
-                    value="1"
-                    [checked]="professional.ambassador.motivations === 1"
-                    (change)="onChangeMotivation($event)">
-                  <label for="motivations-star1"></label>
-
-                </div>
-              </div>
-            </div>
-
-            <div class="stat-body">
-              <h5 class="stat-sub-heading">Qualification</h5>
-              <div class="stat-value">
-                <div class="star-rating">
-
-                  <input
-                    type="radio"
-                    name="qualification"
-                    id="qualification-star5"
-                    value="5"
-                    [checked]="professional.ambassador.qualification === 5"
-                    (change)="onChangeQualification($event)">
-                  <label for="qualification-star5"></label>
-
-                  <input
-                    type="radio"
-                    name="qualification"
-                    id="qualification-star4"
-                    value="4"
-                    [checked]="professional.ambassador.qualification === 4"
-                    (change)="onChangeQualification($event)">
-                  <label for="qualification-star4"></label>
-
-                  <input
-                    type="radio"
-                    name="qualification"
-                    id="qualification-star3"
-                    value="3"
-                    [checked]="professional.ambassador.qualification === 3"
-                    (change)="onChangeQualification($event)">
-                  <label for="qualification-star3"></label>
-
-                  <input
-                    type="radio"
-                    name="qualification"
-                    id="qualification-star2"
-                    value="2"
-                    [checked]="professional.ambassador.qualification === 2"
-                    (change)="onChangeQualification($event)">
-                  <label for="qualification-star2"></label>
-
-                  <input
-                    type="radio"
-                    name="qualification"
-                    id="qualification-star1"
-                    value="1"
-                    [checked]="professional.ambassador.qualification === 1"
-                    (change)="onChangeQualification($event)">
-                  <label for="qualification-star1"></label>
-
-                </div>
-              </div>
-            </div>
-
-            <div class="stat-body">
-              <h5 class="stat-sub-heading">Activity</h5>
-              <div class="stat-value">
-                <div class="star-rating">
-
-                  <input
-                    type="radio"
-                    name="activity"
-                    id="activity-star5"
-                    value="5"
-                    [checked]="professional.ambassador.activity === 5"
-                    (change)="onChangeActivity($event)">
-                  <label for="activity-star5"></label>
-
-                  <input
-                    type="radio"
-                    name="activity"
-                    id="activity-star4"
-                    value="4"
-                    [checked]="professional.ambassador.activity === 4"
-                    (change)="onChangeActivity($event)">
-                  <label for="activity-star4"></label>
-
-                  <input
-                    type="radio"
-                    name="activity"
-                    id="activity-star3"
-                    value="3"
-                    [checked]="professional.ambassador.activity === 3"
-                    (change)="onChangeActivity($event)">
-                  <label for="activity-star3"></label>
-
-                  <input
-                    type="radio"
-                    name="activity"
-                    id="activity-star2"
-                    value="2"
-                    [checked]="professional.ambassador.activity === 2"
-                    (change)="onChangeActivity($event)">
-                  <label for="activity-star2"></label>
-
-                  <input
-                    type="radio"
-                    name="activity"
-                    id="activity-star1"
-                    value="1" [checked]="professional.ambassador.activity === 1"
-                    (change)="onChangeActivity($event)">
-                  <label for="activity-star1"></label>
-
-                </div>
-              </div>
-            </div>
-          </li>
-
-        </ul>
-
-      </div>
+  <ng-container *ngIf="fetchingError">
+    <div class="section-pad">
+      <app-fetching-error></app-fetching-error>
     </div>
-    <!-- /section header -->
+  </ng-container>
 
 
-    <!-- section details -->
-    <div class="section-details section-light-pad rm-pad-bottom">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+  <ng-container *ngIf="!fetchingError && professional">
+    <div class="section-light-pad rm-pad-top">
 
+      <!-- section header -->
+      <div class="section-header section-light-pad rm-pad-bottom">
+        <div class="column col-xs-12 col-11 col-mx-auto">
 
-        <!-- save button -->
-        <div class="text-right">
-          <button type="button" class="badge badge-save btn btn-primary btn-sm" [ngClass]="{ 'active': saveChanges }" (click)="onClickSave()">
-            <span [innerText]="'COMMON.BUTTON.SAVE'" translate></span><i class="fas fa-save"></i>
-          </button>
-        </div>
+          <!-- name -->
+          <div class="name-wrapper flex-start">
 
+            <h1 class="title-primary text-background">
+              <ng-container *ngIf="professional.firstName">{{ professional.firstName }}</ng-container>
+              <ng-container *ngIf="professional.lastName"> {{ professional.lastName }}</ng-container>
+            </h1>
 
-        <!-- information -->
-        <div class="info-wrapper d-flex">
-
-          <!-- column 1 -->
-          <div class="info-body d-flex">
-
-            <!-- first name -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-firstname">First Name</label>
-              <input
-                id="community-member-firstname"
-                class="form-input"
-                type="text"
-                name="firstname"
-                placeholder="Enter the first name"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.firstName">
-            </div>
-
-            <!-- last name -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-lastname">Last Name</label>
-              <input
-                id="community-member-lastname"
-                class="form-input"
-                type="text"
-                name="lastname"
-                placeholder="Enter the last name"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.lastName">
-            </div>
-
-            <!-- email -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-email">Email</label>
-              <input
-                id="community-member-email"
-                class="form-input"
-                type="text"
-                name="email"
-                placeholder="Enter the email address"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.email">
-            </div>
-
-            <!-- job -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-jobTitle">Job Title</label>
-              <input
-                id="community-member-jobTitle"
-                class="form-input"
-                type="text"
-                name="jobTitle"
-                placeholder="Enter the job title"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.jobTitle">
-            </div>
-
-            <!-- experience -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-experience">Experience</label>
-              <select
-                class="form-select"
-                id="community-member-experience"
-                name="experience"
-                [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional.ambassador?.experience || experiences[0].type"
-                (ngModelChange)="onChangeExperience($event)">
-                <option *ngFor="let experience of experiences" [ngValue]="experience.type">{{ experience.type }}</option>
-              </select>
-            </div>
-
-            <!-- position level -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-position">Position Level</label>
-              <select
-                class="form-select"
-                id="community-member-position"
-                name="position"
-                [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional.ambassador?.positionLevel || positions[0].type"
-                (ngModelChange)="onChangePosition($event)">
-                <option *ngFor="let position of positions" [ngValue]="position.type">{{ position.type }}</option>
-              </select>
-            </div>
-
-            <!-- company -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-company">Company</label>
-              <input
-                id="community-member-company"
-                class="form-input"
-                type="text"
-                name="company"
-                placeholder="Enter the company"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.company">
-            </div>
-
-            <!-- linkedin -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-linkedin">LinkedIn Profile</label>
-              <input
-                id="community-member-linkedin"
-                class="form-input"
-                type="text"
-                name="profileUrl"
-                placeholder="Enter the linkedIn profile url"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.profileUrl">
-            </div>
-
-            <!-- language -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-language">Language</label>
-              <select
-                class="form-select"
-                id="community-member-language"
-                name="language"
-                [ngModelOptions]="{ standalone: true }"
-                [ngModel]="professional?.language || languages[0].type"
-                (ngModelChange)="onChangeLang($event)">
-                <option *ngFor="let lang of languages" [ngValue]="lang.type">{{ lang.alias }}</option>
-              </select>
-            </div>
-
-            <!-- country -->
-            <div class="form-group">
-              <label class="form-label" for="community-member-country">Country</label>
-              <input
-                id="community-member-country"
-                class="form-input"
-                type="text"
-                name="country"
-                #country
-                placeholder="Enter the country"
-                [(ngModel)]="countries[professional.country]"
-                (keypress)="onSuggestCountries(country.value)">
-              <ul
-                *ngIf="country.value"
-                class="input-suggestion"
-                [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
-                <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onChangeCountry(suggestion)">
-                  {{ suggestion }}
-                </li>
-              </ul>
+            <div *ngIf="professional.ambassador.is" class="tooltip" data-tooltip="Professional">
+              <img src="https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg" alt=" " class="img-responsive">
             </div>
 
           </div>
 
-          <!-- column 2 -->
-          <div class="info-body">
+          <!-- stats -->
+          <ul class="stat">
 
-            <!-- interested by -->
-            <div class="form-group form-textarea">
-              <label class="form-label" for="community-member-interested">Interested By</label>
-              <textarea
-                id="community-member-interested"
-                class="form-input"
-                type="text"
-                name="industry"
-                rows="5"
-                placeholder="Enter the interests"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.ambassador.industry">
-              </textarea>
-            </div>
+            <!-- feedback -->
+            <li class="stat-container">
+              <h5 class="stat-heading">Feedback</h5>
+              <div class="stat-body">
+                <h5 class="stat-sub-heading">Total</h5>
+                <span class="stat-value">--</span>
+              </div>
+              <div class="stat-body">
+                <h5 class="stat-sub-heading">Partnership</h5>
+                <span class="stat-value">--</span>
+              </div>
+              <div class="stat-body">
+                <h5 class="stat-sub-heading">Solicitations</h5>
+                <span class="stat-value">--</span>
+              </div>
+            </li>
 
-            <!-- why join -->
-            <div class="form-group form-textarea">
-              <label class="form-label" for="community-member-join">Why join?</label>
-              <textarea
-                id="community-member-join"
-                class="form-input"
-                type="text"
-                name="qualificationWhy"
-                rows="4"
-                placeholder="Enter the qualification"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.ambassador.qualificationWhy">
-              </textarea>
-            </div>
+            <!-- rating -->
+            <li class="stat-container">
+              <h5 class="stat-heading">Rating</h5>
 
-            <!-- notes -->
-            <div class="form-group form-textarea">
-              <label class="form-label" for="community-member-notes">Notes</label>
-              <textarea
-                id="community-member-notes"
-                class="form-input"
-                type="text"
-                name="notes"
-                rows="4"
-                placeholder="Enter the notes for you"
-                (change)="notifyChanges()"
-                [(ngModel)]="professional.ambassador.notes">
-              </textarea>
-            </div>
+              <div class="stat-body">
+                <h5 class="stat-sub-heading">Motivations</h5>
+                <div class="stat-value">
+                  <div class="star-rating">
 
-          </div>
+                    <input
+                      type="radio"
+                      name="motivations"
+                      id="motivations-star5"
+                      value="5"
+                      [checked]="professional.ambassador.motivations === 5"
+                      (change)="onChangeMotivation($event)">
+                    <label for="motivations-star5"></label>
 
-          <!-- column 3 -->
-          <div class="info-body tag-info-body">
-            <ng-container *ngIf="totalTags.length > 0">
+                    <input
+                      type="radio"
+                      name="motivations"
+                      id="motivations-star4"
+                      value="4"
+                      [checked]="professional.ambassador.motivations === 4"
+                      (change)="onChangeMotivation($event)">
+                    <label for="motivations-star4"></label>
 
-              <label class="form-label">Sector Tags</label>
+                    <input
+                      type="radio"
+                      name="motivations"
+                      id="motivations-star3" value="3"
+                      [checked]="professional.ambassador.motivations === 3"
+                      (change)="onChangeMotivation($event)">
+                    <label for="motivations-star3"></label>
 
-              <div class="tags-wrapper">
+                    <input
+                      type="radio"
+                      name="motivations"
+                      id="motivations-star2"
+                      value="2"
+                      [checked]="professional.ambassador.motivations === 2"
+                      (change)="onChangeMotivation($event)">
+                    <label for="motivations-star2"></label>
 
-                <!-- professional associated tags -->
-                <ng-container *ngIf="totalTags.length > 0">
-                  <div *ngFor="let tag of totalTags" class="tags">
-                    <label class="form-checkbox">
-                      <input
-                        type="checkbox"
-                        [id]="tag._id"
-                        [name]="tag.label | multiling:userLang"
-                        [value]="tag.label | multiling:userLang"
-                        (change)="onChangeTag($event, tag)"
-                        [checked]="onCheckTag(tag._id)">
-                      <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
-                    </label>
+                    <input
+                      type="radio"
+                      name="motivations"
+                      id="motivations-star1"
+                      value="1"
+                      [checked]="professional.ambassador.motivations === 1"
+                      (change)="onChangeMotivation($event)">
+                    <label for="motivations-star1"></label>
+
                   </div>
-                </ng-container>
-
+                </div>
               </div>
 
-            </ng-container>
+              <div class="stat-body">
+                <h5 class="stat-sub-heading">Qualification</h5>
+                <div class="stat-value">
+                  <div class="star-rating">
+
+                    <input
+                      type="radio"
+                      name="qualification"
+                      id="qualification-star5"
+                      value="5"
+                      [checked]="professional.ambassador.qualification === 5"
+                      (change)="onChangeQualification($event)">
+                    <label for="qualification-star5"></label>
+
+                    <input
+                      type="radio"
+                      name="qualification"
+                      id="qualification-star4"
+                      value="4"
+                      [checked]="professional.ambassador.qualification === 4"
+                      (change)="onChangeQualification($event)">
+                    <label for="qualification-star4"></label>
+
+                    <input
+                      type="radio"
+                      name="qualification"
+                      id="qualification-star3"
+                      value="3"
+                      [checked]="professional.ambassador.qualification === 3"
+                      (change)="onChangeQualification($event)">
+                    <label for="qualification-star3"></label>
+
+                    <input
+                      type="radio"
+                      name="qualification"
+                      id="qualification-star2"
+                      value="2"
+                      [checked]="professional.ambassador.qualification === 2"
+                      (change)="onChangeQualification($event)">
+                    <label for="qualification-star2"></label>
+
+                    <input
+                      type="radio"
+                      name="qualification"
+                      id="qualification-star1"
+                      value="1"
+                      [checked]="professional.ambassador.qualification === 1"
+                      (change)="onChangeQualification($event)">
+                    <label for="qualification-star1"></label>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="stat-body">
+                <h5 class="stat-sub-heading">Activity</h5>
+                <div class="stat-value">
+                  <div class="star-rating">
+
+                    <input
+                      type="radio"
+                      name="activity"
+                      id="activity-star5"
+                      value="5"
+                      [checked]="professional.ambassador.activity === 5"
+                      (change)="onChangeActivity($event)">
+                    <label for="activity-star5"></label>
+
+                    <input
+                      type="radio"
+                      name="activity"
+                      id="activity-star4"
+                      value="4"
+                      [checked]="professional.ambassador.activity === 4"
+                      (change)="onChangeActivity($event)">
+                    <label for="activity-star4"></label>
+
+                    <input
+                      type="radio"
+                      name="activity"
+                      id="activity-star3"
+                      value="3"
+                      [checked]="professional.ambassador.activity === 3"
+                      (change)="onChangeActivity($event)">
+                    <label for="activity-star3"></label>
+
+                    <input
+                      type="radio"
+                      name="activity"
+                      id="activity-star2"
+                      value="2"
+                      [checked]="professional.ambassador.activity === 2"
+                      (change)="onChangeActivity($event)">
+                    <label for="activity-star2"></label>
+
+                    <input
+                      type="radio"
+                      name="activity"
+                      id="activity-star1"
+                      value="1" [checked]="professional.ambassador.activity === 1"
+                      (change)="onChangeActivity($event)">
+                    <label for="activity-star1"></label>
+
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </div>
+      <!-- /section header -->
+
+
+      <!-- section details -->
+      <div class="section-details section-light-pad rm-pad-bottom">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+
+
+          <!-- save button -->
+          <div class="text-right">
+            <button type="button" class="badge badge-save btn btn-primary btn-sm" [ngClass]="{ 'active': saveChanges }" (click)="onClickSave()">
+              <span [innerText]="'COMMON.BUTTON.SAVE'" translate></span><i class="fas fa-save"></i>
+            </button>
           </div>
 
-        </div>
-        <!-- /information -->
 
+          <!-- information -->
+          <div class="info-wrapper d-flex">
 
-        <!-- emails -->
-        <div *ngIf="emailTableInfo._total !== 0" class="section-pad rm-pad-bottom">
-          <app-shared-table [config]="configEmail" [data]="emailTableInfo" (editRow)="onClickEmailShow($event)"></app-shared-table>
-        </div>
-        <!-- emails -->
+            <!-- column 1 -->
+            <div class="info-body d-flex">
 
-
-        <!-- participated in projects -->
-        <div *ngIf="projectTableInfo._total !== 0" class="section-pad rm-pad-bottom">
-          <app-shared-table [config]="configProject" [data]="projectTableInfo" (editRow)="onClickProjectShow($event)"></app-shared-table>
-        </div>
-        <!-- participated in projects -->
-
-
-        <!-- project suggested -->
-        <ng-container *ngIf="innovationsSuggested.length > 0">
-          <div class="suggested-wrapper section-pad rm-pad-bottom">
-
-            <!-- heading -->
-            <h5 class="title-secondary text-notify text-normal">Projects suggested</h5>
-
-            <!-- innovations -->
-            <div class="card-wrapper d-flex text-center">
-              <div *ngFor="let innovation of innovationsSuggested | slice:0:5" class="card">
-
-                <!-- image -->
-                <div class="card-image relative">
-
-                  <figure>
-                    <img [src]="getImageSrc(innovation)" alt=" " width="209" height="130" class="img-responsive img-fit-cover">
-                  </figure>
-
-                  <button type="button" class="btn btn-primary btn-xs absolute" (click)="onClickPush(innovation)">Push it</button>
-
-                </div>
-
-                <!-- card header -->
-                <div class="card-header">
-                  <div class="card-title text-secondary text-normal"><span>{{ innovation.title }}</span></div>
-                </div>
-
+              <!-- first name -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-firstname">First Name</label>
+                <input
+                  id="community-member-firstname"
+                  class="form-input"
+                  type="text"
+                  name="firstname"
+                  placeholder="Enter the first name"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.firstName">
               </div>
+
+              <!-- last name -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-lastname">Last Name</label>
+                <input
+                  id="community-member-lastname"
+                  class="form-input"
+                  type="text"
+                  name="lastname"
+                  placeholder="Enter the last name"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.lastName">
+              </div>
+
+              <!-- email -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-email">Email</label>
+                <input
+                  id="community-member-email"
+                  class="form-input"
+                  type="text"
+                  name="email"
+                  placeholder="Enter the email address"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.email">
+              </div>
+
+              <!-- job -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-jobTitle">Job Title</label>
+                <input
+                  id="community-member-jobTitle"
+                  class="form-input"
+                  type="text"
+                  name="jobTitle"
+                  placeholder="Enter the job title"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.jobTitle">
+              </div>
+
+              <!-- experience -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-experience">Experience</label>
+                <select
+                  class="form-select"
+                  id="community-member-experience"
+                  name="experience"
+                  [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="professional.ambassador?.experience || experiences[0].type"
+                  (ngModelChange)="onChangeExperience($event)">
+                  <option *ngFor="let experience of experiences" [ngValue]="experience.type">{{ experience.type }}</option>
+                </select>
+              </div>
+
+              <!-- position level -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-position">Position Level</label>
+                <select
+                  class="form-select"
+                  id="community-member-position"
+                  name="position"
+                  [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="professional.ambassador?.positionLevel || positions[0].type"
+                  (ngModelChange)="onChangePosition($event)">
+                  <option *ngFor="let position of positions" [ngValue]="position.type">{{ position.type }}</option>
+                </select>
+              </div>
+
+              <!-- company -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-company">Company</label>
+                <input
+                  id="community-member-company"
+                  class="form-input"
+                  type="text"
+                  name="company"
+                  placeholder="Enter the company"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.company">
+              </div>
+
+              <!-- linkedin -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-linkedin">LinkedIn Profile</label>
+                <input
+                  id="community-member-linkedin"
+                  class="form-input"
+                  type="text"
+                  name="profileUrl"
+                  placeholder="Enter the linkedIn profile url"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.profileUrl">
+              </div>
+
+              <!-- language -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-language">Language</label>
+                <select
+                  class="form-select"
+                  id="community-member-language"
+                  name="language"
+                  [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="professional?.language || languages[0].type"
+                  (ngModelChange)="onChangeLang($event)">
+                  <option *ngFor="let lang of languages" [ngValue]="lang.type">{{ lang.alias }}</option>
+                </select>
+              </div>
+
+              <!-- country -->
+              <div class="form-group">
+                <label class="form-label" for="community-member-country">Country</label>
+                <input
+                  id="community-member-country"
+                  class="form-input"
+                  type="text"
+                  name="country"
+                  #country
+                  placeholder="Enter the country"
+                  [(ngModel)]="countries[professional.country]"
+                  (keypress)="onSuggestCountries(country.value)">
+                <ul
+                  *ngIf="country.value"
+                  class="input-suggestion"
+                  [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
+                  <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onChangeCountry(suggestion)">
+                    {{ suggestion }}
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            <!-- column 2 -->
+            <div class="info-body">
+
+              <!-- interested by -->
+              <div class="form-group form-textarea">
+                <label class="form-label" for="community-member-interested">Interested By</label>
+                <textarea
+                  id="community-member-interested"
+                  class="form-input"
+                  type="text"
+                  name="industry"
+                  rows="5"
+                  placeholder="Enter the interests"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.ambassador.industry">
+              </textarea>
+              </div>
+
+              <!-- why join -->
+              <div class="form-group form-textarea">
+                <label class="form-label" for="community-member-join">Why join?</label>
+                <textarea
+                  id="community-member-join"
+                  class="form-input"
+                  type="text"
+                  name="qualificationWhy"
+                  rows="4"
+                  placeholder="Enter the qualification"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.ambassador.qualificationWhy">
+              </textarea>
+              </div>
+
+              <!-- notes -->
+              <div class="form-group form-textarea">
+                <label class="form-label" for="community-member-notes">Notes</label>
+                <textarea
+                  id="community-member-notes"
+                  class="form-input"
+                  type="text"
+                  name="notes"
+                  rows="4"
+                  placeholder="Enter the notes for you"
+                  (change)="notifyChanges()"
+                  [(ngModel)]="professional.ambassador.notes">
+              </textarea>
+              </div>
+
+            </div>
+
+            <!-- column 3 -->
+            <div class="info-body tag-info-body">
+              <ng-container *ngIf="totalTags.length > 0">
+
+                <label class="form-label">Sector Tags</label>
+
+                <div class="tags-wrapper">
+
+                  <!-- professional associated tags -->
+                  <ng-container *ngIf="totalTags.length > 0">
+                    <div *ngFor="let tag of totalTags" class="tags">
+                      <label class="form-checkbox">
+                        <input
+                          type="checkbox"
+                          [id]="tag._id"
+                          [name]="tag.label | multiling:userLang"
+                          [value]="tag.label | multiling:userLang"
+                          (change)="onChangeTag($event, tag)"
+                          [checked]="onCheckTag(tag._id)">
+                        <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
+                      </label>
+                    </div>
+                  </ng-container>
+
+                </div>
+
+              </ng-container>
             </div>
 
           </div>
-        </ng-container>
-        <!-- /project suggested -->
+          <!-- /information -->
 
 
+          <!-- emails -->
+          <div *ngIf="emailTableInfo._total !== 0" class="section-pad rm-pad-bottom">
+            <app-shared-table [config]="configEmail" [data]="emailTableInfo" (editRow)="onClickEmailShow($event)"></app-shared-table>
+          </div>
+          <!-- emails -->
+
+
+          <!-- participated in projects -->
+          <div *ngIf="projectTableInfo._total !== 0" class="section-pad rm-pad-bottom">
+            <app-shared-table [config]="configProject" [data]="projectTableInfo" (editRow)="onClickProjectShow($event)"></app-shared-table>
+          </div>
+          <!-- participated in projects -->
+
+
+          <!-- project suggested -->
+          <ng-container *ngIf="innovationsSuggested.length > 0">
+            <div class="suggested-wrapper section-pad rm-pad-bottom">
+
+              <!-- heading -->
+              <h5 class="title-secondary text-notify text-normal">Projects suggested</h5>
+
+              <!-- innovations -->
+              <div class="card-wrapper d-flex text-center">
+                <div *ngFor="let innovation of innovationsSuggested | slice:0:5" class="card">
+
+                  <!-- image -->
+                  <div class="card-image relative">
+
+                    <figure>
+                      <img [src]="getImageSrc(innovation)" alt=" " width="209" height="130" class="img-responsive img-fit-cover">
+                    </figure>
+
+                    <button type="button" class="btn btn-primary btn-xs absolute" (click)="onClickPush(innovation)">Push it</button>
+
+                  </div>
+
+                  <!-- card header -->
+                  <div class="card-header">
+                    <div class="card-title text-secondary text-normal"><span>{{ innovation.title }}</span></div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+          <!-- /project suggested -->
+
+
+        </div>
       </div>
+      <!-- /section details -->
+
     </div>
-    <!-- /section details -->
+  </ng-container>
 
 
-  </div>
 </section>
