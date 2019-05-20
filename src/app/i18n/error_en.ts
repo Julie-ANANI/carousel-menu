@@ -1,8 +1,6 @@
 export const ERROR = {
   'ERROR': 'Oups...',
 
-  'ERROR_EN': 'Oups...',
-
   'SUCCESS': 'Success',
 
   'CANNOT_REACH': 'We are having trouble while reaching to the server at the moment. Please try again!',
@@ -12,8 +10,6 @@ export const ERROR = {
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
   'FETCHING_ERROR': 'We are having trouble while fetching the data. Please try to reload the page again!',
-
-  'FETCHING_ERROR_EN': 'We are having trouble while fetching the data. Please try to reload the page again!',
 
   'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try it again!',
 

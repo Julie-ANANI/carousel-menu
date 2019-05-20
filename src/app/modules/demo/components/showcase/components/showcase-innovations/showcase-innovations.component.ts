@@ -72,7 +72,7 @@ export class ShowcaseInnovationsComponent {
           this._computeCards();
         }
       }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR_EN', 'FETCHING_ERROR_EN');
+        this._translateNotificationsService.error('ERROR.ERROR', 'FETCHING_ERROR');
       });
 
     } else {
@@ -124,7 +124,7 @@ export class ShowcaseInnovationsComponent {
       if (this._selectedCards.length < 6) {
         this._selectedCards.push(card);
       } else {
-        this._translateNotificationsService.error('ERROR.ERROR_EN', 'You can only select 6 innovations.');
+        this._translateNotificationsService.error('ERROR.ERROR', 'You can only select 6 innovations.');
       }
     } else {
       this._selectedCards = this._selectedCards.filter((item: any) => item._id !== card._id);

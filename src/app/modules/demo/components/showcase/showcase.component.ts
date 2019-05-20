@@ -47,7 +47,7 @@ export class ShowcaseComponent {
         return label1.localeCompare(label2);
       });
     } else {
-      this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
     if (Array.isArray(this._activatedRoute.snapshot.data['tagsStats'])) {
@@ -55,7 +55,7 @@ export class ShowcaseComponent {
       this._recomputeData();
     } else {
       this._selectedTagsStats = [];
-      this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
   }
@@ -91,7 +91,7 @@ export class ShowcaseComponent {
       this._selectedTagsStats = this._selectedTagsStats.concat(stats);
       this._recomputeData();
     }, () => {
-      this._translateNotificationService.error('ERROR.ERROR_EN', `We are having trouble while finding the stats for ${tag.label.en} tag.`);
+      this._translateNotificationService.error('ERROR.ERROR', `We are having trouble while finding the stats for ${tag.label.en} tag.`);
     });
 
   }
