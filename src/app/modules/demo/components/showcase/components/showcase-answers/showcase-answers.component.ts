@@ -95,7 +95,7 @@ export class ShowcaseAnswersComponent {
       if (this._selectedAnswers.length < 6) {
         this._selectedAnswers.push(answer);
       } else {
-        this._translateNotificationsService.error('ERROR.ERROR_EN', 'You can only select 6 answers.');
+        this._translateNotificationsService.error('ERROR.ERROR', 'You can only select 6 answers.');
       }
     } else {
       this._selectedAnswers = this._selectedAnswers.filter((item: Answer) => item._id !== answer._id);

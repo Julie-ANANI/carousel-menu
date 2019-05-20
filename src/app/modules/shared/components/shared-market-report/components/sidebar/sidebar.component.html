@@ -241,7 +241,7 @@
     <!-- questions filters -->
     <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
 
-      <a [href]="'#' + question.identifier | removespaces" pageScroll class="text-primary c-hand">
+      <a [href]="'#' + question.identifier" pageScroll class="text-primary c-hand">
         <div class="flex-between">
           <span>{{ question.title | multiling:userLang | FormatText }}</span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
