@@ -10,7 +10,7 @@ import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
 import { SidebarTagsFormModule } from '../../../sidebar/components/tags-form/sidebar-tags-form.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
-import { FetchingErrorModule } from '../../../utility-components/errors/fetching-error/fetching-error.module';
+import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
 
 @NgModule({
   imports: [
@@ -22,7 +22,7 @@ import { FetchingErrorModule } from '../../../utility-components/errors/fetching
     SidebarUserFormModule,
     SidebarTagsFormModule,
     ModalModule,
-    FetchingErrorModule
+    ErrorTemplate1Module
   ],
   declarations: [
     SharedAmbassadorListComponent

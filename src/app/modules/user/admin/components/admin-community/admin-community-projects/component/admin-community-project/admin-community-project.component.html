@@ -1,7 +1,11 @@
 <!-- when error -->
 <ng-container *ngIf="fetchingError">
   <div class="section-pad">
-    <app-fetching-error></app-fetching-error>
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'">
+        <p [innerText]="'ERROR.ERRORS.PROJECT_ERROR'" translate></p>
+      </app-error-template-1>
+    </div>
   </div>
 </ng-container>
 <!-- /when error -->
@@ -101,14 +105,16 @@
 
 
 <!-- sidebar community -->
-<app-sidebar [(template)]="sidebarValue">
-  <community-form
-    [sidebarState]="sidebarValue.animate_state"
-    [innovationId]="innovation._id"
-    [type]="sidebarValue.type"
-    [config]="sideConfig"
-    [context]="context"
-    (callbackNotification)="actionsResultCallback($event)">
-  </community-form>
-</app-sidebar>
+<ng-container *ngIf="!fetchingError && innovation">
+  <app-sidebar [(template)]="sidebarValue">
+    <community-form
+      [sidebarState]="sidebarValue.animate_state"
+      [innovationId]="innovation._id"
+      [type]="sidebarValue.type"
+      [config]="sideConfig"
+      [context]="context"
+      (callbackNotification)="actionsResultCallback($event)">
+    </community-form>
+  </app-sidebar>
+</ng-container>
 <!-- /sidebar community -->

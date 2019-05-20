@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { FetchingErrorComponent } from './fetching-error.component';
+import { ErrorTemplate1Component } from './error-template-1.component';
+
 
 @NgModule({
   imports: [
@@ -10,11 +11,11 @@ import { FetchingErrorComponent } from './fetching-error.component';
     TranslateModule.forChild(),
   ],
   declarations: [
-    FetchingErrorComponent
+    ErrorTemplate1Component
   ],
   exports: [
-    FetchingErrorComponent
+    ErrorTemplate1Component
   ]
 })
 
-export class FetchingErrorModule {}
+export class ErrorTemplate1Module {}

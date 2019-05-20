@@ -14,7 +14,9 @@
 
 <!-- section fetching error -->
 <ng-container *ngIf="fetchingError">
-  <app-fetching-error></app-fetching-error>
+  <div class="section-pad">
+    <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
+  </div>
 </ng-container>
 
 
