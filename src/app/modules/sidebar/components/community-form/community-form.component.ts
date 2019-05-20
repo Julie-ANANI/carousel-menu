@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'community-form',
@@ -7,18 +7,18 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class CommunityFormComponent implements OnInit {
 
-  @Output('callbackNotification')
-  _callbackNotification = new EventEmitter<any>();
-
   @Input() set context(value: any) {
     this._context = value;
   }
 
   @Input() set sidebarState(value: string) {
-    console.log(value);
     if (value === undefined || value === 'active') {
 
     }
+  }
+
+  @Input() set innovationId(value: string) {
+    this._innovationId = value;
   }
 
   @Input() set type(value: string) {
@@ -29,7 +29,9 @@ export class CommunityFormComponent implements OnInit {
     this._config = value;
   }
 
-  private _actionType = '';
+  @Output('callbackNotification') _callbackNotification = new EventEmitter<any>();
+
+  private _actionType: string;
 
   private _config: any;
 
@@ -37,13 +39,16 @@ export class CommunityFormComponent implements OnInit {
 
   private _parentCb: any = null;
 
+  private _innovationId: string;
+
   constructor() { }
 
   ngOnInit() {
     console.log(this._parentCb && typeof this._parentCb === 'function');
   }
 
-  public onValueTyped(event: Event) {
+
+  public onValueTyped(event: any) {
     this._config = {
       fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry campaigns._id campaigns.innovation campaigns.type innovations._id',
       limit: '10',
@@ -53,6 +58,12 @@ export class CommunityFormComponent implements OnInit {
       sort: '{"created":-1}'
     };
   }
+
+
+  public callbackNotification(event: Event) {
+    this._callbackNotification.emit(event);
+  }
+
 
   get actionType() {
     return this._actionType;
@@ -66,7 +77,8 @@ export class CommunityFormComponent implements OnInit {
     return this._context;
   }
 
-  public callbackNotification(event: Event) {
-    this._callbackNotification.emit(event);
+  get innovationId(): string {
+    return this._innovationId;
   }
+
 }
