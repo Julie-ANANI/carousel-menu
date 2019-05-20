@@ -14,7 +14,7 @@ import { SharedAmbassadorListModule } from "../../../../../shared/components/sha
 import { SharedWorldmapModule } from "../../../../../shared/components/shared-worldmap/shared-worldmap.module";
 import { SidebarCommunityFormModule } from "../../../../../sidebar/components/community-form/sidebar-community-form.module";
 import { MessageSpaceModule } from '../../../../../utility-components/message-space/message-space.module';
-import { FetchingErrorModule } from '../../../../../utility-components/errors/fetching-error/fetching-error.module';
+import { ErrorTemplate1Module } from '../../../../../utility-components/errors/error-template-1/error-template-1.module';
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { FetchingErrorModule } from '../../../../../utility-components/errors/fe
     SharedWorldmapModule,
     SidebarCommunityFormModule,
     MessageSpaceModule,
-    FetchingErrorModule
+    ErrorTemplate1Module
   ],
   declarations: [
     AdminCommunityProjectsComponent,

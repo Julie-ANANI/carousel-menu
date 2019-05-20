@@ -1,0 +1,45 @@
+@import "../../../../../style/framework/src/variables";
+
+#error-template-1-component {
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+
+  .flex-between {
+    flex-wrap: wrap;
+  }
+
+  .message-wrapper, .bot-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .message-wrapper {
+    padding-right: 0.75rem;
+    padding-bottom: $unit-5;
+    max-width: 50%;
+  }
+
+
+  .bot-wrapper {
+
+    img {
+      height: 200px;
+    }
+
+  }
+
+}
+
+@media (max-width: $size-sm) {
+
+  #error-template-1-component {
+
+    .message-wrapper {
+      padding-right: 0;
+      max-width: 100%;
+    }
+
+  }
+
+}
+

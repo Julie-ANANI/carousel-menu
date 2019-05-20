@@ -5,7 +5,7 @@
     <!-- section bot when fetching error -->
     <ng-container *ngIf="fetchingError">
       <div class="section-light-pad rm-pad-bottom">
-        <app-fetching-error></app-fetching-error>
+        <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
       </div>
     </ng-container>
 

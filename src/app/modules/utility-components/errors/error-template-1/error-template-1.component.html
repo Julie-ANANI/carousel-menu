@@ -1,0 +1,15 @@
+<section id="error-template-1-component">
+  <div class="flex-between">
+
+    <div class="message-wrapper">
+      <h4 class="text-background" [innerText]="errorMessage" translate></h4>
+      <ng-content></ng-content>
+      <h6 class="text-normal" [innerText]="'ERROR.RELOAD_PAGE'" translate></h6>
+    </div>
+
+    <div class="bot-wrapper">
+      <img [src]="defaultSrc" class="img-responsive" alt=" ">
+    </div>
+
+  </div>
+</section>
