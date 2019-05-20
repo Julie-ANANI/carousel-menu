@@ -233,10 +233,6 @@ export class QuestionSectionComponent implements OnInit {
     return this._innovation;
   }
 
-  get answersReceived(): Array<Answer> {
-    return this._answersReceived;
-  }
-
   get questionReceived(): Question {
     return this._questionReceived;
   }
