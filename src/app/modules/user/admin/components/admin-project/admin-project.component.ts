@@ -15,7 +15,6 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
-  clientSideUrl: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
@@ -27,11 +26,11 @@ export class AdminProjectComponent implements OnInit {
     this._project = this._activatedRoute.snapshot.data['innovation'];
     if (this._project) {
       this._titleService.setTitle(this._project.name || 'Project');
-      this.clientSideUrl = '/user/projects/' + this.project._id;
       this._frontendService.calculateInnovationMetadataPercentages(this._project, 'preparation');
       this._frontendService.calculateInnovationMetadataPercentages(this._project, 'campaign');
       this._frontendService.calculateInnovationMetadataPercentages(this._project, 'delivery');
     } else {
+      this._project = {};
       this._translateNotifications.error('ERROR.ERROR', 'ERROR.NOT_FOUND');
     }
   }
