@@ -90,10 +90,14 @@ const adminRoutes: Routes = [
           },
           {
             path: 'projects/:projectId',
-            resolve: { innovation : InnovationResolver },
-            runGuardsAndResolvers: 'always',
             children: [
-              { path: '', component: AdminCommunityProjectComponent, pathMatch: 'full' }
+              {
+                path: '',
+                component: AdminCommunityProjectComponent,
+                pathMatch: 'full',
+                resolve: { innovation : InnovationResolver },
+                runGuardsAndResolvers: 'always',
+              }
             ],
           }
         ]

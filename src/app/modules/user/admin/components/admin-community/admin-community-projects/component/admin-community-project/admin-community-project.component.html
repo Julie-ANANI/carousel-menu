@@ -1,6 +1,16 @@
-<ng-container *ngIf="innovation">
+<!-- when error -->
+<ng-container *ngIf="fetchingError">
+  <div class="section-pad">
+    <app-fetching-error></app-fetching-error>
+  </div>
+</ng-container>
+<!-- /when error -->
 
+
+<!-- when not error -->
+<ng-container *ngIf="!fetchingError && innovation">
   <section id="admin-community-project-component" class="section-light-pad rm-pad-top">
+
 
     <!-- section header -->
     <div class="section-header section-light-pad rm-pad-bottom">
@@ -8,8 +18,8 @@
 
         <!-- project name -->
         <div class="name-wrapper d-flex">
-          <h1 class="title-primary text-background">{{ innovation.name }}</h1>
-          <a [href]="'/user/admin/projects/project/' + innovation._id + '/settings'" target="_blank" class="text-link">see project description</a>
+          <h1 class="title-primary text-background" [innerText]="innovation.name"></h1>
+          <a [href]="'/user/admin/projects/project/' + innovation._id + '/settings'" target="_blank" class="text-link">See project description</a>
         </div>
 
         <!-- stat -->
@@ -64,14 +74,15 @@
     </div>
     <!-- /section header -->
 
+
     <!-- section details -->
     <div class="section-details section-light-pad rm-pad-bottom">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- buttons -->
         <div class="text-right">
-          <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add Manually</button>
-          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSuggestion($event)">See Suggestions</button>
+          <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add manually</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSuggestion($event)">See suggestions</button>
         </div>
 
         <!-- section table -->
@@ -83,18 +94,21 @@
     </div>
     <!-- /section details -->
 
+
   </section>
-
-
-  <app-sidebar [(template)]="sidebarStatus">
-    <community-form
-      [sidebarState]="sidebarStatus.animate_state"
-      [type]="sidebarStatus.type"
-      [config]="sideConfig"
-      [context]="context"
-      (callbackNotification)="actionsResultCallback($event)">
-    </community-form>
-  </app-sidebar>
-
 </ng-container>
+<!-- /when not error -->
 
+
+<!-- sidebar community -->
+<app-sidebar [(template)]="sidebarValue">
+  <community-form
+    [sidebarState]="sidebarValue.animate_state"
+    [innovationId]="innovation._id"
+    [type]="sidebarValue.type"
+    [config]="sideConfig"
+    [context]="context"
+    (callbackNotification)="actionsResultCallback($event)">
+  </community-form>
+</app-sidebar>
+<!-- /sidebar community -->
