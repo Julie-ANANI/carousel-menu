@@ -32,7 +32,7 @@
           <h3 class="title-secondary">Geographical Distribution:</h3>
 
           <ul>
-            <li *ngFor="let item of answersOrigin | keyvalue">
+            <li *ngFor="let item of answersOrigin | keyvalue | orderBy:'value'">
               <span>{{ ('CONTINENTS.' + item.key) | translate }}: {{ item.value }}</span>
             </li>
           </ul>
