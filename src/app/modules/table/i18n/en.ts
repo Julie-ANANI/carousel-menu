@@ -40,7 +40,7 @@ export const TABLE = {
     'PROJECTS': 'projects',
     'AMBASSADORS': 'ambassadors',
     'REQUESTS': 'requests',
-    'RESULTS': 'results'
+    'RESULTS': 'results',
   }
 
 };
