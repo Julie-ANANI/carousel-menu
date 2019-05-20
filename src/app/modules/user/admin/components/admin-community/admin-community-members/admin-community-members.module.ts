@@ -13,6 +13,7 @@ import { SharedAmbassadorListModule } from "../../../../../shared/components/sha
 import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { TableModule } from '../../../../../table/table.module';
 import { FetchingErrorModule } from '../../../../../utility-components/errors/fetching-error/fetching-error.module';
+import { SidebarCommunityFormModule } from '../../../../../sidebar/components/community-form/sidebar-community-form.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FetchingErrorModule } from '../../../../../utility-components/errors/fe
     SidebarAdvsearchFormModule,
     SidebarAddAmbassadorFormModule,
     TableModule,
-    FetchingErrorModule
+    FetchingErrorModule,
+    SidebarCommunityFormModule
   ],
   declarations: [
     AdminCommunityMembersComponent,
