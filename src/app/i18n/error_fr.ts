@@ -172,11 +172,6 @@ export const ERROR = {
     'ALREADY_ACTIVATED': 'La vue est déjà activée.',
   },
 
-  'FETCHING_ERRORS': {
-    'HEADING': 'Nous rencontrons des problèmes lors de la récupération des données',
-    'SUB_HEADING': "Cela pourrait être dû à la ou aux raisons suivantes :",
-  },
-
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
     'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.'

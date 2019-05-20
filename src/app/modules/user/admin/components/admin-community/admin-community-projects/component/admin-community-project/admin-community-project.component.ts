@@ -66,7 +66,7 @@ export class AdminCommunityProjectComponent {
     event.preventDefault();
 
     this._sidebarValue = {
-      size: "726px",
+      size: "850px",
       type: "addToProject",
       title: "Add Ambassador",
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
@@ -79,7 +79,7 @@ export class AdminCommunityProjectComponent {
     event.preventDefault();
 
     this._sidebarValue = {
-      size: "726px",
+      size: "850px",
       type: "addFromSuggestions",
       title: "Ambassadors Suggestions",
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
