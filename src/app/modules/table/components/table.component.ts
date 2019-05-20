@@ -217,7 +217,7 @@ export class TableComponent {
       window.scroll(0, 0);
     }
     this.changeConfig(this._config);
-    this.selectAll(value);
+    this.selectAll(event);
   }
 
   /***
@@ -517,10 +517,10 @@ export class TableComponent {
    */
   selectAll(e: any): void  {
     if (this._isLocal) {
-      this._filteredContent.forEach(value => { value._isSelected = e.srcElement.checked; })
+      this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
     } else {
-      this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
-      this._massSelection = e.srcElement.checked;
+      this._content.forEach(value => { value._isSelected = e.target.checked; });
+      this._massSelection = e.target.checked;
     }
   }
 
