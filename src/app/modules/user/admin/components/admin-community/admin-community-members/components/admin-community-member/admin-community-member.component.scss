@@ -7,10 +7,12 @@
 
     .name-wrapper {
       border-bottom: $border-width solid $border-color;
+      padding-bottom: $unit-5;
 
-      h1 {
+      .title-primary {
         font-size: 1.15rem;
-        margin-bottom: $unit-5;
+        margin-bottom: 0;
+        margin-right: $unit-5;
       }
 
     }
@@ -101,16 +103,23 @@
 
       .card-wrapper {
         flex-wrap: wrap;
-        justify-content: space-between;
+        margin-right: -$unit-5;
         margin-bottom: -1.5rem;
+        justify-content: space-between;
 
         .card {
           flex: 0 1 210px;
-          background: transparent;
+          margin-right: $unit-5;
           border: none;
+          overflow: hidden;
+          background-color: transparent;
           margin-bottom: 1.5rem;
 
           .card-image {
+
+            img {
+              height: 130px;
+            }
 
             .btn {
               visibility: hidden;
@@ -162,6 +171,14 @@
 
     .info-body {
       padding-right: 0 !important;
+    }
+
+    .suggested-wrapper {
+
+      .card, .card-wrapper {
+        margin-right: unset !important;
+      }
+
     }
 
   }
