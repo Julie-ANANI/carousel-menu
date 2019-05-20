@@ -1,8 +1,6 @@
 export const ERROR = {
   'ERROR': 'Oups..',
 
-  'ERROR_EN': 'Oups...',
-
   'SUCCESS': 'Succès',
 
   'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment.',
@@ -12,8 +10,6 @@ export const ERROR = {
   'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
 
   'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données.',
-
-  'FETCHING_ERROR_EN': 'We are having trouble while fetching the data.',
 
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur.',
 
@@ -170,11 +166,6 @@ export const ERROR = {
   'FILTER': {
     'ALREADY_EXIST': 'La vue avec ce nom existe déjà.',
     'ALREADY_ACTIVATED': 'La vue est déjà activée.',
-  },
-
-  'FETCHING_ERRORS': {
-    'HEADING': 'Nous rencontrons des problèmes lors de la récupération des données',
-    'SUB_HEADING': "Cela pourrait être dû à la ou aux raisons suivantes :",
   },
 
   'ERRORS': {
