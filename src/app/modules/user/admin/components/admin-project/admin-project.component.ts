@@ -4,6 +4,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { FrontendService } from '../../../../../services/frontend/frontend.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-project',
@@ -14,34 +15,34 @@ import { FrontendService } from '../../../../../services/frontend/frontend.servi
 export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
-  private _tabs: Array<string> = ['settings', 'cards', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis' ];
   clientSideUrl: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
+              private _translateNotifications: TranslateNotificationsService,
               private _authService: AuthService,
               private _frontendService: FrontendService) {}
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.data['innovation'];
-    this._titleService.setTitle(this._project.name || 'Project');
-    this.clientSideUrl = '/user/projects/' + this.project._id;
-    this._frontendService.calculateInnovationMetadataPercentages(this._project, 'preparation');
-    this._frontendService.calculateInnovationMetadataPercentages(this._project, 'campaign');
-    this._frontendService.calculateInnovationMetadataPercentages(this._project, 'delivery');
+    if (this._project) {
+      this._titleService.setTitle(this._project.name || 'Project');
+      this.clientSideUrl = '/user/projects/' + this.project._id;
+      this._frontendService.calculateInnovationMetadataPercentages(this._project, 'preparation');
+      this._frontendService.calculateInnovationMetadataPercentages(this._project, 'campaign');
+      this._frontendService.calculateInnovationMetadataPercentages(this._project, 'delivery');
+    } else {
+      this._translateNotifications.error('ERROR.ERROR', 'ERROR.NOT_FOUND');
+    }
   }
 
   get authorizedTabs(): Array<string> {
     const adminLevel = this._authService.adminLevel;
     if (adminLevel > 1) {
-      return this._tabs;
+      return ['settings', 'cards', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis' ];
     } else {
       return ['cards', 'campaigns', 'synthesis'];
     }
-  }
-
-  getPercentage(level: string) {
-    return this._frontendService.innovationMetadataCalculatedValues[level];
   }
 
   getColor(length: number) {
@@ -55,6 +56,4 @@ export class AdminProjectComponent implements OnInit {
   }
 
   public get project(): Innovation { return this._project; }
-  public get tabs(): Array<string> { return this._tabs; }
-  public get baseUrl(): string { return `/user/admin/projects/project/${this._project._id}/`; }
 }
