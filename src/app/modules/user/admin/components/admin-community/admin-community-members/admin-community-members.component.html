@@ -10,8 +10,12 @@
       </label>
 
       <!-- add -->
-      <button type="button" class="btn btn-primary btn-sm" (click)="addAmbassador($event)"
-              [innerText]="'COMMON.BUTTON.ADD'" translate [ngStyle]="{ 'margin-left': '1rem' }" [disabled]="true">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="addAmbassador($event)"
+        [innerText]="'COMMON.BUTTON.ADD'" translate
+        [ngStyle]="{ 'margin-left': '1rem' }">
       </button>
 
     </div>
@@ -29,7 +33,10 @@
 
 <!-- add ambassadors sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-
+  <community-form
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type">
+  </community-form>
 </app-sidebar>
 <!-- /add ambassadors sidebar -->
 
