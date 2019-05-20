@@ -1,33 +1,155 @@
 <section id="community-form-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
+    <div [ngSwitch]="actionType">
 
-      <div [ngSwitch]="actionType">
-          <ng-container *ngSwitchCase="'addToProject'">
-              <div>
-                  <app-search-input
-                          (finalValueEmit)="onValueTyped($event)"
-                          [suggestions]="[]"
-                          [searchActive]="true"
-                    ></app-search-input>
-              </div>
-              <div *ngIf="!!config">
-                  <app-shared-ambassadors-list
-                          (callbackNotification)="callbackNotification($event)"
-                          [listType]="'suggestions'"
-                          [config]="config"
-                          [context]="context">
-                  </app-shared-ambassadors-list>
-              </div>
+
+      <!-- add ambassador to project -->
+      <ng-container *ngSwitchCase="'addToProject'">
+
+        <!-- search field -->
+        <div class="search-wrapper flex-start">
+
+          <div class="search-field-wrapper">
+            <app-search-input-3 (searchFieldOutput)="onValueTyped($event)"></app-search-input-3>
+          </div>
+
+          <div class="project-link-wrapper">
+            <a [href]="'/user/admin/projects/project/' + innovationId + '/settings'" target="_blank" class="text-link">See project description</a>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="!!config">
+          <app-shared-ambassadors-list
+            (callbackNotification)="callbackNotification($event)"
+            [listType]="'suggestions'"
+            [config]="config"
+            [context]="context">
+          </app-shared-ambassadors-list>
+        </div>
+
+      </ng-container>
+      <!-- /add ambassador to project -->
+
+
+      <!-- ambassador suggestion-->
+      <ng-container *ngSwitchCase="'addFromSuggestions'">
+        Add from suggestions
+      </ng-container>
+      <!-- /ambassador suggestion-->
+
+
+      <!-- add new ambassador-->
+      <ng-container *ngSwitchCase="'addAmbassador'">
+        <form [formGroup]="form" autocomplete="off">
+
+          <!-- email -->
+          <div class="form-group has-error">
+
+            <label class="form-label" for="community-form-email" [innerText]="'COMMON.LABEL.EMAIL'" translate></label>
+            <input
+              (change)="onEmailChange()"
+              class="form-input"
+              formControlName="email"
+              id="community-form-email"
+              placeholder="john@catco.com"
+              type="email">
+
+            <span class="form-input-hint" *ngIf="form.get('email').touched && form.get('email').invalid">
+              <ng-container *ngIf="form.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</ng-container>
+              <ng-container *ngIf="form.get('email').hasError('email') && form.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</ng-container>
+            </span>
+
+          </div>
+
+
+          <!-- checking for professional -->
+          <ng-container *ngIf="lookingProfessional">
+            <div class="text-pro text-center"><span class="text-notify text-medium">Checking the professional already exists or not...</span></div>
+            <div class="loading loading-lg"></div>
           </ng-container>
 
-          <ng-container *ngSwitchCase="'addFromSuggestions'">
-              Add from suggestions
+
+          <!-- firstname -->
+          <div *ngIf="!lookingProfessional" class="form-group has-error">
+
+            <label class="form-label" for="community-form-firstName" [innerText]="'COMMON.LABEL.FIRSTNAME'" translate></label>
+            <input
+              class="form-input"
+              formControlName="firstName"
+              id="community-form-firstName"
+              placeholder="John"
+              type="text">
+
+            <span class="form-input-hint" *ngIf="form.get('firstName').touched && form.get('firstName').invalid && form.get('firstName').hasError('required')">
+              {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
+            </span>
+
+          </div>
+
+
+          <!-- lastname -->
+          <div *ngIf="!lookingProfessional" class="form-group has-error">
+
+            <label class="form-label" for="community-form-lastName" [innerText]="'COMMON.LABEL.LASTNAME'" translate></label>
+            <input
+              class="form-input"
+              formControlName="lastName"
+              id="community-form-lastName"
+              placeholder="Snow"
+              type="text">
+
+            <span class="form-input-hint" *ngIf="form.get('lastName').touched && form.get('lastName').invalid && form.get('lastName').hasError('required')">
+              {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
+            </span>
+
+          </div>
+
+
+          <!-- button -->
+          <div *ngIf="!lookingProfessional" class="text-center section-light-pad">
+
+            <ng-container *ngIf="!professional?.ambassador?.is">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="form.invalid || addingProfessional"
+                [innerText]="'COMMON.BUTTON.CONTINUE'"
+                translate
+                (click)="addAmbassador()">
+              </button>
+            </ng-container>
+
+            <ng-container *ngIf="professional?.ambassador?.is">
+              <button type="submit" class="btn btn-primary" [innerText]="'View ambassador'" translate (click)="goToAmbassador()"></button>
+            </ng-container>
+
+          </div>
+
+
+          <!-- professional already ambassador -->
+          <ng-container *ngIf="professional && professional.ambassador && professional.ambassador.is">
+            <div class="text-pro text-center">
+              <span class="text-alert text-medium">The professional is already the Ambassador.</span>
+            </div>
           </ng-container>
 
-          <ng-container *ngSwitchDefault>
-              Create a new ambassador
-          </ng-container>
-      </div>
 
+          <!-- adding professional -->
+          <ng-container *ngIf="addingProfessional">
+            <div class="text-pro text-center">
+              <span class="text-notify text-medium">We are adding the professional as the Ambassador. Please wait we will redirect you to the Ambassador page where you can edit all the details about it.</span>
+            </div>
+            <div class="loading loading-lg"></div>
+          </ng-container>
+
+
+        </form>
+      </ng-container>
+      <!-- /add new ambassador-->
+
+
+    </div>
   </div>
 </section>
