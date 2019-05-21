@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { ListConfigurations } from "./list-configurations";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { ContextInterface } from '../../../user/admin/components/admin-community/interfaces/context-interface';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -30,7 +32,7 @@ export class SharedAmbassadorListComponent {
 
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
-        this._actions = ['Add to project'];
+        this._actions = ['Add'];
         break;
 
       case('default'):
@@ -51,7 +53,7 @@ export class SharedAmbassadorListComponent {
    * at the whole collection scope.
    * @param value
    */
-  @Input() set context(value: any) {
+  @Input() set context(value: ContextInterface) {
     this._context = value;
   }
 
@@ -75,15 +77,18 @@ export class SharedAmbassadorListComponent {
 
   private _modalDelete = false;
 
-  private _context: any = null;
+  private _context: ContextInterface = null;
 
   private _fetchingError: boolean;
+
+  private _prosToRemoves: Array<Professional> = [];
 
   smartSelect: any = null;
 
   editUser: { [propString: string]: boolean } = {};
 
   constructor(private _advSearchService: AdvSearchService,
+              private _professionalService: ProfessionalsService,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _router: Router) { }
@@ -145,7 +150,6 @@ export class SharedAmbassadorListComponent {
   private _loadTableData() {
     this._tableInfos._content = this._pros;
     this._tableInfos._total = this._total;
-    //this._tableInfos._actions = this._actions;
     // TODO this is ugly AF, shouldn't the table component to be able to update just the data without reloading everything? // Will be fixed in future.
     this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));
   }
@@ -258,9 +262,52 @@ export class SharedAmbassadorListComponent {
   }
 
 
+
+  public onClickRemove(value: Array<Professional>) {
+    this._prosToRemoves = value;
+    this._modalDelete = true;
+  }
+
+
   public deleteAmbassador(event: Event) {
     event.preventDefault();
+
+    if (this._context && this._context.deleteType === 'Campaign') {
+      this._deleteFromCampaign();
+    } else if (!this._context) {
+      this._deleteProfessional();
+    }
+
+    this._modalDelete = false;
+
   }
+
+
+  private _deleteFromCampaign() {
+    if (this._context.campaignId && this._context.innovationId) {
+      this._prosToRemoves.forEach((pro: Professional) => {
+        this._professionalService.removeFromCampaign(pro._id, this._context.campaignId, this._context.innovationId).subscribe(() => {
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.AMBASSADOR.DELETED');
+        }, () => {
+          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+        });
+      });
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', 'We do not have sufficient information\'s to delete this ambassador.');
+    }
+  }
+
+
+  private _deleteProfessional() {
+    this._prosToRemoves.forEach((pro: Professional) => {
+      this._professionalService.remove(pro._id).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.AMBASSADOR.DELETED');
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      });
+    });
+  }
+
 
 
   get total() {
@@ -273,6 +320,10 @@ export class SharedAmbassadorListComponent {
 
   get config() {
     return this._config;
+  }
+
+  get context(): ContextInterface {
+    return this._context;
   }
 
   get tableInfos(): any {
@@ -301,6 +352,10 @@ export class SharedAmbassadorListComponent {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get prosToRemoves(): Array<Professional> {
+    return this._prosToRemoves;
   }
 
 }
