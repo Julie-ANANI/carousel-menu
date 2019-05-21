@@ -5,6 +5,7 @@ import { Innovation } from '../../../../../../../../models/innovation';
 import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
 import { AnswerService } from '../../../../../../../../services/answer/answer.service';
+import {ContextInterface} from '../../../interfaces/context-interface';
 
 @Component({
   selector: 'admin-community-project',
@@ -25,7 +26,7 @@ export class AdminCommunityProjectComponent {
     sort: '{ "created": -1 }'
   };
 
-  private _context: any = null;
+  private _context: ContextInterface = null;
 
   private _sideConfig: any = null;
 
@@ -49,7 +50,9 @@ export class AdminCommunityProjectComponent {
       this._getTargetedCountries();
 
       this._context = {
-        innovationId: this._innovation._id.toString()
+        innovationId: this._innovation._id.toString(),
+        campaignId: this._getCampaignId(),
+        deleteType: 'Campaign'
       };
 
     } else {
@@ -71,6 +74,17 @@ export class AdminCommunityProjectComponent {
         }, []);
       }
     });
+  }
+
+
+  private _getCampaignId(): string {
+    if (this._innovation && this._innovation.campaigns && this._innovation.campaigns.length > 0 ) {
+      const index = this._innovation.campaigns.findIndex((campaign: any) => campaign.type === 'COMMUNITY');
+      if (index !== -1) {
+        return this._innovation.campaigns[index]._id;
+      }
+    }
+    return '';
   }
 
 
