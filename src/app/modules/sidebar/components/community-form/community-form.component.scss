@@ -2,4 +2,49 @@
 
 #community-form-component {
   padding-top: 1.5rem;
+
+  .search-wrapper {
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+
+    .search-field-wrapper, .project-link-wrapper {
+      margin-bottom: 0.5rem;
+    }
+
+    .search-field-wrapper {
+      width: 70%;
+      margin-right: $unit-4;
+    }
+
+  }
+
+  .form-group {
+    margin-bottom: $unit-5;
+  }
+
+  .text-pro {
+    font-size: $font-size-sm;
+    margin-bottom: 0.5rem;
+  }
+
+}
+
+
+@media (max-width: $size-md) {
+
+  #community-form-component {
+
+    .search-wrapper {
+      flex-direction: column;
+      align-items: start;
+
+      .search-field-wrapper {
+        width: 100%;
+        margin-right: 0;
+      }
+
+    }
+
+  }
+
 }

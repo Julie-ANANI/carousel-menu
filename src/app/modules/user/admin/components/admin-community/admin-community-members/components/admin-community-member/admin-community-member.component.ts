@@ -7,8 +7,6 @@ import { lang, Language } from '../../../../../../../../models/static-data/langu
 import { AmbassadorExperience, ambassadorExperiences } from '../../../../../../../../models/static-data/ambassador-experiences';
 import { ambassadorPosition, AmbassadorPosition } from '../../../../../../../../models/static-data/ambassador-position';
 import { Tag } from '../../../../../../../../models/tag';
-import { TagsService } from '../../../../../../../../services/tags/tags.service';
-import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../../../services/notifications/notifications.service';
@@ -16,6 +14,8 @@ import { InnovationService } from '../../../../../../../../services/innovation/i
 import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationFrontService } from '../../../../../../../../services/innovation/innovation-front.service';
 import { InnovCard } from '../../../../../../../../models/innov-card';
+import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
+import { Table } from '../../../../../../../table/models/table';
 
 @Component({
   selector: 'admin-community-member',
@@ -41,22 +41,17 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _saveChanges: boolean;
 
-  private _tagsRest: Array<Tag> = [];
-
-  private _tagsProfessional: Array<Tag> = [];
+  private _totalTags: Array<Tag> = [];
 
   private _innovationsSuggested: Array<InnovCard> = [];
 
-  private _emailTableInfo: any = [];
+  private _emailTableInfo: Table = null;
 
-  private _projectTableInfo: any = [];
+  private _projectTableInfo: Table = null;
 
-  private _configTag = {
-    limit: '0',
-    offset: '0',
-    search: '{"type":"SECTOR"}',
-    sort: '{"label":-1}'
-  };
+  fetchingError: boolean;
+
+  allSectorTags: Array<Tag> = [];
 
   private _configInnovation = {
     fields: 'innovationCards principalMedia',
@@ -85,31 +80,60 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _autoCompleteService: AutocompleteService,
-              private _tagsService: TagsService,
               private _translateService: TranslateService,
+              private _translateTitleService: TranslateTitleService,
               private _professionalService: ProfessionalsService,
               private _translateNotificationService: TranslateNotificationsService,
               private _innovationService: InnovationService) {
 
-    this._configureEmailTable();
-    this._configureProjectTable();
+    this._initializeVariables();
+
+    if (typeof (this._activatedRoute.snapshot.data['professional']) !== 'undefined') {
+      this._professional = this._activatedRoute.snapshot.data['professional'];
+
+      this._translateTitleService.setTitle(`${this._professional.firstName} ${this._professional.lastName} | Professional`);
+
+      if (Array.isArray(this._activatedRoute.snapshot.data['tagsSector'])) {
+        this.allSectorTags = this._activatedRoute.snapshot.data['tagsSector'];
+        this._getAllTags();
+      } else {
+        this.fetchingError = true;
+        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      }
+
+      this._getAllInnovations();
+      this._configureEmailTable();
+      this._configureProjectTable();
+
+    } else {
+      this.fetchingError = true;
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }
 
   }
 
   ngOnInit() {
-    this._professional = this._activatedRoute.snapshot.data['professional'];
-    this._getAllTags();
-    this._initializeVariables();
     this._getEmails();
     this._getProjects();
-    this._getAllInnovations();
+  }
+
+
+  /***
+   * initializing all the variables to its default values.
+   */
+  private _initializeVariables() {
+    this._saveChanges = false;
+    this._experiences = ambassadorExperiences;
+    this._positions = ambassadorPosition;
+    this._languages = lang;
+    this._countries = countries;
   }
 
 
   private _configureEmailTable() {
-    this._projectTableInfo = {
+    this._emailTableInfo = {
       _selector: 'admin-community-member-email',
-      _title: 'Emails',
+      _title: 'emails',
       _content: [],
       _total: 0,
       _isHeadable: true,
@@ -148,7 +172,7 @@ export class AdminCommunityMemberComponent implements OnInit {
   private _configureProjectTable() {
     this._projectTableInfo = {
       _selector: 'admin-community-member-project',
-      _title: 'Projects',
+      _title: 'projects',
       _content: [],
       _total: 0,
       _isHeadable: true,
@@ -174,15 +198,67 @@ export class AdminCommunityMemberComponent implements OnInit {
   }
 
 
+
+
+
   /***
-   * initializing all the variables to its default values.
+   * getting all the tags from the server to show under the lable sector tags.
    */
-  private _initializeVariables() {
-    this._saveChanges = false;
-    this._experiences = ambassadorExperiences;
-    this._positions = ambassadorPosition;
-    this._languages = lang;
-    this._countries = countries;
+  private _getAllTags() {
+    const activeLang = this.userLang;
+    let tagsProfessional: Array<Tag> = [];
+    let tagsRest: Array<Tag> = [];
+
+    if (this.allSectorTags && this.allSectorTags.length > 0) {
+      this.allSectorTags.forEach((tag) => {
+        const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
+        if (find) {
+          tagsProfessional.push(tag);
+        } else {
+          tagsRest.push(tag);
+        }
+      });
+
+      tagsProfessional.sort((a,b) => {
+        return a.label[activeLang].localeCompare(b.label[activeLang]);
+      });
+
+      tagsRest.sort((a,b) => {
+        return a.label[activeLang].localeCompare(b.label[activeLang]);
+      });
+
+      this._totalTags = tagsProfessional.concat(tagsRest);
+    }
+
+  }
+
+
+  private _getAllInnovations() {
+
+    this._innovationsSuggested = [];
+
+    this._innovationService.getAll(this._configInnovation).subscribe((response) => {
+      if (response) {
+        response.result.forEach((innovation: Innovation) => {
+          innovation.tags.forEach((tag) => {
+            const find = this._professional.tags.find((proTag) => proTag._id === tag._id);
+            if (find) {
+              if (innovation.innovationCards.length > 1) {
+                const index = innovation.innovationCards.findIndex((innov) => innov.lang === this._professional.language);
+                if (index !== -1) {
+                  this._innovationsSuggested.push(innovation.innovationCards[index]);
+                }
+              } else {
+                this._innovationsSuggested.push(innovation.innovationCards[0]);
+              }
+            }
+          });
+        });
+      }
+    }, () => {
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
+
   }
 
 
@@ -213,90 +289,27 @@ export class AdminCommunityMemberComponent implements OnInit {
 
 
   /***
-   * checking the browser lang to get the tag label of same lang.
+   * to notify the user if they perform any update in the professional object.
    */
-  public browserLang(): string {
-    return this._translateService.getBrowserLang() || 'en';
-  }
-
-
-  /***
-   * getting all the tags from the server to show under the lable sector tags.
-   */
-  private _getAllTags() {
-    const activeLang = this.browserLang();
-
-    this._tagsService.getAll(this._configTag).pipe(first()).subscribe((response) => {
-      if (response) {
-        response.result.forEach((tag) => {
-          const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
-          if (find) {
-            this._tagsProfessional.push(tag);
-          } else {
-            this._tagsRest.push(tag);
-          }
-        });
-        this._tagsProfessional.sort((a,b) => {
-          return a.label[activeLang].localeCompare(b.label[activeLang]);
-        });
-
-        this._tagsRest.sort((a,b) => {
-          return a.label[activeLang].localeCompare(b.label[activeLang]);
-        });
-      }
-    });
-
-  }
-
-
-  private _getAllInnovations() {
-
-    this._innovationsSuggested = [];
-
-    this._innovationService.getAll(this._configInnovation).pipe(first()).subscribe((response) => {
-      if (response) {
-        response.result.forEach((innovation: Innovation) => {
-          innovation.tags.forEach((tag) => {
-            const find = this._professional.tags.find((proTag) => proTag._id === tag._id);
-            if (find) {
-              if (innovation.innovationCards.length > 1) {
-                const index = innovation.innovationCards.findIndex((innov) => innov.lang === this._professional.language);
-                if (index) {
-                  this._innovationsSuggested.push(innovation.innovationCards[index]);
-                }
-              } else {
-                this._innovationsSuggested.push(innovation.innovationCards[0]);
-              }
-            }
-          });
-        });
-      }
-    });
-
+  public notifyChanges() {
+    this._saveChanges = true;
   }
 
 
   /***
    * to save the changes in professional object to the server.
+   * Convert the professional into an ambassador.
    */
   public onClickSave() {
-    //Convert the professional into an ambassador
     this._professional.ambassador.is = this._professional.ambassador.is || true;
-    this._professionalService.save(this._professional._id, this._professional).pipe(first()).subscribe(() => {
+
+    this._professionalService.save(this._professional._id, this._professional).subscribe(() => {
       this._saveChanges = false;
       this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
       this._getAllInnovations();
     }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
-  }
-
-
-  /***
-   * to notify the user if they perform any update in the professional object.
-   */
-  public notifyChanges() {
-    this._saveChanges = true;
   }
 
 
@@ -411,13 +424,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * @param tagId
    */
   public onCheckTag(tagId: string): boolean {
-    if (tagId) {
-      const find = this._professional.tags.find((tag) => tag._id === tagId);
-      if (find) {
-        return true;
-      }
-    }
-    return false;
+    return this._professional.tags.some((tag) => tag._id === tagId);
   }
 
 
@@ -432,7 +439,7 @@ export class AdminCommunityMemberComponent implements OnInit {
     if (event.target['checked']) {
       this._professional.tags.push(tag);
     } else {
-      this._professional.tags.splice(this._professional.tags.indexOf(tag), 1);
+      this._professional.tags = this._professional.tags.filter((tagPro) => tagPro._id !== tag._id)
     }
 
     this.notifyChanges();
@@ -471,6 +478,9 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   }
 
+  get userLang(): string {
+    return this._translateService.currentLang;
+  }
 
   get professional(): Professional {
     return this._professional;
@@ -504,16 +514,8 @@ export class AdminCommunityMemberComponent implements OnInit {
     return this._saveChanges;
   }
 
-  get tagsRest(): Array<Tag> {
-    return this._tagsRest;
-  }
-
-  get configTag(): { search: string; offset: string; limit: string; sort: string } {
-    return this._configTag;
-  }
-
-  get tagsProfessional(): Array<Tag> {
-    return this._tagsProfessional;
+  get totalTags(): Array<Tag> {
+    return this._totalTags;
   }
 
   get innovationsSuggested(): Array<InnovCard> {

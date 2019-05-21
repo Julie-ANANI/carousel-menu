@@ -54,7 +54,7 @@
 
   <!-- tag -->
   <div *ngIf="tags && tags.length > 0" class="tag-wrapper">
-    <div *ngFor="let tag of tags" class="label label-success label-rounded" [title]="tag.description | multiling:userLang">
+    <div *ngFor="let tag of tags" class="label label-tag label-rounded" [title]="tag.description | multiling:userLang">
       <i class="fas fa-tag"></i><span>{{ tag.label | multiling:userLang }}</span>
     </div>
   </div>

@@ -49,6 +49,14 @@
       </section>
       <!-- /section answer and innovations -->
 
+      <!-- section company -->
+      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+        <div class="client-wrapper">
+          <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
+        </div>
+      </section>
+      <!-- /section company -->
+
       <!-- section map -->
       <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
         <div class="map-wrapper">
@@ -66,14 +74,6 @@
         </div>
       </section>
       <!-- /section map -->
-
-      <!-- section company -->
-      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
-        <div class="client-wrapper">
-          <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
-        </div>
-      </section>
-      <!-- /section company -->
 
     </ng-container>
     <!-- /section stat -->

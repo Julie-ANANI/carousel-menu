@@ -19,11 +19,6 @@ import { SharedExecutiveReportModule } from '../shared-executive-report/shared-e
 import { PieChartModule } from '../../../utility-components/canvas/piechart/pie-chart.module';
 import { SharedMainPageModule } from '../shared-main-page/shared-main-page.module';
 
-
-import { RemoveSpacesPipe } from './pipes/RemoveSpaces.pipe';
-import { AnswersLimiterPipe } from './pipes/AnswersLimiter.pipe';
-
-
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
 import { ProfessionalTagComponent } from './components/pro-tag/pro-tag.component';
@@ -90,13 +85,10 @@ import { WorldmapFiltersService } from './services/worldmap-filter.service';
     QuestionSectionComponent,
     StarsComponent,
     ExportModalComponent,
-    SidebarComponent,
-    RemoveSpacesPipe,
-    AnswersLimiterPipe,
+    SidebarComponent
   ],
   exports: [
-    SharedMarketReportComponent,
-    AnswersLimiterPipe
+    SharedMarketReportComponent
   ]
 })
 

@@ -40,10 +40,13 @@ export class AdminCommunityMembersComponent {
 
   public addAmbassador(event: Event) {
     event.preventDefault();
+
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SIDEBAR.ADD_AMBASSADOR'
+      title: 'SIDEBAR.TITLE.ADD_AMBASSADOR',
+      type: 'addAmbassador',
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active'
     }
+
   }
 
 

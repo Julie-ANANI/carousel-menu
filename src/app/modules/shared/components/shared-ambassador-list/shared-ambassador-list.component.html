@@ -1,5 +1,25 @@
+<!-- section fetching error -->
+<ng-container *ngIf="fetchingError">
+  <div class="section-pad">
+    <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
+  </div>
+</ng-container>
+<!-- /section fetching error -->
+
+
+<!-- section no result -->
+<ng-container *ngIf="!fetchingError && total === 0">
+  <div class="section-pad">
+    <app-message-space [widthMax]="'342px'">
+      <span>Do not have any ambassadors to show for this project. Try to add some!</span>
+    </app-message-space>
+  </div>
+</ng-container>
+<!-- /section no result -->
+
+
 <!-- section table -->
-<ng-container *ngIf="!fetchingError">
+<ng-container *ngIf="!fetchingError && total > 0">
   <app-shared-table
     [config]="config"
     [data]="tableInfos"
@@ -10,12 +30,7 @@
     (selectRowAction)="selectPro($event)">
   </app-shared-table>
 </ng-container>
-
-
-<!-- section fetching error -->
-<ng-container *ngIf="fetchingError">
-  <app-fetching-error></app-fetching-error>
-</ng-container>
+<!-- /section table -->
 
 
 <!-- modal to ask the operator to confirm to delete the ambassador -->

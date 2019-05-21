@@ -12,6 +12,8 @@ import { SidebarAddAmbassadorFormModule } from "../../../../../sidebar/component
 import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
 import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { TableModule } from '../../../../../table/table.module';
+import { SidebarCommunityFormModule } from '../../../../../sidebar/components/community-form/sidebar-community-form.module';
+import { ErrorTemplate1Module } from '../../../../../utility-components/errors/error-template-1/error-template-1.module';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { TableModule } from '../../../../../table/table.module';
     SidebarModule,
     SidebarAdvsearchFormModule,
     SidebarAddAmbassadorFormModule,
-    TableModule
+    TableModule,
+    SidebarCommunityFormModule,
+    ErrorTemplate1Module
   ],
   declarations: [
     AdminCommunityMembersComponent,

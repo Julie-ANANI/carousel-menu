@@ -159,10 +159,14 @@
       margin-bottom: 0;
 
       .form-checkbox {
+        display: block;
         font-size: $font-size-xs;
         color: $text-background-color;
         font-weight: $font-weight-medium;
         padding-right: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .form-icon {

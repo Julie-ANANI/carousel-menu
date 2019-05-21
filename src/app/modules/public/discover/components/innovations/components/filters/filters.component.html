@@ -1,13 +1,5 @@
 <section id="filter-component">
 
-  <a *ngIf="isAdmin && selectedTags.length > 0"
-     class="admin-button"
-     [routerLink]="['/demo', 'showcase']"
-     [queryParams]="{'tag': getSelectedTagsIds()}"
-     target="_blank">
-    {{ 'DISCOVER.BUTTON_SHOWCASE' | translate }}
-  </a>
-
   <!-- highlighted sectors -->
   <div class="sector-highlighted">
 
@@ -27,10 +19,18 @@
       </div>
 
       <div class="share-button">
+
+        <ng-container *ngIf="isAdmin && selectedTags.length > 0">
+          <a class="btn btn-sm ghost-edit rounded" [routerLink]="['/demo', 'showcase']" [queryParams]="{ 'tag': getSelectedTagsIds() }" target="_blank">
+            <span [innerText]="'DISCOVER.BUTTON_SHOWCASE'" translate></span>
+          </a>
+        </ng-container>
+
         <button type="button" class="btn btn-sm rounded btn-secondary" (click)="onClickShare($event)">
           <i class="fas fa-share"></i>
           {{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
+
       </div>
 
     </div>

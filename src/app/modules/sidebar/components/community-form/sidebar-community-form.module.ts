@@ -6,8 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommunityFormComponent } from './community-form.component';
 
 import { SidebarModule } from '../../sidebar.module';
-import {SharedAmbassadorListModule} from "../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
-import {SearchInputModule} from "../../../utility-components/search-inputs/search-template-1/search-input.module";
+import { SharedAmbassadorListModule } from "../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
+import { SearchInput3Module } from '../../../utility-components/search-inputs/search-template-3/search-input-3.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import {SearchInputModule} from "../../../utility-components/search-inputs/searc
     TranslateModule.forChild(),
     SidebarModule,
     SharedAmbassadorListModule,
-    SearchInputModule
+    SearchInput3Module
   ],
   declarations: [
     CommunityFormComponent
