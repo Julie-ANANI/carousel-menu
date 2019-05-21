@@ -7,6 +7,8 @@ export const ERROR = {
 
   'FORM_ERROR': 'Form error',
 
+  'OPERATION_ERROR': 'We are having trouble while performing this operation. Please try again!',
+
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
   'FETCHING_ERROR': 'We are having trouble while fetching the data.',
@@ -171,6 +173,10 @@ export const ERROR = {
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check the URL is good.',
     'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check the URL is good.',
+  },
+
+  'AMBASSADOR': {
+    'DELETED': 'The ambassador has been deleted successfully.',
   }
 
 };
