@@ -11,6 +11,7 @@ import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sid
 import { SidebarTagsFormModule } from '../../../sidebar/components/tags-form/sidebar-tags-form.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
+import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ErrorTemplate1Module } from '../../../utility-components/errors/error-t
     SidebarUserFormModule,
     SidebarTagsFormModule,
     ModalModule,
-    ErrorTemplate1Module
+    ErrorTemplate1Module,
+    MessageSpaceModule
   ],
   declarations: [
     SharedAmbassadorListComponent

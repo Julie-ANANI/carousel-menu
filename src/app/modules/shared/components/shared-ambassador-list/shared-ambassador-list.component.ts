@@ -30,7 +30,7 @@ export class SharedAmbassadorListComponent {
 
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
-        this._actions = ['Add to the project'];
+        this._actions = ['Add to project'];
         break;
 
       case('default'):

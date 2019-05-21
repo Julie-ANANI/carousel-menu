@@ -42,9 +42,9 @@ export class AdminCommunityMembersComponent {
     event.preventDefault();
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'SIDEBAR.TITLE.ADD_AMBASSADOR',
-      type: 'addAmbassador'
+      type: 'addAmbassador',
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active'
     }
 
   }

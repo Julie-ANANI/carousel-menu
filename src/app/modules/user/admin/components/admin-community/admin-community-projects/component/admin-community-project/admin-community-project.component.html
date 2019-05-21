@@ -34,15 +34,15 @@
             <h5 class="stat-heading">Ambassador</h5>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Native</h5>
-              <span class="stat-value">1</span>
+              <span class="stat-value">--</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Added</h5>
-              <span class="stat-value">3</span>
+              <span class="stat-value">--</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Suggested</h5>
-              <span class="stat-value">4</span>
+              <span class="stat-value">--</span>
             </div>
           </li>
 
@@ -51,11 +51,11 @@
             <h5 class="stat-heading">Feedback</h5>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Total</h5>
-              <span class="stat-value" [ngStyle]="{ 'color': checkThreshold() }">{{ totalThreshold }}</span>
+              <span class="stat-value" [ngStyle]="{ 'color': checkThreshold() }">{{ totalThreshold || '--' }}</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">From Ambassador</h5>
-              <span class="stat-value">3</span>
+              <span class="stat-value">--</span>
             </div>
           </li>
 
@@ -86,7 +86,7 @@
         <!-- buttons -->
         <div class="text-right">
           <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add manually</button>
-          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSuggestion($event)">See suggestions</button>
+          <button type="button" class="btn btn-primary btn-sm" [disabled]="true" (click)="onClickSuggestion($event)">See suggestions</button>
         </div>
 
         <!-- section table -->

@@ -25,7 +25,7 @@
               <ng-container *ngIf="professional.lastName"> {{ professional.lastName }}</ng-container>
             </h1>
 
-            <div *ngIf="professional.ambassador.is" class="tooltip" data-tooltip="Professional">
+            <div *ngIf="professional.ambassador.is" class="tooltip" data-tooltip="Ambassador">
               <img src="https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg" alt=" " class="img-responsive">
             </div>
 
@@ -491,7 +491,7 @@
               <h5 class="title-secondary text-notify text-normal">Projects suggested</h5>
 
               <!-- innovations -->
-              <div class="card-wrapper d-flex text-center">
+              <div class="card-wrapper d-flex text-center" [ngStyle]="{ 'justify-content': innovationsSuggested.length >= 4 ? 'space-between' : 'flex-start' }">
                 <div *ngFor="let innovation of innovationsSuggested | slice:0:5" class="card">
 
                   <!-- image -->

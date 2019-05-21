@@ -5,18 +5,12 @@
     <div class="text-right">
 
       <!-- import -->
-      <label class="btn ghost-primary btn-sm" [innerText]="'COMMON.BUTTON.IMPORT'" translate>
+      <label class="btn ghost-primary btn-sm" [innerText]="'COMMON.BUTTON.IMPORT'" translate [ngStyle]="{ 'margin-right': '1rem' }">
         <input #fileupload type="file" [hidden]="true" (change)="importAmbassadors(fileupload.files[0])">
       </label>
 
       <!-- add -->
-      <button
-        type="button"
-        class="btn btn-primary btn-sm"
-        (click)="addAmbassador($event)"
-        [innerText]="'COMMON.BUTTON.ADD'" translate
-        [ngStyle]="{ 'margin-left': '1rem' }">
-      </button>
+      <button type="button" class="btn btn-primary btn-sm" (click)="addAmbassador($event)" [innerText]="'COMMON.BUTTON.ADD'" translate></button>
 
     </div>
     <!-- /section buttons -->
@@ -39,6 +33,10 @@
   </community-form>
 </app-sidebar>
 <!-- /add ambassadors sidebar -->
+
+
+
+
 
 
 <!--<button (click)="onSearchClick($event)" class="btn btn-primary">
