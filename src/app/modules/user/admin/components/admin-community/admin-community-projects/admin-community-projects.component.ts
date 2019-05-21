@@ -96,6 +96,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
           _attrs: ['innovation.status'],
           _name: 'Status',
           _type: 'MULTI-CHOICES',
+          _isSortable: false,
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label label-draft'},

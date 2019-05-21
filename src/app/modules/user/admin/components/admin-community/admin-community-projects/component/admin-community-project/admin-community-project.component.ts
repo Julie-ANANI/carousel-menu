@@ -4,6 +4,7 @@ import { SidebarInterface } from "../../../../../../../sidebar/interfaces/sideba
 import { Innovation } from '../../../../../../../../models/innovation';
 import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
+import { AnswerService } from '../../../../../../../../services/answer/answer.service';
 
 @Component({
   selector: 'admin-community-project',
@@ -28,7 +29,7 @@ export class AdminCommunityProjectComponent {
 
   private _sideConfig: any = null;
 
-  private _targetCountries = ['CO'];
+  private _targetCountries: Array<string> = [];
 
   private _sidebarValue: SidebarInterface = {};
 
@@ -38,12 +39,14 @@ export class AdminCommunityProjectComponent {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
+              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     if (typeof (this._activatedRoute.snapshot.data['innovation']) !== 'undefined') {
       this._innovation = this._activatedRoute.snapshot.data['innovation'];
       this._translateTitleService.setTitle(`${this._innovation.name}`);
       this._config.innovations = this._innovation._id;
+      this._getTargetedCountries();
 
       this._context = {
         innovationId: this._innovation._id.toString()
@@ -54,6 +57,20 @@ export class AdminCommunityProjectComponent {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
+  }
+
+
+  private _getTargetedCountries() {
+    this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
+      if (response && response.answers) {
+        this._targetCountries = response.answers.reduce((acc, answer) => {
+          if (acc.indexOf(answer.country.flag) === -1) {
+            acc.push(answer.country.flag);
+          }
+          return acc;
+        }, []);
+      }
+    });
   }
 
 
