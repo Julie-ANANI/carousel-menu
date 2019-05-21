@@ -132,8 +132,9 @@ export class CommunityFormComponent implements OnInit {
       if (this._professional) {
         this._professional.ambassador.is = true;
         this._professionalService.save(this._professional._id, this._professional).subscribe(() => {
-          this.goToAmbassador();
+          this._goToAmbassador(this._professional._id);
         }, () => {
+          this._addingProfessional = false;
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
         });
       } else {
@@ -144,8 +145,8 @@ export class CommunityFormComponent implements OnInit {
   }
 
 
-  public goToAmbassador() {
-    this._router.navigate([`user/admin/community/members/${this._professional._id}`]);
+  private _goToAmbassador(proId: string) {
+    this._router.navigate([`user/admin/community/members/${proId}`]);
   }
 
 
@@ -162,10 +163,10 @@ export class CommunityFormComponent implements OnInit {
 
     this._professionalService.createAmbassadors([newPro]).subscribe((response) => {
       if (response && response.result) {
-        this._professional = response.result[0];
-        this.goToAmbassador();
+        this._goToAmbassador(response.result[0]._id);
       }
     }, () => {
+      this._addingProfessional = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
   }
