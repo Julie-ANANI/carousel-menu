@@ -27,17 +27,16 @@ export class ListConfigurations {
       _content: [],
       _total: 0,
       _isLocal: true,
-      _isDeletable: true,
       _isSelectable: true,
-      _actions: ['Add to project'],
+      _actions: ['Add'],
       _columns: [
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
         {_attrs: ['tags'], _name: 'TABLE.HEADING.SECTORS', _type: 'TAG-LIST'},
         {_attrs: ['ambassador.industry'], _name: 'TABLE.HEADING.INDUSTRY', _type: 'TEXT'},
-        {_attrs: ['self'], _name: 'Added to project',_isSortable: false, _type: 'MULTI-CHOICES',
+        {_attrs: ['self'], _name: 'To project',_isSortable: false, _type: 'MULTI-CHOICES',
           _choices: [
-            {_name: 'true', _alias: 'True', _class: 'label label-success'},
-            {_name: 'false', _alias: ''}]
+            {_name: 'true', _alias: 'Added', _class: 'label label-success'},
+            {_name: 'false', _alias: '--'}]
         }]
     };
     return _tableInfos;
