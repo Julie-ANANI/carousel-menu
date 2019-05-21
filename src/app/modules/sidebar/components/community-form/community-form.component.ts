@@ -94,6 +94,7 @@ export class CommunityFormComponent implements OnInit {
 
 
   public onEmailChange() {
+    this._professional = null;
     const email = this._form.get('email').value;
     const config: any = {
       fields: 'firstName lastName ambassador',
@@ -136,7 +137,7 @@ export class CommunityFormComponent implements OnInit {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
         });
       } else {
-
+        this._createAmbassador();
       }
 
     }
@@ -147,6 +148,27 @@ export class CommunityFormComponent implements OnInit {
     this._router.navigate([`user/admin/community/members/${this._professional._id}`]);
   }
 
+
+  private _createAmbassador() {
+
+    const newPro: Professional = {
+      firstName: this._form.get('firstName').value,
+      lastName: this._form.get('lastName').value,
+      email: this._form.get('email').value,
+      ambassador: {
+        is: true
+      }
+    };
+
+    this._professionalService.createAmbassadors([newPro]).subscribe((response) => {
+      if (response && response.result) {
+        this._professional = response.result[0];
+        this.goToAmbassador();
+      }
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
 
 
   get actionType() {
