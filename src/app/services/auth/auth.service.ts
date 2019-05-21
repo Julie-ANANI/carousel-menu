@@ -146,10 +146,14 @@ export class AuthService {
   }
 
   public getUserInfo(): any {
-    return {
-      name: this._user ? this._user.firstName + ' ' + this._user.lastName : '',
-      id: this._user.id
-    };
+    if (this._user) {
+      return {
+        name: this._user.firstName + ' ' + this._user.lastName,
+        id: this._user.id
+      };
+    } else {
+      return {};
+    }
   }
 
   get isAuthenticated(): boolean { return this._authenticated; }
