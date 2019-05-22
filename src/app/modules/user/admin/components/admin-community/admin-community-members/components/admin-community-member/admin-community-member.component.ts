@@ -16,6 +16,7 @@ import { InnovationFrontService } from '../../../../../../../../services/innovat
 import { InnovCard } from '../../../../../../../../models/innov-card';
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
 import { Table } from '../../../../../../../table/models/table';
+import { Company } from '../../../../../../../../models/company';
 
 @Component({
   selector: 'admin-community-member',
@@ -37,6 +38,10 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _displayCountrySuggestion = false;
 
+  private _companySuggestions: Array<Company> = [];
+
+  private _displayCompanySuggestion = false;
+
   private _countries: any;
 
   private _saveChanges: boolean;
@@ -49,9 +54,9 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _projectTableInfo: Table = null;
 
-  fetchingError: boolean;
+  private _fetchingError: boolean;
 
-  allSectorTags: Array<Tag> = [];
+  private _allSectorTags: Array<Tag> = [];
 
   private _configInnovation = {
     fields: 'innovationCards principalMedia',
@@ -94,10 +99,10 @@ export class AdminCommunityMemberComponent implements OnInit {
       this._translateTitleService.setTitle(`${this._professional.firstName} ${this._professional.lastName} | Professional`);
 
       if (Array.isArray(this._activatedRoute.snapshot.data['tagsSector'])) {
-        this.allSectorTags = this._activatedRoute.snapshot.data['tagsSector'];
+        this._allSectorTags = this._activatedRoute.snapshot.data['tagsSector'];
         this._getAllTags();
       } else {
-        this.fetchingError = true;
+        this._fetchingError = true;
         this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       }
 
@@ -106,7 +111,7 @@ export class AdminCommunityMemberComponent implements OnInit {
       this._configureProjectTable();
 
     } else {
-      this.fetchingError = true;
+      this._fetchingError = true;
       this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
@@ -209,8 +214,8 @@ export class AdminCommunityMemberComponent implements OnInit {
     let tagsProfessional: Array<Tag> = [];
     let tagsRest: Array<Tag> = [];
 
-    if (this.allSectorTags && this.allSectorTags.length > 0) {
-      this.allSectorTags.forEach((tag) => {
+    if (this._allSectorTags && this._allSectorTags.length > 0) {
+      this._allSectorTags.forEach((tag) => {
         const find = this._professional.tags.find((tagPro) => tagPro._id === tag._id);
         if (find) {
           tagsProfessional.push(tag);
@@ -370,6 +375,44 @@ export class AdminCommunityMemberComponent implements OnInit {
 
 
   /***
+   * when the operator starts tying in the company filed we show the company suggestions
+   * according to the input.
+   * @param input
+   */
+  public suggestCompanies(input: string) {
+    if (input !== '') {
+      this._displayCompanySuggestion = true;
+      this._companySuggestions = [];
+      this._autoCompleteService.get({query: input, type: 'company'}).subscribe((res: any) => {
+
+        if (res.length === 0) {
+          this._displayCompanySuggestion = false;
+        } else {
+          res.forEach((item: Company) => {
+            const find = this._companySuggestions.find((company) => company.name === item.name);
+            if (!find) {
+              this._companySuggestions.push(item);
+            }
+          });
+
+          this._companySuggestions.sort((a, b) => {
+            return a.name.localeCompare(b.name);
+          });
+
+        }
+      });
+    }
+  }
+
+
+  public onUpdateCompany(value: string) {
+    this._professional.company = value;
+    this._displayCompanySuggestion = false;
+    this.notifyChanges();
+  }
+
+
+  /***
    * when changing the value of the language filed.
    * @param value
    */
@@ -380,24 +423,28 @@ export class AdminCommunityMemberComponent implements OnInit {
 
 
   /***
-   * when the user starts tying in the country filed we show the country suggestions
+   * when the operator starts tying in the country filed we show the country suggestions
    * according to the input.
    * @param input
    */
-  public onSuggestCountries(input: string) {
+  public suggestCountries(input: string) {
     if (input !== '') {
       this._displayCountrySuggestion = true;
       this._countriesSuggestion = [];
       this._autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
+
         if (res.length === 0) {
           this._displayCountrySuggestion = false;
         } else {
-          res.forEach((items: any) => {
-            const valueIndex = this._countriesSuggestion.indexOf(items.name);
-            if (valueIndex === -1) { // if not exist then push into the array.
-              this._countriesSuggestion.push(items.name);
+          res.forEach((item: any) => {
+            const valueIndex = this._countriesSuggestion.indexOf(item.name);
+            if (valueIndex === -1) {
+              this._countriesSuggestion.push(item.name);
             }
-          })
+          });
+
+          this._countriesSuggestion.sort();
+
         }
       });
     }
@@ -408,7 +455,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    * when user selects the value from the suggested countries.
    * @param value
    */
-  public onChangeCountry(value: string) {
+  public onUpdateCountry(value: string) {
     for (let code in this._countries) {
       if (this._countries[code] === value) {
         this._professional.country = code;
@@ -540,6 +587,22 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   get configEmail(): { search: string; offset: string; limit: string; sort: string; fields: string } {
     return this._configEmail;
+  }
+
+  get companySuggestions(): Array<Company> {
+    return this._companySuggestions;
+  }
+
+  get displayCompanySuggestion(): boolean {
+    return this._displayCompanySuggestion;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get allSectorTags(): Array<Tag> {
+    return this._allSectorTags;
   }
 
 }
