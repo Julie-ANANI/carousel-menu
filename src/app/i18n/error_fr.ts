@@ -5,7 +5,7 @@ export const ERROR = {
 
   'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment.',
 
-  'OPERATION_ERROR': 'Nous avons du mal à réaliser cette opération. Veuillez réessayer !',
+  'OPERATION_ERROR': 'Nous sommes confrontés à des problèmes techniques pour mener à bien cette demande. Veuillez réessayer !',
 
   'FORM_ERROR': 'Erreur de formulaire',
 

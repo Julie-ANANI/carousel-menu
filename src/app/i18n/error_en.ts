@@ -7,7 +7,7 @@ export const ERROR = {
 
   'FORM_ERROR': 'Form error',
 
-  'OPERATION_ERROR': 'We are having trouble while performing this operation. Please try again!',
+  'OPERATION_ERROR': 'We are facing some technical issues to carry out this request. Please try again!',
 
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
