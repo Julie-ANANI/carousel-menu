@@ -8,7 +8,6 @@ import { Campaign } from '../../../../../../models/campaign';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
@@ -75,7 +74,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
 
   private loadAnswers() {
-    this.campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
+    this.campaignService.getAnswers(this._campaign._id).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
       this._answers = result.answers.localAnswers;
       this._noResult = this._answers.length === 0;
       this.loadTable();
@@ -101,7 +100,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   importAnswers(file: File, event: Event) {
     event.preventDefault();
 
-    this.answerService.importAsCsv(this._campaign._id, file).pipe(first()).subscribe(() => {
+    this.answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
       this.loadAnswers();
       }, () => {
@@ -181,7 +180,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT') {
     rows.forEach((row: Answer) => {
       row.status = status;
-      this.answerService.save(row._id, row).pipe(first()).subscribe(() => {
+      this.answerService.save(row._id, row).subscribe(() => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.STATUS_UPDATE');
         this.loadAnswers();
       }, () => {
