@@ -234,13 +234,31 @@
 
       <!-- star case -->
       <ng-container *ngSwitchCase="'stars'">
-        <ng-container *ngIf="fullAnswer.answers[question.identifier]">
-          <ul class="pad-top star-wrapper text-primary">
-            <li *ngFor="let advantage of question.options">
-              {{ advantage.label | multiling:lang }}: <span>{{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}</span>
-            </li>
-          </ul>
-        </ng-container>
+        <ul *ngIf="fullAnswer.answers[question.identifier] && !editMode" class="pad-top star-wrapper text-primary">
+          <li *ngFor="let opt of question.options">
+            {{ opt.label | multiling:lang }}: <span>{{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}</span>
+          </li>
+        </ul>
+        <ul *ngIf="editMode" class="pad-top star-wrapper text-primary">
+          <li *ngFor="let opt of question.options; index as i;">
+            {{ opt.label | multiling:lang }}:
+            <label for="{{question.identifier}}-benefit{{i}}-rate1">1</label>
+            <input id="{{question.identifier}}-benefit{{i}}-rate1" type="radio"
+                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="1">
+            <label for="{{question.identifier}}-benefit{{i}}-rate2">2</label>
+            <input id="{{question.identifier}}-benefit{{i}}-rate2" type="radio"
+                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="2">
+            <label for="{{question.identifier}}-benefit{{i}}-rate3">3</label>
+            <input id="{{question.identifier}}-benefit{{i}}-rate3" type="radio"
+                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="3">
+            <label for="{{question.identifier}}-benefit{{i}}-rate4">4</label>
+            <input id="{{question.identifier}}-benefit{{i}}-rate4" type="radio"
+                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="4">
+            <label for="{{question.identifier}}-benefit{{i}}-rate5">5</label>
+            <input id="{{question.identifier}}-benefit{{i}}-rate5" type="radio"
+                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="5">
+          </li>
+        </ul>
       </ng-container>
       <!-- /star case -->
 
