@@ -10,6 +10,7 @@ Sentry.init({
   environment: environment.domain,
   release: version,
   dsn: 'https://d86e9ff2dfbb40eab9632f0a3a599757@sentry.io/1315751',
+  integrations: [new Sentry.Integrations.UserAgent()],
   defaultIntegrations: false // we don't want the sentry integrations, they provide more shadows than real data
 });
 
