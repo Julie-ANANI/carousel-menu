@@ -1,33 +1,69 @@
-<!-- section table -->
-<ng-container *ngIf="!fetchingError">
-  <app-shared-table
-    [config]="config"
-    [data]="tableInfos"
-    (configChange)="loadPros($event)"
-    (editRow)="onClickEdit($event)"
-    (removeRows)="modalDelete = true"
-    (performAction)="performActions($event)"
-    (selectRowAction)="selectPro($event)">
-  </app-shared-table>
-</ng-container>
-
-
 <!-- section fetching error -->
 <ng-container *ngIf="fetchingError">
   <div class="section-pad">
     <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
   </div>
 </ng-container>
+<!-- /section fetching error -->
+
+
+<!-- section no result -->
+<ng-container *ngIf="!fetchingError && total === 0">
+  <div class="section-pad">
+    <app-message-space [widthMax]="'342px'">
+      <span>Do not have any ambassadors to show for this project. Try to add some!</span>
+    </app-message-space>
+  </div>
+</ng-container>
+<!-- /section no result -->
+
+
+<!-- section table -->
+<ng-container *ngIf="!fetchingError && total > 0">
+  <app-shared-table
+    [config]="config"
+    [data]="tableInfos"
+    (configChange)="loadPros($event)"
+    (editRow)="onClickEdit($event)"
+    (removeRows)="onClickRemove($event)"
+    (performAction)="performActions($event)"
+    (selectRowAction)="selectPro($event)">
+  </app-shared-table>
+</ng-container>
+<!-- /section table -->
 
 
 <!-- modal to ask the operator to confirm to delete the ambassador -->
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
 
-  <span>Currently this functionality is not implemented.</span>
+  <ng-container *ngIf="context && context.deleteType === 'Campaign'">
+
+    <ng-container *ngIf="prosToRemoves && prosToRemoves.length === 1">
+      <span>Do you really want to delete this ambassador from this project campaign?</span>
+    </ng-container>
+
+    <ng-container *ngIf="prosToRemoves && prosToRemoves.length > 1">
+      <span>Do you really want to delete all these ambassadors from this project campaign?</span>
+    </ng-container>
+
+  </ng-container>
+
+
+  <ng-container *ngIf="!context">
+
+    <ng-container *ngIf="prosToRemoves && prosToRemoves.length === 1">
+      <span>Do you really want to delete this ambassador? This will delete the ambassador from the database completely.</span>
+    </ng-container>
+
+    <ng-container *ngIf="prosToRemoves && prosToRemoves.length > 1">
+      <span>Do you really want to delete all these ambassadors? This will delete the ambassadors from the database completely.</span>
+    </ng-container>
+
+  </ng-container>
 
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-    <button class="btn btn-sm btn-primary" (click)="deleteAmbassador($event)" [disabled]="true" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+    <button class="btn btn-sm btn-primary" (click)="deleteAmbassador($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
   </div>
 
 </app-modal>

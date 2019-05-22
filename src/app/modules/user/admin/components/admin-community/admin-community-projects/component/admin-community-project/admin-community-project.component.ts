@@ -4,6 +4,8 @@ import { SidebarInterface } from "../../../../../../../sidebar/interfaces/sideba
 import { Innovation } from '../../../../../../../../models/innovation';
 import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
+import { AnswerService } from '../../../../../../../../services/answer/answer.service';
+import {ContextInterface} from '../../../interfaces/context-interface';
 
 @Component({
   selector: 'admin-community-project',
@@ -24,11 +26,11 @@ export class AdminCommunityProjectComponent {
     sort: '{ "created": -1 }'
   };
 
-  private _context: any = null;
+  private _context: ContextInterface = null;
 
   private _sideConfig: any = null;
 
-  private _targetCountries = ['CO'];
+  private _targetCountries: Array<string> = [];
 
   private _sidebarValue: SidebarInterface = {};
 
@@ -38,15 +40,19 @@ export class AdminCommunityProjectComponent {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
+              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     if (typeof (this._activatedRoute.snapshot.data['innovation']) !== 'undefined') {
       this._innovation = this._activatedRoute.snapshot.data['innovation'];
       this._translateTitleService.setTitle(`${this._innovation.name}`);
       this._config.innovations = this._innovation._id;
+      this._getTargetedCountries();
 
       this._context = {
-        innovationId: this._innovation._id.toString()
+        innovationId: this._innovation._id.toString(),
+        campaignId: this._getCampaignId(),
+        deleteType: 'Campaign'
       };
 
     } else {
@@ -54,6 +60,31 @@ export class AdminCommunityProjectComponent {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
+  }
+
+
+  private _getTargetedCountries() {
+    this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
+      if (response && response.answers) {
+        this._targetCountries = response.answers.reduce((acc, answer) => {
+          if (acc.indexOf(answer.country.flag) === -1) {
+            acc.push(answer.country.flag);
+          }
+          return acc;
+        }, []);
+      }
+    });
+  }
+
+
+  private _getCampaignId(): string {
+    if (this._innovation && this._innovation.campaigns && this._innovation.campaigns.length > 0 ) {
+      const index = this._innovation.campaigns.findIndex((campaign: any) => campaign.type === 'COMMUNITY');
+      if (index !== -1) {
+        return this._innovation.campaigns[index]._id;
+      }
+    }
+    return '';
   }
 
 

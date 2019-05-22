@@ -94,6 +94,7 @@ export class CommunityFormComponent implements OnInit {
 
 
   public onEmailChange() {
+    this._professional = null;
     const email = this._form.get('email').value;
     const config: any = {
       fields: 'firstName lastName ambassador',
@@ -131,22 +132,44 @@ export class CommunityFormComponent implements OnInit {
       if (this._professional) {
         this._professional.ambassador.is = true;
         this._professionalService.save(this._professional._id, this._professional).subscribe(() => {
-          this.goToAmbassador();
+          this._goToAmbassador(this._professional._id);
         }, () => {
+          this._addingProfessional = false;
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
         });
       } else {
-
+        this._createAmbassador();
       }
 
     }
   }
 
 
-  public goToAmbassador() {
-    this._router.navigate([`user/admin/community/members/${this._professional._id}`]);
+  private _goToAmbassador(proId: string) {
+    this._router.navigate([`user/admin/community/members/${proId}`]);
   }
 
+
+  private _createAmbassador() {
+
+    const newPro: Professional = {
+      firstName: this._form.get('firstName').value,
+      lastName: this._form.get('lastName').value,
+      email: this._form.get('email').value,
+      ambassador: {
+        is: true
+      }
+    };
+
+    this._professionalService.createAmbassadors([newPro]).subscribe((response) => {
+      if (response && response.result) {
+        this._goToAmbassador(response.result[0]._id);
+      }
+    }, () => {
+      this._addingProfessional = false;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
 
 
   get actionType() {

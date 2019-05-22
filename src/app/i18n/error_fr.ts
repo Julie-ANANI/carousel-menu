@@ -5,6 +5,8 @@ export const ERROR = {
 
   'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment.',
 
+  'OPERATION_ERROR': 'Nous avons du mal à réaliser cette opération. Veuillez réessayer !',
+
   'FORM_ERROR': 'Erreur de formulaire',
 
   'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
@@ -171,6 +173,10 @@ export const ERROR = {
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
     'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.'
+  },
+
+  'AMBASSADOR': {
+    'DELETED': 'L\'ambassadeur a été supprimé avec succès.',
   }
 
 };
