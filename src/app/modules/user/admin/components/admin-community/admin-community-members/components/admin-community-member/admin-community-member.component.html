@@ -326,13 +326,25 @@
               <div class="form-group">
                 <label class="form-label" for="community-member-company">Company</label>
                 <input
-                  id="community-member-company"
+                  #company
+                  (keypress)="suggestCompanies(company.value)"
+                  [(ngModel)]="professional.company"
+                  autocomplete="off"
                   class="form-input"
-                  type="text"
+                  id="community-member-company"
                   name="company"
                   placeholder="Enter the company"
-                  (change)="notifyChanges()"
-                  [(ngModel)]="professional.company">
+                  type="text">
+                <ul
+                  *ngIf="company.value"
+                  class="input-suggestion"
+                  [ngStyle]="{ 'display': displayCompanySuggestion ? 'block' : 'none' }">
+                  <li *ngFor="let suggestion of companySuggestions" (click)="onUpdateCompany(suggestion.name)">
+                    <span class="d-flex">
+                      <img *ngIf="suggestion.logo" [src]="suggestion.logo" width="22" height="22" class="img-responsive" alt=" "> {{ suggestion.name }}
+                    </span>
+                  </li>
+                </ul>
               </div>
 
               <!-- linkedin -->
@@ -366,19 +378,20 @@
               <div class="form-group">
                 <label class="form-label" for="community-member-country">Country</label>
                 <input
-                  id="community-member-country"
-                  class="form-input"
-                  type="text"
-                  name="country"
                   #country
-                  placeholder="Enter the country"
+                  (keypress)="suggestCountries(country.value)"
                   [(ngModel)]="countries[professional.country]"
-                  (keypress)="onSuggestCountries(country.value)">
+                  autocomplete="off"
+                  class="form-input"
+                  id="community-member-country"
+                  name="country"
+                  placeholder="Enter the country"
+                  type="text">
                 <ul
                   *ngIf="country.value"
                   class="input-suggestion"
                   [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
-                  <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onChangeCountry(suggestion)">
+                  <li *ngFor="let suggestion of countriesSuggestion" (click)="onUpdateCountry(suggestion)">
                     {{ suggestion }}
                   </li>
                 </ul>
