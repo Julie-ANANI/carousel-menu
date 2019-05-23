@@ -64,9 +64,7 @@ export class ExportModalComponent {
 
     this.showExportModal = false;
 
-    this._innovation.ownerConsent.date = Date.now();
-
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    this._innovationService.saveConsent(this._innovation._id, Date.now()).subscribe(() => {
       this._print();
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
