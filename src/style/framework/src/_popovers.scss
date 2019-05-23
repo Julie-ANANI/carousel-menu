@@ -31,8 +31,8 @@
       width: 0;
       height: 0;
       z-index: 399;
-      border: 15px solid transparent;
-      bottom: 16px;
+      border: 8px solid transparent;
+      bottom: 9px;
     }
 
   }
@@ -40,12 +40,12 @@
   *:focus + .popover-container, &:hover .popover-container, .popover-container:hover {
     display: block;
     opacity: 1;
-    transform: translate(-50%, calc(-100% - 16px)) scale(1);
+    transform: translate(-50%, calc(-100% - 9px)) scale(1);
   }
 
 
   *:focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
-    transform: translate(-50%, calc(100% + 16px)) scale(1);
+    transform: translate(-50%, calc(100% + 9px)) scale(1);
     border-top-color: $bg-color-light;
   }
 
@@ -53,13 +53,13 @@
   &.popover-right {
 
     .popover-container{
-      left: calc(100% + 16px);
+      left: calc(100% + 9px);
       top: 50%;
     }
 
     .popover-container::before {
-      left: -30px;
-      bottom: calc(50% + 16px);
+      left: -16px;
+      bottom: calc(50% + 9px);
       border-color: transparent;
     }
 
@@ -68,7 +68,7 @@
     }
 
     :focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
-      transform: translate(0, calc(50% + 16px)) scale(1);
+      transform: translate(0, calc(50% + 9px)) scale(1);
       border-right-color: $bg-color-light;
     }
 
@@ -79,12 +79,12 @@
 
     .popover-container {
       left: 50%;
-      top: calc(100% + 14px);
+      top: calc(100% + 9px);
     }
 
     .popover-container::before {
-      left: calc(50% - 15px);
-      top: -30px;
+      left: calc(50% - 8px);
+      top: -16px;
       bottom: auto;
       border-color: transparent;
     }
@@ -94,7 +94,7 @@
     }
 
     :focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
-      transform: translate(calc(50% - 15px), 0) scale(1);
+      transform: translate(calc(50% - 8px), 0) scale(1);
       border-bottom-color: $bg-color-light;
     }
 
@@ -103,13 +103,13 @@
   &.popover-left {
 
     .popover-container {
-      left: -16px;
+      left: -9px;
       top: 50%;
     }
 
     .popover-container::before {
-      left: calc(100% + 30px);
-      bottom: calc(50% + 16px);
+      left: calc(100% + 16px);
+      bottom: calc(50% + 9px);
       border-color: transparent;
     }
 
@@ -118,7 +118,7 @@
     }
 
     :focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
-      transform: translate(-100%, calc(50% + 16px)) scale(1);
+      transform: translate(-100%, calc(50% + 9px)) scale(1);
       border-left-color: $bg-color-light;
     }
 
