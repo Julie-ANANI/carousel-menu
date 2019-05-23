@@ -68,6 +68,10 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }
 
+  public saveConsent(innovationId: string, date: number) {
+    return this._http.put(`/innovation/${innovationId}/ownerConsent`, {ownerConsent: {date: date, value: true}});
+  }
+
   public updateMarketReport(innovationId: string, data: QuestionReport): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/marketReport', { payload: data });
   }
