@@ -167,9 +167,16 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _updateAnswersToShow(): void {
     this._filteredAnswers = this._filterService.filter(this._answers);
-    this._answersOrigins = this._sharedWorldmapService.getCountriesRepartition(
-      this._filteredAnswers.map(x => x.country.flag || x.professional.country)
-    );
+    const countriesList = this._filteredAnswers.map(function (answer: Answer): string {
+      if (!!answer.country && !!answer.country.flag) {
+        return answer.country.flag;
+      }
+      if (!!answer.professional && !!answer.professional.country) {
+        return answer.professional.country;
+      }
+      return '';
+    });
+    this._answersOrigins = this._sharedWorldmapService.getCountriesRepartition(countriesList);
   }
 
 
