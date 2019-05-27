@@ -117,6 +117,7 @@
       min-height: 250px;
       font-size: 0.75rem;
       padding: $layout-spacing;
+      overflow: hidden;
 
       &:hover {
         box-shadow: none;
@@ -151,10 +152,6 @@
 
     }
 
-  }
-
-  .btn.btn-primary {
-    border-radius: 25px;
   }
 
 }
