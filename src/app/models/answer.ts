@@ -16,6 +16,7 @@ export interface Answer {
   country: {flag: string, domain?: string, name?: string};
   job: string;
   company: Clearbit;
+  mailType: string;
   readonly ip?: any;
   readonly answeredByEmail: boolean;
   readonly blacklistedCompany?: boolean;
