@@ -64,10 +64,14 @@
       }
 
       .share-button {
-        margin-bottom: 0.75rem;
+
+        .ghost-edit {
+          margin-right: $unit-5;
+        }
 
         .btn {
           min-width: 100px;
+          margin-bottom: 0.75rem;
 
           i {
             margin-left: 0;

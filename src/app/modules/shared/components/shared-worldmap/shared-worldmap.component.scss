@@ -29,12 +29,12 @@
 .synthesis-wrapper {
 
   path, g {
-    fill: $alert-color;
+    fill: #E2E2E2;
     cursor: pointer;
   }
 
-  g.selected, path.selected, .selected g, .selected path {
-    fill: #E2E2E2;
+  g.selected, path.filtered, .filtered g, .filtered path {
+    fill: $alert-color !important;
   }
 
 }

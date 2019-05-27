@@ -3,16 +3,17 @@
   <div class="section-light-pad heading">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <div class="title-button-wrapper">
-        <h1>{{ project.name }}</h1>
 
-        <a [href]="clientSideUrl" target="_blank"><button class="btn ghost-primary">View client side</button></a>
+      <div class="title-button-wrapper">
+        <h1>{{ project?.name }}</h1>
+
+        <a [routerLink]="['/user/projects/', project._id]" target="_blank"><button class="btn ghost-primary">View client side</button></a>
       </div>
 
 
       <ul class="tab">
-        <li *ngFor="let tab of authorizedTabs" (out)="getEvent($event)" class="tab-item">
-          <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
+        <li *ngFor="let tab of authorizedTabs" class="tab-item">
+          <a routerLinkActive="active" [routerLink]="['/user/admin/projects/project', project._id, tab]" [routerLinkActiveOptions]="{ exact: true }">
             {{ 'PROJECT.' + tab.toUpperCase() | translate }}
           </a>
         </li>

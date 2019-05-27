@@ -1,5 +1,5 @@
 <ng-container *ngIf="questionReceived">
-  <section class="question-section-component section-pad" [id]="questionReceived.identifier | removespaces">
+  <section class="question-section-component section-pad" [id]="questionReceived.identifier">
 
     <!-- if the question type is checkbox or radio -->
     <ng-container *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">

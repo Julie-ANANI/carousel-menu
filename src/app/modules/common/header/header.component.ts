@@ -2,7 +2,6 @@ import { Component, HostListener, Inject, OnDestroy, PLATFORM_ID } from '@angula
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { UserService } from '../../../services/user/user.service';
 import { User } from '../../../models/user.model';
 import { Header } from './interface/header';
 import { initTranslation, TranslateService } from '../../../i18n/i18n';
@@ -53,14 +52,6 @@ export class HeaderComponent implements OnDestroy {
 
   private _displayMenuOptions: boolean = false; // on small devices if true then display menu options.
 
-  private _profilePicture: string;
-
-  private _userInitial: string;
-
-  private _email: string;
-
-  private _name: string;
-
   private _currentLang: string;
 
   private _flag: string;
@@ -80,20 +71,8 @@ export class HeaderComponent implements OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _location: Location,
-              private _userService: UserService,
               private _translateService: TranslateService,
               private _cookieService: CookieService) {
-
-    this._userService.getSelf().subscribe((response: User) => {
-
-      this._userInitial = response.firstName && response.lastName ?
-        `${response.firstName.slice(0, 1)}${response.lastName.slice(0, 1)}` : response.firstName.slice(0, 2);
-
-      this._email = response.email;
-      this._name = response.name;
-      this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
-
-    });
 
     this._initializeVariables();
 
@@ -199,7 +178,7 @@ export class HeaderComponent implements OnDestroy {
 
 
   public hasProfilePic(): boolean {
-    return !!this._profilePicture && this._profilePicture !== '';
+    return !!this.profilePicture && this.profilePicture !== '';
   }
 
 
@@ -221,24 +200,21 @@ export class HeaderComponent implements OnDestroy {
     return this._authService;
   }
 
+  get user(): User {
+    return this._authService.user;
+  }
+
   get displayMenuOptions(): boolean {
     return this._displayMenuOptions;
   }
 
   get profilePicture(): string {
-    return this._profilePicture;
+    return this.user.profilePic ? this.user.profilePic.url ||  '' : '' ;
   }
 
   get userInitial(): string {
-    return this._userInitial;
-  }
-
-  get email(): string {
-    return this._email;
-  }
-
-  get name(): string {
-    return this._name;
+    return  this.user.firstName && this.user.lastName ?
+      `${this.user.firstName.slice(0, 1)}${this.user.lastName.slice(0, 1)}` : this.user.firstName.slice(0, 2);;
   }
 
   get currentLang(): string {

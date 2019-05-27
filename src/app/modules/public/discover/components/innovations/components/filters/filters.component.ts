@@ -6,6 +6,7 @@ import { environment } from '../../../../../../../../environments/environment';
 import { FilterService } from '../../services/filter.service';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
 import { ActivatedRoute } from '@angular/router';
+import {AuthService} from "../../../../../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-filters',
@@ -48,6 +49,7 @@ export class FiltersComponent implements OnInit {
   private _suggestedTags: Array<Tag> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _authService: AuthService,
               private _translateService: TranslateService,
               private _tagsService: TagsService,
               private _activatedRoute: ActivatedRoute,
@@ -89,15 +91,15 @@ export class FiltersComponent implements OnInit {
     switch (type) {
 
       case 'allTags':
-        this._allTags = FilterService.sortTags(this._allTags, this._userLang);
+        this._allTags = this._filterService.sortTags(this._allTags, this._userLang);
         break;
 
       case 'suggested':
-        this._suggestedTags = FilterService.sortTags(this._suggestedTags, this._userLang);
+        this._suggestedTags = this._filterService.sortTags(this._suggestedTags, this._userLang);
         break;
 
       case 'highlight':
-        this._highLightTags = FilterService.sortTags(this._highLightTags, this._userLang);
+        this._highLightTags = this._filterService.sortTags(this._highLightTags, this._userLang);
         break;
 
       default:
@@ -375,6 +377,14 @@ export class FiltersComponent implements OnInit {
 
   private static _getClientUrl(): string {
     return `${environment.clientUrl}/discover`;
+  }
+
+  public getSelectedTagsIds(): Array<string> {
+    return this._selectedTags.map((t) => t._id);
+  }
+
+  get isAdmin(): boolean {
+    return (this._authService.adminLevel & 2) === 2;
   }
 
   get modalShare(): boolean {

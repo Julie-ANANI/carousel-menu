@@ -7,6 +7,8 @@ export const DISCOVER = {
 
   'BUTTON_SHARE': 'Share',
 
+  'BUTTON_SHOWCASE': 'Get more stats',
+
   'MODAL_SHARE': {
     'TITLE': 'Share this page with your colleagues',
   },

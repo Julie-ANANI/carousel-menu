@@ -9,34 +9,51 @@
 .tooltip {
   position: relative;
 
-  &::after {
+  &::before, &::after {
     @include control-transition();
-    background: $bg-overlay-color;
+    position: absolute;
+    display: block;
+    opacity: 0;
+    left: 50%;
+    transform: translate(-50%, $unit-1);
+  }
+
+  &::before {
+    background: $bg-tooltip-color;
     border-radius: $border-radius;
-    bottom: 100%;
+    bottom: calc(100% + 5px);
     color: $light-color;
     content: attr(data-tooltip);
-    display: block;
     font-size: $font-size-xs;
-    left: 50%;
     max-width: 320px;
-    opacity: 0;
     font-weight: normal;
     overflow: hidden;
-    padding: $unit-1 $unit-2;
+    padding: 0.5rem;
     pointer-events: none;
-    position: absolute;
     text-overflow: ellipsis;
-    transform: translate(-50%, $unit-2);
     white-space: pre;
+    line-height: $line-height-sm;
     z-index: 300;
+  }
+
+  &::after {
+    z-index: 299;
+    width: 0;
+    height: 0;
+    content: "";
+    border: 5px solid transparent;
+    bottom: calc(100% - 5px);
   }
 
   &:focus, &:hover {
 
-    &::after {
+    &::before, &::after {
       opacity: 1;
       transform: translate(-50%, -$unit-1);
+    }
+
+    &::after {
+      border-top-color: $bg-tooltip-color;
     }
 
   }
@@ -45,36 +62,31 @@
     pointer-events: auto;
   }
 
+
   &.tooltip-right {
 
-    &::after {
+    &::before, &::after {
       bottom: 50%;
-      left: 100%;
       transform: translate(-$unit-1, 50%);
-  }
+    }
+
+    &::before {
+      left: calc(100% + 5px);
+    }
+
+    &::after {
+      border-color: transparent;
+      left: calc(100% - 5px);
+    }
 
     &:focus, &:hover {
 
-      &::after {
+      &::before, &::after {
         transform: translate($unit-1, 50%);
       }
 
-    }
-
-  }
-
-  &.tooltip-bottom {
-
-    &::after {
-      bottom: auto;
-      top: 100%;
-      transform: translate(-50%, -$unit-2);
-    }
-
-    &:focus, &:hover {
-
       &::after {
-        transform: translate(-50%, $unit-1);
+        border-right-color: $bg-tooltip-color;
       }
 
     }
@@ -83,20 +95,63 @@
 
   &.tooltip-left {
 
-    &::after {
+    &::before, &::after {
       bottom: 50%;
       left: auto;
-      right: 100%;
-      transform: translate($unit-2, 50%);
+      transform: translate($unit-1, 50%);
+    }
+
+    &::before {
+      right: calc(100% + 5px);
+    }
+
+    &::after {
+      border-color: transparent;
+      right: calc(100% - 5px);
     }
 
     &:focus, &:hover {
 
-      &::after {
+      &::before, &::after {
         transform: translate(-$unit-1, 50%);
       }
 
+      &::after {
+        border-left-color: $bg-tooltip-color;
+      }
+
     }
+
+  }
+
+  &.tooltip-bottom {
+
+    &::before, &::after {
+      bottom: auto;
+      transform: translate(-50%, -$unit-1);
+    }
+
+    &::before {
+      top: calc(100% + 5px);
+    }
+
+    &::after {
+      border-color: transparent;
+      top: calc(100% - 5px);
+    }
+
+    &:focus, &:hover {
+
+      &::before, &::after {
+        transform: translate(-50%, $unit-1);
+      }
+
+      &::after {
+        border-bottom-color: $bg-tooltip-color;
+      }
+
+    }
+
 
   }
 

@@ -1,15 +1,14 @@
 export interface AmbassadorPosition {
-  name?: string;
-  alias?: string;
+  type?: string;
 }
 
 export const ambassadorPosition: Array<AmbassadorPosition> = [
-  { name:  'uncategorized', alias: 'Uncategorized' },
-  { name:  'academic', alias: 'Academic / Researcher' },
-  { name:  'consultant', alias: 'Consultant' },
-  { name:  'freelance', alias: 'Entrepreneur / Freelance' },
-  { name:  'operational', alias: 'Operational' },
-  { name:  'other', alias: 'Other' },
-  { name:  'business', alias: 'Sales / Business Dev. / Marketing / HR' },
-  { name:  'management', alias: 'Upper management' }
+  { type:  'Uncategorized' },
+  { type:  'Academic / Researcher' },
+  { type:  'Consultant' },
+  { type:  'Entrepreneur / Freelance' },
+  { type:  'Operational' },
+  { type:  'Others' },
+  { type:  'Sales / Business Dev. / Marketing / HR' },
+  { type:  'Upper Management' }
 ];

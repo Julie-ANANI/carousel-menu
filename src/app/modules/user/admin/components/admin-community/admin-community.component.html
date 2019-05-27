@@ -1,17 +1,18 @@
 <section id="admin-community-component">
 
+
   <!-- header section -->
   <div class="section-header section-light-pad rm-pad-bottom">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
       <!-- heading -->
-      <h1 class="title-primary text-background text-normal">Community</h1>
+      <h1 class="title-primary text-background text-normal" [innerText]="'Community'"></h1>
 
       <!-- tabs -->
       <ul class="tab">
         <li *ngFor="let tab of tabs" class="tab-item">
           <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
-            {{ tab | FormatText }}
+            <span>{{ tab | FormatText }}</span>
           </a>
         </li>
       </ul>
@@ -20,10 +21,12 @@
   </div>
   <!-- header section -->
 
+
   <!-- other sections -->
   <div class="section-light-pad">
     <router-outlet></router-outlet>
   </div>
   <!-- /other sections -->
+
 
 </section>

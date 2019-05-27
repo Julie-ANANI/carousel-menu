@@ -71,6 +71,7 @@ export class AutocompleteInputComponent implements OnInit {
   constructor(private _fbuilder: FormBuilder,
               private _sanitizer: DomSanitizer,
               private _autocompleteService: AutocompleteService,
+              private _multiling: MultilingPipe,
               private _translateService: TranslateService) {}
 
   ngOnInit() {
@@ -94,7 +95,7 @@ export class AutocompleteInputComponent implements OnInit {
 
   autocompleteValueFormatter(data: any): string {
     if (this.multiLangObjects) {
-      return MultilingPipe.prototype.transform(data[this._identifier], this._translateService.currentLang);
+      return this._multiling.transform(data[this._identifier], this._translateService.currentLang);
     } else {
       return data[this._identifier];
     }
@@ -127,7 +128,7 @@ export class AutocompleteInputComponent implements OnInit {
       _obj[this._identifier] = val;
       val = _obj;
     } else if (this.multiLangObjects) {
-      val.name = MultilingPipe.prototype.transform(val.name, this._translateService.currentLang);
+      val.name = this._multiling.transform(val.name, this._translateService.currentLang);
     }
 
     if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {

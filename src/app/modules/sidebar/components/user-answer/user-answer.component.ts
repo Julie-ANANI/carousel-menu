@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { first } from 'rxjs/operators';
 import { Question } from '../../../../models/question';
 import { Answer } from '../../../../models/answer';
 import { TranslateService } from '@ngx-translate/core';
@@ -167,7 +166,7 @@ export class UserAnswerComponent {
 
 
   public addTag(tag: Tag): void {
-    this._answerService.addTag(this._modalAnswer._id, tag._id).pipe(first()).subscribe(() => {
+    this._answerService.addTag(this._modalAnswer._id, tag._id).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
       this._modalAnswer.tags.push(tag);
       this.answerUpdated.emit(true);
@@ -178,7 +177,7 @@ export class UserAnswerComponent {
 
 
   public createTag(tag: Tag): void {
-    this._answerService.createTag(this._modalAnswer._id, tag).pipe(first()).subscribe(() => {
+    this._answerService.createTag(this._modalAnswer._id, tag).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
       this._modalAnswer.tags.push(tag);
       this.answerUpdated.emit(true);
@@ -189,7 +188,7 @@ export class UserAnswerComponent {
 
 
   public removeTag(tag: Tag): void {
-    this._answerService.removeTag(this._modalAnswer._id, tag._id).pipe(first()).subscribe((a: any) => {
+    this._answerService.removeTag(this._modalAnswer._id, tag._id).subscribe((a: any) => {
       this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
       this._modalAnswer.tags = this._modalAnswer.tags.filter(t => t._id !== tag._id);
       this.answerUpdated.emit(true);
@@ -202,7 +201,7 @@ export class UserAnswerComponent {
   public importAnswer(event: Event): void {
     event.preventDefault();
 
-    this._answerService.importFromQuiz(this._modalAnswer).pipe(first()).subscribe((_res: any) => {
+    this._answerService.importFromQuiz(this._modalAnswer).subscribe((_res: any) => {
       this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -215,7 +214,7 @@ export class UserAnswerComponent {
   }
 
   get lang(): string {
-    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    return this._translateService.currentLang;
   }
 
   get modalAnswer(): Answer {

@@ -12,15 +12,7 @@ export class FilterService {
 
   static highlight: Array<string> = ['civil engineering', 'construction', 'industry', 'manufacturing', 'energy', 'healthcare', 'pharma', 'chemistry', 'transport', 'service', 'environment', 'telecom', 'materials', 'chemicals', 'electronic', 'food', 'medical device', 'agriculture', 'it'];
 
-  setFilterToRemove(value: string) {
-    this.filterRemove.next(value);
-  }
-
-
-  getFilterToRemove(): Subject<string> {
-    return this.filterRemove;
-  }
-
+  constructor(private multiling: MultilingPipe) {}
 
   static getAllSectorTags(totalInnovations: Array<Innovation>) {
     let sectorTags = [];
@@ -58,22 +50,6 @@ export class FilterService {
   }
 
 
-  static sortTags(tags: Array<Tag>, userLang: string) {
-    let sortTags = [];
-
-    if (tags.length > 0) {
-      sortTags = tags.sort((a: Tag, b: Tag) => {
-        const labelA = MultilingPipe.prototype.transform(a.label, userLang).toLowerCase();
-        const labelB =  MultilingPipe.prototype.transform(b.label, userLang).toLowerCase();
-        return labelA.localeCompare(labelB);
-      });
-    }
-
-    return sortTags;
-
-  }
-
-
   static getFilteredInnovations(totalInnovations: Array<Innovation>, selectedTags: Array<Tag>, searchFieldInput: string = '') {
     if (totalInnovations.length > 0) {
       return totalInnovations.filter((innovation: Innovation) => {
@@ -101,6 +77,29 @@ export class FilterService {
       });
     }
     return [];
+  }
+
+  setFilterToRemove(value: string) {
+    this.filterRemove.next(value);
+  }
+
+  getFilterToRemove(): Subject<string> {
+    return this.filterRemove;
+  }
+
+  public sortTags(tags: Array<Tag>, userLang: string) {
+    let sortTags = [];
+
+    if (tags.length > 0) {
+      sortTags = tags.sort((a: Tag, b: Tag) => {
+        const labelA = this.multiling.transform(a.label, userLang).toLowerCase();
+        const labelB =  this.multiling.transform(b.label, userLang).toLowerCase();
+        return labelA.localeCompare(labelB);
+      });
+    }
+
+    return sortTags;
+
   }
 
 }

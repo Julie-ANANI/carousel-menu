@@ -17,6 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
 import { SearchService } from "../../../../services/search/search.service";
 import { Observable} from 'rxjs';
+import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 
 @Component({
   selector: 'app-user-form',
@@ -128,7 +129,8 @@ export class UserFormComponent implements OnInit {
               private translateService: TranslateService,
               private searchService: SearchService,
               private userService: UserService,
-              private _authService: AuthService) {}
+              private _authService: AuthService,
+              private _professionalService: ProfessionalsService) {}
 
   ngOnInit() {
     this._user = new User();
@@ -336,6 +338,27 @@ export class UserFormComponent implements OnInit {
 
     return value;
 
+  }
+
+  public onEmailChange() {
+    if(this._type === 'addPro' && this._userForm.get("email").valid) {
+      const config = {
+        fields: 'firstName lastName company email country jobTitle campaigns innovations',
+        limit: '1',
+        offset: '0',
+        search: '{}',
+        email: this._userForm.get("email").value,
+        sort: '{ "created": -1 }'
+      };
+      this._professionalService.getAll(config).pipe(first())
+        .subscribe( response => {
+          if(response && response.result && response.result.length) {
+            this._userForm.patchValue(response.result[0]);
+          }
+        }, err => {
+          console.error(err);
+        });
+    }
   }
 
   get isSuperAdmin(): boolean {

@@ -16,9 +16,15 @@ export class MessageSpaceComponent {
     this._wrapperWidth = value;
   }
 
+  @Input() set backgroundColor(value: string) {
+    this._backgroundColor = value;
+  }
+
   private _imageSrc = '';
 
   private _wrapperWidth = '';
+
+  private _backgroundColor = '#4F5D6B';
 
   private _defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1542810328/app/default-images/bot/info.svg';
 
@@ -34,6 +40,10 @@ export class MessageSpaceComponent {
 
   get defaultSrc(): string {
     return this._defaultSrc;
+  }
+
+  get backgroundColor(): string {
+    return this._backgroundColor;
   }
 
 }

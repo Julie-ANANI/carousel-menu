@@ -25,7 +25,10 @@ export class AnswerQuestionComponent {
 
   @Input() set fullAnswer(value: Answer) {
     this._fullAnswer = value;
-    this._commenting = !!(this.fullAnswer.answers && this.fullAnswer.answers[this.question.identifier + 'Comment'])
+    if ((this.question.controlType === 'checkbox' || this.question.controlType === 'stars') && !this._fullAnswer.answers[this.question.identifier]) {
+      this._fullAnswer.answers[this.question.identifier] = {};
+    }
+    this._commenting = !!(this._fullAnswer.answers && this._fullAnswer.answers[this.question.identifier + 'Comment']);
   }
 
   _commenting: boolean;
@@ -54,9 +57,7 @@ export class AnswerQuestionComponent {
   }
 
   checkOption(id: string, event: Event) {
-    if (!this.fullAnswer.answers[this.question.identifier]) {
-      this.fullAnswer.answers[this.question.identifier] = {};
-    }
+    event.preventDefault();
     this.fullAnswer.answers[this.question.identifier][id] = !this.fullAnswer.answers[this.question.identifier][id];
   }
 
@@ -114,7 +115,7 @@ export class AnswerQuestionComponent {
   }
 
   get lang (): string {
-    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    return this._translateService.currentLang;
   }
 
   get fullAnswer() { return this._fullAnswer; }

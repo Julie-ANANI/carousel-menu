@@ -322,7 +322,7 @@ export class AdminProjectManagementComponent implements OnInit {
         this._project = data;
         this.save('Le questionnaire a bien été affecté au projet');
       }, (err: any) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
       });
     } else {
       this.project.preset = preset;
@@ -357,7 +357,7 @@ export class AdminProjectManagementComponent implements OnInit {
       this._project = result;
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
     }, (err: any) => {
-      this._notificationsService.error('ERROR.ERROR', err);
+      this._notificationsService.error('ERROR.ERROR', err.message);
     });
   }
 

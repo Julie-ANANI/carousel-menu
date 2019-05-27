@@ -205,25 +205,25 @@
         </div>
       </a>
 
-      <div *ngFor="let tag of tagsList | slice:0:tagsEndIndex | SortTags:userLang" class="form-group">
+      <div *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))" class="form-group">
         <label class="form-checkbox">
           <input
             type="checkbox"
             [name]="tag.label | multiling:userLang"
-            (change)="checkTag($event)"
+            (change)="checkTag($event, tag._id)"
             [checked]="selectedTags[tag._id]">
           <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
         </label>
       </div>
 
       <!-- see more -->
-      <div *ngIf="tagsList && tagsList.length > 6 && tagsList.length !== tagsEndIndex">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="tagsEndIndex = tagsList.length"></span>
+      <div *ngIf="tagsList && tagsList.length > 6 && !seeMore.professionals">
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="seeMore.professionals = true"></span>
       </div>
 
       <!-- see less -->
-      <div *ngIf="tagsList && tagsList.length === tagsEndIndex && tagsEndIndex !== 6">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="tagsEndIndex = 6"></span>
+      <div *ngIf="tagsList && tagsList.length > 6 && seeMore.professionals">
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="seeMore.professionals = false"></span>
       </div>
 
       <div *ngIf="filters['professionals']" class="professional-hide-wrapper">
@@ -241,7 +241,7 @@
     <!-- questions filters -->
     <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
 
-      <a [href]="'#' + question.identifier | removespaces" pageScroll class="text-primary c-hand">
+      <a [href]="'#' + question.identifier" pageScroll class="text-primary c-hand">
         <div class="flex-between">
           <span>{{ question.title | multiling:userLang | FormatText }}</span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -250,7 +250,8 @@
 
       <!-- textarea -->
       <ng-container *ngIf="question.controlType === 'textarea'">
-        <div *ngFor="let answerTag of answersTagsLists[question.identifier] | SortTags:userLang" class="form-group">
+        <div *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
+             class="form-group">
           <label class="form-checkbox">
             <input
               type="checkbox"
@@ -260,11 +261,19 @@
             <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
           </label>
         </div>
+        <!-- see more -->
+        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
+          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="seeMore[question.identifier] = true"></span>
+        </div>
+        <!-- see less -->
+        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
+          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="seeMore[question.identifier] = false"></span>
+        </div>
       </ng-container>
 
       <!-- checkbox/radio -->
       <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
-        <div *ngFor="let option of question.options | SortTags:userLang" class="form-group">
+        <div *ngFor="let option of question.options" class="form-group">
           <label class="form-checkbox">
             <input
               type="checkbox"

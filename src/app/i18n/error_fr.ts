@@ -1,21 +1,21 @@
 export const ERROR = {
   'ERROR': 'Oups..',
 
-  'ERROR_EN': 'Oups...',
-
   'SUCCESS': 'Succès',
 
-  'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment. Veuillez réessayer !',
+  'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment.',
+
+  'OPERATION_ERROR': 'Nous sommes confrontés à des problèmes techniques pour mener à bien cette demande. Veuillez réessayer !',
 
   'FORM_ERROR': 'Erreur de formulaire',
 
   'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
 
-  'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau !',
+  'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données.',
 
-  'FETCHING_ERROR_EN': 'We are having trouble while fetching the data. Please try to reload the page again!',
+  'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur.',
 
-  'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Veuillez réessayer !',
+  'RELOAD_PAGE': 'Veuillez réessayer !',
 
   'NO_CONNECTION': 'Il semble que vous n\'êtes pas connecté.',
 
@@ -168,6 +168,15 @@ export const ERROR = {
   'FILTER': {
     'ALREADY_EXIST': 'La vue avec ce nom existe déjà.',
     'ALREADY_ACTIVATED': 'La vue est déjà activée.',
+  },
+
+  'ERRORS': {
+    'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
+    'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.'
+  },
+
+  'AMBASSADOR': {
+    'DELETED': 'L\'ambassadeur a été supprimé avec succès.',
   }
 
 };

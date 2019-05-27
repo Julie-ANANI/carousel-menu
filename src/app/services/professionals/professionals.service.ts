@@ -58,9 +58,13 @@ export class ProfessionalsService {
     return this._http.post('/professional/import/' + campaignId + '/' + innovationId, formData);
   }
 
+  public createAmbassadors(professionalArray: Array<Professional>): Observable<any> {
+    return this._http.post(`/professional/ambassador/create`, {professionals: professionalArray});
+  }
+
   public importAmbassadorsFromCSV(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this._http.post('/professional/ambassadors/', formData);
+    return this._http.post('/professional/ambassador/upload', formData);
   }
 }

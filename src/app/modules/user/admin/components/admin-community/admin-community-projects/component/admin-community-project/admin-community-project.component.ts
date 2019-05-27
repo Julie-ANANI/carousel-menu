@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { SidebarInterface } from "../../../../../../../sidebar/interfaces/sidebar-interface";
 import { Innovation } from '../../../../../../../../models/innovation';
 import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
+import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
+import { AnswerService } from '../../../../../../../../services/answer/answer.service';
+import {ContextInterface} from '../../../interfaces/context-interface';
 
 @Component({
   selector: 'admin-community-project',
@@ -14,39 +17,74 @@ export class AdminCommunityProjectComponent {
 
   private _innovation: Innovation;
 
-  private _config = {};
+  private _config: any = {
+    fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
+    limit: '10',
+    offset: '0',
+    innovations: '',
+    search: '',
+    sort: '{ "created": -1 }'
+  };
 
-  private _context: any = null;
+  private _context: ContextInterface = null;
 
   private _sideConfig: any = null;
 
-  private _targetCountries = ['CO'];
+  private _targetCountries: Array<string> = [];
 
-  private _sidebarStatus: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {};
 
   private _totalThreshold: number;
 
+  private _fetchingError: boolean;
+
   constructor(private _activatedRoute: ActivatedRoute,
+              private _translateTitleService: TranslateTitleService,
+              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this._innovation = this._activatedRoute.snapshot.data['innovation'];
-    this._context = {
-      innovationId: this._innovation._id.toString()
-    };
-    this._setConfig();
+    if (typeof (this._activatedRoute.snapshot.data['innovation']) !== 'undefined') {
+      this._innovation = this._activatedRoute.snapshot.data['innovation'];
+      this._translateTitleService.setTitle(`${this._innovation.name}`);
+      this._config.innovations = this._innovation._id;
+      this._getTargetedCountries();
+
+      this._context = {
+        innovationId: this._innovation._id.toString(),
+        campaignId: this._getCampaignId(),
+        deleteType: 'Campaign'
+      };
+
+    } else {
+      this._fetchingError = true;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }
 
   }
 
 
-  private _setConfig() {
-    this._config = {
-      fields: 'firstName lastName tags.label country answers.innovation answers.status ambassador.industry',
-      limit: '10',
-      offset: '0',
-      innovations: this._innovation._id,
-      search: '',
-      sort: '{ "created": -1 }'
-    };
+  private _getTargetedCountries() {
+    this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
+      if (response && response.answers) {
+        this._targetCountries = response.answers.reduce((acc, answer) => {
+          if (acc.indexOf(answer.country.flag) === -1) {
+            acc.push(answer.country.flag);
+          }
+          return acc;
+        }, []);
+      }
+    });
+  }
+
+
+  private _getCampaignId(): string {
+    if (this._innovation && this._innovation.campaigns && this._innovation.campaigns.length > 0 ) {
+      const index = this._innovation.campaigns.findIndex((campaign: any) => campaign.type === 'COMMUNITY');
+      if (index !== -1) {
+        return this._innovation.campaigns[index]._id;
+      }
+    }
+    return '';
   }
 
 
@@ -56,22 +94,30 @@ export class AdminCommunityProjectComponent {
 
 
   public onClickAddManually(event: Event) {
-    this._sidebarStatus = {
-      size: "726px",
+    event.preventDefault();
+
+    this._sidebarValue = {
+      size: "850px",
       type: "addToProject",
-      title: "Add Manually",
-      animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
+      title: "Add Ambassador",
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
     };
+
   }
 
+
   public onClickSuggestion(event: Event) {
-    this._sidebarStatus = {
-      size: "726px",
+    event.preventDefault();
+
+    this._sidebarValue = {
+      size: "850px",
       type: "addFromSuggestions",
-      title: "See Suggestions",
-      animate_state: this._sidebarStatus.animate_state === 'active' ? 'inactive' : 'active',
+      title: "Ambassadors Suggestions",
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
     };
+
   }
+
 
   public actionsResultCallback(response: Event) {
     if(!!response) {
@@ -84,15 +130,16 @@ export class AdminCommunityProjectComponent {
     } else {
       this._translateNotificationsService.error('ERROR.ERROR', "Empty result");
     }
-    this._sidebarStatus.animate_state = 'inactive';
+    this._sidebarValue.animate_state = 'inactive';
   }
 
-  get sidebarStatus(): SidebarInterface {
-    return this._sidebarStatus;
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
   }
 
-  set sidebarStatus(_value: SidebarInterface) {
-    this._sidebarStatus = _value;
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get sideConfig(): any {
@@ -118,5 +165,10 @@ export class AdminCommunityProjectComponent {
   get context() {
     return this._context;
   }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
 }
 

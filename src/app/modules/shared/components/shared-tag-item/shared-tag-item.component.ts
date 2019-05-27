@@ -46,6 +46,7 @@ export class SharedTagItemComponent implements OnInit {
 
   constructor(private translateService: TranslateService,
               private formBuilder: FormBuilder,
+              private multiling: MultilingPipe,
               private sanitizer: DomSanitizer,
               private tagsService: TagsService,
               private autocompleteService: AutocompleteService) {}
@@ -78,9 +79,9 @@ export class SharedTagItemComponent implements OnInit {
 
   public autocompleValueFormatter = (data: any) : string => {
     if (this._projectId === '') {
-      return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
+      return this.multiling.transform(data.name, this.translateService.currentLang);
     } else {
-      return MultilingPipe.prototype.transform(data.label, this.translateService.currentLang);
+      return this.multiling.transform(data.label, this.translateService.currentLang);
     }
   };
 

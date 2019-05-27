@@ -15,7 +15,7 @@
         <ul class="menu">
 
           <!-- example page -->
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
               <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
                  routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
@@ -25,7 +25,7 @@
           </ng-container>
 
           <!-- client my projects -->
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="menu-item" *ngIf="!backOfficeValue">
               <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
                 <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
@@ -41,7 +41,7 @@
           </li>
 
           <!-- client shared reports -->
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="menu-item" *ngIf="!backOfficeValue">
               <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-reports">
                 <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
@@ -50,9 +50,9 @@
           </ng-container>
 
           <!-- admin routes -->
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
             <ng-container *ngFor="let route of adminRoutes">
-              <li class="menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel) && authService.user">
+              <li class="menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel) && user">
                 <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
                   <span>{{ route.pageName }}</span>
                 </a>
@@ -112,13 +112,13 @@
           <li class="menu-item header-account-dropdown">
             <div class="dropdown" id="header-account-dropdown">
 
-              <ng-container *ngIf="authService.user && authService.user.state === 'unconfirmed'">
+              <ng-container *ngIf="user && user.state === 'unconfirmed'">
                 <figure class="avatar avatar-lg avatar-user text-notify">
                   <i class="fas fa-user"></i>
                 </figure>
               </ng-container>
 
-              <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+              <ng-container *ngIf="user && user.state === 'confirmed'">
                 <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
                   <figure class="avatar avatar-lg avatar-user text-medium" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
                     <ng-container *ngIf="hasProfilePic()">
@@ -131,7 +131,7 @@
               <!-- dropdown -->
               <ul class="dropdown-menu dropdown-menu-right">
 
-                <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+                <ng-container *ngIf="user && user.state === 'confirmed'">
 
                   <li class="drop-item drop-item-user">
                     <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account drop-item-user">
@@ -143,8 +143,8 @@
                       </figure>
 
                       <span class="d-flex">
-                      <span class="text-medium text-ellipsis">{{ name }}</span>
-                      <span class="text-email text-ellipsis">{{ email }}</span>
+                      <span class="text-medium text-ellipsis">{{ user.name }}</span>
+                      <span class="text-email text-ellipsis">{{ user.email }}</span>
                     </span>
 
                     </a>
@@ -220,7 +220,7 @@
         <ul class="menu">
 
           <!-- account and pic -->
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="sidebar-menu-item sidebar-item-user">
               <a [routerLink]="'/user/account'" (click)="onClickLink()" class="gtm-menu-my-account">
 
@@ -231,8 +231,8 @@
                 </figure>
 
                 <span class="d-flex">
-              <span class="text-medium text-ellipsis">{{ name }}</span>
-              <span class="text-email text-ellipsis text-normal">{{ email }}</span>
+              <span class="text-medium text-ellipsis">{{ user.name }}</span>
+              <span class="text-email text-ellipsis text-normal">{{ user.email }}</span>
             </span>
 
               </a>
@@ -240,7 +240,7 @@
           </ng-container>
 
           <!-- example page -->
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
               <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
                  routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
@@ -250,7 +250,7 @@
           </ng-container>
 
           <!-- client my projects -->
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
               <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
                 <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
@@ -265,7 +265,7 @@
             </a>
           </li>
 
-          <ng-container *ngIf="authService.user && authService.user.state === 'confirmed'">
+          <ng-container *ngIf="user && user.state === 'confirmed'">
 
             <!-- client shared reports -->
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue">

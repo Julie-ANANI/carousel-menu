@@ -2,19 +2,19 @@ import { Campaign } from './campaign';
 import { Tag } from './tag';
 
 export interface Professional {
-  readonly _id: string;
+  readonly _id?: string;
 
-  readonly personId: string;
+  readonly personId?: string;
 
-  readonly messages: Array<any>;
+  readonly messages?: Array<any>;
 
-  readonly campaigns: Campaign[];
+  readonly campaigns?: Campaign[];
 
   readonly emailConfidence?: number;
 
   readonly urlCompany?: string;
 
-  profileUrl: string;
+  profileUrl?: string;
 
   email: string;
 
@@ -22,7 +22,7 @@ export interface Professional {
 
   lastName: string;
 
-  jobTitle: string;
+  jobTitle?: string;
 
   language?: string;
 
@@ -32,13 +32,13 @@ export interface Professional {
 
   fullName?: string;
 
-  company: string;
+  company?: string;
 
   companyDomain?: string;
 
-  sent: boolean;
+  sent?: boolean;
 
-  tags: Array<Tag>;
+  tags?: Array<Tag>;
 
   country?: string;
 

@@ -20,7 +20,7 @@
     <form novalidate [formGroup]="formBarChart">
       <div class="section-light-pad full-light bg-white full">
 
-        <h2 class="title-primary">{{ question?.identifier | FormatText }} Abstract</h2>
+        <h2 class="title-primary">{{ question.title | multiling:lang | FormatText }} Abstract</h2>
 
         <div class="form-group relative">
           <label [for]="'market-report-' + question._id"></label>

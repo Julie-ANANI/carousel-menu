@@ -7,11 +7,11 @@ import { LimitsPipe } from './pipes/TableLimitsPipe';
 import { DateFormatPipe } from './pipes/DateFormatPipe';
 import { MultilingPipe } from './pipes/multiling.pipe';
 import { ObjectKeysPipe } from './pipes/objectKeys.pipe';
+import { OrderByPipe } from './pipes/orderBy.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
 import { FormatText } from './pipes/FormatText';
 import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
-import { SortTags } from './pipes/SortTags';
 import { SortString } from './pipes/SortString';
 
 
@@ -27,12 +27,15 @@ import { SortString } from './pipes/SortString';
     DateFormatPipe,
     MultilingPipe,
     ObjectKeysPipe,
+    OrderByPipe,
     EllipsisPipe,
     DiscoverSummaryPipe,
     FormatText,
     ScrapeHTMLTags,
-    SortTags,
     SortString
+  ],
+  providers: [
+    MultilingPipe,
   ],
   exports: [
     CharacterCountdown,
@@ -42,11 +45,11 @@ import { SortString } from './pipes/SortString';
     DateFormatPipe,
     MultilingPipe,
     ObjectKeysPipe,
+    OrderByPipe,
     EllipsisPipe,
     DiscoverSummaryPipe,
     FormatText,
     ScrapeHTMLTags,
-    SortTags,
     SortString
   ]
 })

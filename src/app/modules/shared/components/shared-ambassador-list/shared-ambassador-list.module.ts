@@ -10,6 +10,8 @@ import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
 import { SidebarTagsFormModule } from '../../../sidebar/components/tags-form/sidebar-tags-form.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
+import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
+import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { ModalModule } from '../../../utility-components/modals/modal/modal.modu
     TranslateModule.forChild(),
     SidebarUserFormModule,
     SidebarTagsFormModule,
-    ModalModule
+    ModalModule,
+    ErrorTemplate1Module,
+    MessageSpaceModule
   ],
   declarations: [
     SharedAmbassadorListComponent

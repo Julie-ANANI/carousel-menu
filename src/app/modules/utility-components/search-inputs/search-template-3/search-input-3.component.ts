@@ -22,6 +22,8 @@ export class SearchInput3Component implements OnInit, OnDestroy {
 
   @Output() searchFieldOutput = new EventEmitter<string>();
 
+  @Output() searchContinuousOutput = new EventEmitter<string>();
+
   private _placeholder = 'COMMON.SEARCH_INPUT_PLACEHOLDER';
 
   private _searchField: FormControl;
@@ -35,14 +37,15 @@ export class SearchInput3Component implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._searchField.valueChanges.pipe(distinctUntilChanged(), debounceTime(200)).subscribe(() => {
-      this.outputData();
+    this._searchField.valueChanges.pipe(distinctUntilChanged(), debounceTime(200)).subscribe((input) => {
+      this.searchContinuousOutput.emit(input);
     });
   }
 
 
   public outputData() {
     this.searchFieldOutput.emit(this._searchField.value);
+    this.searchContinuousOutput.emit(this._searchField.value);
   }
 
 

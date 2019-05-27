@@ -146,27 +146,61 @@ export class AuthService {
   }
 
   public getUserInfo(): any {
-    return {
-      name: this._user ? this._user.firstName + ' ' + this._user.lastName : '',
-      id: this._user.id
-    };
+    if (this._user) {
+      return {
+        name: this._user.firstName + ' ' + this._user.lastName,
+        id: this._user.id
+      };
+    } else {
+      return {};
+    }
   }
 
-  get isAuthenticated(): boolean { return this._authenticated; }
-  get isConfirmed(): boolean { return this._confirmed; }
-  get adminLevel(): number { return this._admin; }
-  get user () { return this._user; }
-  get userId (): string { return this._user ? this._user.id : ''; }
-  get isAcceptingCookies(): boolean { // CNIL -> TODO: this should be initialized with a false value
+  get isAuthenticated(): boolean {
+    return this._authenticated;
+  }
+
+  get isConfirmed(): boolean {
+    return this._confirmed;
+  }
+
+  get adminLevel(): number {
+    return this._admin;
+  }
+
+  get user () {
+    return this._user;
+  }
+
+  get userId (): string {
+    return this._user ? this._user.id : '';
+  }
+
+  get isAcceptingCookies(): boolean {
+    // CNIL -> TODO: this should be initialized with a false value
     return true;
   }
-  get emailVerified(): boolean { return this._user && this._user.emailVerified || false; }
-  set emailVerified(value: boolean) { this._user.emailVerified = value; }
-  set isConfirmed(confirmed: boolean) { this._confirmed = confirmed; }
-  get redirectUrl() { return this._redirectUrl; }
+
+  get emailVerified(): boolean {
+    return this._user && this._user.emailVerified || false;
+  }
+
+  set emailVerified(value: boolean) {
+    this._user.emailVerified = value;
+  }
+
+  set isConfirmed(confirmed: boolean) {
+    this._confirmed = confirmed;
+  }
+
+  get redirectUrl() {
+    return this._redirectUrl;
+  }
+
   set redirectUrl (redirectUrl: string) {
     if (urlRegEx.test(redirectUrl)) {
       this._redirectUrl = redirectUrl;
     }
   }
+
 }

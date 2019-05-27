@@ -1,21 +1,21 @@
 export const ERROR = {
   'ERROR': 'Oups...',
 
-  'ERROR_EN': 'Oups...',
-
   'SUCCESS': 'Success',
 
-  'CANNOT_REACH': 'We are having trouble while reaching to the server at the moment. Please try again!',
+  'CANNOT_REACH': 'We are having trouble while reaching to the server at the moment.',
 
   'FORM_ERROR': 'Form error',
 
+  'OPERATION_ERROR': 'We are facing some technical issues to carry out this request. Please try again!',
+
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
-  'FETCHING_ERROR': 'We are having trouble while fetching the data. Please try to reload the page again!',
+  'FETCHING_ERROR': 'We are having trouble while fetching the data.',
 
-  'FETCHING_ERROR_EN': 'We are having trouble while fetching the data. Please try to reload the page again!',
+  'SERVER_ERROR': 'We are having trouble while connecting to the server.',
 
-  'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try it again!',
+  'RELOAD_PAGE': 'Please try to reload the page again!',
 
   'NO_CONNECTION': 'It seems that you are currently offline.',
 
@@ -168,6 +168,15 @@ export const ERROR = {
   'FILTER': {
     'ALREADY_EXIST': 'The view with this name already exists.',
     'ALREADY_ACTIVATED': 'The view is already activated.'
+  },
+
+  'ERRORS': {
+    'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check the URL is good.',
+    'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check the URL is good.',
+  },
+
+  'AMBASSADOR': {
+    'DELETED': 'The ambassador has been deleted successfully.',
   }
 
 };

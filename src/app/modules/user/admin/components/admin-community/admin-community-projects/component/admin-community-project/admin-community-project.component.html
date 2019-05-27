@@ -1,6 +1,20 @@
-<ng-container *ngIf="innovation">
+<!-- when error -->
+<ng-container *ngIf="fetchingError">
+  <div class="section-pad">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'">
+        <p [innerText]="'ERROR.ERRORS.PROJECT_ERROR'" translate></p>
+      </app-error-template-1>
+    </div>
+  </div>
+</ng-container>
+<!-- /when error -->
 
+
+<!-- when not error -->
+<ng-container *ngIf="!fetchingError && innovation">
   <section id="admin-community-project-component" class="section-light-pad rm-pad-top">
+
 
     <!-- section header -->
     <div class="section-header section-light-pad rm-pad-bottom">
@@ -8,8 +22,8 @@
 
         <!-- project name -->
         <div class="name-wrapper d-flex">
-          <h1 class="title-primary text-background">{{ innovation.name }}</h1>
-          <a [href]="'/user/admin/projects/project/' + innovation._id + '/settings'" target="_blank" class="text-link">see project description</a>
+          <h1 class="title-primary text-background" [innerText]="innovation.name"></h1>
+          <a [href]="'/user/admin/projects/project/' + innovation._id + '/settings'" target="_blank" class="text-link">See project description</a>
         </div>
 
         <!-- stat -->
@@ -20,15 +34,15 @@
             <h5 class="stat-heading">Ambassador</h5>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Native</h5>
-              <span class="stat-value">1</span>
+              <span class="stat-value">--</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Added</h5>
-              <span class="stat-value">3</span>
+              <span class="stat-value">--</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Suggested</h5>
-              <span class="stat-value">4</span>
+              <span class="stat-value">--</span>
             </div>
           </li>
 
@@ -37,11 +51,11 @@
             <h5 class="stat-heading">Feedback</h5>
             <div class="stat-body">
               <h5 class="stat-sub-heading">Total</h5>
-              <span class="stat-value" [ngStyle]="{ 'color': checkThreshold() }">{{ totalThreshold }}</span>
+              <span class="stat-value" [ngStyle]="{ 'color': checkThreshold() }">{{ totalThreshold || '--' }}</span>
             </div>
             <div class="stat-body">
               <h5 class="stat-sub-heading">From Ambassador</h5>
-              <span class="stat-value">3</span>
+              <span class="stat-value">--</span>
             </div>
           </li>
 
@@ -64,37 +78,43 @@
     </div>
     <!-- /section header -->
 
+
     <!-- section details -->
     <div class="section-details section-light-pad rm-pad-bottom">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- buttons -->
         <div class="text-right">
-          <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add Manually</button>
-          <button type="button" class="btn btn-primary btn-sm" (click)="onClickSuggestion($event)">See Suggestions</button>
+          <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add manually</button>
+          <button type="button" class="btn btn-primary btn-sm" [disabled]="true" (click)="onClickSuggestion($event)">See suggestions</button>
         </div>
 
         <!-- section table -->
         <div class="section-light-pad rm-pad-bottom">
-          <app-shared-ambassadors-list [listType]="'default'" [config]="config"></app-shared-ambassadors-list>
+          <app-shared-ambassadors-list [listType]="'default'" [config]="config" [context]="context"></app-shared-ambassadors-list>
         </div>
 
       </div>
     </div>
     <!-- /section details -->
 
+
   </section>
+</ng-container>
+<!-- /when not error -->
 
 
-  <app-sidebar [(template)]="sidebarStatus">
+<!-- sidebar community -->
+<ng-container *ngIf="!fetchingError && innovation">
+  <app-sidebar [(template)]="sidebarValue">
     <community-form
-      [sidebarState]="sidebarStatus.animate_state"
-      [type]="sidebarStatus.type"
+      [sidebarState]="sidebarValue.animate_state"
+      [innovationId]="innovation._id"
+      [type]="sidebarValue.type"
       [config]="sideConfig"
       [context]="context"
       (callbackNotification)="actionsResultCallback($event)">
     </community-form>
   </app-sidebar>
-
 </ng-container>
-
+<!-- /sidebar community -->

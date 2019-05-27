@@ -9,6 +9,8 @@ export const DISCOVER = {
 
   'BUTTON_SHARE': 'Partager la page',
 
+  'BUTTON_SHOWCASE': 'Obtenir plus de stats',
+
   'MODAL_SHARE': {
     'TITLE': 'Partagez cette page avec vos collègues',
   },

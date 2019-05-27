@@ -55,6 +55,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
+              private multiling: MultilingPipe,
               private sanitizer: DomSanitizer,
               private translateService: TranslateService,
               private autocompleteService: AutocompleteService,
@@ -94,7 +95,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   };
 
   public autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
-      return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
+      return this.multiling.transform(data.name, this.translateService.currentLang);
   };
 
   public addTag(event: Event): void {

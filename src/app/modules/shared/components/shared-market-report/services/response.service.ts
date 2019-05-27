@@ -14,8 +14,6 @@ export class ResponseService {
 
   filteredAnswers = new Subject <Array<Answer>>();
 
-  constructor() { }
-
   /***
    * Return the list of tags on every user answers for a given question
    * @param answers
@@ -48,14 +46,6 @@ export class ResponseService {
 
     return tags;
 
-  }
-
-  setFilteredAnswers(value: Array<Answer>) {
-    this.filteredAnswers.next(value);
-  }
-
-  getFilteredAnswers(): Subject <Array<Answer>> {
-    return this.filteredAnswers;
   }
 
   /***
@@ -172,12 +162,7 @@ export class ResponseService {
    */
   getInnovationAbstract(innovation: Innovation, quesId: string): string {
     const abstract = innovation.executiveReport.abstracts.find((ques) => ques.quesId === quesId);
-    let value;
-
-    value = abstract ? abstract.value : '';
-
-    return value;
-
+    return abstract ? abstract.value : '';
   }
 
 

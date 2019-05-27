@@ -1,6 +1,15 @@
 <section id="admin-community-members-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+
+    <!-- section bot when fetching error -->
+    <ng-container *ngIf="fetchingError">
+      <div class="section-light-pad rm-pad-bottom">
+        <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
+      </div>
+    </ng-container>
+
+
     <!-- section bot when no result -->
     <ng-container *ngIf="noResult">
       <div class="section-light-pad rm-pad-bottom">
@@ -10,15 +19,16 @@
       </div>
     </ng-container>
 
+
     <!-- section table -->
-    <ng-container *ngIf="!noResult">
+    <ng-container *ngIf="!noResult && !fetchingError">
       <app-shared-table
         [config]="config"
-        (configChange)="configChanges($event)"
         [data]="tableInfos"
         (editRow)="onClickShow($event)">
       </app-shared-table>
     </ng-container>
+
 
   </div>
 </section>

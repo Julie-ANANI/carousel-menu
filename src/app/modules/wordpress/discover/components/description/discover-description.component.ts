@@ -56,6 +56,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
+              private _multiling: MultilingPipe,
               private _shareService: ShareService,
               private _domSanitizer1: DomSanitizer,
               private _location: Location,
@@ -93,7 +94,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _getAllTags() {
     this._innovation.tags.forEach((tag: Tag) => {
       if (tag.type === 'SECTOR') {
-        this._tags.push(MultilingPipe.prototype.transform(tag.label, this._lang));
+        this._tags.push(this._multiling.transform(tag.label, this._lang));
         this._tags = this._tags.sort();
       }
     });

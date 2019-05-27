@@ -48,6 +48,7 @@ export class AdminTagListComponent implements OnInit {
 
   constructor(private _tagsService: TagsService,
               private _translateService: TranslateService,
+              private _multiling: MultilingPipe,
               private _notificationsService: TranslateNotificationsService) {}
 
 
@@ -79,7 +80,7 @@ export class AdminTagListComponent implements OnInit {
     this._tagsService.save(datum._id, datum)
         .subscribe((result) => {
           if (result) {
-            const t_label = MultilingPipe.prototype.transform(result.label, this._translateService.currentLang);
+            const t_label = this._multiling.transform(result.label, this._translateService.currentLang);
             this._notificationsService.success('Tag update', `The tag ${t_label} has been updated.`);
           } else {
             this._notificationsService.error('ERROR.ERROR', 'Empty response from server');

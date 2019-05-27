@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-// import { SidebarInterface } from "../../../../../sidebar/interfaces/sidebar-interface";
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-admin-community-members',
@@ -11,39 +11,42 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 
 export class AdminCommunityMembersComponent {
 
-  private _config: any;
-
-  // private _sidebarValue: SidebarInterface = {};
+  private _config: any = {
+    fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.industry',
+    limit: '10',
+    offset: '0',
+    search: '{ "ambassador.is": true }',
+    sort: '{ "created": -1 }'
+  };
 
   private _searchResult: any;
 
+  private _sidebarValue: SidebarInterface = {};
+
   constructor(private _professionalService: ProfessionalsService,
-              private _translateNotificationsService: TranslateNotificationsService) {
-
-    this._setConfig();
-
-  }
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
 
-  private _setConfig() {
-    this._config = {
-      fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.industry',
-      limit: '10',
-      offset: '0',
-      search: '{ "ambassador.is": true }',
-      sort: '{ "created": -1 }'
-    };
-  }
-
-
-  onClickImport(file: File) {
+  public importAmbassadors(file: File) {
     this._professionalService.importAmbassadorsFromCSV(file).subscribe((res: any) => {
       const total = (res.regSuccess || []).length + (res.regErrors || []).length;
-      this._translateNotificationsService.success('ERROR.SUCCESS', `${(res.regSuccess || []).length}/${total} ambassadors has been added`);
+      this._translateNotificationsService.success('ERROR.SUCCESS', `${(res.regSuccess || []).length}/${total} ambassadors has been added.`);
       this._searchResult = res;
     }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
+  }
+
+
+  public addAmbassador(event: Event) {
+    event.preventDefault();
+
+    this._sidebarValue = {
+      title: 'SIDEBAR.TITLE.ADD_AMBASSADOR',
+      type: 'addAmbassador',
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active'
+    }
+
   }
 
 
@@ -53,15 +56,6 @@ export class AdminCommunityMembersComponent {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       size: null,
       title: 'Smart search',
-      type: 'professional'
-    };
-  }*/
-
-/*  onClickAdd() {
-    this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      size: '726px',
-      title: 'SIDEBAR.TITLE.ADD_AMBASSADOR',
       type: 'professional'
     };
   }*/
@@ -79,15 +73,15 @@ export class AdminCommunityMembersComponent {
     return this._searchResult;
   }
 
-  /*get sidebarValue(): SidebarInterface {
+  get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
   }
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
-  }*/
+  }
 
-  get config() {
+  get config(): any {
     return this._config;
   }
 

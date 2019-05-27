@@ -63,6 +63,7 @@ export class AdminTagNewComponent {
 
   constructor(private _tagsService: TagsService,
               private _translateService: TranslateService,
+              private _multiling: MultilingPipe,
               private _notificationsService: TranslateNotificationsService) {}
 
   public onSubmit(_event: any) {
@@ -71,7 +72,7 @@ export class AdminTagNewComponent {
       .subscribe((result: any) => {
         if (result) {
           this.result = result;
-          const t_label = MultilingPipe.prototype.transform(result.label, this._translateService.currentLang);
+          const t_label = this._multiling.transform(result.label, this._translateService.currentLang);
           this._notificationsService.success('Tag creation', `The tag ${t_label} was created.`);
         } else {
           this._notificationsService.error('ERROR.ERROR', 'Empty response from server');

@@ -6,6 +6,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { TagsService } from '../../../../services/tags/tags.service';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-showcase',
@@ -17,7 +18,7 @@ export class ShowcaseComponent {
 
   private readonly _sectorTags: Array<Tag>;
 
-  private _selectedTagsStats: Array<TagStats> = [];
+  private _selectedTagsStats: Array<TagStats>;
 
   private _countries: {[country: string]: number} = {};
 
@@ -31,21 +32,30 @@ export class ShowcaseComponent {
 
   private _modalShow: boolean = false;
 
-  private _loadingStats: boolean;
+  private _loadingStats = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
+              private _multilingPipe: MultilingPipe,
               private _tagService: TagsService,
               private _translateService: TranslateService,
               private _translateNotificationService: TranslateNotificationsService) {
 
     if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
       this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1, t2) => {
-        const label1 = MultilingPipe.prototype.transform(t1.label, this._translateService.currentLang);
-        const label2 = MultilingPipe.prototype.transform(t2.label, this._translateService.currentLang);
+        const label1 = this._multilingPipe.transform(t1.label, this._translateService.currentLang);
+        const label2 = this._multilingPipe.transform(t2.label, this._translateService.currentLang);
         return label1.localeCompare(label2);
       });
     } else {
-      this._translateNotificationService.error('ERROR.ERROR_EN', 'ERROR.FETCHING_ERROR_EN');
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }
+
+    if (Array.isArray(this._activatedRoute.snapshot.data['tagsStats'])) {
+      this._selectedTagsStats = this._activatedRoute.snapshot.data['tagsStats'];
+      this._recomputeData();
+    } else {
+      this._selectedTagsStats = [];
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
   }
@@ -56,7 +66,6 @@ export class ShowcaseComponent {
 
 
   public onChangeTag(event: Event, tag: Tag) {
-    this._loadingStats = true;
 
     if (event.target['checked']) {
       this._getTagStat(event, tag);
@@ -75,13 +84,14 @@ export class ShowcaseComponent {
 
   private _getTagStat(event: Event, tag: Tag) {
     event.preventDefault();
-
-    this._tagService.getStats(tag._id).subscribe((stats) => {
+    this._loadingStats = true;
+    this._tagService.getStats(tag._id).pipe(
+      finalize(() => { this._loadingStats = false; }),
+    ).subscribe((stats) => {
       this._selectedTagsStats = this._selectedTagsStats.concat(stats);
       this._recomputeData();
     }, () => {
-      this._loadingStats = false;
-      this._translateNotificationService.error('ERROR.ERROR_EN', `We are having trouble while finding the stats for ${tag.label.en} tag.`);
+      this._translateNotificationService.error('ERROR.ERROR', `We are having trouble while finding the stats for ${tag.label.en} tag.`);
     });
 
   }
@@ -144,8 +154,6 @@ export class ShowcaseComponent {
     this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
 
     this._maxSecondTertile = this._countries[orderedCountries[Math.floor(2 * tertileSize)]];
-
-    this._loadingStats = false;
 
   }
 
