@@ -129,32 +129,30 @@
       <ng-container *ngSwitchCase="'checkbox'">
         <div class="pad-top checkbox-wrapper">
           <ng-container *ngFor="let option of question.options">
-            <ul *ngIf="(fullAnswer.answers[question.identifier] && !!fullAnswer.answers[question.identifier][option.identifier]) || editMode"
-                [ngClass]="{ 'label label-answer': !editMode, 'edit-answer': editMode }">
+
+            <ul *ngIf="(!!fullAnswer.answers[question.identifier] && !!fullAnswer.answers[question.identifier][option.identifier]) && !editMode" class="label label-answer">
               <li class="flex-between">
+                <span>{{ optionLabel(option.identifier) }}</span>
+              </li>
+            </ul>
 
-                <ng-container *ngIf="editMode">
-                  <span (click)="checkOption(option.identifier, $event)" class="c-hand"
-                       [ngClass]="{'answer': fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier]}">
-                    {{ optionLabel(option.identifier) }}
-                   </span>
-                </ng-container>
-
-                <ng-container *ngIf="!editMode">
-                  <span>{{ optionLabel(option.identifier) }}</span>
-                </ng-container>
-
+            <ul *ngIf="editMode" class="edit-answer">
+              <li class="flex-between">
+                <input id="{{question.identifier}}-{{option.identifier}}" type="checkbox"
+                       [(ngModel)]="fullAnswer.answers[question.identifier][option.identifier]">
+                <label for="{{question.identifier}}-{{option.identifier}}">
+                  {{ optionLabel(option.identifier) }}
+                </label>
                 <!-- Rating checkbox question, not really implemented yet
-                <ng-container *ngIf="editMode">
-                  <app-rating-item
-                    [editMode]="editMode"
-                    [prop]="question.identifier"
-                    [rating]="fullAnswer.answers[question.identifier + 'Quality']"
-                    (ratingChange)="updateQuality($event)">
-                  </app-rating-item>
-                </ng-container>
+                  <ng-container *ngIf="editMode">
+                    <app-rating-item
+                      [editMode]="editMode"
+                      [prop]="question.identifier"
+                      [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                      (ratingChange)="updateQuality($event)">
+                    </app-rating-item>
+                  </ng-container>
                 -->
-
               </li>
             </ul>
           </ng-container>
