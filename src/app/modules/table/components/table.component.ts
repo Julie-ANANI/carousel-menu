@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
-import { countries } from "../../../models/static-data/country";
-import { isPlatformBrowser } from '@angular/common';
+//import { countries } from "../../../models/static-data/country";
+//import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-shared-table',
@@ -19,6 +19,18 @@ import { isPlatformBrowser } from '@angular/common';
  */
 export class TableComponent {
 
+  /***
+   * Input use to set the data
+   * @param {Table} value
+   */
+  @Input() set data(value: Table) {
+    this.loadData(value);
+
+    if (this._isLocal) {
+      this.changeLocalConfig();
+    }
+
+  }
 
   /***
    * Input use to set the config for the tables linked with the back office
@@ -26,18 +38,6 @@ export class TableComponent {
    */
   @Input() set config(value: any) {
     this.loadConfig(value);
-  }
-
-
-  /***
-   * Input use to set the data
-   * @param {Table} value
-   */
-  @Input() set data(value: Table) {
-    this.loadData(value);
-    if (this._isLocal) {
-      this.changeLocalConfig();
-    }
   }
 
 
@@ -98,7 +98,7 @@ export class TableComponent {
 
   private _isNotPaginable = false;
 
-  private _reloadColumns = false;
+  //private _reloadColumns = false;
 
   private _isNoTitle = false;
 
@@ -116,13 +116,13 @@ export class TableComponent {
 
   private _paginationConfig: PaginationInterface = {};
 
-  private _massSelection = false;
+  //private _massSelection = false;
 
   private _editIndex = 0;
 
   fetchingResult = true;
 
-  constructor(@Inject(PLATFORM_ID) private _platformId: Object,
+  constructor(//@Inject(PLATFORM_ID) private _platformId: Object,
               private _translateService: TranslateService) {}
 
 
@@ -131,49 +131,49 @@ export class TableComponent {
    * @param {Table} value
    */
   loadData(value: Table): void  {
-    if (value) {
-      this._title = value._title;
-
-      this._selector = value._selector;
-
-      this._content = [];
-      value._content.forEach(value1 => this._content.push({_isSelected: false, _content: value1}));
-
-      this._filteredContent = this._content;
-
-      this._isHeadable = value._isHeadable || false;
-      this._isNoTitle = value._isNoTitle || false;
-      this._isSelectable = value._isSelectable || false;
-      this._isEditable = value._isEditable || false;
-      this._isShowable = value._isShowable || false;
-      this._isDeletable = value._isDeletable || false;
-      this._isFiltrable = value._isFiltrable || false;
-      this._isNotPaginable = value._isNotPaginable || false;
-      this._reloadColumns = value._reloadColumns || false;
-      this._isLocal = value._isLocal || false;
-      this._editIndex = value._editIndex || 1;
-
-      this._total = value._total;
-
-      if (this._columns.length === 0 || this._reloadColumns) {
-        // Si on a plus de 10 colonnes, on ne prends que les 10 premières
-        value._columns.length > 10 ? this._columns = value._columns.slice(0, 10) : this._columns = value._columns;
-
-        this.initialiseColumns();
-      }
-
-      this._actions = value._actions || [];
-    }
+    // if (value) {
+    //   this._title = value._title;
+    //
+    //   this._selector = value._selector;
+    //
+    //   this._content = [];
+    //   value._content.forEach(value1 => this._content.push({_isSelected: false, _content: value1}));
+    //
+    //   this._filteredContent = this._content;
+    //
+    //   this._isHeadable = value._isHeadable || false;
+    //   this._isNoTitle = value._isNoTitle || false;
+    //   this._isSelectable = value._isSelectable || false;
+    //   this._isEditable = value._isEditable || false;
+    //   this._isShowable = value._isShowable || false;
+    //   this._isDeletable = value._isDeletable || false;
+    //   this._isFiltrable = value._isFiltrable || false;
+    //   this._isNotPaginable = value._isNotPaginable || false;
+    //   this._reloadColumns = value._reloadColumns || false;
+    //   this._isLocal = value._isLocal || false;
+    //   this._editIndex = value._editIndex || 1;
+    //
+    //   this._total = value._total;
+    //
+    //   if (this._columns.length === 0 || this._reloadColumns) {
+    //     // Si on a plus de 10 colonnes, on ne prends que les 10 premières
+    //     value._columns.length > 10 ? this._columns = value._columns.slice(0, 10) : this._columns = value._columns;
+    //
+    //     this.initialiseColumns();
+    //   }
+    //
+    //   this._actions = value._actions || [];
+    // }
   }
 
   /***
    * This function initialise the values of a column
    */
   initialiseColumns() {
-    this._columns.forEach((value1, index) => {
+    /*this._columns.forEach((value1, index) => {
       this._columns[index]._isSelected = false;
       this._columns[index]._isHover = false;
-    });
+    });*/
   }
 
   /***
@@ -181,11 +181,11 @@ export class TableComponent {
    * @param value
    */
   loadConfig(value: any): void {
-    this._config = value;
-    this._paginationConfig = {
-      limit: value.limit || 10,
-      offset: value.offset || 0
-    };
+    // this._config = value;
+    // this._paginationConfig = {
+    //   limit: value.limit || 10,
+    //   offset: value.offset || 0
+    // };
   }
 
   /***
@@ -195,13 +195,13 @@ export class TableComponent {
    * @param value
    */
   changeConfig(value: any): void {
-    this._config = value;
-    this.fetchingResult = false;
-    if (!this._isLocal) {
-      this.configChange.emit(this._config);
-    } else {
-      Promise.resolve(null).then(() => this.changeLocalConfig());
-    }
+    // this._config = value;
+    // this.fetchingResult = false;
+    // if (!this._isLocal) {
+    //   this.configChange.emit(this._config);
+    // } else {
+    //   Promise.resolve(null).then(() => this.changeLocalConfig());
+    // }
   }
 
   /***
@@ -210,14 +210,14 @@ export class TableComponent {
    * @param value
    */
   changePaginationConfig(value: any) {
-    this._paginationConfig = value;
-    this._config.limit = value.limit;
-    this._config.offset = value.offset;
-    if (isPlatformBrowser(this._platformId)) {
-      window.scroll(0, 0);
-    }
-    this.changeConfig(this._config);
-    this.selectAll(event);
+    // this._paginationConfig = value;
+    // this._config.limit = value.limit;
+    // this._config.offset = value.offset;
+    // if (isPlatformBrowser(this._platformId)) {
+    //   window.scroll(0, 0);
+    // }
+    // this.changeConfig(this._config);
+    // this.selectAll(event);
   }
 
   /***
@@ -225,38 +225,38 @@ export class TableComponent {
    * @requires local config
    */
   changeLocalConfig() {
-    this._filteredContent = this._content;
-    for (const key of Object.keys(this._config)) {
-      switch (key) {
-        case('limit') : {
-          break;
-        }
-        case('offset'): {
-          break;
-        }
-        case ('search'): {
-          for (const search of Object.keys(this._config['search'])) {
-            this.filterAttribute(search, true);
-          }
-          break;
-        }
-        case('sort'): {
-          for (const sortKey of Object.keys(this._config['sort'])) {
-            this.sortColumn(sortKey);
-          }
-          break;
-        } default : {
-          this.filterAttribute(key, false);
-          break;
-      }
-      }
-    }
-
-    this._total = this._filteredContent.length;
-
-    if (!this._isNotPaginable) {
-      this._filteredContent = this._filteredContent.slice(this._config.offset, this._config.offset + Number(this._config.limit));
-    }
+    // this._filteredContent = this._content;
+    // for (const key of Object.keys(this._config)) {
+    //   switch (key) {
+    //     case('limit') : {
+    //       break;
+    //     }
+    //     case('offset'): {
+    //       break;
+    //     }
+    //     case ('search'): {
+    //       for (const search of Object.keys(this._config['search'])) {
+    //         this.filterAttribute(search, true);
+    //       }
+    //       break;
+    //     }
+    //     case('sort'): {
+    //       for (const sortKey of Object.keys(this._config['sort'])) {
+    //         this.sortColumn(sortKey);
+    //       }
+    //       break;
+    //     } default : {
+    //       this.filterAttribute(key, false);
+    //       break;
+    //   }
+    //   }
+    // }
+    //
+    // this._total = this._filteredContent.length;
+    //
+    // if (!this._isNotPaginable) {
+    //   this._filteredContent = this._filteredContent.slice(this._config.offset, this._config.offset + Number(this._config.limit));
+    // }
 
   }
 
@@ -266,7 +266,7 @@ export class TableComponent {
    * @param {Row} row
    */
   edit(row: Row) {
-    this.editRow.emit(row._content);
+    //this.editRow.emit(row._content);
   }
 
   /***
@@ -274,15 +274,15 @@ export class TableComponent {
    * Emit the Output removeRows
    */
   removeSelectedRows() {
-   if (this._massSelection) {
-     const values: Array<object> = [];
-     this._content.forEach((content) => {
-       values.push(content._content);
-     });
-     this.removeRows.emit(values);
-   } else {
-     this.removeRows.emit(this.getSelectedRowsContent());
-   }
+   // if (this._massSelection) {
+   //   const values: Array<object> = [];
+   //   this._content.forEach((content) => {
+   //     values.push(content._content);
+   //   });
+   //   this.removeRows.emit(values);
+   // } else {
+   //   this.removeRows.emit(this.getSelectedRowsContent());
+   // }
   }
 
   /***
@@ -291,22 +291,22 @@ export class TableComponent {
    * @param {string} action
    */
   onActionClick(action: string) {
-    if (this._massSelection) {
-      this.performAction.emit({_action: action, _rows: 'all'});
-    } else {
-      this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
-    }
+    // if (this._massSelection) {
+    //   this.performAction.emit({_action: action, _rows: 'all'});
+    // } else {
+    //   this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
+    // }
   }
 
   /**
    * This function is called when the user selects one row. It will emit the selected rows
    */
   onSelectAction() {
-    if (this._massSelection) {
-      this.selectRowAction.emit({ _rows: 'all'});
-    } else {
-      this.selectRowAction.emit({ _rows: this.getSelectedRowsContent()});
-    }
+    // if (this._massSelection) {
+    //   this.selectRowAction.emit({ _rows: 'all'});
+    // } else {
+    //   this.selectRowAction.emit({ _rows: this.getSelectedRowsContent()});
+    // }
   }
 
   /***
@@ -314,11 +314,12 @@ export class TableComponent {
    * @returns {string[]}
    */
   getRowsKeys(): string[] {
-    if (this._isLocal) {
-      return Object.keys(this._filteredContent);
-    } else {
-      return Object.keys(this._content);
-    }
+    // if (this._isLocal) {
+    //   return Object.keys(this._filteredContent);
+    // } else {
+    //   return Object.keys(this._content);
+    // }
+    return [];
   }
 
   /***
@@ -328,23 +329,23 @@ export class TableComponent {
    * @returns {any}
    */
   getContentValue(rowKey: string, columnAttr: string): any  {
-    if (columnAttr.split('.').length > 1) {
-      let newColumnAttr = columnAttr.split('.');
-      let tmpContent = this._isLocal
-        ? this._filteredContent[rowKey]._content[newColumnAttr[0]]
-        : this._content[rowKey]._content[newColumnAttr[0]];
-      newColumnAttr = newColumnAttr.splice(1);
-      for (const i of newColumnAttr){
-        tmpContent = tmpContent ? tmpContent[i] : '-';
-      }
-      return tmpContent || '';
-    }else {
-      if (this._isLocal) {
-        return this._filteredContent[rowKey]._content[columnAttr] || '';
-      } else {
-        return this._content[rowKey]._content[columnAttr] || '';
-      }
-    }
+    // if (columnAttr.split('.').length > 1) {
+    //   let newColumnAttr = columnAttr.split('.');
+    //   let tmpContent = this._isLocal
+    //     ? this._filteredContent[rowKey]._content[newColumnAttr[0]]
+    //     : this._content[rowKey]._content[newColumnAttr[0]];
+    //   newColumnAttr = newColumnAttr.splice(1);
+    //   for (const i of newColumnAttr){
+    //     tmpContent = tmpContent ? tmpContent[i] : '-';
+    //   }
+    //   return tmpContent || '';
+    // }else {
+    //   if (this._isLocal) {
+    //     return this._filteredContent[rowKey]._content[columnAttr] || '';
+    //   } else {
+    //     return this._content[rowKey]._content[columnAttr] || '';
+    //   }
+    // }
   }
 
   /***
@@ -353,7 +354,8 @@ export class TableComponent {
    * @returns {types}
    */
   getType(column: Column): types {
-    return column._type;
+    //return column._type;
+    return ;
   }
 
   /***
@@ -362,7 +364,8 @@ export class TableComponent {
    * @returns {string[]}
    */
   getAttrs(column: Column) {
-    return column._attrs;
+    //return column._attrs;
+    return;
   }
 
   /***
@@ -372,7 +375,8 @@ export class TableComponent {
    * @returns {number}
    */
   getAttrIndex(column: Column, attr: string) {
-    return this.getAttrs(column).findIndex(value => value === attr);
+    //return this.getAttrs(column).findIndex(value => value === attr);
+    return ;
   }
 
   /***
@@ -381,7 +385,8 @@ export class TableComponent {
    * @returns {string | undefined}
    */
   getName(column: Column) {
-    return column._name;
+    //return column._name;
+    return;
   }
 
   /***
@@ -391,7 +396,8 @@ export class TableComponent {
    * @returns {Choice[]}
    */
   getChoices(column: Column): Choice[] {
-    return column._choices || [];
+    //return column._choices || [];
+    return [];
   }
 
   /***
@@ -402,7 +408,8 @@ export class TableComponent {
    * @returns {Choice}
    */
   getChoice(column: Column, name: string): Choice {
-    return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
+    //return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
+    return ;
   }
 
   /***
@@ -411,11 +418,11 @@ export class TableComponent {
    * @returns {any}
    */
   getChoiceAlias(choice: Choice) {
-    if (choice) {
-      return choice._alias || choice._name;
-    } else {
-      return ' - ';
-    }
+    // if (choice) {
+    //   return choice._alias || choice._name;
+    // } else {
+    //   return ' - ';
+    // }
   }
 
   /***
@@ -424,7 +431,8 @@ export class TableComponent {
    * @returns {string}
    */
   getChoiceClass(choice: Choice): string {
-    return choice._class || '';
+    //return choice._class || '';
+    return '';
   }
 
   /***
@@ -433,7 +441,8 @@ export class TableComponent {
    * @returns {string}
    */
   getUrl(choice: Choice): string {
-    return choice._url || '';
+    //return choice._url || '';
+    return  '';
   }
 
   /***
@@ -443,7 +452,7 @@ export class TableComponent {
    * @returns {MultiLabel | {}}
    */
   getMultiLabel(column: Column, attr: string) {
-    return column._multiLabels.find(value => value._attr === attr) || {};
+    //return column._multiLabels.find(value => value._attr === attr) || {};
   }
 
   /***
@@ -451,7 +460,8 @@ export class TableComponent {
    * @param multiLabel
    */
   getMultiLabelClass(multiLabel: any): string {
-    return multiLabel._class;
+    //return multiLabel._class;
+    return '';
   }
 
   /***
@@ -459,11 +469,12 @@ export class TableComponent {
    * @returns {Row[]}
    */
   getSelectedRows(): Row[] {
-    if (this._massSelection && this._total > this._content.length) {
-      return [];
-    } else {
-      return this._content.filter(value => value._isSelected === true);
-    }
+    // if (this._massSelection && this._total > this._content.length) {
+    //   return [];
+    // } else {
+    //   return this._content.filter(value => value._isSelected === true);
+    // }
+    return  [];
   }
 
   /***
@@ -471,12 +482,13 @@ export class TableComponent {
    * @returns {number}
    */
   getSelectedRowsNumber(): number {
-    if (this._massSelection) {
-      return this._content.length;
-      // return this._total;
-    } else {
-      return this.getSelectedRows().length;
-    }
+    // if (this._massSelection) {
+    //   return this._content.length;
+    //   // return this._total;
+    // } else {
+    //   return this.getSelectedRows().length;
+    // }
+    return ;
   }
 
   /***
@@ -484,9 +496,10 @@ export class TableComponent {
    * @returns {any[]}
    */
   getSelectedRowsContent(): any[] {
-    const content: any[] = [];
-    this.getSelectedRows().forEach(value => content.push(value._content));
-    return content;
+    // const content: any[] = [];
+    // this.getSelectedRows().forEach(value => content.push(value._content));
+    // return content;
+    return ;
   }
 
   /***
@@ -494,10 +507,10 @@ export class TableComponent {
    * @param {string} key
    */
   selectRow(key: string): void {
-    if (this._isSelectable) {
-      this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
-        : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
-    }
+    // if (this._isSelectable) {
+    //   this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
+    //     : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
+    // }
   }
 
   /***
@@ -506,9 +519,9 @@ export class TableComponent {
    * @param {string} key
    */
   selectColumn(key: string) {
-    this.initialiseColumns();
-    const index = this._columns.findIndex(value => value._attrs[0] === key);
-    this._columns[index]._isSelected = true;
+    // this.initialiseColumns();
+    // const index = this._columns.findIndex(value => value._attrs[0] === key);
+    // this._columns[index]._isSelected = true;
   }
 
   /***
@@ -516,12 +529,12 @@ export class TableComponent {
    * @param e
    */
   selectAll(e: any): void  {
-    if (this._isLocal) {
-      this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
-    } else {
-      this._content.forEach(value => { value._isSelected = e.target.checked; });
-      this._massSelection = e.target.checked;
-    }
+    // if (this._isLocal) {
+    //   this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
+    // } else {
+    //   this._content.forEach(value => { value._isSelected = e.target.checked; });
+    //   this._massSelection = e.target.checked;
+    // }
   }
 
   /***
@@ -530,7 +543,8 @@ export class TableComponent {
    * @returns {boolean}
    */
   isSelected(content: any): boolean {
-    return !!content && !!content._isSelected
+    //return !!content && !!content._isSelected
+    return ;
   }
 
   /***
@@ -539,11 +553,12 @@ export class TableComponent {
    * @returns {boolean}
    */
   isSort(content: Column): boolean {
-    if (content !== null && this.config && this.config.sort !== null) {
-      return this._config.sort[this.getAttrs(content)[0]];
-    } else {
-      return false;
-    }
+    // if (content !== null && this.config && this.config.sort !== null) {
+    //   return this._config.sort[this.getAttrs(content)[0]];
+    // } else {
+    //   return false;
+    // }
+    return ;
   }
 
   /***
@@ -552,14 +567,14 @@ export class TableComponent {
    * @param {string} key
    */
   sortColumn(key: string) {
-    if ((this._columns.find(value => value._attrs[0] === key))) {
-      const sortArray = this._filteredContent.slice();
-      this._filteredContent = sortArray.sort((a, b) => {
-        const valueA = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(a._content)).toString() , key).toString();
-        const valueB = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(b._content)).toString() , key).toString();
-        return this._config.sort[key] * (valueA.localeCompare(valueB));
-      });
-    }
+    // if ((this._columns.find(value => value._attrs[0] === key))) {
+    //   const sortArray = this._filteredContent.slice();
+    //   this._filteredContent = sortArray.sort((a, b) => {
+    //     const valueA = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(a._content)).toString() , key).toString();
+    //     const valueB = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(b._content)).toString() , key).toString();
+    //     return this._config.sort[key] * (valueA.localeCompare(valueB));
+    //   });
+    // }
   }
 
   /***
@@ -568,7 +583,7 @@ export class TableComponent {
    * @returns {boolean}
    */
   isSortable(column: Column) {
-    return column._isSortable === undefined ? true : column._isSortable;
+    //return column._isSortable === undefined ? true : column._isSortable;
   }
 
   /***
@@ -577,24 +592,24 @@ export class TableComponent {
    * @param {boolean} isSearch
    */
   filterAttribute(key: string, isSearch: boolean) {
-    if ((this._columns.find(value => value._attrs[0] === key))) {
-      let word: RegExp = null;
-      if (isSearch) {
-        word = new RegExp(this._config.search[key], 'gi');
-      } else {
-        word = new RegExp(this._config[key], 'gi');
-      }
-
-      const columnToFilter = this._columns.find(value => value._attrs[0] === key);
-
-      this._filteredContent = this._filteredContent.filter((value, index) => {
-        if (columnToFilter._type === 'COUNTRY') {
-          return !this.getContentValue(index.toString(), key).flag.toLowerCase().search(word);
-        } else {
-          return !this.getContentValue(index.toString(), key).toLowerCase().search(word);
-        }
-      });
-    }
+    // if ((this._columns.find(value => value._attrs[0] === key))) {
+    //   let word: RegExp = null;
+    //   if (isSearch) {
+    //     word = new RegExp(this._config.search[key], 'gi');
+    //   } else {
+    //     word = new RegExp(this._config[key], 'gi');
+    //   }
+    //
+    //   const columnToFilter = this._columns.find(value => value._attrs[0] === key);
+    //
+    //   this._filteredContent = this._filteredContent.filter((value, index) => {
+    //     if (columnToFilter._type === 'COUNTRY') {
+    //       return !this.getContentValue(index.toString(), key).flag.toLowerCase().search(word);
+    //     } else {
+    //       return !this.getContentValue(index.toString(), key).toLowerCase().search(word);
+    //     }
+    //   });
+    // }
   }
 
   /***
@@ -603,21 +618,22 @@ export class TableComponent {
    * @returns {string}
    */
   getColor(length: number) {
-    if (length < 34 && length >= 0) {
-      return '#EA5858';
-    } else if (length >= 34 && length < 67) {
-      return '#f0ad4e';
-    } else {
-      return '#2ECC71';
-    }
+    // if (length < 34 && length >= 0) {
+    //   return '#EA5858';
+    // } else if (length >= 34 && length < 67) {
+    //   return '#f0ad4e';
+    // } else {
+    //   return '#2ECC71';
+    // }
   }
 
   public flag2Name(isoCode: string): string {
-    if(isoCode) {
-      return countries[isoCode] || "Unknown";
-    } else {
-      return "Unknown";
-    }
+    // if(isoCode) {
+    //   return countries[isoCode] || "Unknown";
+    // } else {
+    //   return "Unknown";
+    // }
+    return ;
   }
 
   get selector(): string {
@@ -711,4 +727,5 @@ export class TableComponent {
   get editIndex(): number {
     return this._editIndex;
   }
+
 }
