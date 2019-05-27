@@ -221,13 +221,13 @@
                   <div class="card-footer animate-card-appear flex-centered text-center no-logo">
 
                     <ng-container *ngIf="professional.companyDomain">
-                      <a [href]="getCompanyUrl(professional.companyDomain)" class="text-link" target="_blank">
+                      <a [href]="getCompanyUrl(professional.companyDomain)" class="text-link text-ellipsis text-normal" target="_blank">
                         {{ professional.company }}
                       </a>
                     </ng-container>
 
                     <ng-container *ngIf="!professional.companyDomain">
-                      <span>{{ professional.company }}</span>
+                      <span class="text-ellipsis">{{ professional.company }}</span>
                     </ng-container>
 
                   </div>
@@ -247,7 +247,7 @@
       <!-- button to show more pros -->
       <ng-container *ngIf="searchStopped && slicedPros.length !== searchResult.pros.length && !selectedCountry">
         <div class="text-center section-pad rm-pad-top">
-          <button class="btn btn-primary" (click)="onClickSeeMore()" [innerText]="'COMMON.BUTTON.SEE_MORE'" translate></button>
+          <button class="btn btn-primary rounded" (click)="onClickSeeMore()" [innerText]="'COMMON.BUTTON.SEE_MORE'" translate></button>
         </div>
       </ng-container>
       <!-- /button to show more pros -->

@@ -1,7 +1,12 @@
 <ng-container *ngIf="modalAnswer">
   <section id="user-answer-component">
-    <div class="column col-xs-12 col-11 col-mx-auto">
 
+    <!-- section class mail REJECTED_GMAIL -->
+    <ng-container *ngIf="mailType">
+      <span class="label label-draft">{{mailType}}</span>
+    </ng-container>
+
+    <div class="column col-xs-12 col-11 col-mx-auto">
       <!-- section save -->
       <ng-container *ngIf="modeAdmin">
         <div class="section-light-pad rm-pad-top text-right" [ngSwitch]="modalAnswer?.localStatus">
