@@ -66,11 +66,6 @@ export class AnswerService {
     return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
   }
 
-  public getReportHTML(innovationId: string, lang: string): Observable<any>  {
-    const url = environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
-    return this._http.get(url, { responseType: 'text' });
-  }
-
   public importFromGmail(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
