@@ -42,7 +42,7 @@ export class SharedProsListComponent {
 
   private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS', 'Convert to ambassador'];
 
-  private _total = 0;
+  private _total = -1;
 
   private _pros: Array <SelectedProfessional>;
 
@@ -78,7 +78,6 @@ export class SharedProsListComponent {
           _title: 'TABLE.TITLE.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
-          _isHeadable: true,
           _isFiltrable: true,
           _isDeletable: true,
           _isSelectable: true,
@@ -114,7 +113,6 @@ export class SharedProsListComponent {
           _content: this._pros,
           _total: this._total,
           _isFiltrable: true,
-          _isHeadable: true,
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,

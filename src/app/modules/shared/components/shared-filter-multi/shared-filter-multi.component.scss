@@ -9,8 +9,8 @@
     display: flex;
     flex: 0 1 auto;
     align-items: center;
-    margin-right: 1.25rem;
-    margin-bottom: 0.25rem;
+    margin-right: $unit-5;
+    margin-bottom: $unit-5;
 
     .form-select {
       min-width: 120px;
@@ -70,7 +70,6 @@
   #filter-multi-component {
 
     .type-wrapper, .search-box-wrapper {
-      margin-bottom: 0.75rem;
       margin-right: 0 !important;
     }
 

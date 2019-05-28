@@ -35,12 +35,17 @@ export const TABLE = {
   },
 
   'TITLE': {
-    'PROFESSIONALS': 'Professionals',
-    'USERS': 'Users',
+    'PROFESSIONALS': 'professionals',
+    'USERS': 'users',
     'PROJECTS': 'projects',
     'AMBASSADORS': 'ambassadors',
     'REQUESTS': 'requests',
     'RESULTS': 'results',
+  },
+
+  'MESSAGES': {
+    'FETCHING': 'Fetching results...',
+    'NO_RESULT': 'Sorry, we couldn\'t find any results (as you can see), please try again with some different keywords.'
   }
 
 };

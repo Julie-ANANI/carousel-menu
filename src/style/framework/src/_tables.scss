@@ -6,35 +6,6 @@
   text-align: left;
   width: 100%;
 
-  &.table-striped {
-
-    tbody {
-
-      tr:nth-of-type(odd) {
-        // background: $bg-color;
-      }
-
-    }
-
-  }
-
-  &,
-  &.table-striped {
-
-    tbody {
-
-      tr {
-
-        &.active {
-         // background: $bg-color-dark;
-        }
-
-      }
-
-    }
-
-  }
-
   &.table-hover {
 
     tbody {
@@ -42,7 +13,7 @@
       tr {
 
         &:hover {
-         // background: $bg-color-dark;
+         background: $table-th-background-color;
         }
 
       }
@@ -60,7 +31,7 @@
   }
 
   td, th {
-    border-bottom: $border-width solid $border-color;
+    border-bottom: $border-width solid $table-tr-border-color;
     padding: $unit-3 $unit-2;
   }
 

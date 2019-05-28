@@ -1,3 +1,49 @@
+<section id="table-component">
+  <div class="table-wrapper">
+
+
+    <!-- section title and filter -->
+    <ng-container *ngIf="table._isNoTitle || table._isFiltrable || !table._isHeadable">
+      <div class="table-header-wrapper flex-start">
+
+        <!-- number of results and title -->
+        <ng-container *ngIf="table._isNoTitle">
+          <div class="text text-notify title">
+            <span>{{ table._total === -1 ? 0 : table._total }} {{ table._title | translate }}</span>
+          </div>
+        </ng-container>
+
+        <!-- want to filter by columns -->
+        <ng-container *ngIf="table._isFiltrable">
+          <div>
+            <app-shared-multi-filter
+              [props]="table._columns">
+            </app-shared-multi-filter>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+    <!-- section title and filter -->
+
+
+    <!-- when fetching or initializing -->
+    <ng-container *ngIf="table._total === -1">
+      <div class="section-light-pad">
+        <app-message-space [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
+          <div class="flex-centered">
+            <div class="loading loading-white" [ngStyle]="{ 'margin-right': '16px' }"></div>
+            <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
+          </div>
+        </app-message-space>
+      </div>
+    </ng-container>
+    <!-- /when fetching or initializing -->
+
+
+  </div>
+</section>
+
 <!--<section id="table-component">-->
 <!--  <div class="table-wrapper">-->
 

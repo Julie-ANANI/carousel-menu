@@ -67,7 +67,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
               _title: 'COMMON.BLACKLIST.EMAILS',
               _content: this._emailDataset.blacklists,
               _total: this._emailDataset._metadata.totalCount,
-              _isHeadable: true,
               _isFiltrable: true,
               _isSelectable: true,
               _isEditable: true,

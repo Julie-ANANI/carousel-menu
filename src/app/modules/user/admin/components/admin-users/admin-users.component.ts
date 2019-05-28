@@ -62,7 +62,6 @@ export class AdminUsersComponent implements OnInit {
         _title: 'TABLE.TITLE.USERS',
         _content: this._users,
         _total: this._total,
-        _isHeadable: true,
         _isFiltrable: true,
         _isDeletable: true,
         _isSelectable: true,

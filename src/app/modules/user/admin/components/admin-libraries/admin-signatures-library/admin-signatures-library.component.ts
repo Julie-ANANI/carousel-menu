@@ -46,7 +46,6 @@ export class AdminSignaturesLibraryComponent implements OnInit {
         _title: 'Signatures',
         _content: this._signatures,
         _total: this._total,
-        _isHeadable: true,
         _isFiltrable: true,
         _isDeletable: true,
         _isSelectable: true,

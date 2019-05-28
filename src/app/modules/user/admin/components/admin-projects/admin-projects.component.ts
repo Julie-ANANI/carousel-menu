@@ -50,7 +50,6 @@ export class AdminProjectsComponent implements OnInit {
         _title: 'TABLE.TITLE.PROJECTS',
         _content: this._projects,
         _total: this._total,
-        _isHeadable: true,
         _isFiltrable: true,
         _isShowable: true,
         _columns: [

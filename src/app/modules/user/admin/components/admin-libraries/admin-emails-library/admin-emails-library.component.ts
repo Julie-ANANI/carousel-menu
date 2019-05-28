@@ -90,7 +90,6 @@ export class AdminEmailsLibraryComponent implements OnInit {
       _selector: 'admin-emails',
       _content: this._emails,
       _total: this._total,
-      _isHeadable: false,
       _isFiltrable: false,
       _isDeletable: true,
       _isSelectable: true,

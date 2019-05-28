@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
+//import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
 //import { countries } from "../../../models/static-data/country";
 //import { isPlatformBrowser } from '@angular/common';
 
@@ -17,18 +17,18 @@ import { PaginationInterface } from '../../utility-components/paginations/interf
 /***
  * This generic class generates a table
  */
-export class TableComponent {
+export class TableComponent implements OnInit {
 
   /***
    * Input use to set the data
    * @param {Table} value
    */
   @Input() set data(value: Table) {
-    this.loadData(value);
+    this._loadData(value);
 
-    if (this._isLocal) {
-      this.changeLocalConfig();
-    }
+    /*if (this._isLocal) {
+      // this.changeLocalConfig();
+    }*/
 
   }
 
@@ -78,59 +78,106 @@ export class TableComponent {
    */
   @Output() selectRowAction: EventEmitter<any> = new EventEmitter<any>();
 
-  private _selector = '';
+  private _table: Table; // default table data.
 
-  private _title = 'TABLE.TITLE.RESULTS';
+  //private _selector: string; // for the pagination.
 
-  private _isHeadable = false;
+  //private _title: string; // set the title.
 
-  private _isSelectable = false;
+  //private _isNoTitle: boolean; // no need of the title.
 
-  private _isEditable = false;
+  //private _isSelectable: boolean; // to select the rows or not.
 
-  private _isLocal = false;
+  //private _isEditable: boolean; // to set the row can be edit or not.
 
-  private _isShowable = false;
+  //private _isLocal: boolean; // to set the pagination locally.
 
-  private _isDeletable = false;
+  //private _isDeletable: boolean; // to delete the rows.
 
-  private _isFiltrable = false;
+  //private _isFiltrable: boolean; // to filter the table by columns.
 
-  private _isNotPaginable = false;
+  //private _isNotPaginable: boolean; // to set the pagination required or not.
 
-  //private _reloadColumns = false;
+  //private _total: number; // to set the number of rows. By default always set its value to -1.
 
-  private _isNoTitle = false;
+  //private _content = [];
 
-  private _content: Row[] = [];
+  //private _columns: Column[] = [];
 
-  private _total = 0;
+  //private _actions: string[] = [];
 
-  private _columns: Column[] = [];
-
-  private _actions: string[] = [];
+  //private _editIndex: number; // to set the position of the button.
 
   private _filteredContent: Row[] = [];
 
-  private _config: any = null;
+  //private _isShowable = false;
 
-  private _paginationConfig: PaginationInterface = {};
+  //private _paginationConfig: PaginationInterface = {}; // to set the pagination.
+
+  //private _reloadColumns = false;
+
+
+
+
+
+
+
+
+
+  //private _config: any = null;
+
+
 
   //private _massSelection = false;
 
-  private _editIndex = 0;
-
-  fetchingResult = true;
-
   constructor(//@Inject(PLATFORM_ID) private _platformId: Object,
-              private _translateService: TranslateService) {}
+              private _translateService: TranslateService) {
+
+    this._initializeTable();
+
+    console.log(this._table);
+
+  }
+
+
+  ngOnInit(): void {
+  }
 
 
   /***
-   * This function load and initialise the data send by the user
-   * @param {Table} value
+   * this function is to initialize the table with default values.
+   * @private
    */
-  loadData(value: Table): void  {
+  private _initializeTable() {
+    this._table = {
+      _selector: '',
+      _title: 'TABLE.TITLE.RESULTS',
+      _isNoTitle: false,
+      _isSelectable: false,
+      _isHeadable: false,
+      _isEditable: false,
+      _isLocal: false,
+      _isDeletable: false,
+      _isFiltrable: false,
+      _isNotPaginable: false,
+      _total: -1,
+      _editIndex: 0,
+      _columns: [],
+      _content: [],
+      _actions: [],
+    }
+  }
+
+  /***
+   * This function load and initialise the data send by the user
+   * @param {Table} data
+   */
+  private _loadData(data: Table): void  {
+    if (data) {
+      this._table = data;
+      this._initializeColumns();
+      console.log(this._table);
+    }
     // if (value) {
     //   this._title = value._title;
     //
@@ -169,11 +216,11 @@ export class TableComponent {
   /***
    * This function initialise the values of a column
    */
-  initialiseColumns() {
-    /*this._columns.forEach((value1, index) => {
-      this._columns[index]._isSelected = false;
-      this._columns[index]._isHover = false;
-    });*/
+  private _initializeColumns() {
+    this._table._columns.forEach((value, index) => {
+      this._table._columns[index]._isSelected = false;
+      this._table._columns[index]._isHover = false;
+    });
   }
 
   /***
@@ -636,69 +683,69 @@ export class TableComponent {
     return ;
   }
 
-  get selector(): string {
+  get table(): Table {
+    return this._table;
+  }
+
+  /*get selector(): string {
     return this._selector;
-  }
+  }*/
 
-  get title(): string {
+  /*get title(): string {
     return this._title;
-  }
+  }*/
 
-  get isHeadable(): boolean {
-    return this._isHeadable;
-  }
-
-  get isSelectable(): boolean {
+  /*get isSelectable(): boolean {
     return this._isSelectable;
-  }
+  }*/
 
-  get isEditable(): boolean {
+  /*get isEditable(): boolean {
     return this._isEditable;
-  }
+  }*/
 
-  get isNoTitle(): boolean {
+  /*get isNoTitle(): boolean {
     return this._isNoTitle;
-  }
+  }*/
 
-  get isLocal(): boolean {
+  /*get isLocal(): boolean {
     return this._isLocal;
-  }
+  }*/
 
-  get isShowable(): boolean {
+ /* get isShowable(): boolean {
     return this._isShowable;
-  }
+  }*/
 
-  get isDeletable(): boolean {
+  /*get isDeletable(): boolean {
     return this._isDeletable;
-  }
+  }*/
 
-  get isFiltrable(): boolean {
+  /*get isFiltrable(): boolean {
     return this._isFiltrable;
-  }
+  }*/
 
-  get isNotPaginable(): boolean {
+  /*get isNotPaginable(): boolean {
     return this._isNotPaginable;
-  }
+  }*/
 
-  get content(): Row[] {
+  /*get content(): Row[] {
     return this._content;
-  }
+  }*/
 
-  get columns(): Column[] {
+  /*get columns(): Column[] {
     return this._columns;
-  }
+  }*/
 
-  get total(): number {
+  /*get total(): number {
     return this._total;
-  }
+  }*/
 
-  get config(): any {
+  /*get config(): any {
     return this._config;
-  }
+  }*/
 
-  get actions(): string[] {
+  /*get actions(): string[] {
     return this._actions;
-  }
+  }*/
 
   get selectedRows(): number {
     return this.getSelectedRowsNumber();
@@ -712,20 +759,20 @@ export class TableComponent {
     return this._filteredContent;
   }
 
-  get paginationConfig(): PaginationInterface {
+  /*get paginationConfig(): PaginationInterface {
     return this._paginationConfig;
-  }
+  }*/
 
-  set content(value: Row[]) {
+  /*set content(value: Row[]) {
     this._content = value;
-  }
+  }*/
 
   get lang(): string {
     return this._translateService.currentLang;
   }
 
-  get editIndex(): number {
+  /*get editIndex(): number {
     return this._editIndex;
-  }
+  }*/
 
 }

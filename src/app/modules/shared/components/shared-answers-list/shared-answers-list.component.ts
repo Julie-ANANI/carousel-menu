@@ -49,7 +49,6 @@ export class SharedAnswersListComponent {
         _selector: 'admin-answers',
         _content: this._answers,
         _total: this._answers.length,
-        _isHeadable: true,
         _isLocal: true,
         _isFiltrable: true,
         _isSelectable: true,

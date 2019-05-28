@@ -59,7 +59,6 @@ export class AdminEmailQueueComponent implements OnInit {
             _title: 'Batchs',
             _content: this._queueList.mailqueues,
             _total: this._queueList._metadata.totalCount,
-            _isHeadable: true,
             _isFiltrable: true,
             _isShowable: true,
             _columns: [

@@ -36,12 +36,17 @@ export const TABLE = {
   },
 
   'TITLE': {
-    'PROFESSIONALS': 'Professionnels',
-    'USERS': 'Utilisateurs',
+    'PROFESSIONALS': 'professionnels',
+    'USERS': 'utilisateurs',
     'PROJECTS': 'projets',
     'AMBASSADORS': 'ambassadeurs',
     'REQUESTS': 'requests',
     'RESULTS': 'résultats'
+  },
+
+  'MESSAGES': {
+    'FETCHING': 'Récupérer les résultats....',
+    'NO_RESULT': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir), essayez à nouveau avec des mots-clés différents.'
   }
 
 };
