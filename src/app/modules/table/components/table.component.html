@@ -3,11 +3,11 @@
 
 
     <!-- section title and filter -->
-    <ng-container *ngIf="table._isNoTitle || table._isFiltrable || !table._isHeadable">
+    <ng-container *ngIf="!table._isNoTitle || table._isFiltrable || !table._isHeadable">
       <div class="table-header-wrapper flex-start">
 
         <!-- number of results and title -->
-        <ng-container *ngIf="table._isNoTitle">
+        <ng-container *ngIf="!table._isNoTitle">
           <div class="text text-notify title">
             <span>{{ table._total === -1 ? 0 : table._total }} {{ table._title | translate }}</span>
           </div>

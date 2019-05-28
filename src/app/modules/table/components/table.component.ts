@@ -150,16 +150,7 @@ export class TableComponent implements OnInit {
    */
   private _initializeTable() {
     this._table = {
-      _selector: '',
       _title: 'TABLE.TITLE.RESULTS',
-      _isNoTitle: false,
-      _isSelectable: false,
-      _isHeadable: false,
-      _isEditable: false,
-      _isLocal: false,
-      _isDeletable: false,
-      _isFiltrable: false,
-      _isNotPaginable: false,
       _total: -1,
       _editIndex: 0,
       _columns: [],
