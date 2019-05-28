@@ -73,10 +73,6 @@
 
   }
 
-  &.rounded {
-    border-radius: 36px;
-  }
-
   // Radio button like form-radio
   &.btn-radio {
     width: 22px;
@@ -143,6 +139,14 @@
 
   &.ghost-success {
     @include ghost-button-variant($success-color);
+  }
+
+  &.rounded {
+    border-radius: 36px;
+  }
+
+  &.shadow {
+    box-shadow: $box-shadow;
   }
 
 }

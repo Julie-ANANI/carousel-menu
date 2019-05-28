@@ -30,7 +30,7 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
       state('active', style({
         display: 'block',
         opacity: 1,
-        background: 'rgba(0,0,0,0.75)',
+        background: 'rgba(58,66,77,0.96)',
       })),
       transition('inactive => active', animate('.5ms linear')),
       transition('active => inactive', animate('205ms linear')),
