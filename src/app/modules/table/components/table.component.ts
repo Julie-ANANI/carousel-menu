@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import { isPlatformBrowser } from '@angular/common';
+//import { isPlatformBrowser } from '@angular/common';
 //import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
 //import { countries } from "../../../models/static-data/country";
 
@@ -16,7 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 
 /***
- * This generic class generates a table
+ * This generic class generates a table.
  */
 export class TableComponent implements OnInit {
 
@@ -81,6 +81,8 @@ export class TableComponent implements OnInit {
 
   private _table: Table; // default table data.
 
+  isSearching: boolean;
+
   //private _selector: string; // for the pagination.
 
   //private _title: string; // set the title.
@@ -131,7 +133,7 @@ export class TableComponent implements OnInit {
 
   //private _massSelection = false;
 
-  constructor(@Inject(PLATFORM_ID) private _platformId: Object,
+  constructor(//@Inject(PLATFORM_ID) private _platformId: Object,
               private _translateService: TranslateService) {
 
     this._initializeTable();
@@ -142,9 +144,6 @@ export class TableComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      //document.getElementById('table-component').style.visibility = 'visible';
-    }
   }
 
 

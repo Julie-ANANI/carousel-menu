@@ -46,7 +46,8 @@ export const TABLE = {
 
   'MESSAGES': {
     'FETCHING': 'Récupérer les résultats....',
-    'NO_RESULT': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir), essayez à nouveau avec des mots-clés différents.'
+    'NO_RESULT': 'Aucun résultat trouvé.',
+    'NO_RESULT_SEARCHING': 'Aucun résultat trouvé. Essayez d\'ajuster votre recherche pour trouver ce que vous cherchez.'
   }
 
 };

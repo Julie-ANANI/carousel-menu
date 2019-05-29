@@ -41,6 +41,20 @@
     <!-- /when fetching or initializing -->
 
 
+    <!-- when no result -->
+    <ng-container *ngIf="table._total === 0">
+      <div class="section-light-pad">
+        <app-message-space
+          [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
+          [widthMax]="isSearching ? '362px' : '273px'">
+          <span [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'" translate></span>
+        </app-message-space>
+      </div>
+    </ng-container>
+    <!-- /when no result -->
+
+
+
   </div>
 </section>
 
