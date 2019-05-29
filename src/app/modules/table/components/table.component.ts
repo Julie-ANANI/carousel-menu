@@ -143,7 +143,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
-      document.getElementById('table-component').style.visibility = 'visible';
+      //document.getElementById('table-component').style.visibility = 'visible';
     }
   }
 
