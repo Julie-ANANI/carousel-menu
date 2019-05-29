@@ -58,6 +58,8 @@ export class DiscoverDescriptionComponent implements OnInit {
     sort: '{ "created": -1 }'
   };
 
+  private _pageTitle = 'COMMON.PAGE_TITLE.DISCOVER_DESCRIPTION';
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _multiling: MultilingPipe,
               private _shareService: ShareService,
@@ -65,14 +67,14 @@ export class DiscoverDescriptionComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService) {
 
+    this._setPageTitle();
+
     this._activatedRoute.params.subscribe(params => {
       this._id = params['projectId'];
       this._lang = params['lang'];
     });
 
     this._innovation = this._activatedRoute.snapshot.data.innovation;
-
-    this._translateTitleService.setTitle(this._innovation.name || 'COMMON.PAGE_TITLE.DISCOVER_DESCRIPTION');
 
   }
 
@@ -86,6 +88,11 @@ export class DiscoverDescriptionComponent implements OnInit {
     this._getAllTags();
     this._getAllShareLinks();
     this._getOperatorDetails();
+  }
+
+
+  private _setPageTitle() {
+    this._translateTitleService.setTitle(this._pageTitle);
   }
 
 
@@ -135,9 +142,14 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _getInnovationCard() {
     this._innovationCard = this._innovation.innovationCards.find( (card: InnovCard) => card.lang === this._lang);
+
     if (!this._innovationCard) {
       this._innovationCard = this._innovation.innovationCards[0];
     }
+
+    this._pageTitle = this._innovationCard.title;
+    this._setPageTitle();
+
   }
 
 
@@ -228,6 +240,10 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get innovationsRelated(): Array<{ innovationCard: InnovCard; tags: Array<Tag> }> {
     return this._innovationsRelated;
+  }
+
+  get pageTitle(): string {
+    return this._pageTitle;
   }
 
 }
