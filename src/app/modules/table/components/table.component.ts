@@ -275,7 +275,7 @@ export class TableComponent implements OnInit {
    * If not, we emit the Output configChange
    * @param value
    */
-  changeConfig(value: any): void {
+  public changeConfig(value: any): void {
     // this._config = value;
     // this.fetchingResult = false;
     // if (!this._isLocal) {
@@ -585,10 +585,10 @@ export class TableComponent implements OnInit {
    * change the column selected value to true
    * @param {string} key
    */
-  selectColumn(key: string) {
-    // this.initialiseColumns();
-    // const index = this._columns.findIndex(value => value._attrs[0] === key);
-    // this._columns[index]._isSelected = true;
+  public selectColumn(key: string) {
+    this._initializeColumns();
+    const index = this._table._columns.findIndex(value => value._name === key);
+    this._table._columns[index]._isSelected = true;
   }
 
 

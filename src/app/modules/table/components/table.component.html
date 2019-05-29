@@ -73,7 +73,7 @@
             </ng-container>
 
             <!-- rest columns -->
-            <th *ngFor="let column of table._columns">
+            <th *ngFor="let column of table._columns" (click)="selectColumn(getName(column))" [ngClass]="{ 'active': column._isSelected }">
 
               <ng-container *ngIf="!isSortable(column)">
                 <span class="th-name">{{ getName(column) | translate }}</span>
@@ -82,6 +82,7 @@
               <ng-container *ngIf="isSortable(column)">
                 <app-shared-sort
                   [config]="config"
+                  (configChangeSort)="changeConfig($event)"
                   [property]="getName(column) | translate | lowercase">
                 </app-shared-sort>
               </ng-container>

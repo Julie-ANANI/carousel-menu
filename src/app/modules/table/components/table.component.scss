@@ -47,7 +47,7 @@
         max-width: 300px;
         height: 44px;
         background-color: $table-th-background-color;
-        padding: $unit-2 $unit-5;
+        padding: $unit-h $unit-5;
         vertical-align: middle;
         text-transform: uppercase;
 
@@ -58,7 +58,7 @@
           height: 100%;
         }
 
-        &.active {
+        &.active, &:hover {
           background-color: $table-th-hover-background-color;
         }
 
@@ -68,6 +68,7 @@
         min-width: 45px;
         max-width: 45px;
         padding: 0.5rem;
+        background-color: $table-th-background-color !important;
 
         label {
           transition: all .2s ease;
