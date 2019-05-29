@@ -244,18 +244,23 @@
             {{ opt.label | multiling:lang }}:
             <label for="{{question.identifier}}-benefit{{i}}-rate1">1</label>
             <input id="{{question.identifier}}-benefit{{i}}-rate1" type="radio"
+                   name="{{question.identifier}}-benefit{{opt.identifier}}"
                    [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="1">
             <label for="{{question.identifier}}-benefit{{i}}-rate2">2</label>
             <input id="{{question.identifier}}-benefit{{i}}-rate2" type="radio"
+                   name="{{question.identifier}}-benefit{{opt.identifier}}"
                    [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="2">
             <label for="{{question.identifier}}-benefit{{i}}-rate3">3</label>
             <input id="{{question.identifier}}-benefit{{i}}-rate3" type="radio"
+                   name="{{question.identifier}}-benefit{{opt.identifier}}"
                    [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="3">
             <label for="{{question.identifier}}-benefit{{i}}-rate4">4</label>
             <input id="{{question.identifier}}-benefit{{i}}-rate4" type="radio"
+                   name="{{question.identifier}}-benefit{{opt.identifier}}"
                    [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="4">
             <label for="{{question.identifier}}-benefit{{i}}-rate5">5</label>
             <input id="{{question.identifier}}-benefit{{i}}-rate5" type="radio"
+                   name="{{question.identifier}}-benefit{{opt.identifier}}"
                    [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="5">
           </li>
         </ul>
