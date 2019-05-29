@@ -8,33 +8,47 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export class SharedSortComponent {
 
-  @Input() config: any;
+  @Input() set config(value: any) {
+    this._config = value;
+  }
 
-  @Input() prop: string;
+  @Input() set property(value: string) {
+    this._property = value;
+  }
 
-  @Output() configChange = new EventEmitter <any>();
+  @Output() configChangeSort = new EventEmitter <any>();
+
+  private _property: string;
+
+  private _config: any;
 
   constructor() {}
 
-  sort(event: Event): void {
+  public sort(event: Event): void {
     event.preventDefault();
 
-    const previousOrder = this.config.sort[this.prop] || 0;
-
+    const previousOrder = this._config.sort[this._property] || 0;
     const newOrder = previousOrder === 1 ? -1 : 1;
-
-    this.config.sort = {};
+    this._config.sort = {};
 
     if (newOrder === 1 || newOrder === -1) {
-      this.config.sort[this.prop] = newOrder;
+      this._config.sort[this._property] = newOrder;
     }
 
-    this.configChange.emit(this.config);
+    this.configChangeSort.emit(this._config);
 
   }
 
   get order(): number {
-    return this.config.sort[this.prop] || 0;
+    return this._config.sort[this._property] || 0;
+  }
+
+  get property(): string {
+    return this._property;
+  }
+
+  get config(): any {
+    return this._config;
   }
 
 }

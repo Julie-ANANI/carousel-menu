@@ -54,6 +54,49 @@
     <!-- /when no result -->
 
 
+    <!-- when result -->
+    <ng-container *ngIf="table._total > 0">
+      <table class="table table-scroll">
+
+        <!-- head -->
+        <thead>
+          <tr>
+
+            <!-- if we have selectable -->
+            <ng-container *ngIf="table._isSelectable">
+              <th class="th-checkbox">
+                <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
+                  <input type="checkbox" (change)="selectAll($event)">
+                  <i class="fas fa-check"></i>
+                </label>
+              </th>
+            </ng-container>
+
+            <!-- rest columns -->
+            <th *ngFor="let column of table._columns">
+
+              <ng-container *ngIf="!isSortable(column)">
+                <span class="th-name">{{ getName(column) | translate }}</span>
+              </ng-container>
+
+              <ng-container *ngIf="isSortable(column)">
+                <app-shared-sort
+                  [config]="config"
+                  [property]="getName(column) | translate | lowercase">
+                </app-shared-sort>
+              </ng-container>
+
+            </th>
+
+          </tr>
+        </thead>
+
+
+      </table>
+    </ng-container>
+    <!-- /when result -->
+
+
 
   </div>
 </section>

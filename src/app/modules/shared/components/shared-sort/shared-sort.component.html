@@ -1,19 +1,10 @@
-<section (click)="sort($event)" id="sort-component" class="flex-start c-hand">
+<div id="sort-component" class="flex-start c-hand" [ngClass]="{ 'desc': order === 1, 'asn': order === -1 }" (click)="sort($event)">
 
-  <!-- attribute name -->
-  <ng-content></ng-content>
+  <span>{{ property }}</span>
 
-  <!-- sort icons -->
-  <div class="icon-wrapper d-flex">
-
-    <span [ngClass]="{ 'active': order === 1, 'inactive': order === -1, 'd-invisible': order === 0 }">
-      <i class="fas fa-angle-up"></i>
-    </span>
-
-    <span [ngClass]="{ 'active': order === -1, 'inactive': order === 1, 'd-invisible': order === 0 }">
-      <i class="fas fa-angle-down"></i>
-    </span>
-
+  <div class="d-flex icon-wrapper">
+    <span><i class="fas fa-angle-up"></i></span>
+    <span><i class="fas fa-angle-down"></i></span>
   </div>
 
-</section>
+</div>

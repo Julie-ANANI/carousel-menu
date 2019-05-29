@@ -38,7 +38,7 @@ export class TableComponent implements OnInit {
    * @param value
    */
   @Input() set config(value: any) {
-    this.loadConfig(value);
+    this._loadConfig(value);
   }
 
 
@@ -82,6 +82,10 @@ export class TableComponent implements OnInit {
   private _table: Table; // default table data.
 
   isSearching: boolean;
+
+  private _massSelection: boolean;
+
+  private _config: any = null;
 
   //private _selector: string; // for the pagination.
 
@@ -127,11 +131,11 @@ export class TableComponent implements OnInit {
 
 
 
-  //private _config: any = null;
 
 
 
-  //private _massSelection = false;
+
+
 
   constructor(//@Inject(PLATFORM_ID) private _platformId: Object,
               private _translateService: TranslateService) {
@@ -217,12 +221,48 @@ export class TableComponent implements OnInit {
     });
   }
 
+
+  /***
+   * This function returns the number of selected rows
+   * @returns {number}
+   */
+  private _getSelectedRowsNumber(): number {
+    if (this._massSelection) {
+      return this._table._content.length;
+    }
+    // if (this._massSelection) {
+    //
+    //   // return this._total;
+    // } else {
+    //   return this.getSelectedRows().length;
+    // }
+    return ;
+  }
+
+
+  /***
+   * This function allows to select all the rows
+   * @param event
+   */
+  public selectAll(event: Event): void  {
+    event.preventDefault();
+    this._massSelection = event.target['checked'];
+
+    // if (this._isLocal) {
+    //   this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
+    // } else {
+    //   this._content.forEach(value => { value._isSelected = e.target.checked; });
+    //   this._massSelection = e.target.checked;
+    // }
+  }
+
+
   /***
    * This function affects the config send by the user to this._config
    * @param value
    */
-  loadConfig(value: any): void {
-    // this._config = value;
+  private _loadConfig(value: any): void {
+    this._config = value;
     // this._paginationConfig = {
     //   limit: value.limit || 10,
     //   offset: value.offset || 0
@@ -404,9 +444,8 @@ export class TableComponent implements OnInit {
    * @param {Column} column
    * @returns {string[]}
    */
-  getAttrs(column: Column) {
-    //return column._attrs;
-    return;
+  public getAttrs(column: Column) {
+    return column._attrs;
   }
 
   /***
@@ -425,9 +464,8 @@ export class TableComponent implements OnInit {
    * @param {Column} column
    * @returns {string | undefined}
    */
-  getName(column: Column) {
-    //return column._name;
-    return;
+  public getName(column: Column) {
+    return column._name;
   }
 
   /***
@@ -518,19 +556,7 @@ export class TableComponent implements OnInit {
     return  [];
   }
 
-  /***
-   * This function returns the number of selected rows
-   * @returns {number}
-   */
-  getSelectedRowsNumber(): number {
-    // if (this._massSelection) {
-    //   return this._content.length;
-    //   // return this._total;
-    // } else {
-    //   return this.getSelectedRows().length;
-    // }
-    return ;
-  }
+
 
   /***
    * This function returns the content of the selected rows
@@ -565,18 +591,7 @@ export class TableComponent implements OnInit {
     // this._columns[index]._isSelected = true;
   }
 
-  /***
-   * This function allows to select all the rows
-   * @param e
-   */
-  selectAll(e: any): void  {
-    // if (this._isLocal) {
-    //   this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
-    // } else {
-    //   this._content.forEach(value => { value._isSelected = e.target.checked; });
-    //   this._massSelection = e.target.checked;
-    // }
-  }
+
 
   /***
    * This function returns if a rows is selected or not
@@ -623,8 +638,8 @@ export class TableComponent implements OnInit {
    * @param {Column} column
    * @returns {boolean}
    */
-  isSortable(column: Column) {
-    //return column._isSortable === undefined ? true : column._isSortable;
+  public isSortable(column: Column) {
+    return column._isSortable === undefined ? true : column._isSortable;
   }
 
   /***
@@ -681,6 +696,11 @@ export class TableComponent implements OnInit {
     return this._table;
   }
 
+  get selectedRows(): number {
+    return this._getSelectedRowsNumber();
+  }
+
+
   /*get selector(): string {
     return this._selector;
   }*/
@@ -733,17 +753,14 @@ export class TableComponent implements OnInit {
     return this._total;
   }*/
 
-  /*get config(): any {
+  get config(): any {
     return this._config;
-  }*/
+  }
 
   /*get actions(): string[] {
     return this._actions;
   }*/
 
-  get selectedRows(): number {
-    return this.getSelectedRowsNumber();
-  }
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
@@ -763,6 +780,10 @@ export class TableComponent implements OnInit {
 
   get lang(): string {
     return this._translateService.currentLang;
+  }
+
+  get massSelection(): boolean {
+    return this._massSelection;
   }
 
   /*get editIndex(): number {

@@ -15,6 +15,98 @@
 
     }
 
+    .table {
+
+      thead, tr {
+        display: flex;
+        flex: 1;
+        width: 100%;
+      }
+
+
+      tr {
+        position: relative;
+      }
+
+      th:first-child {
+        border-left: $border-width solid $table-tr-border-color;
+      }
+
+      th:last-child {
+        border-right: $border-width solid $table-tr-border-color;
+      }
+
+      th {
+        font-size: $font-size-xs;
+        color: $text-primary-color;
+        font-weight: 600;
+        white-space: nowrap;
+        flex: 1;
+        text-overflow: ellipsis;
+        min-width: 150px;
+        max-width: 300px;
+        height: 44px;
+        background-color: $table-th-background-color;
+        padding: $unit-2 $unit-5;
+        vertical-align: middle;
+        text-transform: uppercase;
+
+        .th-name {
+          display: inline-flex;
+          align-items: center;
+          text-align: inherit;
+          height: 100%;
+        }
+
+        &.active {
+          background-color: $table-th-hover-background-color;
+        }
+
+      }
+
+      .th-checkbox {
+        min-width: 45px;
+        max-width: 45px;
+        padding: 0.5rem;
+
+        label {
+          transition: all .2s ease;
+          width: 20px;
+          height: 20px;
+          margin: auto;
+          border-radius: $border-radius;
+          border: $border-width-lg solid $border-meta-color;
+
+          input[type="checkbox"] {
+            display: none;
+          }
+
+          i {
+            font-size: $font-size-sm;
+            display: none;
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: $table-th-hover-background-color;
+          }
+
+          &.active {
+            border-color: $primary-color;
+
+            i {
+              display: block;
+              color: $primary-color;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
   }
 
   //.table-wrapper {
