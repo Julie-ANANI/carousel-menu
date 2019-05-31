@@ -27,7 +27,7 @@ export const SHOWCASE = {
   'BUILD_SHOWCASE': 'Create Showcase',
 
   'TOOLTIP': {
-
+    'MODIFY_TAGS': 'Click to edit tags.'
   }
 
 };

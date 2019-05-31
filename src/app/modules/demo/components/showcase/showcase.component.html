@@ -24,8 +24,9 @@
     <!-- section stat -->
     <ng-container *ngIf="selectedTagsStats.length > 0">
 
+
       <!-- header section -->
-      <section class="section-header text-center">
+      <section class="d-flex section-header text-center">
 
         <!-- labels -->
         <h1 class="title-primary text-normal">
@@ -36,16 +37,25 @@
         </h1>
 
         <!-- modify tag link -->
-        <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+        <span
+          class="text-link text-xs tooltip"
+          [attr.data-tooltip]="'SHOWCASE.TOOLTIP.MODIFY_TAGS' | translate"
+          (click)="modifyTag()"
+          [innerText]="'SHOWCASE.MODIFY'"
+          translate>
+        </span>
 
       </section>
       <!-- /header section -->
 
+
       <!-- horizontal line -->
       <hr class="hr hr-main">
+      <!-- /horizontal line -->
+
 
       <!-- section answer and innovations -->
-      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+      <section class="flex-centered section-wrapper section-pad">
 
         <!-- answers wrapper -->
         <div class="answer-wrapper">
@@ -60,13 +70,15 @@
       </section>
       <!-- /section answer and innovations -->
 
+
       <!-- section company -->
-      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+      <section class="flex-centered section-wrapper section-pad">
         <div class="client-wrapper">
           <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
         </div>
       </section>
       <!-- /section company -->
+
 
       <!-- section map -->
       <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
@@ -86,11 +98,14 @@
       </section>
       <!-- /section map -->
 
+
     </ng-container>
     <!-- /section stat -->
 
+
   </div>
 </div>
+
 
 
 <!-- modal to modify the tags -->
@@ -125,7 +140,7 @@
   </div>
 
 </app-modal>
-
+<!-- /modal to modify the tags -->
 
 
 

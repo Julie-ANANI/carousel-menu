@@ -5,7 +5,6 @@
   min-height: 100vh;
   background-color: #F5F5F5;
 
-
   .no-selected-wrapper {
     flex-direction: column;
     min-height: 85vh;
@@ -40,7 +39,6 @@
   }
 
   .section-header {
-    display: flex;
     justify-content: center;
     align-items: flex-end;
 
@@ -53,7 +51,6 @@
     }
 
     .text-link {
-      font-size: $font-size-md;
       margin-bottom: 8px;
     }
 
