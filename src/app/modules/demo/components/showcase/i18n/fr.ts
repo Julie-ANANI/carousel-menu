@@ -27,7 +27,10 @@ export const SHOWCASE = {
   'BUILD_SHOWCASE': 'Construire la vitrine',
 
   'TOOLTIP': {
-    'MODIFY_TAGS': 'Cliquez pour éditer les tags.'
-  }
+    'MODIFY_TAGS': 'Cliquez pour éditer les tags.',
+    'EDIT_ANSWERS': 'Cliquez pour sélectionner différentes réponses.'
+  },
+
+  'MAX_SELECT_ANSWERS': 'Vous ne pouvez sélectionner que 6 réponses.'
 
 };

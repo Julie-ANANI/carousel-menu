@@ -27,7 +27,10 @@ export const SHOWCASE = {
   'BUILD_SHOWCASE': 'Create Showcase',
 
   'TOOLTIP': {
-    'MODIFY_TAGS': 'Click to edit tags.'
-  }
+    'MODIFY_TAGS': 'Click to edit tags.',
+    'EDIT_ANSWERS': 'Click to select different answers.'
+  },
+
+  'MAX_SELECT_ANSWERS': 'You can only select 6 answers.'
 
 };
