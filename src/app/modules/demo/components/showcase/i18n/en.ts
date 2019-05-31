@@ -1,9 +1,5 @@
 export const SHOWCASE = {
 
-  'NO_TAGS_CLICKABLE': 'Choose',
-
-  'NO_TAGS': 'sectors to create your own Showcase.',
-
   'MODIFY': 'Modify',
 
   'SEE_MORE': 'See more',
