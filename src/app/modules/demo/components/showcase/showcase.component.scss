@@ -1,8 +1,39 @@
 @import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
 
-#showcase-component {
+#showcase {
   min-height: 100vh;
   background-color: #F5F5F5;
+
+
+  .no-selected-wrapper {
+    flex-direction: column;
+    min-height: 85vh;
+
+    .add-wrapper {
+      @include control-transition();
+      border-radius: $border-radius;
+      border: $border-width-xl solid $border-color;
+      padding: 1.25rem 2.5rem;
+
+      .text {
+        margin-top: 0.5rem;
+      }
+
+      &:hover {
+        border-color: $primary-color;
+        box-shadow: $box-shadow-umi;
+
+        .fa-pencil-alt {
+          color: $primary-color;
+        }
+
+      }
+
+    }
+
+  }
+
 
   .mar {
     margin-top: 5px;
@@ -91,6 +122,11 @@
 
 }
 
+
+.btn.btn-close, .title-secondary {
+  padding-right: $unit-1;
+}
+
 .title-secondary {
   margin-bottom: 0;
   padding-bottom: $unit-1;
@@ -102,6 +138,7 @@
   .label {
     margin: $unit-2;
     border-radius: $border-width-lg;
+    font-size: 0.5rem;
   }
 
 }
@@ -122,6 +159,12 @@
 
     .form-checkbox {
       font-size: $font-size-sm;
+
+      span {
+        max-width: 100%;
+        min-height: $unit-4;
+      }
+
     }
 
   }
@@ -131,7 +174,7 @@
 
 @media (max-width: $size-md) {
 
-  #showcase-component {
+  #showcase {
 
     .section-wrapper {
       flex-direction: column;

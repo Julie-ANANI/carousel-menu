@@ -15,7 +15,9 @@ export const SHOWCASE = {
   'CLIENTS': 'Quelques entreprises qui ont testé leur marché',
 
   'SECTORS_MODAL': {
-    'TITLE': 'Choix des secteurs'
+    'TITLE': 'Choisir les secteurs pour créer la vitrine'
   },
+
+  'BUILD_SHOWCASE': 'Construire la vitrine'
 
 };

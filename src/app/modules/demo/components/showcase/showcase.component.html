@@ -1,14 +1,25 @@
-<div id="showcase-component" class="section-pad">
+<div id="showcase" class="section-pad">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+
+    <!-- no tags selected -->
     <ng-container *ngIf="selectedTagsStats.length === 0">
-      <div class="section-pad rm-pad-bottom">
-        <app-message-space>
-            <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.NO_TAGS_CLICKABLE'" translate></span>
-            {{'SHOWCASE.NO_TAGS' | translate}}
-        </app-message-space>
+      <div class="flex-centered no-selected-wrapper">
+        <div class="add-wrapper text-center c-hand" (click)="modifyTag()">
+
+          <div class="text-background">
+            <i class="fas fa-pencil-alt fa-2x"></i>
+          </div>
+
+          <div class="text c-hand">
+            <span class="text-medium text-background" [innerText]="'SHOWCASE.BUILD_SHOWCASE'" translate></span>
+          </div>
+
+        </div>
       </div>
     </ng-container>
+    <!-- /no tags selected -->
+
 
     <!-- section stat -->
     <ng-container *ngIf="selectedTagsStats.length > 0">
@@ -83,9 +94,12 @@
 
 
 <!-- modal to modify the tags -->
-<app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
+<app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'" [heightMax]="'80vh'">
 
-  <h2 class="text text-background title-secondary text-medium" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+  <div class="flex-between">
+    <h2 class="text text-background title-secondary text-medium" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+    <button type="button" class="btn btn-close text-notify text-md" (click)="modalShow = false"></button>
+  </div>
 
   <ng-container *ngIf="selectedTagsStats.length">
     <div class="selected-wrapper">
@@ -105,7 +119,7 @@
           [name]="tag.label | multiling:currentLang"
           [disabled]="loadingStats"
           type="checkbox">
-        <i class="form-icon"></i><span>{{ tag.label | multiling:currentLang | FormatText }}</span>
+        <i class="form-icon"></i><span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
       </label>
     </div>
   </div>
