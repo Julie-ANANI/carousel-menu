@@ -6,49 +6,37 @@
   text-align: left;
   width: 100%;
 
-  &.table-striped {
-    tbody {
-      tr:nth-of-type(odd) {
-        // background: $bg-color;
-      }
-    }
-  }
-
-  &,
-  &.table-striped {
-    tbody {
-      tr {
-        &.active {
-         // background: $bg-color-dark;
-        }
-      }
-    }
-  }
-
   &.table-hover {
+
     tbody {
+
       tr {
+
         &:hover {
-         // background: $bg-color-dark;
+         background: $table-th-background-color;
         }
+
       }
+
     }
+
   }
 
   // Tables with horizontal scrollbar
   &.table-scroll {
     display: block;
     overflow-x: auto;
-    padding-bottom: .75rem;
+    padding-bottom: $unit-5;
     white-space: nowrap;
   }
 
-  td,
-  th {
-    border-bottom: $border-width solid $border-color;
+  td, th {
+    border-bottom: $border-width solid $table-tr-border-color;
     padding: $unit-3 $unit-2;
   }
+
   th {
-    border-bottom-width: $border-width-lg;
+    border-top: $border-width solid $table-tr-border-color;
   }
+
 }

@@ -168,6 +168,14 @@ export class AuthService {
     return this._admin;
   }
 
+  get isAdmin(): boolean {
+    return (this._admin & 1) === 1;
+  }
+
+  get isSuperAdmin(): boolean {
+    return (this._admin & 2) === 2;
+  }
+
   get user () {
     return this._user;
   }

@@ -56,11 +56,6 @@ export class AnswerQuestionComponent {
     }
   }
 
-  checkOption(id: string, event: Event) {
-    event.preventDefault();
-    this.fullAnswer.answers[this.question.identifier][id] = !this.fullAnswer.answers[this.question.identifier][id];
-  }
-
   selectOption(event: Event, option: any) {
     event.preventDefault();
     this.fullAnswer.answers[this.question.identifier] = option.identifier;

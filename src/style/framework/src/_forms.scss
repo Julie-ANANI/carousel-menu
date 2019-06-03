@@ -168,7 +168,8 @@ textarea.form-input {
 .form-checkbox, .form-radio, .form-switch {
   display: inline-flex;
   line-height: $line-height-sm;
-  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  font-size: 0.75rem;
   align-items: center;
   padding:  $unit-1 1.25rem;
   position: relative;
@@ -300,8 +301,6 @@ textarea.form-input {
 .form-switch {
   padding-left: 2.5rem;
   padding-right: 0;
-  font-size: 0.75rem;
-  font-weight: $font-weight-normal;
 
   .form-icon {
     background: $bg-color-light none;

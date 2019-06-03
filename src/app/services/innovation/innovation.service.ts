@@ -137,7 +137,7 @@ export class InnovationService {
    * When we want to add them as Collaborator
    */
   public getInvitationUrl (): string {
-    return encodeURIComponent(`${environment.clientUrl}/signup?invitation=true`);
+    return encodeURIComponent(`${environment.clientUrl}/register?invitation=true`);
   }
 
   public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
