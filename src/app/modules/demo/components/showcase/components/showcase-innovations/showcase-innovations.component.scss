@@ -1,29 +1,32 @@
 @import "../../../../../../../style/framework/src/variables";
+@import "../../../../../../../style/framework/src/mixins";
 
-#showcase-innovations-component {
-  flex-direction: column;
-  justify-content: space-between;
+#showcase-innovations {
   height: 100%;
 
-  .icon {
-    right: 0;
+  .see-more-wrapper, .icon {
+    @include control-transition();
+    visibility: hidden;
   }
 
-  .section-heading {
+  .icon {
+    top: -6px;
+    right: 0;
+    margin-right: 0;
+    font-size: $font-icon-xl;
+  }
 
-    h2 {
-      margin-bottom: 0;
-    }
+  h2, h3 {
+    margin-bottom: 0.25rem;
+  }
 
-    h3 {
-      font-family: $font-family-oswald;
-      color: $secondary-color;
-      font-size: 1.85rem;
+  h3 {
+    font-family: $font-family-oswald;
+    color: $secondary-color;
+    font-size: 1.85rem;
 
-      span {
-        color: #3E5164;
-      }
-
+    span {
+      color: #3E5164;
     }
 
   }
@@ -31,12 +34,17 @@
   .card-wrapper {
     flex-wrap: wrap;
     margin-right: -$unit-5;
-    margin-bottom: -0.75rem;
+    margin-bottom: -$unit-5;
 
     .card {
       border: none;
       overflow: hidden;
       background-color: transparent;
+
+
+      &.card-3 {
+        min-width: 218px;
+      }
 
       a {
         font-size: $font-size-xs;
@@ -44,6 +52,12 @@
         padding: $unit-4;
 
         .card-image {
+
+          img {
+            height: 116px;
+            margin-left: auto;
+            margin-right: auto;
+          }
 
           .hover-button {
             min-height: 35px;
@@ -68,12 +82,12 @@
         }
 
         .card-header {
-          padding-left: $unit-2;
-          padding-right: $unit-2;
+          max-height: 80px;
+          overflow-y: auto;
 
           .card-title {
             margin-bottom: 0;
-            font-size: 0.75rem;
+            font-size: $font-size-xs;
           }
 
         }
@@ -107,6 +121,14 @@
 
       }
 
+    }
+
+  }
+
+  &:hover {
+
+    .icon, .see-more-wrapper {
+      visibility: visible;
     }
 
   }

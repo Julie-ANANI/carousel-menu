@@ -28,7 +28,8 @@ export const SHOWCASE = {
 
   'TOOLTIP': {
     'MODIFY_TAGS': 'Click to edit tags.',
-    'EDIT_ANSWERS': 'Click to select different answers.'
+    'EDIT_ANSWERS': 'Click to select different answers.',
+    'EDIT_INNOVATIONS': 'Click to select different innovations.'
   },
 
   'MAX_SELECT_ANSWERS': 'You can only select 6 answers.'
