@@ -61,6 +61,7 @@ export class SearchToolComponent implements OnInit{
   public onClickSearch(keyword: string) {
 
     this._searchFieldOutput = keyword;
+    this._selectedCountry = null;
 
     if (this._requestAlreadyLoaded) {
       this._searchStarted = true;
