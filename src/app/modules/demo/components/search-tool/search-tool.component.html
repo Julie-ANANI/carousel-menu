@@ -187,17 +187,20 @@
                 </ng-container>
                 <!-- /name -->
 
+                <!-- email -->
+                <ng-container *ngIf="professional && professional.email">
+                  <p>
+                    <i class="fas fa-envelope"></i>
+                    <span class="text-email">
+                      {{ professional.email }}
+                    </span>
+                  </p>
+                </ng-container>
+
                 <!-- job -->
                 <ng-container *ngIf="professional && (professional.job || professional.jobTitle)">
                   <p class="text-job text-background">
                     {{ professional.job || professional.jobTitle }}
-                  </p>
-                </ng-container>
-
-                <!-- email -->
-                <ng-container *ngIf="professional && professional.email">
-                  <p class="text-email">
-                    {{ professional.email }}
                   </p>
                 </ng-container>
 
