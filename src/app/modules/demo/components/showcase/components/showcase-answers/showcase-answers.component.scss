@@ -12,6 +12,7 @@
   .icon {
     top: -6px;
     right: 0;
+    margin-right: 0;
     font-size: $font-icon-xl;
   }
 
@@ -28,6 +29,10 @@
       color: #3E5164;
     }
 
+  }
+
+  .card-main {
+    margin-right: 0 !important;
   }
 
   .card-wrapper {
@@ -99,14 +104,6 @@
       box-shadow: none;
     }
 
-  }
-
-}
-
-@media (max-width: $size-sm) {
-
-  .card-main {
-    margin-right: 0 !important;
   }
 
 }
