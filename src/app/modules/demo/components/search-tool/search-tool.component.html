@@ -1,4 +1,4 @@
-<div id="search-tool-component">
+<div id="search-tool-component" class="restrict-width">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
 
@@ -138,111 +138,138 @@
 
 
       <!-- showing the professionals -->
-      <ng-container *ngIf="searchStopped">
-        <h3 class="title-pro text-background" [innerText]="'SEARCH_DEMO.SOME_PROS'" translate></h3>
+      <ng-container *ngIf="searchStopped && slicedPros">
 
-        <div *ngIf="selectedCountry" class="label label-primary label-rounded c-hand">
-          <label class="c-hand">
-            <span class="label-text">{{ names[selectedCountry] }}</span>
-          </label>
-          <i class="fas fa-times" (click)="resetCountry()"></i>
-        </div>
 
-        <div class="card-wrapper d-flex">
-          <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
+        <!-- if filter not activated -->
+        <h3 *ngIf="!selectedCountry" class="title-pro text-background" [innerText]="'SEARCH_DEMO.SOME_PROS'" translate></h3>
 
-            <ng-container *ngIf="professional.isLoading">
-              <div class="card-body card-cover">
-                <i class="fa fa-cog fa-2x text-warning fa-spin"></i>
-              </div>
-            </ng-container>
 
-            <ng-container *ngIf="!professional.isLoading">
+        <!-- if filter activated -->
+        <ng-container *ngIf="selectedCountry">
+          <div class="flex-start" [ngStyle]="{ 'margin-bottom': '1rem' }">
 
-              <ng-container *ngIf="professional && professional.country">
-                <div class="card-header animate-card-appear">
-                  <app-country-flag [country]="professional.country" [width]="23" [height]="16"></app-country-flag>
+            <div class="text-background text-md">
+              <span>{{ slicedPros.length }} {{ 'SEARCH_DEMO.RESULTS_FOR' | translate }}</span>
+            </div>
+
+            <div class="filter-wrapper c-hand text-md" (click)="resetCountry()">
+              <span class="text-background text-medium">{{ names[selectedCountry] }} <i class="fas text-notify fa-times-circle"></i></span>
+            </div>
+
+          </div>
+        </ng-container>
+        <!-- /if filter activated -->
+
+
+        <!-- if no professionals found on filter activated -->
+        <ng-container *ngIf="slicedPros.length === 0">
+          <div class="section-pad flex-centered no-result-wrapper">
+            <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
+            <h3 class="text-normal" [innerText]="'SEARCH_DEMO.NO_RESULT_HEADING'" translate></h3>
+            <span class="text-notify text-medium" [innerText]="'SEARCH_DEMO.NO_RESULT_TEXT'" translate></span>
+          </div>
+        </ng-container>
+        <!-- /if no professionals found on filter activated -->
+
+
+        <ng-container *ngIf="slicedPros.length > 0">
+          <div class="card-wrapper d-flex">
+            <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
+
+              <ng-container *ngIf="professional.isLoading">
+                <div class="card-body card-cover">
+                  <i class="fa fa-cog fa-2x text-warning fa-spin"></i>
                 </div>
               </ng-container>
 
-              <div class="card-body card-cover animate-card-appear">
+              <ng-container *ngIf="!professional.isLoading">
 
-                <!-- name -->
-                <ng-container *ngIf="professional && (professional.firstName || professional.lastName)">
-                  <p class="text-medium">
+                <ng-container *ngIf="professional && professional.country">
+                  <div class="card-header animate-card-appear">
+                    <app-country-flag [country]="professional.country" [width]="23" [height]="16"></app-country-flag>
+                  </div>
+                </ng-container>
 
-                    <ng-container *ngIf="professional.profileUrl">
-                      <a [href]="professional.profileUrl" class="text-link" target="_blank">
+                <div class="card-body card-cover animate-card-appear">
+
+                  <!-- name -->
+                  <ng-container *ngIf="professional && (professional.firstName || professional.lastName)">
+                    <p class="text-medium">
+
+                      <ng-container *ngIf="professional.profileUrl">
+                        <a [href]="professional.profileUrl" class="text-link" target="_blank">
+                          <ng-container *ngIf="professional.firstName">{{ professional.firstName }} </ng-container>
+                          <ng-container *ngIf="professional.lastName">{{ professional.lastName }}</ng-container>
+                        </a>
+                      </ng-container>
+
+                      <ng-container *ngIf="!professional.profileUrl">
                         <ng-container *ngIf="professional.firstName">{{ professional.firstName }} </ng-container>
                         <ng-container *ngIf="professional.lastName">{{ professional.lastName }}</ng-container>
+                      </ng-container>
+
+                    </p>
+                  </ng-container>
+                  <!-- /name -->
+
+                  <!-- email -->
+                  <ng-container *ngIf="professional && professional.email">
+                    <p class="relative tooltip" data-tooltip="E-mail">
+                      <span class="text-email">{{ professional.email }}</span>
+                      <span class="absolute email-icon text-background"><i class="fas fa-envelope"></i></span>
+                    </p>
+                  </ng-container>
+
+                  <!-- job -->
+                  <ng-container *ngIf="professional && (professional.job || professional.jobTitle)">
+                    <p class="text-job text-background">
+                      {{ professional.job || professional.jobTitle }}
+                    </p>
+                  </ng-container>
+
+                </div>
+
+                <!-- logo -->
+                <ng-container *ngIf="professional && professional.company">
+
+                  <ng-container *ngIf="professional.companyLogoUrl">
+                    <div class="card-footer animate-card-appear tooltip flex-centered" [attr.data-tooltip]="professional.company">
+                      <a [href]="getCompanyUrl(professional.companyDomain)" target="_blank">
+                        <img
+                          [src]="professional.companyLogoUrl"
+                          class="img-responsive" [alt]= "professional.company"
+                          (error)="professional.companyLogoUrl = null">
                       </a>
-                    </ng-container>
+                    </div>
+                  </ng-container>
 
-                    <ng-container *ngIf="!professional.profileUrl">
-                      <ng-container *ngIf="professional.firstName">{{ professional.firstName }} </ng-container>
-                      <ng-container *ngIf="professional.lastName">{{ professional.lastName }}</ng-container>
-                    </ng-container>
+                  <ng-container *ngIf="!professional.companyLogoUrl">
+                    <div class="card-footer animate-card-appear flex-centered text-center no-logo">
 
-                  </p>
+                      <ng-container *ngIf="professional.companyDomain">
+                        <a [href]="getCompanyUrl(professional.companyDomain)" class="text-link text-ellipsis text-normal" target="_blank">
+                          {{ professional.company }}
+                        </a>
+                      </ng-container>
+
+                      <ng-container *ngIf="!professional.companyDomain">
+                        <span class="text-ellipsis">{{ professional.company }}</span>
+                      </ng-container>
+
+                    </div>
+                  </ng-container>
+
                 </ng-container>
-                <!-- /name -->
-
-                <!-- email -->
-                <ng-container *ngIf="professional && professional.email">
-                  <p>
-                    <i class="fas fa-envelope"></i>
-                    <span class="text-email">
-                      {{ professional.email }}
-                    </span>
-                  </p>
-                </ng-container>
-
-                <!-- job -->
-                <ng-container *ngIf="professional && (professional.job || professional.jobTitle)">
-                  <p class="text-job text-background">
-                    {{ professional.job || professional.jobTitle }}
-                  </p>
-                </ng-container>
-
-              </div>
-
-              <!-- logo -->
-              <ng-container *ngIf="professional && professional.company">
-
-                <ng-container *ngIf="professional.companyLogoUrl">
-                  <div class="card-footer animate-card-appear tooltip flex-centered" [attr.data-tooltip]="professional.company">
-                    <a [href]="getCompanyUrl(professional.companyDomain)" target="_blank">
-                      <img
-                        [src]="professional.companyLogoUrl"
-                        class="img-responsive" [alt]= "professional.company"
-                        (error)="professional.companyLogoUrl = null">
-                    </a>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="!professional.companyLogoUrl">
-                  <div class="card-footer animate-card-appear flex-centered text-center no-logo">
-
-                    <ng-container *ngIf="professional.companyDomain">
-                      <a [href]="getCompanyUrl(professional.companyDomain)" class="text-link text-ellipsis text-normal" target="_blank">
-                        {{ professional.company }}
-                      </a>
-                    </ng-container>
-
-                    <ng-container *ngIf="!professional.companyDomain">
-                      <span class="text-ellipsis">{{ professional.company }}</span>
-                    </ng-container>
-
-                  </div>
-                </ng-container>
+                <!-- /logo -->
 
               </ng-container>
-              <!-- /logo -->
 
-            </ng-container>
-
+            </div>
           </div>
-        </div>
+        </ng-container>
+
+
       </ng-container>
       <!-- /showing the professionals -->
 
