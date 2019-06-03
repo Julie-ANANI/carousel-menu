@@ -31,14 +31,14 @@
     right: 0;
     position: absolute;
     z-index: 8999;
-    background: $bg-overlay-color;
+    background: $bg-overlay-dark-color;
   }
 
   .modal-container {
     display: flex;
     flex-direction: column;
-    box-shadow: $box-shadow;
     border-radius: 3px;
+    opacity: 1;
     background-color: $bg-color-light;
     position: fixed;
     padding: 0;

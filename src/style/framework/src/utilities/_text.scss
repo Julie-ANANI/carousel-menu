@@ -32,7 +32,7 @@
 
 // Modal, sidebar etc.
 .title-header {
-  font-size: 1rem;
+  font-size: $unit-5;
   color: $light-color;
 }
 
@@ -56,7 +56,7 @@
   cursor: default;
 
   &.text-question {
-    font-size: 0.9rem;
+    font-size: $font-size-lg;
   }
 
   &.text-label {
@@ -170,9 +170,27 @@
 }
 
 .text-italic {
-  font-style: italic;
+  font-style: italic !important;
 }
 
 .text-underline {
-  text-decoration: underline;
+  text-decoration: underline !important;
+}
+
+
+// Text font size
+.text-xs {
+  font-size: $font-size-xs !important;
+}
+
+.text-sm {
+  font-size: $font-size-sm !important;
+}
+
+.text-md {
+  font-size: $font-size-md !important;
+}
+
+.text-lg {
+  font-size: $font-size-lg !important;
 }

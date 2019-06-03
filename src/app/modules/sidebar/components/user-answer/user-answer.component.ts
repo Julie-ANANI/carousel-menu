@@ -245,4 +245,8 @@ export class UserAnswerComponent {
     return this._innovationId;
   }
 
+  get mailType(): string {
+    return this._modalAnswer.mailType;
+  }
+
 }

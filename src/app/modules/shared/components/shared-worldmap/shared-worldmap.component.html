@@ -16,7 +16,7 @@
     <svg [ngStyle]="{ 'width': width }" viewBox="0 0 800 330" version="1.1" xmlns="http://www.w3.org/2000/svg" class="map">
       <g class="land world">
         <g class="europe clickable"
-           [ngClass]="{ selected: getContinentSelectionStatus('europe') }"
+           [ngClass]="getContinentSelectionStatus('europe') ? 'selected' : 'filtered'"
            (mouseenter) ="onHoverChange('europe') "
            (mouseleave) ="onHoverChange('world')"
            (click)="clickOnContinent($event, 'europe')">
@@ -145,7 +145,7 @@
           </g>
         </g>
         <g class="clickable russia"
-           [ngClass]="{ selected: getContinentSelectionStatus('russia') }"
+           [ngClass]="getContinentSelectionStatus('russia') ? 'selected' : 'filtered'"
            (mouseenter) ="onHoverChange('russia') "
            (mouseleave) ="onHoverChange('world')"
            (click)="clickOnContinent($event, 'russia')">
@@ -154,7 +154,7 @@
             class="RU"/>
         </g>
         <g class="asie asia clickable"
-           [ngClass]="{ selected: getContinentSelectionStatus('asia') }"
+           [ngClass]="getContinentSelectionStatus('asia') ? 'selected' : 'filtered'"
            (mouseenter) ="onHoverChange('asia') "
            (mouseleave) ="onHoverChange('world')"
            (click)="clickOnContinent($event, 'asia')">
@@ -310,7 +310,7 @@
           </g>
         </g>
         <g class="oceanie oceania clickable"
-           [ngClass]="{ selected: getContinentSelectionStatus('oceania') }"
+           [ngClass]="getContinentSelectionStatus('oceania') ? 'selected' : 'filtered'"
            (mouseenter) ="onHoverChange('oceania') "
            (mouseleave) ="onHoverChange('world')"
            (click)="clickOnContinent($event, 'oceania')">
@@ -324,7 +324,7 @@
         </g>
         <g class="amerique">
           <g class="amerique nord americaNord clickable"
-             [ngClass]="{ selected: getContinentSelectionStatus('americaNord') }"
+             [ngClass]="getContinentSelectionStatus('americaNord') ? 'selected' : 'filtered'"
              (mouseenter) ="onHoverChange('americaNord') "
              (mouseleave) ="onHoverChange('world')"
              (click)="clickOnContinent($event, 'americaNord')">
@@ -340,7 +340,7 @@
           </g>
           <g class="clickable">
             <g class="amerique centrale americaSud"
-               [ngClass]="{ selected: getContinentSelectionStatus('americaSud') }"
+               [ngClass]="getContinentSelectionStatus('americaSud') ? 'selected' : 'filtered'"
                (mouseenter) ="onHoverChange('americaSud') "
                (mouseleave) ="onHoverChange('world')"
                (click)="clickOnContinent($event, 'americaSud')">
@@ -387,7 +387,7 @@
                 class="PA"/>
             </g>
             <g class="amerique sud americaSud clickable"
-               [ngClass]="{ selected: getContinentSelectionStatus('americaSud') }"
+               [ngClass]="getContinentSelectionStatus('americaSud') ? 'selected' : 'filtered'"
                (mouseenter) ="onHoverChange('americaSud') "
                (mouseleave) ="onHoverChange('world')"
                (click)="clickOnContinent($event, 'americaSud')">
@@ -434,7 +434,7 @@
           </g>
         </g>
         <g class="afrique africa clickable"
-           [ngClass]="{ selected: getContinentSelectionStatus('africa') }"
+           [ngClass]="getContinentSelectionStatus('africa') ? 'selected' : 'filtered'"
            (mouseenter) ="onHoverChange('africa') "
            (mouseleave) ="onHoverChange('world')"
            (click)="clickOnContinent($event, 'africa')">

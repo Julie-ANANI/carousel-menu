@@ -37,17 +37,38 @@
     height: 30px;
     padding: 0;
     text-decoration: none;
+    position: relative;
     width: 12px;
+    min-width: unset;
     line-height: 1.5;
-    font-size: $font-size;
+    font-size: $font-icon-xl;
 
     &:hover {
-      background: transparent;
-      border-color: transparent;
-      opacity: 0.85;
+
+      &::before {
+        display: block;
+        opacity: 0.15;
+        transition: opacity 0.4s ease;
+      }
+
+      &::after {
+        z-index: 2;
+      }
+
     }
 
     &::before {
+      display: none;
+      content: '';
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: $bg-overlay-dark-color;
+      position: absolute;
+      opacity: 0;
+    }
+
+    &::after {
       content: "\2715";
     }
 
@@ -71,10 +92,6 @@
       font-size: $font-icon-lg;
     }
 
-  }
-
-  &.rounded {
-    border-radius: 36px;
   }
 
   // Radio button like form-radio
@@ -143,6 +160,14 @@
 
   &.ghost-success {
     @include ghost-button-variant($success-color);
+  }
+
+  &.rounded {
+    border-radius: 36px;
+  }
+
+  &.shadow {
+    box-shadow: $box-shadow;
   }
 
 }

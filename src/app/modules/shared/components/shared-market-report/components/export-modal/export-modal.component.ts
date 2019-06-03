@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
+import { AuthService } from '../../../../../../services/auth/auth.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
@@ -23,6 +24,7 @@ export class ExportModalComponent {
   }
 
   @Input() set innovation(value: Innovation) {
+    this._needConsent = (!!value.ownerConsent && !value.ownerConsent.value) || !this._authService.isAdmin;
     this._innovation = value;
   }
 
@@ -32,20 +34,17 @@ export class ExportModalComponent {
 
   private _innovation: Innovation;
 
+  private _needConsent = true;
+
   private _showExportModal: boolean = false;
 
   public exportTypeEnum = ExportType;
 
-  private _userLang = 'en';
-
   constructor(private _answerService: AnswerService,
+              private _authService: AuthService,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
-              private _translateNotificationsService: TranslateNotificationsService) {
-
-    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang();
-
-  }
+              private _translateNotificationsService: TranslateNotificationsService) {}
 
 
   public assignExportType(event: Event, type: ExportType) {
@@ -64,13 +63,15 @@ export class ExportModalComponent {
 
     this.showExportModal = false;
 
-    this._innovation.ownerConsent.date = Date.now();
-
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    if (this._needConsent) {
+      this._innovationService.saveConsent(this._innovation._id, Date.now()).subscribe(() => {
+        this._print();
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      });
+    } else {
       this._print();
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
+    }
 
   }
 
@@ -87,7 +88,7 @@ export class ExportModalComponent {
         break;
 
       case (ExportType.respReport):
-        this._printRespReport();
+        window.open(`${environment.apiUrl}/reporting/job/answers/${this._innovation._id}?lang=${this.userLang}&print=1`);
         break;
 
       case (ExportType.shareReport):
@@ -98,25 +99,10 @@ export class ExportModalComponent {
   }
 
 
-  private _printRespReport() {
-    this._answerService.getReportHTML(this._innovation._id, 'en').subscribe(html => {
-      const reportWindow = window.open('', '');
-      reportWindow.document.write(html);
-      setTimeout(() => {
-        reportWindow.focus();
-        reportWindow.print();
-        reportWindow.close();
-      }, 500);
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-  }
-
-
   private _shareReportLink() {
     this._innovationService.shareSynthesis(this._innovation._id).subscribe((response: Share) => {
       const url = `${environment.clientUrl}/share/synthesis/${response.objectId}/${response.shareKey}`;
-      window.open(ShareService.reportShareMail(this._innovation, this._userLang, url), '_blank');
+      window.open(ShareService.reportShareMail(this._innovation, this.userLang, url), '_blank');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
@@ -139,7 +125,7 @@ export class ExportModalComponent {
   }
 
   get userLang(): string {
-    return this._userLang;
+    return this._translateService.currentLang
   }
 
 }

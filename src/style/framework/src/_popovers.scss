@@ -5,13 +5,17 @@
   display: inline-flex;
   position: relative;
 
-  .popover-container {
+  .popover-container, .popover-container::before {
     left: 50%;
     opacity: 0;
     position: absolute;
-    top: 0;
-    transform: translate(-50%, -50%) scale(0);
     transition: transform .2s ease;
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  .popover-container {
+    display: none;
+    top: 0;
     width: $control-width-sm;
     z-index: $zindex-4;
     box-shadow: $box-shadow-hover-umi;
@@ -20,24 +24,54 @@
       width: $control-width-xs;
     }
 
+    &::before {
+      display: block;
+      opacity: 1;
+      content: "";
+      width: 0;
+      height: 0;
+      z-index: 399;
+      border: 8px solid transparent;
+      bottom: 9px;
+    }
+
   }
 
   *:focus + .popover-container, &:hover .popover-container, .popover-container:hover {
     display: block;
     opacity: 1;
-    transform: translate(-50%, -100%) scale(1);
+    transform: translate(-50%, calc(-100% - 9px)) scale(1);
   }
+
+
+  *:focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
+    transform: translate(-50%, calc(100% + 9px)) scale(1);
+    border-top-color: $bg-color-light;
+  }
+
 
   &.popover-right {
 
-    .popover-container {
-      left: 100%;
+    .popover-container{
+      left: calc(100% + 9px);
       top: 50%;
+    }
+
+    .popover-container::before {
+      left: -16px;
+      bottom: calc(50% + 9px);
+      border-color: transparent;
     }
 
     :focus + .popover-container, &:hover .popover-container, .popover-container:hover {
       transform: translate(0, -50%) scale(1);
     }
+
+    :focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
+      transform: translate(0, calc(50% + 9px)) scale(1);
+      border-right-color: $bg-color-light;
+    }
+
 
   }
 
@@ -45,11 +79,23 @@
 
     .popover-container {
       left: 50%;
-      top: 100%;
+      top: calc(100% + 9px);
+    }
+
+    .popover-container::before {
+      left: calc(50% - 8px);
+      top: -16px;
+      bottom: auto;
+      border-color: transparent;
     }
 
     :focus + .popover-container, &:hover .popover-container, .popover-container:hover {
       transform: translate(-50%, 0) scale(1);
+    }
+
+    :focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
+      transform: translate(calc(50% - 8px), 0) scale(1);
+      border-bottom-color: $bg-color-light;
     }
 
   }
@@ -57,12 +103,23 @@
   &.popover-left {
 
     .popover-container {
-      left: 0;
+      left: -9px;
       top: 50%;
+    }
+
+    .popover-container::before {
+      left: calc(100% + 16px);
+      bottom: calc(50% + 9px);
+      border-color: transparent;
     }
 
     :focus + .popover-container, &:hover .popover-container, .popover-container:hover {
       transform: translate(-100%, -50%) scale(1);
+    }
+
+    :focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before {
+      transform: translate(-100%, calc(50% + 9px)) scale(1);
+      border-left-color: $bg-color-light;
     }
 
   }

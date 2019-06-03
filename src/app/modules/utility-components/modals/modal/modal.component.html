@@ -9,7 +9,7 @@
             <button class="btn btn-close"></button>
           </div>
 
-          <div class="modal-body">
+          <div class="modal-body" [ngStyle]="{ 'max-height': maxHeight ? maxHeight : '50vh' }">
             <ng-content></ng-content>
           </div>
 
