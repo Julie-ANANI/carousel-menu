@@ -29,11 +29,14 @@ export const SHOWCASE = {
   'TOOLTIP': {
     'MODIFY_TAGS': 'Cliquez pour éditer les tags.',
     'EDIT_ANSWERS': 'Cliquez pour sélectionner différentes réponses.',
-    'EDIT_INNOVATIONS': 'Cliquez pour sélectionner différentes innovations.'
+    'EDIT_INNOVATIONS': 'Cliquez pour sélectionner différentes innovations.',
+    'EDIT_CLIENTS': 'Cliquez pour sélectionner différentes clients.'
   },
 
   'MAX_SELECT_ANSWERS': 'Vous ne pouvez sélectionner que 6 réponses.',
 
-  'MAX_SELECT_INNOVATIONS': 'Vous ne pouvez sélectionner que 6 innovations.'
+  'MAX_SELECT_INNOVATIONS': 'Vous ne pouvez sélectionner que 6 innovations.',
+
+  'MAX_SELECT_CLIENTS': 'Vous ne pouvez sélectionner que 6 clients.'
 
 };

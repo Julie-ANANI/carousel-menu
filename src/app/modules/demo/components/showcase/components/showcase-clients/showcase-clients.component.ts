@@ -86,7 +86,7 @@ export class ShowcaseClientsComponent {
       if (this._selectedClients.length < 8) {
         this._selectedClients.push(client);
       } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'You can only select 8 clients.');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.MAX_SELECT_CLIENTS');
       }
     } else {
       this._selectedClients = this._selectedClients.filter((item) => item !== client);
