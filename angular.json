@@ -23,6 +23,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.scss"
             ],
             "scripts": [
