@@ -32,6 +32,8 @@ export const SHOWCASE = {
     'EDIT_INNOVATIONS': 'Click to select different innovations.'
   },
 
-  'MAX_SELECT_ANSWERS': 'You can only select 6 answers.'
+  'MAX_SELECT_ANSWERS': 'You can only select 6 answers.',
+
+  'MAX_SELECT_INNOVATIONS': 'You can only select 6 innovations.'
 
 };

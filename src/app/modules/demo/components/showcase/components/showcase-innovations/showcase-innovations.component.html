@@ -23,24 +23,24 @@
 
 
   <!-- section innovations -->
-  <div class="card-wrapper d-flex text-center">
+  <div class="section-card-wrapper d-flex text-center">
     <div *ngFor="let innovationCard of topCards" class="card card-3 animate-zoomIn">
-      <a [routerLink]="['/discover', innovationCard._id, lang]" target="_blank">
+      <a [routerLink]="['/discover', innovationCard._id, lang]" target="_blank" class="text-primary text-xs">
 
-        <div class="card-image relative">
+        <div class="card-image media-hover">
 
           <figure>
-            <img [src]="innovationCard.media" [alt]="innovationCard.title" width="186" height="116" class="img-responsive">
+            <img [src]="innovationCard.media" [alt]="innovationCard.title" width="186" height="116">
           </figure>
 
-          <div class="hover-button absolute flex-centered">
+          <div class="media-hover-button">
             <span class="text-medium">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
           </div>
 
         </div>
 
         <div class="card-header">
-          <div class="card-title">{{ innovationCard.title }}</div>
+          <div class="card-title text-xs">{{ innovationCard.title }}</div>
         </div>
 
       </a>
@@ -62,7 +62,7 @@
 <!-- modal to select innovations -->
 <app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
 
-  <div class="section-card d-flex text-center">
+  <div class="modal-card-wrapper d-flex text-center">
     <ng-container *ngFor="let innovationCard of cards">
       <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard) }">
 
@@ -73,11 +73,11 @@
         </label>
 
         <figure class="card-image">
-          <img [src]="innovationCard.media" alt=" ">
+          <img [src]="innovationCard.media" alt=" " width="186" height="116">
         </figure>
 
         <div class="card-header">
-          <div class="card-title text-background"><span>{{ innovationCard.title }}</span></div>
+          <div class="card-title text-xs">{{ innovationCard.title }}</div>
         </div>
 
       </div>
@@ -87,7 +87,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-    <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+    <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
   </div>
 
 </app-modal>
