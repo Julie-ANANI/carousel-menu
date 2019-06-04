@@ -1,0 +1,155 @@
+@import "variables";
+
+.carousel {
+  display: block;
+  position: relative;
+  width: 100%;
+  background-color: $bg-color-light;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  .carousel-container {
+    height: 100%;
+    left: 0;
+    position: relative;
+
+    &::before {
+      content: "";
+      display: block;
+      padding-bottom: 56.25%;
+    }
+
+    .carousel-item {
+      animation: carousel-slideout 1s ease 1;
+      height: 100%;
+      left: 0;
+      margin: 0;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      &:hover {
+
+        .item-prev, .item-next {
+          opacity: 1;
+        }
+
+      }
+
+    }
+
+    .item-prev, .item-next {
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      transition: all 0.4s ease;
+      transform: translateY(-50%);
+      z-index: $zindex-2;
+      border: none;
+      color: $bg-dropdown-color;
+
+      i {
+        font-size: 22px;
+      }
+
+    }
+
+    .item-prev {
+      left: 1rem;
+    }
+
+    .item-next {
+      right: 1rem;
+    }
+
+    .item-next:hover, .item-prev:hover {
+      background: rgba($primary-color, 0.55);
+    }
+
+  }
+
+  // this is for the static version, if you have 4 images.
+  .carousel-locator {
+
+    &:nth-of-type(1):checked ~ .carousel-container .carousel-item:nth-of-type(1),
+    &:nth-of-type(2):checked ~ .carousel-container .carousel-item:nth-of-type(2),
+    &:nth-of-type(3):checked ~ .carousel-container .carousel-item:nth-of-type(3),
+    &:nth-of-type(4):checked ~ .carousel-container .carousel-item:nth-of-type(4) {
+      animation: carousel-slidein .75s ease 1;
+      opacity: 1;
+      z-index: $zindex-1;
+    }
+
+    &:nth-of-type(1):checked ~ .carousel-nav .nav-item:nth-of-type(1),
+    &:nth-of-type(2):checked ~ .carousel-nav .nav-item:nth-of-type(2),
+    &:nth-of-type(3):checked ~ .carousel-nav .nav-item:nth-of-type(3),
+    &:nth-of-type(4):checked ~ .carousel-nav .nav-item:nth-of-type(4) {
+      color: rgba($primary-color, 0.55);
+    }
+
+  }
+
+  .carousel-nav {
+    bottom: $layout-spacing;
+    display: flex;
+    justify-content: center;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 10rem;
+    z-index: $zindex-2;
+
+    .nav-item {
+      color: $bg-dropdown-color;
+      display: inline-flex;
+      height: $unit-8;
+      margin: $unit-1;
+      align-items: center;
+      justify-content: center;
+      width: 1rem;
+      position: relative;
+
+      &::before {
+        background: currentColor;
+        content: "";
+        display: block;
+        height: 12px;
+        border-radius: 50%;
+        width: 12px;
+        position: absolute;
+        top: .5rem;
+      }
+    }
+
+  }
+
+}
+
+
+@keyframes carousel-slidein {
+
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+
+}
+
+
+@keyframes carousel-slideout {
+
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+}
