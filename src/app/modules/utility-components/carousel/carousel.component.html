@@ -14,20 +14,12 @@
 
       <!-- images -->
       <ng-container *ngIf="totalItems > 0">
-        <ng-container [ngSwitch]="carouselOptions.type">
-
-          <!-- if type IMAGE -->
-          <ng-container *ngSwitchCase="'IMAGE'">
-            <figure
-              *ngFor="let image of carouselOptions.images; let i = index;"
-              [ngClass]="{ 'current-slide': i === currentSlideIndex }"
-              class="carousel-item">
-              <img [src]="image.src" alt=" " class="img-fit-cover">
-            </figure>
-          </ng-container>
-          <!-- /if type IMAGE -->
-
-        </ng-container>
+        <figure
+          *ngFor="let image of carouselOptions.images; let i = index;"
+          [ngClass]="{ 'current-slide': i === currentSlideIndex }"
+          class="carousel-item">
+          <img [src]="image.src" alt=" " class="img-fit-cover">
+        </figure>
       </ng-container>
       <!-- /images -->
 

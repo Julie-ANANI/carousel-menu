@@ -3,7 +3,12 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Clearbit } from '../../../../../../models/clearbit';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+
+
+export interface Slide {
+  clients?: Array<Clearbit>;
+}
+
 
 @Component({
   selector: 'app-showcase-clients',
@@ -35,53 +40,94 @@ export class ShowcaseClientsComponent {
             }, {});
 
           this._totalClients = Object.values(companies);
-          this._selectedClients = this._totalClients.sort((a, b) => {
+
+          this._totalClients = this._totalClients.sort((a, b) => {
             if (a.logo && !b.logo) { return -1; }
             if (!a.logo && b.logo) { return 1; }
             return 0;
-          }).slice(0, 8);
-          this._topClients = this._selectedClients;
+          });
+
+          /*this._selectedClients = this._totalClients.sort((a, b) => {
+            if (a.logo && !b.logo) { return -1; }
+            if (!a.logo && b.logo) { return 1; }
+            return 0;
+          });*/
+
+          this._getSlides();
+
+          //console.log(this._totalClients.length);
+
+          //this._topClients = this._selectedClients;
 
         }
+
       });
 
     } else {
-      this._topClients = [];
+      //this._topClients = [];
     }
 
   }
 
-  private _topClients: Array<Clearbit> = [];
+  //private _topClients: Array<Clearbit> = [];
 
-  private _selectedClients: Array<Clearbit> = [];
+  //private _selectedClients: Array<Clearbit> = [];
 
   private readonly _adminPass: boolean = false;
 
   private _totalClients: Array<Clearbit> = [];
 
-  private _modalShow: boolean = false;
+  //private _modalShow: boolean = false;
+
+  currentSlideIndex: number = 0;
+
+  private _slides: Array<Slide>;
 
   constructor(private _innovationService: InnovationService,
-              private _authService: AuthService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _authService: AuthService) {
 
     this._adminPass = this._authService.adminLevel > 2;
 
   }
 
+  private _getSlides() {
 
-  public openModal(event: Event) {
+    this._slides = [];
+
+    if (this._totalClients.length === 0 || this._totalClients.length <=6) {
+      this._slides.push({ clients: this._totalClients.slice(0, 6) });
+    } else {
+      const slide = Math.ceil(this._totalClients.length / 6);
+
+      for (let i = 0; i < slide ; i++) {
+        if ( i === 0) {
+          this._slides.push({clients: this._totalClients.slice(0, 6)});
+        } else {
+          this._slides.push({ clients: this._totalClients.slice( 6 * i, (6 * i) + 6) });
+        }
+      }
+
+    }
+
+  }
+
+  public onClickNav(event: Event, index: number) {
+    this.currentSlideIndex = index;
+  }
+
+
+  /*public openModal(event: Event) {
     event.preventDefault();
     this._modalShow = true;
-  }
+  }*/
 
 
-  public activeClient(client: Clearbit) {
+  /*public activeClient(client: Clearbit) {
     return this._selectedClients.some((item) => item === client);
-  }
+  }*/
 
 
-  public onChangeClient(event: Event, client: Clearbit) {
+  /*public onChangeClient(event: Event, client: Clearbit) {
     if (event.target['checked']) {
       if (this._selectedClients.length < 8) {
         this._selectedClients.push(client);
@@ -91,34 +137,38 @@ export class ShowcaseClientsComponent {
     } else {
       this._selectedClients = this._selectedClients.filter((item) => item !== client);
     }
-  }
+  }*/
 
 
-  public onClickApply(event: Event) {
+  /*public onClickApply(event: Event) {
     event.preventDefault();
     this._topClients = this._selectedClients;
     this._modalShow = false;
-  }
+  }*/
 
 
-  get topClients() {
+  /*get topClients() {
     return this._topClients;
-  }
+  }*/
 
   get adminPass(): boolean {
     return this._adminPass;
   }
 
-  get modalShow(): boolean {
+  /*get modalShow(): boolean {
     return this._modalShow;
-  }
+  }*/
 
-  set modalShow(value: boolean) {
+  /*set modalShow(value: boolean) {
     this._modalShow = value;
-  }
+  }*/
 
   get totalClients(): Array<Clearbit> {
     return this._totalClients;
+  }
+
+  get slides(): Array<Slide> {
+    return this._slides;
   }
 
 }

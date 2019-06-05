@@ -33,32 +33,12 @@ export class CarouselComponent implements OnInit {
 
   public OnClickPrev(event: Event) {
     event.preventDefault();
-
-    switch (this._carouselOptions.type) {
-
-      case 'IMAGE':
-        this._currentSlideIndex = this._currentSlideIndex === 0 ? this._currentSlideIndex = this._totalItems - 1 : this._currentSlideIndex -=1;
-        break;
-
-      case 'LOGO':
-        break;
-    }
-
+    this._currentSlideIndex = this._currentSlideIndex === 0 ? this._currentSlideIndex = this._totalItems - 1 : this._currentSlideIndex -=1;
   }
 
   public OnClickNext(event: Event) {
     event.preventDefault();
-
-    switch (this._carouselOptions.type) {
-
-      case 'IMAGE':
-        this._currentSlideIndex = this._currentSlideIndex === 0 || this._currentSlideIndex !== this._totalItems - 1 ? this._currentSlideIndex += 1 : 0;
-        break;
-
-      case 'LOGO':
-        break;
-    }
-
+    this._currentSlideIndex = this._currentSlideIndex === 0 || this._currentSlideIndex !== this._totalItems - 1 ? this._currentSlideIndex += 1 : 0;
   }
 
   public onClickNav(event: Event, index: number) {
