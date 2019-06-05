@@ -76,7 +76,7 @@
                       <label for="market-report-objective"></label>
 
                       <textarea
-                        (blur)="update($event)"
+                        (blur)="updateExecutiveReport($event)"
                         [(ngModel)]="innovation.executiveReport.objective"
                         placeholder="Describe the objective of this innovation within 120 words."
                         class="form-input"
@@ -206,7 +206,7 @@
                       <label for="market-report-professionals"></label>
 
                       <textarea
-                        (blur)="update($event)"
+                        (blur)="updateExecutiveReport($event)"
                         [(ngModel)]="innovation.executiveReport.professionalAbstract"
                         placeholder="Describe the professional abstract of this innovation within 160 words."
                         class="form-input"

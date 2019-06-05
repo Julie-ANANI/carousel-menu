@@ -184,7 +184,7 @@ export class QuestionSectionComponent implements OnInit {
 
     this._innovation = this._responseService.saveInnovationAbstract(this._innovation, abstract, formControlName);
 
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    this._innovationService.save(this._innovation._id, {executiveReport: this._innovation.executiveReport}).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
