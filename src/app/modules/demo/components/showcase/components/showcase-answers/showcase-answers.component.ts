@@ -40,9 +40,9 @@ export class ShowcaseAnswersComponent {
 
   private _count: number;
 
-  private _adminPass: boolean = false;
+  private _adminPass: boolean;
 
-  private _modalShow: boolean = false;
+  private _modalShow: boolean;
 
   private _selectedAnswers: Array<Answer> = [];
 
@@ -73,7 +73,7 @@ export class ShowcaseAnswersComponent {
         setTimeout(() => {
           answer.isLoading = false;
           this._topAnswers[index] = answer;
-        }, Math.floor(Math.random() * 100) + 100);
+        }, Math.floor(Math.random() * 900) + 100);
       });
     }
   }
@@ -95,7 +95,7 @@ export class ShowcaseAnswersComponent {
       if (this._selectedAnswers.length < 6) {
         this._selectedAnswers.push(answer);
       } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'You can only select 6 answers.');
+        this._translateNotificationsService.error('ERROR.ERROR', 'SHOWCASE.MAX_SELECT_ANSWERS');
       }
     } else {
       this._selectedAnswers = this._selectedAnswers.filter((item: Answer) => item._id !== answer._id);

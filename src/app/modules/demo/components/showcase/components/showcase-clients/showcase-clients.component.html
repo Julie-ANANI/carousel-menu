@@ -1,23 +1,23 @@
-<section id="showcase-clients-component" class="relative d-flex">
+<section id="showcase-clients" class="relative">
+
 
   <!-- bar icon -->
   <ng-container *ngIf="adminPass && topClients.length > 0">
-    <div class="icon icon-meta absolute" (click)="openModal($event)">
-      <i class="fas fa-2x fa-bars"></i>
+    <div class="icon icon-meta absolute tooltip tooltip-left" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_CLIENTS' | translate" (click)="openModal($event)">
+      <i class="fas fa-bars"></i>
     </div>
   </ng-container>
 
-  <!-- section heading -->
-  <div class="section-heading">
 
-    <!-- heading 1st -->
-    <h2 class="text text-notify" [innerText]="'SHOWCASE.CLIENTS_TITLE'" translate></h2>
+  <!-- heading 1st -->
+  <h2 class="text text-notify" [innerText]="'SHOWCASE.CLIENTS_TITLE'" translate></h2>
+  <!-- /heading 1st -->
 
-    <!-- heading count -->
-    <h3 class="text-normal"><span [innerText]="'SHOWCASE.CLIENTS'" translate></span></h3>
 
-  </div>
-  <!-- /section heading -->
+  <!-- heading -->
+  <h3 class="text-normal" [innerText]="'SHOWCASE.CLIENTS'" translate></h3>
+  <!-- /heading -->
+
 
   <!-- section innovations -->
   <div class="section-card d-flex text-center">
@@ -34,18 +34,21 @@
   </div>
   <!-- /section innovations -->
 
+
   <!-- section see more -->
   <ng-container *ngIf="topClients.length > 6">
-    <div class="text-right section-light-pad rm-pad-bottom">
+    <div class="text-right section-light-pad rm-pad-bottom see-more-wrapper">
       <span class="text-link" (click)="openModal($event)" [innerText]="'SHOWCASE.SEE_MORE'" translate></span>
     </div>
   </ng-container>
+  <!-- /section see more -->
+
 
 </section>
 
 
 <!-- modal to select clients -->
-<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'">
+<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
 
   <div class="section-card d-flex text-center">
     <ng-container *ngFor="let client of totalClients">
@@ -74,7 +77,7 @@
   <ng-container *ngIf="adminPass">
     <div class="modal-footer">
       <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+      <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
     </div>
   </ng-container>
 

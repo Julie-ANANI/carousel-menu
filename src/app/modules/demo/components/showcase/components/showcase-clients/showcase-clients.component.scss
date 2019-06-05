@@ -1,28 +1,35 @@
 @import "../../../../../../../style/framework/src/variables";
+@import "../../../../../../../style/framework/src/mixins";
 
-#showcase-clients-component {
+#showcase-clients {
   height: 100%;
-  flex-direction: column;
 
-  .icon {
-    right: 0;
+  .see-more-wrapper, .icon {
+    @include control-transition();
+    visibility: hidden;
   }
 
-  .section-heading {
+  .icon {
+    top: -6px;
+    right: 0;
+    margin-right: 0;
+    font-size: $font-icon-xl;
+  }
 
-    h2 {
-      margin-bottom: 0;
-    }
+  h2, h3 {
+    margin-bottom: 0.25rem;
+  }
 
-    h3 {
-      font-family: $font-family-oswald;
-      color: $secondary-color;
-      font-size: 1.85rem;
+  h3 {
+    font-family: $font-family-oswald;
+    color: #3E5164;;
+    font-size: 1.85rem;
+  }
 
-      span {
-        color: #3E5164;
-      }
+  &:hover {
 
+    .icon, .see-more-wrapper {
+      visibility: visible;
     }
 
   }

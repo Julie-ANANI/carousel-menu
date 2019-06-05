@@ -124,7 +124,7 @@ export class ShowcaseInnovationsComponent {
       if (this._selectedCards.length < 6) {
         this._selectedCards.push(card);
       } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'You can only select 6 innovations.');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.MAX_SELECT_INNOVATIONS');
       }
     } else {
       this._selectedCards = this._selectedCards.filter((item: any) => item._id !== card._id);

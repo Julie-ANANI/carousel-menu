@@ -85,9 +85,8 @@ export class ShowcaseComponent {
   private _getTagStat(event: Event, tag: Tag) {
     event.preventDefault();
     this._loadingStats = true;
-    this._tagService.getStats(tag._id).pipe(
-      finalize(() => { this._loadingStats = false; }),
-    ).subscribe((stats) => {
+
+    this._tagService.getStats(tag._id).pipe(finalize(() => { this._loadingStats = false; }),).subscribe((stats) => {
       this._selectedTagsStats = this._selectedTagsStats.concat(stats);
       this._recomputeData();
     }, () => {

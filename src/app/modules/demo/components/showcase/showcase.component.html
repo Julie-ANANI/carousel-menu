@@ -1,20 +1,32 @@
-<div id="showcase-component" class="section-pad">
+<div id="showcase" class="section-pad">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+
+    <!-- no tags selected -->
     <ng-container *ngIf="selectedTagsStats.length === 0">
-      <div class="section-pad rm-pad-bottom">
-        <app-message-space>
-            <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.NO_TAGS_CLICKABLE'" translate></span>
-            {{'SHOWCASE.NO_TAGS' | translate}}
-        </app-message-space>
+      <div class="flex-centered no-selected-wrapper">
+        <div class="add-wrapper text-center c-hand" (click)="modifyTag()">
+
+          <div class="text-background">
+            <i class="fas fa-pencil-alt fa-2x"></i>
+          </div>
+
+          <div class="text c-hand">
+            <span class="text-medium text-background" [innerText]="'SHOWCASE.BUILD_SHOWCASE'" translate></span>
+          </div>
+
+        </div>
       </div>
     </ng-container>
+    <!-- /no tags selected -->
+
 
     <!-- section stat -->
     <ng-container *ngIf="selectedTagsStats.length > 0">
 
+
       <!-- header section -->
-      <section class="section-header text-center">
+      <section class="d-flex section-header text-center">
 
         <!-- labels -->
         <h1 class="title-primary text-normal">
@@ -25,20 +37,32 @@
         </h1>
 
         <!-- modify tag link -->
-        <span class="text-link" (click)="modifyTag()" [innerText]="'SHOWCASE.MODIFY'" translate></span>
+        <span
+          class="text-link text-xs tooltip"
+          [attr.data-tooltip]="'SHOWCASE.TOOLTIP.MODIFY_TAGS' | translate"
+          (click)="modifyTag()"
+          [innerText]="'SHOWCASE.MODIFY'"
+          translate>
+        </span>
 
       </section>
       <!-- /header section -->
 
+
       <!-- horizontal line -->
       <hr class="hr hr-main">
+      <!-- /horizontal line -->
+
 
       <!-- section answer and innovations -->
-      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+      <section class="flex-centered section-wrapper section-pad">
 
         <!-- answers wrapper -->
         <div class="answer-wrapper">
-          <app-showcase-answers [totalAnswers]="stats.totalAnswers" [tagsStats]="selectedTagsStats"></app-showcase-answers>
+          <app-showcase-answers
+            [totalAnswers]="stats.totalAnswers"
+            [tagsStats]="selectedTagsStats">
+          </app-showcase-answers>
         </div>
 
         <!-- innovations wrapper -->
@@ -49,21 +73,25 @@
       </section>
       <!-- /section answer and innovations -->
 
+
       <!-- section company -->
-      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+      <section class="flex-centered section-wrapper section-pad">
         <div class="client-wrapper">
           <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
         </div>
       </section>
       <!-- /section company -->
 
+
       <!-- section map -->
-      <section class="flex-centered section-wrapper section-pad rm-pad-bottom">
+      <section class="flex-centered section-wrapper section-pad">
         <div class="map-wrapper">
 
-          <h2 class="text text-notify" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate>Targeted</h2>
+          <h2 class="text text-notify" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>
 
-          <h3 class="text-normal">{{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span> </h3>
+          <h3 class="text-normal">
+            {{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span>
+          </h3>
 
           <admin-search-map
             [countriesData]="countries"
@@ -75,17 +103,23 @@
       </section>
       <!-- /section map -->
 
+
     </ng-container>
     <!-- /section stat -->
+
 
   </div>
 </div>
 
 
+
 <!-- modal to modify the tags -->
 <app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
 
-  <h2 class="text text-background title-secondary text-medium" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+  <div class="flex-between">
+    <h2 class="text text-background title-secondary text-medium" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+    <button type="button" class="btn btn-close text-notify text-md" (click)="modalShow = false"></button>
+  </div>
 
   <ng-container *ngIf="selectedTagsStats.length">
     <div class="selected-wrapper">
@@ -105,13 +139,14 @@
           [name]="tag.label | multiling:currentLang"
           [disabled]="loadingStats"
           type="checkbox">
-        <i class="form-icon"></i><span>{{ tag.label | multiling:currentLang | FormatText }}</span>
+        <i class="form-icon"></i>
+        <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
       </label>
     </div>
   </div>
 
 </app-modal>
-
+<!-- /modal to modify the tags -->
 
 
 

@@ -1,21 +1,30 @@
-<section id="showcase-answers-component" class="relative">
+<section id="showcase-answers" class="relative">
+
 
   <!-- bar icon -->
   <ng-container *ngIf="adminPass && answers.length > 0">
-    <div class="icon icon-meta absolute" (click)="openModal($event)">
-      <i class="fas fa-2x fa-bars"></i>
+    <div class="icon icon-meta absolute tooltip tooltip-left" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_ANSWERS' | translate" (click)="openModal($event)">
+      <i class="fas fa-bars"></i>
     </div>
   </ng-container>
+  <!-- /bar icon -->
+
 
   <!-- heading 1st -->
   <h2 class="text text-notify" [innerText]="'SHOWCASE.PROFESSIONALS_TITLE'" translate></h2>
+  <!-- /heading 1st -->
+
 
   <!-- heading count -->
-  <h3 class="text-normal">{{ count }} <span [innerText]="'SHOWCASE.PROFESSIONALS'" translate></span></h3>
+  <h3 class="text-normal">
+    {{ count }} <span [innerText]="'SHOWCASE.PROFESSIONALS'" translate></span>
+  </h3>
+  <!-- /heading count -->
+
 
   <!-- section answers -->
-  <div *ngFor="let answer of topAnswers" class="card-wrapper">
-    <div *ngIf="!answer.isLoading" class="d-flex animate-appear">
+  <div *ngFor="let answer of topAnswers" class="card-main card-wrapper">
+    <div *ngIf="!answer.isLoading" class="d-flex animate-zoomIn card-content">
 
       <figure class="avatar avatar-lg avatar-meta">
         <i class="fas fa-user"></i>
@@ -23,14 +32,11 @@
 
       <div class="info-wrapper">
 
-        <h4 class="text-background text-medium">{{ answer.job }}</h4>
+        <h4 class="text-background text-medium text-sm">{{ answer.job }}</h4>
 
         <div class="flex-start">
-
           <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-
-          <p class="text-notify text-medium">{{ answer.company?.name }}</p>
-
+          <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
         </div>
 
       </div>
@@ -39,18 +45,21 @@
   </div>
   <!-- /section answers -->
 
+
   <!-- section see more -->
   <ng-container *ngIf="answers.length > 6">
-    <div class="text-right section-light-pad rm-pad-bottom">
+    <div class="text-right section-light-pad rm-pad-bottom see-more-wrapper">
       <span class="text-link" (click)="openModal($event)" [innerText]="'SHOWCASE.SEE_MORE'" translate></span>
     </div>
   </ng-container>
+  <!-- /section see more -->
+
 
 </section>
 
 
 <!-- modal to select the answers -->
-<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'">
+<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
 
   <div class="card-wrapper d-flex">
     <ng-container *ngFor="let answer of answers">
@@ -59,19 +68,16 @@
         <i class="fas fa-check-circle"></i>
 
         <ng-container *ngIf="adminPass">
-          <label class="absolute">
+          <label class="absolute" [ngClass]="{ 'c-hand': adminPass }">
             <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
           </label>
         </ng-container>
 
-        <h4 class="text-background text-medium">{{ answer.job }}</h4>
+        <h4 class="text-background text-medium text-xs">{{ answer.job }}</h4>
 
         <div class="flex-start">
-
           <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-
-          <p class="text-notify text-medium">{{ answer.company?.name }}</p>
-
+          <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
         </div>
 
       </div>
@@ -81,7 +87,7 @@
   <ng-container *ngIf="adminPass">
     <div class="modal-footer">
       <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-      <button class="btn btn-sm btn-secondary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+      <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
     </div>
   </ng-container>
 

@@ -10,7 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class ModalComponent implements OnInit, OnDestroy {
 
   @Input() set showModal(value: boolean) {
-    this.show = value;
+    this._show = value;
   }
 
   @Input() set modalPosition(value: string) {
@@ -21,31 +21,38 @@ export class ModalComponent implements OnInit, OnDestroy {
     this._maxWidth = value;
   }
 
+  @Input() set heightMax(value: string) {
+    this._maxHeight = value;
+  }
+
   @Input() set modalTitle(value: string) {
     this._title = value;
   }
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private element: any;
+  private readonly _element: any;
 
-  private show: boolean;
+  private _show: boolean;
 
   private _maxWidth: string;
+
+  private _maxHeight: string;
 
   private _title: string;
 
   private _position = '';
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private el: ElementRef) {
-    this.element = this.el.nativeElement;
+              private _elementRef: ElementRef) {
+
+    this._element = this._elementRef.nativeElement;
+
   }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      // move element to bottom of page (just before </body>) so it can be displayed above everything else
-      document.body.appendChild(this.element);
+      document.body.appendChild(this._element);
     }
   }
 
@@ -57,12 +64,28 @@ export class ModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  get element(): any {
+    return this._element;
+  }
+
   get showModal() {
-    return this.show;
+    return this._show;
+  }
+
+  get show(): boolean {
+    return this._show;
+  }
+
+  set show(value: boolean) {
+    this._show = value;
   }
 
   get maxWidth(): string {
     return this._maxWidth;
+  }
+
+  get maxHeight(): string {
+    return this._maxHeight;
   }
 
   get title(): string {
@@ -74,7 +97,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.element.remove();
+    this._element.remove();
   }
 
 }
