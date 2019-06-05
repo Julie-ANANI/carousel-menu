@@ -10,9 +10,5 @@ export interface Carousel {
     src: string;
   }>;
 
-  maxOneSlide?: number; // in case of logos.
-
-  type: 'IMAGE' | 'LOGO';
-
 }
 
