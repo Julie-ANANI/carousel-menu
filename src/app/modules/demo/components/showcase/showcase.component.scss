@@ -33,21 +33,21 @@
 
   }
 
-  .section-header {
+  .title-primary {
+    color: #3E5164;
+    font-size: 2.3rem;
+    font-family: $font-family-oswald;
+    margin-bottom: 0;
+  }
+
+  .selected-tags-wrapper {
     flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-end;
+    align-items: baseline;
 
-    .title-primary {
-      color: #3E5164;
-      font-size: 2.3rem;
-      font-family: $font-family-oswald;
-      margin-bottom: 0;
+    .tag {
       margin-right: $unit-2;
-    }
-
-    .text-link {
-      margin-bottom: 8px;
+      font-size: 0.75rem;
     }
 
   }
@@ -184,16 +184,6 @@
 @media (max-width: $size-sm) {
 
   #showcase {
-
-    .section-header {
-      flex-direction: column;
-      align-items: center !important;
-
-      .title-primary {
-        margin-right: 0 !important;
-      }
-
-    }
 
     .answer-wrapper, .innovation-wrapper, .map-wrapper, .client-wrapper {
       padding: 0.5rem !important;
