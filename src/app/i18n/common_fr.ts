@@ -183,7 +183,9 @@ export const COMMON = {
     'CLOSE': 'Fermer',
     'DOWNLOAD': 'Télécharger',
     'SHARE': 'Partager',
-    'SEE_MORE': 'En voir plus'
+    'SEE_MORE': 'En voir plus',
+    'EDIT': 'Éditer',
+    'SHOW': 'Montrer',
   },
 
   'PROJECT': {

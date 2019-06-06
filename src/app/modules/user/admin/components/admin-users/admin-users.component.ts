@@ -66,6 +66,7 @@ export class AdminUsersComponent implements OnInit {
         _isDeletable: true,
         _isSelectable: true,
         _isEditable: true,
+        _editIndex: 1,
         _columns: [
           {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
           {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},

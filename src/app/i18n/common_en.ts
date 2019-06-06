@@ -184,7 +184,9 @@ export const COMMON = {
     'CLOSE': 'Close',
     'DOWNLOAD': 'Download',
     'SHARE': 'Share',
-    'SEE_MORE': 'See more'
+    'SEE_MORE': 'See more',
+    'EDIT': 'Edit',
+    'SHOW': 'Show',
   },
 
   'TABLE' : {

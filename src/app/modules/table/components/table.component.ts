@@ -159,7 +159,7 @@ export class TableComponent implements OnInit {
     this._table = {
       _title: 'TABLE.TITLE.RESULTS',
       _total: -1,
-      _editIndex: 0,
+      _editIndex: 1,
       _columns: [],
       _content: [],
       _actions: [],
@@ -394,13 +394,12 @@ export class TableComponent implements OnInit {
    * This function returns the keys of the table
    * @returns {string[]}
    */
-  getRowsKeys(): string[] {
-    // if (this._isLocal) {
-    //   return Object.keys(this._filteredContent);
-    // } else {
-    //   return Object.keys(this._content);
-    // }
-    return [];
+  public getRowsKeys(): string[] {
+    if (this._table._isLocal) {
+      return Object.keys(this._filteredContent);
+    } else {
+      return Object.keys(this._table._content);
+    }
   }
 
   /***
