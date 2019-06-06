@@ -62,14 +62,6 @@
           </ng-container>
         </p>
 
-        <!-- tag -->
-        <div *ngIf="answer.tags && answer.tags.length > 0" class="tag-wrapper">
-          <div *ngFor="let tag of answer.tags | slice:0:2" class="label label-success label-rounded">
-            <i class="fas fa-tag"></i>
-            <span>{{ tag.label | multiling:userLang  }}</span>
-          </div>
-        </div>
-
       </div>
       <!-- /prof details -->
 
