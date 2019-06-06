@@ -7,7 +7,8 @@
 
       <div>
 
-        <label class="btn btn-sm ghost-primary" [innerText]="'COMMON.BUTTON.IMPORT'" translate>
+        <label class="btn btn-sm ghost-primary">
+          {{ 'COMMON.BUTTON.IMPORT' | translate }}
           <input #fileupload type="file" [hidden]="true" (change)="uploadRequest(fileupload.files[0], $event)" />
         </label>
 

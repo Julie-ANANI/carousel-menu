@@ -1,96 +1,77 @@
 @import "../../../../style/framework/src/variables";
 
-#login-component {
+#login {
 
-  .section-main {
-    display: flex;
+  .cover-image {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
     min-height: 100vh;
+  }
+
+  .section-login {
     flex-direction: column;
+    min-height: 100vh;
 
-    .cover-image {
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center center;
-      min-height: 100vh;
-    }
-
-    .section-login {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .form {
+      flex: 1 0 auto;
       flex-direction: column;
-      min-height: 100vh;
+      width: 100%;
+      margin-right: auto;
+      margin-left: auto;
 
-      .form {
-        flex: 1 0 auto;
-        justify-content: center;
-        align-items: center;
-        display: inline-flex;
-        flex-direction: column;
-        width: 100%;
-        padding-top: 1.25rem;
-        padding-bottom: 1.25rem;
-        margin-right: auto;
-        margin-left: auto;
+      .title-primary {
+        font-size: 1.4rem;
+      }
 
-        .title-primary {
-          font-size: 1.4rem;
-          color: $text-background-color;
-        }
+      .credentials-wrapper {
+        width: 80%;
 
-        .credentials-wrapper {
-          width: 80%;
+        .submit-wrapper {
+          padding-top: 1rem;
 
-          .submit-wrapper {
-            padding-top: 1rem;
-            text-align: center;
+          .login-button {
+            padding-bottom: 0.7rem;
 
-            .login-button {
-              padding-bottom: 0.7rem;
-
-              .btn {
-                min-width: 150px;
-              }
-
-              .loading {
-                position: absolute;
-                left: 25px;
-              }
-
+            .btn {
+              min-width: 150px;
             }
 
-            p, .text-link {
-              font-size: 0.7rem;
-              margin-bottom: 0;
+            .loading {
+              position: absolute;
+              left: 25px;
             }
 
           }
 
-        }
-
-        .linkedIn-wrapper {
-          padding-top: 0.8rem;
-          text-align: center;
-
-          .or-wrapper {
-            padding-bottom: 1.25rem;
-          }
-
-          .btn {
-            min-width: 250px;
-          }
-
-          .loading {
-            margin-right: 20px;
+          p, .text-link {
+            font-size: 0.7rem;
+            margin-bottom: 0;
           }
 
         }
 
       }
 
-    }
+      .linkedIn-wrapper {
+        padding-top: 0.8rem;
 
+        .or-wrapper {
+          padding-bottom: 1.25rem;
+        }
+
+        .btn {
+          min-width: 250px;
+        }
+
+        .loading {
+          margin-right: 20px;
+        }
+
+      }
+
+    }
 
   }
 
@@ -99,7 +80,7 @@
 
 @media (max-width: $size-sm) {
 
-  #login-component {
+  #login {
 
     .cover-image {
       display: none;

@@ -1,72 +1,53 @@
 @import "../../../../style/framework/src/variables";
 
-#signup-component {
+#signup {
 
-  .main-wrapper {
-    display: flex;
+  .cover-image {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
     min-height: 100vh;
+  }
+
+  .signup-details {
     flex-direction: column;
+    min-height: 100vh;
 
-    .cover-image {
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center center;
-      min-height: 100vh;
-    }
-
-    .signup-details {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .register {
+      flex: 1 0 auto;
       flex-direction: column;
-      text-align: center;
-      min-height: 100vh;
+      width: 100%;
+      margin-right: auto;
+      margin-left: auto;
 
-      .register {
-        flex: 1 0 auto;
-        justify-content: center;
-        align-items: center;
-        display: inline-flex;
-        flex-direction: column;
-        width: 100%;
-        padding-top: 1.25rem;
-        padding-bottom: 1.25rem;
-        margin-right: auto;
-        margin-left: auto;
+      .title-primary {
+        font-size: 1.4rem;
+        padding: 0 0.4rem 0.4rem;
+      }
 
-        .title-primary {
-          font-size: 1.4rem;
-          padding: 0 0.4rem 0.4rem;
-          color: $text-background-color;
-        }
+      .btn {
+        width: 280px;
+      }
 
-        .btn {
-          width: 280px;
-        }
+      .linkedIn-wrapper {
+        padding-top: 1rem;
 
-        .linkedIn-wrapper {
-          padding-top: 1rem;
-
-          .or-wrapper {
-            padding-bottom: 1.25rem;
-          }
-
+        .or-wrapper {
+          padding-bottom: 1.25rem;
         }
 
       }
 
     }
 
-
   }
-
 }
 
 
 @media (max-width: $size-sm) {
 
-  #signup-component {
+  #signup {
 
     .cover-image {
       display: none;

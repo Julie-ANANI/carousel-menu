@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { TranslateTitleService } from '../../../services/title/title.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user/user.service';
 import { RandomUtil } from "../../../utils/randomUtil";
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -27,25 +28,32 @@ export class SignupComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
-  constructor(private translateTitleService: TranslateTitleService,
-              private activatedRoute: ActivatedRoute,
-              private translateNotificationsService: TranslateNotificationsService,
-              private authService: AuthService,
-              private userService: UserService,
-              private router: Router) {
+  private _backgroundImage: string;
 
-    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.SIGN_UP');
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateTitleService: TranslateTitleService,
+              private _activatedRoute: ActivatedRoute,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _authService: AuthService,
+              private _userService: UserService,
+              private _router: Router) {
 
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.SIGN_UP');
+
+    this._activatedRoute.queryParams.subscribe((params: Params) => {
       this._isInvitation = params['invitation'] && params['invitation'] === 'true';
     });
+
+    this.linkedInUrl();
+
+    if (isPlatformBrowser(this._platformId)) {
+      this._backgroundImage = environment.background;
+    }
 
   }
 
   ngOnInit() {
-    this.linkedInUrl();
   }
-
 
   private linkedInUrl() {
     const linkedinConfig = {
@@ -61,14 +69,13 @@ export class SignupComponent implements OnInit {
 
   }
 
-
-  linkedInEvent() {
+  public linkedInEvent() {
     const data = {
       domain: environment.domain,
       state: this._linkedInState
     };
 
-    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
+    this._authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
         console.log(_);
       }, err=>{
         console.error(err);
@@ -78,8 +85,7 @@ export class SignupComponent implements OnInit {
 
   }
 
-
-  onSignUpClick(event: Event) {
+  public onSignUpClick(event: Event) {
     event.preventDefault();
 
     this._sidebarValue = {
@@ -90,34 +96,28 @@ export class SignupComponent implements OnInit {
 
   }
 
-
-  createUser(formValue: FormGroup) {
+  public createUser(formValue: FormGroup) {
     if (formValue.valid) {
       const user = new User(formValue.value);
       user.domain = environment.domain;
 
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       } else {
-        this.userService.create(user).pipe(first()).subscribe(() => {
-          this.authService.login(user).pipe(first()).subscribe(() => {
-            this.router.navigate(['/welcome']);
+        this._userService.create(user).pipe(first()).subscribe(() => {
+          this._authService.login(user).pipe(first()).subscribe(() => {
+            this._router.navigate(['/welcome']);
           }, () => {
-            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
           });
         }, () => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
+          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
         });
       }
 
     } else {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
-  }
-
-
-  getBackgroundImage(): string {
-    return environment.background;
   }
 
   getCompanyUrl(): string {
@@ -146,6 +146,10 @@ export class SignupComponent implements OnInit {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
+  }
+
+  get backgroundImage(): string {
+    return this._backgroundImage;
   }
 
 }

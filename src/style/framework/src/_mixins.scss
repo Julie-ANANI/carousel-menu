@@ -44,6 +44,25 @@
 }
 
 
+// Button round variant
+@mixin button-round-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:focus, &:active, &.active {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &:hover {
+    box-shadow: $box-shadow-button-hover;
+  }
+
+}
+
+
 // Ghost button variant
 @mixin ghost-button-variant($color: $primary-color) {
   color: $color;

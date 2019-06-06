@@ -1,0 +1,51 @@
+<ng-container *ngIf="carouselOptions">
+  <div class="carousel" id="carousel">
+
+    <!-- container -->
+    <div class="carousel-container">
+
+      <!-- left slide button -->
+      <ng-container *ngIf="carouselOptions.labelItemPrev">
+        <label class="item-prev btn btn-round" (click)="OnClickPrev($event)">
+          <i class="fas fa-chevron-left"></i>
+        </label>
+      </ng-container>
+      <!-- /left slide button -->
+
+      <!-- images -->
+      <ng-container *ngIf="totalItems > 0">
+        <figure
+          *ngFor="let image of carouselOptions.images; let i = index;"
+          [ngClass]="{ 'current-slide': i === currentSlideIndex }"
+          class="carousel-item">
+          <img [src]="image.src" alt=" " class="img-fit-cover">
+        </figure>
+      </ng-container>
+      <!-- /images -->
+
+      <!-- right slide button -->
+      <ng-container *ngIf="carouselOptions.labelItemPrev">
+        <label class="item-next btn btn-round" (click)="OnClickNext($event)">
+          <i class="fas fa-chevron-right"></i>
+        </label>
+      </ng-container>
+      <!-- /right slide button -->
+
+    </div>
+    <!-- /container -->
+
+    <!-- navigation buttons -->
+    <ng-container *ngIf="carouselOptions.navItem && totalItems > 0">
+      <div class="carousel-nav">
+        <label
+          (click)="onClickNav($event, i)"
+          *ngFor="let src of carouselOptions.images; let i = index;"
+          [ngClass]="{ 'current-slide': i === currentSlideIndex }"
+          class="nav-item text-hide">
+        </label>
+      </div>
+    </ng-container>
+    <!-- /navigation buttons -->
+
+  </div>
+</ng-container>

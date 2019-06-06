@@ -1,29 +1,53 @@
 @import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
 
-#showcase-component {
+#showcase {
   min-height: 100vh;
   background-color: #F5F5F5;
 
-  .mar {
-    margin-top: 5px;
-  }
+  .no-selected-wrapper {
+    flex-direction: column;
+    min-height: 85vh;
 
-  .section-header {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    .add-wrapper {
+      @include control-transition();
+      border-radius: $border-radius;
+      border: $border-width-xl solid $border-color;
+      padding: 1.25rem 2.5rem;
 
-    .title-primary {
-      color: #3E5164;
-      font-size: 2.3rem;
-      font-family: $font-family-oswald;
-      margin-bottom: 0;
-      margin-right: $unit-2;
+      .text {
+        margin-top: 0.5rem;
+      }
+
+      &:hover {
+        border-color: $primary-color;
+        box-shadow: $box-shadow-umi;
+
+        .fa-pencil-alt {
+          color: $primary-color;
+        }
+
+      }
+
     }
 
-    .text-link {
-      font-size: $font-size-md;
-      margin-bottom: 8px;
+  }
+
+  .title-primary {
+    color: #3E5164;
+    font-size: 2.3rem;
+    font-family: $font-family-oswald;
+    margin-bottom: 0;
+  }
+
+  .selected-tags-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+
+    .tag {
+      margin-right: $unit-2;
+      font-size: 0.75rem;
     }
 
   }
@@ -41,11 +65,9 @@
 
     .answer-wrapper, .innovation-wrapper, .map-wrapper, .client-wrapper {
       background-color: $bg-color-light;
-      border-radius: 8px;
+      border-radius: $border-radius;
       padding: 2.5rem;
-      animation-name: fadeIn;
-      animation-duration: 1s;
-      animation-timing-function: ease-in-out;
+      box-shadow: $box-shadow-umi;
     }
 
     .answer-wrapper {
@@ -66,8 +88,8 @@
 
     .map-wrapper {
 
-      h2 {
-        margin-bottom: 0;
+      h2, h3 {
+        margin-bottom: 0.25rem;
       }
 
       h3 {
@@ -91,6 +113,11 @@
 
 }
 
+
+.btn.btn-close, .title-secondary {
+  padding-right: $unit-1;
+}
+
 .title-secondary {
   margin-bottom: 0;
   padding-bottom: $unit-1;
@@ -102,6 +129,7 @@
   .label {
     margin: $unit-2;
     border-radius: $border-width-lg;
+    font-size: 0.5rem;
   }
 
 }
@@ -122,6 +150,12 @@
 
     .form-checkbox {
       font-size: $font-size-sm;
+
+      span {
+        max-width: 100%;
+        min-height: $unit-4;
+      }
+
     }
 
   }
@@ -131,7 +165,7 @@
 
 @media (max-width: $size-md) {
 
-  #showcase-component {
+  #showcase {
 
     .section-wrapper {
       flex-direction: column;
@@ -141,6 +175,18 @@
         margin-bottom: 1.25rem;
       }
 
+    }
+
+  }
+
+}
+
+@media (max-width: $size-sm) {
+
+  #showcase {
+
+    .answer-wrapper, .innovation-wrapper, .map-wrapper, .client-wrapper {
+      padding: 0.5rem !important;
     }
 
   }

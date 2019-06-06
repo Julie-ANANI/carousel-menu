@@ -36,6 +36,59 @@
 }
 
 
+.media-hover {
+  position: relative;
+
+  .media-hover-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    position: absolute;
+    min-height: 35px;
+    width: 133px;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    font-size: $font-size-sm;
+    border: 2px solid $light-color;
+    border-radius: 31.5px;
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.21);
+    }
+
+  }
+
+  &:hover {
+
+    .media-hover-button {
+      opacity: 1 !important;
+      visibility: visible !important;
+      color: $light-color;
+    }
+
+    figure {
+      background: $bg-overlay-color;
+
+      img {
+        transition: all 0.3s ease;
+        opacity: 0.7;
+        cursor: pointer;
+      }
+
+    }
+
+  }
+
+}
+
+
 // video responsive
 .video-responsive {
   display: block;

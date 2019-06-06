@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../services/title/title.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
@@ -8,6 +8,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
 import { RandomUtil } from "../../../utils/randomUtil";
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -27,30 +28,35 @@ export class LoginComponent implements OnInit {
 
   private _displayLoadingLinkedIn = false;
 
-  constructor(private translateTitleService: TranslateTitleService,
-              private formBuilder: FormBuilder,
-              private authService: AuthService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private router: Router) {
+  private _backgroundImage: string;
 
-    this.translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateTitleService: TranslateTitleService,
+              private _formBuilder: FormBuilder,
+              private _authService: AuthService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _router: Router) {
+
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
+    this.buildForm();
+    this.linkedInUrl();
+
+    if (isPlatformBrowser(this._platformId)) {
+      this._backgroundImage = environment.background;
+    }
 
   }
 
 
   ngOnInit() {
-    this.buildForm();
-    this.linkedInUrl();
   }
 
-
   private buildForm() {
-    this._formData = this.formBuilder.group({
+    this._formData = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
   }
-
 
   private linkedInUrl(){
     const linkedinConfig = {
@@ -66,8 +72,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-
-  onClickLinkedIn() {
+  public onClickLinkedIn() {
     this._displayLoadingLinkedIn = true;
 
     const data = {
@@ -75,7 +80,7 @@ export class LoginComponent implements OnInit {
       state: this._linkedInState
     };
 
-    this.authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{console.log(_);
+    this._authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{console.log(_);
       }, (err) => {
       this._displayLoadingLinkedIn = false;
       console.error(err);
@@ -85,8 +90,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-
-  onClickContinue() {
+  public onClickContinue() {
     if (this._formData.valid) {
 
       this._displayLoading = true;
@@ -94,12 +98,12 @@ export class LoginComponent implements OnInit {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this.authService.login(user).pipe(first()).subscribe(() => {
+      this._authService.login(user).pipe(first()).subscribe(() => {
 
-        if (this.authService.isAuthenticated) {
+        if (this._authService.isAuthenticated) {
 
           // Get the redirect URL from our auth service. If no redirect has been set, use the default.
-          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
+          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
 
           // Set our navigation extras object that passes on our global query params and fragment
           const navigationExtras: NavigationExtras = {
@@ -108,24 +112,19 @@ export class LoginComponent implements OnInit {
           };
 
           // Redirect the user
-          this.router.navigate([redirect], navigationExtras);
+          this._router.navigate([redirect], navigationExtras);
 
         }
       }, () => {
         this._displayLoading = false;
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
       });
     } else {
       if (this._formData.untouched && this._formData.pristine) {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
     }
-  }
-
-
-  getBackgroundImage(): string {
-    return environment.background;
   }
 
   getCompanyUrl(): string {
@@ -154,6 +153,10 @@ export class LoginComponent implements OnInit {
 
   get displayLoadingLinkedIn(): boolean {
     return this._displayLoadingLinkedIn;
+  }
+
+  get backgroundImage(): string {
+    return this._backgroundImage;
   }
 
 }

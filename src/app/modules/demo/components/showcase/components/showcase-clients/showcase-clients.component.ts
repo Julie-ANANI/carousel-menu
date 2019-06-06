@@ -3,7 +3,10 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Clearbit } from '../../../../../../models/clearbit';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+
+export interface Slide {
+  clients?: Array<Clearbit>;
+}
 
 @Component({
   selector: 'app-showcase-clients',
@@ -35,90 +38,77 @@ export class ShowcaseClientsComponent {
             }, {});
 
           this._totalClients = Object.values(companies);
-          this._selectedClients = this._totalClients.sort((a, b) => {
+
+          this._totalClients = this._totalClients.sort((a, b) => {
             if (a.logo && !b.logo) { return -1; }
             if (!a.logo && b.logo) { return 1; }
             return 0;
-          }).slice(0, 8);
-          this._topClients = this._selectedClients;
+          });
+
+          this._getSlides();
 
         }
+
       });
 
-    } else {
-      this._topClients = [];
     }
 
   }
-
-  private _topClients: Array<Clearbit> = [];
-
-  private _selectedClients: Array<Clearbit> = [];
 
   private readonly _adminPass: boolean = false;
 
   private _totalClients: Array<Clearbit> = [];
 
-  private _modalShow: boolean = false;
+  private _currentSlideIndex: number = 0;
+
+  private _slides: Array<Slide>;
 
   constructor(private _innovationService: InnovationService,
-              private _authService: AuthService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _authService: AuthService) {
 
     this._adminPass = this._authService.adminLevel > 2;
 
   }
 
+  private _getSlides() {
 
-  public openModal(event: Event) {
-    event.preventDefault();
-    this._modalShow = true;
-  }
+    this._slides = [];
 
-
-  public activeClient(client: Clearbit) {
-    return this._selectedClients.some((item) => item === client);
-  }
-
-
-  public onChangeClient(event: Event, client: Clearbit) {
-    if (event.target['checked']) {
-      if (this._selectedClients.length < 8) {
-        this._selectedClients.push(client);
-      } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'You can only select 8 clients.');
-      }
+    if (this._totalClients.length === 0 || this._totalClients.length <=6) {
+      this._slides.push({ clients: this._totalClients.slice(0, 6) });
     } else {
-      this._selectedClients = this._selectedClients.filter((item) => item !== client);
+      const slide = Math.ceil(this._totalClients.length / 6);
+
+      for (let i = 0; i < slide ; i++) {
+        if ( i === 0) {
+          this._slides.push({clients: this._totalClients.slice(0, 6)});
+        } else {
+          this._slides.push({ clients: this._totalClients.slice( 6 * i, (6 * i) + 6) });
+        }
+      }
+
     }
+
   }
 
-
-  public onClickApply(event: Event) {
-    event.preventDefault();
-    this._topClients = this._selectedClients;
-    this._modalShow = false;
-  }
-
-
-  get topClients() {
-    return this._topClients;
+  public onClickNav(event: Event, index: number) {
+    this._currentSlideIndex = index;
   }
 
   get adminPass(): boolean {
     return this._adminPass;
   }
 
-  get modalShow(): boolean {
-    return this._modalShow;
-  }
-
-  set modalShow(value: boolean) {
-    this._modalShow = value;
-  }
-
   get totalClients(): Array<Clearbit> {
     return this._totalClients;
+  }
+
+  get slides(): Array<Slide> {
+    return this._slides;
+  }
+
+  get currentSlideIndex(): number {
+    return this._currentSlideIndex;
   }
 
 }

@@ -31,23 +31,44 @@
   }
 
   &.btn-close {
+    transition: all 0.4s ease;
     background: transparent;
     border: 0;
     color: $light-color;
     height: 30px;
     padding: 0;
     text-decoration: none;
+    position: relative;
     width: 12px;
+    min-width: unset;
     line-height: 1.5;
-    font-size: $font-size;
+    font-size: $font-icon-xl;
 
     &:hover {
-      background: transparent;
-      border-color: transparent;
-      opacity: 0.85;
+
+      &::before {
+        display: block;
+        opacity: 0.15;
+      }
+
+      &::after {
+        z-index: 2;
+      }
+
     }
 
     &::before {
+      display: none;
+      content: '';
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: $bg-overlay-dark-color;
+      position: absolute;
+      opacity: 0;
+    }
+
+    &::after {
       content: "\2715";
     }
 
@@ -96,6 +117,7 @@
     background-color: $button-disabled-bg-color !important;
     border-color: $button-border-color !important;
     cursor: not-allowed;
+    box-shadow: none !important;
     pointer-events: auto;
     opacity: 1;
     border-width: $border-width-lg;
@@ -145,8 +167,28 @@
     border-radius: 36px;
   }
 
-  &.shadow {
-    box-shadow: $box-shadow;
+  &.rounded.shadow {
+
+    &.btn-primary {
+      @include button-round-variant($primary-color);
+    }
+
+    &.btn-secondary {
+      @include button-round-variant($secondary-color);
+    }
+
+    &.btn-edit {
+      @include button-round-variant($meta-color);
+    }
+
+    &.btn-error {
+      @include button-round-variant($alert-color);
+    }
+
+    &.btn-success {
+      @include button-round-variant($success-color);
+    }
+
   }
 
 }

@@ -5,7 +5,6 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { FilterService } from './services/filters.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Answer } from '../../../../models/answer';
-import { Campaign } from '../../../../models/campaign';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Innovation } from '../../../../models/innovation';
@@ -66,14 +65,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _adminMode: boolean;
 
-  private _campaignsStats: {
-    nbPros: number,
-    nbProsSent: number,
-    nbProsOpened: number,
-    nbProsClicked: number,
-    nbValidatedResp: number
-  };
-
   private _toggleAnswers: boolean;
 
   private _numberOfSections: number;
@@ -112,7 +103,6 @@ export class SharedMarketReportComponent implements OnInit {
   private _initializeReport() {
     this._initializeVariable();
     this._getAnswers();
-    this._getCampaign();
     this.resetMap();
     this.presets();
   }
@@ -237,35 +227,6 @@ export class SharedMarketReportComponent implements OnInit {
 
 
   /***
-   * This function is to fetch the campaign from the server.
-   */
-  private _getCampaign() {
-    this._innovationService.campaigns(this._innovation._id).subscribe((results) => {
-      if (results && Array.isArray(results.result)) {
-        this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
-          if (campaign.stats) {
-            if (campaign.stats.campaign) {
-              acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
-              acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
-            }
-            if (campaign.stats.mail) {
-              acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
-              if (campaign.stats.mail.statuses) {
-                acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
-                acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
-              }
-            }
-          }
-          return acc;
-        }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
-      }
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
-  }
-
-
-  /***
    * This function is to reset the map configuration.
    */
   private resetMap() {
@@ -287,8 +248,9 @@ export class SharedMarketReportComponent implements OnInit {
    * This function is to update the projects.
    * @param {Event} event
    */
-  public update(event: Event) {
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+  public updateExecutiveReport(event: Event) {
+    event.preventDefault();
+    this._innovationService.save(this._innovation._id, {executiveReport: this._innovation.executiveReport}).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
@@ -327,7 +289,7 @@ export class SharedMarketReportComponent implements OnInit {
   public generateExecutiveTemplate(event: Event) {
     event.preventDefault();
     this._innovation.executiveReport.totalSections = this._numberOfSections;
-    this.update(event);
+    this.updateExecutiveReport(event);
   }
 
 
@@ -426,10 +388,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   get filters(): {[questionId: string]: Filter} {
     return this._filterService.filters;
-  }
-
-  get campaignStats() {
-    return this._campaignsStats;
   }
 
   get companies() {

@@ -156,3 +156,15 @@
   }
 
 }
+
+@media (max-width: $size-sm) {
+
+  &.tooltip-hide-sm {
+
+    &::before, &::after {
+      display: none !important;
+    }
+
+  }
+
+}

@@ -50,7 +50,6 @@ export class ShowcaseInnovationsComponent {
 
   }
 
-
   private _getInnovations(value: Array<TagStats>): void {
     this._tags = value.map((st) => st.tag._id);
 
@@ -68,11 +67,11 @@ export class ShowcaseInnovationsComponent {
         if (Array.isArray(response.result)) {
           this._innovations = response.result;
           this._count = this._innovations.length;
-          this._topInnovations = response.result.slice(0, 6);
+          this._topInnovations = response.result.slice(0, 9);
           this._computeCards();
         }
       }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'FETCHING_ERROR');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
 
     } else {
@@ -80,7 +79,6 @@ export class ShowcaseInnovationsComponent {
       this._computeCards();
     }
   }
-
 
   private _computeCards() {
     const innovationToCard = (innovation: Innovation) => {
@@ -107,37 +105,32 @@ export class ShowcaseInnovationsComponent {
 
   }
 
-
   public openModal(event: Event) {
     event.preventDefault();
     this._modalShow = true;
   }
 
-
   public activeInnovation(card: any) {
     return this._selectedCards.some((item: any) => item._id === card._id);
   }
 
-
   public onChangeInnovation(event: Event, card: any) {
     if (event.target['checked']) {
-      if (this._selectedCards.length < 6) {
+      if (this._selectedCards.length < 9) {
         this._selectedCards.push(card);
       } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'You can only select 6 innovations.');
+        this._translateNotificationsService.error('ERROR.ERROR', 'SHOWCASE.MAX_SELECT_INNOVATIONS');
       }
     } else {
       this._selectedCards = this._selectedCards.filter((item: any) => item._id !== card._id);
     }
   }
 
-
   public onClickApply(event: Event) {
     event.preventDefault();
     this._topCards = this._selectedCards;
     this._modalShow = false;
   }
-
 
   get cards() {
     return this._cards;

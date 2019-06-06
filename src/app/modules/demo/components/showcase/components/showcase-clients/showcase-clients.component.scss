@@ -1,88 +1,59 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#showcase-clients-component {
+#showcase-clients {
   height: 100%;
-  flex-direction: column;
 
-  .icon {
-    right: 0;
+  h2, h3 {
+    margin-bottom: 0.25rem;
   }
 
-  .section-heading {
-
-    h2 {
-      margin-bottom: 0;
-    }
-
-    h3 {
-      font-family: $font-family-oswald;
-      color: $secondary-color;
-      font-size: 1.85rem;
-
-      span {
-        color: #3E5164;
-      }
-
-    }
-
+  h3 {
+    font-family: $font-family-oswald;
+    color: #3E5164;;
+    font-size: 1.85rem;
   }
 
-}
+  .carousel {
 
-.section-card {
-  flex-wrap: wrap;
-  padding-top: 0.5rem;
-  margin-bottom: -$unit-5;
-  margin-right: -$unit-5;
+    .carousel-container {
 
-  .card {
-    margin-bottom: $unit-5;
-    margin-right: $unit-5;
-    flex: 1 0 100px;
-    max-width: calc(17% - 1rem);
-    border: none;
-
-    &:hover {
-      box-shadow: none;
-    }
-
-    .card-header {
-      padding-top: 0;
-      padding-bottom: 0;
-
-      img {
-        height: 50px;
+      &::before {
+        padding-bottom: 90px;
       }
 
-      .card-title {
-        font-size: 0.75rem;
+      .carousel-item {
+        justify-content: space-between;
+        overflow: auto;
+
+        .client-name-wrapper {
+          margin: $unit-5;
+
+          .text-name {
+            font-size: 0.75rem;
+          }
+
+        }
+
+        img {
+          height: 50px;
+          width: auto;
+        }
+
       }
 
     }
 
-  }
+    .carousel-nav {
+      position: relative;
 
-  .modal-card {
-    border: $border-width-lg solid $border-color;
+      .nav-item {
 
-    label {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+        &:hover, &.current-slide {
+          color: $primary-color;
+        }
 
-      input[type="checkbox"] {
-        display: none;
       }
 
-      &:hover {
-        cursor: pointer;
-      }
-
-    }
-
-    &.active {
-      border-color: $success-color;
     }
 
   }
