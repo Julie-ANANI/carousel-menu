@@ -4,6 +4,8 @@ export const SHOWCASE = {
 
   'SEE_MORE': 'Voir plus',
 
+  'MAIN_TITLE': 'Découvrez nos projets d\'innovation',
+
   'PROFESSIONALS_TITLE': 'Contributeurs',
 
   'PROFESSIONALS': 'répondants',
@@ -35,8 +37,6 @@ export const SHOWCASE = {
 
   'MAX_SELECT_ANSWERS': 'Vous ne pouvez sélectionner que 6 réponses.',
 
-  'MAX_SELECT_INNOVATIONS': 'Vous ne pouvez sélectionner que 6 innovations.',
-
-  'MAX_SELECT_CLIENTS': 'Vous ne pouvez sélectionner que 6 clients.'
+  'MAX_SELECT_INNOVATIONS': 'Vous ne pouvez sélectionner que 9 innovations.',
 
 };
