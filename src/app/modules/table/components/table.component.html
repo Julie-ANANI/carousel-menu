@@ -92,32 +92,34 @@
 
           <!-- body -->
           <tbody>
-          <tr *ngFor="let row of getRowsKeys()">
+            <tr *ngFor="let row of getRowsKeys()">
 
-            <!-- if we have selectable -->
-            <ng-container *ngIf="table._isSelectable">
-              <td class="th-checkbox">
-                <label class="flex-centered">
-                  <input type="checkbox">
-                  <i class="fas fa-check"></i>
-                </label>
+              <!-- if we have selectable -->
+              <ng-container *ngIf="table._isSelectable">
+                <td class="th-checkbox">
+                  <label class="flex-centered">
+                    <input type="checkbox">
+                    <i class="fas fa-check"></i>
+                  </label>
+                </td>
+              </ng-container>
+
+              <!-- rest columns -->
+              <td *ngFor="let column of table._columns; let i = index">
+
+                <!-- button -->
+                <button
+                  *ngIf="i === table._editIndex - 1"
+                  type="button"
+                  class="btn btn-xs ghost-edit float-right">
+                  {{ table._isEditable ? ('COMMON.BUTTON.EDIT' | translate) : ('COMMON.BUTTON.SHOW' | translate) }}
+                </button>
+                <!-- /button -->
+
               </td>
-            </ng-container>
+              <!-- rest columns -->
 
-            <!-- rest columns -->
-            <td *ngFor="let column of table._columns; let i = index">
-
-              <button
-                *ngIf="i === table._editIndex - 1"
-                type="button"
-                class="btn btn-xs ghost-edit float-right">
-                {{ table._isEditable ? ('COMMON.BUTTON.EDIT' | translate) : ('COMMON.BUTTON.SHOW' | translate) }}
-              </button>
-
-            </td>
-            <!-- rest columns -->
-
-          </tr>
+            </tr>
           </tbody>
           <!-- /body -->
 
