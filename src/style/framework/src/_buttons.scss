@@ -117,6 +117,7 @@
     background-color: $button-disabled-bg-color !important;
     border-color: $button-border-color !important;
     cursor: not-allowed;
+    box-shadow: none !important;
     pointer-events: auto;
     opacity: 1;
     border-width: $border-width-lg;
@@ -166,8 +167,28 @@
     border-radius: 36px;
   }
 
-  &.shadow {
-    box-shadow: $box-shadow;
+  &.rounded.shadow {
+
+    &.btn-primary {
+      @include button-round-variant($primary-color);
+    }
+
+    &.btn-secondary {
+      @include button-round-variant($secondary-color);
+    }
+
+    &.btn-edit {
+      @include button-round-variant($meta-color);
+    }
+
+    &.btn-error {
+      @include button-round-variant($alert-color);
+    }
+
+    &.btn-success {
+      @include button-round-variant($success-color);
+    }
+
   }
 
 }
