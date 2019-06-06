@@ -3,7 +3,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="adminPass && innovations.length > 0">
-    <div class="icon icon-meta absolute tooltip tooltip-left" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_INNOVATIONS' | translate" (click)="openModal($event)">
+    <div class="icon icon-meta absolute tooltip tooltip-left tooltip-hide-sm" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_INNOVATIONS' | translate" (click)="openModal($event)">
       <i class="fas fa-bars"></i>
     </div>
   </ng-container>
@@ -23,7 +23,7 @@
 
 
   <!-- section innovations -->
-  <div class="section-card-wrapper d-flex text-center">
+  <div class="section-card-wrapper section-light-pad rm-pad-top d-flex text-center">
     <div *ngFor="let innovationCard of topCards" class="card card-3 animate-zoomIn">
       <a [routerLink]="['/discover', innovationCard._id, lang]" target="_blank" class="text-primary text-xs">
 

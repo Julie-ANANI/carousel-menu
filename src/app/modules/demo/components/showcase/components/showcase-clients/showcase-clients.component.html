@@ -21,7 +21,7 @@
               <div
                 [attr.data-tooltip]="client.name"
                 [ngClass]="innerIndex === slide.clients.length - 1 && slide.clients.length !== 1 ? 'tooltip-left' : 'tooltip-right'"
-                class="tooltip">
+                class="tooltip tooltip-hide-sm">
                 <img [src]="client.logo" [alt]="client.name" height="50" class="img-fit-cover">
               </div>
             </ng-container>
