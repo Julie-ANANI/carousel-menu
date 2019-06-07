@@ -15,7 +15,12 @@
     min-height: 100vh;
 
     .logo-wrapper {
-      height: 35px;
+
+      img {
+        height: 35px;
+        width: 110px;
+      }
+
     }
 
     .register {
