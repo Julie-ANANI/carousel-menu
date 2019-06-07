@@ -258,6 +258,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.dynergie.scss"
             ],
             "scripts": [
@@ -428,6 +429,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.dynergie.scss"
             ],
             "scripts": [
@@ -582,6 +584,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.inomer.scss"
             ],
             "scripts": [
@@ -744,6 +747,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.vendor1.scss"
             ],
             "scripts": [
@@ -895,6 +899,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.vendor1.scss"
             ],
             "scripts": [
@@ -1046,6 +1051,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.schneider.scss"
             ],
             "scripts": [
@@ -1197,6 +1203,7 @@
               }
             ],
             "styles": [
+              "src/style/framework/src/umi.scss",
               "src/styles.schneider.scss"
             ],
             "scripts": [
