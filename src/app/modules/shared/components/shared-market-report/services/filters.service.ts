@@ -70,7 +70,7 @@ export class FilterService {
           break;
         case 'CUSTOM':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return filter.value.includes(answer._id);
+            return filter.value.indexOf(answer._id) !== -1;
           });
           break;
         case 'LIST':
