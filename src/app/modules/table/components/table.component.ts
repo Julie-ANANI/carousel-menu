@@ -4,6 +4,7 @@ import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
+import {countries} from '../../../models/static-data/country';
 //import { isPlatformBrowser } from '@angular/common';
 //import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
 //import { countries } from "../../../models/static-data/country";
@@ -346,8 +347,9 @@ export class TableComponent implements OnInit {
    * Emit the Output editRow
    * @param {Row} row
    */
-  edit(row: Row) {
-    //this.editRow.emit(row._content);
+  public edit(row: Row) {
+    console.log(row);
+    this.editRow.emit(row);
   }
 
   /***
@@ -408,24 +410,39 @@ export class TableComponent implements OnInit {
    * @param {string} columnAttr
    * @returns {any}
    */
-  getContentValue(rowKey: string, columnAttr: string): any  {
-    // if (columnAttr.split('.').length > 1) {
-    //   let newColumnAttr = columnAttr.split('.');
-    //   let tmpContent = this._isLocal
-    //     ? this._filteredContent[rowKey]._content[newColumnAttr[0]]
-    //     : this._content[rowKey]._content[newColumnAttr[0]];
-    //   newColumnAttr = newColumnAttr.splice(1);
-    //   for (const i of newColumnAttr){
-    //     tmpContent = tmpContent ? tmpContent[i] : '-';
-    //   }
-    //   return tmpContent || '';
-    // }else {
-    //   if (this._isLocal) {
-    //     return this._filteredContent[rowKey]._content[columnAttr] || '';
-    //   } else {
-    //     return this._content[rowKey]._content[columnAttr] || '';
-    //   }
-    // }
+  public getContentValue(rowKey: string, columnAttr: string): any  {
+
+    if (this._table && this._table._content && this._table._content.length > 0) {
+
+      if (columnAttr.split('.').length > 1) {
+        let newColumnAttr = columnAttr.split('.');
+
+        let tmpContent = this._table._isLocal ? this._filteredContent[rowKey]._content[newColumnAttr[0]] : this._table._content[rowKey][newColumnAttr[0]];
+
+        newColumnAttr = newColumnAttr.splice(1);
+
+        for (const i of newColumnAttr){
+          tmpContent = tmpContent ? tmpContent[i] : '-';
+        }
+
+        return tmpContent || '';
+
+      } else {
+
+        if (this._table._isLocal) {
+          return this._filteredContent[rowKey]._content[columnAttr] || '';
+        } else {
+          if (this._table._content[rowKey] && this._table._content[rowKey][columnAttr]) {
+            return this._table._content[rowKey][columnAttr];
+          }
+        }
+
+      }
+
+      return '';
+
+    }
+
   }
 
   /***
@@ -433,9 +450,8 @@ export class TableComponent implements OnInit {
    * @param {Column} column
    * @returns {types}
    */
-  getType(column: Column): types {
-    //return column._type;
-    return ;
+  public getType(column: Column): types {
+    return column._type;
   }
 
   /***
@@ -453,9 +469,8 @@ export class TableComponent implements OnInit {
    * @param {string} attr
    * @returns {number}
    */
-  getAttrIndex(column: Column, attr: string) {
-    //return this.getAttrs(column).findIndex(value => value === attr);
-    return ;
+  public getAttrIndex(column: Column, attr: string) {
+    return this.getAttrs(column).findIndex(value => value === attr);
   }
 
   /***
@@ -529,17 +544,16 @@ export class TableComponent implements OnInit {
    * @param {string} attr
    * @returns {MultiLabel | {}}
    */
-  getMultiLabel(column: Column, attr: string) {
-    //return column._multiLabels.find(value => value._attr === attr) || {};
+  public getMultiLabel(column: Column, attr: string) {
+    return column._multiLabels.find(value => value._attr === attr) || {};
   }
 
   /***
    * This function returns the class of one label of a multilabel
    * @param multiLabel
    */
-  getMultiLabelClass(multiLabel: any): string {
-    //return multiLabel._class;
-    return '';
+  public getMultiLabelClass(multiLabel: any): string {
+    return multiLabel._class;
   }
 
   /***
@@ -672,23 +686,22 @@ export class TableComponent implements OnInit {
    * @param {number} length
    * @returns {string}
    */
-  getColor(length: number) {
-    // if (length < 34 && length >= 0) {
-    //   return '#EA5858';
-    // } else if (length >= 34 && length < 67) {
-    //   return '#f0ad4e';
-    // } else {
-    //   return '#2ECC71';
-    // }
+  public getColor(length: number): string {
+    if (length < 34 && length >= 0) {
+      return '#EA5858';
+    } else if (length >= 34 && length < 67) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
   }
 
-  public flag2Name(isoCode: string): string {
-    // if(isoCode) {
-    //   return countries[isoCode] || "Unknown";
-    // } else {
-    //   return "Unknown";
-    // }
-    return ;
+  public getCountryName(isoCode: string): string {
+    if(isoCode) {
+      return countries[isoCode] || "NA";
+    } else {
+      return "NA";
+    }
   }
 
   get table(): Table {

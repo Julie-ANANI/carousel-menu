@@ -57,36 +57,41 @@
 
           <!-- head -->
           <thead>
-          <tr>
+            <tr>
 
-            <!-- if we have selectable -->
-            <ng-container *ngIf="table._isSelectable">
-              <th class="th-checkbox">
-                <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
-                  <input type="checkbox" (change)="selectAll($event)">
-                  <i class="fas fa-check"></i>
-                </label>
+              <!-- if we have selectable -->
+              <ng-container *ngIf="table._isSelectable">
+                <th class="th-checkbox">
+                  <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
+                    <input type="checkbox" (change)="selectAll($event)">
+                    <i class="fas fa-check"></i>
+                  </label>
+                </th>
+              </ng-container>
+
+              <!-- rest columns -->
+              <th
+                *ngFor="let column of table._columns"
+                (click)="selectColumn(getName(column))"
+                [ngClass]="{ 'active': column._isSelected }"
+                [ngStyle]="{ 'max-width': column._maxWidth, 'min-width': column._minWidth }"
+                class="text-ellipsis">
+
+                <ng-container *ngIf="!isSortable(column)">
+                  <span class="th-name">{{ getName(column) | translate }}</span>
+                </ng-container>
+
+                <ng-container *ngIf="isSortable(column)">
+                  <app-shared-sort
+                    [config]="config"
+                    (configChangeSort)="changeConfig($event)"
+                    [property]="getName(column) | translate | lowercase">
+                  </app-shared-sort>
+                </ng-container>
+
               </th>
-            </ng-container>
 
-            <!-- rest columns -->
-            <th *ngFor="let column of table._columns" (click)="selectColumn(getName(column))" [ngClass]="{ 'active': column._isSelected }">
-
-              <ng-container *ngIf="!isSortable(column)">
-                <span class="th-name">{{ getName(column) | translate }}</span>
-              </ng-container>
-
-              <ng-container *ngIf="isSortable(column)">
-                <app-shared-sort
-                  [config]="config"
-                  (configChangeSort)="changeConfig($event)"
-                  [property]="getName(column) | translate | lowercase">
-                </app-shared-sort>
-              </ng-container>
-
-            </th>
-
-          </tr>
+            </tr>
           </thead>
           <!-- /head -->
 
@@ -106,16 +111,98 @@
 
               <!-- rest columns -->
               <td *ngFor="let column of table._columns; let i = index">
+                <div
+                  class="tbody-td-data d-flex"
+                  [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE' }">
 
-                <!-- button -->
-                <button
-                  *ngIf="i === table._editIndex - 1"
-                  type="button"
-                  class="btn btn-xs ghost-edit float-right">
-                  {{ table._isEditable ? ('COMMON.BUTTON.EDIT' | translate) : ('COMMON.BUTTON.SHOW' | translate) }}
-                </button>
-                <!-- /button -->
+                  <!-- button -->
+                  <div *ngIf="i === table._editIndex - 1" class="tbody-td-action-button">
+                    <button
+                      (click)="table._isLocal ? edit(filteredContent[row]) : edit(table._content[row])"
+                      type="button"
+                      class="btn btn-xs ghost-edit">
+                      {{ table._isEditable ? ('COMMON.BUTTON.EDIT' | translate) : ('COMMON.BUTTON.SHOW' | translate) }}
+                    </button>
+                  </div>
+                  <!-- /button -->
 
+                  <div
+                    [ngSwitch]="getType(column)"
+                    [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE',
+                    'enable-tooltip': column._enableTooltip || getType(column) === 'COUNTRY' }"
+                    class="tbody-td-content text-ellipsis">
+
+                    <!-- if type is Date -->
+                    <ng-container *ngSwitchCase="'DATE'">
+                      <span>{{ (getContentValue(row, getAttrs(column)[0])?.toString() | date:dateFormat) }}</span>
+                    </ng-container>
+
+                    <!-- if type is Country -->
+                    <ng-container *ngSwitchCase="'COUNTRY'">
+                      <span>
+                        <app-country-flag [country]="(getContentValue(row, getAttrs(column)[0]) || '')"></app-country-flag>
+                      </span>
+                    </ng-container>
+
+                    <!-- if type is country name -->
+                    <ng-container *ngSwitchCase="'COUNTRY-NAME'">
+                      <span>{{ getCountryName(getContentValue(row, getAttrs(column)[0]) || '') }}</span>
+                    </ng-container>
+
+                    <!-- if type is array -->
+                    <ng-container *ngSwitchCase="'ARRAY'">
+                      <span>{{ (getContentValue(row, getAttrs(column)[0]) || []).length.toString() }}</span>
+                    </ng-container>
+
+                    <!-- if type is image -->
+                    <ng-container *ngSwitchCase="'PICTURE'">
+                      <span>
+                        <img [src]="getContentValue(row, getAttrs(column)[0]) || ''" class="img-responsive" height="27" alt=" ">
+                      </span>
+                    </ng-container>
+
+                    <!-- if type is progress -->
+                    <ng-container *ngSwitchCase="'PROGRESS'">
+                      <span>
+                        <app-progress-bar
+                          [enableTooltip]="true"
+                          [height]="'8px'"
+                          [backgroundColor]="getColor(getContentValue(row, getAttrs(column)[0]) || 0)"
+                          [width]="(getContentValue(row, getAttrs(column)[0]) || 0) +'%'">
+                        </app-progress-bar>
+                      </span>
+                    </ng-container>
+
+                    <!-- if type is check -->
+                    <ng-container *ngSwitchCase="'CHECK'">
+                      <span>
+                        <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 0" class="fas fa-times text-error"></i>
+                        <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 1" class="fas fa-check text-success"></i>
+                      </span>
+                    </ng-container>
+
+                    <!-- if type is multi-label -->
+                    <ng-container *ngSwitchCase="'MULTI-LABEL'">
+                      <span
+                        *ngFor="let attr of getAttrs(column)"
+                        [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
+                        [ngClass]="{ 'td-type-left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
+                        'td-type-right-label' : getAttrIndex(column, attr) === getAttrs(column).length - 1 && getAttrs(column).length !== 1,
+                        'td-type-middle-label' : getAttrIndex(column, attr) !== 0 && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
+                        {{ (getContentValue(row, attr) || " - ").toString() }}
+                      </span>
+                    </ng-container>
+
+                    <!-- if type is text -->
+                    <ng-container *ngSwitchDefault>
+                      <span *ngFor="let attr of getAttrs(column)">
+                        {{ (getContentValue(row, attr)|| " - ").toString() }}
+                      </span>
+                    </ng-container>
+
+                  </div>
+
+                </div>
               </td>
               <!-- rest columns -->
 

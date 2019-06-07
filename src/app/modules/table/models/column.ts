@@ -1,5 +1,5 @@
-import {Choice} from './choice';
-import {MultiLabel} from './multi-label';
+import { Choice } from './choice';
+import { MultiLabel } from './multi-label';
 
 export interface Column {
   _isSelected?: boolean;
@@ -11,6 +11,9 @@ export interface Column {
   readonly _isFiltrable?: boolean;
   readonly _choices?: Choice[];
   readonly _multiLabels?: MultiLabel[];
+  readonly _maxWidth?: string;
+  readonly _minWidth?: string;
+  readonly _enableTooltip?: boolean;
 }
 
 export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK'

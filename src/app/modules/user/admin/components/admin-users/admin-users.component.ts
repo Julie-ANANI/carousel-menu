@@ -71,8 +71,8 @@ export class AdminUsersComponent implements OnInit {
           {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
           {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
           {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
-          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'}]
+          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _maxWidth: '150px'},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _maxWidth: '150px'}]
       };
       }, () => {
       this.translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
