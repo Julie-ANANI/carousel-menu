@@ -191,6 +191,14 @@
 
   }
 
+  &.ghost-background-hover {
+
+    &.ghost-primary {
+      @include button-ghost-background-variant($primary-color);
+    }
+
+  }
+
 }
 
 

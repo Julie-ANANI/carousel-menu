@@ -33,7 +33,7 @@ export class PresetService {
   }
 
   public isTaggedQuestion(identifier: string): boolean {
-    return Object.keys(this.taggedQuestionsTypes).includes(identifier);
+    return Object.keys(this.taggedQuestionsTypes).indexOf(identifier) !== -1;
   }
 
   public getNonUsedQuestions(): Array<string> {

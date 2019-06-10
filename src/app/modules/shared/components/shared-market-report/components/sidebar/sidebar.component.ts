@@ -187,14 +187,16 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  public deleteCustomFilter(name: string) {
-    this._innovationService.deleteFilter(this._innovation._id, name).subscribe((_result) => {
-      this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
+  public deleteCustomFilter(event: Event, name: string) {
+    event.preventDefault();
+    this._innovationService.deleteFilter(this._innovation._id, name).subscribe((result) => {
+      if (result['ok'] === 1) {
+        this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
+      }
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
   }
-
 
 
   public checkCountry(event: Event) {

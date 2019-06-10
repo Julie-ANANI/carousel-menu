@@ -38,8 +38,8 @@ export class FilterService {
 
     if (tags.length > 0) {
       tags.forEach((tag: Tag) => {
-        const include = FilterService.highlight.includes(tag.label.en.toLowerCase());
-        if (include) {
+        const index = FilterService.highlight.indexOf(tag.label.en.toLowerCase());
+        if (index !== -1) {
           highlightTags.push(tag);
         }
       });

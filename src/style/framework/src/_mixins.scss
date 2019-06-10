@@ -86,6 +86,25 @@
 }
 
 
+// Button ghost background variant
+@mixin button-ghost-background-variant($color: $primary-color) {
+  color: $color;
+  background-color: transparent;
+  border-color: $color;
+
+  &:focus, &:active, &.active {
+    color: $color;
+    background-color: transparent;
+    border-color: $color;
+  }
+
+  &:hover {
+    background-color: lighten($color, 47%);
+  }
+
+}
+
+
 // Text link variant
 @mixin text-link-variant($color: $primary-color) {
   font-weight: $font-weight-medium;
