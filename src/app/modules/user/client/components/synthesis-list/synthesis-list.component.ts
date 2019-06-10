@@ -68,10 +68,9 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
           media: result.principalMedia || null,
           objectId: info.sharedObjectId,
           sharedKey: info.sharedKey,
-          date: info.created // TODO use the share date instead...
+          date: info.created, // TODO use the share date instead...
+          link: `/user/synthesis/${info.sharedObjectId}/${info.sharedKey}`
         };
-
-        report['link'] = `/user/synthesis/${report.objectId}/${report.sharedKey}`;
 
         this._totalReports.push(report);
 

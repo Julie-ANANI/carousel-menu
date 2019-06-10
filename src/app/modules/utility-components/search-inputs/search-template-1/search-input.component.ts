@@ -93,16 +93,16 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
   }
 
-  onKeyboardPress(event: Event) {
+  onKeyboardPress(event: Event & {key: number, code: string}) {
     this._displaySuggestion = true;
 
-    if (event['key'] === 40 || event['code'] === 'ArrowDown') {
+    if (event.key === 40 || event.code === 'ArrowDown') {
       this._currentFocus++;
       this.setFocus(this._currentFocus);
-    } else if (event['key'] === 38 || event['code'] === 'ArrowUp') {
+    } else if (event.key === 38 || event.code === 'ArrowUp') {
       this._currentFocus--;
       this.setFocus(this._currentFocus);
-    } else if (event['key'] === 13 || event['code'] === 'Enter') {
+    } else if (event.key === 13 || event.code === 'Enter') {
       event.preventDefault();
 
       if (this._currentFocus > -1) {
