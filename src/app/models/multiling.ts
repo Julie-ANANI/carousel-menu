@@ -1,4 +1,3 @@
 export type Multiling = {
-  readonly en?: string;
-  readonly fr?: string;
-}
+  readonly [lang: string]: string;
+};

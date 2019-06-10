@@ -38,7 +38,8 @@ export class ModalMediaComponent implements OnInit, OnDestroy {
 
 
   toggleState(event: Event) {
-    if (event.target['className'] === 'modal-overlay' || event.target['className'] === 'btn btn-close' || event.target['className'] === 'modal-container' ) {
+    const { className } = (event.target as any);
+    if (className === 'modal-overlay' || className === 'btn btn-close' || className === 'modal-container' ) {
       this.showModalChange.emit(false);
     }
   }

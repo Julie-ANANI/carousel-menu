@@ -139,8 +139,7 @@ export class FiltersComponent implements OnInit {
    * @param tag
    */
   toggleFilter(event: Event, tag: Tag) {
-
-    if (event.target['checked']) {
+    if ((event.target as any).checked) {
       this._selectedTags.push(tag);
       this._selectedSimilarTags = [];
       this._getSuggestedTags();
@@ -184,8 +183,7 @@ export class FiltersComponent implements OnInit {
    * @param tag
    */
   toggleSimilarFilter(event: Event, tag: Tag) {
-
-    if (event.target['checked']) {
+    if ((event.target as any).checked) {
       this._selectedSimilarTags.push(tag);
       this._selectedTags.push(tag);
       this._sendSelectedFilters();

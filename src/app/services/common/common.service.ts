@@ -65,10 +65,10 @@ export class CommonService {
 
 
 
-  configToString(configObj) {
-    let config = {};
-    Object.keys(configObj).forEach(key=>{
-      if(configObj[key] instanceof Object) {
+  configToString(configObj: {[k: string]: any}): {[k: string]: string} {
+    const config: {[k: string]: string} = {};
+    Object.keys(configObj).forEach((key: string) => {
+      if (configObj[key] instanceof Object) {
         config[key] = JSON.stringify(configObj[key]);
       } else {
         config[key] = configObj[key];

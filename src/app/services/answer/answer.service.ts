@@ -36,19 +36,19 @@ export class AnswerService {
   }
 
   public addTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
-    const params = {tag: tagId };
+    const params: {[param: string]: string | string[]} = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
     return this._http.post('/answer/' + answerId + '/tag', { params: params});
   }
 
   public createTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
-    const params = {tag: tag };
+    const params: {[param: string]: string | string[]} = { tag: JSON.stringify(tag) };
     if (questionId) { params['questionId'] = questionId; }
     return this._http.post('/answer/' + answerId + '/new-tag', { params: params});
   }
 
   public removeTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
-    const params = {tag: tagId };
+    const params: {[param: string]: string | string[]} = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
     return this._http.delete('/answer/' + answerId + '/tag', { params: params});
   }
