@@ -166,11 +166,11 @@ export const MARKET_REPORT = {
 
   'BUTTON_EXPORT': 'Exporter',
 
-  'BUTTON_SAVE_VIEW': 'Enregistrer vue',
+  'BUTTON_SAVE_VIEW': 'Enregistrer la vue',
 
   'TOOLTIP_DELETE_VIEW': 'Effacer la vue',
 
-  'TOOLTIP_LOAD_VIEW': 'Vue de charge',
+  'TOOLTIP_LOAD_VIEW': 'Charger la vue',
 
   'TOOLTIP_UNHIDE_PROFESSIONAL': 'Démasquer le professionnel',
 
