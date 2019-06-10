@@ -359,7 +359,6 @@ export class TableComponent implements OnInit {
    * @param {Row} row
    */
   public edit(row: Row) {
-    console.log(row);
     this.editRow.emit(row);
   }
 
