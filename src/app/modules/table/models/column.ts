@@ -14,8 +14,8 @@ export interface Column {
   readonly _maxWidth?: string;
   readonly _minWidth?: string;
   readonly _enableTooltip?: boolean;
+  readonly _imgHeight?: string;
 }
 
-export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK'
-                    | 'MULTI-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL' | 'MULTILING'
+export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL' | 'MULTILING'
                     | 'TAG-LIST' | 'COUNTRY-NAME';

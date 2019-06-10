@@ -104,7 +104,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
                 {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg'},
                 {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg'},
                 {_name: 'leads', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg'}
-              ]},
+              ], _imgHeight: '20px'},
             {_attrs: ['percentages.preparation'], _name: 'Preparation', _type: 'PROGRESS', _enableTooltip: true},
             {_attrs: ['percentages.campaign'], _name: 'PROJECT.CAMPAIGN.CAMPAIGN', _type: 'PROGRESS', _enableTooltip: true},
             {_attrs: ['percentages.delivery'], _name: 'PROJECT.DELIVERY.DELIVERY', _type: 'PROGRESS', _enableTooltip: true},

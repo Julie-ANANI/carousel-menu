@@ -151,7 +151,8 @@ export class SharedAmbassadorListComponent {
     this._tableInfos._content = this._pros;
     this._tableInfos._total = this._total;
     // TODO this is ugly AF, shouldn't the table component to be able to update just the data without reloading everything? // Will be fixed in future.
-    this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));
+    //this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));
+
   }
 
 

@@ -121,15 +121,16 @@
                       (click)="table._isLocal ? edit(filteredContent[row]) : edit(table._content[row])"
                       type="button"
                       class="btn btn-xs ghost-edit">
-                      {{ table._isEditable ? ('COMMON.BUTTON.EDIT' | translate) : ('COMMON.BUTTON.SHOW' | translate) }}
+                      {{ getButtonLabel() | translate }}
                     </button>
                   </div>
                   <!-- /button -->
 
                   <div
-                    [ngSwitch]="getType(column)"
                     [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE',
-                    'enable-tooltip': column._enableTooltip || getType(column) === 'COUNTRY' }"
+                    'enable-tooltip': column._enableTooltip || getType(column) === 'COUNTRY',
+                     'td-type-tag': getType(column) === 'TAG-LIST' }"
+                    [ngSwitch]="getType(column)"
                     class="tbody-td-content text-ellipsis">
 
                     <!-- if type is Date -->
@@ -186,10 +187,51 @@
                       <span
                         *ngFor="let attr of getAttrs(column)"
                         [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
+                        class="tbody-td-multiLabel"
                         [ngClass]="{ 'td-type-left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
                         'td-type-right-label' : getAttrIndex(column, attr) === getAttrs(column).length - 1 && getAttrs(column).length !== 1,
                         'td-type-middle-label' : getAttrIndex(column, attr) !== 0 && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
                         {{ (getContentValue(row, attr) || " - ").toString() }}
+                      </span>
+                    </ng-container>
+
+                    <!-- if type is multiling -->
+                    <ng-container *ngSwitchCase="'MULTILING'">
+                      <span>{{ getContentValue(row, getAttrs(column)[0]) | multiling:userLang }}</span>
+                    </ng-container>
+
+                    <!-- if type is tags -->
+                    <ng-container *ngSwitchCase="'TAG-LIST'">
+                      <span class="tbody-td-tag d-flex">
+                        <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag label-rounded">
+                          {{ tag.label | multiling:userLang }}
+                        </span>
+                        <span *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">...</span>
+                      </span>
+                    </ng-container>
+
+                    <!-- if type is multi-choices -->
+                    <ng-container *ngSwitchCase="'MULTI-CHOICES'">
+                      <span class="d-flex">
+
+                        <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString())) !== ''">
+                          <img
+                            [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]).toString())))"
+                            [ngStyle]="{ 'height': column._imgHeight }"
+                            [src]="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString() || ''))"
+                            alt=" "
+                            class="img-responsive"
+                            height="27">
+                        </ng-container>
+
+                        <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]))) === ''">
+                          <span
+                            [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
+                            class="tbody-td-multi-choice-label text-xs">
+                            {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])|| " - "))) | translate }}
+                          </span>
+                        </ng-container>
+
                       </span>
                     </ng-container>
 

@@ -343,6 +343,17 @@ export class TableComponent implements OnInit {
   }
 
   /***
+   * This function returns the label of the button.
+   */
+  public getButtonLabel(): string {
+    if (this._table._editButtonLabel) {
+      return this._table._editButtonLabel;
+    } else {
+      return this._table._isEditable ? 'COMMON.BUTTON.EDIT' : 'COMMON.BUTTON.SHOW';
+    }
+  }
+
+  /***
    * This function is call when the user click on the edit button
    * Emit the Output editRow
    * @param {Row} row
@@ -488,9 +499,8 @@ export class TableComponent implements OnInit {
    * @param {Column} column
    * @returns {Choice[]}
    */
-  getChoices(column: Column): Choice[] {
-    //return column._choices || [];
-    return [];
+  public getChoices(column: Column): Choice[] {
+    return column._choices || [];
   }
 
   /***
@@ -500,9 +510,8 @@ export class TableComponent implements OnInit {
    * @param {string} name
    * @returns {Choice}
    */
-  getChoice(column: Column, name: string): Choice {
-    //return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
-    return ;
+  public getChoice(column: Column, name: string): Choice {
+    return this.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
   }
 
   /***
@@ -510,12 +519,12 @@ export class TableComponent implements OnInit {
    * @param {Choice} choice
    * @returns {any}
    */
-  getChoiceAlias(choice: Choice) {
-    // if (choice) {
-    //   return choice._alias || choice._name;
-    // } else {
-    //   return ' - ';
-    // }
+  public getChoiceAlias(choice: Choice) {
+    if (choice) {
+      return choice._alias || choice._name;
+    } else {
+      return ' - ';
+    }
   }
 
   /***
@@ -523,9 +532,8 @@ export class TableComponent implements OnInit {
    * @param {Choice} choice
    * @returns {string}
    */
-  getChoiceClass(choice: Choice): string {
-    //return choice._class || '';
-    return '';
+  public getChoiceClass(choice: Choice): string {
+    return choice._class || '';
   }
 
   /***
@@ -533,9 +541,8 @@ export class TableComponent implements OnInit {
    * @param {Choice} choice
    * @returns {string}
    */
-  getUrl(choice: Choice): string {
-    //return choice._url || '';
-    return  '';
+  public getUrl(choice: Choice): string {
+    return choice._url || '';
   }
 
   /***
@@ -790,7 +797,7 @@ export class TableComponent implements OnInit {
     this._content = value;
   }*/
 
-  get lang(): string {
+  get userLang(): string {
     return this._translateService.currentLang;
   }
 
