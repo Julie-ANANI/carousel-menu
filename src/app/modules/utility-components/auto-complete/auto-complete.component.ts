@@ -128,7 +128,7 @@ export class NguiAutoCompleteComponent implements OnInit {
     @Input('no-match-found-text') public noMatchFoundText: string;
     @Input('accept-user-input') public acceptUserInput: boolean = true;
     @Input('loading-text') public loadingText: string = 'Loading';
-    @Input('loading-template') public loadingTemplate = null;
+    @Input('loading-template') public loadingTemplate: string = null;
     @Input('max-num-list') public maxNumList: number;
     @Input('show-input-tag') public showInputTag: boolean = true;
     @Input('show-dropdown-on-init') public showDropdownOnInit: boolean = false;
@@ -137,7 +137,7 @@ export class NguiAutoCompleteComponent implements OnInit {
     @Input('auto-select-first-item') public autoSelectFirstItem: boolean = false;
     @Input('select-on-blur') public selectOnBlur: boolean = false;
     @Input('re-focus-after-select') public reFocusAfterSelect: boolean = true;
-    @Input('header-item-template') public headerItemTemplate = null;
+    @Input('header-item-template') public headerItemTemplate: string = null;
     @Input('ignore-accents') public ignoreAccents: boolean = true;
 
     @Output() public valueSelected = new EventEmitter();
@@ -156,7 +156,7 @@ export class NguiAutoCompleteComponent implements OnInit {
     public keyword: string;
 
     private delay = (function() {
-        let timer;
+        let timer: any;
         return function(callback: any, ms: number) {
             clearTimeout(timer);
             timer = setTimeout(callback, ms);
@@ -240,7 +240,7 @@ export class NguiAutoCompleteComponent implements OnInit {
             if (typeof this.source === 'function') {
                 // custom function that returns observable
                 this.source(keyword).subscribe(
-                    (resp) => {
+                    (resp: any) => {
 
                         if (this.pathToData) {
                             const paths = this.pathToData.split('.');
@@ -252,7 +252,7 @@ export class NguiAutoCompleteComponent implements OnInit {
                             this.filteredList = this.filteredList.slice(0, this.maxNumList);
                         }
                     },
-                    (error) => null,
+                    (error: any): any => null,
                     () => this.isLoading = false // complete
                 );
             } else {
@@ -336,7 +336,7 @@ export class NguiAutoCompleteComponent implements OnInit {
         }
     }
 
-    public scrollToView(index) {
+    public scrollToView(index: number) {
         const container = this.autoCompleteContainer.nativeElement;
         const ul = container.querySelector('ul');
         const li = ul.querySelector('li');  // just sample the first li to get height
@@ -349,7 +349,7 @@ export class NguiAutoCompleteComponent implements OnInit {
         }
     }
 
-    public trackByIndex(index, item) {
+    public trackByIndex(index: any, item: any): any {
         return index;
     }
 
