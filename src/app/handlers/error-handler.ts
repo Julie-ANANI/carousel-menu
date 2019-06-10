@@ -25,7 +25,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       }
     }
 
-    // do nothing and send the error to the errorService
+    // else do nothing and send the error to the errorService
     const errorService = this.injector.get(ErrorService);
     errorService.handleError(error);
 

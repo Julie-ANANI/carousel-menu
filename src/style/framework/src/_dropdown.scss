@@ -15,17 +15,33 @@
     margin: 0;
     padding: 0.5rem 0;
     box-shadow: $box-shadow-dropdown;
-    border-radius: 2px;
+    border-radius: 5px;
     list-style: none;
-    overflow-y: auto;
     opacity: 0;
     display: none;
 
     .drop-item {
       @include control-transition();
       margin: 0;
+      color: $text-background-color;
       font-weight: normal;
       padding: 0.5rem 1.1rem;
+
+      .drop-btn {
+        display: flex;
+        height: auto;
+        text-align: left;
+        justify-content: flex-start;
+        border: none !important;
+        align-items: flex-start;
+        background-color: transparent;
+        font-weight: inherit;
+        color: inherit;
+        width: 100%;
+        padding: 0;
+        font-size: inherit;
+        min-width: unset;
+      }
 
       a {
         display: block;
@@ -33,8 +49,13 @@
 
       &:hover {
         cursor: pointer;
-        color: $text-background-color;
-        background:  $bg-dropdown-color;
+        background-color: $bg-dropdown-color;
+      }
+
+      &.disabled, .drop-btn:disabled, .drop-btn[disabled], .drop-btn.disabled {
+        cursor: not-allowed;
+        color: $disabled-text-color !important;
+        background-color: transparent !important;
       }
 
     }
