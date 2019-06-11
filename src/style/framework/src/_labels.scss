@@ -46,6 +46,10 @@
     @include label-variant($light-color, $meta-color);
   }
 
+  &.label-autoTags {
+    @include label-variant(#2295C6, #D7EBF3);
+  }
+
   &.label-tag {
     @include label-variant($light-color, $background-color);
 

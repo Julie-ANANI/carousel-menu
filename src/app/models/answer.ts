@@ -16,7 +16,7 @@ export interface Answer {
   country: {flag: string, domain?: string, name?: string};
   job: string;
   company: Clearbit;
-  mailType: string;
+  mailType?: string;
   readonly ip?: any;
   readonly answeredByEmail: boolean;
   readonly blacklistedCompany?: boolean;
@@ -25,4 +25,6 @@ export interface Answer {
   readonly created?: Date;
   readonly updated?: Date;
   isLoading?: boolean;
+  scoreStatus?: number;
+  autoTags?: Array<string>;
 }
