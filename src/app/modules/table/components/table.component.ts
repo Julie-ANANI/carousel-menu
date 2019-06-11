@@ -175,6 +175,7 @@ export class TableComponent implements OnInit {
     if (data) {
       this._table = data;
       this._initializeColumns();
+      this._initializeContents();
       console.log(this._table);
     }
     // if (value) {
@@ -213,12 +214,21 @@ export class TableComponent implements OnInit {
   }
 
   /***
-   * This function initialise the values of a column
+   * This function initialise the values of a column.
    */
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
       this._table._columns[index]._isSelected = false;
       this._table._columns[index]._isHover = false;
+    });
+  }
+
+  /***
+   * This function initialise the values of a content.
+   */
+  private _initializeContents() {
+    this._table._content.forEach((value, index) => {
+      this._table._content[index]._isSelected = false;
     });
   }
 
@@ -229,15 +239,12 @@ export class TableComponent implements OnInit {
    */
   private _getSelectedRowsNumber(): number {
     if (this._massSelection) {
+      console.log(this._table._content.length);
       return this._table._content.length;
+    } else {
+      console.log(this.getSelectedRows().length);
+      return this.getSelectedRows().length;
     }
-    // if (this._massSelection) {
-    //
-    //   // return this._total;
-    // } else {
-    //   return this.getSelectedRows().length;
-    // }
-    return ;
   }
 
 
@@ -247,7 +254,14 @@ export class TableComponent implements OnInit {
    */
   public selectAll(event: Event): void  {
     event.preventDefault();
+
+    this._table._content.forEach((value) => {
+      value._isSelected = event.target['checked'];
+    });
+
     this._massSelection = event.target['checked'];
+
+    console.log(this._table);
 
     // if (this._isLocal) {
     //   this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
@@ -366,7 +380,19 @@ export class TableComponent implements OnInit {
    * This function is call when the user click on the delete button
    * Emit the Output removeRows
    */
-  removeSelectedRows() {
+  public removeSelectedRows() {
+    if (this._massSelection) {
+      const rows: Array<any> = [];
+
+      this._table._content.forEach((content) => {
+        rows.push(content);
+      });
+
+      this.removeRows.emit(rows);
+
+    } else {
+
+    }
    // if (this._massSelection) {
    //   const values: Array<object> = [];
    //   this._content.forEach((content) => {
@@ -383,7 +409,18 @@ export class TableComponent implements OnInit {
    * Emit the Output performAction
    * @param {string} action
    */
-  onActionClick(action: string) {
+  public onActionClick(action: string) {
+    if (this._massSelection) {
+      const rows: Array<any> = [];
+
+      this._table._content.forEach((content) => {
+        rows.push(content);
+      });
+
+      this.performAction.emit({_action: action, _rows: rows});
+    } else {
+
+    }
     // if (this._massSelection) {
     //   this.performAction.emit({_action: action, _rows: 'all'});
     // } else {
@@ -566,13 +603,8 @@ export class TableComponent implements OnInit {
    * This function returns all the selected rows
    * @returns {Row[]}
    */
-  getSelectedRows(): Row[] {
-    // if (this._massSelection && this._total > this._content.length) {
-    //   return [];
-    // } else {
-    //   return this._content.filter(value => value._isSelected === true);
-    // }
-    return  [];
+  public getSelectedRows(): Row[] {
+    return this._table._content.filter((content) => content._isSelected === true );
   }
 
 
@@ -592,7 +624,11 @@ export class TableComponent implements OnInit {
    * This function change the selected value of a row to the opposite
    * @param {string} key
    */
-  selectRow(key: string): void {
+  public selectRow(key: string): void {
+    if (this._table._isSelectable) {
+      this._table._content[key]._isSelected = !(this._table._content[key]._isSelected);
+      this._massSelection = false;
+    }
     // if (this._isSelectable) {
     //   this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
     //     : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
@@ -610,16 +646,13 @@ export class TableComponent implements OnInit {
     this._table._columns[index]._isSelected = true;
   }
 
-
-
   /***
    * This function returns if a rows is selected or not
    * @param content
    * @returns {boolean}
    */
-  isSelected(content: any): boolean {
-    //return !!content && !!content._isSelected
-    return ;
+  public isSelected(content: any): boolean {
+    return !!content && !!content._isSelected;
   }
 
   /***

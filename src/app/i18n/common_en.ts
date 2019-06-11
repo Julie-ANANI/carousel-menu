@@ -189,11 +189,6 @@ export const COMMON = {
     'SHOW': 'Show',
   },
 
-  'TABLE' : {
-    'SELECTED_ROWS': 'row(s) selected',
-    'NO-RESULTS': 'Sorry, I can\'t display nothing'
-  },
-
   'PROJECT': {
     'OWNER': 'Owner',
     'TITLE': 'Title',

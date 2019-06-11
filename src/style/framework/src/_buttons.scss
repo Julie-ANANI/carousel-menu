@@ -191,6 +191,18 @@
 
   }
 
+  &.no-hover {
+
+    &.ghost-primary {
+      @include ghost-button-no-hover-variant($primary-color);
+    }
+
+    &.ghost-delete {
+      @include ghost-button-no-hover-variant($alert-color);
+    }
+
+  }
+
   &.ghost-background-hover {
 
     &.ghost-primary {
@@ -241,8 +253,13 @@
 // Make a button extra small just add this class with the btn class
 .btn-xs {
   height: 1.75rem;
-  padding: 0.5rem $unit-4;
+  padding: $unit-2 $unit-3;
   font-size: $font-size-xs;
+
+  i {
+    font-size: $font-icon-xs;
+  }
+
 }
 
 

@@ -208,11 +208,6 @@ export const COMMON = {
     '2': 'Déjà disponible'
   },
 
-  'TABLE' : {
-    'SELECTED_ROWS': 'ligne(s) sélectionnée(s)',
-    'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
-  },
-
   'LINKS': 'Liens',
   'HELP': 'Aide',
   'OR': 'Ou',

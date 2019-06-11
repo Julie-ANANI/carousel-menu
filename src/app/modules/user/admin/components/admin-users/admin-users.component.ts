@@ -63,9 +63,11 @@ export class AdminUsersComponent implements OnInit {
         _content: this._users,
         _total: this._total,
         _isFiltrable: true,
+        _buttons: [{ _icon: 'fas fa-edit', _label: 'Modify' }],
         _isDeletable: true,
         _isSelectable: true,
         _isEditable: true,
+        _isTitle: true,
         _editIndex: 1,
         _columns: [
           {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
@@ -126,8 +128,9 @@ export class AdminUsersComponent implements OnInit {
 
   deleteUsersModal(users: User[]) {
     this._usersToRemove = [];
-    this._modalDelete = true;
-    users.forEach(value => this._usersToRemove.push(new User(value)));
+    console.log(users);
+    //this._modalDelete = true;
+    //users.forEach(value => this._usersToRemove.push(new User(value)));
   }
 
 
@@ -151,9 +154,10 @@ export class AdminUsersComponent implements OnInit {
 
 
   performActions(action: any) {
-    this._actions.find(value => value === action._action)
+    console.log(action);
+    /*this._actions.find(value => value === action._action)
       ? console.log('Execution de l\'action ' + action._action + ' sur les lignes ' + JSON.stringify(action._rows, null, 2))
-      : console.log('l\'Action' + action + 'n\'existe pas !');
+      : console.log('l\'Action' + action + 'n\'existe pas !');*/
   }
 
   public synchronizeSRTUsers() {

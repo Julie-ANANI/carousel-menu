@@ -1,12 +1,13 @@
 <section id="table-component">
   <div class="table-wrapper">
 
+
     <!-- section title and filter -->
-    <ng-container *ngIf="!table._isNoTitle || table._isFiltrable || !table._isHeadable">
+    <ng-container *ngIf="table._isTitle || table._isFiltrable">
       <div class="table-header-wrapper flex-start">
 
         <!-- number of results and title -->
-        <ng-container *ngIf="!table._isNoTitle">
+        <ng-container *ngIf="table._isTitle">
           <div class="text text-notify title">
             <span>{{ table._total === -1 ? 0 : table._total }} {{ table._title | translate }}</span>
           </div>
@@ -25,6 +26,7 @@
     </ng-container>
     <!-- section title and filter -->
 
+
     <!-- when fetching or initializing -->
     <ng-container *ngIf="table._total === -1">
       <div class="section-light-pad">
@@ -38,6 +40,7 @@
     </ng-container>
     <!-- /when fetching or initializing -->
 
+
     <!-- when no result -->
     <ng-container *ngIf="table._total === 0">
       <div class="section-light-pad">
@@ -49,6 +52,7 @@
       </div>
     </ng-container>
     <!-- /when no result -->
+
 
     <!-- when result -->
     <ng-container *ngIf="table._total > 0">
@@ -68,28 +72,66 @@
                   </label>
                 </th>
               </ng-container>
+              <!-- /if we have selectable -->
 
               <!-- rest columns -->
-              <th
-                *ngFor="let column of table._columns"
-                (click)="selectColumn(getName(column))"
-                [ngClass]="{ 'active': column._isSelected }"
-                [ngStyle]="{ 'max-width': column._maxWidth, 'min-width': column._minWidth }"
-                class="text-ellipsis">
+              <ng-container *ngIf="!massSelection && selectedRows === 0">
+                <th
+                  *ngFor="let column of table._columns; let i = index;"
+                  (click)="selectColumn(getName(column))"
+                  [ngClass]="{ 'active': column._isSelected }"
+                  [ngStyle]="{ 'max-width': column._maxWidth, 'min-width': column._minWidth }"
+                  class="text-ellipsis">
 
-                <ng-container *ngIf="!isSortable(column)">
-                  <span class="th-name">{{ getName(column) | translate }}</span>
-                </ng-container>
+                  <ng-container *ngIf="!isSortable(column)">
+                    <span class="th-name">{{ getName(column) | translate }}</span>
+                  </ng-container>
 
-                <ng-container *ngIf="isSortable(column)">
-                  <app-shared-sort
-                    [config]="config"
-                    (configChangeSort)="changeConfig($event)"
-                    [property]="getName(column) | translate | lowercase">
-                  </app-shared-sort>
-                </ng-container>
+                  <ng-container *ngIf="isSortable(column)">
+                    <app-shared-sort
+                      [config]="config"
+                      (configChangeSort)="changeConfig($event)"
+                      [property]="getName(column) | translate | lowercase">
+                    </app-shared-sort>
+                  </ng-container>
 
-              </th>
+                </th>
+              </ng-container>
+              <!-- /rest columns -->
+
+              <!-- actions -->
+              <ng-container *ngIf="selectedRows > 0">
+                <th [colSpan]="table._columns.length" class="text-ellipsis th-action">
+
+                  <div class="d-inline-flex th-selected-heading">
+                    <span>{{ selectedRows }} {{ 'TABLE.SELECTED_ROWS' | translate }}</span>
+                  </div>
+
+                  <ng-container *ngIf="table?._buttons?.length > 0">
+                    <div *ngFor="let button of table._buttons" class="d-inline-flex th-action-button">
+                      <button
+                        (click)="onActionClick(button._label)"
+                        type="button"
+                        class="btn btn-xs no-hover ghost-primary">
+                        <i *ngIf="button._icon" [ngClass]="button._icon"></i>
+                        {{ button._label | translate }}
+                      </button>
+                    </div>
+                  </ng-container>
+
+                  <div *ngIf="table._isDeletable" class="d-inline-flex th-action-delete">
+                    <button
+                      (click)="removeSelectedRows()"
+                      class="btn btn-xs no-hover ghost-delete"
+                      type="button">
+                      <i class="fas fa-trash-alt"></i>
+                      {{ 'COMMON.BUTTON.DELETE' | translate }}
+                    </button>
+                  </div>
+
+                </th>
+              </ng-container>
+              <!-- /actions -->
 
             </tr>
           </thead>
@@ -102,8 +144,8 @@
               <!-- if we have selectable -->
               <ng-container *ngIf="table._isSelectable">
                 <td class="th-checkbox">
-                  <label class="flex-centered">
-                    <input type="checkbox">
+                  <label class="flex-centered" [ngClass]="{ 'active': table._content[row]?._isSelected }">
+                    <input type="checkbox" (click)="selectRow(row);">
                     <i class="fas fa-check"></i>
                   </label>
                 </td>
@@ -256,6 +298,7 @@
       </div>
     </ng-container>
     <!-- /when result -->
+
 
   </div>
 </section>

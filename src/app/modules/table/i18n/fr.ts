@@ -48,6 +48,8 @@ export const TABLE = {
     'FETCHING': 'Récupérer les résultats....',
     'NO_RESULT': 'Aucun résultat trouvé.',
     'NO_RESULT_SEARCHING': 'Aucun résultat trouvé. Essayez d\'ajuster votre recherche pour trouver ce que vous cherchez.'
-  }
+  },
+
+  'SELECTED_ROWS': 'sélectionné(s)',
 
 };

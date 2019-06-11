@@ -7,6 +7,7 @@ export interface Table {
   readonly _isSelectable?: boolean;
   readonly _isEditable?: boolean;
   readonly _isNoTitle?: boolean;
+  readonly _isTitle?: boolean;
   readonly _isShowable?: boolean;
   readonly _isDeletable?: boolean;
   readonly _isFiltrable?: boolean;
@@ -17,6 +18,7 @@ export interface Table {
   readonly _actions?: string[];
   readonly _editIndex?: number;
   readonly _editButtonLabel?: string;
+  readonly _buttons?: Array<{ _icon?: string, _label?: string }>;
   _content: any[];
   _total: number;
 }
