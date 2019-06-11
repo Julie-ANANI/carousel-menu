@@ -41,6 +41,8 @@
             <span class="text">{{ 'TAGS.TYPE.' + tag.type | translate }}</span>
           </p>
 
+          <button (click)="needToSetOriginalTag = true" class="btn btn-primary">EDIT<i class="fas fa-edit"></i></button>
+
         </div>
 
         <!-- when to set tag -->
@@ -58,7 +60,7 @@
               [value-formatter]="autocompleValueFormatter"
               [attr.placeholder]="'COMMON.TAG_LABEL.TAG_PLACEHOLDER' | translate"
               class="form-input">
-            <button (click)="connectToTag($event, tag)" class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
+            <button (click)="connectToTag($event, tag)" class="btn btn-primary">SAVE<i class="fas fa-plus"></i></button>
           </div>
         </div>
 
