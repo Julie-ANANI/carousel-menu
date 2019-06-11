@@ -239,10 +239,8 @@ export class TableComponent implements OnInit {
    */
   private _getSelectedRowsNumber(): number {
     if (this._massSelection) {
-      console.log(this._table._content.length);
       return this._table._content.length;
     } else {
-      console.log(this.getSelectedRows().length);
       return this.getSelectedRows().length;
     }
   }
@@ -254,21 +252,11 @@ export class TableComponent implements OnInit {
    */
   public selectAll(event: Event): void  {
     event.preventDefault();
-
     this._table._content.forEach((value) => {
       value._isSelected = event.target['checked'];
     });
-
     this._massSelection = event.target['checked'];
-
     console.log(this._table);
-
-    // if (this._isLocal) {
-    //   this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
-    // } else {
-    //   this._content.forEach(value => { value._isSelected = e.target.checked; });
-    //   this._massSelection = e.target.checked;
-    // }
   }
 
 
@@ -381,28 +369,18 @@ export class TableComponent implements OnInit {
    * Emit the Output removeRows
    */
   public removeSelectedRows() {
+
     if (this._massSelection) {
       const rows: Array<any> = [];
-
       this._table._content.forEach((content) => {
         rows.push(content);
       });
-
       this.removeRows.emit(rows);
-
     } else {
-
+      this.removeRows.emit(this._getSelectedRowsContent());
     }
-   // if (this._massSelection) {
-   //   const values: Array<object> = [];
-   //   this._content.forEach((content) => {
-   //     values.push(content._content);
-   //   });
-   //   this.removeRows.emit(values);
-   // } else {
-   //   this.removeRows.emit(this.getSelectedRowsContent());
-   // }
-  }
+
+}
 
   /***
    * This function is call when the user click on one of the actions button
@@ -410,22 +388,17 @@ export class TableComponent implements OnInit {
    * @param {string} action
    */
   public onActionClick(action: string) {
+
     if (this._massSelection) {
       const rows: Array<any> = [];
-
       this._table._content.forEach((content) => {
         rows.push(content);
       });
-
       this.performAction.emit({_action: action, _rows: rows});
     } else {
-
+      this.performAction.emit({_action: action, _rows: this._getSelectedRowsContent()})
     }
-    // if (this._massSelection) {
-    //   this.performAction.emit({_action: action, _rows: 'all'});
-    // } else {
-    //   this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
-    // }
+
   }
 
   /**
@@ -444,11 +417,7 @@ export class TableComponent implements OnInit {
    * @returns {string[]}
    */
   public getRowsKeys(): string[] {
-    if (this._table._isLocal) {
-      return Object.keys(this._filteredContent);
-    } else {
-      return Object.keys(this._table._content);
-    }
+    return Object.keys(this._table._content);
   }
 
   /***
@@ -613,11 +582,10 @@ export class TableComponent implements OnInit {
    * This function returns the content of the selected rows
    * @returns {any[]}
    */
-  getSelectedRowsContent(): any[] {
-    // const content: any[] = [];
-    // this.getSelectedRows().forEach(value => content.push(value._content));
-    // return content;
-    return ;
+  private _getSelectedRowsContent(): any[] {
+    const content: any[] = [];
+    this.getSelectedRows().forEach(value => content.push(value));
+    return content;
   }
 
   /***
@@ -629,10 +597,6 @@ export class TableComponent implements OnInit {
       this._table._content[key]._isSelected = !(this._table._content[key]._isSelected);
       this._massSelection = false;
     }
-    // if (this._isSelectable) {
-    //   this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
-    //     : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
-    // }
   }
 
   /***
