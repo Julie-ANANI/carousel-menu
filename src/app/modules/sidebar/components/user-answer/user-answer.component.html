@@ -181,6 +181,15 @@
           </div>
         </ng-container>
 
+        <!-- section autoTags -->
+        <ng-container *ngIf="autoTags?.length > 0">
+          <div class="tags-wrapper">
+            <div *ngFor="let tag of autoTags" class="label label-autoTags label-rounded">
+              {{ tag }}
+            </div>
+          </div>
+        </ng-container>
+
         <!-- received date and time, and time spent -->
         <ng-container *ngIf="modalAnswer.created || modalAnswer.time_elapsed">
           <div class="text text-notify text-bold receive-wrapper">
