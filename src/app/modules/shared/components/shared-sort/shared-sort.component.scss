@@ -36,12 +36,20 @@
 
     .icon-wrapper {
 
-      .fa-angle-down {
+      .fa-angle-up {
         color: $primary-color !important;
       }
 
       .fa-angle-down {
         color: $meta-color;
+      }
+
+    }
+
+    &:hover {
+
+      .fa-angle-down {
+        color: $background-color !important;
       }
 
     }
@@ -52,12 +60,20 @@
 
     .icon-wrapper {
 
-      .fa-angle-up {
+      .fa-angle-down {
         color: $primary-color !important;
       }
 
-      .fa-angle-down {
+      .fa-angle-up {
         color: $meta-color;
+      }
+
+    }
+
+    &:hover {
+
+      .fa-angle-up {
+        color: $background-color !important;
       }
 
     }
