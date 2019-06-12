@@ -291,7 +291,7 @@ export class SidebarComponent implements OnInit {
     const sections = this._innovation.executiveReport.sections;
 
     this._innovation.executiveReport.totalSections = 0;
-    this._innovation.executiveReport.sections = [{}];
+    this._innovation.executiveReport.sections = [];
 
     this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'The executive report has been reset successfully.');

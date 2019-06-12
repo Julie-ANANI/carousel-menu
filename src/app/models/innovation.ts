@@ -6,6 +6,12 @@ import { Media } from './media';
 import { Tag } from './tag';
 import { User } from './user.model';
 
+export interface InnovationMetadataValues {
+  preparation?: number;
+  campaign?: number;
+  delivery?: number;
+}
+
 export interface Innovation {
   __v?: number;
   readonly _id?: string;
@@ -31,7 +37,7 @@ export interface Innovation {
   comments?: string;
 
   marketReport?: {
-    [prop: string]: QuestionReport
+    [questionIdentifier: string]: QuestionReport
   };
 
   collaborators?: Array<User>;
@@ -58,18 +64,16 @@ export interface Innovation {
   ownerConsent?: {
     value?: boolean,
     date?: any
-  },
+  };
 
   executiveReport?: {
     totalSections?: number,
     goal?: string,
     professionalAbstract?: string,
-    sections?: [{
-      quesId?: string
-    }],
+    sections?: Array<{quesId: string}>,
     abstracts?: [{
-      quesId?: string,
-      value?: string
+      quesId: string,
+      value: string
     }]
   };
 
@@ -78,9 +82,11 @@ export interface Innovation {
   completion?: number;
 
   readonly similar?: Array<{
-    matched_inno_id?: string,
-    score?: number
+    matched_inno_id: string,
+    score: number
   }>;
+
+  percentages?: InnovationMetadataValues;
 
   _metadata?: any;
 }

@@ -104,11 +104,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
         });
   }
 
-  public configureSearch() {
-    this._config.search['email'] = this.searchConfiguration;
-    this.loadEmails(null);
-  }
-
   public resetSearch() {
     this.searchConfiguration = '';
     this.loadEmails(null);

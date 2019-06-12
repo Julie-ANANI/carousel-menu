@@ -75,16 +75,15 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       this._config = config;
     }
     this._innovationService.getAll(this._config)
-      .pipe(first())
       .subscribe((projects: any) => {
         this._projects = projects.result.map((project: Innovation) => {
           if (project._metadata) {
             this._frontendService.calculateInnovationMetadataPercentages(project, 'preparation');
             this._frontendService.calculateInnovationMetadataPercentages(project, 'campaign');
             this._frontendService.calculateInnovationMetadataPercentages(project, 'delivery');
-            project['percentages'] = JSON.parse(JSON.stringify(this._frontendService.innovationMetadataCalculatedValues));
+            project.percentages = JSON.parse(JSON.stringify(this._frontendService.innovationMetadataCalculatedValues));
           } else {
-            project['percentages'] = {preparation: 0, campaign: 0, delivery: 0};
+            project.percentages = {preparation: 0, campaign: 0, delivery: 0};
           }
           return project;
         });

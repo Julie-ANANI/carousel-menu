@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Innovation } from '../../models/innovation';
+import { Innovation, InnovationMetadataValues } from '../../models/innovation';
 
 export interface Values {
   settingPercentage?: number;
@@ -8,12 +8,6 @@ export interface Values {
     percentage: number
   }>;
   totalPercentage?: number;
-}
-
-export interface InnovationMetadataValues {
-  preparation?: number;
-  campaign?: number;
-  delivery?: number;
 }
 
 @Injectable()

@@ -211,8 +211,8 @@ export class AdminCommunityMemberComponent implements OnInit {
    */
   private _getAllTags() {
     const activeLang = this.userLang;
-    let tagsProfessional: Array<Tag> = [];
-    let tagsRest: Array<Tag> = [];
+    const tagsProfessional: Array<Tag> = [];
+    const tagsRest: Array<Tag> = [];
 
     if (this._allSectorTags && this._allSectorTags.length > 0) {
       this._allSectorTags.forEach((tag) => {
@@ -224,11 +224,11 @@ export class AdminCommunityMemberComponent implements OnInit {
         }
       });
 
-      tagsProfessional.sort((a,b) => {
+      tagsProfessional.sort((a, b) => {
         return a.label[activeLang].localeCompare(b.label[activeLang]);
       });
 
-      tagsRest.sort((a,b) => {
+      tagsRest.sort((a, b) => {
         return a.label[activeLang].localeCompare(b.label[activeLang]);
       });
 
@@ -323,8 +323,8 @@ export class AdminCommunityMemberComponent implements OnInit {
    * @param event
    */
   public onChangeMotivation(event: Event) {
-    if (event && event.target && event.target['value']) {
-      this._professional.ambassador.motivations = event.target['value'];
+    if (!!event && !!event.target && !!(event.target as HTMLInputElement).value) {
+      this._professional.ambassador.motivations = Number((event.target as HTMLInputElement).value);
       this.notifyChanges();
     }
   }
@@ -335,8 +335,8 @@ export class AdminCommunityMemberComponent implements OnInit {
    * @param event
    */
   public onChangeQualification(event: Event) {
-    if (event && event.target && event.target['value']) {
-      this._professional.ambassador.qualification = event.target['value'];
+    if (!!event && !!event.target && !!(event.target as HTMLInputElement).value) {
+      this._professional.ambassador.qualification = Number((event.target as HTMLInputElement).value);
       this.notifyChanges();
     }
   }
@@ -347,8 +347,8 @@ export class AdminCommunityMemberComponent implements OnInit {
    * @param event
    */
   public onChangeActivity(event: Event) {
-    if (event && event.target && event.target['value']) {
-      this._professional.ambassador.activity = event.target['value'];
+    if (!!event && !!event.target && !!(event.target as HTMLInputElement).value) {
+      this._professional.ambassador.activity = Number((event.target as HTMLInputElement).value);
       this.notifyChanges();
     }
   }
