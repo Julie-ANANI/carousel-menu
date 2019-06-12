@@ -23,7 +23,7 @@ export class SharedFilterMultiComponent {
     this._tableView = value;
   }
 
-  @Output() onConfigUpdation = new EventEmitter<Config>();
+  @Output() filterConfigChange: EventEmitter<Config> = new EventEmitter<Config>();
 
   private _currentTextProp: Column = {_attrs: [''], _name: '', _type: 'TEXT'};
 
@@ -33,7 +33,7 @@ export class SharedFilterMultiComponent {
 
   private _tableView: boolean;
 
-  private _searchConfig: Config = {};
+  private _searchConfig: Config;
 
   constructor() {}
 
@@ -69,7 +69,7 @@ export class SharedFilterMultiComponent {
 
       if (value === '') {
         this._searchConfig.search = '{}';
-        this.onConfigUpdation.emit(this._searchConfig);
+        this.filterConfigChange.emit(this._searchConfig);
       } else {
         //Detect an "special" query...
         value = value.split(',');
@@ -80,9 +80,10 @@ export class SharedFilterMultiComponent {
         });
 
         this._searchConfig.search = JSON.stringify(_search);
-        this.onConfigUpdation.emit(this._searchConfig);
+        this.filterConfigChange.emit(this._searchConfig);
 
       }
+
   }
 
   public onOtherFilter(prop: Column, event: Event) {
@@ -92,8 +93,8 @@ export class SharedFilterMultiComponent {
 
     if (this._searchConfig.filter) {
       this._searchConfig.filter.forEach((filter, index) => {
-        for (let key in JSON.parse(filter) ) {
-          if (key === attr) {
+        for (let filterKey in JSON.parse(filter) ) {
+          if (filterKey === attr) {
             this._searchConfig.filter[index] = JSON.stringify(currentFilter);
           } else {
             this._searchConfig.filter.push(JSON.stringify(currentFilter));
@@ -104,7 +105,7 @@ export class SharedFilterMultiComponent {
       this._searchConfig.filter = [JSON.stringify(currentFilter)]
     }
 
-    this.onConfigUpdation.emit(this._searchConfig);
+    this.filterConfigChange.emit(this._searchConfig);
 
   }
 

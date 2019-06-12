@@ -9,7 +9,7 @@
       <label>
         <select class="form-select" (change)="onChangeTextProp($event)">
           <option *ngFor="let propName of textProps" [value]="getAttrs(propName)" [selected]="textIsSelected(propName)">
-            {{ getName(propName) | translate | FormatText }}
+            {{ getName(propName) | translate }}
           </option>
         </select>
       </label>
@@ -53,10 +53,7 @@
 
         <ng-container *ngSwitchCase="'CHECK'">
           <label>
-            <select
-              class="form-select"
-              (change)="onOtherFilter(prop)"
-              [ngStyle]="{ 'padding-right': '2.5rem' }">
+            <select class="form-select" (change)="onOtherFilter(prop, $event)" [ngStyle]="{ 'padding-right': '2.5rem' }">
               <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
               <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
               <option [ngValue]="false">{{ 'COMMON.NO' | translate }}</option>
@@ -69,7 +66,7 @@
             <select class="form-select" (change)="onOtherFilter(prop, $event)">
               <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let choice of getChoices(prop)" [ngValue]="getChoiceName(choice)">
-                {{ getChoiceAlias(choice) | translate | FormatText }}
+                {{ getChoiceAlias(choice) | translate }}
               </option>
             </select>
           </label>
@@ -82,40 +79,3 @@
   <!-- /other options -->
 
 </section>
-
-
-
-<!--
-<ng-container [ngSwitch]="getType(prop)">
-
-  <ng-container *ngSwitchCase="'CHECK'">
-    <label>
-      <select
-        class="form-select"
-        (change)="filterOther(prop)"
-        [(ngModel)]="config[getAttrs(prop)]"
-        [ngStyle]="{ 'padding-right': '2.5rem' }">
-        <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
-        <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
-        <option [ngValue]="false">{{ 'COMMON.NO' | translate }}</option>
-      </select>
-    </label>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="'MULTI-CHOICES'">
-    <label>
-      <select
-        class="form-select"
-        (change)="filterOther(prop)"
-        [(ngModel)]="config[getAttrs(prop)]">
-        <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
-        <option
-          *ngFor="let choice of getChoices(prop)"
-          [ngValue]="getChoiceName(choice)">
-          {{ getChoiceAlias(choice) | translate | FormatText }}
-        </option>
-      </select>
-    </label>
-  </ng-container>
-
-</ng-container>-->
