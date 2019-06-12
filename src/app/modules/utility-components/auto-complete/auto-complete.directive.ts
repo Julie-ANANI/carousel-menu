@@ -43,8 +43,8 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
     @Input('accept-user-input') public acceptUserInput: boolean = true;
     @Input('max-num-list') public maxNumList: string;
     @Input('select-value-of') public selectValueOf: string;
-    @Input('loading-template') public loadingTemplate = null;
-    @Input('list-formatter') public listFormatter;
+    @Input('loading-template') public loadingTemplate: string = null;
+    @Input('list-formatter') public listFormatter: (arg: any) => string;
     @Input('loading-text') public loadingText: string = 'Loading';
     @Input('blank-option-text') public blankOptionText: string;
     @Input('no-match-found-text') public noMatchFoundText: string;
@@ -56,7 +56,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
     @Input('open-on-focus') public openOnFocus: boolean = true;
     @Input('close-on-focusout') public closeOnFocusOut: boolean = true;
     @Input('re-focus-after-select') public reFocusAfterSelect: boolean = true;
-    @Input('header-item-template') public headerItemTemplate = null;
+    @Input('header-item-template') public headerItemTemplate: string = null;
     @Input('ignore-accents') public ignoreAccents: boolean = true;
 
     @Input() public ngModel: string;
@@ -113,8 +113,8 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
             // Check if we were supplied with a [formControlName] and it is inside a [form]
             // else check if we are supplied with a [FormControl] regardless if it is inside a [form] tag
             if (this.parentForm && this.formControlName) {
-                if (this.parentForm['form']) {
-                    this.formControl = (this.parentForm['form'] as FormGroup).get(this.formControlName);
+                if ((this.parentForm as any).form) {
+                    this.formControl = ((this.parentForm as any).form as FormGroup).get(this.formControlName);
                 } else if (this.parentForm instanceof FormGroupName) {
                     this.formControl = (this.parentForm as FormGroupName).control.controls[this.formControlName];
                 }
@@ -292,7 +292,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
 
     public setToStringFunction(item: any): any {
         if (item && typeof item === 'object') {
-            let displayVal;
+            let displayVal: any;
 
             if (typeof this.valueFormatter === 'string') {
                 const matches = this.valueFormatter.match(/[a-zA-Z0-9_\$]+/g);
@@ -307,7 +307,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
                 displayVal = this.valueFormatter(item);
             } else if (this.displayPropertyName) {
                 displayVal = item[this.displayPropertyName];
-            } else if (typeof this.listFormatter === 'string' && this.listFormatter.match(/^\w+$/)) {
+            } else if (typeof this.listFormatter === 'string' && (this.listFormatter as string).match(/^\w+$/)) {
                 displayVal = item[this.listFormatter];
             } else {
                 displayVal = item.value;

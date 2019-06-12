@@ -37,8 +37,8 @@ export class NguiAutoComplete {
             );
     }
 
-    public getFormattedListItem(data: any) {
-        let formatted;
+    public getFormattedListItem(data: any): string {
+        let formatted: string;
         const formatter = this.listFormatter || '(id) value';
         if (typeof formatter === 'function') {
             formatted = formatter.apply(this, [data]);
@@ -76,11 +76,11 @@ export class NguiAutoComplete {
 
         return this.http.get<any[]>(url)
             .pipe(
-                map((list) => {
+                map((list: any) => {
 
                     if (this.pathToData) {
                         const paths = this.pathToData.split('.');
-                        paths.forEach((prop) => list = list[prop]);
+                        paths.forEach((prop: string) => list = list[prop]);
                     }
 
                     return list;

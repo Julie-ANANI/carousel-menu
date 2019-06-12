@@ -25,15 +25,19 @@
     color: $light-color;
     content: attr(data-tooltip);
     font-size: $font-size-xs;
-    max-width: 320px;
+    max-width: 200px;
+    overflow: auto;
     font-weight: normal;
-    overflow: hidden;
     padding: 0.5rem;
     pointer-events: none;
-    text-overflow: ellipsis;
+    line-height: $line-height;
     white-space: pre;
-    line-height: $line-height-sm;
     z-index: 300;
+  }
+
+  &.tooltip-wrap::before {
+    width: 100%;
+    white-space: normal;
   }
 
   &::after {
@@ -152,6 +156,18 @@
 
     }
 
+
+  }
+
+}
+
+@media (max-width: $size-sm) {
+
+  &.tooltip-hide-sm {
+
+    &::before, &::after {
+      display: none !important;
+    }
 
   }
 

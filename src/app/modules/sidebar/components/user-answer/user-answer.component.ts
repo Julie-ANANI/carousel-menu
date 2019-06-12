@@ -249,4 +249,8 @@ export class UserAnswerComponent {
     return this._modalAnswer.mailType;
   }
 
+  get autoTags(): Array<string> {
+    return this._modalAnswer.autoTags;
+  }
+
 }

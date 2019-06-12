@@ -4,23 +4,30 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "allowSyntheticDefaultImports": false,
+    "module": "esnext",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    // "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "target": "es5",
+    "importHelpers": true,
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
-    ]
-  }
+    ],
+    "skipLibCheck": true,
+    // "strict": true, TODO
+    // "noImplicitAny": true, TODO
+    "noUnusedLocals": true
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

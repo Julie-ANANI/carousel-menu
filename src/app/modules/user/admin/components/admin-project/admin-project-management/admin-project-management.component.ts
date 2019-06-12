@@ -177,7 +177,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param {string} name
    * @param event
    */
-  public setMetadata(level: string, name: string, event: any) {
+  public setMetadata(level: 'preparation' | 'campaign' | 'delivery', name: string, event: any) {
     if (this._project._metadata && this._project._metadata[level][name] !== undefined) {
       this._project._metadata[level][name] = event.currentTarget.checked;
       this._frontendService.calculateInnovationMetadataPercentages(this._project, level);

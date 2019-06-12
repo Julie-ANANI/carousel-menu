@@ -31,7 +31,7 @@ export class FrontendService {
 
   private _calculatedValues: Values = {};
 
-  private _innovationMetadataCalculatedValues = {};
+  private _innovationMetadataCalculatedValues: InnovationMetadataValues = {};
 
   constructor() {}
 
@@ -170,7 +170,7 @@ export class FrontendService {
   /*
     Return the completion percentage of a project section (preparation, campaign or delivery)
    */
-  calculateInnovationMetadataPercentages(project: Innovation, level: string) {
+  calculateInnovationMetadataPercentages(project: Innovation, level: 'preparation' | 'campaign' | 'delivery') {
     if (project._metadata[level] !== undefined) {
       const keys = Object.keys(project._metadata[level]) || [];
       this._innovationMetadataCalculatedValues[level] = (((keys.filter(value => project._metadata[level][value] === true).length) * 100) / keys.length);

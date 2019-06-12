@@ -31,7 +31,7 @@ export class TagsFormComponent {
 
   @Input() set tag(tag: Tag) {
     this._tag = {...tag};
-    this._needToSetOriginalTag = !(tag.originalTagId);
+    this.needToSetOriginalTag = !(tag.originalTagId);
   }
 
   @Input() set project(value: Innovation) {
@@ -56,7 +56,7 @@ export class TagsFormComponent {
 
   private _type = '';
 
-  private _needToSetOriginalTag = false;
+  public needToSetOriginalTag = false;
 
   constructor(private tagsService: TagsService,
               private autocompleteService: AutocompleteService,
@@ -124,7 +124,7 @@ export class TagsFormComponent {
         this._tag = data[index];
       }
       this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
-      this._needToSetOriginalTag = false;
+      this.needToSetOriginalTag = false;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ERROR');
     });
@@ -151,10 +151,6 @@ export class TagsFormComponent {
 
   get innovationId(): string {
     return this._innovationId;
-  }
-
-  get needToSetOriginalTag(): boolean {
-    return this._needToSetOriginalTag;
   }
 
   get lang(): string {

@@ -277,7 +277,7 @@ export class SharedSearchProsComponent implements OnInit {
 
 
   checkKeywords(keywords: string): string {
-    if (this._params.keywords.includes(keywords)) {
+    if (this._params.keywords.indexOf(keywords) !== -1) {
       return 'hidden';
     }
 

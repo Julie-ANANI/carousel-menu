@@ -58,8 +58,8 @@ export class ModalComponent implements OnInit, OnDestroy {
 
 
   toggleState(event: Event) {
-    if (event.target['className'] === 'modal-overlay' || event.target['className'] === 'btn btn-close' || event.target['className'] === 'btn btn-sm btn-cancel'
-      || event.target['className'] === 'btn btn-cancel' ) {
+    const { className } = (event.target as any);
+    if (className === 'modal-overlay' || className === 'btn btn-close' || className === 'btn btn-sm btn-cancel' || className === 'btn btn-cancel' ) {
       this.showModalChange.emit(false);
     }
   }

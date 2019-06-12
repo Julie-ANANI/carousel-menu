@@ -51,6 +51,11 @@
 
   }
 
+  .see-more-wrapper {
+    right: 0;
+    bottom: 0;
+  }
+
   &:hover {
 
     .icon, .see-more-wrapper {
@@ -64,7 +69,6 @@
 .section-card-wrapper, .modal-card-wrapper {
   flex-wrap: wrap;
   margin-right: -$unit-5;
-  margin-bottom: -$unit-5;
 
   .card-3, .modal-card {
     margin-bottom: $unit-5;
@@ -79,11 +83,6 @@
         margin-right: auto;
       }
 
-    }
-
-    .card-header {
-      max-height: 66px;
-      overflow-y: auto;
     }
 
   }

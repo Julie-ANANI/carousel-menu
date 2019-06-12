@@ -38,8 +38,8 @@ export class FilterService {
 
     if (tags.length > 0) {
       tags.forEach((tag: Tag) => {
-        const include = FilterService.highlight.includes(tag.label.en.toLowerCase());
-        if (include) {
+        const index = FilterService.highlight.indexOf(tag.label.en.toLowerCase());
+        if (index !== -1) {
           highlightTags.push(tag);
         }
       });
@@ -88,18 +88,14 @@ export class FilterService {
   }
 
   public sortTags(tags: Array<Tag>, userLang: string) {
-    let sortTags = [];
-
     if (tags.length > 0) {
-      sortTags = tags.sort((a: Tag, b: Tag) => {
+      return tags.sort((a: Tag, b: Tag) => {
         const labelA = this.multiling.transform(a.label, userLang).toLowerCase();
         const labelB =  this.multiling.transform(b.label, userLang).toLowerCase();
         return labelA.localeCompare(labelB);
       });
     }
-
-    return sortTags;
-
+    return [];
   }
 
 }

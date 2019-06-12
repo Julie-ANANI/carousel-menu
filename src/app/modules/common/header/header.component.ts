@@ -214,7 +214,7 @@ export class HeaderComponent implements OnDestroy {
 
   get userInitial(): string {
     return  this.user.firstName && this.user.lastName ?
-      `${this.user.firstName.slice(0, 1)}${this.user.lastName.slice(0, 1)}` : this.user.firstName.slice(0, 2);;
+      `${this.user.firstName.slice(0, 1)}${this.user.lastName.slice(0, 1)}` : this.user.firstName.slice(0, 2);
   }
 
   get currentLang(): string {
