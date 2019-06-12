@@ -22,11 +22,11 @@
   <table class="table presets" wt-responsive-table>
     <thead>
       <tr>
-        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [property]="'name'">{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
+        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPresets($event)" [property]="'name'">{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
         <th>{{ 'PRESETS.SECTIONS' | translate }}</th>
-        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [property]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</app-shared-sort></th>
-        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [property]="'updated'">{{ 'COMMON.UPDATED' | translate }}</app-shared-sort></th>
-        <th><app-shared-sort [config]="config" (configChange)="loadPresets($event)" [property]="'created'">{{ 'COMMON.CREATED' | translate }}</app-shared-sort></th>
+        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPresets($event)" [property]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</app-shared-sort></th>
+        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPresets($event)" [property]="'updated'">{{ 'COMMON.UPDATED' | translate }}</app-shared-sort></th>
+        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPresets($event)" [property]="'created'">{{ 'COMMON.CREATED' | translate }}</app-shared-sort></th>
         <th></th>
         <th></th>
       </tr>

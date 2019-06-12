@@ -18,7 +18,7 @@ export interface Table {
   readonly _actions?: string[];
   readonly _editIndex?: number;
   readonly _editButtonLabel?: string;
-  readonly _buttons?: Array<{ _icon?: string, _label?: string }>;
+  readonly _buttons?: Array<{ _icon?: string, _label: string }>;
   _content: any[];
   _total: number;
 }
