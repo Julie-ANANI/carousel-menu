@@ -40,15 +40,15 @@ export class TableComponent implements OnInit {
    * @param value
    */
   @Input() set config(value: Config) {
-    this._loadConfig(value);
+    this._config = value;
   }
 
 
   /***
    * Output call when the config change
-   * @type {EventEmitter<any>}
+   * @type {EventEmitter<Config>}
    */
-  @Output() configChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
 
 
   /***
@@ -233,7 +233,6 @@ export class TableComponent implements OnInit {
     });
   }
 
-
   /***
    * This function returns the number of selected rows
    * @returns {number}
@@ -245,7 +244,6 @@ export class TableComponent implements OnInit {
       return this.getSelectedRows().length;
     }
   }
-
 
   /***
    * This function allows to select all the rows
@@ -260,19 +258,17 @@ export class TableComponent implements OnInit {
     console.log(this._table);
   }
 
-
   /***
    * This function affects the config send by the user to this._config
    * @param value
    */
-  private _loadConfig(value: Config) {
+  /*private _loadConfig(value: Config) {
     this._config = value;
-    console.log(this._config);
     // this._paginationConfig = {
     //   limit: value.limit || 10,
     //   offset: value.offset || 0
     // };
-  }
+  }*/
 
   /***
    * This function is call when the user change the config
@@ -280,8 +276,8 @@ export class TableComponent implements OnInit {
    * If not, we emit the Output configChange
    * @param value
    */
-  public changeConfig(value: Config): void {
-    console.log(value);
+  public filterConfigChange(value: Config) {
+    this._config = value;
     // this._config = value;
     // this.fetchingResult = false;
     // if (!this._isLocal) {
@@ -290,6 +286,11 @@ export class TableComponent implements OnInit {
     //   Promise.resolve(null).then(() => this.changeLocalConfig());
     // }
   }
+
+  private _sortConfigChange() {
+
+  }
+
 
   /***
    * This function is call when the user change the paginations config
@@ -718,6 +719,14 @@ export class TableComponent implements OnInit {
     return this._getSelectedRowsNumber();
   }
 
+  get sortConfig(): string {
+    return this._config.sort;
+  }
+
+  set sortConfig(value: string) {
+    this._config.sort = value;
+    this._sortConfigChange();
+  }
 
   /*get selector(): string {
     return this._selector;
