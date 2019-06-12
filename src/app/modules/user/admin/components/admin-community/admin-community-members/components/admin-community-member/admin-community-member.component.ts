@@ -483,7 +483,7 @@ export class AdminCommunityMemberComponent implements OnInit {
    */
   public onChangeTag(event: Event, tag: Tag) {
 
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       this._professional.tags.push(tag);
     } else {
       this._professional.tags = this._professional.tags.filter((tagPro) => tagPro._id !== tag._id)

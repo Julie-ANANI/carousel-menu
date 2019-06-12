@@ -52,8 +52,6 @@ export class HeaderComponent implements OnDestroy {
 
   private _displayMenuOptions: boolean = false; // on small devices if true then display menu options.
 
-  private _currentLang: string;
-
   private _flag: string;
 
   private _sidebarValues: SidebarInterface = {};
@@ -80,7 +78,7 @@ export class HeaderComponent implements OnDestroy {
 
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(_event: Event) {
     if (window.innerWidth > 840) {
       this._sidebarValues.animate_state = 'inactive';
     }
@@ -93,7 +91,6 @@ export class HeaderComponent implements OnDestroy {
    */
   private _initializeVariables() {
     initTranslation(this._translateService);
-    this._currentLang = this._translateService.currentLang;
     this._setFlag();
     this._backOfficeValue = this._location.path().slice(5, 11) === '/admin';
     this._sidebarValues.animate_state = 'inactive';
@@ -105,7 +102,7 @@ export class HeaderComponent implements OnDestroy {
    * @private
    */
   private _setFlag() {
-    this._flag = this._currentLang === 'en' ? 'US' : 'FR';
+    this._flag = this.currentLang === 'en' ? 'US' : 'FR';
   }
 
 
@@ -119,7 +116,6 @@ export class HeaderComponent implements OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       document.location.reload();
     } else {
-      this._currentLang = lang;
       this._translateService.use(lang || 'en');
       this._setFlag();
     }
@@ -188,7 +184,7 @@ export class HeaderComponent implements OnDestroy {
 
 
   public getContactUrl(): string {
-    return this._currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
+    return this.currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
   }
 
 
@@ -204,12 +200,8 @@ export class HeaderComponent implements OnDestroy {
     return this._authService.user;
   }
 
-  get displayMenuOptions(): boolean {
-    return this._displayMenuOptions;
-  }
-
   get profilePicture(): string {
-    return this.user.profilePic ? this.user.profilePic.url ||  '' : '' ;
+    return (!!this.user.profilePic) ? this.user.profilePic.url : '' ;
   }
 
   get userInitial(): string {
@@ -218,7 +210,7 @@ export class HeaderComponent implements OnDestroy {
   }
 
   get currentLang(): string {
-    return this._currentLang;
+    return this._translateService.currentLang;
   }
 
   get flag(): string {

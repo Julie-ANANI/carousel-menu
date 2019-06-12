@@ -137,18 +137,17 @@ export class AdminCampaignProsComponent implements OnInit {
 
   onClickSave(formValue: FormGroup) {
     this._newPro = {
-      firstName: formValue['firstName'],
-      lastName: formValue['lastName'],
-      email: formValue['email'],
-      jobTitle: formValue['jobTitle'],
-      country: formValue['country'],
-      profileUrl: formValue['profileUrl'],
-      company: formValue['companyName'],
+      firstName: formValue.get('firstName').value,
+      lastName: formValue.get('lastName').value,
+      email: formValue.get('email').value,
+      jobTitle: formValue.get('jobTitle').value,
+      country: formValue.get('country').value,
+      profileUrl: formValue.get('profileUrl').value,
+      company: formValue.get('companyName').value,
       emailConfidence: 100
     };
 
     this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id)
-      .pipe(first())
       .subscribe((result: any) => {
         if (result.nbProfessionalsMoved) {
           this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
@@ -163,32 +162,32 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
 
-  public selectedProsEvent(event: Event) {
-    this._contextSelectedPros = event['pros'];
+  public selectedProsEvent(event: {pros: Array<any>}) {
+    this._contextSelectedPros = event.pros;
   }
 
 
   onClickExport(event: Event) {
     event.preventDefault();
-    const config = {
+    const config: any = {
       fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country jobTitle messages',
-      professionals: [] || 'all',
+      professionals: [],
       campaignId: this._campaign._id,
       query: {
         campaignId: this._campaign._id,
-        search: ""
+        search: ''
       }
     };
 
     config.query.search = this._config.search ? JSON.parse(this._config.search) : null;
 
-    if( this._contextSelectedPros.length ) {
+    if ( this._contextSelectedPros.length ) {
       config.professionals = this._contextSelectedPros.map(pro => pro._id);
     } else {
       config.professionals = 'all';
     }
 
-    this.professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
+    this.professionalsService.export(config).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
       if (isPlatformBrowser(this.platform)) { window.open(url); }

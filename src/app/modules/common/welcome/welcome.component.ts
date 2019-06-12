@@ -67,8 +67,7 @@ export class WelcomeComponent implements OnInit {
   get isAdmin(): boolean {
     if (this._user) {
       return this._user['isAdmin'] || (this._user['roles'] ? this._user['roles'] === 'super-admin' : false);
-    }
-    else {
+    } else {
       return false;
     }
   }

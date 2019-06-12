@@ -121,10 +121,6 @@ export class AdminCommunityProjectsComponent implements OnInit {
     return this._tableInfos;
   }
 
-  get totalProjects(): Array<any> {
-    return this._totalProjects;
-  }
-
   get noResult(): boolean {
     return this._noResult;
   }
