@@ -167,6 +167,7 @@ export class SearchToolComponent implements OnInit{
       this._searchResult.pros.slice(0, displayLimit);
 
     this._slicedPros.forEach((professional, index) => {
+      professional.isLoading = true;
       if (index >= (displayLimit - loadLimit)) {
         this._formatPro(professional, index);
       }
@@ -187,22 +188,26 @@ export class SearchToolComponent implements OnInit{
 
   private _formatPro(professional: any, index: number) {
 
-      if (!professional.company) {
-        professional.company = '';
-      }
+    const currentCOuntry = this._selectedCountry;
 
-      if (!professional.email) {
-        professional.email = `${professional.firstName.toLowerCase()}.${professional.lastName.toLowerCase()}@${professional.companyDomain || "unknown.com"}`;
-      }
+    if (!professional.company) {
+      professional.company = '';
+    }
 
-      if(professional.companyDomain) {
-        professional.companyLogoUrl = `https://logo.clearbit.com/${professional.companyDomain}?size=240`;
-      }
+    if (!professional.email) {
+      professional.email = `${professional.firstName.toLowerCase()}.${professional.lastName.toLowerCase()}@${professional.companyDomain || "unknown.com"}`;
+    }
 
-      setTimeout(() => {
+    if(professional.companyDomain) {
+      professional.companyLogoUrl = `https://logo.clearbit.com/${professional.companyDomain}?size=240`;
+    }
+
+    setTimeout(() => {
+      if (currentCOuntry === this._selectedCountry) {
         professional.isLoading = false;
         this._slicedPros[index] = professional;
-      }, Math.floor(Math.random() * 2000) + 1000);
+      }
+    }, Math.floor(Math.random() * 2000) + 1000);
 
   }
 

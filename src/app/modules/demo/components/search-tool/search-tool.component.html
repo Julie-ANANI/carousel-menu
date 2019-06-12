@@ -177,13 +177,13 @@
           <div class="card-wrapper d-flex">
             <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
 
-              <ng-container *ngIf="professional.isLoading">
+              <ng-container *ngIf="professional && professional.isLoading">
                 <div class="card-body card-cover">
                   <i class="fa fa-cog fa-2x text-warning fa-spin"></i>
                 </div>
               </ng-container>
 
-              <ng-container *ngIf="!professional.isLoading">
+              <ng-container *ngIf="!professional || !professional.isLoading">
 
                 <ng-container *ngIf="professional && professional.country">
                   <div class="card-header animate-card-appear">
