@@ -29,15 +29,15 @@ export class SharedFilterMultiComponent {
   // For values linked with config
   filterText(event: any) {
     this.config.offset = '0';
-    let value = event.value || '';
+    let value: string = event.value || '';
       if (value === '') {
         this.config.search = '{}';
         this.configChange.emit(this.config);
       } else {
         //Detect an "special" query...
-        value = value.split(',');
-        let _search = {};
-        value.forEach((queryStr, idx)=>{
+        const values = value.split(',');
+        const _search: any = {};
+        values.forEach((queryStr, idx) => {
           _search[this._currentTextProp._attrs[idx]] = encodeURIComponent(queryStr.trim());
         });
         this.config.search = JSON.stringify(_search);

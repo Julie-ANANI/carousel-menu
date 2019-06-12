@@ -98,7 +98,7 @@ export class SidebarComponent implements OnInit {
 
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(_event: Event) {
     if (window.innerWidth > 600) {
       this._toggleFilterBar = false;
     }
@@ -201,20 +201,20 @@ export class SidebarComponent implements OnInit {
 
   public checkCountry(event: Event) {
     event.preventDefault();
-    this._worldmapFilterService.selectContinent(event.target['name'], event.target['checked']);
+    this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
   }
 
 
   public checkOption(event: Event, question: Question) {
     event.preventDefault();
-    const checked = event.target['checked'];
-    let filterValue;
+    const checked = (event.target as HTMLInputElement).checked;
+    let filterValue: any;
     if (this._filterService.filters[question.identifier]) {
       filterValue = this._filterService.filters[question.identifier].value;
     } else {
-      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {});
+      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
     }
-    filterValue[event.target['name']] = checked;
+    filterValue[(event.target as HTMLInputElement).name] = checked;
     const removeFilter = checked && Object.keys(filterValue).every((k) => filterValue[k] === true);
     if (removeFilter) {
       this._filterService.deleteFilter(question.identifier);
@@ -230,13 +230,13 @@ export class SidebarComponent implements OnInit {
 
   public checkTag(event: Event, tagId: string) {
     event.preventDefault();
-    this._tagService.checkTag(tagId, event.target['checked']);
+    this._tagService.checkTag(tagId, (event.target as HTMLInputElement).checked);
   }
 
 
   public checkAnswerTag(event: Event, questionIdentifier: string) {
     event.preventDefault();
-    this._tagService.checkAnswerTag(questionIdentifier, event.target['name'], event.target['checked']);
+    this._tagService.checkAnswerTag(questionIdentifier, (event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
   }
 
 

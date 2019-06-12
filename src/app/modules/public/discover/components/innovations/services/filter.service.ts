@@ -14,9 +14,8 @@ export class FilterService {
 
   constructor(private multiling: MultilingPipe) {}
 
-  static getAllSectorTags(totalInnovations: Array<Innovation>) {
-    let sectorTags = [];
-
+  static getAllSectorTags(totalInnovations: Array<Innovation>): Array<Tag> {
+    const sectorTags: Array<Tag> = [];
     totalInnovations.forEach((innovation) => {
       innovation.tags.forEach((tag: Tag) => {
         if (tag.type === 'SECTOR') {
@@ -27,15 +26,12 @@ export class FilterService {
         }
       });
     });
-
     return sectorTags;
-
   }
 
 
-  static getHighlightedTags(tags: Array<Tag>) {
-    let highlightTags = [];
-
+  static getHighlightedTags(tags: Array<Tag>): Array<Tag> {
+    const highlightTags: Array<Tag> = [];
     if (tags.length > 0) {
       tags.forEach((tag: Tag) => {
         const index = FilterService.highlight.indexOf(tag.label.en.toLowerCase());
@@ -44,9 +40,7 @@ export class FilterService {
         }
       });
     }
-
     return highlightTags;
-
   }
 
 

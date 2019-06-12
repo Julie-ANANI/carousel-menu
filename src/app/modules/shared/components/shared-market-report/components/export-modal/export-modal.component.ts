@@ -54,7 +54,7 @@ export class ExportModalComponent {
 
   public toggleConsent(event: Event) {
     event.preventDefault();
-    this._innovation.ownerConsent.value = !!event.target['checked'];
+    this._innovation.ownerConsent.value = !!(event.target as HTMLInputElement).checked;
   }
 
 

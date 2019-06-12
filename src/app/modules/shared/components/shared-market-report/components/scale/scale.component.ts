@@ -19,7 +19,7 @@ export class ScaleComponent implements OnInit {
 
   private _answers: Array<Answer>;
 
-  private _barsData: {[prop: string]: {count: number, percentage: string}} = {};
+  private _barsData: {[prop: string]: {count: number, percentage?: string}} = {};
 
   private _bars: Array<number> = [];
 
@@ -50,7 +50,7 @@ export class ScaleComponent implements OnInit {
             acc[val.answers[this.question.identifier]].count++;
           }
           return acc;
-        }, {});
+        }, {} as {[prop: string]: {count: number}});
 
       this._maxCount = Object.keys(this._barsData).map(key => this._barsData[key]).reduce(function (prev: number, current: { count: number, percentage: string }) {
           return (prev > current.count) ? prev : current.count
@@ -64,12 +64,12 @@ export class ScaleComponent implements OnInit {
 
   }
 
-  get barsData(): { [p: string]: { count: number; percentage: string } } {
+  get barsData() {
     return this._barsData;
   }
 
   get bars() {
-    return this._bars
-  };
+    return this._bars;
+  }
 
 }

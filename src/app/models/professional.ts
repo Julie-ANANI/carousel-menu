@@ -1,4 +1,5 @@
 import { Campaign } from './campaign';
+import { Innovation } from './innovation';
 import { Tag } from './tag';
 
 export interface Professional {
@@ -35,6 +36,8 @@ export interface Professional {
   company?: string;
 
   companyDomain?: string;
+
+  innovations?: Array<Innovation>;
 
   sent?: boolean;
 

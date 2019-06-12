@@ -35,7 +35,7 @@ export class ShowcaseClientsComponent {
             .reduce((acc, company) => {
               acc[company.name] = company;
               return acc;
-            }, {});
+            }, {} );
 
           this._totalClients = Object.values(companies);
 

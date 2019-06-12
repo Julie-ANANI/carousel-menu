@@ -41,15 +41,13 @@ export class SharedMailEditorComponent implements OnInit {
 
   private _language = 'en';
 
-  private _id;
+  private _id: string;
 
   private _email: EmailTemplate;
 
   private _languageHasBeenSet: Boolean = false;
 
   private _editionMode = true;
-
-  constructor() { }
 
   ngOnInit() {
     this._signatures = [];

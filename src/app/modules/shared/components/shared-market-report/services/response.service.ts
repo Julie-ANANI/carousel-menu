@@ -21,21 +21,20 @@ export class ResponseService {
    */
   static getTagsList(answers: Array<Answer>, question: Question): Array<Tag> {
 
-    let tags: Array<Tag>;
     const tagId = question.identifier + (question.controlType !== 'textarea' ? 'Comment' : '');
 
-    tags = answers.reduce((tagsList, answer) => {
+    return answers.reduce((tagsList, answer) => {
 
-      const answerTags = answer.answerTags[tagId];
+      const answerTags: Array<Tag&{count?: number}> = answer.answerTags[tagId];
 
       if (Array.isArray(answerTags)) {
         answerTags.forEach((t) => {
           const previousTag = tagsList.find((t2) => t2._id === t._id);
 
           if (previousTag) {
-            previousTag['count'] += 1;
+            previousTag.count += 1;
           } else {
-            t['count'] = 1;
+            t.count = 1;
             tagsList.push(t);
           }
 
@@ -43,8 +42,6 @@ export class ResponseService {
       }
       return tagsList;
     }, []).sort((a, b) => b.count - a.count);
-
-    return tags;
 
   }
 
@@ -191,7 +188,7 @@ export class ResponseService {
           const vote = parseInt(answer.answers[question.identifier][k], 10);
           if (Number.isInteger(idx) && Number.isInteger(vote) && idx < notesData.length) {
             // If user didn't vote this characteristic, default value will be 0.
-            notesData[k].sum += vote;
+            notesData[idx].sum += vote;
           }
         });
       });

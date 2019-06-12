@@ -15,7 +15,7 @@ export class WorldmapFiltersService {
     this._selectedContinents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
       acc[cont] = true;
       return acc;
-    }, {});
+    }, {} as {[c: string]: boolean});
   }
 
   public selectContinent(continent: string, value: boolean) {

@@ -40,7 +40,7 @@ export class PresetService {
     const identifiersMap = this._preset.sections.reduce((accS, section) => {
       const subIdentifiersMap = section.questions.reduce((accQ, question) => Object.assign(accQ, {[question.identifier]: 1}), {});
       return Object.assign(accS, subIdentifiersMap);
-    }, {});
+    }, {} as {[questionId: string]: 1});
     return Object.keys(this.taggedQuestionsTypes).filter((tag) => !identifiersMap[tag]);
   }
 

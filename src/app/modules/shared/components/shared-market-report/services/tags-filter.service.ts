@@ -69,7 +69,7 @@ export class TagsFiltersService {
     this._selectedAnswersTags[questionId] = value.reduce(function (acc, tag) {
       acc[tag._id] = true;
       return acc;
-    }, {});
+    }, {} as {[id: string]: boolean});
     this.filterService.deleteFilter(questionId);
   }
 
@@ -96,7 +96,7 @@ export class TagsFiltersService {
     this._selectedTags = value.reduce(function (acc, tag) {
       acc[tag._id] = true;
       return acc;
-    }, {});
+    }, {} as {[id: string]: boolean});
     this.filterService.deleteFilter(GENERIC_FILTER_NAME);
   }
 

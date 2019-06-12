@@ -111,11 +111,11 @@ export class BarChartComponent implements OnInit {
 
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();
-    let filterValue;
+    let filterValue: any;
     if (this._filterService.filters[this.question.identifier]) {
       filterValue = this._filterService.filters[this.question.identifier].value;
     } else {
-      filterValue = this.question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {});
+      filterValue = this.question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
     }
     filterValue[data.identifier] = !filterValue[data.identifier];
     const removeFilter = Object.keys(filterValue).every((k) => filterValue[k] === true);

@@ -172,7 +172,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * @param event
    * @param model
    */
-  importTranslation(event: Event, model: string) {
+  importTranslation(event: Event, model: 'advantages' | 'title' | 'summary' | 'problem' | 'solution') {
     event.preventDefault();
 
     const target_card = this._innovation.innovationCards[this._selectedCardIndex];
@@ -184,7 +184,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
         const subs = from_card[model].map((a) => this.translationService.translate(a.text, target_card.lang));
         forkJoin(subs).subscribe(results => {
           target_card[model] = results.map((r) => { return {text: r.translation}; });
-
         });
         break;
 
@@ -204,10 +203,10 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * this function is called when the user edit the summary, problem
    * and solution.
    * @param event
-   * @param id
+   * @param cardProperty
    */
-  updateData(event: { content: string }, id: string) {
-    this._innovation.innovationCards[this._selectedCardIndex][id] = event.content;
+  updateData(event: { content: string }, cardProperty:  'summary' | 'problem' | 'solution') {
+    this._innovation.innovationCards[this._selectedCardIndex][cardProperty] = event.content;
     this.notifyChanges();
   }
 
@@ -232,10 +231,10 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * This configuration tells the directive what text to use for the placeholder and if it exists,
    * the initial data to show.
    * @param type
-   * @returns {any|{placeholder: string, initialData: string}}
+   * @returns {placeholder: string, initialData: string}
    */
   getConfig(type: string): any {
-    const _inputConfig = {
+    const _inputConfig: any = {
       'advantages': {
         placeholder: 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
         initialData: this._innovation.innovationCards[this._selectedCardIndex]['advantages']

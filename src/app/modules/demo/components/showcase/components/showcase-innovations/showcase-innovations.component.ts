@@ -115,7 +115,7 @@ export class ShowcaseInnovationsComponent {
   }
 
   public onChangeInnovation(event: Event, card: any) {
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       if (this._selectedCards.length < 9) {
         this._selectedCards.push(card);
       } else {

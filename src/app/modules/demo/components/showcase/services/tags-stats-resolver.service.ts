@@ -9,7 +9,7 @@ import { TagStats } from '../../../../../models/tag-stats';
 
 const SECTOR_TAGS_STATS_KEY = makeStateKey('sector-tags-stats');
 
-const toCleanArray = (o) => o ? [].concat(o) : [];
+const toCleanArray = (o: any): Array<any> => o ? [].concat(o) : [];
 
 @Injectable()
 export class TagsStatsResolver implements Resolve<Array<TagStats>> {

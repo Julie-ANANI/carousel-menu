@@ -12,6 +12,7 @@ import { ContextInterface } from '../../../user/admin/components/admin-community
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
+  self: 'true' | 'false';
 }
 
 @Component({
@@ -113,10 +114,10 @@ export class SharedAmbassadorListComponent {
 
           pro.sent = pro.messages && pro.messages.length > 0;
 
-          if(pro['innovations'] && !!pro['innovations'].find( inno => { return this._context['innovationId'] === inno._id;} ) ) {
-            pro['self'] = 'true';
+          if (!!pro.innovations && !!pro.innovations.find( (inno) => { return this._context['innovationId'] === inno._id; } ) ) {
+            pro.self = 'true';
           } else {
-            pro['self'] = 'false';
+            pro.self = 'false';
           }
 
         });
@@ -133,8 +134,7 @@ export class SharedAmbassadorListComponent {
 
 
   private _configToString() {
-    let config = {};
-
+    let config: any = {};
     Object.keys(this._config).forEach(key => {
       if (this._config[key] instanceof Object) {
         config[key] = JSON.stringify(this._config[key]);
@@ -142,7 +142,6 @@ export class SharedAmbassadorListComponent {
         config[key] = this._config[key];
       }
     });
-
     return config;
   }
 
@@ -175,36 +174,36 @@ export class SharedAmbassadorListComponent {
         // If one or more professionals already belong to the project, just add the remaining ones.
         // We need to verify in the back whether a "Kate" campaign exists, otherwise we need to create one and
         // get the id...
-        const pros = action._rows.map(pro => { return {_id: pro._id.toString()}; });
+        const pros = action._rows.map((pro: Professional) => { return {_id: pro._id.toString()}; });
         const innovationId = this._context ? this._context.innovationId : null;
-        const resultObj = {
+        const resultObj: any = {
           origin: "AMBASSADOR-ADD"
         };
-        if(innovationId) {
+        if (innovationId) {
           this._innovationService.addProsFromCommunity(pros, innovationId).pipe(first())
             .subscribe(result => {
               // Verify the result
-              if(!!result) {
+              if (!!result) {
                 // Notify the parent
                 // Close the sidebar (let the parent do that!)
                 // Notify the client
-                resultObj['result'] = {status:'success', value: result};
+                resultObj.result = {status: 'success', value: result};
               } else {
                 // Inform the parent and close the sidebar
-                resultObj['result'] = {status:'error', message: "Empty result!"};
+                resultObj.result = {status: 'error', message: "Empty result!"};
               }
               this.callbackNotification.emit(resultObj);
             }, err => {
               // Inform the parent and close the sidebar
               console.error(err);
-              resultObj['result'] = {status:'error', message: JSON.stringify(err)};
+              resultObj.result = {status: 'error', message: JSON.stringify(err)};
               this.callbackNotification.emit(resultObj);
             });
         } else {
           //Silently fail
           console.error("Innovation id cannot be null");
           // Inform the parent and close the sidebar
-          resultObj['result'] = {status:'error', message: "Innovation id cannot be null"};
+          resultObj.result = {status: 'error', message: "Innovation id cannot be null"};
           this.callbackNotification.emit(resultObj);
         }
         break;
@@ -226,7 +225,7 @@ export class SharedAmbassadorListComponent {
   }
 
 
-  selectPro(event): void {
+  selectPro(event: any): void {
     this.selectedProsChange.emit({
       total: event._rows.length,
       pros: event._rows
