@@ -15,13 +15,25 @@ export class AdminSearchMapComponent {
     this._countriesData = value;
   }
 
-  @Input() set quartiles (value: any) {
+  @Input() set quartiles (value: [number, number, number]) {
     this._quartiles = value;
+  }
+
+  @Input() set minValue (value: number) {
+    this._minValue = value;
+  }
+
+  @Input() set maxValue (value: number) {
+    this._maxValue = value;
   }
 
   @Output() onCountryClick = new EventEmitter<any>();
 
   private _hoverInfo: any = null;
+
+  private _minValue: number = null;
+
+  private _maxValue: number = null;
 
   private _countriesData: any = {};
 
@@ -61,9 +73,15 @@ export class AdminSearchMapComponent {
     const foo: any = event.srcElement.className;
     const country = foo.baseVal.slice(-2);
     const countryName = this.names[country];
+    let displayedNumber = this._countriesData[country] || "NA";
+    if (this._minValue && (this._countriesData[country] || this._countriesData[country] === 0) && this._countriesData[country] <= this._minValue) {
+      displayedNumber = "<" + this._minValue;
+    } else if (this._minValue && (this._countriesData[country] || this._countriesData[country] === 0) && this._countriesData[country] >= this._maxValue) {
+      displayedNumber = ">" + this._maxValue;
+    }
     this._hoverInfo = {
       country: countryName,
-      number: this._countriesData[country] || 'NA'
+      number: displayedNumber
     };
     this._boxStyle = {
       top: `${event.pageY - 40}px`,
