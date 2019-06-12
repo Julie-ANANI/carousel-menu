@@ -1,8 +1,7 @@
 @import "../../../../../style/framework/src/variables";
 @import "../../../../../style/framework/src/mixins";
 
-#filter-multi-component {
-  display: flex;
+#filter-multi {
   flex-wrap: wrap;
 
   .type-wrapper, .search-box-wrapper {
@@ -13,12 +12,12 @@
     margin-bottom: $unit-5;
 
     .form-select {
-      min-width: 120px;
+      min-width: 100px;
     }
 
   }
 
-  .text.text-label {
+  .text-label {
     margin-right: 0.5rem;
   }
 
@@ -51,7 +50,7 @@
 
       .fa-times {
         color: $meta-color;
-        font-size: 0.9rem;
+        font-size: $font-icon-lg;
       }
 
     }
@@ -62,18 +61,32 @@
     border-color: $border-color;
   }
 
-}
+  &.table-view {
 
+    .form-select, .form-input {
+      height: 40px;
+      font-size: 0.65rem;
+    }
+
+  }
+
+}
 
 @media (max-width: $size-sm) {
 
-  #filter-multi-component {
+  #filter-multi {
 
-    .type-wrapper, .search-box-wrapper {
-      margin-right: 0 !important;
+    .type-wrapper {
+
+      .form-select {
+        min-width: 100%;
+      }
+
     }
 
     .search-box-wrapper {
+      margin-right: 0 !important;
+      order: 2;
       width: 100%;
 
       .form-input {
@@ -84,4 +97,20 @@
 
   }
   
+}
+
+@media (max-width: $size-md) {
+
+  #filter-multi {
+
+    .search-box-wrapper {
+
+      .form-input {
+        min-width: 100%;
+      }
+
+    }
+
+  }
+
 }

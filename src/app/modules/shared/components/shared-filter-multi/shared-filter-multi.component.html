@@ -1,17 +1,14 @@
-<section id="filter-multi-component">
+<section [ngClass]="{ 'table-view': tableView }" id="filter-multi" class="d-flex">
 
   <!-- select by option -->
   <ng-container *ngIf="textProps.length > 0">
     <div class="type-wrapper">
 
-      <span class="text text-label">{{ 'COMMON.LABEL.SEARCH_BY' | translate }}:</span>
+      <span class="text-sm text-secondary text-label text-normal">{{ 'COMMON.LABEL.SEARCH_BY' | translate }}:</span>
 
       <label>
-        <select class="form-select" (change)="changeCurrentTextProp($event)">
-          <option
-            *ngFor="let propName of textProps"
-            [value]="getAttrs(propName)"
-            [selected]="textIsSelected(propName)">
+        <select class="form-select" (change)="onChangeTextProp($event)">
+          <option *ngFor="let propName of textProps" [value]="getAttrs(propName)" [selected]="textIsSelected(propName)">
             {{ getName(propName) | translate | FormatText }}
           </option>
         </select>
@@ -27,17 +24,17 @@
 
       <input
         type="search"
-        (keyup)="filterText($event.srcElement)"
+        (keyup)="onSearch($event.target)"
         #search
         class="form-input"
         [attr.placeholder]="'COMMON.SEARCH_INPUT_PLACEHOLDER' | translate">
 
-      <div class="search-icon" (click)="filterText(search)">
+      <div class="search-icon" (click)="onSearch(search)">
         <img src="https://res.cloudinary.com/umi/image/upload/v1541656930/app/default-images/icons/search-meta.svg" alt=" ">
       </div>
 
       <ng-container *ngIf="search.value !== ''">
-        <div class="search-cross" (click)="search.value = ''; filterText(search)">
+        <div class="search-cross" (click)="search.value = ''; onSearch(search)">
           <i class="fas fa-times"></i>
         </div>
       </ng-container>
@@ -50,7 +47,7 @@
   <ng-container *ngFor="let prop of otherProps">
     <div class="type-wrapper" *ngIf="isFiltrable(prop)">
 
-      <span class="text text-label">{{ getName(prop) | translate | FormatText }}:</span>
+      <span class="text-sm text-secondary text-label text-normal text-label">{{ getName(prop) | translate | FormatText }}:</span>
 
       <ng-container [ngSwitch]="getType(prop)">
 
@@ -58,7 +55,7 @@
           <label>
             <select
               class="form-select"
-              (change)="filterOther(prop)"
+              (change)="onOtherFilter(prop)"
               [ngStyle]="{ 'padding-right': '2.5rem' }">
               <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
               <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
@@ -69,13 +66,9 @@
 
         <ng-container *ngSwitchCase="'MULTI-CHOICES'">
           <label>
-            <select
-              class="form-select"
-              (change)="filterOther(prop)">
+            <select class="form-select" (change)="onOtherFilter(prop, $event)">
               <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
-              <option
-                *ngFor="let choice of getChoices(prop)"
-                [ngValue]="getChoiceName(choice)">
+              <option *ngFor="let choice of getChoices(prop)" [ngValue]="getChoiceName(choice)">
                 {{ getChoiceAlias(choice) | translate | FormatText }}
               </option>
             </select>
