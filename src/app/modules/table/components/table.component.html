@@ -8,18 +8,19 @@
 
         <!-- number of results and title -->
         <ng-container *ngIf="table._isTitle">
-          <div class="text text-notify title">
+          <div class="text-notify text-md title">
             <span>{{ table._total === -1 ? 0 : table._total }} {{ table._title | translate }}</span>
           </div>
         </ng-container>
 
         <!-- want to filter by columns -->
         <ng-container *ngIf="table._isFiltrable">
-          <div>
-            <app-shared-multi-filter
-              [props]="table._columns">
-            </app-shared-multi-filter>
-          </div>
+          <app-shared-multi-filter
+            [searchConfig]="config"
+            [props]="table._columns"
+            [tableView]="true"
+            (onConfigUpdation)="changeConfig($event)">
+          </app-shared-multi-filter>
         </ng-container>
 
       </div>
@@ -68,7 +69,8 @@
                 <th class="th-checkbox">
                   <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
                     <input type="checkbox" (change)="selectAll($event)">
-                    <i class="fas fa-check"></i>
+                    <i *ngIf="selectedRows === table._content.length" class="fas fa-check"></i>
+                    <span *ngIf="selectedRows < table._content.length && selectedRows > 0" class="hr"></span>
                   </label>
                 </th>
               </ng-container>

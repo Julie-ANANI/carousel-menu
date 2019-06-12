@@ -4,7 +4,8 @@ import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import {countries} from '../../../models/static-data/country';
+import { countries } from '../../../models/static-data/country';
+import { Config } from '../../../models/config';
 //import { isPlatformBrowser } from '@angular/common';
 //import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
 //import { countries } from "../../../models/static-data/country";
@@ -38,7 +39,7 @@ export class TableComponent implements OnInit {
    * Input use to set the config for the tables linked with the back office
    * @param value
    */
-  @Input() set config(value: any) {
+  @Input() set config(value: Config) {
     this._loadConfig(value);
   }
 
@@ -86,7 +87,7 @@ export class TableComponent implements OnInit {
 
   private _massSelection: boolean;
 
-  private _config: any = null;
+  private _config: Config;
 
   //private _selector: string; // for the pagination.
 
@@ -264,8 +265,9 @@ export class TableComponent implements OnInit {
    * This function affects the config send by the user to this._config
    * @param value
    */
-  private _loadConfig(value: any): void {
+  private _loadConfig(value: Config) {
     this._config = value;
+    console.log(this._config);
     // this._paginationConfig = {
     //   limit: value.limit || 10,
     //   offset: value.offset || 0
@@ -278,7 +280,8 @@ export class TableComponent implements OnInit {
    * If not, we emit the Output configChange
    * @param value
    */
-  public changeConfig(value: any): void {
+  public changeConfig(value: Config): void {
+    console.log(value);
     // this._config = value;
     // this.fetchingResult = false;
     // if (!this._isLocal) {
@@ -768,7 +771,7 @@ export class TableComponent implements OnInit {
     return this._total;
   }*/
 
-  get config(): any {
+  get config(): Config {
     return this._config;
   }
 

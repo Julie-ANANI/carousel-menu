@@ -244,6 +244,14 @@
             display: none;
           }
 
+          .hr {
+            margin-left: auto;
+            margin-right: auto;
+            width: 75%;
+            border-width: 2px;
+            border-color: $primary-color;
+          }
+
           &:hover {
             cursor: pointer;
             background-color: $table-th-hover-background-color;
@@ -534,8 +542,16 @@
 
             td {
 
-              .btn-xs {
-                display: inline-flex;
+              .tbody-td-data {
+
+                .tbody-td-action-button {
+
+                  .btn-xs {
+                    visibility: visible;
+                  }
+
+                }
+
               }
 
             }
