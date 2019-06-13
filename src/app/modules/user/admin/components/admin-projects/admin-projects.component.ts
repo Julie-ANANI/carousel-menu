@@ -54,6 +54,7 @@ export class AdminProjectsComponent implements OnInit {
         _isShowable: true,
         _isEditable: false,
         _editIndex: 1,
+        _isPaginable: true,
         _columns: [
           {_attrs: ['name'], _name: 'TABLE.HEADING.TITLE', _type: 'TEXT'},
           {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSortable: false, _isFiltrable: false},

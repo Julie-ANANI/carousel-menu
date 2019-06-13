@@ -1,7 +1,7 @@
  import { Column } from './column';
 
 export interface Table {
-  readonly _selector?: string;
+  readonly _selector: string;
   readonly _title?: string;
   readonly _isHeadable?: boolean; //Todo remove
   readonly _isSelectable?: boolean;

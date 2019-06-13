@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../../services/preset/preset.service';
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
-import {PaginationInterface} from '../../../../../../utility-components/paginations/interfaces/pagination';
+import {Pagination} from '../../../../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -32,7 +32,7 @@ export class AdminPresetsListComponent implements OnInit {
 
   private _modalClone = false;
 
-  private _paginationConfig: PaginationInterface = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: Pagination = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _presetService: PresetService,
               private _router: Router) {}
@@ -104,7 +104,7 @@ export class AdminPresetsListComponent implements OnInit {
 
   get total () { return this._total; }
 
-  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
+  get paginationConfig(): Pagination { return this._paginationConfig; }
 
   get presets () { return this._presets; }
 

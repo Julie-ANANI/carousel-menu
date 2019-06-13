@@ -270,7 +270,7 @@
                         <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]))) === ''">
                           <span
                             [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
-                            class="tbody-td-multi-choice-label text-xs">
+                            class="tbody-td-multi-choice-label text-xs text-ellipsis d-block">
                             {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])|| " - "))) | translate }}
                           </span>
                         </ng-container>
@@ -299,6 +299,14 @@
       </div>
     </ng-container>
     <!-- /when result -->
+
+
+    <!-- when pagination is required -->
+    <ng-container *ngIf="table._total > 0 && table._isPaginable">
+      <div class="flex-centered section-light-pad rm-pad-bottom">
+        <app-pagination-2 [(pagination)]="pagination"></app-pagination-2>
+      </div>
+    </ng-container>
 
 
   </div>

@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { Innovation } from '../../../../../models/innovation';
-import { PaginationInterface } from '../../../../utility-components/paginations/interfaces/pagination';
+import { Pagination } from '../../../../utility-components/paginations/interfaces/pagination';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
@@ -51,7 +51,7 @@ export class ProjectsListComponent implements OnInit {
     sort: '{ "created" :-1}'
   };
 
-  private _paginationConfig: PaginationInterface = {
+  private _paginationConfig: Pagination = {
     limit: this._config.limit,
     offset: this._config.offset
   };
@@ -186,7 +186,7 @@ export class ProjectsListComponent implements OnInit {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
-  get paginationConfig(): PaginationInterface {
+  get paginationConfig(): Pagination {
     return this._paginationConfig;
   }
 

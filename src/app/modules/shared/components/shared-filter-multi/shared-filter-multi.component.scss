@@ -12,7 +12,7 @@
     margin-bottom: $unit-5;
 
     .form-select {
-      min-width: 100px;
+      max-width: 150px;
     }
 
   }
@@ -79,7 +79,7 @@
     .type-wrapper {
 
       .form-select {
-        min-width: 100%;
+        min-width: 100% !important;
       }
 
     }

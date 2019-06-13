@@ -6,6 +6,8 @@ import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
 import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
+import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
+import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 //import { isPlatformBrowser } from '@angular/common';
 //import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
 //import { countries } from "../../../models/static-data/country";
@@ -89,6 +91,8 @@ export class TableComponent implements OnInit {
 
   private _config: Config;
 
+  private _pagination: Pagination;
+
   //private _selector: string; // for the pagination.
 
   //private _title: string; // set the title.
@@ -140,7 +144,8 @@ export class TableComponent implements OnInit {
 
 
   constructor(//@Inject(PLATFORM_ID) private _platformId: Object,
-              private _translateService: TranslateService) {
+              private _translateService: TranslateService,
+              private _localStorageService: LocalStorageService) {
 
     this._initializeTable();
 
@@ -159,6 +164,7 @@ export class TableComponent implements OnInit {
    */
   private _initializeTable() {
     this._table = {
+      _selector: '',
       _title: 'TABLE.TITLE.RESULTS',
       _total: -1,
       _editIndex: 1,
@@ -177,6 +183,10 @@ export class TableComponent implements OnInit {
       this._table = data;
       this._initializeColumns();
       this._initializeContents();
+
+      const localParPageValue =  parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
+      this._setPagination(localParPageValue, Number(this._config.offset));
+
       console.log(this._table);
     }
     // if (value) {
@@ -231,6 +241,18 @@ export class TableComponent implements OnInit {
     this._table._content.forEach((value, index) => {
       this._table._content[index]._isSelected = false;
     });
+  }
+
+  /***
+   * This function sets the pagination value.
+   */
+  private _setPagination(parPage: number, offset: number) {
+    this._pagination = {
+      propertyName: this._table._selector,
+      totalCount: this._table._total,
+      parPage: parPage ? parPage : 10,
+      offset: offset || 0
+    }
   }
 
   /***
@@ -726,6 +748,15 @@ export class TableComponent implements OnInit {
   set sortConfig(value: string) {
     this._config.sort = value;
     this._sortConfigChange();
+  }
+
+  get pagination(): Pagination {
+    return this._pagination;
+  }
+
+  set pagination(value: Pagination) {
+    console.log(value);
+    this._pagination = value;
   }
 
   /*get selector(): string {

@@ -182,6 +182,8 @@
                 .tbody-td-multi-choice-label {
                   margin: 0;
                   padding: $unit-2 $unit-4;
+                  min-width: 93px;
+                  max-width: 100%;
                 }
 
               }

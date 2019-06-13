@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import {PaginationInterface} from '../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
+import {Pagination} from '../../../utility-components/paginations/interfaces/pagination';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -18,7 +18,7 @@ export class SharedProsListOldComponent {
 
   private _config: any;
   private _keywordsModal: boolean = false;
-  private _paginationConfig: PaginationInterface = {};
+  private _paginationConfig: Pagination = {};
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
 
@@ -106,5 +106,5 @@ export class SharedProsListOldComponent {
   get keywordsModal(): boolean { return this._keywordsModal; }
   set keywordsModal(value: boolean) { this._keywordsModal = value; }
   get config() { return this._config; }
-  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
+  get paginationConfig(): Pagination { return this._paginationConfig; }
 }
