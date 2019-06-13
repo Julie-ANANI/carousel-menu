@@ -107,11 +107,9 @@ export class AutocompleteInputComponent implements OnInit {
     if (val) {
       // Verify here if the value has the expected fields (name, logo and domain)
       if (typeof val === 'string') {
-        const _obj = {};
-        _obj[this._identifier] = val;
-        val = _obj;
+        val = {[this._identifier]: val};
       }
-      if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
+      if (val && this.answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
         if (this.onlyOne) {
           this.answerList = [val];
         } else {
@@ -124,14 +122,12 @@ export class AutocompleteInputComponent implements OnInit {
 
     // Verify here if the value has the expected fields (name, logo and domain)
     if (typeof val === 'string') {
-      const _obj = {};
-      _obj[this._identifier] = val;
-      val = _obj;
+      val = {[this._identifier]: val};
     } else if (this.multiLangObjects) {
       val.name = this._multiling.transform(val.name, this._translateService.currentLang);
     }
 
-    if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
+    if (val && this.answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
       if (this.onlyOne) {
         this.answerList = [val];
       } else {

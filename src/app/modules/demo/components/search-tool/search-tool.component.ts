@@ -102,7 +102,7 @@ export class SearchToolComponent {
   }
 
 
-  private _loadResults(result) {
+  private _loadResults(result: any) {
     this._requestId = result._id;
     this._professionalCount = 0;
     this._slicedPros = [];
@@ -233,8 +233,8 @@ export class SearchToolComponent {
   public uploadRequest(file: File) {
     const reader = new FileReader();
     reader.readAsText(file, "UTF-8");
-    reader.onload = evt => {
-      const request = JSON.parse(evt.target['result']);
+    reader.onload = (evt: ProgressEvent) => {
+      const request = JSON.parse((evt.target as any).result);
       this._searchFieldValue = request.keywords;
       this._loadResults(request);
       this._requestAlreadyLoaded = true;

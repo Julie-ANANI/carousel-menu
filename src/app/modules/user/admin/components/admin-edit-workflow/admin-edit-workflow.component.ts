@@ -71,7 +71,7 @@ export class AdminEditWorkflowComponent {
 
 
   private _initTable() {
-    const steps = {
+    const steps: any = {
       FIRST: {step: "FIRST", num: "01 - "},
       SECOND: {step: "SECOND", num: "02 - "},
       THIRD: {step: "THIRD", num: "03 - "},

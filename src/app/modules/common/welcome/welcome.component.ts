@@ -5,7 +5,6 @@ import { UserService } from '../../../services/user/user.service';
 import { User } from '../../../models/user.model';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
-import { first } from 'rxjs/operators';
 import { TranslateTitleService } from '../../../services/title/title.service';
 
 @Component({
@@ -46,7 +45,7 @@ export class WelcomeComponent implements OnInit {
 
     this.authService.user.state = 'confirmed';
 
-    this.userService.activate(this.authService.user.state, this._tokenEmail).pipe(first()).subscribe((res: any) => {
+    this.userService.activate(this.authService.user.state, this._tokenEmail).subscribe((res: any) => {
       if (res.emailVerified === true) {
         this.authService.emailVerified = true;
       }
