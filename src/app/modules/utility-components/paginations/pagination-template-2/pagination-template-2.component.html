@@ -1,0 +1,49 @@
+<section id="pagination-2-wrapper" class="flex-centered">
+
+  <!-- navigation -->
+  <nav class="pagination-navigation m-right-2 d-flex align-center">
+
+    <!-- previous button -->
+    <span class="pagination-navigation-previous-control">
+      <button class="btn ghost-draft ghost-background-hover" type="button">
+        <i class="fas fa-angle-left m-no-left m-right-3"></i>
+        <span>{{ 'PAGINATION.PREVIOUS' | translate }}</span>
+      </button>
+    </span>
+
+    <!-- pages -->
+    <span class="pagination-navigation-numbers">
+
+    </span>
+
+    <!-- next button -->
+    <span class="pagination-navigation-next-control">
+      <button class="btn ghost-draft ghost-background-hover" type="button">
+        <span>{{ 'PAGINATION.NEXT' | translate }}</span>
+        <i class="fas fa-angle-right m-no-right m-left-3"></i>
+      </button>
+    </span>
+
+  </nav>
+  <!-- /navigation -->
+
+  <!-- par page -->
+  <div class="popover">
+
+    <button class="btn ghost-draft no-hover" type="button">
+      <span>{{ pagination.parPage }} {{ 'PAGINATION.PAR_PAGE' | translate }}</span>
+      <i class="fas fa-caret-down m-left-1 m-no-right"></i>
+    </button>
+
+    <div class="popover-container">
+      <ul class="card">
+        <li *ngFor="let parPage of parPages" class="text-medium text-sm text-background">
+          <span>{{ parPage }}</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /par page -->
+
+</section>

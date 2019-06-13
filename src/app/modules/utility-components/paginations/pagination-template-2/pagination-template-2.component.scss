@@ -1,2 +1,73 @@
 @import "../../../../../style/framework/src/variables";
 
+#pagination-2-wrapper {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+
+  .btn {
+    border: none;
+    min-width: auto;
+    height: 32px;
+    padding: $unit-h $unit-2;
+
+    &:disabled {
+      background-color: transparent !important;
+    }
+
+  }
+
+  .pagination-navigation-previous-control, .pagination-navigation-next-control {
+
+    .btn {
+
+      i {
+        font-size: 24px;
+      }
+
+    }
+
+  }
+
+  .popover {
+
+    .btn {
+      padding: 0;
+
+      &:hover {
+
+        span {
+          text-decoration: underline;
+        }
+
+      }
+
+    }
+
+    .popover-container {
+      width: 144px;
+
+      .card {
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        list-style: none;
+
+        li {
+          margin-top: 0;
+          padding: $unit-2 $unit-3;
+
+          &:hover {
+            cursor: pointer;
+            background-color: $bg-dropdown-color;
+          }
+
+        }
+
+      }
+
+    }
+
+
+  }
+
+}

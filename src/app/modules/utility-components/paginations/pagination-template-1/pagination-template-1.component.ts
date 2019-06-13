@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { PaginationInterface } from '../interfaces/pagination';
+import { Pagination } from '../interfaces/pagination';
 import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class PaginationTemplate1Component implements OnInit {
     this._numPages = Math.ceil(this._total / this.perPage);
   };
 
-  @Input() set configValue(value: PaginationInterface) {
+  @Input() set configValue(value: Pagination) {
     if (this.checkConfig(value.limit)) {
       this.initialConfigValues.limit = JSON.parse(JSON.stringify(value.limit));
       this.initialConfigValues.offset = JSON.parse(JSON.stringify(value.offset));
@@ -31,7 +31,7 @@ export class PaginationTemplate1Component implements OnInit {
 
   perPageValues: Array<number> = [10, 20, 50, 100, 1000];
 
-  initialConfigValues: PaginationInterface = {
+  initialConfigValues: any = {
     limit: 10,
     offset: 0
   };
