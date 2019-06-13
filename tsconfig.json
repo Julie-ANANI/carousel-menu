@@ -23,11 +23,12 @@
     ],
     "skipLibCheck": true,
     // "strict": true, TODO
-    // "noImplicitAny": true, TODO
+    "noImplicitAny": true,
     "noUnusedLocals": true
   },
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "server.ts"
   ]
 }

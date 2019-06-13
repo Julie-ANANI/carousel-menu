@@ -327,7 +327,7 @@ export class TableComponent {
    * @param {string} columnAttr
    * @returns {any}
    */
-  getContentValue(rowKey: string, columnAttr: string): any  {
+  getContentValue(rowKey: number, columnAttr: string): any  {
     if (columnAttr.split('.').length > 1) {
       let newColumnAttr = columnAttr.split('.');
       let tmpContent = this._isLocal
@@ -493,7 +493,7 @@ export class TableComponent {
    * This function change the selected value of a row to the opposite
    * @param {string} key
    */
-  selectRow(key: string): void {
+  selectRow(key: number): void {
     if (this._isSelectable) {
       this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
         : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
@@ -555,8 +555,8 @@ export class TableComponent {
     if ((this._columns.find(value => value._attrs[0] === key))) {
       const sortArray = this._filteredContent.slice();
       this._filteredContent = sortArray.sort((a, b) => {
-        const valueA = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(a._content)).toString() , key).toString();
-        const valueB = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(b._content)).toString() , key).toString();
+        const valueA = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(a._content)), key).toString();
+        const valueB = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(b._content)), key).toString();
         return this._config.sort[key] * (valueA.localeCompare(valueB));
       });
     }
@@ -589,9 +589,9 @@ export class TableComponent {
 
       this._filteredContent = this._filteredContent.filter((value, index) => {
         if (columnToFilter._type === 'COUNTRY') {
-          return !this.getContentValue(index.toString(), key).flag.toLowerCase().search(word);
+          return !this.getContentValue(index, key).flag.toLowerCase().search(word);
         } else {
-          return !this.getContentValue(index.toString(), key).toLowerCase().search(word);
+          return !this.getContentValue(index, key).toLowerCase().search(word);
         }
       });
     }

@@ -154,8 +154,9 @@ export class SharedSearchProsComponent implements OnInit {
 
     if (settings && settings.geography) {
       // On ajoute d'abord les pays appartenants aux continents sélectionnés
-      for (const continent in settings.geography.continentTarget) {
-        if (settings.geography.continentTarget[continent]) {
+      const continents = settings.geography.continentTarget as {[c: string]: boolean};
+      for (const continent in continents) {
+        if (continents[continent]) {
           countries = countries.concat(COUNTRIES[continent]);
         }
       }
