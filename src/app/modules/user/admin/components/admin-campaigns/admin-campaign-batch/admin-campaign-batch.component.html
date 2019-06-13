@@ -161,8 +161,8 @@
                 <div *ngIf="getDeleteStatus(batch)" class="icon icon-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
               </div>
 
-              <label class="form-switch float-right text-medium" for="freeze">
-                <input type="checkbox" id="freeze" (change)="OnSwitchFreeze(batch, $event)" [ngModel]="batch.active">
+              <label class="form-switch float-right text-medium" [for]="batch._id">
+                <input type="checkbox" [id]="batch._id" (change)="OnSwitchFreeze(batch , $event)" [ngModel]="batch.active">
                 <i class="form-icon"></i>{{ 'COMMON.LABEL.STARTED' | translate }}
               </label>
 
