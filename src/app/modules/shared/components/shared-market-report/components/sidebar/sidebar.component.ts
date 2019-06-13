@@ -158,7 +158,7 @@ export class SidebarComponent implements OnInit {
     const find = this._activatedCustomFilters.find((filter) => filter.toLowerCase() === name.toLowerCase());
 
     if (!find) {
-      this._innovationService.getFilter(this._innovation._id, name).subscribe((result) => {
+      this._innovationService.getFilter(this._innovation._id, encodeURIComponent(name)).subscribe((result) => {
         if (result) {
 
           this._filterService.addFilter({
@@ -189,7 +189,7 @@ export class SidebarComponent implements OnInit {
 
   public deleteCustomFilter(event: Event, name: string) {
     event.preventDefault();
-    this._innovationService.deleteFilter(this._innovation._id, name).subscribe((result) => {
+    this._innovationService.deleteFilter(this._innovation._id, encodeURIComponent(name)).subscribe((result) => {
       if (result['ok'] === 1) {
         this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
       }
