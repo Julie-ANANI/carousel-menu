@@ -61,12 +61,12 @@ export class SharedTagItemComponent implements OnInit {
     if (this._projectId !== '') {
       return this.tagsService.searchTagInPool(this.projectId, query);
     } else {
-      const queryConf = {
+      const queryConf: any = {
         query: query,
         type: 'tags'
       };
       if (this.type) {
-        queryConf['tagType'] = this.type;
+        queryConf.tagType = this.type;
       }
       return this.autocompleteService.get(queryConf);
     }

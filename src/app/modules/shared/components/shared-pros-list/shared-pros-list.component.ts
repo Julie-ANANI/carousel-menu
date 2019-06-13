@@ -34,8 +34,6 @@ export class SharedProsListComponent {
 
   private _config: any;
 
-  smartSelect: any = null;
-
   editUser: {[propString: string]: boolean} = {};
 
   private _tableInfos: any = null;
@@ -139,9 +137,9 @@ export class SharedProsListComponent {
   }
 
   private configToString() {
-    let config = {};
-    Object.keys(this._config).forEach(key=>{
-      if(this._config[key] instanceof Object) {
+    const config: any = {};
+    Object.keys(this._config).forEach(key => {
+      if (this._config[key] instanceof Object) {
         config[key] = JSON.stringify(this._config[key]);
       } else {
         config[key] = this._config[key];
@@ -152,34 +150,11 @@ export class SharedProsListComponent {
   }
 
 
-  selectPro(event): void {
+  selectPro(event: any): void {
     this.selectedProsChange.emit({
       total: event._rows.length,
       pros: event._rows
     });
-  }
-
-
-  updateSelection(event: any) {
-    this.smartSelect = event;
-    const config = this._config;
-    config.offset = this.smartSelect.offset;
-    config.limit = this.smartSelect.limit;
-    this.selectedProsChange.emit({
-      total: this.nbSelected,
-      pros: 'all',
-      query: config
-    });
-  }
-
-
-  get nbSelected(): number {
-    if (this.smartSelect) {
-      return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
-        this.total - this.smartSelect.offset :
-        this.smartSelect.limit;
-    }
-    return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
 
 
@@ -222,7 +197,7 @@ export class SharedProsListComponent {
   updatePro(pro: Professional): void {
     this.editUser[pro._id] = false;
 
-    this.professionalsService.save(pro._id, pro).pipe(first()).subscribe((res: any) => {
+    this.professionalsService.save(pro._id, pro).subscribe((res: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
       this.loadPros(this._config);
     }, (err: any) => {
@@ -256,7 +231,7 @@ export class SharedProsListComponent {
 
 
   private removePro(userId: string) {
-    this.professionalsService.remove(userId).pipe(first()).subscribe((foo: any) => {
+    this.professionalsService.remove(userId).subscribe((foo: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
       this.loadPros(this._config);
     }, () => {
@@ -265,14 +240,13 @@ export class SharedProsListComponent {
   }
 
   private removeProsFromCampaign(userId: string) {
-    const campaignId = this.campaign['id'];
+    const campaignId = this.campaign._id;
     const innovationId = this.campaign.innovation._id;
     this.professionalsService.removeFromCampaign(userId, campaignId, innovationId)
-      .pipe(first())
-      .subscribe(result=>{
+      .subscribe(result => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
         this.loadPros(this._config);
-    }, err=>{
+    }, err => {
         this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
       });
   }
@@ -300,7 +274,8 @@ export class SharedProsListComponent {
       tags.forEach(value1 => {
         if (!(value.tags.find(value2 => {return value2._id === value1._id}))) {
           this._prosToTag[index].tags.push(value1);
-        }})
+        }
+      });
     });
 
     this._prosToTag.forEach(value => this.updatePro(value));
@@ -325,14 +300,6 @@ export class SharedProsListComponent {
 
   get tableInfos(): Table {
     return this._tableInfos;
-  }
-
-  get prosToRemove(): Professional[] {
-    return this._prosToRemove;
-  }
-
-  get prosToTag(): Professional[] {
-    return this._prosToTag;
   }
 
   set sidebarValue(value: SidebarInterface) {
@@ -364,27 +331,3 @@ export class SharedProsListComponent {
   }
 
 }
-
-
-// deletePro(pro: Professional, event: Event): void {
-//   event.preventDefault();
-//
-//   this.editUser[pro._id] = false;
-//
-//   this._professionalService.remove(pro._id).pipe(first()).subscribe((res: any) => {
-//     this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
-//   }, (err: any) => {
-//     this._notificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
-//   });
-//
-// }
-
-// deleteProModal(pro: Professional) {
-//   this._prosToRemove = [];
-//   this._sidebarValue = {
-//     animate_state: 'inactive',
-//     title: this._sidebarValue.title
-//   };
-//   this._showDeleteModal = true;
-//   this._prosToRemove.push(pro);
-// }

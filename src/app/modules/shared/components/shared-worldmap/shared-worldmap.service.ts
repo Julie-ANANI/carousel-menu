@@ -42,7 +42,7 @@ export class SharedWorldmapService {
         acc[continent] = (acc[continent] || 0) + 1;
       }
       return acc;
-    }, {});
+    }, {} as {[continent: string]: number});
   }
 
   static get continentsList(): Array<string> {

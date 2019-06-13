@@ -78,7 +78,7 @@ export class UserAnswerComponent {
 
 
   public changeMode(event: Event) {
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       this._editMode = true;
     } else {
       this._editMode = false;
@@ -157,7 +157,7 @@ export class UserAnswerComponent {
 
 
   public sendEmail(event: Event, status: any) {
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       this.updateStatus(event, status);
     } else {
       this.updateStatus(event, 'VALIDATED_NO_MAIL');
@@ -210,7 +210,7 @@ export class UserAnswerComponent {
   }
 
   get meta(): any {
-    return this._modalAnswer['meta'] || {};
+    return this._modalAnswer.meta || {};
   }
 
   get lang(): string {

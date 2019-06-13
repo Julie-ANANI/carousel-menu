@@ -33,7 +33,7 @@ export class WorkflowFormComponent {
 
   private _language = 'en';
 
-  private _id = null;
+  private _id: string = null;
 
   constructor() { }
 

@@ -159,7 +159,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     }
   }
 
-  private _generateOneTable(l: string): Table {
+  private _generateOneTable(l: 'A' | 'B'): Table {
     const digit = 2; // Number of decimals.
     return {
       _selector: 'TODO',

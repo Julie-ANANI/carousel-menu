@@ -22,6 +22,7 @@ export interface Answer {
   readonly blacklistedCompany?: boolean;
   readonly professional?: Professional;
   readonly answers: any;
+  readonly meta: any;
   readonly created?: Date;
   readonly updated?: Date;
   isLoading?: boolean;

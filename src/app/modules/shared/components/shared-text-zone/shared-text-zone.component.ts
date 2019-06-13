@@ -97,7 +97,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  _configEditor(name) {
+  _configEditor(name: string) {
     // clean previous editor state
     this._sharedEditor.clean();
     if (!name) {
@@ -106,7 +106,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
       //isLocal = true;
       //configButton("saveBtn","Save...");
     } else {
-      this._sharedText = this._sharedDocument.get('documents.'+name);
+      this._sharedText = this._sharedDocument.get('documents.' + name);
       //isLocal = false;
       //configButton("saveBtn","Save", true);
       //revisionsText = text.getPlaybackTextFor(swell.TextWeb.REV_HISTORY);
@@ -140,11 +140,11 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
           logPanel: document.getElementById("log")
         });
 
-        let editorElement = document.getElementById("editor");
+        const editorElement = document.getElementById("editor");
         this._sharedEditor = swellrt.Editor.create(editorElement);
 
-        this._sharedEditor.setSelectionHandler((range, editor, selection) => {
-          console.log('selection changed '+ range);
+        this._sharedEditor.setSelectionHandler((range: any, _editor: any, _selection: any) => {
+          console.log('selection changed ' + range);
         });
 
         this._configEditor(null);

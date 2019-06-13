@@ -98,7 +98,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   public updateStats() {
     this.campaignService.updateStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
-      this.getBatches()
+      this.getBatches();
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -203,12 +203,12 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   onFirstAutoBatch(event: Event) {
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STARTED');
       this._batchAlreadyActivated = 'true';
       this.setValues(this._batchAlreadyActivated);
       this.setAutoBatch();
-    } else if (!event.target['checked'] && this._campaign.autoBatch) {
+    } else if (this._campaign.autoBatch) {
       this.setAutoBatch();
     }
   }
@@ -219,7 +219,7 @@ export class AdminCampaignBatchComponent implements OnInit {
    * @param event
    */
   onSwitchAutoBatch(event: Event) {
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STARTED');
     }
 
@@ -245,19 +245,21 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   private setAutoBatch() {
-    this.campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
-      if (result.length === 0) {
-        this._campaign.autoBatch = false;
-        this._batchAlreadyActivated = 'false';
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STOPPED');
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.NOT_CREATED');
-      } else if (result.length > 0 && !result['status']) {
-        this._campaign.autoBatch = true;
-        this._stats.batches = result;
-        this._tableBatch = this._stats.batches.map((batch: any) => {
-          return this.generateTableBatch(batch);
-        });
-        this.checkResult(this._stats.batches);
+    this.campaignService.AutoBatch(this._campaign._id).subscribe((result: Array<any> | {status: string}) => {
+      if (Array.isArray(result)) {
+        if (result.length === 0) {
+          this._campaign.autoBatch = false;
+          this._batchAlreadyActivated = 'false';
+          this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.STOPPED');
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.BATCH.NOT_CREATED');
+        } else if (result.length > 0) {
+          this._campaign.autoBatch = true;
+          this._stats.batches = result;
+          this._tableBatch = this._stats.batches.map((batch: any) => {
+            return this.generateTableBatch(batch);
+          });
+          this.checkResult(this._stats.batches);
+        }
       }
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.BATCH_ERROR');
@@ -517,7 +519,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       this._stats.batches[this.getBatchIndex(modifiedBatch._id)] = modifiedBatch;
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.FREEZED');
     }, () => {
-      event.target['checked'] = batch.active;
+      (event.target as HTMLInputElement).checked = batch.active;
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }

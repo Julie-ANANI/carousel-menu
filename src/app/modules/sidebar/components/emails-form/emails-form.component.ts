@@ -199,17 +199,19 @@ export class EmailsFormComponent implements OnInit, OnChanges {
   }
 
   public getConfig(type: string): any {
-    const _inputConfig = {
-        'countries': {
+    switch (type) {
+      case 'countries':
+        return {
           placeholder: 'COMMON.PLACEHOLDER.COUNTRY',
           initialData: this.country || null,
           type: 'countries',
-        }
-    };
-    return _inputConfig[type] || {
-        placeholder: 'Input',
-        initialData: ''
-    };
+        };
+      default:
+        return {
+          placeholder: 'Input',
+          initialData: ''
+        };
+    }
   }
 
   resetExpirationDate(check: boolean) {

@@ -46,16 +46,16 @@ export class AdvsearchFormComponent implements OnInit {
       });
   }
 
-  private processOneLine(self, oneString) {
-    //If we can split the given string using tabs, we can fill the all the other fields in one go.
-    if(oneString) {
-      oneString = oneString.split('\t');
-      if(oneString.length > 1 ) {
-        Object.keys(self._advSearchForm.controls).forEach((key, idx)=>{
-          self._advSearchForm.get(key).setValue(oneString[idx], {emitEvent:false});
+  private processOneLine(self: AdvsearchFormComponent, oneString: string) {
+    // If we can split the given string using tabs, we can fill the all the other fields in one go.
+    if (oneString) {
+      const multipleString = oneString.split('\t');
+      if (multipleString.length > 1 ) {
+        Object.keys(self._advSearchForm.controls).forEach((key, idx) => {
+          self._advSearchForm.get(key).setValue(multipleString[idx], {emitEvent:false});
         });
       } else {
-        self._advSearchForm.get('firstName').setValue(oneString[0], {emitEvent:false});
+        self._advSearchForm.get('firstName').setValue(multipleString[0], {emitEvent:false});
       }
     }
   }

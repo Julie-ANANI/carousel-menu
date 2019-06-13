@@ -55,7 +55,7 @@ export class SharedWorldmapComponent implements OnInit{
   private _continents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
     acc[cont] = false;
     return acc;
-  }, {});
+  }, {} as any);
 
   constructor(private _elem: ElementRef,
               private _worldmap: SharedWorldmapService,
