@@ -4,7 +4,7 @@
 // The base class for the button, add the other classes with this to add the different styles
 .btn {
   @include control-transition();
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -163,6 +163,10 @@
     @include ghost-button-variant($success-color);
   }
 
+  &.ghost-draft {
+    @include ghost-button-variant($background-color);
+  }
+
   &.rounded {
     border-radius: 36px;
   }
@@ -197,8 +201,16 @@
       @include ghost-button-no-hover-variant($primary-color);
     }
 
+    &.ghost-edit {
+      @include ghost-button-no-hover-variant($meta-color);
+    }
+
     &.ghost-delete {
       @include ghost-button-no-hover-variant($alert-color);
+    }
+
+    &.ghost-draft {
+      @include ghost-button-no-hover-variant($background-color);
     }
 
   }
@@ -207,6 +219,14 @@
 
     &.ghost-primary {
       @include button-ghost-background-variant($primary-color);
+    }
+
+    &.ghost-edit {
+      @include button-ghost-background-variant($meta-color);
+    }
+
+    &.ghost-draft {
+      @include button-ghost-background-variant($background-color);
     }
 
   }

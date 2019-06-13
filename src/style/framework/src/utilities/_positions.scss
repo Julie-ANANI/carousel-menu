@@ -28,6 +28,18 @@
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
 .centered {
   display: block;
   float: none;

@@ -16,6 +16,7 @@
   .popover-container {
     display: none;
     top: 0;
+    border-radius: 5px;
     width: $control-width-sm;
     z-index: $zindex-4;
     box-shadow: $box-shadow-hover-umi;
