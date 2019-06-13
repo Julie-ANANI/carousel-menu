@@ -75,47 +75,56 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
    * @returns {any|{placeholder: string, initialData: string}}
    */
   getConfig(type: string): any {
-    const _inputConfig = {
-      'countries': {
-        placeholder: 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this._innovation.settings && this._innovation.settings.geography ? this._innovation.settings.geography.exclude || [] : [],
-        type: 'countries'
-      },
-      'excludedPeople': {
-        placeholder: 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this._innovation.settings && this._innovation.settings.professionals ? this._innovation.settings.professionals.exclude || [] : []
-      },
-      'excludedCompanies': {
-        placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.exclude || [] : [],
-        type: 'company'
-      },
-      'includedCompanies': {
-        placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
-        initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.include || [] : [],
-        type: 'company'
-      },
-      'keywords': {
-        placeholder: 'SHARED_PROJECT_SETTINGS.KEYWORDS.PLACEHOLDER',
-        initialData: this._innovation.settings ? this._innovation.settings.keywords || [] : []
-      },
-      'domainBL': {
-        placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.DOMAINS_PLACEHOLDER',
-        initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.domains, (val: string) => {return {text: val}; }) : []
-      },
-      'emailBL': {
-        placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.EMAILS_PLACEHOLDER',
-        initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.emails, (val: string) => {return {text: val}; }) : []
-      },
-      'peopleBL': {
-        placeholder: 'Ex. sjobs@apple.com',
-        initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.people, (val: string) => {return {text: val}; }) : []
-      }
-    };
-    return _inputConfig[type] || {
-      placeholder: 'Input',
-      initialData: ''
-    };
+    switch (type) {
+      case 'countries':
+        return {
+          placeholder: 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
+            initialData: this._innovation.settings && this._innovation.settings.geography ? this._innovation.settings.geography.exclude || [] : [],
+            type: 'countries'
+        };
+      case 'excludedPeople':
+        return {
+          placeholder: 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
+          initialData: this._innovation.settings && this._innovation.settings.professionals ? this._innovation.settings.professionals.exclude || [] : []
+        };
+      case 'excludedCompanies':
+        return {
+          placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
+          initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.exclude || [] : [],
+          type: 'company'
+        };
+      case 'includedCompanies':
+        return {
+          placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
+          initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.include || [] : [],
+          type: 'company'
+        };
+      case 'keywords':
+        return {
+          placeholder: 'SHARED_PROJECT_SETTINGS.KEYWORDS.PLACEHOLDER',
+          initialData: this._innovation.settings ? this._innovation.settings.keywords || [] : []
+        };
+      case 'domainBL':
+        return {
+          placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.DOMAINS_PLACEHOLDER',
+          initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.domains, (val: string) => {return {text: val}; }) : []
+        };
+      case 'emailBL':
+        return {
+          placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.EMAILS_PLACEHOLDER',
+          initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.emails, (val: string) => {return {text: val}; }) : []
+        };
+      case 'peopleBL':
+        return {
+          placeholder: 'Ex. sjobs@apple.com',
+          initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.people, (val: string) => {return {text: val}; }) : []
+        };
+      default:
+        return {
+          placeholder: 'Input',
+          initialData: ''
+        };
+    }
   }
 
 

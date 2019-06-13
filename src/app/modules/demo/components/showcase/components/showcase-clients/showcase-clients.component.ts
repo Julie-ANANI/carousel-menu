@@ -35,9 +35,9 @@ export class ShowcaseClientsComponent {
             .reduce((acc, company) => {
               acc[company.name] = company;
               return acc;
-            }, {});
+            }, {} as {[c: string]: Clearbit});
 
-          this._totalClients = Object.values(companies);
+          this._totalClients = Object.keys(companies).map((k) => companies[k]);
 
           this._totalClients = this._totalClients.sort((a, b) => {
             if (a.logo && !b.logo) { return -1; }

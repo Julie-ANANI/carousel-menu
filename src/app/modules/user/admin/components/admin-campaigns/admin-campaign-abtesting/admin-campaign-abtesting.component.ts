@@ -159,36 +159,37 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     }
   }
 
-  private _generateOneTable(l: string): Table {
+  private _generateOneTable(l: 'A' | 'B'): Table {
+    const self = this as any;
     const digit = 2; // Number of decimals.
     return {
       _selector: 'TODO',
-      _title: this[`_nameWorkflow${l}`],
+      _title: self[`_nameWorkflow${l}`],
       _isNotPaginable: true,
       _content: [
         {
           Step: ' 1er mail',
-          Sent: this[`_stats${l}`][0].delivered + this[`_stats${l}`][0].bounced,
-          Opened: ((this[`_stats${l}`][0].opened / this[`_size${l}`]) * 100).toFixed(digit) + '%',
-          Clicked: ((this[`_stats${l}`][0].clicked / this[`_size${l}`]) * 100).toFixed(digit) + '%',
-          Insights: this[`_stats${l}`][0].insights,
-          Status: this.getStatus(0, this[`_status${l}`])
+          Sent: self[`_stats${l}`][0].delivered + self[`_stats${l}`][0].bounced,
+          Opened: ((self[`_stats${l}`][0].opened / self[`_size${l}`]) * 100).toFixed(digit) + '%',
+          Clicked: ((self[`_stats${l}`][0].clicked / self[`_size${l}`]) * 100).toFixed(digit) + '%',
+          Insights: self[`_stats${l}`][0].insights,
+          Status: this.getStatus(0, self[`_status${l}`])
         }, {
           Step: ' 2eme mail',
-          Sent: this[`_stats${l}`][1].delivered + this[`_stats${l}`][1].bounced,
-          Opened: ((this[`_stats${l}`][1].opened / this[`_size${l}`]) * 100).toFixed(digit) + '%',
-          Clicked: ((this[`_stats${l}`][1].clicked / this[`_size${l}`]) * 100).toFixed(digit) + '%',
-          Insights: this[`_stats${l}`][1].insights,
-          Status: this.getStatus(1, this[`_status${l}`])
+          Sent: self[`_stats${l}`][1].delivered + self[`_stats${l}`][1].bounced,
+          Opened: ((self[`_stats${l}`][1].opened / self[`_size${l}`]) * 100).toFixed(digit) + '%',
+          Clicked: ((self[`_stats${l}`][1].clicked / self[`_size${l}`]) * 100).toFixed(digit) + '%',
+          Insights: self[`_stats${l}`][1].insights,
+          Status: this.getStatus(1, self[`_status${l}`])
         }, {
           Step: ' 3eme mail',
-          Sent: this[`_stats${l}`][2].delivered + this[`_stats${l}`][2].bounced,
-          Opened: ((this[`_stats${l}`][2].opened / this[`_size${l}`]) * 100).toFixed(digit) + '%',
-          Clicked: ((this[`_stats${l}`][2].clicked / this[`_size${l}`]) * 100).toFixed(digit) + '%',
-          Insights: this[`_stats${l}`][2].insights ,
-          Status: this.getStatus(2, this[`_status${l}`])
+          Sent: self[`_stats${l}`][2].delivered + self[`_stats${l}`][2].bounced,
+          Opened: ((self[`_stats${l}`][2].opened / self[`_size${l}`]) * 100).toFixed(digit) + '%',
+          Clicked: ((self[`_stats${l}`][2].clicked / self[`_size${l}`]) * 100).toFixed(digit) + '%',
+          Insights: self[`_stats${l}`][2].insights ,
+          Status: this.getStatus(2, self[`_status${l}`])
         }],
-      _total: this[`_size${l}`],
+      _total: self[`_size${l}`],
       _columns: [{
         _attrs: ['Step'],
         _name: 'Step',

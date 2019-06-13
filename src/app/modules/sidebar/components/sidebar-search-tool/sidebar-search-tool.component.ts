@@ -48,9 +48,6 @@ export class SidebarSearchToolComponent {
   constructor(private _searchService: SearchService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
-  ngOnInit() {
-  }
-
 
   public loadHistory(config: any) {
     this._config = config;
@@ -58,7 +55,7 @@ export class SidebarSearchToolComponent {
     this._searchService.getMetadataRequests(this._config).subscribe((result: any) => {
 
       if (result.metadatarequests) {
-        this._requests = result.metadatarequests.map(request => {
+        this._requests = result.metadatarequests.map((request: any) => {
           request.saved = !request.expireAt;
           return request;
         });
@@ -87,7 +84,7 @@ export class SidebarSearchToolComponent {
   }
 
 
-  public onClickEdit(request) {
+  public onClickEdit(request: any) {
     this.onLoadRequest.emit(request._id);
   }
 

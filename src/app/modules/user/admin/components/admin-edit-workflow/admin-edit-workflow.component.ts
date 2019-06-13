@@ -3,6 +3,8 @@ import { EmailScenario } from '../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../models/email-template';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../models/email-signature';
+import { Column } from '../../../../table/models/column';
+import { Table } from '../../../../table/models/table';
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -54,7 +56,7 @@ export class AdminEditWorkflowComponent {
 
   private _more: SidebarInterface = {};
 
-  private _tableInfos: any;
+  private _tableInfos: Table;
 
   private _campaignScenario: EmailScenario;
 
@@ -69,7 +71,7 @@ export class AdminEditWorkflowComponent {
 
 
   private _initTable() {
-    const steps = {
+    const steps: any = {
       FIRST: {step: "FIRST", num: "01 - "},
       SECOND: {step: "SECOND", num: "02 - "},
       THIRD: {step: "THIRD", num: "03 - "},
@@ -86,11 +88,11 @@ export class AdminEditWorkflowComponent {
 
     this._total = this._campaignScenario.emails.length;
 
-    let columns = [{_attrs: ['num', `${this._language}.subject`], _name: 'TABLE.HEADING.EMAILS', _type: 'TEXT', _isSortable: false, _choices: null},
+    const columns: Array<Column> = [{_attrs: ['num', `${this._language}.subject`], _name: 'TABLE.HEADING.EMAILS', _type: 'TEXT', _isSortable: false, _choices: null},
       {_attrs: [`${this._language}.defaultSignatureName`], _name: 'TABLE.HEADING.SIGNATURES', _type: 'TEXT', _isSortable: false, _choices: null}];
 
     if (this._inCampaign) {
-      columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES',_isSortable: false, _choices: [
+      columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSortable: false, _choices: [
           {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label label-draft'},
           {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label label-success'},
         ]});

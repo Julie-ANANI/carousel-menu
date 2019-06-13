@@ -85,8 +85,8 @@ export class SharedProsListOldComponent {
     });
   }
 
-  showKeywords(personId) {
-    this._searchService.getProKeywords(personId).pipe(first()).subscribe((keywords: Array<string>) => {
+  showKeywords(personId: string) {
+    this._searchService.getProKeywords(personId).subscribe((keywords: Array<string>) => {
       this._proKeywords = keywords;
       this._keywordsModal = true;
     });

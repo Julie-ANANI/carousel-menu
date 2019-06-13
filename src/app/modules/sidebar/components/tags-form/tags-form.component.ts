@@ -118,7 +118,7 @@ export class TagsFormComponent {
   connectToTag(event: Event, tag: Tag): void {
     event.preventDefault();
 
-    this.tagsService.updateTagInPool(this._innovationId, tag).pipe(first()).subscribe((data: any) => {
+    this.tagsService.updateTagInPool(this._innovationId, tag).subscribe((data: Array<Tag>) => {
       const index = data.findIndex((item) => item._id === tag._id);
       if (index !== -1) {
         this._tag = data[index];

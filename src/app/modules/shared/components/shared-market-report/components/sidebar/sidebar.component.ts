@@ -98,7 +98,7 @@ export class SidebarComponent implements OnInit {
 
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(_event: Event) {
     if (window.innerWidth > 600) {
       this._toggleFilterBar = false;
     }
@@ -158,7 +158,7 @@ export class SidebarComponent implements OnInit {
     const find = this._activatedCustomFilters.find((filter) => filter.toLowerCase() === name.toLowerCase());
 
     if (!find) {
-      this._innovationService.getFilter(this._innovation._id, name).subscribe((result) => {
+      this._innovationService.getFilter(this._innovation._id, encodeURIComponent(name)).subscribe((result) => {
         if (result) {
 
           this._filterService.addFilter({
@@ -189,7 +189,7 @@ export class SidebarComponent implements OnInit {
 
   public deleteCustomFilter(event: Event, name: string) {
     event.preventDefault();
-    this._innovationService.deleteFilter(this._innovation._id, name).subscribe((result) => {
+    this._innovationService.deleteFilter(this._innovation._id, encodeURIComponent(name)).subscribe((result) => {
       if (result['ok'] === 1) {
         this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
       }
@@ -201,20 +201,20 @@ export class SidebarComponent implements OnInit {
 
   public checkCountry(event: Event) {
     event.preventDefault();
-    this._worldmapFilterService.selectContinent(event.target['name'], event.target['checked']);
+    this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
   }
 
 
   public checkOption(event: Event, question: Question) {
     event.preventDefault();
-    const checked = event.target['checked'];
-    let filterValue;
+    const checked = (event.target as HTMLInputElement).checked;
+    let filterValue: any;
     if (this._filterService.filters[question.identifier]) {
       filterValue = this._filterService.filters[question.identifier].value;
     } else {
-      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {});
+      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
     }
-    filterValue[event.target['name']] = checked;
+    filterValue[(event.target as HTMLInputElement).name] = checked;
     const removeFilter = checked && Object.keys(filterValue).every((k) => filterValue[k] === true);
     if (removeFilter) {
       this._filterService.deleteFilter(question.identifier);
@@ -230,13 +230,13 @@ export class SidebarComponent implements OnInit {
 
   public checkTag(event: Event, tagId: string) {
     event.preventDefault();
-    this._tagService.checkTag(tagId, event.target['checked']);
+    this._tagService.checkTag(tagId, (event.target as HTMLInputElement).checked);
   }
 
 
   public checkAnswerTag(event: Event, questionIdentifier: string) {
     event.preventDefault();
-    this._tagService.checkAnswerTag(questionIdentifier, event.target['name'], event.target['checked']);
+    this._tagService.checkAnswerTag(questionIdentifier, (event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
   }
 
 
@@ -291,7 +291,7 @@ export class SidebarComponent implements OnInit {
     const sections = this._innovation.executiveReport.sections;
 
     this._innovation.executiveReport.totalSections = 0;
-    this._innovation.executiveReport.sections = [{}];
+    this._innovation.executiveReport.sections = [];
 
     this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'The executive report has been reset successfully.');

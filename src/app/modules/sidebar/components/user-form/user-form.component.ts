@@ -316,7 +316,7 @@ export class UserFormComponent implements OnInit {
 
 
   changeRole(event: Event) {
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       this._userForm.get('roles').setValue('admin');
     } else {
       this._userForm.get('roles').setValue('user');

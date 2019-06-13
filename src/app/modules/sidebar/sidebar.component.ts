@@ -82,7 +82,7 @@ export class SidebarComponent implements OnInit {
    * @param target
    */
   toggleState(event: Event, target: any) {
-    if (event.target['id'] === 'sidebar-wrapper' || event.target['id'] === 'close') {
+    if ((event.target as HTMLElement).id === 'sidebar-wrapper' || (event.target as HTMLElement).id === 'close') {
       this._state = 'inactive'; // todo: remove this line
       this.templateChange.emit({animate_state: 'inactive', title: this._title, type: this._type});
       this.closeSidebar.emit({animate_state: this._state, title: this._title, type: this._type}); // todo: remove this line

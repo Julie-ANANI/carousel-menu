@@ -1,4 +1,4 @@
-export const COUNTRIES = {
+export const COUNTRIES: {[c: string]: Array<string>} = {
   europe: ['AL', 'AD', 'AM', 'AT', 'BY', 'BE', 'BA', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FO', 'FI', 'FR', 'DE', 'GR',
     'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MK', 'MT', 'MD', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES',
     'SE', 'CH', 'UA', 'UK'],

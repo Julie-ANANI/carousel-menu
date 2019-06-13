@@ -7,6 +7,7 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { Answer } from '../../../../models/answer';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
+import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment } from '../../../../../environments/environment';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
@@ -208,7 +209,7 @@ export class SharedMarketReportComponent implements OnInit {
           }
         });
         return acc;
-      }, {});
+      }, {} as {[id: string]: Tag});
       this._tagFiltersService.tagsList = Object.values(tagsDict);
 
       /*
@@ -315,18 +316,12 @@ export class SharedMarketReportComponent implements OnInit {
    * @param event
    * @param {string} ob
    */
-  public saveOperatorComment(event: any, ob: string) {
-    const objToSave = {};
-
-    objToSave[ob] = {
-      conclusion: event['content']
-    };
-
+  public saveOperatorComment(event: {content: string}, ob: string) {
+    const objToSave = { [ob]: { conclusion: event.content } };
     this._innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
-
   }
 
 
@@ -341,7 +336,7 @@ export class SharedMarketReportComponent implements OnInit {
 
   filterPro(answer: Answer, event: Event) {
     event.preventDefault();
-    let proFiltered = {};
+    let proFiltered: any = {};
     if (this._filterService.filters['professionals']) {
       proFiltered = this._filterService.filters['professionals'].value;
     }

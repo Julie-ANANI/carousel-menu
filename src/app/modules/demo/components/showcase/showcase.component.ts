@@ -41,7 +41,7 @@ export class ShowcaseComponent {
               private _translateNotificationService: TranslateNotificationsService) {
 
     if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
-      this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1, t2) => {
+      this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1: Tag, t2: Tag) => {
         const label1 = this._multilingPipe.transform(t1.label, this._translateService.currentLang);
         const label2 = this._multilingPipe.transform(t2.label, this._translateService.currentLang);
         return label1.localeCompare(label2);
@@ -66,13 +66,11 @@ export class ShowcaseComponent {
 
 
   public onChangeTag(event: Event, tag: Tag) {
-
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       this._getTagStat(event, tag);
     } else {
       this._removeTag(tag._id);
     }
-
   }
 
 

@@ -120,9 +120,9 @@ export class AdminCommunityProjectComponent {
 
 
   public actionsResultCallback(response: Event) {
-    if(!!response) {
-      if(response['result'].status === 'error') {
-        this._translateNotificationsService.error('ERROR.ERROR', response['result'].message);
+    if (!!response) {
+      if ((response as any).result.status === 'error') {
+        this._translateNotificationsService.error('ERROR.ERROR', (response as any).result.message);
       } else {
         const message = `Operation done!`; // TODO Use a real informative message
         this._translateNotificationsService.success('ERROR.SUCCESS', message);

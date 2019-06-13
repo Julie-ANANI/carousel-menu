@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { SearchService } from '../../../../services/search/search.service';
-import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
@@ -16,7 +15,7 @@ import { countries } from "../../../../models/static-data/country";
   styleUrls: ['./search-tool.component.scss']
 })
 
-export class SearchToolComponent implements OnInit{
+export class SearchToolComponent {
 
   private _slicedPros: Array<any> = [];
 
@@ -38,8 +37,6 @@ export class SearchToolComponent implements OnInit{
 
   private _requestAlreadyLoaded: boolean = false;
 
-  public names: any = countries;
-
   private _searchFieldValue: string;
 
   private _searchFieldOutput: string;
@@ -52,9 +49,6 @@ export class SearchToolComponent implements OnInit{
 
     this._translateTitleService.setTitle('Search Tool | UMI');
 
-  }
-
-  ngOnInit(): void {
   }
 
 
@@ -97,8 +91,8 @@ export class SearchToolComponent implements OnInit{
   }
 
 
-  public loadRequest(requestId) {
-    this._searchService.getMetadataRequest(requestId).pipe(first()).subscribe((request: any) => {
+  public loadRequest(requestId: string) {
+    this._searchService.getMetadataRequest(requestId).subscribe((request: any) => {
       this._searchFieldValue = request.keywords;
       this._loadResults(request);
       this._requestAlreadyLoaded = true;
@@ -108,7 +102,7 @@ export class SearchToolComponent implements OnInit{
   }
 
 
-  private _loadResults(result) {
+  private _loadResults(result: any) {
     this._requestId = result._id;
     this._professionalCount = 0;
     this._slicedPros = [];
@@ -239,8 +233,8 @@ export class SearchToolComponent implements OnInit{
   public uploadRequest(file: File) {
     const reader = new FileReader();
     reader.readAsText(file, "UTF-8");
-    reader.onload = evt => {
-      const request = JSON.parse(evt.target['result']);
+    reader.onload = (evt: ProgressEvent) => {
+      const request = JSON.parse((evt.target as any).result);
       this._searchFieldValue = request.keywords;
       this._loadResults(request);
       this._requestAlreadyLoaded = true;
@@ -322,6 +316,10 @@ export class SearchToolComponent implements OnInit{
 
   get searchFieldOutput(): string {
     return this._searchFieldOutput;
+  }
+
+  get name() {
+    return countries;
   }
 
 }

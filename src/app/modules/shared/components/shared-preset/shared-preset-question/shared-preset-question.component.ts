@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { PresetService } from '../services/preset.service';
+import { Innovation } from '../../../../../models/innovation';
 import { Question } from '../../../../../models/question';
 
 @Component({
@@ -72,18 +73,18 @@ export class SharedPresetQuestionComponent {
 
   public fillWithBenefits(event: Event) {
     event.preventDefault();
-    const innovation = this.activatedRoute.snapshot.parent.data['innovation'];
+    const innovation = this.activatedRoute.snapshot.parent.data['innovation'] as Innovation;
     // Calcul benefits
     this._question.options = innovation.innovationCards.reduce((acc, innovCard) => {
       innovCard.advantages.forEach((advantage, index) => {
-        if (acc[index]) {
+        if (index < acc.length) {
           acc[index].label[innovCard.lang] = advantage.text;
         } else {
-          acc[index] = {identifier: index.toString(), label: { [innovCard.lang]: advantage.text }};
+          acc.push({identifier: index.toString(), label: { [innovCard.lang]: advantage.text }});
         }
       });
       return acc;
-    }, new Array());
+    }, []);
   }
 
   public deleteOption(event: Event, index: number) {

@@ -91,7 +91,7 @@ export class ShowcaseAnswersComponent {
 
 
   public onChangeAnswer(event: Event, answer: Answer) {
-    if (event.target['checked']) {
+    if ((event.target as HTMLInputElement).checked) {
       if (this._selectedAnswers.length < 6) {
         this._selectedAnswers.push(answer);
       } else {
