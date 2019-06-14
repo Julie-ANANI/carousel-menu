@@ -304,7 +304,7 @@
     <!-- when pagination is required -->
     <ng-container *ngIf="table._total > 0 && table._isPaginable">
       <div class="flex-centered section-light-pad rm-pad-bottom">
-        <app-pagination-2 [(pagination)]="pagination"></app-pagination-2>
+        <app-pagination-2 [(pagination)]="pagination" [ngStyle]="{ 'width': '100%' }"></app-pagination-2>
       </div>
     </ng-container>
 
