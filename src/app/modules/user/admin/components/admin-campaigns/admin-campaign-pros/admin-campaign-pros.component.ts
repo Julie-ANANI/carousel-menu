@@ -5,9 +5,9 @@ import { ProfessionalsService } from '../../../../../../services/professionals/p
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
-import { FormGroup } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import { Professional } from '../../../../../../models/professional';
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -135,15 +135,15 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
 
-  onClickSave(formValue: FormGroup) {
+  onClickSave(formValue: Professional) {
     this._newPro = {
-      firstName: formValue.get('firstName').value,
-      lastName: formValue.get('lastName').value,
-      email: formValue.get('email').value,
-      jobTitle: formValue.get('jobTitle').value,
-      country: formValue.get('country').value,
-      profileUrl: formValue.get('profileUrl').value,
-      company: formValue.get('companyName').value,
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      email: formValue.email,
+      jobTitle: formValue.jobTitle,
+      country: formValue.country,
+      profileUrl: formValue.profileUrl,
+      company: formValue.company,
       emailConfidence: 100
     };
 
