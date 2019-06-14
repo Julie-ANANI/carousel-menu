@@ -161,8 +161,8 @@ export class SearchToolComponent {
       this._searchResult.pros.slice(0, displayLimit);
 
     this._slicedPros.forEach((professional, index) => {
-      professional.isLoading = true;
       if (index >= (displayLimit - loadLimit)) {
+        professional.isLoading = true;
         this._formatPro(professional, index);
       }
     });
@@ -318,7 +318,7 @@ export class SearchToolComponent {
     return this._searchFieldOutput;
   }
 
-  get name() {
+  get names() {
     return countries;
   }
 
