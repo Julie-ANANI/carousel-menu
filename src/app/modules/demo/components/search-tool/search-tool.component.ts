@@ -318,7 +318,7 @@ export class SearchToolComponent {
     return this._searchFieldOutput;
   }
 
-  get name() {
+  get names() {
     return countries;
   }
 
