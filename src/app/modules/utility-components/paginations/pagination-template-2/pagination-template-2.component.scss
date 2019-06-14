@@ -1,19 +1,29 @@
 @import "../../../../../style/framework/src/variables";
 
 #pagination-2-wrapper {
-  flex-wrap: nowrap;
-  white-space: nowrap;
 
   .btn {
-    border: none;
+    transition: none;
+    border: 1px solid transparent;
     min-width: auto;
     height: 32px;
     padding: $unit-h $unit-2;
 
+
     &:disabled {
       background-color: transparent !important;
+      border: none;
     }
 
+  }
+
+  .active {
+    background-color: $text-background-50-color;
+    border-color: $background-color;
+  }
+
+  .ghost-background-hover:hover {
+    background-color: $text-background-55-color;
   }
 
   .pagination-navigation-previous-control, .pagination-navigation-next-control {
@@ -21,7 +31,7 @@
     .btn {
 
       i {
-        font-size: 24px;
+        font-size: 28px;
       }
 
     }
@@ -32,6 +42,7 @@
 
     .btn {
       padding: 0;
+      min-width: 101px;
 
       &:hover {
 
@@ -58,7 +69,7 @@
 
           &:hover {
             cursor: pointer;
-            background-color: $bg-dropdown-color;
+            background-color: $text-background-55-color;
           }
 
         }

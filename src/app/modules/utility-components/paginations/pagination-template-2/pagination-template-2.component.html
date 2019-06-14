@@ -1,49 +1,66 @@
-<section id="pagination-2-wrapper" class="flex-centered">
+<section id="pagination-2-wrapper">
+  <nav class="flex-centered flex-wrap">
 
-  <!-- navigation -->
-  <nav class="pagination-navigation m-right-2 d-flex align-center">
+    <!-- controls -->
+    <div class="pagination-navigation m-right-2 scroll-x">
 
-    <!-- previous button -->
-    <span class="pagination-navigation-previous-control">
-      <button class="btn ghost-draft ghost-background-hover" type="button">
+      <!-- previous button -->
+      <span class="pagination-navigation-previous-control">
+      <button
+        [disabled]="pagination.currentPage === 1"
+        (click)="navigatePage(pagination.currentPage - 1)"
+        class="btn ghost-draft ghost-background-hover"
+        type="button">
         <i class="fas fa-angle-left m-no-left m-right-3"></i>
         <span>{{ 'PAGINATION.PREVIOUS' | translate }}</span>
       </button>
     </span>
 
-    <!-- pages -->
-    <span class="pagination-navigation-numbers">
-
+      <!-- pages -->
+      <span class="pagination-navigation-numbers">
+      <button
+        *ngFor="let page of pagination.paginatorNumber| slice:startPageNumber:endPageNumber"
+        (click)="navigatePage(page)"
+        [ngClass]="{ 'active': pagination.currentPage === page }"
+        type="button"
+        class="btn ghost-draft ghost-background-hover light-hover m-left-1 m-right-1">
+        <span>{{ page }}</span>
+      </button>
     </span>
 
-    <!-- next button -->
-    <span class="pagination-navigation-next-control">
-      <button class="btn ghost-draft ghost-background-hover" type="button">
+      <!-- next button -->
+      <span class="pagination-navigation-next-control">
+      <button
+        [disabled]="pagination.currentPage === pagination.totalPage"
+        (click)="navigatePage(pagination.currentPage + 1)"
+        class="btn ghost-draft ghost-background-hover"
+        type="button">
         <span>{{ 'PAGINATION.NEXT' | translate }}</span>
         <i class="fas fa-angle-right m-no-right m-left-3"></i>
       </button>
     </span>
 
-  </nav>
-  <!-- /navigation -->
-
-  <!-- par page -->
-  <div class="popover">
-
-    <button class="btn ghost-draft no-hover" type="button">
-      <span>{{ pagination.parPage }} {{ 'PAGINATION.PAR_PAGE' | translate }}</span>
-      <i class="fas fa-caret-down m-left-1 m-no-right"></i>
-    </button>
-
-    <div class="popover-container">
-      <ul class="card">
-        <li *ngFor="let parPage of parPages" class="text-medium text-sm text-background">
-          <span>{{ parPage }}</span>
-        </li>
-      </ul>
     </div>
+    <!-- /controls -->
 
-  </div>
-  <!-- /par page -->
+    <!-- par page -->
+    <div class="popover">
 
+      <button class="btn ghost-draft no-hover" type="button">
+        <span>{{ pagination.parPage }} {{ 'PAGINATION.PAR_PAGE' | translate }}</span>
+        <i class="fas fa-caret-down m-left-1 m-no-right"></i>
+      </button>
+
+      <div class="popover-container">
+        <ul class="card">
+          <li *ngFor="let parPage of parPages" (click)="onChangeParPage(parPage)" class="text-medium text-sm text-background">
+            <span>{{ parPage }}</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- /par page -->
+
+  </nav>
 </section>
