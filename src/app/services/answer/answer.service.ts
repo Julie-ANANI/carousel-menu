@@ -42,7 +42,7 @@ export class AnswerService {
   }
 
   public createTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
-    const params: {[param: string]: string | string[]} = { tag: JSON.stringify(tag) };
+    const params: any = { tag: tag };
     if (questionId) { params['questionId'] = questionId; }
     return this._http.post('/answer/' + answerId + '/new-tag', { params: params});
   }
