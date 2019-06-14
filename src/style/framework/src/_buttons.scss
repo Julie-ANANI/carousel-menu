@@ -115,7 +115,7 @@
   }
 
   &[disabled], &:disabled, &.disabled {
-    color: $button-disabled-text !important;
+    color: $button-disabled-text-color !important;
     background-color: $button-disabled-bg-color !important;
     border-color: $button-border-color !important;
     cursor: not-allowed;

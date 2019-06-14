@@ -34,7 +34,7 @@ legend {
 .form-input {
   @include control-transition();
   appearance: none;
-  border: $border-width solid $form-border;
+  border: $border-width solid $form-border-color;
   font-size: $font-size-sm;
   color: $form-input-color;
   border-radius: $border-radius;
@@ -58,7 +58,7 @@ legend {
   }
 
   &.ng-touched.ng-dirty.ng-invalid {
-    border-color: $form-alert;
+    border-color: $form-alert-color;
   }
 
   &.input-inline {
@@ -123,7 +123,7 @@ textarea.form-input {
 .form-select {
   @include control-transition();
   appearance: none;
-  border: $border-width solid $form-border;
+  border: $border-width solid $form-border-color;
   font-size: $font-size-sm;
   color: $form-input-color;
   border-radius: $border-radius;
@@ -379,7 +379,7 @@ textarea.form-input {
     padding: $unit-2;
     font-size: $font-size-sm;
     margin-top: $unit-1;
-    color: $text-primary;
+    color: $text-primary-color;
 
     &:hover, &.is-focused {
       background:  $bg-dropdown-color;
@@ -530,7 +530,7 @@ textarea.form-input {
 
   &:disabled, &.disabled {
     background: $form-disabled-color none;
-    color: $form-disabled-text;
+    color: $form-disabled-text-color;
     border-color: $form-disabled-color;
     cursor: not-allowed;
     opacity: .5;
