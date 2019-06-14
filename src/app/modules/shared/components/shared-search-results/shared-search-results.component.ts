@@ -109,7 +109,7 @@ export class SharedSearchResultsComponent implements OnInit {
     this._professionalsService.addFromRequest(params).pipe(first()).subscribe((result: any) => {
       this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
       if (goToCampaign) {
-        this._router.navigate([`/admin/campaigns/campaign/${campaign._id}/pros`]);
+        this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
       }
     });
   }
