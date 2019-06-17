@@ -38,7 +38,7 @@ export class SharedProsListComponent {
 
   editUser: {[propString: string]: boolean} = {};
 
-  private _tableInfos: any = null;
+  private _tableInfos: Table = null;
 
   private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS', 'Convert to ambassador'];
 
@@ -113,6 +113,8 @@ export class SharedProsListComponent {
           _content: this._pros,
           _total: this._total,
           _isFiltrable: true,
+          _isTitle: true,
+          _isPaginable: true,
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
@@ -121,8 +123,8 @@ export class SharedProsListComponent {
           _columns: [
             {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES',
               _choices: [
-                {_name: 'false', _alias: 'No',_class:'img-responsive badge-sm'},
-                {_name: 'true', _alias: 'Yes',_class:'img-responsive badge-sm',
+                {_name: 'false', _alias: 'No'},
+                {_name: 'true', _alias: 'Yes',
                   _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}]},
             {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},

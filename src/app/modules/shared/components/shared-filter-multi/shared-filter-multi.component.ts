@@ -12,6 +12,7 @@ import { Config } from '../../../../models/config';
 export class SharedFilterMultiComponent {
 
   @Input() set searchConfig(value: Config) {
+    console.log(value);
     this._searchConfig = value;
   }
 
@@ -63,9 +64,9 @@ export class SharedFilterMultiComponent {
   }
 
   // For values linked with config
-  public onSearch(event: any) {
+  public onSearch(event: Event) {
 
-    let value = event.value || '';
+    let value = event.target['value'] || '';
 
       if (value === '') {
         this._searchConfig.search = '{}';

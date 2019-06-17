@@ -29,11 +29,6 @@ export class TableComponent implements OnInit {
    */
   @Input() set data(value: Table) {
     this._loadData(value);
-
-    /*if (this._isLocal) {
-      // this.changeLocalConfig();
-    }*/
-
   }
 
   /***
@@ -142,8 +137,7 @@ export class TableComponent implements OnInit {
 
 
 
-  constructor(//@Inject(PLATFORM_ID) private _platformId: Object,
-              private _translateService: TranslateService) {
+  constructor(private _translateService: TranslateService) {
 
     this._initializeTable();
 
@@ -179,11 +173,11 @@ export class TableComponent implements OnInit {
   private _loadData(data: Table): void  {
     if (data) {
       this._table = data;
+      this._initializeVariables();
       this._initializeColumns();
       this._initializeContents();
       this._setPagination(Number(this._config.offset));
 
-      //console.log(typeof (parseInt(this._config.offset, 10)));
       console.log(this._table);
     }
     // if (value) {
@@ -221,6 +215,10 @@ export class TableComponent implements OnInit {
     // }
   }
 
+  private _initializeVariables() {
+    this._massSelection = false;
+  }
+
   /***
    * This function initialise the values of a column.
    */
@@ -244,13 +242,24 @@ export class TableComponent implements OnInit {
    * This function sets the pagination value.
    */
   private _setPagination(offset: number) {
+
     if (!this._pagination) {
       this._pagination = {
         propertyName: this._table._selector,
         totalCount: this._table._total,
-        offset: offset || 0
+        offset: offset || 0,
+      }
+    } else {
+      this._pagination = {
+        propertyName: this._table._selector,
+        totalCount: this._table._total,
+        offset: offset || 0,
+        currentPage: this._pagination.currentPage,
+        previousPage: this._pagination.previousPage,
+        nextPage: this._pagination.nextPage,
       }
     }
+
   }
 
   /***
@@ -275,7 +284,6 @@ export class TableComponent implements OnInit {
       value._isSelected = event.target['checked'];
     });
     this._massSelection = event.target['checked'];
-    console.log(this._table);
   }
 
   /***
@@ -289,23 +297,6 @@ export class TableComponent implements OnInit {
     //   offset: value.offset || 0
     // };
   }*/
-
-  /***
-   * This function is call when the user change the config
-   * If it's the config is local, we call this.changeLocalConfig() to directly make the changes
-   * If not, we emit the Output configChange
-   * @param value
-   */
-  public filterConfigChange(value: Config) {
-    this._config = value;
-    // this._config = value;
-    // this.fetchingResult = false;
-    // if (!this._isLocal) {
-    //   this.configChange.emit(this._config);
-    // } else {
-    //   Promise.resolve(null).then(() => this.changeLocalConfig());
-    // }
-  }
 
   private _sortConfigChange() {
 
@@ -326,6 +317,29 @@ export class TableComponent implements OnInit {
     // }
     // this.changeConfig(this._config);
     // this.selectAll(event);
+  }
+
+  /***
+   * This function is called when the user starts searching or filtering the table content
+   * and based on that we change the config. If table.isLocal = true, then we call the
+   * this.changeLocalConfig otherwise we output the config change.
+   * @param value
+   */
+  public filterConfigChange(value: Config) {
+    this._config = value;
+    console.log(value);
+    if (this._table._isLocal) {
+
+    } else {
+      this._emitConfigChange();
+    }
+    // this._config = value;
+    // this.fetchingResult = false;
+    // if (!this._isLocal) {
+    //   this.configChange.emit(this._config);
+    // } else {
+    //   Promise.resolve(null).then(() => this.changeLocalConfig());
+    // }
   }
 
   /***

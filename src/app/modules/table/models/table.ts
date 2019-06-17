@@ -11,7 +11,7 @@ export interface Table {
   readonly _isShowable?: boolean;
   readonly _isDeletable?: boolean;
   readonly _isFiltrable?: boolean;
-  readonly _isLocal?: boolean; //Todo remove
+  readonly _isLocal?: boolean;
   readonly _isNotPaginable?: boolean; //Todo remove
   readonly _reloadColumns?: boolean; //Todo remove
   readonly _columns: Column[];

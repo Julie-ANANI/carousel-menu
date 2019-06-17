@@ -83,6 +83,7 @@ export class AdminProjectsComponent implements OnInit {
   set config(value: any) {
     this._config = value;
     this.loadProjects(value);
+    console.log(value);
   }
 
   get config() {

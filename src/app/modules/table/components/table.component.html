@@ -43,7 +43,7 @@
 
 
     <!-- when no result -->
-    <ng-container *ngIf="table._total === 0">
+    <ng-container *ngIf="table._total === 0 || isSearching">
       <div class="section-light-pad">
         <app-message-space
           [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
