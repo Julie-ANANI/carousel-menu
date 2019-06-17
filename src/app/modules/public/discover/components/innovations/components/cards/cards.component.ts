@@ -33,7 +33,7 @@ export class CardsComponent {
     this._endIndex = value;
   }
 
-  private _paginationValue: Pagination = {};
+  private _paginationValue: any = {}; //todo correct this.
 
   private _innovations: Array<Innovation> = [];
 
@@ -113,7 +113,7 @@ export class CardsComponent {
   public onChangePagination(value: any) {
     if (isPlatformBrowser(this._platformId)) {
 
-      const tempOffset = parseInt(value.offset, 10);
+      /*const tempOffset = parseInt(value.offset, 10);
       const tempLimit = parseInt(value.limit, 10);
 
       this._startIndex = tempOffset;
@@ -130,7 +130,7 @@ export class CardsComponent {
           this._startIndex = tempOffset;
           this._endIndex += tempOffset;
         }
-      }
+      }*/ //todo correct this.
     }
   }
 

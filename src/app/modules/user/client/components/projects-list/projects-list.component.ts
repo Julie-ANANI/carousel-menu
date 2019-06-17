@@ -51,10 +51,10 @@ export class ProjectsListComponent implements OnInit {
     sort: '{ "created" :-1}'
   };
 
-  private _paginationConfig: Pagination = {
+  private _paginationConfig: any = {
     limit: this._config.limit,
     offset: this._config.offset
-  };
+  }; //todo correct this.
 
   private _noResult = false;
 

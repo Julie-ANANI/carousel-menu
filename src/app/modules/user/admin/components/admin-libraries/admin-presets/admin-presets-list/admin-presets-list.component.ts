@@ -20,13 +20,13 @@ export class AdminPresetsListComponent implements OnInit {
 
   private _total: number;
 
-  private _config = {
+  private _config: any = {
     fields: '',
     limit: '10',
     offset: '0',
     search: '{}',
     sort: '{"created":-1}'
-  };
+  }; //todo correct this.
 
   private _modalDelete = false;
 

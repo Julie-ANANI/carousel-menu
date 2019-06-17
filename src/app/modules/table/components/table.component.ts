@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
 import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
-import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 //import { isPlatformBrowser } from '@angular/common';
 //import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
 //import { countries } from "../../../models/static-data/country";
@@ -144,8 +143,7 @@ export class TableComponent implements OnInit {
 
 
   constructor(//@Inject(PLATFORM_ID) private _platformId: Object,
-              private _translateService: TranslateService,
-              private _localStorageService: LocalStorageService) {
+              private _translateService: TranslateService) {
 
     this._initializeTable();
 
@@ -183,10 +181,9 @@ export class TableComponent implements OnInit {
       this._table = data;
       this._initializeColumns();
       this._initializeContents();
+      this._setPagination(Number(this._config.offset));
 
-      const localParPageValue =  parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
-      this._setPagination(localParPageValue, Number(this._config.offset));
-
+      //console.log(typeof (parseInt(this._config.offset, 10)));
       console.log(this._table);
     }
     // if (value) {
@@ -246,11 +243,10 @@ export class TableComponent implements OnInit {
   /***
    * This function sets the pagination value.
    */
-  private _setPagination(parPage: number, offset: number) {
+  private _setPagination(offset: number) {
     this._pagination = {
       propertyName: this._table._selector,
       totalCount: this._table._total,
-      parPage: parPage ? parPage : 10,
       offset: offset || 0
     }
   }
