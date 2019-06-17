@@ -7,7 +7,6 @@ import { CampaignService } from '../../../../../../services/campaign/campaign.se
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
-import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 // import { EmailTemplate } from '../../../../../models/email-template';
 
 @Component({
@@ -45,8 +44,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
               private templatesService: TemplatesService,
-              private notificationsService: TranslateNotificationsService,
-              private campaignFrontService: CampaignFrontService) { }
+              private notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -69,13 +67,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     }, () => {
       this.notificationsService.error('ERROR.ERROR', 'ERROR.CAMPAIGN.TEMPLATE_ERROR');
     });
-  }
-
-
-  getCampaignStat(searchKey: string): number {
-    if (this._campaign) {
-      return this.campaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
-    }
   }
 
   /***

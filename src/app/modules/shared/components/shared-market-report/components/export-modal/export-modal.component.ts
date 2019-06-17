@@ -125,7 +125,7 @@ export class ExportModalComponent {
   }
 
   get userLang(): string {
-    return this._translateService.currentLang
+    return this._translateService.currentLang;
   }
 
 }

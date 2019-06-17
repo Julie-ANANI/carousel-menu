@@ -18,8 +18,7 @@ export class AdminCampaignQuizComponent implements OnInit {
 
   private _noResult = false;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private campaignFrontService: CampaignFrontService) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -39,7 +38,7 @@ export class AdminCampaignQuizComponent implements OnInit {
 
   getCampaignStat(searchKey: string): number {
     if (this._campaign) {
-      return this.campaignFrontService.getProsCampaignStat(this._campaign, searchKey);
+      return CampaignFrontService.getProsCampaignStat(this._campaign, searchKey);
     }
   }
 

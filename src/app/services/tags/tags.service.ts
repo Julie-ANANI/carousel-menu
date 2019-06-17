@@ -59,6 +59,9 @@ export class TagsService {
   }
 
   public removeTagFromPool(innovationId: string, tag: Tag): Observable<any> {
+    if (typeof tag._id !== 'string') {
+      throw  new Error('Tag object require an \'_id\' to be removed from database.');
+    }
     return this._http.delete('/tags/' + innovationId + '/pool', { params: {tag: tag._id }});
   }
 

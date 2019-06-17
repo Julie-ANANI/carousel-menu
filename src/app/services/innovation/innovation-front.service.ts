@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
 
@@ -40,22 +40,6 @@ export class InnovationFrontService {
   selectedInnovationIndex = new Subject<number>();
 
   saveNotifySubject = new Subject<boolean>();
-
-  private _defaultInnovation = new BehaviorSubject({});
-
-  getInnovation = this._defaultInnovation.asObservable();
-
-  constructor() { }
-
-
-  /***
-   * these function is to set the innovation object.
-   * @param innovation
-   */
-  setInnovation(innovation: Innovation) {
-    this._defaultInnovation.next(innovation);
-  }
-
 
   /***
    * these function is to set and get selected innovation index.
@@ -275,11 +259,6 @@ export class InnovationFrontService {
 
     return src === '' ? defaultSrc : src;
 
-  }
-
-
-  get defaultInnovation(): BehaviorSubject<{}> {
-    return this._defaultInnovation;
   }
 
   get calculatedPercentages(): Values {

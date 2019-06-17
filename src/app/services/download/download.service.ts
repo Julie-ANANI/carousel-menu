@@ -11,12 +11,12 @@ export class DownloadService {
 
   constructor() { }
 
-  public saveCsv(csv: string, fileName: string): Observable<Blob> {
+  static saveCsv(csv: string, fileName: string): Observable<Blob> {
     const file = <Blob> new Blob([csv]);
     return FileSaver.saveAs(file, `${fileName}.csv`);
   }
 
-  public saveJson(json: string, fileName: string): Observable<Blob> {
+  static saveJson(json: string, fileName: string): Observable<Blob> {
     const file = <Blob> new Blob([json]);
     return FileSaver.saveAs(file, `${fileName}.json`);
   }

@@ -4,15 +4,11 @@ import { CharacterCountdown } from './pipes/CharacterCountdown';
 import { DomSanitizerPipe } from './pipes/DomSanitizer';
 import { FilterPipe } from './pipes/TableFilterPipe';
 import { LimitsPipe } from './pipes/TableLimitsPipe';
-import { DateFormatPipe } from './pipes/DateFormatPipe';
 import { MultilingPipe } from './pipes/multiling.pipe';
-import { ObjectKeysPipe } from './pipes/objectKeys.pipe';
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
-import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
 import { FormatText } from './pipes/FormatText';
 import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
-import { SortString } from './pipes/SortString';
 
 
 @NgModule({
@@ -24,15 +20,11 @@ import { SortString } from './pipes/SortString';
     DomSanitizerPipe,
     FilterPipe,
     LimitsPipe,
-    DateFormatPipe,
     MultilingPipe,
-    ObjectKeysPipe,
     OrderByPipe,
     EllipsisPipe,
-    DiscoverSummaryPipe,
     FormatText,
-    ScrapeHTMLTags,
-    SortString
+    ScrapeHTMLTags
   ],
   providers: [
     MultilingPipe,
@@ -42,15 +34,11 @@ import { SortString } from './pipes/SortString';
     DomSanitizerPipe,
     FilterPipe,
     LimitsPipe,
-    DateFormatPipe,
     MultilingPipe,
-    ObjectKeysPipe,
     OrderByPipe,
     EllipsisPipe,
-    DiscoverSummaryPipe,
     FormatText,
-    ScrapeHTMLTags,
-    SortString
+    ScrapeHTMLTags
   ]
 })
 

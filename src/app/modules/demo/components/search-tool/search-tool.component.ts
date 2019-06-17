@@ -44,7 +44,6 @@ export class SearchToolComponent {
   constructor(private _translateTitleService: TranslateTitleService,
               private _searchService: SearchService,
               private _authService: AuthService,
-              private _downloadService: DownloadService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('Search Tool | UMI');
@@ -225,7 +224,7 @@ export class SearchToolComponent {
         metadata: this._searchResult.metadata,
         scale: this._scale,
       });
-      this._downloadService.saveJson(jsonFile, keywords);
+      DownloadService.saveJson(jsonFile, keywords);
     }
   }
 

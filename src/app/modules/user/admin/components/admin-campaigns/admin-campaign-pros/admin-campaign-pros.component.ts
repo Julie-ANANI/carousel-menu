@@ -6,7 +6,6 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
-import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Professional } from '../../../../../../models/professional';
 
 @Component({
@@ -17,7 +16,7 @@ import { Professional } from '../../../../../../models/professional';
 
 export class AdminCampaignProsComponent implements OnInit {
 
-  private _newPro: any = {
+  private _newPro: Professional = {
     firstName: '',
     lastName: '',
     email: '',
@@ -45,8 +44,7 @@ export class AdminCampaignProsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,
               private professionalsService: ProfessionalsService,
-              @Inject(PLATFORM_ID) private platform: Object,
-              private campaignFrontService: CampaignFrontService) { }
+              @Inject(PLATFORM_ID) private platform: Object) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -71,13 +69,6 @@ export class AdminCampaignProsComponent implements OnInit {
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
-  }
-
-
-  getCampaignStat(searchKey: string): number {
-    if (this._campaign) {
-      return this.campaignFrontService.getProsCampaignStat(this._campaign, searchKey);
-    }
   }
 
 
