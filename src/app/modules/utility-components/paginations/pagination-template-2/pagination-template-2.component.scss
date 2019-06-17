@@ -17,7 +17,7 @@
 
   }
 
-  .active {
+  .ghost-background-hover.active {
     background-color: $text-background-50-color;
     border-color: $background-color;
   }
@@ -45,11 +45,7 @@
       min-width: 101px;
 
       &:hover {
-
-        span {
-          text-decoration: underline;
-        }
-
+        text-decoration: underline;
       }
 
     }

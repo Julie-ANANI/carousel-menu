@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Pagination } from '../interfaces/pagination';
 import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
+import { MouseService } from '../../../../services/mouse/mouse.service';
 
 @Component({
   selector: 'app-pagination-2',
@@ -11,12 +12,10 @@ import { LocalStorageService } from '../../../../services/localStorage/localStor
 export class PaginationTemplate2Component implements OnInit {
 
   @Input() set pagination(value: Pagination) {
-    console.log(typeof (value.offset));
     this._pagination = value;
     this._initializeValues();
     this._calculatePage();
     this._setOffset();
-    console.log(this._pagination);
   }
 
   @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
@@ -29,9 +28,18 @@ export class PaginationTemplate2Component implements OnInit {
 
   private _endPageNumber: number;
 
-  constructor(private _localStorageService: LocalStorageService) {
+  private _toggleParPageMenu: boolean;
+
+  constructor(private _localStorageService: LocalStorageService,
+              private _mouseService: MouseService) {
+
     this._startPageNumber = 0;
     this._endPageNumber = 11;
+
+    this._mouseService.targetId().subscribe((value: string) => {
+      this._toggleParPageMenu = value === 'pagination-button-parPage';
+    });
+
   }
 
   ngOnInit() {
@@ -67,7 +75,6 @@ export class PaginationTemplate2Component implements OnInit {
 
     this._pagination.currentPage = pageNumber;
     this._setOffset();
-    console.log(this._pagination);
 
   }
 
@@ -99,17 +106,18 @@ export class PaginationTemplate2Component implements OnInit {
 
   public onChangeParPage(value: number) {
     this._pagination.parPage = value;
-    this._setOffset();
+    this._calculatePage();
     this._emitPaginationChanges();
   }
 
-  private _setOffset() {
-    this._pagination.offset = this._pagination.currentPage === 1 ? 0 : this._pagination.currentPage * this._pagination.parPage;
-  }
-
   private _emitPaginationChanges() {
+    this._setOffset();
     this._storeParPageLocally();
     this.paginationChange.emit(this._pagination);
+  }
+
+  private _setOffset() {
+    this._pagination.offset = this._pagination.currentPage === 1 ? 0 : (this._pagination.currentPage - 1) * this._pagination.parPage;
   }
 
   private _storeParPageLocally() {
@@ -130,6 +138,10 @@ export class PaginationTemplate2Component implements OnInit {
 
   get endPageNumber(): number {
     return this._endPageNumber;
+  }
+
+  get toggleParPageMenu(): boolean {
+    return this._toggleParPageMenu;
   }
 
 }

@@ -44,10 +44,10 @@
     <!-- /controls -->
 
     <!-- par page -->
-    <div class="popover">
+    <div class="popover" [ngClass]="{ 'active': toggleParPageMenu }">
 
-      <button class="btn ghost-draft no-hover" type="button">
-        <span>{{ pagination.parPage }} {{ 'PAGINATION.PAR_PAGE' | translate }}</span>
+      <button class="btn ghost-draft no-hover" type="button" id="pagination-button-parPage">
+        {{ pagination.parPage }} {{ 'PAGINATION.PAR_PAGE' | translate }}
         <i class="fas fa-caret-down m-left-1 m-no-right"></i>
       </button>
 
