@@ -12,7 +12,6 @@ import { Config } from '../../../../models/config';
 export class SharedFilterMultiComponent {
 
   @Input() set searchConfig(value: Config) {
-    console.log(value);
     this._searchConfig = value;
   }
 
@@ -49,6 +48,7 @@ export class SharedFilterMultiComponent {
 
       this._otherProps = value.filter(value1 => this.getType(value1) === 'CHECK' || this.getType(value1) === 'MULTI-CHOICES');
     }
+
   }
 
   public textIsSelected(prop: Column): boolean {
@@ -64,19 +64,21 @@ export class SharedFilterMultiComponent {
   }
 
   // For values linked with config
-  public onSearch(event: Event) {
+  public onSearch(value: any) {
 
-    let value = event.target['value'] || '';
+    this._searchConfig.offset = '0';
 
-      if (value === '') {
+    let input = value.value || '';
+
+      if (input === '') {
         this._searchConfig.search = '{}';
         this.filterConfigChange.emit(this._searchConfig);
       } else {
         //Detect an "special" query...
-        value = value.split(',');
+        input = input.split(',');
         let _search = {};
 
-        value.forEach((queryStr, index) => {
+        input.forEach((queryStr, index) => {
           _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
         });
 
@@ -87,23 +89,12 @@ export class SharedFilterMultiComponent {
 
   }
 
-  public onOtherFilter(prop: Column, event: Event) {
-    const attr: string = prop._attrs[0];
-    let currentFilter = {};
-    currentFilter[attr] = event.target['value'];
+  public onOtherFilter(prop: Column) {
 
-    if (this._searchConfig.filter) {
-      this._searchConfig.filter.forEach((filter, index) => {
-        for (let filterKey in JSON.parse(filter) ) {
-          if (filterKey === attr) {
-            this._searchConfig.filter[index] = JSON.stringify(currentFilter);
-          } else {
-            this._searchConfig.filter.push(JSON.stringify(currentFilter));
-          }
-        }
-      });
-    } else {
-      this._searchConfig.filter = [JSON.stringify(currentFilter)]
+    this._searchConfig.offset = '0';
+
+    if (this._searchConfig[prop._attrs[0]] === null || this._searchConfig[prop._attrs[0]] === undefined ) {
+      delete this._searchConfig[prop._attrs[0]];
     }
 
     this.filterConfigChange.emit(this._searchConfig);

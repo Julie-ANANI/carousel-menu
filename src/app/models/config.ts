@@ -4,5 +4,4 @@ export interface Config {
   offset: string;
   search: string;
   sort: string;
-  filter?: Array<string>;
 }

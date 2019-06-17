@@ -217,6 +217,11 @@ export class TableComponent implements OnInit {
 
   private _initializeVariables() {
     this._massSelection = false;
+
+    if (this._table._total === 0 && this.isSearching) {
+      this.isSearching = false;
+    }
+
   }
 
   /***
@@ -243,17 +248,17 @@ export class TableComponent implements OnInit {
    */
   private _setPagination(offset: number) {
 
-    if (!this._pagination) {
+    if (!this._pagination || offset === 0) {
       this._pagination = {
         propertyName: this._table._selector,
         totalCount: this._table._total,
-        offset: offset || 0,
+        offset: offset,
       }
     } else {
       this._pagination = {
         propertyName: this._table._selector,
         totalCount: this._table._total,
-        offset: offset || 0,
+        offset: offset,
         currentPage: this._pagination.currentPage,
         previousPage: this._pagination.previousPage,
         nextPage: this._pagination.nextPage,
@@ -327,7 +332,8 @@ export class TableComponent implements OnInit {
    */
   public filterConfigChange(value: Config) {
     this._config = value;
-    console.log(value);
+    this.isSearching = true;
+
     if (this._table._isLocal) {
 
     } else {
