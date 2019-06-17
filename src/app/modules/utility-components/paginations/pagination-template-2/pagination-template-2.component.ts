@@ -74,7 +74,7 @@ export class PaginationTemplate2Component implements OnInit {
     }
 
     this._pagination.currentPage = pageNumber;
-    this._setOffset();
+    this._emitPaginationChanges();
 
   }
 

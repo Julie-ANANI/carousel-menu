@@ -3,8 +3,8 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { Innovation } from '../../../../../models/innovation';
-import {Table} from '../../../../table/models/table';
-import {FrontendService} from '../../../../../services/frontend/frontend.service';
+import { Table } from '../../../../table/models/table';
+import { FrontendService } from '../../../../../services/frontend/frontend.service';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -13,15 +13,20 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./admin-projects-list.component.scss']
 })
 export class AdminProjectsListComponent implements OnInit, OnDestroy {
+
   @Input() operatorId: string; // Filtrer les résultats pour un utilisateur en particulier
+
   @Input() refreshNeededEmitter: Subject<any>;
 
   private _projects: Array<Innovation> = [];
-  public selectedProjectIdToBeDeleted: any = null;
-  private _tableInfos: Table = null;
-  private _total = 0;
-  private _config: any;
 
+  public selectedProjectIdToBeDeleted: any = null;
+
+  private _tableInfos: Table = null;
+
+  private _total = 0;
+
+  private _config: any;
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
@@ -71,6 +76,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   };
 
   loadProjects(config?: any): void {
+
     if (config) {
       this._config = config;
     }
@@ -146,10 +152,21 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  set config(value: any) { this._config = value; }
-  get config() { return this._config; }
+  get config() {
+    return this._config;
+  }
+
+  set config(value: any) {
+    this._config = value;
+    this.loadProjects(value);
+  }
+
   get total () { return this._total; }
+
   get projects () { return this._projects; }
+
   get tableInfos(): Table { return this._tableInfos; }
+
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
+
 }

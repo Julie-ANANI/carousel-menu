@@ -53,6 +53,7 @@ export class AdminProjectsComponent implements OnInit {
         _isFiltrable: true,
         _isShowable: true,
         _isEditable: false,
+        _isTitle: true,
         _editIndex: 1,
         _isPaginable: true,
         _columns: [
@@ -81,6 +82,7 @@ export class AdminProjectsComponent implements OnInit {
 
   set config(value: any) {
     this._config = value;
+    this.loadProjects(value);
   }
 
   get config() {

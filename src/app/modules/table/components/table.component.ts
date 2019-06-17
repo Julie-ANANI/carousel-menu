@@ -244,10 +244,12 @@ export class TableComponent implements OnInit {
    * This function sets the pagination value.
    */
   private _setPagination(offset: number) {
-    this._pagination = {
-      propertyName: this._table._selector,
-      totalCount: this._table._total,
-      offset: offset || 0
+    if (!this._pagination) {
+      this._pagination = {
+        propertyName: this._table._selector,
+        totalCount: this._table._total,
+        offset: offset || 0
+      }
     }
   }
 
@@ -309,13 +311,13 @@ export class TableComponent implements OnInit {
 
   }
 
-
   /***
-   * This function is call when the user change the paginations config
-   * It affects the values and call changeConfig
-   * @param value
+   * This function is called when the user changes the pagination or
+   * do the searching or filtering. It affects the values and emit
+   * the config changes to the parent component.
    */
-  changePaginationConfig(value: any) {
+  private _emitConfigChange() {
+    this.configChange.emit(this._config);
     // this._paginationConfig = value;
     // this._config.limit = value.limit;
     // this._config.offset = value.offset;
@@ -751,8 +753,10 @@ export class TableComponent implements OnInit {
   }
 
   set pagination(value: Pagination) {
-    console.log(value);
     this._pagination = value;
+    this._config.limit = this._pagination.parPage.toString(10);
+    this._config.offset = this._pagination.offset.toString(10);
+    this._emitConfigChange();
   }
 
   /*get selector(): string {
