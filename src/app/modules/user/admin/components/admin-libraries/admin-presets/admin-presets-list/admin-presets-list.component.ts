@@ -26,13 +26,13 @@ export class AdminPresetsListComponent implements OnInit {
     offset: '0',
     search: '{}',
     sort: '{"created":-1}'
-  }; //todo correct this.
+  };
 
   private _modalDelete = false;
 
   private _modalClone = false;
 
-  private _paginationConfig: Pagination = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: any = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _presetService: PresetService,
               private _router: Router) {}
@@ -97,6 +97,16 @@ export class AdminPresetsListComponent implements OnInit {
       this._router.navigate(['/user/admin/libraries/questionnaire/' + preset._id])
     });
   }
+
+  get sortConfig(): string {
+    return this._config.sort;
+  }
+
+  set sortConfig(value: string) {
+    this._config.sort = value;
+    this.loadPresets(this._config);
+  }
+
 
   set config(value: any) { this._config = value; }
 
