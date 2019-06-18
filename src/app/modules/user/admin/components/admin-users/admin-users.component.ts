@@ -17,19 +17,17 @@ export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
 
-  private _actions: string[] = [];
-
   private _usersToRemove: User[] = [];
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _tableInfos: Table = null;
+  private _tableInfos: Table;
 
   private _modalDelete = false;
 
   private _currentUser: User;
 
-  private _total = 0;
+  private _total: number;
 
   private _me: boolean = false;
 
@@ -43,11 +41,13 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(private translateTitleService: TranslateTitleService,
               private userService: UserService,
-              private translateNotificationsService: TranslateNotificationsService) { }
+              private translateNotificationsService: TranslateNotificationsService) {
+
+    this.translateTitleService.setTitle('USERS.TITLE');
+
+  }
 
   ngOnInit() {
-    this.translateTitleService.setTitle('USERS.TITLE');
-    this._actions = ['Action1', 'Action2', 'Action3'];
     this.loadUsers();
   }
 
@@ -70,11 +70,12 @@ export class AdminUsersComponent implements OnInit {
         _isPaginable: true,
         _editIndex: 1,
         _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-          {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
-          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'}]
+          {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isFiltrable: true},
+          {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isFiltrable: true},
+          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isFiltrable: true},
+          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isFiltrable: true},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true}
+          ]
       };
       }, () => {
       this.translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
@@ -86,13 +87,6 @@ export class AdminUsersComponent implements OnInit {
         console.error(err);
       });
   }
-
-
-  configChange(config: any) {
-    this._config = config;
-    this.loadUsers();
-  }
-
 
   inviteUser(event: Event): void {
     event.preventDefault();
@@ -151,13 +145,6 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-
-  performActions(action: any) {
-    this._actions.find(value => value === action._action)
-      ? console.log('Execution de l\'action ' + action._action + ' sur les lignes ' + JSON.stringify(action._rows, null, 2))
-      : console.log('l\'Action' + action + 'n\'existe pas !');
-  }
-
   public synchronizeSRTUsers() {
     this.userService.createSwellUsers().pipe(first())
       .subscribe(result => {
@@ -174,6 +161,7 @@ export class AdminUsersComponent implements OnInit {
 
   set config(value: any) {
     this._config = value;
+    this.loadUsers();
   }
 
   get config(): any {
