@@ -4,10 +4,6 @@ import { Clearbit } from '../../../../../../models/clearbit';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
-export interface Slide {
-  clients?: Array<Clearbit>;
-}
-
 @Component({
   selector: 'app-showcase-clients',
   templateUrl: './showcase-clients.component.html',
@@ -45,7 +41,15 @@ export class ShowcaseClientsComponent {
             return 0;
           });
 
-          this._getSlides();
+          this._selectedClients =
+            Object
+              .keys(companies)
+              .reduce((acc, company) => {
+                acc[company] = true;
+                return acc;
+              }, {} as {[clientName: string]: boolean});
+
+          this._slides = this.getSlides(this._totalClients);
 
         }
 
@@ -55,60 +59,73 @@ export class ShowcaseClientsComponent {
 
   }
 
-  private readonly _adminPass: boolean = false;
-
   private _totalClients: Array<Clearbit> = [];
 
-  private _currentSlideIndex: number = 0;
+  private _currentSlideIndex = 0;
 
-  private _slides: Array<Slide>;
+  private _modalShow = false;
+
+  private _selectedClients: {[clientName: string]: boolean} = {};
+
+  private _slides: Array<Array<Clearbit>>;
 
   constructor(private _innovationService: InnovationService,
-              private _authService: AuthService) {
+              private _authService: AuthService) {}
 
-    this._adminPass = this._authService.adminLevel > 2;
-
-  }
-
-  private _getSlides() {
-
-    this._slides = [];
-
-    if (this._totalClients.length === 0 || this._totalClients.length <=6) {
-      this._slides.push({ clients: this._totalClients.slice(0, 6) });
-    } else {
-      const slide = Math.ceil(this._totalClients.length / 6);
-
-      for (let i = 0; i < slide ; i++) {
-        if ( i === 0) {
-          this._slides.push({clients: this._totalClients.slice(0, 6)});
-        } else {
-          this._slides.push({ clients: this._totalClients.slice( 6 * i, (6 * i) + 6) });
-        }
-      }
-
+  private getSlides(clients: Array<Clearbit>, chunkSize: number = 6): Array<Array<Clearbit>> {
+    const slides = [];
+    const nbSlides = Math.ceil(clients.length / chunkSize);
+    for (let i = 0; i < nbSlides ; i++) {
+      slides.push(clients.slice( chunkSize * i, (chunkSize * i) + chunkSize));
     }
-
+    return slides;
   }
 
-  public onClickNav(event: Event, index: number) {
+  public onChangeClient(event: Event, client: Clearbit): void {
+    event.preventDefault();
+    this._selectedClients[client.name] = (event.target as HTMLInputElement).checked;
+  }
+
+  public onClickApply(event: Event): void {
+    event.preventDefault();
+    this._slides = this.getSlides(this._totalClients.filter((client) => this._selectedClients[client.name]));
+  }
+
+  public onClickNav(event: Event, index: number): void {
     this._currentSlideIndex = index;
   }
 
-  get adminPass(): boolean {
-    return this._adminPass;
+  public openModal(event: Event) {
+    event.preventDefault();
+    this._modalShow = true;
+  }
+
+  get isAdmin(): boolean {
+    return this._authService.isAdmin;
   }
 
   get totalClients(): Array<Clearbit> {
     return this._totalClients;
   }
 
-  get slides(): Array<Slide> {
+  get slides(): Array<Array<Clearbit>> {
     return this._slides;
+  }
+
+  get modalShow(): boolean {
+    return this._modalShow;
+  }
+
+  set modalShow(value: boolean) {
+    this._modalShow = value;
   }
 
   get currentSlideIndex(): number {
     return this._currentSlideIndex;
+  }
+
+  get selectedClients(): {[clientName: string]: boolean} {
+    return this._selectedClients;
   }
 
 }

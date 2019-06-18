@@ -2,7 +2,7 @@
 
 
   <!-- bar icon -->
-  <ng-container *ngIf="adminPass && answers.length > 0">
+  <ng-container *ngIf="isAdmin && answers.length > 0">
     <div class="icon icon-meta absolute tooltip tooltip-left tooltip-hide-sm" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_ANSWERS' | translate" (click)="openModal($event)">
       <i class="fas fa-bars"></i>
     </div>
@@ -63,12 +63,12 @@
 
   <div class="card-wrapper d-flex">
     <ng-container *ngFor="let answer of answers">
-      <div class="card card-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && adminPass }">
+      <div class="card card-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
 
         <i class="fas fa-check-circle"></i>
 
-        <ng-container *ngIf="adminPass">
-          <label class="absolute" [ngClass]="{ 'c-hand': adminPass }">
+        <ng-container *ngIf="isAdmin">
+          <label class="absolute c-hand">
             <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
           </label>
         </ng-container>
@@ -84,7 +84,7 @@
     </ng-container>
   </div>
 
-  <ng-container *ngIf="adminPass">
+  <ng-container *ngIf="isAdmin">
     <div class="modal-footer">
       <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
       <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>

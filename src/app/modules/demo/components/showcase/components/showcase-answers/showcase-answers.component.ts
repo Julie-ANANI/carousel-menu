@@ -40,19 +40,13 @@ export class ShowcaseAnswersComponent {
 
   private _count: number;
 
-  private _adminPass: boolean;
-
   private _modalShow: boolean;
 
   private _selectedAnswers: Array<Answer> = [];
 
   constructor(private _answerService: AnswerService,
               private _authService: AuthService,
-              private _translateNotificationsService: TranslateNotificationsService) {
-
-    this._adminPass = this._authService.adminLevel > 2;
-
-  }
+              private _translateNotificationsService: TranslateNotificationsService) {}
 
 
   private _startLoading(answers: Array<Answer>) {
@@ -129,8 +123,8 @@ export class ShowcaseAnswersComponent {
     return this._count;
   }
 
-  get adminPass(): boolean {
-    return this._adminPass;
+  get isAdmin(): boolean {
+    return this._authService.isAdmin;
   }
 
 }

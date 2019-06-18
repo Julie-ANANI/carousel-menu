@@ -2,7 +2,7 @@
 
 
   <!-- bar icon -->
-  <ng-container *ngIf="adminPass && innovations.length > 0">
+  <ng-container *ngIf="isAdmin && innovations.length > 0">
     <div class="icon icon-meta absolute tooltip tooltip-left tooltip-hide-sm" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_INNOVATIONS' | translate" (click)="openModal($event)">
       <i class="fas fa-bars"></i>
     </div>

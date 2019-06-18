@@ -3,6 +3,23 @@
 #showcase-clients {
   height: 100%;
 
+  .icon {
+    top: -6px;
+    right: 0;
+    margin-right: 0;
+    font-size: $font-icon-xl;
+  }
+
+  .see-more-wrapper, .icon {
+    visibility: hidden;
+  }
+
+  &:hover {
+    .icon, .see-more-wrapper {
+      visibility: visible;
+    }
+  }
+
   h2, h3 {
     margin-bottom: 0.25rem;
   }
