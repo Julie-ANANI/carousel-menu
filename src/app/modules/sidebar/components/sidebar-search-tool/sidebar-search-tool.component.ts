@@ -71,7 +71,6 @@ export class SidebarSearchToolComponent {
         _title: 'TABLE.TITLE.REQUESTS',
         _content: this._requests,
         _total: this._total,
-        _isHeadable: true,
         _isFiltrable: true,
         _columns: [
           {_attrs: ['keywords'], _name: 'Keywords', _type: 'TEXT'},

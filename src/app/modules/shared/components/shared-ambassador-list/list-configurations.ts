@@ -5,7 +5,6 @@ export class ListConfigurations {
       _title: 'TABLE.TITLE.AMBASSADORS',
       _content: [],
       _total: -1,
-      //_isLocal: true,
       _isDeletable: true,
       _isSelectable: true,
       _actions: [],

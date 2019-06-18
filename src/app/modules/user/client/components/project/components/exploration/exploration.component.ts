@@ -74,7 +74,6 @@ export class ExplorationComponent implements OnInit {
       this._tableInfos = {
         _selector: 'client-answer',
         _content: response.answers,
-        _isShowable: true,
         _total: response.answers.length,
         _isPaginable: true,
         _editIndex: 1,

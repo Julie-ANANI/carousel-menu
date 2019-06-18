@@ -124,11 +124,9 @@ export class AdminCampaignAnswersComponent implements OnInit {
         _selector: 'admin-answers',
         _content: this._answers,
         _total: this._answers.length,
-        _isLocal: true,
         _isFiltrable: true,
         _isSelectable: true,
         _isEditable: true,
-        _reloadColumns: true,
         _actions: this._actions,
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},

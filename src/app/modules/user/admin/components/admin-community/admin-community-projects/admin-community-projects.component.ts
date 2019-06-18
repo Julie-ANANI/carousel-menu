@@ -58,7 +58,6 @@ export class AdminCommunityProjectsComponent implements OnInit {
       _content: this._totalProjects,
       _total: this._totalProjects.length,
       _isFiltrable: true,
-      _isShowable: true,
       _columns: [
         {
           _attrs: ['innovation.name'],

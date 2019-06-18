@@ -60,7 +60,6 @@ export class AdminEmailQueueComponent implements OnInit {
             _content: this._queueList.mailqueues,
             _total: this._queueList._metadata.totalCount,
             _isFiltrable: true,
-            _isShowable: true,
             _columns: [
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSortable: false, _isFiltrable: false},

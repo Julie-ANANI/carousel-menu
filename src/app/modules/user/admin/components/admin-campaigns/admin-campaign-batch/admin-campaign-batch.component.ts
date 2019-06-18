@@ -335,9 +335,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     }
     const t: any = {
       _selector: batch._id,
-      _isNotPaginable: true,
       _isEditable: true,
-      _isNoTitle: true,
       _content: [
         {
           Step: '01 - Hello World',
