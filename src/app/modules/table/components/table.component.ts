@@ -8,7 +8,6 @@ import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
 import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
 
-
 @Component({
   selector: 'app-shared-table',
   templateUrl: './table.component.html',
@@ -42,9 +41,9 @@ export class TableComponent implements OnInit {
   /***
    * Output call when the user click on the edit button
    * Send the corresponding row
-   * @type {EventEmitter<any>}
+   * @type {EventEmitter<Row>}
    */
-  @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() editRow: EventEmitter<Row> = new EventEmitter<Row>();
 
   /***
    * Output call when the user click on the delete button
@@ -59,13 +58,6 @@ export class TableComponent implements OnInit {
    * @type {EventEmitter<any>}
    */
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
-
-  /***
-   * Output call when the user selects one row
-   * Send the list of selected rows
-   * @type {EventEmitter<any>}
-   */
-  @Output() selectRowAction: EventEmitter<any> = new EventEmitter<any>();
 
   private _table: Table;
 
@@ -198,11 +190,6 @@ export class TableComponent implements OnInit {
 
     this._massSelection = event.target['checked'];
 
-  }
-
-  private _sortConfigChange() {
-    this._emitConfigChange();
-    console.log(this._config);
   }
 
   /***
@@ -387,9 +374,9 @@ export class TableComponent implements OnInit {
   /***
    * This function return the alias of a choice that will be show to the user instead of the initial name
    * @param {Choice} choice
-   * @returns {any}
+   * @returns {string}
    */
-  public getChoiceAlias(choice: Choice) {
+  public getChoiceAlias(choice: Choice): string {
     if (choice) {
       return choice._alias || choice._name;
     } else {
@@ -530,8 +517,7 @@ export class TableComponent implements OnInit {
 
   set sortConfig(value: string) {
     this._config.sort = value;
-    console.log(value)
-    this._sortConfigChange();
+    this._emitConfigChange();
   }
 
   get pagination(): Pagination {
