@@ -17,19 +17,19 @@ import { Pagination } from '../../utility-components/paginations/interfaces/pagi
 export class TableComponent implements OnInit {
 
   /***
-   * Input use to set the data
-   * @param {Table} value
-   */
-  @Input() set data(value: Table) {
-    this._loadData(value);
-  }
-
-  /***
    * Input use to set the config for the tables linked with the back office
    * @param value
    */
   @Input() set config(value: Config) {
     this._config = value;
+  }
+
+  /***
+   * Input use to set the data
+   * @param {Table} value
+   */
+  @Input() set data(value: Table) {
+    this._loadData(value);
   }
 
   /***
@@ -100,7 +100,6 @@ export class TableComponent implements OnInit {
 
     if (data) {
       this._table = data;
-      console.log(data);
       this._initializeVariables();
       this._checkSearching();
       this._initializeColumns();
