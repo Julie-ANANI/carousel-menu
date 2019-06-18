@@ -18,6 +18,17 @@ export class PaginationTemplate2Component implements OnInit {
     this._setOffset();
   }
 
+  @Input() set totalCount(value: number) {
+    this._totalCount = value;
+
+    if (value || value > 10) {
+      this._initializeValues();
+      this._calculatePage();
+      this._setOffset();
+    }
+
+  }
+
   @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
   private _pagination: Pagination;
@@ -29,6 +40,8 @@ export class PaginationTemplate2Component implements OnInit {
   private _endPageNumber: number;
 
   private _toggleParPageMenu: boolean;
+
+  private _totalCount: number;
 
   constructor(private _localStorageService: LocalStorageService,
               private _mouseService: MouseService) {
@@ -55,7 +68,7 @@ export class PaginationTemplate2Component implements OnInit {
   }
 
   private _calculatePage() {
-    this._pagination.totalPage = Math.ceil(this._pagination.totalCount / this._pagination.parPage);
+    this._pagination.totalPage = Math.ceil(this._totalCount / this._pagination.parPage);
     this._pagination.paginatorNumber = [];
 
     for (let i = 1; i <= this._pagination.totalPage; i++) {
@@ -142,6 +155,10 @@ export class PaginationTemplate2Component implements OnInit {
 
   get toggleParPageMenu(): boolean {
     return this._toggleParPageMenu;
+  }
+
+  get totalCount(): number {
+    return this._totalCount;
   }
 
 }
