@@ -43,7 +43,7 @@ export class ProjectsListComponent implements OnInit {
 
   private _deleteModal = false;
 
-  private _config = {
+  private _config: any = {
     fields: 'name created updated status collaborators principalMedia',
     limit: '10',
     offset: '0',
@@ -51,10 +51,7 @@ export class ProjectsListComponent implements OnInit {
     sort: '{ "created" :-1}'
   };
 
-  private _paginationConfig: any = {
-    limit: this._config.limit,
-    offset: this._config.offset
-  }; //todo correct this.
+  private _pagination: Pagination;
 
   private _noResult = false;
 
@@ -62,13 +59,16 @@ export class ProjectsListComponent implements OnInit {
               private userService: UserService,
               private translateTitleService: TranslateTitleService,
               private translateNotificationService: TranslateNotificationsService,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService) {
 
-  ngOnInit() {
     this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
-    this.loadProjects();
+
   }
 
+  ngOnInit() {
+    this.loadProjects();
+    this._setPagination();
+  }
 
   private loadProjects() {
     this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
@@ -78,6 +78,16 @@ export class ProjectsListComponent implements OnInit {
     }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
+  }
+
+  private _setPagination() {
+    this.pagination = {
+      propertyName: 'client-projects',
+      offset: Number(this._config.offset),
+      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
+      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
+      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
+    };
   }
 
 
@@ -146,8 +156,6 @@ export class ProjectsListComponent implements OnInit {
 
 
   configChange(value: any) {
-    window.scroll(0, 0);
-    this._paginationConfig = value;
     this._config.limit = value.limit;
     this._config.offset = value.offset;
     this.loadProjects();
@@ -160,6 +168,21 @@ export class ProjectsListComponent implements OnInit {
 
   get config(): any {
     return this._config;
+  }
+
+  get pagination(): Pagination {
+    return this._pagination;
+  }
+
+  set pagination(value: Pagination) {
+    this._pagination = value;
+
+    if (this._pagination.parPage && this._pagination.offset) {
+      this._config.limit = this._pagination.parPage.toString(10);
+      this._config.offset = this._pagination.offset.toString(10);
+    }
+
+    this.loadProjects();
   }
 
   get total () {
@@ -184,10 +207,6 @@ export class ProjectsListComponent implements OnInit {
 
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-  get paginationConfig(): Pagination {
-    return this._paginationConfig;
   }
 
   get noResult(): boolean {

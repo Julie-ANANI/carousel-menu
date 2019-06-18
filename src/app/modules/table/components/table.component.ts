@@ -147,13 +147,11 @@ export class TableComponent implements OnInit {
     if (!this._pagination || offset === 0) {
       this._pagination = {
         propertyName: this._table._selector,
-        totalCount: this._table._total,
         offset: offset,
       }
     } else {
       this._pagination = {
         propertyName: this._table._selector,
-        totalCount: this._table._total,
         offset: offset,
         currentPage: this._pagination.currentPage,
         previousPage: this._pagination.previousPage,
