@@ -89,7 +89,7 @@ export class SharedSearchMultiComponent {
 
   }
 
-  public onOtherFilter(prop: Column) {
+  public onOtherSearch(prop: Column) {
 
     this._searchConfig.offset = '0';
 

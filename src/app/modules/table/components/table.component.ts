@@ -183,7 +183,7 @@ export class TableComponent implements OnInit {
 
   /***
    * This function is called when the user changes the pagination or
-   * do the searching or filtering. It affects the values and emit
+   * do the searching. It affects the values and emit
    * the config changes to all related components.
    */
   private _emitConfigChange() {
@@ -192,11 +192,11 @@ export class TableComponent implements OnInit {
   }
 
   /***
-   * This function is called when the user starts searching or filtering the table content
+   * This function is called when the user starts searching the table content
    * and based on that we change the config.
    * @param value
    */
-  public filterConfigChange(value: Config) {
+  public searchConfigChange(value: Config) {
     this._config = value;
     this._emitConfigChange();
   }

@@ -53,7 +53,7 @@
 
         <ng-container *ngSwitchCase="'CHECK'">
           <label>
-            <select (change)="onOtherFilter(prop)" [(ngModel)]="searchConfig[getAttrs(prop)]" [ngStyle]="{ 'padding-right': '2.5rem' }" class="form-select">
+            <select (change)="onOtherSearch(prop)" [(ngModel)]="searchConfig[getAttrs(prop)]" [ngStyle]="{ 'padding-right': '2.5rem' }" class="form-select">
               <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
               <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
               <option [ngValue]="false">{{ 'COMMON.NO' | translate }}</option>
@@ -63,7 +63,7 @@
 
         <ng-container *ngSwitchCase="'MULTI-CHOICES'">
           <label>
-            <select (change)="onOtherFilter(prop)" [(ngModel)]="searchConfig[getAttrs(prop)]" class="form-select">
+            <select (change)="onOtherSearch(prop)" [(ngModel)]="searchConfig[getAttrs(prop)]" class="form-select">
               <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let choice of getChoices(prop)" [ngValue]="getChoiceName(choice)">
                 {{ getChoiceAlias(choice) | translate | FormatText }}
