@@ -7,9 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
 import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
-//import { isPlatformBrowser } from '@angular/common';
-//import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
-//import { countries } from "../../../models/static-data/country";
 
 
 @Component({
@@ -18,9 +15,6 @@ import { Pagination } from '../../utility-components/paginations/interfaces/pagi
   styleUrls: ['./table.component.scss']
 })
 
-/***
- * This generic class generates a table.
- */
 export class TableComponent implements OnInit {
 
   /***
@@ -39,13 +33,11 @@ export class TableComponent implements OnInit {
     this._config = value;
   }
 
-
   /***
    * Output call when the config change
    * @type {EventEmitter<Config>}
    */
   @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
-
 
   /***
    * Output call when the user click on the edit button
@@ -54,14 +46,12 @@ export class TableComponent implements OnInit {
    */
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
 
-
   /***
    * Output call when the user click on the delete button
    * Send the list of selected rows
    * @type {EventEmitter<any>}
    */
   @Output() removeRows: EventEmitter<any> = new EventEmitter<any>();
-
 
   /***
    * Output call when the user click on one action
@@ -79,7 +69,7 @@ export class TableComponent implements OnInit {
 
   private _table: Table; // default table data.
 
-  isSearching: boolean;
+  private _isSearching: boolean;
 
   private _massSelection: boolean;
 
@@ -87,68 +77,14 @@ export class TableComponent implements OnInit {
 
   private _pagination: Pagination;
 
-  //private _selector: string; // for the pagination.
-
-  //private _title: string; // set the title.
-
-  //private _isNoTitle: boolean; // no need of the title.
-
-  //private _isSelectable: boolean; // to select the rows or not.
-
-  //private _isEditable: boolean; // to set the row can be edit or not.
-
-  //private _isLocal: boolean; // to set the pagination locally.
-
-  //private _isDeletable: boolean; // to delete the rows.
-
-  //private _isFiltrable: boolean; // to filter the table by columns.
-
-  //private _isNotPaginable: boolean; // to set the pagination required or not.
-
-  //private _total: number; // to set the number of rows. By default always set its value to -1.
-
-  //private _content = [];
-
-  //private _columns: Column[] = [];
-
-  //private _actions: string[] = [];
-
-  //private _editIndex: number; // to set the position of the button.
-
   private _filteredContent: Row[] = [];
 
-  //private _isShowable = false;
-
-  //private _paginationConfig: PaginationInterface = {}; // to set the pagination.
-
-  //private _reloadColumns = false;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   constructor(private _translateService: TranslateService) {
-
     this._initializeTable();
-
-    console.log(this._table);
-
   }
-
 
   ngOnInit(): void {
   }
-
 
   /***
    * this function is to initialize the table with default values.
@@ -174,6 +110,7 @@ export class TableComponent implements OnInit {
     if (data) {
       this._table = data;
       this._initializeVariables();
+      this._checkSearching();
       this._initializeColumns();
       this._initializeContents();
       this._setPagination(Number(this._config.offset));
@@ -217,11 +154,13 @@ export class TableComponent implements OnInit {
 
   private _initializeVariables() {
     this._massSelection = false;
+    this._isSearching = false;
+  }
 
-    if (this._table._total === 0 && this.isSearching) {
-      this.isSearching = false;
+  private _checkSearching() {
+    if (this._config.search.length > 2  && this._table._total === 0) {
+      this._isSearching = true;
     }
-
   }
 
   /***
@@ -272,11 +211,13 @@ export class TableComponent implements OnInit {
    * @returns {number}
    */
   private _getSelectedRowsNumber(): number {
+
     if (this._massSelection) {
       return this._table._content.length;
     } else {
       return this.getSelectedRows().length;
     }
+
   }
 
   /***
@@ -285,10 +226,13 @@ export class TableComponent implements OnInit {
    */
   public selectAll(event: Event): void  {
     event.preventDefault();
+
     this._table._content.forEach((value) => {
       value._isSelected = event.target['checked'];
     });
+
     this._massSelection = event.target['checked'];
+
   }
 
   /***
@@ -310,7 +254,7 @@ export class TableComponent implements OnInit {
   /***
    * This function is called when the user changes the pagination or
    * do the searching or filtering. It affects the values and emit
-   * the config changes to the parent component.
+   * the config changes to all related components.
    */
   private _emitConfigChange() {
     this.configChange.emit(this._config);
@@ -326,19 +270,12 @@ export class TableComponent implements OnInit {
 
   /***
    * This function is called when the user starts searching or filtering the table content
-   * and based on that we change the config. If table.isLocal = true, then we call the
-   * this.changeLocalConfig otherwise we output the config change.
+   * and based on that we change the config.
    * @param value
    */
   public filterConfigChange(value: Config) {
     this._config = value;
-    this.isSearching = true;
-
-    if (this._table._isLocal) {
-
-    } else {
-      this._emitConfigChange();
-    }
+    this._emitConfigChange();
     // this._config = value;
     // this.fetchingResult = false;
     // if (!this._isLocal) {
@@ -779,66 +716,9 @@ export class TableComponent implements OnInit {
     this._emitConfigChange();
   }
 
-  /*get selector(): string {
-    return this._selector;
-  }*/
-
-  /*get title(): string {
-    return this._title;
-  }*/
-
-  /*get isSelectable(): boolean {
-    return this._isSelectable;
-  }*/
-
-  /*get isEditable(): boolean {
-    return this._isEditable;
-  }*/
-
-  /*get isNoTitle(): boolean {
-    return this._isNoTitle;
-  }*/
-
-  /*get isLocal(): boolean {
-    return this._isLocal;
-  }*/
-
- /* get isShowable(): boolean {
-    return this._isShowable;
-  }*/
-
-  /*get isDeletable(): boolean {
-    return this._isDeletable;
-  }*/
-
-  /*get isFiltrable(): boolean {
-    return this._isFiltrable;
-  }*/
-
-  /*get isNotPaginable(): boolean {
-    return this._isNotPaginable;
-  }*/
-
-  /*get content(): Row[] {
-    return this._content;
-  }*/
-
-  /*get columns(): Column[] {
-    return this._columns;
-  }*/
-
-  /*get total(): number {
-    return this._total;
-  }*/
-
   get config(): Config {
     return this._config;
   }
-
-  /*get actions(): string[] {
-    return this._actions;
-  }*/
-
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
@@ -848,14 +728,6 @@ export class TableComponent implements OnInit {
     return this._filteredContent;
   }
 
-  /*get paginationConfig(): PaginationInterface {
-    return this._paginationConfig;
-  }*/
-
-  /*set content(value: Row[]) {
-    this._content = value;
-  }*/
-
   get userLang(): string {
     return this._translateService.currentLang;
   }
@@ -864,8 +736,8 @@ export class TableComponent implements OnInit {
     return this._massSelection;
   }
 
-  /*get editIndex(): number {
-    return this._editIndex;
-  }*/
+  get isSearching(): boolean {
+    return this._isSearching;
+  }
 
 }
