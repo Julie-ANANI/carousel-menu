@@ -61,9 +61,9 @@ export class PaginationTemplate2Component implements OnInit {
   private _initializeValues() {
     const localStorage = parseInt(this._localStorageService.getItem(`${this._pagination.propertyName}-limit`), 10);
 
-    this._pagination.currentPage = this._pagination.currentPage ? this._pagination.currentPage : 1;
-    this._pagination.previousPage = this._pagination.previousPage ? this._pagination.previousPage : 0;
-    this._pagination.nextPage = this._pagination.nextPage ? this._pagination.nextPage : 2;
+    // this._pagination.currentPage = this._pagination.currentPage ? this._pagination.currentPage : 1;
+    // this._pagination.previousPage = this._pagination.previousPage ? this._pagination.previousPage : 0;
+    // this._pagination.nextPage = this._pagination.nextPage ? this._pagination.nextPage : 2;
     this._pagination.parPage = localStorage ? localStorage : 10;
   }
 

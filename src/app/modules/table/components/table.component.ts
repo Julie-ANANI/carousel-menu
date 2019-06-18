@@ -143,22 +143,13 @@ export class TableComponent implements OnInit {
    * This function sets the pagination value.
    */
   private _setPagination(offset: number) {
-
-    if (!this._pagination || offset === 0) {
-      this._pagination = {
-        propertyName: this._table._selector,
-        offset: offset,
-      }
-    } else {
-      this._pagination = {
-        propertyName: this._table._selector,
-        offset: offset,
-        currentPage: this._pagination.currentPage,
-        previousPage: this._pagination.previousPage,
-        nextPage: this._pagination.nextPage,
-      }
+    this._pagination = {
+      propertyName: this._table._selector,
+      offset: offset,
+      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
+      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
+      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
     }
-
   }
 
   /***

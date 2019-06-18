@@ -81,7 +81,7 @@ export class ProjectsListComponent implements OnInit {
   }
 
   private _setPagination() {
-    this.pagination = {
+    this._pagination = {
       propertyName: 'client-projects',
       offset: Number(this._config.offset),
       currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
