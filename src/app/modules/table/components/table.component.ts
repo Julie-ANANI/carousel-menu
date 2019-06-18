@@ -41,9 +41,9 @@ export class TableComponent implements OnInit {
   /***
    * Output call when the user click on the edit button
    * Send the corresponding row
-   * @type {EventEmitter<Row>}
+   * @type {EventEmitter<any>}
    */
-  @Output() editRow: EventEmitter<Row> = new EventEmitter<Row>();
+  @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
 
   /***
    * Output call when the user click on the delete button
@@ -100,6 +100,7 @@ export class TableComponent implements OnInit {
 
     if (data) {
       this._table = data;
+      console.log(data);
       this._initializeVariables();
       this._checkSearching();
       this._initializeColumns();
@@ -126,7 +127,7 @@ export class TableComponent implements OnInit {
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
       this._table._columns[index]._isSelected = false;
-      this._table._columns[index]._isHover = false;
+      this._table._columns[index]._isFiltrable = this._table._columns[index]._isFiltrable ? this._table._columns[index]._isFiltrable : false;
     });
   }
 
@@ -188,6 +189,7 @@ export class TableComponent implements OnInit {
    */
   private _emitConfigChange() {
     this.configChange.emit(this._config);
+    console.log(this._config);
   }
 
   /***
@@ -466,7 +468,7 @@ export class TableComponent implements OnInit {
    * @returns {boolean}
    */
   public isSortable(column: Column) {
-    return column._isSortable === undefined ? true : column._isSortable;
+    return column._isSortable;
   }
 
   /***

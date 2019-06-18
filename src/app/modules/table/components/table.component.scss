@@ -73,8 +73,9 @@
 
             i {
               margin-left: 0;
-              margin-right: 0.3rem;
+              margin-right: $unit-h;
               font-size: 0.7rem;
+              vertical-align: unset;
             }
 
             &:hover {

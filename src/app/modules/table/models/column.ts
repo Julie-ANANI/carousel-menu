@@ -3,12 +3,11 @@ import { MultiLabel } from './multi-label';
 
 export interface Column {
   _isSelected?: boolean;
-  _isHover?: boolean;
+  _isFiltrable?: boolean;
   readonly _attrs: string[];
   readonly _type: types;
   readonly _name?: string;
   readonly _isSortable?: boolean;
-  readonly _isFiltrable?: boolean;
   readonly _choices?: Choice[];
   readonly _multiLabels?: MultiLabel[];
   readonly _maxWidth?: string;

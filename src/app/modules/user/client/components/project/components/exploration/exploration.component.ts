@@ -12,6 +12,7 @@ import { Section } from '../../../../../../../models/section';
 import { Table } from '../../../../../../table/models/table';
 import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
+import { Config } from '../../../../../../../models/config';
 
 @Component({
   selector: 'app-exploration',
@@ -47,9 +48,10 @@ export class ExplorationComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _tableInfos: Table = null;
+  private _tableInfos: Table;
 
-  private _config = {
+  private _config: Config = {
+    fields: '',
     limit: '10',
     offset: '0',
     search: '{}',
@@ -73,14 +75,14 @@ export class ExplorationComponent implements OnInit {
         _selector: 'client-answer',
         _content: response.answers,
         _isShowable: true,
-        _isLocal: true,
         _total: response.answers.length,
-        _isNoTitle: true,
+        _isPaginable: true,
+        _editIndex: 1,
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
           {_attrs: ['job'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
-          {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'COMMON.LABEL.DATE', _type: 'DATE'},
+          {_attrs: ['company.name'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
+          {_attrs: ['created'], _name: 'COMMON.LABEL.CREATED', _type: 'DATE'},
         ]
       };
 
@@ -218,8 +220,12 @@ export class ExplorationComponent implements OnInit {
     return this._tableInfos;
   }
 
-  get config(): { search: string; offset: string; limit: string; sort: string } {
+  get config(): Config {
     return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
   }
 
   get innovation(): Innovation {

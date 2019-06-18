@@ -8,10 +8,10 @@ export interface Table {
   readonly _isEditable?: boolean;
   readonly _isNoTitle?: boolean; //Todo remove
   readonly _isTitle?: boolean;
-  readonly _isShowable?: boolean;
+  readonly _isShowable?: boolean; // todo remove
   readonly _isDeletable?: boolean;
   readonly _isFiltrable?: boolean;
-  readonly _isLocal?: boolean;
+  readonly _isLocal?: boolean; // todo remove
   readonly _isNotPaginable?: boolean; //Todo remove
   readonly _reloadColumns?: boolean; //Todo remove
   readonly _columns: Column[];
