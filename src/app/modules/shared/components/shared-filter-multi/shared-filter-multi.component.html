@@ -24,7 +24,7 @@
 
       <input
         type="search"
-        (keyup)="onSearch($event.target)"
+        (keyup.enter)="onSearch($event.target)"
         #search
         class="form-input"
         [attr.placeholder]="'COMMON.SEARCH_INPUT_PLACEHOLDER' | translate">
