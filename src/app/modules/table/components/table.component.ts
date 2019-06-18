@@ -77,8 +77,6 @@ export class TableComponent implements OnInit {
 
   private _pagination: Pagination;
 
-  private _filteredContent: Row[] = [];
-
   constructor(private _translateService: TranslateService) {
     this._initializeTable();
   }
@@ -107,6 +105,7 @@ export class TableComponent implements OnInit {
    * @param {Table} data
    */
   private _loadData(data: Table): void  {
+
     if (data) {
       this._table = data;
       this._initializeVariables();
@@ -114,42 +113,8 @@ export class TableComponent implements OnInit {
       this._initializeColumns();
       this._initializeContents();
       this._setPagination(Number(this._config.offset));
-
-      console.log(this._table);
     }
-    // if (value) {
-    //   this._title = value._title;
-    //
-    //   this._selector = value._selector;
-    //
-    //   this._content = [];
-    //   value._content.forEach(value1 => this._content.push({_isSelected: false, _content: value1}));
-    //
-    //   this._filteredContent = this._content;
-    //
-    //   this._isHeadable = value._isHeadable || false;
-    //   this._isNoTitle = value._isNoTitle || false;
-    //   this._isSelectable = value._isSelectable || false;
-    //   this._isEditable = value._isEditable || false;
-    //   this._isShowable = value._isShowable || false;
-    //   this._isDeletable = value._isDeletable || false;
-    //   this._isFiltrable = value._isFiltrable || false;
-    //   this._isNotPaginable = value._isNotPaginable || false;
-    //   this._reloadColumns = value._reloadColumns || false;
-    //   this._isLocal = value._isLocal || false;
-    //   this._editIndex = value._editIndex || 1;
-    //
-    //   this._total = value._total;
-    //
-    //   if (this._columns.length === 0 || this._reloadColumns) {
-    //     // Si on a plus de 10 colonnes, on ne prends que les 10 premières
-    //     value._columns.length > 10 ? this._columns = value._columns.slice(0, 10) : this._columns = value._columns;
-    //
-    //     this.initialiseColumns();
-    //   }
-    //
-    //   this._actions = value._actions || [];
-    // }
+
   }
 
   private _initializeVariables() {
@@ -235,18 +200,6 @@ export class TableComponent implements OnInit {
 
   }
 
-  /***
-   * This function affects the config send by the user to this._config
-   * @param value
-   */
-  /*private _loadConfig(value: Config) {
-    this._config = value;
-    // this._paginationConfig = {
-    //   limit: value.limit || 10,
-    //   offset: value.offset || 0
-    // };
-  }*/
-
   private _sortConfigChange() {
     this._emitConfigChange();
     console.log(this._config);
@@ -259,14 +212,6 @@ export class TableComponent implements OnInit {
    */
   private _emitConfigChange() {
     this.configChange.emit(this._config);
-    // this._paginationConfig = value;
-    // this._config.limit = value.limit;
-    // this._config.offset = value.offset;
-    // if (isPlatformBrowser(this._platformId)) {
-    //   window.scroll(0, 0);
-    // }
-    // this.changeConfig(this._config);
-    // this.selectAll(event);
   }
 
   /***
@@ -277,53 +222,6 @@ export class TableComponent implements OnInit {
   public filterConfigChange(value: Config) {
     this._config = value;
     this._emitConfigChange();
-    // this._config = value;
-    // this.fetchingResult = false;
-    // if (!this._isLocal) {
-    //   this.configChange.emit(this._config);
-    // } else {
-    //   Promise.resolve(null).then(() => this.changeLocalConfig());
-    // }
-  }
-
-  /***
-   * This function reload the config when its change
-   * @requires local config
-   */
-  changeLocalConfig() {
-    // this._filteredContent = this._content;
-    // for (const key of Object.keys(this._config)) {
-    //   switch (key) {
-    //     case('limit') : {
-    //       break;
-    //     }
-    //     case('offset'): {
-    //       break;
-    //     }
-    //     case ('search'): {
-    //       for (const search of Object.keys(this._config['search'])) {
-    //         this.filterAttribute(search, true);
-    //       }
-    //       break;
-    //     }
-    //     case('sort'): {
-    //       for (const sortKey of Object.keys(this._config['sort'])) {
-    //         this.sortColumn(sortKey);
-    //       }
-    //       break;
-    //     } default : {
-    //       this.filterAttribute(key, false);
-    //       break;
-    //   }
-    //   }
-    // }
-    //
-    // this._total = this._filteredContent.length;
-    //
-    // if (!this._isNotPaginable) {
-    //   this._filteredContent = this._filteredContent.slice(this._config.offset, this._config.offset + Number(this._config.limit));
-    // }
-
   }
 
   /***
@@ -383,17 +281,6 @@ export class TableComponent implements OnInit {
 
   }
 
-  /**
-   * This function is called when the user selects one row. It will emit the selected rows
-   */
-  onSelectAction() {
-    // if (this._massSelection) {
-    //   this.selectRowAction.emit({ _rows: 'all'});
-    // } else {
-    //   this.selectRowAction.emit({ _rows: this.getSelectedRowsContent()});
-    // }
-  }
-
   /***
    * This function returns the keys of the table
    * @returns {string[]}
@@ -415,7 +302,7 @@ export class TableComponent implements OnInit {
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
 
-        let tmpContent = this._table._isLocal ? this._filteredContent[rowKey]._content[newColumnAttr[0]] : this._table._content[rowKey][newColumnAttr[0]];
+        let tmpContent = this._table._content[rowKey][newColumnAttr[0]];
 
         newColumnAttr = newColumnAttr.splice(1);
 
@@ -427,12 +314,8 @@ export class TableComponent implements OnInit {
 
       } else {
 
-        if (this._table._isLocal) {
-          return this._filteredContent[rowKey]._content[columnAttr] || '';
-        } else {
-          if (this._table._content[rowKey] && this._table._content[rowKey][columnAttr]) {
-            return this._table._content[rowKey][columnAttr];
-          }
+        if (this._table._content[rowKey] && this._table._content[rowKey][columnAttr]) {
+          return this._table._content[rowKey][columnAttr];
         }
 
       }
@@ -602,68 +485,12 @@ export class TableComponent implements OnInit {
   }
 
   /***
-   * This function returns if a column is already sort or not
-   * @param {Column} content
-   * @returns {boolean}
-   */
-  isSort(content: Column): boolean {
-    // if (content !== null && this.config && this.config.sort !== null) {
-    //   return this._config.sort[this.getAttrs(content)[0]];
-    // } else {
-    //   return false;
-    // }
-    return ;
-  }
-
-  /***
-   * This function sort the content of the Table depending on one column
-   * @requires local config
-   * @param {string} key
-   */
-  sortColumn(key: string) {
-    // if ((this._columns.find(value => value._attrs[0] === key))) {
-    //   const sortArray = this._filteredContent.slice();
-    //   this._filteredContent = sortArray.sort((a, b) => {
-    //     const valueA = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(a._content)).toString() , key).toString();
-    //     const valueB = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(b._content)).toString() , key).toString();
-    //     return this._config.sort[key] * (valueA.localeCompare(valueB));
-    //   });
-    // }
-  }
-
-  /***
    * This function returns if a column is sortable or not
    * @param {Column} column
    * @returns {boolean}
    */
   public isSortable(column: Column) {
     return column._isSortable === undefined ? true : column._isSortable;
-  }
-
-  /***
-   * This function filter the Table content basing on a column
-   * @param {string} key
-   * @param {boolean} isSearch
-   */
-  filterAttribute(key: string, isSearch: boolean) {
-    // if ((this._columns.find(value => value._attrs[0] === key))) {
-    //   let word: RegExp = null;
-    //   if (isSearch) {
-    //     word = new RegExp(this._config.search[key], 'gi');
-    //   } else {
-    //     word = new RegExp(this._config[key], 'gi');
-    //   }
-    //
-    //   const columnToFilter = this._columns.find(value => value._attrs[0] === key);
-    //
-    //   this._filteredContent = this._filteredContent.filter((value, index) => {
-    //     if (columnToFilter._type === 'COUNTRY') {
-    //       return !this.getContentValue(index.toString(), key).flag.toLowerCase().search(word);
-    //     } else {
-    //       return !this.getContentValue(index.toString(), key).toLowerCase().search(word);
-    //     }
-    //   });
-    // }
   }
 
   /***
@@ -724,10 +551,6 @@ export class TableComponent implements OnInit {
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-  get filteredContent(): Row[] {
-    return this._filteredContent;
   }
 
   get userLang(): string {
