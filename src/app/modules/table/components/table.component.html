@@ -16,7 +16,7 @@
         <!-- want to filter by columns -->
         <ng-container *ngIf="table._isFiltrable">
           <app-shared-search-filter
-            (filterConfigChange)="filterConfigChange($event)"
+            (searchConfigChange)="filterConfigChange($event)"
             [props]="table._columns"
             [searchConfig]="config"
             [tableView]="true">

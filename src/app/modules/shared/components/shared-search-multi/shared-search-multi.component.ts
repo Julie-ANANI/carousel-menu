@@ -23,7 +23,7 @@ export class SharedSearchMultiComponent {
     this._tableView = value;
   }
 
-  @Output() filterConfigChange: EventEmitter<Config> = new EventEmitter<Config>();
+  @Output() searchConfigChange: EventEmitter<Config> = new EventEmitter<Config>();
 
   private _currentTextProp: Column = {_attrs: [''], _name: '', _type: 'TEXT'};
 
@@ -72,7 +72,7 @@ export class SharedSearchMultiComponent {
 
       if (input === '') {
         this._searchConfig.search = '{}';
-        this.filterConfigChange.emit(this._searchConfig);
+        this.searchConfigChange.emit(this._searchConfig);
       } else {
         //Detect an "special" query...
         input = input.split(',');
@@ -83,7 +83,7 @@ export class SharedSearchMultiComponent {
         });
 
         this._searchConfig.search = JSON.stringify(_search);
-        this.filterConfigChange.emit(this._searchConfig);
+        this.searchConfigChange.emit(this._searchConfig);
 
       }
 
@@ -97,7 +97,7 @@ export class SharedSearchMultiComponent {
       delete this._searchConfig[prop._attrs[0]];
     }
 
-    this.filterConfigChange.emit(this._searchConfig);
+    this.searchConfigChange.emit(this._searchConfig);
 
   }
 
