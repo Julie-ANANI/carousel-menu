@@ -15,12 +15,12 @@
 
         <!-- want to filter by columns -->
         <ng-container *ngIf="table._isFiltrable">
-          <app-shared-multi-filter
+          <app-shared-search-filter
             (filterConfigChange)="filterConfigChange($event)"
             [props]="table._columns"
             [searchConfig]="config"
             [tableView]="true">
-          </app-shared-multi-filter>
+          </app-shared-search-filter>
         </ng-container>
 
       </div>

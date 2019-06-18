@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
-import { SharedFilterMultiComponent } from './shared-filter-multi.component';
+import { SharedSearchMultiComponent } from './shared-search-multi.component';
 
 
 @NgModule({
@@ -17,11 +17,11 @@ import { SharedFilterMultiComponent } from './shared-filter-multi.component';
     PipeModule
   ],
   declarations: [
-    SharedFilterMultiComponent
+    SharedSearchMultiComponent
   ],
   exports: [
-    SharedFilterMultiComponent
+    SharedSearchMultiComponent
   ]
 })
 
-export class SharedFilterMultiModule { }
+export class SharedSearchMultiModule { }

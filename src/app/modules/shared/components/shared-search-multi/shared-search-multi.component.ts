@@ -4,12 +4,12 @@ import { Choice } from '../../../table/models/choice';
 import { Config } from '../../../../models/config';
 
 @Component({
-  selector: 'app-shared-multi-filter',
-  templateUrl: './shared-filter-multi.component.html',
-  styleUrls: ['./shared-filter-multi.component.scss']
+  selector: 'app-shared-search-filter',
+  templateUrl: './shared-search-multi.component.html',
+  styleUrls: ['./shared-search-multi.component.scss']
 })
 
-export class SharedFilterMultiComponent {
+export class SharedSearchMultiComponent {
 
   @Input() set searchConfig(value: Config) {
     this._searchConfig = value;
