@@ -3,6 +3,7 @@ import { EmailScenario } from '../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../models/email-template';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../models/email-signature';
+import { Config } from '../../../../../models/config';
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -58,11 +59,12 @@ export class AdminEditWorkflowComponent {
 
   private _campaignScenario: EmailScenario;
 
-  public config: any = {
-    limit: '0',
+  private _config: Config = {
+    fields: '',
+    limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{}'
+    sort: '{"created":-1}'
   };
 
   constructor() { }
@@ -86,11 +88,11 @@ export class AdminEditWorkflowComponent {
 
     this._total = this._campaignScenario.emails.length;
 
-    let columns = [{_attrs: ['num', `${this._language}.subject`], _name: 'TABLE.HEADING.EMAILS', _type: 'TEXT', _isSortable: false, _choices: null},
-      {_attrs: [`${this._language}.defaultSignatureName`], _name: 'TABLE.HEADING.SIGNATURES', _type: 'TEXT', _isSortable: false, _choices: null}];
+    let columns = [{_attrs: ['num', `${this._language}.subject`], _name: 'TABLE.HEADING.EMAILS', _type: 'TEXT', _choices: null},
+      {_attrs: [`${this._language}.defaultSignatureName`], _name: 'TABLE.HEADING.SIGNATURES', _type: 'TEXT', _choices: null}];
 
     if (this._inCampaign) {
-      columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES',_isSortable: false, _choices: [
+      columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _choices: [
           {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label label-draft'},
           {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label label-success'},
         ]});
@@ -100,14 +102,8 @@ export class AdminEditWorkflowComponent {
       _selector: 'admin-scenario',
       _content: this._emails,
       _total: this._total,
-      _isNoTitle: true,
-      _isHeadable: false,
-      _isFiltrable: false,
-      _isDeletable: false,
-      _isSelectable: false,
-      _isNotPaginable: true,
       _isEditable: true,
-      _reloadColumns: true,
+      _editIndex: 1,
       _columns: columns
     };
 
@@ -232,6 +228,14 @@ export class AdminEditWorkflowComponent {
 
   public getId(): string {
     return `${this._language}_${this._campaignScenario.name.replace(/\s/ig, '_').toLowerCase()}`;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
   }
 
 }
