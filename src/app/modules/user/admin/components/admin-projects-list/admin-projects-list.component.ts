@@ -22,7 +22,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   public selectedProjectIdToBeDeleted: any = null;
 
-  private _tableInfos: Table = null;
+  private _tableInfos: Table;
 
   private _total = 0;
 
@@ -54,12 +54,10 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this._projects = [];
     this._config = {
       fields: '',
-      limit: 10,
-      offset: 0,
-      search: {},
-      sort: {
-        created: -1
-      }
+      limit: '10',
+      offset: '0',
+      search: '{}',
+      sort: '{"created":-1}'
     };
     if (this.operatorId && this.operatorId !== '') {
       this._config.operator = this.operatorId;
@@ -101,20 +99,25 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
           _title: 'COMMON.PROJECTS',
           _content: this._projects,
           _total: this._total,
-          _isShowable: true,
+          _editIndex: 1,
+          _isEditable: false,
           _isFiltrable: true,
           _isPaginable: true,
+          _isTitle: true,
           _columns: [
-            {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT'},
-            {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-CHOICES',
+            {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT', _isFiltrable: true, _isSortable: true},
+            {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-CHOICES', _imgHeight: '20px', _isFiltrable: true, _maxWidth: '150px',
               _choices: [
                 {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg'},
                 {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg'},
                 {_name: 'leads', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg'}
-              ], _imgHeight: '20px'},
+              ]
+            },
             {_attrs: ['percentages.preparation'], _name: 'Preparation', _type: 'PROGRESS', _enableTooltip: true},
             {_attrs: ['percentages.campaign'], _name: 'PROJECT.CAMPAIGN.CAMPAIGN', _type: 'PROGRESS', _enableTooltip: true},
             {_attrs: ['percentages.delivery'], _name: 'PROJECT.DELIVERY.DELIVERY', _type: 'PROGRESS', _enableTooltip: true},
+            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
+            {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true}
           ]
         };
       });
