@@ -1,5 +1,9 @@
 @import "../variables";
 
+.scroll-no {
+  overflow: hidden;
+}
+
 .scroll-y {
   display: block;
   white-space: nowrap;
