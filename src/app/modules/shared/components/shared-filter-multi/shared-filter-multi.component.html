@@ -9,7 +9,7 @@
       <label>
         <select class="form-select" (change)="onChangeTextProp($event)">
           <option *ngFor="let propName of textProps" [value]="getAttrs(propName)" [selected]="textIsSelected(propName)">
-            {{ getName(propName) | translate }}
+            {{ getName(propName) | translate | FormatText }}
           </option>
         </select>
       </label>
@@ -66,7 +66,7 @@
             <select (change)="onOtherFilter(prop)" [(ngModel)]="searchConfig[getAttrs(prop)]" class="form-select">
               <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let choice of getChoices(prop)" [ngValue]="getChoiceName(choice)">
-                {{ getChoiceAlias(choice) | translate }}
+                {{ getChoiceAlias(choice) | translate | FormatText }}
               </option>
             </select>
           </label>
