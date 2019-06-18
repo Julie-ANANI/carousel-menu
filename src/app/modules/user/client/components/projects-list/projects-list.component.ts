@@ -51,7 +51,10 @@ export class ProjectsListComponent implements OnInit {
     sort: '{ "created" :-1}'
   };
 
-  private _pagination: Pagination;
+  private _pagination: Pagination = {
+    propertyName: 'client-projects',
+    offset: Number(this._config.offset)
+  };
 
   private _noResult = false;
 
@@ -67,7 +70,6 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit() {
     this.loadProjects();
-    this._setPagination();
   }
 
   private loadProjects() {
@@ -79,17 +81,6 @@ export class ProjectsListComponent implements OnInit {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
-
-  private _setPagination() {
-    this._pagination = {
-      propertyName: 'client-projects',
-      offset: Number(this._config.offset),
-      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
-      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
-      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
-    };
-  }
-
 
   getRelevantLink(innovation: Innovation): Array<string> {
     const link = [innovation._id];
@@ -154,14 +145,6 @@ export class ProjectsListComponent implements OnInit {
 
   }
 
-
-  configChange(value: any) {
-    this._config.limit = value.limit;
-    this._config.offset = value.offset;
-    this.loadProjects();
-  }
-
-
   set config(value: any) {
     this._config = value;
   }
@@ -176,12 +159,8 @@ export class ProjectsListComponent implements OnInit {
 
   set pagination(value: Pagination) {
     this._pagination = value;
-
-    if (this._pagination.parPage && this._pagination.offset) {
-      this._config.limit = this._pagination.parPage.toString(10);
-      this._config.offset = this._pagination.offset.toString(10);
-    }
-
+    this._config.limit = this._pagination.parPage ? this._pagination.parPage.toString(10) : '10';
+    this._config.offset = this._pagination.offset ? this._pagination.offset.toString(10) : '0';
     this.loadProjects();
   }
 
