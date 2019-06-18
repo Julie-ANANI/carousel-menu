@@ -18,7 +18,7 @@ export class AdminProjectsComponent implements OnInit {
 
   private _total: number;
 
-  private _tableInfos: Table = null;
+  private _tableInfos: Table;
 
   private _config = {
     fields: '',
@@ -30,10 +30,13 @@ export class AdminProjectsComponent implements OnInit {
 
   constructor(private innovationService: InnovationService,
               private router: Router,
-              private translateTitleService: TranslateTitleService) { }
+              private translateTitleService: TranslateTitleService) {
+
+    this.translateTitleService.setTitle('COMMON.PROJECTS');
+
+  }
 
   ngOnInit(): void {
-    this.translateTitleService.setTitle('COMMON.PROJECTS');
     this.loadProjects(this._config);
   }
 
@@ -51,18 +54,17 @@ export class AdminProjectsComponent implements OnInit {
         _content: this._projects,
         _total: this._total,
         _isFiltrable: true,
-        _isShowable: true,
         _isEditable: false,
         _isTitle: true,
         _editIndex: 1,
         _isPaginable: true,
         _columns: [
-          {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-          {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
-          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
-          {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE'},
-          {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES',
+          {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isFiltrable: true },
+          {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isFiltrable: true },
+          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isFiltrable: true},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true },
+          {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true },
+          {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSortable: true, _isFiltrable: true,
             _choices: [
               {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
               {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label label-draft'},

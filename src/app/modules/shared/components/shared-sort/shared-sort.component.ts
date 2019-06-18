@@ -17,15 +17,15 @@ export class SharedSortComponent {
     this._property = value;
   }
 
-  @Input() set displayLabel(value: string) {
-    this._displayLabel = value;
+  @Input() set label(value: string) {
+    this._label = value;
   }
 
   @Output() sortConfigChange: EventEmitter<string> = new EventEmitter<string>();
 
   private _property: string;
 
-  private _displayLabel: string;
+  private _label: string;
 
   private _sort: string;
 
@@ -74,8 +74,8 @@ export class SharedSortComponent {
     return this._property;
   }
 
-  get displayLabel(): string {
-    return this._displayLabel;
+  get label(): string {
+    return this._label;
   }
 
   get currentKey(): string {
