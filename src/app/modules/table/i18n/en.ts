@@ -31,7 +31,7 @@ export const TABLE = {
     'SECTORS': 'Sectors',
     'INDUSTRY': 'Industry',
     'FEEDBACK': 'Feedback',
-    'SAVED': 'Saved'
+    'SAVED': 'Saved',
   },
 
   'TITLE': {

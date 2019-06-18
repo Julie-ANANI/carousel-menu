@@ -92,7 +92,8 @@
                   <ng-container *ngIf="isSortable(column)">
                     <app-shared-sort
                       [(sortConfig)]="sortConfig"
-                      [property]="getName(column) | translate | lowercase">
+                      [property]="getAttrs(column)[0] | lowercase"
+                      [displayLabel]="getName(column) | translate">
                     </app-shared-sort>
                   </ng-container>
 
@@ -161,7 +162,7 @@
                   <!-- button -->
                   <div *ngIf="i === table._editIndex - 1" class="tbody-td-action-button">
                     <button
-                      (click)="table._isLocal ? edit(filteredContent[row]) : edit(table._content[row])"
+                      (click)="edit(table._content[row])"
                       type="button"
                       class="btn btn-xs ghost-edit">
                       {{ getButtonLabel() | translate }}

@@ -67,7 +67,7 @@ export class TableComponent implements OnInit {
    */
   @Output() selectRowAction: EventEmitter<any> = new EventEmitter<any>();
 
-  private _table: Table; // default table data.
+  private _table: Table;
 
   private _isSearching: boolean;
 
@@ -248,7 +248,8 @@ export class TableComponent implements OnInit {
   }*/
 
   private _sortConfigChange() {
-
+    this._emitConfigChange();
+    console.log(this._config);
   }
 
   /***
@@ -702,6 +703,7 @@ export class TableComponent implements OnInit {
 
   set sortConfig(value: string) {
     this._config.sort = value;
+    console.log(value)
     this._sortConfigChange();
   }
 
