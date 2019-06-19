@@ -56,19 +56,24 @@ export class AdminEmailQueueComponent implements OnInit {
 
           this._tableInfos = {
             _selector: 'admin-mailgun',
-            _title: 'Batchs',
+            _title: 'batch(s)',
             _content: this._queueList.mailqueues,
             _total: this._queueList._metadata.totalCount,
             _isSearchable: true,
+            _isEditable: false,
+            _isTitle: true,
             _columns: [
-              {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSortable: false, _isSearchable: false},
-              {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSortable: false, _isSearchable: false},
-              {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _isSortable: false, _choices: [
+              {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSearchable: true},
+              {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},
+              {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
+                _choices: [
                   {_name: 'QUEUED', _alias: 'Queued', _class: 'label label-draft'},
                   {_name: 'PROCESSING', _alias: 'Processing', _class: 'label label-progress'},
                   {_name: 'CANCELED', _alias: 'Canceled', _class: 'label label-edit'},
                   {_name: 'DONE', _alias: 'Done', _class: 'label label-success'}
-                ]}]
+                ]
+              }
+              ]
           };
         },
         (error: any) => this._notificationsService.error('ERROR', error.message)
@@ -109,11 +114,21 @@ export class AdminEmailQueueComponent implements OnInit {
     this.sidebarState.next(this.more.animate_state);
   }
 
-  set config(value: any) { this._config = value; }
+  set config(value: any) {
+    this._config = value;
+    this.loadQueue(value);
+  }
+
   get config() { return this._config; }
+
   get queueSize(): number { return this._queueList._metadata.totalCount || 0; }
+
   get queue() { return this._queueList.mailqueues; }
+
   get tableInfos() { return this._tableInfos; }
+
   get currentQueue(): any { return this._currentQueue; }
+
   get more(): SidebarInterface { return this._more; }
+
 }
