@@ -4,7 +4,9 @@
 // The base class for the button, add the other classes with this to add the different styles
 .btn {
   @include control-transition();
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   outline: none;
   position: relative;
@@ -26,13 +28,9 @@
     margin-left: $unit-2;
     margin-right: $unit-2;
     font-size: $font-icon;
-    vertical-align: middle;
   }
 
   &.btn-close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     transition: all 0.4s ease;
     background: transparent;
     border: 0;

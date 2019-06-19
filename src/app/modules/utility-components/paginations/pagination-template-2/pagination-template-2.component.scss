@@ -6,8 +6,13 @@
     transition: none;
     border: 1px solid transparent;
     min-width: auto;
+    display: inline-block;
     height: 32px;
     padding: $unit-h $unit-2;
+
+    i {
+      vertical-align: middle;
+    }
 
 
     &:disabled {
