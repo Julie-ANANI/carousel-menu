@@ -33,6 +33,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
   private _modalAdd = false;
 
   private _config = {
+    fields: '',
     limit: '10',
     offset: '0',
     search: '{}',
@@ -90,18 +91,15 @@ export class AdminEmailsLibraryComponent implements OnInit {
       _selector: 'admin-emails',
       _content: this._emails,
       _total: this._total,
-      _isHeadable: false,
-      _isFiltrable: false,
       _isDeletable: true,
       _isSelectable: true,
-      _isNotPaginable: true,
       _isEditable: true,
-      _reloadColumns: true,
+      _editIndex: 1,
       _columns: [
-        {_attrs: [`name`], _name: 'Nom', _type: 'TEXT', _isSortable: false},
-        {_attrs: [`${this.language}.subject`], _name: 'Objet', _type: 'TEXT', _isSortable: false},
-        {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
-        {_attrs: [`${this.language}.signatureName`], _name: 'Signature', _type: 'TEXT', _isSortable: false}
+        {_attrs: [`name`], _name: 'Nom', _type: 'TEXT'},
+        {_attrs: [`${this.language}.subject`], _name: 'Objet', _type: 'TEXT'},
+        {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT'},
+        {_attrs: [`${this.language}.signatureName`], _name: 'Signature', _type: 'TEXT'}
       ]
     };
 
@@ -198,6 +196,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
 
   set config(value: any) {
     this._config = value;
+    this.getEmails(value);
   }
 
   set emailToEdit(value: any) {

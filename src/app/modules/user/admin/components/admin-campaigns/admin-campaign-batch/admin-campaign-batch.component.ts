@@ -335,9 +335,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     }
     const t: any = {
       _selector: batch._id,
-      _isNotPaginable: true,
       _isEditable: true,
-      _isNoTitle: true,
       _content: [
         {
           Step: '01 - Hello World',
@@ -392,41 +390,33 @@ export class AdminCampaignBatchComponent implements OnInit {
       _columns: [{
         _attrs: ['Step'],
         _name: workflowName,
-        _type: 'TEXT',
-        _isSortable: false
+        _type: 'TEXT'
       }, {
         _attrs: ['Sent'],
         _name: 'Sent',
-        _type: 'TEXT',
-        _isSortable: false
+        _type: 'TEXT'
       }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label label-success'}, {_attr: 'OpenedPred', _class: 'label label-meta'} ],
-        _isSortable: false
       }, {
         _attrs: ['ClickedPred', 'ClickedReel'],
         _name: 'Clicked',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label label-success'}, {_attr: 'ClickedPred', _class: 'label label-meta'} ],
-        _isSortable: false
       }, {
         _attrs: ['InsightsPred', 'InsightsReel'],
         _name: 'Insights',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label label-success'} , {_attr: 'InsightsPred', _class: 'label label-meta'}],
-        _isSortable: false
       }, {
         _attrs: ['Date'],
         _name: 'Date',
         _type: 'DATE',
-        _isSortable: false
       }, {
         _attrs: ['Time'],
         _name: 'Time',
         _type: 'TEXT',
-        _isSortable: false
       }, {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
-        _isSortable: false,
         _choices: [
           {_name: 'Sent', _class: 'label label-success'},
           {_name: 'Planned',  _class: 'label label-progress'},

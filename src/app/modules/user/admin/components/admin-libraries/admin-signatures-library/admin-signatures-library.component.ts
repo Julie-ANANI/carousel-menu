@@ -14,16 +14,23 @@ import { first } from 'rxjs/operators';
 export class AdminSignaturesLibraryComponent implements OnInit {
 
   private _signatures: Array<EmailSignature> = [];
+
   private _signatureToEdit: EmailSignature;
+
   private _newSignatureName: string = null;
+
   private _more: SidebarInterface = {};
+
   private _total = 0;
+
   private _tableInfos: Table = null;
+
   private _config = {
+    fields: '',
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"id":-1}'
+    sort: '{ "id": -1 }'
   };
 
   private _modalAdd = false;
@@ -43,20 +50,22 @@ export class AdminSignaturesLibraryComponent implements OnInit {
 
       this._tableInfos = {
         _selector: 'admin-signatures',
-        _title: 'Signatures',
+        _title: 'signature(s)',
         _content: this._signatures,
         _total: this._total,
-        _isHeadable: true,
-        _isFiltrable: true,
+        _isSearchable: true,
         _isDeletable: true,
         _isSelectable: true,
         _isEditable: true,
+        _isTitle: true,
+        _editIndex: 1,
         _columns: [
-          {_attrs: ['name'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
-          {_attrs: ['from'], _name: 'COMMON.SORT.BY_AUTHOR', _type: 'TEXT'},
+          {_attrs: ['name'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+          {_attrs: ['from'], _name: 'COMMON.SORT.BY_AUTHOR', _type: 'TEXT', _isSearchable: true, _isSortable: true},
           {_attrs: ['content'], _name: 'Content', _type: 'TEXT'},
-          {_attrs: ['language'], _name: 'COMMON.LANGUAGE', _type: 'TEXT'},
-          {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT'}]
+          {_attrs: ['language'], _name: 'COMMON.LANGUAGE', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+          {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT', _isSearchable: true}
+          ]
       };
     });
   }
@@ -112,13 +121,24 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   }
 
   get signatures(): Array<EmailSignature> { return this._signatures; }
+
   get newSignatureName(): string { return this._newSignatureName; }
+
   set newSignatureName(name: string) { this._newSignatureName = name; }
+
   get tableInfos(): any { return this._tableInfos; }
+
   get signatureToEdit(): any { return this._signatureToEdit; }
+
   get more(): any { return this._more; }
+
   get config(): any { return this._config; }
-  set config(value: any) { this._config = value; }
+
+  set config(value: any) {
+    this._config = value;
+    this.getSignatures(value);
+  }
+
   set signatureToEdit(value: any) { this._signatureToEdit = value; }
 
   get modalAdd(): boolean {

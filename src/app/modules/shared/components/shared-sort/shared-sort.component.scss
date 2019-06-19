@@ -1,38 +1,81 @@
 @import "../../../../../style/framework/src/variables";
 
 #sort-component {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  width: 100%;
+  height: 100%;
 
   .icon-wrapper {
+    transition: all .2s ease;
     flex-direction: column;
-    margin-left: 12px;
-    margin-top: -6px;
-    visibility: hidden;
-    transition: all .15s ease-in-out;
+    margin-left: 5px;
+    margin-bottom: 10px;
 
     .fa-angle-up, .fa-angle-down {
-      font-size: $font-icon-xl;
+      font-size: 0.6rem;
+      color: #CBD6E2;
     }
 
     span {
-      height: 13px;
-    }
-
-    .active {
-      color: $primary-color;
-      visibility: visible;
-    }
-
-    .inactive {
-      visibility: visible;
+      height: 8px;
     }
 
   }
 
-
   &:hover {
 
+    .icon-wrapper .fa-angle-down {
+      color: $primary-color;
+    }
+
+  }
+
+  &.desc {
+
     .icon-wrapper {
-      visibility: visible;
+
+      .fa-angle-up {
+        color: $primary-color !important;
+      }
+
+      .fa-angle-down {
+        color: $meta-color;
+      }
+
+    }
+
+    &:hover {
+
+      .fa-angle-down {
+        color: $background-color !important;
+      }
+
+    }
+
+  }
+
+  &.asn {
+
+    .icon-wrapper {
+
+      .fa-angle-down {
+        color: $primary-color !important;
+      }
+
+      .fa-angle-up {
+        color: $meta-color;
+      }
+
+    }
+
+    &:hover {
+
+      .fa-angle-up {
+        color: $background-color !important;
+      }
+
     }
 
   }

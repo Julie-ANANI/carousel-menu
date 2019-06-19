@@ -183,7 +183,9 @@ export const COMMON = {
     'CLOSE': 'Fermer',
     'DOWNLOAD': 'Télécharger',
     'SHARE': 'Partager',
-    'SEE_MORE': 'En voir plus'
+    'SEE_MORE': 'En voir plus',
+    'EDIT': 'Éditer',
+    'SHOW': 'Montrer',
   },
 
   'PROJECT': {
@@ -204,11 +206,6 @@ export const COMMON = {
     '0': 'Idée',
     '1': 'Développement en cours',
     '2': 'Déjà disponible'
-  },
-
-  'TABLE' : {
-    'SELECTED_ROWS': 'ligne(s) sélectionnée(s)',
-    'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 
   'LINKS': 'Liens',

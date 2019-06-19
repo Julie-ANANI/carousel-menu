@@ -177,7 +177,7 @@
         <ng-container *ngIf="tableInfos?._total > 0">
           <div class="section-light-pad rm-pad-bottom">
             <h3 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
-            <app-shared-table [data]="tableInfos" [config]="config" (editRow)="onClickShow($event)"></app-shared-table>
+            <app-shared-table [data]="tableInfos" [(config)]="config" (editRow)="onClickShow($event)"></app-shared-table>
           </div>
         </ng-container>
         <!-- section table -->

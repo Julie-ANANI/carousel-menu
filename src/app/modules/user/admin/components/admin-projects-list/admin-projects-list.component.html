@@ -1,5 +1,4 @@
-<app-shared-table [config]="config"
+<app-shared-table [(config)]="config"
                   [data]="tableInfos"
-                  (configChange)="loadProjects($event)"
                   (editRow)="goToProject($event)">
 </app-shared-table>

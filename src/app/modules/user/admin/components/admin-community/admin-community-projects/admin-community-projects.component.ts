@@ -3,6 +3,7 @@ import { TranslateTitleService } from "../../../../../../services/title/title.se
 import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from '../../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { Config } from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-community-projects',
@@ -12,9 +13,9 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 
 export class AdminCommunityProjectsComponent implements OnInit {
 
-  private _tableInfos: Table = null;
+  private _tableInfos: Table;
 
-  private _config: any = {
+  private _config: Config = {
     fields: '',
     limit: '',
     offset: '0',
@@ -57,26 +58,28 @@ export class AdminCommunityProjectsComponent implements OnInit {
       _title: 'TABLE.TITLE.PROJECTS',
       _content: this._totalProjects,
       _total: this._totalProjects.length,
-      _isHeadable: true,
-      _isFiltrable: true,
-      _isShowable: true,
-      _isLocal: true,
+      _isSearchable: true,
+      _isTitle: true,
+      _editIndex: 1,
+      _isEditable: false,
       _columns: [
         {
           _attrs: ['innovation.name'],
           _name: 'Projects',
-          _type: 'TEXT'
+          _type: 'TEXT',
+          _isSortable: true,
+          _isSearchable: true
         },
         {
           _attrs: ['innovation.created'],
-          _name: 'Created on',
-          _type: 'DATE'
+          _name: 'Created',
+          _type: 'DATE',
+          _isSortable: true
         },
         {
           _attrs: ['nbAmbassadors', 'nbRecAmbassadors'],
           _name: 'Ambassador count / Suggested',
           _type: 'MULTI-LABEL',
-          _isSortable: false,
           _multiLabels: [
             {_attr: 'nbAmbassadors', _class: 'label label-success' },
             {_attr: 'nbRecAmbassadors', _class: 'label label-draft'}
@@ -86,7 +89,6 @@ export class AdminCommunityProjectsComponent implements OnInit {
           _attrs: ['nbAnswers', 'nbAnswersFromAmbassadors'],
           _name: 'Feedback / From Ambassador',
           _type: 'MULTI-LABEL',
-          _isSortable: false,
           _multiLabels: [
             {_attr: 'nbAnswers', _class: 'label label-success'},
             {_attr: 'nbAnswersFromAmbassadors', _class: 'label label-draft'}
@@ -96,7 +98,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
           _attrs: ['innovation.status'],
           _name: 'Status',
           _type: 'MULTI-CHOICES',
-          _isSortable: false,
+          _isSearchable: true,
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label label-draft'},
@@ -113,7 +115,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
     this._router.navigate(['/user/admin/community/projects/' + project.innovation._id]);
   }
 
-  get config() {
+  get config(): Config {
     return this._config;
   }
 

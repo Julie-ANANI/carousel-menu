@@ -167,7 +167,7 @@ export class FrontendService {
   calculateInnovationMetadataPercentages(project: Innovation, level: 'preparation' | 'campaign' | 'delivery') {
     if (project._metadata[level] !== undefined) {
       const keys = Object.keys(project._metadata[level]) || [];
-      this._innovationMetadataCalculatedValues[level] = (((keys.filter(value => project._metadata[level][value] === true).length) * 100) / keys.length);
+      this._innovationMetadataCalculatedValues[level] = Math.round( (((keys.filter(value => project._metadata[level][value] === true).length) * 100) / keys.length));
     } else {
       this._innovationMetadataCalculatedValues[level] = 0;
     }

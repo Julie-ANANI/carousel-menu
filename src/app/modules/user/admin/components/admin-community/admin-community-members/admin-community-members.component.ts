@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
+import { Config } from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-community-members',
@@ -11,7 +12,7 @@ import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-inte
 
 export class AdminCommunityMembersComponent {
 
-  private _config: any = {
+  private _config: Config = {
     fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.industry',
     limit: '10',
     offset: '0',
@@ -81,8 +82,12 @@ export class AdminCommunityMembersComponent {
     this._sidebarValue = value;
   }
 
-  get config(): any {
+  get config(): Config {
     return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
   }
 
 }

@@ -28,29 +28,29 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _tableInfos: Table = {
     _selector: 'admin-user',
+    _title: 'tag(s)',
+    _isTitle: true,
     _content: [],
-    _total: 0,
+    _total: -1,
     _isDeletable: true,
     _isSelectable: true,
-    _isFiltrable: false,
     _columns: [
-      {_attrs: ['label'], _name: 'Label', _type: 'MULTILING'},
+      {_attrs: ['label'], _name: 'Label', _type: 'MULTILING', _isSortable: true},
       {_attrs: ['description'], _name: 'Description', _type: 'MULTILING'},
-      {_attrs: ['type'], _name: 'Type', _type: 'TEXT'},
+      {_attrs: ['type'], _name: 'Type', _type: 'TEXT', _isSortable: true},
       {
-        _attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES',
+        _attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES', _isSortable: true,
         _choices: [{_name: 'To Tag', _class: 'label label-alert'}, {_name: 'Tagged', _class: 'label label-success'}]
       }
     ],
   };
 
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created": "-1"}'
   };
 
   constructor(private route: ActivatedRoute,

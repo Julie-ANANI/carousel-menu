@@ -1,0 +1,25 @@
+@import "../variables";
+
+.scroll-no {
+  overflow: hidden;
+}
+
+.scroll-y {
+  display: block;
+  white-space: nowrap;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scroll-x {
+  display: block;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scroll-xy {
+  display: block;
+  white-space: nowrap;
+  overflow: auto;
+}
