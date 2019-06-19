@@ -59,8 +59,8 @@ export class SharedSearchMultiComponent {
     return column._isSearchable === undefined ? true : column._isSearchable;
   }
 
-  public onChangeTextProp(prop: any) {
-    this._currentTextProp = this._textProps.find(value => value._attrs[0] === prop.target['value']);
+  public onChangeTextProp(prop: Event) {
+    this._currentTextProp = this._textProps.find(value => value._attrs[0] === (prop.target as HTMLSelectElement).value);
   }
 
   // For values linked with config
@@ -76,9 +76,9 @@ export class SharedSearchMultiComponent {
       } else {
         //Detect an "special" query...
         input = input.split(',');
-        let _search = {};
+        let _search: any = {};
 
-        input.forEach((queryStr, index) => {
+        input.forEach((queryStr: string, index: number) => {
           _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
         });
 
