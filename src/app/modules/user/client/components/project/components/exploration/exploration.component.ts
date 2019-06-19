@@ -75,13 +75,13 @@ export class ExplorationComponent implements OnInit {
         _selector: 'client-answer',
         _content: response.answers,
         _total: response.answers.length,
-        _isPaginable: true,
         _editIndex: 1,
+        _isEditable: false,
         _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
-          {_attrs: ['job'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
-          {_attrs: ['company.name'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'COMMON.LABEL.CREATED', _type: 'DATE'},
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+          {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true},
+          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
         ]
       };
 
