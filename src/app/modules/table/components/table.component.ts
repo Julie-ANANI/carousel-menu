@@ -180,10 +180,10 @@ export class TableComponent implements OnInit {
     event.preventDefault();
 
     this._table._content.forEach((value) => {
-      value._isSelected = event.target['checked'];
+      value._isSelected = (event.target as HTMLInputElement).checked;
     });
 
-    this._massSelection = event.target['checked'];
+    this._massSelection = (event.target as HTMLInputElement).checked;
 
     this._onSelectRow();
 
@@ -195,17 +195,11 @@ export class TableComponent implements OnInit {
    * parent component.
    */
   private _onSelectRow() {
-
     if (this._massSelection) {
-      const rows: Array<any> = [];
-      this._table._content.forEach((content) => {
-        rows.push(content);
-      });
-      this.selectRows.emit({ _rows: rows});
+      this.selectRows.emit({ _rows: this._getAllContent()});
     } else {
       this.selectRows.emit({ _rows: this._getSelectedRowsContent()});
     }
-
   }
 
   /***
@@ -234,6 +228,7 @@ export class TableComponent implements OnInit {
    * @param {Row} row
    */
   public edit(row: Row) {
+    console.log(row);
     this.editRow.emit(row);
   }
 
@@ -242,17 +237,11 @@ export class TableComponent implements OnInit {
    * Emit the Output removeRows
    */
   public removeSelectedRows() {
-
     if (this._massSelection) {
-      const rows: Array<any> = [];
-      this._table._content.forEach((content) => {
-        rows.push(content);
-      });
-      this.removeRows.emit(rows);
+      this.removeRows.emit(this._getAllContent());
     } else {
       this.removeRows.emit(this._getSelectedRowsContent());
     }
-
 }
 
   /***
@@ -261,24 +250,18 @@ export class TableComponent implements OnInit {
    * @param {string} action
    */
   public onActionClick(action: string) {
-
     if (this._massSelection) {
-      const rows: Array<any> = [];
-      this._table._content.forEach((content) => {
-        rows.push(content);
-      });
-      this.performAction.emit({_action: action, _rows: rows});
+      this.performAction.emit({_action: action, _rows: this._getAllContent()});
     } else {
       this.performAction.emit({_action: action, _rows: this._getSelectedRowsContent()})
     }
-
   }
 
   /***
    * This function returns the keys of the table
    * @returns {string[]}
    */
-  public getRowsKeys(): string[] {
+  public getRowsKeys(): Array<string> {
     return Object.keys(this._table._content);
   }
 
@@ -286,16 +269,17 @@ export class TableComponent implements OnInit {
    * This function returns the content of the column basing on the rowKey and the column(s) attribute(s)
    * @param {string} rowKey
    * @param {string} columnAttr
-   * @returns {any}
+   * @returns {string}
    */
-  public getContentValue(rowKey: string, columnAttr: string): any  {
+  public getContentValue(rowKey: string, columnAttr: string): string  {
+    const row: number = TableComponent._getRowKey(rowKey);
 
-    if (this._table && this._table._content && this._table._content.length > 0) {
+    if (this._table._content && this._table._content.length > 0) {
 
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
 
-        let tmpContent = this._table._content[rowKey][newColumnAttr[0]];
+        let tmpContent = this._table._content[row][newColumnAttr[0]];
 
         newColumnAttr = newColumnAttr.splice(1);
 
@@ -307,8 +291,8 @@ export class TableComponent implements OnInit {
 
       } else {
 
-        if (this._table._content[rowKey] && this._table._content[rowKey][columnAttr]) {
-          return this._table._content[rowKey][columnAttr];
+        if (this._table._content[row] && this._table._content[row][columnAttr]) {
+          return this._table._content[row][columnAttr];
         }
 
       }
@@ -452,8 +436,10 @@ export class TableComponent implements OnInit {
    */
   public selectRow(key: string): void {
 
+    const rowKey: number = TableComponent._getRowKey(key);
+
     if (this._table._isSelectable) {
-      this._table._content[key]._isSelected = !(this._table._content[key]._isSelected);
+      this._table._content[rowKey]._isSelected = !(this._table._content[rowKey]._isSelected);
       this._massSelection = false;
     }
 
@@ -511,6 +497,20 @@ export class TableComponent implements OnInit {
     } else {
       return "NA";
     }
+  }
+
+  private static _getRowKey(key: string): number {
+    return parseInt(key, 10);
+  }
+
+  private _getAllContent(): Array<any> {
+    const rows: Array<any> = [];
+
+    this._table._content.forEach((content) => {
+      rows.push(content);
+    });
+
+    return rows;
   }
 
   get table(): Table {
