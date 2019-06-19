@@ -21,9 +21,8 @@
 <!-- section table -->
 <ng-container *ngIf="!fetchingError && total > 0">
   <app-shared-table
-    [config]="config"
+    [(config)]="config"
     [data]="tableInfos"
-    (configChange)="loadPros($event)"
     (editRow)="onClickEdit($event)"
     (removeRows)="onClickRemove($event)"
     (performAction)="performActions($event)"

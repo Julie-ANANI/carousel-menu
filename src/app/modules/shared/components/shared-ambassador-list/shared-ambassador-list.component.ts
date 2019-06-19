@@ -9,6 +9,7 @@ import { InnovationService } from "../../../../services/innovation/innovation.se
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { ContextInterface } from '../../../user/admin/components/admin-community/interfaces/context-interface';
+import { Config } from '../../../../models/config';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -22,7 +23,7 @@ export interface SelectedProfessional extends Professional {
 
 export class SharedAmbassadorListComponent {
 
-  @Input() set config(value: any) {
+  @Input() set config(value: Config) {
     this.loadPros(value);
   }
 
@@ -32,7 +33,7 @@ export class SharedAmbassadorListComponent {
 
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
-        this._actions = ['Add'];
+        this._tableInfos._button = [{_label: 'Add', _icon: 'fas fa-plus'}];
         break;
 
       case('default'):
@@ -63,9 +64,7 @@ export class SharedAmbassadorListComponent {
 
   private _config: any;
 
-  private _tableInfos: any = null;
-
-  private _actions: Array<string> = [];
+  private _tableInfos: any;
 
   private _total: number;
 
@@ -100,7 +99,7 @@ export class SharedAmbassadorListComponent {
    * allow the table to show data
    * @param config
    */
-  public loadPros(config: any): void {
+  public loadPros(config: Config): void {
 
     this._config = config;
 
@@ -150,9 +149,6 @@ export class SharedAmbassadorListComponent {
   private _loadTableData() {
     this._tableInfos._content = this._pros;
     this._tableInfos._total = this._total;
-    // TODO this is ugly AF, shouldn't the table component to be able to update just the data without reloading everything? // Will be fixed in future.
-    //this._tableInfos = JSON.parse(JSON.stringify(this._tableInfos));
-
   }
 
 
@@ -169,9 +165,9 @@ export class SharedAmbassadorListComponent {
 
 
   public performActions(action: any) {
-    switch (this._actions.findIndex(value => action._action === value)) {
+    switch (action._label) {
 
-      case 0:
+      case 'Add':
         // This is the add to the project case: the idea is to add the selected pros to the active project
         // If one or more professionals already belong to the project, just add the remaining ones.
         // We need to verify in the back whether a "Kate" campaign exists, otherwise we need to create one and
@@ -319,7 +315,7 @@ export class SharedAmbassadorListComponent {
     return this._pros;
   }
 
-  get config() {
+  get config(): Config {
     return this._config;
   }
 
