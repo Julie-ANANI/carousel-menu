@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
-import {PaginationInterface} from '../../../utility-components/paginations/interfaces/pagination';
+import {Pagination} from '../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -29,7 +29,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   };
 
-  private _paginationConfig: PaginationInterface = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: Pagination = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _searchService: SearchService) {}
 
@@ -177,5 +177,5 @@ export class SharedSearchHistoryComponent implements OnInit {
   get googleQuota(): number { return this._googleQuota; }
   get config(): any { return this._config; }
   get paused(): boolean { return this._paused; }
-  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
+  get paginationConfig(): Pagination { return this._paginationConfig; }
 }

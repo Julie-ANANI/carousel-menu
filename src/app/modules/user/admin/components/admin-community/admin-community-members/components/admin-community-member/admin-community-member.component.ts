@@ -141,8 +141,6 @@ export class AdminCommunityMemberComponent implements OnInit {
       _title: 'emails',
       _content: [],
       _total: 0,
-      _isHeadable: true,
-      _isShowable: true,
       _columns: [
         {
           _attrs: [''],
@@ -180,8 +178,6 @@ export class AdminCommunityMemberComponent implements OnInit {
       _title: 'projects',
       _content: [],
       _total: 0,
-      _isHeadable: true,
-      _isShowable: true,
       _columns: [
         {
           _attrs: [''],

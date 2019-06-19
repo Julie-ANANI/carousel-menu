@@ -34,8 +34,6 @@ export class ShowcaseInnovationsComponent {
 
   private _count = 0;
 
-  private readonly _adminPass: boolean = false;
-
   private _modalShow = false;
 
   constructor(private _innovationService: InnovationService,
@@ -43,7 +41,6 @@ export class ShowcaseInnovationsComponent {
               private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this._adminPass = this._authService.adminLevel > 2;
     this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this._computeCards();
     });
@@ -152,8 +149,8 @@ export class ShowcaseInnovationsComponent {
     return this._count;
   }
 
-  get adminPass(): boolean {
-    return this._adminPass;
+  get isAdmin(): boolean {
+    return this._authService.isAdmin;
   }
 
   get lang(): string {

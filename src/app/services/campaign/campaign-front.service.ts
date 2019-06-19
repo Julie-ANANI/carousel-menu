@@ -1,51 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
-import { Subject}  from 'rxjs';
 
 @Injectable()
 export class CampaignFrontService {
-
-  campaignSubject = new Subject<Campaign>();
-
-  constructor() { }
-
-
-  /***
-   * this function is to called to set the campaign object
-   * so that we can have same object in every child component.
-   * @param campaign
-   */
-  setCampaign(campaign: Campaign) {
-    this.campaignSubject.next(campaign);
-  }
-
-
-  /***
-   * this function is to get the value of set campaign after setting
-   * the campaign object.
-   */
-  getCampaign(): Subject<Campaign> {
-    return this.campaignSubject;
-  }
-
-
-  /***
-   * This function is to calculate the percentage of the analytics that has been used
-   * in Exploration and Synthesis page.
-   * @param {number} value1
-   * @param {number} value2
-   * @returns {number}
-   */
-  analyticPercentage(value1: number, value2: number) {
-    if (value2 === 0 || value2 === undefined) {
-      return 0;
-    } else {
-      const percentage = (value2 / value1) * 100;
-      return percentage === Infinity ? 0 : Math.floor(percentage);
-    }
-  }
-
 
   /***
    * this function is to calculate the campaign stat for the answers component in the
@@ -100,14 +58,13 @@ export class CampaignFrontService {
     return value;
   }
 
-
   /***
    * this function is to calculate the campaign stat for the pros and quiz component in the
    * campaign component.
    * @param campaign
    * @param searchKey
    */
-  getProsCampaignStat(campaign: Campaign, searchKey: any): number {
+  static getProsCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
     if(campaign && campaign.stats) {
@@ -142,14 +99,13 @@ export class CampaignFrontService {
     return isNaN(value) ? 0 : value;
   }
 
-
   /***
    * this function is to calculate the campaign stat for the workflows and batch component in the
    * campaign component.
    * @param campaign
    * @param searchKey
    */
-  getBatchCampaignStat(campaign: Campaign, searchKey: any): number {
+  static getBatchCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
     if (campaign && campaign.stats) {

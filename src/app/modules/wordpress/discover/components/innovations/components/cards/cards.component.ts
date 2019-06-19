@@ -1,6 +1,5 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { PaginationInterface } from '../../../../../../utility-components/paginations/interfaces/pagination';
 import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovCard } from '../../../../../../../models/innov-card';
@@ -34,7 +33,7 @@ export class CardsComponent {
     this._endIndex = value;
   }
 
-  private _paginationValue: PaginationInterface = {};
+  private _paginationValue: any = {};
 
   private _innovations: Array<Innovation> = [];
 
@@ -114,7 +113,7 @@ export class CardsComponent {
    * update the innovation cards with the new limit and offset value.
    * @param value
    */
-  public onChangePagination(value: PaginationInterface) {
+  public onChangePagination(value: any) {
     if (isPlatformBrowser(this._platformId)) {
 
       const tempOffset = parseInt(value.offset, 10);
@@ -143,7 +142,7 @@ export class CardsComponent {
     return this._translateService.getBrowserLang();
   }
 
-  get paginationValue(): PaginationInterface {
+  get paginationValue(): any {
     return this._paginationValue;
   }
 

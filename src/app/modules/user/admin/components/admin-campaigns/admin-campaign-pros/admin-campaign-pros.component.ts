@@ -5,9 +5,8 @@ import { ProfessionalsService } from '../../../../../../services/professionals/p
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
-import { FormGroup } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
-import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import { Professional } from '../../../../../../models/professional';
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -17,7 +16,7 @@ import { CampaignFrontService } from '../../../../../../services/campaign/campai
 
 export class AdminCampaignProsComponent implements OnInit {
 
-  private _newPro: any = {
+  private _newPro: Professional = {
     firstName: '',
     lastName: '',
     email: '',
@@ -45,8 +44,7 @@ export class AdminCampaignProsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private translateNotificationsService: TranslateNotificationsService,
               private professionalsService: ProfessionalsService,
-              @Inject(PLATFORM_ID) private platform: Object,
-              private campaignFrontService: CampaignFrontService) { }
+              @Inject(PLATFORM_ID) private platform: Object) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -71,13 +69,6 @@ export class AdminCampaignProsComponent implements OnInit {
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
-  }
-
-
-  getCampaignStat(searchKey: string): number {
-    if (this._campaign) {
-      return this.campaignFrontService.getProsCampaignStat(this._campaign, searchKey);
-    }
   }
 
 
@@ -135,15 +126,15 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
 
-  onClickSave(formValue: FormGroup) {
+  onClickSave(formValue: Professional) {
     this._newPro = {
-      firstName: formValue.get('firstName').value,
-      lastName: formValue.get('lastName').value,
-      email: formValue.get('email').value,
-      jobTitle: formValue.get('jobTitle').value,
-      country: formValue.get('country').value,
-      profileUrl: formValue.get('profileUrl').value,
-      company: formValue.get('companyName').value,
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      email: formValue.email,
+      jobTitle: formValue.jobTitle,
+      country: formValue.country,
+      profileUrl: formValue.profileUrl,
+      company: formValue.company,
       emailConfidence: 100
     };
 

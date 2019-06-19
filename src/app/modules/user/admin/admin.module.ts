@@ -47,7 +47,6 @@ import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
 import { SignatureResolver } from '../../../resolvers/signature.resolver';
 import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
-import { InnovationCommonService } from '../../../services/innovation/innovation-common.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
 import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
@@ -107,7 +106,6 @@ import { InnovationFrontService } from '../../../services/innovation/innovation-
     RequestResolver,
     CampaignFrontService,
     QuizService,
-    InnovationCommonService,
     PresetResolver,
     AdvSearchService,
     ProfessionalResolver,

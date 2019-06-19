@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { Innovation } from '../../../../../models/innovation';
-import { PaginationInterface } from '../../../../utility-components/paginations/interfaces/pagination';
+import { Pagination } from '../../../../utility-components/paginations/interfaces/pagination';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
@@ -43,7 +43,7 @@ export class ProjectsListComponent implements OnInit {
 
   private _deleteModal = false;
 
-  private _config = {
+  private _config: any = {
     fields: 'name created updated status collaborators principalMedia',
     limit: '10',
     offset: '0',
@@ -51,9 +51,9 @@ export class ProjectsListComponent implements OnInit {
     sort: '{ "created" :-1}'
   };
 
-  private _paginationConfig: PaginationInterface = {
-    limit: this._config.limit,
-    offset: this._config.offset
+  private _pagination: Pagination = {
+    propertyName: 'client-projects',
+    offset: Number(this._config.offset)
   };
 
   private _noResult = false;
@@ -62,13 +62,15 @@ export class ProjectsListComponent implements OnInit {
               private userService: UserService,
               private translateTitleService: TranslateTitleService,
               private translateNotificationService: TranslateNotificationsService,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService) {
 
-  ngOnInit() {
     this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
-    this.loadProjects();
+
   }
 
+  ngOnInit() {
+    this.loadProjects();
+  }
 
   private loadProjects() {
     this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
@@ -79,7 +81,6 @@ export class ProjectsListComponent implements OnInit {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
-
 
   getRelevantLink(innovation: Innovation): Array<string> {
     const link = [innovation._id];
@@ -144,22 +145,23 @@ export class ProjectsListComponent implements OnInit {
 
   }
 
-
-  configChange(value: any) {
-    window.scroll(0, 0);
-    this._paginationConfig = value;
-    this._config.limit = value.limit;
-    this._config.offset = value.offset;
-    this.loadProjects();
-  }
-
-
   set config(value: any) {
     this._config = value;
   }
 
   get config(): any {
     return this._config;
+  }
+
+  get pagination(): Pagination {
+    return this._pagination;
+  }
+
+  set pagination(value: Pagination) {
+    this._pagination = value;
+    this._config.limit = this._pagination.parPage ? this._pagination.parPage.toString(10) : '10';
+    this._config.offset = this._pagination.offset ? this._pagination.offset.toString(10) : '0';
+    this.loadProjects();
   }
 
   get total () {
@@ -184,10 +186,6 @@ export class ProjectsListComponent implements OnInit {
 
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-  get paginationConfig(): PaginationInterface {
-    return this._paginationConfig;
   }
 
   get noResult(): boolean {

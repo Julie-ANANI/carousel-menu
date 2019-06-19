@@ -7,7 +7,6 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Batch } from '../../../../../../models/batch';
 import { Table } from '../../../../../table/models/table';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
-import { first } from 'rxjs/operators';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -63,7 +62,6 @@ export class AdminCampaignBatchComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
               private translateNotificationsService: TranslateNotificationsService,
-              private campaignFrontService: CampaignFrontService,
               private translateService: TranslateService,
               private localStorage: LocalStorageService) { }
 
@@ -92,12 +90,12 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   getCampaignStat(searchKey: any): number {
     if (this._campaign) {
-      return this.campaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
+      return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
     }
   }
 
   public updateStats() {
-    this.campaignService.updateStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
+    this.campaignService.updateStats(this._campaign._id).subscribe((stats: any) => {
       this.getBatches();
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
     }, () => {
@@ -134,7 +132,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   private getBatches() {
-    this.campaignService.messagesStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
+    this.campaignService.messagesStats(this._campaign._id).subscribe((stats: any) => {
       this._stats = stats;
       this._tableBatch = [];
 
@@ -229,7 +227,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   setNuggets() {
-    this.campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
+    this.campaignService.setNuggets(this._campaign._id).subscribe((result: Campaign) => {
       this._campaign = result;
 
       if (this._campaign.nuggets) {
@@ -291,7 +289,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     this._newBatch.firstMail = formValue.value['send'] === 'true' ? Date.now() : this.computeDate(formValue.value['date'], formValue.value['time']||"00:00");
     this._newBatch.sendNow = formValue.value['send'];
 
-    this.campaignService.createNewBatch(this._campaign._id, this._newBatch).pipe(first()).subscribe(() => {
+    this.campaignService.createNewBatch(this._campaign._id, this._newBatch).subscribe(() => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.CREATED');
       this.getBatches();
     }, () => {
@@ -337,9 +335,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     }
     const t: any = {
       _selector: batch._id,
-      _isNotPaginable: true,
       _isEditable: true,
-      _isNoTitle: true,
       _content: [
         {
           Step: '01 - Hello World',
@@ -394,41 +390,33 @@ export class AdminCampaignBatchComponent implements OnInit {
       _columns: [{
         _attrs: ['Step'],
         _name: workflowName,
-        _type: 'TEXT',
-        _isSortable: false
+        _type: 'TEXT'
       }, {
         _attrs: ['Sent'],
         _name: 'Sent',
-        _type: 'TEXT',
-        _isSortable: false
+        _type: 'TEXT'
       }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label label-success'}, {_attr: 'OpenedPred', _class: 'label label-meta'} ],
-        _isSortable: false
       }, {
         _attrs: ['ClickedPred', 'ClickedReel'],
         _name: 'Clicked',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label label-success'}, {_attr: 'ClickedPred', _class: 'label label-meta'} ],
-        _isSortable: false
       }, {
         _attrs: ['InsightsPred', 'InsightsReel'],
         _name: 'Insights',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label label-success'} , {_attr: 'InsightsPred', _class: 'label label-meta'}],
-        _isSortable: false
       }, {
         _attrs: ['Date'],
         _name: 'Date',
         _type: 'DATE',
-        _isSortable: false
       }, {
         _attrs: ['Time'],
         _name: 'Time',
         _type: 'TEXT',
-        _isSortable: false
       }, {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
-        _isSortable: false,
         _choices: [
           {_name: 'Sent', _class: 'label label-success'},
           {_name: 'Planned',  _class: 'label label-progress'},
@@ -515,7 +503,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   OnSwitchFreeze(batch: Batch, event: Event) {
-    this.campaignService.freezeStatus(batch).pipe(first()).subscribe((modifiedBatch: any) => {
+    this.campaignService.freezeStatus(batch).subscribe((modifiedBatch: any) => {
       this._stats.batches[this.getBatchIndex(modifiedBatch._id)] = modifiedBatch;
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.BATCH.FREEZED');
     }, () => {
@@ -602,7 +590,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     }
 
     this._currentBatch.workflow = formValue.value['workflow'];
-    this.campaignService.updateBatch(this._currentBatch).pipe(first()).subscribe((batch: any) => {
+    this.campaignService.updateBatch(this._currentBatch).subscribe((batch: any) => {
       this._stats.batches[this.getBatchIndex(batch)] = batch;
 
       this._tableBatch.every((table, index) => {
@@ -624,7 +612,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   /*public addNuggetsToBatch(batchId: string) {
     this.nuggetsBatch = null;
-    this.campaignService.addNuggets(this._campaign._id, batchId).pipe(first()).subscribe((batch: any) => {
+    this.campaignService.addNuggets(this._campaign._id, batchId).subscribe((batch: any) => {
       this.stats.batches[this.getBatchIndex(batch._id)] = batch;
       this.translateNotificationsService.success('Nuggets ajoutés', `${batch.nuggetsPros} pros à 80% ont été ajoutés.`);
     });
@@ -633,7 +621,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   // DEBUG AUTOBATCH => Creation de pro a la volée
   /*createPro() {
-    this.campaignService.creerpro(this._campaign._id).pipe(first()).subscribe();
+    this.campaignService.creerpro(this._campaign._id).subscribe();
   }*/
 
   get dateFormat(): string {

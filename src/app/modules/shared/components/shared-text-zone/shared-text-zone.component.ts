@@ -85,10 +85,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
                 this._sharedEditor.set('text', this._text);
               }
               console.log("Goodbye motherfucker!");*/
-            })
-            .on('click', () => {
-              //this.startCollaborativeEditor();
-            })
+            });
         },
       });
       if (this._text && this.editor) {

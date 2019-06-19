@@ -36,11 +36,9 @@ export class SharedProsListComponent {
 
   editUser: {[propString: string]: boolean} = {};
 
-  private _tableInfos: any = null;
+  private _tableInfos: Table = null;
 
-  private _actions: string[] = ['COMMON.TAG_LABEL.ADD_TAGS', 'Convert to ambassador'];
-
-  private _total = 0;
+  private _total = -1;
 
   private _pros: Array <SelectedProfessional>;
 
@@ -76,24 +74,26 @@ export class SharedProsListComponent {
           _title: 'TABLE.TITLE.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
-          _isHeadable: true,
-          _isFiltrable: true,
+          _isSearchable: true,
+          _isTitle: true,
+          _isPaginable: true,
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
-          _actions: this._actions,
+          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG_LABEL.ADD_TAGS', _icon: 'fas fa-plus'}],
           _editIndex: 2,
           _columns: [
-            {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES',
+            {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES', _isSortable: true, _minWidth: '125px', _isSearchable: true,
               _choices: [
-                {_name: 'false', _alias: null},
-                {_name: 'true', _alias: 'Yes',
-                  _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}]},
-            {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
-            {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-            {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
-            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'}
+                {_name: 'false', _alias: 'No', _url: ''},
+                {_name: 'true', _alias: 'Yes', _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}
+              ]
+            },
+            {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},
+            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSortable: true, _isSearchable: true, _minWidth: '125px'},
+            {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+            {_attrs: ['company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY', _isSortable: true, _isSearchable: true, _minWidth: '125px'},
           ]
         };
 
@@ -101,9 +101,11 @@ export class SharedProsListComponent {
     } else {
       this.professionalsService.getAll(this.configToString()).pipe(first()).subscribe((pros: any) => {
         this._pros = pros.result;
+
         this._pros.forEach(pro => {
           pro.sent = pro.messages && pro.messages.length > 0;
         });
+
         this._total = pros._metadata.totalCount;
 
         this._tableInfos = {
@@ -111,25 +113,28 @@ export class SharedProsListComponent {
           _title: 'TABLE.TITLE.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
-          _isFiltrable: true,
-          _isHeadable: true,
+          _isSearchable: true,
+          _isTitle: true,
+          _isPaginable: true,
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
-          _actions: this._actions,
+          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG_LABEL.ADD_TAGS', _icon: 'fas fa-plus'}],
           _editIndex: 2,
           _columns: [
-            {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES',
+            {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-CHOICES', _isSortable: true, _minWidth: '125px', _isSearchable: true,
               _choices: [
-                {_name: 'false', _alias: 'No',_class:'img-responsive badge-sm'},
-                {_name: 'true', _alias: 'Yes',_class:'img-responsive badge-sm',
-                  _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}]},
-            {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
-            {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-            {_attrs: ['company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
-            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY'},
-            {_attrs: ['messages'], _name: 'TABLE.HEADING.CONTACT', _type: 'ARRAY'}]
+                {_name: 'false', _alias: 'No', _url: ''},
+                {_name: 'true', _alias: 'Yes', _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}
+                ]
+            },
+            {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},
+            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSortable: true, _isSearchable: true, _minWidth: '125px'},
+            {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+            {_attrs: ['company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+            {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY', _isSortable: true, _isSearchable: true, _minWidth: '125px'},
+            {_attrs: ['messages'], _name: 'TABLE.HEADING.CONTACT', _type: 'ARRAY', _isSortable: true, _isSearchable: true, _minWidth: '125px'},
+            ]
         };
       });
     }
@@ -159,12 +164,10 @@ export class SharedProsListComponent {
 
 
   performActions(action: any) {
-    switch (this._actions.findIndex(value => action._action === value)) {
-      case 0: {
-        this.editTags(action._rows);
-        break;
-      }
-      case 1:
+
+    switch (action._action) {
+
+      case 'Convert to ambassador':
         if(action._rows.length) {
           if(action._rows.length > 1) {
             console.log("Look man, I could do this action just for the first one...");
@@ -175,7 +178,13 @@ export class SharedProsListComponent {
           console.error("What? empty rows? How did you do that?");
         }
         break;
+
+      case 'COMMON.TAG_LABEL.ADD_TAGS':
+        this.editTags(action._rows);
+        break;
+
     }
+
   }
 
 

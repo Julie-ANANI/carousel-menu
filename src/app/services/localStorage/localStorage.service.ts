@@ -8,7 +8,7 @@ export class LocalStorageService {
     localStorage.setItem(k, v);
   }
 
-  public getItem (k: string): string {
+  public getItem (k: string): string | null {
     return localStorage.getItem(k);
   }
 

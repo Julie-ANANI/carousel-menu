@@ -165,7 +165,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     return {
       _selector: 'TODO',
       _title: self[`_nameWorkflow${l}`],
-      _isNotPaginable: true,
       _content: [
         {
           Step: ' 1er mail',

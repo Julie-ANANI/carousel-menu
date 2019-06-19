@@ -1,5 +1,12 @@
 <section id="showcase-clients" class="relative">
 
+  <!-- bar icon -->
+  <ng-container *ngIf="isAdmin && totalClients.length > 0">
+    <div class="icon icon-meta absolute tooltip tooltip-left" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_CLIENTS' | translate" (click)="openModal($event)">
+      <i class="fas fa-bars"></i>
+    </div>
+  </ng-container>
+
   <!-- heading 1st -->
   <h2 class="text text-notify" [innerText]="'SHOWCASE.CLIENTS_TITLE'" translate></h2>
   <!-- /heading 1st -->
@@ -15,12 +22,12 @@
       <div class="carousel-container">
 
         <div *ngFor="let slide of slides; let i = index;" [ngClass]="{ 'current-slide': i === currentSlideIndex }" class="carousel-item d-flex">
-          <div *ngFor="let client of slide.clients; let innerIndex = index" class="client-name-wrapper flex-centered animate-zoomIn">
+          <div *ngFor="let client of slide; let innerIndex = index" class="client-name-wrapper flex-centered animate-zoomIn">
 
             <ng-container *ngIf="client.logo">
               <div
                 [attr.data-tooltip]="client.name"
-                [ngClass]="innerIndex === slide.clients.length - 1 && slide.clients.length !== 1 ? 'tooltip-left' : 'tooltip-right'"
+                [ngClass]="innerIndex === slide.length - 1 && slide.length !== 1 ? 'tooltip-left' : 'tooltip-right'"
                 class="tooltip tooltip-hide-sm">
                 <img [src]="client.logo" [alt]="client.name" height="50" class="img-fit-cover">
               </div>
@@ -51,3 +58,33 @@
   <!-- /section client logos -->
 
 </section>
+
+<!-- modal to select clients -->
+<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
+
+  <div class="section-card d-flex text-center">
+    <ng-container *ngFor="let client of totalClients">
+      <div class="card flex-centered modal-card badge badge-save"
+           (click)="onChangeClient($event, client)"
+           [ngClass]="{ 'active': selectedClients[client.name] }">
+
+        <i class="fas fa-check-circle"></i>
+
+        <div class="card-header">
+          <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">
+            <img [src]="client.logo" [alt]="client.name"/>
+          </div>
+          <div *ngIf="!client.logo" class="card-title text-background"><span>{{ client.name }}</span></div>
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+    <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+  </div>
+
+</app-modal>
+<!-- /modal to select innovations -->

@@ -65,16 +65,13 @@
           <app-showcase-innovations [tagsStats]="selectedTagsStats"></app-showcase-innovations>
         </div>
 
-      </div>
-      <!-- /section answer and innovations -->
-
-      <!-- section company -->
-      <div class="flex-centered section-wrapper section-pad">
+        <!-- clients wrapper -->
         <div class="client-wrapper">
           <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
         </div>
+
       </div>
-      <!-- /section company -->
+      <!-- /section answer and innovations -->
 
       <!-- section map -->
       <div class="flex-centered section-wrapper section-pad">
@@ -88,7 +85,7 @@
 
           <admin-search-map
             [countriesData]="countries"
-            [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
+            [quartiles]="quartiles"
             [width]="'100%'">
           </admin-search-map>
 
@@ -136,10 +133,10 @@
     </div>
   </div>
 
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+    <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+  </div>
+
 </app-modal>
 <!-- /modal to modify the tags -->
-
-
-
-
-

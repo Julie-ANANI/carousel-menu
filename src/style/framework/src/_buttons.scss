@@ -5,8 +5,8 @@
 .btn {
   @include control-transition();
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
   outline: none;
   position: relative;
@@ -113,7 +113,7 @@
   }
 
   &[disabled], &:disabled, &.disabled {
-    color: $button-disabled-text !important;
+    color: $button-disabled-text-color !important;
     background-color: $button-disabled-bg-color !important;
     border-color: $button-border-color !important;
     cursor: not-allowed;
@@ -163,6 +163,10 @@
     @include ghost-button-variant($success-color);
   }
 
+  &.ghost-draft {
+    @include ghost-button-variant($background-color);
+  }
+
   &.rounded {
     border-radius: 36px;
   }
@@ -191,10 +195,38 @@
 
   }
 
+  &.no-hover {
+
+    &.ghost-primary {
+      @include ghost-button-no-hover-variant($primary-color);
+    }
+
+    &.ghost-edit {
+      @include ghost-button-no-hover-variant($meta-color);
+    }
+
+    &.ghost-delete {
+      @include ghost-button-no-hover-variant($alert-color);
+    }
+
+    &.ghost-draft {
+      @include ghost-button-no-hover-variant($background-color);
+    }
+
+  }
+
   &.ghost-background-hover {
 
     &.ghost-primary {
       @include button-ghost-background-variant($primary-color);
+    }
+
+    &.ghost-edit {
+      @include button-ghost-background-variant($meta-color);
+    }
+
+    &.ghost-draft {
+      @include button-ghost-background-variant($background-color);
     }
 
   }
@@ -241,8 +273,13 @@
 // Make a button extra small just add this class with the btn class
 .btn-xs {
   height: 1.75rem;
-  padding: 0.5rem $unit-4;
+  padding: $unit-2 $unit-3;
   font-size: $font-size-xs;
+
+  i {
+    font-size: $font-icon-xs;
+  }
+
 }
 
 

@@ -12,8 +12,7 @@ import { CampaignFrontService } from '../../../../../../services/campaign/campai
 export class AdminCampaignStatsComponent implements OnInit {
   private _campaign: Campaign;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private campaignFrontService: CampaignFrontService) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
@@ -22,7 +21,7 @@ export class AdminCampaignStatsComponent implements OnInit {
 
   getCampaignStat(searchKey: any): number {
     if (this._campaign) {
-      return this.campaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
+      return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
     }
   }
 }
