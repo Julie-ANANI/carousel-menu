@@ -1,6 +1,5 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { Pagination } from '../../../../../../utility-components/paginations/interfaces/pagination';
 import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovCard } from '../../../../../../../models/innov-card';
@@ -33,7 +32,7 @@ export class CardsComponent {
     this._endIndex = value;
   }
 
-  private _paginationValue: any = {}; //todo correct this.
+  private _paginationValue: any = {};
 
   private _innovations: Array<Innovation> = [];
 
@@ -113,24 +112,24 @@ export class CardsComponent {
   public onChangePagination(value: any) {
     if (isPlatformBrowser(this._platformId)) {
 
-      /*const tempOffset = parseInt(value.offset, 10);
+      const tempOffset = parseInt(value.offset, 10);
       const tempLimit = parseInt(value.limit, 10);
 
       this._startIndex = tempOffset;
       this._endIndex = tempLimit;
 
-      if (value.limit >= this._totalInnovations) {
+      if (tempLimit >= this._totalInnovations) {
         this._startIndex = 0;
         this._endIndex = this._totalInnovations;
       } else {
-        if (value.offset === 0) {
+        if (tempOffset === 0) {
           this._startIndex = 0;
           this._endIndex = tempLimit;
-        } else if (value.offset > 0) {
+        } else if (tempOffset > 0) {
           this._startIndex = tempOffset;
           this._endIndex += tempOffset;
         }
-      }*/ //todo correct this.
+      }
     }
   }
 
@@ -139,7 +138,7 @@ export class CardsComponent {
     return this._translateService.getBrowserLang();
   }
 
-  get paginationValue(): Pagination {
+  get paginationValue(): any {
     return this._paginationValue;
   }
 
