@@ -40,11 +40,16 @@ export class MouseService {
   }
 
   private _setTargetParentId(event: MouseEvent) {
-    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).id) {
-      this.parent.next((((event.target as HTMLElement).parentNode) as HTMLElement).id);
+
+    const targetElement: HTMLElement = event.target as HTMLElement;
+    const parentNodeElement: HTMLElement = targetElement.parentNode as HTMLElement;
+
+    if (targetElement && parentNodeElement && parentNodeElement.id) {
+      this.parent.next(parentNodeElement.id);
     } else {
       this.parent.next('');
     }
+
   }
 
   public targetParentId(): Subject<string> {
@@ -52,12 +57,18 @@ export class MouseService {
   }
 
   private _setTargetParentOffsetId(event: MouseEvent) {
-    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent
-      && ((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id) {
-      this.parentOffset.next(((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id);
+
+    const targetElement: HTMLElement = event.target as HTMLElement;
+    const parentNodeElement: HTMLElement = targetElement.parentNode as HTMLElement;
+    const parentOffsetElement: HTMLElement = parentNodeElement.offsetParent as HTMLElement;
+
+
+    if (targetElement && parentNodeElement && parentOffsetElement && parentOffsetElement.id) {
+      this.parentOffset.next(parentOffsetElement.id);
     } else {
       this.parentOffset.next('');
     }
+
   }
 
   public targetParentOffsetId(): Subject<string> {
@@ -65,19 +76,22 @@ export class MouseService {
   }
 
   private _setAll(event: MouseEvent) {
+
     let ids: Array<string> = [];
+    const targetElement: HTMLElement = event.target as HTMLElement;
+    const parentNodeElement: HTMLElement = targetElement.parentNode as HTMLElement;
+    const parentOffsetElement: HTMLElement = parentNodeElement.offsetParent as HTMLElement;
 
-    if (event.target && (event.target as HTMLElement).id) {
-      ids.push((event.target as HTMLElement).id);
+    if (targetElement.id) {
+      ids.push(targetElement.id);
     }
 
-    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).id) {
-      ids.push((((event.target as HTMLElement).parentNode) as HTMLElement).id);
+    if (targetElement && parentNodeElement && parentNodeElement.id) {
+      ids.push(parentNodeElement.id);
     }
 
-    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent
-      && ((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id) {
-      ids.push(((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id);
+    if (targetElement && parentNodeElement && parentOffsetElement && parentOffsetElement.id) {
+      ids.push(parentOffsetElement.id);
     }
 
     this.container.next(ids);
