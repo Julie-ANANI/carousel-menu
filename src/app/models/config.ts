@@ -4,4 +4,5 @@ export interface Config {
   offset: string;
   search: string;
   sort: string;
+  status?: string;
 }
