@@ -56,7 +56,15 @@
 
     <!-- when result -->
     <ng-container *ngIf="table._total > 0">
-      <div class="table-responsive" [ngStyle]="{ 'min-height': table._minHeight ? table._minHeight : 'auto' }">
+      <div class="table-responsive relative" [ngStyle]="{ 'min-height': table._minHeight ? table._minHeight : 'auto' }" [ngClass]="{ 'scroll-no': isLoadingData }">
+
+        <!-- loading style -->
+        <ng-container *ngIf="isLoadingData">
+          <div class="absolute table-loading-wrapper flex-centered">
+            <div class="loading loading-lg"></div>
+          </div>
+        </ng-container>
+
         <table class="table">
 
           <!-- head -->
@@ -296,6 +304,7 @@
           <!-- /body -->
 
         </table>
+
       </div>
     </ng-container>
     <!-- /when result -->
