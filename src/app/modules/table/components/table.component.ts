@@ -59,6 +59,13 @@ export class TableComponent implements OnInit {
    */
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
+  /***
+   * Output call when the user selects one row or
+   * Send the list of selected rows
+   * @type {EventEmitter<any>}
+   */
+  @Output() selectRows: EventEmitter<any> = new EventEmitter<any>();
+
   private _table: Table;
 
   private _isSearching: boolean;
@@ -179,6 +186,27 @@ export class TableComponent implements OnInit {
 
     this._massSelection = event.target['checked'];
 
+    this._onSelectRow();
+
+  }
+
+  /***
+   * This function is called when the users either select the one row
+   * or select all on the basis of that we emit the selected rows to the
+   * parent component.
+   */
+  private _onSelectRow() {
+
+    if (this._massSelection) {
+      const rows: Array<any> = [];
+      this._table._content.forEach((content) => {
+        rows.push(content);
+      });
+      this.selectRows.emit({ _rows: rows});
+    } else {
+      this.selectRows.emit({ _rows: this._getSelectedRowsContent()});
+    }
+
   }
 
   /***
@@ -188,7 +216,6 @@ export class TableComponent implements OnInit {
    */
   private _emitConfigChange() {
     this.configChange.emit(this._config);
-    console.log(this._config);
   }
 
   /***
@@ -425,10 +452,14 @@ export class TableComponent implements OnInit {
    * @param {string} key
    */
   public selectRow(key: string): void {
+
     if (this._table._isSelectable) {
       this._table._content[key]._isSelected = !(this._table._content[key]._isSelected);
       this._massSelection = false;
     }
+
+    this._onSelectRow();
+
   }
 
   /***
