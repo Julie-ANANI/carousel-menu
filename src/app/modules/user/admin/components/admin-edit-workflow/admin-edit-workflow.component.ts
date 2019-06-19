@@ -4,6 +4,7 @@ import { EmailTemplate } from '../../../../../models/email-template';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../models/email-signature';
 import { Config } from '../../../../../models/config';
+import { Column } from '../../../../table/models/column';
 
 @Component({
   selector: 'app-admin-edit-workflow',

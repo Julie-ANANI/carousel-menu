@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('mouseup', ['$event'])
-  onMouseUp(event: Event) {
+  onMouseUp(event: MouseEvent) {
     this._mouseService.setClickEvent(event);
   }
 

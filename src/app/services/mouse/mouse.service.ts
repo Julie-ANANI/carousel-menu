@@ -20,16 +20,16 @@ export class MouseService {
 
   constructor() { }
 
-  public setClickEvent(event: Event) {
+  public setClickEvent(event: MouseEvent) {
     this._setTargetId(event);
     this._setTargetParentId(event);
     this._setTargetParentOffsetId(event);
     this._setAll(event);
   }
 
-  private _setTargetId(event: Event) {
-    if (event && event.target && event.target['id']) {
-      this.target.next(event.target['id']);
+  private _setTargetId(event: MouseEvent) {
+    if (event.target && (event.target as HTMLElement).id) {
+      this.target.next((event.target as HTMLElement).id);
     } else {
       this.target.next('');
     }
@@ -39,9 +39,9 @@ export class MouseService {
     return this.target;
   }
 
-  private _setTargetParentId(event: Event) {
-    if (event && event.target && event.target['parentNode'] && event.target['parentNode']['id']) {
-      this.parent.next(event.target['parentNode']['id']);
+  private _setTargetParentId(event: MouseEvent) {
+    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).id) {
+      this.parent.next((((event.target as HTMLElement).parentNode) as HTMLElement).id);
     } else {
       this.parent.next('');
     }
@@ -51,9 +51,10 @@ export class MouseService {
     return this.parent;
   }
 
-  private _setTargetParentOffsetId(event: Event) {
-    if (event && event.target && event.target['parentNode'] && event.target['parentNode']['offsetParent'] && event.target['parentNode']['offsetParent']['id']) {
-      this.parentOffset.next(event.target['parentNode']['offsetParent']['id']);
+  private _setTargetParentOffsetId(event: MouseEvent) {
+    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent
+      && ((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id) {
+      this.parentOffset.next(((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id);
     } else {
       this.parentOffset.next('');
     }
@@ -63,19 +64,20 @@ export class MouseService {
     return this.parentOffset;
   }
 
-  private _setAll(event: Event) {
+  private _setAll(event: MouseEvent) {
     let ids: Array<string> = [];
 
-    if (event && event.target && event.target['id']) {
-      ids.push(event.target['id']);
+    if (event.target && (event.target as HTMLElement).id) {
+      ids.push((event.target as HTMLElement).id);
     }
 
-    if (event && event.target && event.target['parentNode'] && event.target['parentNode']['id']) {
-      ids.push(event.target['parentNode']['id']);
+    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).id) {
+      ids.push((((event.target as HTMLElement).parentNode) as HTMLElement).id);
     }
 
-    if (event && event.target && event.target['parentNode'] && event.target['parentNode']['offsetParent'] && event.target['parentNode']['offsetParent']['id']) {
-      ids.push(event.target['parentNode']['offsetParent']['id']);
+    if (event.target && (event.target as HTMLElement).parentNode && (((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent
+      && ((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id) {
+      ids.push(((((event.target as HTMLElement).parentNode) as HTMLElement).offsetParent as HTMLElement).id);
     }
 
     this.container.next(ids);
