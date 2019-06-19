@@ -59,10 +59,10 @@ export class AdminEmailQueueComponent implements OnInit {
             _title: 'Batchs',
             _content: this._queueList.mailqueues,
             _total: this._queueList._metadata.totalCount,
-            _isFiltrable: true,
+            _isSearchable: true,
             _columns: [
-              {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
-              {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
+              {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSortable: false, _isSearchable: false},
+              {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSortable: false, _isSearchable: false},
               {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _isSortable: false, _choices: [
                   {_name: 'QUEUED', _alias: 'Queued', _class: 'label label-draft'},
                   {_name: 'PROCESSING', _alias: 'Processing', _class: 'label label-progress'},

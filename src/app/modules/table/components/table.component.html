@@ -3,7 +3,7 @@
 
 
     <!-- section title and filter -->
-    <ng-container *ngIf="table._isTitle || table._isFiltrable">
+    <ng-container *ngIf="table._isTitle || table._isSearchable">
       <div class="table-header-wrapper flex-start">
 
         <!-- number of results and title -->
@@ -14,7 +14,7 @@
         </ng-container>
 
         <!-- want to filter by columns -->
-        <ng-container *ngIf="table._isFiltrable">
+        <ng-container *ngIf="table._isSearchable">
           <app-shared-search-filter
             (searchConfigChange)="searchConfigChange($event)"
             [props]="table._columns"

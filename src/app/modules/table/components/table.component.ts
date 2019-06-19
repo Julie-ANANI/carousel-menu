@@ -126,7 +126,7 @@ export class TableComponent implements OnInit {
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
       this._table._columns[index]._isSelected = false;
-      this._table._columns[index]._isFiltrable = this._table._columns[index]._isFiltrable ? this._table._columns[index]._isFiltrable : false;
+      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ? this._table._columns[index]._isSearchable : false;
     });
   }
 

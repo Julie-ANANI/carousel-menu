@@ -124,7 +124,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
         _selector: 'admin-answers',
         _content: this._answers,
         _total: this._answers.length,
-        _isFiltrable: true,
+        _isSearchable: true,
         _isSelectable: true,
         _isEditable: true,
         _actions: this._actions,

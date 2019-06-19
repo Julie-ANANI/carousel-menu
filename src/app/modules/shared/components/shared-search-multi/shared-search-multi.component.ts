@@ -56,7 +56,7 @@ export class SharedSearchMultiComponent {
   }
 
   public isFiltrable(column: Column): boolean {
-    return column._isFiltrable === undefined ? true : column._isFiltrable;
+    return column._isSearchable === undefined ? true : column._isSearchable;
   }
 
   public onChangeTextProp(prop: any) {

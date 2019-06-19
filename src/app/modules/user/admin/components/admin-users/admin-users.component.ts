@@ -62,7 +62,7 @@ export class AdminUsersComponent implements OnInit {
         _title: 'TABLE.TITLE.USERS',
         _content: this._users,
         _total: this._total,
-        _isFiltrable: true,
+        _isSearchable: true,
         _isDeletable: true,
         _isSelectable: true,
         _isEditable: true,
@@ -70,10 +70,10 @@ export class AdminUsersComponent implements OnInit {
         _isPaginable: true,
         _editIndex: 1,
         _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isFiltrable: true},
-          {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isFiltrable: true},
-          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isFiltrable: true},
-          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isFiltrable: true},
+          {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},
+          {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isSearchable: true},
           {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true}
           ]
       };

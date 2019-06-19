@@ -32,7 +32,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     _total: 0,
     _isDeletable: true,
     _isSelectable: true,
-    _isFiltrable: false,
+    _isSearchable: false,
     _columns: [
       {_attrs: ['label'], _name: 'Label', _type: 'MULTILING'},
       {_attrs: ['description'], _name: 'Description', _type: 'MULTILING'},

@@ -57,7 +57,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
       _title: 'TABLE.TITLE.PROJECTS',
       _content: this._totalProjects,
       _total: this._totalProjects.length,
-      _isFiltrable: true,
+      _isSearchable: true,
       _columns: [
         {
           _attrs: ['innovation.name'],

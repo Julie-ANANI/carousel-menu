@@ -71,12 +71,12 @@ export class SidebarSearchToolComponent {
         _title: 'TABLE.TITLE.REQUESTS',
         _content: this._requests,
         _total: this._total,
-        _isFiltrable: true,
+        _isSearchable: true,
         _columns: [
           {_attrs: ['keywords'], _name: 'Keywords', _type: 'TEXT'},
           {_attrs: ['user'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isFiltrable: false},
-          {_attrs: ['saved'], _name: 'TABLE.HEADING.SAVED', _type: 'CHECK', _isSortable: false, _isFiltrable: false},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSearchable: false},
+          {_attrs: ['saved'], _name: 'TABLE.HEADING.SAVED', _type: 'CHECK', _isSortable: false, _isSearchable: false},
         ]
       };
 

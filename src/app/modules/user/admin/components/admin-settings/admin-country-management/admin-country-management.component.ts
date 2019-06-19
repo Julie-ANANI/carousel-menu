@@ -83,7 +83,7 @@ export class AdminCountryManagementComponent implements OnInit {
             _title: 'COMMON.BLACKLIST.COUNTRIES',
             _content: this._countryList.filteredCountries,
             _total: this._countryList._metadata.totalCount,
-            _isFiltrable: true,
+            _isSearchable: true,
             _isDeletable: true,
             _isSelectable: true,
             _isEditable: true,
