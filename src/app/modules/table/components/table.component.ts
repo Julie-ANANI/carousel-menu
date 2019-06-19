@@ -192,16 +192,6 @@ export class TableComponent implements OnInit {
   }
 
   /***
-   * This function is called when the user starts searching the table content
-   * and based on that we change the config.
-   * @param value
-   */
-  public searchConfigChange(value: Config) {
-    this._config = value;
-    this._emitConfigChange();
-  }
-
-  /***
    * This function returns the label of the button.
    */
   public getButtonLabel(): string {
@@ -518,6 +508,16 @@ export class TableComponent implements OnInit {
     this._pagination = value;
     this._config.limit = this._pagination.parPage.toString(10);
     this._config.offset = this._pagination.offset.toString(10);
+    this._emitConfigChange();
+  }
+
+  get searchConfig(): Config {
+    return this._config;
+  }
+
+  set searchConfig(value: Config) {
+    this._config = value;
+    console.log(value);
     this._emitConfigChange();
   }
 

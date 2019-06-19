@@ -1,4 +1,4 @@
-<section id="table-component">
+<section id="table">
   <div class="table-wrapper">
 
 
@@ -16,9 +16,8 @@
         <!-- want to filter by columns -->
         <ng-container *ngIf="table._isSearchable">
           <app-shared-search-filter
-            (searchConfigChange)="searchConfigChange($event)"
+            [(searchConfig)]="searchConfig"
             [props]="table._columns"
-            [searchConfig]="config"
             [tableView]="true">
           </app-shared-search-filter>
         </ng-container>
