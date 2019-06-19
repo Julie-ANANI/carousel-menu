@@ -88,7 +88,7 @@
 
           <admin-search-map
             [countriesData]="countries"
-            [quartiles]="[1, maxFirstTertile, maxSecondTertile]"
+            [quartiles]="quartiles"
             [width]="'100%'">
           </admin-search-map>
 
@@ -136,10 +136,10 @@
     </div>
   </div>
 
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
+    <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+  </div>
+
 </app-modal>
 <!-- /modal to modify the tags -->
-
-
-
-
-
