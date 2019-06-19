@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchService } from "../../../../services/search/search.service";
 import { Table } from "../../../table/models/table";
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Config } from '../../../../models/config';
 
 @Component({
   selector: 'app-sidebar-search-tool',
@@ -29,7 +30,7 @@ export class SidebarSearchToolComponent {
 
   @Output() onLoadRequest = new EventEmitter <any>();
 
-  private _config: any = {
+  private _config: Config = {
     fields: "keywords user created expireAt metadata",
     limit: '10',
     offset: '0',
@@ -37,7 +38,7 @@ export class SidebarSearchToolComponent {
     sort: '{ "created": -1 }'
   };
 
-  private _tableInfos: any = null;
+  private _tableInfos: Table;
 
   private _total: number;
 
@@ -52,7 +53,7 @@ export class SidebarSearchToolComponent {
   }
 
 
-  public loadHistory(config: any) {
+  public loadHistory(config: Config) {
     this._config = config;
 
     this._searchService.getMetadataRequests(this._config).subscribe((result: any) => {
@@ -72,11 +73,15 @@ export class SidebarSearchToolComponent {
         _content: this._requests,
         _total: this._total,
         _isSearchable: true,
+        _isTitle: true,
+        _editIndex: 1,
+        _editButtonLabel: 'Load',
+        _isPaginable: true,
         _columns: [
-          {_attrs: ['keywords'], _name: 'Keywords', _type: 'TEXT'},
-          {_attrs: ['user'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSearchable: false},
-          {_attrs: ['saved'], _name: 'TABLE.HEADING.SAVED', _type: 'CHECK', _isSortable: false, _isSearchable: false},
+          {_attrs: ['keywords'], _name: 'Keywords', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+          {_attrs: ['user'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+          {_attrs: ['saved'], _name: 'TABLE.HEADING.SAVED', _type: 'CHECK'},
         ]
       };
 
@@ -115,8 +120,13 @@ export class SidebarSearchToolComponent {
     return this._requests;
   }
 
-  get config() {
+  get config(): Config {
     return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    this.loadHistory(this._config);
   }
 
   get tableInfos(): Table {
