@@ -517,7 +517,6 @@ export class TableComponent implements OnInit {
 
   set searchConfig(value: Config) {
     this._config = value;
-    console.log(value);
     this._emitConfigChange();
   }
 

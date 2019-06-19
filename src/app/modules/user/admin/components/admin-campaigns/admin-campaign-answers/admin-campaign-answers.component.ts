@@ -11,6 +11,7 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import { Config } from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -24,7 +25,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
-  private _total = 0;
+  private _total: number;
 
   private _questions: Array<Question> = [];
 
@@ -36,21 +37,17 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _adminMode = true;
 
-  private _tableInfos: Table = null;
-
-  private _actions: string[] = [];
-
-  private _config = {
-    fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
-  };
+  private _tableInfos: Table;
 
   private _noResult = false;
+
+  private _config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
 
   constructor(private activatedRoute: ActivatedRoute,
               private campaignService: CampaignService,
@@ -118,22 +115,26 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private loadTable() {
     if (this._answers) {
-      this._actions = ['ANSWER.VALID_ANSWER', 'ANSWER.REJECT_ANSWER'];
-
       this._tableInfos = {
         _selector: 'admin-answers',
+        _title: 'answer(s)',
         _content: this._answers,
         _total: this._answers.length,
         _isSearchable: true,
         _isSelectable: true,
         _isEditable: true,
-        _actions: this._actions,
+        _editIndex: 1,
+        _isTitle: true,
+        _buttons: [{_label: 'ANSWER.VALID_ANSWER', _icon: 'fas fa-check'}, {_label: 'ANSWER.REJECT_ANSWER', _icon: 'fas fa-times'}],
         _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-          {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSortable: false},
-          {_attrs: ['professional.email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT'},
-          {_attrs: ['professional.jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-          {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _choices: [
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},
+          {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSortable: true},
+          {_attrs: ['professional.email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT', _isSortable: true},
+          {_attrs: ['professional.jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
+          {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true},
+          {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
+            _choices: [
               {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label label-success'},
               {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
               {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label label-progress'},
@@ -141,10 +142,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
               {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label label-alert'},
               {_name: 'VALIDATED_UMIBOT', _alias: 'TABLE.STATUS.VALIDATED_UMIBOT', _class: 'label label-progress'},
               {_name: 'REJECTED_UMIBOT', _alias: 'TABLE.STATUS.REJECTED_UMIBOT', _class: 'label label-progress'}
-            ]},
+            ]
+          },
         ]
       };
-
     }
   }
 
@@ -162,13 +163,15 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
 
   onTableAction(action: any) {
-    switch (this._actions.findIndex(value => action._action === value)) {
-      case 0: {
+    switch (action._label) {
+
+      case 'ANSWER.VALID_ANSWER':
         this.updateStatus(action._rows, 'VALIDATED_NO_MAIL');
         break;
-      } case 1: {
+
+      case 'ANSWER.REJECT_ANSWER':
         this.updateStatus(action._rows, 'REJECTED');
-      }
+        break;
     }
   }
 
@@ -191,6 +194,14 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this.loadAnswers();
   }
 
+  set config(value: Config) {
+    this._config = value;
+    this.loadAnswers();
+  }
+
+  get config(): Config {
+    return this._config;
+  }
 
   get questions() {
     return this._questions;
@@ -230,14 +241,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   get tableInfos(): Table {
     return this._tableInfos;
-  }
-
-  get actions(): string[] {
-    return this._actions;
-  }
-
-  get config(): { search: {}; offset: number; limit: number; sort: { created: number }; fields: string } {
-    return this._config;
   }
 
   get noResult(): boolean {
