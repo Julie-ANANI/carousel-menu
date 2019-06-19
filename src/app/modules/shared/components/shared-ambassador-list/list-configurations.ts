@@ -3,7 +3,7 @@ export class ListConfigurations {
     const _tableInfos = {
       _selector: 'admin-ambassador',
       _title: 'TABLE.TITLE.AMBASSADORS',
-      _content: [],
+      _content: [''],
       _isTitle: true,
       _total: -1,
       _isDeletable: true,
@@ -23,7 +23,7 @@ export class ListConfigurations {
     const _tableInfos = {
       _selector: 'admin-ambassador',
       _title: 'TABLE.TITLE.AMBASSADORS',
-      _content: [],
+      _content: [''],
       _total: -1,
       _isTitle: true,
       _isSelectable: true,
