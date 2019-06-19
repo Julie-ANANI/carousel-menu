@@ -1,8 +1,8 @@
-<section id="table">
+<section id="table-component">
   <div class="table-wrapper">
 
 
-    <!-- section title and filter -->
+    <!-- section title and search -->
     <ng-container *ngIf="table._isTitle || table._isSearchable">
       <div class="table-header-wrapper flex-start">
 
@@ -13,7 +13,7 @@
           </div>
         </ng-container>
 
-        <!-- want to filter by columns -->
+        <!-- want to search by columns -->
         <ng-container *ngIf="table._isSearchable">
           <app-shared-search-filter
             [(searchConfig)]="searchConfig"
@@ -24,7 +24,7 @@
 
       </div>
     </ng-container>
-    <!-- section title and filter -->
+    <!-- section title and search -->
 
 
     <!-- when fetching or initializing -->
