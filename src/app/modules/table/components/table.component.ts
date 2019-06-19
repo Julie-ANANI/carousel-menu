@@ -76,6 +76,8 @@ export class TableComponent implements OnInit {
 
   private _pagination: Pagination;
 
+  private _isLoadingData: boolean;
+
   constructor(private _translateService: TranslateService) {
     this._initializeTable();
   }
@@ -118,6 +120,7 @@ export class TableComponent implements OnInit {
   private _initializeVariables() {
     this._massSelection = false;
     this._isSearching = false;
+    this._isLoadingData = false;
   }
 
   private _checkSearching() {
@@ -208,6 +211,7 @@ export class TableComponent implements OnInit {
    * the config changes to all related components.
    */
   private _emitConfigChange() {
+    this._isLoadingData = true;
     this.configChange.emit(this._config);
   }
 
@@ -271,7 +275,7 @@ export class TableComponent implements OnInit {
    * @param {string} columnAttr
    * @returns {string}
    */
-  public getContentValue(rowKey: string, columnAttr: string): string  {
+  public getContentValue(rowKey: string, columnAttr: string): any  {
     const row: number = TableComponent._getRowKey(rowKey);
 
     if (this._table._content && this._table._content.length > 0) {
@@ -568,6 +572,10 @@ export class TableComponent implements OnInit {
 
   get isSearching(): boolean {
     return this._isSearching;
+  }
+
+  get isLoadingData(): boolean {
+    return this._isLoadingData;
   }
 
 }
