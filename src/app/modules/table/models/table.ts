@@ -9,7 +9,6 @@ export interface Table {
   readonly _isDeletable?: boolean;
   readonly _isSearchable?: boolean;
   readonly _columns: Column[];
-  readonly _actions?: string[]; //Todo remove
   readonly _editIndex?: number;
   readonly _isPaginable?: boolean;
   readonly _editButtonLabel?: string;

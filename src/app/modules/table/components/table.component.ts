@@ -95,7 +95,6 @@ export class TableComponent implements OnInit {
       _editIndex: 1,
       _columns: [],
       _content: [],
-      _actions: [],
     }
   }
 

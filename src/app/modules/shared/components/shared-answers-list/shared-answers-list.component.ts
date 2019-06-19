@@ -13,12 +13,10 @@ export class SharedAnswersListComponent {
 
   private _config: any = {
     fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created": "-1"}'
   };
 
   @Input() set config(value: any) {
@@ -34,9 +32,7 @@ export class SharedAnswersListComponent {
 
   private _answers: Array<Answer> = [];
 
-  private _tableInfos: Table = null;
-
-  private _actions: string[] = [];
+  private _tableInfos: Table;
 
   constructor( private _answerService: AnswerService ) { }
 
@@ -44,7 +40,6 @@ export class SharedAnswersListComponent {
 
     this._answerService.getAll(this._config).subscribe((answers: any) => {
       this._answers = answers.result || [];
-      this._actions = ['ANSWER.VALID_ANSWER', 'ANSWER.REJECT_ANSWER'];
       this._tableInfos = {
         _selector: 'admin-answers',
         _content: this._answers,
@@ -52,10 +47,11 @@ export class SharedAnswersListComponent {
         _isSearchable: true,
         _isSelectable: true,
         _isEditable: true,
-        _actions: this._actions,
+        _editIndex: 1,
+        _buttons: [{_label: 'ANSWER.VALID_ANSWER'}, {_label: 'ANSWER.REJECT_ANSWER'}],
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-          {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY', _isSortable: false},
+          {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
           {_attrs: ['professional.email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
           {_attrs: ['professional.jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
           {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _choices: [
@@ -81,12 +77,13 @@ export class SharedAnswersListComponent {
   }
 
   performActions(action: any) {
-    switch (this._actions.findIndex(value => action._action === value)) {
-      case 0: {
+    switch (action._label) {
+      case 'ANSWER.VALID_ANSWER': {
         this.validateAnswers.emit(action._rows);
         break;
-      } case 1: {
+      } case 'ANSWER.REJECT_ANSWER': {
         this.rejectAnswers.emit(action._rows);
+        break;
       }
     }
   }
