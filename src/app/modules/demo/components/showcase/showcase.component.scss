@@ -171,8 +171,8 @@
     .section-wrapper {
       flex-direction: column;
 
-      .answer-wrapper {
-        margin-right: 0 !important;
+      .answer-wrapper, .innovation-wrapper, .client-wrapper {
+        margin-left: 0 !important;
         margin-bottom: 1.25rem;
       }
 
