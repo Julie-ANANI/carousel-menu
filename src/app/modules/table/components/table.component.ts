@@ -82,7 +82,7 @@ export class TableComponent implements OnInit {
   private _filteredContent: Array<any> = [];
 
   constructor(private _translateService: TranslateService,
-              private _localStorageService: LocalStorageService,) {
+              private _localStorageService: LocalStorageService) {
     this._initializeTable();
   }
 
@@ -134,6 +134,13 @@ export class TableComponent implements OnInit {
     this._isLoadingData = false;
   }
 
+  /***
+   * This function is to check the limit or we can say the parPage row which
+   * user has already activated according to that if the limit is not same to the
+   * config limit then we update the config limit and output the event, add call the
+   * api to fetch the data.
+   * @private
+   */
   private _checkLocalStorage() {
     const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
 
@@ -148,6 +155,11 @@ export class TableComponent implements OnInit {
 
   }
 
+  /***
+   * This function is called when the content is local. We slice the
+   * original table content data.
+   * @private
+   */
   private _getFilteredContent() {
     this._pagination.parPage = Number(this._config.limit);
 
@@ -193,7 +205,7 @@ export class TableComponent implements OnInit {
   private _initializeContents() {
     if (this._table._isLocal) {
       this._filteredContent.forEach((value, index) => {
-        this._table._content[index]._isSelected = false;
+        this._filteredContent[index]._isSelected = false;
       });
     } else {
       this._table._content.forEach((value, index) => {
@@ -334,7 +346,7 @@ export class TableComponent implements OnInit {
   public getContentValue(rowKey: string, columnAttr: string): any  {
 
     const row: number = TableComponent._getRowKey(rowKey);
-    let contents: Array<any>;
+    let contents: Array<any> = [];
 
     if (this._table._isLocal) {
       contents = this._filteredContent;
@@ -342,7 +354,7 @@ export class TableComponent implements OnInit {
       contents = this._table._content;
     }
 
-    if (contents && contents.length > 0) {
+    if (contents.length > 0) {
 
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
