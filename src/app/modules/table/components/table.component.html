@@ -56,7 +56,7 @@
 
     <!-- when result -->
     <ng-container *ngIf="table._total > 0">
-      <div class="table-responsive relative" [ngStyle]="{ 'min-height': table._minHeight ? table._minHeight : 'auto' }" [ngClass]="{ 'scroll-no': isLoadingData }">
+      <div class="table-responsive relative" [ngClass]="{ 'scroll-no': isLoadingData, 'table-min-height': table._activeMinHeight }">
 
         <!-- loading style -->
         <ng-container *ngIf="isLoadingData">
@@ -99,7 +99,7 @@
                   <ng-container *ngIf="isSortable(column)">
                     <app-shared-sort
                       [(sortConfig)]="sortConfig"
-                      [property]="getAttrs(column)[0] | lowercase"
+                      [properties]="getAttrs(column)"
                       [label]="getName(column) | translate">
                     </app-shared-sort>
                   </ng-container>
@@ -311,7 +311,7 @@
 
 
     <!-- when pagination is required -->
-    <ng-container *ngIf="table._total > 0 && table._isPaginable">
+    <ng-container *ngIf="table._total > 10 && table._isPaginable">
       <div class="flex-centered section-light-pad rm-pad-bottom">
         <app-pagination-2
           [(pagination)]="pagination"

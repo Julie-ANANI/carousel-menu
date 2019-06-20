@@ -13,7 +13,8 @@ export interface Table {
   readonly _isPaginable?: boolean;
   readonly _editButtonLabel?: string;
   readonly _buttons?: Array<{ _icon?: string, _label: string }>;
-  readonly _minHeight?: string;
+  readonly _activeMinHeight?: boolean;
+  readonly _isLocal?: boolean;
   _content: Array<any>;
   _total: number;
 }
