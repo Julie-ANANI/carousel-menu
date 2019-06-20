@@ -325,7 +325,8 @@ export class TableComponent implements OnInit {
   }
 
   /***
-   * This function returns the content of the column basing on the rowKey and the column(s) attribute(s)
+   * This function returns the content of the column basing on the rowKey
+   * and the column(s) attribute(s)
    * @param {string} rowKey
    * @param {string} columnAttr
    * @returns {string}

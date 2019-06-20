@@ -55,8 +55,8 @@
 
 
     <!-- when result -->
-    <ng-container *ngIf="table._total > 0">
-      <div class="table-responsive relative" [ngClass]="{ 'scroll-no': isLoadingData, 'table-min-height': table._activeMinHeight }">
+    <div *ngIf="table._total > 0" [ngClass]="{ 'table-min-height': table._activeMinHeight }">
+      <div class="table-responsive relative" [ngClass]="{ 'scroll-no': isLoadingData }">
 
         <!-- loading style -->
         <ng-container *ngIf="isLoadingData">
@@ -306,7 +306,7 @@
         </table>
 
       </div>
-    </ng-container>
+    </div>
     <!-- /when result -->
 
 
