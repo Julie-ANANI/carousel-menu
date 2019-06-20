@@ -69,7 +69,6 @@ export class AdminUsersComponent implements OnInit {
         _isTitle: true,
         _isPaginable: true,
         _editIndex: 1,
-        _activeMinHeight: true,
         _columns: [
           {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
           {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},

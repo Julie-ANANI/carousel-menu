@@ -16,13 +16,8 @@
     }
 
     .table-responsive {
-      max-height: 490px;
-      padding-bottom: 0.1rem;
-
-      &.table-min-height {
-        min-height: 490px;
-      }
-
+      max-height: 500px;
+      padding-bottom: 0;
     }
 
     .table-loading-wrapper {

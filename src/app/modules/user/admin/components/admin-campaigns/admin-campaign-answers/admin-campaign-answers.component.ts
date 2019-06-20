@@ -122,9 +122,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
         _total: this._answers.length,
         _isSearchable: true,
         _isSelectable: true,
+        _isPaginable: true,
         _isEditable: true,
         _editIndex: 1,
         _isTitle: true,
+        _isLocal: true,
         _buttons: [{_label: 'ANSWER.VALID_ANSWER', _icon: 'fas fa-check'}, {_label: 'ANSWER.REJECT_ANSWER', _icon: 'fas fa-times'}],
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},

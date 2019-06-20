@@ -13,18 +13,14 @@ export class PaginationTemplate2Component implements OnInit {
 
   @Input() set pagination(value: Pagination) {
     this._pagination = value;
-    this._initializeValues();
-    this._calculatePage();
-    this._setOffset();
+    this._callingFunctions();
   }
 
   @Input() set totalCount(value: number) {
     this._totalCount = value;
 
     if (value) {
-      this._initializeValues();
-      this._calculatePage();
-      this._setOffset();
+      this._callingFunctions();
     }
 
   }
@@ -58,9 +54,15 @@ export class PaginationTemplate2Component implements OnInit {
   ngOnInit() {
   }
 
+  private _callingFunctions() {
+    this._initializeValues();
+    this._calculatePage();
+    this._setOffset();
+  }
+
   private _initializeValues() {
     const localStorage = parseInt(this._localStorageService.getItem(`${this._pagination.propertyName}-limit`), 10);
-    this._pagination.currentPage = this._pagination.currentPage ? this._pagination.currentPage : 1;
+    this._pagination.currentPage = this.currentPage;
     this._pagination.previousPage = this._pagination.previousPage ? this._pagination.previousPage : 0;
     this._pagination.nextPage = this._pagination.nextPage ? this._pagination.nextPage : 2;
     this._pagination.parPage = localStorage ? localStorage : 10;
@@ -125,11 +127,18 @@ export class PaginationTemplate2Component implements OnInit {
   private _emitPaginationChanges() {
     this._setOffset();
     this._storeParPageLocally();
+
+    if (this._pagination.offset > this._totalCount) {
+      this._pagination.offset = 0;
+      this._pagination.currentPage = 1;
+      this._startPageNumber = 0;
+    }
+
     this.paginationChange.emit(this._pagination);
   }
 
   private _setOffset() {
-    this._pagination.offset = this._pagination.currentPage === 1 ? 0 : (this._pagination.currentPage - 1) * this._pagination.parPage;
+    this._pagination.offset = this.currentPage === 1 ? 0 : (this.currentPage - 1) * this._pagination.parPage;
   }
 
   private _storeParPageLocally() {
@@ -158,6 +167,10 @@ export class PaginationTemplate2Component implements OnInit {
 
   get totalCount(): number {
     return this._totalCount;
+  }
+
+  get currentPage(): number {
+    return this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1;
   }
 
 }
