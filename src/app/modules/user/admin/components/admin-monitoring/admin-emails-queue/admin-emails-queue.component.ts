@@ -27,7 +27,7 @@ export class AdminEmailQueueComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  private _tableInfos: Table = null;
+  private _tableInfos: Table;
   private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
   private _currentQueue: EmailQueueModel = null;
@@ -60,8 +60,9 @@ export class AdminEmailQueueComponent implements OnInit {
             _content: this._queueList.mailqueues,
             _total: this._queueList._metadata.totalCount,
             _isSearchable: true,
-            _isEditable: false,
             _isTitle: true,
+            _isPaginable: true,
+            _editIndex: 1,
             _columns: [
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSearchable: true},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},
@@ -109,8 +110,8 @@ export class AdminEmailQueueComponent implements OnInit {
     };
   }
 
-  closeSidebar(value: string) {
-    this.more.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this.more.animate_state = value.animate_state;
     this.sidebarState.next(this.more.animate_state);
   }
 
@@ -119,7 +120,7 @@ export class AdminEmailQueueComponent implements OnInit {
     this.loadQueue(value);
   }
 
-  get config() { return this._config; }
+  get config(): any { return this._config; }
 
   get queueSize(): number { return this._queueList._metadata.totalCount || 0; }
 

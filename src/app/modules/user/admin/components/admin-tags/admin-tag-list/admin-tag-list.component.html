@@ -8,11 +8,11 @@
     <thead>
     <tr>
         <th></th>
-        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadData($event)" [property]="'label'">Label</app-shared-sort></th>
-        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadData($event)" [property]="'description'">Description</app-shared-sort></th>
-        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadData($event)" [property]="'type'">Type</app-shared-sort></th>
-        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadData($event)" [property]="'attachments'" >Attachments</app-shared-sort></th>
-        <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadData($event)" [property]="'created'" >Created</app-shared-sort></th>
+        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'label'">Label</app-shared-sort></th>
+        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'description'">Description</app-shared-sort></th>
+        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'type'">Type</app-shared-sort></th>
+        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'attachments'" >Attachments</app-shared-sort></th>
+        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'created'" >Created</app-shared-sort></th>
         <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
     </tr>
     </thead>

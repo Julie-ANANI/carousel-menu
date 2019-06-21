@@ -61,20 +61,19 @@ export class AdminCommunityProjectsComponent implements OnInit {
       _isSearchable: true,
       _isTitle: true,
       _editIndex: 1,
-      _isEditable: false,
+      _isLocal: true,
+      _isPaginable: true,
       _columns: [
         {
           _attrs: ['innovation.name'],
           _name: 'Projects',
           _type: 'TEXT',
           _isSortable: true,
-          _isSearchable: true
         },
         {
           _attrs: ['innovation.created'],
           _name: 'Created',
           _type: 'DATE',
-          _isSortable: true
         },
         {
           _attrs: ['nbAmbassadors', 'nbRecAmbassadors'],

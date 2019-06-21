@@ -5,6 +5,7 @@ import { Table } from '../../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
+import {Config} from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-signatures-library',
@@ -25,7 +26,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
 
   private _tableInfos: Table = null;
 
-  private _config = {
+  private _config: Config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -42,7 +43,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
     this.getSignatures();
   }
 
-  public getSignatures(config?: any) {
+  public getSignatures(config?: Config) {
     if (config) this._config = config;
     this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
@@ -56,6 +57,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
         _isSearchable: true,
         _isDeletable: true,
         _isSelectable: true,
+        _isPaginable: true,
         _isEditable: true,
         _isTitle: true,
         _editIndex: 1,
@@ -71,8 +73,8 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   }
 
 
-  public closeSidebar(value: string) {
-    this.more.animate_state = value;
+  public closeSidebar(value: SidebarInterface) {
+    this.more.animate_state = value.animate_state;
   }
 
   public editSignature(signature: any) {
@@ -132,9 +134,9 @@ export class AdminSignaturesLibraryComponent implements OnInit {
 
   get more(): any { return this._more; }
 
-  get config(): any { return this._config; }
+  get config(): Config { return this._config; }
 
-  set config(value: any) {
+  set config(value: Config) {
     this._config = value;
     this.getSignatures(value);
   }
