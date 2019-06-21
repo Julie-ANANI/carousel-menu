@@ -74,6 +74,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
               _isSelectable: true,
               _isEditable: true,
               _isPaginable: true,
+              _editIndex: 1,
               _columns: [
                 {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT'},
                 {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE', _isSortable: true},
