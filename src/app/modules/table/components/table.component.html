@@ -55,7 +55,7 @@
 
 
     <!-- when result -->
-    <div *ngIf="table._total > 0" [ngClass]="{ 'table-min-height': table._activeMinHeight }">
+    <div *ngIf="table._total > 0" [ngStyle]="{ 'min-height': table._isNoMinHeight ? 'unset' : '500px' }">
       <div class="table-responsive relative" [ngClass]="{ 'scroll-no': isLoadingData }">
 
         <!-- loading style -->

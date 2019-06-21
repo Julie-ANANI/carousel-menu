@@ -14,7 +14,7 @@ export interface Table {
   readonly _editButtonLabel?: string;
   readonly _buttons?: Array<{ _icon?: string, _label: string }>;
   readonly _isLocal?: boolean;
-  readonly _activeMinHeight?: boolean;
+  readonly _isNoMinHeight?: boolean;
   _content: Array<any>;
   _total: number;
 }

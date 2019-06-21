@@ -359,7 +359,7 @@ export class TableComponent implements OnInit {
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
 
-        let tmpContent = contents[row][newColumnAttr[0]];
+        let tmpContent = contents[row] ? contents[row][newColumnAttr[0]] : '' ;
 
         newColumnAttr = newColumnAttr.splice(1);
 
@@ -426,7 +426,7 @@ export class TableComponent implements OnInit {
    * @param {Column} column
    * @returns {Choice[]}
    */
-  public getChoices(column: Column): Choice[] {
+  public static getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
@@ -438,7 +438,7 @@ export class TableComponent implements OnInit {
    * @returns {Choice}
    */
   public getChoice(column: Column, name: string): Choice {
-    return this.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
+    return TableComponent.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
   }
 
   /***
@@ -553,7 +553,7 @@ export class TableComponent implements OnInit {
    * @param content
    * @returns {boolean}
    */
-  public isSelected(content: any): boolean {
+  public static isSelected(content: any): boolean {
     return !!content && !!content._isSelected;
   }
 
@@ -625,7 +625,10 @@ export class TableComponent implements OnInit {
     this._config.sort = value;
 
     if (this._table._isLocal) {
-
+      /*for (let sortKey of Object.keys(JSON.parse(this._config.sort))) {
+        this._sortLocally(sortKey, JSON.parse(this._config.sort)[sortKey]);
+      }*/
+      this._getFilteredContent();
     } else {
       this._emitConfigChange();
     }
@@ -655,7 +658,12 @@ export class TableComponent implements OnInit {
 
   set searchConfig(value: Config) {
     this._config = value;
-    this._emitConfigChange();
+
+    if (this._table._isLocal) {
+    } else {
+      this._emitConfigChange();
+    }
+
   }
 
   get config(): Config {

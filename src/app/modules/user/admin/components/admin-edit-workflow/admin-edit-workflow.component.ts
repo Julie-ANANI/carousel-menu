@@ -105,6 +105,7 @@ export class AdminEditWorkflowComponent {
       _total: this._total,
       _isEditable: true,
       _editIndex: 1,
+      _isNoMinHeight: true,
       _columns: columns
     };
 
