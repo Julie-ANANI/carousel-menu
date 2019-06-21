@@ -119,7 +119,6 @@ export class SharedProsListComponent {
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
-          _activeMinHeight: true,
           _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG_LABEL.ADD_TAGS', _icon: 'fas fa-plus'}],
           _editIndex: 2,
           _columns: [

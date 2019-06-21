@@ -73,7 +73,7 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit {
   }
 
   get selected(): Array<any> {
-    return this._dataset.result.filter(datum => !!TableComponent.isSelected);
+    return this._dataset.result.filter(datum => !!datum.isSelected);
   }
 
   get activeNTM(): boolean { return this._activeNTM; }
