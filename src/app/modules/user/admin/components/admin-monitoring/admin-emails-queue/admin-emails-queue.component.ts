@@ -6,6 +6,7 @@ import {Table} from '../../../../../table/models/table';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
+import {Config} from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -19,7 +20,7 @@ export class AdminEmailQueueComponent implements OnInit {
     _metadata: {}
   };
 
-  private _config = {
+  private _config: Config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -27,7 +28,7 @@ export class AdminEmailQueueComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  private _tableInfos: Table = null;
+  private _tableInfos: Table;
   private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
   private _currentQueue: EmailQueueModel = null;
@@ -47,7 +48,7 @@ export class AdminEmailQueueComponent implements OnInit {
     return transaction.payload.queueSize || 0;
   }
 
-  public loadQueue(config: any): void {
+  public loadQueue(config: Config): void {
     this._config = config;
     this._emailService.getQueue(this._config)
       .pipe(first())
@@ -62,6 +63,8 @@ export class AdminEmailQueueComponent implements OnInit {
             _isSearchable: true,
             _isEditable: false,
             _isTitle: true,
+            _isLocal: true,
+            _isPaginable: true,
             _columns: [
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSearchable: true},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},
@@ -109,17 +112,17 @@ export class AdminEmailQueueComponent implements OnInit {
     };
   }
 
-  closeSidebar(value: string) {
-    this.more.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this.more.animate_state = value.animate_state;
     this.sidebarState.next(this.more.animate_state);
   }
 
-  set config(value: any) {
+  set config(value: Config) {
     this._config = value;
     this.loadQueue(value);
   }
 
-  get config() { return this._config; }
+  get config(): Config { return this._config; }
 
   get queueSize(): number { return this._queueList._metadata.totalCount || 0; }
 

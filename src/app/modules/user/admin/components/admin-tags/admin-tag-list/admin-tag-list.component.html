@@ -55,7 +55,7 @@
 
             <ng-container *ngSwitchDefault>
                 <ng-container (click)="selectPro(datum)">
-                    <td><input type="checkbox" [(ngModel)]="datum?.isSelected"/></td>
+                    <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
                     <td>{{ datum.label | multiling:lang }}</td>
                     <td>{{ datum.description | multiling:lang }}</td>
                     <td [textContent]="'TAGS.TYPE.'+datum.type" translate></td>
