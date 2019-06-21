@@ -6,6 +6,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { Table } from '../../../../table/models/table';
 import { FrontendService } from '../../../../../services/frontend/frontend.service';
 import { first } from 'rxjs/operators';
+import {Config} from '../../../../../models/config';
 
 @Component({
   selector: 'app-admin-projects-list',
@@ -24,9 +25,9 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   private _tableInfos: Table;
 
-  private _total = 0;
+  private _total: number;
 
-  private _config: any;
+  private _config: Config;
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
@@ -73,7 +74,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   };
 
-  loadProjects(config?: any): void {
+  loadProjects(config?: Config): void {
 
     if (config) {
       this._config = config;
@@ -99,7 +100,6 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
           _content: this._projects,
           _total: this._total,
           _editIndex: 1,
-          _isEditable: false,
           _isSearchable: true,
           _isPaginable: true,
           _isTitle: true,
@@ -154,13 +154,13 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  get config() {
+  get config(): Config {
     return this._config;
   }
 
-  set config(value: any) {
+  set config(value: Config) {
     this._config = value;
-    this.loadProjects(value);
+    this.loadProjects(this._config);
   }
 
   get total () { return this._total; }
