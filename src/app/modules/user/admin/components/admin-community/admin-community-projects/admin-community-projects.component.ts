@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
 import { TranslateTitleService } from "../../../../../../services/title/title.service";
-import { ActivatedRoute, Router } from '@angular/router';
+import { /*ActivatedRoute,*/ Router } from '@angular/router';
 import { Table } from '../../../../../table/models/table';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+//import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-community-projects',
@@ -10,7 +10,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
   styleUrls: ['./admin-community-projects.component.scss']
 })
 
-export class AdminCommunityProjectsComponent implements OnInit {
+export class AdminCommunityProjectsComponent implements OnInit, OnChanges, AfterViewInit {
 
   private _tableInfos: Table = null;
 
@@ -30,26 +30,36 @@ export class AdminCommunityProjectsComponent implements OnInit {
   private _fetchingError: boolean;
 
   constructor(private _router: Router,
-              private _activatedRoute: ActivatedRoute,
-              private _translateNotificationsService: TranslateNotificationsService,
+             // private _activatedRoute: ActivatedRoute,
+             // private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
 
-    if (Array.isArray(this._activatedRoute.snapshot.data.projects)) {
+    /*if (Array.isArray(this._activatedRoute.snapshot.data.projects)) {
       this._totalProjects = this._activatedRoute.snapshot.data.projects;
       this._noResult = this._totalProjects.length === 0;
       this._configureTable();
     } else {
       this._fetchingError = true;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    }
+    }*/
+
+  }
+
+  ngOnChanges() {
+    console.log("On changes");
 
   }
 
   ngOnInit() {
+    console.log('Projects child initiated...');
+    this._configureTable();
   }
 
+  ngAfterViewInit(): void {
+    console.log("after view init");
+  }
 
   private _configureTable() {
     this._tableInfos = {
