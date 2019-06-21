@@ -4,6 +4,7 @@ import {Table} from '../../../../../table/models/table';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
+import {Config} from '../../../../../../models/config';
 
 
 @Component({
@@ -13,7 +14,8 @@ import {EmailService} from '../../../../../../services/email/email.service';
 })
 export class AdminEmailBlacklistComponent implements OnInit {
 
-  private _config = {
+  private _config: Config = {
+    fields: '',
     limit: '10',
     offset: '0',
     search: '{}',
@@ -48,7 +50,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
 
   }
 
-  public loadEmails(config: any) {
+  public loadEmails(config: Config) {
     this._config = config || this._config;
     this._emailService.getBlacklist(this._config)
         .subscribe((result: any) => {
@@ -67,14 +69,16 @@ export class AdminEmailBlacklistComponent implements OnInit {
               _title: 'COMMON.BLACKLIST.EMAILS',
               _content: this._emailDataset.blacklists,
               _total: this._emailDataset._metadata.totalCount,
+              _isTitle: true,
               _isSearchable: true,
               _isSelectable: true,
               _isEditable: true,
+              _isPaginable: true,
               _columns: [
                 {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT'},
-                {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
-                {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'},
-                {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES',
+                {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE', _isSortable: true},
+                {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE', _isSortable: true},
+                {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES', _isSearchable: true,
                   _choices: [
                     {
                       _name: 'MANUALLY_ADDED',
@@ -91,7 +95,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
                       _alias: this.reasonFormat('MAIL_EVENT'),
                     }
                     ]},
-                {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-CHOICES',
+                {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-CHOICES', _isSearchable: true,
                   _choices: [
                     {_name: 'EMAIL', _alias: 'COMMON.LABEL.EMAIL', _class: 'label label-draft'},
                     {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label label-edit'}
@@ -131,8 +135,8 @@ export class AdminEmailBlacklistComponent implements OnInit {
       }); });
   }
 
-  closeSidebar(value: string) {
-    this.more.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this.more.animate_state = value.animate_state;
     this.sidebarState.next(this.more.animate_state);
   }
 
@@ -197,8 +201,16 @@ export class AdminEmailBlacklistComponent implements OnInit {
   get emailInfos(): Table { return this._emailInfos; }
   get data(): Array<any> { return this._emailDataset.blacklists; };
   get metadata(): any { return this._emailDataset._metadata; };
-  get config(): any { return this._config; };
-  set config(value: any) { this._config = value; };
+
+  get config(): Config {
+    return this._config;
+  };
+
+  set config(value: Config) {
+    this._config = value;
+    this.loadEmails(value);
+  };
+
   get total(): number { return this._emailDataset._metadata.totalCount; };
   get searchConfiguration(): string { return this._searchConfiguration; };
   get addressToBL(): string { return this._addressToBL; };
