@@ -6,6 +6,7 @@ import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
+import {Config} from '../../../../../models/config';
 
 @Component({
   selector: 'app-admin-users',
@@ -31,7 +32,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _me: boolean = false;
 
-  private _config = {
+  private _config: Config = {
     fields: 'id company jobTitle created domain location firstName lastName',
     limit: '10',
     offset: '0',
@@ -159,12 +160,12 @@ export class AdminUsersComponent implements OnInit {
     return this._me;
   }
 
-  set config(value: any) {
+  set config(value: Config) {
     this._config = value;
     this.loadUsers();
   }
 
-  get config(): any {
+  get config(): Config {
     return this._config;
   }
 
