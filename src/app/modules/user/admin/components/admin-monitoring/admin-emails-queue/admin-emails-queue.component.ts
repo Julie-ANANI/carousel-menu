@@ -6,7 +6,6 @@ import {Table} from '../../../../../table/models/table';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
-import {Config} from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -20,7 +19,7 @@ export class AdminEmailQueueComponent implements OnInit {
     _metadata: {}
   };
 
-  private _config: Config = {
+  private _config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -48,7 +47,7 @@ export class AdminEmailQueueComponent implements OnInit {
     return transaction.payload.queueSize || 0;
   }
 
-  public loadQueue(config: Config): void {
+  public loadQueue(config: any): void {
     this._config = config;
     this._emailService.getQueue(this._config)
       .pipe(first())
@@ -61,10 +60,9 @@ export class AdminEmailQueueComponent implements OnInit {
             _content: this._queueList.mailqueues,
             _total: this._queueList._metadata.totalCount,
             _isSearchable: true,
-            _isEditable: false,
             _isTitle: true,
-            _isLocal: true,
             _isPaginable: true,
+            _editIndex: 1,
             _columns: [
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSearchable: true},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},
@@ -117,12 +115,12 @@ export class AdminEmailQueueComponent implements OnInit {
     this.sidebarState.next(this.more.animate_state);
   }
 
-  set config(value: Config) {
+  set config(value: any) {
     this._config = value;
     this.loadQueue(value);
   }
 
-  get config(): Config { return this._config; }
+  get config(): any { return this._config; }
 
   get queueSize(): number { return this._queueList._metadata.totalCount || 0; }
 

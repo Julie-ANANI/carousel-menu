@@ -4,7 +4,6 @@ import {Table} from '../../../../../table/models/table';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
-import {Config} from '../../../../../../models/config';
 
 
 @Component({
@@ -14,7 +13,7 @@ import {Config} from '../../../../../../models/config';
 })
 export class AdminEmailBlacklistComponent implements OnInit {
 
-  private _config: Config = {
+  private _config: any = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -29,7 +28,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
 
   public editDatum: {[propString: string]: boolean} = {};
 
-  private _emailInfos: Table = null;
+  private _emailInfos: Table;
 
   private _more: SidebarInterface = {};
   sidebarState = new Subject<string>();
@@ -46,11 +45,11 @@ export class AdminEmailBlacklistComponent implements OnInit {
       }
     };
 
-    this.loadEmails(null);
+    this.loadEmails(this._config);
 
   }
 
-  public loadEmails(config: Config) {
+  public loadEmails(config: any) {
     this._config = config || this._config;
     this._emailService.getBlacklist(this._config)
         .subscribe((result: any) => {
@@ -76,7 +75,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
               _isPaginable: true,
               _editIndex: 1,
               _columns: [
-                {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT'},
+                {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT', _isSearchable: true},
                 {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE', _isSortable: true},
                 {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE', _isSortable: true},
                 {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES', _isSearchable: true,
@@ -203,13 +202,13 @@ export class AdminEmailBlacklistComponent implements OnInit {
   get data(): Array<any> { return this._emailDataset.blacklists; };
   get metadata(): any { return this._emailDataset._metadata; };
 
-  get config(): Config {
+  get config(): any {
     return this._config;
   };
 
-  set config(value: Config) {
+  set config(value: any) {
     this._config = value;
-    this.loadEmails(value);
+    this.loadEmails(this._config);
   };
 
   get total(): number { return this._emailDataset._metadata.totalCount; };
