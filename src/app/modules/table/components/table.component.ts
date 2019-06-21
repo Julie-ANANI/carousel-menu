@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
 import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
+import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-shared-table',
@@ -78,7 +79,10 @@ export class TableComponent implements OnInit {
 
   private _isLoadingData: boolean;
 
-  constructor(private _translateService: TranslateService) {
+  private _filteredContent: Array<any> = [];
+
+  constructor(private _translateService: TranslateService,
+              private _localStorageService: LocalStorageService,) {
     this._initializeTable();
   }
 
@@ -109,10 +113,17 @@ export class TableComponent implements OnInit {
     if (data) {
       this._table = data;
       this._initializeVariables();
+      this._checkLocalStorage();
+      this._setPagination(Number(this._config.offset));
       this._checkSearching();
+
+      if (this._table._isLocal) {
+        this._getFilteredContent();
+      }
+
       this._initializeColumns();
       this._initializeContents();
-      this._setPagination(Number(this._config.offset));
+
     }
 
   }
@@ -121,6 +132,43 @@ export class TableComponent implements OnInit {
     this._massSelection = false;
     this._isSearching = false;
     this._isLoadingData = false;
+  }
+
+  private _checkLocalStorage() {
+    const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
+
+    if (localStorage.toString(10) !== this._config.limit ) {
+      this._config.limit = localStorage.toString(10) ? localStorage.toString(10) : this._config.limit;
+
+      if (!this._table._isLocal) {
+        this._emitConfigChange();
+      }
+
+    }
+
+  }
+
+  private _getFilteredContent() {
+    this._pagination.parPage = Number(this._config.limit);
+
+    const startIndex = this._pagination.offset;
+    const endIndex = this._pagination.offset + this._pagination.parPage;
+
+    this._filteredContent = this._table._content.slice(startIndex, endIndex);
+
+  }
+
+  /***
+   * This function sets the pagination value.
+   */
+  private _setPagination(offset: number) {
+    this._pagination = {
+      propertyName: this._table._selector,
+      offset: offset,
+      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
+      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
+      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
+    }
   }
 
   private _checkSearching() {
@@ -143,21 +191,14 @@ export class TableComponent implements OnInit {
    * This function initialise the values of a content.
    */
   private _initializeContents() {
-    this._table._content.forEach((value, index) => {
-      this._table._content[index]._isSelected = false;
-    });
-  }
-
-  /***
-   * This function sets the pagination value.
-   */
-  private _setPagination(offset: number) {
-    this._pagination = {
-      propertyName: this._table._selector,
-      offset: offset,
-      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
-      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
-      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value, index) => {
+        this._table._content[index]._isSelected = false;
+      });
+    } else {
+      this._table._content.forEach((value, index) => {
+        this._table._content[index]._isSelected = false;
+      });
     }
   }
 
@@ -168,7 +209,13 @@ export class TableComponent implements OnInit {
   private _getSelectedRowsNumber(): number {
 
     if (this._massSelection) {
-      return this._table._content.length;
+
+      if (this._table._isLocal) {
+        return this._filteredContent.length;
+      } else {
+        return this._table._content.length;
+      }
+
     } else {
       return this.getSelectedRows().length;
     }
@@ -182,12 +229,17 @@ export class TableComponent implements OnInit {
   public selectAll(event: Event): void  {
     event.preventDefault();
 
-    this._table._content.forEach((value) => {
-      value._isSelected = (event.target as HTMLInputElement).checked;
-    });
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value) => {
+        value._isSelected = (event.target as HTMLInputElement).checked;
+      });
+    } else {
+      this._table._content.forEach((value) => {
+        value._isSelected = (event.target as HTMLInputElement).checked;
+      });
+    }
 
     this._massSelection = (event.target as HTMLInputElement).checked;
-
     this._onSelectRow();
 
   }
@@ -232,7 +284,6 @@ export class TableComponent implements OnInit {
    * @param {Row} row
    */
   public edit(row: Row) {
-    console.log(row);
     this.editRow.emit(row);
   }
 
@@ -266,7 +317,11 @@ export class TableComponent implements OnInit {
    * @returns {string[]}
    */
   public getRowsKeys(): Array<string> {
-    return Object.keys(this._table._content);
+    if (this._table._isLocal) {
+      return Object.keys(this._filteredContent);
+    } else {
+      return Object.keys(this._table._content);
+    }
   }
 
   /***
@@ -276,14 +331,22 @@ export class TableComponent implements OnInit {
    * @returns {string}
    */
   public getContentValue(rowKey: string, columnAttr: string): any  {
-    const row: number = TableComponent._getRowKey(rowKey);
 
-    if (this._table._content && this._table._content.length > 0) {
+    const row: number = TableComponent._getRowKey(rowKey);
+    let contents: Array<any>;
+
+    if (this._table._isLocal) {
+      contents = this._filteredContent;
+    } else {
+      contents = this._table._content;
+    }
+
+    if (contents && contents.length > 0) {
 
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
 
-        let tmpContent = this._table._content[row][newColumnAttr[0]];
+        let tmpContent = contents[row][newColumnAttr[0]];
 
         newColumnAttr = newColumnAttr.splice(1);
 
@@ -295,8 +358,8 @@ export class TableComponent implements OnInit {
 
       } else {
 
-        if (this._table._content[row] && this._table._content[row][columnAttr]) {
-          return this._table._content[row][columnAttr];
+        if (contents[row] && contents[row][columnAttr]) {
+          return contents[row][columnAttr];
         }
 
       }
@@ -419,7 +482,11 @@ export class TableComponent implements OnInit {
    * @returns {Row[]}
    */
   public getSelectedRows(): Row[] {
-    return this._table._content.filter((content) => content._isSelected === true );
+    if (this._table._isLocal) {
+      return this._filteredContent.filter((content) => content._isSelected === true );
+    } else {
+      return this._table._content.filter((content) => content._isSelected === true );
+    }
   }
 
 
@@ -443,7 +510,13 @@ export class TableComponent implements OnInit {
     const rowKey: number = TableComponent._getRowKey(key);
 
     if (this._table._isSelectable) {
-      this._table._content[rowKey]._isSelected = !(this._table._content[rowKey]._isSelected);
+
+      if (this._table._isLocal) {
+        this._filteredContent[rowKey]._isSelected = !(this._filteredContent[rowKey]._isSelected);
+      } else {
+        this._table._content[rowKey]._isSelected = !(this._table._content[rowKey]._isSelected);
+      }
+
       this._massSelection = false;
     }
 
@@ -510,9 +583,15 @@ export class TableComponent implements OnInit {
   private _getAllContent(): Array<any> {
     const rows: Array<any> = [];
 
-    this._table._content.forEach((content) => {
-      rows.push(content);
-    });
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((content) => {
+        rows.push(content);
+      });
+    } else {
+      this._table._content.forEach((content) => {
+        rows.push(content);
+      });
+    }
 
     return rows;
   }
@@ -531,7 +610,13 @@ export class TableComponent implements OnInit {
 
   set sortConfig(value: string) {
     this._config.sort = value;
-    this._emitConfigChange();
+
+    if (this._table._isLocal) {
+
+    } else {
+      this._emitConfigChange();
+    }
+
   }
 
   get pagination(): Pagination {
@@ -542,7 +627,13 @@ export class TableComponent implements OnInit {
     this._pagination = value;
     this._config.limit = this._pagination.parPage.toString(10);
     this._config.offset = this._pagination.offset.toString(10);
-    this._emitConfigChange();
+
+    if (this._table._isLocal) {
+      this._getFilteredContent();
+    } else {
+      this._emitConfigChange();
+    }
+
   }
 
   get searchConfig(): Config {
@@ -576,6 +667,10 @@ export class TableComponent implements OnInit {
 
   get isLoadingData(): boolean {
     return this._isLoadingData;
+  }
+
+  get filteredContent(): Array<any> {
+    return this._filteredContent;
   }
 
 }

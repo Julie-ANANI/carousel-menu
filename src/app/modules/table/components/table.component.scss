@@ -16,8 +16,8 @@
     }
 
     .table-responsive {
-      max-height: 490px;
-      padding-bottom: 0.1rem;
+      max-height: 500px;
+      padding-bottom: 0;
     }
 
     .table-loading-wrapper {
@@ -62,7 +62,7 @@
           display: inline-flex;
           align-items: center;
           text-align: inherit;
-          height: 100%;
+          height: 38px;
         }
 
         &.active, &:hover {

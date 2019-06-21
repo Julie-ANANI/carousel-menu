@@ -6,39 +6,39 @@
 
       <!-- previous button -->
       <span class="pagination-navigation-previous-control">
-      <button
-        [disabled]="pagination.currentPage === 1"
-        (click)="navigatePage(pagination.currentPage - 1)"
-        class="btn ghost-draft ghost-background-hover"
-        type="button">
-        <i class="fas fa-angle-left m-no-left m-right-3"></i>
-        <span>{{ 'PAGINATION.PREVIOUS' | translate }}</span>
-      </button>
-    </span>
+        <button
+          [disabled]="currentPage === 1"
+          (click)="navigatePage(currentPage - 1)"
+          class="btn ghost-draft ghost-background-hover"
+          type="button">
+          <i class="fas fa-angle-left m-no-left m-right-3"></i>
+          <span>{{ 'PAGINATION.PREVIOUS' | translate }}</span>
+        </button>
+      </span>
 
       <!-- pages -->
       <span class="pagination-navigation-numbers">
-      <button
-        *ngFor="let page of pagination.paginatorNumber| slice:startPageNumber:endPageNumber"
-        (click)="navigatePage(page)"
-        [ngClass]="{ 'active': pagination.currentPage === page }"
-        type="button"
-        class="btn ghost-draft ghost-background-hover light-hover m-left-1 m-right-1">
-        <span>{{ page }}</span>
-      </button>
-    </span>
+        <button
+          *ngFor="let page of pagination.paginatorNumber| slice:startPageNumber:endPageNumber"
+          (click)="navigatePage(page)"
+          [ngClass]="{ 'active': currentPage === page }"
+          type="button"
+          class="btn ghost-draft ghost-background-hover light-hover m-left-1 m-right-1">
+          <span>{{ page }}</span>
+        </button>
+      </span>
 
       <!-- next button -->
       <span class="pagination-navigation-next-control">
-      <button
-        [disabled]="pagination.currentPage === pagination.totalPage"
-        (click)="navigatePage(pagination.currentPage + 1)"
-        class="btn ghost-draft ghost-background-hover"
-        type="button">
-        <span>{{ 'PAGINATION.NEXT' | translate }}</span>
-        <i class="fas fa-angle-right m-no-right m-left-3"></i>
-      </button>
-    </span>
+        <button
+          [disabled]="currentPage === pagination.totalPage"
+          (click)="navigatePage(currentPage + 1)"
+          class="btn ghost-draft ghost-background-hover"
+          type="button">
+          <span>{{ 'PAGINATION.NEXT' | translate }}</span>
+          <i class="fas fa-angle-right m-no-right m-left-3"></i>
+        </button>
+      </span>
 
     </div>
     <!-- /controls -->

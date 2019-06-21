@@ -8,13 +8,32 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export class SharedSortComponent {
 
+  /***
+   * Use this input attribute when you have only one key
+   * for the sorting.
+   * @param value
+   */
+  @Input() set property(value: string) {
+    this._property = value;
+  }
+
+  /***
+   * Use this input attribute when you have more than one
+   * key for the property.
+   * @param value
+   */
+  @Input() set properties(value: Array<string>) {
+    this._properties = value;
+
+    for (let propertyKey of this._properties) {
+      this._property = propertyKey;
+    }
+
+  }
+
   @Input() set sortConfig(value: string) {
     this._sort = value;
     this._getCurrentKeyValue();
-  }
-
-  @Input() set property(value: string) {
-    this._property = value;
   }
 
   @Input() set label(value: string) {
@@ -33,6 +52,8 @@ export class SharedSortComponent {
 
   private _currentKeyValue: number;
 
+  private _properties: Array<string> = [];
+
   constructor() {}
 
   private _getCurrentKeyValue() {
@@ -48,7 +69,8 @@ export class SharedSortComponent {
   public sort(event: Event): void {
     event.preventDefault();
 
-    let newOrder;
+    let newOrder: number;
+    let newSort;
 
     if (this._currentKey === this._property) {
       newOrder = this._currentKeyValue === 1 ? -1 : 1;
@@ -57,7 +79,16 @@ export class SharedSortComponent {
       this._currentKey = this._property;
     }
 
-    const newSort = { [this._currentKey]: newOrder };
+    if (this._properties.length > 1) {
+
+      newSort = this._properties.reduce((acc, key) => {
+        return {...acc, ...{ [key]: newOrder }};
+      }, {});
+
+    } else {
+      newSort = { [this._currentKey]: newOrder };
+    }
+
     this.sortConfigChange.emit(JSON.stringify(newSort));
 
   }
@@ -84,6 +115,10 @@ export class SharedSortComponent {
 
   get currentKeyValue(): number {
     return this._currentKeyValue;
+  }
+
+  get properties(): Array<string> {
+    return this._properties;
   }
 
 }
