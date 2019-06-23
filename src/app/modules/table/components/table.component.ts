@@ -118,7 +118,7 @@ export class TableComponent implements OnInit {
       this._checkSearching();
 
       if (this._table._isLocal) {
-        this._getFilteredContent();
+        this._getFilteredContent(data._content);
       }
 
       this._initializeColumns();
@@ -158,15 +158,22 @@ export class TableComponent implements OnInit {
   /***
    * This function is called when the content is local. We slice the
    * original table content data.
+   * @param rows
    * @private
    */
-  private _getFilteredContent() {
+  private _getFilteredContent(rows: Array<any>) {
     this._pagination.parPage = Number(this._config.limit);
 
     const startIndex = this._pagination.offset;
     const endIndex = this._pagination.offset + this._pagination.parPage;
 
-    this._filteredContent = this._table._content.slice(startIndex, endIndex);
+    this._table._total = rows.length;
+
+    this._isSearching = this._isSearching && this._table._total === 0;
+
+    this._filteredContent = rows.slice(startIndex, endIndex);
+
+    //console.log(this._filteredContent);
 
   }
 
@@ -628,7 +635,7 @@ export class TableComponent implements OnInit {
       /*for (let sortKey of Object.keys(JSON.parse(this._config.sort))) {
         this._sortLocally(sortKey, JSON.parse(this._config.sort)[sortKey]);
       }*/
-      this._getFilteredContent();
+      this._getFilteredContent(this._table._content);
     } else {
       this._emitConfigChange();
     }
@@ -645,10 +652,51 @@ export class TableComponent implements OnInit {
     this._config.offset = this._pagination.offset.toString(10);
 
     if (this._table._isLocal) {
-      this._getFilteredContent();
+      this._getFilteredContent(this._table._content);
     } else {
       this._emitConfigChange();
     }
+
+  }
+
+
+  private _searchLocally(configKey: string): Array<any> {
+
+    let rows: Array<any> = [];
+
+    if (this._table._columns.find((column) => column._attrs[0] === configKey) || this._config.search.length > 2) {
+
+      //let regExp: RegExp = null;
+
+      if (this._config.search.length > 2) {
+        /*for (const searchKey of Object.keys(JSON.parse(this._config.search))) {
+          //regExp = new RegExp(searchKey, 'gi');
+          //rows = this._contentLocally(this._table._content, searchKey);
+        }*/
+      }
+
+      if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
+
+        rows = rows.length > 0 ? rows : this._table._content;
+
+        rows = rows.filter((value) => {
+          for (const valueKey of Object.keys(value)) {
+            if (valueKey === configKey && value[valueKey].toLowerCase().includes(this._config[configKey].toLowerCase())) {
+              return true;
+            }
+          }
+          return false;
+        });
+
+      }
+
+    } else {
+      rows = this._table._content;
+    }
+
+    //console.log(rows);
+
+    return rows;
 
   }
 
@@ -660,6 +708,12 @@ export class TableComponent implements OnInit {
     this._config = value;
 
     if (this._table._isLocal) {
+      this._isSearching = true;
+      
+      for (const configKey of Object.keys(this._config)) {
+        this._getFilteredContent(this._searchLocally(configKey));
+      }
+
     } else {
       this._emitConfigChange();
     }
