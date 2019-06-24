@@ -33,8 +33,8 @@
         <img src="https://res.cloudinary.com/umi/image/upload/v1541656930/app/default-images/icons/search-meta.svg" alt=" ">
       </div>
 
-      <ng-container *ngIf="searchString !== ''">
-        <div class="search-cross" (click)="searchString = ''; onSearch()">
+      <ng-container *ngIf="search.value !== ''">
+        <div class="search-cross" (click)="searchString = search.value = ''; onSearch()">
           <i class="fas fa-times"></i>
         </div>
       </ng-container>
