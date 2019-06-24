@@ -1,327 +1,325 @@
-<section id="table-component">
-  <div class="table-wrapper">
+<section id="table-wrapper">
 
 
-    <!-- section title and search -->
-    <ng-container *ngIf="table._isTitle || table._isSearchable">
-      <div class="table-header-wrapper flex-start">
+  <!-- section title and search -->
+  <ng-container *ngIf="table._isTitle || table._isSearchable">
+    <div class="table-header-wrapper flex-start">
 
-        <!-- number of results and title -->
-        <ng-container *ngIf="table._isTitle">
-          <div class="text-notify text-sm title">
-            <span>{{ table._total === -1 ? 0 : table._total }} {{ table._title | translate }}</span>
-          </div>
-        </ng-container>
+      <!-- number of results and title -->
+      <ng-container *ngIf="table._isTitle">
+        <div class="text-notify text-sm title">
+          <span>{{ table._total === -1 ? 0 : table._total }} {{ table._title | translate }}</span>
+        </div>
+      </ng-container>
 
-        <!-- want to search by columns -->
-        <ng-container *ngIf="table._isSearchable">
-          <app-shared-search-filter
-            [(searchConfig)]="searchConfig"
-            [props]="table._columns"
-            [tableView]="true">
-          </app-shared-search-filter>
-        </ng-container>
+      <!-- want to search by columns -->
+      <ng-container *ngIf="table._isSearchable">
+        <app-shared-search-filter
+          [(searchConfig)]="searchConfig"
+          [props]="table._columns"
+          [tableView]="true">
+        </app-shared-search-filter>
+      </ng-container>
 
-      </div>
-    </ng-container>
-    <!-- /section title and search -->
-
-
-    <!-- when fetching or initializing -->
-    <ng-container *ngIf="table._total === -1">
-      <div class="section-light-pad">
-        <app-message-space [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
-          <div class="flex-centered">
-            <div class="loading loading-white" [ngStyle]="{ 'margin-right': '16px' }"></div>
-            <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
-          </div>
-        </app-message-space>
-      </div>
-    </ng-container>
-    <!-- /when fetching or initializing -->
+    </div>
+  </ng-container>
+  <!-- /section title and search -->
 
 
-    <!-- when no result -->
-    <ng-container *ngIf="table._total === 0 || isSearching">
-      <div class="section-light-pad">
-        <app-message-space
-          [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
-          [widthMax]="isSearching ? '362px' : '273px'">
-          <span [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'" translate></span>
-        </app-message-space>
-      </div>
-    </ng-container>
-    <!-- /when no result -->
+  <!-- when fetching or initializing -->
+  <ng-container *ngIf="table._total === -1">
+    <div class="section-light-pad">
+      <app-message-space [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
+        <div class="flex-centered">
+          <div class="loading loading-white" [ngStyle]="{ 'margin-right': '16px' }"></div>
+          <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
+        </div>
+      </app-message-space>
+    </div>
+  </ng-container>
+  <!-- /when fetching or initializing -->
 
 
-    <!-- when result -->
-    <div *ngIf="table._total > 0" [ngStyle]="{ 'min-height': table._isNoMinHeight ? 'unset' : '500px' }">
-      <div class="table-responsive relative" [ngClass]="{ 'scroll-no': isLoadingData }">
+  <!-- when no result -->
+  <ng-container *ngIf="table._total === 0 || isSearching">
+    <div class="section-light-pad">
+      <app-message-space
+        [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
+        [widthMax]="isSearching ? '362px' : '273px'">
+        <span [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'" translate></span>
+      </app-message-space>
+    </div>
+  </ng-container>
+  <!-- /when no result -->
 
-        <!-- loading style -->
-        <ng-container *ngIf="isLoadingData">
-          <div class="absolute table-loading-wrapper flex-centered">
-            <div class="loading loading-lg"></div>
-          </div>
-        </ng-container>
 
-        <table class="table">
+  <!-- when result -->
+  <div *ngIf="table._total > 0" [ngStyle]="{ 'min-height': table._isNoMinHeight ? 'unset' : '500px' }">
+    <div class="table-responsive relative" [ngClass]="{ 'scroll-no': isLoadingData }">
 
-          <!-- head -->
-          <thead>
-            <tr>
+      <!-- loading style -->
+      <ng-container *ngIf="isLoadingData">
+        <div class="absolute table-loading-wrapper flex-centered">
+          <div class="loading loading-lg"></div>
+        </div>
+      </ng-container>
 
-              <!-- if we have selectable -->
-              <ng-container *ngIf="table._isSelectable">
-                <th class="th-checkbox">
-                  <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
-                    <input type="checkbox" (change)="selectAll($event)">
-                    <i *ngIf="selectedRows === table._content.length" class="fas fa-check"></i>
-                    <span *ngIf="selectedRows < table._content.length && selectedRows > 0" class="hr"></span>
-                  </label>
-                </th>
-              </ng-container>
-              <!-- /if we have selectable -->
+      <table class="table">
 
-              <!-- rest columns -->
-              <ng-container *ngIf="!massSelection && selectedRows === 0">
-                <th
-                  *ngFor="let column of table._columns; let i = index;"
-                  (click)="selectColumn(getName(column))"
-                  [ngClass]="{ 'active': column._isSelected }"
-                  [ngStyle]="{ 'max-width': column._maxWidth, 'min-width': column._minWidth }"
-                  class="text-ellipsis">
+        <!-- head -->
+        <thead>
+          <tr>
 
-                  <ng-container *ngIf="!isSortable(column)">
-                    <span class="th-name">{{ getName(column) | translate }}</span>
-                  </ng-container>
+            <!-- if we have selectable -->
+            <ng-container *ngIf="table._isSelectable">
+              <th class="th-checkbox">
+                <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
+                  <input type="checkbox" (change)="selectAll($event)">
+                  <i *ngIf="selectedRows === table._content.length" class="fas fa-check"></i>
+                  <span *ngIf="selectedRows < table._content.length && selectedRows > 0" class="hr"></span>
+                </label>
+              </th>
+            </ng-container>
+            <!-- /if we have selectable -->
 
-                  <ng-container *ngIf="isSortable(column)">
-                    <app-shared-sort
-                      [(sortConfig)]="sortConfig"
-                      [properties]="getAttrs(column)"
-                      [label]="getName(column) | translate">
-                    </app-shared-sort>
-                  </ng-container>
+            <!-- rest columns -->
+            <ng-container *ngIf="!massSelection && selectedRows === 0">
+              <th
+                *ngFor="let column of table._columns; let i = index;"
+                (click)="selectColumn(getName(column))"
+                [ngClass]="{ 'active': column._isSelected }"
+                [ngStyle]="{ 'max-width': column._maxWidth, 'min-width': column._minWidth }"
+                class="text-ellipsis">
 
-                </th>
-              </ng-container>
-              <!-- /rest columns -->
+                <ng-container *ngIf="!isSortable(column)">
+                  <span class="th-name">{{ getName(column) | translate }}</span>
+                </ng-container>
 
-              <!-- actions -->
-              <ng-container *ngIf="selectedRows > 0">
-                <th [colSpan]="table._columns.length" class="text-ellipsis th-action">
+                <ng-container *ngIf="isSortable(column)">
+                  <app-shared-sort
+                    [(sortConfig)]="sortConfig"
+                    [properties]="getAttrs(column)"
+                    [label]="getName(column) | translate">
+                  </app-shared-sort>
+                </ng-container>
 
-                  <div class="d-inline-flex th-selected-heading">
-                    <span>{{ selectedRows }} {{ 'TABLE.SELECTED_ROWS' | translate }}</span>
-                  </div>
+              </th>
+            </ng-container>
+            <!-- /rest columns -->
 
-                  <ng-container *ngIf="table?._buttons?.length > 0">
-                    <div *ngFor="let button of table._buttons" class="d-inline-flex th-action-button">
-                      <button
-                        (click)="onActionClick(button._label)"
-                        type="button"
-                        class="btn btn-xs no-hover ghost-primary">
-                        <i *ngIf="button._icon" [ngClass]="button._icon"></i>
-                        {{ button._label | translate }}
-                      </button>
-                    </div>
-                  </ng-container>
+            <!-- actions -->
+            <ng-container *ngIf="selectedRows > 0">
+              <th [colSpan]="table._columns.length" class="text-ellipsis th-action">
 
-                  <div *ngIf="table._isDeletable" class="d-inline-flex th-action-delete">
+                <div class="d-inline-flex th-selected-heading">
+                  <span>{{ selectedRows }} {{ 'TABLE.SELECTED_ROWS' | translate }}</span>
+                </div>
+
+                <ng-container *ngIf="table?._buttons?.length > 0">
+                  <div *ngFor="let button of table._buttons" class="d-inline-flex th-action-button">
                     <button
-                      (click)="removeSelectedRows()"
-                      class="btn btn-xs no-hover ghost-delete"
-                      type="button">
-                      <i class="fas fa-trash-alt"></i>
-                      {{ 'COMMON.BUTTON.DELETE' | translate }}
-                    </button>
-                  </div>
-
-                </th>
-              </ng-container>
-              <!-- /actions -->
-
-            </tr>
-          </thead>
-          <!-- /head -->
-
-          <!-- body -->
-          <tbody>
-            <tr *ngFor="let row of getRowsKeys()">
-
-              <!-- if we have selectable -->
-              <ng-container *ngIf="table._isSelectable">
-                <td class="th-checkbox">
-                  <label class="flex-centered" [ngClass]="{ 'active': table._content[row]?._isSelected }">
-                    <input type="checkbox" (click)="selectRow(row);">
-                    <i class="fas fa-check"></i>
-                  </label>
-                </td>
-              </ng-container>
-
-              <!-- rest columns -->
-              <td *ngFor="let column of table._columns; let i = index">
-                <div
-                  class="tbody-td-data d-flex"
-                  [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE' }">
-
-                  <!-- button -->
-                  <div *ngIf="i === table._editIndex - 1" class="tbody-td-action-button">
-                    <button
-                      (click)="edit(table._content[row])"
+                      (click)="onActionClick(button._label)"
                       type="button"
-                      class="btn btn-xs ghost-edit">
-                      {{ getButtonLabel() | translate }}
+                      class="btn btn-xs no-hover ghost-primary">
+                      <i *ngIf="button._icon" [ngClass]="button._icon"></i>
+                      {{ button._label | translate }}
                     </button>
                   </div>
-                  <!-- /button -->
+                </ng-container>
 
-                  <div
-                    [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE',
-                    'enable-tooltip': column._enableTooltip || getType(column) === 'COUNTRY',
-                     'td-type-tag': getType(column) === 'TAG-LIST' }"
-                    [ngSwitch]="getType(column)"
-                    class="tbody-td-content text-ellipsis">
+                <div *ngIf="table._isDeletable" class="d-inline-flex th-action-delete">
+                  <button
+                    (click)="removeSelectedRows()"
+                    class="btn btn-xs no-hover ghost-delete"
+                    type="button">
+                    <i class="fas fa-trash-alt"></i>
+                    {{ 'COMMON.BUTTON.DELETE' | translate }}
+                  </button>
+                </div>
 
-                    <!-- if type is Date -->
-                    <ng-container *ngSwitchCase="'DATE'">
-                      <span>{{ (getContentValue(row, getAttrs(column)[0])?.toString() | date:dateFormat) }}</span>
-                    </ng-container>
+              </th>
+            </ng-container>
+            <!-- /actions -->
 
-                    <!-- if type is Country -->
-                    <ng-container *ngSwitchCase="'COUNTRY'">
-                      <span>
-                        <app-country-flag [country]="(getContentValue(row, getAttrs(column)[0]) || '')"></app-country-flag>
+          </tr>
+        </thead>
+        <!-- /head -->
+
+        <!-- body -->
+        <tbody>
+          <tr *ngFor="let row of getRowsKeys()">
+
+            <!-- if we have selectable -->
+            <ng-container *ngIf="table._isSelectable">
+              <td class="th-checkbox">
+                <label class="flex-centered" [ngClass]="{ 'active': table._content[row]?._isSelected }">
+                  <input type="checkbox" (click)="selectRow(row);">
+                  <i class="fas fa-check"></i>
+                </label>
+              </td>
+            </ng-container>
+
+            <!-- rest columns -->
+            <td *ngFor="let column of table._columns; let i = index">
+              <div
+              class="tbody-td-data d-flex"
+              [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE' }">
+
+                <!-- button -->
+                <div *ngIf="i === table._editIndex - 1" class="tbody-td-action-button">
+                  <button
+                    (click)="edit(table._content[row])"
+                    type="button"
+                    class="btn btn-xs ghost-edit">
+                    {{ getButtonLabel() | translate }}
+                  </button>
+                </div>
+                <!-- /button -->
+
+                <div
+                [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE',
+                'enable-tooltip': column._enableTooltip || getType(column) === 'COUNTRY',
+                'td-type-tag': getType(column) === 'TAG-LIST' }"
+                [ngSwitch]="getType(column)"
+                class="tbody-td-content text-ellipsis">
+
+                  <!-- if type is Date -->
+                  <ng-container *ngSwitchCase="'DATE'">
+                    <span>{{ (getContentValue(row, getAttrs(column)[0])?.toString() | date:dateFormat) }}</span>
+                  </ng-container>
+
+                  <!-- if type is Country -->
+                  <ng-container *ngSwitchCase="'COUNTRY'">
+                    <span>
+                      <app-country-flag [country]="(getContentValue(row, getAttrs(column)[0]) || '')"></app-country-flag>
+                    </span>
+                  </ng-container>
+
+                  <!-- if type is country name -->
+                  <ng-container *ngSwitchCase="'COUNTRY-NAME'">
+                    <span>{{ getCountryName(getContentValue(row, getAttrs(column)[0]) || '') }}</span>
+                  </ng-container>
+
+                  <!-- if type is array -->
+                  <ng-container *ngSwitchCase="'ARRAY'">
+                    <span>{{ (getContentValue(row, getAttrs(column)[0]) || []).length.toString() }}</span>
+                  </ng-container>
+
+                  <!-- if type is image -->
+                  <ng-container *ngSwitchCase="'PICTURE'">
+                    <span>
+                      <img [src]="getContentValue(row, getAttrs(column)[0]) || ''" class="img-responsive" height="27" alt=" ">
+                    </span>
+                  </ng-container>
+
+                  <!-- if type is progress -->
+                  <ng-container *ngSwitchCase="'PROGRESS'">
+                    <span>
+                      <app-progress-bar
+                        [enableTooltip]="true"
+                        [height]="'8px'"
+                        [backgroundColor]="getColor(getContentValue(row, getAttrs(column)[0]) || 0)"
+                        [width]="(getContentValue(row, getAttrs(column)[0]) || 0) +'%'">
+                      </app-progress-bar>
+                    </span>
+                  </ng-container>
+
+                  <!-- if type is check -->
+                  <ng-container *ngSwitchCase="'CHECK'">
+                    <span>
+                      <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 0" class="fas fa-times text-error"></i>
+                      <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 1" class="fas fa-check text-success"></i>
+                    </span>
+                  </ng-container>
+
+                  <!-- if type is multi-label -->
+                  <ng-container *ngSwitchCase="'MULTI-LABEL'">
+                    <span
+                      *ngFor="let attr of getAttrs(column)"
+                      [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
+                      class="tbody-td-multiLabel"
+                      [ngClass]="{ 'td-type-left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
+                      'td-type-right-label' : getAttrIndex(column, attr) === getAttrs(column).length - 1 && getAttrs(column).length !== 1,
+                      'td-type-middle-label' : getAttrIndex(column, attr) !== 0 && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
+                      {{ (getContentValue(row, attr) || " - ").toString() }}
+                    </span>
+                  </ng-container>
+
+                  <!-- if type is multiling -->
+                  <ng-container *ngSwitchCase="'MULTILING'">
+                    <span>{{ getContentValue(row, getAttrs(column)[0]) | multiling:userLang }}</span>
+                  </ng-container>
+
+                  <!-- if type is tags -->
+                  <ng-container *ngSwitchCase="'TAG-LIST'">
+                    <span class="tbody-td-tag d-flex">
+                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag label-rounded">
+                        {{ tag.label | multiling:userLang }}
                       </span>
-                    </ng-container>
+                      <span *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">...</span>
+                    </span>
+                  </ng-container>
 
-                    <!-- if type is country name -->
-                    <ng-container *ngSwitchCase="'COUNTRY-NAME'">
-                      <span>{{ getCountryName(getContentValue(row, getAttrs(column)[0]) || '') }}</span>
-                    </ng-container>
+                  <!-- if type is multi-choices -->
+                  <ng-container *ngSwitchCase="'MULTI-CHOICES'">
+                    <span class="d-flex">
 
-                    <!-- if type is array -->
-                    <ng-container *ngSwitchCase="'ARRAY'">
-                      <span>{{ (getContentValue(row, getAttrs(column)[0]) || []).length.toString() }}</span>
-                    </ng-container>
+                      <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString())) !== ''">
+                        <img
+                          [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]).toString())))"
+                          [ngStyle]="{ 'height': column._imgHeight }"
+                          [src]="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString() || ''))"
+                          alt=" "
+                          class="img-responsive"
+                          height="27">
+                      </ng-container>
 
-                    <!-- if type is image -->
-                    <ng-container *ngSwitchCase="'PICTURE'">
-                      <span>
-                        <img [src]="getContentValue(row, getAttrs(column)[0]) || ''" class="img-responsive" height="27" alt=" ">
-                      </span>
-                    </ng-container>
-
-                    <!-- if type is progress -->
-                    <ng-container *ngSwitchCase="'PROGRESS'">
-                      <span>
-                        <app-progress-bar
-                          [enableTooltip]="true"
-                          [height]="'8px'"
-                          [backgroundColor]="getColor(getContentValue(row, getAttrs(column)[0]) || 0)"
-                          [width]="(getContentValue(row, getAttrs(column)[0]) || 0) +'%'">
-                        </app-progress-bar>
-                      </span>
-                    </ng-container>
-
-                    <!-- if type is check -->
-                    <ng-container *ngSwitchCase="'CHECK'">
-                      <span>
-                        <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 0" class="fas fa-times text-error"></i>
-                        <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 1" class="fas fa-check text-success"></i>
-                      </span>
-                    </ng-container>
-
-                    <!-- if type is multi-label -->
-                    <ng-container *ngSwitchCase="'MULTI-LABEL'">
-                      <span
-                        *ngFor="let attr of getAttrs(column)"
-                        [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
-                        class="tbody-td-multiLabel"
-                        [ngClass]="{ 'td-type-left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
-                        'td-type-right-label' : getAttrIndex(column, attr) === getAttrs(column).length - 1 && getAttrs(column).length !== 1,
-                        'td-type-middle-label' : getAttrIndex(column, attr) !== 0 && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
-                        {{ (getContentValue(row, attr) || " - ").toString() }}
-                      </span>
-                    </ng-container>
-
-                    <!-- if type is multiling -->
-                    <ng-container *ngSwitchCase="'MULTILING'">
-                      <span>{{ getContentValue(row, getAttrs(column)[0]) | multiling:userLang }}</span>
-                    </ng-container>
-
-                    <!-- if type is tags -->
-                    <ng-container *ngSwitchCase="'TAG-LIST'">
-                      <span class="tbody-td-tag d-flex">
-                        <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag label-rounded">
-                          {{ tag.label | multiling:userLang }}
+                      <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]))) === ''">
+                        <span
+                          [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
+                          class="tbody-td-multi-choice-label text-xs text-ellipsis d-block">
+                          {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])|| " - "))) | translate }}
                         </span>
-                        <span *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">...</span>
-                      </span>
-                    </ng-container>
+                      </ng-container>
 
-                    <!-- if type is multi-choices -->
-                    <ng-container *ngSwitchCase="'MULTI-CHOICES'">
-                      <span class="d-flex">
+                    </span>
+                  </ng-container>
 
-                        <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString())) !== ''">
-                          <img
-                            [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]).toString())))"
-                            [ngStyle]="{ 'height': column._imgHeight }"
-                            [src]="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString() || ''))"
-                            alt=" "
-                            class="img-responsive"
-                            height="27">
-                        </ng-container>
-
-                        <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]))) === ''">
-                          <span
-                            [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
-                            class="tbody-td-multi-choice-label text-xs text-ellipsis d-block">
-                            {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])|| " - "))) | translate }}
-                          </span>
-                        </ng-container>
-
-                      </span>
-                    </ng-container>
-
-                    <!-- if type is text -->
-                    <ng-container *ngSwitchDefault>
-                      <span *ngFor="let attr of getAttrs(column)">
-                        {{ (getContentValue(row, attr)|| " - ").toString() }}
-                      </span>
-                    </ng-container>
-
-                  </div>
+                  <!-- if type is text -->
+                  <ng-container *ngSwitchDefault>
+                    <span *ngFor="let attr of getAttrs(column)">
+                      {{ (getContentValue(row, attr)|| " - ").toString() }}
+                    </span>
+                 </ng-container>
 
                 </div>
-              </td>
-              <!-- rest columns -->
 
-            </tr>
-          </tbody>
-          <!-- /body -->
+              </div>
+            </td>
+            <!-- rest columns -->
 
-        </table>
+          </tr>
+        </tbody>
+        <!-- /body -->
 
-      </div>
+      </table>
+
     </div>
-    <!-- /when result -->
-
-
-    <!-- when pagination is required -->
-    <ng-container *ngIf="table._total > 10 && table._isPaginable">
-      <div class="flex-centered section-light-pad rm-pad-bottom">
-        <app-pagination-2
-          [(pagination)]="pagination"
-          [ngStyle]="{ 'width': '100%' }"
-          [totalCount]="table._total">
-        </app-pagination-2>
-      </div>
-    </ng-container>
-    <!-- /when pagination is required -->
-
-
   </div>
+  <!-- /when result -->
+
+
+  <!-- when pagination is required -->
+  <ng-container *ngIf="table._total > 10 && table._isPaginable">
+    <div class="flex-centered section-light-pad rm-pad-bottom">
+      <app-pagination-2
+        [(pagination)]="pagination"
+        [ngStyle]="{ 'width': '100%' }"
+        [totalCount]="table._total">
+      </app-pagination-2>
+    </div>
+  </ng-container>
+  <!-- /when pagination is required -->
+
+
 </section>

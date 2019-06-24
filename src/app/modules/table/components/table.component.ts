@@ -699,7 +699,7 @@ export class TableComponent implements OnInit {
 
         rows = rows.filter((value) => {
           for (const valueKey of Object.keys(value)) {
-            if (valueKey === configKey && value[valueKey].toLowerCase().includes(this._config[configKey].toLowerCase())) {
+            if (valueKey === configKey && value[valueKey].toLowerCase().match(this._config[configKey].toLowerCase())) {
               return true;
             }
           }
