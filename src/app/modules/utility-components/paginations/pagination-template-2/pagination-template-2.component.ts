@@ -130,7 +130,7 @@ export class PaginationTemplate2Component implements OnInit {
     this._setOffset();
     this._storeParPageLocally();
 
-    if (this._pagination.offset > this._totalCount) {
+    if (this._pagination.offset >= this._totalCount) {
       this._pagination.offset = 0;
       this._pagination.currentPage = 1;
       this._startPageNumber = 0;
