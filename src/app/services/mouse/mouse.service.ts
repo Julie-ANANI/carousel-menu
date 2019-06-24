@@ -10,6 +10,8 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class MouseService {
 
+  start: Subject<boolean> = new Subject<boolean>();
+
   target: Subject<string> = new Subject<string>();
 
   parent: Subject<string> = new Subject<string>();
@@ -19,6 +21,14 @@ export class MouseService {
   container: Subject<Array<string>> = new Subject<Array<string>>();
 
   constructor() { }
+
+  public startEvent(value: boolean) {
+    this.start.next(value);
+  }
+
+  public getStartEvent(): Subject<boolean> {
+    return this.start;
+  }
 
   public setClickEvent(event: MouseEvent) {
     this._setTargetId(event);

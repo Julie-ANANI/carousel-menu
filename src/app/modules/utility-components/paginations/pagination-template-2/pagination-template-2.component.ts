@@ -45,6 +45,8 @@ export class PaginationTemplate2Component implements OnInit {
     this._startPageNumber = 0;
     this._endPageNumber = 11;
 
+    this._mouseService.startEvent(true);
+
     this._mouseService.targetId().subscribe((value: string) => {
       this._toggleParPageMenu = value === 'pagination-button-parPage';
     });
