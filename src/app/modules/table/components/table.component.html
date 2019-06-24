@@ -263,25 +263,24 @@
                   <!-- if type is multi-choices -->
                   <ng-container *ngSwitchCase="'MULTI-CHOICES'">
                     <span class="d-flex">
+                      <span
+                        [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
+                        class="tbody-td-multi-choice-label text-xs text-ellipsis d-block">
+                        {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])|| " - "))) | translate }}
+                      </span>
+                    </span>
+                  </ng-container>
 
-                      <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString())) !== ''">
-                        <img
-                          [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]).toString())))"
-                          [ngStyle]="{ 'height': column._imgHeight }"
-                          [src]="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString() || ''))"
-                          alt=" "
-                          class="img-responsive"
-                          height="27">
-                      </ng-container>
-
-                      <ng-container *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]))) === ''">
-                        <span
-                          [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
-                          class="tbody-td-multi-choice-label text-xs text-ellipsis d-block">
-                          {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])|| " - "))) | translate }}
-                        </span>
-                      </ng-container>
-
+                  <!-- if type is multi-image-choices -->
+                  <ng-container *ngSwitchCase="'MULTI-IMAGE-CHOICES'">
+                    <span>
+                      <img
+                        *ngIf="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString()))"
+                        [ngStyle]="{ 'height': column._imgHeight }"
+                        [src]="getUrl(getChoice(column, getContentValue(row, getAttrs(column)[0]).toString() || ''))"
+                        alt=" "
+                        class="img-responsive"
+                        height="27">
                     </span>
                   </ng-container>
 
