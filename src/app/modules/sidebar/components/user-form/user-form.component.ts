@@ -238,7 +238,9 @@ export class UserFormComponent implements OnInit {
       pro.tags = this._tags;
       this.finalProfessionalData.emit(pro);
     } else if (this._isProfessional && this._type === 'addPro') {
-      this.finalProfessionalData.emit(this._userForm.value);
+      const pro = this._userForm.value;
+      pro.company = this._userForm.get('company.name').value;
+      this.finalProfessionalData.emit(pro);
     }
   }
 

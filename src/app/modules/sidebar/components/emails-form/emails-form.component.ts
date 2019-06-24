@@ -158,9 +158,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       this._tableInfos = {
         _selector: 'admin-mailgun',
         _title: 'COMMON.PROFESSIONALS',
-        _isFiltrable: true,
-        _isHeadable: true,
-        _isLocal: true,
+        _isSearchable: true,
         _content: this.campaignInfosToShow.payload.recipients,
         _total: this.campaignInfosToShow.payload.recipients.length,
         _columns: [

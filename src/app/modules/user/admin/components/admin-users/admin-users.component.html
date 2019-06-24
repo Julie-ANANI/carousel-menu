@@ -10,11 +10,9 @@
     <!-- section table -->
     <app-shared-table
       [data]="tableInfos"
-      [config]="config"
-      (configChange)="configChange($event)"
+      [(config)]="config"
       (editRow)="editUser($event)"
-      (removeRows)="deleteUsersModal($event)"
-      (performAction)="performActions($event)">
+      (removeRows)="deleteUsersModal($event)">
     </app-shared-table>
     <!-- /section table -->
 

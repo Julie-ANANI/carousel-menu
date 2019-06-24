@@ -83,10 +83,10 @@
       <ng-container *ngIf="!noResult">
         <div class="section-light-pad rm-pad-top">
           <app-shared-table
-            [data]="tableInfos"
-            [config]="config"
             (editRow)="onClickEdit($event)"
-            (performAction)="onTableAction($event)">
+            (performAction)="onTableAction($event)"
+            [(config)]="config"
+            [data]="tableInfos">
           </app-shared-table>
         </div>
       </ng-container>

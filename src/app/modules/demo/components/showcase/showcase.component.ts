@@ -6,6 +6,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { TagsService } from '../../../../services/tags/tags.service';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
+import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -20,15 +21,15 @@ export class ShowcaseComponent {
 
   private _selectedTagsStats: Array<TagStats>;
 
-  private _countries: {[country: string]: number} = {};
+  private _selectedTags: {[tagId: string]: boolean} = {};
+
+  private _countries: {readonly [country: string]: number} = {};
 
   private _countriesCount = 0;
 
   private _stats: TagStats = {};
 
-  private _maxFirstTertile = 0;
-
-  private _maxSecondTertile = 0;
+  private _quartiles = [1, 1, 1];
 
   private _modalShow: boolean = false;
 
@@ -50,8 +51,9 @@ export class ShowcaseComponent {
       this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
-    if (Array.isArray(this._activatedRoute.snapshot.data['tagsStats'])) {
-      this._selectedTagsStats = this._activatedRoute.snapshot.data['tagsStats'];
+    const tagStats = this._activatedRoute.snapshot.data['tagsStats'];
+    if (Array.isArray(tagStats)) {
+      this._selectedTagsStats = tagStats;
       this._recomputeData();
     } else {
       this._selectedTagsStats = [];
@@ -66,31 +68,32 @@ export class ShowcaseComponent {
 
 
   public onChangeTag(event: Event, tag: Tag) {
-    if ((event.target as HTMLInputElement).checked) {
-      this._getTagStat(event, tag);
-    } else {
-      this._removeTag(tag._id);
-    }
-  }
-
-
-  private _removeTag(tagId: string) {
-    this._selectedTagsStats = this._selectedTagsStats.filter((item) => item.tag._id !== tagId);
-    this._recomputeData();
-  }
-
-
-  private _getTagStat(event: Event, tag: Tag) {
     event.preventDefault();
-    this._loadingStats = true;
+    this._selectedTags[tag._id] = (event.target as HTMLInputElement).checked;
+  }
 
-    this._tagService.getStats(tag._id).pipe(finalize(() => { this._loadingStats = false; }),).subscribe((stats) => {
-      this._selectedTagsStats = this._selectedTagsStats.concat(stats);
-      this._recomputeData();
-    }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', `We are having trouble while finding the stats for ${tag.label.en} tag.`);
-    });
 
+  public onClickApply(event: Event): void {
+    event.preventDefault();
+    this._modalShow = false;
+
+    const tagsStatsObservables =
+      Object
+        .keys(this._selectedTags)
+        .filter((tagId) => this._selectedTags[tagId])
+        .map((tagId) => this._tagService.getStats(tagId));
+
+    if (tagsStatsObservables.length > 0) {
+      this._loadingStats = true;
+      forkJoin(tagsStatsObservables)
+        .pipe(finalize(() => { this._loadingStats = false; }))
+        .subscribe((res) => {
+          this._selectedTagsStats = res;
+          this._recomputeData();
+        }, () => {
+          this._translateNotificationService.error('ERROR.ERROR', `We are having trouble while finding the stats.`);
+        });
+    }
   }
 
 
@@ -148,9 +151,11 @@ export class ShowcaseComponent {
 
     const tertileSize = (orderedCountries.length / 3);
 
-    this._maxFirstTertile = this._countries[orderedCountries[Math.floor(tertileSize)]];
-
-    this._maxSecondTertile = this._countries[orderedCountries[Math.floor(2 * tertileSize)]];
+    this._quartiles = [
+      1,
+      this._countries[orderedCountries[Math.floor(tertileSize)]],
+      this._countries[orderedCountries[Math.floor(2 * tertileSize)]]
+    ];
 
   }
 
@@ -174,12 +179,8 @@ export class ShowcaseComponent {
     return this._stats;
   }
 
-  get maxFirstTertile() {
-    return this._maxFirstTertile;
-  }
-
-  get maxSecondTertile() {
-    return this._maxSecondTertile;
+  get quartiles() {
+    return this._quartiles;
   }
 
   get modalShow(): boolean {

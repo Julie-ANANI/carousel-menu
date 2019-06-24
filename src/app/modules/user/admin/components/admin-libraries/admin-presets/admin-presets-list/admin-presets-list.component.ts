@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../../services/preset/preset.service';
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
-import {PaginationInterface} from '../../../../../../utility-components/paginations/interfaces/pagination';
+import {Pagination} from '../../../../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -20,7 +20,7 @@ export class AdminPresetsListComponent implements OnInit {
 
   private _total: number;
 
-  private _config = {
+  private _config: any = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -32,7 +32,7 @@ export class AdminPresetsListComponent implements OnInit {
 
   private _modalClone = false;
 
-  private _paginationConfig: PaginationInterface = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: any = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _presetService: PresetService,
               private _router: Router) {}
@@ -98,13 +98,23 @@ export class AdminPresetsListComponent implements OnInit {
     });
   }
 
+  get sortConfig(): string {
+    return this._config.sort;
+  }
+
+  set sortConfig(value: string) {
+    this._config.sort = value;
+    this.loadPresets(this._config);
+  }
+
+
   set config(value: any) { this._config = value; }
 
   get config(): any { return this._config; }
 
   get total () { return this._total; }
 
-  get paginationConfig(): PaginationInterface { return this._paginationConfig; }
+  get paginationConfig(): Pagination { return this._paginationConfig; }
 
   get presets () { return this._presets; }
 

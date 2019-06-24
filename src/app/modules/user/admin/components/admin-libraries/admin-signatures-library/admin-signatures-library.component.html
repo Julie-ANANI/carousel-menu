@@ -22,8 +22,7 @@
   </div>
 
   <app-shared-table
-    [config]="config"
-    (configChange)="getSignatures($event)"
+    [(config)]="config"
     [data]="tableInfos"
     (editRow)="editSignature($event)"
     (removeRows)="removeSignatures($event)">

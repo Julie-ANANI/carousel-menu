@@ -1,10 +1,11 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
+import { MouseService } from './services/mouse/mouse.service';
 
 @Component({
   selector: 'app-root',
@@ -28,9 +29,10 @@ export class AppComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService,
               private _authService: AuthService,
+              private _mouseService: MouseService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this.setFavicon();
+    this._setFavicon();
 
     initTranslation(this._translateService);
 
@@ -47,9 +49,13 @@ export class AppComponent implements OnInit {
     //this._setSwellRTScript();
   }
 
+  @HostListener('mouseup', ['$event'])
+  onMouseUp(event: MouseEvent) {
+    this._mouseService.setClickEvent(event);
+  }
 
   // Favicon
-  private setFavicon() {
+  private _setFavicon() {
     if (isPlatformBrowser(this.platformId)) {
       const linkElement = document.createElement('link');
       linkElement.setAttribute('id', 'theicon');
