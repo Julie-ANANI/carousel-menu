@@ -313,7 +313,7 @@ export class SidebarComponent implements OnInit {
   public onClickEndInnovationConfirm(event: Event) {
     event.preventDefault();
 
-    this._innovationService.endProject(this._innovation._id).subscribe(() => {
+    this._innovationService.save(this._innovation._id, {status: 'DONE'}).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');

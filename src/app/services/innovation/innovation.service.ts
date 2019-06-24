@@ -95,18 +95,6 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId + '/sendMailToOwner', {mail: mail});
   }
 
-  public validate(innovationId: string): Observable<any> { /* FIXME */
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EVALUATING', {});
-  }
-
-  public endProject(innovationId: string): Observable<any> { /* FIXME */
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=DONE', {});
-  }
-
-  public askRevision(innovationId: string): Observable<any> { /* FIXME */
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EDITING', {});
-  }
-
   public inviteCollaborators(innovationId: string, collaboratorsEmails: string): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/invite', {
       collaborators: collaboratorsEmails

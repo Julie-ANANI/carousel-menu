@@ -56,13 +56,13 @@ export class AdminProjectCardsComponent implements OnInit {
   }
 
   public validateProject (): void {
-    this.innovationService.validate(this.project._id).pipe(first()).subscribe((_: any) => {
+    this.innovationService.save(this.project._id, {status: 'EVALUATING'}).subscribe((_: any) => {
       this.translateNotificationsService.success('Projet validé', 'Le projet a bien été validé');
     });
   }
 
   public askRevision (): void {
-    this.innovationService.askRevision(this.project._id).pipe(first()).subscribe((_: any) => {
+    this.innovationService.save(this.project._id, {status: 'EDITING'}).subscribe((_: any) => {
       this.translateNotificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
     });
   }
