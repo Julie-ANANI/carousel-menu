@@ -64,7 +64,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
 
   private getProfessionals() {
-    this.professionalsService.getAll(this._config).pipe(first()).subscribe((response: any) => {
+    this.professionalsService.getAll(this._config).subscribe((response: any) => {
       this._noResult = response._metadata.totalCount === 0;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
@@ -95,7 +95,7 @@ export class AdminCampaignProsComponent implements OnInit {
   importPros(value: boolean) {
     if (value) {
       this.professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id, this._originCampaign[0].innovation.toString(), this._campaign.innovation._id)
-        .pipe(first()).subscribe((answer: any) => {
+        .subscribe((answer: any) => {
           const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
           this.translateNotificationsService.success('ERROR.SUCCESS', message);
           this._noResult = false;
@@ -218,10 +218,6 @@ export class AdminCampaignProsComponent implements OnInit {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
-  }
-
-  get newPro(): any {
-    return this._newPro;
   }
 
   get noResult(): boolean {

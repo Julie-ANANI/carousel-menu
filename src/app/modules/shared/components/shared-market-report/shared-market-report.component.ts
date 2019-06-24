@@ -317,8 +317,9 @@ export class SharedMarketReportComponent implements OnInit {
    * @param {string} ob
    */
   public saveOperatorComment(event: {content: string}, ob: string) {
-    const objToSave = { [ob]: { conclusion: event.content } };
-    this._innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe(() => {
+    const innoChanges = { marketReport: { [ob]: { conclusion: event.content } } };
+    this._innovationService.save(this._innovation._id, innoChanges).subscribe(() => {
+      // do nothing
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });

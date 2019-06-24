@@ -50,8 +50,8 @@ export class QuestionConclusionComponent implements OnInit {
 
 
   public keyupHandlerFunction(event: {content: string}) {
-    const objToSave = {[this.question.identifier]: { conclusion: event['content'] }};
-    this._innovationService.updateMarketReport(this.innovation._id, objToSave).subscribe(() => {
+    const innoChanges: Innovation = {marketReport: {[this.question.identifier]: { conclusion: event['content'] }}};
+    this._innovationService.save(this.innovation._id, innoChanges).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
