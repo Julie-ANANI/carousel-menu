@@ -166,7 +166,7 @@ export class TableComponent implements OnInit {
 
     this._table._total = rows.length;
 
-    if (this._pagination.offset > this._table._total) {
+    if (this._pagination.offset >= this._table._total) {
       this._pagination.offset = 0;
       this._pagination.currentPage = 1;
     }
@@ -177,8 +177,6 @@ export class TableComponent implements OnInit {
     this._isSearching = this._isSearching && this._table._total === 0;
 
     this._filteredContent = rows.slice(startIndex, endIndex);
-
-    //console.log(this._filteredContent);
 
   }
 
@@ -684,28 +682,17 @@ export class TableComponent implements OnInit {
 
     if (this._table._columns.find((column) => column._attrs[0] === configKey) || this._config.search.length > 2) {
 
-      //let regExp: RegExp = null;
-
       if (this._config.search.length > 2) {
-        /*for (const searchKey of Object.keys(JSON.parse(this._config.search))) {
-          //regExp = new RegExp(searchKey, 'gi');
-          //rows = this._contentLocally(this._table._content, searchKey);
-        }*/
+        for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
+          const searchValue = JSON.parse(this._config.search)[searchKey];
+          rows = this._searchContent(this._table._content, searchKey, searchValue.toString().toLowerCase());
+        }
       }
 
       if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
-
-        rows = rows.length > 0 ? rows : this._table._content;
-
-        rows = rows.filter((value) => {
-          for (const valueKey of Object.keys(value)) {
-            if (valueKey === configKey && value[valueKey].toLowerCase().match(this._config[configKey].toLowerCase())) {
-              return true;
-            }
-          }
-          return false;
-        });
-
+        rows = rows.length > 0 || this._config.search.length > 2 ? rows : this._table._content;
+        const searchValue = this._config[configKey];
+        rows = this._searchContent(rows, configKey, searchValue.toLowerCase());
       }
 
       this._localStorageService.setItem('table-search', 'active');
@@ -715,10 +702,45 @@ export class TableComponent implements OnInit {
       this._localStorageService.setItem('table-search', '');
     }
 
-    //console.log(rows);
-
     return rows;
 
+  }
+
+  private _searchContent(totalContents: Array<any>, searchKey: string, searchValue: string): Array<any> {
+    return totalContents.filter((content) => {
+
+      if (searchKey === 'country') {
+        searchKey = 'country.flag';
+      }
+
+      for (const contentKey of Object.keys(content)) {
+
+        if (searchKey.split('.').length > 1) {
+          let newAttr = searchKey.split('.');
+
+          if (contentKey === newAttr[0] ) {
+            let tmpContent = content[newAttr[0]];
+            newAttr = newAttr.splice(1);
+
+            for (const i of newAttr){
+              tmpContent = tmpContent ? tmpContent[i] : '-';
+            }
+
+            if (tmpContent.toString().toLowerCase().includes(searchValue)) {
+              return true;
+            }
+
+          }
+
+        } else if (contentKey === searchKey && content[searchKey] && content[searchKey].toString().toLowerCase().includes(searchValue)) {
+          return true;
+        }
+
+      }
+
+      return false;
+
+    });
   }
 
   get searchConfig(): Config {
