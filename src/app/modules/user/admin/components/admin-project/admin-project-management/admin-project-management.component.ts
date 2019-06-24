@@ -306,10 +306,9 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param {string} presetName
    */
   public updatePreset(presetName: string): void {
-    let preset: any = {sections: []};
     if (presetName) {
-      preset = this.presets.find(value => value.name === presetName);
-      this._innovationService.updatePreset(this._project._id, preset).subscribe((data: any) => {
+      const preset = this.presets.find(value => value.name === presetName);
+      this._innovationService.save(this._project._id, {preset: preset}).subscribe((data: any) => {
         this._activatedRoute.snapshot.parent.data['innovation'] = data;
         this._project = data;
         this.save('Le questionnaire a bien été affecté au projet');
@@ -317,7 +316,6 @@ export class AdminProjectManagementComponent implements OnInit {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
       });
     } else {
-      this.project.preset = preset;
       this.save('Il n\'existe plus de questionnaire correspondant à ce projet');
     }
   }
