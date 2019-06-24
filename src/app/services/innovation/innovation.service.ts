@@ -87,10 +87,6 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId + '/updatePreset', {preset: data});
   }
 
-  public submitProjectToValidation (innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/submit', {});
-  }
-
   public sendMailToOwner(innovationId: string, mail: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/sendMailToOwner', {mail: mail});
   }
