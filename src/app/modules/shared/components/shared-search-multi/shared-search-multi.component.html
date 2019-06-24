@@ -24,17 +24,17 @@
 
       <input
         type="search"
-        (keyup.enter)="onSearch($event.target)"
+        (keyup.enter)="searchString = $event.target.value; onSearch()"
         #search
         class="form-input"
         [attr.placeholder]="'COMMON.SEARCH_INPUT_PLACEHOLDER' | translate">
 
-      <div class="search-icon" (click)="onSearch(search)">
+      <div class="search-icon" (click)="searchString = search.value; onSearch()">
         <img src="https://res.cloudinary.com/umi/image/upload/v1541656930/app/default-images/icons/search-meta.svg" alt=" ">
       </div>
 
-      <ng-container *ngIf="search.value !== ''">
-        <div class="search-cross" (click)="search.value = ''; onSearch(search)">
+      <ng-container *ngIf="searchString !== ''">
+        <div class="search-cross" (click)="searchString = ''; onSearch()">
           <i class="fas fa-times"></i>
         </div>
       </ng-container>
