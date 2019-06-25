@@ -4,6 +4,7 @@ import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { first } from 'rxjs/operators';
 import {Pagination} from '../../../utility-components/paginations/interfaces/pagination';
+import {Config} from '../../../../models/config';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -16,7 +17,7 @@ export interface SelectedProfessional extends Professional {
 })
 export class SharedProsListOldComponent {
 
-  private _config: any;
+  private _config: Config;
   private _keywordsModal: boolean = false;
   private _paginationConfig: Pagination = {};
   public smartSelect: any = null;
@@ -24,7 +25,7 @@ export class SharedProsListOldComponent {
 
   @Input() public requestId: string;
   @Input() public campaign: Campaign;
-  @Input() set config(value: any) {
+  @Input() set config(value: Config) {
     this.loadPaginationConfig(value);
     this.loadPros(value);
   }
@@ -36,14 +37,14 @@ export class SharedProsListOldComponent {
 
   constructor(private _searchService: SearchService) { }
 
-  loadPaginationConfig(config: any) {
+  loadPaginationConfig(config: Config) {
     this._paginationConfig = {
-      limit: config.limit || 10,
-      offset: config.offset || 0
+      limit: Number(config.limit) || 10,
+      offset: Number(config.offset) || 0
     };
   }
 
-  loadPros(config: any): void {
+  loadPros(config: Config): void {
     this._config = config;
     this._searchService.getPros(this._config, this.requestId).pipe(first()).subscribe((pros: any) => {
       this._pros = pros.persons;
@@ -58,7 +59,7 @@ export class SharedProsListOldComponent {
    */
   changePaginationConfig(value: any) {
     this._paginationConfig = value;
-    this._config.limit = value.limit
+    this._config.limit = value.limit;
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.loadPros(this._config);
@@ -75,7 +76,7 @@ export class SharedProsListOldComponent {
 
   updateSelection(event: any) {
     this.smartSelect = event;
-    const config = this._config;
+    const config: Config = this._config;
     config.offset = this.smartSelect.offset;
     config.limit = this.smartSelect.limit;
     this.selectedProsChange.emit({
@@ -105,6 +106,16 @@ export class SharedProsListOldComponent {
   get proKeywords(): Array<string> { return this._proKeywords; }
   get keywordsModal(): boolean { return this._keywordsModal; }
   set keywordsModal(value: boolean) { this._keywordsModal = value; }
-  get config() { return this._config; }
+  get config(): Config { return this._config; }
   get paginationConfig(): Pagination { return this._paginationConfig; }
+
+  get sortConfig(): string {
+    return this._config.sort;
+  }
+
+  set sortConfig(value: string) {
+    this._config.sort = value;
+    this.loadPros(this._config);
+  }
+
 }
