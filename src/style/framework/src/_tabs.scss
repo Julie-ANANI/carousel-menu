@@ -14,11 +14,9 @@
     padding: 0;
 
     a {
+      @include flex-centered();
       font-size: $font-size-md;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       margin: 0;
       padding: $unit-4;
       text-decoration: none;

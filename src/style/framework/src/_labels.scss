@@ -3,9 +3,7 @@
 
 .label {
   @include label-variant($light-color, inherit);
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  @include inline-flex-centered();
   text-align: center;
   font-weight: $font-weight-medium;
   font-size: $font-size-xs;

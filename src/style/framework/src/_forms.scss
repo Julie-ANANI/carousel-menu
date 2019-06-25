@@ -277,7 +277,7 @@ textarea.form-input {
 
   input {
 
-    &:checked + .form-icon {
+    &:checked + .form-icon, &.active + .form-icon {
 
       &::before {
         background: $bg-color-light none;
@@ -457,17 +457,19 @@ textarea.form-input {
 
   input {
 
-    &:checked  + .form-icon, &:active + .form-icon  {
+    &:checked  + .form-icon, &:active + .form-icon, &.active + .form-icon  {
       background: $form-success-color none;
       border-color: $form-success-color;
     }
 
-    &:not(:checked) + .form-icon {
+    &.disabled + .form-icon, &:disabled + .form-icon, &:not(:checked) + .form-icon {
       background: $bg-color-light none;
       border-color: $form-border-color;
     }
 
   }
+
+
 
 }
 
