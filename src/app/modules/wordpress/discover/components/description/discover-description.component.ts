@@ -79,7 +79,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _loadInnovation() {
 
-    if ((this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE') {
+    if (this._innovation && (this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE') {
       this._quizButtonDisplay = 'none';
     }
 
