@@ -71,23 +71,24 @@ export class CampaignFrontService {
       switch (searchKey) {
 
         case 'professional':
-          value = campaign.stats.nbPros;
+          value = campaign.stats.nbPros ? campaign.stats.nbPros : 0;
           break;
 
         case 'notReached':
-          value = Math.round(((campaign.stats.nbPros - campaign.stats.nbProsSent) / campaign.stats.nbPros) * 100);
+          value = campaign.stats.nbPros && campaign.stats.nbProsSent ? Math.round(((campaign.stats.nbPros - campaign.stats.nbProsSent) / campaign.stats.nbPros) * 100) : 0;
           break;
 
         case 'good':
-          value = Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100);
+          value = campaign.stats.campaign.nbFirstTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100) : 0;
           break;
 
         case 'unsure':
-          value = Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100);
+          value = campaign.stats.campaign.nbSecondTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100): 0;
           break;
 
         case 'bad':
-          value = Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100);
+          value = campaign.stats.nbPros && campaign.stats.campaign.nbFirstTierMails && campaign.stats.campaign.nbSecondTierMails ?
+            Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100) : 0;
           break;
 
         default:
@@ -112,31 +113,31 @@ export class CampaignFrontService {
       switch (searchKey) {
 
         case 'good_emails':
-          value = campaign.stats.campaign.nbFirstTierMails;
+          value = campaign.stats.campaign.nbFirstTierMails ? campaign.stats.campaign.nbFirstTierMails : 0;
           break;
 
         case 'received':
-          value = campaign.stats.nbProsSent;
+          value = campaign.stats.nbProsSent ? campaign.stats.nbProsSent : 0;
           break;
 
         case 'bounces':
-          value = campaign.stats.nbTotalMails - campaign.stats.nbProsSent;
+          value = campaign.stats.nbTotalMails && campaign.stats.nbProsSent? campaign.stats.nbTotalMails - campaign.stats.nbProsSent : 0;
           break;
 
         case 'opened':
-          value = Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsSent) * 100);
+          value = campaign.stats.nbProsOpened  && campaign.stats.nbProsSent ? Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsSent) * 100) : 0;
           break;
 
         case 'clicked':
-          value = Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsSent) * 100);
+          value = campaign.stats.nbProsClicked  && campaign.stats.nbProsSent ? Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsSent) * 100) : 0;
           break;
 
         case 'email':
-          value = campaign.stats.nbProsOpened;
+          value = campaign.stats.nbProsOpened ? campaign.stats.nbProsOpened : 0;
           break;
 
         case 'questionnaire':
-          value = campaign.stats.nbProsClicked;
+          value = campaign.stats.nbProsClicked ?  campaign.stats.nbProsClicked : 0;
           break;
 
       }
