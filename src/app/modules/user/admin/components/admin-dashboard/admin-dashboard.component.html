@@ -27,7 +27,7 @@
             [(ngModel)]="operatorId"
             (ngModelChange)="newOperatorSelected($event)">
             <option value="">{{ 'DASHBOARD.STATS.ALL_OPERATORS' | translate }}</option>
-            <option *ngFor="let operator of operators" [ngValue]="operator._id" [selected]="operatorId === operator._id">
+            <option *ngFor="let operator of operators" [ngValue]="operator?._id" [selected]="operatorId === operator?._id">
               {{ operator.firstName + ' ' + operator.lastName }}
             </option>
           </select>

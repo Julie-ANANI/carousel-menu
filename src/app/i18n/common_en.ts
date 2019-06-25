@@ -184,12 +184,9 @@ export const COMMON = {
     'CLOSE': 'Close',
     'DOWNLOAD': 'Download',
     'SHARE': 'Share',
-    'SEE_MORE': 'See more'
-  },
-
-  'TABLE' : {
-    'SELECTED_ROWS': 'row(s) selected',
-    'NO-RESULTS': 'Sorry, I can\'t display nothing'
+    'SEE_MORE': 'See more',
+    'EDIT': 'Edit',
+    'SHOW': 'Show',
   },
 
   'PROJECT': {

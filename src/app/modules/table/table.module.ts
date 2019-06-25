@@ -6,29 +6,29 @@ import { FormsModule } from '@angular/forms';
 
 import { TableComponent } from './components/table.component';
 
-import { SharedFilterMultiModule } from '../shared/components/shared-filter-multi/shared-filter-multi.module';
+import { SharedSearchMultiModule } from '../shared/components/shared-search-multi/shared-search-multi.module';
 import { SharedSortModule } from '../shared/components/shared-sort/shared-sort.module';
-import { PaginationTemplate1Module } from '../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { ProgressBarModule } from '../utility-components/progress-bar/progress-bar.module';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { CountryFlagModule } from '../utility-components/country-flag/country-flag.module';
 import { PipeModule } from '../../pipe/pipe.module';
 import { MessageSpaceModule } from '../utility-components/message-space/message-space.module';
+import { PaginationTemplate2Module } from '../utility-components/paginations/pagination-template-2/pagination-template-2.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SharedFilterMultiModule,
+    SharedSearchMultiModule,
     SharedSortModule,
     FormsModule,
     TranslateModule.forChild(),
-    PaginationTemplate1Module,
     PipeModule,
     ProgressBarModule,
     SharedLoaderModule,
     CountryFlagModule,
-    MessageSpaceModule
+    MessageSpaceModule,
+    PaginationTemplate2Module
   ],
   declarations: [
     TableComponent

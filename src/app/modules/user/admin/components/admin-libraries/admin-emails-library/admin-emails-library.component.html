@@ -7,8 +7,7 @@
   <ng-container *ngIf="emails.length > 0">
     <div class="section-light-pad rm-pad-bottom">
       <app-shared-table
-        [config]="config"
-        (configChange)="getEmails($event)"
+        [(config)]="config"
         [data]="tableInfos"
         (editRow)="editEmail($event)"
         (removeRows)="removeEmails($event)">

@@ -141,19 +141,18 @@ export class AdminCommunityMemberComponent implements OnInit {
       _title: 'emails',
       _content: [],
       _total: 0,
-      _isHeadable: true,
-      _isShowable: true,
+      _isTitle: true,
       _columns: [
         {
           _attrs: [''],
           _name: 'Emails',
-          _type: 'TEXT'
+          _type: 'TEXT',
+          _isSortable: true,
         },
         {
           _attrs: [''],
           _name: 'Open',
           _type: 'MULTI-CHOICES',
-          _isSortable: false,
           _choices: [
             {_name: '', _alias: '', _class: 'label label-alert'},
             {_name: '', _alias: '',  _class: 'label label-success'},
@@ -163,7 +162,6 @@ export class AdminCommunityMemberComponent implements OnInit {
           _attrs: [''],
           _name: 'Click',
           _type: 'MULTI-CHOICES',
-          _isSortable: false,
           _choices: [
             {_name: '', _alias: '', _class: 'label label-alert'},
             {_name: '', _alias: '',  _class: 'label label-success'},
@@ -180,8 +178,6 @@ export class AdminCommunityMemberComponent implements OnInit {
       _title: 'projects',
       _content: [],
       _total: 0,
-      _isHeadable: true,
-      _isShowable: true,
       _columns: [
         {
           _attrs: [''],
@@ -192,7 +188,6 @@ export class AdminCommunityMemberComponent implements OnInit {
           _attrs: ['', ''],
           _name: 'Feedback',
           _type: 'MULTI-LABEL',
-          _isSortable: false,
           _multiLabels: [
             {_attr: '', _class: 'label label-success'},
             {_attr: '', _class: 'label label-draft'}

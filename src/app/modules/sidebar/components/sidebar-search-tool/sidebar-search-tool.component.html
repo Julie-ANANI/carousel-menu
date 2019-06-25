@@ -26,9 +26,8 @@
 
     <!-- section table -->
     <app-shared-table
-      [config]="config"
+      [(config)]="config"
       [data]="tableInfos"
-      (configChange)="loadHistory($event)"
       (editRow)="onClickEdit($event)">
     </app-shared-table>
     <!-- /section table -->

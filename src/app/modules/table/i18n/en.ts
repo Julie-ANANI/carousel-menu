@@ -36,12 +36,20 @@ export const TABLE = {
   },
 
   'TITLE': {
-    'PROFESSIONALS': 'Professionals',
-    'USERS': 'Users',
+    'PROFESSIONALS': 'professionals',
+    'USERS': 'users',
     'PROJECTS': 'projects',
     'AMBASSADORS': 'ambassadors',
     'REQUESTS': 'requests',
     'RESULTS': 'results',
-  }
+  },
+
+  'MESSAGES': {
+    'FETCHING': 'Fetching results...',
+    'NO_RESULT': 'No results to show.',
+    'NO_RESULT_SEARCHING': 'No results to show. Try adjusting your search to find what you\'re looking for.'
+  },
+
+  'SELECTED_ROWS': 'selected',
 
 };

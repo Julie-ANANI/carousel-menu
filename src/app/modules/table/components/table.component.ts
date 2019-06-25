@@ -1,12 +1,13 @@
-import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import { PaginationInterface } from '../../utility-components/paginations/interfaces/pagination';
-import { countries } from "../../../models/static-data/country";
-import { isPlatformBrowser } from '@angular/common';
+import { countries } from '../../../models/static-data/country';
+import { Config } from '../../../models/config';
+import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
+import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-shared-table',
@@ -14,39 +15,29 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./table.component.scss']
 })
 
-/***
- * This generic class generates a table
- */
-export class TableComponent {
-
+export class TableComponent implements OnInit {
 
   /***
    * Input use to set the config for the tables linked with the back office
    * @param value
    */
-  @Input() set config(value: any) {
-    this.loadConfig(value);
+  @Input() set config(value: Config) {
+    this._config = value;
   }
-
 
   /***
    * Input use to set the data
    * @param {Table} value
    */
   @Input() set data(value: Table) {
-    this.loadData(value);
-    if (this._isLocal) {
-      this.changeLocalConfig();
-    }
+    this._loadData(value);
   }
-
 
   /***
    * Output call when the config change
-   * @type {EventEmitter<any>}
+   * @type {EventEmitter<Config>}
    */
-  @Output() configChange: EventEmitter<any> = new EventEmitter<any>();
-
+  @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
 
   /***
    * Output call when the user click on the edit button
@@ -55,14 +46,12 @@ export class TableComponent {
    */
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
 
-
   /***
    * Output call when the user click on the delete button
    * Send the list of selected rows
    * @type {EventEmitter<any>}
    */
   @Output() removeRows: EventEmitter<any> = new EventEmitter<any>();
-
 
   /***
    * Output call when the user click on one action
@@ -72,192 +61,243 @@ export class TableComponent {
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
   /***
-   * Output call when the user selects one row
+   * Output call when the user selects one row or
    * Send the list of selected rows
    * @type {EventEmitter<any>}
    */
-  @Output() selectRowAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selectRows: EventEmitter<any> = new EventEmitter<any>();
 
-  private _selector = '';
+  private _table: Table;
 
-  private _title = 'TABLE.TITLE.RESULTS';
+  private _isSearching: boolean;
 
-  private _isHeadable = false;
+  private _massSelection: boolean;
 
-  private _isSelectable = false;
+  private _config: Config;
 
-  private _isEditable = false;
+  private _pagination: Pagination;
 
-  private _isLocal = false;
+  private _isLoadingData: boolean;
 
-  private _isShowable = false;
+  private _filteredContent: Array<any> = [];
 
-  private _isDeletable = false;
+  constructor(private _translateService: TranslateService,
+              private _localStorageService: LocalStorageService) {
+    this._initializeTable();
+  }
 
-  private _isFiltrable = false;
-
-  private _isNotPaginable = false;
-
-  private _reloadColumns = false;
-
-  private _isNoTitle = false;
-
-  private _content: Row[] = [];
-
-  private _total = 0;
-
-  private _columns: Column[] = [];
-
-  private _actions: string[] = [];
-
-  private _filteredContent: Row[] = [];
-
-  private _config: any = null;
-
-  private _paginationConfig: PaginationInterface = {};
-
-  private _massSelection = false;
-
-  private _editIndex = 0;
-
-  fetchingResult = true;
-
-  constructor(@Inject(PLATFORM_ID) private _platformId: Object,
-              private _translateService: TranslateService) {}
-
+  ngOnInit(): void {
+  }
 
   /***
-   * This function load and initialise the data send by the user
-   * @param {Table} value
+   * this function is to initialize the table with default values.
+   * @private
    */
-  loadData(value: Table): void  {
-    if (value) {
-      this._title = value._title;
-
-      this._selector = value._selector;
-
-      this._content = [];
-      value._content.forEach(value1 => this._content.push({_isSelected: false, _content: value1}));
-
-      this._filteredContent = this._content;
-
-      this._isHeadable = value._isHeadable || false;
-      this._isNoTitle = value._isNoTitle || false;
-      this._isSelectable = value._isSelectable || false;
-      this._isEditable = value._isEditable || false;
-      this._isShowable = value._isShowable || false;
-      this._isDeletable = value._isDeletable || false;
-      this._isFiltrable = value._isFiltrable || false;
-      this._isNotPaginable = value._isNotPaginable || false;
-      this._reloadColumns = value._reloadColumns || false;
-      this._isLocal = value._isLocal || false;
-      this._editIndex = value._editIndex || 1;
-
-      this._total = value._total;
-
-      if (this._columns.length === 0 || this._reloadColumns) {
-        // Si on a plus de 10 colonnes, on ne prends que les 10 premières
-        value._columns.length > 10 ? this._columns = value._columns.slice(0, 10) : this._columns = value._columns;
-
-        this.initialiseColumns();
-      }
-
-      this._actions = value._actions || [];
+  private _initializeTable() {
+    this._table = {
+      _selector: '',
+      _title: 'TABLE.TITLE.RESULTS',
+      _total: -1,
+      _editIndex: 1,
+      _columns: [],
+      _content: [],
     }
   }
 
   /***
-   * This function initialise the values of a column
+   * This function load and initialise the data send by the user
+   * @param {Table} data
    */
-  initialiseColumns() {
-    this._columns.forEach((value1, index) => {
-      this._columns[index]._isSelected = false;
-      this._columns[index]._isHover = false;
+  private _loadData(data: Table): void  {
+
+    if (data) {
+      this._table = data;
+      this._initializeVariables();
+      this._checkLocalStorage();
+      this._setPagination(Number(this._config.offset));
+      this._checkSearching();
+
+      if (this._table._isLocal) {
+        this._getFilteredContent(data._content);
+      }
+
+      this._initializeColumns();
+      this._initializeContents();
+
+    }
+
+  }
+
+  private _initializeVariables() {
+    this._massSelection = false;
+    this._isSearching = false;
+    this._isLoadingData = false;
+  }
+
+  /***
+   * This function is to check the limit or we can say the parPage row which
+   * user has already activated according to that if the limit is not same to the
+   * config limit then we update the config limit and output the event, add call the
+   * api to fetch the data.
+   * @private
+   */
+  private _checkLocalStorage() {
+    const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
+
+    if (localStorage.toString(10) !== this._config.limit ) {
+      this._config.limit = localStorage.toString(10) ? localStorage.toString(10) : this._config.limit;
+
+      if (!this._table._isLocal) {
+        this._emitConfigChange();
+      }
+
+    }
+
+  }
+
+  /***
+   * This function is called when the content is local. We slice the
+   * rows passed to it based on the offset and parPage.
+   * @param rows
+   * @private
+   */
+  private _getFilteredContent(rows: Array<any>) {
+    this._pagination.parPage = Number(this._config.limit);
+
+    this._table._total = rows.length;
+
+    if (this._pagination.offset >= this._table._total) {
+      this._pagination.offset = 0;
+      this._pagination.currentPage = 1;
+    }
+
+    const startIndex = this._pagination.offset;
+    const endIndex = this._pagination.offset + this._pagination.parPage;
+
+    this._isSearching = this._isSearching && this._table._total === 0;
+
+    this._filteredContent = rows.slice(startIndex, endIndex);
+
+  }
+
+  /***
+   * This function sets the pagination value.
+   */
+  private _setPagination(offset: number) {
+    this._pagination = {
+      propertyName: this._table._selector,
+      offset: offset,
+      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
+      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
+      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
+    }
+  }
+
+  private _checkSearching() {
+    if (this._config.search.length > 2  && this._table._total === 0) {
+      this._isSearching = true;
+    }
+  }
+
+  /***
+   * This function initialise the values of a column.
+   */
+  private _initializeColumns() {
+    this._table._columns.forEach((value, index) => {
+      this._table._columns[index]._isSelected = false;
+      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ? this._table._columns[index]._isSearchable : false;
     });
   }
 
   /***
-   * This function affects the config send by the user to this._config
-   * @param value
+   * This function initialise the values of a content.
    */
-  loadConfig(value: any): void {
-    this._config = value;
-    this._paginationConfig = {
-      limit: value.limit || 10,
-      offset: value.offset || 0
-    };
-  }
-
-  /***
-   * This function is call when the user change the config
-   * If it's the config is local, we call this.changeLocalConfig() to directly make the changes
-   * If not, we emit the Output configChange
-   * @param value
-   */
-  changeConfig(value: any): void {
-    this._config = value;
-    this.fetchingResult = false;
-    if (!this._isLocal) {
-      this.configChange.emit(this._config);
+  private _initializeContents() {
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value, index) => {
+        this._filteredContent[index]._isSelected = false;
+      });
     } else {
-      Promise.resolve(null).then(() => this.changeLocalConfig());
+      this._table._content.forEach((value, index) => {
+        this._table._content[index]._isSelected = false;
+      });
     }
   }
 
   /***
-   * This function is call when the user change the paginations config
-   * It affects the values and call changeConfig
-   * @param value
+   * This function returns the number of selected rows
+   * @returns {number}
    */
-  changePaginationConfig(value: any) {
-    this._paginationConfig = value;
-    this._config.limit = value.limit;
-    this._config.offset = value.offset;
-    if (isPlatformBrowser(this._platformId)) {
-      window.scroll(0, 0);
+  private _getSelectedRowsNumber(): number {
+
+    if (this._massSelection) {
+
+      if (this._table._isLocal) {
+        return this._filteredContent.length;
+      } else {
+        return this._table._content.length;
+      }
+
+    } else {
+      return this.getSelectedRows().length;
     }
-    this.changeConfig(this._config);
-    this.selectAll(event);
+
   }
 
   /***
-   * This function reload the config when its change
-   * @requires local config
+   * This function allows to select all the rows
+   * @param event
    */
-  changeLocalConfig() {
-    this._filteredContent = this._content;
-    for (const key of Object.keys(this._config)) {
-      switch (key) {
-        case('limit') : {
-          break;
-        }
-        case('offset'): {
-          break;
-        }
-        case ('search'): {
-          for (const search of Object.keys(this._config['search'])) {
-            this.filterAttribute(search, true);
-          }
-          break;
-        }
-        case('sort'): {
-          for (const sortKey of Object.keys(this._config['sort'])) {
-            this.sortColumn(sortKey);
-          }
-          break;
-        } default : {
-          this.filterAttribute(key, false);
-          break;
-      }
-      }
+  public selectAll(event: Event): void  {
+    event.preventDefault();
+
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value) => {
+        value._isSelected = (event.target as HTMLInputElement).checked;
+      });
+    } else {
+      this._table._content.forEach((value) => {
+        value._isSelected = (event.target as HTMLInputElement).checked;
+      });
     }
 
-    this._total = this._filteredContent.length;
+    this._massSelection = (event.target as HTMLInputElement).checked;
+    this._onSelectRow();
 
-    if (!this._isNotPaginable) {
-      this._filteredContent = this._filteredContent.slice(this._config.offset, this._config.offset + Number(this._config.limit));
+  }
+
+  /***
+   * This function is called when the users either select the one row
+   * or select all on the basis of that we emit the selected rows to the
+   * parent component.
+   */
+  private _onSelectRow() {
+    if (this._massSelection) {
+      this.selectRows.emit({ _rows: this._getAllContent()});
+    } else {
+      this.selectRows.emit({ _rows: this._getSelectedRowsContent()});
     }
+  }
 
+  /***
+   * This function is called when the user changes the pagination or
+   * do the searching. It affects the values and emit
+   * the config changes to all related components.
+   */
+  private _emitConfigChange() {
+    this._isLoadingData = true;
+    this.configChange.emit(this._config);
+  }
+
+  /***
+   * This function returns the label of the button.
+   */
+  public getButtonLabel(): string {
+    if (this._table._editButtonLabel) {
+      return this._table._editButtonLabel;
+    } else {
+      return this._table._isEditable ? 'COMMON.BUTTON.EDIT' : 'COMMON.BUTTON.SHOW';
+    }
   }
 
   /***
@@ -265,47 +305,32 @@ export class TableComponent {
    * Emit the Output editRow
    * @param {Row} row
    */
-  edit(row: Row) {
-    this.editRow.emit(row._content);
+  public edit(row: Row) {
+    this.editRow.emit(row);
   }
 
   /***
    * This function is call when the user click on the delete button
    * Emit the Output removeRows
    */
-  removeSelectedRows() {
-   if (this._massSelection) {
-     const values: Array<object> = [];
-     this._content.forEach((content) => {
-       values.push(content._content);
-     });
-     this.removeRows.emit(values);
-   } else {
-     this.removeRows.emit(this.getSelectedRowsContent());
-   }
-  }
+  public removeSelectedRows() {
+    if (this._massSelection) {
+      this.removeRows.emit(this._getAllContent());
+    } else {
+      this.removeRows.emit(this._getSelectedRowsContent());
+    }
+}
 
   /***
    * This function is call when the user click on one of the actions button
    * Emit the Output performAction
    * @param {string} action
    */
-  onActionClick(action: string) {
+  public onActionClick(action: string) {
     if (this._massSelection) {
-      this.performAction.emit({_action: action, _rows: 'all'});
+      this.performAction.emit({_action: action, _rows: this._getAllContent()});
     } else {
-      this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
-    }
-  }
-
-  /**
-   * This function is called when the user selects one row. It will emit the selected rows
-   */
-  onSelectAction() {
-    if (this._massSelection) {
-      this.selectRowAction.emit({ _rows: 'all'});
-    } else {
-      this.selectRowAction.emit({ _rows: this.getSelectedRowsContent()});
+      this.performAction.emit({_action: action, _rows: this._getSelectedRowsContent()})
     }
   }
 
@@ -313,38 +338,59 @@ export class TableComponent {
    * This function returns the keys of the table
    * @returns {string[]}
    */
-  getRowsKeys(): string[] {
-    if (this._isLocal) {
+  public getRowsKeys(): Array<string> {
+    if (this._table._isLocal) {
       return Object.keys(this._filteredContent);
     } else {
-      return Object.keys(this._content);
+      return Object.keys(this._table._content);
     }
   }
 
   /***
-   * This function returns the content of the column basing on the rowKey and the column(s) attribute(s)
+   * This function returns the content of the column basing on the rowKey
+   * and the column(s) attribute(s)
    * @param {string} rowKey
    * @param {string} columnAttr
-   * @returns {any}
+   * @returns {string}
    */
-  getContentValue(rowKey: number, columnAttr: string): any  {
-    if (columnAttr.split('.').length > 1) {
-      let newColumnAttr = columnAttr.split('.');
-      let tmpContent = this._isLocal
-        ? this._filteredContent[rowKey]._content[newColumnAttr[0]]
-        : this._content[rowKey]._content[newColumnAttr[0]];
-      newColumnAttr = newColumnAttr.splice(1);
-      for (const i of newColumnAttr){
-        tmpContent = tmpContent ? tmpContent[i] : '-';
-      }
-      return tmpContent || '';
-    }else {
-      if (this._isLocal) {
-        return this._filteredContent[rowKey]._content[columnAttr] || '';
-      } else {
-        return this._content[rowKey]._content[columnAttr] || '';
-      }
+  public getContentValue(rowKey: string, columnAttr: string): any  {
+
+    const row: number = TableComponent._getRowKey(rowKey);
+    let contents: Array<any> = [];
+
+    if (this._table._isLocal) {
+      contents = this._filteredContent;
+    } else {
+      contents = this._table._content;
     }
+
+    if (contents.length > 0) {
+
+      if (columnAttr.split('.').length > 1) {
+        let newColumnAttr = columnAttr.split('.');
+
+        let tmpContent = contents[row] ? contents[row][newColumnAttr[0]] : '' ;
+
+        newColumnAttr = newColumnAttr.splice(1);
+
+        for (const i of newColumnAttr){
+          tmpContent = tmpContent ? tmpContent[i] : '-';
+        }
+
+        return tmpContent || '';
+
+      } else {
+
+        if (contents[row] && contents[row][columnAttr]) {
+          return contents[row][columnAttr];
+        }
+
+      }
+
+      return '';
+
+    }
+
   }
 
   /***
@@ -352,7 +398,7 @@ export class TableComponent {
    * @param {Column} column
    * @returns {types}
    */
-  getType(column: Column): types {
+  public getType(column: Column): types {
     return column._type;
   }
 
@@ -361,7 +407,7 @@ export class TableComponent {
    * @param {Column} column
    * @returns {string[]}
    */
-  getAttrs(column: Column) {
+  public getAttrs(column: Column) {
     return column._attrs;
   }
 
@@ -371,7 +417,7 @@ export class TableComponent {
    * @param {string} attr
    * @returns {number}
    */
-  getAttrIndex(column: Column, attr: string) {
+  public getAttrIndex(column: Column, attr: string) {
     return this.getAttrs(column).findIndex(value => value === attr);
   }
 
@@ -380,7 +426,7 @@ export class TableComponent {
    * @param {Column} column
    * @returns {string | undefined}
    */
-  getName(column: Column) {
+  public getName(column: Column) {
     return column._name;
   }
 
@@ -390,7 +436,7 @@ export class TableComponent {
    * @param {Column} column
    * @returns {Choice[]}
    */
-  getChoices(column: Column): Choice[] {
+  public static getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
@@ -401,16 +447,16 @@ export class TableComponent {
    * @param {string} name
    * @returns {Choice}
    */
-  getChoice(column: Column, name: string): Choice {
-    return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
+  public getChoice(column: Column, name: string): Choice {
+    return TableComponent.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
   }
 
   /***
    * This function return the alias of a choice that will be show to the user instead of the initial name
    * @param {Choice} choice
-   * @returns {any}
+   * @returns {string}
    */
-  getChoiceAlias(choice: Choice) {
+  public getChoiceAlias(choice: Choice): string {
     if (choice) {
       return choice._alias || choice._name;
     } else {
@@ -423,7 +469,7 @@ export class TableComponent {
    * @param {Choice} choice
    * @returns {string}
    */
-  getChoiceClass(choice: Choice): string {
+  public getChoiceClass(choice: Choice): string {
     return choice._class || '';
   }
 
@@ -432,7 +478,7 @@ export class TableComponent {
    * @param {Choice} choice
    * @returns {string}
    */
-  getUrl(choice: Choice): string {
+  public getUrl(choice: Choice): string {
     return choice._url || '';
   }
 
@@ -442,7 +488,7 @@ export class TableComponent {
    * @param {string} attr
    * @returns {MultiLabel | {}}
    */
-  getMultiLabel(column: Column, attr: string) {
+  public getMultiLabel(column: Column, attr: string) {
     return column._multiLabels.find(value => value._attr === attr) || {};
   }
 
@@ -450,7 +496,7 @@ export class TableComponent {
    * This function returns the class of one label of a multilabel
    * @param multiLabel
    */
-  getMultiLabelClass(multiLabel: any): string {
+  public getMultiLabelClass(multiLabel: any): string {
     return multiLabel._class;
   }
 
@@ -458,34 +504,23 @@ export class TableComponent {
    * This function returns all the selected rows
    * @returns {Row[]}
    */
-  getSelectedRows(): Row[] {
-    if (this._massSelection && this._total > this._content.length) {
-      return [];
+  public getSelectedRows(): Row[] {
+    if (this._table._isLocal) {
+      return this._filteredContent.filter((content) => content._isSelected === true );
     } else {
-      return this._content.filter(value => value._isSelected === true);
+      return this._table._content.filter((content) => content._isSelected === true );
     }
   }
 
-  /***
-   * This function returns the number of selected rows
-   * @returns {number}
-   */
-  getSelectedRowsNumber(): number {
-    if (this._massSelection) {
-      return this._content.length;
-      // return this._total;
-    } else {
-      return this.getSelectedRows().length;
-    }
-  }
+
 
   /***
    * This function returns the content of the selected rows
    * @returns {any[]}
    */
-  getSelectedRowsContent(): any[] {
+  private _getSelectedRowsContent(): any[] {
     const content: any[] = [];
-    this.getSelectedRows().forEach(value => content.push(value._content));
+    this.getSelectedRows().forEach(value => content.push(value));
     return content;
   }
 
@@ -493,11 +528,23 @@ export class TableComponent {
    * This function change the selected value of a row to the opposite
    * @param {string} key
    */
-  selectRow(key: number): void {
-    if (this._isSelectable) {
-      this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
-        : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
+  public selectRow(key: string): void {
+
+    const rowKey: number = TableComponent._getRowKey(key);
+
+    if (this._table._isSelectable) {
+
+      if (this._table._isLocal) {
+        this._filteredContent[rowKey]._isSelected = !(this._filteredContent[rowKey]._isSelected);
+      } else {
+        this._table._content[rowKey]._isSelected = !(this._table._content[rowKey]._isSelected);
+      }
+
+      this._massSelection = false;
     }
+
+    this._onSelectRow();
+
   }
 
   /***
@@ -505,23 +552,10 @@ export class TableComponent {
    * change the column selected value to true
    * @param {string} key
    */
-  selectColumn(key: string) {
-    this.initialiseColumns();
-    const index = this._columns.findIndex(value => value._attrs[0] === key);
-    this._columns[index]._isSelected = true;
-  }
-
-  /***
-   * This function allows to select all the rows
-   * @param e
-   */
-  selectAll(e: any): void  {
-    if (this._isLocal) {
-      this._filteredContent.forEach(value => { value._isSelected = e.target.checked; })
-    } else {
-      this._content.forEach(value => { value._isSelected = e.target.checked; });
-      this._massSelection = e.target.checked;
-    }
+  public selectColumn(key: string) {
+    this._initializeColumns();
+    const index = this._table._columns.findIndex(value => value._name === key);
+    this._table._columns[index]._isSelected = true;
   }
 
   /***
@@ -529,37 +563,8 @@ export class TableComponent {
    * @param content
    * @returns {boolean}
    */
-  isSelected(content: any): boolean {
-    return !!content && !!content._isSelected
-  }
-
-  /***
-   * This function returns if a column is already sort or not
-   * @param {Column} content
-   * @returns {boolean}
-   */
-  isSort(content: Column): boolean {
-    if (content !== null && this.config && this.config.sort !== null) {
-      return this._config.sort[this.getAttrs(content)[0]];
-    } else {
-      return false;
-    }
-  }
-
-  /***
-   * This function sort the content of the Table depending on one column
-   * @requires local config
-   * @param {string} key
-   */
-  sortColumn(key: string) {
-    if ((this._columns.find(value => value._attrs[0] === key))) {
-      const sortArray = this._filteredContent.slice();
-      this._filteredContent = sortArray.sort((a, b) => {
-        const valueA = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(a._content)), key).toString();
-        const valueB = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(b._content)), key).toString();
-        return this._config.sort[key] * (valueA.localeCompare(valueB));
-      });
-    }
+  public static isSelected(content: any): boolean {
+    return !!content && !!content._isSelected;
   }
 
   /***
@@ -567,34 +572,8 @@ export class TableComponent {
    * @param {Column} column
    * @returns {boolean}
    */
-  isSortable(column: Column) {
-    return column._isSortable === undefined ? true : column._isSortable;
-  }
-
-  /***
-   * This function filter the Table content basing on a column
-   * @param {string} key
-   * @param {boolean} isSearch
-   */
-  filterAttribute(key: string, isSearch: boolean) {
-    if ((this._columns.find(value => value._attrs[0] === key))) {
-      let word: RegExp = null;
-      if (isSearch) {
-        word = new RegExp(this._config.search[key], 'gi');
-      } else {
-        word = new RegExp(this._config[key], 'gi');
-      }
-
-      const columnToFilter = this._columns.find(value => value._attrs[0] === key);
-
-      this._filteredContent = this._filteredContent.filter((value, index) => {
-        if (columnToFilter._type === 'COUNTRY') {
-          return !this.getContentValue(index, key).flag.toLowerCase().search(word);
-        } else {
-          return !this.getContentValue(index, key).toLowerCase().search(word);
-        }
-      });
-    }
+  public isSortable(column: Column) {
+    return column._isSortable;
   }
 
   /***
@@ -602,7 +581,7 @@ export class TableComponent {
    * @param {number} length
    * @returns {string}
    */
-  getColor(length: number) {
+  public getColor(length: number): string {
     if (length < 34 && length >= 0) {
       return '#EA5858';
     } else if (length >= 34 && length < 67) {
@@ -612,103 +591,200 @@ export class TableComponent {
     }
   }
 
-  public flag2Name(isoCode: string): string {
+  public getCountryName(isoCode: string): string {
     if(isoCode) {
-      return countries[isoCode] || "Unknown";
+      return countries[isoCode] || "NA";
     } else {
-      return "Unknown";
+      return "NA";
     }
   }
 
-  get selector(): string {
-    return this._selector;
+  private static _getRowKey(key: string): number {
+    return parseInt(key, 10);
   }
 
-  get title(): string {
-    return this._title;
+  private _getAllContent(): Array<any> {
+    const rows: Array<any> = [];
+
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((content) => {
+        rows.push(content);
+      });
+    } else {
+      this._table._content.forEach((content) => {
+        rows.push(content);
+      });
+    }
+
+    return rows;
   }
 
-  get isHeadable(): boolean {
-    return this._isHeadable;
+  /***
+   * When changing the pagination we check if we have activated the
+   * search or not.
+   * @private
+   */
+  private _setFilteredContent() {
+
+    if (this._localStorageService.getItem('table-search') === 'active') {
+      this._isSearching = true;
+
+      for (const configKey of Object.keys(this._config)) {
+        this._getFilteredContent(this._searchLocally(configKey));
+      }
+    } else {
+      this._getFilteredContent(this._table._content);
+    }
+
   }
 
-  get isSelectable(): boolean {
-    return this._isSelectable;
-  }
-
-  get isEditable(): boolean {
-    return this._isEditable;
-  }
-
-  get isNoTitle(): boolean {
-    return this._isNoTitle;
-  }
-
-  get isLocal(): boolean {
-    return this._isLocal;
-  }
-
-  get isShowable(): boolean {
-    return this._isShowable;
-  }
-
-  get isDeletable(): boolean {
-    return this._isDeletable;
-  }
-
-  get isFiltrable(): boolean {
-    return this._isFiltrable;
-  }
-
-  get isNotPaginable(): boolean {
-    return this._isNotPaginable;
-  }
-
-  get content(): Row[] {
-    return this._content;
-  }
-
-  get columns(): Column[] {
-    return this._columns;
-  }
-
-  get total(): number {
-    return this._total;
-  }
-
-  get config(): any {
-    return this._config;
-  }
-
-  get actions(): string[] {
-    return this._actions;
+  get table(): Table {
+    return this._table;
   }
 
   get selectedRows(): number {
-    return this.getSelectedRowsNumber();
+    return this._getSelectedRowsNumber();
+  }
+
+  get sortConfig(): string {
+    return this._config.sort;
+  }
+
+  set sortConfig(value: string) {
+    this._config.sort = value;
+
+    if (!this._table._isLocal) {
+      this._emitConfigChange();
+    }
+
+  }
+
+  get pagination(): Pagination {
+    return this._pagination;
+  }
+
+  set pagination(value: Pagination) {
+    this._pagination = value;
+    this._config.limit = this._pagination.parPage.toString(10);
+    this._config.offset = this._pagination.offset.toString(10);
+
+    if (this._table._isLocal) {
+      this._setFilteredContent();
+    } else {
+      this._emitConfigChange();
+    }
+
+  }
+
+  private _searchLocally(configKey: string): Array<any> {
+
+    let rows: Array<any> = [];
+
+    if (this._table._columns.find((column) => column._attrs[0] === configKey) || this._config.search.length > 2) {
+
+      if (this._config.search.length > 2) {
+        for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
+          const searchValue = JSON.parse(this._config.search)[searchKey];
+          rows = this._searchContent(this._table._content, searchKey, searchValue.toString().toLowerCase());
+        }
+      }
+
+      if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
+        rows = rows.length > 0 || this._config.search.length > 2 ? rows : this._table._content;
+        const searchValue = this._config[configKey];
+        rows = this._searchContent(rows, configKey, searchValue.toLowerCase());
+      }
+
+      this._localStorageService.setItem('table-search', 'active');
+
+    } else {
+      rows = this._table._content;
+      this._localStorageService.setItem('table-search', '');
+    }
+
+    return rows;
+
+  }
+
+  private _searchContent(totalContents: Array<any>, searchKey: string, searchValue: string): Array<any> {
+    return totalContents.filter((content) => {
+
+      if (searchKey === 'country') {
+        searchKey = 'country.flag';
+      }
+
+      for (const contentKey of Object.keys(content)) {
+
+        if (searchKey.split('.').length > 1) {
+          let newAttr = searchKey.split('.');
+
+          if (contentKey === newAttr[0] ) {
+            let tmpContent = content[newAttr[0]];
+            newAttr = newAttr.splice(1);
+
+            for (const i of newAttr){
+              tmpContent = tmpContent ? tmpContent[i] : '-';
+            }
+
+            if (tmpContent.toString().toLowerCase().includes(searchValue)) {
+              return true;
+            }
+
+          }
+
+        } else if (contentKey === searchKey && content[searchKey] && content[searchKey].toString().toLowerCase().includes(searchValue)) {
+          return true;
+        }
+
+      }
+
+      return false;
+
+    });
+  }
+
+  get searchConfig(): Config {
+    return this._config;
+  }
+
+  set searchConfig(value: Config) {
+    this._config = value;
+
+    if (this._table._isLocal) {
+      this._localStorageService.setItem('table-search', 'active');
+      this._setFilteredContent();
+    } else {
+      this._emitConfigChange();
+    }
+
+  }
+
+  get config(): Config {
+    return this._config;
   }
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
-  get filteredContent(): Row[] {
-    return this._filteredContent;
-  }
-
-  get paginationConfig(): PaginationInterface {
-    return this._paginationConfig;
-  }
-
-  set content(value: Row[]) {
-    this._content = value;
-  }
-
-  get lang(): string {
+  get userLang(): string {
     return this._translateService.currentLang;
   }
 
-  get editIndex(): number {
-    return this._editIndex;
+  get massSelection(): boolean {
+    return this._massSelection;
   }
+
+  get isSearching(): boolean {
+    return this._isSearching;
+  }
+
+  get isLoadingData(): boolean {
+    return this._isLoadingData;
+  }
+
+  get filteredContent(): Array<any> {
+    return this._filteredContent;
+  }
+
 }

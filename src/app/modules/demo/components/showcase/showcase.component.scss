@@ -73,20 +73,25 @@
     .answer-wrapper {
       flex: 1;
       max-width: 400px;
-      margin-right: 1.25rem;
+      margin-right: 0.5rem;
     }
 
     .innovation-wrapper {
       flex: 2;
       max-width: 800px;
+      margin: 0 0.5rem;
     }
 
-    .map-wrapper, .client-wrapper {
+    .client-wrapper {
       flex: 1;
-      max-width: 1225px;
+      max-width: 400px;
+      margin-left: 0.5rem;
     }
 
     .map-wrapper {
+
+      flex: 1;
+      max-width: 1600px;
 
       h2, h3 {
         margin-bottom: 0.25rem;
@@ -103,10 +108,6 @@
 
       }
 
-    }
-
-    .client-wrapper {
-      min-height: 220px;
     }
 
   }
@@ -170,8 +171,8 @@
     .section-wrapper {
       flex-direction: column;
 
-      .answer-wrapper {
-        margin-right: 0 !important;
+      .answer-wrapper, .innovation-wrapper, .client-wrapper {
+        margin-left: 0 !important;
         margin-bottom: 1.25rem;
       }
 

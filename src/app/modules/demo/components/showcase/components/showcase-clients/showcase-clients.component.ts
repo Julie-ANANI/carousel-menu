@@ -83,12 +83,13 @@ export class ShowcaseClientsComponent {
 
   public onChangeClient(event: Event, client: Clearbit): void {
     event.preventDefault();
-    this._selectedClients[client.name] = (event.target as HTMLInputElement).checked;
+    this._selectedClients[client.name] = !this._selectedClients[client.name];
   }
 
   public onClickApply(event: Event): void {
     event.preventDefault();
     this._slides = this.getSlides(this._totalClients.filter((client) => this._selectedClients[client.name]));
+    this._modalShow = false;
   }
 
   public onClickNav(event: Event, index: number): void {

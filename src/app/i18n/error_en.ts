@@ -114,15 +114,8 @@ export const ERROR = {
   'NO_RESULT': {
     'HEADING': 'Something wrong here...',
     'MESSAGE': {
-      'A': 'Sorry, we couldn\'t find any results (as you can see)',
-      'B': 'try again with some different keywords.'
-    }
-  },
-
-  'FETCHING_RESULT': {
-    'MESSAGE': {
-      'A': 'We are fetching the results, please',
-      'B': 'have a patience!'
+      'A': '',
+      'B': ''
     }
   },
 

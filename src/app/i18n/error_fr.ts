@@ -111,20 +111,6 @@ export const ERROR = {
     'CREATED': 'Le quiz a été créé.'
   },
 
-  'NO_RESULT': {
-    'HEADING': 'Quelque chose ne va pas ici..',
-    'MESSAGE': {
-      'A': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir),',
-      'B': 'essayez à nouveau avec des mots-clés différents.'
-    }
-  },
-
-  'FETCHING_RESULT': {
-    'MESSAGE': {
-      'A': 'Nous allons chercher les résultats, s\'il vous plaît soyez patient !',
-      'B': 's\'il vous plaît soyez patient !'
-    }
-  },
 
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',

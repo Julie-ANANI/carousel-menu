@@ -64,13 +64,11 @@
 
   <div class="section-card d-flex text-center">
     <ng-container *ngFor="let client of totalClients">
-      <div class="card flex-centered modal-card badge badge-save" [ngClass]="{ 'active': selectedClients[client.name] }">
+      <div class="card flex-centered modal-card badge badge-save"
+           (click)="onChangeClient($event, client)"
+           [ngClass]="{ 'active': selectedClients[client.name] }">
 
         <i class="fas fa-check-circle"></i>
-
-        <label class="absolute">
-          <input type="checkbox" (change)="onChangeClient($event, client)" [checked]="selectedClients[client.name]">
-        </label>
 
         <div class="card-header">
           <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">

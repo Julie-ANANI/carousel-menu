@@ -8,7 +8,7 @@ import { SharedSearchHistoryComponent} from './shared-search-history.component';
 
 import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
 import { PaginationTemplate1Module } from '../../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
-import { SharedFilterMultiModule } from '../shared-filter-multi/shared-filter-multi.module';
+import { SharedSearchMultiModule } from '../shared-search-multi/shared-search-multi.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
     SharedFilterInputModule,
     TranslateModule.forChild(),
     PaginationTemplate1Module,
-    SharedFilterMultiModule,
+    SharedSearchMultiModule,
     CountryFlagModule
   ],
   declarations: [

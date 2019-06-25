@@ -86,6 +86,22 @@
 }
 
 
+// Ghost button variant
+@mixin ghost-button-no-hover-variant($color: $primary-color) {
+  color: $color;
+  background-color: transparent;
+  border-color: $color;
+  border-width: $border-width-lg;
+
+  &:focus, &:active, &.active, &:hover {
+    color: $color;
+    border-color: $color;
+    border-width: $border-width-lg;
+  }
+
+}
+
+
 // Button ghost background variant
 @mixin button-ghost-background-variant($color: $primary-color) {
   color: $color;

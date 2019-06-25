@@ -3,9 +3,10 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { Innovation } from '../../../../../models/innovation';
-import {Table} from '../../../../table/models/table';
-import {FrontendService} from '../../../../../services/frontend/frontend.service';
+import { Table } from '../../../../table/models/table';
+import { FrontendService } from '../../../../../services/frontend/frontend.service';
 import { first } from 'rxjs/operators';
+import {Config} from '../../../../../models/config';
 
 @Component({
   selector: 'app-admin-projects-list',
@@ -13,15 +14,20 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./admin-projects-list.component.scss']
 })
 export class AdminProjectsListComponent implements OnInit, OnDestroy {
+
   @Input() operatorId: string; // Filtrer les résultats pour un utilisateur en particulier
+
   @Input() refreshNeededEmitter: Subject<any>;
 
   private _projects: Array<Innovation> = [];
-  public selectedProjectIdToBeDeleted: any = null;
-  private _tableInfos: Table = null;
-  private _total = 0;
-  private _config: any;
 
+  public selectedProjectIdToBeDeleted: any = null;
+
+  private _tableInfos: Table;
+
+  private _total: number;
+
+  private _config: Config;
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
@@ -49,12 +55,10 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this._projects = [];
     this._config = {
       fields: '',
-      limit: 10,
-      offset: 0,
-      search: {},
-      sort: {
-        created: -1
-      }
+      limit: '10',
+      offset: '0',
+      search: '{}',
+      sort: '{"created":-1}'
     };
     if (this.operatorId && this.operatorId !== '') {
       this._config.operator = this.operatorId;
@@ -70,7 +74,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   };
 
-  loadProjects(config?: any): void {
+  loadProjects(config?: Config): void {
+
     if (config) {
       this._config = config;
     }
@@ -94,20 +99,24 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
           _title: 'COMMON.PROJECTS',
           _content: this._projects,
           _total: this._total,
-          _isShowable: true,
-          _isFiltrable: true,
-          _isHeadable: true,
+          _editIndex: 1,
+          _isSearchable: true,
+          _isPaginable: true,
+          _isTitle: true,
           _columns: [
-            {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT'},
-            {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-CHOICES',
+            {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+            {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-IMAGE-CHOICES', _imgHeight: '20px', _isSearchable: true, _maxWidth: '150px',
               _choices: [
                 {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg'},
                 {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg'},
                 {_name: 'leads', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg'}
-              ]},
-            {_attrs: ['percentages.preparation'], _name: 'Preparation', _type: 'PROGRESS'},
-            {_attrs: ['percentages.campaign'], _name: 'PROJECT.CAMPAIGN.CAMPAIGN', _type: 'PROGRESS'},
-            {_attrs: ['percentages.delivery'], _name: 'PROJECT.DELIVERY.DELIVERY', _type: 'PROGRESS'},
+              ]
+            },
+            {_attrs: ['percentages.preparation'], _name: 'Preparation', _type: 'PROGRESS', _enableTooltip: true},
+            {_attrs: ['percentages.campaign'], _name: 'PROJECT.CAMPAIGN.CAMPAIGN', _type: 'PROGRESS', _enableTooltip: true},
+            {_attrs: ['percentages.delivery'], _name: 'PROJECT.DELIVERY.DELIVERY', _type: 'PROGRESS', _enableTooltip: true},
+            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
+            {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true}
           ]
         };
       });
@@ -145,10 +154,21 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  set config(value: any) { this._config = value; }
-  get config() { return this._config; }
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    this.loadProjects(this._config);
+  }
+
   get total () { return this._total; }
+
   get projects () { return this._projects; }
+
   get tableInfos(): Table { return this._tableInfos; }
+
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
+
 }
