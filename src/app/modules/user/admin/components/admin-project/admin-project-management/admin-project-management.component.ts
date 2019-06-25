@@ -125,7 +125,7 @@ export class AdminProjectManagementComponent implements OnInit {
             {name: 'schneider'},
             {name: 'bnpparibas'}];
 
-    this._domain = this._project.settings.domain;
+    this._domain = this._project.settings && this._project.settings.domain ? this._project.settings.domain : '';
 
     this.offers = [{name: 'insights', alias: 'GetInsights'}, {name: 'apps', alias: 'GetApps'}, {name: 'leads', alias: 'GetLeads'}];
 
