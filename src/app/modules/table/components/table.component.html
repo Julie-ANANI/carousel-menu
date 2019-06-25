@@ -168,9 +168,9 @@
                 <!-- button -->
                 <div *ngIf="i === table._editIndex - 1" class="tbody-td-action-button">
                   <button
-                    (click)="edit(table._content[row])"
-                    type="button"
-                    class="btn btn-xs ghost-edit">
+                    (click)="table._isLocal ? edit(filteredContent[row]) : edit(table._content[row])"
+                    class="btn btn-xs ghost-edit"
+                    type="button">
                     {{ getButtonLabel() | translate }}
                   </button>
                 </div>

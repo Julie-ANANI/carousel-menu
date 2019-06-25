@@ -26,7 +26,9 @@
 
 ####_buttons:  
 1. <b>_icon:</b> set the icon.
-2. <b>_label:</b> set the label. 
+2. <b>_label*:</b> set the label. 
+
+***Compulsory**
 
 <hr>
 
