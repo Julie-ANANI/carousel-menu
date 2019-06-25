@@ -79,15 +79,15 @@ export class CampaignFrontService {
           break;
 
         case 'good':
-          value = campaign.stats.campaign.nbFirstTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100) : 0;
+          value = campaign.stats.campaign && campaign.stats.campaign.nbFirstTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100) : 0;
           break;
 
         case 'unsure':
-          value = campaign.stats.campaign.nbSecondTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100): 0;
+          value = campaign.stats.campaign && campaign.stats.campaign.nbSecondTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100): 0;
           break;
 
         case 'bad':
-          value = campaign.stats.nbPros && campaign.stats.campaign.nbFirstTierMails && campaign.stats.campaign.nbSecondTierMails ?
+          value = campaign.stats.nbPros && campaign.stats.campaign && campaign.stats.campaign.nbFirstTierMails && campaign.stats.campaign.nbSecondTierMails ?
             Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100) : 0;
           break;
 
