@@ -1,4 +1,4 @@
- <section class="section-pad rm-pad-top" id="project-component">
+ <section *ngIf="innovation" class="section-pad rm-pad-top" id="project-component">
 
     <!-- header section -->
     <div class="header header-hero">
@@ -6,8 +6,8 @@
 
         <!-- heading -->
         <h1 class="title-hero">
-          <ng-container *ngIf="innovation && innovation.name">{{ innovation.name | FormatText }}</ng-container>
-          <ng-container *ngIf="!innovation && !innovation.name">Project</ng-container>
+          <ng-container *ngIf="innovation.name">{{ innovation.name | FormatText }}</ng-container>
+          <ng-container *ngIf="!innovation.name">Project</ng-container>
         </h1>
 
         <!-- info -->
@@ -72,13 +72,13 @@
 </section>
 
 
-  <!-- collaborator sidebar -->
-  <app-sidebar [(template)]="sidebarValue">
-    <app-collaborator
-      [sidebarState]="sidebarValue.animate_state"
-      [project]="innovation"
-      (collaboratorAdded)="addCollaborators($event)">
-    </app-collaborator>
-  </app-sidebar>
-  <!-- /collaborator sidebar -->
+<!-- collaborator sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-collaborator
+    [sidebarState]="sidebarValue.animate_state"
+    [project]="innovation"
+    (collaboratorAdded)="addCollaborators($event)">
+  </app-collaborator>
+</app-sidebar>
+<!-- /collaborator sidebar -->
 
