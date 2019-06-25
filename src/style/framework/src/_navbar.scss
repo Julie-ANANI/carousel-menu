@@ -10,9 +10,7 @@
   position: relative;
 
   .mobile-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    @include inline-flex-centered();
     height: 75px;
     margin: 0;
     font-size: $font-size-md;
@@ -27,10 +25,8 @@
   }
 
   .logo {
+    @include inline-flex-centered();
     height: 75px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .navigation-wrapper, .sidebar-navigation-wrapper {
@@ -45,9 +41,7 @@
       list-style: none;
 
       .menu-item, .sidebar-menu-item {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        @include inline-flex-centered();
         height: 75px;
         margin: 0;
         padding: 0 $unit-3;

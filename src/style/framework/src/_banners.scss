@@ -1,15 +1,14 @@
 @import "variables";
+@import "mixins";
 
 .banner {
+  @include flex-centered();
   background-color: $primary-color;
   color: $light-color;
   font-weight: $font-weight-medium;
   font-size: 0.75rem;
   padding: $unit-4;
   margin: 0;
-  justify-content: center;
-  align-items: center;
-  display: flex;
   box-shadow: $box-shadow;
 
   .text-link {

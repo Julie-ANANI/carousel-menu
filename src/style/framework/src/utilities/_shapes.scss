@@ -2,15 +2,13 @@
 @import "../mixins";
 
 .shape {
+  @include inline-flex-centered();
   @include control-transition();
-  display: inline-flex;
   cursor: default;
   text-align: center;
-  justify-content: center;
   background-color: $background-color;
   color: $light-color;
   font-weight: $font-weight-medium;
-  align-items: center;
   font-size: $font-size-sm;
   line-height: $line-height-sm;
   margin-right: $unit-2;
