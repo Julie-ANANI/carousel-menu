@@ -21,7 +21,7 @@ export class AdminProjectCardsComponent implements OnInit {
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService) {
 
-    this.project = this.activatedRoute.snapshot.parent.data['innovation']._id;
+    this.project = this.activatedRoute.snapshot.parent.data['innovation'];
 
   }
 
