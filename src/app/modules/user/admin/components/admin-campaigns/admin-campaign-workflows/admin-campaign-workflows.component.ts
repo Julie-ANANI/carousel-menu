@@ -164,7 +164,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       this.notificationsService.success("ERROR.SUCCESS", message);
       this.generateModifiedScenarios();
     }, (err: any) => {
-      this.notificationsService.error('ERROR', err);
+      this.notificationsService.error('ERROR', err.message);
     });
   }
 
