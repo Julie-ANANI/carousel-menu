@@ -107,7 +107,7 @@ export class AdminDashboardComponent implements OnInit {
     this.searchService
       .getEmailStats(this.nbDaysOfStats)
       .subscribe((stats: any) => {
-        const totalMails = (stats.total && stats.total.domainNotFound ? stats.total.domainNotFound : 0 ) + stats.total.found + stats.total.notFound + stats.total.timeOut;
+        const totalMails = stats.total && stats.total.domainNotFound && stats.total.found && stats.total.timeOut ? stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut : 'NA';
         this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
         this.statistics.percentFoundPros = 'NA';
         this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
