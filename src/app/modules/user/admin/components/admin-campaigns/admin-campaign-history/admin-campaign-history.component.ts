@@ -12,11 +12,17 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
   private _campaign: Campaign;
 
-  constructor(private _activatedRoute: ActivatedRoute) { }
+  constructor(private _activatedRoute: ActivatedRoute) {
 
-  ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+
   }
 
-  get campaignId(): string { return this._campaign._id; }
+  ngOnInit() {
+  }
+
+  get campaignId(): string {
+    return this._campaign && this._campaign._id ? this._campaign._id : '';
+  }
+
 }
