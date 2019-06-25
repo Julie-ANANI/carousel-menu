@@ -4,12 +4,12 @@
   <thead>
     <tr>
       <th></th>
-      <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPros($event)" [property]="'country'">{{ 'COMMON.LABEL.COUNTRY' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPros($event)" [property]="'firstName'" >{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPros($event)" [property]="'jobTitle'">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</app-shared-sort></th>
-      <th *ngIf="requestId"><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPros($event)" [property]="'company.name'">{{ 'COMMON.LABEL.COMPANY' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPros($event)" [property]="'email'">{{ 'COMMON.LABEL.EMAIL' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [sortConfig]="config" (sortConfigChange)="loadPros($event)" [property]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'country'">{{ 'COMMON.LABEL.COUNTRY' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'firstName'" >{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'jobTitle'">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</app-shared-sort></th>
+      <th *ngIf="requestId"><app-shared-sort [(sortConfig)]="sortConfig" [property]="'company.name'">{{ 'COMMON.LABEL.COMPANY' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'email'">{{ 'COMMON.LABEL.EMAIL' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</app-shared-sort></th>
     </tr>
     <tr>
       <th></th>

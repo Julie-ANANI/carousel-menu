@@ -108,8 +108,6 @@ export class SharedProsListComponent {
 
         this._total = pros._metadata.totalCount;
 
-        console.log(pros.result);
-
         this._tableInfos = {
           _selector: 'admin-pros',
           _title: 'TABLE.TITLE.PROFESSIONALS',
