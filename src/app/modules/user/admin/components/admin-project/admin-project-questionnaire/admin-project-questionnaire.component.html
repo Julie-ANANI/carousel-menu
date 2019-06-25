@@ -1,7 +1,7 @@
 <div class="container">
   <div class="columns">
 
-    <div class="column col-11 col-mx-auto" *ngIf="!innovation.preset">
+    <div class="column col-11 col-mx-auto" *ngIf="project && !project.preset">
       <div class="bot-wrapper text-center">
         <span class="bot-rect">Importez d'abord un questionnaire dans l'onglet Settings avant de pouvoir le modifier.</span>
         <br>
@@ -10,9 +10,9 @@
       </div>
     </div>
 
-    <div class="column col-11 col-mx-auto" *ngIf="innovation.preset">
+    <div class="column col-11 col-mx-auto" *ngIf="project && project.preset">
       <app-shared-preset
-        [preset]="innovation.preset"
+        [preset]="project.preset"
         (save)="savePreset($event)">
       </app-shared-preset>
     </div>

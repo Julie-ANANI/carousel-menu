@@ -138,7 +138,7 @@ export class SharedMarketReportComponent implements OnInit {
      * @type {boolean | undefined}
      * @user
      */
-    this._previewMode = !!this._innovation.previewMode;
+    this._previewMode = this._innovation.previewMode ? this._innovation.previewMode : false;
 
 
     /***

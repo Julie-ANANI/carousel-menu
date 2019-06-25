@@ -5,7 +5,10 @@
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- heading -->
-        <h1 class="title-hero">{{ innovation.name | FormatText }}</h1>
+        <h1 class="title-hero">
+          <ng-container *ngIf="innovation && innovation.name">{{ innovation.name | FormatText }}</ng-container>
+          <ng-container *ngIf="!innovation && !innovation.name">Project</ng-container>
+        </h1>
 
         <!-- info -->
         <div class="info-wrapper">

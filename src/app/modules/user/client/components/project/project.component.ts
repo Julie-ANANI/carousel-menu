@@ -38,6 +38,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     this._innovation = this.activatedRoute.snapshot.data.innovation;
 
+    this.translateTitleService.setTitle(this._innovation.name || 'Project');
+
     this.innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       this._saveChanges = !!response;
     });
@@ -45,7 +47,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translateTitleService.setTitle(this._innovation.name || 'Project');
     this.getPage();
     this.loadOfferType();
 

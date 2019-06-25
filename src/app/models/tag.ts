@@ -6,7 +6,7 @@ import { TagAttachment } from './tag-attachment';
  */
 export interface Tag {
   _id?: string;
-  readonly originalTagId?: string;
+  originalTagId?: string;
   readonly originalLabel?: Multiling;
   readonly label: Multiling;
   readonly description?: Multiling;
