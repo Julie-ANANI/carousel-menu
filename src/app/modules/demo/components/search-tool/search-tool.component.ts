@@ -120,7 +120,7 @@ export class SearchToolComponent {
       });
 
       setTimeout(() => {
-        this._totalProfessional(this._searchResult.metadata.world);
+        this._totalProfessional(this._searchResult.metadata && this._searchResult.metadata.world ? this._searchResult.metadata.world : 0);
       }, 2005);
     }
   }
