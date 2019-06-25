@@ -21,7 +21,7 @@
         <select class="form-select"
                 name="setDomain"
                 id="setDomain"
-                [ngModel]="project.domain"
+                [ngModel]="project.domain ? project.domain : 'umi'"
                 (ngModelChange)="changeProjectDomain($event)"
                 [ngModelOptions]="{standalone: true}">
           <option *ngFor="let d of projectDomains" [ngValue]="d.name">{{d.name}}</option>
@@ -50,7 +50,7 @@
                 (ngModelChange)="changeProjectOperator($event)"
                 [ngModelOptions]="{standalone: true}">
           <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
-          <option *ngFor="let op of operators" [ngValue]="op._id">
+          <option *ngFor="let op of operators" [ngValue]="op.id">
             {{op.firstName + ' ' + op.lastName}}
           </option>
         </select>
