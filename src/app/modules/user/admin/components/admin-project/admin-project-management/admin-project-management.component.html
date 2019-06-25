@@ -21,7 +21,7 @@
         <select class="form-select"
                 name="setDomain"
                 id="setDomain"
-                [ngModel]="project.domain ? project.domain : ''"
+                [ngModel]="project && project.domain ? project.domain : ''"
                 (ngModelChange)="changeProjectDomain($event)"
                 [ngModelOptions]="{standalone: true}">
           <option *ngFor="let d of projectDomains" [ngValue]="d.name">{{d.name}}</option>

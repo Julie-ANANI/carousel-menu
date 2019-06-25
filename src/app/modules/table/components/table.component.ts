@@ -142,18 +142,30 @@ export class TableComponent implements OnInit {
    * @private
    */
   private _checkLocalStorage() {
-    const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
 
-    if (localStorage.toString(10) !== this._config.limit ) {
-      this._config.limit = localStorage.toString(10) ? localStorage.toString(10) : this._config.limit;
+    if (this._localStorageService.getItem(`${this._table._selector}-limit`)) {
+      const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
 
-      if (!this._table._isLocal) {
-        this._emitConfigChange();
+      if (localStorage.toString(10) !== this._config.limit) {
+        this._config.limit = localStorage.toString(10) ? localStorage.toString(10) : this._config.limit;
+        this._setLocalStorage();
+
+        if (!this._table._isLocal) {
+          this._emitConfigChange();
+        }
+
       }
 
+    } else {
+      this._setLocalStorage();
     }
 
   }
+
+  private _setLocalStorage() {
+    this._localStorageService.setItem(`${this._table._selector}-limit`, JSON.stringify(this._config.limit));
+  }
+
 
   /***
    * This function is called when the content is local. We slice the
