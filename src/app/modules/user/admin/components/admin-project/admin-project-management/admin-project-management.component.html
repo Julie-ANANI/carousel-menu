@@ -81,8 +81,8 @@
             (click)="onSuggestUsers()">
           <ul
             *ngIf="formData.get('owner').value"
-            class="suggestion"
-            [ngStyle]="{ 'display': displayUserSuggestion ? 'block' : 'none' }">
+            class="input-suggestion"
+            [ngStyle]="{ 'display': displayUserSuggestion ? 'flex' : 'none', 'width': '220px' }">
             <li *ngFor="let suggestion of usersSuggestion" (click)="onValueSelect(suggestion)">
               <a><span>{{ suggestion.name }}</span></a>
             </li>
