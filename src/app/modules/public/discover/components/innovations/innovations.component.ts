@@ -66,10 +66,6 @@ export class InnovationsComponent implements OnInit {
       }
     });
 
-    this._getLatestInnovations();
-
-    this._getTrendingInnovations();
-
     this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
 
     this._userAuthenticated = this._authService.isAuthenticated;
@@ -77,6 +73,8 @@ export class InnovationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._getLatestInnovations();
+    this._getTrendingInnovations();
     this._getAllSectorTags();
   }
 
@@ -102,7 +100,7 @@ export class InnovationsComponent implements OnInit {
    * @private
    */
   private _getLatestInnovations() {
-    this._latestInnovations = this._totalInnovations.slice(0, 4);
+    this._latestInnovations = this._totalInnovations && this._totalInnovations.length > 0 ? this._totalInnovations.slice(0, 4) : [];
   }
 
 
@@ -112,7 +110,7 @@ export class InnovationsComponent implements OnInit {
    * @private
    */
   private _getTrendingInnovations() {
-    this._trendingInnovations = this._totalInnovations.slice(4);
+    this._trendingInnovations = this._totalInnovations && this._totalInnovations.length > 0 ? this._totalInnovations.slice(4) : [];
   }
 
 

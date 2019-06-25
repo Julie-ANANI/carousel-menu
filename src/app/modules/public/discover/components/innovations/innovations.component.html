@@ -22,7 +22,7 @@
 
 
       <!-- section latest innovations -->
-      <ng-container *ngIf="!filterActivated">
+      <ng-container *ngIf="!filterActivated && latestInnovations.length > 0">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
           <app-cards [allInnovations]="latestInnovations"></app-cards>
@@ -32,7 +32,7 @@
 
 
       <!-- section trending innovations -->
-      <ng-container *ngIf="!filterActivated">
+      <ng-container *ngIf="!filterActivated && trendingInnovations.length > 0">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
           <app-cards [allInnovations]="trendingInnovations" [pagination]="true"></app-cards>
