@@ -69,7 +69,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
   private loadOfferType() {
-    switch (this._innovation.type) {
+    switch (this._innovation && this._innovation.type) {
 
       case 'insights':
         this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg';
