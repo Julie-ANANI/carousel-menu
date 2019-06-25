@@ -147,7 +147,7 @@ export class TableComponent implements OnInit {
       const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
 
       if (localStorage.toString(10) !== this._config.limit) {
-        this._config.limit = localStorage.toString(10) ? localStorage.toString(10) : this._config.limit;
+        this._config.limit = localStorage.toString(10) || this._config.limit;
         this._setLocalStorage();
 
         if (!this._table._isLocal) {
