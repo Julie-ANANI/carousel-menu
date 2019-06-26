@@ -35,87 +35,87 @@
     <!-- /start process-->
 
 
-
     <!-- section stat -->
-    <ng-container *ngIf="false">
+    <ng-container *ngIf="selectedTagsStats.length > 0 && !fetchingError">
+      <div class="section-pad">
 
-      <!-- heading -->
-      <h1 class="text-center title-primary text-normal" [innerText]="'SHOWCASE.MAIN_TITLE'" translate></h1>
-      <!-- /heading -->
+        <!-- heading -->
+        <h1 class="text-center title-primary text-normal" [innerText]="'SHOWCASE.MAIN_TITLE'" translate></h1>
+        <!-- /heading -->
 
-      <!-- header section -->
-      <div class="d-flex selected-tags-wrapper text-center">
+        <!-- header section -->
+        <div class="d-flex selected-tags-wrapper text-center">
 
-        <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-notify">
-          <span>{{ tagStat.tag.label | multiling:currentLang | FormatText }}</span>
-          <ng-container *ngIf=" i !== selectedTagsStats.length - 1 "> / </ng-container>
+          <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-notify">
+            <span>{{ tagStat.tag.label | multiling:currentLang | FormatText }}</span>
+            <ng-container *ngIf=" i !== selectedTagsStats.length - 1 "> / </ng-container>
+          </div>
+
+          <!-- modify tag link -->
+          <div
+            class="text-link text-xs tooltip tooltip-hide-sm"
+            [attr.data-tooltip]="'SHOWCASE.TOOLTIP.MODIFY_TAGS' | translate"
+            (click)="modifyTag()">
+            <span [innerText]="'SHOWCASE.MODIFY'" translate></span>
+          </div>
+
         </div>
+        <!-- /header section -->
 
-        <!-- modify tag link -->
-        <div
-          class="text-link text-xs tooltip tooltip-hide-sm"
-          [attr.data-tooltip]="'SHOWCASE.TOOLTIP.MODIFY_TAGS' | translate"
-          (click)="modifyTag()">
-          <span [innerText]="'SHOWCASE.MODIFY'" translate></span>
+        <!-- horizontal line -->
+        <hr class="hr hr-main">
+        <!-- /horizontal line -->
+
+        <!-- section answer and innovations -->
+        <div class="flex-centered section-wrapper section-pad">
+
+          <!-- answers wrapper -->
+          <div class="answer-wrapper">
+            <app-showcase-answers
+              [totalAnswers]="stats.totalAnswers"
+              [tagsStats]="selectedTagsStats">
+            </app-showcase-answers>
+          </div>
+
+          <!-- innovations wrapper -->
+          <div class="innovation-wrapper">
+            <app-showcase-innovations [tagsStats]="selectedTagsStats"></app-showcase-innovations>
+          </div>
+
+          <!-- clients wrapper -->
+          <div class="client-wrapper">
+            <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
+          </div>
+
         </div>
+        <!-- /section answer and innovations -->
+
+        <!-- section map -->
+        <div class="flex-centered section-wrapper section-pad">
+          <div class="map-wrapper">
+
+            <h2 class="text text-notify" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>
+
+            <h3 class="text-normal">
+              {{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span>
+            </h3>
+
+            <admin-search-map
+              [countriesData]="countries"
+              [quartiles]="quartiles"
+              [width]="'100%'">
+            </admin-search-map>
+
+          </div>
+        </div>
+        <!-- /section map -->
 
       </div>
-      <!-- /header section -->
-
-      <!-- horizontal line -->
-      <hr class="hr hr-main">
-      <!-- /horizontal line -->
-
-      <!-- section answer and innovations -->
-      <div class="flex-centered section-wrapper section-pad">
-
-        <!-- answers wrapper -->
-        <div class="answer-wrapper">
-          <app-showcase-answers
-            [totalAnswers]="stats.totalAnswers"
-            [tagsStats]="selectedTagsStats">
-          </app-showcase-answers>
-        </div>
-
-        <!-- innovations wrapper -->
-        <div class="innovation-wrapper">
-          <app-showcase-innovations [tagsStats]="selectedTagsStats"></app-showcase-innovations>
-        </div>
-
-        <!-- clients wrapper -->
-        <div class="client-wrapper">
-          <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
-        </div>
-
-      </div>
-      <!-- /section answer and innovations -->
-
-      <!-- section map -->
-      <div class="flex-centered section-wrapper section-pad">
-        <div class="map-wrapper">
-
-          <h2 class="text text-notify" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>
-
-          <h3 class="text-normal">
-            {{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span>
-          </h3>
-
-          <admin-search-map
-            [countriesData]="countries"
-            [quartiles]="quartiles"
-            [width]="'100%'">
-          </admin-search-map>
-
-        </div>
-      </div>
-      <!-- /section map -->
-
     </ng-container>
     <!-- /section stat -->
 
   </div>
 </div>
-
 
 
 <!-- modal to modify the tags -->
