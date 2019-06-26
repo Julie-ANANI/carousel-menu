@@ -12,7 +12,7 @@
 // left
 
 .m-no-left {
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 
 .m-left-1 {
@@ -30,7 +30,7 @@
 // right
 
 .m-no-right {
-  margin-right: 0;
+  margin-right: 0 !important;
 }
 
 .m-right-1 {
@@ -49,6 +49,10 @@
 
 .m-top-10 {
   margin-top: 10px;
+}
+
+.m-top-20 {
+  margin-top: 20px;
 }
 
 .m-top-50 {

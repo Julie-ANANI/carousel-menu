@@ -1,6 +1,6 @@
 ## Message Template 1
 
-The selector of this component id is **<app-message-space>**. It includes 3 inputs.
+The selector of this component id is **<app-message-template-1>**. It includes 3 inputs.
 
 1. **srcImage:** give this value to provide the source of the image. By default it's value is given, but you can add any image.
 
@@ -12,4 +12,4 @@ The selector of this component id is **<app-message-space>**. It includes 3 inpu
 
 ### How to use 
 
-`<app-message-template-1 [widthMax]="'width'" [srcImage]="'source''" [background]="'color'"> <ng-content></ng-content> </app-message-template-1>`
+`<app-message-template-1 [widthMax]="'width'" [srcImage]="'source'" [background]="'color'"> <ng-content></ng-content> </app-message-template-1>`
