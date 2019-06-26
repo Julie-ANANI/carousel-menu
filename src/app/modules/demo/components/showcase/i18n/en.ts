@@ -28,6 +28,8 @@ export const SHOWCASE = {
 
   'CREATE_SHOWCASE': 'Ready to create your showcase!',
 
+  'ERROR_STATS': 'We are having trouble while finding the stats.',
+
   'TOOLTIP': {
     'MODIFY_TAGS': 'Click to edit tags.',
     'EDIT_ANSWERS': 'Click to select different answers.',

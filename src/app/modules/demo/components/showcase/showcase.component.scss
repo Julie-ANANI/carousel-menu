@@ -9,34 +9,6 @@
     min-height: 100vh;
   }
 
-  .no-selected-wrapper {
-    flex-direction: column;
-    min-height: 85vh;
-
-    .add-wrapper {
-      @include control-transition();
-      border-radius: $border-radius;
-      border: $border-width-xl solid $border-color;
-      padding: 1.25rem 2.5rem;
-
-      .text {
-        margin-top: 0.5rem;
-      }
-
-      &:hover {
-        border-color: $primary-color;
-        box-shadow: $box-shadow-umi;
-
-        .fa-pencil-alt {
-          color: $primary-color;
-        }
-
-      }
-
-    }
-
-  }
-
   .title-primary {
     color: #3E5164;
     font-size: 2.3rem;
@@ -118,16 +90,6 @@
 
 }
 
-
-.btn.btn-close, .title-secondary {
-  padding-right: $unit-1;
-}
-
-.title-secondary {
-  margin-bottom: 0;
-  padding-bottom: $unit-1;
-}
-
 .selected-wrapper {
   margin-left: -$unit-2;
 
@@ -140,7 +102,6 @@
 }
 
 .tags-wrapper {
-  flex-wrap: wrap;
   margin-right: -$unit-5;
   margin-bottom: -$unit-2;
 
@@ -154,7 +115,6 @@
     }
 
     .form-checkbox {
-      font-size: $font-size-sm;
 
       span {
         max-width: 100%;

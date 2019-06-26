@@ -14,7 +14,7 @@
     <!-- start process -->
     <ng-container *ngIf="selectedTagsStats.length === 0 && !fetchingError">
       <div class="s-start-wrapper d-flex align-center">
-        <app-message-template-2 [ngStyle]="{ 'width': '100%' }">
+        <app-message-template-2 [ngStyle]="{ 'width': '100%' }" [animation]="true">
 
           <div class="text-center">
 
@@ -122,8 +122,8 @@
 <app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
 
   <div class="flex-between">
-    <h2 class="text text-background title-secondary text-medium" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
-    <button type="button" class="btn btn-close text-notify text-md" (click)="modalShow = false"></button>
+    <h2 class="text text-background m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+    <button type="button" class="btn btn-close p-right-1 text-notify text-md" (click)="modalShow = false"></button>
   </div>
 
   <ng-container *ngIf="selectedTagsStats.length">
@@ -136,13 +136,12 @@
 
   <hr class="hr">
 
-  <div class="d-flex tags-wrapper">
+  <div class="d-flex tags-wrapper flex-wrap">
     <div *ngFor="let tag of sectorTags" class="card card-responsive">
-      <label class="form-checkbox">
+      <label class="form-checkbox text-sm">
         <input
           (change)="onChangeTag($event, tag)"
           [name]="tag.label | multiling:currentLang"
-          [disabled]="loadingStats"
           type="checkbox">
         <i class="form-icon"></i>
         <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
@@ -151,8 +150,16 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-    <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
+
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+
+    <button
+      (click)="onClickApply($event)"
+      [innerText]="'COMMON.BUTTON.CONFIRM'"
+      class="btn btn-sm btn-primary"
+      translate>
+    </button>
+
   </div>
 
 </app-modal>

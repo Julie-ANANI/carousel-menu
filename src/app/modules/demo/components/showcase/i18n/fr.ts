@@ -28,6 +28,8 @@ export const SHOWCASE = {
 
   'CREATE_SHOWCASE': 'Prêt à créer votre vitrine !',
 
+  'ERROR_STATS': 'Nous avons de la difficulté à trouver les statistiques.',
+
   'TOOLTIP': {
     'MODIFY_TAGS': 'Cliquez pour éditer les tags.',
     'EDIT_ANSWERS': 'Cliquez pour sélectionner différentes réponses.',

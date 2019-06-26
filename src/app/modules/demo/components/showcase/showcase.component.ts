@@ -7,7 +7,6 @@ import { TagsService } from '../../../../services/tags/tags.service';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
 import { forkJoin } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-showcase',
@@ -32,8 +31,6 @@ export class ShowcaseComponent {
   private _quartiles = [1, 1, 1];
 
   private _modalShow: boolean = false;
-
-  private _loadingStats = false;
   
   private _fetchingError: boolean;
 
@@ -87,14 +84,11 @@ export class ShowcaseComponent {
         .map((tagId) => this._tagService.getStats(tagId));
 
     if (tagsStatsObservables.length > 0) {
-      this._loadingStats = true;
-      forkJoin(tagsStatsObservables)
-        .pipe(finalize(() => { this._loadingStats = false; }))
-        .subscribe((res) => {
-          this._selectedTagsStats = res;
-          this._recomputeData();
+      forkJoin(tagsStatsObservables).subscribe((res) => {
+        this._selectedTagsStats = res;
+        this._recomputeData();
         }, () => {
-          this._translateNotificationService.error('ERROR.ERROR', `We are having trouble while finding the stats.`);
+          this._translateNotificationService.error('ERROR.ERROR', 'SHOWCASE.ERROR_STATS');
         });
     }
   }
@@ -196,10 +190,6 @@ export class ShowcaseComponent {
 
   get currentLang(): string {
     return this._translateService.currentLang;
-  }
-
-  get loadingStats(): boolean {
-    return this._loadingStats;
   }
 
   get fetchingError(): boolean {
