@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .modal {
   position: fixed;
@@ -21,10 +22,8 @@
   }
 
   .modal-overlay {
+    @include flex-centered();
     cursor: default;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     top: 0;
     bottom: 0;
     left: 0;
@@ -75,11 +74,11 @@
     }
 
     .modal-footer {
-      padding: 2rem 0 0 0 !important;
-      text-align: right !important;
+      padding: 2rem 0 0 0;
+      text-align: right;
 
       .btn-cancel {
-        margin-right: .5rem !important;
+        margin-right: 0.5rem;
       }
 
     }

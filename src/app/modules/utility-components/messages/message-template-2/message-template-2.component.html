@@ -5,7 +5,7 @@
       <ng-content></ng-content>
     </div>
 
-    <div class="bot-wrapper m-left-right">
+    <div class="bot-wrapper m-left-right" [ngClass]="{ 'animate-bot-bounceIn': animation }">
       <img [src]="defaultSrc" class="img-responsive" alt=" ">
     </div>
 
