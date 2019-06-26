@@ -16,44 +16,24 @@
   <!-- /heading -->
 
   <!-- section client logos -->
-  <div class="section-card">
-    <div class="carousel">
+  <div class="d-flex text-center s-c-card-wrapper flex-wrap">
+    <ng-container *ngFor="let slide of slides">
+      <div *ngFor="let client of slide" class="s-c-card-content animate-zoomIn">
 
-      <div class="carousel-container">
-
-        <div *ngFor="let slide of slides; let i = index;" [ngClass]="{ 'current-slide': i === currentSlideIndex }" class="carousel-item d-flex">
-          <div *ngFor="let client of slide; let innerIndex = index" class="client-name-wrapper flex-centered animate-zoomIn">
-
-            <ng-container *ngIf="client.logo">
-              <div
-                [attr.data-tooltip]="client.name"
-                [ngClass]="innerIndex === slide.length - 1 && slide.length !== 1 ? 'tooltip-left' : 'tooltip-right'"
-                class="tooltip tooltip-hide-sm">
-                <img [src]="client.logo" [alt]="client.name" height="50" class="img-fit-cover">
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="!client.logo">
-              <div class="text-background text-medium">
-                <span class="text-name">{{ client.name }}</span>
-              </div>
-            </ng-container>
-
+        <ng-container *ngIf="client.logo">
+          <div [attr.data-tooltip]="client.name" class="tooltip">
+            <img [src]="client.logo" [alt]="client.name" height="50" class="img-fit-cover">
           </div>
-        </div>
+        </ng-container>
+
+        <ng-container *ngIf="!client.logo">
+          <div class="text-background text-medium">
+            <span class="text-name">{{ client.name }}</span>
+          </div>
+        </ng-container>
 
       </div>
-
-      <div class="carousel-nav">
-        <label
-          (click)="onClickNav($event, i)"
-          *ngFor="let slide of slides; let i = index;"
-          [ngClass]="{ 'current-slide': i === currentSlideIndex }"
-          class="nav-item text-hide">
-        </label>
-      </div>
-
-    </div>
+    </ng-container>
   </div>
   <!-- /section client logos -->
 
@@ -64,15 +44,13 @@
 
   <div class="section-card d-flex text-center">
     <ng-container *ngFor="let client of totalClients">
-      <div class="card flex-centered modal-card badge badge-save"
-           (click)="onChangeClient($event, client)"
-           [ngClass]="{ 'active': selectedClients[client.name] }">
+      <div class="card flex-centered modal-card badge badge-save" (click)="onChangeClient($event, client)" [ngClass]="{ 'active': selectedClients[client.name] }">
 
         <i class="fas fa-check-circle"></i>
 
         <div class="card-header">
           <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">
-            <img [src]="client.logo" [alt]="client.name"/>
+            <img [src]="client.logo" height="50" [alt]="client.name" [ngStyle]="{ 'height': '50px' }"/>
           </div>
           <div *ngIf="!client.logo" class="card-title text-background"><span>{{ client.name }}</span></div>
         </div>

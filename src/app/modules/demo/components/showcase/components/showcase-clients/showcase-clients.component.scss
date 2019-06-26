@@ -30,47 +30,35 @@
     font-size: 1.85rem;
   }
 
-  .carousel {
+  .s-c-card-wrapper {
+    flex-direction: column;
+    padding-top: $unit-5;
 
-    .carousel-container {
+    .s-c-card-content {
+      margin-bottom: $unit-5;
 
-      &::before {
-        padding-bottom: 90px;
+      img {
+        height: 50px;
+        width: auto;
       }
 
-      .carousel-item {
-        justify-content: space-between;
-        overflow: auto;
-
-        .client-name-wrapper {
-          margin: $unit-5;
-
-          .text-name {
-            font-size: 0.75rem;
-          }
-
-        }
-
-        img {
-          height: 50px;
-          width: auto;
-        }
-
+      .text-name {
+        font-size: 0.75rem;
       }
 
     }
 
-    .carousel-nav {
-      position: relative;
+  }
 
-      .nav-item {
+}
 
-        &:hover, &.current-slide {
-          color: $primary-color;
-        }
 
-      }
+@media (max-width: $size-xl) {
 
+  #showcase-clients {
+
+    .s-c-card-wrapper {
+      flex-direction: row;
     }
 
   }
