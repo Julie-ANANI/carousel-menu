@@ -11,23 +11,30 @@
     <!-- /when fetching error -->
 
 
-    <!-- no tags selected -->
-    <ng-container *ngIf="false">
-      <div class="flex-centered no-selected-wrapper">
-        <div class="add-wrapper text-center c-hand" (click)="modifyTag()">
+    <!-- start process -->
+    <ng-container *ngIf="selectedTagsStats.length === 0 && !fetchingError">
+      <div class="s-start-wrapper d-flex align-center">
+        <app-message-template-2 [ngStyle]="{ 'width': '100%' }">
 
-          <div class="text-background">
-            <i class="fas fa-pencil-alt fa-2x"></i>
+          <div class="text-center">
+
+            <h4 [innerText]="'SHOWCASE.CREATE_SHOWCASE'" class="text-background" translate></h4>
+
+            <div class="m-top-25">
+              <button (click)="modifyTag()" class="btn btn-primary rounded shadow" type="button">
+                <i class="fas fa-pencil-alt m-no-left"></i>
+                {{ 'COMMON.BUTTON.CREATE' | translate }}
+              </button>
+            </div>
+
           </div>
 
-          <div class="text c-hand">
-            <span class="text-medium text-background" [innerText]="'SHOWCASE.BUILD_SHOWCASE'" translate></span>
-          </div>
-
-        </div>
+        </app-message-template-2>
       </div>
     </ng-container>
-    <!-- /no tags selected -->
+    <!-- /start process-->
+
+
 
     <!-- section stat -->
     <ng-container *ngIf="false">
@@ -111,7 +118,7 @@
 
 
 
-<!-- modal to modify the tags
+<!-- modal to modify the tags -->
 <app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
 
   <div class="flex-between">
@@ -149,4 +156,4 @@
   </div>
 
 </app-modal>
-/modal to modify the tags -->
+<!-- /modal to modify the tags -->
