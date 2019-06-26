@@ -12,4 +12,4 @@ The selector of this component id is **<app-message-space>**. It includes 3 inpu
 
 ### How to use 
 
-`<app-message-space [widthMax]="'width'" [srcImage]="'source''" [background]="'color'"> <ng-content></ng-content> </app-message-space>`
+`<app-message-template-1 [widthMax]="'width'" [srcImage]="'source''" [background]="'color'"> <ng-content></ng-content> </app-message-template-1>`

@@ -19,6 +19,7 @@ import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
+import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { MessageTemplate1Module } from '../../../utility-components/messages/mes
     ModalModule,
     PipeModule,
     ShowcaseRoutingModule,
-    MessageTemplate1Module
+    MessageTemplate1Module,
+    ErrorTemplate1Module
   ],
   declarations: [
     ShowcaseAnswersComponent,

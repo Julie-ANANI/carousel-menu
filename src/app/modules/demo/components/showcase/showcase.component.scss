@@ -3,7 +3,8 @@
 
 #showcase {
   min-height: 100vh;
-  background-color: #F5F5F5;
+  background-color: $bg-page-color;
+
 
   .no-selected-wrapper {
     flex-direction: column;

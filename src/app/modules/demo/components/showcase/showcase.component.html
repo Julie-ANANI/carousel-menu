@@ -1,8 +1,18 @@
 <div id="showcase" class="section-pad">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+
+    <!-- when fetching error -->
+    <ng-container *ngIf="fetchingError">
+      <div class="m-top-50">
+        <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+      </div>
+    </ng-container>
+    <!-- /when fetching error -->
+
+
     <!-- no tags selected -->
-    <ng-container *ngIf="selectedTagsStats.length === 0">
+    <ng-container *ngIf="false">
       <div class="flex-centered no-selected-wrapper">
         <div class="add-wrapper text-center c-hand" (click)="modifyTag()">
 
@@ -20,7 +30,7 @@
     <!-- /no tags selected -->
 
     <!-- section stat -->
-    <ng-container *ngIf="selectedTagsStats.length > 0">
+    <ng-container *ngIf="false">
 
       <!-- heading -->
       <h1 class="text-center title-primary text-normal" [innerText]="'SHOWCASE.MAIN_TITLE'" translate></h1>
@@ -101,7 +111,7 @@
 
 
 
-<!-- modal to modify the tags -->
+<!-- modal to modify the tags
 <app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
 
   <div class="flex-between">
@@ -139,4 +149,4 @@
   </div>
 
 </app-modal>
-<!-- /modal to modify the tags -->
+/modal to modify the tags -->
