@@ -1,11 +1,11 @@
-<div id="showcase" class="section-pad">
+<div id="showcase">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
 
     <!-- when fetching error -->
     <ng-container *ngIf="fetchingError">
-      <div class="m-top-50">
-        <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+      <div class="d-flex s-error-wrapper align-center">
+        <app-error-template-1 [ngStyle]="{ 'width': '100%' }" [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
       </div>
     </ng-container>
     <!-- /when fetching error -->

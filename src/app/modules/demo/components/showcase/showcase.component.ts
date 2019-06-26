@@ -17,9 +17,9 @@ import { finalize } from 'rxjs/operators';
 
 export class ShowcaseComponent {
 
-  private readonly _sectorTags: Array<Tag>;
+  private _sectorTags: Array<Tag> = [];
 
-  private _selectedTagsStats: Array<TagStats>;
+  private _selectedTagsStats: Array<TagStats> = [];
 
   private _selectedTags: {[tagId: string]: boolean} = {};
 
@@ -35,7 +35,7 @@ export class ShowcaseComponent {
 
   private _loadingStats = false;
   
-  fetchingError: boolean;
+  private _fetchingError: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _multilingPipe: MultilingPipe,
@@ -43,15 +43,14 @@ export class ShowcaseComponent {
               private _translateService: TranslateService,
               private _translateNotificationService: TranslateNotificationsService) {
 
-    if (!Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
+    if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
       this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1: Tag, t2: Tag) => {
         const label1 = this._multilingPipe.transform(t1.label, this._translateService.currentLang);
         const label2 = this._multilingPipe.transform(t2.label, this._translateService.currentLang);
         return label1.localeCompare(label2);
       });
     } else {
-      this.fetchingError = true;
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._fetchingError = true;
     }
 
     const tagStats = this._activatedRoute.snapshot.data['tagsStats'];
@@ -61,7 +60,7 @@ export class ShowcaseComponent {
       this._recomputeData();
     } else {
       this._selectedTagsStats = [];
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._fetchingError = true;
     }
 
   }
@@ -201,6 +200,10 @@ export class ShowcaseComponent {
 
   get loadingStats(): boolean {
     return this._loadingStats;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }
