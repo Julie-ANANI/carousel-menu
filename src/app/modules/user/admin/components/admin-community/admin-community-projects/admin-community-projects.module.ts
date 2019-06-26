@@ -13,7 +13,7 @@ import { TableModule } from "../../../../../table/table.module";
 import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
 import { SharedWorldmapModule } from "../../../../../shared/components/shared-worldmap/shared-worldmap.module";
 import { SidebarCommunityFormModule } from "../../../../../sidebar/components/community-form/sidebar-community-form.module";
-import { MessageSpaceModule } from '../../../../../utility-components/messages/message-template-1/message-space.module';
+import { MessageTemplate1Module } from '../../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ErrorTemplate1Module } from '../../../../../utility-components/errors/error-template-1/error-template-1.module';
 
 
@@ -29,7 +29,7 @@ import { ErrorTemplate1Module } from '../../../../../utility-components/errors/e
     SharedAmbassadorListModule,
     SharedWorldmapModule,
     SidebarCommunityFormModule,
-    MessageSpaceModule,
+    MessageTemplate1Module,
     ErrorTemplate1Module
   ],
   declarations: [

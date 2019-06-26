@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessageSpaceComponent } from './message-space.component';
+import { MessageTemplate1Component } from './message-template-1.component';
 
 describe('MessageSpaceComponent', () => {
-  let component: MessageSpaceComponent;
-  let fixture: ComponentFixture<MessageSpaceComponent>;
+  let component: MessageTemplate1Component;
+  let fixture: ComponentFixture<MessageTemplate1Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MessageSpaceComponent ]
+      declarations: [ MessageTemplate1Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MessageSpaceComponent);
+    fixture = TestBed.createComponent(MessageTemplate1Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

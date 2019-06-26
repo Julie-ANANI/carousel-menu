@@ -18,7 +18,7 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { PipeModule } from '../../../../pipe/pipe.module';
-import { MessageSpaceModule } from '../../../utility-components/messages/message-template-1/message-space.module';
+import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
 
 @NgModule({
   imports: [
@@ -30,7 +30,7 @@ import { MessageSpaceModule } from '../../../utility-components/messages/message
     ModalModule,
     PipeModule,
     ShowcaseRoutingModule,
-    MessageSpaceModule
+    MessageTemplate1Module
   ],
   declarations: [
     ShowcaseAnswersComponent,

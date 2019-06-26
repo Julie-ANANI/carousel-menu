@@ -9,7 +9,7 @@ import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
 import { SidebarWorkflowFormModule } from '../../../../../sidebar/components/workflow-form/sidebar-workflow-form.module';
 import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
-import { MessageSpaceModule } from '../../../../../utility-components/messages/message-template-1/message-space.module';
+import { MessageTemplate1Module } from '../../../../../utility-components/messages/message-template-1/message-template-1.module';
 
 @NgModule({
   imports: [
@@ -20,7 +20,7 @@ import { MessageSpaceModule } from '../../../../../utility-components/messages/m
     TableModule,
     SidebarWorkflowFormModule,
     ModalModule,
-    MessageSpaceModule
+    MessageTemplate1Module
   ],
   declarations: [
     AdminEmailsLibraryComponent

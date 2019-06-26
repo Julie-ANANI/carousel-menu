@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-message-space',
-  templateUrl: './message-space.component.html',
-  styleUrls: ['./message-space.component.scss']
+  selector: 'app-message-template-1',
+  templateUrl: './message-template-1.component.html',
+  styleUrls: ['./message-template-1.component.scss']
 })
 
-export class MessageSpaceComponent {
+export class MessageTemplate1Component {
 
   @Input() set srcImage(value: string) {
     this._imageSrc = value;
