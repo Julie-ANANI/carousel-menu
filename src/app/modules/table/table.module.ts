@@ -12,7 +12,7 @@ import { ProgressBarModule } from '../utility-components/progress-bar/progress-b
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { CountryFlagModule } from '../utility-components/country-flag/country-flag.module';
 import { PipeModule } from '../../pipe/pipe.module';
-import { MessageSpaceModule } from '../utility-components/message-space/message-space.module';
+import { MessageSpaceModule } from '../utility-components/messages/message-template-1/message-space.module';
 import { PaginationTemplate2Module } from '../utility-components/paginations/pagination-template-2/pagination-template-2.module';
 
 @NgModule({

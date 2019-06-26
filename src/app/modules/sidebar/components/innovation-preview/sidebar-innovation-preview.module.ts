@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InnovationPreviewComponent } from './innovation-preview.component';
 
 import { SidebarModule } from '../../sidebar.module';
-import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { MessageSpaceModule } from '../../../utility-components/messages/message-template-1/message-space.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
 @NgModule({

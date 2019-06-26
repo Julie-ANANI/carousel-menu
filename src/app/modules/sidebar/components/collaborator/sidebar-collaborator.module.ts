@@ -6,7 +6,7 @@ import { SidebarModule } from '../../sidebar.module';
 
 import { CollaboratorComponent } from './collaborator.component';
 
-import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { MessageSpaceModule } from '../../../utility-components/messages/message-template-1/message-space.module';
 
 @NgModule({
   imports: [

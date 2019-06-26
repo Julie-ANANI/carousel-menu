@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SynthesisCompleteComponent } from './synthesis-complete.component';
 
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
-import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
+import { MessageSpaceModule } from '../../../../utility-components/messages/message-template-1/message-space.module';
 import { SharedMainPageModule } from '../../../../shared/components/shared-main-page/shared-main-page.module';
 import { SharedInnovationDetailModule } from '../../../../shared/components/shared-innovation-detail/shared-innovation-detail.module';
 import { SharedTargetingDetailModule } from '../../../../shared/components/shared-targeting-detail/shared-targeting-detail.module';
