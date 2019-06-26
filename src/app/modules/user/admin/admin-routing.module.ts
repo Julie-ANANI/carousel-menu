@@ -41,6 +41,7 @@ import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
+import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
 
 
 const adminRoutes: Routes = [
@@ -105,7 +106,13 @@ const adminRoutes: Routes = [
       {
         path: 'projects',
         children: [
-          { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
+          {
+            path: '',
+            component: AdminProjectsComponent,
+            pathMatch: 'full',
+            resolve: { projects : ProjectsResolver },
+            runGuardsAndResolvers: 'always'
+          },
           { path: 'project/:projectId',
             resolve: { innovation : InnovationResolver },
             component: AdminProjectComponent,

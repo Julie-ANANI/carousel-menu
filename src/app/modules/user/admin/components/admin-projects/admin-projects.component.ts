@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
 import { Table } from '../../../../table/models/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { Config } from '../../../../../models/config';
 
 @Component({
   selector: 'app-admin-projects',
@@ -12,15 +13,15 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./admin-projects.component.scss']
 })
 
-export class AdminProjectsComponent implements OnInit {
+export class AdminProjectsComponent {
 
-  private _projects: Array<Innovation>;
+  private _projects: Array<Innovation> = [];
 
   private _total: number;
 
   private _tableInfos: Table;
 
-  private _config = {
+  private _config: Config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -28,23 +29,30 @@ export class AdminProjectsComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  constructor(private innovationService: InnovationService,
-              private router: Router,
-              private translateTitleService: TranslateTitleService) {
+  fetchingError: boolean;
 
-    this.translateTitleService.setTitle('COMMON.PROJECTS');
+  constructor(private _innovationService: InnovationService,
+              private _router: Router,
+              private _activatedRoute: ActivatedRoute,
+              private _translateTitleService: TranslateTitleService) {
+
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
+
+    if (this._activatedRoute.snapshot.data.projects && Array.isArray(this._activatedRoute.snapshot.data.projects.result)) {
+      this._projects = this._activatedRoute.snapshot.data.projects.result;
+      this._total = this._activatedRoute.snapshot.data.projects._metadata.totalCount;
+    } else {
+      this.fetchingError = true;
+    }
+
 
   }
 
-  ngOnInit(): void {
-    this.loadProjects(this._config);
-  }
 
 
-  loadProjects(config: any): void {
-    this._config = config;
+  loadProjects(): void {
 
-    this.innovationService.getAll(this._config).pipe(first()).subscribe((projects: any) => {
+    this._innovationService.getAll(this._config).pipe(first()).subscribe((projects: any) => {
       this._projects = projects.result;
       this._total = projects._metadata.totalCount;
 
@@ -78,16 +86,16 @@ export class AdminProjectsComponent implements OnInit {
 
 
   goToProject(project: Innovation) {
-    this.router.navigate(['/user/admin/projects/project/' + project._id]);
+    this._router.navigate(['/user/admin/projects/project/' + project._id]);
   }
 
 
-  set config(value: any) {
+  set config(value: Config) {
     this._config = value;
-    this.loadProjects(value);
+    this.loadProjects();
   }
 
-  get config() {
+  get config(): Config {
     return this._config;
   }
 
