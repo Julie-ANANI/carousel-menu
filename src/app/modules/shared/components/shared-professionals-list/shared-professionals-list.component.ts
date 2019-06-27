@@ -60,9 +60,13 @@ export class SharedProfessionalsListComponent {
 
   private _isTagsSidebar = false;
 
-  selectedProfessional: Professional;
+  private _selectedProfessional: Professional;
 
   private _campaign: Campaign = null;
+
+  private _modalDelete: boolean;
+
+  private _professionalsToRemove: Array<SelectedProfessional> = [];
 
   constructor(private _professionalsService: ProfessionalsService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -120,7 +124,7 @@ export class SharedProfessionalsListComponent {
     this._resetSidebarVariables();
 
     this._professionalsService.get(value._id).pipe(first()).subscribe((response: Professional) => {
-      this.selectedProfessional = response;
+      this._selectedProfessional = response;
       this._isProfessionalSidebar = true;
 
       this._sidebarValue = {
@@ -134,12 +138,58 @@ export class SharedProfessionalsListComponent {
     });
   }
 
+  public onClickDelete(value: Array<SelectedProfessional>) {
+    this._professionalsToRemove = value;
+    this._modalDelete = true;
+  }
+
+  public onClickConfirm() {
+
+    for (const professional of this._professionalsToRemove) {
+      if(this._isCampaignProfessional()) {
+        this._removeProfessionalFromCampaign(professional._id)
+      } else {
+        this._removeProfessional(professional._id);
+      }
+    }
+
+    this._modalDelete = false;
+    this._professionalsToRemove = [];
+
+  }
+
+  private _removeProfessionalFromCampaign(value: string) {
+    const campaignId = this._campaign._id;
+    const innovationId = this._campaign.innovation._id;
+
+    this._professionalsService.removeFromCampaign(value, campaignId, innovationId).pipe(first()).subscribe(result => {
+      this.onConfigChange(this._config);
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+      }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  private _removeProfessional(value: string) {
+    this._professionalsService.remove(value).subscribe(() => {
+      this.onConfigChange(this._config);
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   public updateProfessional(value: Professional) {
     this._professionalsService.save(value._id, value).subscribe(() => {
+      this.onConfigChange(this._config);
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
+  }
+
+  private _isCampaignProfessional(): boolean {
+    return !!this._campaign;
   }
 
   get professionals(): Array<SelectedProfessional> {
@@ -180,6 +230,22 @@ export class SharedProfessionalsListComponent {
 
   get campaign(): Campaign {
     return this._campaign;
+  }
+
+  get modalDelete(): boolean {
+    return this._modalDelete;
+  }
+
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
+  }
+
+  get selectedProfessional(): Professional {
+    return this._selectedProfessional;
+  }
+
+  get professionalsToRemove(): Array<SelectedProfessional> {
+    return this._professionalsToRemove;
   }
 
 }

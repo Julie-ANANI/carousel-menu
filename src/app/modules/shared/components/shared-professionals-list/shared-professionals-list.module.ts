@@ -9,6 +9,7 @@ import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
 import { SidebarTagsFormModule } from '../../../sidebar/components/tags-form/sidebar-tags-form.module';
+import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { SidebarTagsFormModule } from '../../../sidebar/components/tags-form/sid
     TableModule,
     SidebarModule,
     SidebarUserFormModule,
-    SidebarTagsFormModule
+    SidebarTagsFormModule,
+    ModalModule
   ],
   declarations: [
     SharedProfessionalsListComponent
