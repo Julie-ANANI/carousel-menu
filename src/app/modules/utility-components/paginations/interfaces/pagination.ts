@@ -1,10 +1,10 @@
 export interface Pagination {
   limit?: any; // todo remove
-  offset?: number; // todo remove ?
+  offset?: number;
   currentPage?: number;
   totalPage?: number;
-  parPage?: number; // todo remove ?
-  propertyName?: string //todo remove ?
+  parPage?: number;
+  propertyName?: string;
   paginatorNumber?: Array<number>;
   nextPage?: number;
   previousPage?: number;

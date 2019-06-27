@@ -16,5 +16,4 @@ export interface Column {
   readonly _imgHeight?: string;
 }
 
-export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL' | 'MULTILING'
-                    | 'TAG-LIST' | 'COUNTRY-NAME';
+export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'MULTI-IMAGE-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL' | 'MULTILING' | 'TAG-LIST' | 'COUNTRY-NAME';

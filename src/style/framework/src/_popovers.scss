@@ -44,6 +44,13 @@
     transform: translate(-50%, calc(-100% - 9px)) scale(1);
   }
 
+  &.active {
+
+    .popover-container {
+      display: block !important;
+    }
+
+  }
 
   *:focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before, &.active + .popover-container::before {
     transform: translate(-50%, calc(100% + 9px)) scale(1);

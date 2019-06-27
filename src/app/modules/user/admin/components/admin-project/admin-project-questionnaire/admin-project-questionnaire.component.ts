@@ -15,10 +15,13 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _notificationService: TranslateNotificationsService,
-              private _innovationService: InnovationService) {}
+              private _innovationService: InnovationService) {
+
+    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+
+  }
 
   ngOnInit(): void {
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
   }
 
   public savePreset(preset: Preset): void {
@@ -29,6 +32,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     });
   }
 
-  get innovation() { return this._project; }
+  get project() { return this._project; }
 
 }

@@ -26,7 +26,9 @@ export const SHOWCASE = {
     'TITLE': 'Choisir les secteurs pour créer la vitrine'
   },
 
-  'BUILD_SHOWCASE': 'Construire la vitrine',
+  'CREATE_SHOWCASE': 'Prêt à créer votre vitrine !',
+
+  'ERROR_STATS': 'Nous avons de la difficulté à trouver les statistiques.',
 
   'TOOLTIP': {
     'MODIFY_TAGS': 'Cliquez pour éditer les tags.',

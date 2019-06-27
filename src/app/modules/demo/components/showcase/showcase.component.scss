@@ -3,34 +3,10 @@
 
 #showcase {
   min-height: 100vh;
-  background-color: #F5F5F5;
+  background-color: $bg-page-color;
 
-  .no-selected-wrapper {
-    flex-direction: column;
-    min-height: 85vh;
-
-    .add-wrapper {
-      @include control-transition();
-      border-radius: $border-radius;
-      border: $border-width-xl solid $border-color;
-      padding: 1.25rem 2.5rem;
-
-      .text {
-        margin-top: 0.5rem;
-      }
-
-      &:hover {
-        border-color: $primary-color;
-        box-shadow: $box-shadow-umi;
-
-        .fa-pencil-alt {
-          color: $primary-color;
-        }
-
-      }
-
-    }
-
+  .s-error-wrapper, .s-start-wrapper {
+    min-height: 100vh;
   }
 
   .title-primary {
@@ -114,16 +90,6 @@
 
 }
 
-
-.btn.btn-close, .title-secondary {
-  padding-right: $unit-1;
-}
-
-.title-secondary {
-  margin-bottom: 0;
-  padding-bottom: $unit-1;
-}
-
 .selected-wrapper {
   margin-left: -$unit-2;
 
@@ -136,7 +102,6 @@
 }
 
 .tags-wrapper {
-  flex-wrap: wrap;
   margin-right: -$unit-5;
   margin-bottom: -$unit-2;
 
@@ -150,7 +115,6 @@
     }
 
     .form-checkbox {
-      font-size: $font-size-sm;
 
       span {
         max-width: 100%;
@@ -164,16 +128,21 @@
 }
 
 
-@media (max-width: $size-md) {
+@media (max-width: $size-xl) {
 
   #showcase {
 
     .section-wrapper {
       flex-direction: column;
 
-      .answer-wrapper {
+      .answer-wrapper, .innovation-wrapper, .client-wrapper {
+        margin-left: 0 !important;
         margin-right: 0 !important;
         margin-bottom: 1.25rem;
+      }
+
+      .innovation-wrapper, .client-wrapper {
+        max-width: 100%;
       }
 
     }

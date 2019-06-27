@@ -5,6 +5,7 @@ import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interf
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
 import {Table} from '../../../../../table/models/table';
+import {Config} from '../../../../../../models/config';
 
 
 @Component({
@@ -25,13 +26,12 @@ export class AdminCountryManagementComponent implements OnInit {
   sidebarState = new Subject<string>();
   private _countriesTable: Table = null;
 
-  private _config: any = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+  private _config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{ "created": -1}'
   };
 
   private _countryList: {filteredCountries: Array<any>, _metadata: any};
@@ -64,7 +64,7 @@ export class AdminCountryManagementComponent implements OnInit {
     };
   }
 
-  public loadCountries(config: any) {
+  public loadCountries(config: Config) {
     this._config = config || this._config;
     this._emailService.getCountries(this._config)
       .subscribe((result: any) => {
@@ -83,14 +83,18 @@ export class AdminCountryManagementComponent implements OnInit {
             _title: 'COMMON.BLACKLIST.COUNTRIES',
             _content: this._countryList.filteredCountries,
             _total: this._countryList._metadata.totalCount,
+            _isTitle: true,
+            _isPaginable: true,
             _isSearchable: true,
             _isDeletable: true,
             _isSelectable: true,
             _isEditable: true,
+            _editIndex: 1,
             _columns: [
-              {_attrs: ['name'], _name: 'COMMON.COUNTRY', _type: 'TEXT'},
-              {_attrs: ['acceptation'], _name: 'COMMON.BLACKLIST.ACCEPTATION', _type: 'PROGRESS'},
-              {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'}]
+              {_attrs: ['name'], _name: 'COMMON.COUNTRY', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+              {_attrs: ['acceptation'], _name: 'COMMON.BLACKLIST.ACCEPTATION', _type: 'PROGRESS', _isSearchable: true, _isSortable: true},
+              {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE', _isSortable: true
+              }]
           };
         }
       }, (error: any) => {
@@ -132,8 +136,8 @@ export class AdminCountryManagementComponent implements OnInit {
         });
   }
 
-  closeSidebar(value: string) {
-    this.more.animate_state = value;
+  closeSidebar(value: SidebarInterface) {
+    this.more.animate_state = value.animate_state;
     this.sidebarState.next(this.more.animate_state);
   }
 
@@ -166,7 +170,14 @@ export class AdminCountryManagementComponent implements OnInit {
 
   get more(): SidebarInterface { return this._more; }
   get countriesTable(): Table { return this._countriesTable; }
-  get config(): any { return this._config; }
+
+  get config(): Config { return this._config; }
+
+  set config(value: Config) {
+    this._config = value;
+    this.loadCountries(this._config);
+  }
+
   get data(): Array<any> { return this._countryList.filteredCountries; };
   get currentCountry(): any { return this._currentCountry; }
   get metadata(): any { return this._countryList._metadata; };

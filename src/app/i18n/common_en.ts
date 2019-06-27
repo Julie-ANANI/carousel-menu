@@ -187,6 +187,8 @@ export const COMMON = {
     'SEE_MORE': 'See more',
     'EDIT': 'Edit',
     'SHOW': 'Show',
+    'START': 'Start',
+    'CREATE': 'Create'
   },
 
   'PROJECT': {

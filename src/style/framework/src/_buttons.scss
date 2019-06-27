@@ -4,9 +4,7 @@
 // The base class for the button, add the other classes with this to add the different styles
 .btn {
   @include control-transition();
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  @include inline-flex-centered();
   text-align: center;
   outline: none;
   position: relative;

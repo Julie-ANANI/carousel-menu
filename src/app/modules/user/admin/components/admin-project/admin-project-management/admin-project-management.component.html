@@ -21,7 +21,7 @@
         <select class="form-select"
                 name="setDomain"
                 id="setDomain"
-                [ngModel]="project.domain"
+                [ngModel]="project && project.domain ? project.domain : ''"
                 (ngModelChange)="changeProjectDomain($event)"
                 [ngModelOptions]="{standalone: true}">
           <option *ngFor="let d of projectDomains" [ngValue]="d.name">{{d.name}}</option>
@@ -50,7 +50,7 @@
                 (ngModelChange)="changeProjectOperator($event)"
                 [ngModelOptions]="{standalone: true}">
           <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
-          <option *ngFor="let op of operators" [ngValue]="op._id">
+          <option *ngFor="let op of operators" [ngValue]="op.id">
             {{op.firstName + ' ' + op.lastName}}
           </option>
         </select>
@@ -81,8 +81,8 @@
             (click)="onSuggestUsers()">
           <ul
             *ngIf="formData.get('owner').value"
-            class="suggestion"
-            [ngStyle]="{ 'display': displayUserSuggestion ? 'block' : 'none' }">
+            class="input-suggestion"
+            [ngStyle]="{ 'display': displayUserSuggestion ? 'flex' : 'none', 'width': '220px' }">
             <li *ngFor="let suggestion of usersSuggestion" (click)="onValueSelect(suggestion)">
               <a><span>{{ suggestion.name }}</span></a>
             </li>

@@ -35,6 +35,8 @@ export class SharedSearchMultiComponent {
 
   private _searchConfig: Config;
 
+  private _searchString: string = '';
+
   constructor() {}
 
   private _loadProps(value: Column[]) {
@@ -59,33 +61,24 @@ export class SharedSearchMultiComponent {
     return column._isSearchable === undefined ? true : column._isSearchable;
   }
 
-  public onChangeTextProp(prop: any) {
-    this._currentTextProp = this._textProps.find(value => value._attrs[0] === prop.target['value']);
+  public onChangeTextProp(prop: Event) {
+    this._currentTextProp = this._textProps.find(value => value._attrs[0] === (prop.target as HTMLSelectElement).value);
+    this.onSearch();
   }
 
-  // For values linked with config
-  public onSearch(value: any) {
+  public onSearch() {
 
     this._searchConfig.offset = '0';
 
-    let input = value.value || '';
+    if (this._searchString === '') {
+      this._searchConfig.search = '{}';
+    } else {
+      let _search: any = {};
+      _search[this._currentTextProp._attrs[0]] = encodeURIComponent(this._searchString.trim());
+      this._searchConfig.search = JSON.stringify(_search);
+    }
 
-      if (input === '') {
-        this._searchConfig.search = '{}';
-        this.searchConfigChange.emit(this._searchConfig);
-      } else {
-        //Detect an "special" query...
-        input = input.split(',');
-        let _search = {};
-
-        input.forEach((queryStr, index) => {
-          _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
-        });
-
-        this._searchConfig.search = JSON.stringify(_search);
-        this.searchConfigChange.emit(this._searchConfig);
-
-      }
+    this.searchConfigChange.emit(this._searchConfig);
 
   }
 
@@ -143,6 +136,14 @@ export class SharedSearchMultiComponent {
 
   get searchConfig(): Config {
     return this._searchConfig;
+  }
+
+  get searchString(): string {
+    return this._searchString;
+  }
+
+  set searchString(value: string) {
+    this._searchString = value;
   }
 
 }

@@ -1,20 +1,18 @@
-<ng-container *ngIf="showModal">
-  <section (click)="toggleState($event)">
-    <div class="modal" [ngClass]="showModal ? 'active' : 'inactive'">
-      <div class="modal-overlay" [ngStyle]="{ 'align-items': position ? 'normal' : 'center' }">
-        <div class="modal-container" [ngStyle]="{ 'max-width': maxWidth ? maxWidth : '640px', 'top': position ? position : 'auto' }">
+<section (click)="toggleState($event)" *ngIf="showModal">
+  <div [ngClass]="showModal ? 'active' : 'inactive'" class="modal">
+    <div [ngStyle]="{ 'align-items': position ? 'normal' : 'center' }" class="modal-overlay">
+      <div [ngStyle]="{ 'max-width': maxWidth ? maxWidth : '640px', 'top': position ? position : 'auto' }" class="modal-container">
 
-          <div *ngIf="title" class="header modal-header">
-            <h5 class="title">{{ title | translate }}</h5>
-            <button class="btn btn-close"></button>
-          </div>
-
-          <div class="modal-body" [ngStyle]="{ 'max-height': maxHeight ? maxHeight : '80vh' }">
-            <ng-content></ng-content>
-          </div>
-
+        <div *ngIf="title" class="header modal-header">
+          <h5 class="title">{{ title | translate }}</h5>
+          <button class="btn btn-close"></button>
         </div>
+
+        <div class="modal-body" [ngStyle]="{ 'max-height': maxHeight ? maxHeight : '80vh' }">
+          <ng-content></ng-content>
+        </div>
+
       </div>
     </div>
-  </section>
-</ng-container>
+  </div>
+</section>

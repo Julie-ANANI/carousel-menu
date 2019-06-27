@@ -13,7 +13,7 @@ import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { SidebarUserAnswerModule } from '../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { SharedExecutiveReportModule } from '../shared-executive-report/shared-executive-report.module';
 import { PieChartModule } from '../../../utility-components/canvas/piechart/pie-chart.module';
@@ -57,7 +57,7 @@ import { WorldmapFiltersService } from './services/worldmap-filter.service';
     ReactiveFormsModule,
     SidebarUserAnswerModule,
     CountryFlagModule,
-    MessageSpaceModule,
+    MessageTemplate1Module,
     ModalModule,
     SharedExecutiveReportModule,
     PieChartModule,

@@ -1,0 +1,46 @@
+@import "../../../../../style/framework/src/variables";
+
+#message-template-2 {
+
+  .message-wrapper, .bot-wrapper {
+    padding-bottom: $unit-5;
+  }
+
+  .message-wrapper {
+    max-width: 75%;
+  }
+
+  .bot-wrapper {
+
+    img {
+      height: 200px;
+    }
+
+  }
+
+}
+
+@media (max-width: $size-sm) {
+
+  #message-template-2 {
+
+    .message-wrapper {
+      order: 2;
+      max-width: 100%;
+    }
+
+  }
+
+}
+
+@media (min-width: $size-xl) {
+
+  #message-template-2 {
+
+    .message-wrapper {
+      max-width: 50%;
+    }
+
+  }
+
+}

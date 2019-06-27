@@ -1,312 +1,314 @@
 @import "../../../../style/framework/src/variables";
 
-#table-component {
+#table-wrapper {
 
-  .table-wrapper {
+  .table-header-wrapper {
+    flex-wrap: wrap;
+    padding-bottom: 0.5rem;
 
-    .table-header-wrapper {
-      flex-wrap: wrap;
-      padding-bottom: 0.5rem;
+    .title {
+      margin-bottom: $unit-5;
+      margin-right: $unit-5;
+    }
 
-      .title {
-        margin-bottom: $unit-5;
-        margin-right: $unit-5;
+  }
+
+  .table-responsive {
+    max-height: 500px;
+    padding-bottom: 0.75rem;
+  }
+
+  .table-loading-wrapper {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: $zindex-1;
+    background-color: rgba(255,255,255,0.8);
+  }
+
+  .table {
+
+    tr {
+      position: relative;
+    }
+
+    th:first-child {
+      border-left: $border-width solid $table-tr-border-color;
+    }
+
+    th:last-child {
+      border-right: $border-width solid $table-tr-border-color;
+    }
+
+    th, tbody td {
+      min-width: 150px;
+      max-width: 300px;
+      height: 44px;
+      max-height: 44px;
+      padding: $unit-h $unit-5;
+    }
+
+    th {
+      color: $text-background-color;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-bold;
+      background-color: $table-th-background-color;
+      text-transform: uppercase;
+
+      .th-name {
+        display: inline-flex;
+        align-items: center;
+        text-align: inherit;
+        height: 38px;
+      }
+
+      &.active, &:hover {
+        background-color: $table-th-hover-background-color !important;
+      }
+
+      &.th-action {
+        text-transform: none;
+        font-weight: $font-weight-medium;
+        background-color: $table-th-background-color !important;
+
+        .btn {
+          border: none;
+          padding: 0;
+          font-size: $font-size-sm;
+
+          i {
+            margin-left: 0;
+            margin-right: 0.3rem;
+            font-size: 0.7rem;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+        }
+
+        .th-selected-heading, .th-action-button {
+          margin-right: 1.25rem;
+        }
+
       }
 
     }
 
-    .table-responsive {
-      max-height: 486px;
-      padding-bottom: 0.1rem;
-    }
-
-    .table {
+    tbody {
 
       tr {
-        position: relative;
-      }
-
-      th:first-child {
+        color: $text-primary-color;
+        font-size: 0.65rem;
+        background-color: $bg-color-light;
         border-left: $border-width solid $table-tr-border-color;
-      }
-
-      th:last-child {
         border-right: $border-width solid $table-tr-border-color;
-      }
 
-      th, tbody td {
-        min-width: 150px;
-        max-width: 300px;
-        height: 44px;
-        max-height: 44px;
-        padding: $unit-h $unit-5;
-      }
+        td {
 
-      th {
-        color: $text-background-color;
-        font-size: $font-size-xs;
-        font-weight: $font-weight-bold;
-        background-color: $table-th-background-color;
-        text-transform: uppercase;
+          .tbody-td-data {
+            justify-content: space-between;
+            align-items: center;
 
-        .th-name {
-          display: inline-flex;
-          align-items: center;
-          text-align: inherit;
-          height: 100%;
-        }
+            .tbody-td-action-button {
+              order: 2;
+              margin-left: 0.5rem;
 
-        &.active, &:hover {
-          background-color: $table-th-hover-background-color !important;
-        }
+              .btn-xs {
+                display: inline-flex;
+                transition: none;
+                visibility: hidden;
+              }
 
-        &.th-action {
-          text-transform: none;
-          font-weight: $font-weight-medium;
-          background-color: $table-th-background-color !important;
-
-          .btn {
-            border: none;
-            padding: 0;
-            font-size: $font-size-sm;
-
-            i {
-              margin-left: 0;
-              margin-right: 0.3rem;
-              font-size: 0.7rem;
             }
 
-            &:hover {
-              text-decoration: underline;
+            &.td-type-image {
+              height: 27px;
+              width: 37px;
+            }
+
+            .tbody-td-content {
+              flex: 1;
+              max-width: 100%;
+
+              &.td-type-image, img {
+                height: 27px;
+              }
+
+              &.enable-tooltip {
+                overflow: unset;
+              }
+
+              &.td-type-tag {
+                max-height: 44px;
+                overflow-y: auto;
+              }
+
+              .tbody-td-multiLabel {
+                margin: 0;
+                min-width: 45px;
+                border-radius: 3px;
+
+                &.td-type-left-label {
+                  border-bottom-right-radius: 0;
+                  border-top-right-radius: 0;
+                }
+
+                &.td-type-middle-label {
+                  border-radius: 0;
+                }
+
+                &.td-type-right-label {
+                  border-bottom-left-radius: 0;
+                  border-top-left-radius: 0;
+                }
+
+              }
+
+              .tbody-td-tag {
+                flex-wrap: wrap;
+
+                .label-tag {
+                  background-color: #D7EBF3;
+                  color: #2295C6;
+                  font-size: 0.5rem;
+                  padding: $unit-1 $unit-3;
+                }
+
+              }
+
+              .tbody-td-multi-choice-label {
+                margin: 0;
+                padding: $unit-2 $unit-4;
+                min-width: 93px;
+                max-width: 100%;
+              }
+
             }
 
           }
 
-          .th-selected-heading, .th-action-button {
-            margin-right: 1.25rem;
-          }
-
         }
 
-      }
-
-      tbody {
-
-        tr {
-          color: $text-primary-color;
-          font-size: 0.65rem;
-          background-color: $bg-color-light;
-          border-left: $border-width solid $table-tr-border-color;
-          border-right: $border-width solid $table-tr-border-color;
+        &:hover {
 
           td {
 
             .tbody-td-data {
-              justify-content: space-between;
-              align-items: center;
 
               .tbody-td-action-button {
-                order: 2;
-                margin-left: 0.5rem;
 
                 .btn-xs {
-                  display: inline-flex;
-                  transition: none;
-                  visibility: hidden;
+                  visibility: visible;
+                  color: $text-background-color;
+                  background-color: $table-th-hover-background-color;
+                  border-color: $table-tr-border-color;
                 }
 
               }
 
-              &.td-type-image {
-                height: 27px;
-                width: 37px;
-              }
-
-              .tbody-td-content {
-                flex: 1;
-                max-width: 100%;
-
-                &.td-type-image, img {
-                  height: 27px;
-                }
-
-                &.enable-tooltip {
-                  overflow: unset;
-                }
-
-                &.td-type-tag {
-                  max-height: 44px;
-                  overflow-y: auto;
-                }
-
-                .tbody-td-multiLabel {
-                  margin: 0;
-                  min-width: 45px;
-                  border-radius: 3px;
-
-                  &.td-type-left-label {
-                    border-bottom-right-radius: 0;
-                    border-top-right-radius: 0;
-                  }
-
-                  &.td-type-middle-label {
-                    border-radius: 0;
-                  }
-
-                  &.td-type-right-label {
-                    border-bottom-left-radius: 0;
-                    border-top-left-radius: 0;
-                  }
-
-                }
-
-                .tbody-td-tag {
-                  flex-wrap: wrap;
-
-                  .label-tag {
-                    background-color: #D7EBF3;
-                    color: #2295C6;
-                    font-size: 0.5rem;
-                    padding: $unit-1 $unit-3;
-                  }
-
-                }
-
-                .tbody-td-multi-choice-label {
-                  margin: 0;
-                  padding: $unit-2 $unit-4;
-                  min-width: 93px;
-                  max-width: 100%;
-                }
-
-              }
-
-            }
-
-          }
-
-          &:hover {
-
-            td {
-
-              .tbody-td-data {
-
-                .tbody-td-action-button {
-
-                  .btn-xs {
-                    visibility: visible;
-                    color: $text-background-color;
-                    background-color: $table-th-hover-background-color;
-                    border-color: $table-tr-border-color;
-                  }
-
-                }
-
-              }
-
-            }
-
-          }
-
-          &.active, &:hover {
-            background-color: $table-tr-hover-background-color;
-          }
-
-        }
-
-      }
-
-      .th-checkbox {
-        min-width: 45px !important;
-        max-width: 45px !important;
-        width: 45px !important;
-        padding: 0.5rem !important;
-
-        label {
-          transition: all .2s ease;
-          width: 20px;
-          height: 20px;
-          margin: auto;
-          border-radius: $border-radius;
-          border: $border-width-lg solid $border-meta-color;
-
-          input[type="checkbox"] {
-            display: none;
-          }
-
-          i {
-            font-size: $font-size-sm;
-            display: none;
-          }
-
-          .hr {
-            margin-left: auto;
-            margin-right: auto;
-            width: 75%;
-            border-width: 2px;
-            border-color: $primary-color;
-          }
-
-          &:hover {
-            cursor: pointer;
-            background-color: $table-th-hover-background-color;
-          }
-
-          &.active {
-            border-color: $primary-color;
-
-            i {
-              display: block;
-              color: $primary-color;
             }
 
           }
 
         }
 
+        &.active, &:hover {
+          background-color: $table-tr-hover-background-color;
+        }
+
       }
 
-      .btn-xs {
-        min-width: unset;
-        height: unset;
-        padding: 0.3rem $unit-3;
+    }
+
+    .th-checkbox {
+      min-width: 45px !important;
+      max-width: 45px !important;
+      width: 45px !important;
+      padding: 0.5rem !important;
+
+      label {
+        transition: all .2s ease;
+        width: 20px;
+        height: 20px;
+        margin: auto;
+        border-radius: $border-radius;
+        border: $border-width-lg solid $border-meta-color;
+
+        input[type="checkbox"] {
+          display: none;
+        }
+
+        i {
+          font-size: $font-size-sm;
+          display: none;
+        }
+
+        .hr {
+          margin-left: auto;
+          margin-right: auto;
+          width: 75%;
+          border-width: 2px;
+          border-color: $primary-color;
+        }
 
         &:hover {
-          background-color: transparent !important;
-          transition: background-color 0.2s ease !important;
+          cursor: pointer;
+          background-color: $table-th-hover-background-color;
         }
 
+        &.active {
+          border-color: $primary-color;
+
+          i {
+            display: block;
+            color: $primary-color;
+          }
+
+        }
+
+      }
+
+    }
+
+    .btn-xs {
+      min-width: unset;
+      height: unset;
+      padding: 0.3rem $unit-3;
+
+      &:hover {
+        background-color: transparent !important;
+        transition: background-color 0.2s ease !important;
       }
 
     }
 
   }
 
+
 }
 
 
 @media (max-width: $size-md) {
 
-  #table-component {
+  #table-wrapper {
 
-    .table-wrapper {
+    .table {
 
-      .table {
+      tbody {
 
-        tbody {
+        tr {
 
-          tr {
+          td {
 
-            td {
+            .tbody-td-data {
 
-              .tbody-td-data {
+              .tbody-td-action-button {
 
-                .tbody-td-action-button {
-
-                  .btn-xs {
-                    visibility: visible;
-                  }
-
+                .btn-xs {
+                  visibility: visible;
                 }
 
               }

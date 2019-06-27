@@ -5,4 +5,6 @@ export interface Config {
   search: string;
   sort: string;
   status?: string;
+  isPublic?: string;
+  [property: string]: string;
 }

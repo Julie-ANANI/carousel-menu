@@ -43,8 +43,6 @@ export class AdminProjectManagementComponent implements OnInit {
   sidebarState = new Subject<string>();
   projectSubject = new Subject<Innovation>();
 
-  private _showDeleteModal = false;
-
   // Owner edition
   isEditOwner = false;
   usersSuggestion: Array<any> = [];
@@ -79,9 +77,6 @@ export class AdminProjectManagementComponent implements OnInit {
   // Campaign choice
   currentCampaign: any = null;
 
-  // Click percentage
-  private _clickPercentage = 0.0;
-
   // Campaign tags
   isTagsSidebar = false;
 
@@ -99,8 +94,6 @@ export class AdminProjectManagementComponent implements OnInit {
     domainfr: ['', [Validators.required]],
     owner: '',
   });
-
-  public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -132,7 +125,7 @@ export class AdminProjectManagementComponent implements OnInit {
             {name: 'schneider'},
             {name: 'bnpparibas'}];
 
-    this._domain = this._project.settings.domain;
+    this._domain = this._project && this._project.settings && this._project.settings.domain ? this._project.settings.domain : '';
 
     this.offers = [{name: 'insights', alias: 'GetInsights'}, {name: 'apps', alias: 'GetApps'}, {name: 'leads', alias: 'GetLeads'}];
 
@@ -160,7 +153,6 @@ export class AdminProjectManagementComponent implements OnInit {
       .subscribe((campaigns: any) => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
           if (this.currentCampaign !== null) {
-            this.calculateClickPercentage();
             this.updateStats(this.currentCampaign);
             this.generateAvailableScenario();
             this.generateModifiedScenarios();
@@ -498,16 +490,6 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   * This function calculate the click percentage to the project
-   */
-  calculateClickPercentage() {
-    if (this.currentCampaign && this.currentCampaign.stats && this.currentCampaign.stats.campaign) {
-      this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.nbProsClicked,
-        this.currentCampaign.stats.nbProsOpened);
-    }
-  }
-
-  /***
    * This function is call when the user edit the tags of the project
    * Change the sidebar to the addTags sidebar
    */
@@ -688,7 +670,7 @@ export class AdminProjectManagementComponent implements OnInit {
         this.resetData();
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , notification);
       }, (err: any) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
       });
   }
 
@@ -702,7 +684,7 @@ export class AdminProjectManagementComponent implements OnInit {
       this.currentCampaign = savedCampaign;
       this.resetData();
     }, (err: any) => {
-      this._notificationsService.error('ERROR', err);
+      this._notificationsService.error('ERROR', err.message);
     });
   }
 
@@ -716,29 +698,9 @@ export class AdminProjectManagementComponent implements OnInit {
     this.projectSubject.next(this._project);
   }
 
-  deleteProjectModal() {
-    this._showDeleteModal = true;
-  }
-
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._showDeleteModal = false;
-  }
-
   public updateOwnerLanguage(language: string) {
     this._project.owner.language = language;
     this._userService.updateOther(this._project.owner).subscribe();
-  }
-
-  /**
-   * Suppression et mise à jour de la vue
-   */
-  public removeProject() {
-    this._innovationService
-      .remove(this._project._id)
-      .subscribe((projectRemoved: any) => {
-        this._router.navigate(['/user/admin/projects/']);
-      });
   }
 
   formatText(text: string) {
@@ -770,14 +732,6 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get authService() {
     return this._authService;
-  }
-
-  get clickPercentage(): number {
-    return this._clickPercentage;
-  }
-
-  get showDeleteModal(): boolean {
-    return this._showDeleteModal;
   }
 
 }

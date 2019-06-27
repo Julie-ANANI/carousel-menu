@@ -1,4 +1,4 @@
-<div id="sort-component" class="flex-start c-hand" [ngClass]="{ 'desc': order === 1, 'asn': order === -1 }" (click)="sort($event)">
+<div id="sort-component" class="flex-start c-hand" [ngClass]="{ 'asc': order === 1, 'desc': order === -1 }" (click)="sort($event)">
 
   <span>{{ label }}</span>
 

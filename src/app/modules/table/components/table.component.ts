@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
 import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
+import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-shared-table',
@@ -76,7 +77,12 @@ export class TableComponent implements OnInit {
 
   private _pagination: Pagination;
 
-  constructor(private _translateService: TranslateService) {
+  private _isLoadingData: boolean;
+
+  private _filteredContent: Array<any> = [];
+
+  constructor(private _translateService: TranslateService,
+              private _localStorageService: LocalStorageService) {
     this._initializeTable();
   }
 
@@ -107,10 +113,17 @@ export class TableComponent implements OnInit {
     if (data) {
       this._table = data;
       this._initializeVariables();
+      this._checkLocalStorage();
+      this._setPagination(Number(this._config.offset));
       this._checkSearching();
+
+      if (this._table._isLocal) {
+        this._getFilteredContent(data._content);
+      }
+
       this._initializeColumns();
       this._initializeContents();
-      this._setPagination(Number(this._config.offset));
+
     }
 
   }
@@ -118,6 +131,78 @@ export class TableComponent implements OnInit {
   private _initializeVariables() {
     this._massSelection = false;
     this._isSearching = false;
+    this._isLoadingData = false;
+  }
+
+  /***
+   * This function is to check the limit or we can say the parPage row which
+   * user has already activated according to that if the limit is not same to the
+   * config limit then we update the config limit and output the event, add call the
+   * api to fetch the data.
+   * @private
+   */
+  private _checkLocalStorage() {
+
+    if (this._localStorageService.getItem(`${this._table._selector}-limit`)) {
+      const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
+
+      if (localStorage.toString(10) !== this._config.limit) {
+        this._config.limit = localStorage.toString(10) || this._config.limit;
+        this._setLocalStorage();
+
+        if (!this._table._isLocal) {
+          this._emitConfigChange();
+        }
+
+      }
+
+    } else {
+      this._setLocalStorage();
+    }
+
+  }
+
+  private _setLocalStorage() {
+    this._localStorageService.setItem(`${this._table._selector}-limit`, JSON.stringify(this._config.limit));
+  }
+
+
+  /***
+   * This function is called when the content is local. We slice the
+   * rows passed to it based on the offset and parPage.
+   * @param rows
+   * @private
+   */
+  private _getFilteredContent(rows: Array<any>) {
+    this._pagination.parPage = Number(this._config.limit);
+
+    this._table._total = rows.length;
+
+    if (this._pagination.offset >= this._table._total) {
+      this._pagination.offset = 0;
+      this._pagination.currentPage = 1;
+    }
+
+    const startIndex = this._pagination.offset;
+    const endIndex = this._pagination.offset + this._pagination.parPage;
+
+    this._isSearching = this._isSearching && this._table._total === 0;
+
+    this._filteredContent = rows.slice(startIndex, endIndex);
+
+  }
+
+  /***
+   * This function sets the pagination value.
+   */
+  private _setPagination(offset: number) {
+    this._pagination = {
+      propertyName: this._table._selector,
+      offset: offset,
+      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
+      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
+      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
+    }
   }
 
   private _checkSearching() {
@@ -140,21 +225,14 @@ export class TableComponent implements OnInit {
    * This function initialise the values of a content.
    */
   private _initializeContents() {
-    this._table._content.forEach((value, index) => {
-      this._table._content[index]._isSelected = false;
-    });
-  }
-
-  /***
-   * This function sets the pagination value.
-   */
-  private _setPagination(offset: number) {
-    this._pagination = {
-      propertyName: this._table._selector,
-      offset: offset,
-      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
-      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
-      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value, index) => {
+        this._filteredContent[index]._isSelected = false;
+      });
+    } else {
+      this._table._content.forEach((value, index) => {
+        this._table._content[index]._isSelected = false;
+      });
     }
   }
 
@@ -165,7 +243,13 @@ export class TableComponent implements OnInit {
   private _getSelectedRowsNumber(): number {
 
     if (this._massSelection) {
-      return this._table._content.length;
+
+      if (this._table._isLocal) {
+        return this._filteredContent.length;
+      } else {
+        return this._table._content.length;
+      }
+
     } else {
       return this.getSelectedRows().length;
     }
@@ -179,12 +263,17 @@ export class TableComponent implements OnInit {
   public selectAll(event: Event): void  {
     event.preventDefault();
 
-    this._table._content.forEach((value) => {
-      value._isSelected = event.target['checked'];
-    });
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value) => {
+        value._isSelected = (event.target as HTMLInputElement).checked;
+      });
+    } else {
+      this._table._content.forEach((value) => {
+        value._isSelected = (event.target as HTMLInputElement).checked;
+      });
+    }
 
-    this._massSelection = event.target['checked'];
-
+    this._massSelection = (event.target as HTMLInputElement).checked;
     this._onSelectRow();
 
   }
@@ -195,17 +284,11 @@ export class TableComponent implements OnInit {
    * parent component.
    */
   private _onSelectRow() {
-
     if (this._massSelection) {
-      const rows: Array<any> = [];
-      this._table._content.forEach((content) => {
-        rows.push(content);
-      });
-      this.selectRows.emit({ _rows: rows});
+      this.selectRows.emit({ _rows: this._getAllContent()});
     } else {
       this.selectRows.emit({ _rows: this._getSelectedRowsContent()});
     }
-
   }
 
   /***
@@ -214,6 +297,7 @@ export class TableComponent implements OnInit {
    * the config changes to all related components.
    */
   private _emitConfigChange() {
+    this._isLoadingData = true;
     this.configChange.emit(this._config);
   }
 
@@ -242,17 +326,11 @@ export class TableComponent implements OnInit {
    * Emit the Output removeRows
    */
   public removeSelectedRows() {
-
     if (this._massSelection) {
-      const rows: Array<any> = [];
-      this._table._content.forEach((content) => {
-        rows.push(content);
-      });
-      this.removeRows.emit(rows);
+      this.removeRows.emit(this._getAllContent());
     } else {
       this.removeRows.emit(this._getSelectedRowsContent());
     }
-
 }
 
   /***
@@ -261,41 +339,49 @@ export class TableComponent implements OnInit {
    * @param {string} action
    */
   public onActionClick(action: string) {
-
     if (this._massSelection) {
-      const rows: Array<any> = [];
-      this._table._content.forEach((content) => {
-        rows.push(content);
-      });
-      this.performAction.emit({_action: action, _rows: rows});
+      this.performAction.emit({_action: action, _rows: this._getAllContent()});
     } else {
       this.performAction.emit({_action: action, _rows: this._getSelectedRowsContent()})
     }
-
   }
 
   /***
    * This function returns the keys of the table
    * @returns {string[]}
    */
-  public getRowsKeys(): string[] {
-    return Object.keys(this._table._content);
+  public getRowsKeys(): Array<string> {
+    if (this._table._isLocal) {
+      return Object.keys(this._filteredContent);
+    } else {
+      return Object.keys(this._table._content);
+    }
   }
 
   /***
-   * This function returns the content of the column basing on the rowKey and the column(s) attribute(s)
+   * This function returns the content of the column basing on the rowKey
+   * and the column(s) attribute(s)
    * @param {string} rowKey
    * @param {string} columnAttr
-   * @returns {any}
+   * @returns {string}
    */
   public getContentValue(rowKey: string, columnAttr: string): any  {
 
-    if (this._table && this._table._content && this._table._content.length > 0) {
+    const row: number = TableComponent._getRowKey(rowKey);
+    let contents: Array<any> = [];
+
+    if (this._table._isLocal) {
+      contents = this._filteredContent;
+    } else {
+      contents = this._table._content;
+    }
+
+    if (contents.length > 0) {
 
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
 
-        let tmpContent = this._table._content[rowKey][newColumnAttr[0]];
+        let tmpContent = contents[row] ? contents[row][newColumnAttr[0]] : '' ;
 
         newColumnAttr = newColumnAttr.splice(1);
 
@@ -307,8 +393,8 @@ export class TableComponent implements OnInit {
 
       } else {
 
-        if (this._table._content[rowKey] && this._table._content[rowKey][columnAttr]) {
-          return this._table._content[rowKey][columnAttr];
+        if (contents[row] && contents[row][columnAttr]) {
+          return contents[row][columnAttr];
         }
 
       }
@@ -362,7 +448,7 @@ export class TableComponent implements OnInit {
    * @param {Column} column
    * @returns {Choice[]}
    */
-  public getChoices(column: Column): Choice[] {
+  public static getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
@@ -374,7 +460,7 @@ export class TableComponent implements OnInit {
    * @returns {Choice}
    */
   public getChoice(column: Column, name: string): Choice {
-    return this.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
+    return TableComponent.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
   }
 
   /***
@@ -431,7 +517,11 @@ export class TableComponent implements OnInit {
    * @returns {Row[]}
    */
   public getSelectedRows(): Row[] {
-    return this._table._content.filter((content) => content._isSelected === true );
+    if (this._table._isLocal) {
+      return this._filteredContent.filter((content) => content._isSelected === true );
+    } else {
+      return this._table._content.filter((content) => content._isSelected === true );
+    }
   }
 
 
@@ -452,8 +542,16 @@ export class TableComponent implements OnInit {
    */
   public selectRow(key: string): void {
 
+    const rowKey: number = TableComponent._getRowKey(key);
+
     if (this._table._isSelectable) {
-      this._table._content[key]._isSelected = !(this._table._content[key]._isSelected);
+
+      if (this._table._isLocal) {
+        this._filteredContent[rowKey]._isSelected = !(this._filteredContent[rowKey]._isSelected);
+      } else {
+        this._table._content[rowKey]._isSelected = !(this._table._content[rowKey]._isSelected);
+      }
+
       this._massSelection = false;
     }
 
@@ -477,7 +575,7 @@ export class TableComponent implements OnInit {
    * @param content
    * @returns {boolean}
    */
-  public isSelected(content: any): boolean {
+  public static isSelected(content: any): boolean {
     return !!content && !!content._isSelected;
   }
 
@@ -513,6 +611,45 @@ export class TableComponent implements OnInit {
     }
   }
 
+  private static _getRowKey(key: string): number {
+    return parseInt(key, 10);
+  }
+
+  private _getAllContent(): Array<any> {
+    const rows: Array<any> = [];
+
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((content) => {
+        rows.push(content);
+      });
+    } else {
+      this._table._content.forEach((content) => {
+        rows.push(content);
+      });
+    }
+
+    return rows;
+  }
+
+  /***
+   * When changing the pagination we check if we have activated the
+   * search or not.
+   * @private
+   */
+  private _setFilteredContent() {
+
+    if (this._localStorageService.getItem('table-search') === 'active') {
+      this._isSearching = true;
+
+      for (const configKey of Object.keys(this._config)) {
+        this._getFilteredContent(this._searchLocally(configKey));
+      }
+    } else {
+      this._getFilteredContent(this._table._content);
+    }
+
+  }
+
   get table(): Table {
     return this._table;
   }
@@ -527,7 +664,11 @@ export class TableComponent implements OnInit {
 
   set sortConfig(value: string) {
     this._config.sort = value;
-    this._emitConfigChange();
+
+    if (!this._table._isLocal) {
+      this._emitConfigChange();
+    }
+
   }
 
   get pagination(): Pagination {
@@ -538,7 +679,80 @@ export class TableComponent implements OnInit {
     this._pagination = value;
     this._config.limit = this._pagination.parPage.toString(10);
     this._config.offset = this._pagination.offset.toString(10);
-    this._emitConfigChange();
+
+    if (this._table._isLocal) {
+      this._setFilteredContent();
+    } else {
+      this._emitConfigChange();
+    }
+
+  }
+
+  private _searchLocally(configKey: string): Array<any> {
+
+    let rows: Array<any> = [];
+
+    if (this._table._columns.find((column) => column._attrs[0] === configKey) || this._config.search.length > 2) {
+
+      if (this._config.search.length > 2) {
+        for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
+          const searchValue = JSON.parse(this._config.search)[searchKey];
+          rows = this._searchContent(this._table._content, searchKey, searchValue.toString().toLowerCase());
+        }
+      }
+
+      if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
+        rows = rows.length > 0 || this._config.search.length > 2 ? rows : this._table._content;
+        const searchValue = this._config[configKey];
+        rows = this._searchContent(rows, configKey, searchValue.toLowerCase());
+      }
+
+      this._localStorageService.setItem('table-search', 'active');
+
+    } else {
+      rows = this._table._content;
+      this._localStorageService.setItem('table-search', '');
+    }
+
+    return rows;
+
+  }
+
+  private _searchContent(totalContents: Array<any>, searchKey: string, searchValue: string): Array<any> {
+    return totalContents.filter((content) => {
+
+      if (searchKey === 'country') {
+        searchKey = 'country.flag';
+      }
+
+      for (const contentKey of Object.keys(content)) {
+
+        if (searchKey.split('.').length > 1) {
+          let newAttr = searchKey.split('.');
+
+          if (contentKey === newAttr[0] ) {
+            let tmpContent = content[newAttr[0]];
+            newAttr = newAttr.splice(1);
+
+            for (const i of newAttr){
+              tmpContent = tmpContent ? tmpContent[i] : '-';
+            }
+
+            if (tmpContent.toString().toLowerCase().includes(searchValue)) {
+              return true;
+            }
+
+          }
+
+        } else if (contentKey === searchKey && content[searchKey] && content[searchKey].toString().toLowerCase().includes(searchValue)) {
+          return true;
+        }
+
+      }
+
+      return false;
+
+    });
   }
 
   get searchConfig(): Config {
@@ -547,7 +761,14 @@ export class TableComponent implements OnInit {
 
   set searchConfig(value: Config) {
     this._config = value;
-    this._emitConfigChange();
+
+    if (this._table._isLocal) {
+      this._localStorageService.setItem('table-search', 'active');
+      this._setFilteredContent();
+    } else {
+      this._emitConfigChange();
+    }
+
   }
 
   get config(): Config {
@@ -568,6 +789,14 @@ export class TableComponent implements OnInit {
 
   get isSearching(): boolean {
     return this._isSearching;
+  }
+
+  get isLoadingData(): boolean {
+    return this._isLoadingData;
+  }
+
+  get filteredContent(): Array<any> {
+    return this._filteredContent;
   }
 
 }

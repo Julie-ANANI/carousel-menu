@@ -4,8 +4,7 @@
   </div>
 
   <app-shared-table [data]="countriesTable"
-                    [config]="config"
-                    (configChange)="loadCountries($event)"
+                    [(config)]="config"
                     (editRow)="editCountry($event)"
                     (removeRows)="deleteCountriesModal($event)"></app-shared-table>
 

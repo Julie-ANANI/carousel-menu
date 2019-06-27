@@ -6,6 +6,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {Config} from '../../../../models/config';
 
 @Component({
   selector: 'app-shared-search-results',
@@ -20,13 +21,12 @@ export class SharedSearchResultsComponent implements OnInit {
   private _selection: any;
   private _chosenCampaign: Array<any>;
   private _addToCampaignModal = false;
-  public config: any = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    },
+  public config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{ "created": -1 }',
   };
 
   constructor(private _router: Router,
