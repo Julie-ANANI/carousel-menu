@@ -31,6 +31,7 @@
       <!-- table users -->
       <ng-container *ngIf="!fetchingError">
         <app-shared-table
+          (editRow)="onClickEdit($event)"
           [(config)]="config"
           [data]="table">
         </app-shared-table>
@@ -41,6 +42,18 @@
     </div>
   </div>
 </section>
+
+
+<!-- sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-user-form
+    (finalUserData)="updateUser($event)"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type"
+    [user]="selectedUser">
+  </app-user-form>
+</app-sidebar>
+<!-- /sidebar -->
 
 
 

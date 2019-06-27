@@ -36,7 +36,7 @@ export class AdminUsersComponent {
 
   private _modalDelete: boolean;
 
-  private _currentUser: User;
+  private _selectedUser: User;
 
   private _total: number;
 
@@ -103,6 +103,32 @@ export class AdminUsersComponent {
     });
   }
 
+  public onClickEdit(value: User) {
+    const us = new User(value);
+
+    this._userService.get(us.id).pipe(first()).subscribe((response: User) => {
+      this._selectedUser = response;
+
+      this._sidebarValue = {
+        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+        title: 'SIDEBAR.TITLE.EDIT_USER',
+        type: 'editUser'
+      };
+
+    });
+
+  }
+
+  public updateUser(value: User) {
+    this._userService.updateOther(value).pipe(first()).subscribe(() => {
+      this._getUsers();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+      },
+      () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   public synchronizeSRTUsers() {
     this._userService.createSwellUsers().pipe(first()).subscribe(response => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'All the users are updated.');
@@ -118,30 +144,10 @@ export class AdminUsersComponent {
   }
 
 
-  editUser(user: User) {
-    const us = new User(user);
-
-    this._userService.get(us.id).pipe(first()).subscribe((value: any) => {
-      this._sidebarValue = {
-        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-        title: 'SIDEBAR.TITLE.EDIT_USER',
-        type: 'editUser'
-      };
-      this._currentUser = value;
-    });
-
-  }
 
 
-  updateUser(user: User) {
-    this._userService.updateOther(user).pipe(first()).subscribe((data: any) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
-      //this.loadUsers();
-    },
-    () => {
-      this._translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
-    });
-  }
+
+
 
 
   deleteUsersModal(users: User[]) {
@@ -205,8 +211,8 @@ export class AdminUsersComponent {
     return this._sidebarValue;
   }
 
-  get currentUser(): User {
-    return this._currentUser;
+  get selectedUser(): User {
+    return this._selectedUser;
   }
 
   get modalDelete(): boolean {
