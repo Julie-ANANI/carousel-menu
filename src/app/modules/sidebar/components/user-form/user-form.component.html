@@ -198,7 +198,7 @@
       </ng-container>
 
       <!-- Display all keywords associated to the professional -->
-      <ng-container *ngIf="isProfessional && campaign">
+      <ng-container *ngIf="isProfessional && campaign && pro.personId">
         <div class="pro-quiz-wrapper">
           <a class="text-link" *ngIf="!proKeywords" (click)="showKeywords()">Voir keywords</a>
           <ul *ngIf="proKeywords">
