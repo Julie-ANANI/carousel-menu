@@ -8,11 +8,11 @@ export class ConfigService {
 
   public configLimit(selector: string): string {
 
-    if (this._localStorageService.getItem(`${selector}-limit`)) {
-      return this._localStorageService.getItem(`${selector}-limit`);
+    if (this._localStorageService.getItem(selector) && !isNaN(parseInt(this._localStorageService.getItem(selector)))) {
+      return this._localStorageService.getItem(selector);
     }
 
-    this._localStorageService.setItem(`${selector}-limit`, '10');
+    this._localStorageService.setItem(selector, '10');
 
     return '10';
 
