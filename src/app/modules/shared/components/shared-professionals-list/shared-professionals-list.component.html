@@ -43,7 +43,7 @@
 <!-- modal -->
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
 
-  <span class="text-background text-medium">{{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}</span>
+  <div class="text-background text-medium">{{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}</div>
 
   <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
     <li *ngFor="let professional of professionalsToRemove" class="m-right-3 m-top-1">
