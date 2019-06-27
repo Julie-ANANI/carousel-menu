@@ -1,20 +1,40 @@
-<section class="section-light-pad" id="admin-users-component">
+<section id="admin-users" class="section-light-pad">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <div class="restrict-width">
+
+
+      <!-- fetching error -->
+      <ng-container *ngIf="fetchingError">
+        <div class="a-u-error-wrapper d-flex align-center">
+          <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+        </div>
+      </ng-container>
+      <!-- /fetching error -->
+
+
+    </div>
+  </div>
+</section>
+
+
+
+<!--<section class="section-light-pad" id="admin-users-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <!-- TODO
+    &lt;!&ndash; TODO
     <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
       <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
       <p>{{ pending_invitations.join(', ') }}</p>
-    </div> -->
+    </div> &ndash;&gt;
 
-    <!-- section table -->
+    &lt;!&ndash; section table &ndash;&gt;
     <app-shared-table
       [data]="tableInfos"
       [(config)]="config"
       (editRow)="editUser($event)"
       (removeRows)="deleteUsersModal($event)">
     </app-shared-table>
-    <!-- /section table -->
+    &lt;!&ndash; /section table &ndash;&gt;
 
       <div *ngIf="isJuan()">
           <button (click)="synchronizeSRTUsers()">Update everybody</button>
@@ -23,7 +43,7 @@
 </section>
 
 
-<!-- modal to ask admin to delete the user -->
+&lt;!&ndash; modal to ask admin to delete the user &ndash;&gt;
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}
   <div class="modal-footer">
@@ -31,10 +51,10 @@
     <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 </app-modal>
-<!-- /modal to ask admin to delete the user -->
+&lt;!&ndash; /modal to ask admin to delete the user &ndash;&gt;
 
 
-<!-- sidebar to edit user -->
+&lt;!&ndash; sidebar to edit user &ndash;&gt;
 <app-sidebar [(template)]="sidebarValue">
   <app-user-form
     [sidebarState]="sidebarValue.animate_state"
@@ -43,4 +63,4 @@
     (finalUserData)="updateUser($event)">
   </app-user-form>
 </app-sidebar>
-<!-- sidebar to edit user -->
+&lt;!&ndash; sidebar to edit user &ndash;&gt;-->

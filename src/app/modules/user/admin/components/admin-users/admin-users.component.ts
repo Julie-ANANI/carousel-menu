@@ -6,7 +6,8 @@ import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import {Config} from '../../../../../models/config';
+import { Config } from '../../../../../models/config';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-admin-users',
@@ -16,22 +17,6 @@ import {Config} from '../../../../../models/config';
 
 export class AdminUsersComponent implements OnInit {
 
-  private _users: Array<User> = [];
-
-  private _usersToRemove: User[] = [];
-
-  private _sidebarValue: SidebarInterface = {};
-
-  private _tableInfos: Table;
-
-  private _modalDelete = false;
-
-  private _currentUser: User;
-
-  private _total: number;
-
-  private _me: boolean = false;
-
   private _config: Config = {
     fields: 'id company jobTitle created domain location firstName lastName',
     limit: '10',
@@ -40,11 +25,36 @@ export class AdminUsersComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  constructor(private translateTitleService: TranslateTitleService,
-              private userService: UserService,
-              private translateNotificationsService: TranslateNotificationsService) {
+  private _users: Array<User> = [];
 
-    this.translateTitleService.setTitle('USERS.TITLE');
+  private _usersToRemove: Array<User> = [];
+
+  private _sidebarValue: SidebarInterface = {};
+
+  private _table: Table;
+
+  private _modalDelete: boolean;
+
+  private _currentUser: User;
+
+  private _total: number;
+
+  private _me: boolean = false;
+
+  private _fetchingError: boolean;
+
+  constructor(private _translateTitleService: TranslateTitleService,
+              private _userService: UserService,
+              private _activatedRoute: ActivatedRoute,
+              private _translateNotificationsService: TranslateNotificationsService) {
+
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.USERS');
+
+    if (!this._activatedRoute.snapshot.data.users && Array.isArray(this._activatedRoute.snapshot.data.users.result)) {
+
+    } else {
+      this._fetchingError = true;
+    }
 
   }
 
@@ -54,12 +64,12 @@ export class AdminUsersComponent implements OnInit {
 
 
   private loadUsers(): void {
-    this.userService.getAll(this._config).pipe(first()).subscribe((users: any) => {
+    this._userService.getAll(this._config).pipe(first()).subscribe((users: any) => {
       this._users = users.result;
       this._total = users._metadata.totalCount;
 
-      this._tableInfos = {
-        _selector: 'admin-user',
+      this._table = {
+        _selector: 'admin-user-limit',
         _title: 'TABLE.TITLE.USERS',
         _content: this._users,
         _total: this._total,
@@ -79,9 +89,9 @@ export class AdminUsersComponent implements OnInit {
           ]
       };
       }, () => {
-      this.translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
+      this._translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
     });
-    this.userService.getSelf().pipe(first())
+    this._userService.getSelf().pipe(first())
       .subscribe(result => {
         this._me = result && result.email === 'jdcruz-gomez@umi.us';
       }, err => {
@@ -98,7 +108,7 @@ export class AdminUsersComponent implements OnInit {
   editUser(user: User) {
     const us = new User(user);
 
-    this.userService.get(us.id).pipe(first()).subscribe((value: any) => {
+    this._userService.get(us.id).pipe(first()).subscribe((value: any) => {
       this._sidebarValue = {
         animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
         title: 'SIDEBAR.TITLE.EDIT_USER',
@@ -111,12 +121,12 @@ export class AdminUsersComponent implements OnInit {
 
 
   updateUser(user: User) {
-    this.userService.updateOther(user).pipe(first()).subscribe((data: any) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+    this._userService.updateOther(user).pipe(first()).subscribe((data: any) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
       this.loadUsers();
     },
     () => {
-      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 
@@ -138,18 +148,18 @@ export class AdminUsersComponent implements OnInit {
 
 
   private removeUser(userId: string) {
-    this.userService.deleteUser(userId).pipe(first()).subscribe((foo: any) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+    this._userService.deleteUser(userId).pipe(first()).subscribe((foo: any) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
       this.loadUsers();
     }, () => {
-      this.translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 
   public synchronizeSRTUsers() {
-    this.userService.createSwellUsers().pipe(first())
+    this._userService.createSwellUsers().pipe(first())
       .subscribe(result => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
         console.log(result);
       }, err => {
         console.error(err);
@@ -169,8 +179,8 @@ export class AdminUsersComponent implements OnInit {
     return this._config;
   }
 
-  get tableInfos(): Table {
-    return this._tableInfos;
+  get table(): Table {
+    return this._table;
   }
 
   get total(): number {
@@ -199,6 +209,10 @@ export class AdminUsersComponent implements OnInit {
 
   set modalDelete(value: boolean) {
     this._modalDelete = value;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }
