@@ -42,7 +42,6 @@ import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
 import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
-import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
 
 
 const adminRoutes: Routes = [
@@ -68,9 +67,7 @@ const adminRoutes: Routes = [
           {
             path: '',
             component: AdminProfessionalsComponent,
-            pathMatch: 'full',
-            resolve: { professionals : ProfessionalsResolver },
-            runGuardsAndResolvers: 'always',
+            pathMatch: 'full'
           }
         ]
       },
