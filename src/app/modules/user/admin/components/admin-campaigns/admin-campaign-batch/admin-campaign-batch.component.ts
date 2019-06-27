@@ -554,7 +554,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   private getContentWorkflowStep(batch: Batch, step: any): any {
     const workflowName = this.getWorkflowName(batch);
-    const content = {en: '', fr: ''};
+    const content = {en: '', fr: '', _id: batch._id};
 
     this.campaign.settings.emails.forEach( mail => {
       if (mail.step === step && workflowName === mail.nameWorkflow) {

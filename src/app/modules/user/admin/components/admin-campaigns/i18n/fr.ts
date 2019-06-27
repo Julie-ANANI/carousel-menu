@@ -168,7 +168,7 @@ export const CAMPAIGNS = {
     'BOT': 'Lancer auto-batch et prendre des vacances :)',
     'AUTO_BATCH_LABEL': 'Démarrage auto-batch',
     'NUGGETS': 'Nuggets',
-    'TITLE': 'Batch des',
+    'TITLE': 'Batch de',
     'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?'
   }
 
