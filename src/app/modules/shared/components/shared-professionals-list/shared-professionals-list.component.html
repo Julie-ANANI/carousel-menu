@@ -1,12 +1,28 @@
 <section id="shared-professionals-list">
-
-  <!-- table -->
   <app-shared-table
-    [config]="config"
     (configChange)="onConfigChange($event)"
+    (editRow)="onClickEdit($event)"
+    [config]="config"
     [data]="table">
   </app-shared-table>
-  <!-- /table -->
-
-
 </section>
+
+
+<!-- sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+
+  <!-- professional -->
+  <ng-container *ngIf="isProfessionalSidebar">
+    <app-user-form
+      (finalProfessionalData)="updateProfessional($event)"
+      [campaign]="campaign"
+      [pro]="selectedProfessional"
+      [sidebarState]="sidebarValue.animate_state"
+      [type]="sidebarValue.type">
+    </app-user-form>
+  </ng-container>
+  <!-- /professional -->
+
+
+</app-sidebar>
+<!-- /sidebar -->

@@ -1,7 +1,12 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Professional } from '../../../../models/professional';
 import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
+import { ProfessionalsService} from '../../../../services/professionals/professionals.service';
+import { first} from 'rxjs/operators';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
+import { Campaign } from '../../../../models/campaign';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -27,6 +32,10 @@ export class SharedProfessionalsListComponent {
     this._total = value;
   }
 
+  @Input() set campaign(value: Campaign) {
+    this._campaign = value;
+  }
+
   @Input() set professionals(value: Array<SelectedProfessional>) {
     this._professionals = value;
     this._setProfessionals();
@@ -45,7 +54,18 @@ export class SharedProfessionalsListComponent {
 
   private _config: Config;
 
-  constructor() { }
+  private _sidebarValue: SidebarInterface = {};
+
+  private _isProfessionalSidebar = false;
+
+  private _isTagsSidebar = false;
+
+  selectedProfessional: Professional;
+
+  private _campaign: Campaign = null;
+
+  constructor(private _professionalsService: ProfessionalsService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   private _setProfessionals() {
     if (this._professionals.length > 0) {
@@ -90,6 +110,38 @@ export class SharedProfessionalsListComponent {
     this.configChange.emit(value);
   }
 
+  private _resetSidebarVariables() {
+    this._isProfessionalSidebar = false;
+    this._isTagsSidebar = false;
+  }
+
+  public onClickEdit(value: Professional) {
+
+    this._resetSidebarVariables();
+
+    this._professionalsService.get(value._id).pipe(first()).subscribe((response: Professional) => {
+      this.selectedProfessional = response;
+      this._isProfessionalSidebar = true;
+
+      this._sidebarValue = {
+        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+        title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
+        type: 'professional'
+      };
+
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  public updateProfessional(value: Professional) {
+    this._professionalsService.save(value._id, value).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   get professionals(): Array<SelectedProfessional> {
     return this._professionals;
   }
@@ -108,6 +160,26 @@ export class SharedProfessionalsListComponent {
 
   get config(): Config {
     return this._config;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  get isProfessionalSidebar(): boolean {
+    return this._isProfessionalSidebar;
+  }
+
+  get isTagsSidebar(): boolean {
+    return this._isTagsSidebar;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
   }
 
 }
