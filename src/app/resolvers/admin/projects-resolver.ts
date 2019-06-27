@@ -7,7 +7,7 @@ import { isPlatformServer } from '@angular/common';
 import { Config } from '../../models/config';
 import { InnovationService } from '../../services/innovation/innovation.service';
 import { ConfigService } from '../../services/config/config.service';
-import {Response} from '../../models/response';
+import { Response } from '../../models/response';
 
 const INNOVATIONS_KEY = makeStateKey('projects');
 
