@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { User } from '../../../../../models/user.model';
@@ -7,7 +7,8 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../models/config';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Response } from '../../../../../models/response';
 
 @Component({
   selector: 'app-admin-users',
@@ -15,7 +16,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./admin-users.component.scss']
 })
 
-export class AdminUsersComponent implements OnInit {
+export class AdminUsersComponent {
 
   private _config: Config = {
     fields: 'id company jobTitle created domain location firstName lastName',
@@ -50,53 +51,65 @@ export class AdminUsersComponent implements OnInit {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.USERS');
 
-    if (!this._activatedRoute.snapshot.data.users && Array.isArray(this._activatedRoute.snapshot.data.users.result)) {
-
+    if (this._activatedRoute.snapshot.data.users && Array.isArray(this._activatedRoute.snapshot.data.users.result)) {
+      this._users = this._activatedRoute.snapshot.data.users.result;
+      this._total = this._activatedRoute.snapshot.data.users._metadata.totalCount;
+      this._checkJuan();
+      this._initializeTable();
     } else {
       this._fetchingError = true;
     }
 
   }
 
-  ngOnInit() {
-    this.loadUsers();
+  private _initializeTable() {
+    this._table = {
+      _selector: 'admin-user-limit',
+      _title: 'TABLE.TITLE.USERS',
+      _content: this._users,
+      _total: this._total,
+      _isSearchable: true,
+      _isDeletable: true,
+      _isSelectable: true,
+      _isEditable: true,
+      _isTitle: true,
+      _isPaginable: true,
+      _editIndex: 1,
+      _columns: [
+        {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+        {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+        {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true}
+      ]
+    };
   }
 
-
-  private loadUsers(): void {
-    this._userService.getAll(this._config).pipe(first()).subscribe((users: any) => {
-      this._users = users.result;
-      this._total = users._metadata.totalCount;
-
-      this._table = {
-        _selector: 'admin-user-limit',
-        _title: 'TABLE.TITLE.USERS',
-        _content: this._users,
-        _total: this._total,
-        _isSearchable: true,
-        _isDeletable: true,
-        _isSelectable: true,
-        _isEditable: true,
-        _isTitle: true,
-        _isPaginable: true,
-        _editIndex: 1,
-        _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-          {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-          {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true}
-          ]
-      };
-      }, () => {
-      this._translateNotificationsService.error('ERROR', 'ERROR.FETCHING_ERROR')
+  private _getUsers() {
+    this._userService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+      this._users = response.result;
+      this._total = response._metadata.totalCount;
+      this._initializeTable();
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
-    this._userService.getSelf().pipe(first())
-      .subscribe(result => {
-        this._me = result && result.email === 'jdcruz-gomez@umi.us';
+  }
+
+  private _checkJuan() {
+    this._userService.getSelf().pipe(first()).subscribe((result) => {
+      this._me = result && result.email === 'jdcruz-gomez@umi.us';
+    }, err => {
+      console.error(err);
+    });
+  }
+
+  public synchronizeSRTUsers() {
+    this._userService.createSwellUsers().pipe(first()).subscribe(response => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'All the users are updated.');
+      console.log(response);
       }, err => {
         console.error(err);
-      });
+    });
   }
 
   inviteUser(event: Event): void {
@@ -123,7 +136,7 @@ export class AdminUsersComponent implements OnInit {
   updateUser(user: User) {
     this._userService.updateOther(user).pipe(first()).subscribe((data: any) => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
-      this.loadUsers();
+      //this.loadUsers();
     },
     () => {
       this._translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
@@ -150,21 +163,13 @@ export class AdminUsersComponent implements OnInit {
   private removeUser(userId: string) {
     this._userService.deleteUser(userId).pipe(first()).subscribe((foo: any) => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
-      this.loadUsers();
+      //this.loadUsers();
     }, () => {
       this._translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 
-  public synchronizeSRTUsers() {
-    this._userService.createSwellUsers().pipe(first())
-      .subscribe(result => {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
-        console.log(result);
-      }, err => {
-        console.error(err);
-      });
-  }
+
 
   public isJuan(): boolean {
     return this._me;
@@ -172,7 +177,8 @@ export class AdminUsersComponent implements OnInit {
 
   set config(value: Config) {
     this._config = value;
-    this.loadUsers();
+    this._getUsers();
+    this._checkJuan();
   }
 
   get config(): Config {

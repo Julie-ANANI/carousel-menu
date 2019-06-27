@@ -12,6 +12,32 @@
       <!-- /fetching error -->
 
 
+      <!-- TODO
+      <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
+        <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
+        <p>{{ pending_invitations.join(', ') }}</p>
+      </div> -->
+
+
+      <!-- if juan -->
+      <ng-container *ngIf="isJuan() && !fetchingError">
+        <div class="text-right m-bottom-25">
+          <button (click)="synchronizeSRTUsers()" class="btn btn-sm rounded shadow btn-edit" type="button">Update everybody</button>
+        </div>
+      </ng-container>
+      <!-- /if juan -->
+
+
+      <!-- table users -->
+      <ng-container *ngIf="!fetchingError">
+        <app-shared-table
+          [(config)]="config"
+          [data]="table">
+        </app-shared-table>
+      </ng-container>
+      <!-- /table users -->
+
+
     </div>
   </div>
 </section>
