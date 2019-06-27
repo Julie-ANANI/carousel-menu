@@ -53,6 +53,7 @@ import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
 import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
+import { UsersResolver } from '../../../resolvers/admin/users-resolver';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-re
     ProfessionalResolver,
     InnovationFrontService,
     ProjectsResolver,
-    ProfessionalsResolver
+    ProfessionalsResolver,
+    UsersResolver
   ]
 })
 
