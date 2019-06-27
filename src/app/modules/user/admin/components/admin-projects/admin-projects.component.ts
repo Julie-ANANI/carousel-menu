@@ -53,7 +53,7 @@ export class AdminProjectsComponent {
 
   private _initializeTable() {
     this._table = {
-      _selector: 'admin-projects',
+      _selector: 'admin-projects-limit',
       _title: 'TABLE.TITLE.PROJECTS',
       _content: this._projects,
       _total: this._total,

@@ -40,7 +40,7 @@ export class ProjectsResolver implements Resolve<Response> {
 
     } else {
 
-      this._config.limit = this._configService.configLimit('admin-projects');
+      this._config.limit = this._configService.configLimit('admin-projects-limit');
 
       return this._innovationService.getAll(this._config)
         .pipe(

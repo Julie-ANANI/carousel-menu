@@ -40,7 +40,7 @@ export class ProfessionalsResolver implements Resolve<Response> {
 
     } else {
 
-      this._config.limit = this._configService.configLimit('admin-pros');
+      this._config.limit = this._configService.configLimit('admin-pros-limit');
 
       return this._professionalService.getAll(this._config)
         .pipe(
