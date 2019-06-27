@@ -32,6 +32,7 @@
       <ng-container *ngIf="!fetchingError">
         <app-shared-table
           (editRow)="onClickEdit($event)"
+          (removeRows)="onClickDelete($event)"
           [(config)]="config"
           [data]="table">
         </app-shared-table>
@@ -56,50 +57,21 @@
 <!-- /sidebar -->
 
 
-
-<!--<section class="section-light-pad" id="admin-users-component">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-
-    &lt;!&ndash; TODO
-    <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
-      <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
-      <p>{{ pending_invitations.join(', ') }}</p>
-    </div> &ndash;&gt;
-
-    &lt;!&ndash; section table &ndash;&gt;
-    <app-shared-table
-      [data]="tableInfos"
-      [(config)]="config"
-      (editRow)="editUser($event)"
-      (removeRows)="deleteUsersModal($event)">
-    </app-shared-table>
-    &lt;!&ndash; /section table &ndash;&gt;
-
-      <div *ngIf="isJuan()">
-          <button (click)="synchronizeSRTUsers()">Update everybody</button>
-      </div>
-  </div>
-</section>
-
-
-&lt;!&ndash; modal to ask admin to delete the user &ndash;&gt;
+<!-- modal -->
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-  {{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}
+
+  <div class="text-background text-medium">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>
+
+  <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+    <li *ngFor="let user of usersToRemove" class="m-right-3 m-top-1">
+      {{ user?.firstName }} {{ user?.lastName }}
+    </li>
+  </ul>
+
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+    <button (click)="onClickConfirm()" class="btn btn-sm btn-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
+
 </app-modal>
-&lt;!&ndash; /modal to ask admin to delete the user &ndash;&gt;
-
-
-&lt;!&ndash; sidebar to edit user &ndash;&gt;
-<app-sidebar [(template)]="sidebarValue">
-  <app-user-form
-    [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type"
-    [user]="currentUser"
-    (finalUserData)="updateUser($event)">
-  </app-user-form>
-</app-sidebar>
-&lt;!&ndash; sidebar to edit user &ndash;&gt;-->
+<!-- /modal -->

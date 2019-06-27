@@ -129,53 +129,46 @@ export class AdminUsersComponent {
     });
   }
 
+  public onClickDelete(users: Array<User>) {
+    this._usersToRemove = [];
+    users.forEach(value => this._usersToRemove.push(new User(value)));
+    this._modalDelete = true;
+  }
+
+  public onClickConfirm() {
+
+    for (const user of this._usersToRemove) {
+      this._removeUser(user.id);
+    }
+
+    this._getUsers();
+    this._modalDelete = false;
+    this._usersToRemove = [];
+
+  }
+
+  private _removeUser(value: string) {
+    this._userService.deleteUser(value).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
+    }, () => {
+      this._translateNotificationsService.error('ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   public synchronizeSRTUsers() {
     this._userService.createSwellUsers().pipe(first()).subscribe(response => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'All the users are updated.');
+      this._getUsers();
       console.log(response);
       }, err => {
         console.error(err);
     });
   }
 
+  // TODO
   inviteUser(event: Event): void {
     event.preventDefault();
-    // TODO
   }
-
-
-
-
-
-
-
-
-  deleteUsersModal(users: User[]) {
-    this._usersToRemove = [];
-    this._modalDelete = true;
-    users.forEach(value => this._usersToRemove.push(new User(value)));
-  }
-
-
-  onClickSubmit() {
-    for (const user of this._usersToRemove) {
-      this.removeUser(user.id);
-    }
-    this._usersToRemove = [];
-    this._modalDelete = false;
-  }
-
-
-  private removeUser(userId: string) {
-    this._userService.deleteUser(userId).pipe(first()).subscribe((foo: any) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_DELETE_TEXT');
-      //this.loadUsers();
-    }, () => {
-      this._translateNotificationsService.error('ERROR', 'ERROR.SERVER_ERROR');
-    });
-  }
-
-
 
   public isJuan(): boolean {
     return this._me;
@@ -225,6 +218,10 @@ export class AdminUsersComponent {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get usersToRemove(): Array<User> {
+    return this._usersToRemove;
   }
 
 }
