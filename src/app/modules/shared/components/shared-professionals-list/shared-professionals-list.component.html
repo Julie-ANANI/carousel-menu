@@ -3,6 +3,7 @@
     (configChange)="onConfigChange($event)"
     (editRow)="onClickEdit($event)"
     (removeRows)="onClickDelete($event)"
+    (performAction)="onClickActions($event)"
     [config]="config"
     [data]="table">
   </app-shared-table>
@@ -24,6 +25,15 @@
   </ng-container>
   <!-- /professional -->
 
+  <!-- tags -->
+  <ng-container *ngIf="isTagsSidebar">
+    <app-tags-form
+      [sidebarState]="sidebarValue.animate_state"
+      [type]="sidebarValue.type"
+      (newTags)="addProfessionalTags($event)">
+    </app-tags-form>
+  </ng-container>
+  <!-- /tags -->
 
 </app-sidebar>
 <!-- /sidebar -->

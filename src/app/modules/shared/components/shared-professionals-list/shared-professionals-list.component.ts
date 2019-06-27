@@ -7,6 +7,8 @@ import { first} from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Campaign } from '../../../../models/campaign';
+import { Router } from '@angular/router';
+import { Tag } from '../../../../models/tag';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -68,7 +70,10 @@ export class SharedProfessionalsListComponent {
 
   private _professionalsToRemove: Array<SelectedProfessional> = [];
 
+  private _professionalsToTags: Array<SelectedProfessional> = [];
+
   constructor(private _professionalsService: ProfessionalsService,
+              private _router: Router,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   private _setProfessionals() {
@@ -92,7 +97,7 @@ export class SharedProfessionalsListComponent {
       _isSelectable: true,
       _isEditable: true,
       _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG_LABEL.ADD_TAGS', _icon: 'fas fa-plus'}],
-      _editIndex: 2,
+      _editIndex: 1,
       _columns: [
         {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _minWidth: '125px', _isSearchable: true,
           _choices: [
@@ -179,6 +184,59 @@ export class SharedProfessionalsListComponent {
     });
   }
 
+  public onClickActions(value: any) {
+    switch (value._action) {
+
+      case 'Convert to ambassador':
+        if(value._rows.length) {
+          if(value._rows.length > 1) {
+            console.log("Look man, I could do this action just for the first one...");
+          }
+          const link = `/user/admin/community/members/${value._rows[0]._id}`;
+          this._router.navigate([link]);
+        } else {
+          console.error("What? empty rows? How did you do that?");
+        }
+        break;
+
+      case 'COMMON.TAG_LABEL.ADD_TAGS':
+        this._editProfessionalTags(value._rows);
+        break;
+
+    }
+  }
+
+  private _editProfessionalTags(value: Array<SelectedProfessional>) {
+    this._resetSidebarVariables();
+    this._professionalsToTags = value;
+    this._isTagsSidebar = true;
+
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SIDEBAR.TITLE.ADD_TAGS',
+      type: 'addTags'
+    };
+
+  }
+
+  public addProfessionalTags(tags: Array<Tag>) {
+    this._professionalsToTags.forEach((value, index) => {
+
+      if (!this._professionalsToTags[index].tags) {
+        this._professionalsToTags[index].tags = [];
+      }
+
+      tags.forEach( (value1) => {
+        if (!(value.tags.find(value2 => {return value2._id === value1._id}))) {
+          this._professionalsToTags[index].tags.push(value1);
+        }
+      });
+    });
+
+    this._professionalsToTags.forEach(value => this.updateProfessional(value));
+
+  }
+
   public updateProfessional(value: Professional) {
     this._professionalsService.save(value._id, value).subscribe(() => {
       this.onConfigChange(this._config);
@@ -246,6 +304,10 @@ export class SharedProfessionalsListComponent {
 
   get professionalsToRemove(): Array<SelectedProfessional> {
     return this._professionalsToRemove;
+  }
+
+  get professionalsToTags(): Array<SelectedProfessional> {
+    return this._professionalsToTags;
   }
 
 }
