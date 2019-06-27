@@ -224,4 +224,8 @@ export class AdminUsersComponent {
     return this._usersToRemove;
   }
 
+  get me(): boolean {
+    return this._me;
+  }
+
 }
