@@ -61,7 +61,6 @@ export class AdminProfessionalsComponent {
 
   set config(value: Config) {
     this._config = value;
-    console.log(value);
     this._getProfessionals();
   }
 
