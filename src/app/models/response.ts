@@ -1,7 +1,5 @@
-import { Innovation } from './innovation';
-
 export interface Response {
-  result: Array<Innovation>;
+  result: Array<any>;
   _metadata: any;
   [property: string]: any;
 }
