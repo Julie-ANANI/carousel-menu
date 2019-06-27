@@ -41,6 +41,9 @@ import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
+import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
+import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
+import { UsersResolver } from '../../../resolvers/admin/users-resolver';
 
 
 const adminRoutes: Routes = [
@@ -56,14 +59,30 @@ const adminRoutes: Routes = [
       {
         path: 'users',
         children: [
-          { path: '', component: AdminUsersComponent, pathMatch: 'full' },
-          { path: 'user/:userId', component: AdminUserDetailsComponent, pathMatch: 'full' }
+          {
+            path: '',
+            component: AdminUsersComponent,
+            pathMatch: 'full',
+            resolve: { users : UsersResolver },
+            runGuardsAndResolvers: 'always',
+          },
+          {
+            path: 'user/:userId',
+            component: AdminUserDetailsComponent,
+            pathMatch: 'full'
+          }
         ]
       },
       {
         path: 'professionals',
         children: [
-          { path: '', component: AdminProfessionalsComponent, pathMatch: 'full' }
+          {
+            path: '',
+            component: AdminProfessionalsComponent,
+            pathMatch: 'full',
+            resolve: { professionals : ProfessionalsResolver },
+            runGuardsAndResolvers: 'always',
+          }
         ]
       },
       {
@@ -105,7 +124,13 @@ const adminRoutes: Routes = [
       {
         path: 'projects',
         children: [
-          { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
+          {
+            path: '',
+            component: AdminProjectsComponent,
+            pathMatch: 'full',
+            resolve: { projects : ProjectsResolver },
+            runGuardsAndResolvers: 'always'
+          },
           { path: 'project/:projectId',
             resolve: { innovation : InnovationResolver },
             component: AdminProjectComponent,

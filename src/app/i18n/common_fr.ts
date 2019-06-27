@@ -97,6 +97,8 @@ export const COMMON = {
     'PROJECTS': 'Projets',
     'REPORT': 'Rapport',
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
+    'PROFESSIONALS': 'Professionnels',
+    'USERS': 'Utilisateurs'
   },
 
   'LABEL': {
