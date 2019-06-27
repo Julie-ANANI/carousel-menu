@@ -46,6 +46,8 @@ export class SharedProfessionalsListComponent {
 
   @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
 
+  @Output() selectedProfessionalChange: EventEmitter<any> = new EventEmitter<any>();
+
   private _professionals: Array<SelectedProfessional> = [];
 
   private _table: Table;
@@ -235,6 +237,10 @@ export class SharedProfessionalsListComponent {
 
     this._professionalsToTags.forEach(value => this.updateProfessional(value));
 
+  }
+
+  public onSelectRows(value: any) {
+    this.selectedProfessionalChange.emit({ total: value._rows.length, pros: value._rows });
   }
 
   public updateProfessional(value: Professional) {
