@@ -89,8 +89,8 @@ export class AdminProjectsComponent {
     });
   }
 
-  goToProject(project: Innovation) {
-    this._router.navigate(['/user/admin/projects/project/' + project._id]);
+  public navigate(value: Innovation) {
+    this._router.navigate(['/user/admin/projects/project/' + value._id]);
   }
 
   set config(value: Config) {
