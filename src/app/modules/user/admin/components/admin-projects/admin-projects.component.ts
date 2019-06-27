@@ -29,7 +29,7 @@ export class AdminProjectsComponent {
     sort: '{"created":-1}'
   };
 
-  fetchingError: boolean;
+  private _fetchingError: boolean;
 
   constructor(private _innovationService: InnovationService,
               private _router: Router,
@@ -42,9 +42,8 @@ export class AdminProjectsComponent {
       this._projects = this._activatedRoute.snapshot.data.projects.result;
       this._total = this._activatedRoute.snapshot.data.projects._metadata.totalCount;
     } else {
-      this.fetchingError = true;
+      this._fetchingError = true;
     }
-
 
   }
 
@@ -99,16 +98,20 @@ export class AdminProjectsComponent {
     return this._config;
   }
 
-  get total () {
+  get total(): number {
     return this._total;
   }
 
-  get projects () {
+  get projects(): Array<Innovation> {
     return this._projects;
   }
 
-  get tableInfos() {
+  get tableInfos(): Table {
     return this._tableInfos;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }
