@@ -2,6 +2,7 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="restrict-width">
 
+
       <!-- fetching error -->
       <ng-container *ngIf="fetchingError">
         <div class="a-p-error-wrapper d-flex align-center">
@@ -12,7 +13,9 @@
 
 
       <!-- table -->
-      <app-shared-table [(config)]="config" [data]="table" (editRow)="navigate($event)"></app-shared-table>
+      <ng-container *ngIf="!fetchingError">
+        <app-shared-table [(config)]="config" [data]="table" (editRow)="navigate($event)"></app-shared-table>
+      </ng-container>
       <!-- /table -->
 
 
