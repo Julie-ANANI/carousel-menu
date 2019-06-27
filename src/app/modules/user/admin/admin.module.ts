@@ -52,6 +52,7 @@ import { AdvSearchService } from "../../../services/advsearch/advsearch.service"
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
+import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
     AdvSearchService,
     ProfessionalResolver,
     InnovationFrontService,
-    ProjectsResolver
+    ProjectsResolver,
+    ProfessionalsResolver
   ]
 })
 
