@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { MessageSpaceComponent } from './message-space.component';
+import { MessageTemplate1Component } from './message-template-1.component';
 
 @NgModule({
   imports: [
@@ -10,11 +10,11 @@ import { MessageSpaceComponent } from './message-space.component';
     TranslateModule.forChild(),
   ],
   declarations: [
-    MessageSpaceComponent
+    MessageTemplate1Component
   ],
   exports: [
-    MessageSpaceComponent
+    MessageTemplate1Component
   ]
 })
 
-export class MessageSpaceModule {}
+export class MessageTemplate1Module {}

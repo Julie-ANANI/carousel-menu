@@ -19,16 +19,22 @@ export class AdminProjectCardsComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService) {
+
+    this.project = this.activatedRoute.snapshot.parent.data['innovation'];
+
+  }
 
   ngOnInit(): void {
-    this.innovationService
-      .get(this.activatedRoute.snapshot.parent.data['innovation']._id)
-      .subscribe((result: Innovation) => {
-        if(result) {
-          this.project = result;
-        }
-      });
+    if (this.project && this.project._id) {
+      this.innovationService
+        .get(this.project._id)
+        .subscribe((result: Innovation) => {
+          if(result) {
+            this.project = result;
+          }
+        });
+    }
   }
 
   public save(event: Event): void {

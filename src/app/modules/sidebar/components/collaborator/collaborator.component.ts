@@ -15,7 +15,7 @@ import { Innovation } from '../../../../models/innovation';
 export class CollaboratorComponent {
 
   @Input() set project(value: Innovation) {
-    this._innovationId = value._id;
+    this._innovationId = value ? value._id : '';
     this._innovationCollaborators = value.collaborators;
   }
 

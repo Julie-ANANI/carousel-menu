@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
     clickToClose: true
   };
 
+  private _startMouseEvent: boolean;
+
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService,
               private _authService: AuthService,
@@ -42,6 +44,10 @@ export class AppComponent implements OnInit {
       });
     }
 
+    this._mouseService.getStartEvent().subscribe((value: boolean) => {
+      this._startMouseEvent = value;
+    });
+
   }
 
 
@@ -51,7 +57,9 @@ export class AppComponent implements OnInit {
 
   @HostListener('mouseup', ['$event'])
   onMouseUp(event: MouseEvent) {
-    this._mouseService.setClickEvent(event);
+    if (this._startMouseEvent) {
+      this._mouseService.setClickEvent(event);
+    }
   }
 
   // Favicon
@@ -113,6 +121,10 @@ export class AppComponent implements OnInit {
 
   get notificationsOptions(): Options {
     return this._notificationsOptions;
+  }
+
+  get startMouseEvent(): boolean {
+    return this._startMouseEvent;
   }
 
 }

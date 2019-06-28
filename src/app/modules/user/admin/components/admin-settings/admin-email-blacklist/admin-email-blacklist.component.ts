@@ -103,7 +103,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
             };
           }
         }, (error: any) => {
-          this._notificationsService.error('Error', error);
+          this._notificationsService.error('Error', error.message);
         });
   }
 

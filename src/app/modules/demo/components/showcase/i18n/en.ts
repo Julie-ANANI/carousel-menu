@@ -26,7 +26,9 @@ export const SHOWCASE = {
     'TITLE': 'Choose sectors to create the showcase'
   },
 
-  'BUILD_SHOWCASE': 'Create Showcase',
+  'CREATE_SHOWCASE': 'Ready to create your showcase!',
+
+  'ERROR_STATS': 'We are having trouble while finding the stats.',
 
   'TOOLTIP': {
     'MODIFY_TAGS': 'Click to edit tags.',

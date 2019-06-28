@@ -22,7 +22,7 @@ export class CardsComponent {
 
   @Input() set pagination(value: boolean) {
     this._isPagination = value;
-    this._endIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
+    this._endIndex = this._localStorage.getItem('discover-page-limit') ? parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50 : 50;
   }
 
   @Input() set search(value: boolean) {

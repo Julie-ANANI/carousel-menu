@@ -58,7 +58,7 @@ export const ERROR = {
     'PROFILE_UPDATE_TEXT': 'The profile has been updated successfully.',
     'PROFILE_DELETE_TEXT': 'The profile has been deleted successfully.',
     'ADDED': 'The profile has been added successfully.',
-    'NOT_ADDED': 'The profile has not been added. It may belong to another campaign of the project, or be blacklisted.'
+    'NOT_ADDED': 'The profile has not been added. It may belong to another campaign of the project, or be blacklisted.',
   },
 
   'PROJECT': {
@@ -166,10 +166,18 @@ export const ERROR = {
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check the URL is good.',
     'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check the URL is good.',
+    'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.'
   },
 
   'AMBASSADOR': {
     'DELETED': 'The ambassador has been deleted successfully.',
+  },
+
+  'SIGNATURES': {
+    'ADDED': 'The signature has been added successfully.',
+    'UPDATED': 'The signature has been updated successfully.',
+    'ALREADY_EXIST': 'The signature with the same already exists.',
+    'DELETED': 'The signature has been deleted successfully.',
   }
 
 };

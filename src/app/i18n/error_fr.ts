@@ -158,11 +158,19 @@ export const ERROR = {
 
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
-    'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.'
+    'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
+    'FETCHING': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être dû à un problème de connexion au serveur.'
   },
 
   'AMBASSADOR': {
     'DELETED': 'L\'ambassadeur a été supprimé avec succès.',
+  },
+
+  'SIGNATURES': {
+    'ADDED': 'La signature a été ajoutée avec succès.',
+    'UPDATED': 'La signature a été mise à jour avec succès.',
+    'ALREADY_EXIST': 'La signature avec la même existe déjà.',
+    'DELETED': 'La signature a été supprimée avec succès.',
   }
 
 };

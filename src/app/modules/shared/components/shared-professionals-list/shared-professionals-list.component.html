@@ -1,0 +1,60 @@
+<section id="shared-professionals-list">
+  <app-shared-table
+    (configChange)="onConfigChange($event)"
+    (editRow)="onClickEdit($event)"
+    (removeRows)="onClickDelete($event)"
+    (performAction)="onClickActions($event)"
+    (selectRowAction)="onSelectRows($event)"
+    [config]="config"
+    [data]="table">
+  </app-shared-table>
+</section>
+
+
+<!-- sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+
+  <!-- professional -->
+  <ng-container *ngIf="isProfessionalSidebar">
+    <app-user-form
+      (finalProfessionalData)="updateProfessional($event)"
+      [campaign]="campaign"
+      [pro]="selectedProfessional"
+      [sidebarState]="sidebarValue.animate_state"
+      [type]="sidebarValue.type">
+    </app-user-form>
+  </ng-container>
+  <!-- /professional -->
+
+  <!-- tags -->
+  <ng-container *ngIf="isTagsSidebar">
+    <app-tags-form
+      [sidebarState]="sidebarValue.animate_state"
+      [type]="sidebarValue.type"
+      (newTags)="addProfessionalTags($event)">
+    </app-tags-form>
+  </ng-container>
+  <!-- /tags -->
+
+</app-sidebar>
+<!-- /sidebar -->
+
+
+<!-- modal -->
+<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+
+  <div class="text-background text-medium">{{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}</div>
+
+  <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+    <li *ngFor="let professional of professionalsToRemove" class="m-right-3 m-top-1">
+      {{ professional?.firstName }} {{ professional?.lastName }}
+    </li>
+  </ul>
+
+  <div class="modal-footer">
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+    <button (click)="onClickConfirm()" class="btn btn-sm btn-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal -->

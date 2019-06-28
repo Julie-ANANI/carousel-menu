@@ -45,6 +45,8 @@ export class PaginationTemplate2Component implements OnInit {
     this._startPageNumber = 0;
     this._endPageNumber = 11;
 
+    this._mouseService.startEvent(true);
+
     this._mouseService.targetId().subscribe((value: string) => {
       this._toggleParPageMenu = value === 'pagination-button-parPage';
     });
@@ -61,7 +63,7 @@ export class PaginationTemplate2Component implements OnInit {
   }
 
   private _initializeValues() {
-    const localStorage = parseInt(this._localStorageService.getItem(`${this._pagination.propertyName}-limit`), 10);
+    const localStorage = parseInt(this._localStorageService.getItem(this._pagination.propertyName), 10);
     this._pagination.currentPage = this.currentPage;
     this._pagination.previousPage = this._pagination.previousPage ? this._pagination.previousPage : 0;
     this._pagination.nextPage = this._pagination.nextPage ? this._pagination.nextPage : 2;
@@ -128,7 +130,7 @@ export class PaginationTemplate2Component implements OnInit {
     this._setOffset();
     this._storeParPageLocally();
 
-    if (this._pagination.offset > this._totalCount) {
+    if (this._pagination.offset >= this._totalCount) {
       this._pagination.offset = 0;
       this._pagination.currentPage = 1;
       this._startPageNumber = 0;
@@ -142,7 +144,7 @@ export class PaginationTemplate2Component implements OnInit {
   }
 
   private _storeParPageLocally() {
-    this._localStorageService.setItem(`${this._pagination.propertyName}-limit`, (this._pagination.parPage).toString())
+    this._localStorageService.setItem(this._pagination.propertyName, (this._pagination.parPage).toString())
   }
 
   get pagination(): Pagination {

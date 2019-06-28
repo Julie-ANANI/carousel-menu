@@ -164,7 +164,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       this.notificationsService.success("ERROR.SUCCESS", message);
       this.generateModifiedScenarios();
     }, (err: any) => {
-      this.notificationsService.error('ERROR', err);
+      this.notificationsService.error('ERROR', err.message);
     });
   }
 
@@ -196,7 +196,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._availableScenarios = [];
     let scenariosNames: Set<string>;
     scenariosNames = new Set<string>();
-    if (this._campaign.settings && this._campaign.settings.emails) {
+    if (this._campaign && this._campaign.settings && this._campaign.settings.emails) {
       this._campaign.settings.emails.forEach((x) => {
         scenariosNames.add(x.nameWorkflow);
       });

@@ -8,7 +8,6 @@ import { AdminEmailBlacklistComponent } from '../admin-settings/admin-email-blac
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SharedSortModule } from '../../../../shared/components/shared-sort/shared-sort.module';
-
 import { AdminWorkflowsLibraryModule } from './admin-workflows-library/admin-workflows-library.module';
 import { AdminSignaturesLibraryModule } from './admin-signatures-library/admin-signatures-library.module';
 import { AdminCountryManagementModule } from '../admin-settings/admin-country-management/admin-country-management.module';
@@ -34,7 +33,7 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     TableModule,
     SidebarModule,
     SidebarEmailFormModule,
-    ModalModule
+    ModalModule,
   ],
   declarations: [
     AdminLibrariesComponent,

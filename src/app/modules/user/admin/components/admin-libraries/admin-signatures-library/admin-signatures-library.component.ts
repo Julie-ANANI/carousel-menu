@@ -1,30 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { Table } from '../../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import {Config} from '../../../../../../models/config';
+import { Config } from '../../../../../../models/config';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { ActivatedRoute } from '@angular/router';
+import { Response } from '../../../../../../models/response';
 
 @Component({
   selector: 'app-admin-signatures-library',
   templateUrl: 'admin-signatures-library.component.html',
   styleUrls: ['admin-signatures-library.component.scss']
 })
-export class AdminSignaturesLibraryComponent implements OnInit {
 
-  private _signatures: Array<EmailSignature> = [];
-
-  private _signatureToEdit: EmailSignature;
-
-  private _newSignatureName: string = null;
-
-  private _more: SidebarInterface = {};
-
-  private _total = 0;
-
-  private _tableInfos: Table = null;
+export class AdminSignaturesLibraryComponent {
 
   private _config: Config = {
     fields: '',
@@ -34,121 +26,219 @@ export class AdminSignaturesLibraryComponent implements OnInit {
     sort: '{ "id": -1 }'
   };
 
-  private _modalAdd = false;
+  private _fetchingError: boolean;
+
+  private _signatures: Array<EmailSignature> = [];
+
+  private _signatureToEdit: EmailSignature;
+
+  private _newSignatureName: string = null;
+
+  private _sidebarValue: SidebarInterface = {};
+
+  private _total: number;
+
+  private _table: Table;
+
+  private _modalOpen: boolean;
+
+  private _signaturesToRemove: Array<EmailSignature> = [];
+
+  private _isModalAdd: boolean;
+
+  private _isModalDelete: boolean;
 
   constructor(private _templatesService: TemplatesService,
-              private _notificationsService: TranslateNotificationsService) {}
+              private _translateTitleService: TranslateTitleService,
+              private _activatedRoute: ActivatedRoute,
+              private _translateNotificationsService: TranslateNotificationsService) {
 
-  ngOnInit() {
-    this.getSignatures();
+    this._translateTitleService.setTitle('Signatures | Libraries');
+
+    if (this._activatedRoute.snapshot.data.signatures && Array.isArray(this._activatedRoute.snapshot.data.signatures.result)) {
+      this._signatures = this._activatedRoute.snapshot.data.signatures.result;
+      this._total = this._activatedRoute.snapshot.data.signatures._metadata.totalCount;
+      this._initializeTable();
+    } else {
+      this._fetchingError = true;
+    }
+
   }
 
-  public getSignatures(config?: Config) {
-    if (config) this._config = config;
-    this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((signatures: any) => {
-      this._signatures = signatures.result;
-      this._total = signatures._metadata.totalCount;
-
-      this._tableInfos = {
-        _selector: 'admin-signatures',
-        _title: 'signature(s)',
-        _content: this._signatures,
-        _total: this._total,
-        _isSearchable: true,
-        _isDeletable: true,
-        _isSelectable: true,
-        _isPaginable: true,
-        _isEditable: true,
-        _isTitle: true,
-        _editIndex: 1,
-        _columns: [
-          {_attrs: ['name'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-          {_attrs: ['from'], _name: 'COMMON.SORT.BY_AUTHOR', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-          {_attrs: ['content'], _name: 'Content', _type: 'TEXT'},
-          {_attrs: ['language'], _name: 'COMMON.LANGUAGE', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-          {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT', _isSearchable: true}
-          ]
-      };
-    });
-  }
-
-
-  public closeSidebar(value: SidebarInterface) {
-    this.more.animate_state = value.animate_state;
-  }
-
-  public editSignature(signature: any) {
-    this._signatureToEdit = signature;
-    this._more = {
-      size: '650px',
-      animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
-      title: signature.name
+  private _initializeTable() {
+    this._table = {
+      _selector: 'admin-signatures-limit',
+      _title: 'signature(s)',
+      _content: this._signatures,
+      _total: this._total,
+      _isSearchable: true,
+      _isDeletable: true,
+      _isSelectable: true,
+      _isPaginable: true,
+      _isEditable: true,
+      _isTitle: true,
+      _editIndex: 1,
+      _isNoMinHeight: true,
+      _columns: [
+        {_attrs: ['name'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['from'], _name: 'COMMON.SORT.BY_AUTHOR', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['content'], _name: 'Content', _type: 'TEXT'},
+        {_attrs: ['language'], _name: 'COMMON.LANGUAGE', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT', _isSearchable: true}
+      ]
     };
   }
 
-
-  onClickAdd() {
-    this._modalAdd = true;
+  private _getSignatures() {
+    this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((response: Response) => {
+      this._signatures = response.result;
+      this._total = response._metadata.totalCount;
+      this._initializeTable();
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
   }
 
+  private _resetModalVariables() {
+    this._isModalAdd = false;
+    this._isModalDelete = false;
+  }
+
+  public onClickAdd() {
+    this._resetModalVariables();
+    this._isModalAdd = true;
+    this._modalOpen = true;
+  }
+
+  public onAddConfirm() {
+    this._templatesService.createSignature({ name: this._newSignatureName }).pipe(first()).subscribe((response: EmailSignature) => {
+      this._getSignatures();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.ADDED');
+      this._newSignatureName = null;
+      this._modalOpen = false;
+      this.editSignature(response);
+    }, () => {
+      this._checkSignatureAlready();
+    });
+  }
+
+  private _checkSignatureAlready() {
+    if (this._signatures.length > 0 && this._newSignatureName && this._signatures.find((signature) => signature.name === this._newSignatureName)) {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SIGNATURES.ALREADY_EXIST');
+    } else {
+      this._modalOpen = false;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }
+  }
+
+  public editSignature(signature: EmailSignature) {
+    this._signatureToEdit = signature;
+
+    this._sidebarValue = {
+      size: '650px',
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SIDEBAR.TITLE.EDIT_SIGNATURE'
+    };
+
+  }
 
   public updateSignature(signature: EmailSignature) {
-    this._templatesService.saveSignature(signature).pipe(first()).subscribe((updatedSignature: any) => {
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-    }, (err: any) => {
-      this._notificationsService.error('ERROR', err);
+    this._templatesService.saveSignature(signature).pipe(first()).subscribe(() => {
+      this._getSignatures();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.UPDATED');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
   }
 
-  removeSignatures(signatures: Array<EmailSignature>) {
-    signatures.forEach((signature: EmailSignature) => {
-      this.deleteSignature(signature._id);
-    });
+  public OnClickDelete(value: Array<EmailSignature>) {
+    this._signaturesToRemove = value;
+    this._resetModalVariables();
+    this._isModalDelete = true;
+    this._modalOpen = true;
   }
 
-  public deleteSignature(signatureId: string) {
-    this._templatesService.removeSignature(signatureId).pipe(first()).subscribe((_: any) => {
-      this.getSignatures();
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+  public onDeleteConfirm() {
+    this._signaturesToRemove.forEach((signature) => {
+      this._templatesService.removeSignature(signature._id).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.DELETED');
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      });
     });
+
+    this._getSignatures();
+    this._modalOpen = false;
+
   }
 
-  public createSignature() {
-    this._templatesService.createSignature({name: this._newSignatureName}).pipe(first()).subscribe((newSignature: any) => {
-      this._newSignatureName = null;
-      this.editSignature(newSignature);
-      this.getSignatures();
-      this._modalAdd = false;
-    });
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
-  get signatures(): Array<EmailSignature> { return this._signatures; }
-
-  get newSignatureName(): string { return this._newSignatureName; }
-
-  set newSignatureName(name: string) { this._newSignatureName = name; }
-
-  get tableInfos(): any { return this._tableInfos; }
-
-  get signatureToEdit(): any { return this._signatureToEdit; }
-
-  get more(): any { return this._more; }
-
-  get config(): Config { return this._config; }
+  get config(): Config {
+    return this._config;
+  }
 
   set config(value: Config) {
     this._config = value;
-    this.getSignatures(value);
+    this._getSignatures();
   }
 
-  set signatureToEdit(value: any) { this._signatureToEdit = value; }
-
-  get modalAdd(): boolean {
-    return this._modalAdd;
+  get signatures(): Array<EmailSignature> {
+    return this._signatures;
   }
 
-  set modalAdd(value: boolean) {
-    this._modalAdd = value;
+  get newSignatureName(): string {
+    return this._newSignatureName;
+  }
+
+  set newSignatureName(name: string) {
+    this._newSignatureName = name;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get signatureToEdit(): any {
+    return this._signatureToEdit;
+  }
+
+  set signatureToEdit(value: any) {
+    this._signatureToEdit = value;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get modalOpen(): boolean {
+    return this._modalOpen;
+  }
+
+  set modalOpen(value: boolean) {
+    this._modalOpen = value;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get signaturesToRemove(): Array<EmailSignature> {
+    return this._signaturesToRemove;
+  }
+
+  get isModalAdd(): boolean {
+    return this._isModalAdd;
+  }
+
+  get isModalDelete(): boolean {
+    return this._isModalDelete;
   }
 
 }

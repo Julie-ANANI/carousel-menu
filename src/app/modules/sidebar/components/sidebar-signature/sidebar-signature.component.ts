@@ -7,11 +7,20 @@ import { EmailSignature } from '../../../../models/email-signature';
   templateUrl: './sidebar-signature.component.html',
   styleUrls: ['./sidebar-signature.component.scss']
 })
+
+
 export class SidebarSignatureComponent {
+
+  @Input() set sidebarState(value: string) {
+    if (value === undefined || value ===  'active') {
+    } else {
+    }
+  }
 
   @Input() set signature(value: EmailSignature) {
     this._signature = value;
   }
+
   @Output() signatureChange = new EventEmitter<any>();
 
   private _signature: EmailSignature;

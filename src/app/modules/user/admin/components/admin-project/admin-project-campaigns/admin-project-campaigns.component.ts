@@ -55,21 +55,26 @@ export class AdminProjectCampaignsComponent implements OnInit {
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
               private campaignService: CampaignService,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+
+    this._innovation = this.activatedRoute.snapshot.parent.data['innovation'];
+
+  }
 
   ngOnInit() {
-    this._innovation =  this.activatedRoute.snapshot.parent.data['innovation'];
     this.getCampaigns();
   }
 
 
   private getCampaigns() {
-    this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
-      this._campaigns = campaigns.result;
-      this._noResult = campaigns.result.length === 0;
+    if (this._innovation && this._innovation._id) {
+      this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
+        this._campaigns = campaigns.result;
+        this._noResult = campaigns.result.length === 0;
       },() => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      });
+    }
   }
 
 

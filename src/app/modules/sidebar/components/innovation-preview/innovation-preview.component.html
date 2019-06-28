@@ -4,9 +4,9 @@
     <!-- nothing to show -->
     <ng-container *ngIf="innovationCard && innovationCard.problem === '' && innovationCard.summary === ''
     && innovationCard.title === '' && innovationCard.advantages.length === 0">
-      <app-message-space [widthMax]="'321px'">
+      <app-message-template-1 [widthMax]="'321px'">
         {{ 'DISCOVERDESCRIPTION.SIDEBAR_BOT_MESSAGE' | translate }}
-      </app-message-space>
+      </app-message-template-1>
     </ng-container>
     <!-- /nothing to show -->
 

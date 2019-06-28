@@ -96,5 +96,7 @@
       </ng-container>
 
     </form>
+
+    <p *ngIf="!isNewBatch && contentCurrent">BatchId : {{ contentCurrent._id }}</p>
   </div>
 </section>

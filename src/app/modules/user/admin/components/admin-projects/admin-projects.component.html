@@ -1,9 +1,24 @@
-<section class="section-light-pad" id="admin-projects-component">
+<section id="admin-projects" class="section-light-pad">
   <div class="column col-xs-12 col-11 col-mx-auto">
-    <app-shared-table
-      [(config)]="config"
-      [data]="tableInfos"
-      (editRow)="goToProject($event)">
-    </app-shared-table>
+    <div class="restrict-width">
+
+
+      <!-- fetching error -->
+      <ng-container *ngIf="fetchingError">
+        <div class="a-p-error-wrapper d-flex align-center">
+          <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+        </div>
+      </ng-container>
+      <!-- /fetching error -->
+
+
+      <!-- table -->
+      <ng-container *ngIf="!fetchingError">
+        <app-shared-table [(config)]="config" [data]="table" (editRow)="navigate($event)"></app-shared-table>
+      </ng-container>
+      <!-- /table -->
+
+
+    </div>
   </div>
 </section>

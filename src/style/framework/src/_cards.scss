@@ -58,11 +58,9 @@
   .card-body {
 
     &.card-cover {
-      display: flex;
+      @include flex-centered();
       flex-direction: column;
       flex: 1 0 auto;
-      align-items: center;
-      justify-content: center;
       text-align: center;
     }
 

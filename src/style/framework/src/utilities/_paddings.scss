@@ -1,0 +1,25 @@
+@import "../variables";
+
+// right {
+.p-right-1 {
+  padding-right: $unit-1 !important;
+}
+
+// top
+.p-top-20 {
+  padding-top: $unit-5;
+}
+
+//bottom
+
+.p-bottom-1 {
+  padding-bottom: $unit-1 !important;
+}
+
+.p-bottom-20 {
+  padding-bottom: $unit-5;
+}
+
+.p-bottom-25 {
+  padding-bottom: 1.25rem;
+}

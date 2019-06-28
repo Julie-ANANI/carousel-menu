@@ -3,7 +3,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && answers.length > 0">
-    <div class="icon icon-meta absolute tooltip tooltip-left tooltip-hide-sm" [attr.data-tooltip]="'SHOWCASE.TOOLTIP.EDIT_ANSWERS' | translate" (click)="openModal($event)">
+    <div class="icon icon-meta absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
       <i class="fas fa-bars"></i>
     </div>
   </ng-container>
@@ -23,26 +23,28 @@
 
 
   <!-- section answers -->
-  <div *ngFor="let answer of topAnswers" class="card-main card-wrapper">
-    <div *ngIf="!answer.isLoading" class="d-flex animate-zoomIn card-content">
+  <ng-container *ngIf="topAnswers.length > 0">
+    <div *ngFor="let answer of topAnswers" class="card-main card-wrapper">
+      <div *ngIf="!answer.isLoading" class="d-flex animate-zoomIn card-content">
 
-      <figure class="avatar avatar-lg avatar-meta">
-        <i class="fas fa-user"></i>
-      </figure>
+        <figure class="avatar avatar-lg avatar-meta">
+          <i class="fas fa-user"></i>
+        </figure>
 
-      <div class="info-wrapper">
+        <div class="info-wrapper">
 
-        <h4 class="text-background text-medium text-sm">{{ answer.job }}</h4>
+          <h4 class="text-background text-medium text-sm">{{ answer.job }}</h4>
 
-        <div class="flex-start">
-          <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-          <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
+          <div class="flex-start">
+            <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
+            <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
+          </div>
+
         </div>
 
       </div>
-
     </div>
-  </div>
+  </ng-container>
   <!-- /section answers -->
 
 

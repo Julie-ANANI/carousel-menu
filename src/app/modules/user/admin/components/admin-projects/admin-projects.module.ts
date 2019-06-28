@@ -3,9 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { TableModule } from '../../../../table/table.module';
-import { PipeModule } from '../../../../../pipe/pipe.module';
+
 import { AdminProjectsComponent } from './admin-projects.component';
+
+import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { PipeModule } from '../../../../../pipe/pipe.module';
+import { TableModule } from '../../../../table/table.module';
 
 @NgModule({
   imports: [
@@ -15,7 +18,8 @@ import { AdminProjectsComponent } from './admin-projects.component';
     RouterModule,
     TranslateModule.forChild(),
     PipeModule,
-    RouterModule
+    RouterModule,
+    ErrorTemplate1Module
   ],
   declarations: [
     AdminProjectsComponent
