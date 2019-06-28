@@ -72,6 +72,7 @@ export class AdminSignaturesLibraryComponent {
       _isEditable: true,
       _isTitle: true,
       _editIndex: 1,
+      _isNoMinHeight: true,
       _columns: [
         {_attrs: ['name'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
         {_attrs: ['from'], _name: 'COMMON.SORT.BY_AUTHOR', _type: 'TEXT', _isSearchable: true, _isSortable: true},

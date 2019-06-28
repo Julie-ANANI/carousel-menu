@@ -12,7 +12,7 @@
 
 
     <!-- no signature -->
-    <ng-container *ngIf="!fetchingError">
+    <ng-container *ngIf="!fetchingError && total === 0">
       <div class="a-s-l-create-signature-wrapper d-flex align-center">
         <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
 
@@ -23,7 +23,7 @@
             <div class="m-top-25">
               <button (click)="onClickAdd()" class="btn btn-primary rounded shadow" type="button">
                 <i class="fas fa-plus m-no-left"></i>
-                {{ 'COMMON.BUTTON.ADD' | translate }}
+                {{ 'COMMON.BUTTON.ADD' | translate }} signature
               </button>
             </div>
 
@@ -35,6 +35,33 @@
     <!-- /no signature -->
 
 
+    <!-- signatures -->
+    <ng-container *ngIf="!fetchingError && total > 0">
+
+
+      <!-- add button -->
+      <div class="text-right p-bottom-25">
+        <button (click)="onClickAdd()" class="btn btn-primary btn-sm rounded shadow" type="button">
+          <i class="fas fa-plus m-no-left"></i>
+          {{ 'COMMON.BUTTON.ADD' | translate }} signature
+        </button>
+      </div>
+      <!-- /add button -->
+
+
+      <!-- table -->
+      <app-shared-table
+        (editRow)="editSignature($event)"
+        [(config)]="config"
+        [data]="table">
+      </app-shared-table>
+      <!-- /table -->
+
+
+    </ng-container>
+    <!-- /signatures-->
+
+
   </div>
 </section>
 
@@ -42,9 +69,9 @@
 <!-- sidebar -->
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-signature
+    (signatureChange)="updateSignature($event)"
     [sidebarState]="sidebarValue.animate_state"
-    [signature]="signatureToEdit"
-    (signatureChange)="updateSignature($event)">
+    [signature]="signatureToEdit">
   </app-sidebar-signature>
 </app-sidebar>
 <!-- /sidebar -->

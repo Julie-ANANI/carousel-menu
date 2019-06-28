@@ -42,7 +42,7 @@ export class SignaturesResolver implements Resolve<Response> {
 
       this._config.limit = this._configService.configLimit('admin-signatures-limit');
 
-      return this._templatesService.getAll(this._config)
+      return this._templatesService.getAllSignatures(this._config)
         .pipe(
           tap((response) => {
           if (isPlatformServer(this._platformId)) {
