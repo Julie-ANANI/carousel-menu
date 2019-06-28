@@ -128,6 +128,7 @@ export const COMMON = {
     'SELECT': 'Select',
     'CHOOSE_LANGUAGE': 'Choose Language:',
     'SEARCH_BY': 'Search by',
+    'SIGNATURE_NAME': 'Signature Name'
   },
 
   'PLACEHOLDER': {
@@ -140,6 +141,7 @@ export const COMMON = {
     'ACTIVITY_FIELDS': 'Enter your activity field',
     'TECHNOLOGIES': 'Enter the technology',
     'SEARCH': 'Search here',
+    'SIGNATURE_NAME': 'Enter the signature name'
   },
 
   'REQUIRED': {
@@ -339,6 +341,11 @@ export const COMMON = {
 
   'TOOLTIP': {
     'HISTORY': 'History'
+  },
+
+  'SIGNATURES': {
+    'NO_SIGNATURES_ADMIN': 'Add the first signature by clicking on the below button.',
+    'DELETE_SIGNATURES': 'Do you really want to delete the selected signature(s)?'
   }
 
 };
