@@ -22,7 +22,7 @@
 
           <div class="m-left-25 m-bottom-15">
             <label class="form-switch">
-              <input type="checkbox" (change)="editionMode = !editionMode">
+              <input (change)="editionMode = !editionMode" type="checkbox">
               <i class="form-icon"></i><span class="text-notify text-medium text-sm">Preview</span>
             </label>
           </div>
@@ -43,87 +43,75 @@
       <!-- /actions -->
 
 
+      <!-- not edition mode -->
+      <ng-container *ngIf="!editionMode">
+        <div [innerHTML]="signature?.content" class="p-top-20 text-sm"></div>
+      </ng-container>
+      <!-- /not edition mode -->
+
+
+      <!-- edition mode -->
+      <ng-container *ngIf="editionMode">
+
+        <!-- internal name -->
+        <div class="form-group">
+          <label class="form-label" for="sidebar-signature-name">Internal Name</label>
+          <input
+            class="form-input"
+            formControlName="name"
+            id="sidebar-signature-name"
+            placeholder="Enter the internal name"
+            type="text">
+        </div>
+        <!-- /internal name -->
+
+        <!-- from name -->
+        <div class="form-group">
+          <label class="form-label" for="sidebar-signature-from-name">From Name</label>
+          <input
+            class="form-input"
+            formControlName="from_name"
+            id="sidebar-signature-from-name"
+            placeholder="Enter the from name"
+            type="text">
+        </div>
+        <!-- /from name -->
+
+        <!-- from email -->
+        <div class="form-group has-error">
+          <label class="form-label" for="sidebar-signature-from-email">E-mail Address</label>
+          <input
+            class="form-input"
+            formControlName="email"
+            id="sidebar-signature-from-email"
+            placeholder="Enter the email address"
+            type="text">
+          <span class="form-input-hint" *ngIf="form.get('email').touched && form.get('email').invalid">
+            <ng-container *ngIf="form.get('email').hasError('email') && form.get('email').value !== ''">
+              {{ 'COMMON.INVALID.EMAIL' | translate }}
+            </ng-container>
+          </span>
+        </div>
+        <!-- /from name -->
+
+        <!-- content -->
+        <div class="form-group">
+          <label class="form-label" for="sidebar-signature-content">Signature (HTML code)</label>
+          <textarea
+            class="form-input p-right-2"
+            formControlName="content"
+            id="sidebar-signature-content"
+            placeholder="Enter the content for the signature in the HTML way."
+            rows="15"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /content -->
+
+      </ng-container>
+      <!-- /edition mode -->
+
+
     </form>
   </div>
 </section>
-
-<!--
-<div *ngIf="signature">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-
-    <div class="sidebar-header">
-      &lt;!&ndash;
-      <div class="language-choice">
-        <div (click)="changeLanguage('en')" [ngClass]="{active: language === 'en'}" class="discreet-link">English</div>
-        <div (click)="changeLanguage('fr')" [ngClass]="{active: language === 'fr'}" class="discreet-link">Français</div>
-      </div>&ndash;&gt;
-
-      <label class="form-switch" *ngIf="signature.content != null">
-        <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
-        <i class="form-icon"></i>Preview
-      </label>
-
-      &lt;!&ndash; Save button &ndash;&gt;
-      <div class="sidebar-main-action">
-        <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
-      </div>
-
-        <div class="form-group">
-          <label class="form-label" for="language">Language</label>
-          <select
-            class="form-input"
-            [(ngModel)]="signature.language"
-            id="language">
-            <option value="en" name="en">en</option>
-            <option value="fr" name="fr">fr</option>
-            </select>
-        </div>
-    </div>
-
-
-    <div class="sidebar-edit" *ngIf="editionMode">
-      <div class="form-group">
-        <label class="form-label" for="name">Internal name</label>
-        <input
-          class="form-input"
-          [(ngModel)]="signature.name"
-          id="name"
-          type="text"
-          placeholder="">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="from">From name</label>
-        <input
-          class="form-input"
-          [(ngModel)]="signature.from"
-          id="from"
-          type="text"
-          placeholder="">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="email">From email</label>
-        <input
-          class="form-input"
-          [(ngModel)]="signature.email"
-          id="email"
-          type="text"
-          placeholder="">
-      </div>
-    </div>
-
-    <label class="form-label" *ngIf="editionMode">Signature (code HTML)</label>
-    <textarea
-      *ngIf="editionMode"
-      class="form-input"
-      rows="25"
-      [(ngModel)]="signature.content"
-      id="signature"
-      type="text"
-      placeholder="">
-    </textarea>
-    <div *ngIf="!editionMode" [innerHTML]="signature.content"></div>
-  </div>
-</div>
--->

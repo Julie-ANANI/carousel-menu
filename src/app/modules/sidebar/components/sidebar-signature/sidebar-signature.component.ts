@@ -17,7 +17,7 @@ export class SidebarSignatureComponent {
     if (value === undefined || value ===  'active') {
       this._buildForm();
       this._patchData();
-      this._editionMode = true;
+      this.editionMode = true;
     } else {
       this._form.reset();
     }
@@ -32,7 +32,7 @@ export class SidebarSignatureComponent {
 
   private _signature: EmailSignature;
 
-  private _editionMode: boolean;
+  editionMode: boolean;
 
   private _form: FormGroup;
 
@@ -68,17 +68,13 @@ export class SidebarSignatureComponent {
   private _setValues() {
     this._signature.name = this._form.get('name').value;
     this._signature.content = this._form.get('content').value;
-    this._signature.from = this._form.get('email').value;
+    this._signature.from = this._form.get('from_name').value;
     this._signature.language = this._form.get('language').value;
     this._signature.email = this._form.get('email').value;
   }
 
   get signature(): EmailSignature {
     return this._signature;
-  }
-
-  get editionMode(): boolean {
-    return this._editionMode;
   }
 
   get form(): FormGroup {
