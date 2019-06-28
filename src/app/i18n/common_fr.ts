@@ -127,6 +127,7 @@ export const COMMON = {
     'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
+    'SIGNATURE_NAME': 'Signature Nom'
   },
 
   'PLACEHOLDER': {
@@ -139,6 +140,7 @@ export const COMMON = {
     'ACTIVITY_FIELDS': 'Entrez votre secteur d\'activité',
     'TECHNOLOGIES': 'Entrez la technologie',
     'SEARCH': 'Rechercher ici',
+    'SIGNATURE_NAME': 'Entrez le nom de la signature'
   },
 
   'REQUIRED': {

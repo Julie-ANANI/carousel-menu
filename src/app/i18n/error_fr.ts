@@ -164,6 +164,11 @@ export const ERROR = {
 
   'AMBASSADOR': {
     'DELETED': 'L\'ambassadeur a été supprimé avec succès.',
+  },
+
+  'SIGNATURES': {
+    'ADDED': 'La signature a été ajoutée avec succès.',
+    'UPDATED': 'La signature a été mise à jour avec succès.'
   }
 
 };

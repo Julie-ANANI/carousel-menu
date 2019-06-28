@@ -11,8 +11,77 @@
     <!-- /fetching error -->
 
 
+    <!-- no signature -->
+    <ng-container *ngIf="!fetchingError">
+      <div class="a-s-l-create-signature-wrapper d-flex align-center">
+        <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+
+          <div class="text-center">
+
+            <h4 [innerText]="'COMMON.SIGNATURES.NO_SIGNATURES_ADMIN'" class="text-background" translate></h4>
+
+            <div class="m-top-25">
+              <button (click)="onClickAdd()" class="btn btn-primary rounded shadow" type="button">
+                <i class="fas fa-plus m-no-left"></i>
+                {{ 'COMMON.BUTTON.ADD' | translate }}
+              </button>
+            </div>
+
+          </div>
+
+        </app-message-template-2>
+      </div>
+    </ng-container>
+    <!-- /no signature -->
+
+
   </div>
 </section>
+
+
+<!-- sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-signature
+    [sidebarState]="sidebarValue.animate_state"
+    [signature]="signatureToEdit"
+    (signatureChange)="updateSignature($event)">
+  </app-sidebar-signature>
+</app-sidebar>
+<!-- /sidebar -->
+
+
+<!-- modal -->
+<app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+
+  <div class="flex-centered">
+    <div class="form-group" [ngStyle]="{ 'width': '75%' }">
+      <label class="form-label" for="add-email">{{ 'COMMON.LABEL.SIGNATURE_NAME' | translate }}</label>
+      <input
+        [(ngModel)]="newSignatureName"
+        class="form-input"
+        id="add-email"
+        name="emailName"
+        [placeholder]="'COMMON.PLACEHOLDER.SIGNATURE_NAME' | translate"
+        type="text">
+    </div>
+  </div>
+
+  <div class="modal-footer">
+
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+
+    <button
+      (click)="onClickConfirm()"
+      [disabled]="!newSignatureName"
+      [innerText]="'COMMON.BUTTON.CONFIRM'"
+      class="btn btn-sm btn-primary"
+      translate>
+    </button>
+
+  </div>
+
+</app-modal>
+<!-- /modal -->
 
 <!--
 <div>
