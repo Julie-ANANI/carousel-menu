@@ -1,11 +1,8 @@
-FROM node:10.13.0
+FROM node:10.13.0 as baseimage
 
 ARG APP_NAME
 ARG ENV_NAME
 ARG VERSION
-
-#RUN echo ${APP_NAME}
-#RUN echo "${ENV_NAME}"
 
 RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_NAME} --prod' !!!!!!"
 
@@ -23,6 +20,14 @@ RUN rm -f /var/web/.npmrc
 
 # update version
 RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
+
+FROM unitedmotionideas/frontbase:lastest as buildinstance
+
+ARG APP_NAME
+ARG ENV_NAME
+ARG VERSION
+
+WORKDIR /var/web
 
 # build client
 RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
