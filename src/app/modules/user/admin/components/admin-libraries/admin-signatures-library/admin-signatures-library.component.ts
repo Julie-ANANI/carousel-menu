@@ -3,9 +3,9 @@ import { TemplatesService } from '../../../../../../services/templates/templates
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { Table } from '../../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import {Config} from '../../../../../../models/config';
+import { Config } from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-signatures-library',
