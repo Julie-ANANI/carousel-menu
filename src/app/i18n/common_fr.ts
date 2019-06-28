@@ -127,7 +127,8 @@ export const COMMON = {
     'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
-    'SIGNATURE_NAME': 'Signature Nom'
+    'SIGNATURE_NAME': 'Signature Nom',
+    'LANGUAGE': 'Langue'
   },
 
   'PLACEHOLDER': {
