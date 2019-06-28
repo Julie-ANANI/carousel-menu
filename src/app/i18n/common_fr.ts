@@ -339,6 +339,11 @@ export const COMMON = {
 
   'TOOLTIP': {
     'HISTORY': 'Historique'
+  },
+
+  'SIGNATURES': {
+    'NO_SIGNATURES_ADMIN': 'Ajoutez la première signature en cliquant sur le bouton ci-dessous.',
+    'DELETE_SIGNATURES': 'Voulez-vous vraiment effacer la ou les signature(s) sélectionnée(s) ?'
   }
 
 };

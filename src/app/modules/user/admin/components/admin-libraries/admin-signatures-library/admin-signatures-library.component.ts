@@ -40,7 +40,13 @@ export class AdminSignaturesLibraryComponent {
 
   private _table: Table;
 
-  private _modalAdd: boolean;
+  private _modalOpen: boolean;
+
+  private _signaturesToRemove: Array<EmailSignature> = [];
+
+  private _isModalAdd: boolean;
+
+  private _isModalDelete: boolean;
 
   constructor(private _templatesService: TemplatesService,
               private _translateTitleService: TranslateTitleService,
@@ -93,34 +99,36 @@ export class AdminSignaturesLibraryComponent {
     });
   }
 
-  onClickAdd() {
-    this._modalAdd = true;
+  private _resetModalVariables() {
+    this._isModalAdd = false;
+    this._isModalDelete = false;
   }
 
-  removeSignatures(signatures: Array<EmailSignature>) {
-    signatures.forEach((signature: EmailSignature) => {
-      this.deleteSignature(signature._id);
-    });
+  public onClickAdd() {
+    this._resetModalVariables();
+    this._isModalAdd = true;
+    this._modalOpen = true;
   }
 
-  public deleteSignature(signatureId: string) {
-    this._templatesService.removeSignature(signatureId).pipe(first()).subscribe((_: any) => {
-      //this.getSignatures();
-      //this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-    });
-  }
-
-  public onClickConfirm() {
+  public onAddConfirm() {
     this._templatesService.createSignature({ name: this._newSignatureName }).pipe(first()).subscribe((response: EmailSignature) => {
       this._getSignatures();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.ADDED');
       this._newSignatureName = null;
-      this._modalAdd = false;
+      this._modalOpen = false;
       this.editSignature(response);
     }, () => {
-      this._modalAdd = false;
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      this._checkSignatureAlready();
     });
+  }
+
+  private _checkSignatureAlready() {
+    if (this._signatures.length > 0 && this._newSignatureName && this._signatures.find((signature) => signature.name === this._newSignatureName)) {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SIGNATURES.ALREADY_EXIST');
+    } else {
+      this._modalOpen = false;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }
   }
 
   public editSignature(signature: EmailSignature) {
@@ -141,6 +149,27 @@ export class AdminSignaturesLibraryComponent {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
+  }
+
+  public OnClickDelete(value: Array<EmailSignature>) {
+    this._signaturesToRemove = value;
+    this._resetModalVariables();
+    this._isModalDelete = true;
+    this._modalOpen = true;
+  }
+
+  public onDeleteConfirm() {
+    this._signaturesToRemove.forEach((signature) => {
+      this._templatesService.removeSignature(signature._id).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.DELETED');
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      });
+    });
+
+    this._getSignatures();
+    this._modalOpen = false;
+
   }
 
   get fetchingError(): boolean {
@@ -188,16 +217,28 @@ export class AdminSignaturesLibraryComponent {
     this._sidebarValue = value;
   }
 
-  get modalAdd(): boolean {
-    return this._modalAdd;
+  get modalOpen(): boolean {
+    return this._modalOpen;
   }
 
-  set modalAdd(value: boolean) {
-    this._modalAdd = value;
+  set modalOpen(value: boolean) {
+    this._modalOpen = value;
   }
 
   get total(): number {
     return this._total;
+  }
+
+  get signaturesToRemove(): Array<EmailSignature> {
+    return this._signaturesToRemove;
+  }
+
+  get isModalAdd(): boolean {
+    return this._isModalAdd;
+  }
+
+  get isModalDelete(): boolean {
+    return this._isModalDelete;
   }
 
 }

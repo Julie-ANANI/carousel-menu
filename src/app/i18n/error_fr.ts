@@ -168,7 +168,9 @@ export const ERROR = {
 
   'SIGNATURES': {
     'ADDED': 'La signature a été ajoutée avec succès.',
-    'UPDATED': 'La signature a été mise à jour avec succès.'
+    'UPDATED': 'La signature a été mise à jour avec succès.',
+    'ALREADY_EXIST': 'La signature avec la même existe déjà.',
+    'DELETED': 'La signature a été supprimée avec succès.',
   }
 
 };

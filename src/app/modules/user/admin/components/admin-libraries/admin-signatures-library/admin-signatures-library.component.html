@@ -38,7 +38,6 @@
     <!-- signatures -->
     <ng-container *ngIf="!fetchingError && total > 0">
 
-
       <!-- add button -->
       <div class="text-right p-bottom-25">
         <button (click)="onClickAdd()" class="btn btn-primary btn-sm rounded shadow" type="button">
@@ -48,15 +47,14 @@
       </div>
       <!-- /add button -->
 
-
       <!-- table -->
       <app-shared-table
         (editRow)="editSignature($event)"
+        (removeRows)="OnClickDelete($event)"
         [(config)]="config"
         [data]="table">
       </app-shared-table>
       <!-- /table -->
-
 
     </ng-container>
     <!-- /signatures-->
@@ -78,90 +76,65 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+<app-modal [(showModal)]="modalOpen" [modalTitle]="isModalAdd ? 'COMMON.MODAL.TITLE_CREATE' : 'COMMON.MODAL.TITLE_DELETE'">
 
-  <div class="flex-centered">
-    <div class="form-group" [ngStyle]="{ 'width': '75%' }">
-      <label class="form-label" for="add-email">{{ 'COMMON.LABEL.SIGNATURE_NAME' | translate }}</label>
-      <input
-        [(ngModel)]="newSignatureName"
-        class="form-input"
-        id="add-email"
-        name="emailName"
-        [placeholder]="'COMMON.PLACEHOLDER.SIGNATURE_NAME' | translate"
-        type="text">
+  <!-- isAdd -->
+  <ng-container *ngIf="isModalAdd">
+    <div class="flex-centered">
+      <div class="form-group" [ngStyle]="{ 'width': '75%' }">
+        <label class="form-label" for="add-email">{{ 'COMMON.LABEL.SIGNATURE_NAME' | translate }}</label>
+        <input
+          [(ngModel)]="newSignatureName"
+          class="form-input"
+          id="add-email"
+          name="emailName"
+          [placeholder]="'COMMON.PLACEHOLDER.SIGNATURE_NAME' | translate"
+          type="text">
+      </div>
     </div>
-  </div>
+  </ng-container>
+  <!-- /isAdd -->
+
+  <!-- isDelete -->
+  <ng-container *ngIf="isModalDelete">
+    <div class="text-background text-medium">{{ 'COMMON.SIGNATURES.DELETE_SIGNATURES' | translate }}</div>
+
+    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+      <li *ngFor="let signature of signaturesToRemove" class="m-right-3 m-top-1">
+        {{ signature.name }}
+      </li>
+    </ul>
+  </ng-container>
+  <!-- /isDelete -->
 
   <div class="modal-footer">
 
     <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
 
-    <button
-      (click)="onClickConfirm()"
-      [disabled]="!newSignatureName"
-      [innerText]="'COMMON.BUTTON.CONFIRM'"
-      class="btn btn-sm btn-primary"
-      translate>
-    </button>
+    <!-- isAdd -->
+    <ng-container *ngIf="isModalAdd">
+      <button
+        (click)="onAddConfirm()"
+        [disabled]="!newSignatureName"
+        [innerText]="'COMMON.BUTTON.CONFIRM'"
+        class="btn btn-sm btn-primary"
+        translate>
+      </button>
+    </ng-container>
+    <!-- /isAdd -->
+
+    <!-- isDelete -->
+    <ng-container *ngIf="isModalDelete">
+      <button
+        (click)="onDeleteConfirm()"
+        [innerText]="'COMMON.BUTTON.CONFIRM'"
+        class="btn btn-sm btn-primary"
+        translate>
+      </button>
+    </ng-container>
+    <!-- /isDelete -->
 
   </div>
 
 </app-modal>
 <!-- /modal -->
-
-<!--
-<div>
-
-  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
-    <app-sidebar-signature
-      [signature]="signatureToEdit"
-      (signatureChange)="updateSignature($event)">
-    </app-sidebar-signature>
-  </app-sidebar>
-
-  <div class="empty" *ngIf="!signatures.length">
-    <div class="empty-action">
-      <button (click)="newSignatureName = 'signature'; onClickAdd()" class="btn btn-primary">
-        Créer une signature
-      </button>
-    </div>
-  </div>
-
-  <div class="text-right">
-    <button *ngIf="signatures.length" (click)="newSignatureName = 'signature'; onClickAdd()" class="btn btn-primary">
-      Créer une signature
-    </button>
-  </div>
-
-  <app-shared-table
-    [(config)]="config"
-    [data]="tableInfos"
-    (editRow)="editSignature($event)"
-    (removeRows)="removeSignatures($event)">
-  </app-shared-table>
-</div>
-
-
-&lt;!&ndash; modal to add the new signature &ndash;&gt;
-<app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
-
-  <div class="form-group">
-    <label class="form-label" for="add-email">Signature Name</label>
-    <input
-      type="text"
-      id="add-email"
-      [(ngModel)]="newSignatureName"
-      name="emailName"
-      placeholder="Enter the email name"
-      class="form-input">
-  </div>
-
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="createSignature()" [disabled]="!newSignatureName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
-
-</app-modal>
-&lt;!&ndash; /modal to add the new signature &ndash;&gt;
--->
