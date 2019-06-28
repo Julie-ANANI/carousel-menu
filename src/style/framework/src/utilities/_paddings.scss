@@ -10,10 +10,18 @@
   padding-top: $unit-5;
 }
 
+.p-top-30 {
+  padding-top: 1.5rem;
+}
+
 //bottom
 
 .p-bottom-1 {
   padding-bottom: $unit-1 !important;
+}
+
+.p-bottom-10 {
+  padding-bottom: 0.5rem;
 }
 
 .p-bottom-20 {
@@ -22,4 +30,8 @@
 
 .p-bottom-25 {
   padding-bottom: 1.25rem;
+}
+
+.p-bottom-30 {
+  padding-bottom: 1.5rem;
 }
