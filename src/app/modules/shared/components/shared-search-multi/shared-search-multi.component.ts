@@ -62,8 +62,13 @@ export class SharedSearchMultiComponent {
   }
 
   public onChangeTextProp(prop: Event) {
+
     this._currentTextProp = this._textProps.find(value => value._attrs[0] === (prop.target as HTMLSelectElement).value);
-    this.onSearch();
+
+    if (this._searchString) {
+      this.onSearch();
+    }
+
   }
 
   public onSearch() {
