@@ -80,25 +80,11 @@ export class SharedSearchMultiComponent {
     } else {
       let _search: any = {};
 
-      if (this._searchString.split(',')) {
-
-      } else {
-        _search[this._currentTextProp._attrs[0]] = encodeURIComponent(this._searchString.trim());
-      }
-
-
-      console.log(_search);
-
-      /*//Detect an "special" query...
-      input = input.split(',');
-      let _search: any = {};
+      const input = this._searchString.split(',');
 
       input.forEach((queryStr: string, index: number) => {
         _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
       });
-
-      this._searchConfig.search = JSON.stringify(_search);
-      this.searchConfigChange.emit(this._searchConfig);*/
 
       this._searchConfig.search = JSON.stringify(_search);
     }
