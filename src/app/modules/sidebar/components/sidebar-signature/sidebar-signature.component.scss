@@ -1,19 +1,8 @@
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  color: #97A4B1;
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 30px;
-  margin-bottom: 30px;
+#sidebar-signature {
 
-  .discreet-link {
-    display: inline-block;
-    margin-right: 15px;
+  .form-select {
+    height: 40px;
+    font-size: 0.65rem;
   }
 
-  .sidebar-main-action {
-    text-align: right;
-    flex: 1;
-  }
 }

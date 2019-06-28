@@ -128,7 +128,8 @@ export const COMMON = {
     'SELECT': 'Select',
     'CHOOSE_LANGUAGE': 'Choose Language:',
     'SEARCH_BY': 'Search by',
-    'SIGNATURE_NAME': 'Signature Name'
+    'SIGNATURE_NAME': 'Signature Name',
+    'LANGUAGE': 'Language'
   },
 
   'PLACEHOLDER': {

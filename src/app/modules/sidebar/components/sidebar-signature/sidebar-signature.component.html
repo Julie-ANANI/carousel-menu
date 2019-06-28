@@ -1,19 +1,69 @@
+<section id="sidebar-signature" class="p-top-30">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <form [formGroup]="form">
+
+
+      <!-- actions -->
+      <div class="flex-between flex-wrap">
+
+        <div class="d-flex p-bottom-20 align-center">
+
+          <div class="d-flex align-center m-bottom-10">
+            <label class="form-label m-right-3" for="sidebar-signature-language">{{ 'COMMON.LABEL.LANGUAGE' | translate }}: </label>
+            <select
+              class="form-select"
+              formControlName="language"
+              id="sidebar-signature-language">
+              <option *ngFor="let language of languages" [value]="language.type">
+                {{ language.alias }}
+              </option>
+            </select>
+          </div>
+
+          <div class="m-left-25 m-bottom-15">
+            <label class="form-switch">
+              <input type="checkbox" (change)="editionMode = !editionMode">
+              <i class="form-icon"></i><span class="text-notify text-medium text-sm">Preview</span>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="p-bottom-30">
+          <button
+            (click)="onClickSave()"
+            [innerText]="'COMMON.BUTTON.SAVE'"
+            class="btn btn-sm btn-primary"
+            translate
+            type="submit">
+          </button>
+        </div>
+
+      </div>
+      <!-- /actions -->
+
+
+    </form>
+  </div>
+</section>
+
+<!--
 <div *ngIf="signature">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <div class="sidebar-header">
-      <!--
+      &lt;!&ndash;
       <div class="language-choice">
         <div (click)="changeLanguage('en')" [ngClass]="{active: language === 'en'}" class="discreet-link">English</div>
         <div (click)="changeLanguage('fr')" [ngClass]="{active: language === 'fr'}" class="discreet-link">Français</div>
-      </div>-->
+      </div>&ndash;&gt;
 
       <label class="form-switch" *ngIf="signature.content != null">
         <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
         <i class="form-icon"></i>Preview
       </label>
 
-      <!-- Save button -->
+      &lt;!&ndash; Save button &ndash;&gt;
       <div class="sidebar-main-action">
         <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
       </div>
@@ -76,3 +126,4 @@
     <div *ngIf="!editionMode" [innerHTML]="signature.content"></div>
   </div>
 </div>
+-->
