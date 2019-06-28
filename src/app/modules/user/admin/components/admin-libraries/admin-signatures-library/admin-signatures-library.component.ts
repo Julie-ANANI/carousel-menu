@@ -6,25 +6,16 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../../models/config';
+import {TranslateTitleService} from '../../../../../../services/title/title.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-admin-signatures-library',
   templateUrl: 'admin-signatures-library.component.html',
   styleUrls: ['admin-signatures-library.component.scss']
 })
+
 export class AdminSignaturesLibraryComponent implements OnInit {
-
-  private _signatures: Array<EmailSignature> = [];
-
-  private _signatureToEdit: EmailSignature;
-
-  private _newSignatureName: string = null;
-
-  private _more: SidebarInterface = {};
-
-  private _total = 0;
-
-  private _tableInfos: Table = null;
 
   private _config: Config = {
     fields: '',
@@ -34,17 +25,45 @@ export class AdminSignaturesLibraryComponent implements OnInit {
     sort: '{ "id": -1 }'
   };
 
-  private _modalAdd = false;
+  private _fetchingError: boolean;
+
+  private _signatures: Array<EmailSignature> = [];
+
+  private _signatureToEdit: EmailSignature;
+
+  private _newSignatureName: string = null;
+
+  private _more: SidebarInterface = {};
+
+  private _total: number;
+
+  private _tableInfos: Table;
+
+  private _modalAdd: boolean;
 
   constructor(private _templatesService: TemplatesService,
-              private _notificationsService: TranslateNotificationsService) {}
+              private _translateTitleService: TranslateTitleService,
+              private _activatedRoute: ActivatedRoute,
+              private _notificationsService: TranslateNotificationsService) {
+
+    this._translateTitleService.setTitle('Signatures | Libraries');
+
+    if (!this._activatedRoute.snapshot.data.signatures && Array.isArray(this._activatedRoute.snapshot.data.signatures.result)) {
+      this._signatures = this._activatedRoute.snapshot.data.signatures.result;
+      this._total = this._activatedRoute.snapshot.data.signatures._metadata.totalCount;
+      //this._initializeTable();
+    } else {
+      this._fetchingError = true;
+    }
+
+  }
 
   ngOnInit() {
     this.getSignatures();
   }
 
-  public getSignatures(config?: Config) {
-    if (config) this._config = config;
+  public getSignatures() {
+
     this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
       this._total = signatures._metadata.totalCount;
@@ -122,6 +141,19 @@ export class AdminSignaturesLibraryComponent implements OnInit {
     });
   }
 
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    this.getSignatures();
+  }
+
   get signatures(): Array<EmailSignature> { return this._signatures; }
 
   get newSignatureName(): string { return this._newSignatureName; }
@@ -134,14 +166,9 @@ export class AdminSignaturesLibraryComponent implements OnInit {
 
   get more(): any { return this._more; }
 
-  get config(): Config { return this._config; }
-
-  set config(value: Config) {
-    this._config = value;
-    this.getSignatures(value);
+  set signatureToEdit(value: any) {
+    this._signatureToEdit = value;
   }
-
-  set signatureToEdit(value: any) { this._signatureToEdit = value; }
 
   get modalAdd(): boolean {
     return this._modalAdd;

@@ -9,6 +9,7 @@ import { AdminSignaturesLibraryComponent } from "./admin-signatures-library.comp
 import { SidebarModule } from "../../../../../sidebar/sidebar.module";
 import { SidebarSignatureModule } from '../../../../../sidebar/components/sidebar-signature/sidebar-signature.module';
 import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
+import { ErrorTemplate1Module } from '../../../../../utility-components/errors/error-template-1/error-template-1.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ModalModule } from '../../../../../utility-components/modals/modal/moda
     SidebarModule,
     TableModule,
     SidebarSignatureModule,
-    ModalModule
+    ModalModule,
+    ErrorTemplate1Module
   ],
   declarations: [
     AdminSignaturesLibraryComponent

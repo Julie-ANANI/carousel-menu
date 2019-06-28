@@ -1,3 +1,20 @@
+<section id="admin-signatures-library">
+  <div class="restrict-width">
+
+
+    <!-- fetching error -->
+    <ng-container *ngIf="fetchingError">
+      <div class="a-s-l-error-wrapper d-flex align-center">
+        <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+      </div>
+    </ng-container>
+    <!-- /fetching error -->
+
+
+  </div>
+</section>
+
+<!--
 <div>
 
   <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
@@ -30,7 +47,7 @@
 </div>
 
 
-<!-- modal to add the new signature -->
+&lt;!&ndash; modal to add the new signature &ndash;&gt;
 <app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
 
   <div class="form-group">
@@ -50,4 +67,5 @@
   </div>
 
 </app-modal>
-<!-- /modal to add the new signature -->
+&lt;!&ndash; /modal to add the new signature &ndash;&gt;
+-->
