@@ -1,16 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../../services/preset/preset.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
-import {Pagination} from '../../../../../../utility-components/paginations/interfaces/pagination';
+import { Pagination } from '../../../../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
+import { Config } from '../../../../../../../models/config';
+import { TranslateTitleService } from '../../../../../../../services/title/title.service';
 
 @Component({
   selector: 'app-admin-presets-list',
   templateUrl: './admin-presets-list.component.html',
   styleUrls: ['./admin-presets-list.component.scss']
 })
+
 export class AdminPresetsListComponent implements OnInit {
+
+  private _config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
 
   private _presets: Array<Preset>;
 
@@ -20,14 +31,6 @@ export class AdminPresetsListComponent implements OnInit {
 
   private _total: number;
 
-  private _config: any = {
-    fields: '',
-    limit: '10',
-    offset: '0',
-    search: '{}',
-    sort: '{"created":-1}'
-  };
-
   private _modalDelete = false;
 
   private _modalClone = false;
@@ -35,7 +38,21 @@ export class AdminPresetsListComponent implements OnInit {
   private _paginationConfig: any = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _presetService: PresetService,
-              private _router: Router) {}
+              private _translateTitleService: TranslateTitleService,
+              private _activatedRoute: ActivatedRoute,
+              private _router: Router) {
+
+    this._translateTitleService.setTitle('Questionnaires | Libraries');
+
+    if (this._activatedRoute.snapshot.data.presets && Array.isArray(this._activatedRoute.snapshot.data.presets.result)) {
+      // this._signatures = this._activatedRoute.snapshot.data.signatures.result;
+      // this._total = this._activatedRoute.snapshot.data.signatures._metadata.totalCount;
+      // this._initializeTable();
+    } else {
+      //this._fetchingError = true;
+    }
+
+  }
 
   ngOnInit(): void {
     this.loadPresets(this._config);
@@ -108,9 +125,13 @@ export class AdminPresetsListComponent implements OnInit {
   }
 
 
-  set config(value: any) { this._config = value; }
+  set config(value: Config) {
+    this._config = value;
+  }
 
-  get config(): any { return this._config; }
+  get config(): Config {
+    return this._config;
+  }
 
   get total () { return this._total; }
 

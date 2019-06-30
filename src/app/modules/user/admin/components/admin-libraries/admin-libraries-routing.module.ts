@@ -9,6 +9,7 @@ import { AdminPresetsEditComponent } from './admin-presets/admin-presets-edit/ad
 
 import { PresetResolver } from '../../../../../resolvers/preset.resolver';
 import { SignaturesResolver } from '../../../../../resolvers/admin/signatures-resolver';
+import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver';
 
 export const librariesRoutes: Routes = [
   {
@@ -42,7 +43,9 @@ export const librariesRoutes: Routes = [
   {
     path: 'questionnaire',
     component: AdminPresetsListComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    resolve: { presets: PresetsResolver },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'questionnaire/new',

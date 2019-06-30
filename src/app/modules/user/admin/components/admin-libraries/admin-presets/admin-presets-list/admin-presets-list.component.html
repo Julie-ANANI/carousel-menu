@@ -1,3 +1,7 @@
+
+
+
+<!--
 <h1>{{total}} {{ 'COMMON.QUESTIONNAIRE' | translate }}</h1>
 <div class="text-right">
   <button [routerLink]="'new'" class="btn btn-primary" (click)="$event.preventDefault()">
@@ -63,7 +67,7 @@
 </div>
 
 
-<!-- modal to delete -->
+&lt;!&ndash; modal to delete &ndash;&gt;
 <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'PRESETS.PRESET.DELETE_MODAL.CONTENT' | translate }}
   <div class="modal-footer">
@@ -72,10 +76,10 @@
   </div>
 
 </app-modal>
-<!-- /modal to add the new workflow -->
+&lt;!&ndash; /modal to add the new workflow &ndash;&gt;
 
 
-<!-- modal to delete -->
+&lt;!&ndash; modal to delete &ndash;&gt;
 <app-modal [(showModal)]="modalClone" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
 
   <div *ngIf="selectedPresetToBeCloned" class="form-group">
@@ -95,10 +99,10 @@
   </div>
 
 </app-modal>
-<!-- /modal to add the new workflow -->
+&lt;!&ndash; /modal to add the new workflow &ndash;&gt;
 
 
-<!-- Modal de création de section
+&lt;!&ndash; Modal de création de section
 <div class="modal" [ngClass]="{'active': (modalsection)}">
   <div class="modal-overlay" (click)="(modalsection = !modalsection)"></div>
   <div class="modal-container">
@@ -120,4 +124,5 @@
     </div>
   </div>
 </div>
+&ndash;&gt;
 -->
