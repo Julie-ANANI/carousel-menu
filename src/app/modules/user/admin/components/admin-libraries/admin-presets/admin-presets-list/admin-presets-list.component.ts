@@ -23,6 +23,8 @@ export class AdminPresetsListComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
+  private _fetchingError: boolean;
+
   private _presets: Array<Preset>;
 
   selectedPresetIdToBeDeleted: string = null;
@@ -49,7 +51,7 @@ export class AdminPresetsListComponent implements OnInit {
       // this._total = this._activatedRoute.snapshot.data.signatures._metadata.totalCount;
       // this._initializeTable();
     } else {
-      //this._fetchingError = true;
+      this._fetchingError = true;
     }
 
   }
@@ -131,6 +133,10 @@ export class AdminPresetsListComponent implements OnInit {
 
   get config(): Config {
     return this._config;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
   get total () { return this._total; }

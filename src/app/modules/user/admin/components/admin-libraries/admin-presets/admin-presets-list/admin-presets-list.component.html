@@ -1,4 +1,18 @@
+<section id="admin-presets-list">
+  <div class="restrict-width">
 
+
+    <!-- fetching error -->
+    <ng-container *ngIf="fetchingError">
+      <div class="a-p-l-error-wrapper d-flex align-center">
+        <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+      </div>
+    </ng-container>
+    <!-- /fetching error -->
+
+
+  </div>
+</section>
 
 
 <!--
