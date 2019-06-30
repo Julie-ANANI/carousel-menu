@@ -17,6 +17,8 @@ import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-proje
 import { PaginationTemplate1Module } from '../../../../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { MessageTemplate2Module } from '../../../../../utility-components/messages/message-template-2/message-template-2.module';
+import { TableModule } from '../../../../../table/table.module';
 
 @NgModule({
   imports: [
@@ -34,7 +36,9 @@ import { ErrorTemplate1Module } from '../../../../../utility-components/errors/e
     SharedPresetModule,
     PaginationTemplate1Module,
     ModalModule,
-    ErrorTemplate1Module
+    ErrorTemplate1Module,
+    MessageTemplate2Module,
+    TableModule
   ],
   declarations: [
     AdminPresetsEditComponent,

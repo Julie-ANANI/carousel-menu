@@ -1,4 +1,11 @@
 export const PRESETS = {
+
+  'NO_PRESETS': 'Ajoutez le premier questionnaire en cliquant sur le bouton ci-dessous.',
+
+  'ALREADY_EXIST': 'Le preset du même nom existe déjà.',
+
+
+
   'PRESET': {
     'ADD': 'Ajouter une configuration',
     'FILTER': 'Rechercher',

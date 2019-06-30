@@ -176,7 +176,7 @@ export const ERROR = {
   'SIGNATURES': {
     'ADDED': 'The signature has been added successfully.',
     'UPDATED': 'The signature has been updated successfully.',
-    'ALREADY_EXIST': 'The signature with the same already exists.',
+    'ALREADY_EXIST': 'The signature with the same name already exists.',
     'DELETED': 'The signature has been deleted successfully.',
   }
 

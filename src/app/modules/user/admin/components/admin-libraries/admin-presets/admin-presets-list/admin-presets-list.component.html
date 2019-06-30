@@ -11,8 +11,77 @@
     <!-- /fetching error -->
 
 
+    <!-- no questionnaire -->
+    <ng-container *ngIf="!fetchingError">
+      <div class="a-p-l-create-questionnaire-wrapper d-flex align-center">
+        <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+
+          <div class="text-center">
+
+            <h4 [innerText]="'PRESETS.NO_PRESETS'" class="text-background" translate></h4>
+
+            <div class="m-top-25">
+              <button (click)="onClickAdd()" class="btn btn-primary rounded shadow" type="button">
+                <i class="fas fa-plus m-no-left"></i>
+                {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
+              </button>
+            </div>
+
+          </div>
+
+        </app-message-template-2>
+      </div>
+    </ng-container>
+    <!-- /no questionnaire -->
+
+
+
   </div>
 </section>
+
+
+<!-- modal -->
+<app-modal [(showModal)]="modalOpen" [modalTitle]="modalTitle">
+
+  <!-- isAdd -->
+  <ng-container *ngIf="isModalAdd">
+    <div class="flex-centered">
+      <div class="form-group" [ngStyle]="{ 'width': '75%' }">
+        <label class="form-label" for="add-preset">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
+        <input
+          [(ngModel)]="newPresetName"
+          class="form-input"
+          id="add-preset"
+          name="preset"
+          [placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate"
+          type="text">
+      </div>
+    </div>
+  </ng-container>
+  <!-- /isAdd -->
+
+  <div class="modal-footer">
+
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+
+    <!-- isAdd -->
+    <ng-container *ngIf="isModalAdd">
+      <button
+        (click)="onAddConfirm()"
+        [disabled]="!newPresetName"
+        [innerText]="'COMMON.BUTTON.CONFIRM'"
+        class="btn btn-sm btn-primary"
+        translate>
+      </button>
+    </ng-container>
+    <!-- /isAdd -->
+
+  </div>
+
+</app-modal>
+<!-- /modal -->
+
+
 
 
 <!--

@@ -32,7 +32,11 @@ export const TABLE = {
     'INDUSTRY': 'Industry',
     'FEEDBACK': 'Feedback',
     'SAVED': 'Saved',
-    'SCORE': 'Validation Score'
+    'SCORE': 'Validation Score',
+    'LANGUAGE': 'Language',
+    'AUTHOR': 'Author',
+    'CONTENT': 'Content',
+    'SECTIONS': 'Sections',
   },
 
   'TITLE': {
