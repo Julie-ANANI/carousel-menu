@@ -112,3 +112,250 @@ steps:
   when:
     event:
       - tag
+
+  ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
+  ## ## ## ## ## ## ## ## WHITE LABEL ## ## ## ## ## ## ## ## ##
+  ## Dynergie production steps
+- name: dockerProdDynergie
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
+    auto_tag_suffix: dynergie
+    build_args:
+      - APP_NAME=dynergie
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdDynergie
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-dynergie"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-dynergie"
+    timeout: 240
+  when:
+    event:
+      - tag
+
+  ## Multivalente production steps
+- name: dockerProdMultivalente
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
+    auto_tag_suffix: multivalente
+    build_args:
+      - APP_NAME=multivalente
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdMultivalente
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-multivalente"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-multivalente"
+    timeout: 240
+  when:
+    event:
+      - tag
+
+  ## Inomer production steps
+- name: dockerProdInomer
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
+    auto_tag_suffix: inomer
+    build_args:
+      - APP_NAME=inomer
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdInomer
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-inomer"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-inomer"
+    timeout: 240
+  when:
+    event:
+      - tag
+
+  ## Novanexia production steps
+- name: dockerProdNovanexia
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
+    auto_tag_suffix: novanexia
+    build_args:
+      - APP_NAME=novanexia
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdNovanexia
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-novanexia"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-novanexia"
+    timeout: 240
+  when:
+    event:
+      - tag
+
+  ## Salveo production steps
+- name: dockerProdSalveo
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
+    auto_tag_suffix: salveo
+    build_args:
+      - APP_NAME=salveo
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdSalveo
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-salveo"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-salveo"
+    timeout: 240
+  when:
+    event:
+      - tag
+
+  ## Schneider production steps
+- name: dockerProdSchneider
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
+    auto_tag_suffix: schneider
+    build_args:
+      - APP_NAME=schneider
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdSchneider
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-schneider"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-schneider"
+    timeout: 240
+  when:
+    event:
+      - tag
+
+  ## BNP Paribas production steps
+- name: dockerProdBNP
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
+    auto_tag_suffix: bnpparibas
+    build_args:
+      - APP_NAME=bnpparibas
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
+    repo: unitedmotionideas/umi-application-front
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: rancherProdBNP
+  image: peloton/drone-rancher
+  settings:
+    url: http://206.189.56.176:8080
+    access_key:
+      from_secret: rancher_access
+    secret_key:
+      from_secret: rancher_secret
+    service: "frontstack/umiapplicationfront-bnpparibas"
+    docker_image: "unitedmotionideas/umi-application-front:${DRONE_TAG}-bnpparibas"
+    timeout: 240
+  when:
+    event:
+      - tag
