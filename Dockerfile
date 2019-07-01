@@ -21,7 +21,11 @@ RUN rm -f /var/web/.npmrc
 # update version
 RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
 
+
+
 FROM unitedmotionideas/frontbase:latest AS buildinstance
+
+COPY --from=baseimage /var/web .
 
 ARG APP_NAME
 ARG ENV_NAME
