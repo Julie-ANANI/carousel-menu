@@ -8,6 +8,7 @@ steps:
   settings:
     repo: unitedmotionideas/frontbase
     target: baseimage
+    dockerfile: ./Dockerfile.image
     build_args:
       - APP_NAME=umi
       - ENV_NAME=dev
