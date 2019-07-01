@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS baseimage
+FROM node:10.13.0 AS baseimage
 
 ARG APP_NAME
 ARG ENV_NAME
@@ -6,10 +6,8 @@ ARG VERSION
 
 RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_NAME} --prod' !!!!!!"
 
-RUN apk --no-cache --virtual build-dependencies add \
-    python \
-    make \
-    g++
+RUN apt-get clean
+RUN apt-get update
 
 RUN npm install -g @angular/cli
 RUN npm install -g typings
@@ -19,9 +17,6 @@ ADD . .
 
 RUN npm install
 RUN rm -f /var/web/.npmrc
-
-# Remove build dependencies
-RUN apk del build-dependencies
 
 # update version
 RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
