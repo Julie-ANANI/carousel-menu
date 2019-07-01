@@ -1,4 +1,4 @@
-FROM FROM node:lts-alpine AS baseimage
+FROM node:lts-alpine AS baseimage
 
 ARG APP_NAME
 ARG ENV_NAME
