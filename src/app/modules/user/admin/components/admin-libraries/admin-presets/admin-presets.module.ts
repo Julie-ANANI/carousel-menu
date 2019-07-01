@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminPresetsEditComponent } from './admin-presets-edit/admin-presets-edit.component';
@@ -20,13 +20,13 @@ import { TableModule } from '../../../../../table/table.module';
     TranslateModule.forChild(),
     TranslateModule.forChild(),
     RouterModule,
-    ReactiveFormsModule,
     AdminProjectQuestionnaireModule,
     SharedPresetModule,
     ModalModule,
     ErrorTemplate1Module,
     MessageTemplate2Module,
-    TableModule
+    TableModule,
+    FormsModule
   ],
   declarations: [
     AdminPresetsEditComponent,
