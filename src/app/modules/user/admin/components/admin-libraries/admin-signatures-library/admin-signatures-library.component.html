@@ -113,7 +113,6 @@
     <ng-container *ngIf="isModalAdd">
       <button
         (click)="onAddConfirm()"
-        (keyup.enter)="onAddConfirm()"
         [disabled]="!newSignatureName"
         [innerText]="'COMMON.BUTTON.CONFIRM'"
         class="btn btn-sm btn-primary"
