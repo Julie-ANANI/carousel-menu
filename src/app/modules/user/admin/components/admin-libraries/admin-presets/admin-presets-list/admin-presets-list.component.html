@@ -12,7 +12,7 @@
 
 
     <!-- no questionnaire -->
-    <ng-container *ngIf="!fetchingError">
+    <ng-container *ngIf="!fetchingError && total === 0">
       <div class="a-p-l-create-questionnaire-wrapper d-flex align-center">
         <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
 
@@ -34,6 +34,30 @@
     </ng-container>
     <!-- /no questionnaire -->
 
+
+    <!-- questionnaire -->
+    <ng-container *ngIf="!fetchingError && total > 0">
+
+      <!-- add button -->
+      <div class="text-right p-bottom-25">
+        <button (click)="onClickAdd()" class="btn btn-primary btn-sm rounded shadow" type="button">
+          <i class="fas fa-plus m-no-left"></i>
+          {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
+        </button>
+      </div>
+      <!-- /add button -->
+
+      <!-- table -->
+      <app-shared-table
+        (editRow)="showPreset($event)"
+        (removeRows)="OnClickDelete($event)"
+        [(config)]="config"
+        [data]="table">
+      </app-shared-table>
+      <!-- /table -->
+
+    </ng-container>
+    <!-- /questionnaire-->
 
 
   </div>

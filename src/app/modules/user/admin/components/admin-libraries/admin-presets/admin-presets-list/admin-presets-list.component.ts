@@ -94,10 +94,10 @@ export class AdminPresetsListComponent {
       _editIndex: 1,
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['sections'], _name: 'TABLE.HEADING.SECTIONS', _type: 'TEXT', _isSortable: true},
+        {_attrs: ['sections'], _name: 'TABLE.HEADING.SECTIONS', _type: 'LENGTH', _isSortable: true},
         {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'TEXT', _isSortable: true},
-        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'TEXT', _isSortable: true}
+        {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true},
+        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true}
       ]
     };
   }
@@ -122,7 +122,7 @@ export class AdminPresetsListComponent {
     };
 
     this._presetService.create(newPreset).pipe(first()).subscribe((response: Preset) => {
-      this._router.navigate(['/admin/libraries/questionnaire/' + response._id]);
+      this._router.navigate(['/user/admin/libraries/questionnaire/' + response._id]);
     }, () => {
       this._checkPresetAlready();
     });
@@ -136,6 +136,14 @@ export class AdminPresetsListComponent {
       this._modalOpen = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     }
+  }
+
+  public showPreset(value: Preset) {
+    this._router.navigate(['/user/admin/libraries/questionnaire/' + value._id]);
+  }
+
+  public OnClickDelete(values: Array<Preset>) {
+    console.log(values);
   }
 
   loadPresets(config: any): void {
