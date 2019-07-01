@@ -4,6 +4,14 @@ export const PRESETS = {
 
   'ALREADY_EXIST': 'The preset with the same name already exists.',
 
+  'ADDED': 'The preset has been added successfully.',
+
+  'DELETED': 'The preset has been deleted successfully.',
+
+  'MODAL': {
+    'DELETE': 'Do you really want to delete the selected preset(s)?'
+  },
+
 
 
   'PRESET': {

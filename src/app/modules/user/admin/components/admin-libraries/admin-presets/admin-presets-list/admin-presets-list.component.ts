@@ -43,6 +43,9 @@ export class AdminPresetsListComponent {
 
   private _table: Table;
 
+  private _isModalDelete: boolean;
+
+  private _presetsToRemove: Array<Preset> = [];
 
   selectedPresetIdToBeDeleted: string = null;
 
@@ -112,6 +115,7 @@ export class AdminPresetsListComponent {
 
   private _resetModalVariables() {
     this._isModalAdd = false;
+    this._isModalDelete = false;
   }
 
   public onAddConfirm() {
@@ -122,6 +126,7 @@ export class AdminPresetsListComponent {
     };
 
     this._presetService.create(newPreset).pipe(first()).subscribe((response: Preset) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'PRESETS.ADDED');
       this._router.navigate(['/user/admin/libraries/questionnaire/' + response._id]);
     }, () => {
       this._checkPresetAlready();
@@ -143,7 +148,26 @@ export class AdminPresetsListComponent {
   }
 
   public OnClickDelete(values: Array<Preset>) {
-    console.log(values);
+    this._presetsToRemove = values;
+    this._resetModalVariables();
+    this._modalTitle = 'COMMON.MODAL.TITLE_DELETE';
+    this._isModalDelete = true;
+    this._modalOpen = true;
+  }
+
+  public onDeleteConfirm() {
+
+    this._presetsToRemove.forEach((preset) => {
+      this._presetService.remove(preset._id).pipe(first()).subscribe(() => {
+        this._getPresets();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'PRESETS.DELETED');
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      })
+    });
+
+    this._modalOpen = false;
+
   }
 
   loadPresets(config: any): void {
@@ -259,6 +283,14 @@ export class AdminPresetsListComponent {
 
   get table(): Table {
     return this._table;
+  }
+
+  get isModalDelete(): boolean {
+    return this._isModalDelete;
+  }
+
+  get presetsToRemove(): Array<Preset> {
+    return this._presetsToRemove;
   }
 
   get paginationConfig(): Pagination { return this._paginationConfig; }

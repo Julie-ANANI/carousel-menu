@@ -85,10 +85,6 @@ export const ERROR = {
     'ALREADY_ADDED': 'The tag has been already added.'
   },
 
-  'PRESET': {
-    'UPDATED': 'The configuration has been updated.'
-  },
-
   'SECTION': {
     'UPDATED': 'The section has been updated.'
   },

@@ -161,13 +161,13 @@ export class AdminSignaturesLibraryComponent {
   public onDeleteConfirm() {
     this._signaturesToRemove.forEach((signature) => {
       this._templatesService.removeSignature(signature._id).pipe(first()).subscribe(() => {
+        this._getSignatures();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.DELETED');
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
     });
 
-    this._getSignatures();
     this._modalOpen = false;
 
   }

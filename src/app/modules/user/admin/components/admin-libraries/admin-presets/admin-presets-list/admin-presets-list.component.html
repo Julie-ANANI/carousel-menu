@@ -69,20 +69,30 @@
 
   <!-- isAdd -->
   <ng-container *ngIf="isModalAdd">
-    <div class="flex-centered">
-      <div class="form-group" [ngStyle]="{ 'width': '75%' }">
-        <label class="form-label" for="add-preset">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
-        <input
-          [(ngModel)]="newPresetName"
-          class="form-input"
-          id="add-preset"
-          name="preset"
-          [placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate"
-          type="text">
-      </div>
+    <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
+      <label class="form-label" for="add-preset">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
+      <input
+        [(ngModel)]="newPresetName"
+        class="form-input"
+        id="add-preset"
+        name="preset"
+        [placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate"
+        type="text">
     </div>
   </ng-container>
   <!-- /isAdd -->
+
+  <!-- isDelete -->
+  <ng-container *ngIf="isModalDelete">
+    <div class="text-background text-medium">{{ 'PRESETS.MODAL.DELETE' | translate }}</div>
+
+    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+      <li *ngFor="let preset of presetsToRemove" class="m-right-3 m-top-1">
+        {{ preset.name }}
+      </li>
+    </ul>
+  </ng-container>
+  <!-- /isDelete -->
 
   <div class="modal-footer">
 
@@ -99,6 +109,17 @@
       </button>
     </ng-container>
     <!-- /isAdd -->
+
+    <!-- isDelete -->
+    <ng-container *ngIf="isModalDelete">
+      <button
+        (click)="onDeleteConfirm()"
+        [innerText]="'COMMON.BUTTON.CONFIRM'"
+        class="btn btn-sm btn-primary"
+        translate>
+      </button>
+    </ng-container>
+    <!-- /isDelete -->
 
   </div>
 

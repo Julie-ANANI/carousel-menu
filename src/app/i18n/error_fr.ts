@@ -85,10 +85,6 @@ export const ERROR = {
     'ALREADY_ADDED': 'Le tag a déjà été ajoutée.'
   },
 
-  'PRESET': {
-    'UPDATED': 'Configuration mise à jour.'
-  },
-
   'SECTION': {
     'UPDATED': 'Section mise à jour.'
   },
@@ -110,7 +106,6 @@ export const ERROR = {
   'QUIZ': {
     'CREATED': 'Le quiz a été créé.'
   },
-
 
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',
