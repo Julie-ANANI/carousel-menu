@@ -85,10 +85,6 @@ export const ERROR = {
     'ALREADY_ADDED': 'Le tag a déjà été ajoutée.'
   },
 
-  'PRESET': {
-    'UPDATED': 'Configuration mise à jour.'
-  },
-
   'SECTION': {
     'UPDATED': 'Section mise à jour.'
   },
@@ -110,7 +106,6 @@ export const ERROR = {
   'QUIZ': {
     'CREATED': 'Le quiz a été créé.'
   },
-
 
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',
@@ -169,7 +164,7 @@ export const ERROR = {
   'SIGNATURES': {
     'ADDED': 'La signature a été ajoutée avec succès.',
     'UPDATED': 'La signature a été mise à jour avec succès.',
-    'ALREADY_EXIST': 'La signature avec la même existe déjà.',
+    'ALREADY_EXIST': 'La signature avec la même nom existe déjà.',
     'DELETED': 'La signature a été supprimée avec succès.',
   }
 

@@ -128,7 +128,8 @@ export const COMMON = {
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
     'SIGNATURE_NAME': 'Signature Nom',
-    'LANGUAGE': 'Langue'
+    'LANGUAGE': 'Langue',
+    'PRESET_NAME': 'Nom du Preset',
   },
 
   'PLACEHOLDER': {
@@ -141,7 +142,8 @@ export const COMMON = {
     'ACTIVITY_FIELDS': 'Entrez votre secteur d\'activité',
     'TECHNOLOGIES': 'Entrez la technologie',
     'SEARCH': 'Rechercher ici',
-    'SIGNATURE_NAME': 'Entrez le nom de la signature'
+    'SIGNATURE_NAME': 'Entrez le nom de la signature',
+    'PRESET_NAME': 'Entrer le nom du preset',
   },
 
   'REQUIRED': {

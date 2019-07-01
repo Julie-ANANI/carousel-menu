@@ -80,11 +80,11 @@ export class AdminSignaturesLibraryComponent {
       _editIndex: 1,
       _isNoMinHeight: true,
       _columns: [
-        {_attrs: ['name'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['from'], _name: 'COMMON.SORT.BY_AUTHOR', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['content'], _name: 'Content', _type: 'TEXT'},
-        {_attrs: ['language'], _name: 'COMMON.LANGUAGE', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT', _isSearchable: true}
+        {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['from'], _name: 'TABLE.HEADING.AUTHOR', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['content'], _name: 'TABLE.HEADING.CONTENT', _type: 'TEXT'},
+        {_attrs: ['language'], _name: 'TABLE.HEADING.LANGUAGE', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT', _isSearchable: true}
       ]
     };
   }
@@ -161,13 +161,13 @@ export class AdminSignaturesLibraryComponent {
   public onDeleteConfirm() {
     this._signaturesToRemove.forEach((signature) => {
       this._templatesService.removeSignature(signature._id).pipe(first()).subscribe(() => {
+        this._getSignatures();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.DELETED');
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
     });
 
-    this._getSignatures();
     this._modalOpen = false;
 
   }

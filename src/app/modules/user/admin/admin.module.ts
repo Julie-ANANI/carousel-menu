@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
-import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 
@@ -55,6 +54,7 @@ import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
 import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
 import { UsersResolver } from '../../../resolvers/admin/users-resolver';
 import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver';
+import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
 
 
 @NgModule({
@@ -86,7 +86,6 @@ import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver
   ],
   declarations: [
     AdminPatentsComponent,
-    AdminUserDetailsComponent,
     AdminSettingsComponent
   ],
   providers: [
@@ -117,7 +116,8 @@ import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver
     ProjectsResolver,
     ProfessionalsResolver,
     UsersResolver,
-    SignaturesResolver
+    SignaturesResolver,
+    PresetsResolver
   ]
 })
 

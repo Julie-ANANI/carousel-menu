@@ -4,11 +4,11 @@ import { AdminWorkflowsLibraryComponent } from './admin-workflows-library/admin-
 import { AdminSignaturesLibraryComponent } from './admin-signatures-library/admin-signatures-library.component';
 import { AdminEmailsLibraryComponent } from './admin-emails-library/admin-emails-library.component';
 import { AdminPresetsListComponent } from './admin-presets/admin-presets-list/admin-presets-list.component';
-import { AdminPresetsNewComponent } from './admin-presets/admin-presets-new/admin-presets-new.component';
 import { AdminPresetsEditComponent } from './admin-presets/admin-presets-edit/admin-presets-edit.component';
 
 import { PresetResolver } from '../../../../../resolvers/preset.resolver';
 import { SignaturesResolver } from '../../../../../resolvers/admin/signatures-resolver';
+import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver';
 
 export const librariesRoutes: Routes = [
   {
@@ -42,12 +42,9 @@ export const librariesRoutes: Routes = [
   {
     path: 'questionnaire',
     component: AdminPresetsListComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'questionnaire/new',
-    component: AdminPresetsNewComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    resolve: { presets: PresetsResolver },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'questionnaire/:presetId',

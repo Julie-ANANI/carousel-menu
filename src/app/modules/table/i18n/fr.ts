@@ -33,7 +33,11 @@ export const TABLE = {
     'INDUSTRY': 'Industrie',
     'FEEDBACK': 'Feedback',
     'SAVED': 'Sauvegardé',
-    'SCORE': 'Score de Validation'
+    'SCORE': 'Score de Validation',
+    'LANGUAGE': 'Langue',
+    'AUTHOR': 'Auteur',
+    'CONTENT': 'Contenu',
+    'SECTIONS': 'Sections',
   },
 
   'TITLE': {

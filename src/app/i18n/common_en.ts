@@ -129,7 +129,8 @@ export const COMMON = {
     'CHOOSE_LANGUAGE': 'Choose Language:',
     'SEARCH_BY': 'Search by',
     'SIGNATURE_NAME': 'Signature Name',
-    'LANGUAGE': 'Language'
+    'LANGUAGE': 'Language',
+    'PRESET_NAME': 'Preset Name',
   },
 
   'PLACEHOLDER': {
@@ -142,7 +143,8 @@ export const COMMON = {
     'ACTIVITY_FIELDS': 'Enter your activity field',
     'TECHNOLOGIES': 'Enter the technology',
     'SEARCH': 'Search here',
-    'SIGNATURE_NAME': 'Enter the signature name'
+    'SIGNATURE_NAME': 'Enter the signature name',
+    'PRESET_NAME': 'Enter the preset name'
   },
 
   'REQUIRED': {

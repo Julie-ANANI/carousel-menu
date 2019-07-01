@@ -284,6 +284,11 @@
                     </span>
                   </ng-container>
 
+                  <!-- if type is length -->
+                  <ng-container *ngSwitchCase="'LENGTH'">
+                    <span>{{ getLength(getContentValue(row, getAttrs(column)[0])) }}</span>
+                  </ng-container>
+
                   <!-- if type is text -->
                   <ng-container *ngSwitchDefault>
                     <span *ngFor="let attr of getAttrs(column)">
