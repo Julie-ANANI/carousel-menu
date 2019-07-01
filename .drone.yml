@@ -24,11 +24,11 @@ steps:
 - name: dockerDev
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     build_args:
-    - APP_NAME=umi
-    - ENV_NAME=dev
-    target: buildinstance
+      - APP_NAME=umi
+      - ENV_NAME=dev
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username

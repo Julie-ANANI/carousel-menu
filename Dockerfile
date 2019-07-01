@@ -1,4 +1,4 @@
-FROM node:10.13.0 as baseimage
+FROM node:10.13.0 AS baseimage
 
 ARG APP_NAME
 ARG ENV_NAME
@@ -21,7 +21,7 @@ RUN rm -f /var/web/.npmrc
 # update version
 RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
 
-FROM unitedmotionideas/frontbase:latest as buildinstance
+FROM unitedmotionideas/frontbase:latest AS buildinstance
 
 ARG APP_NAME
 ARG ENV_NAME
