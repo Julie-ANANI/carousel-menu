@@ -22,7 +22,7 @@ RUN rm dist/browser/*.js.map
 RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
 
 # gzip every files for the browser
-RUN gzip -k -r dist/browser/
+RUN gzip -k dist/browser/
 
 RUN npm run webpack:server
 
