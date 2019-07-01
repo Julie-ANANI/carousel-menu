@@ -63,25 +63,26 @@ steps:
 - name: baseimageProd
   image: plugins/docker
   settings:
+    auto_tag: true
     repo: unitedmotionideas/frontbase
     target: baseimage
     dockerfile: ./Dockerfile.image
     build_args:
       - APP_NAME=umi
       - ENV_NAME=dev
+      - VERSION=${DRONE_TAG}
     username:
       from_secret: docker_username
     password:
       from_secret: docker_password
   when:
     event:
-      - push
-    branch:
-      - development
-      -
+      - tag
+
 - name: dockerProd
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: umi
     build_args:
