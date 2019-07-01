@@ -7,6 +7,7 @@ import { InnovationSettings } from '../../../../models/innov-settings';
 import { COUNTRIES } from './COUNTRIES';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
+import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -38,7 +39,8 @@ export class SharedSearchProsComponent implements OnInit {
 
   constructor(private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private proService: ProfessionalsService) {
 
     this.searchService.getCountriesSettings().pipe(first()).subscribe((countriesSettings: any) => {
       this._countriesSettings = countriesSettings.countries;
@@ -318,6 +320,12 @@ export class SharedSearchProsComponent implements OnInit {
     this._params = value;
     this.estimateNumberOfGoogleRequests();
     this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.SEARCH.SETTINGS_UPDATED');
+  }
+
+  cleanPros() {
+    this.proService.cleanPros().pipe(first()).subscribe((_: any) => {
+      console.log("OK");
+    });
   }
 
 
