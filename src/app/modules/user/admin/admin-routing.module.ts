@@ -10,7 +10,6 @@ import { AdminCampaignsComponent } from './components/admin-campaigns/admin-camp
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
-import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { AdminCampaignBatchComponent } from './components/admin-campaigns/admin-campaign-batch/admin-campaign-batch.component';
 import { AdminCampaignWorkflowsComponent } from './components/admin-campaigns/admin-campaign-workflows/admin-campaign-workflows.component';
@@ -66,11 +65,6 @@ const adminRoutes: Routes = [
             resolve: { users : UsersResolver },
             runGuardsAndResolvers: 'always',
           },
-          {
-            path: 'user/:userId',
-            component: AdminUserDetailsComponent,
-            pathMatch: 'full'
-          }
         ]
       },
       {

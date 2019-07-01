@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
-import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 
@@ -87,7 +86,6 @@ import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
   ],
   declarations: [
     AdminPatentsComponent,
-    AdminUserDetailsComponent,
     AdminSettingsComponent
   ],
   providers: [
