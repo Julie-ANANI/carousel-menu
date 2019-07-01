@@ -28,6 +28,7 @@ steps:
     build_args:
     - APP_NAME=umi
     - ENV_NAME=dev
+    target: buildinstance
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -35,9 +36,9 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - push
+      - push
     branch:
-    - development
+      - development
 
 - name: rancherDev
   image: peloton/drone-rancher
