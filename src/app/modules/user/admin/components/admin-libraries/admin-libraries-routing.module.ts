@@ -4,7 +4,6 @@ import { AdminWorkflowsLibraryComponent } from './admin-workflows-library/admin-
 import { AdminSignaturesLibraryComponent } from './admin-signatures-library/admin-signatures-library.component';
 import { AdminEmailsLibraryComponent } from './admin-emails-library/admin-emails-library.component';
 import { AdminPresetsListComponent } from './admin-presets/admin-presets-list/admin-presets-list.component';
-import { AdminPresetsNewComponent } from './admin-presets/admin-presets-new/admin-presets-new.component';
 import { AdminPresetsEditComponent } from './admin-presets/admin-presets-edit/admin-presets-edit.component';
 
 import { PresetResolver } from '../../../../../resolvers/preset.resolver';
@@ -46,11 +45,6 @@ export const librariesRoutes: Routes = [
     pathMatch: 'full',
     resolve: { presets: PresetsResolver },
     runGuardsAndResolvers: 'always'
-  },
-  {
-    path: 'questionnaire/new',
-    component: AdminPresetsNewComponent,
-    pathMatch: 'full'
   },
   {
     path: 'questionnaire/:presetId',
