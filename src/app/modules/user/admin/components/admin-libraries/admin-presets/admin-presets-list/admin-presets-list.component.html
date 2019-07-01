@@ -116,6 +116,7 @@
     <ng-container *ngIf="isModalAdd || isModalCloneAdd">
       <button
         (click)="isModalAdd ? onAddConfirm() : onClickCloneAdd()"
+        (keyup.enter)="isModalAdd ? onAddConfirm() : onClickCloneAdd()"
         [disabled]="!newPresetName"
         [innerText]="'COMMON.BUTTON.CONFIRM'"
         class="btn btn-sm btn-primary"
@@ -139,6 +140,7 @@
     <ng-container *ngIf="isModalClone">
       <button
         (click)="onCloneConfirm()"
+        (keyup.enter)="onCloneConfirm()"
         [innerText]="'COMMON.BUTTON.CONFIRM'"
         class="btn btn-sm btn-primary"
         translate>
