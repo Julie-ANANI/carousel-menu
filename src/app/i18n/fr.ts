@@ -13,7 +13,6 @@ import { BLACKLISTS } from '../modules/user/admin/components/admin-settings/admi
 import { TAGS } from '../modules/user/admin/components/admin-tags/i18n/fr';
 import { PROJECT_LIST } from '../modules/user/admin/components/admin-projects-list/i18n/fr';
 import { PROJECT_MODULE } from '../modules/user/client/components/project/i18n/fr';
-import { PROFESSIONALS } from '../modules/user/admin/components/admin-professionals/i18n/fr';
 import { DISCOVER } from '../modules/public/discover/i18n/fr';
 import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/description/i18n/fr';
 import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/fr';
@@ -60,7 +59,6 @@ export const fr = {
   'TAGS': TAGS,
   'PROJECT_LIST': PROJECT_LIST,
   'PROJECT_MODULE': PROJECT_MODULE,
-  'PROFESSIONALS' : PROFESSIONALS,
   'SHARE': SHARE,
   'RESET_PASSWORD': RESET_PASSWORD,
   'EDIT_WORKFLOW': EDIT_WORKFLOW,

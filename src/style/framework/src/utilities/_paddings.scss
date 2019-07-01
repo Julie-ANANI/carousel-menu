@@ -5,9 +5,18 @@
   padding-right: $unit-1 !important;
 }
 
+.p-right-2 {
+  padding-right: $unit-2 !important;
+}
+
+
 // top
 .p-top-20 {
   padding-top: $unit-5;
+}
+
+.p-top-30 {
+  padding-top: 1.5rem;
 }
 
 //bottom
@@ -16,6 +25,18 @@
   padding-bottom: $unit-1 !important;
 }
 
+.p-bottom-10 {
+  padding-bottom: 0.5rem;
+}
+
 .p-bottom-20 {
-  padding-top: $unit-5;
+  padding-bottom: $unit-5;
+}
+
+.p-bottom-25 {
+  padding-bottom: 1.25rem;
+}
+
+.p-bottom-30 {
+  padding-bottom: 1.5rem;
 }

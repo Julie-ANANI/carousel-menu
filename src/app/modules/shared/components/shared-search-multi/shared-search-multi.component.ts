@@ -62,8 +62,13 @@ export class SharedSearchMultiComponent {
   }
 
   public onChangeTextProp(prop: Event) {
+
     this._currentTextProp = this._textProps.find(value => value._attrs[0] === (prop.target as HTMLSelectElement).value);
-    this.onSearch();
+
+    if (this._searchString) {
+      this.onSearch();
+    }
+
   }
 
   public onSearch() {
@@ -74,7 +79,13 @@ export class SharedSearchMultiComponent {
       this._searchConfig.search = '{}';
     } else {
       let _search: any = {};
-      _search[this._currentTextProp._attrs[0]] = encodeURIComponent(this._searchString.trim());
+
+      const input = this._searchString.split(',');
+
+      input.forEach((queryStr: string, index: number) => {
+        _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
+      });
+
       this._searchConfig.search = JSON.stringify(_search);
     }
 

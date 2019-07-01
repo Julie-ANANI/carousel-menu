@@ -95,7 +95,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
         this._total = projects._metadata.totalCount;
 
         this._tableInfos = {
-          _selector: 'admin-projects',
+          _selector: 'admin-dashboard-limit',
           _title: 'COMMON.PROJECTS',
           _content: this._projects,
           _total: this._total,

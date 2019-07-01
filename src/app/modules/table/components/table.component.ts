@@ -113,7 +113,6 @@ export class TableComponent implements OnInit {
     if (data) {
       this._table = data;
       this._initializeVariables();
-      this._checkLocalStorage();
       this._setPagination(Number(this._config.offset));
       this._checkSearching();
 
@@ -133,39 +132,6 @@ export class TableComponent implements OnInit {
     this._isSearching = false;
     this._isLoadingData = false;
   }
-
-  /***
-   * This function is to check the limit or we can say the parPage row which
-   * user has already activated according to that if the limit is not same to the
-   * config limit then we update the config limit and output the event, add call the
-   * api to fetch the data.
-   * @private
-   */
-  private _checkLocalStorage() {
-
-    if (this._localStorageService.getItem(`${this._table._selector}-limit`)) {
-      const localStorage = parseInt(this._localStorageService.getItem(`${this._table._selector}-limit`), 10);
-
-      if (localStorage.toString(10) !== this._config.limit) {
-        this._config.limit = localStorage.toString(10) || this._config.limit;
-        this._setLocalStorage();
-
-        if (!this._table._isLocal) {
-          this._emitConfigChange();
-        }
-
-      }
-
-    } else {
-      this._setLocalStorage();
-    }
-
-  }
-
-  private _setLocalStorage() {
-    this._localStorageService.setItem(`${this._table._selector}-limit`, JSON.stringify(this._config.limit));
-  }
-
 
   /***
    * This function is called when the content is local. We slice the
