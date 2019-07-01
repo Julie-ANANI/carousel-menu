@@ -8,9 +8,16 @@ export const PRESETS = {
 
   'DELETED': 'Le preset a été supprimé avec succès.',
 
+  'CLONED': 'Le preset a été cloné avec succès.',
+
+  'NO_MULTIPLE_CLONE': 'Désolée. Cette fonctionnalité n\'est pas disponible sur plusieurs presets.',
+
   'MODAL': {
-    'DELETE': 'Souhaitez-vous vraiment supprimer le(s) Preset(s) sélectionné(s) ?'
+    'DELETE': 'Souhaitez-vous vraiment supprimer le(s) Preset(s) sélectionné(s) ?',
+    'CLONE': 'Voulez-vous vraiment cloner le preset sélectionné ?',
   },
+
+
 
   'PRESET': {
     'ADD': 'Ajouter une configuration',

@@ -8,8 +8,13 @@ export const PRESETS = {
 
   'DELETED': 'The preset has been deleted successfully.',
 
+  'CLONED': 'The preset has been cloned successfully.',
+
+  'NO_MULTIPLE_CLONE': 'Sorry. This functionality is not available on multiple presets.',
+
   'MODAL': {
-    'DELETE': 'Do you really want to delete the selected preset(s)?'
+    'DELETE': 'Do you really want to delete the selected preset(s)?',
+    'CLONE': 'Do you really want to clone the selected preset?',
   },
 
 

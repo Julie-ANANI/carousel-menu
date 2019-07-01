@@ -51,6 +51,7 @@
       <app-shared-table
         (editRow)="showPreset($event)"
         (removeRows)="OnClickDelete($event)"
+        (performAction)="onClickActions($event)"
         [(config)]="config"
         [data]="table">
       </app-shared-table>
@@ -68,9 +69,10 @@
 <app-modal [(showModal)]="modalOpen" [modalTitle]="modalTitle">
 
   <!-- isAdd -->
-  <ng-container *ngIf="isModalAdd">
+  <ng-container *ngIf="isModalAdd || isModalCloneAdd">
     <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
-      <label class="form-label" for="add-preset">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
+      <label class="form-label" for="add-preset" *ngIf="isModalAdd">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
+      <label class="form-label" for="add-preset" *ngIf="isModalCloneAdd">Preset Clone</label>
       <input
         [(ngModel)]="newPresetName"
         class="form-input"
@@ -94,21 +96,33 @@
   </ng-container>
   <!-- /isDelete -->
 
+  <!-- isClone -->
+  <ng-container *ngIf="isModalClone">
+    <div class="text-background text-medium">{{ 'PRESETS.MODAL.CLONE' | translate }}</div>
+
+    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+      <li class="m-right-3 m-top-1">
+        {{ presetToClone.name }}
+      </li>
+    </ul>
+  </ng-container>
+  <!-- /isClone -->
+
   <div class="modal-footer">
 
     <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
 
-    <!-- isAdd -->
-    <ng-container *ngIf="isModalAdd">
+    <!-- isAdd || isCloneAdd -->
+    <ng-container *ngIf="isModalAdd || isModalCloneAdd">
       <button
-        (click)="onAddConfirm()"
+        (click)="isModalAdd ? onAddConfirm() : onClickCloneAdd()"
         [disabled]="!newPresetName"
         [innerText]="'COMMON.BUTTON.CONFIRM'"
         class="btn btn-sm btn-primary"
         translate>
       </button>
     </ng-container>
-    <!-- /isAdd -->
+    <!-- /isAdd || /isCloneAdd -->
 
     <!-- isDelete -->
     <ng-container *ngIf="isModalDelete">
@@ -121,136 +135,18 @@
     </ng-container>
     <!-- /isDelete -->
 
+    <!-- isClone -->
+    <ng-container *ngIf="isModalClone">
+      <button
+        (click)="onCloneConfirm()"
+        [innerText]="'COMMON.BUTTON.CONFIRM'"
+        class="btn btn-sm btn-primary"
+        translate>
+      </button>
+    </ng-container>
+    <!-- /isClone -->
+
   </div>
 
 </app-modal>
 <!-- /modal -->
-
-
-
-
-<!--
-<h1>{{total}} {{ 'COMMON.QUESTIONNAIRE' | translate }}</h1>
-<div class="text-right">
-  <button [routerLink]="'new'" class="btn btn-primary" (click)="$event.preventDefault()">
-    Create questionnaire
-  </button>
-</div>
-
-<label>{{ 'PRESETS.PRESET.FILTER' | translate }} : <sqFilter [config]="config" (configChange)="loadPresets($event)" [prop]="'name'"></sqFilter></label>
-
-<div class="empty" *ngIf="presets && !presets.length">
-  <p class="empty-title h5">{{ 'PRESETS.PRESET.NONE.TITLE' | translate }}</p>
-  <p class="empty-subtitle">{{ 'PRESETS.PRESET.NONE.CONTENT' | translate }}</p>
-  <div class="empty-action">
-    <button [routerLink]="'new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
-      {{ 'PRESETS.PRESET.ADD' | translate }} <i class="icon icon-arrow-right"></i>
-    </button>
-  </div>
-</div>
-
-<div class="columns" *ngIf="presets && presets.length">
-
-  <table class="table presets" wt-responsive-table>
-    <thead>
-      <tr>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'name'" [label]="'name'">{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
-        <th>{{ 'PRESETS.SECTIONS' | translate }}</th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'domain'" [label]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</app-shared-sort></th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'updated'" [label]="'updated'">{{ 'COMMON.UPDATED' | translate }}</app-shared-sort></th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'created'" [label]="'created'">{{ 'COMMON.CREATED' | translate }}</app-shared-sort></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let preset of presets">
-        <td><a [routerLink]="[preset._id]">{{preset.name}}</a></td>
-        <td>{{preset.sections ? preset.sections.length : 0}}</td>
-        <td>{{preset.domain}}</td>
-        <td>{{preset.created | date : dateFormat}}</td>
-        <td>{{preset.updated | date : dateFormat}}</td>
-        <td>
-          <button class="btn btn-primary" (click)="(selectedPresetToBeCloned = preset) && onClickClone()">
-            <i class="far fa-copy"></i> {{ 'COMMON.CLONE' | translate }}
-          </button>
-        </td>
-        <td><a class="delete c-hand icon icon-delete" aria-label="Close" role="button" (click)="(selectedPresetIdToBeDeleted = preset._id); onClickDelete()">
-          <i class="fas fa-trash-alt"></i>
-        </a></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="12">
-          <app-pagination
-            [configValue]="paginationConfig"
-            (configChange)="configChange($event)"
-            [total]="total"
-            [propertyName]="'admin-presets'"></app-pagination>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
-
-
-&lt;!&ndash; modal to delete &ndash;&gt;
-<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-  {{ 'PRESETS.PRESET.DELETE_MODAL.CONTENT' | translate }}
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="removePreset($event, selectedPresetIdToBeDeleted)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
-
-</app-modal>
-&lt;!&ndash; /modal to add the new workflow &ndash;&gt;
-
-
-&lt;!&ndash; modal to delete &ndash;&gt;
-<app-modal [(showModal)]="modalClone" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
-
-  <div *ngIf="selectedPresetToBeCloned" class="form-group">
-    <label class="form-label" for="preset-clone">Preset Clone</label>
-    <input
-      type="text"
-      id="preset-clone"
-      [(ngModel)]="selectedPresetToBeCloned.name"
-      name="preset"
-      placeholder="Enter the preset clone name"
-      class="form-input">
-  </div>
-
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="clonePreset($event, selectedPresetToBeCloned)" [disabled]="!selectedPresetToBeCloned || !selectedPresetToBeCloned.name">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
-
-</app-modal>
-&lt;!&ndash; /modal to add the new workflow &ndash;&gt;
-
-
-&lt;!&ndash; Modal de création de section
-<div class="modal" [ngClass]="{'active': (modalsection)}">
-  <div class="modal-overlay" (click)="(modalsection = !modalsection)"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(modalsection = !modalsection)"></button>
-      <div class="modal-title h5"> CHOISIR UN NOM UNIQUE </div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        Appuyer sur entrée après avoir écris le nom de la section.
-        <input type="text" (keyup.enter)="addSection($event)">
-        <span *ngIf="errorsection"> Ce nom est deja pris, veuillez en choisir un nouveau</span>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-link" (click)="(modalsection = !modalsection)">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-    </div>
-  </div>
-</div>
-&ndash;&gt;
--->

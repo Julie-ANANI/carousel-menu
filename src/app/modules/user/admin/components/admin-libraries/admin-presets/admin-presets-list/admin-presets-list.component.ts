@@ -2,12 +2,10 @@ import { Component } from '@angular/core';
 import { PresetService } from '../../../../../../../services/preset/preset.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
-import { Pagination } from '../../../../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../../services/title/title.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import { Section } from '../../../../../../../models/section';
 import { Table } from '../../../../../../table/models/table';
 import { Response } from '../../../../../../../models/response';
 
@@ -47,15 +45,11 @@ export class AdminPresetsListComponent {
 
   private _presetsToRemove: Array<Preset> = [];
 
-  selectedPresetIdToBeDeleted: string = null;
+  private _isModalClone: boolean;
 
-  selectedPresetToBeCloned: Preset = null;
+  private _isModalCloneAdd: boolean;
 
-  private _modalDelete = false;
-
-  private _modalClone = false;
-
-  private _paginationConfig: any = {limit: this._config.limit, offset: this._config.offset};
+  private _presetToClone: Preset;
 
   constructor(private _presetService: PresetService,
               private _translateTitleService: TranslateTitleService,
@@ -95,6 +89,7 @@ export class AdminPresetsListComponent {
       _isPaginable: true,
       _isTitle: true,
       _editIndex: 1,
+      _buttons: [{ _icon: 'fas fa-clone', _label: 'Clone' }],
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
         {_attrs: ['sections'], _name: 'TABLE.HEADING.SECTIONS', _type: 'LENGTH', _isSortable: true},
@@ -105,6 +100,13 @@ export class AdminPresetsListComponent {
     };
   }
 
+  private _resetModalVariables() {
+    this._isModalAdd = false;
+    this._isModalDelete = false;
+    this._isModalClone = false;
+    this._isModalCloneAdd = false;
+  }
+
   public onClickAdd() {
     this._resetModalVariables();
     this._modalTitle = 'COMMON.MODAL.TITLE_CREATE';
@@ -113,25 +115,28 @@ export class AdminPresetsListComponent {
     this._modalOpen = true;
   }
 
-  private _resetModalVariables() {
-    this._isModalAdd = false;
-    this._isModalDelete = false;
-  }
-
   public onAddConfirm() {
-
-    const newPreset: { name: string; sections: Array<Section> } = {
+    const newPreset: Preset = {
       name: this._newPresetName,
       sections: []
     };
+    this._createPreset(newPreset, true, 'PRESETS.ADDED');
+  }
 
-    this._presetService.create(newPreset).pipe(first()).subscribe((response: Preset) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'PRESETS.ADDED');
-      this._router.navigate(['/user/admin/libraries/questionnaire/' + response._id]);
+  private _createPreset(preset: Preset, navigate: boolean, message: string) {
+    this._presetService.create(preset).pipe(first()).subscribe((response: Preset) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', message);
+
+      if (navigate) {
+        this._router.navigate(['/user/admin/libraries/questionnaire/' + response._id]);
+      } else {
+        this._getPresets();
+        this._modalOpen = false;
+      }
+
     }, () => {
       this._checkPresetAlready();
     });
-
   }
 
   private _checkPresetAlready() {
@@ -170,70 +175,33 @@ export class AdminPresetsListComponent {
 
   }
 
-  loadPresets(config: any): void {
-    this._config = config;
-    this._presetService.getAll(this._config)
-      .pipe(first())
-      .subscribe((presets: any) => {
-        this._presets = presets.result;
-        this._total = presets._metadata.totalCount;
-      });
-  }
-
-  configChange(value: any) {
-    this._paginationConfig = value;
-    this._config.limit = value.limit;
-    this._config.offset = value.offset;
-    window.scroll(0, 0);
-    this.loadPresets(this._config);
-  }
-
-  onClickDelete() {
-    this._modalDelete = true;
-  }
-
-  onClickClone() {
-    this._modalClone = true;
-  }
-
-  private _getPresetIndex(presetId: string): number {
-    for (const preset of this._presets) {
-      if (presetId === preset._id) {
-        return this._presets.indexOf(preset);
+  public onClickActions(value: any) {
+    if (value._action === 'Clone') {
+      if (value._rows.length === 1) {
+        this._resetModalVariables();
+        this._presetToClone = value._rows[0];
+        this._modalTitle = 'COMMON.MODAL.TITLE_CONFIRMATION';
+        this._isModalClone = true;
+        this._modalOpen = true;
+      } else {
+        this._translateNotificationsService.error('ERROR.ERROR', 'PRESETS.NO_MULTIPLE_CLONE');
       }
+
     }
   }
 
-  /**
-   * Suppression et mise à jour de la vue
-   */
-  public removePreset(event: Event, presetId: string) {
-    event.preventDefault();
-    this._presetService
-      .remove(presetId)
-      .pipe(first())
-      .subscribe((_: any) => {
-        this._presets.splice(this._getPresetIndex(presetId), 1);
-        this.selectedPresetIdToBeDeleted = null;
-        this._modalDelete = false;
-      });
+  public onCloneConfirm() {
+    this._resetModalVariables();
+    delete this._presetToClone._id;
+    this._newPresetName =  this._presetToClone.name;
+    this._modalTitle = 'COMMON.MODAL.TITLE_CREATE';
+    this._isModalCloneAdd = true;
+    this._modalOpen = true;
   }
 
-  public clonePreset(event: Event, clonedPreset: Preset) {
-    event.preventDefault();
-    delete clonedPreset._id;
-    this._presetService.create(clonedPreset).pipe(first()).subscribe((preset: any) => {
-      this._router.navigate(['/user/admin/libraries/questionnaire/' + preset._id])
-    });
-  }
-
-  get sortConfig(): string {
-    return this._config.sort;
-  }
-
-  set sortConfig(value: string) {
-    this._config.sort = value;
-    this.loadPresets(this._config);
+  public onClickCloneAdd() {
+    this._presetToClone.name = this._newPresetName;
+    this._createPreset(this._presetToClone, false, 'PRESETS.CLONED');
   }
 
   get config(): Config {
@@ -293,22 +261,16 @@ export class AdminPresetsListComponent {
     return this._presetsToRemove;
   }
 
-  get paginationConfig(): Pagination { return this._paginationConfig; }
-
-  get modalDelete(): boolean {
-    return this._modalDelete;
+  get isModalClone(): boolean {
+    return this._isModalClone;
   }
 
-  set modalDelete(value: boolean) {
-    this._modalDelete = value;
+  get isModalCloneAdd(): boolean {
+    return this._isModalCloneAdd;
   }
 
-  get modalClone(): boolean {
-    return this._modalClone;
-  }
-
-  set modalClone(value: boolean) {
-    this._modalClone = value;
+  get presetToClone(): Preset {
+    return this._presetToClone;
   }
 
 }
