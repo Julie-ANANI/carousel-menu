@@ -18,7 +18,6 @@ import { TableModule } from '../../../../../table/table.module';
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    TranslateModule.forChild(),
     RouterModule,
     AdminProjectQuestionnaireModule,
     SharedPresetModule,
