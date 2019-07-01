@@ -80,6 +80,7 @@ steps:
       - tag
 
 - name: dockerProd
+  depends_on: [baseimageProd]
   image: plugins/docker
   settings:
     target: buildinstance
@@ -99,6 +100,7 @@ steps:
       - tag
 
 - name: rancherProd
+  depends_on: [dockerProd]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -113,10 +115,11 @@ steps:
     event:
       - tag
 
-  ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
-  ## ## ## ## ## ## ## ## WHITE LABEL ## ## ## ## ## ## ## ## ##
-  ## Dynergie production steps
+## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
+## ## ## ## ## ## ## ## WHITE LABEL ## ## ## ## ## ## ## ## ##
+## Dynergie production steps
 - name: dockerProdDynergie
+  depends_on: [baseimageProd]
   image: plugins/docker
   settings:
     target: buildinstance
@@ -136,6 +139,7 @@ steps:
       - tag
 
 - name: rancherProdDynergie
+  depends_on: [dockerProdDynergie]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
