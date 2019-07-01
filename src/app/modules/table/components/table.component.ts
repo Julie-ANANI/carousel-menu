@@ -479,6 +479,13 @@ export class TableComponent implements OnInit {
   }
 
   /***
+   * This function returns the length.
+   */
+  public getLength(content: string): string {
+    return content.length.toString(10) || '-';
+  }
+
+  /***
    * This function returns all the selected rows
    * @returns {Row[]}
    */
