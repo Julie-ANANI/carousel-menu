@@ -119,7 +119,7 @@ export class TableComponent implements OnInit {
       this._checkSearching();
 
       if (this._table._isLocal) {
-        this._getFilteredContent(data._content);
+        this._setFilteredContent();
       }
 
       this._initializeColumns();
