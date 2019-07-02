@@ -23,7 +23,7 @@ export class CampaignAnswersResolver implements Resolve<Response> {
   };
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
-              private campaignService: CampaignService,
+              private _campaignService: CampaignService,
               private _configService: ConfigService,
               private _transferState: TransferState) { }
 
@@ -39,7 +39,7 @@ export class CampaignAnswersResolver implements Resolve<Response> {
       const campaignId = activatedRouteSnapshot.paramMap.get('campaignId') || '';
       this._config.limit = this._configService.configLimit('admin-campaign-answers-limit');
 
-      return this.campaignService.getAnswers(campaignId)
+      return this._campaignService.getAnswers(campaignId)
         .pipe(
           tap((response) => {
             if (isPlatformServer(this.platformId)) {

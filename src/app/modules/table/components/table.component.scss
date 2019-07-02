@@ -42,11 +42,15 @@
     }
 
     th, tbody td {
-      min-width: 150px;
-      max-width: 300px;
+      max-width: 200px;
       height: 44px;
       max-height: 44px;
       padding: $unit-h $unit-5;
+
+      &.max-width {
+        max-width: 300px;
+      }
+
     }
 
     th {
