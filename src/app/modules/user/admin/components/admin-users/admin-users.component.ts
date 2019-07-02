@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { User } from '../../../../../models/user.model';
@@ -16,7 +16,7 @@ import { Response } from '../../../../../models/response';
   styleUrls: ['./admin-users.component.scss']
 })
 
-export class AdminUsersComponent {
+export class AdminUsersComponent implements OnInit {
 
   private _config: Config = {
     fields: 'id company jobTitle created domain location firstName lastName',
@@ -50,6 +50,10 @@ export class AdminUsersComponent {
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.USERS');
+
+  }
+
+  ngOnInit(): void {
 
     if (this._activatedRoute.snapshot.data.users && Array.isArray(this._activatedRoute.snapshot.data.users.result)) {
       this._users = this._activatedRoute.snapshot.data.users.result;

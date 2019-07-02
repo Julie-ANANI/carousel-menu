@@ -142,7 +142,7 @@ export class TableComponent implements OnInit {
    * @private
    */
   private _getFilteredContent(rows: Array<any>) {
-    this._pagination.parPage = Number(this._config.limit) || parseInt(this._configService.configLimit(this._table._selector)) || 10;
+    this._pagination.parPage = parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10;
 
     this._table._total = rows.length;
 

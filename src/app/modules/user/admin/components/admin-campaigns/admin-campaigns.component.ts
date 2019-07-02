@@ -15,7 +15,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./admin-campaigns.component.scss']
 })
 
-// TODO deprecate this thing, who's using this component? Why it's still here?
+// TODO deprecate this thing, who's using this component? Why it's still here? Abhi - No idea.
 export class AdminCampaignsComponent implements OnInit {
 
   private _innovation: Innovation;

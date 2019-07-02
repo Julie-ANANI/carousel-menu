@@ -17,7 +17,7 @@ export class CampaignResolver implements Resolve<Campaign> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
               private campaignService: CampaignService,
-              private state: TransferState) {}
+              private state: TransferState) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Campaign> {
     if (this.state.hasKey(CAMPAIGN_KEY)) {

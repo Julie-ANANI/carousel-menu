@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
@@ -15,7 +15,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
   styleUrls: ['./admin-projects.component.scss']
 })
 
-export class AdminProjectsComponent {
+export class AdminProjectsComponent implements OnInit {
 
   private _projects: Array<Innovation> = [];
 
@@ -40,6 +40,10 @@ export class AdminProjectsComponent {
               private _translateTitleService: TranslateTitleService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
+
+  }
+
+  ngOnInit(): void {
 
     if (this._activatedRoute.snapshot.data.projects && Array.isArray(this._activatedRoute.snapshot.data.projects.result)) {
       this._projects = this._activatedRoute.snapshot.data.projects.result;
@@ -66,8 +70,8 @@ export class AdminProjectsComponent {
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true },
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT' },
         {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true },
         {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true },
+        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true },
         {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true,
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
