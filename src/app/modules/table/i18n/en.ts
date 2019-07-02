@@ -37,6 +37,7 @@ export const TABLE = {
     'AUTHOR': 'Author',
     'CONTENT': 'Content',
     'SECTIONS': 'Sections',
+    'PROJECTS': 'Projects',
   },
 
   'TITLE': {

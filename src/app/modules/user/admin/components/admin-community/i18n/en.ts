@@ -1,3 +1,5 @@
 export const COMMUNITY = {
-  'TITLE': 'Community'
+
+  'NO_PROJECTS': 'We do not have projects to show at the moment.',
+
 };

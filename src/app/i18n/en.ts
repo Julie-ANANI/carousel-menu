@@ -32,6 +32,7 @@ import { SHARED_PROJECT_SETTINGS } from '../modules/shared/components/shared-pro
 import { SHARED_PROJECT_EDIT } from '../modules/shared/components/shared-project-edit-cards-component/i18n/en';
 import { SHOWCASE } from '../modules/demo/components/showcase/i18n/en';
 import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
+import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -67,5 +68,6 @@ export const en = {
   'SHARED_PROJECT_SETTINGS': SHARED_PROJECT_SETTINGS,
   'SHARED_PROJECT_EDIT': SHARED_PROJECT_EDIT,
   'SHOWCASE': SHOWCASE,
-  'SEARCH_DEMO': SEARCH_DEMO
+  'SEARCH_DEMO': SEARCH_DEMO,
+  'COMMUNITY': COMMUNITY
 };
