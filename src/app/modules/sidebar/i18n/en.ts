@@ -17,6 +17,7 @@ export const SIDEBAR = {
     'CHANGE_PASSWORD': 'Change Password',
     'INSIGHT': 'Insight',
     'SEARCH_HISTORY': 'Search History',
+    'SHOWCASE_HISTORY': 'Showcase History',
     'EDIT_SIGNATURE': 'Edit Signature'
   },
 

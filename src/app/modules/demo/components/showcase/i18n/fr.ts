@@ -2,6 +2,8 @@ export const SHOWCASE = {
 
   'MODIFY': 'Modifier',
 
+  'BUTTON_SAVE': 'Sauvegarder',
+
   'SEE_MORE': 'Voir plus',
 
   'MAIN_TITLE': 'Découvrez nos projets d\'innovation',
@@ -40,5 +42,7 @@ export const SHOWCASE = {
   'MAX_SELECT_ANSWERS': 'Vous ne pouvez sélectionner que 6 réponses.',
 
   'MAX_SELECT_INNOVATIONS': 'Vous ne pouvez sélectionner que 9 innovations.',
+
+  'NAME_PLACEHOLDER': 'Nom',
 
 };

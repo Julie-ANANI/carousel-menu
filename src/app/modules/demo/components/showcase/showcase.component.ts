@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
 import { forkJoin } from 'rxjs';
@@ -21,6 +22,12 @@ export class ShowcaseComponent {
   private _selectedTagsStats: Array<TagStats> = [];
 
   private _selectedTags: {[tagId: string]: boolean} = {};
+
+  private _sidebarValue: SidebarInterface = {
+    animate_state: 'inactive',
+    title: 'SIDEBAR.TITLE.SHOWCASE_HISTORY',
+    size: '726px'
+  };
 
   private _countries: {readonly [country: string]: number} = {};
 
@@ -91,6 +98,16 @@ export class ShowcaseComponent {
           this._translateNotificationService.error('ERROR.ERROR', 'SHOWCASE.ERROR_STATS');
         });
     }
+  }
+
+
+  public onClickHistoryIcon(event: Event) {
+    event.preventDefault();
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SIDEBAR.TITLE.SHOWCASE_HISTORY',
+      size: '726px'
+    };
   }
 
 
@@ -170,6 +187,14 @@ export class ShowcaseComponent {
 
   get selectedTagsStats(): Array<TagStats> {
     return this._selectedTagsStats;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
   }
 
   get stats(): TagStats {

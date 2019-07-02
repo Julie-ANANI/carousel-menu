@@ -1,6 +1,14 @@
 <div id="showcase">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+    <!-- history icon -->
+    <div class="shape circle circle-white history-wrapper c-hand absolute tooltip tooltip-left history-icon"
+         [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate"
+         (click)="onClickHistoryIcon($event)">
+      <i class="fas fa-history text-notify"></i>
+    </div>
+    <!-- /history icon -->
+
 
     <!-- when fetching error -->
     <ng-container *ngIf="fetchingError">
@@ -164,3 +172,9 @@
 
 </app-modal>
 <!-- /modal to modify the tags -->
+
+<!-- sidebar for history -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-showcase-history></app-sidebar-showcase-history>
+</app-sidebar>
+<!-- /sidebar for history -->
