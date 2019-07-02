@@ -162,7 +162,8 @@ export const ERROR = {
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check the URL is good.',
     'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check the URL is good.',
-    'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.'
+    'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.',
+    'FETCHING_CAMPAIGN_ANSWERS': 'We are having trouble while fetching the answers for this campaign.',
   },
 
   'AMBASSADOR': {

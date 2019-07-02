@@ -1,104 +1,116 @@
-<ng-container *ngIf="campaign">
-  <section id="admin-campaign-answers-component">
-
-    <!-- section stats -->
-    <ul class="stat">
-
-      <!-- stat col 1 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Insight</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Rejected</h5>
-          <span class="stat-value">{{ getCampaignStat('status', 'REJECTED') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">To look at</h5>
-          <span class="stat-value">{{ getCampaignStat('status', ['SUBMITTED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']) }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Validated</h5>
-          <span class="stat-value">{{ getCampaignStat('status', 'VALIDATED') }}</span>
-        </div>
-      </li>
-
-      <!-- stat col 2 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Profile</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Standard</h5>
-          <span class="stat-value">{{ getCampaignStat('profile', 1) }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Top profile</h5>
-          <span class="stat-value">{{ getCampaignStat('profile', 2) }}</span>
-        </div>
-      </li>
-
-      <!-- stat col 3 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Quality</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Fill rate</h5>
-          <span class="stat-value">--</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Time spent</h5>
-          <span class="stat-value">{{ getCampaignStat('quality', 'time_elapsed') }}" min.</span>
-        </div>
-      </li>
-
-    </ul>
+<section id="admin-campaign-answers">
 
 
-    <div class="column col-xs-12 col-11 col-mx-auto">
+  <!-- stats -->
+  <ul class="stat">
 
-      <!-- section actions -->
-      <ng-container *ngIf="getAuthorizedActions(2)">
-        <div class="section-actions section-light-pad text-right">
+    <!-- stat col 1 -->
+    <li class="stat-container fluid">
+      <h5 class="stat-heading">Insight</h5>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Rejected</h5>
+        <span class="stat-value">{{ campaignStat('status', 'REJECTED') }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">To look at</h5>
+        <span class="stat-value">{{ campaignStat('status', ['SUBMITTED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']) }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Validated</h5>
+        <span class="stat-value">{{ campaignStat('status', 'VALIDATED') }}</span>
+      </div>
+    </li>
 
-          <label class="btn ghost-primary btn-sm">
-            <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
-            {{ 'COMMON.BUTTON.IMPORT' | translate }}
-          </label>
+    <!-- stat col 2 -->
+    <li class="stat-container fluid">
+      <h5 class="stat-heading">Profile</h5>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Standard</h5>
+        <span class="stat-value">{{ campaignStat('profile', 1) }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Top profile</h5>
+        <span class="stat-value">{{ campaignStat('profile', 2) }}</span>
+      </div>
+    </li>
 
-          <button class="btn btn-primary btn-sm" (click)="exportAnswers($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
+    <!-- stat col 3 -->
+    <li class="stat-container fluid">
+      <h5 class="stat-heading">Quality</h5>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Fill rate</h5>
+        <span class="stat-value">--</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Time spent</h5>
+        <span class="stat-value">{{ campaignStat('quality', 'time_elapsed') }}" min.</span>
+      </div>
+    </li>
 
+  </ul>
+  <!-- /stats -->
+
+
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <div class="restrict-width">
+
+
+      <!-- fetching error campaign answers -->
+      <ng-container *ngIf="fetchingError">
+        <div class="a-c-a-error-wrapper d-flex align-center">
+          <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING_CAMPAIGN_ANSWERS'" [ngStyle]="{ 'width': '100%' }"></app-error-template-1>
         </div>
       </ng-container>
-      <!-- /section actions -->
+      <!-- /fetching error campaign answers -->
 
-      <!-- section no answers -->
-      <ng-container *ngIf="noResult">
-        <div class="section-pad">
-          <app-message-template-1 [widthMax]="'354px'">
-            {{ 'CAMPAIGNS.NO_ANSWERS.A' | translate }}
-            <br>
-            {{ 'CAMPAIGNS.NO_ANSWERS.B' | translate }}
-          </app-message-template-1>
-        </div>
-      </ng-container>
-      <!-- /section no answers -->
-
-      <!-- section answers -->
-      <ng-container *ngIf="!noResult">
-        <div class="section-light-pad rm-pad-top">
-          <app-shared-table
-            (editRow)="onClickEdit($event)"
-            (performAction)="onTableAction($event)"
-            [(config)]="config"
-            [data]="tableInfos">
-          </app-shared-table>
-        </div>
-      </ng-container>
-      <!-- /section answers -->
 
     </div>
+  </div>
 
-  </section>
+</section>
+
+
+<!-- section actions
+    <ng-container *ngIf="getAuthorizedActions(2)">
+      <div class="section-actions section-light-pad text-right">
+
+        <label class="btn ghost-primary btn-sm">
+          <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
+          {{ 'COMMON.BUTTON.IMPORT' | translate }}
+        </label>
+
+        <button class="btn btn-primary btn-sm" (click)="exportAnswers($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
+
+      </div>
+    </ng-container>
+     /section actions -->
+
+<!-- section no answers
+<ng-container *ngIf="noResult">
+  <div class="section-pad">
+    <app-message-template-1 [widthMax]="'354px'">
+      {{ 'CAMPAIGNS.NO_ANSWERS.A' | translate }}
+      <br>
+      {{ 'CAMPAIGNS.NO_ANSWERS.B' | translate }}
+    </app-message-template-1>
+  </div>
 </ng-container>
+ /section no answers -->
 
+<!-- section answers
+<ng-container *ngIf="!noResult">
+  <div class="section-light-pad rm-pad-top">
+    <app-shared-table
+      (editRow)="onClickEdit($event)"
+      (performAction)="onTableAction($event)"
+      [(config)]="config"
+      [data]="tableInfos">
+    </app-shared-table>
+  </div>
+</ng-container>
+/section answers -->
 
-<!-- sidebar insight preview -->
+<!-- sidebar insight preview
 <app-sidebar [(template)]="sidebarValue">
   <app-user-answer
     [sidebarState]="sidebarValue.animate_state"
@@ -109,4 +121,4 @@
     (answerUpdated)="updateAnswer($event)">
   </app-user-answer>
 </app-sidebar>
-<!-- /sidebar insight preview -->
+ /sidebar insight preview -->

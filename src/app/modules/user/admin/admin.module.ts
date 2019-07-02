@@ -55,7 +55,7 @@ import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-re
 import { UsersResolver } from '../../../resolvers/admin/users-resolver';
 import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver';
 import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
-
+import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 
 @NgModule({
   imports: [
@@ -117,7 +117,8 @@ import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
     ProfessionalsResolver,
     UsersResolver,
     SignaturesResolver,
-    PresetsResolver
+    PresetsResolver,
+    CampaignAnswersResolver
   ]
 })
 

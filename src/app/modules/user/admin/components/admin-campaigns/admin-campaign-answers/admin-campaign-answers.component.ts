@@ -12,6 +12,7 @@ import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-inte
 import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Config } from '../../../../../../models/config';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -21,11 +22,21 @@ import { Config } from '../../../../../../models/config';
 
 export class AdminCampaignAnswersComponent implements OnInit {
 
+  private _config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
+
   private _campaign: Campaign;
 
   private _answers: Array<Answer> = [];
 
   private _total: number;
+
+  fetchingError: boolean;
 
   private _questions: Array<Question> = [];
 
@@ -41,25 +52,38 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _noResult = false;
 
-  private _config: Config = {
-    fields: '',
-    limit: '10',
-    offset: '0',
-    search: '{}',
-    sort: '{"created":-1}'
-  };
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _campaignService: CampaignService,
+              private _translateTitleService: TranslateTitleService,
+              private _answerService: AnswerService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _authService: AuthService,
+              private _campaignFrontService: CampaignFrontService) {
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private campaignService: CampaignService,
-              private answerService: AnswerService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private authService: AuthService,
-              private campaignFrontService: CampaignFrontService) { }
+    this._translateTitleService.setTitle('Answers | Campaign');
+    this._adminMode = this._authService.adminLevel > 2;
+
+    if (this._activatedRoute.snapshot.parent.data['campaign']) {
+      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+    }
+
+  }
 
   ngOnInit() {
-    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
-    this._adminMode = this.authService.adminLevel > 2;
-    this.loadAnswers();
+
+    if (!this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers
+      && this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers
+      && Array.isArray(this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers)) {
+      this._answers = this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers;
+      this._total = this._answers.length;
+      //this._projects = this._activatedRoute.snapshot.data.projects.result;
+      //this._total = this._activatedRoute.snapshot.data.projects._metadata.totalCount;
+      //this._initializeTable();
+    } else {
+      this.fetchingError = true;
+    }
+
+    //this.loadAnswers();
 
     if (this._campaign && this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
       this._campaign.innovation.preset.sections.forEach((section: Section) => {
@@ -71,25 +95,23 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
 
   private loadAnswers() {
-    this.campaignService.getAnswers(this._campaign._id).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
+    this._campaignService.getAnswers(this._campaign._id).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
       this._answers = result.answers.localAnswers;
       this._noResult = this._answers.length === 0;
       this.loadTable();
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
 
-  getCampaignStat(type: string, searchKey: any): number {
-    if (this._answers) {
-      return this.campaignFrontService.getAnswerCampaignStat(this._answers, type, searchKey);
-    }
+  public campaignStat(type: string, searchKey: any): number {
+    return this._campaignFrontService.getAnswerCampaignStat(this._answers, type, searchKey);
   }
 
 
   getAuthorizedActions(level: number): boolean {
-    const adminLevel = this.authService.adminLevel;
+    const adminLevel = this._authService.adminLevel;
     return adminLevel > level;
   }
 
@@ -97,11 +119,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
   importAnswers(file: File, event: Event) {
     event.preventDefault();
 
-    this.answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
+    this._answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
       this.loadAnswers();
       }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
   }
@@ -109,7 +131,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   exportAnswers(event: Event) {
     event.preventDefault();
-    this.answerService.exportAsCsvByCampaign(this._campaign._id, false);
+    this._answerService.exportAsCsvByCampaign(this._campaign._id, false);
   }
 
 
@@ -183,11 +205,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
     | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT') {
     rows.forEach((row: Answer) => {
       row.status = status;
-      this.answerService.save(row._id, row).subscribe(() => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.STATUS_UPDATE');
+      this._answerService.save(row._id, row).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.STATUS_UPDATE');
         this.loadAnswers();
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
     });
   }

@@ -26,6 +26,7 @@ import { librariesRoutes } from './components/admin-libraries/admin-libraries-ro
 import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
 import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
+import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
@@ -133,7 +134,7 @@ const adminRoutes: Routes = [
           {
             path: 'campaign/:campaignId',
             component: AdminCampaignComponent,
-            resolve: { campaign : CampaignResolver },
+            resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver },
             runGuardsAndResolvers: 'always',
             children: [
               ...campaignRoutes

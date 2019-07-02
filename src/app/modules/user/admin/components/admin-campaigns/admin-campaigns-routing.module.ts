@@ -56,6 +56,6 @@ export const campaignRoutes: Routes = [
   {
     path: 'answers',
     component: AdminCampaignAnswersComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   }
 ];

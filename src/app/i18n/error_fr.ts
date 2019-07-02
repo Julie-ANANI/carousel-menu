@@ -154,7 +154,8 @@ export const ERROR = {
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
     'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
-    'FETCHING': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être dû à un problème de connexion au serveur.'
+    'FETCHING': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être dû à un problème de connexion au serveur.',
+    'FETCHING_CAMPAIGN_ANSWERS': 'Nous rencontrons des problèmes lors de la récupération les réponses pour cette campagne.',
   },
 
   'AMBASSADOR': {
