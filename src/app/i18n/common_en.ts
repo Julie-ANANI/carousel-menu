@@ -99,7 +99,8 @@ export const COMMON = {
     'REPORT': 'Report',
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
     'PROFESSIONALS': 'Professionals',
-    'USERS': 'Users'
+    'USERS': 'Users',
+    'COMMUNITY_PROJECTS': 'Projects | Community'
   },
 
   'LABEL': {

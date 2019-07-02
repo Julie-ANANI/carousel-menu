@@ -120,11 +120,6 @@ export const CAMPAIGNS = {
     'VALIDATED': 'Validé',
   },
 
-  'NO_ANSWERS': {
-    'A': 'Vous n\'avez pas de réponses ?',
-    'B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
-  },
-
   'QUIZ_PAGE': {
     'HEADING': 'Visitez ces liens pour voir le questionnaire :',
     'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
@@ -170,6 +165,12 @@ export const CAMPAIGNS = {
     'NUGGETS': 'Nuggets',
     'TITLE': 'Batch de',
     'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?'
-  }
+  },
+
+  'ERROR_MESSAGE': {
+    'FETCHING': 'Nous avons de la difficulté à trouver les réponses pour cette campagne. C\'est peut-être parce que nous ne pouvions pas avoir les réponses.',
+  },
+
+  'NO_ANSWER': 'Aucune réponse pour cette campagne pour le moment. Essayez d\'en importer !'
 
 };

@@ -51,6 +51,8 @@ export class AdminPresetsListComponent {
 
   private _presetToClone: Preset;
 
+  private _noResult: boolean;
+
   constructor(private _presetService: PresetService,
               private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
@@ -62,6 +64,7 @@ export class AdminPresetsListComponent {
     if (this._activatedRoute.snapshot.data.presets && Array.isArray(this._activatedRoute.snapshot.data.presets.result)) {
        this._presets = this._activatedRoute.snapshot.data.presets.result;
        this._total = this._activatedRoute.snapshot.data.presets._metadata.totalCount;
+       this._noResult = this._total === 0;
        this._initializeTable();
     } else {
       this._fetchingError = true;
@@ -73,6 +76,7 @@ export class AdminPresetsListComponent {
     this._presetService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
       this._presets = response.result;
       this._total = response._metadata.totalCount;
+      this._noResult = this._config.search.length > 2 ? false : this._total === 0;
       this._initializeTable();
     });
   }
@@ -271,6 +275,10 @@ export class AdminPresetsListComponent {
 
   get presetToClone(): Preset {
     return this._presetToClone;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
   }
 
 }

@@ -32,6 +32,8 @@ import { SidebarBatchFormModule } from '../../../../sidebar/components/batch-for
 import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
+import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { MessageTemplate2Module } from '../../../../utility-components/messages/message-template-2/message-template-2.module';
 
 @NgModule({
   imports: [
@@ -55,6 +57,8 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     MessageTemplate1Module,
     ModalModule,
     SidebarUserFormModule,
+    ErrorTemplate1Module,
+    MessageTemplate2Module
   ],
   declarations: [
     AdminCampaignsComponent,
@@ -69,7 +73,6 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignWorkflowsComponent,
     AdminCampaignStatsComponent,
     AdminCampaignAbtestingComponent
-
   ],
   exports: [
     AdminCampaignsComponent,

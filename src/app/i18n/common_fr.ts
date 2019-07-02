@@ -98,7 +98,8 @@ export const COMMON = {
     'REPORT': 'Rapport',
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
     'PROFESSIONALS': 'Professionnels',
-    'USERS': 'Utilisateurs'
+    'USERS': 'Utilisateurs',
+    'COMMUNITY_PROJECTS': 'Projets | Community'
   },
 
   'LABEL': {

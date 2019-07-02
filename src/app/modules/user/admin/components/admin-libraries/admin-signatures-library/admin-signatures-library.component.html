@@ -12,7 +12,7 @@
 
 
     <!-- no signature -->
-    <ng-container *ngIf="!fetchingError && total === 0">
+    <ng-container *ngIf="!fetchingError && noResult && total === 0">
       <div class="a-s-l-create-signature-wrapper d-flex align-center">
         <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
 
@@ -36,12 +36,11 @@
 
 
     <!-- signatures -->
-    <ng-container *ngIf="!fetchingError && total > 0">
+    <ng-container *ngIf="!fetchingError && !noResult">
 
       <!-- add button -->
       <div class="text-right p-bottom-25">
-        <button (click)="onClickAdd()" class="btn btn-primary btn-sm rounded shadow" type="button">
-          <i class="fas fa-plus m-no-left"></i>
+        <button (click)="onClickAdd()" class="btn btn-primary btn-sm" type="button">
           {{ 'COMMON.BUTTON.ADD' | translate }} signature
         </button>
       </div>

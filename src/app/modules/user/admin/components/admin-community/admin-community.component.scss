@@ -1,16 +1,12 @@
 @import "../../../../../../style/framework/src/variables";
 
-#admin-community-component {
+#admin-community {
 
-  .section-header {
+  .a-c-header {
     background: $bg-color-light;
 
-    .title-primary {
+    h1 {
       font-size: 1.15rem;
-    }
-
-    .tab .tab-item a {
-      border-bottom-width: 4px;
     }
 
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Config } from '../../../../../models/config';
 import { ActivatedRoute } from '@angular/router';
 import { Professional } from '../../../../../models/professional';
@@ -18,7 +18,7 @@ export interface SelectedProfessional extends Professional {
   styleUrls: ['./admin-professionals.component.scss']
 })
 
-export class AdminProfessionalsComponent {
+export class AdminProfessionalsComponent implements OnInit {
 
   private _professionals: Array<SelectedProfessional> = [];
 
@@ -40,6 +40,10 @@ export class AdminProfessionalsComponent {
               private _translateTitleService: TranslateTitleService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROFESSIONALS');
+
+  }
+
+  ngOnInit(): void {
 
     if (this._activatedRoute.snapshot.data.professionals && Array.isArray(this._activatedRoute.snapshot.data.professionals.result)) {
       this._professionals = this._activatedRoute.snapshot.data.professionals.result;

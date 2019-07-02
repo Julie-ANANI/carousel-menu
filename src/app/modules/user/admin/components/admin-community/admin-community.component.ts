@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-admin-community',
@@ -13,12 +12,9 @@ export class AdminCommunityComponent implements OnInit {
   //private _tabs: Array<string> = ['members', 'emailanswers'];
   private _tabs: Array<string> = ['projects', 'members'];
 
-  constructor(private _translateTitleService: TranslateTitleService) {
-
-  }
+  constructor() { }
 
   ngOnInit(): void {
-    this._translateTitleService.setTitle('Community | UMI');
     console.log("Community parent initiated...");
   }
 

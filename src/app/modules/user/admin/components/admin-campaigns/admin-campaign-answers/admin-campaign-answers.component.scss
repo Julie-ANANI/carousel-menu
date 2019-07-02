@@ -1,6 +1,6 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#admin-campaign-answers-component {
+#admin-campaign-answers {
 
   .stat {
 
@@ -31,17 +31,12 @@
 
   }
 
-  .section-actions {
-    padding-bottom: 0.75rem;
+  .a-c-a-error-wrapper {
+    min-height: 47vh;
+  }
 
-    .btn {
-      margin-bottom: 0.5rem;
-    }
-
-    .ghost-primary {
-      margin-right: $unit-5;
-    }
-
+  .a-c-a-no-result-wrapper {
+    min-height: 34vh;
   }
 
 }

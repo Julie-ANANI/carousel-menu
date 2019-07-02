@@ -11,14 +11,6 @@ import { AdminPatentsComponent } from './components/admin-patents/admin-patents.
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
-import { AdminCampaignBatchComponent } from './components/admin-campaigns/admin-campaign-batch/admin-campaign-batch.component';
-import { AdminCampaignWorkflowsComponent } from './components/admin-campaigns/admin-campaign-workflows/admin-campaign-workflows.component';
-import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
-import { AdminCampaignQuizComponent } from './components/admin-campaigns/admin-campaign-quiz/admin-campaign-quiz.component';
-import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
-import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
-import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
-import { AdminCampaignSearchResultsComponent } from './components/admin-campaigns/admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminCommunityComponent } from "./components/admin-community/admin-community.component";
 import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
 import { AdminLibrariesComponent } from './components/admin-libraries/admin-libraries.component';
@@ -33,17 +25,17 @@ import { projectRoutes } from './components/admin-project/admin-project-routing.
 import { librariesRoutes } from './components/admin-libraries/admin-libraries-routing.module';
 import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
+import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
+import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
-import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
 import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
 import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
 import { UsersResolver } from '../../../resolvers/admin/users-resolver';
-
 
 const adminRoutes: Routes = [
   {
@@ -141,19 +133,11 @@ const adminRoutes: Routes = [
           },
           {
             path: 'campaign/:campaignId',
-            resolve: { campaign : CampaignResolver },
-            runGuardsAndResolvers: 'always',
             component: AdminCampaignComponent,
+            resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver },
+            runGuardsAndResolvers: 'always',
             children: [
-            { path: '', redirectTo: 'answers', pathMatch: 'full' },
-            { path: 'quiz', component: AdminCampaignQuizComponent, pathMatch: 'full' },
-            { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full' },
-            { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full' },
-            { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },
-            { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full' },
-            { path: 'batch', component: AdminCampaignBatchComponent, pathMatch: 'full' },
-            { path: 'workflows', component: AdminCampaignWorkflowsComponent, pathMatch: 'full' },
-            { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full' }
+              ...campaignRoutes
           ]}
         ]
       },

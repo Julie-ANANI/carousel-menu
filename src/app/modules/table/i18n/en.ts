@@ -37,6 +37,7 @@ export const TABLE = {
     'AUTHOR': 'Author',
     'CONTENT': 'Content',
     'SECTIONS': 'Sections',
+    'PROJECTS': 'Projects',
   },
 
   'TITLE': {
@@ -46,6 +47,7 @@ export const TABLE = {
     'AMBASSADORS': 'ambassadors',
     'REQUESTS': 'requests',
     'RESULTS': 'results',
+    'ANSWERS': 'answers'
   },
 
   'MESSAGES': {

@@ -8,6 +8,7 @@ import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
 import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
 import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
+import { ConfigService } from '../../../services/config/config.service';
 
 @Component({
   selector: 'app-shared-table',
@@ -82,6 +83,7 @@ export class TableComponent implements OnInit {
   private _filteredContent: Array<any> = [];
 
   constructor(private _translateService: TranslateService,
+              private _configService: ConfigService,
               private _localStorageService: LocalStorageService) {
     this._initializeTable();
   }
@@ -117,7 +119,7 @@ export class TableComponent implements OnInit {
       this._checkSearching();
 
       if (this._table._isLocal) {
-        this._getFilteredContent(data._content);
+        this._setFilteredContent();
       }
 
       this._initializeColumns();
@@ -140,7 +142,7 @@ export class TableComponent implements OnInit {
    * @private
    */
   private _getFilteredContent(rows: Array<any>) {
-    this._pagination.parPage = Number(this._config.limit);
+    this._pagination.parPage = parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10;
 
     this._table._total = rows.length;
 
