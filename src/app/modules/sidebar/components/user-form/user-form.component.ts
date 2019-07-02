@@ -178,6 +178,7 @@ export class UserFormComponent implements OnInit {
   private loadProfessional() {
     if (this._pro && this._userForm) {
       this._tags = this._pro.tags;
+      this._userForm.get('company').get('name').setValue(this._pro.company);
       this._userForm.patchValue(this._pro);
       this._company = { name: this._pro.company };
       this._proKeywords = null;
@@ -212,7 +213,7 @@ export class UserFormComponent implements OnInit {
   };
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
-    return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35"/><span>${data.name}</span>`);
+    return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
   };
 
   public selectCompany(c: string | Clearbit) {
