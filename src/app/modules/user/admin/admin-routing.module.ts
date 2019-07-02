@@ -25,6 +25,7 @@ import { projectRoutes } from './components/admin-project/admin-project-routing.
 import { librariesRoutes } from './components/admin-libraries/admin-libraries-routing.module';
 import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
+import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
 
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
@@ -34,8 +35,6 @@ import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
 import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
 import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
 import { UsersResolver } from '../../../resolvers/admin/users-resolver';
-import {campaignRoutes} from './components/admin-campaigns/admin-campaign-routing.module';
-
 
 const adminRoutes: Routes = [
   {
