@@ -13,6 +13,7 @@ import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { Response } from '../../../../../../models/response';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -37,6 +38,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
   private _total: number;
 
   fetchingError: boolean;
+
+  errorMessage: string;
 
   private _questions: Array<Question> = [];
 
@@ -71,15 +74,17 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   ngOnInit() {
 
-    if (!this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers
+    if (this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers
       && this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers
       && Array.isArray(this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers)) {
       this._answers = this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers;
       this._total = this._answers.length;
-      //this._projects = this._activatedRoute.snapshot.data.projects.result;
-      //this._total = this._activatedRoute.snapshot.data.projects._metadata.totalCount;
       //this._initializeTable();
+    } else if (this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers) {
+      this.errorMessage = 'CAMPAIGNS.ERROR_MESSAGE.FETCHING';
+      this.fetchingError = true;
     } else {
+      this.errorMessage = 'ERROR.ERRORS.FETCHING';
       this.fetchingError = true;
     }
 
@@ -91,6 +96,29 @@ export class AdminCampaignAnswersComponent implements OnInit {
       });
 
     }
+  }
+
+  public onClickImport(file: File) {
+    this._answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
+      this._getAnswers();
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  public onClickExport() {
+    this._answerService.exportAsCsvByCampaign(this._campaign._id, false);
+  }
+
+  private _getAnswers() {
+    this._campaignService.getAnswers(this._campaign._id).subscribe((response: Response) => {
+      this._answers = response.answers.localAnswers;
+      this._total = this._answers.length;
+      this.loadTable();
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
   }
 
 
@@ -110,29 +138,15 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
 
-  getAuthorizedActions(level: number): boolean {
-    const adminLevel = this._authService.adminLevel;
-    return adminLevel > level;
+  public authorizedActions(level: number): boolean {
+    return this._authService.adminLevel > level;
   }
 
 
-  importAnswers(file: File, event: Event) {
-    event.preventDefault();
-
-    this._answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
-      this.loadAnswers();
-      }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
-
-  }
 
 
-  exportAnswers(event: Event) {
-    event.preventDefault();
-    this._answerService.exportAsCsvByCampaign(this._campaign._id, false);
-  }
+
+
 
 
   private loadTable() {

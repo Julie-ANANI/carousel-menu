@@ -51,51 +51,57 @@
   <!-- /stats -->
 
 
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <div class="restrict-width">
+  <div class="section-light-pad">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="restrict-width">
 
 
-      <!-- fetching error campaign answers -->
-      <ng-container *ngIf="fetchingError">
-        <div class="a-c-a-error-wrapper d-flex align-center">
-          <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING_CAMPAIGN_ANSWERS'" [ngStyle]="{ 'width': '100%' }"></app-error-template-1>
-        </div>
-      </ng-container>
-      <!-- /fetching error campaign answers -->
+        <!-- fetching error campaign answers -->
+        <ng-container *ngIf="fetchingError">
+          <div class="a-c-a-error-wrapper d-flex align-center">
+            <app-error-template-1 [errorMessage]="errorMessage" [ngStyle]="{ 'width': '100%' }"></app-error-template-1>
+          </div>
+        </ng-container>
+        <!-- /fetching error campaign answers -->
 
 
+        <!-- buttons -->
+        <ng-container *ngIf="!fetchingError && authorizedActions(2)">
+          <div class="text-right p-bottom-20">
+
+            <!-- import -->
+            <label class="btn ghost-primary btn-sm m-right-20 m-bottom-10">
+              <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+              {{ 'COMMON.BUTTON.IMPORT' | translate }}
+            </label>
+
+            <!-- export -->
+            <button class="btn btn-primary m-bottom-10 btn-sm" (click)="onClickExport()">
+              {{ 'COMMON.BUTTON.EXPORT' | translate }}
+            </button>
+
+          </div>
+        </ng-container>
+        <!-- /buttons -->
+
+
+        <!-- no answers -->
+        <ng-container *ngIf="!fetchingError && total === 0">
+          <div class="a-c-a-no-result-wrapper d-flex align-center">
+            <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+              <h4 [innerText]="'CAMPAIGNS.NO_ANSWER'" class="text-background" translate></h4>
+            </app-message-template-2>
+          </div>
+        </ng-container>
+        <!-- /no answers -->
+
+
+      </div>
     </div>
   </div>
 
+
 </section>
-
-
-<!-- section actions
-    <ng-container *ngIf="getAuthorizedActions(2)">
-      <div class="section-actions section-light-pad text-right">
-
-        <label class="btn ghost-primary btn-sm">
-          <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
-          {{ 'COMMON.BUTTON.IMPORT' | translate }}
-        </label>
-
-        <button class="btn btn-primary btn-sm" (click)="exportAnswers($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
-
-      </div>
-    </ng-container>
-     /section actions -->
-
-<!-- section no answers
-<ng-container *ngIf="noResult">
-  <div class="section-pad">
-    <app-message-template-1 [widthMax]="'354px'">
-      {{ 'CAMPAIGNS.NO_ANSWERS.A' | translate }}
-      <br>
-      {{ 'CAMPAIGNS.NO_ANSWERS.B' | translate }}
-    </app-message-template-1>
-  </div>
-</ng-container>
- /section no answers -->
 
 <!-- section answers
 <ng-container *ngIf="!noResult">

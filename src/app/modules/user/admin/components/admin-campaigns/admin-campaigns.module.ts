@@ -33,6 +33,7 @@ import { MessageTemplate1Module } from '../../../../utility-components/messages/
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
 import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { MessageTemplate2Module } from '../../../../utility-components/messages/message-template-2/message-template-2.module';
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import { ErrorTemplate1Module } from '../../../../utility-components/errors/erro
     ModalModule,
     SidebarUserFormModule,
     ErrorTemplate1Module,
+    MessageTemplate2Module
   ],
   declarations: [
     AdminCampaignsComponent,
@@ -71,7 +73,6 @@ import { ErrorTemplate1Module } from '../../../../utility-components/errors/erro
     AdminCampaignWorkflowsComponent,
     AdminCampaignStatsComponent,
     AdminCampaignAbtestingComponent
-
   ],
   exports: [
     AdminCampaignsComponent,
