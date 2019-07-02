@@ -115,7 +115,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._campaignService.getAnswers(this._campaign._id).subscribe((response: Response) => {
       this._answers = response.answers.localAnswers;
       this._total = this._answers.length;
-      this._noResult = false;
+      this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
       this._initializeTable();
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');

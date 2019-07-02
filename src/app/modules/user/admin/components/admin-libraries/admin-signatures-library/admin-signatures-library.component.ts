@@ -48,6 +48,8 @@ export class AdminSignaturesLibraryComponent {
 
   private _isModalDelete: boolean;
 
+  private _noResult: boolean;
+
   constructor(private _templatesService: TemplatesService,
               private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
@@ -58,6 +60,7 @@ export class AdminSignaturesLibraryComponent {
     if (this._activatedRoute.snapshot.data.signatures && Array.isArray(this._activatedRoute.snapshot.data.signatures.result)) {
       this._signatures = this._activatedRoute.snapshot.data.signatures.result;
       this._total = this._activatedRoute.snapshot.data.signatures._metadata.totalCount;
+      this._noResult = this._total === 0;
       this._initializeTable();
     } else {
       this._fetchingError = true;
@@ -93,6 +96,7 @@ export class AdminSignaturesLibraryComponent {
     this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((response: Response) => {
       this._signatures = response.result;
       this._total = response._metadata.totalCount;
+      this._noResult = this._config.search.length > 2 ? false : this._total === 0;
       this._initializeTable();
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
@@ -239,6 +243,10 @@ export class AdminSignaturesLibraryComponent {
 
   get isModalDelete(): boolean {
     return this._isModalDelete;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
   }
 
 }
