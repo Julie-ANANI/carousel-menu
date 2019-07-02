@@ -36,6 +36,7 @@ import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
 import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
 import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
 import { UsersResolver } from '../../../resolvers/admin/users-resolver';
+import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
 
 const adminRoutes: Routes = [
   {
@@ -134,7 +135,7 @@ const adminRoutes: Routes = [
           {
             path: 'campaign/:campaignId',
             component: AdminCampaignComponent,
-            resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver },
+            resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver, campaign_professionals: CampaignProfessionalsResolver },
             runGuardsAndResolvers: 'always',
             children: [
               ...campaignRoutes

@@ -6,5 +6,6 @@ export interface Config {
   sort: string;
   status?: string;
   isPublic?: string;
+  campaigns?: string;
   [property: string]: string;
 }
