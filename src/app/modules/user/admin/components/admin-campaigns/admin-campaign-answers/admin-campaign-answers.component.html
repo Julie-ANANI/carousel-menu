@@ -86,7 +86,7 @@
 
 
         <!-- no answers -->
-        <ng-container *ngIf="!fetchingError && total === 0">
+        <ng-container *ngIf="!fetchingError && total === 0 && noResult">
           <div class="a-c-a-no-result-wrapper d-flex align-center">
             <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
               <h4 [innerText]="'CAMPAIGNS.NO_ANSWER'" class="text-background" translate></h4>
@@ -96,6 +96,18 @@
         <!-- /no answers -->
 
 
+        <!-- answers -->
+        <ng-container *ngIf="!fetchingError && !noResult">
+          <app-shared-table
+            (editRow)="onClickEdit($event)"
+            (performAction)="onClickActions($event)"
+            [(config)]="config"
+            [data]="table">
+          </app-shared-table>
+        </ng-container>
+        <!-- /answers -->
+
+
       </div>
     </div>
   </div>
@@ -103,20 +115,7 @@
 
 </section>
 
-<!-- section answers
-<ng-container *ngIf="!noResult">
-  <div class="section-light-pad rm-pad-top">
-    <app-shared-table
-      (editRow)="onClickEdit($event)"
-      (performAction)="onTableAction($event)"
-      [(config)]="config"
-      [data]="tableInfos">
-    </app-shared-table>
-  </div>
-</ng-container>
-/section answers -->
-
-<!-- sidebar insight preview
+<!-- sidebar -->
 <app-sidebar [(template)]="sidebarValue">
   <app-user-answer
     [sidebarState]="sidebarValue.animate_state"
@@ -127,4 +126,4 @@
     (answerUpdated)="updateAnswer($event)">
   </app-user-answer>
 </app-sidebar>
- /sidebar insight preview -->
+<!-- /sidebar insight preview -->

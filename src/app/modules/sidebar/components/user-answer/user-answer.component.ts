@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
-import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-user-answer',
@@ -15,7 +14,7 @@ import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 export class UserAnswerComponent {
 
-  @Input() set sidebarState(value: SidebarInterface) {
+  @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this._reinitializeVariables();
     }

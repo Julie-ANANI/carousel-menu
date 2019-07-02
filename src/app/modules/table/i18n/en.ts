@@ -47,6 +47,7 @@ export const TABLE = {
     'AMBASSADORS': 'ambassadors',
     'REQUESTS': 'requests',
     'RESULTS': 'results',
+    'ANSWERS': 'answers'
   },
 
   'MESSAGES': {

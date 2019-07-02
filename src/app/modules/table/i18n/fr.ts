@@ -47,7 +47,8 @@ export const TABLE = {
     'PROJECTS': 'projets',
     'AMBASSADORS': 'ambassadeurs',
     'REQUESTS': 'requests',
-    'RESULTS': 'résultats'
+    'RESULTS': 'résultats',
+    'ANSWERS': 'réponses'
   },
 
   'MESSAGES': {
