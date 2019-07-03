@@ -58,15 +58,7 @@ export class AdminCampaignProsComponent implements OnInit {
     profileUrl: ''
   };
 
-
-
-
-
   private _contextSelectedPros: Array<any> = [];
-
-
-
-
 
   constructor(@Inject(PLATFORM_ID) private platform: Object,
               private _activatedRoute: ActivatedRoute,
@@ -170,14 +162,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   }
 
-
-  public selectedProsEvent(event: {pros: Array<any>}) {
-    this._contextSelectedPros = event.pros;
-  }
-
-
-  onClickExport(event: Event) {
-    event.preventDefault();
+  public onClickExport() {
     const config: any = {
       fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country jobTitle messages',
       professionals: [],
@@ -196,14 +181,22 @@ export class AdminCampaignProsComponent implements OnInit {
       config.professionals = 'all';
     }
 
-    this._professionalsService.export(config).subscribe((answer: any) => {
+    this._professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
-      if (isPlatformBrowser(this.platform)) { window.open(url); }
+
+      if (isPlatformBrowser(this.platform)) {
+        window.open(url);
+      }
+
     }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
 
+  }
+
+  public selectedProsEvent(value: {total: number, pros: Array<any>}) {
+    this._contextSelectedPros = value.pros;
   }
 
   get config(): Config {
@@ -255,10 +248,8 @@ export class AdminCampaignProsComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get newPro(): any {
+  get newPro(): Professional {
     return this._newPro;
   }
-
-
 
 }

@@ -176,7 +176,7 @@ export const CAMPAIGNS = {
 
   'NO_ANSWER': 'No answers for this campaign at the moment. Try to import some!',
 
-  'NO_PROFESSIONALS': 'Add/Import professionals by clicking on the below buttons.',
+  'NO_PROFESSIONALS': 'Add/Import professionals by clicking one of the below buttons.',
 
   'LABEL_IMPORT': 'Import professionals from campaign (only one campaign at a time)',
 

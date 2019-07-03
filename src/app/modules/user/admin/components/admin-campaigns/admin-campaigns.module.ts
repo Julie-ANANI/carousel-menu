@@ -18,7 +18,6 @@ import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admi
 import { AdminCampaignStatsComponent } from './admin-campaign-stats/admin-campaign-stats.component';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
-import { SharedProsListModule } from '../../../../shared/components/shared-pros-list/shared-pros-list.module';
 import { SharedSearchHistoryModule} from '../../../../shared/components/shared-search-history/search-history.module';
 import { SharedSearchProsModule } from '../../../../shared/components/shared-search-pros/shared-search-pros.module';
 import { SharedSearchResultsModule } from '../../../../shared/components/shared-search-results/search-results.module';
@@ -34,12 +33,12 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
 import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../utility-components/messages/message-template-2/message-template-2.module';
+import { SharedProfessionalsListModule } from '../../../../shared/components/shared-professionals-list/shared-professionals-list.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SharedProsListModule,
     FormsModule,
     SharedSearchProsModule,
     SharedSearchResultsModule,
@@ -58,7 +57,8 @@ import { MessageTemplate2Module } from '../../../../utility-components/messages/
     ModalModule,
     SidebarUserFormModule,
     ErrorTemplate1Module,
-    MessageTemplate2Module
+    MessageTemplate2Module,
+    SharedProfessionalsListModule
   ],
   declarations: [
     AdminCampaignsComponent,
