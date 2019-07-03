@@ -15,11 +15,11 @@ const CAMPAIGN_PROFESSIONALS_KEY = makeStateKey('campaign_professionals');
 export class CampaignProfessionalsResolver implements Resolve<Response> {
 
   private _config: Config = {
-    fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.is',
+    fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages campaigns',
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{ "created": -1 }'
   };
 
   constructor(@Inject(PLATFORM_ID) private _platformId: Object,

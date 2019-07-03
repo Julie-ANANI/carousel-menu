@@ -169,8 +169,13 @@ export const CAMPAIGNS = {
 
   'ERROR_MESSAGE': {
     'FETCHING': 'Nous avons de la difficulté à trouver les réponses pour cette campagne. C\'est peut-être parce que nous ne pouvions pas avoir les réponses.',
+    'FETCHING_PROFESSIONALS': 'Nous avons de la difficulté à trouver les professionnels pour cette campagne. Cela peut être dû à un problème de connexion au serveur ou à l\'absence de professionnels.',
   },
 
-  'NO_ANSWER': 'Aucune réponse pour cette campagne pour le moment. Essayez d\'en importer !'
+  'NO_ANSWER': 'Aucune réponse pour cette campagne pour le moment. Essayez d\'en importer !',
+
+  'NO_PROFESSIONALS': 'dd/Import professionals by clicking on the below buttons.',
+
+  'LABEL_IMPORT': 'Importer des professionnels de la campagne (une seule campagne à la fois)',
 
 };
