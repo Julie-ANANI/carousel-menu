@@ -175,6 +175,8 @@
 
 <!-- sidebar for history -->
 <app-sidebar [(template)]="sidebarValue">
-  <app-sidebar-showcase-history></app-sidebar-showcase-history>
+  <app-sidebar-showcase-history
+    [tagsStats]="selectedTagsStats">
+  </app-sidebar-showcase-history>
 </app-sidebar>
 <!-- /sidebar for history -->

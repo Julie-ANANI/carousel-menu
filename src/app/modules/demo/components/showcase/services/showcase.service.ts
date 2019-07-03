@@ -11,7 +11,7 @@ export class ShowcaseService {
   constructor(private _http: HttpClient) {
   }
 
-  public create(showcaseObj: Showcase): Observable<any> {
+  public create(showcaseObj: any): Observable<any> {
     return this._http.post('/showcase', showcaseObj);
   }
 

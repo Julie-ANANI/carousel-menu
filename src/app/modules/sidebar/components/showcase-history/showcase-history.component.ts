@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ShowcaseService } from '../../../demo/components/showcase/services/showcase.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Config } from '../../../../models/config';
-import {Table} from "../../../table/models/table";
-import {Showcase} from "../../../../models/showcase";
+import { Showcase } from '../../../../models/showcase';
+import { Table } from '../../../table/models/table';
+import { TagStats } from '../../../../models/tag-stats';
 
 @Component({
-  selector: 'app-sidebar-showcase-history',
+  selector: 'app-sidebar-showcase-history[tagsStats]',
   templateUrl: './showcase-history.component.html',
   styleUrls: ['./showcase-history.component.scss']
 })
 
 export class ShowcaseHistoryComponent implements OnInit {
+
+  @Input() tagsStats: Array<TagStats> = [];
 
   private _config: Config = {
     fields: 'name owner created',
@@ -22,14 +25,12 @@ export class ShowcaseHistoryComponent implements OnInit {
   };
 
   private _tableInfos: Table = {
-    _selector: 'metadataRequests-history',
-    _title: 'TABLE.TITLE.REQUESTS',
+    _selector: '',
     _content: [],
     _total: 0,
     _isDeletable: true,
     _isSearchable: true,
     _isSelectable: true,
-    _isTitle: true,
     _editIndex: 1,
     _editButtonLabel: 'Load',
     _isPaginable: true,
@@ -50,7 +51,10 @@ export class ShowcaseHistoryComponent implements OnInit {
   }
 
   public createShowcase(): void {
-    const showcase = { name: this.showcaseName };
+    const showcase = {
+      name: this.showcaseName,
+      tags: this.tagsStats.map((ts) => ts.tag._id)
+    };
     this._showcaseService.create(showcase).subscribe((res) => {
       this.showcaseName = '';
       this._tableInfos._content.unshift(res);
