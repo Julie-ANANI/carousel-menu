@@ -3,6 +3,7 @@ import { ShowcaseService } from '../../../demo/components/showcase/services/show
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Config } from '../../../../models/config';
 import {Table} from "../../../table/models/table";
+import {Showcase} from "../../../../models/showcase";
 
 @Component({
   selector: 'app-sidebar-showcase-history',
@@ -13,7 +14,7 @@ import {Table} from "../../../table/models/table";
 export class ShowcaseHistoryComponent implements OnInit {
 
   private _config: Config = {
-    fields: 'name created',
+    fields: 'name owner created',
     limit: '10',
     offset: '0',
     search: '{}',
@@ -25,13 +26,16 @@ export class ShowcaseHistoryComponent implements OnInit {
     _title: 'TABLE.TITLE.REQUESTS',
     _content: [],
     _total: 0,
+    _isDeletable: true,
     _isSearchable: true,
+    _isSelectable: true,
     _isTitle: true,
     _editIndex: 1,
     _editButtonLabel: 'Load',
     _isPaginable: true,
     _columns: [
-      {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+      {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+      {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSortable: true, _isSearchable: true},
       {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
     ]
   };
@@ -49,11 +53,26 @@ export class ShowcaseHistoryComponent implements OnInit {
     const showcase = { name: this.showcaseName };
     this._showcaseService.create(showcase).subscribe((res) => {
       this.showcaseName = '';
-      this._tableInfos._content.push(res);
+      this._tableInfos._content.unshift(res);
       this._tableInfos._total++;
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
+  }
+
+  public deleteShowcase(showcases: Array<Showcase>) {
+    showcases.forEach((showcase) => {
+      this._showcaseService.remove(showcase._id).subscribe((res) => {
+        this._tableInfos._content = this._tableInfos._content.filter((s) => s._id !== res._id);
+        this._tableInfos._total--;
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      });
+    });
+  }
+
+  public loadShowcase(showcase: Showcase) {
+    console.log(showcase);
   }
 
   private loadShowcases() {
