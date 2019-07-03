@@ -46,7 +46,7 @@ export class SharedProfessionalsListComponent {
 
   @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
 
-  @Output() selectedProfessionalChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selectedProfessionalChange: EventEmitter<{ total: number, pros: Array<any> }> = new EventEmitter<{ total: number, pros: Array<any> }>();
 
   private _professionals: Array<SelectedProfessional> = [];
 

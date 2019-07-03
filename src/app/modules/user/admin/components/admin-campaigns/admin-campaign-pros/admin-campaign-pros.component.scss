@@ -1,18 +1,9 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#admin-campaign-pros-component {
+#admin-campaign-pros {
 
-  .section-actions {
-    padding-bottom: 0.75rem;
-
-    .btn {
-      margin-bottom: 0.5rem;
-    }
-
-    .gap-right {
-      margin-right: $unit-5;
-    }
-
+  .a-c-p-error-wrapper, .a-c-p-no-result-wrapper {
+    min-height: 47vh;
   }
 
 }

@@ -7,6 +7,13 @@ import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Professional } from '../../../../../../models/professional';
+import { Config } from '../../../../../../models/config';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { Response } from '../../../../../../models/response';
+
+export interface SelectedProfessional extends Professional {
+  isSelected: boolean;
+}
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -15,6 +22,30 @@ import { Professional } from '../../../../../../models/professional';
 })
 
 export class AdminCampaignProsComponent implements OnInit {
+
+  private _config: Config = {
+    fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages campaigns',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{ "created": -1 }'
+  };
+
+  private _campaign: Campaign;
+
+  private _professionals: Array<SelectedProfessional> = [];
+
+  private _total: number;
+
+  private _fetchingError: boolean;
+
+  private _noResult: boolean;
+
+  private _modalImport = false;
+
+  private _originCampaign: Array<Campaign> = [];
+
+  private _sidebarValue: SidebarInterface = {};
 
   private _newPro: Professional = {
     firstName: '',
@@ -27,139 +58,111 @@ export class AdminCampaignProsComponent implements OnInit {
     profileUrl: ''
   };
 
-  private _importModal = false;
-
-  private _campaign: Campaign;
-
-  private _originCampaign: Array<Campaign> = [];
-
   private _contextSelectedPros: Array<any> = [];
 
-  private _config: any;
+  constructor(@Inject(PLATFORM_ID) private platform: Object,
+              private _activatedRoute: ActivatedRoute,
+              private _translateTitleService: TranslateTitleService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _professionalsService: ProfessionalsService) {
 
-  private _sidebarValue: SidebarInterface = {};
+    this._translateTitleService.setTitle('Professionals | Campaign');
 
-  private _noResult = false;
-
-  constructor(private activatedRoute: ActivatedRoute,
-              private translateNotificationsService: TranslateNotificationsService,
-              private professionalsService: ProfessionalsService,
-              @Inject(PLATFORM_ID) private platform: Object) { }
-
-  ngOnInit() {
-    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
-
-    this._config = {
-      fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages campaigns',
-      limit: '10',
-      offset: '0',
-      search: '{}',
-      campaigns: this._campaign._id,
-      sort: '{ "created": -1 }'
-    };
-
-    this.getProfessionals();
-
-  }
-
-
-  private getProfessionals() {
-    this.professionalsService.getAll(this._config).pipe(first()).subscribe((response: any) => {
-      this._noResult = response._metadata.totalCount === 0;
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
-  }
-
-
-  onClickImport(event: Event) {
-    event.preventDefault();
-    this._importModal = true;
-  }
-
-
-  OnClickImportCsv(file: File, event: Event) {
-    event.preventDefault();
-
-    this.professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file).pipe(first()).subscribe((res: any) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
-      this._importModal = false;
-      this._noResult = false;
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
-
-  }
-
-
-  importPros(value: boolean) {
-    if (value) {
-      this.professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id, this._originCampaign[0].innovation.toString(), this._campaign.innovation._id)
-        .pipe(first()).subscribe((answer: any) => {
-          const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
-          this.translateNotificationsService.success('ERROR.SUCCESS', message);
-          this._noResult = false;
-        }, () => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-        });
+    if (this._activatedRoute.snapshot.parent.data['campaign']) {
+      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+      this._config.campaigns = this._campaign ? this._campaign._id : '';
     }
 
-    this._importModal = false;
+  }
+
+  ngOnInit() {
+
+    if (this._activatedRoute.snapshot.parent.data.campaign_professionals && Array.isArray(this._activatedRoute.snapshot.parent.data.campaign_professionals.result)) {
+      this._professionals = this._activatedRoute.snapshot.parent.data.campaign_professionals.result;
+      this._total = this._activatedRoute.snapshot.parent.data.campaign_professionals._metadata.totalCount;
+      this._noResult = this._total === 0;
+    } else {
+      this._fetchingError = true;
+    }
 
   }
 
-
-  updateCampaign(event: any) {
-    this._originCampaign = event.value;
+  private _getProfessionals() {
+    this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+      this._professionals = response.result;
+      this._total = response._metadata.totalCount;
+      this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
   }
 
-
-  OnClickAdd(event: Event) {
-    event.preventDefault();
-
+  public onClickAdd() {
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'SIDEBAR.TITLE.ADD_PRO',
       type: 'addPro'
     };
-
   }
 
+  public onClickImport() {
+    this._modalImport = true;
+  }
 
-  onClickSave(formValue: Professional) {
+  public updateCampaign(event: any) {
+    this._originCampaign = event.value;
+  }
+
+  public onClickImportCsv(file: File) {
+    this._professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file).pipe(first()).subscribe((res: any) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+      this._getProfessionals();
+      this._modalImport = false;
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  public onClickConfirm() {
+    this._professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id,
+      this._originCampaign[0].innovation.toString(), this._campaign.innovation._id).pipe(first()).subscribe((answer: any) => {
+      const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
+      this._translateNotificationsService.success('ERROR.SUCCESS', message);
+      this._getProfessionals();
+      this._modalImport = false;
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  public onClickSave(value: Professional) {
+
     this._newPro = {
-      firstName: formValue.firstName,
-      lastName: formValue.lastName,
-      email: formValue.email,
-      jobTitle: formValue.jobTitle,
-      country: formValue.country,
-      profileUrl: formValue.profileUrl,
-      company: formValue.company,
+      firstName: value.firstName,
+      lastName: value.lastName,
+      email: value.email,
+      jobTitle: value.jobTitle,
+      country: value.country,
+      profileUrl: value.profileUrl,
+      company: value.company,
       emailConfidence: 100
     };
 
-    this.professionalsService.create([this._newPro], this.campaign._id, this.campaign.innovation._id)
-      .subscribe((result: any) => {
+    this._professionalsService.create([this._newPro], this._campaign._id, this._campaign.innovation._id)
+      .pipe(first()).subscribe((result: any) => {
         if (result.nbProfessionalsMoved) {
-          this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.ADDED');
         } else {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.NOT_ADDED');
+          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.NOT_ADDED');
         }
-        this._noResult = false;
+        this._getProfessionals();
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
 
   }
 
-
-  public selectedProsEvent(event: {pros: Array<any>}) {
-    this._contextSelectedPros = event.pros;
-  }
-
-
-  onClickExport(event: Event) {
-    event.preventDefault();
+  public onClickExport() {
     const config: any = {
       fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country jobTitle messages',
       professionals: [],
@@ -178,38 +181,63 @@ export class AdminCampaignProsComponent implements OnInit {
       config.professionals = 'all';
     }
 
-    this.professionalsService.export(config).subscribe((answer: any) => {
+    this._professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
-      if (isPlatformBrowser(this.platform)) { window.open(url); }
+
+      if (isPlatformBrowser(this.platform)) {
+        window.open(url);
+      }
+
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
 
   }
 
-  set config(value: any) {
-    this._config = value;
+  public selectedProsEvent(value: {total: number, pros: Array<any>}) {
+    this._contextSelectedPros = value.pros;
   }
 
-  get config(): any {
+  get config(): Config {
     return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    this._getProfessionals();
   }
 
   get campaign(): Campaign {
     return this._campaign;
   }
 
+  get professionals(): Array<SelectedProfessional> {
+    return this._professionals;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
+  }
+
+  get modalImport(): boolean {
+    return this._modalImport;
+  }
+
+  set modalImport(value: boolean) {
+    this._modalImport = value;
+  }
+
   get originCampaign(): Array<Campaign> {
     return this._originCampaign;
-  }
-
-  get importModal(): boolean {
-    return this._importModal;
-  }
-
-  set importModal(value: boolean) {
-    this._importModal = value;
   }
 
   get sidebarValue(): SidebarInterface {
@@ -220,12 +248,8 @@ export class AdminCampaignProsComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get newPro(): any {
+  get newPro(): Professional {
     return this._newPro;
-  }
-
-  get noResult(): boolean {
-    return this._noResult;
   }
 
 }

@@ -65,31 +65,25 @@
         <!-- /fetching error campaign answers -->
 
 
-        <!-- buttons -->
-        <ng-container *ngIf="!fetchingError && authorizedActions(2)">
-          <div class="text-right p-bottom-20">
-
-            <!-- import -->
-            <label class="btn ghost-primary btn-sm m-right-20 m-bottom-10">
-              <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
-              {{ 'COMMON.BUTTON.IMPORT' | translate }}
-            </label>
-
-            <!-- export -->
-            <button class="btn btn-primary m-bottom-10 btn-sm" (click)="onClickExport()">
-              {{ 'COMMON.BUTTON.EXPORT' | translate }}
-            </button>
-
-          </div>
-        </ng-container>
-        <!-- /buttons -->
-
-
         <!-- no answers -->
         <ng-container *ngIf="!fetchingError && total === 0 && noResult">
           <div class="a-c-a-no-result-wrapper d-flex align-center">
             <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
-              <h4 [innerText]="'CAMPAIGNS.NO_ANSWER'" class="text-background" translate></h4>
+              <div class="text-center">
+
+                <h4 [innerText]="'CAMPAIGNS.NO_ANSWER'" class="text-background" translate></h4>
+
+                <div *ngIf="authorizedActions(2)" class="m-top-25">
+
+                  <label class="btn btn-primary rounded shadow">
+                    <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file"/>
+                    <i class="fas fa-file-import m-no-left"></i>
+                    {{ 'CAMPAIGNS.IMPORT_ANSWERS' | translate }}
+                  </label>
+
+                </div>
+
+              </div>
             </app-message-template-2>
           </div>
         </ng-container>
@@ -98,12 +92,38 @@
 
         <!-- answers -->
         <ng-container *ngIf="!fetchingError && !noResult">
-          <app-shared-table
-            (editRow)="onClickEdit($event)"
-            (performAction)="onClickActions($event)"
-            [(config)]="config"
-            [data]="table">
-          </app-shared-table>
+
+
+          <!-- buttons -->
+          <div *ngIf="authorizedActions(2)" class="text-right">
+
+            <!-- import -->
+            <label class="btn ghost-primary btn-sm m-right-20 m-bottom-10">
+              <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file"/>
+              {{ 'COMMON.BUTTON.IMPORT' | translate }}
+            </label>
+
+            <!-- export -->
+            <button (click)="onClickExport()" class="btn btn-primary m-bottom-10 btn-sm">
+              {{ 'COMMON.BUTTON.EXPORT' | translate }}
+            </button>
+
+          </div>
+          <!-- /buttons -->
+
+
+          <!-- table -->
+          <div class="p-top-25">
+            <app-shared-table
+              (editRow)="onClickEdit($event)"
+              (performAction)="onClickActions($event)"
+              [(config)]="config"
+              [data]="table">
+            </app-shared-table>
+          </div>
+          <!-- /table -->
+
+
         </ng-container>
         <!-- /answers -->
 

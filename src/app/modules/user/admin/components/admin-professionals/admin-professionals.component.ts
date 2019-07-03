@@ -59,7 +59,7 @@ export class AdminProfessionalsComponent implements OnInit {
       this._professionals = response.result;
       this._total = response._metadata.totalCount;
     }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
