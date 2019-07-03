@@ -100,7 +100,8 @@ export const COMMON = {
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
     'PROFESSIONALS': 'Professionals',
     'USERS': 'Users',
-    'COMMUNITY_PROJECTS': 'Projects | Community'
+    'COMMUNITY_PROJECTS': 'Projects | Community',
+    'ANSWER_TAGS': 'Answer tags | Project'
   },
 
   'LABEL': {

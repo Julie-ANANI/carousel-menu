@@ -82,7 +82,7 @@ export const ERROR = {
     'ADDED': 'The tag has been added successfully.',
     'UPDATED': 'The tag has been updated successfully.',
     'REMOVED': 'The tag has been removed successfully.',
-    'ALREADY_ADDED': 'The tag has been already added.'
+    'ALREADY_ADDED': 'The tag has been already added.',
   },
 
   'SECTION': {
@@ -163,6 +163,7 @@ export const ERROR = {
     'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check the URL is good.',
     'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check the URL is good.',
     'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.',
+    'TAGS_POOL': 'It could be because of server connection problem or you are trying to access the innovation that doesn\'t exist.'
   },
 
   'AMBASSADOR': {

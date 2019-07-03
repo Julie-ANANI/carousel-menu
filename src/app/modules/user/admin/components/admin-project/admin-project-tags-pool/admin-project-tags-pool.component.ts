@@ -13,15 +13,35 @@ import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-inte
 import { Observable } from 'rxjs';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { Multiling } from '../../../../../../models/multiling';
+import { Config } from '../../../../../../models/config';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
 
 @Component({
   selector: 'app-admin-project-tags-pool',
   templateUrl: 'admin-project-tags-pool.component.html',
   styleUrls: ['admin-project-tags-pool.component.scss']
 })
+
 export class AdminProjectTagsPoolComponent implements OnInit {
 
-  private _project: Innovation;
+  private _config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created": "-1"}'
+  };
+
+  private _innovation: Innovation;
+
+  private _tags: Array<Tag> = [];
+
+  private _total: number;
+
+  private _noResult: boolean;
+
+  private _fetchingError: boolean;
+
   private _tag: Tag;
   private _tagForm: FormGroup;
   private _sidebarTemplateValue: SidebarInterface = {};
@@ -45,29 +65,42 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     ],
   };
 
-  private _config = {
-    fields: '',
-    limit: '10',
-    offset: '0',
-    search: '{}',
-    sort: '{"created": "-1"}'
-  };
 
-  constructor(private route: ActivatedRoute,
+
+  constructor(private _activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
               private multiling: MultilingPipe,
               private sanitizer: DomSanitizer,
+              private _translateTitleService: TranslateTitleService,
               private translateService: TranslateService,
               private autocompleteService: AutocompleteService,
               private notificationsService: TranslateNotificationsService,
-              private tagService: TagsService) {}
+              private tagService: TagsService) {
+
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.ANSWER_TAGS');
+
+    if (this._activatedRoute.snapshot.parent.data['innovation']) {
+      this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
+    }
+
+  }
 
   ngOnInit(): void {
-    this._project = this.route.snapshot.parent.data['innovation'];
+
+    if (this._activatedRoute.snapshot.parent.data.project_tags_pool && Array.isArray(this._activatedRoute.snapshot.parent.data.project_tags_pool)) {
+      this._tags = this._activatedRoute.snapshot.parent.data.project_tags_pool;
+      this._total = this._tags.length;
+      this._noResult = this._total === 0;
+    } else {
+      this._fetchingError = true;
+    }
+
+    console.log(this._activatedRoute.snapshot.parent.data.project_tags_pool);
+
     this._tagForm = this.formBuilder.group({
       tag: null,
     });
-    this.tagService.getTagsFromPool(this._project._id).subscribe((data: any) => {
+    this.tagService.getTagsFromPool(this._innovation._id).subscribe((data: any) => {
       this.updateTable(data);
     });
   }
@@ -84,7 +117,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
       query: query,
-      type: 'tags'
+      type: '_tags'
     };
     return this.autocompleteService.get(queryConf);
   }
@@ -101,7 +134,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public addTag(event: Event): void {
     event.preventDefault();
     this.tagService
-      .addTagToPool(this._project._id, this._tagForm.get('tag').value._id)
+      .addTagToPool(this._innovation._id, this._tagForm.get('tag').value._id)
       .subscribe((data: any) => {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
@@ -113,7 +146,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   public updateTag(tag: Tag): void {
     this.tagService
-      .updateTagInPool(this._project._id, tag)
+      .updateTagInPool(this._innovation._id, tag)
       .subscribe((data: any) => {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
@@ -137,7 +170,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public deleteTags(tags: Array<Tag>): void {
     tags.forEach((tag) => {
       this.tagService
-        .removeTagFromPool(this._project._id, tag)
+        .removeTagFromPool(this._innovation._id, tag)
         .subscribe((data: any) => {
           this.updateTable(data);
           this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
@@ -147,9 +180,35 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     });
   }
 
-  get config() { return this._config; }
-  get project() { return this._project; }
-  get sidebarTemplateValue() { return this._sidebarTemplateValue; }
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+  }
+
+  get innovation() {
+    return this._innovation;
+  }
+
+  get tags(): Array<Tag> {
+    return this._tags;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+    get sidebarTemplateValue() { return this._sidebarTemplateValue; }
   get tag() { return this._tag; }
   get tagForm() { return this._tagForm; }
   get tableInfos() { return this._tableInfos; }

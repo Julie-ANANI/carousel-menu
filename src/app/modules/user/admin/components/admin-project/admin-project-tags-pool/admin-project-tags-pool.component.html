@@ -1,3 +1,25 @@
+<section id="admin-project-tags-pool" class="section-light-pad">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <div class="restrict-width">
+
+
+      <!-- fetching error -->
+      <ng-container *ngIf="fetchingError">
+        <div class="a-p-t-p-error-wrapper d-flex align-center">
+          <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+            <p [innerText]="'ERROR.ERRORS.TAGS_POOL'" translate></p>
+          </app-error-template-1>
+        </div>
+      </ng-container>
+      <!-- /fetching error -->
+
+
+    </div>
+  </div>
+</section>
+
+<!--
+
 <div class="admin-project-tags-pool">
 
   <form class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTag($event)">
@@ -22,7 +44,7 @@
                       (removeRows)="deleteTags($event)">
     </app-shared-table>
 
-  <!-- Tag preview -->
+  &lt;!&ndash; Tag preview &ndash;&gt;
   <app-sidebar
     [template]="sidebarTemplateValue"
     (closeSidebar)="closeSidebar($event)">
@@ -31,10 +53,11 @@
       [sidebarState]="sidebarTemplateValue.animate_state"
       [tag]="tag"
       [type]="'editTag'"
-      [project]="project"
+      [project]="innovation"
       (updateTag)="updateTag($event)">
     </app-tags-form>
   </app-sidebar>
 
 </div>
 
+-->
