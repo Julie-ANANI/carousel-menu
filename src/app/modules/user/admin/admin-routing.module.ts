@@ -6,7 +6,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { AdminProfessionalsComponent } from './components/admin-professionals/admin-professionals.component';
 import { AdminProjectComponent } from './components/admin-project/admin-project.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
-import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
+//import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
@@ -127,19 +127,12 @@ const adminRoutes: Routes = [
         ]
       },
       {
-        path: 'campaigns',
+        path: 'campaigns/campaign/:campaignId',
+        component: AdminCampaignComponent,
+        resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver, campaign_professionals: CampaignProfessionalsResolver },
+        runGuardsAndResolvers: 'always',
         children: [
-          {
-            path: '', component: AdminCampaignsComponent, pathMatch: 'full'
-          },
-          {
-            path: 'campaign/:campaignId',
-            component: AdminCampaignComponent,
-            resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver, campaign_professionals: CampaignProfessionalsResolver },
-            runGuardsAndResolvers: 'always',
-            children: [
-              ...campaignRoutes
-          ]}
+          ...campaignRoutes
         ]
       },
       {
