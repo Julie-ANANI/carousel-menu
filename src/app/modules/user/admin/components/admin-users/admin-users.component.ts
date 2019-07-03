@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { User } from '../../../../../models/user.model';

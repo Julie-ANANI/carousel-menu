@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Campaign } from '../../../../models/campaign';
 
@@ -8,7 +8,7 @@ import { Campaign } from '../../../../models/campaign';
   styleUrls: ['./campaign-form.component.scss']
 })
 
-export class CampaignFormComponent {
+export class CampaignFormComponent implements OnInit {
 
   @Input() set campaign(value: Campaign) {
     this._innovationCampaign = value;
@@ -38,6 +38,10 @@ export class CampaignFormComponent {
   private _isEditName = false;
 
   constructor(private formBuilder: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.buildForm();
+  }
 
   private buildForm() {
     this._campaignForm = this.formBuilder.group( {
