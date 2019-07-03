@@ -10,8 +10,7 @@ export interface Column {
   readonly _isSortable?: boolean;
   readonly _choices?: Choice[];
   readonly _multiLabels?: MultiLabel[];
-  readonly _maxWidth?: string;
-  readonly _minWidth?: string;
+  readonly _width?: string;
   readonly _enableTooltip?: boolean;
   readonly _imgHeight?: string;
 }

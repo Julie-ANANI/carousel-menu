@@ -394,10 +394,6 @@ export class AdminCampaignBatchComponent implements OnInit {
         _name: workflowName,
         _type: 'TEXT'
       }, {
-        _attrs: ['Sent'],
-        _name: 'Sent',
-        _type: 'TEXT'
-      }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label label-success'}, {_attr: 'OpenedPred', _class: 'label label-meta'} ],
