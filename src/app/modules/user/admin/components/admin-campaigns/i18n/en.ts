@@ -20,7 +20,7 @@ export const CAMPAIGNS = {
 
   'EXPORT_ANSWERS': 'Export',
 
-  'IMPORT_ANSWERS': 'Import',
+  'IMPORT_ANSWERS': 'Import answers',
 
   'EMAIL_CONFIDENCE': 'Email confidence',
 
