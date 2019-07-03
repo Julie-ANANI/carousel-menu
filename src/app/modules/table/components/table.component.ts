@@ -713,7 +713,7 @@ export class TableComponent implements OnInit {
               tmpContent = tmpContent ? tmpContent[i] : '-';
             }
 
-            if (tmpContent.toString().toLowerCase().includes(searchValue)) {
+            if (tmpContent && tmpContent.toString().toLowerCase().includes(searchValue)) {
               return true;
             }
 
