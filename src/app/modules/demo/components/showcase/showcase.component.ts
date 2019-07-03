@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
+import { Showcase } from '../../../../models/showcase';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
@@ -37,7 +38,7 @@ export class ShowcaseComponent {
 
   private _quartiles = [1, 1, 1];
 
-  private _modalShow: boolean = false;
+  private _modalShow = false;
   
   private _fetchingError: boolean;
 
@@ -67,6 +68,21 @@ export class ShowcaseComponent {
       this._fetchingError = true;
     }
 
+  }
+
+  public displayCustomShowcase(showcase: Showcase) {
+    if (showcase.tags.length > 0) {
+      const statsObservables = showcase.tags.map((tag) => this._tagService.getStats(tag._id));
+      forkJoin(statsObservables).subscribe((tagStats) => {
+        this._selectedTagsStats = tagStats;
+        this._recomputeData();
+      }, (err) => {
+        this._translateNotificationService.error('ERROR.ERROR', err.message);
+      });
+    } else {
+      this._selectedTagsStats = [];
+      this._recomputeData();
+    }
   }
 
   public modifyTag() {
