@@ -105,7 +105,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   private checkBatch() {
-    if (this.localStorage.getItem(`auto-batch-${this._campaign._id}`)) {
+    if (this._campaign && this.localStorage.getItem(`auto-batch-${this._campaign._id}`)) {
       this._batchAlreadyActivated = this.localStorage.getItem(`auto-batch-${this._campaign._id}`);
     } else {
       this.setValues('false');
