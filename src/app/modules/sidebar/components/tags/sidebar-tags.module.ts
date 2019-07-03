@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TagsComponent } from './tags.component';
 
 import { SidebarModule } from '../../sidebar.module';
-import { SharedTagModule } from '../../../shared/components/shared-tag-item/shared-tag.module';
+import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
 import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { NguiAutoCompleteModule } from '../../../utility-components/auto-complete/auto-complete.module';

@@ -18,7 +18,7 @@ import { SharedTextZoneModule } from '../../../../shared/components/shared-text-
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
-import { SharedTagModule } from '../../../../shared/components/shared-tag-item/shared-tag.module';
+import { SharedTagModule } from '../../../../shared/components/shared-tag/shared-tag.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/admin-project-questionnaire.module';
 import { AutocompleteInputModule } from '../../../../utility-components/autocomplete-input/autocomplete-input.module';

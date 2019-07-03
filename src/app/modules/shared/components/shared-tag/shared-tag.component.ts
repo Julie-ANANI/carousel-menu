@@ -100,7 +100,7 @@ export class SharedTagComponent implements OnInit {
   };
 
   public autocompleValueFormatter = (data: any) : string => {
-    if (!this._projectId && this._type) {
+    if (!this._projectId || this._type) {
       return this._multilingPipe.transform(data.name, this._translateService.currentLang);
     } else {
       return this._multilingPipe.transform(data.label, this._translateService.currentLang);

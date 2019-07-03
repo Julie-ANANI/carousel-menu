@@ -87,8 +87,6 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       this._fetchingError = true;
     }
 
-    console.log(this._activatedRoute.snapshot.parent.data.project_tags_pool);
-
     this._tagForm = this.formBuilder.group({
       tag: null,
     });
