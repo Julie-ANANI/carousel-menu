@@ -24,7 +24,7 @@ import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/a
 import { AutocompleteInputModule } from '../../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
-import { SidebarTagsFormModule } from '../../../../sidebar/components/tags-form/sidebar-tags-form.module';
+import { SidebarTagsModule } from '../../../../sidebar/components/tags/sidebar-tags.module';
 import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebar/components/innovation-form/sidebar-innovation-form.module';
 import { SidebarCampaignFormModule } from '../../../../sidebar/components/campaign-form/sidebar-campaign-form.module';
@@ -53,7 +53,7 @@ import { MessageTemplate2Module } from '../../../../utility-components/messages/
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule,
     ProgressBarModule,
-    SidebarTagsFormModule,
+    SidebarTagsModule,
     SidebarEmailFormModule,
     SidebarInnovationFormModule,
     SidebarCampaignFormModule,

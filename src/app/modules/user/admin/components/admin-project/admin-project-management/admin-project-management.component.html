@@ -712,13 +712,13 @@
     [initialEmails]="project.settings.blacklist.emails"
     (emailsToBlacklists)="addBlacklists($event)">
   </app-emails-form>
-  <app-tags-form [sidebarState]="sidebarState"
+  <app-tags [sidebarState]="sidebarState"
                  *ngIf="isTagsSidebar"
                  [type]="more.type"
                  [tags]="project.tags"
                  tagType="SECTOR"
                  (newTags)="addTags($event)">
-  </app-tags-form>
+  </app-tags>
 </app-sidebar>
 
 
