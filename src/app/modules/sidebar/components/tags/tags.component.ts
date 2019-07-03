@@ -53,6 +53,10 @@ export class TagsComponent {
     this._tagType = value;
   }
 
+  @Input() set placeholder(value: string) {
+    this._placeholder = value;
+  }
+
   @Output() newTags: EventEmitter<Array<Tag>> = new EventEmitter<Array<Tag>>();
 
   @Output() updateTag: EventEmitter<Tag> = new EventEmitter<Tag>();
@@ -68,6 +72,8 @@ export class TagsComponent {
   public needToSetOriginalTag = false;
 
   private _tagType: string;
+
+  private _placeholder: string = 'COMMON.TAG.TAG_PLACEHOLDER';
 
   constructor(private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService,
@@ -165,6 +171,10 @@ export class TagsComponent {
 
   get tagType(): string {
     return this._tagType;
+  }
+
+  get placeholder(): string {
+    return this._placeholder;
   }
 
 }

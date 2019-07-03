@@ -147,6 +147,7 @@ export const COMMON = {
     'SEARCH': 'Rechercher ici',
     'SIGNATURE_NAME': 'Entrez le nom de la signature',
     'PRESET_NAME': 'Entrer le nom du preset',
+    'EXISTING_TAG': 'Ajouter un tag existant',
   },
 
   'REQUIRED': {

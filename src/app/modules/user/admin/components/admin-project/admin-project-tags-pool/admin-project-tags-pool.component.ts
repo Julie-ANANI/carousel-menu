@@ -100,7 +100,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public onClickAdd() {
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      type: 'addTagsFromPool',
+      type: 'addTags',
       title: 'SIDEBAR.TITLE.ADD_TAGS'
     }
   }
@@ -108,7 +108,6 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public addNewTags(value: Array<Tag>) {
     console.log(value);
   }
-
 
   private updateTable(tags: Array<Tag>) {
     const tagsList = tags
@@ -118,16 +117,6 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       .sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
     this._tableInfos = {...this._tableInfos, _content: tagsList, _total: tagsList.length};
   }
-
-  /*public suggestions(query: string): Observable<Array<any>> {
-    const queryConf = {
-      query: query,
-      type: '_tags'
-    };
-    return this.autocompleteService.get(queryConf);
-  }*/
-
-
 
   public addTag(event: Event): void {
     event.preventDefault();

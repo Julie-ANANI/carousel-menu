@@ -147,7 +147,8 @@ export const COMMON = {
     'TECHNOLOGIES': 'Enter the technology',
     'SEARCH': 'Search here',
     'SIGNATURE_NAME': 'Enter the signature name',
-    'PRESET_NAME': 'Enter the preset name'
+    'PRESET_NAME': 'Enter the preset name',
+    'EXISTING_TAG': 'Add an existing tag',
   },
 
   'REQUIRED': {

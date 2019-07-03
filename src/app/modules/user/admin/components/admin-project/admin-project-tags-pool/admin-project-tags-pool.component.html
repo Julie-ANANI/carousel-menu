@@ -46,7 +46,9 @@
   <app-tags
     (newTags)="addNewTags($event)"
     [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type">
+    [type]="sidebarValue.type"
+    [tagType]="'_tags'"
+    [placeholder]="'COMMON.PLACEHOLDER.EXISTING_TAG'">
   </app-tags>
 </app-sidebar>
 <!-- /sidebar -->

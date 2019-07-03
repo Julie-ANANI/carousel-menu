@@ -16,75 +16,98 @@ import { Observable } from 'rxjs';
 
 export class SharedTagComponent implements OnInit {
 
-  @Input() tags: Array<any>;
+  @Input() set tags(value: Array<Tag>) {
+    this._tags = value;
+  }
 
-  @Input() type: string;
+  @Input() set type(value: string){
+    this._type = value;
+  }
 
   @Input() set projectId(project: string) {
     this._projectId = project;
   };
 
-  @Input() editMode: boolean;
+  @Input() set editMode(value: boolean) {
+    this._editMode = value;
+  }
 
-  @Input() isAdmin: boolean;
+  @Input() set isAdmin(value: boolean) {
+    this._isAdmin = value;
+  }
 
-  @Input() textColor: string;
+  @Input() set placeholder(value: string) {
+    this._placeholder = value;
+  }
 
-  @Output() addTag: EventEmitter<Tag> = new EventEmitter();
+  @Output() addTag: EventEmitter<Tag> = new EventEmitter<Tag>();
 
-  @Output() createTag: EventEmitter<Tag> = new EventEmitter();
+  @Output() createTag: EventEmitter<Tag> = new EventEmitter<Tag>();
 
-  @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
+  @Output() removeTag: EventEmitter<Tag> = new EventEmitter<Tag>();
+
+  @Output() tagChange: EventEmitter<Tag> = new EventEmitter<Tag>();
 
   private _tagForm: FormGroup;
 
-  private _showModal = false;
+  private _showModal: boolean;
 
-  private _projectId = '';
+  private _projectId: string;
 
-  constructor(private translateService: TranslateService,
-              private formBuilder: FormBuilder,
-              private multiling: MultilingPipe,
-              private sanitizer: DomSanitizer,
-              private tagsService: TagsService,
-              private autocompleteService: AutocompleteService) {}
+  private _placeholder: string = 'COMMON.TAG.TAG_PLACEHOLDER';
+
+  private _type: string;
+
+  private _editMode: boolean;
+
+  private _tags: Array<Tag> = [];
+
+  private _isAdmin: boolean;
+
+  constructor(private _translateService: TranslateService,
+              private _formBuilder: FormBuilder,
+              private _multilingPipe: MultilingPipe,
+              private _domSanitizer: DomSanitizer,
+              private _tagsService: TagsService,
+              private _autocompleteService: AutocompleteService) {}
 
   ngOnInit() {
-    this._tagForm = this.formBuilder.group({
+    this._tagForm = this._formBuilder.group({
       tag: null,
     });
   }
 
   public tagSuggestions(query: string): Observable<Array<any>> {
-    if (this._projectId !== '') {
-      return this.tagsService.searchTagInPool(this.projectId, query);
+
+    if (this._projectId && !this._type) {
+      return this._tagsService.searchTagInPool(this._projectId, query);
     } else {
-      const queryConf: any = {
-        query: query,
-        type: 'tags'
-      };
-      if (this.type) {
-        queryConf.tagType = this.type;
+
+      const queryConf: any = { query: query, type: 'tags' };
+
+      if (this._type) {
+        queryConf.type = this._type;
       }
-      return this.autocompleteService.get(queryConf);
+
+      return this._autocompleteService.get(queryConf);
     }
+
   }
 
   public autocompleListFormatter = (data: any) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
-    return this.sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
+    return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
   public autocompleValueFormatter = (data: any) : string => {
-    if (this._projectId === '') {
-      return this.multiling.transform(data.name, this.translateService.currentLang);
+    if (!this._projectId && this._type) {
+      return this._multilingPipe.transform(data.name, this._translateService.currentLang);
     } else {
-      return this.multiling.transform(data.label, this.translateService.currentLang);
+      return this._multilingPipe.transform(data.label, this._translateService.currentLang);
     }
   };
 
-  public addTagEmitter(event: Event): void {
-    event.preventDefault();
+  public addTagEmitter(): void {
     if (typeof this._tagForm.get('tag').value !== 'string') {
       this.addTag.emit(this._tagForm.get('tag').value);
       this._tagForm.get('tag').reset();
@@ -110,15 +133,15 @@ export class SharedTagComponent implements OnInit {
     this.removeTag.emit(tag);
   }
 
-  browserLang(): string {
-    return this.translateService.getBrowserLang() || 'en';
+  get userLang(): string {
+    return this._translateService.currentLang || 'en';
   }
 
   get canAdd(): boolean {
     return !!this._tagForm.get('tag').value;
   }
 
-  get tagForm() {
+  get tagForm(): FormGroup {
     return this._tagForm;
   }
 
@@ -132,6 +155,26 @@ export class SharedTagComponent implements OnInit {
 
   set showModal(value: boolean) {
     this._showModal = value;
+  }
+
+  get placeholder(): string {
+    return this._placeholder;
+  }
+
+  get type(): string {
+    return this._type;
+  }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
+
+  get tags(): Array<Tag> {
+    return this._tags;
+  }
+
+  get isAdmin(): boolean {
+    return this._isAdmin;
   }
 
 }
