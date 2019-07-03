@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ShowcaseService } from '../../../demo/components/showcase/services/showcase.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Config } from '../../../../models/config';
@@ -15,6 +15,8 @@ import { TagStats } from '../../../../models/tag-stats';
 export class ShowcaseHistoryComponent implements OnInit {
 
   @Input() tagsStats: Array<TagStats> = [];
+
+  @Output() displayShowcase: EventEmitter<Showcase> = new EventEmitter<Showcase>();
 
   private _config: Config = {
     fields: 'name owner created',
@@ -76,7 +78,7 @@ export class ShowcaseHistoryComponent implements OnInit {
   }
 
   public loadShowcase(showcase: Showcase) {
-    console.log(showcase);
+    this.displayShowcase.emit(showcase);
   }
 
   private loadShowcases() {
