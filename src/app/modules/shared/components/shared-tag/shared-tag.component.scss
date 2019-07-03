@@ -1,0 +1,40 @@
+@import "../../../../../style/framework/src/variables";
+
+#shared-tag-item-component {
+
+  .form-input.ng-touched.ng-invalid {
+    border-color: $form-border-color;
+  }
+
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      display: none;
+    }
+
+  }
+
+  .tags-wrapper {
+    flex-wrap: wrap;
+    margin-left: -$unit-1;
+    margin-bottom: -$unit-1;
+    margin-right: -$unit-1;
+
+    .label.label-tag {
+
+      .fa-times {
+        font-size: $font-icon-sm;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+      }
+
+    }
+
+  }
+
+}

@@ -14,9 +14,38 @@
       <!-- /fetching error -->
 
 
+      <!-- no result -->
+      <ng-container *ngIf="!fetchingError && total === 0 && noResult">
+        <div class="a-p-t-p-no-result-wrapper d-flex align-center">
+          <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+            <div class="text-center">
+
+              <h4 [innerText]="'COMMON.TAG.NO_TAGS_POOL'" class="text-background" translate></h4>
+
+              <div class="m-top-25">
+                <button (click)="onClickAdd()" type="button" class="btn btn-primary rounded shadow">
+                  <i class="fas fa-plus m-no-left"></i>
+                  {{ 'COMMON.BUTTON.ADD' | translate }} tags
+                </button>
+              </div>
+
+            </div>
+          </app-message-template-2>
+        </div>
+      </ng-container>
+      <!-- /no result -->
+
+
     </div>
   </div>
 </section>
+
+
+<!-- sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-tags></app-tags>
+</app-sidebar>
+<!-- /sidebar -->
 
 <!--
 
@@ -38,6 +67,16 @@
     </div>
   </form>
 
+  <app-tags-form
+    (newTags)="addNewTags($event)"
+    (updateTag)="updateTag($event)"
+    [project]="innovation"
+    [sidebarState]="sidebarValue.animate_state"
+    [tag]="tag"
+    [type]="sidebarValue.type"
+    [tagType]="'_tags'">
+  </app-tags-form>
+
     <app-shared-table [config]="config"
                       [data]="tableInfos"
                       (editRow)="editTag($event)"
@@ -45,18 +84,7 @@
     </app-shared-table>
 
   &lt;!&ndash; Tag preview &ndash;&gt;
-  <app-sidebar
-    [template]="sidebarTemplateValue"
-    (closeSidebar)="closeSidebar($event)">
-    <app-tags-form
-      *ngIf="tag"
-      [sidebarState]="sidebarTemplateValue.animate_state"
-      [tag]="tag"
-      [type]="'editTag'"
-      [project]="innovation"
-      (updateTag)="updateTag($event)">
-    </app-tags-form>
-  </app-sidebar>
+
 
 </div>
 

@@ -172,9 +172,9 @@ export const CAMPAIGNS = {
     'FETCHING_PROFESSIONALS': 'Nous avons de la difficulté à trouver les professionnels pour cette campagne. Cela peut être dû à un problème de connexion au serveur ou à l\'absence de professionnels.',
   },
 
-  'NO_ANSWER': 'Aucune réponse pour cette campagne pour le moment. Essayez d\'en importer !',
+  'NO_ANSWER': 'Aucune réponse pour cette campagne. Essayez d\'en importer !',
 
-  'NO_PROFESSIONALS': 'Ajouter/Importer des professionnels en cliquant sur l\'un des boutons ci-dessous.',
+  'NO_PROFESSIONALS': 'Pas de professionnels pour cette campagne. Essayez d\'en ajouter/importer !',
 
   'LABEL_IMPORT': 'Importer des professionnels de la campagne (une seule campagne à la fois)',
 

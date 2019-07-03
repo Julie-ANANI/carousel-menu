@@ -132,6 +132,7 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Signature Nom',
     'LANGUAGE': 'Langue',
     'PRESET_NAME': 'Nom du Preset',
+    'TAG_NAME': 'Nom de tag',
   },
 
   'PLACEHOLDER': {
@@ -303,7 +304,7 @@ export const COMMON = {
     'MESSAGE': 'Message',
   },
 
-  'TAG_LABEL': {
+  'TAG': {
     'ADD_TAGS': 'Ajouter des tags',
     'EDIT_TAG': 'Modifier le tag',
     'LABEL_EN_PLACEHOLDER': 'Entrez le label en anglais',
@@ -311,7 +312,8 @@ export const COMMON = {
     'DESC_EN_PLACEHOLDER': 'Entrez la description en anglais',
     'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
     'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
-    'TAG_PLACEHOLDER': 'Ajouter un tag existante'
+    'TAG_PLACEHOLDER': 'Ajouter un tag existante',
+    'NO_TAGS_POOL': 'Pas de tags pour cette innovation. Essayez d\'en ajouter !'
   },
 
   'LOGOUT': {

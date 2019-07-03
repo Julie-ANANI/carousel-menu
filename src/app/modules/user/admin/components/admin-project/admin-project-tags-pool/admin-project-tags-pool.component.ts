@@ -1,18 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
-import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Table } from '../../../../../table/models/table';
 import { Tag } from '../../../../../../models/tag';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
-import { Observable } from 'rxjs';
-import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
-import { Multiling } from '../../../../../../models/multiling';
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 
@@ -42,9 +36,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _fetchingError: boolean;
 
+  private _sidebarValue: SidebarInterface = {};
+
   private _tag: Tag;
   private _tagForm: FormGroup;
-  private _sidebarTemplateValue: SidebarInterface = {};
+
 
   private _tableInfos: Table = {
     _selector: 'admin-user',
@@ -69,11 +65,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private multiling: MultilingPipe,
-              private sanitizer: DomSanitizer,
               private _translateTitleService: TranslateTitleService,
-              private translateService: TranslateService,
-              private autocompleteService: AutocompleteService,
               private notificationsService: TranslateNotificationsService,
               private tagService: TagsService) {
 
@@ -105,6 +97,19 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     });
   }
 
+  public onClickAdd() {
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      type: 'addTagsFromPool',
+      title: 'SIDEBAR.TITLE.ADD_TAGS'
+    }
+  }
+
+  public addNewTags(value: Array<Tag>) {
+    console.log(value);
+  }
+
+
   private updateTable(tags: Array<Tag>) {
     const tagsList = tags
       .map(x => {
@@ -114,22 +119,15 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tableInfos = {...this._tableInfos, _content: tagsList, _total: tagsList.length};
   }
 
-  public suggestions(query: string): Observable<Array<any>> {
+  /*public suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
       query: query,
       type: '_tags'
     };
     return this.autocompleteService.get(queryConf);
-  }
+  }*/
 
-  public autocompleListFormatter = (data: {name: Multiling, _id: string}) : SafeHtml => {
-    const text = this.autocompleValueFormatter(data);
-    return this.sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
-  };
 
-  public autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
-      return this.multiling.transform(data.name, this.translateService.currentLang);
-  };
 
   public addTag(event: Event): void {
     event.preventDefault();
@@ -157,14 +155,10 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   public editTag(tag: Tag) {
     this._tag = tag;
-    this._sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.TAG_LABEL.EDIT_TAG',
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'COMMON.TAG.EDIT_TAG',
     };
-  }
-
-  public closeSidebar(state: SidebarInterface) {
-    this._sidebarTemplateValue.animate_state = state.animate_state;
   }
 
   public deleteTags(tags: Array<Tag>): void {
@@ -188,7 +182,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._config = value;
   }
 
-  get innovation() {
+  get innovation(): Innovation {
     return this._innovation;
   }
 
@@ -208,7 +202,14 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     return this._fetchingError;
   }
 
-    get sidebarTemplateValue() { return this._sidebarTemplateValue; }
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
   get tag() { return this._tag; }
   get tagForm() { return this._tagForm; }
   get tableInfos() { return this._tableInfos; }

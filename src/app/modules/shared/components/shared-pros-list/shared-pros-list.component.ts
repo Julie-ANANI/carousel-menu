@@ -80,7 +80,7 @@ export class SharedProsListComponent {
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
-          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG_LABEL.ADD_TAGS', _icon: 'fas fa-plus'}],
+          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
           _editIndex: 2,
           _columns: [
             {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true,
@@ -119,7 +119,7 @@ export class SharedProsListComponent {
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
-          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG_LABEL.ADD_TAGS', _icon: 'fas fa-plus'}],
+          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
           _editIndex: 2,
           _columns: [
             {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true,
@@ -179,7 +179,7 @@ export class SharedProsListComponent {
         }
         break;
 
-      case 'COMMON.TAG_LABEL.ADD_TAGS':
+      case 'COMMON.TAG.ADD_TAGS':
         this.editTags(action._rows);
         break;
 

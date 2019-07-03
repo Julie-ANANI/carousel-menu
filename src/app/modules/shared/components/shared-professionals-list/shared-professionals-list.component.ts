@@ -98,7 +98,7 @@ export class SharedProfessionalsListComponent {
       _isDeletable: true,
       _isSelectable: true,
       _isEditable: true,
-      _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG_LABEL.ADD_TAGS', _icon: 'fas fa-plus'}],
+      _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
       _editIndex: 1,
       _columns: [
         {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true,
@@ -201,7 +201,7 @@ export class SharedProfessionalsListComponent {
         }
         break;
 
-      case 'COMMON.TAG_LABEL.ADD_TAGS':
+      case 'COMMON.TAG.ADD_TAGS':
         this._editProfessionalTags(value._rows);
         break;
 

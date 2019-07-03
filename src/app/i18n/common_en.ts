@@ -133,6 +133,7 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Signature Name',
     'LANGUAGE': 'Language',
     'PRESET_NAME': 'Preset Name',
+    'TAG_NAME': 'Tag Name'
   },
 
   'PLACEHOLDER': {
@@ -305,7 +306,7 @@ export const COMMON = {
     'MESSAGE': 'Message',
   },
 
-  'TAG_LABEL': {
+  'TAG': {
     'ADD_TAGS': 'Add Tags',
     'EDIT_TAG': 'Edit Tag',
     'LABEL_EN_PLACEHOLDER': 'Enter the label in english',
@@ -313,7 +314,8 @@ export const COMMON = {
     'DESC_EN_PLACEHOLDER': 'Enter the description in english',
     'DESC_FR_PLACEHOLDER': 'Enter the description in french',
     'CHOOSE_TAG': 'Choose the tag to associate with this actual tag',
-    'TAG_PLACEHOLDER': 'Add an existing tag'
+    'TAG_PLACEHOLDER': 'Add an existing tag',
+    'NO_TAGS_POOL': 'No tags for this innovation. Try to add some!'
   },
 
   'LOGOUT': {
