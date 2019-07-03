@@ -61,10 +61,10 @@
       text-transform: uppercase;
 
       .th-name {
-        display: inline-flex;
-        align-items: center;
-        text-align: inherit;
+        top: 50%;
+        margin-top: -19px;
         height: 38px;
+        max-width: 100%;
       }
 
       &.active, &:hover {
