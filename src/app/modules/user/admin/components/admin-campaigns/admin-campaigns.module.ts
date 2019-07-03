@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { AdminCampaignsComponent } from './admin-campaigns.component';
 import { AdminCampaignComponent } from './admin-campaign/admin-campaign.component';
 import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
 import { AdminCampaignQuizComponent } from './admin-campaign-quiz/admin-campaign-quiz.component';
@@ -61,7 +60,6 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
     SharedProfessionalsListModule
   ],
   declarations: [
-    AdminCampaignsComponent,
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
     AdminCampaignQuizComponent,
@@ -75,7 +73,6 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
     AdminCampaignAbtestingComponent
   ],
   exports: [
-    AdminCampaignsComponent,
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
     AdminCampaignQuizComponent,

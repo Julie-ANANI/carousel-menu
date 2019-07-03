@@ -105,17 +105,11 @@ export class SharedProsListOldComponent {
   get pros() { return this._pros; }
   get proKeywords(): Array<string> { return this._proKeywords; }
   get keywordsModal(): boolean { return this._keywordsModal; }
-  set keywordsModal(value: boolean) { this._keywordsModal = value; }
   get config(): Config { return this._config; }
   get paginationConfig(): Pagination { return this._paginationConfig; }
 
   get sortConfig(): string {
     return this._config.sort;
-  }
-
-  set sortConfig(value: string) {
-    this._config.sort = value;
-    this.loadPros(this._config);
   }
 
 }
