@@ -14,7 +14,7 @@ import {Showcase} from "../../../../models/showcase";
 export class ShowcaseHistoryComponent implements OnInit {
 
   private _config: Config = {
-    fields: 'name created',
+    fields: 'name owner created',
     limit: '10',
     offset: '0',
     search: '{}',
@@ -34,7 +34,8 @@ export class ShowcaseHistoryComponent implements OnInit {
     _editButtonLabel: 'Load',
     _isPaginable: true,
     _columns: [
-      {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+      {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+      {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSortable: true, _isSearchable: true},
       {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
     ]
   };
