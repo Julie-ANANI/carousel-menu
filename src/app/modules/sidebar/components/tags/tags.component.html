@@ -16,23 +16,16 @@
       <!-- type addTags -->
       <ng-container *ngSwitchCase="'addTags'">
         <label class="form-label">{{ 'COMMON.LABEL.TAG_NAME' | translate }}</label>
-        <app-shared-tag-item
+        <app-shared-tag
           (addTag)="addTag($event)"
           (removeTag)="removeTag($event)"
           [editMode]="true"
           [projectId]="innovationId"
           [tags]="tags"
           [type]="tagType">
-        </app-shared-tag-item>
+        </app-shared-tag>
       </ng-container>
       <!-- /type addTags -->
-
-
-      <!-- type addTagsFromPool -->
-      <ng-container *ngSwitchCase="'addTagsFromPool'">
-
-      </ng-container>
-      <!-- /type addTagsFromPool -->
 
 
       <!-- edit Tag -->

@@ -502,9 +502,9 @@
 
     <div class="tags">
       <label class="form-label">{{'PROJECT.PROJECT_TAGS' | translate}}</label>
-      <app-shared-tag-item [tags]="project.tags" [backgroundColor]="'#0B90C6'"
-                           [textColor]="'white'">
-      </app-shared-tag-item>
+      <app-shared-tag [tags]="project.tags"
+                      [textColor]="'white'">
+      </app-shared-tag>
     </div>
   </div>
 

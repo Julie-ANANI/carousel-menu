@@ -29,6 +29,11 @@ export class TagsComponent {
     this._tags = [...tags];
   }
 
+  /***
+   * this value is when you want to update the
+   * existing tag.
+   * @param tag
+   */
   @Input() set tag(tag: Tag) {
     if (tag) {
       this._tag = {...tag};
@@ -48,17 +53,17 @@ export class TagsComponent {
     this._tagType = value;
   }
 
-  @Output() newTags = new EventEmitter<Tag[]>();
+  @Output() newTags: EventEmitter<Array<Tag>> = new EventEmitter<Array<Tag>>();
 
-  @Output() updateTag = new EventEmitter<Tag>();
+  @Output() updateTag: EventEmitter<Tag> = new EventEmitter<Tag>();
 
-  private _tags: Tag[] = [];
+  private _tags: Array<Tag> = [];
 
   private _tag: Tag;
 
-  private _innovationId = '';
+  private _innovationId: string;
 
-  private _type = '';
+  private _type: string;
 
   public needToSetOriginalTag = false;
 
@@ -142,7 +147,7 @@ export class TagsComponent {
     return this._tag;
   }
 
-  get tags(): Tag[] {
+  get tags(): Array<Tag> {
     return this._tags;
   }
 

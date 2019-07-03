@@ -9,12 +9,12 @@ import { Tag } from '../../../../models/tag';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-shared-tag-item',
-  templateUrl: './shared-tag-item.component.html',
-  styleUrls: ['./shared-tag-item.component.scss']
+  selector: 'app-shared-tag',
+  templateUrl: './shared-tag.component.html',
+  styleUrls: ['./shared-tag.component.scss']
 })
 
-export class SharedTagItemComponent implements OnInit {
+export class SharedTagComponent implements OnInit {
 
   @Input() tags: Array<any>;
 
@@ -27,8 +27,6 @@ export class SharedTagItemComponent implements OnInit {
   @Input() editMode: boolean;
 
   @Input() isAdmin: boolean;
-
-  @Input() backgroundColor: string;
 
   @Input() textColor: string;
 

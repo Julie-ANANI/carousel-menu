@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NguiAutoCompleteModule } from '../../../utility-components/auto-complete/auto-complete.module';
 import { RouterModule } from '@angular/router';
-import { SharedTagItemComponent } from './shared-tag-item.component';
+import { SharedTagComponent } from './shared-tag.component';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
@@ -20,11 +20,11 @@ import { PipeModule } from '../../../../pipe/pipe.module';
     PipeModule
   ],
   declarations: [
-    SharedTagItemComponent
+    SharedTagComponent
   ],
   exports: [
-    SharedTagItemComponent
+    SharedTagComponent
   ]
 })
 
-export class SharedTagItemModule { }
+export class SharedTagModule { }

@@ -43,6 +43,11 @@
 
 <!-- sidebar -->
 <app-sidebar [(template)]="sidebarValue">
+  <app-tags
+    (newTags)="addNewTags($event)"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type">
+  </app-tags>
 </app-sidebar>
 <!-- /sidebar -->
 
