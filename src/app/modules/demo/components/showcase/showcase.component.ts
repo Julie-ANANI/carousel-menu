@@ -127,6 +127,9 @@ export class ShowcaseComponent {
         }, () => {
           this._translateNotificationService.error('ERROR.ERROR', 'SHOWCASE.ERROR_STATS');
         });
+    } else {
+      this._selectedTagsStats = [];
+      this._recomputeData();
     }
   }
 

@@ -64,12 +64,12 @@
 
   <div class="modal-card-wrapper d-flex text-center">
     <ng-container *ngFor="let innovationCard of cards">
-      <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard) }">
+      <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard._id) }">
 
         <i class="fas fa-check-circle"></i>
 
         <label class="absolute">
-          <input type="checkbox" (change)="onChangeInnovation($event, innovationCard)" [checked]="activeInnovation(innovationCard)">
+          <input type="checkbox" (change)="onChangeInnovation($event, innovationCard)" [checked]="activeInnovation(innovationCard._id)">
         </label>
 
         <figure class="card-image">
