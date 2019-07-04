@@ -44,11 +44,21 @@
 
 </section>
 
+
 <!-- modal to create new tag -->
-<app-modal [(showModal)]="showModal">
-  <h1>Create a new Tag</h1>
-  <p>Do you want to create a new tag: "{{tagForm.get('tag').value}}" ?</p>
-  <button type="button" (click)="createNewTag()">Create new tag</button>
-  <button type="button" (click)="showModal = false">Close</button>
+<app-modal [(showModal)]="showModal" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+
+  <div class="text-medium text-background p-bottom-15">{{ 'COMMON.TAG.CREATE_NEW_TAG' | translate }}</div>
+
+  <div>
+    <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.NAME' | translate }}</p>
+    <p class="text-sm m-no-bottom">"{{ tagForm.get('tag').value }}"</p>
+  </div>
+
+  <div class="modal-footer">
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+    <button (click)="createNewTag()" class="btn btn-sm btn-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
 </app-modal>
 <!-- /modal to create new tag -->
