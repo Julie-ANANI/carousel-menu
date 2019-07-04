@@ -80,6 +80,7 @@ export class ShowcaseComponent {
   }
 
   public displayCustomShowcase(showcase: Showcase) {
+    this._sidebarValue = { ...this._sidebarValue, animate_state: 'inactive' };
     const { answers, clients, projects, tags } = showcase;
     this.selectedAnswers = answers;
     this.selectedClients = clients;
