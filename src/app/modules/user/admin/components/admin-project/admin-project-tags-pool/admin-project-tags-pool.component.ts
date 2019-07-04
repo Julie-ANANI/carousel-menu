@@ -9,6 +9,7 @@ import { Tag } from '../../../../../../models/tag';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-project-tags-pool',
@@ -66,8 +67,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
               private _translateTitleService: TranslateTitleService,
-              private notificationsService: TranslateNotificationsService,
-              private tagService: TagsService) {
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _tagsService: TagsService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.ANSWER_TAGS');
 
@@ -81,6 +82,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
     if (this._activatedRoute.snapshot.parent.data.project_tags_pool && Array.isArray(this._activatedRoute.snapshot.parent.data.project_tags_pool)) {
       this._tags = this._activatedRoute.snapshot.parent.data.project_tags_pool;
+      this._sortTags();
       this._total = this._tags.length;
       this._noResult = this._total === 0;
     } else {
@@ -90,9 +92,26 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tagForm = this.formBuilder.group({
       tag: null,
     });
-    this.tagService.getTagsFromPool(this._innovation._id).subscribe((data: any) => {
-      this.updateTable(data);
+    this._tagsService.getTagsFromPool(this._innovation._id).subscribe((data: any) => {
+      //this.updateTable(data);
     });
+  }
+
+  private _getTagsFromPool() {
+    this._tagsService.getTagsFromPool(this._innovation._id).pipe(first()).subscribe((response: Array<Tag>) => {
+      this._tags = response;
+      this._sortTags();
+      this._total = this._tags.length;
+      this._noResult = this._total === 0;
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.FETCHING_ERROR');
+    });
+  }
+
+  private _sortTags() {
+    this._tags = this._tags.map(x => {
+      return {...x, state: x.originalTagId ? 'Tagged' : 'To Tag'};
+    }).sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
   }
 
   public onClickAdd() {
@@ -103,40 +122,56 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     }
   }
 
-  public addNewTags(value: Array<Tag>) {
-    console.log(value);
+  public onNewTags(value: Array<Tag>) {
+    if (value && value.length > 0) {
+
+      value.forEach((newTag: Tag) => {
+        this._addTagToPool(newTag);
+      });
+
+      this._getTagsFromPool();
+
+    }
   }
 
-  private updateTable(tags: Array<Tag>) {
+  private _addTagToPool(value: Tag) {
+    this._tagsService.addTagToPool(this._innovation._id, value._id).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    })
+  }
+
+  /*private updateTable(tags: Array<Tag>) {
     const tagsList = tags
       .map(x => {
         return {...x, state: x.originalTagId ? 'Tagged' : 'To Tag'};
       })
       .sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
     this._tableInfos = {...this._tableInfos, _content: tagsList, _total: tagsList.length};
-  }
+  }*/
 
-  public addTag(event: Event): void {
+/*  public addTag(event: Event): void {
     event.preventDefault();
-    this.tagService
+    this._tagsService
       .addTagToPool(this._innovation._id, this._tagForm.get('tag').value._id)
       .subscribe((data: any) => {
         this.updateTable(data);
-        this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+        this._translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, (err: any) => {
-        this.notificationsService.error('ERROR.ERROR', err.message);
+        this._translateNotificationsService.error('ERROR.ERROR', err.message);
       });
     this._tagForm.get('tag').reset();
-  }
+  }*/
 
   public updateTag(tag: Tag): void {
-    this.tagService
+    this._tagsService
       .updateTagInPool(this._innovation._id, tag)
       .subscribe((data: any) => {
-        this.updateTable(data);
-        this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
+        //this.updateTable(data);
+        this._translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       }, (err: any) => {
-        this.notificationsService.error('ERROR.ERROR', err.message);
+        this._translateNotificationsService.error('ERROR.ERROR', err.message);
       });
   }
 
@@ -150,13 +185,13 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   public deleteTags(tags: Array<Tag>): void {
     tags.forEach((tag) => {
-      this.tagService
+      this._tagsService
         .removeTagFromPool(this._innovation._id, tag)
         .subscribe((data: any) => {
-          this.updateTable(data);
-          this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+          //this.updateTable(data);
+          this._translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
         }, (err: any) => {
-          this.notificationsService.error('ERROR.ERROR', err);
+          this._translateNotificationsService.error('ERROR.ERROR', err);
         });
     });
   }

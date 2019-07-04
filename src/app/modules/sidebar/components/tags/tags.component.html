@@ -4,7 +4,14 @@
 
     <!-- save button -->
     <div class="text-right p-bottom-25">
-      <button (click)="onClickSave()" [innerText]="'COMMON.BUTTON.SAVE'" class="btn btn-primary btn-sm" translate type="submit"></button>
+      <button
+        (click)="onClickSave()"
+        [disabled]="!enableSaveButton"
+        [innerText]="'COMMON.BUTTON.SAVE'"
+        class="btn btn-primary btn-sm"
+        translate
+        type="submit">
+      </button>
     </div>
     <!-- /save button -->
 
@@ -17,8 +24,8 @@
       <ng-container *ngSwitchCase="'addTags'">
         <label class="form-label">{{ 'COMMON.LABEL.TAG_NAME' | translate }}</label>
         <app-shared-tag
-          (addTag)="addTag($event)"
-          (removeTag)="removeTag($event)"
+          (addTag)="onAddTag($event)"
+          (removeTag)="onRemoveTag($event)"
           [editMode]="true"
           [placeholder]="placeholder"
           [projectId]="innovationId"

@@ -22,6 +22,8 @@ export class TagsComponent {
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this._tags = [];
+    } else {
+      this._saveButton(false);
     }
   }
 
@@ -75,6 +77,8 @@ export class TagsComponent {
 
   private _placeholder: string = 'COMMON.TAG.TAG_PLACEHOLDER';
 
+  private _enableSaveButton: boolean;
+
   constructor(private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService,
               private _multiling: MultilingPipe,
@@ -100,7 +104,25 @@ export class TagsComponent {
     return this._multiling.transform(data.name, this._translateService.currentLang);
   };
 
+  public onAddTag(value: any) {
+    const id = value.tag ? value.tag : value._id;
+
+    this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
+      this._tags.push(res.tags[0]);
+      this._saveButton(true);
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.TAG_FETCHING_ERROR');
+    });
+
+  }
+
+  public onRemoveTag(tag: any) {
+    this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
+    this._saveButton(true);
+  }
+
   public onClickSave() {
+
     switch (this._type) {
 
       case 'addTags':
@@ -111,22 +133,15 @@ export class TagsComponent {
         this.updateTag.emit(this._tag);
         break;
 
-      default:
-        // do nothing...
-
     }
 
-  }
-
-  addTag(tag: any) {
-    const id = tag.tag ? tag.tag : tag._id;
-
-    this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
-      this._tags.push(res.tags[0]);
-    });
+    this._saveButton(false);
 
   }
 
+  private _saveButton(value: boolean) {
+    this._enableSaveButton = value;
+  }
 
   connectToTag(event: Event, tag: Tag): void {
     event.preventDefault();
@@ -145,9 +160,7 @@ export class TagsComponent {
   }
 
 
-  removeTag(tag: any) {
-    this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
-  }
+
 
   get tag(): Tag {
     return this._tag;
@@ -175,6 +188,10 @@ export class TagsComponent {
 
   get placeholder(): string {
     return this._placeholder;
+  }
+
+  get enableSaveButton(): boolean {
+    return this._enableSaveButton;
   }
 
 }

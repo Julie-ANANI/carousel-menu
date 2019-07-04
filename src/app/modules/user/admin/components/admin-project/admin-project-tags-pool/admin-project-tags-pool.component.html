@@ -7,7 +7,7 @@
       <ng-container *ngIf="fetchingError">
         <div class="a-p-t-p-error-wrapper d-flex align-center">
           <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
-            <p [innerText]="'ERROR.ERRORS.TAGS_POOL'" translate></p>
+            <p [innerText]="'ERROR.ERRORS.PROJECT_FETCHING_ERROR'" translate></p>
           </app-error-template-1>
         </div>
       </ng-container>
@@ -44,7 +44,7 @@
 <!-- sidebar -->
 <app-sidebar [(template)]="sidebarValue">
   <app-tags
-    (newTags)="addNewTags($event)"
+    (newTags)="onNewTags($event)"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
     [tagType]="'tags'"
