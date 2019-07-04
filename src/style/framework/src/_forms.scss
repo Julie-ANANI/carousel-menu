@@ -80,7 +80,10 @@ legend {
     max-width: $control-width-md;
   }
 
-
+  &.input-height-md {
+    height: 2rem;
+    font-size: 0.65rem;
+  }
 
 }
 

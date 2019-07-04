@@ -29,10 +29,12 @@ export const ERROR = {
 
   'ALREADY_EXIST': 'A user with this e-mail address is already registered in the system.',
 
+
   'FORM': {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',
     'TARGETING_FORM': 'Please answer the fields of the targeting form.'
   },
+
 
   'LOGIN': {
     'WELCOME': 'Welcome back!',
@@ -45,6 +47,7 @@ export const ERROR = {
     'LOGOUT': 'Logout',
     'LOGOUT_TEXT': 'You have been logged out successfully.',
   },
+
 
   'ACCOUNT': {
     'UPDATE': 'Successful update',
@@ -61,6 +64,7 @@ export const ERROR = {
     'NOT_ADDED': 'The profile has not been added. It may belong to another campaign of the project, or be blacklisted.',
   },
 
+
   'PROJECT': {
     'NOT_FOUND': 'Not found',
     'UNFORBIDDEN': 'Unforbidden',
@@ -74,24 +78,32 @@ export const ERROR = {
     'SAVE_ERROR': 'You have to save all changes before proceeding.',
     'SUBMITTED': 'Submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validate.',
-    'NOT_ALLOWED': 'You are not allowed to perform this action anymore.'
+    'NOT_ALLOWED': 'You are not allowed to perform this action anymore.',
   },
+
 
   'TAGS': {
     'UPDATE': 'Tag update',
     'ADDED': 'The tag has been added successfully.',
+    'CREATED': 'The tag has been created successfully.',
     'UPDATED': 'The tag has been updated successfully.',
     'REMOVED': 'The tag has been removed successfully.',
-    'ALREADY_ADDED': 'The tag has been already added.'
+    'ALREADY_ADDED': 'The tag has been already added.',
+    'FETCHING_ERROR': 'We are having trouble while fetching the tags for this innovations from the server.',
+    'TAG_FETCHING_ERROR': 'We are having trouble while fetching the data for this tag.',
   },
+
+
 
   'SECTION': {
     'UPDATED': 'The section has been updated.'
   },
 
+
   'QUESTION': {
     'UPDATED': 'The question has been updated.'
   },
+
 
   'ANSWER': {
     'UPDATED': 'The answer has been updated successfully.',
@@ -99,21 +111,16 @@ export const ERROR = {
     'STATUS_UPDATE': 'The status has been updated successfully.'
   },
 
+
   'NOT_MODIFIED': {
     'USER_ANSWER': 'You are not allowed to make changes in the view mode.'
   },
+
 
   'QUIZ': {
     'CREATED': 'The quiz has been created successfully.'
   },
 
-  'NO_RESULT': {
-    'HEADING': 'Something wrong here...',
-    'MESSAGE': {
-      'A': '',
-      'B': ''
-    }
-  },
 
   'CAMPAIGN': {
     'ADDED': 'The campaign has been added successfully.',
@@ -150,24 +157,30 @@ export const ERROR = {
     }
   },
 
+
   'IMPORT': {
     'CSV': 'The CSV has been imported successfully.'
   },
+
 
   'FILTER': {
     'ALREADY_EXIST': 'The view with this name already exists.',
     'ALREADY_ACTIVATED': 'The view is already activated.'
   },
 
+
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check the URL is good.',
     'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check the URL is good.',
     'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.',
+    'PROJECT_FETCHING_ERROR': 'It could be because of server connection problem or you are trying to access the innovation that doesn\'t exist.'
   },
+
 
   'AMBASSADOR': {
     'DELETED': 'The ambassador has been deleted successfully.',
   },
+
 
   'SIGNATURES': {
     'ADDED': 'The signature has been added successfully.',
@@ -175,5 +188,6 @@ export const ERROR = {
     'ALREADY_EXIST': 'The signature with the same name already exists.',
     'DELETED': 'The signature has been deleted successfully.',
   }
+
 
 };

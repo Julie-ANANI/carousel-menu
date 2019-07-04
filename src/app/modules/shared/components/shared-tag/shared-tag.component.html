@@ -1,0 +1,64 @@
+<section id="shared-tag">
+
+
+  <!-- input -->
+  <ng-container *ngIf="editMode">
+    <form (ngSubmit)="onSubmit()" [formGroup]="tagForm">
+      <div class="form-group flex-between">
+
+        <label for="shared-tag-item"></label>
+        <input
+          [attr.placeholder]="placeholder | translate"
+          [list-formatter]="autocompleListFormatter"
+          [source]="tagSuggestions.bind(this)"
+          [value-formatter]="autocompleValueFormatter"
+          auto-complete
+          class="form-input"
+          formControlName="tag"
+          id="shared-tag-item">
+
+        <div>
+          <button [disabled]="!canAdd" class="btn btn-round btn-round-md btn-primary">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </ng-container>
+  <!-- /input -->
+
+
+  <!-- displaying tags -->
+  <ng-container *ngIf="tags && tags.length > 0">
+    <div class="flex-wrap d-flex">
+      <div *ngFor="let tag of tags" [title]="tag.description | multiling:userLang" class="label label-tag label-rounded">
+        <i class="fas fa-tag label-left-icon"></i>
+        <span class="label-text">{{ tag.label | multiling:userLang }}</span>
+        <i (click)="onRemoveTag(tag)" *ngIf="editMode || isAdmin" class="fas fa-times label-cross-icon"></i>
+      </div>
+    </div>
+  </ng-container>
+  <!-- /displaying tags -->
+
+
+</section>
+
+
+<!-- modal to create new tag -->
+<app-modal [(showModal)]="showModal" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+
+  <div class="text-medium text-background p-bottom-15">{{ 'COMMON.TAG.CREATE_NEW_TAG' | translate }}</div>
+
+  <div>
+    <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.NAME' | translate }}</p>
+    <p class="text-sm m-no-bottom">"{{ tagForm.get('tag').value }}"</p>
+  </div>
+
+  <div class="modal-footer">
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+    <button (click)="createNewTag()" class="btn btn-sm btn-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </div>
+
+</app-modal>
+<!-- /modal to create new tag -->

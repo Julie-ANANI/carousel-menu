@@ -29,10 +29,12 @@ export const ERROR = {
 
   'PAGE_NOT_FOUND': 'Pas de page par ici...',
 
+
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
     'TARGETING_FORM': 'Il manque quelques informations dans l\'onglet "Ciblage".'
   },
+
 
   'LOGIN': {
     'WELCOME': 'Bienvenue !',
@@ -45,6 +47,7 @@ export const ERROR = {
     'LOGOUT': 'Déconnexion',
     'LOGOUT_TEXT': 'Vous avez été déconnecté(e).',
   },
+
 
   'ACCOUNT': {
     'UPDATE': 'Mise à jour réussie',
@@ -60,6 +63,7 @@ export const ERROR = {
     'ADDED': 'Le profil a été ajouté avec succès.',
     'NOT_ADDED': 'Le profil n\'a pas été ajouté. Il appartient peut-être à une autre campagne du projet, ou est blacklisté.'
   },
+
 
   'PROJECT': {
     'NOT_FOUND': 'Introuvable',
@@ -77,21 +81,28 @@ export const ERROR = {
     'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'
   },
 
+
   'TAGS': {
     'UPDATE': 'Tag',
     'ADDED': 'Le tag a été ajouté.',
     'UPDATED': 'Le tag a été modifié.',
+    'CREATED': 'Le tag a été créée avec succès.',
     'REMOVED': 'Le tag a été supprimé.',
-    'ALREADY_ADDED': 'Le tag a déjà été ajoutée.'
+    'ALREADY_ADDED': 'Le tag a déjà été ajoutée.',
+    'FETCHING_ERROR': 'Nous rencontrons des problèmes à récupérer les tags de ces innovations sur le serveur.',
+    'TAG_FETCHING_ERROR': 'Nous rencontrons des problèmes à récupérer les données de ce tag.'
   },
+
 
   'SECTION': {
     'UPDATED': 'Section mise à jour.'
   },
 
+
   'QUESTION': {
     'UPDATED': 'Question  mise à jour.'
   },
+
 
   'ANSWER': {
     'UPDATED': 'La réponse mise à jour avec succès.',
@@ -99,13 +110,16 @@ export const ERROR = {
     'STATUS_UPDATE': 'Le statut a été mis à jour avec succès.'
   },
 
+
   'NOT_MODIFIED': {
     'USER_ANSWER': 'Vous n\'êtes pas autorisé à effectuer des modifications en mode d\'affichage.'
   },
 
+
   'QUIZ': {
     'CREATED': 'Le quiz a été créé.'
   },
+
 
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',
@@ -142,25 +156,31 @@ export const ERROR = {
     }
   },
 
+
   'IMPORT': {
     'CSV': 'Le CSV a été importé avec succès.'
   },
+
 
   'FILTER': {
     'ALREADY_EXIST': 'La vue avec ce nom existe déjà.',
     'ALREADY_ACTIVATED': 'La vue est déjà activée.',
   },
 
+
   'ERRORS': {
     'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
     'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
     'FETCHING': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être dû à un problème de connexion au serveur.',
     'FETCHING_CAMPAIGN_ANSWERS': 'Nous rencontrons des problèmes lors de la récupération les réponses pour cette campagne.',
+    'PROJECT_FETCHING_ERROR': 'Cela peut être dû à un problème de connexion au serveur ou au fait que vous essayez d\'accéder à l\'innovation qui n\'existe pas.'
   },
+
 
   'AMBASSADOR': {
     'DELETED': 'L\'ambassadeur a été supprimé avec succès.',
   },
+
 
   'SIGNATURES': {
     'ADDED': 'La signature a été ajoutée avec succès.',
@@ -168,5 +188,6 @@ export const ERROR = {
     'ALREADY_EXIST': 'La signature avec la même nom existe déjà.',
     'DELETED': 'La signature a été supprimée avec succès.',
   }
+
 
 };

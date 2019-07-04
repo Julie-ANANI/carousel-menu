@@ -86,7 +86,7 @@
       <ng-container *ngIf="isProfessional && tags.length > 0">
         <div class="form-group">
           <label class="form-label">Tags</label>
-          <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag-item>
+          <app-shared-tag [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag>
         </div>
       </ng-container>
 

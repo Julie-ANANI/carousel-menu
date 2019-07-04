@@ -99,7 +99,8 @@ export const COMMON = {
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
-    'COMMUNITY_PROJECTS': 'Projets | Community'
+    'COMMUNITY_PROJECTS': 'Projets | Community',
+    'ANSWER_TAGS': 'Answer tags | Projet'
   },
 
   'LABEL': {
@@ -131,6 +132,7 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Signature Nom',
     'LANGUAGE': 'Langue',
     'PRESET_NAME': 'Nom du Preset',
+    'TAG_NAME': 'Nom de tag',
   },
 
   'PLACEHOLDER': {
@@ -145,6 +147,7 @@ export const COMMON = {
     'SEARCH': 'Rechercher ici',
     'SIGNATURE_NAME': 'Entrez le nom de la signature',
     'PRESET_NAME': 'Entrer le nom du preset',
+    'EXISTING_TAG': 'Ajouter un tag existant',
   },
 
   'REQUIRED': {
@@ -302,7 +305,7 @@ export const COMMON = {
     'MESSAGE': 'Message',
   },
 
-  'TAG_LABEL': {
+  'TAG': {
     'ADD_TAGS': 'Ajouter des tags',
     'EDIT_TAG': 'Modifier le tag',
     'LABEL_EN_PLACEHOLDER': 'Entrez le label en anglais',
@@ -310,7 +313,9 @@ export const COMMON = {
     'DESC_EN_PLACEHOLDER': 'Entrez la description en anglais',
     'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
     'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
-    'TAG_PLACEHOLDER': 'Ajouter un tag existante'
+    'TAG_PLACEHOLDER': 'Ajouter un tag existante',
+    'NO_TAGS_POOL': 'Pas de tags pour cette innovation. Essayez d\'en ajouter !',
+    'CREATE_NEW_TAG': 'Voulez-vous créer une nouvelle tag ?',
   },
 
   'LOGOUT': {
@@ -342,7 +347,8 @@ export const COMMON = {
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',
 
   'TOOLTIP': {
-    'HISTORY': 'Historique'
+    'HISTORY': 'Historique',
+    'EDIT': 'éditer'
   },
 
   'SIGNATURES': {

@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { TagsFormComponent } from './tags-form.component';
+import { TagsComponent } from './tags.component';
 
 import { SidebarModule } from '../../sidebar.module';
-import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/shared-tag-item.module';
+import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
 import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { NguiAutoCompleteModule } from '../../../utility-components/auto-complete/auto-complete.module';
@@ -18,17 +18,17 @@ import { NguiAutoCompleteModule } from '../../../utility-components/auto-complet
     ReactiveFormsModule,
     TranslateModule.forChild(),
     SidebarModule,
-    SharedTagItemModule,
+    SharedTagModule,
     AutocompleteInputModule,
     PipeModule,
     NguiAutoCompleteModule,
   ],
   declarations: [
-   TagsFormComponent
+   TagsComponent
   ],
   exports: [
-    TagsFormComponent
+    TagsComponent
   ]
 })
 
-export class SidebarTagsFormModule {}
+export class SidebarTagsModule {}

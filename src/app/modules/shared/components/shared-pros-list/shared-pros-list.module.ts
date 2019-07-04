@@ -8,7 +8,7 @@ import { SharedProsListComponent } from './shared-pros-list.component';
 import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
-import { SidebarTagsFormModule } from '../../../sidebar/components/tags-form/sidebar-tags-form.module';
+import { SidebarTagsModule } from '../../../sidebar/components/tags/sidebar-tags.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { ModalModule } from '../../../utility-components/modals/modal/modal.modu
     TableModule,
     TranslateModule.forChild(),
     SidebarUserFormModule,
-    SidebarTagsFormModule,
+    SidebarTagsModule,
     ModalModule
   ],
   declarations: [

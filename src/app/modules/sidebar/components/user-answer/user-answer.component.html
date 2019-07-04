@@ -217,14 +217,14 @@
       <ng-container *ngIf="modalAnswer?.tags.length > 0 || editMode">
         <div class="section-tags">
           <label class="form-label">Tags</label>
-          <app-shared-tag-item
+          <app-shared-tag
             [tags]="modalAnswer.tags"
             [editMode]="editMode"
             [projectId]="innovationId"
             (addTag)="addTag($event)"
             (createTag)="createTag($event)"
             (removeTag)="removeTag($event)">
-          </app-shared-tag-item>
+          </app-shared-tag>
         </div>
       </ng-container>
       <!-- /section tags -->

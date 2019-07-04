@@ -502,9 +502,8 @@
 
     <div class="tags">
       <label class="form-label">{{'PROJECT.PROJECT_TAGS' | translate}}</label>
-      <app-shared-tag-item [tags]="project.tags" [backgroundColor]="'#0B90C6'"
-                           [textColor]="'white'">
-      </app-shared-tag-item>
+      <app-shared-tag [tags]="project.tags">
+      </app-shared-tag>
     </div>
   </div>
 
@@ -712,13 +711,13 @@
     [initialEmails]="project.settings.blacklist.emails"
     (emailsToBlacklists)="addBlacklists($event)">
   </app-emails-form>
-  <app-tags-form [sidebarState]="sidebarState"
+  <app-tags [sidebarState]="sidebarState"
                  *ngIf="isTagsSidebar"
                  [type]="more.type"
                  [tags]="project.tags"
                  tagType="SECTOR"
                  (newTags)="addTags($event)">
-  </app-tags-form>
+  </app-tags>
 </app-sidebar>
 
 

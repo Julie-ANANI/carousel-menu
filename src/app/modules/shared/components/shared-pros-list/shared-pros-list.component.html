@@ -24,11 +24,11 @@
   </ng-container>
 
   <ng-container *ngIf="isTagsForm">
-    <app-tags-form
+    <app-tags
       [sidebarState]="sidebarValue.animate_state"
       [type]="sidebarValue.type"
       (newTags)="addTagsToPro($event)">
-    </app-tags-form>
+    </app-tags>
   </ng-container>
 
 </app-sidebar>
