@@ -1,36 +1,46 @@
 <section id="shared-tag">
 
-  <!-- add tag input -->
+
+  <!-- input -->
   <ng-container *ngIf="editMode">
-    <form [formGroup]="tagForm" (ngSubmit)="addTagEmitter()">
-      <div class="form-group">
+    <form (ngSubmit)="onSubmit()" [formGroup]="tagForm">
+      <div class="form-group flex-between">
+
         <label for="shared-tag-item"></label>
         <input
-          auto-complete
-          formControlName="tag"
-          [source]="tagSuggestions.bind(this)"
-          [list-formatter]="autocompleListFormatter"
-          [value-formatter]="autocompleValueFormatter"
           [attr.placeholder]="placeholder | translate"
-          id="shared-tag-item"
-          class="form-input">
-        <button class="btn btn-round btn-primary" [disabled]="!canAdd"><i class="fas fa-plus"></i></button>
+          [list-formatter]="autocompleListFormatter"
+          [source]="tagSuggestions.bind(this)"
+          [value-formatter]="autocompleValueFormatter"
+          auto-complete
+          class="form-input"
+          formControlName="tag"
+          id="shared-tag-item">
+
+        <div>
+          <button [disabled]="!canAdd" class="btn btn-round btn-round-md btn-primary">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
       </div>
     </form>
   </ng-container>
-  <!-- /add tag input -->
+  <!-- /input -->
+
 
   <!-- displaying tags -->
-  <ng-container *ngIf="tags?.length > 0">
-    <div class="tags-wrapper d-flex">
+  <ng-container *ngIf="tags && tags.length > 0">
+    <div class="flex-wrap d-flex">
       <div *ngFor="let tag of tags" [title]="tag.description | multiling:userLang" class="label label-tag label-rounded">
-        <i class="fas fa-tag"></i>
-        <span class="label-text">{{ tag?.label | multiling:userLang }}</span>
-        <i *ngIf="editMode || isAdmin" class="fas fa-times label-text" (click)="removeTagEmitter($event, tag)"></i>
+        <i class="fas fa-tag label-left-icon"></i>
+        <span class="label-text">{{ tag.label | multiling:userLang }}</span>
+        <i (click)="onRemoveTag(tag)" *ngIf="editMode || isAdmin" class="fas fa-times label-cross-icon"></i>
       </div>
     </div>
   </ng-container>
   <!-- /displaying tags -->
+
 
 </section>
 

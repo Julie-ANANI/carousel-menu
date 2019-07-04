@@ -46,8 +46,6 @@ export class SharedTagComponent implements OnInit {
 
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter<Tag>();
 
-  @Output() tagChange: EventEmitter<Tag> = new EventEmitter<Tag>();
-
   private _tagForm: FormGroup;
 
   private _showModal: boolean;
@@ -94,7 +92,7 @@ export class SharedTagComponent implements OnInit {
 
   }
 
-  public autocompleListFormatter = (data: any) : SafeHtml => {
+  public autocompleListFormatter = (data: any): SafeHtml => {
     const text = this.autocompleValueFormatter(data);
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
@@ -107,13 +105,17 @@ export class SharedTagComponent implements OnInit {
     }
   };
 
-  public addTagEmitter(): void {
+  public onSubmit() {
     if (typeof this._tagForm.get('tag').value !== 'string') {
       this.addTag.emit(this._tagForm.get('tag').value);
       this._tagForm.get('tag').reset();
     } else {
       this._showModal = true;
     }
+  }
+
+  public onRemoveTag(tag: Tag): void {
+    this.removeTag.emit(tag);
   }
 
   public createNewTag(): void {
@@ -126,11 +128,6 @@ export class SharedTagComponent implements OnInit {
       });
     }
     this._showModal = false;
-  }
-
-  public removeTagEmitter(event: Event, tag: Tag): void {
-    event.preventDefault();
-    this.removeTag.emit(tag);
   }
 
   get userLang(): string {

@@ -59,6 +59,20 @@
       margin-left: $unit-1;
     }
 
+    .label-left-icon {
+      font-size: $font-icon-xs;
+    }
+
+    .label-cross-icon {
+      font-size: $font-icon-sm;
+      margin-left: $unit-2;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+
   }
 
   &.label-answer {
