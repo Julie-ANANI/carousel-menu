@@ -85,11 +85,12 @@ export const ERROR = {
   'TAGS': {
     'UPDATE': 'Tag update',
     'ADDED': 'The tag has been added successfully.',
+    'CREATED': 'The tag has been created successfully.',
     'UPDATED': 'The tag has been updated successfully.',
     'REMOVED': 'The tag has been removed successfully.',
     'ALREADY_ADDED': 'The tag has been already added.',
     'FETCHING_ERROR': 'We are having trouble while fetching the tags for this innovations from the server.',
-    'TAG_FETCHING_ERROR': 'We are having trouble while fetching the data for this tag.'
+    'TAG_FETCHING_ERROR': 'We are having trouble while fetching the data for this tag.',
   },
 
 

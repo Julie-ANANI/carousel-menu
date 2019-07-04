@@ -40,8 +40,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _table: Table;
 
-  private _tag: Tag;
-
+  private _tagToEdit: Tag;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
@@ -99,6 +98,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       _isPaginable: true,
       _isDeletable: true,
       _isSelectable: true,
+      _isEditable: true,
       _editIndex: 1,
       _columns: [
         {_attrs: ['label'], _name: 'Label', _type: 'MULTILING'},
@@ -119,79 +119,68 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       type: 'addTags',
       title: 'SIDEBAR.TITLE.ADD_TAGS'
-    }
+    };
   }
 
   public onNewTags(value: Array<Tag>) {
     if (value && value.length > 0) {
-
       value.forEach((newTag: Tag) => {
         this._addTagToPool(newTag);
       });
-
-      this._getTagsFromPool();
-
     }
   }
 
   private _addTagToPool(value: Tag) {
     this._tagsService.addTagToPool(this._innovation._id, value._id).pipe(first()).subscribe(() => {
+      this._getTagsFromPool();
       this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
     }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      this._checkTagAlready(value);
     })
   }
 
-  public onRemoveTags(value: Array<Tag>) {
+  private _checkTagAlready(value: Tag) {
+    if (this._tags.length > 0 && this._tags.find((tag) => tag.originalTagId === value._id)) {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }
+  }
+
+  public onClickDelete(value: Array<Tag>) {
     value.forEach((tag: Tag) => {
       this._tagsService.removeTagFromPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
         this._getTagsFromPool();
+        this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
     });
   }
 
-  public updateTag(tag: Tag): void {
-    this._tagsService
-      .updateTagInPool(this._innovation._id, tag)
-      .subscribe((data: any) => {
-        //this.updateTable(data);
-        this._translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
-      }, (err: any) => {
-        this._translateNotificationsService.error('ERROR.ERROR', err.message);
-      });
-  }
+  public onClickEdit(value: Tag) {
+    this._tagToEdit = value;
 
-  public editTag(tag: Tag) {
-    this._tag = tag;
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'COMMON.TAG.EDIT_TAG',
+      type: 'editTag'
     };
+
   }
 
-/*  public onRemoveTags(tags: Array<Tag>): void {
-    tags.forEach((tag) => {
-      this._tagsService
-        .removeTagFromPool(this._innovation._id, tag)
-        .subscribe((data: any) => {
-          //this.updateTable(data);
-          this._translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
-        }, (err: any) => {
-          this._translateNotificationsService.error('ERROR.ERROR', err);
-        });
+  public onUpdateTag(tag: Tag): void {
+    this._tagsService.updateTagInPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
+      this._getTagsFromPool();
+      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.UPDATED');
+      }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
-  }*/
+  }
 
   get config(): Config {
     return this._config;
   }
-
-  /*set config(value: Config) {
-    this._config = value;
-  }*/
 
   get innovation(): Innovation {
     return this._innovation;
@@ -225,7 +214,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     return this._table;
   }
 
-  get tag() { return this._tag; }
-
+  get tagToEdit(): Tag {
+    return this._tagToEdit;
+  }
 
 }

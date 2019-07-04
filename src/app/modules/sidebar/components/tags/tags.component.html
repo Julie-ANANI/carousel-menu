@@ -1,4 +1,4 @@
-<section id="tags-form" class="p-top-30">
+<section id="tags" class="p-top-30">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
 
@@ -26,8 +26,8 @@
         <app-shared-tag
           (addTag)="onAddTag($event)"
           (removeTag)="onRemoveTag($event)"
+          (createTag)="onCreateTag($event)"
           [editMode]="true"
-          [hideCrossIcon]="true"
           [placeholder]="placeholder"
           [projectId]="innovationId"
           [tags]="tags"
@@ -40,32 +40,52 @@
       <!-- edit Tag -->
       <ng-container *ngSwitchCase="'editTag'">
 
-        <!-- when not to set tag as original -->
-        <div *ngIf="!needToSetOriginalTag" class="tag-details-wrapper">
 
-          <h1 class="title-primary">Original Tag Details</h1>
+        <!-- when not to set tag as original -->
+        <div *ngIf="!needToSetOriginalTag">
+
+          <!-- label -->
+          <h1 class="text-background m-bottom-10 relative">Original Tag Details
+            <span
+              (click)="needToSetOriginalTag = true"
+              [attr.data-tooltip]="'COMMON.TOOLTIP.EDIT' | translate"
+              [ngStyle]="{ 'top': '-12px' }"
+              class="absolute tooltip c-hand m-left-1">
+              <i class="fas fa-edit text-warning text-xs"></i>
+            </span>
+          </h1>
+          <!-- /label -->
+
+          <!-- id -->
+          <div class="p-bottom-10">
+            <p class="form-label m-no-bottom">ID</p>
+            <p class="text-sm m-no-bottom">{{ tag.originalTagId }}</p>
+          </div>
+          <!-- /id -->
 
           <!-- name -->
-          <p>
-            <span class="label-text">{{ 'COMMON.LABEL.NAME' | translate }}: </span>
-            <span class="text">{{ tag.originalLabel | multiling:lang }}</span>
-          </p>
-
+          <div class="p-bottom-10">
+            <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.NAME' | translate }}</p>
+            <p class="text-sm m-no-bottom">{{ tag.originalLabel | multiling:lang }}</p>
+          </div>
+          <!-- /name -->
 
           <!-- type -->
-          <p>
-            <span class="label-text">{{ 'COMMON.LABEL.TYPE' | translate }}: </span>
-            <span class="text">{{ 'TAGS.TYPE.' + tag.type | translate }}</span>
-          </p>
-
-          <button (click)="needToSetOriginalTag = true" class="btn btn-primary">EDIT<i class="fas fa-edit"></i></button>
+          <div>
+            <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.TYPE' | translate }}</p>
+            <p class="text-sm">{{ 'TAGS.TYPE.' + tag.type | translate }}</p>
+          </div>
+          <!-- /type -->
 
         </div>
+        <!-- /when not to set tag as original -->
+
 
         <!-- when to set tag -->
-        <div *ngIf="needToSetOriginalTag" class="tag-details-wrapper">
+        <div *ngIf="needToSetOriginalTag" class="p-bottom-10">
           <label class="form-label" for="tags-form-tagSelector">{{ 'COMMON.TAG.CHOOSE_TAG' | translate }}</label>
-          <div class="tag-selector">
+          <div class="flex-between">
+
             <input
               auto-complete
               [(ngModel)]="tag.originalTagId"
@@ -76,66 +96,92 @@
               [list-formatter]="autocompleListFormatter"
               [value-formatter]="autocompleValueFormatter"
               [attr.placeholder]="'COMMON.TAG.TAG_PLACEHOLDER' | translate"
-              class="form-input">
-            <button (click)="connectToTag($event, tag)" class="btn btn-primary">SAVE<i class="fas fa-plus"></i></button>
+              class="form-input input-tag">
+
+            <div>
+              <button (click)="connectToTag(tag)" class="btn btn-round btn-round-md btn-primary">
+                <i class="fas fa-save"></i>
+              </button>
+            </div>
+
           </div>
         </div>
+        <!-- /when to set tag -->
+
 
         <!-- label -->
-        <h1 class="main-heading">Actual Tag Label</h1>
+        <div class="p-top-25">
 
-        <div class="form-group">
-          <label for="tags-form-enLabel" class="form-label">{{ 'COMMON.LANG.EN' | translate }}</label>
-          <input
-            id="tags-form-enLabel"
-            type="text"
-            class="form-input"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="tag.label.en"
-            alt="label"
-            [placeholder]="'COMMON.TAG.LABEL_EN_PLACEHOLDER' | translate">
-        </div>
+          <h1 class="text-background m-bottom-10">Actual Tag Label</h1>
 
-        <div class="form-group">
-          <label for="tags-form-frLabel" class="form-label">{{ 'COMMON.LANG.FR' | translate }}</label>
-          <input
-            id="tags-form-frLabel"
-            type="text"
-            class="form-input"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="tag.label.fr"
-            alt="label"
-            [placeholder]="'COMMON.TAG.LABEL_FR_PLACEHOLDER' | translate">
+          <div class="form-group">
+            <label for="tags-form-enLabel" class="form-label">{{ 'COMMON.LANG.EN' | translate }}</label>
+            <input
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.label.en"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'COMMON.TAG.LABEL_EN_PLACEHOLDER' | translate"
+              alt="label"
+              class="form-input"
+              id="tags-form-enLabel"
+              type="text">
+          </div>
+
+          <div class="form-group">
+            <label for="tags-form-frLabel" class="form-label">{{ 'COMMON.LANG.FR' | translate }}</label>
+            <input
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.label.fr"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'COMMON.TAG.LABEL_FR_PLACEHOLDER' | translate"
+              alt="label"
+              class="form-input"
+              id="tags-form-frLabel"
+              type="text">
+          </div>
+
         </div>
+        <!-- /label -->
+
 
         <!-- description -->
-        <h1 class="main-heading" [ngStyle]="{ 'padding-top': '0.9375rem' }">Actual Tag Description</h1>
+        <div class="p-top-20">
 
-        <div class="form-group">
-          <label for="tags-form-enDesc" class="form-label">{{ 'COMMON.LANG.EN' | translate }}</label>
-          <input
-            id="tags-form-enDesc"
-            type="text"
-            class="form-input"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="tag.description.en"
-            alt="description"
-            [placeholder]="'COMMON.TAG.DESC_EN_PLACEHOLDER' | translate">
-        </div>
+          <h1 class="text-background m-bottom-10">Actual Tag Description</h1>
 
-        <div class="form-group">
-          <label for="tags-form-frDesc" class="form-label">{{ 'COMMON.LANG.FR' | translate }}</label>
-          <input
-            id="tags-form-frDesc"
-            type="text"
-            class="form-input"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="tag.description.fr"
-            alt="description"
-            [placeholder]="'COMMON.TAG.DESC_FR_PLACEHOLDER' | translate">
+          <div class="form-group">
+            <label for="tags-form-enDesc" class="form-label">{{ 'COMMON.LANG.EN' | translate }}</label>
+            <input
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.description.en"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'COMMON.TAG.DESC_EN_PLACEHOLDER' | translate"
+              alt="description"
+              class="form-input"
+              id="tags-form-enDesc"
+              type="text">
+          </div>
+
+          <div class="form-group">
+            <label for="tags-form-frDesc" class="form-label">{{ 'COMMON.LANG.FR' | translate }}</label>
+            <input
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.description.fr"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'COMMON.TAG.DESC_FR_PLACEHOLDER' | translate"
+              alt="description"
+              class="form-input"
+              id="tags-form-frDesc"
+              type="text">
+          </div>
+
         </div>
+        <!-- /description -->
+
 
       </ng-container>
+      <!-- /edit Tag -->
+
 
     </div>
     <!-- /different template based on type -->

@@ -23,7 +23,8 @@ export class TagsComponent {
     if (value === undefined || value === 'active') {
       this._tags = [];
     } else {
-      this._saveButton(false);
+      this.needToSetOriginalTag = false;
+      this.saveButton(false);
     }
   }
 
@@ -109,7 +110,7 @@ export class TagsComponent {
 
     this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
       this._tags.push(res.tags[0]);
-      this._saveButton(true);
+      this.saveButton(true);
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.TAG_FETCHING_ERROR');
     });
@@ -118,7 +119,19 @@ export class TagsComponent {
 
   public onRemoveTag(tag: any) {
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
-    this._saveButton(true);
+    if (this._tags.length !== 0) {
+      this.saveButton(true);
+    } else {
+      this.saveButton(false);
+    }
+  }
+
+  public onCreateTag(value: Tag) {
+    this._tagsService.create(value).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.CREATED');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.TAG_FETCHING_ERROR');
+    });
   }
 
   public onClickSave() {
@@ -131,36 +144,29 @@ export class TagsComponent {
 
       case 'editTag':
         this.updateTag.emit(this._tag);
+        this.saveButton(true);
         break;
 
     }
 
-    this._saveButton(false);
-
   }
 
-  private _saveButton(value: boolean) {
+  public saveButton(value: boolean) {
     this._enableSaveButton = value;
   }
 
-  connectToTag(event: Event, tag: Tag): void {
-    event.preventDefault();
-
-    this._tagsService.updateTagInPool(this._innovationId, tag).subscribe((data: Array<Tag>) => {
+  public connectToTag(tag: Tag) {
+    this._tagsService.updateTagInPool(this._innovationId, tag).pipe(first()).subscribe((data: Array<Tag>) => {
       const index = data.findIndex((item) => item._id === tag._id);
       if (index !== -1) {
         this._tag = data[index];
       }
-      this._translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
+      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.UPDATED');
       this.needToSetOriginalTag = false;
     }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
-
   }
-
-
-
 
   get tag(): Tag {
     return this._tag;

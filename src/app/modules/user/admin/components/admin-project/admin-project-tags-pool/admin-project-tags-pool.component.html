@@ -49,7 +49,8 @@
 
         <!-- table -->
         <app-shared-table
-          (removeRows)="onRemoveTags($event)"
+          (removeRows)="onClickDelete($event)"
+          (editRow)="onClickEdit($event)"
           [config]="config"
           [data]="table">
         </app-shared-table>
@@ -68,37 +69,13 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-tags
     (newTags)="onNewTags($event)"
+    (updateTag)="onUpdateTag($event)"
+    [placeholder]="'COMMON.PLACEHOLDER.EXISTING_TAG'"
+    [project]="innovation"
     [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type"
     [tagType]="'tags'"
-    [placeholder]="'COMMON.PLACEHOLDER.EXISTING_TAG'">
+    [tag]="tagToEdit"
+    [type]="sidebarValue.type">
   </app-tags>
 </app-sidebar>
 <!-- /sidebar -->
-
-<!--
-
-<div class="admin-project-tags-pool">
-
-  <app-tags-form
-    (newTags)="addNewTags($event)"
-    (updateTag)="updateTag($event)"
-    [project]="innovation"
-    [sidebarState]="sidebarValue.animate_state"
-    [tag]="tag"
-    [type]="sidebarValue.type"
-    [tagType]="'_tags'">
-  </app-tags-form>
-
-    <app-shared-table [config]="config"
-                      [data]="tableInfos"
-                      (editRow)="editTag($event)"
-                      (removeRows)="deleteTags($event)">
-    </app-shared-table>
-
-  &lt;!&ndash; Tag preview &ndash;&gt;
-
-
-</div>
-
--->

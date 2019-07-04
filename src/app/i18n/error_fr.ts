@@ -86,10 +86,11 @@ export const ERROR = {
     'UPDATE': 'Tag',
     'ADDED': 'Le tag a été ajouté.',
     'UPDATED': 'Le tag a été modifié.',
+    'CREATED': 'Le tag a été créée avec succès.',
     'REMOVED': 'Le tag a été supprimé.',
     'ALREADY_ADDED': 'Le tag a déjà été ajoutée.',
     'FETCHING_ERROR': 'Nous rencontrons des problèmes à récupérer les tags de ces innovations sur le serveur.',
-    'TAG_FETCHING_ERROR': 'Nous rencontrons des problèmes à récupérer les données de cette tag.'
+    'TAG_FETCHING_ERROR': 'Nous rencontrons des problèmes à récupérer les données de ce tag.'
   },
 
 

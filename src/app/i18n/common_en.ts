@@ -316,7 +316,8 @@ export const COMMON = {
     'DESC_FR_PLACEHOLDER': 'Enter the description in french',
     'CHOOSE_TAG': 'Choose the tag to associate with this actual tag',
     'TAG_PLACEHOLDER': 'Add an existing tag',
-    'NO_TAGS_POOL': 'No tags for this innovation. Try to add some!'
+    'NO_TAGS_POOL': 'No tags for this innovation. Try to add some!',
+    'CREATE_NEW_TAG': 'Do you want to create a new tag?',
   },
 
   'LOGOUT': {
@@ -348,7 +349,8 @@ export const COMMON = {
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search...',
 
   'TOOLTIP': {
-    'HISTORY': 'History'
+    'HISTORY': 'History',
+    'EDIT': 'edit'
   },
 
   'SIGNATURES': {

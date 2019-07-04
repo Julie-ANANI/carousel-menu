@@ -314,7 +314,8 @@ export const COMMON = {
     'DESC_FR_PLACEHOLDER': 'Entrez la description en français',
     'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
     'TAG_PLACEHOLDER': 'Ajouter un tag existante',
-    'NO_TAGS_POOL': 'Pas de tags pour cette innovation. Essayez d\'en ajouter !'
+    'NO_TAGS_POOL': 'Pas de tags pour cette innovation. Essayez d\'en ajouter !',
+    'CREATE_NEW_TAG': 'Voulez-vous créer une nouvelle tag ?',
   },
 
   'LOGOUT': {
@@ -346,7 +347,8 @@ export const COMMON = {
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',
 
   'TOOLTIP': {
-    'HISTORY': 'Historique'
+    'HISTORY': 'Historique',
+    'EDIT': 'éditer'
   },
 
   'SIGNATURES': {

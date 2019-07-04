@@ -1,48 +1,17 @@
-#tags-form {
+@import "../../../../../style/framework/src/variables";
 
-  .title-primary {
-    font-size: 1.2rem;
-    margin-bottom: 0.9375rem;
+#tags {
+
+  h1 {
+    font-size: $font-size-lg;
   }
 
-  p {
-
-    .label-text, .text {
-      font-size: 0.875rem;
-    }
-
-    .label-text {
-      font-weight: 600;
-    }
-
+  .form-group {
+    margin-bottom: $unit-5;
   }
 
-  .tag-details-wrapper {
-    margin-bottom: 0.9375rem;
-
-    .tag-selector {
-      padding-bottom: 0.6rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-
-      .form-input {
-        margin-top: 0;
-      }
-
-      .btn-round {
-        margin-left: 1.2rem;
-        padding: 1rem 1.06rem;
-
-        i {
-          margin-top: 0;
-          margin-right: 0;
-        }
-
-      }
-
-    }
-
+  .input-tag {
+    max-width: 80%;
   }
 
 }
