@@ -37,6 +37,7 @@ import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
 import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
 import { UsersResolver } from '../../../resolvers/admin/users-resolver';
 import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
+import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
 
 const adminRoutes: Routes = [
   {
@@ -119,7 +120,7 @@ const adminRoutes: Routes = [
             runGuardsAndResolvers: 'always'
           },
           { path: 'project/:projectId',
-            resolve: { innovation : InnovationResolver },
+            resolve: { innovation : InnovationResolver, project_tags_pool: ProjectTagsPoolResolver },
             component: AdminProjectComponent,
             children: [
               ...projectRoutes
