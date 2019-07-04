@@ -82,7 +82,7 @@
             <app-showcase-answers
               [totalAnswers]="stats.totalAnswers"
               [tagsStats]="selectedTagsStats"
-              (selectAnswers)="selectedAnswers = $event">
+              [(topAnswers)]="selectedAnswers">
             </app-showcase-answers>
           </div>
 
@@ -90,7 +90,7 @@
           <div class="innovation-wrapper">
             <app-showcase-innovations
               [tagsStats]="selectedTagsStats"
-              (selectProjects)="selectedInnovations = $event">
+              [(topInnovations)]="selectedInnovations">
             </app-showcase-innovations>
           </div>
 
@@ -98,7 +98,7 @@
           <div class="client-wrapper">
             <app-showcase-clients
               [tagsStats]="selectedTagsStats"
-              (selectClients)="selectedClients = $event">
+              [(topClients)]="selectedClients">
             </app-showcase-clients>
           </div>
 

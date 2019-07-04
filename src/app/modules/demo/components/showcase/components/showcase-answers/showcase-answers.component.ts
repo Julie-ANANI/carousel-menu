@@ -29,17 +29,15 @@ export class ShowcaseAnswersComponent {
         }
       });
     } else {
-      this._topAnswers = [];
-      this.selectAnswers.emit([]);
+      this.topAnswersChange.emit([]);
     }
 
   }
 
-  @Output() selectAnswers: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
+  @Input() topAnswers: Array<Answer> = [];
+  @Output() topAnswersChange: EventEmitter<Array<Answer>> = new EventEmitter<Array<Answer>>();
 
   private _answers: Array<Answer> = [];
-
-  private _topAnswers: Array<Answer> = [];
 
   private _count: number;
 
@@ -54,14 +52,14 @@ export class ShowcaseAnswersComponent {
 
   private _startLoading(answers: Array<Answer>) {
 
-    this._topAnswers = answers.map((answer) => {
+    const topAnswers = answers.map((answer) => {
       answer.isLoading = true;
       setTimeout(() => {
         answer.isLoading = false;
-      }, Math.floor(Math.random() * 900) + 100);
+      }, Math.floor(Math.random() * 1900));
       return answer;
     });
-    this.selectAnswers.emit(this._topAnswers.map((a) => a._id));
+    this.topAnswersChange.emit(topAnswers);
 
   }
 
@@ -98,10 +96,6 @@ export class ShowcaseAnswersComponent {
 
   get answers() {
     return this._answers;
-  }
-
-  get topAnswers() {
-    return this._topAnswers;
   }
 
   get modalShow(): boolean {

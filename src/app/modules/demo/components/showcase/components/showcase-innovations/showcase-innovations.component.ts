@@ -20,13 +20,16 @@ export class ShowcaseInnovationsComponent {
     this._getInnovations(value);
   }
 
-  @Output() selectProjects: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
+  private _topInnovations: Array<Innovation> = [];
+  @Input() set topInnovations(value: Array<Innovation>) {
+    this._topInnovations = value;
+    this._computeCards();
+  }
+  @Output() topInnovationsChange: EventEmitter<Array<Innovation>> = new EventEmitter<Array<Innovation>>();
 
   private _tags: Array<string> = [];
 
   private _innovations: Array<Innovation> = [];
-
-  private _topInnovations: Array<Innovation> = [];
 
   private _cards: Array<{title: string, _id: string, media: string}> = [];
 
@@ -43,7 +46,7 @@ export class ShowcaseInnovationsComponent {
               private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+    this._translateService.onLangChange.subscribe((_event: LangChangeEvent) => {
       this._computeCards();
     });
 
@@ -66,18 +69,14 @@ export class ShowcaseInnovationsComponent {
         if (Array.isArray(response.result)) {
           this._innovations = response.result;
           this._count = this._innovations.length;
-          this._topInnovations = response.result.slice(0, 9);
-          this.selectProjects.emit(this._topInnovations.map((i) => i._id));
-          this._computeCards();
+          this.topInnovationsChange.emit(response.result.slice(0, 9));
         }
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
 
     } else {
-      this._topInnovations = [];
-      this.selectProjects.emit([]);
-      this._computeCards();
+      this.topInnovationsChange.emit([]);
     }
   }
 

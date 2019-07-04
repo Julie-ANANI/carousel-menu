@@ -1,8 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ShowcaseService } from '../../../demo/components/showcase/services/showcase.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Answer } from '../../../../models/answer';
 import { Clearbit } from '../../../../models/clearbit';
 import { Config } from '../../../../models/config';
+import { Innovation } from '../../../../models/innovation';
 import { Showcase } from '../../../../models/showcase';
 import { Table } from '../../../table/models/table';
 import { TagStats } from '../../../../models/tag-stats';
@@ -15,11 +17,11 @@ import { TagStats } from '../../../../models/tag-stats';
 
 export class ShowcaseHistoryComponent implements OnInit {
 
-  @Input() selectedAnswers: Array<string> = [];
+  @Input() selectedAnswers: Array<Answer> = [];
 
   @Input() selectedClients: Array<Clearbit> = [];
 
-  @Input() selectedInnovations: Array<string> = [];
+  @Input() selectedInnovations: Array<Innovation> = [];
 
   @Input() tagsStats: Array<TagStats> = [];
 
@@ -62,9 +64,9 @@ export class ShowcaseHistoryComponent implements OnInit {
   public createShowcase(): void {
     const showcase = {
       name: this.showcaseName,
-      answers: this.selectedAnswers,
+      answers: this.selectedAnswers.map((a) => a._id),
       clients: this.selectedClients,
-      projects: this.selectedInnovations,
+      projects: this.selectedInnovations.map((i) => i._id),
       tags: this.tagsStats.map((ts) => ts.tag._id)
     };
     this._showcaseService.create(showcase).subscribe((res) => {

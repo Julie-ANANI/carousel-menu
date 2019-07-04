@@ -49,8 +49,7 @@ export class ShowcaseClientsComponent {
                 return acc;
               }, {} as {[clientName: string]: boolean});
 
-          this._slides = this.getSlides(this._totalClients);
-          this.selectClients.emit(this._slides.reduce((acc, val) => acc.concat(val), []));
+          this.topClientsChange.emit(this._totalClients);
 
         }
 
@@ -60,7 +59,10 @@ export class ShowcaseClientsComponent {
 
   }
 
-  @Output() selectClients: EventEmitter<Array<Clearbit>> = new EventEmitter<Array<Clearbit>>();
+  @Input() set topClients(value: Array<Clearbit>) {
+    this._slides = this.getSlides(value);
+  }
+  @Output() topClientsChange: EventEmitter<Array<Clearbit>> = new EventEmitter<Array<Clearbit>>();
 
   private _totalClients: Array<Clearbit> = [];
 
@@ -89,8 +91,8 @@ export class ShowcaseClientsComponent {
 
   public onClickApply(event: Event): void {
     event.preventDefault();
-    this._slides = this.getSlides(this._totalClients.filter((client) => this._selectedClients[client.name]));
-    this.selectClients.emit(this._slides.reduce((acc, val) => acc.concat(val), []));
+    const clients = this._totalClients.filter((client) => this._selectedClients[client.name]);
+    this.topClientsChange.emit(clients);
     this._modalShow = false;
   }
 
