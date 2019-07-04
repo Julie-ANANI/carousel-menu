@@ -81,18 +81,25 @@
           <div class="answer-wrapper">
             <app-showcase-answers
               [totalAnswers]="stats.totalAnswers"
-              [tagsStats]="selectedTagsStats">
+              [tagsStats]="selectedTagsStats"
+              [(topAnswers)]="selectedAnswers">
             </app-showcase-answers>
           </div>
 
           <!-- innovations wrapper -->
           <div class="innovation-wrapper">
-            <app-showcase-innovations [tagsStats]="selectedTagsStats"></app-showcase-innovations>
+            <app-showcase-innovations
+              [tagsStats]="selectedTagsStats"
+              [(topInnovations)]="selectedInnovations">
+            </app-showcase-innovations>
           </div>
 
           <!-- clients wrapper -->
           <div class="client-wrapper">
-            <app-showcase-clients [tagsStats]="selectedTagsStats"></app-showcase-clients>
+            <app-showcase-clients
+              [tagsStats]="selectedTagsStats"
+              [(topClients)]="selectedClients">
+            </app-showcase-clients>
           </div>
 
         </div>
@@ -176,6 +183,9 @@
 <!-- sidebar for history -->
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-showcase-history
+    [selectedAnswers]="selectedAnswers"
+    [selectedClients]="selectedClients"
+    [selectedInnovations]="selectedInnovations"
     [tagsStats]="selectedTagsStats"
     (displayShowcase)="displayCustomShowcase($event)">
   </app-sidebar-showcase-history>

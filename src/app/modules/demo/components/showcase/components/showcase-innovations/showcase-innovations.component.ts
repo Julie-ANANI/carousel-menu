@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
@@ -9,7 +9,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-showcase-innovations',
+  selector: 'app-showcase-innovations[tagsStats]',
   templateUrl: './showcase-innovations.component.html',
   styleUrls: ['./showcase-innovations.component.scss']
 })
@@ -20,11 +20,16 @@ export class ShowcaseInnovationsComponent {
     this._getInnovations(value);
   }
 
+  private _topInnovations: Array<Innovation> = [];
+  @Input() set topInnovations(value: Array<Innovation>) {
+    this._topInnovations = value;
+    this._computeCards();
+  }
+  @Output() topInnovationsChange: EventEmitter<Array<Innovation>> = new EventEmitter<Array<Innovation>>();
+
   private _tags: Array<string> = [];
 
   private _innovations: Array<Innovation> = [];
-
-  private _topInnovations: Array<Innovation> = [];
 
   private _cards: Array<{title: string, _id: string, media: string}> = [];
 
@@ -41,7 +46,7 @@ export class ShowcaseInnovationsComponent {
               private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+    this._translateService.onLangChange.subscribe((_event: LangChangeEvent) => {
       this._computeCards();
     });
 
@@ -64,16 +69,14 @@ export class ShowcaseInnovationsComponent {
         if (Array.isArray(response.result)) {
           this._innovations = response.result;
           this._count = this._innovations.length;
-          this._topInnovations = response.result.slice(0, 9);
-          this._computeCards();
+          this.topInnovationsChange.emit(response.result.slice(0, 9));
         }
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
 
     } else {
-      this._topInnovations = [];
-      this._computeCards();
+      this.topInnovationsChange.emit([]);
     }
   }
 

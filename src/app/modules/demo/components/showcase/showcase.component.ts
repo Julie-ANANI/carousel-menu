@@ -4,6 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
+import { Answer } from '../../../../models/answer';
+import { Clearbit } from '../../../../models/clearbit';
+import { Innovation } from '../../../../models/innovation';
 import { Showcase } from '../../../../models/showcase';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Tag } from '../../../../models/tag';
@@ -17,6 +20,12 @@ import { forkJoin } from 'rxjs';
 })
 
 export class ShowcaseComponent {
+
+  public selectedAnswers: Array<Answer> = [];
+
+  public selectedClients: Array<Clearbit> = [];
+
+  public selectedInnovations: Array<Innovation> = [];
 
   private _sectorTags: Array<Tag> = [];
 
@@ -71,8 +80,13 @@ export class ShowcaseComponent {
   }
 
   public displayCustomShowcase(showcase: Showcase) {
-    if (showcase.tags.length > 0) {
-      const statsObservables = showcase.tags.map((tag) => this._tagService.getStats(tag._id));
+    this._sidebarValue = { ...this._sidebarValue, animate_state: 'inactive' };
+    const { answers, clients, projects, tags } = showcase;
+    this.selectedAnswers = answers;
+    this.selectedClients = clients;
+    this.selectedInnovations = projects;
+    if (tags.length > 0) {
+      const statsObservables = tags.map((tag) => this._tagService.getStats(tag._id));
       forkJoin(statsObservables).subscribe((tagStats) => {
         this._selectedTagsStats = tagStats;
         this._recomputeData();

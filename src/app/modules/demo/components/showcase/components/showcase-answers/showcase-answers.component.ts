@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
@@ -6,7 +6,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Answer } from '../../../../../../models/answer';
 
 @Component({
-  selector: 'app-showcase-answers',
+  selector: 'app-showcase-answers[tagsStats]',
   templateUrl: './showcase-answers.component.html',
   styleUrls: ['./showcase-answers.component.scss']
 })
@@ -29,14 +29,15 @@ export class ShowcaseAnswersComponent {
         }
       });
     } else {
-      this._topAnswers = [];
+      this.topAnswersChange.emit([]);
     }
 
   }
 
-  private _answers: Array<Answer> = [];
+  @Input() topAnswers: Array<Answer> = [];
+  @Output() topAnswersChange: EventEmitter<Array<Answer>> = new EventEmitter<Array<Answer>>();
 
-  private _topAnswers: Array<Answer> = [];
+  private _answers: Array<Answer> = [];
 
   private _count: number;
 
@@ -51,25 +52,15 @@ export class ShowcaseAnswersComponent {
 
   private _startLoading(answers: Array<Answer>) {
 
-    this._topAnswers = answers.map((answer) => {
+    const topAnswers = answers.map((answer) => {
       answer.isLoading = true;
+      setTimeout(() => {
+        answer.isLoading = false;
+      }, Math.floor(Math.random() * 1900));
       return answer;
     });
+    this.topAnswersChange.emit(topAnswers);
 
-    this._stopLoading(this._topAnswers);
-
-  }
-
-
-  private _stopLoading(answers: Array<Answer>) {
-    if (answers.length) {
-      answers.forEach((answer, index) => {
-        setTimeout(() => {
-          answer.isLoading = false;
-          this._topAnswers[index] = answer;
-        }, Math.floor(Math.random() * 900) + 100);
-      });
-    }
   }
 
 
@@ -105,10 +96,6 @@ export class ShowcaseAnswersComponent {
 
   get answers() {
     return this._answers;
-  }
-
-  get topAnswers() {
-    return this._topAnswers;
   }
 
   get modalShow(): boolean {
