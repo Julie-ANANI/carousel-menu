@@ -36,6 +36,29 @@
       <!-- /no result -->
 
 
+      <!-- result -->
+      <ng-container *ngIf="!fetchingError && !noResult">
+
+        <!-- button -->
+        <div class="text-right p-bottom-30">
+          <button (click)="onClickAdd()" type="button" class="btn btn-primary btn-sm">
+            {{ 'COMMON.BUTTON.ADD' | translate }} tags
+          </button>
+        </div>
+        <!-- /button -->
+
+        <!-- table -->
+        <app-shared-table
+          (removeRows)="onRemoveTags($event)"
+          [config]="config"
+          [data]="table">
+        </app-shared-table>
+        <!-- /table -->
+
+      </ng-container>
+      <!-- /result -->
+
+
     </div>
   </div>
 </section>
@@ -56,22 +79,6 @@
 <!--
 
 <div class="admin-project-tags-pool">
-
-  <form class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTag($event)">
-    <div class="input-group">
-      <input auto-complete
-             formControlName="tag"
-             [source]="suggestions.bind(this)"
-             [list-formatter]="autocompleListFormatter"
-             [value-formatter]="autocompleValueFormatter"
-             [attr.placeholder]="'Add an existing tag'"
-             class="form-input form-control input-lg">
-      <button class="btn btn-primary input-group-btn" [disabled]="!canAddTag" translate>
-        COMMON.ADD
-        <i class="icon icon-arrow-right"></i>
-      </button>
-    </div>
-  </form>
 
   <app-tags-form
     (newTags)="addNewTags($event)"

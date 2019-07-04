@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -9,7 +8,7 @@ import { Tag } from '../../../../../../models/tag';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
-import {first} from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-project-tags-pool',
@@ -39,33 +38,12 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
+  private _table: Table;
+
   private _tag: Tag;
-  private _tagForm: FormGroup;
-
-
-  private _tableInfos: Table = {
-    _selector: 'admin-user',
-    _title: 'tag(s)',
-    _isTitle: true,
-    _content: [],
-    _total: -1,
-    _isDeletable: true,
-    _isSelectable: true,
-    _columns: [
-      {_attrs: ['label'], _name: 'Label', _type: 'MULTILING', _isSortable: true},
-      {_attrs: ['description'], _name: 'Description', _type: 'MULTILING'},
-      {_attrs: ['type'], _name: 'Type', _type: 'TEXT', _isSortable: true},
-      {
-        _attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES', _isSortable: true,
-        _choices: [{_name: 'To Tag', _class: 'label label-alert'}, {_name: 'Tagged', _class: 'label label-success'}]
-      }
-    ],
-  };
-
 
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _tagsService: TagsService) {
@@ -85,16 +63,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       this._sortTags();
       this._total = this._tags.length;
       this._noResult = this._total === 0;
+      this._initializeTable();
     } else {
       this._fetchingError = true;
     }
 
-    this._tagForm = this.formBuilder.group({
-      tag: null,
-    });
-    this._tagsService.getTagsFromPool(this._innovation._id).subscribe((data: any) => {
-      //this.updateTable(data);
-    });
   }
 
   private _getTagsFromPool() {
@@ -103,6 +76,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       this._sortTags();
       this._total = this._tags.length;
       this._noResult = this._total === 0;
+      this._initializeTable();
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.FETCHING_ERROR');
     });
@@ -112,6 +86,32 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tags = this._tags.map(x => {
       return {...x, state: x.originalTagId ? 'Tagged' : 'To Tag'};
     }).sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
+  }
+
+  private _initializeTable() {
+    this._table = {
+      _selector: 'admin-project-tags-pool-limit',
+      _title: 'tag(s)',
+      _isTitle: true,
+      _content: this._tags,
+      _total: this._total,
+      _isLocal: true,
+      _isPaginable: true,
+      _isDeletable: true,
+      _isSelectable: true,
+      _editIndex: 1,
+      _columns: [
+        {_attrs: ['label'], _name: 'Label', _type: 'MULTILING'},
+        {_attrs: ['description'], _name: 'Description', _type: 'MULTILING'},
+        {_attrs: ['type'], _name: 'Type', _type: 'TEXT'},
+        {_attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES',
+          _choices: [
+            {_name: 'To Tag', _class: 'label label-alert'},
+            {_name: 'Tagged', _class: 'label label-success'}
+            ]
+        }
+      ],
+    }
   }
 
   public onClickAdd() {
@@ -142,27 +142,16 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     })
   }
 
-  /*private updateTable(tags: Array<Tag>) {
-    const tagsList = tags
-      .map(x => {
-        return {...x, state: x.originalTagId ? 'Tagged' : 'To Tag'};
-      })
-      .sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
-    this._tableInfos = {...this._tableInfos, _content: tagsList, _total: tagsList.length};
-  }*/
-
-/*  public addTag(event: Event): void {
-    event.preventDefault();
-    this._tagsService
-      .addTagToPool(this._innovation._id, this._tagForm.get('tag').value._id)
-      .subscribe((data: any) => {
-        this.updateTable(data);
-        this._translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, (err: any) => {
-        this._translateNotificationsService.error('ERROR.ERROR', err.message);
+  public onRemoveTags(value: Array<Tag>) {
+    value.forEach((tag: Tag) => {
+      this._tagsService.removeTagFromPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
+        this._getTagsFromPool();
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
-    this._tagForm.get('tag').reset();
-  }*/
+    });
+  }
 
   public updateTag(tag: Tag): void {
     this._tagsService
@@ -183,7 +172,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     };
   }
 
-  public deleteTags(tags: Array<Tag>): void {
+/*  public onRemoveTags(tags: Array<Tag>): void {
     tags.forEach((tag) => {
       this._tagsService
         .removeTagFromPool(this._innovation._id, tag)
@@ -194,15 +183,15 @@ export class AdminProjectTagsPoolComponent implements OnInit {
           this._translateNotificationsService.error('ERROR.ERROR', err);
         });
     });
-  }
+  }*/
 
   get config(): Config {
     return this._config;
   }
 
-  set config(value: Config) {
+  /*set config(value: Config) {
     this._config = value;
-  }
+  }*/
 
   get innovation(): Innovation {
     return this._innovation;
@@ -232,12 +221,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get tag() { return this._tag; }
-  get tagForm() { return this._tagForm; }
-  get tableInfos() { return this._tableInfos; }
-
-  get canAddTag(): boolean {
-    const tag = this._tagForm.get('tag').value;
-    return tag && tag._id;
+  get table(): Table {
+    return this._table;
   }
+
+  get tag() { return this._tag; }
+
+
 }
