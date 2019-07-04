@@ -40,10 +40,6 @@ export class SharedTagComponent implements OnInit {
     this._placeholder = value;
   }
 
-  @Input() set hideCrossIcon(value: boolean) {
-    this._hideCrossIcon = value;
-  }
-
   @Output() addTag: EventEmitter<Tag> = new EventEmitter<Tag>();
 
   @Output() createTag: EventEmitter<Tag> = new EventEmitter<Tag>();
@@ -65,8 +61,6 @@ export class SharedTagComponent implements OnInit {
   private _tags: Array<Tag> = [];
 
   private _isAdmin: boolean;
-
-  private _hideCrossIcon: boolean;
 
   constructor(private _translateService: TranslateService,
               private _formBuilder: FormBuilder,
@@ -179,10 +173,6 @@ export class SharedTagComponent implements OnInit {
 
   get isAdmin(): boolean {
     return this._isAdmin;
-  }
-
-  get hideCrossIcon(): boolean {
-    return this._hideCrossIcon;
   }
 
 }
