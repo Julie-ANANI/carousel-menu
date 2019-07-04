@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
@@ -6,7 +6,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Answer } from '../../../../../../models/answer';
 
 @Component({
-  selector: 'app-showcase-answers',
+  selector: 'app-showcase-answers[tagsStats]',
   templateUrl: './showcase-answers.component.html',
   styleUrls: ['./showcase-answers.component.scss']
 })
@@ -30,9 +30,12 @@ export class ShowcaseAnswersComponent {
       });
     } else {
       this._topAnswers = [];
+      this.selectAnswers.emit([]);
     }
 
   }
+
+  @Output() selectAnswers: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
 
   private _answers: Array<Answer> = [];
 
@@ -53,23 +56,13 @@ export class ShowcaseAnswersComponent {
 
     this._topAnswers = answers.map((answer) => {
       answer.isLoading = true;
+      setTimeout(() => {
+        answer.isLoading = false;
+      }, Math.floor(Math.random() * 900) + 100);
       return answer;
     });
+    this.selectAnswers.emit(this._topAnswers.map((a) => a._id));
 
-    this._stopLoading(this._topAnswers);
-
-  }
-
-
-  private _stopLoading(answers: Array<Answer>) {
-    if (answers.length) {
-      answers.forEach((answer, index) => {
-        setTimeout(() => {
-          answer.isLoading = false;
-          this._topAnswers[index] = answer;
-        }, Math.floor(Math.random() * 900) + 100);
-      });
-    }
   }
 
 

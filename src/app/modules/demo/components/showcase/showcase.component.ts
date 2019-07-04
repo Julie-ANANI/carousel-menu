@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
+import { Clearbit } from '../../../../models/clearbit';
 import { Showcase } from '../../../../models/showcase';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Tag } from '../../../../models/tag';
@@ -17,6 +18,12 @@ import { forkJoin } from 'rxjs';
 })
 
 export class ShowcaseComponent {
+
+  public selectedAnswers: Array<string> = [];
+
+  public selectedClients: Array<Clearbit> = [];
+
+  public selectedInnovations: Array<string> = [];
 
   private _sectorTags: Array<Tag> = [];
 

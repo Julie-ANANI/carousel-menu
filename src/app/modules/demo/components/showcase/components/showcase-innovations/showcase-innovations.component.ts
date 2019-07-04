@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
@@ -9,7 +9,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-showcase-innovations',
+  selector: 'app-showcase-innovations[tagsStats]',
   templateUrl: './showcase-innovations.component.html',
   styleUrls: ['./showcase-innovations.component.scss']
 })
@@ -19,6 +19,8 @@ export class ShowcaseInnovationsComponent {
   @Input() set tagsStats(value: Array<TagStats>) {
     this._getInnovations(value);
   }
+
+  @Output() selectProjects: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
 
   private _tags: Array<string> = [];
 
@@ -65,6 +67,7 @@ export class ShowcaseInnovationsComponent {
           this._innovations = response.result;
           this._count = this._innovations.length;
           this._topInnovations = response.result.slice(0, 9);
+          this.selectProjects.emit(this._topInnovations.map((i) => i._id));
           this._computeCards();
         }
       }, () => {
@@ -73,6 +76,7 @@ export class ShowcaseInnovationsComponent {
 
     } else {
       this._topInnovations = [];
+      this.selectProjects.emit([]);
       this._computeCards();
     }
   }

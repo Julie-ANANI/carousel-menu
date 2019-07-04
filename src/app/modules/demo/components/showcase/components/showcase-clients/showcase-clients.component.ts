@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Clearbit } from '../../../../../../models/clearbit';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-showcase-clients',
+  selector: 'app-showcase-clients[tagsStats]',
   templateUrl: './showcase-clients.component.html',
   styleUrls: ['./showcase-clients.component.scss']
 })
@@ -50,6 +50,7 @@ export class ShowcaseClientsComponent {
               }, {} as {[clientName: string]: boolean});
 
           this._slides = this.getSlides(this._totalClients);
+          this.selectClients.emit(this._slides.reduce((acc, val) => acc.concat(val), []));
 
         }
 
@@ -59,9 +60,9 @@ export class ShowcaseClientsComponent {
 
   }
 
-  private _totalClients: Array<Clearbit> = [];
+  @Output() selectClients: EventEmitter<Array<Clearbit>> = new EventEmitter<Array<Clearbit>>();
 
-  private _currentSlideIndex = 0;
+  private _totalClients: Array<Clearbit> = [];
 
   private _modalShow = false;
 
@@ -89,11 +90,8 @@ export class ShowcaseClientsComponent {
   public onClickApply(event: Event): void {
     event.preventDefault();
     this._slides = this.getSlides(this._totalClients.filter((client) => this._selectedClients[client.name]));
+    this.selectClients.emit(this._slides.reduce((acc, val) => acc.concat(val), []));
     this._modalShow = false;
-  }
-
-  public onClickNav(event: Event, index: number): void {
-    this._currentSlideIndex = index;
   }
 
   public openModal(event: Event) {
@@ -119,10 +117,6 @@ export class ShowcaseClientsComponent {
 
   set modalShow(value: boolean) {
     this._modalShow = value;
-  }
-
-  get currentSlideIndex(): number {
-    return this._currentSlideIndex;
   }
 
   get selectedClients(): {[clientName: string]: boolean} {
