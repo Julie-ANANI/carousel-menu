@@ -15,7 +15,7 @@ export const ERROR = {
 
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur.',
 
-  'RELOAD_PAGE': 'Veuillez réessayer !',
+  'RELOAD_PAGE': 'Veuillez essayer de rafraîchir la page !',
 
   'NO_CONNECTION': 'Il semble que vous n\'êtes pas connecté.',
 
