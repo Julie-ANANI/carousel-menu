@@ -9,6 +9,7 @@ import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthes
 
 // Component
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
+
 import { demoRoutes } from './modules/demo/demo-routing.module';
 
 const appRoutes: Routes = [
