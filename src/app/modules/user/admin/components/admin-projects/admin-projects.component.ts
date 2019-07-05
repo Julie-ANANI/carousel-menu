@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
 import { Table } from '../../../../table/models/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../models/config';
 import { Response } from '../../../../../models/response';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { ConfigService } from '../../../../../services/config/config.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-admin-projects',
@@ -19,7 +21,7 @@ export class AdminProjectsComponent implements OnInit {
 
   private _projects: Array<Innovation> = [];
 
-  private _total: number;
+  private _total: number = -1;
 
   private _table: Table;
 
@@ -33,9 +35,10 @@ export class AdminProjectsComponent implements OnInit {
 
   private _fetchingError: boolean;
 
-  constructor(private _innovationService: InnovationService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: ConfigService,
+              private _innovationService: InnovationService,
               private _router: Router,
-              private _activatedRoute: ActivatedRoute,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
@@ -45,12 +48,18 @@ export class AdminProjectsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this._activatedRoute.snapshot.data.projects && Array.isArray(this._activatedRoute.snapshot.data.projects.result)) {
-      this._projects = this._activatedRoute.snapshot.data.projects.result;
-      this._total = this._activatedRoute.snapshot.data.projects._metadata.totalCount;
-      this._initializeTable();
-    } else {
-      this._fetchingError = true;
+    if (isPlatformBrowser(this._platformId)) {
+
+      this._config.limit = this._configService.configLimit('admin-projects-limit');
+
+      this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+        this._projects = response.result;
+        this._total = response._metadata.totalCount;
+        this._initializeTable();
+      }, () => {
+        this._fetchingError = true;
+      });
+
     }
 
   }
@@ -89,7 +98,7 @@ export class AdminProjectsComponent implements OnInit {
       this._total = response._metadata.totalCount;
       this._initializeTable();
     }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
