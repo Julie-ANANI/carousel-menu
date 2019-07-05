@@ -24,6 +24,13 @@
             </li>
           </ng-container>
 
+          <!-- discover page -->
+          <li class="menu-item" *ngIf="!backOfficeValue">
+            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
+              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
+            </a>
+          </li>
+
           <!-- client my projects -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="menu-item" *ngIf="!backOfficeValue">
@@ -32,13 +39,6 @@
               </a>
             </li>
           </ng-container>
-
-          <!-- discover page -->
-          <li class="menu-item" *ngIf="!backOfficeValue">
-            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
-              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
-            </a>
-          </li>
 
           <!-- client shared reports -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
@@ -249,6 +249,13 @@
             </li>
           </ng-container>
 
+          <!-- discover page -->
+          <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
+            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
+              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
+            </a>
+          </li>
+
           <!-- client my projects -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
@@ -257,13 +264,6 @@
               </a>
             </li>
           </ng-container>
-
-          <!-- discover page -->
-          <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
-            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
-              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
-            </a>
-          </li>
 
           <ng-container *ngIf="user && user.state === 'confirmed'">
 
