@@ -4,10 +4,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
+import { Answer } from '../../../../models/answer';
+import { Clearbit } from '../../../../models/clearbit';
+import { Innovation } from '../../../../models/innovation';
+import { Showcase } from '../../../../models/showcase';
+import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
 import { forkJoin } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-showcase',
@@ -17,11 +21,23 @@ import { finalize } from 'rxjs/operators';
 
 export class ShowcaseComponent {
 
-  private readonly _sectorTags: Array<Tag>;
+  public selectedAnswers: Array<Answer> = [];
 
-  private _selectedTagsStats: Array<TagStats>;
+  public selectedClients: Array<Clearbit> = [];
+
+  public selectedInnovations: Array<Innovation> = [];
+
+  private _sectorTags: Array<Tag> = [];
+
+  private _selectedTagsStats: Array<TagStats> = [];
 
   private _selectedTags: {[tagId: string]: boolean} = {};
+
+  private _sidebarValue: SidebarInterface = {
+    animate_state: 'inactive',
+    title: 'SIDEBAR.TITLE.SHOWCASE_HISTORY',
+    size: '726px'
+  };
 
   private _countries: {readonly [country: string]: number} = {};
 
@@ -31,9 +47,9 @@ export class ShowcaseComponent {
 
   private _quartiles = [1, 1, 1];
 
-  private _modalShow: boolean = false;
-
-  private _loadingStats = false;
+  private _modalShow = false;
+  
+  private _fetchingError: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _multilingPipe: MultilingPipe,
@@ -48,18 +64,39 @@ export class ShowcaseComponent {
         return label1.localeCompare(label2);
       });
     } else {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._fetchingError = true;
     }
 
     const tagStats = this._activatedRoute.snapshot.data['tagsStats'];
+    
     if (Array.isArray(tagStats)) {
       this._selectedTagsStats = tagStats;
       this._recomputeData();
     } else {
       this._selectedTagsStats = [];
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._fetchingError = true;
     }
 
+  }
+
+  public displayCustomShowcase(showcase: Showcase) {
+    this._sidebarValue = { ...this._sidebarValue, animate_state: 'inactive' };
+    const { answers, clients, projects, tags } = showcase;
+    this.selectedAnswers = answers;
+    this.selectedClients = clients;
+    this.selectedInnovations = projects;
+    if (tags.length > 0) {
+      const statsObservables = tags.map((tag) => this._tagService.getStats(tag._id));
+      forkJoin(statsObservables).subscribe((tagStats) => {
+        this._selectedTagsStats = tagStats;
+        this._recomputeData();
+      }, (err) => {
+        this._translateNotificationService.error('ERROR.ERROR', err.message);
+      });
+    } else {
+      this._selectedTagsStats = [];
+      this._recomputeData();
+    }
   }
 
   public modifyTag() {
@@ -84,16 +121,26 @@ export class ShowcaseComponent {
         .map((tagId) => this._tagService.getStats(tagId));
 
     if (tagsStatsObservables.length > 0) {
-      this._loadingStats = true;
-      forkJoin(tagsStatsObservables)
-        .pipe(finalize(() => { this._loadingStats = false; }))
-        .subscribe((res) => {
-          this._selectedTagsStats = res;
-          this._recomputeData();
+      forkJoin(tagsStatsObservables).subscribe((res) => {
+        this._selectedTagsStats = res;
+        this._recomputeData();
         }, () => {
-          this._translateNotificationService.error('ERROR.ERROR', `We are having trouble while finding the stats.`);
+          this._translateNotificationService.error('ERROR.ERROR', 'SHOWCASE.ERROR_STATS');
         });
+    } else {
+      this._selectedTagsStats = [];
+      this._recomputeData();
     }
+  }
+
+
+  public onClickHistoryIcon(event: Event) {
+    event.preventDefault();
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SIDEBAR.TITLE.SHOWCASE_HISTORY',
+      size: '726px'
+    };
   }
 
 
@@ -175,6 +222,14 @@ export class ShowcaseComponent {
     return this._selectedTagsStats;
   }
 
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
   get stats(): TagStats {
     return this._stats;
   }
@@ -195,8 +250,8 @@ export class ShowcaseComponent {
     return this._translateService.currentLang;
   }
 
-  get loadingStats(): boolean {
-    return this._loadingStats;
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }

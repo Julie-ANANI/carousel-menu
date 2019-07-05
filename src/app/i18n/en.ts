@@ -13,7 +13,6 @@ import { BLACKLISTS } from '../modules/user/admin/components/admin-settings/admi
 import { TAGS } from '../modules/user/admin/components/admin-tags/i18n/en';
 import { PROJECT_LIST } from '../modules/user/admin/components/admin-projects-list/i18n/en';
 import { PROJECT_MODULE } from '../modules/user/client/components/project/i18n/en';
-import { PROFESSIONALS } from '../modules/user/admin/components/admin-professionals/i18n/en';
 import { DISCOVER } from '../modules/public/discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/description/i18n/en';
 import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/en';
@@ -33,6 +32,7 @@ import { SHARED_PROJECT_SETTINGS } from '../modules/shared/components/shared-pro
 import { SHARED_PROJECT_EDIT } from '../modules/shared/components/shared-project-edit-cards-component/i18n/en';
 import { SHOWCASE } from '../modules/demo/components/showcase/i18n/en';
 import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
+import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -60,7 +60,6 @@ export const en = {
   'TAGS': TAGS,
   'PROJECT_LIST': PROJECT_LIST,
   'PROJECT_MODULE': PROJECT_MODULE,
-  'PROFESSIONALS' : PROFESSIONALS,
   'SHARE': SHARE,
   'RESET_PASSWORD': RESET_PASSWORD,
   'EDIT_WORKFLOW': EDIT_WORKFLOW,
@@ -69,5 +68,6 @@ export const en = {
   'SHARED_PROJECT_SETTINGS': SHARED_PROJECT_SETTINGS,
   'SHARED_PROJECT_EDIT': SHARED_PROJECT_EDIT,
   'SHOWCASE': SHOWCASE,
-  'SEARCH_DEMO': SEARCH_DEMO
+  'SEARCH_DEMO': SEARCH_DEMO,
+  'COMMUNITY': COMMUNITY
 };

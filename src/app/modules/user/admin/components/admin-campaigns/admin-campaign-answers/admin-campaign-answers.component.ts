@@ -12,6 +12,8 @@ import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-inte
 import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Config } from '../../../../../../models/config';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { Response } from '../../../../../../models/response';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -21,26 +23,6 @@ import { Config } from '../../../../../../models/config';
 
 export class AdminCampaignAnswersComponent implements OnInit {
 
-  private _campaign: Campaign;
-
-  private _answers: Array<Answer> = [];
-
-  private _total: number;
-
-  private _questions: Array<Question> = [];
-
-  // modalAnswer : null si le modal est fermé,
-  // égal à la réponse à afficher si le modal est ouvert
-  private _modalAnswer: Answer = null;
-
-  private _sidebarValue: SidebarInterface = {};
-
-  private _adminMode = true;
-
-  private _tableInfos: Table;
-
-  private _noResult = false;
-
   private _config: Config = {
     fields: '',
     limit: '10',
@@ -49,112 +31,143 @@ export class AdminCampaignAnswersComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private campaignService: CampaignService,
-              private answerService: AnswerService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private authService: AuthService,
-              private campaignFrontService: CampaignFrontService) { }
+  private _campaign: Campaign;
+
+  private _answers: Array<Answer> = [];
+
+  private _total: number;
+
+  private _fetchingError: boolean;
+
+  private _errorMessage: string;
+
+  private _table: Table;
+
+  private _adminMode: boolean;
+
+  private _noResult: boolean;
+
+  private _sidebarValue: SidebarInterface = {};
+
+  private _modalAnswer: Answer = null;
+
+  private _questions: Array<Question> = [];
+
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _campaignService: CampaignService,
+              private _translateTitleService: TranslateTitleService,
+              private _answerService: AnswerService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _authService: AuthService,
+              private _campaignFrontService: CampaignFrontService) {
+
+    this._translateTitleService.setTitle('Answers | Campaign');
+    this._adminMode = this._authService.adminLevel > 2;
+
+    if (this._activatedRoute.snapshot.parent.data['campaign']) {
+      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+      this._getQuestions();
+    }
+
+  }
 
   ngOnInit() {
-    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
-    this._adminMode = this.authService.adminLevel > 2;
-    this.loadAnswers();
 
-    if (this._campaign && this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
+    if (this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers
+      && this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers
+      && Array.isArray(this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers)) {
+      this._answers = this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers;
+      this._total = this._answers.length;
+      this._noResult = this._total === 0;
+      this._initializeTable();
+    } else if (this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers) {
+      this._errorMessage = 'CAMPAIGNS.ERROR_MESSAGE.FETCHING';
+      this._fetchingError = true;
+    } else {
+      this._errorMessage = 'ERROR.ERRORS.FETCHING';
+      this._fetchingError = true;
+    }
+
+  }
+
+  private _getQuestions() {
+    if (this._campaign && this._campaign.innovation.preset && this._campaign.innovation.preset.sections && Array.isArray(this._campaign.innovation.preset.sections)) {
       this._campaign.innovation.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
       });
-
     }
   }
 
-
-  private loadAnswers() {
-    this.campaignService.getAnswers(this._campaign._id).subscribe((result: { answers: { localAnswers: Array<Answer>, draftAnswers: Array<Answer> } }) => {
-      this._answers = result.answers.localAnswers;
-      this._noResult = this._answers.length === 0;
-      this.loadTable();
+  public onClickImport(file: File) {
+    this._answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
+      this._getAnswers();
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
   }
 
-
-  getCampaignStat(type: string, searchKey: any): number {
-    if (this._answers) {
-      return this.campaignFrontService.getAnswerCampaignStat(this._answers, type, searchKey);
-    }
+  public onClickExport() {
+    this._answerService.exportAsCsvByCampaign(this._campaign._id, false);
   }
 
-
-  getAuthorizedActions(level: number): boolean {
-    const adminLevel = this.authService.adminLevel;
-    return adminLevel > level;
-  }
-
-
-  importAnswers(file: File, event: Event) {
-    event.preventDefault();
-
-    this.answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
-      this.loadAnswers();
-      }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+  private _getAnswers() {
+    this._campaignService.getAnswers(this._campaign._id).subscribe((response: Response) => {
+      this._answers = response.answers.localAnswers;
+      this._total = this._answers.length;
+      this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
+      this._initializeTable();
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
-
   }
 
-
-  exportAnswers(event: Event) {
-    event.preventDefault();
-    this.answerService.exportAsCsvByCampaign(this._campaign._id, false);
+  private _initializeTable() {
+    this._table = {
+      _selector: 'admin-campaign-answers',
+      _title: 'TABLE.TITLE.ANSWERS',
+      _content: this._answers,
+      _total: this._total,
+      _isSearchable: true,
+      _isSelectable: true,
+      _isPaginable: true,
+      _isEditable: true,
+      _editIndex: 1,
+      _isTitle: true,
+      _isLocal: true,
+      _buttons: [{_label: 'ANSWER.VALID_ANSWER', _icon: 'fas fa-check'}, {_label: 'ANSWER.REJECT_ANSWER', _icon: 'fas fa-times'}],
+      _columns: [
+        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},
+        {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSearchable: true },
+        {_attrs: ['professional.jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSearchable: true},
+        {_attrs: ['scoreStatus'], _name: 'TABLE.HEADING.SCORE', _type: 'TEXT', _isSearchable: true},
+        {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE'},
+        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+        {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
+          _choices: [
+            {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label label-success'},
+            {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
+            {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label label-progress'},
+            {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label label-alert'},
+            {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label label-alert'},
+            {_name: 'VALIDATED_UMIBOT', _alias: 'TABLE.STATUS.VALIDATED_UMIBOT', _class: 'label label-progress'},
+            {_name: 'REJECTED_UMIBOT', _alias: 'TABLE.STATUS.REJECTED_UMIBOT', _class: 'label label-progress'}
+          ]
+        },
+      ]
+    };
   }
 
-
-  private loadTable() {
-    if (this._answers) {
-      this._tableInfos = {
-        _selector: 'admin-answers',
-        _title: 'answer(s)',
-        _content: this._answers,
-        _total: this._answers.length,
-        _isSearchable: true,
-        _isSelectable: true,
-        _isPaginable: true,
-        _isEditable: true,
-        _editIndex: 1,
-        _isTitle: true,
-        _isLocal: true,
-        _buttons: [{_label: 'ANSWER.VALID_ANSWER', _icon: 'fas fa-check'}, {_label: 'ANSWER.REJECT_ANSWER', _icon: 'fas fa-times'}],
-        _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},
-          {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSearchable: true},
-          {_attrs: ['professional.email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT'},
-          {_attrs: ['professional.jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSearchable: true},
-          {_attrs: ['scoreStatus'], _name: 'TABLE.HEADING.SCORE', _type: 'TEXT', _isSearchable: true},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
-          {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE'},
-          {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
-            _choices: [
-              {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label label-success'},
-              {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
-              {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label label-progress'},
-              {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label label-alert'},
-              {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label label-alert'},
-              {_name: 'VALIDATED_UMIBOT', _alias: 'TABLE.STATUS.VALIDATED_UMIBOT', _class: 'label label-progress'},
-              {_name: 'REJECTED_UMIBOT', _alias: 'TABLE.STATUS.REJECTED_UMIBOT', _class: 'label label-progress'}
-            ]
-          },
-        ]
-      };
-    }
+  public campaignStat(type: string, searchKey: any): number {
+    return this._campaignFrontService.getAnswerCampaignStat(this._answers, type, searchKey);
   }
 
+  public authorizedActions(level: number): boolean {
+    return this._authService.adminLevel > level;
+  }
 
-  onClickEdit(answer: Answer) {
-    this._modalAnswer = answer;
+  public onClickEdit(value: Answer) {
+    this._modalAnswer = value;
 
     this._sidebarValue = {
       animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
@@ -164,70 +177,76 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   }
 
-
-  onTableAction(action: any) {
+  public onClickActions(action: any) {
     switch (action._label) {
 
       case 'ANSWER.VALID_ANSWER':
-        this.updateStatus(action._rows, 'VALIDATED_NO_MAIL');
+        this._updateStatus(action._rows, 'VALIDATED_NO_MAIL');
         break;
 
       case 'ANSWER.REJECT_ANSWER':
-        this.updateStatus(action._rows, 'REJECTED');
+        this._updateStatus(action._rows, 'REJECTED');
         break;
     }
   }
 
-
-  private updateStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL'
+  private _updateStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL'
     | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT') {
     rows.forEach((row: Answer) => {
       row.status = status;
-      this.answerService.save(row._id, row).subscribe(() => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.STATUS_UPDATE');
-        this.loadAnswers();
+      this._answerService.save(row._id, row).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.STATUS_UPDATE');
+        this._getAnswers();
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
     });
   }
 
 
-  updateAnswer(value: boolean) {
-    this.loadAnswers();
-  }
-
-  set config(value: Config) {
-    this._config = value;
-    this.loadAnswers();
+  public updateAnswer(value: boolean) {
+    this._getAnswers();
   }
 
   get config(): Config {
     return this._config;
   }
 
-  get questions() {
-    return this._questions;
+  set config(value: Config) {
+    this._config = value;
+    this._getAnswers();
   }
 
-  get modalAnswer() {
-    return this._modalAnswer;
-  }
-
-  set modalAnswer(modalAnswer: Answer) {
-    this._modalAnswer = modalAnswer;
-  }
-
-  get total() {
-    return this._total;
-  }
-
-  get campaign() {
+  get campaign(): Campaign {
     return this._campaign;
   }
 
-  get answers() {
+  get answers(): Array<Answer> {
     return this._answers;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get errorMessage(): string {
+    return this._errorMessage;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get noResult(): boolean {
+    return this._noResult;
   }
 
   get sidebarValue(): SidebarInterface {
@@ -238,16 +257,16 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get adminMode(): boolean {
-    return this._adminMode;
+  get modalAnswer(): Answer {
+    return this._modalAnswer;
   }
 
-  get tableInfos(): Table {
-    return this._tableInfos;
+  set modalAnswer(modalAnswer: Answer) {
+    this._modalAnswer = modalAnswer;
   }
 
-  get noResult(): boolean {
-    return this._noResult;
+  get questions(): Array<Question> {
+    return this._questions;
   }
 
 }

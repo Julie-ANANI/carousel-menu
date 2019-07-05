@@ -96,8 +96,13 @@ export const COMMON = {
     'SHARED_REPORTS': 'Shared Reports',
     'DISCOVER': 'Innovation Portfolio | UMI',
     'PROJECTS': 'Projects',
+    'PROJECT': 'Project',
     'REPORT': 'Report',
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
+    'PROFESSIONALS': 'Professionals',
+    'USERS': 'Users',
+    'COMMUNITY_PROJECTS': 'Projects | Community',
+    'ANSWER_TAGS': 'Answer tags | Project'
   },
 
   'LABEL': {
@@ -126,6 +131,12 @@ export const COMMON = {
     'SELECT': 'Select',
     'CHOOSE_LANGUAGE': 'Choose Language:',
     'SEARCH_BY': 'Search by',
+    'SIGNATURE_NAME': 'Signature Name',
+    'LANGUAGE': 'Language',
+    'PRESET_NAME': 'Preset Name',
+    'TAG_NAME': 'Tag Name',
+    'CREATED': 'Created',
+    'COLLABORATORS': 'collaborators'
   },
 
   'PLACEHOLDER': {
@@ -138,6 +149,9 @@ export const COMMON = {
     'ACTIVITY_FIELDS': 'Enter your activity field',
     'TECHNOLOGIES': 'Enter the technology',
     'SEARCH': 'Search here',
+    'SIGNATURE_NAME': 'Enter the signature name',
+    'PRESET_NAME': 'Enter the preset name',
+    'EXISTING_TAG': 'Add an existing tag',
   },
 
   'REQUIRED': {
@@ -187,6 +201,9 @@ export const COMMON = {
     'SEE_MORE': 'See more',
     'EDIT': 'Edit',
     'SHOW': 'Show',
+    'START': 'Start',
+    'CREATE': 'Create',
+    'VIEW_LIKE_CLIENT': 'View like client'
   },
 
   'PROJECT': {
@@ -294,7 +311,7 @@ export const COMMON = {
     'MESSAGE': 'Message',
   },
 
-  'TAG_LABEL': {
+  'TAG': {
     'ADD_TAGS': 'Add Tags',
     'EDIT_TAG': 'Edit Tag',
     'LABEL_EN_PLACEHOLDER': 'Enter the label in english',
@@ -302,7 +319,9 @@ export const COMMON = {
     'DESC_EN_PLACEHOLDER': 'Enter the description in english',
     'DESC_FR_PLACEHOLDER': 'Enter the description in french',
     'CHOOSE_TAG': 'Choose the tag to associate with this actual tag',
-    'TAG_PLACEHOLDER': 'Add an existing tag'
+    'TAG_PLACEHOLDER': 'Add an existing tag',
+    'NO_TAGS_POOL': 'No tags for this innovation. Try to add some!',
+    'CREATE_NEW_TAG': 'Do you want to create a new tag?',
   },
 
   'LOGOUT': {
@@ -334,7 +353,13 @@ export const COMMON = {
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search...',
 
   'TOOLTIP': {
-    'HISTORY': 'History'
+    'HISTORY': 'History',
+    'EDIT': 'edit'
+  },
+
+  'SIGNATURES': {
+    'NO_SIGNATURES_ADMIN': 'No signatures. Try to add some!.',
+    'DELETE_SIGNATURES': 'Do you really want to delete the selected signature(s)?'
   }
 
 };

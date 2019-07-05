@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { PaginationTemplate2Component } from './pagination-template-2.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { PaginationTemplate2Component } from './pagination-template-2.component';
+
 
 @NgModule({
   imports: [

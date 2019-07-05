@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from "../../../../../../services/title/title.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from '../../../../../table/models/table';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Config } from '../../../../../../models/config';
 
 @Component({
@@ -13,91 +12,70 @@ import { Config } from '../../../../../../models/config';
 
 export class AdminCommunityProjectsComponent implements OnInit {
 
-  private _tableInfos: Table;
-
   private _config: Config = {
     fields: '',
     limit: '',
     offset: '0',
     search: '{}',
     status: "EVALUATING",
-    sort: '{"created":-1}'
+    sort: '{ "created": -1 }'
   };
 
-  private _totalProjects: Array<any> = [];
+  private _total: number;
 
-  private _noResult: boolean;
+  private _table: Table;
+
+  private _projects: Array<any> = [];
 
   private _fetchingError: boolean;
 
   constructor(private _router: Router,
               private _activatedRoute: ActivatedRoute,
-              private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
-    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.COMMUNITY_PROJECTS');
+  }
 
-    if (Array.isArray(this._activatedRoute.snapshot.data.projects)) {
-      this._totalProjects = this._activatedRoute.snapshot.data.projects;
-      this._noResult = this._totalProjects.length === 0;
-      this._configureTable();
+  ngOnInit() {
+
+    if (this._activatedRoute.snapshot.data.projects && Array.isArray(this._activatedRoute.snapshot.data.projects)) {
+      this._projects = this._activatedRoute.snapshot.data.projects;
+      this._total = this._projects.length;
+      this._initializeTable();
     } else {
       this._fetchingError = true;
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }
 
   }
 
-  ngOnInit() {
-  }
 
-
-  private _configureTable() {
-    this._tableInfos = {
+  private _initializeTable() {
+    this._table = {
       _selector: 'admin-community-projects',
       _title: 'TABLE.TITLE.PROJECTS',
-      _content: this._totalProjects,
-      _total: this._totalProjects.length,
+      _content: this._projects,
+      _total: this._total,
       _isSearchable: true,
       _isTitle: true,
       _editIndex: 1,
       _isLocal: true,
       _isPaginable: true,
       _columns: [
-        {
-          _attrs: ['innovation.name'],
-          _name: 'Projects',
-          _type: 'TEXT',
-          _isSortable: true,
-        },
-        {
-          _attrs: ['innovation.created'],
-          _name: 'Created',
-          _type: 'DATE',
-        },
-        {
-          _attrs: ['nbAmbassadors', 'nbRecAmbassadors'],
-          _name: 'Ambassador count / Suggested',
-          _type: 'MULTI-LABEL',
+        {_attrs: ['innovation.name'], _name: 'TABLE.HEADING.PROJECTS', _type: 'TEXT'},
+        {_attrs: ['nbAmbassadors', 'nbRecAmbassadors'], _name: 'Ambassador count / Suggested', _type: 'MULTI-LABEL',
           _multiLabels: [
             {_attr: 'nbAmbassadors', _class: 'label label-success' },
             {_attr: 'nbRecAmbassadors', _class: 'label label-draft'}
-            ],
+          ],
         },
-        {
-          _attrs: ['nbAnswers', 'nbAnswersFromAmbassadors'],
-          _name: 'Feedback / From Ambassador',
-          _type: 'MULTI-LABEL',
+        {_attrs: ['nbAnswers', 'nbAnswersFromAmbassadors'], _name: 'Feedback / From Ambassador', _type: 'MULTI-LABEL',
           _multiLabels: [
             {_attr: 'nbAnswers', _class: 'label label-success'},
             {_attr: 'nbAnswersFromAmbassadors', _class: 'label label-draft'}
             ],
         },
-        {
-          _attrs: ['innovation.status'],
-          _name: 'Status',
-          _type: 'MULTI-CHOICES',
-          _isSearchable: true,
+        {_attrs: ['innovation.created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+        {_attrs: ['innovation.status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label label-draft'},
@@ -118,16 +96,16 @@ export class AdminCommunityProjectsComponent implements OnInit {
     return this._config;
   }
 
-  get tableInfos() {
-    return this._tableInfos;
-  }
-
-  get noResult(): boolean {
-    return this._noResult;
+  get table(): Table {
+    return this._table;
   }
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get total(): number {
+    return this._total;
   }
 
 }

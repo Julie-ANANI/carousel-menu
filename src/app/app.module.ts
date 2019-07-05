@@ -23,6 +23,7 @@ import { TranslateTitleService } from './services/title/title.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
 import { MouseService } from './services/mouse/mouse.service';
+import { ConfigService } from './services/config/config.service';
 
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
@@ -67,7 +68,8 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     // { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
     SwellrtBackend,
-    MouseService
+    MouseService,
+    ConfigService
   ],
   bootstrap: [
     AppComponent

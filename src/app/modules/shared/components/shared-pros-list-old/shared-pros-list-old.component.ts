@@ -115,7 +115,6 @@ export class SharedProsListOldComponent {
 
   set sortConfig(value: string) {
     this._config.sort = value;
-    this.loadPros(this._config);
   }
 
 }

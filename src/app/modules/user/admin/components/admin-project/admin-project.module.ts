@@ -18,18 +18,20 @@ import { SharedTextZoneModule } from '../../../../shared/components/shared-text-
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
-import { SharedTagItemModule } from '../../../../shared/components/shared-tag-item/shared-tag-item.module';
+import { SharedTagModule } from '../../../../shared/components/shared-tag/shared-tag.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/admin-project-questionnaire.module';
 import { AutocompleteInputModule } from '../../../../utility-components/autocomplete-input/autocomplete-input.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
-import { SidebarTagsFormModule } from '../../../../sidebar/components/tags-form/sidebar-tags-form.module';
+import { SidebarTagsModule } from '../../../../sidebar/components/tags/sidebar-tags.module';
 import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebar/components/innovation-form/sidebar-innovation-form.module';
 import { SidebarCampaignFormModule } from '../../../../sidebar/components/campaign-form/sidebar-campaign-form.module';
-import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
+import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { MessageTemplate2Module } from '../../../../utility-components/messages/message-template-2/message-template-2.module';
 
 @NgModule({
   imports: [
@@ -42,7 +44,7 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     PipeModule,
     SharedProjectEditCardsModule,
     SharedProjectSettingsModule,
-    SharedTagItemModule,
+    SharedTagModule,
     TableModule,
     RouterModule,
     SidebarModule,
@@ -51,12 +53,14 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule,
     ProgressBarModule,
-    SidebarTagsFormModule,
+    SidebarTagsModule,
     SidebarEmailFormModule,
     SidebarInnovationFormModule,
     SidebarCampaignFormModule,
-    MessageSpaceModule,
-    ModalModule
+    MessageTemplate1Module,
+    ModalModule,
+    ErrorTemplate1Module,
+    MessageTemplate2Module
   ],
   declarations: [
     AdminProjectComponent,

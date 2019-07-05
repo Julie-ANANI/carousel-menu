@@ -86,7 +86,7 @@
       <ng-container *ngIf="isProfessional && tags.length > 0">
         <div class="form-group">
           <label class="form-label">Tags</label>
-          <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag-item>
+          <app-shared-tag [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag>
         </div>
       </ng-container>
 
@@ -198,7 +198,7 @@
       </ng-container>
 
       <!-- Display all keywords associated to the professional -->
-      <ng-container *ngIf="isProfessional && campaign">
+      <ng-container *ngIf="isProfessional && campaign && pro.personId">
         <div class="pro-quiz-wrapper">
           <a class="text-link" *ngIf="!proKeywords" (click)="showKeywords()">Voir keywords</a>
           <ul *ngIf="proKeywords">

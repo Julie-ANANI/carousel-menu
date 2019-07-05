@@ -105,7 +105,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   private checkBatch() {
-    if (this.localStorage.getItem(`auto-batch-${this._campaign._id}`)) {
+    if (this._campaign && this.localStorage.getItem(`auto-batch-${this._campaign._id}`)) {
       this._batchAlreadyActivated = this.localStorage.getItem(`auto-batch-${this._campaign._id}`);
     } else {
       this.setValues('false');
@@ -394,10 +394,6 @@ export class AdminCampaignBatchComponent implements OnInit {
         _name: workflowName,
         _type: 'TEXT'
       }, {
-        _attrs: ['Sent'],
-        _name: 'Sent',
-        _type: 'TEXT'
-      }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
         _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label label-success'}, {_attr: 'OpenedPred', _class: 'label label-meta'} ],
@@ -554,7 +550,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   private getContentWorkflowStep(batch: Batch, step: any): any {
     const workflowName = this.getWorkflowName(batch);
-    const content = {en: '', fr: ''};
+    const content = {en: '', fr: '', _id: batch._id};
 
     this.campaign.settings.emails.forEach( mail => {
       if (mail.step === step && workflowName === mail.nameWorkflow) {

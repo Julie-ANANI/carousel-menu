@@ -435,6 +435,22 @@
 
 }
 
+@keyframes bot-bounceInUp {
+
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 8px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+}
+
 /********************************** Loading ***************************************/
 
 @keyframes loading {
@@ -495,4 +511,11 @@
   animation-name: bounceIn;
   animation-duration: 1s;
   animation-timing-function: ease;
+}
+
+.animate-bot-bounceIn {
+  animation-name: bot-bounceInUp;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
 }

@@ -1,75 +1,153 @@
-<ng-container *ngIf="campaign">
-  <section id="admin-campaign-pros-component">
+<section id="admin-campaign-pros">
 
-    <!-- section stats -->
-    <app-admin-campaign-stats></app-admin-campaign-stats>
 
+  <!-- stats -->
+  <app-admin-campaign-stats></app-admin-campaign-stats>
+  <!-- /stats -->
+
+
+  <div class="section-light-pad">
     <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="restrict-width">
 
-      <!-- section actions -->
-      <div class="section-actions section-light-pad text-right">
-        <button class="btn ghost-primary gap-right btn-sm" (click)="onClickImport($event)">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
-        <button class="btn ghost-primary gap-right btn-sm" (click)="OnClickAdd($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
-        <button class="btn btn-primary btn-sm" (click)="onClickExport($event)">{{ 'COMMON.BUTTON.EXPORT' | translate }}</button>
+
+        <!-- fetching error -->
+        <ng-container *ngIf="fetchingError">
+          <div class="a-c-p-error-wrapper d-flex align-center">
+            <app-error-template-1 [errorMessage]="'CAMPAIGNS.ERROR_MESSAGE.FETCHING_PROFESSIONALS'"></app-error-template-1>
+          </div>
+        </ng-container>
+        <!-- /fetching error -->
+
+
+        <!-- no professional -->
+        <ng-container *ngIf="!fetchingError && noResult && total === 0">
+          <div class="a-c-p-no-result-wrapper d-flex align-center">
+            <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+
+              <div class="text-center">
+
+                <h4 [innerText]="'CAMPAIGNS.NO_PROFESSIONALS'" class="text-background" translate></h4>
+
+                <div class="m-top-25">
+
+                  <button (click)="onClickAdd()" class="btn btn-primary rounded shadow m-right-20 m-bottom-20" type="button">
+                    <i class="fas fa-plus m-no-left"></i>
+                    {{ 'COMMON.BUTTON.ADD' | translate }} professional
+                  </button>
+
+                  <button (click)="onClickImport()" class="btn btn-primary rounded shadow m-bottom-20 m-right-20" type="button">
+                    <i class="fas fa-file-import m-no-left"></i>
+                    {{ 'COMMON.BUTTON.IMPORT' | translate }} professionals
+                  </button>
+
+                </div>
+
+              </div>
+
+            </app-message-template-2>
+          </div>
+        </ng-container>
+        <!-- /no professional -->
+
+
+        <!-- professionals -->
+        <ng-container *ngIf="!fetchingError && !noResult">
+
+
+          <!-- buttons -->
+          <div class="text-right p-bottom-10">
+
+            <!-- import -->
+            <button (click)="onClickImport()" class="btn btn-sm ghost-primary m-bottom-20 m-right-20" type="button">
+              {{ 'COMMON.BUTTON.IMPORT' | translate }}
+            </button>
+
+            <!-- add -->
+            <button (click)="onClickAdd()" class="btn btn-sm ghost-primary m-bottom-20 m-right-20" type="button">
+              {{ 'COMMON.BUTTON.ADD' | translate }}
+            </button>
+
+            <!-- export -->
+            <button (click)="onClickExport()" class="btn btn-sm btn-primary m-bottom-20" type="button">
+              {{ 'COMMON.BUTTON.EXPORT' | translate }}
+            </button>
+
+          </div>
+          <!-- /buttons -->
+
+
+          <!-- table -->
+          <app-shared-professionals-list
+            (selectedProfessionalChange)="selectedProsEvent($event)"
+            [(config)]="config"
+            [campaign]="campaign"
+            [professionals]="professionals"
+            [tableSelector]="'admin-campaign-pros-limit'"
+            [total]="total">
+          </app-shared-professionals-list>
+          <!-- /table -->
+
+
+        </ng-container>
+        <!-- /professionals -->
+
+
       </div>
-
-      <!-- section no pros -->
-      <ng-container *ngIf="noResult">
-        <div class="section-pad">
-          <app-message-space [widthMax]="'354px'">
-            Don't have any pros?
-            <br>
-            Try to add some either by clicking on "Import" or "Add" button.
-          </app-message-space>
-        </div>
-      </ng-container>
-
-      <!-- section pros list -->
-      <ng-container *ngIf="!noResult">
-        <div class="section-light-pad rm-pad-top">
-          <app-shared-pros-list [config]="config" [campaign]="campaign" (selectedProsChange)="selectedProsEvent($event)"></app-shared-pros-list>
-        </div>
-      </ng-container>
-
     </div>
+  </div>
 
 
-  </section>
-</ng-container>
+</section>
 
 
+<!-- sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-user-form
+    (finalProfessionalData)="onClickSave($event)"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type">
+  </app-user-form>
+</app-sidebar>
+<!-- /sidebar -->
 
-<!-- modal to import pros -->
-<app-modal [(showModal)]="importModal" [modalTitle]="'COMMON.MODAL.TITLE_IMPORT'">
 
+<!-- modal -->
+<app-modal [(showModal)]="modalImport" [modalTitle]="'COMMON.MODAL.TITLE_IMPORT'">
+
+  <label class="form-label">{{ 'CAMPAIGNS.LABEL_IMPORT' | translate }}</label>
   <app-autocomplete-input
     (update)="updateCampaign($event)"
     [onlyOne]="true"
     [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
   </app-autocomplete-input>
 
-  <div class="text-center section-light-pad rm-pad-bottom">
+  <div class="text-center p-top-25">
     <label class="btn btn-sm ghost-primary">
-      <input #fileupload type="file" [hidden]="true" (change)="OnClickImportCsv(fileupload.files[0], $event)" />
-      Import
+      <input #fileupload type="file" [hidden]="true" (change)="onClickImportCsv(fileupload.files[0])" />
+      Import file
     </label>
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" [disabled]="!originCampaign.length" (click)="importPros($event)">{{ 'COMMON.BUTTON.ADD' | translate }}</button>
+
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+
+    <button
+      (click)="onClickConfirm()"
+      [disabled]="!originCampaign.length"
+      [innerText]="'COMMON.BUTTON.CONFIRM'"
+      class="btn btn-sm btn-primary"
+      translate>
+    </button>
+
   </div>
 
 </app-modal>
-<!-- /modal to import pros -->
+<!-- /modal -->
 
 
-<!-- sidebar to add pro -->
-<app-sidebar [(template)]="sidebarValue">
-  <app-user-form
-    [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type"
-    (finalProfessionalData)="onClickSave($event)">
-  </app-user-form>
-</app-sidebar>
-<!-- /sidebar to add pro -->
+
+
+
+

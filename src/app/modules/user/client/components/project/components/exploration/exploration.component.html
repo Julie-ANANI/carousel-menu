@@ -7,7 +7,7 @@
       <ng-container *ngIf="innovation.status === 'EDITING' || innovation.status === 'SUBMITTED'">
         <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h2>
         <div class="section-light-pad rm-pad-bottom">
-          <app-message-space [widthMax]="'337px'">{{ getMessage() | translate }}</app-message-space>
+          <app-message-template-1 [widthMax]="'337px'">{{ getMessage() | translate }}</app-message-template-1>
         </div>
       </ng-container>
        <!-- /project under editing and submitted status -->

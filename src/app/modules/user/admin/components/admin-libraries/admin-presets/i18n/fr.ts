@@ -1,4 +1,24 @@
 export const PRESETS = {
+
+  'NO_PRESETS': 'Pas de questionnaire. Essayez d\'en ajouter !',
+
+  'ALREADY_EXIST': 'Le preset du même nom existe déjà.',
+
+  'ADDED': 'Le preset a été ajouté avec succès.',
+
+  'DELETED': 'Le preset a été supprimé avec succès.',
+
+  'CLONED': 'Le preset a été cloné avec succès.',
+
+  'NO_MULTIPLE_CLONE': 'Désolée. Cette fonctionnalité n\'est pas disponible sur plusieurs presets.',
+
+  'MODAL': {
+    'DELETE': 'Souhaitez-vous vraiment supprimer le(s) Preset(s) sélectionné(s) ?',
+    'CLONE': 'Voulez-vous vraiment cloner le preset sélectionné ?',
+  },
+
+
+
   'PRESET': {
     'ADD': 'Ajouter une configuration',
     'FILTER': 'Rechercher',

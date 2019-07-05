@@ -14,7 +14,7 @@ import { ProjectModule } from './components/project/project.module';
 import { AccountModule } from './components/account/account.module';
 import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';
 import { SynthesisCompleteModule } from '../../public/share/component/synthesis-complete/synthesis-complete.module';
-import { MessageSpaceModule } from '../../utility-components/message-space/message-space.module';
+import { MessageTemplate1Module } from '../../utility-components/messages/message-template-1/message-template-1.module';
 import { TagsService } from "../../../services/tags/tags.service";
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 import { PaginationTemplate2Module } from '../../utility-components/paginations/pagination-template-2/pagination-template-2.module';
@@ -31,7 +31,7 @@ import { PaginationTemplate2Module } from '../../utility-components/paginations/
     AccountModule,
     SynthesisListModule,
     SynthesisCompleteModule,
-    MessageSpaceModule,
+    MessageTemplate1Module,
     ModalModule,
     PaginationTemplate2Module
   ],

@@ -1,27 +1,72 @@
-<div class="container fluid admin-project">
+<section id="admin-project" class="container fluid">
 
-  <div class="section-light-pad heading">
+
+  <!-- fetching error -->
+  <div *ngIf="fetchingError" class="section-light-pad">
+    <div class="restrict-width">
+      <div class="a-p-error-wrapper d-flex align-center">
+        <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+          <p [innerText]="'ERROR.ERRORS.PROJECT_FETCHING_ERROR'" translate></p>
+        </app-error-template-1>
+      </div>
+    </div>
+  </div>
+  <!-- /fetching error -->
+
+
+  <!-- project -->
+  <div *ngIf="!fetchingError && project" class="a-p-header p-top-25">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
 
-      <div class="title-button-wrapper">
-        <h1>{{ project?.name }}</h1>
-
-        <a [routerLink]="['/user/projects/', project._id]" target="_blank"><button class="btn ghost-primary">View client side</button></a>
+      <!-- title -->
+      <div class="d-flex flex-wrap align-center">
+        <h1 class="a-title-header m-right-15">{{ title }}</h1>
+        <a [routerLink]="['/user/projects/', project._id]" class="m-bottom-2" target="_blank">
+          <span class="text-link">{{ 'COMMON.BUTTON.VIEW_LIKE_CLIENT' | translate }}</span>
+        </a>
       </div>
+      <!-- title -->
 
 
+      <!-- metadata -->
+      <div class="d-flex flex-wrap m-bottom-2">
+        <p class="text-sm text-medium text-notify">
+          <span *ngIf="project?.owner?.name">{{ project?.owner?.name }}</span>
+          <span *ngIf="project?.owner?.company" class="m-left-1 m-right-1">-</span>
+          <span *ngIf="project?.owner?.company">{{ project?.owner?.company }}</span>
+          <span *ngIf="project.created" class="m-left-1 m-right-1">-</span>
+          <span>{{ 'COMMON.LABEL.CREATED' | translate }} {{ project.created | date:dateFormat }}</span>
+          <span class="m-left-1 m-right-1">-</span>
+          <span>{{ project.collaborators.length }} {{ 'COMMON.LABEL.COLLABORATORS' | translate }}</span>
+        </p>
+      </div>
+      <!-- /metadata -->
+
+
+      <!-- tabs -->
       <ul class="tab">
         <li *ngFor="let tab of authorizedTabs" class="tab-item">
-          <a routerLinkActive="active" [routerLink]="['/user/admin/projects/project', project._id, tab]" [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLink]="['/user/admin/projects/project', project._id, tab]"
+            routerLinkActive="active">
             {{ 'PROJECT.' + tab.toUpperCase() | translate }}
           </a>
         </li>
       </ul>
+      <!-- /tabs -->
+
 
     </div>
   </div>
+  <!-- /project -->
 
+
+  <!-- other sections -->
   <router-outlet></router-outlet>
+  <!-- /other sections -->
 
-</div>
+
+</section>
+

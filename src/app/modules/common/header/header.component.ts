@@ -59,6 +59,7 @@ export class HeaderComponent implements OnDestroy {
   private _adminRoutes: Array<Header> = [
     { pageName: 'Dashboard', pageLink: '/user/admin', adminLevel: 1 },
     { pageName: 'Users', pageLink: '/user/admin/users', adminLevel: 1 },
+    { pageName: 'Community', pageLink: '/user/admin/community', adminLevel: 3 },
     { pageName: 'Professionals', pageLink: '/user/admin/professionals', adminLevel: 3 },
     { pageName: 'Projects', pageLink: '/user/admin/projects', adminLevel: 1 },
     { pageName: 'Libraries', pageLink: '/user/admin/libraries', adminLevel: 3 },

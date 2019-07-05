@@ -1,22 +1,13 @@
 @import "../../../../../style/framework/src/variables";
 
-#error-template-1-component {
-  font-size: $font-size-md;
-  font-weight: $font-weight-normal;
-
-  .flex-between {
-    flex-wrap: wrap;
-  }
+#error-template-1 {
 
   .message-wrapper, .bot-wrapper {
-    margin-left: auto;
-    margin-right: auto;
+    padding-bottom: $unit-5;
   }
 
   .message-wrapper {
-    padding-right: 0.75rem;
-    padding-bottom: $unit-5;
-    max-width: 50%;
+    max-width: 75%;
   }
 
 
@@ -32,10 +23,10 @@
 
 @media (max-width: $size-sm) {
 
-  #error-template-1-component {
+  #error-template-1 {
 
     .message-wrapper {
-      padding-right: 0;
+      order: 2;
       max-width: 100%;
     }
 
@@ -43,3 +34,14 @@
 
 }
 
+@media (min-width: $size-xl) {
+
+  #error-template-1 {
+
+    .message-wrapper {
+      max-width: 50%;
+    }
+
+  }
+
+}

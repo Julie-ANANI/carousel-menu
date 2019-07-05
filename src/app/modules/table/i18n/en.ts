@@ -32,7 +32,12 @@ export const TABLE = {
     'INDUSTRY': 'Industry',
     'FEEDBACK': 'Feedback',
     'SAVED': 'Saved',
-    'SCORE': 'Validation Score'
+    'SCORE': 'Validation Score',
+    'LANGUAGE': 'Language',
+    'AUTHOR': 'Author',
+    'CONTENT': 'Content',
+    'SECTIONS': 'Sections',
+    'PROJECTS': 'Projects',
   },
 
   'TITLE': {
@@ -42,6 +47,7 @@ export const TABLE = {
     'AMBASSADORS': 'ambassadors',
     'REQUESTS': 'requests',
     'RESULTS': 'results',
+    'ANSWERS': 'answers'
   },
 
   'MESSAGES': {

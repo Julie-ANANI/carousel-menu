@@ -33,7 +33,12 @@ export const TABLE = {
     'INDUSTRY': 'Industrie',
     'FEEDBACK': 'Feedback',
     'SAVED': 'Sauvegardé',
-    'SCORE': 'Score de Validation'
+    'SCORE': 'Score de Validation',
+    'LANGUAGE': 'Langue',
+    'AUTHOR': 'Auteur',
+    'CONTENT': 'Contenu',
+    'SECTIONS': 'Sections',
+    'PROJECTS': 'Projets',
   },
 
   'TITLE': {
@@ -42,7 +47,8 @@ export const TABLE = {
     'PROJECTS': 'projets',
     'AMBASSADORS': 'ambassadeurs',
     'REQUESTS': 'requests',
-    'RESULTS': 'résultats'
+    'RESULTS': 'résultats',
+    'ANSWERS': 'réponses'
   },
 
   'MESSAGES': {

@@ -8,10 +8,10 @@ import { SharedAmbassadorListComponent } from './shared-ambassador-list.componen
 import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
-import { SidebarTagsFormModule } from '../../../sidebar/components/tags-form/sidebar-tags-form.module';
+import { SidebarTagsModule } from '../../../sidebar/components/tags/sidebar-tags.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
-import { MessageSpaceModule } from '../../../utility-components/message-space/message-space.module';
+import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
 
 @NgModule({
   imports: [
@@ -21,10 +21,10 @@ import { MessageSpaceModule } from '../../../utility-components/message-space/me
     TableModule,
     TranslateModule.forChild(),
     SidebarUserFormModule,
-    SidebarTagsFormModule,
+    SidebarTagsModule,
     ModalModule,
     ErrorTemplate1Module,
-    MessageSpaceModule
+    MessageTemplate1Module
   ],
   declarations: [
     SharedAmbassadorListComponent

@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { AdminCampaignsComponent } from './admin-campaigns.component';
 import { AdminCampaignComponent } from './admin-campaign/admin-campaign.component';
 import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
 import { AdminCampaignQuizComponent } from './admin-campaign-quiz/admin-campaign-quiz.component';
@@ -18,7 +17,6 @@ import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admi
 import { AdminCampaignStatsComponent } from './admin-campaign-stats/admin-campaign-stats.component';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
-import { SharedProsListModule } from '../../../../shared/components/shared-pros-list/shared-pros-list.module';
 import { SharedSearchHistoryModule} from '../../../../shared/components/shared-search-history/search-history.module';
 import { SharedSearchProsModule } from '../../../../shared/components/shared-search-pros/shared-search-pros.module';
 import { SharedSearchResultsModule } from '../../../../shared/components/shared-search-results/search-results.module';
@@ -29,15 +27,17 @@ import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workf
 import { AutocompleteInputModule } from "../../../../utility-components/autocomplete-input/autocomplete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { SidebarBatchFormModule } from '../../../../sidebar/components/batch-form/sidebar-batch-form.module';
-import { MessageSpaceModule } from '../../../../utility-components/message-space/message-space.module';
+import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/sidebar-user-form.module';
+import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { MessageTemplate2Module } from '../../../../utility-components/messages/message-template-2/message-template-2.module';
+import { SharedProfessionalsListModule } from '../../../../shared/components/shared-professionals-list/shared-professionals-list.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SharedProsListModule,
     FormsModule,
     SharedSearchProsModule,
     SharedSearchResultsModule,
@@ -52,12 +52,14 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AutocompleteInputModule,
     SidebarUserAnswerModule,
     SidebarBatchFormModule,
-    MessageSpaceModule,
+    MessageTemplate1Module,
     ModalModule,
     SidebarUserFormModule,
+    ErrorTemplate1Module,
+    MessageTemplate2Module,
+    SharedProfessionalsListModule
   ],
   declarations: [
-    AdminCampaignsComponent,
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
     AdminCampaignQuizComponent,
@@ -69,10 +71,8 @@ import { SidebarUserFormModule } from '../../../../sidebar/components/user-form/
     AdminCampaignWorkflowsComponent,
     AdminCampaignStatsComponent,
     AdminCampaignAbtestingComponent
-
   ],
   exports: [
-    AdminCampaignsComponent,
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
     AdminCampaignQuizComponent,

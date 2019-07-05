@@ -2,6 +2,8 @@ export const SHOWCASE = {
 
   'MODIFY': 'Modifier',
 
+  'BUTTON_SAVE': 'Sauvegarder',
+
   'SEE_MORE': 'Voir plus',
 
   'MAIN_TITLE': 'Découvrez nos projets d\'innovation',
@@ -26,7 +28,9 @@ export const SHOWCASE = {
     'TITLE': 'Choisir les secteurs pour créer la vitrine'
   },
 
-  'BUILD_SHOWCASE': 'Construire la vitrine',
+  'CREATE_SHOWCASE': 'Prêt à créer votre vitrine !',
+
+  'ERROR_STATS': 'Nous avons de la difficulté à trouver les statistiques.',
 
   'TOOLTIP': {
     'MODIFY_TAGS': 'Cliquez pour éditer les tags.',
@@ -38,5 +42,7 @@ export const SHOWCASE = {
   'MAX_SELECT_ANSWERS': 'Vous ne pouvez sélectionner que 6 réponses.',
 
   'MAX_SELECT_INNOVATIONS': 'Vous ne pouvez sélectionner que 9 innovations.',
+
+  'NAME_PLACEHOLDER': 'Nom',
 
 };

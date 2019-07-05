@@ -1,4 +1,5 @@
 export const CAMPAIGNS = {
+
   'CAMPAIGN-NAME': 'Campaign name',
 
   'QUIZ': 'Quiz',
@@ -19,7 +20,7 @@ export const CAMPAIGNS = {
 
   'EXPORT_ANSWERS': 'Export',
 
-  'IMPORT_ANSWERS': 'Import',
+  'IMPORT_ANSWERS': 'Import answers',
 
   'EMAIL_CONFIDENCE': 'Email confidence',
 
@@ -119,11 +120,6 @@ export const CAMPAIGNS = {
 
   },
 
-  'NO_ANSWERS': {
-    'A': 'Don\'t have any answers?',
-    'B': 'Try to add some by clicking on "Import" button.'
-  },
-
   'QUIZ_PAGE': {
     'HEADING': 'Visit these link to see the questionnaire:',
     'BOT': 'No quiz has been generated for this campaign.'
@@ -171,6 +167,17 @@ export const CAMPAIGNS = {
     'TITLE': 'Batch for',
     'MODAL_DELETE_CONTENT': 'Do you really want to delete this batch?',
     'CREATING_BATCH': 'We are in progress of creating the batch for this campaign. Please be patient!',
-  }
+  },
+
+  'ERROR_MESSAGE': {
+    'FETCHING': 'We are having trouble while fetching the answers for this campaign. It could be because we could not have the answers.',
+    'FETCHING_PROFESSIONALS': 'We are having trouble while fetching the professionals for this campaign. It could be because of server connection problem or no professionals.',
+  },
+
+  'NO_ANSWER': 'No answers for this campaign. Try to import some!',
+
+  'NO_PROFESSIONALS': 'No professionals for this campaign. Try to add/import some!',
+
+  'LABEL_IMPORT': 'Import professionals from campaign (only one campaign at a time)',
 
 };

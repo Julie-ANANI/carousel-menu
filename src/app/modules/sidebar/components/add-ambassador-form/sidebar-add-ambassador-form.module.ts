@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddAmbassadorFormComponent } from './add-ambassador-form.component';
 import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
-import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/shared-tag-item.module';
+import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
 import { SidebarModule } from '../../sidebar.module';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { SidebarModule } from '../../sidebar.module';
     ReactiveFormsModule,
     TranslateModule.forChild(),
     AutocompleteInputModule,
-    SharedTagItemModule,
+    SharedTagModule,
     SidebarModule
   ],
   declarations: [

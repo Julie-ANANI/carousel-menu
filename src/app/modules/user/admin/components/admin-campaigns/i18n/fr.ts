@@ -19,7 +19,7 @@ export const CAMPAIGNS = {
 
   'EXPORT_ANSWERS': 'Exporter',
 
-  'IMPORT_ANSWERS': 'Importer',
+  'IMPORT_ANSWERS': 'Importer des réponses',
 
   'EMAIL_CONFIDENCE': 'Indice de confiance',
 
@@ -120,11 +120,6 @@ export const CAMPAIGNS = {
     'VALIDATED': 'Validé',
   },
 
-  'NO_ANSWERS': {
-    'A': 'Vous n\'avez pas de réponses ?',
-    'B': 'Essayez d\'en ajouter en cliquant sur le bouton "Importer".'
-  },
-
   'QUIZ_PAGE': {
     'HEADING': 'Visitez ces liens pour voir le questionnaire :',
     'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
@@ -168,8 +163,19 @@ export const CAMPAIGNS = {
     'BOT': 'Lancer auto-batch et prendre des vacances :)',
     'AUTO_BATCH_LABEL': 'Démarrage auto-batch',
     'NUGGETS': 'Nuggets',
-    'TITLE': 'Batch des',
+    'TITLE': 'Batch de',
     'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?'
-  }
+  },
+
+  'ERROR_MESSAGE': {
+    'FETCHING': 'Nous avons de la difficulté à trouver les réponses pour cette campagne. C\'est peut-être parce que nous ne pouvions pas avoir les réponses.',
+    'FETCHING_PROFESSIONALS': 'Nous avons de la difficulté à trouver les professionnels pour cette campagne. Cela peut être dû à un problème de connexion au serveur ou à l\'absence de professionnels.',
+  },
+
+  'NO_ANSWER': 'Aucune réponse pour cette campagne. Essayez d\'en importer !',
+
+  'NO_PROFESSIONALS': 'Pas de professionnels pour cette campagne. Essayez d\'en ajouter/importer !',
+
+  'LABEL_IMPORT': 'Importer des professionnels de la campagne (une seule campagne à la fois)',
 
 };

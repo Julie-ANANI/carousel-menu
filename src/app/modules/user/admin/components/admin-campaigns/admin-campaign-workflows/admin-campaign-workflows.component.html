@@ -37,11 +37,11 @@
       <!-- section no campaign -->
       <ng-container *ngIf="!availableScenarios || !availableScenarios.length">
         <div class="section-pad">
-          <app-message-space [widthMax]="'354px'">
+          <app-message-template-1 [widthMax]="'354px'">
             {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A' | translate }}
             <br>
             {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B' | translate }}
-          </app-message-space>
+          </app-message-template-1>
         </div>
       </ng-container>
       <!-- /section no campaign -->

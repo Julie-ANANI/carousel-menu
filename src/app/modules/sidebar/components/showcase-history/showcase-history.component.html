@@ -1,0 +1,41 @@
+<section id="sidebar-showcase-history">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+
+    <!-- section buttons -->
+    <div class="flex-between">
+      <form (ngSubmit)="createShowcase()">
+
+        <div class="form-group">
+          <label>
+            <input
+              [(ngModel)]="showcaseName"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'SHOWCASE.NAME_PLACEHOLDER' | translate"
+              class="form-input"
+              type="text">
+          </label>
+        </div>
+
+        <div class="text-center">
+          <button class="btn btn-sm ghost-primary" type="submit" [disabled]="!showcaseName" [textContent]="'SHOWCASE.BUTTON_SAVE'" translate></button>
+        </div>
+
+      </form>
+    </div>
+    <!-- /section buttons -->
+
+
+    <!-- section table -->
+    <app-shared-table
+      [(config)]="config"
+      [data]="tableInfos"
+      (editRow)="loadShowcase($event)"
+      (removeRows)="deleteShowcase($event)">
+    </app-shared-table>
+    <!-- /section table -->
+
+
+  </div>
+</section>
+

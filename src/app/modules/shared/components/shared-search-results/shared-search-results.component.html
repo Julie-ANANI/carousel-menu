@@ -33,10 +33,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length">
+    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length">
       {{ 'SEARCH.CAMPAIGN.ADDANDSEE' | translate }}
     </button>
-    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length">
+    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length">
       {{ 'SEARCH.ADD' | translate }}
     </button>
   </div>

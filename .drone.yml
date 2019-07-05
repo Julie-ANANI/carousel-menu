@@ -3,13 +3,33 @@ name: default
 
 ## UMI development steps
 steps:
+- name: baseimage
+  image: plugins/docker
+  settings:
+    repo: unitedmotionideas/frontbase
+    target: baseimage
+    dockerfile: ./Dockerfile.image
+    build_args:
+      - APP_NAME=umi
+      - ENV_NAME=dev
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - push
+    branch:
+      - development
+
 - name: dockerDev
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     build_args:
-    - APP_NAME=umi
-    - ENV_NAME=dev
+      - APP_NAME=umi
+      - ENV_NAME=dev
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -17,9 +37,9 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - push
+      - push
     branch:
-    - development
+      - development
 
 - name: rancherDev
   image: peloton/drone-rancher
@@ -37,16 +57,39 @@ steps:
     - push
     branch:
     - development
+
 ## UMI production steps
-- name: dockerProd
+## This will build the base image. The base image for the front is the same for all instances
+- name: baseimageProd
   image: plugins/docker
   settings:
     auto_tag: true
+    repo: unitedmotionideas/frontbase
+    target: baseimage
+    dockerfile: ./Dockerfile.image
+    build_args:
+      - APP_NAME=umi
+      - ENV_NAME=dev
+      - VERSION=${DRONE_TAG}
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      - tag
+
+- name: dockerProd
+  depends_on: [baseimageProd]
+  image: plugins/docker
+  settings:
+    target: buildinstance
+    auto_tag: true
     auto_tag_suffix: umi
     build_args:
-    - APP_NAME=umi
-    - ENV_NAME=production
-    - VERSION=${DRONE_TAG}
+      - APP_NAME=umi
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -54,9 +97,10 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - tag
+      - tag
 
 - name: rancherProd
+  depends_on: [dockerProd]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -69,19 +113,27 @@ steps:
     timeout: 240
   when:
     event:
-    - tag
+      - tag
+
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
 ## ## ## ## ## ## ## ## WHITE LABEL ## ## ## ## ## ## ## ## ##
+## We need to organize this in groups of three, otherwise,  ##
+## the machine won't stand the charge. ## ## ## ## ## ## ## ##
+## Group 1: [umi, dynergie, multivalente]
+## Group 2: [inomer, novanexia, salveo]
+## Group 3: [schneider, bnp]
 ## Dynergie production steps
 - name: dockerProdDynergie
+  depends_on: [baseimageProd]
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: dynergie
     build_args:
-    - APP_NAME=dynergie
-    - ENV_NAME=production
-    - VERSION=${DRONE_TAG}
+      - APP_NAME=dynergie
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -89,9 +141,10 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - tag
+      - tag
 
 - name: rancherProdDynergie
+  depends_on: [dockerProdDynergie]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -104,18 +157,20 @@ steps:
     timeout: 240
   when:
     event:
-    - tag
+      - tag
 
-## Multivalente production steps
+  ## Multivalente production steps
 - name: dockerProdMultivalente
+  depends_on: [baseimageProd]
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: multivalente
     build_args:
-    - APP_NAME=multivalente
-    - ENV_NAME=production
-    - VERSION=${DRONE_TAG}
+      - APP_NAME=multivalente
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -123,9 +178,10 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - tag
+      - tag
 
 - name: rancherProdMultivalente
+  depends_on: [dockerProdMultivalente]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -138,18 +194,21 @@ steps:
     timeout: 240
   when:
     event:
-    - tag
+      - tag
 
-## Inomer production steps
+## Group 2
+  ## Inomer production steps
 - name: dockerProdInomer
+  depends_on: [baseimageProd, rancherProd, rancherProdDynergie, rancherProdMultivalente]
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: inomer
     build_args:
-    - APP_NAME=inomer
-    - ENV_NAME=production
-    - VERSION=${DRONE_TAG}
+      - APP_NAME=inomer
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -157,9 +216,10 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - tag
+      - tag
 
 - name: rancherProdInomer
+  depends_on: [dockerProdInomer]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -172,18 +232,20 @@ steps:
     timeout: 240
   when:
     event:
-    - tag
+      - tag
 
-## Novanexia production steps
+  ## Novanexia production steps
 - name: dockerProdNovanexia
+  depends_on: [baseimageProd, rancherProd, rancherProdDynergie, rancherProdMultivalente]
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: novanexia
     build_args:
-    - APP_NAME=novanexia
-    - ENV_NAME=production
-    - VERSION=${DRONE_TAG}
+      - APP_NAME=novanexia
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -191,9 +253,10 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - tag
+      - tag
 
 - name: rancherProdNovanexia
+  depends_on: [dockerProdNovanexia]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -206,18 +269,20 @@ steps:
     timeout: 240
   when:
     event:
-    - tag
+      - tag
 
-## Salveo production steps
+  ## Salveo production steps
 - name: dockerProdSalveo
+  depends_on: [baseimageProd, rancherProd, rancherProdDynergie, rancherProdMultivalente]
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: salveo
     build_args:
-    - APP_NAME=salveo
-    - ENV_NAME=production
-    - VERSION=${DRONE_TAG}
+      - APP_NAME=salveo
+      - ENV_NAME=production
+      - VERSION=${DRONE_TAG}
     repo: unitedmotionideas/umi-application-front
     username:
       from_secret: docker_username
@@ -225,9 +290,10 @@ steps:
       from_secret: docker_password
   when:
     event:
-    - tag
+      - tag
 
 - name: rancherProdSalveo
+  depends_on: [dockerProdSalveo]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -240,12 +306,15 @@ steps:
     timeout: 240
   when:
     event:
-    - tag
+      - tag
 
+## Group 3
   ## Schneider production steps
 - name: dockerProdSchneider
+  depends_on: [baseimageProd, rancherProdInomer, rancherProdNovanexia, rancherProdSalveo]
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: schneider
     build_args:
@@ -262,6 +331,7 @@ steps:
       - tag
 
 - name: rancherProdSchneider
+  depends_on: [dockerProdSchneider]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080
@@ -278,8 +348,10 @@ steps:
 
   ## BNP Paribas production steps
 - name: dockerProdBNP
+  depends_on: [baseimageProd, rancherProdInomer, rancherProdNovanexia, rancherProdSalveo]
   image: plugins/docker
   settings:
+    target: buildinstance
     auto_tag: true
     auto_tag_suffix: bnpparibas
     build_args:
@@ -296,6 +368,7 @@ steps:
       - tag
 
 - name: rancherProdBNP
+  depends_on: [dockerProdBNP]
   image: peloton/drone-rancher
   settings:
     url: http://206.189.56.176:8080

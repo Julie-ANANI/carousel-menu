@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
@@ -9,7 +9,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-showcase-innovations',
+  selector: 'app-showcase-innovations[tagsStats]',
   templateUrl: './showcase-innovations.component.html',
   styleUrls: ['./showcase-innovations.component.scss']
 })
@@ -17,20 +17,46 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 export class ShowcaseInnovationsComponent {
 
   @Input() set tagsStats(value: Array<TagStats>) {
-    this._getInnovations(value);
+    this._tags = value.map((st) => st.tag._id);
+
+    if (this._tags.length > 0) {
+      const config = {
+        fields: 'created name principalMedia status',
+        isPublic: '1',
+        status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
+        tags: JSON.stringify({ $in: this._tags }),
+        sort: '{"created":-1}'
+      };
+      this._innovationService.getAll(config).subscribe((response: any) => {
+        if (Array.isArray(response.result)) {
+          this._innovations = response.result;
+          this._count = this._innovations.length;
+          this.topInnovationsChange.emit(response.result.slice(0, 9));
+        }
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      });
+    } else {
+      this.topInnovationsChange.emit([]);
+    }
   }
+
+  private _topInnovations: Array<Innovation> = [];
+  @Input() set topInnovations(value: Array<Innovation>) {
+    this._topInnovations = value;
+    this._computeCards();
+  }
+  @Output() topInnovationsChange: EventEmitter<Array<Innovation>> = new EventEmitter<Array<Innovation>>();
 
   private _tags: Array<string> = [];
 
   private _innovations: Array<Innovation> = [];
 
-  private _topInnovations: Array<Innovation> = [];
-
   private _cards: Array<{title: string, _id: string, media: string}> = [];
 
   private _topCards: Array<{title: string, _id: string, media: string}> = [];
 
-  private _selectedCards: Array<{title: string, _id: string, media: string}> = [];
+  private _selectedInnovations: {[innoId: string]: boolean} = {};
 
   private _count = 0;
 
@@ -41,40 +67,10 @@ export class ShowcaseInnovationsComponent {
               private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+    this._translateService.onLangChange.subscribe((_event: LangChangeEvent) => {
       this._computeCards();
     });
 
-  }
-
-  private _getInnovations(value: Array<TagStats>): void {
-    this._tags = value.map((st) => st.tag._id);
-
-    if (this._tags.length > 0) {
-
-      const config = {
-        fields: 'created name principalMedia status',
-        isPublic: '1',
-        status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
-        tags: JSON.stringify({ $in: this._tags }),
-        sort: '{"created":-1}'
-      };
-
-      this._innovationService.getAll(config).subscribe((response: any) => {
-        if (Array.isArray(response.result)) {
-          this._innovations = response.result;
-          this._count = this._innovations.length;
-          this._topInnovations = response.result.slice(0, 9);
-          this._computeCards();
-        }
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-      });
-
-    } else {
-      this._topInnovations = [];
-      this._computeCards();
-    }
   }
 
   private _computeCards() {
@@ -96,8 +92,7 @@ export class ShowcaseInnovationsComponent {
       };
     };
 
-    this._selectedCards = this._topInnovations.map(innovationToCard);
-    this._topCards = this._selectedCards;
+    this._topCards = this._topInnovations.map(innovationToCard);
     this._cards = this._innovations.map(innovationToCard);
 
   }
@@ -107,25 +102,18 @@ export class ShowcaseInnovationsComponent {
     this._modalShow = true;
   }
 
-  public activeInnovation(card: any) {
-    return this._selectedCards.some((item: any) => item._id === card._id);
+  public activeInnovation(id: string) {
+    return this._selectedInnovations[id];
   }
 
   public onChangeInnovation(event: Event, card: any) {
-    if ((event.target as HTMLInputElement).checked) {
-      if (this._selectedCards.length < 9) {
-        this._selectedCards.push(card);
-      } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'SHOWCASE.MAX_SELECT_INNOVATIONS');
-      }
-    } else {
-      this._selectedCards = this._selectedCards.filter((item: any) => item._id !== card._id);
-    }
+    this._selectedInnovations[card._id] = (event.target as HTMLInputElement).checked;
   }
 
   public onClickApply(event: Event) {
     event.preventDefault();
-    this._topCards = this._selectedCards;
+    const selectedInnovation = this._innovations.filter((i) => this._selectedInnovations[i._id]).slice(0, 9);
+    this.topInnovationsChange.emit(selectedInnovation);
     this._modalShow = false;
   }
 
