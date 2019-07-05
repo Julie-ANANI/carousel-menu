@@ -1,6 +1,6 @@
 export const PRESETS = {
 
-  'NO_PRESETS': 'Ajoutez le premier questionnaire en cliquant sur le bouton ci-dessous.',
+  'NO_PRESETS': 'Pas de questionnaire. Essayez d\'en ajouter !',
 
   'ALREADY_EXIST': 'Le preset du même nom existe déjà.',
 

@@ -6,7 +6,6 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { AdminProfessionalsComponent } from './components/admin-professionals/admin-professionals.component';
 import { AdminProjectComponent } from './components/admin-project/admin-project.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
-//import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
@@ -26,8 +25,8 @@ import { librariesRoutes } from './components/admin-libraries/admin-libraries-ro
 import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
 import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
-import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 
+import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
@@ -119,8 +118,10 @@ const adminRoutes: Routes = [
             resolve: { projects : ProjectsResolver },
             runGuardsAndResolvers: 'always'
           },
-          { path: 'project/:projectId',
+          {
+            path: 'project/:projectId',
             resolve: { innovation : InnovationResolver, project_tags_pool: ProjectTagsPoolResolver },
+            runGuardsAndResolvers: 'always',
             component: AdminProjectComponent,
             children: [
               ...projectRoutes
@@ -131,7 +132,7 @@ const adminRoutes: Routes = [
         path: 'campaigns/campaign/:campaignId',
         component: AdminCampaignComponent,
         resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver, campaign_professionals: CampaignProfessionalsResolver },
-        runGuardsAndResolvers: 'always',
+        runGuardsAndResolvers: 'pathParamsChange',
         children: [
           ...campaignRoutes
         ]

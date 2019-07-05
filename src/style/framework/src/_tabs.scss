@@ -16,9 +16,9 @@
     a {
       @include flex-centered();
       font-size: $font-size-md;
-      font-weight: 500;
+      font-weight: normal;
       margin: 0;
-      padding: $unit-4;
+      padding: $unit-3;
       text-decoration: none;
       color: inherit;
       border-bottom: $border-width-xl solid transparent;
