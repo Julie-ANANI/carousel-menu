@@ -15,13 +15,13 @@
 
 
   <!-- project -->
-  <div *ngIf="!fetchingError" class="a-p-header p-top-25">
+  <div *ngIf="!fetchingError && project" class="a-p-header p-top-25">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
 
       <!-- title -->
       <div class="d-flex flex-wrap align-center">
-        <h1 class="a-title-header m-right-15">{{ currentInnovationCard.title }}</h1>
+        <h1 class="a-title-header m-right-15">{{ innovationTitle }}</h1>
         <a [routerLink]="['/user/projects/', project._id]" class="m-bottom-2" target="_blank">
           <span class="text-link">{{ 'COMMON.BUTTON.VIEW_LIKE_CLIENT' | translate }}</span>
         </a>

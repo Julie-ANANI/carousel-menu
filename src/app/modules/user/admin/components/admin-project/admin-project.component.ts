@@ -37,7 +37,7 @@ export class AdminProjectComponent implements OnInit {
     if (this._activatedRoute.snapshot.data['innovation'] && this._activatedRoute.snapshot.data['innovation'] !== undefined) {
       this._project = this._activatedRoute.snapshot.data['innovation'];
       this._currentInnovationCard = InnovationFrontService.currentLangInnovationCard(this._project, this.userLang);
-      this._setPageTitle(this._currentInnovationCard.title);
+      this._setPageTitle(this.innovationTitle );
       this._metadata();
     } else {
       this._fetchingError = true;
@@ -76,6 +76,10 @@ export class AdminProjectComponent implements OnInit {
     } else {
       return '#2ECC71';
     }
+  }
+
+  get innovationTitle(): string {
+    return this._currentInnovationCard && this._currentInnovationCard.title ? this._currentInnovationCard.title : this._project.name;
   }
 
   get userLang(): string {
