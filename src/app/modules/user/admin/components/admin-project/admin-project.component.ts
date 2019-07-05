@@ -37,6 +37,7 @@ export class AdminProjectComponent implements OnInit {
       this._project = this._activatedRoute.snapshot.data['innovation'];
       this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this.userLang, 'title');
       this._setPageTitle(this.title );
+      console.log(this.title);
       this._metadata();
     } else {
       this._fetchingError = true;
@@ -52,7 +53,9 @@ export class AdminProjectComponent implements OnInit {
   }
 
   private _setPageTitle(value: string) {
-    this._translateTitleService.setTitle(value);
+    if (value) {
+      this._translateTitleService.setTitle(value);
+    }
   }
 
   get authorizedTabs(): Array<string> {
