@@ -88,7 +88,7 @@ export class ShowcaseComponent {
     if (tags.length > 0) {
       const statsObservables = tags.map((tag) => this._tagService.getStats(tag._id));
       forkJoin(statsObservables).subscribe((tagStats) => {
-        this._selectedTagsStats = tagStats;
+        this._selectedTagsStats = tagStats.map((t) => { return {...t, static: true}; });
         this._recomputeData();
       }, (err) => {
         this._translateNotificationService.error('ERROR.ERROR', err.message);
@@ -179,14 +179,16 @@ export class ShowcaseComponent {
 
 
   private _computeCountries() {
-    this._countries = this._selectedTagsStats.reduce( (acc, stats) => {
-      stats.geographicalRepartition.forEach((cc) => {
-        if (acc[cc.country]) {
-          acc[cc.country] += cc.count;
-        } else {
-          acc[cc.country] = cc.count;
-        }
-      });
+    this._countries = this._selectedTagsStats.reduce((acc, stats) => {
+      if (!!stats.geographicalRepartition) {
+        stats.geographicalRepartition.forEach((cc) => {
+          if (acc[cc.country]) {
+            acc[cc.country] += cc.count;
+          } else {
+            acc[cc.country] = cc.count;
+          }
+        });
+      }
       return acc;
     }, <{ [country: string]: number }> {} );
 

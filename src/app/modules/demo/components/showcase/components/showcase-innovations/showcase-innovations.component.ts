@@ -31,7 +31,12 @@ export class ShowcaseInnovationsComponent {
         if (Array.isArray(response.result)) {
           this._innovations = response.result;
           this._count = this._innovations.length;
-          this.topInnovationsChange.emit(response.result.slice(0, 9));
+          const staticInnovations = value.every((t) => t.static);
+          if (staticInnovations) {
+            this._computeCards();
+          } else {
+            this.topInnovationsChange.emit(response.result.slice(0, 9));
+          }
         }
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
