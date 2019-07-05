@@ -16,30 +16,35 @@ const INNOVATION_KEY = makeStateKey('innovation');
 export class InnovationResolver implements Resolve<Innovation> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
-              private innovationService: InnovationService,
-              private state: TransferState) {}
+              private _innovationService: InnovationService,
+              private _transferState: TransferState) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Innovation> {
-    if (this.state.hasKey(INNOVATION_KEY)) {
-      const innovation = this.state.get<Innovation>(INNOVATION_KEY, null);
-      this.state.remove(INNOVATION_KEY);
+  resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Innovation> {
+
+    if (this._transferState.hasKey(INNOVATION_KEY)) {
+      const innovation = this._transferState.get<Innovation>(INNOVATION_KEY, null);
+      this._transferState.remove(INNOVATION_KEY);
       return new Observable((observer) => {
         observer.next(innovation);
         observer.complete();
       });
+
     } else {
-      const innovationId = route.paramMap.get('projectId') || '';
-      return this.innovationService.get(innovationId)
+      const innovationId = activatedRouteSnapshot.paramMap.get('projectId') || '';
+
+      return this._innovationService.get(innovationId)
         .pipe(
           tap((innovation) => {
             if (isPlatformServer(this.platformId)) {
-              this.state.set(INNOVATION_KEY, innovation as Innovation);
+              this._transferState.set(INNOVATION_KEY, innovation as Innovation);
             }
           }),
           catchError(() => {
             return EMPTY;
           })
         );
+
     }
+
   }
 }

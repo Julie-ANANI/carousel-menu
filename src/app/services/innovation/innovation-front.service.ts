@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
+import {InnovCard} from '../../models/innov-card';
 
 export interface Values {
   settingPercentage?: number;
@@ -203,6 +204,7 @@ export class InnovationFrontService {
   /***
    * this function is to return the color based on the length and limit.
    * @param length
+   * @param limit
    */
   public static getColor(length: number, limit: number): string {
     if (length <= 0) {
@@ -259,6 +261,25 @@ export class InnovationFrontService {
 
     return src === '' ? defaultSrc : src;
 
+  }
+
+  /***
+   * this function returns the current lang innovation card from
+   * the innovation.
+   * @param innovation
+   * @param currentLang
+   */
+  public static currentLangInnovationCard(innovation: Innovation, currentLang: string): InnovCard {
+    if (innovation && currentLang) {
+      if (innovation.innovationCards.length > 1) {
+        const index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
+        if (index !== -1) {
+          return innovation.innovationCards[index];
+        }
+      } else {
+        return innovation.innovationCards[0];
+      }
+    }
   }
 
   get calculatedPercentages(): Values {
