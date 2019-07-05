@@ -41,15 +41,18 @@ export class ShowcaseClientsComponent {
             return 0;
           });
 
-          this._selectedClients =
-            Object
-              .keys(companies)
-              .reduce((acc, company) => {
-                acc[company] = true;
-                return acc;
-              }, {} as {[clientName: string]: boolean});
+          const staticClients = value.every((t) => t.static);
+          if (!staticClients) {
+            this._selectedClients =
+              Object
+                .keys(companies)
+                .reduce((acc, company) => {
+                  acc[company] = true;
+                  return acc;
+                }, {} as {[clientName: string]: boolean});
 
-          this.topClientsChange.emit(this._totalClients);
+            this.topClientsChange.emit(this._totalClients);
+          }
 
         }
 

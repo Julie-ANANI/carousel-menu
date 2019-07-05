@@ -4,6 +4,8 @@ export interface TagStats {
 
   _id?: string;
 
+  static?: boolean; // define if we need to load the data dynamically or if it is static
+
   tag?: Tag;
 
   totalInnovations?: number;

@@ -8,7 +8,7 @@ import { isPlatformServer } from '@angular/common';
 import { Response } from '../../../../../../models/response';
 import { Config } from '../../../../../../models/config';
 
-const PROJECTS_KEY = makeStateKey('projects');
+const COMMUNITY_PROJECTS_KEY = makeStateKey('community_projects');
 
 @Injectable()
 export class CommunityProjectsResolver implements Resolve<Response> {
@@ -28,9 +28,9 @@ export class CommunityProjectsResolver implements Resolve<Response> {
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Response> {
 
-    if (this._transferState.hasKey(PROJECTS_KEY)) {
-      const projects = this._transferState.get<Response>(PROJECTS_KEY, null);
-      this._transferState.remove(PROJECTS_KEY);
+    if (this._transferState.hasKey(COMMUNITY_PROJECTS_KEY)) {
+      const projects = this._transferState.get<Response>(COMMUNITY_PROJECTS_KEY, null);
+      this._transferState.remove(COMMUNITY_PROJECTS_KEY);
 
       return new Observable((observer) => {
         observer.next(projects);
@@ -41,7 +41,7 @@ export class CommunityProjectsResolver implements Resolve<Response> {
       return this._advSearchService.getCommunityInnovations(this._config).pipe(
         tap((response) => {
           if (isPlatformServer(this._platformId)) {
-            this._transferState.set(PROJECTS_KEY, response as Response);
+            this._transferState.set(COMMUNITY_PROJECTS_KEY, response as Response);
           }
         }),
         catchError(() => {

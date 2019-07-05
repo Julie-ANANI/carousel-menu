@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from "../../../../../../services/title/title.service";
-import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from '../../../../../table/models/table';
 import { Config } from '../../../../../../models/config';
+import { isPlatformBrowser } from '@angular/common';
+import { first} from 'rxjs/operators';
+import { AdvSearchService } from '../../../../../../services/advsearch/advsearch.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-community-projects',
@@ -21,7 +24,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
     sort: '{ "created": -1 }'
   };
 
-  private _total: number;
+  private _total: number = -1;
 
   private _table: Table;
 
@@ -29,8 +32,9 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
   private _fetchingError: boolean;
 
-  constructor(private _router: Router,
-              private _activatedRoute: ActivatedRoute,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _router: Router,
+              private _advSearchService: AdvSearchService,
               private _translateTitleService: TranslateTitleService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.COMMUNITY_PROJECTS');
@@ -38,12 +42,14 @@ export class AdminCommunityProjectsComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this._activatedRoute.snapshot.data.projects && Array.isArray(this._activatedRoute.snapshot.data.projects)) {
-      this._projects = this._activatedRoute.snapshot.data.projects;
-      this._total = this._projects.length;
-      this._initializeTable();
-    } else {
-      this._fetchingError = true;
+    if (isPlatformBrowser(this._platformId)) {
+      this._advSearchService.getCommunityInnovations(this._config).pipe(first()).subscribe((response: Array<any>) => {
+        this._projects = response;
+        this._total = this._projects.length;
+        this._initializeTable();
+      }, () => {
+        this._fetchingError = true;
+      });
     }
 
   }

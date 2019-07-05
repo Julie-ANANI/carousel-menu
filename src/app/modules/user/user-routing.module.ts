@@ -1,16 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UserService } from '../../services/user/user.service';
 
 import { UserComponent } from './user.component';
+
+import { UserService } from '../../services/user/user.service';
+import { AuthGuard } from '../../guards/auth-guard.service';
 
 const userRoutes: Routes = [
   {
     path: '',
+    canActivate: [AuthGuard],
     component: UserComponent,
     children: [
-      { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
-      { path: '', loadChildren: './client/client.module#ClientModule' }
+      {
+        path: 'admin',
+        canActivateChild: [AuthGuard],
+        loadChildren: './admin/admin.module#AdminModule'
+      },
+      {
+        path: '',
+        canActivateChild: [AuthGuard],
+        loadChildren: './client/client.module#ClientModule'
+      }
     ]
   }
 ];
@@ -20,7 +31,8 @@ const userRoutes: Routes = [
     RouterModule.forChild(userRoutes)
   ],
   providers: [
-    UserService
+    UserService,
+    AuthGuard
   ],
   exports: [
     RouterModule

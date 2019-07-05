@@ -1,4 +1,4 @@
- import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { UserService } from '../../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { User } from '../../../../../models/user.model';
@@ -7,8 +7,9 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../models/config';
-import { ActivatedRoute } from '@angular/router';
 import { Response } from '../../../../../models/response';
+import { ConfigService } from '../../../../../services/config/config.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-admin-users',
@@ -23,7 +24,7 @@ export class AdminUsersComponent implements OnInit {
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{ "created": -1 }'
   };
 
   private _users: Array<User> = [];
@@ -38,15 +39,16 @@ export class AdminUsersComponent implements OnInit {
 
   private _selectedUser: User;
 
-  private _total: number;
+  private _total: number = -1;
 
   private _me: boolean = false;
 
   private _fetchingError: boolean;
 
-  constructor(private _translateTitleService: TranslateTitleService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: ConfigService,
+              private _translateTitleService: TranslateTitleService,
               private _userService: UserService,
-              private _activatedRoute: ActivatedRoute,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.USERS');
@@ -55,13 +57,19 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this._activatedRoute.snapshot.data.users && Array.isArray(this._activatedRoute.snapshot.data.users.result)) {
-      this._users = this._activatedRoute.snapshot.data.users.result;
-      this._total = this._activatedRoute.snapshot.data.users._metadata.totalCount;
-      this._checkJuan();
-      this._initializeTable();
-    } else {
-      this._fetchingError = true;
+    if (isPlatformBrowser(this._platformId)) {
+
+      this._config.limit = this._configService.configLimit('admin-user-limit');
+
+      this._userService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+        this._users = response.result;
+        this._total = response._metadata.totalCount;
+        this._checkJuan();
+        this._initializeTable();
+      }, () => {
+        this._fetchingError = true;
+      });
+
     }
 
   }
