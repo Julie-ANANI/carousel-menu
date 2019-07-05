@@ -24,8 +24,11 @@ export class ShowcaseAnswersComponent {
       this._answerService.getSectorAnswer(tags_id).subscribe((response) => {
         if (Array.isArray(response.result)) {
           this._answers = response.result;
-          this._selectedAnswers = response.result.slice(0, 6);
-          this._startLoading(this._selectedAnswers);
+          const staticAnswers = value.every((t) => t.static);
+          if (!staticAnswers) {
+            this._selectedAnswers = response.result.slice(0, 6);
+            this._startLoading(this._selectedAnswers);
+          }
         }
       });
     } else {
