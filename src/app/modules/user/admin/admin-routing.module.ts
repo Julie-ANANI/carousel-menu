@@ -132,6 +132,7 @@ const adminRoutes: Routes = [
         path: 'campaigns/campaign/:campaignId',
         component: AdminCampaignComponent,
         resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver, campaign_professionals: CampaignProfessionalsResolver },
+        runGuardsAndResolvers: 'pathParamsChange',
         children: [
           ...campaignRoutes
         ]
