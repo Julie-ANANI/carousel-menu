@@ -95,6 +95,7 @@ export const COMMON = {
     'SHARED_REPORTS': 'Rapports partagés',
     'DISCOVER': 'Showroom des innovations | UMI',
     'PROJECTS': 'Projets',
+    'PROJECT': 'Projet',
     'REPORT': 'Rapport',
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
     'PROFESSIONALS': 'Professionnels',
@@ -133,6 +134,8 @@ export const COMMON = {
     'LANGUAGE': 'Langue',
     'PRESET_NAME': 'Nom du Preset',
     'TAG_NAME': 'Nom de tag',
+    'CREATED': 'Créé',
+    'COLLABORATORS': 'collaborateurs'
   },
 
   'PLACEHOLDER': {
@@ -199,6 +202,7 @@ export const COMMON = {
     'SHOW': 'Montrer',
     'START': 'Démarrer',
     'CREATE': 'Créer',
+    'VIEW_LIKE_CLIENT': 'Afficher comme client'
   },
 
   'PROJECT': {

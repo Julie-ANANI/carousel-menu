@@ -96,6 +96,7 @@ export const COMMON = {
     'SHARED_REPORTS': 'Shared Reports',
     'DISCOVER': 'Innovation Portfolio | UMI',
     'PROJECTS': 'Projects',
+    'PROJECT': 'Project',
     'REPORT': 'Report',
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
     'PROFESSIONALS': 'Professionals',
@@ -133,7 +134,9 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Signature Name',
     'LANGUAGE': 'Language',
     'PRESET_NAME': 'Preset Name',
-    'TAG_NAME': 'Tag Name'
+    'TAG_NAME': 'Tag Name',
+    'CREATED': 'Created',
+    'COLLABORATORS': 'collaborators'
   },
 
   'PLACEHOLDER': {
@@ -199,7 +202,8 @@ export const COMMON = {
     'EDIT': 'Edit',
     'SHOW': 'Show',
     'START': 'Start',
-    'CREATE': 'Create'
+    'CREATE': 'Create',
+    'VIEW_LIKE_CLIENT': 'View like client'
   },
 
   'PROJECT': {
