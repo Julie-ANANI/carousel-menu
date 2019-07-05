@@ -21,7 +21,7 @@
 
       <!-- title -->
       <div class="d-flex flex-wrap align-center">
-        <h1 class="a-title-header m-right-15">{{ innovationTitle }}</h1>
+        <h1 class="a-title-header m-right-15">{{ title }}</h1>
         <a [routerLink]="['/user/projects/', project._id]" class="m-bottom-2" target="_blank">
           <span class="text-link">{{ 'COMMON.BUTTON.VIEW_LIKE_CLIENT' | translate }}</span>
         </a>
@@ -30,9 +30,9 @@
 
 
       <!-- metadata -->
-      <div class="d-flex flex-wrap">
+      <div class="d-flex flex-wrap m-bottom-2">
         <p class="text-sm text-medium text-notify">
-          <span *ngIf="project?.owner?.name" class="text-warning">{{ project?.owner?.name }}</span>
+          <span *ngIf="project?.owner?.name">{{ project?.owner?.name }}</span>
           <span *ngIf="project?.owner?.company" class="m-left-1 m-right-1">-</span>
           <span *ngIf="project?.owner?.company">{{ project?.owner?.company }}</span>
           <span *ngIf="project.created" class="m-left-1 m-right-1">-</span>

@@ -8,7 +8,8 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
-import {InnovCard} from '../../models/innov-card';
+import { InnovCard } from '../../models/innov-card';
+import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 
 export interface Values {
   settingPercentage?: number;
@@ -264,21 +265,39 @@ export class InnovationFrontService {
   }
 
   /***
-   * this function returns the current lang innovation card from
-   * the innovation.
+   * this function returns the fields for the
+   * current lang innovation card or innovation card from the innovation.
    * @param innovation
    * @param currentLang
+   * @param required
    */
-  public static currentLangInnovationCard(innovation: Innovation, currentLang: string): InnovCard {
-    if (innovation && currentLang) {
-      if (innovation.innovationCards.length > 1) {
-        const index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
-        if (index !== -1) {
-          return innovation.innovationCards[index];
-        }
-      } else {
-        return innovation.innovationCards[0];
+  public static currentLangInnovationCard(innovation: Innovation, currentLang: string, required: string) {
+    if (innovation && innovation.innovationCards && currentLang && required) {
+
+      let index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
+
+      if (index === -1) {
+        index = 0;
       }
+
+      switch (required) {
+
+        case 'card':
+          return innovation.innovationCards[index];
+
+        case 'title':
+          return innovation.innovationCards[index].title;
+
+        case 'summary':
+          return new ScrapeHTMLTags().transform(innovation.innovationCards[index].summary) || '';
+
+        case 'problem':
+          return new ScrapeHTMLTags().transform(innovation.innovationCards[index].problem) || '';
+
+        case 'solution':
+          return new ScrapeHTMLTags().transform(innovation.innovationCards[index].solution) || '';
+      }
+
     }
   }
 

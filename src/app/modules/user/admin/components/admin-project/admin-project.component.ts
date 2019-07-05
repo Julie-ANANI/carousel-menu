@@ -6,7 +6,6 @@ import { AuthService } from '../../../../../services/auth/auth.service';
 import { FrontendService } from '../../../../../services/frontend/frontend.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { InnovCard } from '../../../../../models/innov-card';
 
 @Component({
   selector: 'app-admin-project',
@@ -20,7 +19,7 @@ export class AdminProjectComponent implements OnInit {
 
   private _fetchingError: boolean;
 
-  private _currentInnovationCard: InnovCard;
+  private _innovationTitle: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -36,8 +35,8 @@ export class AdminProjectComponent implements OnInit {
 
     if (this._activatedRoute.snapshot.data['innovation'] && this._activatedRoute.snapshot.data['innovation'] !== undefined) {
       this._project = this._activatedRoute.snapshot.data['innovation'];
-      this._currentInnovationCard = InnovationFrontService.currentLangInnovationCard(this._project, this.userLang);
-      this._setPageTitle(this.innovationTitle );
+      this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this.userLang, 'title');
+      this._setPageTitle(this.title );
       this._metadata();
     } else {
       this._fetchingError = true;
@@ -78,8 +77,8 @@ export class AdminProjectComponent implements OnInit {
     }
   }
 
-  get innovationTitle(): string {
-    return this._currentInnovationCard && this._currentInnovationCard.title ? this._currentInnovationCard.title : this._project.name;
+  get title(): string {
+    return  this._innovationTitle ? this._innovationTitle : this._project.name;
   }
 
   get userLang(): string {
@@ -94,8 +93,8 @@ export class AdminProjectComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get currentInnovationCard(): InnovCard {
-    return this._currentInnovationCard;
+  get innovationTitle(): string {
+    return this._innovationTitle;
   }
 
   get project(): Innovation {
