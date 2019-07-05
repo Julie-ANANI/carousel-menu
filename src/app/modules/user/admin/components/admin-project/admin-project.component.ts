@@ -37,7 +37,6 @@ export class AdminProjectComponent implements OnInit {
       this._project = this._activatedRoute.snapshot.data['innovation'];
       this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this.userLang, 'title');
       this._setPageTitle(this.title );
-      console.log(this.title);
       this._metadata();
     } else {
       this._fetchingError = true;
