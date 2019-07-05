@@ -358,7 +358,7 @@ export const COMMON = {
   },
 
   'SIGNATURES': {
-    'NO_SIGNATURES_ADMIN': 'Add the first signature by clicking on the below button.',
+    'NO_SIGNATURES_ADMIN': 'No signatures. Try to add some!.',
     'DELETE_SIGNATURES': 'Do you really want to delete the selected signature(s)?'
   }
 
