@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
 import { Media } from '../../../../../models/media';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { Config } from '../../../../../models/config';
 
 @Component({
   selector: 'app-discover-description',
@@ -20,6 +21,14 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 })
 
 export class DiscoverDescriptionComponent implements OnInit {
+
+  private _relatedInnovationConfig = {
+    fields: 'innovationCards tags principalMedia',
+    limit: '3',
+    offset: '',
+    search: '{}',
+    sort: '{ "created": -1 }'
+  };
 
   private _innovationCard: InnovCard;
 
@@ -47,18 +56,13 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _tags: Array<string> = [];
 
-  private _modalMedia = false;
+  private _modalMedia: boolean;
 
   private _innovationsRelated: Array<{ innovationCard: InnovCard, tags: Array<Tag> }> = [];
 
-  private _innovationConfig = {
-    fields: 'innovationCards tags principalMedia',
-    limit: '3',
-    offset: '0',
-    sort: '{ "created": -1 }'
-  };
-
   private _pageTitle = 'COMMON.PAGE_TITLE.DISCOVER_DESCRIPTION';
+
+  private _fetchingError: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _multiling: MultilingPipe,
@@ -74,27 +78,33 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._lang = params['lang'];
     });
 
-    this._innovation = this._activatedRoute.snapshot.data.innovation;
-
   }
 
   ngOnInit() {
-    if (this._innovation && (this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE') {
-      this._quizButtonDisplay = 'none';
+
+    if (this._activatedRoute.snapshot.data.innovation && typeof this._activatedRoute.snapshot.data.innovation !== undefined) {
+      this._innovation = this._activatedRoute.snapshot.data.innovation;
+      this._innovationCard = InnovationFrontService.currentLangInnovationCard(this._innovation, this._lang, 'card');
+      this._pageTitle = this._innovationCard.title;
+      this._setPageTitle();
+      this._getAllTags();
+      this._getRelatedInnovations();
+      this._getOperatorDetails();
+      this._getAllShareLinks();
+
+      if ((this._innovation.quizId && this._innovation.quizId !== '') || this._innovation.status === 'DONE' ) {
+        this._quizButtonDisplay = 'none';
+      }
+
+    } else {
+      this._fetchingError = true;
     }
 
-    this._getInnovationCard();
-    this._getRelatedInnovations();
-    this._getAllTags();
-    this._getAllShareLinks();
-    this._getOperatorDetails();
   }
-
 
   private _setPageTitle() {
     this._translateTitleService.setTitle(this._pageTitle);
   }
-
 
   private _getAllTags() {
     this._innovation.tags.forEach((tag: Tag) => {
@@ -105,11 +115,10 @@ export class DiscoverDescriptionComponent implements OnInit {
     });
   }
 
-
   private _getRelatedInnovations() {
     if (this._innovation.similar) {
       this._innovation.similar.forEach((item) => {
-        this._innovationService.get(item.matched_inno_id , this._innovationConfig).pipe(first()).subscribe((response: Innovation) => {
+        this._innovationService.get(item.matched_inno_id , this._relatedInnovationConfig).pipe(first()).subscribe((response: Innovation) => {
           const index = response.innovationCards.findIndex((innovCard: InnovCard) => innovCard.lang === this._lang);
           if (index !== -1) {
             this._innovationsRelated.push({innovationCard: response.innovationCards[index], tags: response.tags});
@@ -121,10 +130,13 @@ export class DiscoverDescriptionComponent implements OnInit {
     }
   }
 
+  private _getOperatorDetails() {
+    this._operatorEmail = this._innovation.operator ? this._innovation.operator.email : 'contact@umi.us';
+  }
 
   private _getAllShareLinks() {
 
-    if (this._innovation.campaigns.length !== 0) {
+    if (this._innovation.quizId && this._innovation.campaigns && this._innovation.campaigns.length > 0) {
       this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
     }
 
@@ -132,46 +144,28 @@ export class DiscoverDescriptionComponent implements OnInit {
     this._twitterUrl = this._shareService.twitterProjectShareLink(this._innovationCard);
     this._mailUrl = this._shareService.mailProjectShareLink(this._innovationCard);
     this._contactUsUrl = this._shareService.contactOperator(this._innovationCard, this._operatorEmail);
-  }
-
-
-  private _getOperatorDetails() {
-    this._operatorEmail = this._innovation.operator ? this._innovation.operator.email : 'contact@umi.us';
-  }
-
-
-  private _getInnovationCard() {
-    this._innovationCard = this._innovation.innovationCards.find( (card: InnovCard) => card.lang === this._lang);
-
-    if (!this._innovationCard) {
-      this._innovationCard = this._innovation.innovationCards[0];
-    }
-
-    this._pageTitle = this._innovationCard.title;
-    this._setPageTitle();
 
   }
-
 
   public getSrc(media: Media): string {
     return InnovationFrontService.getMediaSrc(media, 'mediaSrc', '280', '177');
   }
 
-
-  public mediaToShow(event: Event, src: string) {
-    event.preventDefault();
+  public mediaToShow(src: string) {
     this._modalMedia = true;
     this._selectedMedia = src;
   }
-
 
   public getRelatedSrc(innovCard: InnovCard): string {
     return InnovationFrontService.getMediaSrc(innovCard, 'default', '280', '177');
   }
 
-
   public getLink(innovCard: InnovCard): string {
     return `/discover/${innovCard.innovation_reference}/${innovCard.lang}`;
+  }
+
+  get relatedInnovationConfig(): Config {
+    return this._relatedInnovationConfig;
   }
 
   get lang(): string {
@@ -244,6 +238,10 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get pageTitle(): string {
     return this._pageTitle;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }
