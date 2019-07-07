@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .tab {
   align-items: center;
@@ -14,6 +15,7 @@
     padding: 0;
 
     a {
+      @include control-transition();
       @include flex-centered();
       font-size: $font-size-md;
       font-weight: normal;
@@ -21,7 +23,7 @@
       padding: $unit-3;
       text-decoration: none;
       color: inherit;
-      border-bottom: $border-width-xl solid transparent;
+      border-bottom: $border-width-lg solid transparent;
 
       i {
         margin-right: $unit-2;
@@ -30,7 +32,6 @@
 
       &:focus, &:hover {
         color: $link-color;
-        border-bottom-color: $primary-color;
         cursor: pointer;
       }
 

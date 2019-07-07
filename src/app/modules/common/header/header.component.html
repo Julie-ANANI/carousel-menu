@@ -17,8 +17,13 @@
           <!-- example page -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
-              <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
-                 routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
+              <a
+                (click)="onClickLink()"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+                class="gtm-menu-sample-synthesis"
+                routerLinkActive="active"
+                target="_blank">
                 <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
               </a>
             </li>
@@ -26,7 +31,12 @@
 
           <!-- discover page -->
           <li class="menu-item" *ngIf="!backOfficeValue">
-            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
+            <a
+              (click)="onClickLink()"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="'/discover'"
+              class="gtm-menu-discover"
+              routerLinkActive="active">
               <span>{{ 'HEADER.DISCOVER' | translate }}</span>
             </a>
           </li>
@@ -34,7 +44,12 @@
           <!-- client my projects -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="menu-item" *ngIf="!backOfficeValue">
-              <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
+              <a
+                (click)="onClickLink()"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/user/projects'"
+                class="gtm-menu-my-projects"
+                routerLinkActive="active">
                 <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
               </a>
             </li>
@@ -43,7 +58,12 @@
           <!-- client shared reports -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="menu-item" *ngIf="!backOfficeValue">
-              <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-reports">
+              <a
+                (click)="onClickLink()"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/user/synthesis'"
+                class="gtm-menu-my-reports"
+                routerLinkActive="active">
                 <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
               </a>
             </li>
@@ -53,7 +73,11 @@
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <ng-container *ngFor="let route of adminRoutes">
               <li class="menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel) && user">
-                <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
+                <a
+                  (click)="onClickLink()"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  [routerLink]="route.pageLink"
+                  routerLinkActive="active">
                   <span>{{ route.pageName }}</span>
                 </a>
               </li>
@@ -242,8 +266,13 @@
           <!-- example page -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
-              <a [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
-                 routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-sample-synthesis" target="_blank">
+              <a
+                (click)="onClickLink()"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+                class="gtm-menu-sample-synthesis"
+                routerLinkActive="active"
+                target="_blank">
                 <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
               </a>
             </li>
@@ -251,7 +280,12 @@
 
           <!-- discover page -->
           <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
-            <a [routerLink]="'/discover'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-discover">
+            <a
+              (click)="onClickLink()"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="'/discover'"
+              class="gtm-menu-discover"
+              routerLinkActive="active">
               <span>{{ 'HEADER.DISCOVER' | translate }}</span>
             </a>
           </li>
@@ -259,7 +293,12 @@
           <!-- client my projects -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
-              <a [routerLink]="'/user/projects'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-projects">
+              <a
+                (click)="onClickLink()"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/user/projects'"
+                class="gtm-menu-my-projects"
+                routerLinkActive="active">
                 <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
               </a>
             </li>
@@ -269,7 +308,12 @@
 
             <!-- client shared reports -->
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue">
-              <a [routerLink]="'/user/synthesis'" routerLinkActive="active" (click)="onClickLink()" class="gtm-menu-my-reports">
+              <a
+                (click)="onClickLink()"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/user/synthesis'"
+                class="gtm-menu-my-reports"
+                routerLinkActive="active">
                 <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
               </a>
             </li>
@@ -277,7 +321,11 @@
             <!-- admin routes -->
             <ng-container *ngFor="let route of adminRoutes">
               <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel)">
-                <a [routerLink]="route.pageLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickLink()">
+                <a
+                  (click)="onClickLink()"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  [routerLink]="route.pageLink"
+                  routerLinkActive="active">
                   <span>{{ route.pageName }}</span>
                 </a>
               </li>
@@ -286,10 +334,10 @@
             <!-- account page -->
             <li class="sidebar-menu-item">
               <a
-                [routerLink]="'/user/account'"
-                routerLinkActive="active"
                 (click)="onClickLink()"
-                class="gtm-menu-my-account text-background">
+                [routerLink]="'/user/account'"
+                class="gtm-menu-my-account text-background"
+                routerLinkActive="active">
                 {{ 'HEADER.MY_ACCOUNT' | translate }}
               </a>
             </li>
@@ -297,10 +345,10 @@
             <!-- admin side -->
             <li class="sidebar-menu-item" *ngIf="!backOfficeValue && canShow(1)">
               <a
-                [routerLink]="'/user/admin'"
-                routerLinkActive="active"
                 (click)="toggleBackOfficeState(); onClickLink();"
-                class="text-background">
+                [routerLink]="'/user/admin'"
+                class="text-background"
+                routerLinkActive="active">
                 Admin Side
               </a>
             </li>
@@ -308,10 +356,10 @@
             <!-- client side -->
             <li class="sidebar-menu-item" *ngIf="backOfficeValue && canShow(1)">
               <a
-                routerLinkActive="active"
-                [routerLink]="'/user/projects'"
                 (click)="toggleBackOfficeState(); onClickLink();"
-                class="text-background">
+                [routerLink]="'/user/projects'"
+                class="text-background"
+                routerLinkActive="active">
                 Client Side
               </a>
             </li>
@@ -327,7 +375,7 @@
 
           <!-- log out -->
           <li class="sidebar-menu-item">
-            <a [routerLink]="'/logout'" (click)="onClickLink()" class="text-background">
+            <a (click)="onClickLink()" [routerLink]="'/logout'" class="text-background">
               {{ 'HEADER.LOG_OUT' | translate }}
             </a>
           </li>
