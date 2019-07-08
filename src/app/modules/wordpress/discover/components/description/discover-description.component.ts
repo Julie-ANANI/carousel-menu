@@ -57,7 +57,6 @@ export class DiscoverDescriptionComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _multiling: MultilingPipe,
-              private _shareService: ShareService,
               private _domSanitizer1: DomSanitizer,
               private _location: Location,
               public _router: Router,
@@ -123,10 +122,10 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
     }
 
-    this._linkedInUrl = this._shareService.linkedinProjectShareLink(this._innovationCard[0]);
-    this._twitterUrl = this._shareService.twitterProjectShareLink(this._innovationCard[0]);
-    this._mailUrl = this._shareService.mailProjectShareLink(this._innovationCard[0]);
-    this._contactUsUrl = this._shareService.contactOperator(this.innovationCard[0], this._operatorEmail);
+    this._linkedInUrl = ShareService.linkedinProjectShareLink(this._innovationCard[0]);
+    this._twitterUrl = ShareService.twitterProjectShareLink(this._innovationCard[0]);
+    this._mailUrl = ShareService.mailProjectShareLink(this._innovationCard[0], this._lang);
+    this._contactUsUrl = ShareService.contactOperator(this.innovationCard[0], this._operatorEmail, this._lang);
 
   }
 
