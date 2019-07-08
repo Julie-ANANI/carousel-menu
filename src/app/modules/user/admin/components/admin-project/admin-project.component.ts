@@ -33,7 +33,7 @@ export class AdminProjectComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this._activatedRoute.snapshot.data['innovation'] && this._activatedRoute.snapshot.data['innovation'] !== undefined) {
+    if (this._activatedRoute.snapshot.data['innovation'] && typeof this._activatedRoute.snapshot.data['innovation'] !== undefined) {
       this._project = this._activatedRoute.snapshot.data['innovation'];
       this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this.userLang, 'title');
       this._setPageTitle(this.title );

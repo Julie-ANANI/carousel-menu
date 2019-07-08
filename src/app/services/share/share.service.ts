@@ -9,23 +9,19 @@ export class ShareService {
 
   constructor() {}
 
-
   private static _getShareUrl(innovationCard: InnovCard): string {
     return encodeURIComponent(`${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}`);
   }
-
 
   private static _getTitle(innovationCard: InnovCard): string {
     return innovationCard.title || '';
   }
 
-
   private static _getSummary(innovationCard: InnovCard): string {
     return  new ScrapeHTMLTags().transform(innovationCard.summary) || '';
   }
 
-
-  linkedinProjectShareLink(innovationCard: InnovCard): string {
+  public static linkedinProjectShareLink(innovationCard: InnovCard): string {
     return 'https://www.linkedin.com/shareArticle' +
       '?mini=true' +
       '&url=' + ShareService._getShareUrl(innovationCard) +
@@ -34,15 +30,15 @@ export class ShareService {
       '&source=' + 'UMI';
   }
 
-
-  twitterProjectShareLink(innovationCard: InnovCard): string {
+  public static twitterProjectShareLink(innovationCard: InnovCard): string {
     const twitterAccount = 'uMotionIdeas';
     return 'http://twitter.com/home' +
-      '?status=' + ShareService._getTitle(innovationCard) + '%20' + ShareService._getShareUrl(innovationCard) + '%20%40' + twitterAccount;
+      '?status=' + ShareService._getTitle(innovationCard) +
+      '%20' + ShareService._getShareUrl(innovationCard) +
+      '%20%40' + twitterAccount;
   }
 
-
-  facebookProjectShareLink(innovationCard: InnovCard): string {
+  public static facebookProjectShareLink(innovationCard: InnovCard): string {
     return 'https://www.facebook.com/dialog/feed' +
       '?app_id=' + '1172496952780763' +
       '&version=' + 'v2.12' +
@@ -55,26 +51,65 @@ export class ShareService {
     return 'https://plus.google.com/share?url=' + this._getShareUrl(project, lang) + '&text=' + this._getSummary(project, lang);
   }*/
 
+  /***
+   * this is to get the url to share the innovation
+   * to others through mail.
+   * @param innovationCard
+   * @param userLang
+   */
+  public static mailProjectShareLink(innovationCard: InnovCard, userLang: string = 'en'): string {
+    let subject: string;
+    let message: string;
 
-  mailProjectShareLink(innovationCard: InnovCard): string {
+    if (userLang === 'fr' ) {
+      subject = `Innovation intéressante - ${ShareService._getTitle(innovationCard)}`;
 
-    const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle(innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
+      message = encodeURI(`Veuillez ajouter votre message ici.\r\n\r\n-------------------------------------\r\nDétails de l'innovation :
+      \r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitre - ${ShareService
+        ._getTitle(innovationCard)}\r\n\r\nSommaire - ${ShareService._getSummary(innovationCard)}`);
+    }
 
-    return `mailto:?subject=Interesting Innovation - ${ShareService._getTitle(innovationCard)}&body=${message}`;
+    if (userLang === 'en') {
+      subject = `Interesting Innovation - ${ShareService._getTitle(innovationCard)}`;
+
+      message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\nURL - 
+      ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle
+      (innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
+    }
+
+    return `mailto:?subject=${subject}&body=${message}`;
 
   }
 
+  /***
+   * this is to get the url to contact us.
+   * @param innovationCard
+   * @param operatorEmail
+   * @param userLang
+   */
+  public static contactOperator(innovationCard: InnovCard, operatorEmail: string = 'contact@umi.us', userLang: string = 'en'): string {
+    let subject: string;
+    let message: string;
 
-  contactOperator(innovationCard: InnovCard, operatorEmail: string): string {
+    if (userLang === 'fr' ) {
+      subject = `Contactez-nous - ${ShareService._getTitle(innovationCard)}`;
 
-    operatorEmail = operatorEmail || 'contact@umi.us';
+      message = encodeURI(`Veuillez ajouter votre message ici.\r\n\r\n-------------------------------------\r\nDétails de l'innovation :
+      \r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitre - ${ShareService
+        ._getTitle(innovationCard)}\r\n\r\nSommaire - ${ShareService._getSummary(innovationCard)}`);
+    }
 
-    const message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\n\r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle(innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
+    if (userLang === 'en') {
+      subject = `Contacting us - ${ShareService._getTitle(innovationCard)}`;
 
-    return `mailto:${operatorEmail}?subject=Contacting us - ${ShareService._getTitle(innovationCard)}&body=${message}`;
+      message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\nURL - 
+      ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle
+      (innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
+    }
+
+    return `mailto:${operatorEmail}?subject=${subject}&body=${message}`;
 
   }
-
 
   /***
    * this is to get the share mail to share the synthesis.

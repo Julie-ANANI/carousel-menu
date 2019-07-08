@@ -475,6 +475,15 @@
 
 }
 
+
+@keyframes loading-content {
+
+  100% {
+    transform: translateX(100%);
+  }
+
+}
+
 /********************************** Animation class ***************************************/
 
 .animate-page {

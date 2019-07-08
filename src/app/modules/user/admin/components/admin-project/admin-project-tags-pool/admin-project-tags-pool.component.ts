@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -9,6 +9,8 @@ import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-inte
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { first } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
+import { ConfigService } from '../../../../../../services/config/config.service';
 
 @Component({
   selector: 'app-admin-project-tags-pool',
@@ -20,7 +22,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _config: Config = {
     fields: '',
-    limit: '10',
+    limit: this._configService.configLimit('admin-project-tags-pool-limit'),
     offset: '0',
     search: '{}',
     sort: '{"created": "-1"}'
@@ -42,7 +44,9 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _tagToEdit: Tag;
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _activatedRoute: ActivatedRoute,
+              private _configService: ConfigService,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _tagsService: TagsService) {
@@ -57,14 +61,16 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this._activatedRoute.snapshot.parent.data.project_tags_pool && Array.isArray(this._activatedRoute.snapshot.parent.data.project_tags_pool)) {
-      this._tags = this._activatedRoute.snapshot.parent.data.project_tags_pool;
-      this._sortTags();
-      this._total = this._tags.length;
-      this._noResult = this._total === 0;
-      this._initializeTable();
-    } else {
-      this._fetchingError = true;
+    if (isPlatformBrowser(this._platformId)) {
+      this._tagsService.getTagsFromPool(this._innovation._id).pipe(first()).subscribe((response: Array<Tag>) => {
+        this._tags = response;
+        this._sortTags();
+        this._total = this._tags.length;
+        this._noResult = this._total === 0;
+        this._initializeTable();
+      }, () => {
+        this._fetchingError = true;
+      });
     }
 
   }

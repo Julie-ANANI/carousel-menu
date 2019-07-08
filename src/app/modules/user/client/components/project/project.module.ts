@@ -8,8 +8,6 @@ import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
-import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
-import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
@@ -21,7 +19,6 @@ import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
-import { SharedProjectDescriptionModule } from '../../../../shared/components/shared-project-description/shared-project-description.module';
 import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
@@ -41,7 +38,6 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     SharedWorldmapModule,
     SidebarUserAnswerModule,
     SharedMarketReportModule,
-    SharedProjectDescriptionModule,
     MessageTemplate1Module,
     ModalModule
   ],
@@ -50,9 +46,7 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     SetupComponent,
     ExplorationComponent,
     SurveyComponent,
-    HistoryProjectComponent,
-    ProjectEditExample1Component,
-    ProjectEditExample2Component
+    HistoryProjectComponent
   ],
   exports: [
     ProjectComponent

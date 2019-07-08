@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { DiscoverRoutingModule } from './discover-routing.module';
+
 import { DiscoverComponent } from './discover.component';
 import { DiscoverDescriptionComponent } from './components/description/discover-description.component';
-
 import { InnovationsComponent } from './components/innovations/innovations.component';
 import { FiltersComponent } from './components/innovations/components/filters/filters.component';
 import { CardsComponent } from './components/innovations/components/cards/cards.component';
@@ -15,6 +14,7 @@ import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
 import { TagsService } from '../../../services/tags/tags.service';
 import { FilterService } from './components/innovations/services/filter.service';
+import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
@@ -27,6 +27,7 @@ import { ModalMediaModule } from '../../utility-components/modals/modal-media/mo
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { SearchInput2Module } from '../../utility-components/search-inputs/search-template-2/search-input-2.module';
+import { ErrorTemplate1Module } from '../../utility-components/errors/error-template-1/error-template-1.module';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { SearchInput2Module } from '../../utility-components/search-inputs/searc
     ModalMediaModule,
     ModalModule,
     HeaderModule,
-    SearchInput2Module
+    SearchInput2Module,
+    ErrorTemplate1Module
   ],
   providers:[
     InnovationService,
@@ -50,7 +52,8 @@ import { SearchInput2Module } from '../../utility-components/search-inputs/searc
     ShareService,
     UserService,
     TagsService,
-    FilterService
+    FilterService,
+    InnovationFrontService
   ],
   declarations: [
     DiscoverComponent,
