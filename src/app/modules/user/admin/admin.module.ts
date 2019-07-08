@@ -50,9 +50,6 @@ import { PresetResolver } from '../../../resolvers/preset.resolver';
 import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
-import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
-import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
-import { UsersResolver } from '../../../resolvers/admin/users-resolver';
 import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver';
 import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
 import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
@@ -115,9 +112,6 @@ import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-p
     AdvSearchService,
     ProfessionalResolver,
     InnovationFrontService,
-    ProjectsResolver,
-    ProfessionalsResolver,
-    UsersResolver,
     SignaturesResolver,
     PresetsResolver,
     CampaignAnswersResolver,

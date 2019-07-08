@@ -32,9 +32,6 @@ import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
-import { ProjectsResolver } from '../../../resolvers/admin/projects-resolver';
-import { ProfessionalsResolver } from '../../../resolvers/admin/professionals-resolver';
-import { UsersResolver } from '../../../resolvers/admin/users-resolver';
 import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
 import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
 
@@ -55,8 +52,6 @@ const adminRoutes: Routes = [
             path: '',
             component: AdminUsersComponent,
             pathMatch: 'full',
-            resolve: { users : UsersResolver },
-            runGuardsAndResolvers: 'always',
           },
         ]
       },
@@ -67,8 +62,6 @@ const adminRoutes: Routes = [
             path: '',
             component: AdminProfessionalsComponent,
             pathMatch: 'full',
-            resolve: { professionals : ProfessionalsResolver },
-            runGuardsAndResolvers: 'always',
           }
         ]
       },
@@ -115,8 +108,6 @@ const adminRoutes: Routes = [
             path: '',
             component: AdminProjectsComponent,
             pathMatch: 'full',
-            resolve: { projects : ProjectsResolver },
-            runGuardsAndResolvers: 'always'
           },
           {
             path: 'project/:projectId',

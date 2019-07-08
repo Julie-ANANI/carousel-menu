@@ -9,6 +9,7 @@ import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthes
 
 // Component
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
+
 import { demoRoutes } from './modules/demo/demo-routing.module';
 
 const appRoutes: Routes = [
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
     path: 'user/discover', redirectTo: 'discover'
   },
   {
-    path: 'user', canActivate: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'
+    path: 'user', loadChildren: './modules/user/user.module#UserModule'
   },
   {
     path: 'demo', canActivate: [AuthGuard, AdminAuthGuard], children: [ ...demoRoutes ]
@@ -58,7 +59,8 @@ const appRoutes: Routes = [
 
 const config: ExtraOptions = {
   initialNavigation: 'enabled',
-  scrollPositionRestoration: 'enabled'
+  scrollPositionRestoration: 'top',
+  onSameUrlNavigation: 'reload'
 };
 
 @NgModule({
