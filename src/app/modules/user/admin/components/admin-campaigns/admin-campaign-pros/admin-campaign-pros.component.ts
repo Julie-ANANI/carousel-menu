@@ -10,6 +10,7 @@ import { Professional } from '../../../../../../models/professional';
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { Response } from '../../../../../../models/response';
+import { ConfigService } from '../../../../../../services/config/config.service';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -35,7 +36,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _professionals: Array<SelectedProfessional> = [];
 
-  private _total: number;
+  private _total: number = -1;
 
   private _fetchingError: boolean;
 
@@ -60,11 +61,12 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _contextSelectedPros: Array<any> = [];
 
-  constructor(@Inject(PLATFORM_ID) private platform: Object,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _professionalsService: ProfessionalsService) {
+              private _professionalsService: ProfessionalsService,
+              private _configService: ConfigService) {
 
     this._translateTitleService.setTitle('Professionals | Campaign');
 
@@ -77,12 +79,18 @@ export class AdminCampaignProsComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this._activatedRoute.snapshot.parent.data.campaign_professionals && Array.isArray(this._activatedRoute.snapshot.parent.data.campaign_professionals.result)) {
-      this._professionals = this._activatedRoute.snapshot.parent.data.campaign_professionals.result;
-      this._total = this._activatedRoute.snapshot.parent.data.campaign_professionals._metadata.totalCount;
-      this._noResult = this._total === 0;
-    } else {
-      this._fetchingError = true;
+    if (isPlatformBrowser(this._platformId)) {
+
+      this._config.limit = this._configService.configLimit('admin-campaign-pros-limit');
+
+      this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+        this._professionals = response.result;
+        this._total = response._metadata.totalCount;
+        this._noResult = this._total === 0;
+      }, () => {
+        this._fetchingError = true;
+      });
+
     }
 
   }
@@ -185,7 +193,7 @@ export class AdminCampaignProsComponent implements OnInit {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
 
-      if (isPlatformBrowser(this.platform)) {
+      if (isPlatformBrowser(this._platformId)) {
         window.open(url);
       }
 
