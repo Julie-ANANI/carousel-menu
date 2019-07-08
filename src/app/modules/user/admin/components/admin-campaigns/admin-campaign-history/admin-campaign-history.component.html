@@ -1,1 +1,14 @@
-<app-shared-search-history [campaignId]="campaignId"></app-shared-search-history>
+<section id="admin-campaign-history">
+  <div class="restrict-width">
+    <div class="section-light-pad">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        <div *ngIf="campaignId">
+          <app-shared-search-history [campaignId]="campaignId" [tableSelector]="'admin-campaign-history-limit'"></app-shared-search-history>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
