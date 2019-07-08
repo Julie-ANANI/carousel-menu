@@ -26,7 +26,6 @@ import { settingsRoutes } from './components/admin-settings/admin-settings-routi
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
 import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
 
-import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
@@ -122,8 +121,8 @@ const adminRoutes: Routes = [
       {
         path: 'campaigns/campaign/:campaignId',
         component: AdminCampaignComponent,
-        resolve: { campaign : CampaignResolver, campaign_answers: CampaignAnswersResolver, campaign_professionals: CampaignProfessionalsResolver },
-        runGuardsAndResolvers: 'pathParamsChange',
+        resolve: { campaign : CampaignResolver, campaign_professionals: CampaignProfessionalsResolver },
+        runGuardsAndResolvers: 'always',
         children: [
           ...campaignRoutes
         ]

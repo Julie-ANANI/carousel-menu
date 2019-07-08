@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
@@ -14,6 +14,9 @@ import { CampaignFrontService } from '../../../../../../services/campaign/campai
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { Response } from '../../../../../../models/response';
+import { isPlatformBrowser } from '@angular/common';
+import { first } from 'rxjs/operators';
+import { ConfigService } from '../../../../../../services/config/config.service';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -25,7 +28,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _config: Config = {
     fields: '',
-    limit: '10',
+    limit: this._configService.configLimit('admin-campaign-answers-limit'),
     offset: '0',
     search: '{}',
     sort: '{"created":-1}'
@@ -39,8 +42,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _fetchingError: boolean;
 
-  private _errorMessage: string;
-
   private _table: Table;
 
   private _adminMode: boolean;
@@ -53,12 +54,14 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _questions: Array<Question> = [];
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private _translateTitleService: TranslateTitleService,
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _authService: AuthService,
+              private _configService: ConfigService,
               private _campaignFrontService: CampaignFrontService) {
 
     this._translateTitleService.setTitle('Answers | Campaign');
@@ -73,19 +76,15 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers
-      && this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers
-      && Array.isArray(this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers)) {
-      this._answers = this._activatedRoute.snapshot.parent.data.campaign_answers.answers.localAnswers;
-      this._total = this._answers.length;
-      this._noResult = this._total === 0;
-      this._initializeTable();
-    } else if (this._activatedRoute.snapshot.parent.data.campaign_answers && this._activatedRoute.snapshot.parent.data.campaign_answers.answers) {
-      this._errorMessage = 'CAMPAIGNS.ERROR_MESSAGE.FETCHING';
-      this._fetchingError = true;
-    } else {
-      this._errorMessage = 'ERROR.ERRORS.FETCHING';
-      this._fetchingError = true;
+    if (isPlatformBrowser(this._platformId)) {
+      this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((response: Response) => {
+        this._answers = response.answers.localAnswers;
+        this._total = this._answers.length;
+        this._noResult = this._total === 0;
+        this._initializeTable();
+      }, () => {
+        this._fetchingError = true;
+      });
     }
 
   }
@@ -112,7 +111,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
   private _getAnswers() {
-    this._campaignService.getAnswers(this._campaign._id).subscribe((response: Response) => {
+    this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((response: Response) => {
       this._answers = response.answers.localAnswers;
       this._total = this._answers.length;
       this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
@@ -227,10 +226,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
-  }
-
-  get errorMessage(): string {
-    return this._errorMessage;
   }
 
   get adminMode(): boolean {
