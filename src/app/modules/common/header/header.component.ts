@@ -77,14 +77,12 @@ export class HeaderComponent implements OnDestroy {
 
   }
 
-
   @HostListener('window:resize', ['$event'])
   onResize(_event: Event) {
     if (window.innerWidth > 840) {
       this._sidebarValues.animate_state = 'inactive';
     }
   }
-
 
   /***
    * initializing all the variables.
@@ -97,7 +95,6 @@ export class HeaderComponent implements OnDestroy {
     this._sidebarValues.animate_state = 'inactive';
   }
 
-
   /***
    * based on the current lang show flag.
    * @private
@@ -105,7 +102,6 @@ export class HeaderComponent implements OnDestroy {
   private _setFlag() {
     this._flag = this.currentLang === 'en' ? 'US' : 'FR';
   }
-
 
   /***
    * set the lang as current lang.
@@ -123,14 +119,12 @@ export class HeaderComponent implements OnDestroy {
 
   }
 
-
   /***
    * to toggle the back office value.
    */
   public toggleBackOfficeState() {
     this._backOfficeValue = !this._backOfficeValue;
   }
-
 
   /***
    * to toggle the value of menu options display.
@@ -140,11 +134,9 @@ export class HeaderComponent implements OnDestroy {
     this._sidebarValues.animate_state = this._sidebarValues.animate_state === 'inactive' ? 'active' : 'inactive';
   }
 
-
   public closeSidebar() {
     this._sidebarValues.animate_state = 'inactive';
   }
-
 
   /***
    * set the menu display value false when click on link
@@ -158,36 +150,33 @@ export class HeaderComponent implements OnDestroy {
 
   }
 
+  public onClickAccount() {
+    this._backOfficeValue = false;
+  }
 
   public canShow(reqLevel: number): boolean {
     return reqLevel && ( this.authService.adminLevel & reqLevel) === reqLevel;
   }
 
-
   public getLogo(): string {
     return environment.logoURL;
   }
-
 
   public getCompany(): string {
     return environment.companyShortName;
   }
 
-
   public hasProfilePic(): boolean {
     return !!this.profilePicture && this.profilePicture !== '';
   }
-
 
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
-
   public getContactUrl(): string {
     return this.currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
   }
-
 
   get backOfficeValue(): boolean {
     return this._backOfficeValue;

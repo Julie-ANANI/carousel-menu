@@ -201,7 +201,7 @@
                     <a
                       [routerLink]="'/user/account'"
                       routerLinkActive="active"
-                      (click)="onClickLink()"
+                      (click)="onClickLink(); onClickAccount();"
                       class="gtm-menu-my-account text-background">
                       {{ 'HEADER.MY_ACCOUNT' | translate }}
                     </a>
@@ -334,7 +334,7 @@
             <!-- account page -->
             <li class="sidebar-menu-item">
               <a
-                (click)="onClickLink()"
+                (click)="onClickLink(); onClickAccount();"
                 [routerLink]="'/user/account'"
                 class="gtm-menu-my-account text-background"
                 routerLinkActive="active">
