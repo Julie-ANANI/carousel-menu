@@ -1,4 +1,7 @@
 <section id="innovations">
+
+
+  <!-- content -->
   <div class="restrict-width">
     <div class="section-light-pad">
       <div class="column col-xs-12 col-11 col-mx-auto">
@@ -16,7 +19,7 @@
 
 
         <!-- result -->
-        <section *ngIf="!fetchingError">
+        <section *ngIf="!fetchingError" class="d-content-wrapper">
 
 
           <!-- filters -->
@@ -30,15 +33,24 @@
           </div>
           <!-- /filters -->
 
-
-
         </section>
         <!-- /result -->
+
+
 
 
       </div>
     </div>
   </div>
+  <!-- /content -->
+
+
+  <!-- community banner -->
+  <section *ngIf="!fetchingError" class="d-community-banner-wrapper">
+  </section>
+  <!-- /community banner -->
+
+
 </section>
 
 

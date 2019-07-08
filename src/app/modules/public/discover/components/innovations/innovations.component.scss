@@ -2,8 +2,16 @@
 
 #innovations {
 
-  .i-error-wrapper {
+  .i-error-wrapper, .d-content-wrapper {
     min-height: 70vh;
+  }
+
+  .d-content-wrapper {
+    min-height: 100vh;
+  }
+
+  .d-community-banner-wrapper {
+    background-image: $primary-gradient-color;
   }
 
 
