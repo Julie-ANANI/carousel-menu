@@ -4,7 +4,6 @@ import { ADMIN_USERS } from '../modules/user/admin/components/admin-users/i18n/e
 import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
 import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
-import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/en';
 import { DASHBOARD } from '../modules/user/admin/components/admin-dashboard/i18n/en';
 import { PRESETS } from '../modules/user/admin/components/admin-libraries/admin-presets/i18n/en';
 import { CAMPAIGNS } from '../modules/user/admin/components/admin-campaigns/i18n/en';
@@ -33,6 +32,7 @@ import { SHARED_PROJECT_EDIT } from '../modules/shared/components/shared-project
 import { SHOWCASE } from '../modules/demo/components/showcase/i18n/en';
 import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
 import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/en';
+import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
