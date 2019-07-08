@@ -3,26 +3,24 @@
 
 
     <!-- section buttons -->
-    <div class="flex-between">
-      <form (ngSubmit)="createShowcase()">
+    <form class="create-form d-inline-flex" (ngSubmit)="createShowcase()">
 
-        <div class="form-group">
-          <label>
-            <input
-              [(ngModel)]="showcaseName"
-              [ngModelOptions]="{ standalone: true }"
-              [placeholder]="'SHOWCASE.NAME_PLACEHOLDER' | translate"
-              class="form-input"
-              type="text">
-          </label>
-        </div>
+      <div class="form-group">
+        <label>
+          <input
+            [(ngModel)]="showcaseName"
+            [ngModelOptions]="{ standalone: true }"
+            [placeholder]="'SHOWCASE.NAME_PLACEHOLDER' | translate"
+            class="form-input"
+            type="text">
+        </label>
+      </div>
 
-        <div class="text-center">
-          <button class="btn btn-sm ghost-primary" type="submit" [disabled]="!showcaseName" [textContent]="'SHOWCASE.BUTTON_SAVE'" translate></button>
-        </div>
+      <div class="text-center">
+        <button class="btn btn-sm ghost-primary" type="submit" [disabled]="!showcaseName" [textContent]="'SHOWCASE.BUTTON_SAVE'" translate></button>
+      </div>
 
-      </form>
-    </div>
+    </form>
     <!-- /section buttons -->
 
 
