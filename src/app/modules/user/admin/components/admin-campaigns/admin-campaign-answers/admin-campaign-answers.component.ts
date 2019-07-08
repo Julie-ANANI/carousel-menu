@@ -31,7 +31,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     limit: this._configService.configLimit('admin-campaign-answers-limit'),
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{ "created": -1 }'
   };
 
   private _campaign: Campaign;

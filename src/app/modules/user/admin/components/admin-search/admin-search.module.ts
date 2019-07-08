@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedSearchHistoryModule } from '../../../../shared/components/shared-search-history/search-history.module';
+import { SharedSearchHistoryModule } from '../../../../shared/components/shared-search-history/shared-search-history.module';
 import { SharedSearchResultsModule } from '../../../../shared/components/shared-search-results/search-results.module';
 import { SharedSearchProsModule } from '../../../../shared/components/shared-search-pros/shared-search-pros.module';
 import { AdminSearchComponent } from './admin-search.component';
