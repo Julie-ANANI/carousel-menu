@@ -6,12 +6,26 @@ import { environment } from '../../../../../../../../environments/environment';
 import { FilterService } from '../../services/filter.service';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
 import { ActivatedRoute } from '@angular/router';
-import {AuthService} from "../../../../../../../services/auth/auth.service";
+import { AuthService } from "../../../../../../../services/auth/auth.service";
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss']
+  styleUrls: ['./filters.component.scss'],
+  animations: [
+    trigger('tagAnimation', [
+      transition('* => *', [
+
+        query('.animate-tag', style({ opacity: 0, transform: 'translateX(-15%)' })),
+
+        query('.animate-tag', stagger('50ms', [
+          animate('.15s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        ])),
+
+      ])
+    ])
+  ]
 })
 
 export class FiltersComponent implements OnInit {
@@ -24,11 +38,13 @@ export class FiltersComponent implements OnInit {
     }
   }
 
+  @Input() set stopLoading(value: boolean) {
+    this._stopLoading = value;
+  }
+
   @Output() appliedFilters = new EventEmitter<Array<Tag>>();
 
   @Output() searchFieldOutput = new EventEmitter<string>();
-
-  private _userLang = '';
 
   private _modalShare: boolean = false;
 
@@ -48,14 +64,14 @@ export class FiltersComponent implements OnInit {
 
   private _suggestedTags: Array<Tag> = [];
 
+  private _stopLoading: boolean;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _translateService: TranslateService,
               private _tagsService: TagsService,
               private _activatedRoute: ActivatedRoute,
               private _filterService: FilterService) {
-
-    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en' ;
 
     this._filterService.getFilterToRemove().subscribe((tagId: string) => {
       if (this._selectedSimilarTags.length === 0) {
@@ -81,7 +97,6 @@ export class FiltersComponent implements OnInit {
     this._sendSelectedFilters();
   }
 
-
   /***
    * this function is to sort tags based on the type.
    * @param type
@@ -91,22 +106,21 @@ export class FiltersComponent implements OnInit {
     switch (type) {
 
       case 'allTags':
-        this._allTags = this._filterService.sortTags(this._allTags, this._userLang);
+        this._allTags = this._filterService.sortTags(this._allTags, this.userLang);
         break;
 
       case 'suggested':
-        this._suggestedTags = this._filterService.sortTags(this._suggestedTags, this._userLang);
+        this._suggestedTags = this._filterService.sortTags(this._suggestedTags, this.userLang);
         break;
 
       case 'highlight':
-        this._highLightTags = this._filterService.sortTags(this._highLightTags, this._userLang);
+        this._highLightTags = this._filterService.sortTags(this._highLightTags, this.userLang);
         break;
 
       default:
       // do nothing...
     }
   }
-
 
   /***
    * this function is to get the highlighted tags from all the sector tags.
@@ -116,7 +130,6 @@ export class FiltersComponent implements OnInit {
     this._highLightTags = FilterService.getHighlightedTags(this._allTags);
     this._sortTags('highlight');
   }
-
 
   /***
    * this function checks do we have any filters stored in session storage.
@@ -129,7 +142,6 @@ export class FiltersComponent implements OnInit {
       }
     }
   }
-
 
   /***
    * this function is to check if we contain any params or not.
@@ -162,7 +174,6 @@ export class FiltersComponent implements OnInit {
     });
   }
 
-
   /***
    * this function is to get the suggested tags based on the tag selected.
    * @private
@@ -185,7 +196,6 @@ export class FiltersComponent implements OnInit {
     }
   }
 
-
   /***
    * this function is to determine which filter is active or not.
    * @param id
@@ -194,13 +204,12 @@ export class FiltersComponent implements OnInit {
     return this._selectedTags.some((item) => item._id === id);
   }
 
-
   /***
    * based on the filter is checked or unchecked we do the respective functions.
    * @param event
    * @param tag
    */
-  toggleFilter(event: Event, tag: Tag) {
+  public toggleFilter(event: Event, tag: Tag) {
     if ((event.target as any).checked) {
       this._selectedTags.push(tag);
       this._selectedSimilarTags = [];
@@ -212,7 +221,6 @@ export class FiltersComponent implements OnInit {
     }
   }
 
-
   /***
    * this function is to remove the selected filter from the variable selectedTags.
    * @param id
@@ -222,13 +230,11 @@ export class FiltersComponent implements OnInit {
     this._selectedTags.splice(index, 1);
   }
 
-
   private _initialize() {
     this._selectedSimilarTags = [];
     this._getSuggestedTags();
     this._sendSelectedFilters();
   }
-
 
   /***
    * this function is to determine which similar filter is active or not.
@@ -238,13 +244,12 @@ export class FiltersComponent implements OnInit {
     return this._selectedSimilarTags.some((item) => item._id === id);
   }
 
-
   /***
    * based on the similar filter is checked or unchecked we do the respective functions.
    * @param event
    * @param tag
    */
-  toggleSimilarFilter(event: Event, tag: Tag) {
+  public toggleSimilarFilter(event: Event, tag: Tag) {
     if ((event.target as any).checked) {
       this._selectedSimilarTags.push(tag);
       this._selectedTags.push(tag);
@@ -253,7 +258,6 @@ export class FiltersComponent implements OnInit {
       this.removeSimilarFilter(tag._id);
     }
   }
-
 
   /***
    * this function is to remove the selected similar filter from the variable selectedTags.
@@ -266,12 +270,10 @@ export class FiltersComponent implements OnInit {
     this._sendSelectedFilters();
   }
 
-
   public showAllTags(event: Event) {
     event.preventDefault();
     this._modalTag = true;
   }
-
 
   /***
    * this function will open the share modal to share the
@@ -279,12 +281,13 @@ export class FiltersComponent implements OnInit {
    * @param event
    */
   public onClickShare(event: Event) {
-    event.preventDefault();
-    this._urlCopied = false;
-    this._modalShare = true;
-    this._getShareLink();
+    if (this._stopLoading) {
+      event.preventDefault();
+      this._urlCopied = false;
+      this._modalShare = true;
+      this._getShareLink();
+    }
   }
-
 
   /***
    * this function is to copy the share url to clipboard when the user clicks on it.
@@ -318,7 +321,6 @@ export class FiltersComponent implements OnInit {
 
   }
 
-
   /***
    * this function is to generate the share link of the page.
    * @private
@@ -346,12 +348,10 @@ export class FiltersComponent implements OnInit {
     }
   }
 
-
   private _closeBanner(event: Event) {
     event.preventDefault();
     this._urlCopied = false;
   }
-
 
   public onInputField(value: string) {
     this._selectedTags = [];
@@ -360,8 +360,6 @@ export class FiltersComponent implements OnInit {
     this._sendSelectedFilters();
     this.searchFieldOutput.emit(value);
   }
-
-
 
   private _sendSelectedFilters() {
 
@@ -410,7 +408,7 @@ export class FiltersComponent implements OnInit {
   }
 
   get userLang(): string {
-    return this._userLang;
+    return this._translateService.currentLang;
   }
 
   get allTags(): Array<Tag> {
@@ -431,6 +429,10 @@ export class FiltersComponent implements OnInit {
 
   get suggestedTags(): Array<Tag> {
     return this._suggestedTags;
+  }
+
+  get stopLoading(): boolean {
+    return this._stopLoading;
   }
 
 }

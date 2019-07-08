@@ -6,7 +6,6 @@ import { InnovationsComponent } from './components/innovations/innovations.compo
 import { DiscoverDescriptionComponent } from './components/description/discover-description.component';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
-import { InnovationsResolver } from './services/innos-resolver.service';
 
 const discoverRoutes: Routes = [
   {
@@ -16,8 +15,6 @@ const discoverRoutes: Routes = [
       {
         path: '',
         component: InnovationsComponent,
-        resolve: { innovations: InnovationsResolver },
-        runGuardsAndResolvers: 'always',
         pathMatch: 'full',
       },
       {
@@ -40,8 +37,7 @@ const discoverRoutes: Routes = [
     RouterModule.forChild(discoverRoutes)
   ],
   providers: [
-    InnovationResolver,
-    InnovationsResolver
+    InnovationResolver
   ],
   exports: [
     RouterModule

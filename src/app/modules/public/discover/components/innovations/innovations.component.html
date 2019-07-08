@@ -1,47 +1,91 @@
-<ng-container *ngIf="totalInnovations.length > 0">
+<section id="innovations">
+  <div class="restrict-width">
+    <div class="section-light-pad">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+
+        <!-- fetching error -->
+        <section *ngIf="fetchingError">
+          <div class="i-error-wrapper d-flex align-center">
+            <app-error-template-1 [errorMessage]="'DISCOVER.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+              <p [innerText]="'DISCOVER.FETCHING_ERROR_SUB'" translate></p>
+            </app-error-template-1>
+          </div>
+        </section>
+        <!-- /fetching error -->
+
+
+        <!-- result -->
+        <section *ngIf="!fetchingError">
+
+
+          <!-- filters -->
+          <div class="section-light-pad">
+            <app-filters
+              [tags]="sectorTags"
+              [stopLoading]="stopLoading"
+              (appliedFilters)="onSelectFilters($event)"
+              (searchFieldOutput)="onInputField($event)">
+            </app-filters>
+          </div>
+          <!-- /filters -->
+
+
+
+        </section>
+        <!-- /result -->
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<ng-container *ngIf="false">
 
   <section id="innovations-component">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
 
-      <!-- section filter -->
+      <!-- section filter
       <div class="section-light-pad">
         <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)" (searchFieldOutput)="onInputField($event)"></app-filters>
       </div>
-      <!-- /section filter -->
+       /section filter -->
 
 
-      <!-- section recommended innovations -->
+      <!-- section recommended innovations
       <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated && !filterActivated">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
           <app-cards [allInnovations]="recommendedInnovations"></app-cards>
         </div>
       </ng-container>
-      <!-- /section recommended innovations -->
+      /section recommended innovations -->
 
 
-      <!-- section latest innovations -->
+      <!-- section latest innovations
       <ng-container *ngIf="!filterActivated && latestInnovations.length > 0">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
           <app-cards [allInnovations]="latestInnovations"></app-cards>
         </div>
       </ng-container>
-      <!-- /section latest innovations -->
+       /section latest innovations -->
 
 
-      <!-- section trending innovations -->
+      <!-- section trending innovations
       <ng-container *ngIf="!filterActivated && trendingInnovations.length > 0">
         <div class="section-light-pad rm-pad-bottom">
           <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
           <app-cards [allInnovations]="trendingInnovations" [pagination]="true"></app-cards>
         </div>
       </ng-container>
-      <!-- /section all innovations -->
+       /section all innovations -->
 
 
-      <!-- section when searching innovation -->
+      <!-- section when searching innovation
       <ng-container *ngIf="filterActivated">
         <div class="section-light-pad rm-pad-bottom">
 
@@ -73,14 +117,14 @@
 
         </div>
       </ng-container>
-      <!-- /section when searching innovation -->
+       /section when searching innovation -->
 
 
     </div>
   </section>
 
 
-  <!-- footer banner -->
+  <!-- footer banner
   <div class="section-community">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <div class="flex-between">
@@ -97,7 +141,7 @@
       </div>
     </div>
   </div>
-  <!-- /footer banner -->
+   /footer banner -->
 
 
 </ng-container>

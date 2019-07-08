@@ -1,5 +1,15 @@
 @import '../../../../../../style/framework/src/variables';
 
+#innovations {
+
+  .i-error-wrapper {
+    min-height: 70vh;
+  }
+
+
+}
+
+
 #innovations-component {
   max-width: $size-2x;
   min-height: 100vh;

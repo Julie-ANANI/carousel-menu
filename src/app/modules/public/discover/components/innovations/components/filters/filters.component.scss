@@ -1,6 +1,6 @@
 @import "../../../../../../../../style/framework/src/variables";
 
-#filter-component {
+#filters {
 
   .animate-appear {
     animation-duration: .5s;
@@ -65,10 +65,6 @@
 
       .share-button {
 
-        .ghost-edit {
-          margin-right: $unit-5;
-        }
-
         .btn {
           min-width: 100px;
           margin-bottom: 0.75rem;
@@ -124,10 +120,9 @@
 
 }
 
-
 @media (max-width: $size-sm) {
 
-  #filter-component {
+  #filters {
 
     .sector-highlighted {
 
@@ -147,7 +142,7 @@
 @media (max-width: $size-xs) {
 
 
-  #filter-component {
+  #filters {
 
     .sector-highlighted {
 

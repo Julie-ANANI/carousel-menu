@@ -1,4 +1,4 @@
-<section id="filter-component">
+<section id="filters">
 
   <!-- highlighted sectors -->
   <div class="sector-highlighted">
@@ -7,13 +7,16 @@
 
       <div class="flex-start action-wrapper">
 
-        <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)">
+        <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)" [ngClass]="{ 'd-hide': !stopLoading }">
           <i class="fas fa-sliders-h"></i>
           <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
         </div>
 
-        <div class="search-wrapper">
-          <app-search-input-2 [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'" (searchFieldOutput)="onInputField($event)"></app-search-input-2>
+        <div class="search-wrapper" [ngClass]="{ 'd-hide': !stopLoading }">
+          <app-search-input-2
+            [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'"
+            (searchFieldOutput)="onInputField($event)">
+          </app-search-input-2>
         </div>
 
       </div>
@@ -21,22 +24,26 @@
       <div class="share-button">
 
         <ng-container *ngIf="isAdmin && selectedTags.length > 0">
-          <a class="btn btn-sm ghost-edit rounded" [routerLink]="['/demo', 'showcase']" [queryParams]="{ 'tag': getSelectedTagsIds() }" target="_blank">
+          <a
+            [queryParams]="{ 'tag': getSelectedTagsIds() }"
+            [routerLink]="['/demo', 'showcase']"
+            class="btn btn-sm rounded m-right-20"
+            [ngClass]="stopLoading ? 'ghost-edit' : 'loading-content'"
+            target="_blank">
             <span [innerText]="'DISCOVER.BUTTON_SHOWCASE'" translate></span>
           </a>
         </ng-container>
 
-        <button type="button" class="btn btn-sm rounded btn-secondary" (click)="onClickShare($event)">
-          <i class="fas fa-share"></i>
-          {{ 'DISCOVER.BUTTON_SHARE' | translate }}
+        <button (click)="onClickShare($event)" class="btn btn-sm rounded" type="button" [ngClass]="stopLoading ? 'btn-secondary' : 'loading-content'">
+          <i class="fas fa-share"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
 
       </div>
 
     </div>
 
-    <div *ngIf="highLightTags.length > 0" class="sector-wrapper d-flex">
-      <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
+    <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
+      <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand animate-tag" [ngClass]="{ 'label-primary': checkFilter(tag._id)}">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"

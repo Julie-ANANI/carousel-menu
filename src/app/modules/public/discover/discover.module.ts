@@ -18,7 +18,6 @@ import { InnovationFrontService } from '../../../services/innovation/innovation-
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
-import { PaginationTemplate1Module } from '../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { FooterModule } from '../../common/footer/footer.module';
@@ -28,6 +27,7 @@ import { ModalModule } from '../../utility-components/modals/modal/modal.module'
 import { HeaderModule } from '../../common/header/header.module';
 import { SearchInput2Module } from '../../utility-components/search-inputs/search-template-2/search-input-2.module';
 import { ErrorTemplate1Module } from '../../utility-components/errors/error-template-1/error-template-1.module';
+import { PaginationTemplate2Module } from '../../utility-components/paginations/pagination-template-2/pagination-template-2.module';
 
 
 @NgModule({
@@ -35,7 +35,6 @@ import { ErrorTemplate1Module } from '../../utility-components/errors/error-temp
     CommonModule,
     DiscoverRoutingModule,
     TranslateModule.forChild(),
-    PaginationTemplate1Module,
     PipeModule,
     SharedLoaderModule,
     FooterModule,
@@ -44,7 +43,8 @@ import { ErrorTemplate1Module } from '../../utility-components/errors/error-temp
     ModalModule,
     HeaderModule,
     SearchInput2Module,
-    ErrorTemplate1Module
+    ErrorTemplate1Module,
+    PaginationTemplate2Module
   ],
   providers:[
     InnovationService,
