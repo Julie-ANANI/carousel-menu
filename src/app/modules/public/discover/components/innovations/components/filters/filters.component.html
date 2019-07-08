@@ -1,7 +1,9 @@
 <section id="filters">
 
+
   <!-- highlighted sectors -->
   <div class="sector-highlighted">
+
 
     <div class="flex-between">
 
@@ -25,22 +27,27 @@
 
         <ng-container *ngIf="isAdmin && selectedTags.length > 0">
           <a
+            [ngClass]="stopLoading ? 'ghost-edit' : 'loading-content'"
             [queryParams]="{ 'tag': getSelectedTagsIds() }"
             [routerLink]="['/demo', 'showcase']"
             class="btn btn-sm rounded m-right-20"
-            [ngClass]="stopLoading ? 'ghost-edit' : 'loading-content'"
             target="_blank">
             <span [innerText]="'DISCOVER.BUTTON_SHOWCASE'" translate></span>
           </a>
         </ng-container>
 
-        <button (click)="onClickShare($event)" class="btn btn-sm rounded" type="button" [ngClass]="stopLoading ? 'btn-secondary' : 'loading-content'">
+        <button
+          (click)="onClickShare($event)"
+          [ngClass]="stopLoading ? 'btn-secondary' : 'loading-content'"
+          class="btn btn-sm rounded"
+          type="button">
           <i class="fas fa-share"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
 
       </div>
 
     </div>
+
 
     <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
       <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand animate-tag" [ngClass]="{ 'label-primary': checkFilter(tag._id)}">
@@ -52,10 +59,11 @@
             [name]="tag.label | multiling:userLang"
             [value]="tag.label | multiling:userLang"
             type="checkbox">
-          {{ tag.label | multiling:userLang | FormatText }}
+          {{ tag.label | multiling:userLang }}
         </label>
       </div>
     </div>
+
 
   </div>
   <!-- /highlighted sectors -->
@@ -76,7 +84,7 @@
             [name]="tag.label | multiling:userLang"
             [value]="tag.label | multiling:userLang"
             type="checkbox">
-          {{ tag.label | multiling:userLang | FormatText }}
+          {{ tag.label | multiling:userLang }}
         </label>
       </div>
     </div>
@@ -101,7 +109,7 @@
             [name]="tag.label | multiling:userLang"
             [value]="tag.label | multiling:userLang"
             type="checkbox">
-          {{ tag.label | multiling:userLang | FormatText }}
+          {{ tag.label | multiling:userLang }}
         </label>
       </div>
     </div>
