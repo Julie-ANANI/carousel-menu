@@ -59,6 +59,19 @@
             opacity: 0.8;
           }
 
+          &.loading-content {
+            width: 200px;
+
+            i, span {
+              visibility: hidden;
+            }
+
+            &:hover {
+              opacity: 1;
+            }
+
+          }
+
         }
 
       }

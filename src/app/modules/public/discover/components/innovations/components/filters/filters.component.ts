@@ -270,19 +270,18 @@ export class FiltersComponent implements OnInit {
     this._sendSelectedFilters();
   }
 
-  public showAllTags(event: Event) {
-    event.preventDefault();
-    this._modalTag = true;
+  public showAllTags() {
+    if (this._stopLoading) {
+      this._modalTag = true;
+    }
   }
 
   /***
    * this function will open the share modal to share the
    * page url.
-   * @param event
    */
-  public onClickShare(event: Event) {
+  public onClickShare() {
     if (this._stopLoading) {
-      event.preventDefault();
       this._urlCopied = false;
       this._modalShare = true;
       this._getShareLink();

@@ -9,9 +9,12 @@
 
       <div class="flex-start action-wrapper">
 
-        <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)" [ngClass]="{ 'd-hide': !stopLoading }">
+        <div
+          class="filter-icon"
+          (click)="showAllTags()"
+          [ngClass]="stopLoading ? 'text-notify c-hand' : 'loading-content'">
           <i class="fas fa-sliders-h"></i>
-          <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
+          <span class="text-medium" [innerText]="'DISCOVER.FILTER_TEXT'" translate></span>
         </div>
 
         <div class="search-wrapper" [ngClass]="{ 'd-hide': !stopLoading }">
@@ -37,7 +40,7 @@
         </ng-container>
 
         <button
-          (click)="onClickShare($event)"
+          (click)="onClickShare()"
           [ngClass]="stopLoading ? 'btn-secondary' : 'loading-content'"
           class="btn btn-sm rounded"
           type="button">
@@ -50,7 +53,10 @@
 
 
     <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
-      <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand animate-tag" [ngClass]="{ 'label-primary': checkFilter(tag._id)}">
+      <div
+        *ngFor="let tag of highLightTags"
+        class="label label-draft label-rounded c-hand animate-tag"
+        [ngClass]="{ 'label-primary': checkFilter(tag._id)}">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"
@@ -75,7 +81,10 @@
     <h3 class="text-notify animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
     <div class="d-flex sector-wrapper">
-      <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand animate-appear" [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
+      <div
+        *ngFor="let tag of suggestedTags"
+        class="label label-draft label-rounded c-hand animate-appear"
+        [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
         <label class="c-hand">
           <input
             (change)="toggleSimilarFilter($event, tag)"
@@ -100,7 +109,10 @@
 <app-modal [(showModal)]="modalTag" [modalPosition]="'150px'" [widthMax]="'90%'" [modalTitle]="'DISCOVER.ALL_SECTORS'">
   <div class="modal-tag-wrapper">
     <div class="d-flex sector-wrapper">
-      <div *ngFor="let tag of allTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
+      <div
+        *ngFor="let tag of allTags"
+        class="label label-draft label-rounded c-hand"
+        [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"
@@ -122,14 +134,23 @@
 <app-modal [(showModal)]="modalShare" [modalPosition]="'250px'">
   <div class="modal-share-wrapper text-center">
 
-    <h3 class="text-background text-normal">{{ 'DISCOVER.MODAL_SHARE.TITLE' | translate }}</h3>
+    <h3 class="text-background text-normal" [innerText]="'DISCOVER.MODAL_SHARE.TITLE'" translate></h3>
 
     <div *ngIf="!urlCopied">
-      <button type="button" class="btn btn-sm ghost-edit" (click)="onClickCopy($event)">{{ 'DISCOVER.TOOLTIP_TEXT' | translate }}</button>
+      <button
+        (click)="onClickCopy($event)"
+        class="btn btn-sm ghost-edit"
+        type="button">
+        {{ 'DISCOVER.TOOLTIP_TEXT' | translate }}
+      </button>
     </div>
 
     <div *ngIf="urlCopied">
-      <button type="button" class="btn btn-sm ghost-success c-not-allowed">{{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}</button>
+      <button
+        class="btn btn-sm ghost-success c-not-allowed"
+        type="button">
+        {{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}
+      </button>
     </div>
 
   </div>

@@ -36,6 +36,8 @@ export class InnovationsComponent implements OnInit {
 
   private _recommendedInnovations: Array<Innovation> = [];
 
+  private _recommendedInnovationId: string;
+
   private _latestInnovations: Array<Innovation> = [];
 
   private _trendingInnovations: Array<Innovation> = [];
@@ -67,7 +69,7 @@ export class InnovationsComponent implements OnInit {
 
     this._activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
-        this._applyInnoRecommendation(params['innovation']);
+        this._recommendedInnovationId = params['innovation'];
       }
     });
 
@@ -78,6 +80,7 @@ export class InnovationsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
         this._totalInnovations = response.result;
+        this._applyInnoRecommendation();
         this._getLatestInnovations();
         this._getTrendingInnovations();
         this._getAllSectorTags();
@@ -92,11 +95,10 @@ export class InnovationsComponent implements OnInit {
   /***
    * this function is to get the recommend innovations for the
    * logged user.
-   * @param idInno
    * @private
    */
-  private _applyInnoRecommendation(idInno: string) {
-    this._innovationService.getRecommendation(idInno).subscribe((response) => {
+  private _applyInnoRecommendation() {
+    this._innovationService.getRecommendation(this._recommendedInnovationId).subscribe((response) => {
       response.forEach((inno_similar: Innovation) => {
         this._recommendedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
       });
@@ -171,6 +173,10 @@ export class InnovationsComponent implements OnInit {
 
   get recommendedInnovations(): Array<Innovation> {
     return this._recommendedInnovations;
+  }
+
+  get recommendedInnovationId(): string {
+    return this._recommendedInnovationId;
   }
 
   get latestInnovations(): Array<Innovation> {
