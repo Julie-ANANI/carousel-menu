@@ -91,7 +91,7 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._getOperatorDetails();
       this._getAllShareLinks();
 
-      if ((this._innovation.quizId && this._innovation.quizId !== '') || this._innovation.status === 'DONE' ) {
+      if ((this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE' ) {
         this._quizButtonDisplay = 'none';
       }
 
