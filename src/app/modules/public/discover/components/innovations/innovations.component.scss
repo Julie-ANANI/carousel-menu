@@ -2,12 +2,72 @@
 
 #innovations {
 
-  .i-error-wrapper, .d-content-wrapper {
+  .i-error-wrapper {
     min-height: 70vh;
   }
 
   .d-content-wrapper {
     min-height: 100vh;
+  }
+
+  .d-title-secondary {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    font-weight: $font-weight-normal;
+    font-family: $font-family-oswald;
+
+    > span {
+      position: relative;
+
+      &:after {
+        display: block;
+        content: '';
+        position: absolute;
+        width: 60%;
+        height: 2px;
+        background-color: $primary-color;
+      }
+
+    }
+
+    &.loading-content {
+      width: 200px;
+      height: 30px;
+
+      > span {
+        visibility: hidden;
+      }
+
+    }
+
+  }
+
+  .c-filter-wrapper.loading-content {
+    width: 200px;
+    height: 30px;
+
+    > * {
+      display: none;
+    }
+
+  }
+
+  .c-filter-activate-wrapper {
+    margin-bottom: 0.25rem;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+  }
+
+  .c-no-result-wrapper {
+    flex-direction: column;
+
+    span {
+      font-size: 0.75rem;
+    }
+
   }
 
   .d-community-banner-wrapper {
@@ -44,72 +104,6 @@
 
   }
 
-
-}
-
-
-#innovations-component {
-  max-width: $size-2x;
-  min-height: 100vh;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 1.25rem;
-  padding-bottom: 2.5rem;
-
-  .title-secondary {
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-    font-family: $font-family-oswald;
-
-    > span {
-      position: relative;
-
-      &:after {
-        display: block;
-        content: '';
-        position: absolute;
-        width: 60%;
-        height: 2px;
-        background-color: $primary-color;
-      }
-
-    }
-
-  }
-
-  .result-heading {
-    font-size: $font-size-md;
-    margin-bottom: 0.5rem;
-    flex-wrap: wrap;
-
-    .heading, .filter-wrapper {
-      margin-bottom: 0.25rem;
-    }
-
-    .filter-wrapper {
-      margin-left: $unit-1;
-      margin-right: $unit-2;
-
-      &:hover {
-        opacity: 0.7;
-      }
-
-    }
-
-  }
-
-  .no-result-wrapper {
-    flex-direction: column;
-
-   h3 {
-     margin-top: $unit-5;
-   }
-
-    span {
-      font-size: 0.75rem;
-    }
-
-  }
 
 }
 

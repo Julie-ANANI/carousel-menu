@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
 import { Tag } from '../../../../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -28,13 +28,17 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
   ]
 })
 
-export class FiltersComponent implements OnInit {
+export class FiltersComponent {
 
   @Input() set tags(value: Array<Tag>) {
     if (value) {
       this._allTags = value;
       this._sortTags('allTags');
       this._getHighlightedTags();
+      this._checkStoredFilters();
+      this._checkSharedResult();
+      this._getSuggestedTags();
+      this._sendSelectedFilters();
     }
   }
 
@@ -88,13 +92,6 @@ export class FiltersComponent implements OnInit {
       }
     });
 
-  }
-
-  ngOnInit() {
-    this._checkStoredFilters();
-    this._checkSharedResult();
-    this._getSuggestedTags();
-    this._sendSelectedFilters();
   }
 
   /***

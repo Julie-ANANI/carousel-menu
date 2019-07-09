@@ -54,7 +54,7 @@ export class InnovationsComponent implements OnInit {
 
   private _searchKey = '';
 
-  private _stopLoading: boolean;
+  private _stopLoading: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -84,6 +84,7 @@ export class InnovationsComponent implements OnInit {
         this._getLatestInnovations();
         this._getTrendingInnovations();
         this._getAllSectorTags();
+        this._getFilteredInnovations();
         this._stopLoading = true;
       }, () => {
         this._fetchingError = true;
