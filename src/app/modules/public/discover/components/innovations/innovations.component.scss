@@ -12,6 +12,36 @@
 
   .d-community-banner-wrapper {
     background-image: $primary-gradient-color;
+
+    .flex-between {
+      min-height: 140px;
+
+      .d-community-msg-wrapper {
+
+        .fa-paper-plane {
+          color: $light-color;
+          font-size: 100px;
+        }
+
+        span {
+          color: $light-color;
+          font-family: $font-family-oswald;
+          font-size: 1.4rem;
+        }
+
+      }
+
+      .btn-primary {
+        box-shadow: $box-shadow;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+      }
+
+    }
+
   }
 
 
@@ -83,53 +113,13 @@
 
 }
 
-.section-community {
-  padding-top: $unit-5;
-  background-image: $primary-gradient-color;
-
-  .flex-between {
-    min-height: 140px;
-
-    .message-wrapper {
-      align-items: center;
-      margin-bottom: $unit-5;
-
-      .fa-paper-plane {
-        color: $light-color;
-        font-size: 100px;
-        margin-right: 2.5rem;
-      }
-
-      span {
-        padding-right: 2.5rem;
-        color: $light-color;
-        font-family: $font-family-oswald;
-        font-size: 1.4rem;
-      }
-
-    }
-
-    .btn-primary {
-      margin-bottom: $unit-5;
-      box-shadow: $box-shadow;
-
-      &:hover {
-        transform: scale(1.1);
-      }
-
-    }
-
-  }
-
-}
-
-
 @media (max-width: $size-md) {
 
-  .section-community {
+  .d-community-banner-wrapper {
 
     .flex-between {
       flex-wrap: wrap;
+      justify-content: center;
     }
 
   }

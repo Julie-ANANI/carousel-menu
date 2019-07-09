@@ -46,7 +46,28 @@
 
 
   <!-- community banner -->
-  <section *ngIf="!fetchingError" class="d-community-banner-wrapper">
+  <section *ngIf="!fetchingError" class="d-community-banner-wrapper p-top-20">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="flex-between">
+
+        <div class="d-community-msg-wrapper d-flex align-center m-bottom-20">
+          <i class="fas fa-paper-plane m-right-50"></i>
+          <span [innerText]="'DISCOVER.COMMUNITY_TEXT'" class="p-right-50" translate></span>
+        </div>
+
+        <div class="m-bottom-20">
+          <a
+            [href]="getCommunityUrl()"
+            [innerText]="'DISCOVER.BUTTON_COMMUNITY'"
+            class="btn btn-primary rounded"
+            rel="noopener"
+            target="_blank"
+            translate>
+          </a>
+        </div>
+
+      </div>
+    </div>
   </section>
   <!-- /community banner -->
 
