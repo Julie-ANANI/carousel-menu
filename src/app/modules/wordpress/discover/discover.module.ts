@@ -13,6 +13,7 @@ import { InnovationService } from '../../../services/innovation/innovation.servi
 import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
 import { FilterService } from '../../public/discover/components/innovations/services/filter.service';
+import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
@@ -21,16 +22,20 @@ import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { TagsService } from '../../../services/tags/tags.service';
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
+import { ErrorTemplate1Module } from '../../utility-components/errors/error-template-1/error-template-1.module';
+import { PaginationTemplate2Module } from '../../utility-components/paginations/pagination-template-2/pagination-template-2.module';
 
 @NgModule({
   imports: [
     CommonModule,
     DiscoverRoutingModule,
     TranslateModule.forChild(),
-    PaginationTemplate1Module,
+    PaginationTemplate1Module, //Todo remove
     PipeModule,
     SharedLoaderModule,
-    ModalModule
+    ModalModule,
+    ErrorTemplate1Module,
+    PaginationTemplate2Module
   ],
   providers:[
     InnovationService,
@@ -38,7 +43,8 @@ import { ModalModule } from '../../utility-components/modals/modal/modal.module'
     ShareService,
     UserService,
     TagsService,
-    FilterService
+    FilterService,
+    InnovationFrontService
   ],
   declarations: [
     DiscoverComponent,
