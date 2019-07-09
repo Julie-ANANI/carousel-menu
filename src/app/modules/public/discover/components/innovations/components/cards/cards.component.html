@@ -9,7 +9,7 @@
         <div class="card-image" [ngClass]="stopLoading ? 'relative' : 'loading-content'">
 
           <figure>
-            <img [src]="getInnovationDetail('imageUrl', innovation)" [alt]="getInnovationDetail('title', innovation)" width="320" height="200">
+            <img [src]="getInnovationDetail('imageUrl', innovation)" alt=" " width="320" height="200">
           </figure>
 
           <div class="hover-button absolute flex-centered" [ngClass]="{ 'd-hide': !stopLoading }">
