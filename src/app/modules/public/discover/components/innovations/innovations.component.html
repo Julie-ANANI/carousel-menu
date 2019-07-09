@@ -38,7 +38,9 @@
           <section *ngIf="!filterActivated && recommendedInnovations.length > 0">
             <div class="p-top-25">
 
-              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span>
+              </h2>
 
               <div class="p-top-10">
                 <app-cards
@@ -56,7 +58,9 @@
           <section *ngIf="!filterActivated">
             <div class="p-top-25">
 
-              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.LATEST' | translate }}</span>
+              </h2>
 
               <div class="p-top-10">
                 <app-cards
@@ -74,7 +78,9 @@
           <section *ngIf="!filterActivated">
             <div class="p-top-25">
 
-              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.TRENDING' | translate }}</span>
+              </h2>
 
               <div class="p-top-10">
                 <app-cards
@@ -94,7 +100,9 @@
             <div class="p-top-25">
 
 
-              <div class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper" [ngClass]="{ 'loading-content': !stopLoading }">
+              <div
+                class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
+                [ngClass]="{ 'loading-content': !stopLoading }">
 
                 <div [ngStyle]="{ 'margin-bottom': '0.25rem' }">
                   <span>
@@ -106,8 +114,13 @@
                   </span>
                 </div>
 
-                <div *ngFor="let filter of selectedFilters" class="c-hand c-filter-activate-wrapper m-left-1 m-right-2" (click)="onClickRemove(filter._id)">
-                  <span class="text-medium">{{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i></span>
+                <div
+                  *ngFor="let filter of selectedFilters"
+                  class="c-hand c-filter-activate-wrapper m-left-1 m-right-2"
+                  (click)="onClickRemove(filter._id)">
+                  <span class="text-medium">
+                    {{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i>
+                  </span>
                 </div>
 
               </div>
@@ -123,7 +136,10 @@
 
 
               <div *ngIf="filteredInnovations.length === 0" class="p-top-50 flex-centered c-no-result-wrapper">
-                <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
+                <img
+                  src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png"
+                  class="img-responsive"
+                  alt=" ">
                 <h3 class="text-normal m-top-50" [innerText]="'DISCOVER.NO_RESULT_HEADING'" translate></h3>
                 <span class="text-notify text-medium" [innerText]="'DISCOVER.NO_RESULT_TEXT'" translate></span>
               </div>
