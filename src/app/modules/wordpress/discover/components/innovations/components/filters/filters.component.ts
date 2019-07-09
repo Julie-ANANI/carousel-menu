@@ -1,23 +1,43 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Tag } from '../../../../../../../models/tag';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
 import { FilterService } from '../../../../../../public/discover/components/innovations/services/filter.service';
 import { ActivatedRoute } from '@angular/router';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss']
+  styleUrls: ['./filters.component.scss'],
+  animations: [
+    trigger('tagAnimation', [
+      transition('* => *', [
+
+        query('.animate-tag', style({ opacity: 0, transform: 'translateX(-15%)' })),
+
+        query('.animate-tag', stagger('50ms', [
+          animate('.15s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        ])),
+
+      ])
+    ])
+  ]
 })
 
-export class FiltersComponent implements OnInit {
+export class FiltersComponent {
 
   @Input() set tags(value: Array<Tag>) {
     if (value) {
       this._allTags = value;
       this._sortTags('allTags');
       this._getHighlightedTags();
+      this._getSuggestedTags();
+      this._sendSelectedFilters();
     }
+  }
+
+  @Input() set stopLoading(value: boolean) {
+    this._stopLoading = value;
   }
 
   @Output() appliedFilters = new EventEmitter<Array<Tag>>();
@@ -33,6 +53,8 @@ export class FiltersComponent implements OnInit {
   private _highLightTags: Array<Tag> = [];
 
   private _suggestedTags: Array<Tag> = [];
+
+  private _stopLoading: boolean;
 
   constructor(private _tagsService: TagsService,
               private _filterService: FilterService,
@@ -59,12 +81,6 @@ export class FiltersComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    this._getSuggestedTags();
-    this._sendSelectedFilters();
-  }
-
-
   /***
    * this function is to sort tags based on the type.
    * @param type
@@ -85,8 +101,6 @@ export class FiltersComponent implements OnInit {
         this._highLightTags = this._filterService.sortTags(this._highLightTags, this._userLang);
         break;
 
-      default:
-      // do nothing...
     }
   }
 
@@ -232,6 +246,10 @@ export class FiltersComponent implements OnInit {
 
   get suggestedTags(): Array<Tag> {
     return this._suggestedTags;
+  }
+
+  get stopLoading(): boolean {
+    return this._stopLoading;
   }
 
 }

@@ -17,7 +17,6 @@ import { InnovationFrontService } from '../../../services/innovation/innovation-
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
-import { PaginationTemplate1Module } from '../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { TagsService } from '../../../services/tags/tags.service';
@@ -30,7 +29,6 @@ import { PaginationTemplate2Module } from '../../utility-components/paginations/
     CommonModule,
     DiscoverRoutingModule,
     TranslateModule.forChild(),
-    PaginationTemplate1Module, //Todo remove
     PipeModule,
     SharedLoaderModule,
     ModalModule,

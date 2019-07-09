@@ -1,20 +1,18 @@
 @import "../../../../../../../../style/framework/src/variables";
 
-#cards-component {
+#wordpress-cards {
 
-  .card-wrapper {
-    flex-wrap: wrap;
+  .c-cards-wrapper {
     margin-right: -$unit-5;
     margin-bottom: -0.75rem;
 
     .card {
       border: none;
       overflow: hidden;
+      box-shadow: $box-shadow-3;
       background-color: transparent;
 
       a {
-        font-size: $font-size-xs;
-        color: $text-primary-color;
         padding: $unit-4;
 
         .card-image {
@@ -39,17 +37,22 @@
 
           }
 
+          img {
+            height: 200px;
+          }
+
         }
 
         .card-header {
-          padding-left: $unit-2;
-          padding-right: $unit-2;
 
           .card-title {
-            margin-bottom: 0;
 
             h6 {
               font-size: 0.75rem;
+            }
+
+            &.loading-content {
+              height: 30px;
             }
 
           }
@@ -58,12 +61,8 @@
 
       }
 
-      &.card-responsive {
-        margin-bottom: 0.75rem;
-      }
-
-      &:hover {
-        box-shadow: $box-shadow-hover-umi;
+      &.c-effect:hover {
+        transform: translateY(-15px);
         cursor: pointer;
 
         .hover-button {
@@ -91,10 +90,9 @@
 
 }
 
-
 @media (max-width: $size-xs) {
 
-  .card-wrapper {
+  .c-cards-wrapper {
     margin-right: 0 !important;
     justify-content: center;
 
@@ -106,3 +104,4 @@
   }
 
 }
+
