@@ -99,7 +99,7 @@
           <section *ngIf="filterActivated">
             <div class="p-top-25">
 
-
+              <!-- filter applied -->
               <div
                 class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
                 [ngClass]="{ 'loading-content': !stopLoading }">
@@ -125,7 +125,7 @@
 
               </div>
 
-
+              <!-- innovations based on the filtered apply -->
               <div class="p-top-10">
                 <app-cards
                   [allInnovations]="filteredInnovations"
@@ -134,7 +134,7 @@
                 </app-cards>
               </div>
 
-
+              <!-- if no innovations found then no result -->
               <div *ngIf="filteredInnovations.length === 0" class="p-top-50 flex-centered c-no-result-wrapper">
                 <img
                   src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png"
@@ -143,7 +143,6 @@
                 <h3 class="text-normal m-top-50" [innerText]="'DISCOVER.NO_RESULT_HEADING'" translate></h3>
                 <span class="text-notify text-medium" [innerText]="'DISCOVER.NO_RESULT_TEXT'" translate></span>
               </div>
-
 
             </div>
           </section>

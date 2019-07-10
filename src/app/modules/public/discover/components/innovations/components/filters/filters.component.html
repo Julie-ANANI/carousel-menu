@@ -1,12 +1,14 @@
 <section id="filters">
 
 
-  <!-- highlighted sectors -->
+  <!-- highlighted tags, search and buttons -->
   <div class="sector-highlighted">
 
 
+    <!-- see all filters button, search and share button -->
     <div class="flex-between">
 
+      <!-- see all filters button and search -->
       <div class="flex-start action-wrapper">
 
         <div
@@ -26,6 +28,7 @@
 
       </div>
 
+      <!-- share and stats buttons -->
       <div class="share-button">
 
         <ng-container *ngIf="isAdmin && selectedTags.length > 0">
@@ -50,8 +53,10 @@
       </div>
 
     </div>
+    <!-- /filters, search and share button -->
 
 
+    <!-- highlight tags -->
     <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
       <div
         *ngFor="let tag of highLightTags"
@@ -69,13 +74,14 @@
         </label>
       </div>
     </div>
+    <!-- /highlight tags -->
 
 
   </div>
-  <!-- /highlighted sectors -->
+  <!-- /highlighted tags, search and buttons -->
 
 
-  <!-- suggested sectors -->
+  <!-- suggested tags -->
   <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
 
     <h3 class="text-notify animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
@@ -99,7 +105,7 @@
     </div>
 
   </div>
-  <!-- /suggested sectors -->
+  <!-- /suggested tags -->
 
 
 </section>

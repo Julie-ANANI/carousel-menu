@@ -114,8 +114,6 @@ export class FiltersComponent {
         this._highLightTags = this._filterService.sortTags(this._highLightTags, this.userLang);
         break;
 
-      default:
-      // do nothing...
     }
   }
 

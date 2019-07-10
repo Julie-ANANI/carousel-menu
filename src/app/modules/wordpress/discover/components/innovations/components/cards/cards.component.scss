@@ -9,7 +9,6 @@
     .card {
       border: none;
       overflow: hidden;
-      box-shadow: $box-shadow-3;
       background-color: transparent;
 
       a {
@@ -62,6 +61,7 @@
       }
 
       &.c-effect:hover {
+        box-shadow: $box-shadow-hover-umi;
         transform: translateY(-15px);
         cursor: pointer;
 
