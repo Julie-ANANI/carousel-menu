@@ -113,17 +113,21 @@
         td {
 
           .tbody-td-data {
-            justify-content: space-between;
+            flex: 1;
+            max-width: 100%;
+            justify-content: flex-start;
             align-items: center;
 
             .tbody-td-action-button {
-              order: 2;
-              margin-left: 0.5rem;
+              position: absolute;
+              right: 0;
+              padding-left: 0.75rem;
 
               .btn-xs {
                 display: inline-flex;
                 transition: none;
                 visibility: hidden;
+                background-color: $bg-color-light;
               }
 
             }
@@ -202,6 +206,7 @@
             .tbody-td-data {
 
               .tbody-td-action-button {
+                background-color: $table-tr-hover-background-color;
 
                 .btn-xs {
                   visibility: visible;
