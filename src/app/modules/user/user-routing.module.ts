@@ -19,7 +19,7 @@ const userRoutes: Routes = [
         loadChildren: './admin/admin.module#AdminModule'
       },
       {
-        path: 'documentation/framework/css',
+        path: 'documentation/framework/css/overview',
         canActivateChild: [DocsCssGuardService],
         loadChildren: './../documentation/docs-css/docs-css.module#DocsCssModule'
       },
