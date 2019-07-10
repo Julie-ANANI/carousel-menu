@@ -194,7 +194,7 @@ export class SharedProsListComponent {
       this._isTagsForm = false;
       this._currentPro = professional;
       this._sidebarValue = {
-        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+        animate_state: 'active',
         title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
         type: 'professional'
       };
@@ -267,7 +267,7 @@ export class SharedProsListComponent {
     this._prosToTag = pros;
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.ADD_TAGS',
       type: 'addTags'
     };

@@ -122,7 +122,7 @@ export class AccountComponent implements OnInit {
     event.preventDefault();
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.CHANGE_PASSWORD'
     };
 

@@ -186,7 +186,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   onClickSettings() {
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'Advanced Search',
       size: '726px'
     };

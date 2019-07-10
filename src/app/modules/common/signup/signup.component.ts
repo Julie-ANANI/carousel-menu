@@ -89,7 +89,7 @@ export class SignupComponent implements OnInit {
     event.preventDefault();
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.SIGN_UP',
       type: 'signup'
     }

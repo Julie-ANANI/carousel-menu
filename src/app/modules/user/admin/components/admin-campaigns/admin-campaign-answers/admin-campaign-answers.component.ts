@@ -169,7 +169,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._modalAnswer = value;
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.EDIT_INSIGHT',
       size: '726px'
     };

@@ -353,7 +353,7 @@ export class SharedMarketReportComponent implements OnInit {
     this._modalAnswer = answer;
 
     this._sidebarTemplateValue = {
-      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'Insight',
       size: '726px'
     };

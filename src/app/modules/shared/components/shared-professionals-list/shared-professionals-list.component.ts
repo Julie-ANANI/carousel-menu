@@ -121,21 +121,30 @@ export class SharedProfessionalsListComponent {
     this.configChange.emit(value);
   }
 
-  private _resetSidebarVariables() {
-    this._isProfessionalSidebar = false;
-    this._isTagsSidebar = false;
+  private _resetSidebarVariables(sidebarToReset: string) {
+    switch (sidebarToReset) {
+
+      case 'professional':
+        this._isProfessionalSidebar = false;
+        return;
+
+      case 'tags':
+        this._isTagsSidebar = false;
+        return;
+
+    }
   }
 
   public onClickEdit(value: Professional) {
 
-    this._resetSidebarVariables();
+    this._resetSidebarVariables('tags');
 
     this._professionalsService.get(value._id).pipe(first()).subscribe((response: Professional) => {
       this._selectedProfessional = response;
       this._isProfessionalSidebar = true;
 
       this._sidebarValue = {
-        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+        animate_state: 'active',
         title: 'SIDEBAR.TITLE.EDIT_PROFESSIONAL',
         type: 'professional'
       };
@@ -209,12 +218,12 @@ export class SharedProfessionalsListComponent {
   }
 
   private _editProfessionalTags(value: Array<SelectedProfessional>) {
-    this._resetSidebarVariables();
+    this._resetSidebarVariables('professional');
     this._professionalsToTags = value;
     this._isTagsSidebar = true;
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.ADD_TAGS',
       type: 'addTags'
     };

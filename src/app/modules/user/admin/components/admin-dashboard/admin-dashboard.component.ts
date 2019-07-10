@@ -186,7 +186,7 @@ export class AdminDashboardComponent implements OnInit {
       this.innovationService.getInnovationCard(this._selectedBatch.innovation.innovationCards[0].id).pipe(first()).subscribe((card: any) => {
         this._selectedInnovation = card;
         this._sidebarTemplateValue = {
-          animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+          animate_state: 'active',
           title: 'SIDEBAR.TITLE.PREVIEW',
           size: '726px'
         };
