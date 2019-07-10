@@ -12,7 +12,6 @@ import { first } from 'rxjs/operators';
 import { Response } from '../../../../../models/response';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 
-
 @Component({
   selector: 'app-innovations',
   templateUrl: './innovations.component.html',
@@ -90,7 +89,6 @@ export class InnovationsComponent implements OnInit {
 
   }
 
-
   /***
    * this function will slice first four innovations to show in the section
    * latest.
@@ -99,7 +97,6 @@ export class InnovationsComponent implements OnInit {
   private _getLatestInnovations() {
     this._latestInnovations = this._totalInnovations.length > 0 ? this._totalInnovations.slice(0, 4) : [];
   }
-
 
   /***
    * this function will get the remaining innovations that are not latest t
@@ -110,7 +107,6 @@ export class InnovationsComponent implements OnInit {
     this._trendingInnovations = this._totalInnovations.length > 0 ? this._totalInnovations.slice(4) : [];
   }
 
-
   /***
    * this function searches for the tags of type sector and push them to the attribute
    * sectorTags.
@@ -119,18 +115,15 @@ export class InnovationsComponent implements OnInit {
     this._sectorTags = FilterService.getAllSectorTags(this._totalInnovations);
   }
 
-
   public onSelectFilters(filters: Array<Tag>) {
     this._selectedFilters = filters;
     this._filterActivated = this._selectedFilters.length > 0;
     this._getFilteredInnovations();
   }
 
-
   private _getFilteredInnovations() {
     this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters);
   }
-
 
   public onClickRemove(tagId: string) {
     this._filterService.setFilterToRemove(tagId);
@@ -143,7 +136,6 @@ export class InnovationsComponent implements OnInit {
   get totalInnovations(): Array<Innovation> {
     return this._totalInnovations;
   }
-
 
   get latestInnovations(): Array<Innovation> {
     return this._latestInnovations;

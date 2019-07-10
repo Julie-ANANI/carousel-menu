@@ -1,11 +1,12 @@
 <section id="wordpress-filters">
 
+
   <!-- highlighted sectors -->
   <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
     <div
       *ngFor="let tag of highLightTags"
-      class="label label-draft label-rounded c-hand animate-tag"
-      [ngClass]="{ 'label-primary': checkFilter(tag._id)}">
+      [ngClass]="{ 'label-primary': checkFilter(tag._id)}"
+      class="label label-draft label-rounded c-hand animate-tag">
       <label class="c-hand">
         <input
           (change)="toggleFilter($event, tag)"
@@ -20,6 +21,7 @@
   </div>
   <!-- /highlighted sectors -->
 
+
   <!-- suggested sectors -->
   <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
 
@@ -28,8 +30,8 @@
     <div class="d-flex sector-wrapper">
       <div
         *ngFor="let tag of suggestedTags"
-        class="label label-draft label-rounded c-hand animate-appear"
-        [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
+        [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }"
+        class="label label-draft label-rounded c-hand animate-appear">
         <label class="c-hand">
           <input
             (change)="toggleSimilarFilter($event, tag)"
@@ -45,6 +47,7 @@
 
   </div>
   <!-- /suggested sectors -->
+
 
 </section>
 

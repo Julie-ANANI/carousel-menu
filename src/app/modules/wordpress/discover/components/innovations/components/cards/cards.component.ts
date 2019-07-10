@@ -110,7 +110,7 @@ export class CardsComponent {
       switch (toReturn) {
 
         case 'url':
-          return `discover/${innovation.innovationCards[index].innovation_reference}/${innovation.innovationCards[index].lang}`;
+          return `wordpress/discover/${innovation.innovationCards[index].innovation_reference}/${innovation.innovationCards[index].lang}`;
 
         case 'title':
           return innovation.innovationCards[index].title;
@@ -129,7 +129,6 @@ export class CardsComponent {
     return '';
 
   }
-
 
   get pagination(): Pagination {
     return this._pagination;

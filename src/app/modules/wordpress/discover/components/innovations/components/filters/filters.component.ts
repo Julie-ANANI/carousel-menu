@@ -104,7 +104,6 @@ export class FiltersComponent {
     }
   }
 
-
   /***
    * this function is to get the highlighted tags from all the sector tags.
    * @private
@@ -113,7 +112,6 @@ export class FiltersComponent {
     this._highLightTags = FilterService.getHighlightedTags(this._allTags);
     this._sortTags('highlight');
   }
-
 
   /***
    * this function is to get the suggested tags based on the tag selected.
@@ -164,7 +162,6 @@ export class FiltersComponent {
     }
   }
 
-
   /***
    * this function is to remove the selected filter from the variable selectedTags.
    * @param id
@@ -174,13 +171,11 @@ export class FiltersComponent {
     this._selectedTags.splice(index, 1);
   }
 
-
   private _initialize() {
     this._selectedSimilarTags = [];
     this._getSuggestedTags();
     this._sendSelectedFilters();
   }
-
 
   /***
    * this function is to determine which similar filter is active or not.
@@ -190,13 +185,12 @@ export class FiltersComponent {
     return this._selectedSimilarTags.some((item) => item._id === id);
   }
 
-
   /***
    * based on the similar filter is checked or unchecked we do the respective functions.
    * @param event
    * @param tag
    */
-  toggleSimilarFilter(event: Event, tag: Tag) {
+  public toggleSimilarFilter(event: Event, tag: Tag) {
     if ((event.target as any).checked) {
       this._selectedSimilarTags.push(tag);
       this._selectedTags.push(tag);
@@ -205,7 +199,6 @@ export class FiltersComponent {
       this.removeSimilarFilter(tag._id);
     }
   }
-
 
   /***
    * this function is to remove the selected similar filter from the variable selectedTags.
@@ -218,11 +211,9 @@ export class FiltersComponent {
     this._sendSelectedFilters();
   }
 
-
   private _sendSelectedFilters() {
     this.appliedFilters.emit(this._selectedTags);
   }
-
 
   get userLang(): string {
     return this._userLang;
