@@ -29,7 +29,11 @@ import { InnovationFrontService } from '../../../../services/innovation/innovati
 export class SharedMarketReportComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
-    this._innovation = value;
+    if (value) {
+      this._innovation = value;
+      this._initializeReport();
+      this._isOwner = (this._authService.userId === this._innovation.owner.id) || this._authService.adminLevel > 2;
+    }
   }
 
   @Input() set reportShared(value: boolean) {
@@ -93,8 +97,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   ngOnInit() {
     this._filterService.reset();
-    this._initializeReport();
-    this._isOwner = (this._authService.userId === this._innovation.owner.id) || this._authService.adminLevel > 2;
   }
 
 
@@ -138,14 +140,14 @@ export class SharedMarketReportComponent implements OnInit {
      * @type {boolean | undefined}
      * @user
      */
-    this._previewMode = this._innovation && this._innovation.previewMode ? this._innovation.previewMode : false;
+    this._previewMode = this._innovation.previewMode ? this._innovation.previewMode : false;
 
 
     /***
      * we are checking do we have any template.
      * @type {number | undefined}
      */
-    this._numberOfSections = this._innovation && this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
+    this._numberOfSections = this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
 
     /***
      * assigning the value of the executive template.
