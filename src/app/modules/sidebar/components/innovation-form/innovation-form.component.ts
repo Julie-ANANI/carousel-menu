@@ -84,7 +84,6 @@ export class InnovationFormComponent implements OnInit {
             fr: {language: 'fr', subject: '', content: ''}
           };
           this.statusValid = true;
-          console.log(this._project.clientSatisfaction);
         }
       });
     }
