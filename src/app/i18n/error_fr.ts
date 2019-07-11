@@ -9,7 +9,7 @@ export const ERROR = {
 
   'FORM_ERROR': 'Erreur de formulaire',
 
-  'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
+  'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changez le nombre de \'lignes par page\'.',
 
   'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données.',
 
@@ -89,8 +89,8 @@ export const ERROR = {
     'CREATED': 'Le tag a été créée avec succès.',
     'REMOVED': 'Le tag a été supprimé.',
     'ALREADY_ADDED': 'Le tag a déjà été ajoutée.',
-    'FETCHING_ERROR': 'Nous rencontrons des problèmes à récupérer les tags de ces innovations sur le serveur.',
-    'TAG_FETCHING_ERROR': 'Nous rencontrons des problèmes à récupérer les données de ce tag.'
+    'FETCHING_ERROR': 'Nous rencontrons des problèmes pour récupérer les tags de ces innovations sur le serveur.',
+    'TAG_FETCHING_ERROR': 'Nous rencontrons des problèmes pour récupérer les données de ce tag.'
   },
 
 
@@ -105,7 +105,7 @@ export const ERROR = {
 
 
   'ANSWER': {
-    'UPDATED': 'La réponse mise à jour avec succès.',
+    'UPDATED': 'La réponse a été mise à jour avec succès.',
     'IMPORTED': 'Les réponses ont été importées avec succès.',
     'STATUS_UPDATE': 'Le statut a été mis à jour avec succès.'
   },
@@ -123,24 +123,24 @@ export const ERROR = {
 
   'CAMPAIGN': {
     'ADDED': 'La campagne a été ajoutée avec succès.',
-    'UPDATED': 'La campagne a été mis à jour avec succès.',
-    'DELETED': 'La campagne et son professionnel sont été supprimés avec succès.',
-    'TEMPLATE_ERROR': 'Nous avons du mal à récupérer les données des modèles. Veuillez essayer de recharger la page à nouveau !',
-    'SIGNATURE_ERROR': 'Nous avons du mal à récupérer les données des signatures. Veuillez essayer de recharger la page à nouveau !',
+    'UPDATED': 'La campagne a été mise à jour avec succès.',
+    'DELETED': 'La campagne et ses professionnels ont été supprimés avec succès.',
+    'TEMPLATE_ERROR': 'Nous avons du mal à récupérer les données des modèles. Veuillez essayer de recharger la page !',
+    'SIGNATURE_ERROR': 'Nous avons du mal à récupérer les données des signatures. Veuillez essayer de recharger la page !',
     'WORKFLOW': {
       'ADDED': 'Le workflow a été ajouté avec succès.',
       'DELETED': 'Le workflow a été supprimé avec succès.',
       'UPDATED': 'Le workflow a été mis à jour avec succès.',
-      'SENT': 'Le courrier a été envoyé avec succès.',
-      'SENT_ERROR': 'Nous avons de la difficulté à envoyer le courrier.',
+      'SENT': 'L\'email a été envoyé avec succès.',
+      'SENT_ERROR': 'Nous avons des difficulté à envoyer l\'email.',
       'DEFAULT': 'Le workflow par défaut a été mis à jour.'
     },
     'BATCH': {
       'NUGGETS_ERROR': 'Nous avons du mal à activer/désactiver les nuggets. Veuillez essayer de recharger la page !',
       'BATCH_ERROR': 'Nous avons du mal à activer/désactiver les batchs. Veuillez essayer de recharger la page !',
-      'NUGGETS_ACTIVATED': 'Les nuggets ont été activées avec succès.',
-      'NUGGETS_DEACTIVATED': 'Les nuggets ont été désactivées avec succès.',
-      'NOT_CREATED': 'Aucun batch est créé.',
+      'NUGGETS_ACTIVATED': 'Les nuggets ont été activés avec succès.',
+      'NUGGETS_DEACTIVATED': 'Les nuggets ont été désactivés avec succès.',
+      'NOT_CREATED': 'Aucun batch n\'est créé.',
       'STARTED': 'Le batch a été démarré avec succès.',
       'CREATED': 'Le batch a été créé avec succès.',
       'STOPPED': 'Le batch a été arrêté avec succès.',
@@ -169,10 +169,10 @@ export const ERROR = {
 
 
   'ERRORS': {
-    'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
-    'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou parce que l\'URL est bonne.',
+    'PROFESSIONAL_ERROR': 'Cela peut être parce que vous essayez d\'accéder au professionnel qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou une mauvaise URL.',
+    'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou une mauvaise URL.',
     'FETCHING': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être dû à un problème de connexion au serveur.',
-    'FETCHING_CAMPAIGN_ANSWERS': 'Nous rencontrons des problèmes lors de la récupération les réponses pour cette campagne.',
+    'FETCHING_CAMPAIGN_ANSWERS': 'Nous rencontrons des problèmes lors de la récupération des réponses pour cette campagne.',
     'PROJECT_FETCHING_ERROR': 'Cela peut être dû à un problème de connexion au serveur ou au fait que nous n\'avons pas trouvé l\'innovation que vous recherchez.'
   },
 
