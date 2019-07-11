@@ -1,14 +1,16 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { CookieService, CookieOptions } from 'ngx-cookie';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
 import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
 
+const AUTH_SESSION_KEY = makeStateKey('authSession');
 
 @Injectable()
 export class AuthService {
@@ -30,7 +32,7 @@ export class AuthService {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _http: HttpClient,
               private _cookieService: CookieService,
-              /*private _router: Router,*/
+              private _state: TransferState,
               private _swellRtService: SwellrtBackend ) {
   /**
      Les cookies <hasBeenAuthenticated> et <hasBeenAdmin> sont utiles quand l'application essaye d'accéder à une route
@@ -107,14 +109,27 @@ export class AuthService {
    * Appelé à l'initialisation de l'application pour ouvrir une session auprès du serveur si besoin
    */
   public initializeSession(): Observable<any> {
-    return this._http.get('/auth/session')
-      .pipe(
-        tap((res: any) => {
-          this._setAuthenticatedTo(res.isAuthenticated);
-          this._setAdminTo(res.adminLevel);
-          this._setConfirmedTo(res.isConfirmed);
-          this._user = res.user || null;
-        }));
+    const callback = (res: any) => {
+      this._setAuthenticatedTo(res.isAuthenticated);
+      this._setAdminTo(res.adminLevel);
+      this._setConfirmedTo(res.isConfirmed);
+      this._user = res.user || null;
+    };
+    if (this._state.hasKey(AUTH_SESSION_KEY)) {
+      const res = this._state.get(AUTH_SESSION_KEY, {});
+      callback(res);
+      this._state.remove(AUTH_SESSION_KEY);
+      return of(res);
+    } else {
+      return this._http.get('/auth/session')
+        .pipe(
+          tap((res: any) => {
+            if (isPlatformServer(this.platformId)) {
+              this._state.set(AUTH_SESSION_KEY, res);
+            }
+            callback(res);
+          }));
+    }
   }
 
   public preRegisterDataOAuth2(provider: string, data: any): Observable<any> {
