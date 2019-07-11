@@ -25,6 +25,7 @@
 
 }
 
+// Sidebar for full page
 .sidebar {
   top: 0;
   min-height: 100vh;
@@ -37,11 +38,6 @@
   overflow-y: auto;
   overflow-x: hidden;
   box-shadow: -3px 0 8px 0 rgba(66,91,118,.21);
-
-  &.active {
-    opacity: 1;
-    transform: translateX(0);
-  }
 
   .sidebar-container {
     width: 100%;
@@ -65,6 +61,11 @@
     position: relative;
   }
 
+  &.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   &.sidebar-right {
     right: 0;
     left: unset;
@@ -76,6 +77,15 @@
 
   }
 
+}
+
+// Sidebar for inside page
+.sidebar-inline {
+  position: relative;
+  min-height: 100vh;
+  left: 0;
+  width: $control-width-sm;
+  background: $bg-page-color;
 }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-docs-css',
@@ -6,14 +6,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './docs-css.component.html'
 })
 
-export class DocsCssComponent implements OnInit {
+export class DocsCssComponent {
 
   constructor() {
-  }
-
-
-  ngOnInit(): void {
-
   }
 
 }

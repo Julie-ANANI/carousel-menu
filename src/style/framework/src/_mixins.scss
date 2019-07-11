@@ -1,5 +1,27 @@
 @import "variables";
 
+// Title mixin
+@mixin title-variant($size: 1.6rem) {
+  color: $text-primary-color;
+  font-size: $size;
+  font-weight: $font-weight-medium;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  line-height: $line-height;
+  word-break: break-word;
+}
+
+// Subtitle mixin
+@mixin subtitle-variant($size: 1.6rem) {
+  color: $text-primary-color;
+  font-size: $size;
+  font-weight: $font-weight-normal;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  line-height: $line-height;
+  word-break: break-word;
+}
+
 // Clearfix mixin
 @mixin clearfix() {
   &::after {
@@ -9,7 +31,6 @@
   }
 }
 
-
 // Text Ellipsis
 @mixin text-ellipsis() {
   overflow: hidden;
@@ -17,12 +38,10 @@
   white-space: nowrap;
 }
 
-
 // Component transition
 @mixin control-transition() {
   transition: all 0.2s ease-in-out;
 }
-
 
 // Flex-centered
 @mixin flex-centered {
@@ -31,14 +50,12 @@
   align-items: center;
 }
 
-
 // Inline-flex centered
 @mixin inline-flex-centered {
   display: inline-flex;
   justify-content: center;
   align-items: center;
 }
-
 
 // Button variant
 @mixin button-variant($color: $primary-color) {
@@ -59,7 +76,6 @@
 
 }
 
-
 // Button round variant
 @mixin button-round-variant($color: $primary-color) {
   color: $light-color;
@@ -77,7 +93,6 @@
   }
 
 }
-
 
 // Ghost button variant
 @mixin ghost-button-variant($color: $primary-color) {
@@ -101,7 +116,6 @@
 
 }
 
-
 // Ghost button variant
 @mixin ghost-button-no-hover-variant($color: $primary-color) {
   color: $color;
@@ -116,7 +130,6 @@
   }
 
 }
-
 
 // Button ghost background variant
 @mixin button-ghost-background-variant($color: $primary-color) {
@@ -136,7 +149,6 @@
 
 }
 
-
 // Text link variant
 @mixin text-link-variant($color: $primary-color) {
   font-weight: $font-weight-medium;
@@ -151,12 +163,10 @@
 
 }
 
-
 // Bar scale variant
 @mixin bar-scale-variant($color-1st, $color-2nd) {
   background-image: linear-gradient(-180deg, $color-1st 0%, $color-2nd 100%);
 }
-
 
 // Avatar mixin
 @mixin avatar-variant($color: $light-color, $bg-color: $primary-color) {
@@ -169,7 +179,6 @@
   height: $size;
   width: $size;
 }
-
 
 // Label mixin
 @mixin label-variant($color: $light-color, $bg-color: $primary-color) {
