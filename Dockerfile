@@ -9,9 +9,6 @@ WORKDIR /var/web
 # build client
 RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
 
-# update version
-RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
-
 # upload source-map to sentry
 RUN if [ $VERSION ]; then npm install @sentry/cli; fi
 RUN if [ $VERSION ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
