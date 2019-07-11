@@ -33,14 +33,6 @@
       position: relative;
     }
 
-    th:first-child {
-      border-left: $border-width solid $table-tr-border-color;
-    }
-
-    th:last-child {
-      border-right: $border-width solid $table-tr-border-color;
-    }
-
     th, tbody td {
       max-width: 200px;
       height: 44px;
@@ -54,21 +46,12 @@
     }
 
     th {
-      color: $text-background-color;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-bold;
-      background-color: $table-th-background-color;
-      text-transform: uppercase;
 
       .th-name {
         top: 50%;
         margin-top: -19px;
         height: 38px;
         max-width: 100%;
-      }
-
-      &.active, &:hover {
-        background-color: $table-th-hover-background-color !important;
       }
 
       &.th-action {
@@ -104,11 +87,6 @@
     tbody {
 
       tr {
-        color: $text-primary-color;
-        font-size: 0.65rem;
-        background-color: $bg-color-light;
-        border-left: $border-width solid $table-tr-border-color;
-        border-right: $border-width solid $table-tr-border-color;
 
         td {
 

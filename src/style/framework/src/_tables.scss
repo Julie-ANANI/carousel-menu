@@ -4,6 +4,12 @@
   display: block;
   overflow: auto;
   white-space: nowrap;
+
+  &.fixed-height {
+    max-height: 500px;
+    padding-bottom: 0.75rem;
+  }
+
 }
 
 .table {
@@ -12,14 +18,14 @@
   text-align: left;
   width: 100%;
 
-  &.table-hover {
+  &.table {
 
     tbody {
 
       tr {
 
         &:hover {
-         background: $table-th-background-color;
+         background: $table-tr-hover-background-color;
         }
 
       }
@@ -28,21 +34,41 @@
 
   }
 
-  // Tables with horizontal scrollbar
-  &.table-scroll {
-    display: block;
-    overflow-x: auto;
-    padding-bottom: $unit-5;
-    white-space: nowrap;
-  }
-
-  td, th {
+  th, td {
     border-bottom: $border-width solid $table-tr-border-color;
+    min-height: 44px;
     padding: $unit-3 $unit-2;
+    font-size: $font-size-sm;
   }
 
   th {
+    color: $text-background-color;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    background-color: $table-th-background-color;
+    text-transform: uppercase;
     border-top: $border-width solid $table-tr-border-color;
+
+    &.active, &:hover {
+      background-color: $table-th-hover-background-color !important;
+    }
+
+  }
+
+  th:first-child{
+    border-left: $border-width solid $table-tr-border-color;
+  }
+
+  th:last-child {
+    border-right: $border-width solid $table-tr-border-color;
+  }
+
+  tbody tr {
+    color: $text-primary-color;
+    font-size: 0.65rem;
+    background-color: $bg-color-light;
+    border-left: $border-width solid $table-tr-border-color;
+    border-right: $border-width solid $table-tr-border-color;
   }
 
 }
