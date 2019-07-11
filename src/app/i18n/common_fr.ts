@@ -130,10 +130,10 @@ export const COMMON = {
     'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
-    'SIGNATURE_NAME': 'Signature Nom',
+    'SIGNATURE_NAME': 'Nom Signature',
     'LANGUAGE': 'Langue',
     'PRESET_NAME': 'Nom du Preset',
-    'TAG_NAME': 'Nom de tag',
+    'TAG_NAME': 'Nom du tag',
     'CREATED': 'Créé',
     'COLLABORATORS': 'collaborateurs'
   },
@@ -168,7 +168,7 @@ export const COMMON = {
     'ACCEPT': 'Veuillez accepter les termes et conditions.',
     'COUNTRY': 'Le pays est requis.',
     'URL': 'Le profil est requis.',
-    'PROS_CONTACT': 'Value should be greater then 0.',
+    'PROS_CONTACT': 'La valeur doit être supérieure à 0.',
     'BATCH_IMMEDIATE': 'Laissez ce champ vide pour envoyer le batch immédiatement.',
     'BATCH_DELAY': 'L\'heure choisie doit être au minimum dans 7 minutes, sinon le batch risque de ne pas être envoyé'
   },
@@ -176,7 +176,7 @@ export const COMMON = {
   'INVALID': {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
     'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
-    'MUST_CONTAIN': 'Le mot de passe doit en contenir un symbole spécial ($@&!#).'
+    'MUST_CONTAIN': 'Le mot de passe doit contenir un symbole spécial ($@&!#).'
   },
 
   'BUTTON': {
@@ -319,7 +319,7 @@ export const COMMON = {
     'CHOOSE_TAG': 'Choisissez le tag à associer à cet tag',
     'TAG_PLACEHOLDER': 'Ajouter un tag existante',
     'NO_TAGS_POOL': 'Pas de tags pour cette innovation. Essayez d\'en ajouter !',
-    'CREATE_NEW_TAG': 'Voulez-vous créer une nouvelle tag ?',
+    'CREATE_NEW_TAG': 'Voulez-vous créer un nouveau tag ?',
   },
 
   'LOGOUT': {
@@ -334,7 +334,6 @@ export const COMMON = {
   'CAMPAIGN': {
     'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
     'DELETE_BOARD': {
-      'HEADING': 'Supprimer le forum',
       'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
     }
   },
