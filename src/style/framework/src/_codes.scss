@@ -1,0 +1,28 @@
+@import "variables";
+
+.code {
+  background: $bg-page-color;
+  border-radius: $border-radius;
+  color: $text-primary-color;
+  position: relative;
+
+  &::before {
+    color: $meta-color;
+    content: attr(data-lang);
+    font-size: $font-size-sm;
+    position: absolute;
+    right: $unit-2;
+    top: $unit-h;
+  }
+
+  code {
+    color: inherit;
+    display: block;
+    line-height: $line-height;
+    overflow-x: auto;
+    padding: 1.25rem;
+    width: 100%;
+    font-size: $font-size-sm;
+  }
+
+}

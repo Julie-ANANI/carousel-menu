@@ -38,11 +38,15 @@
       display: flex;
       margin: 0;
       padding: 0;
+      box-shadow: none;
+      background-color: transparent;
+      min-width: unset;
       list-style: none;
 
       .menu-item, .sidebar-menu-item {
         @include inline-flex-centered();
         height: 75px;
+        font-weight: $font-weight-medium;
         margin: 0;
         padding: 0 $unit-3;
 
@@ -86,6 +90,10 @@
             color: $primary-color;
           }
 
+        }
+
+        &:hover {
+          background-color: transparent;
         }
 
       }

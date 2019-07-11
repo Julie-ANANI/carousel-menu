@@ -1,42 +1,14 @@
+@import "mixins/text";
+@import "mixins/clearfix";
+
+
 @import "variables";
 
-// Title mixin
-@mixin title-variant($size: 1.6rem) {
-  color: $text-primary-color;
-  font-size: $size;
-  font-weight: $font-weight-medium;
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-  line-height: $line-height;
-  word-break: break-word;
-}
 
-// Subtitle mixin
-@mixin subtitle-variant($size: 1.6rem) {
-  color: $text-primary-color;
-  font-size: $size;
-  font-weight: $font-weight-normal;
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-  line-height: $line-height;
-  word-break: break-word;
-}
 
-// Clearfix mixin
-@mixin clearfix() {
-  &::after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-}
 
-// Text Ellipsis
-@mixin text-ellipsis() {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+
+
 
 // Component transition
 @mixin control-transition() {

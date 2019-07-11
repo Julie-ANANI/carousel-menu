@@ -22,10 +22,6 @@
 
 }
 
-.full-width {
-  width: 100%;
-}
-
 // remove padding top
 .rm-pad-top {
   padding-top: 0;
@@ -35,6 +31,15 @@
 .rm-pad-bottom {
   padding-bottom: 0;
 }
+
+.width-100 {
+  width: 100%;
+}
+
+.width-75 {
+  width: 75%;
+}
+
 
 @media (max-width: $size-sm) {
 

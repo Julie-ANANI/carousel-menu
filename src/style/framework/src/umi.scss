@@ -7,17 +7,16 @@
 @import "variables";
 @import "mixins";
 
-
 // Reset and dependencies
 @import "normalize";
 @import "base";
-
 
 // Elements
 @import "typography";
 @import "tables";
 @import "banners";
 @import "buttons";
+@import "codes";
 @import "dropdown";
 @import "forms";
 @import "header";
@@ -25,10 +24,8 @@
 @import "stats";
 @import "media";
 
-
 // Layout
 @import "layout";
-
 
 // Components
 @import "accordions";
@@ -37,14 +34,13 @@
 @import "bars";
 @import "cards";
 @import "carousels";
+@import "menu";
 @import "modal";
 @import "navbar";
 @import "popovers";
 @import "sidebars";
 @import "tabs";
 @import "tooltip";
-
-
 
 // Utilities
 @import "animation";
