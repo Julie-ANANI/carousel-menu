@@ -16,7 +16,7 @@ export class CollaboratorComponent {
 
   @Input() set project(value: Innovation) {
     this._innovationId = value ? value._id : '';
-    this._innovationCollaborators = value.collaborators;
+    this._innovationCollaborators = value && value.collaborators ? value.collaborators : [];
   }
 
   @Input() set sidebarState(value: string) {

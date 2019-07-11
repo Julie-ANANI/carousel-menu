@@ -1,45 +1,46 @@
-<ng-container *ngIf="totalInnovations > 0">
-  <section id="cards-component">
+<section id="cards">
 
-    <!-- section cards -->
-    <div class="card-wrapper d-flex text-center">
-      <div *ngFor="let innovation of innovations | slice:startIndex:endIndex" class="card card-responsive">
-        <a [href]="[getInnovationDetail('url', innovation)]">
 
-          <div class="card-image relative">
+  <!-- section cards -->
+  <section class="c-cards-wrapper d-flex text-center flex-wrap">
+    <div *ngFor="let innovation of innovations | slice:startIndex:endIndex" class="card card-responsive m-bottom-30" [ngClass]="{ 'c-effect': stopLoading }">
+      <a [href]="[getInnovationDetail('url', innovation)]" class="text-primary text-xs" [ngClass]="{ 'c-default': !stopLoading }">
 
-            <figure>
-              <img [src]="getInnovationDetail('imageUrl', innovation)" [alt]="getInnovationDetail('title', innovation)" width="320" height="200">
-            </figure>
+        <div class="card-image" [ngClass]="stopLoading ? 'relative' : 'loading-content'">
 
-            <div class="hover-button absolute flex-centered">
-              <span class="text-medium">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
-            </div>
+          <figure>
+            <img [src]="getInnovationDetail('imageUrl', innovation)" [alt]="getInnovationDetail('title', innovation)" width="320" height="200">
+          </figure>
 
+          <div class="hover-button absolute flex-centered" [ngClass]="{ 'd-hide': !stopLoading }">
+            <span class="text-medium">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
           </div>
 
-          <div class="card-header">
-            <div class="card-title">
-              <h6>{{ getInnovationDetail('title', innovation) }}</h6>
-            </div>
-          </div>
+        </div>
 
-        </a>
-      </div>
+        <div class="card-header" [ngClass]="stopLoading ? 'p-left-2 p-right-2' : 'p-no-left p-no-right'">
+          <div class="card-title m-no-bottom" [ngClass]="{ 'loading-content': !stopLoading }">
+            <h6>{{ getInnovationDetail('title', innovation) }}</h6>
+          </div>
+        </div>
+
+
+      </a>
     </div>
-
-    <!-- section paginations -->
-    <ng-container *ngIf="isPagination && totalInnovations > 10">
-      <div class="section-light-pad rm-pad-bottom flex-end">
-        <app-pagination
-          [total]="totalInnovations"
-          [propertyName]="'discover-page'"
-          [configValue]="paginationValue"
-          (configChange)="onChangePagination($event)">
-        </app-pagination>
-      </div>
-    </ng-container>
-    <!-- /section paginations -->
-
   </section>
-</ng-container>
+  <!-- /section cards -->
+
+
+  <!-- section pagination -->
+  <section *ngIf="isPagination && total > 10 && stopLoading">
+    <div class="section-light-pad">
+      <app-pagination-2
+        [(pagination)]="pagination"
+        [totalCount]="total">
+      </app-pagination-2>
+    </div>
+  </section>
+  <!-- /section pagination -->
+
+
+</section>

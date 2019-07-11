@@ -1,6 +1,6 @@
 @import "../../../../../../../../style/framework/src/variables";
 
-#filter-component {
+#filters {
 
   .animate-appear {
     animation-duration: .5s;
@@ -59,15 +59,25 @@
             opacity: 0.8;
           }
 
+          &.loading-content {
+            width: 200px;
+            height: 30px;
+
+            i, span {
+              visibility: hidden;
+            }
+
+            &:hover {
+              opacity: 1;
+            }
+
+          }
+
         }
 
       }
 
       .share-button {
-
-        .ghost-edit {
-          margin-right: $unit-5;
-        }
 
         .btn {
           min-width: 100px;
@@ -124,10 +134,9 @@
 
 }
 
-
 @media (max-width: $size-sm) {
 
-  #filter-component {
+  #filters {
 
     .sector-highlighted {
 
@@ -147,7 +156,7 @@
 @media (max-width: $size-xs) {
 
 
-  #filter-component {
+  #filters {
 
     .sector-highlighted {
 

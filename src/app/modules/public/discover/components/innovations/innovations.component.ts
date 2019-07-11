@@ -5,9 +5,12 @@ import { Tag } from '../../../../../models/tag';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { AuthService } from '../../../../../services/auth/auth.service';
 import { FilterService } from './services/filter.service';
-
+import { Config } from '../../../../../models/config';
+import { isPlatformBrowser } from '@angular/common';
+import { first } from 'rxjs/operators';
+import { Response } from '../../../../../models/response';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-innovations',
@@ -17,18 +20,23 @@ import { FilterService } from './services/filter.service';
 
 export class InnovationsComponent implements OnInit {
 
-  private _config = {
-    fields: 'created innovationCards tags status projectStatus principalMedia',
+  private _config: Config = {
+    fields: 'created principalMedia innovationCards tags status projectStatus',
     limit: '0',
-    offset: '0',
+    offset: '',
     isPublic: '1',
+    search: '{}',
     $or: '[{ "status": "EVALUATING" },{ "status": "DONE" }]',
     sort: '{ "created": -1 }'
   };
 
+  private _fetchingError: boolean;
+
   private _totalInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
 
   private _recommendedInnovations: Array<Innovation> = [];
+
+  private _recommendedInnovationId: string;
 
   private _latestInnovations: Array<Innovation> = [];
 
@@ -38,15 +46,15 @@ export class InnovationsComponent implements OnInit {
 
   private _sectorTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
-  private _userLang = '';
-
   private _selectedFilters: Array<Tag> = [];
 
-  private _userAuthenticated: boolean = false;
+  private _userAuthenticated: boolean;
 
-  private _filterActivated: boolean = false;
+  private _filterActivated: boolean;
 
   private _searchKey = '';
+
+  private _stopLoading: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -57,42 +65,46 @@ export class InnovationsComponent implements OnInit {
               private _filterService: FilterService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
-
-    this._totalInnovations = this._activatedRoute.snapshot.data.innovations;
+    this._userAuthenticated = this._authService.isAuthenticated;
 
     this._activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
-        this._applyInnoRecommendation(params['innovation']);
+        this._recommendedInnovationId = params['innovation'];
       }
     });
-
-    this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
-
-    this._userAuthenticated = this._authService.isAuthenticated;
 
   }
 
   ngOnInit() {
-    this._getLatestInnovations();
-    this._getTrendingInnovations();
-    this._getAllSectorTags();
-  }
 
+    if (isPlatformBrowser(this._platformId)) {
+      this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+        this._totalInnovations = response.result;
+        this._applyInnoRecommendation();
+        this._getLatestInnovations();
+        this._getTrendingInnovations();
+        this._getAllSectorTags();
+        this._getFilteredInnovations();
+        this._stopLoading = true;
+      }, () => {
+        this._fetchingError = true;
+      });
+    }
+
+  }
 
   /***
    * this function is to get the recommend innovations for the
    * logged user.
-   * @param idInno
    * @private
    */
-  private _applyInnoRecommendation(idInno: string) {
-    this._innovationService.getRecommendation(idInno).subscribe((response) => {
+  private _applyInnoRecommendation() {
+    this._innovationService.getRecommendation(this._recommendedInnovationId).subscribe((response) => {
       response.forEach((inno_similar: Innovation) => {
         this._recommendedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
       });
     });
   }
-
 
   /***
    * this function will slice first four innovations to show in the section
@@ -100,9 +112,8 @@ export class InnovationsComponent implements OnInit {
    * @private
    */
   private _getLatestInnovations() {
-    this._latestInnovations = this._totalInnovations && this._totalInnovations.length > 0 ? this._totalInnovations.slice(0, 4) : [];
+    this._latestInnovations = this._totalInnovations.length > 0 ? this._totalInnovations.slice(0, 4) : [];
   }
-
 
   /***
    * this function will get the remaining innovations that are not latest t
@@ -110,9 +121,8 @@ export class InnovationsComponent implements OnInit {
    * @private
    */
   private _getTrendingInnovations() {
-    this._trendingInnovations = this._totalInnovations && this._totalInnovations.length > 0 ? this._totalInnovations.slice(4) : [];
+    this._trendingInnovations = this._totalInnovations.length > 0 ? this._totalInnovations.slice(4) : [];
   }
-
 
   /***
    * this function searches for the tags of type sector and push them to the attribute
@@ -122,13 +132,11 @@ export class InnovationsComponent implements OnInit {
     this._sectorTags = FilterService.getAllSectorTags(this._totalInnovations);
   }
 
-
   public onSelectFilters(filters: Array<Tag>) {
     this._selectedFilters = filters;
     this._checkFilterActivation();
     this._getFilteredInnovations();
   }
-
 
   public onInputField(value: string) {
     this._searchKey = value;
@@ -136,33 +144,28 @@ export class InnovationsComponent implements OnInit {
     this._getFilteredInnovations();
   }
 
-
   private _checkFilterActivation() {
     this._filterActivated = this._selectedFilters.length > 0 || this._searchKey !== '';
   }
-
 
   private _getFilteredInnovations() {
     this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this._searchKey);
   }
 
-
   public onClickRemove(tagId: string) {
     this._filterService.setFilterToRemove(tagId);
   }
 
-
-  public browserLang(): string {
-    return this._translateService.getBrowserLang();
-  }
-
-
   public getCommunityUrl(): string {
-    return this._userLang === 'fr' ? 'https://www.umi.us/fr/communaute/' : 'https://www.umi.us/community/';
+    return this.userLang === 'fr' ? 'https://www.umi.us/fr/communaute/' : 'https://www.umi.us/community/';
   }
 
-  get config() {
+  get config(): Config {
     return this._config;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
   get totalInnovations(): Array<Innovation> {
@@ -171,6 +174,10 @@ export class InnovationsComponent implements OnInit {
 
   get recommendedInnovations(): Array<Innovation> {
     return this._recommendedInnovations;
+  }
+
+  get recommendedInnovationId(): string {
+    return this._recommendedInnovationId;
   }
 
   get latestInnovations(): Array<Innovation> {
@@ -186,7 +193,7 @@ export class InnovationsComponent implements OnInit {
   }
 
   get userLang(): string {
-    return this._userLang;
+    return this._translateService.currentLang;
   }
 
   get userAuthenticated(): boolean {
@@ -207,6 +214,10 @@ export class InnovationsComponent implements OnInit {
 
   get searchKey(): string {
     return this._searchKey;
+  }
+
+  get stopLoading(): boolean {
+    return this._stopLoading;
   }
 
 }

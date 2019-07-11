@@ -1,42 +1,67 @@
-<section id="filter-component">
+<section id="filters">
 
-  <!-- highlighted sectors -->
+
+  <!-- highlighted tags, search and buttons -->
   <div class="sector-highlighted">
 
+
+    <!-- see all filters button, search and share button -->
     <div class="flex-between">
 
+      <!-- see all filters button and search -->
       <div class="flex-start action-wrapper">
 
-        <div class="filter-icon text-notify c-hand" (click)="showAllTags($event)">
+        <div
+          class="filter-icon"
+          (click)="showAllTags()"
+          [ngClass]="stopLoading ? 'text-notify c-hand' : 'loading-content'">
           <i class="fas fa-sliders-h"></i>
-          <span class="text-medium">{{ 'DISCOVER.FILTER_TEXT' | translate }}</span>
+          <span class="text-medium" [innerText]="'DISCOVER.FILTER_TEXT'" translate></span>
         </div>
 
-        <div class="search-wrapper">
-          <app-search-input-2 [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'" (searchFieldOutput)="onInputField($event)"></app-search-input-2>
+        <div class="search-wrapper" [ngClass]="{ 'd-hide': !stopLoading }">
+          <app-search-input-2
+            [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'"
+            (searchFieldOutput)="onInputField($event)">
+          </app-search-input-2>
         </div>
 
       </div>
 
+      <!-- share and stats buttons -->
       <div class="share-button">
 
         <ng-container *ngIf="isAdmin && selectedTags.length > 0">
-          <a class="btn btn-sm ghost-edit rounded" [routerLink]="['/demo', 'showcase']" [queryParams]="{ 'tag': getSelectedTagsIds() }" target="_blank">
+          <a
+            [ngClass]="stopLoading ? 'ghost-edit' : 'loading-content'"
+            [queryParams]="{ 'tag': getSelectedTagsIds() }"
+            [routerLink]="['/demo', 'showcase']"
+            class="btn btn-sm rounded m-right-20"
+            target="_blank">
             <span [innerText]="'DISCOVER.BUTTON_SHOWCASE'" translate></span>
           </a>
         </ng-container>
 
-        <button type="button" class="btn btn-sm rounded btn-secondary" (click)="onClickShare($event)">
-          <i class="fas fa-share"></i>
-          {{ 'DISCOVER.BUTTON_SHARE' | translate }}
+        <button
+          (click)="onClickShare()"
+          [ngClass]="stopLoading ? 'btn-secondary' : 'loading-content'"
+          class="btn btn-sm rounded"
+          type="button">
+          <i class="fas fa-share"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
 
       </div>
 
     </div>
+    <!-- /filters, search and share button -->
 
-    <div *ngIf="highLightTags.length > 0" class="sector-wrapper d-flex">
-      <div *ngFor="let tag of highLightTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
+
+    <!-- highlight tags -->
+    <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
+      <div
+        *ngFor="let tag of highLightTags"
+        class="label label-draft label-rounded c-hand animate-tag"
+        [ngClass]="{ 'label-primary': checkFilter(tag._id)}">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"
@@ -45,22 +70,27 @@
             [name]="tag.label | multiling:userLang"
             [value]="tag.label | multiling:userLang"
             type="checkbox">
-          {{ tag.label | multiling:userLang | FormatText }}
+          {{ tag.label | multiling:userLang }}
         </label>
       </div>
     </div>
+    <!-- /highlight tags -->
+
 
   </div>
-  <!-- /highlighted sectors -->
+  <!-- /highlighted tags, search and buttons -->
 
 
-  <!-- suggested sectors -->
+  <!-- suggested tags -->
   <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
 
     <h3 class="text-notify animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
     <div class="d-flex sector-wrapper">
-      <div *ngFor="let tag of suggestedTags" class="label label-draft label-rounded c-hand animate-appear" [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
+      <div
+        *ngFor="let tag of suggestedTags"
+        class="label label-draft label-rounded c-hand animate-appear"
+        [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
         <label class="c-hand">
           <input
             (change)="toggleSimilarFilter($event, tag)"
@@ -69,13 +99,13 @@
             [name]="tag.label | multiling:userLang"
             [value]="tag.label | multiling:userLang"
             type="checkbox">
-          {{ tag.label | multiling:userLang | FormatText }}
+          {{ tag.label | multiling:userLang }}
         </label>
       </div>
     </div>
 
   </div>
-  <!-- /suggested sectors -->
+  <!-- /suggested tags -->
 
 
 </section>
@@ -85,7 +115,10 @@
 <app-modal [(showModal)]="modalTag" [modalPosition]="'150px'" [widthMax]="'90%'" [modalTitle]="'DISCOVER.ALL_SECTORS'">
   <div class="modal-tag-wrapper">
     <div class="d-flex sector-wrapper">
-      <div *ngFor="let tag of allTags" class="label label-draft label-rounded c-hand" [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
+      <div
+        *ngFor="let tag of allTags"
+        class="label label-draft label-rounded c-hand"
+        [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"
@@ -94,7 +127,7 @@
             [name]="tag.label | multiling:userLang"
             [value]="tag.label | multiling:userLang"
             type="checkbox">
-          {{ tag.label | multiling:userLang | FormatText }}
+          {{ tag.label | multiling:userLang }}
         </label>
       </div>
     </div>
@@ -107,14 +140,23 @@
 <app-modal [(showModal)]="modalShare" [modalPosition]="'250px'">
   <div class="modal-share-wrapper text-center">
 
-    <h3 class="text-background text-normal">{{ 'DISCOVER.MODAL_SHARE.TITLE' | translate }}</h3>
+    <h3 class="text-background text-normal" [innerText]="'DISCOVER.MODAL_SHARE.TITLE'" translate></h3>
 
     <div *ngIf="!urlCopied">
-      <button type="button" class="btn btn-sm ghost-edit" (click)="onClickCopy($event)">{{ 'DISCOVER.TOOLTIP_TEXT' | translate }}</button>
+      <button
+        (click)="onClickCopy($event)"
+        class="btn btn-sm ghost-edit"
+        type="button">
+        {{ 'DISCOVER.TOOLTIP_TEXT' | translate }}
+      </button>
     </div>
 
     <div *ngIf="urlCopied">
-      <button type="button" class="btn btn-sm ghost-success c-not-allowed">{{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}</button>
+      <button
+        class="btn btn-sm ghost-success c-not-allowed"
+        type="button">
+        {{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}
+      </button>
     </div>
 
   </div>

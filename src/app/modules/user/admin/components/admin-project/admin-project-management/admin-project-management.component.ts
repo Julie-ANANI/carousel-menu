@@ -131,7 +131,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this._dashboardService.getOperators().subscribe((operators: any) => this.operators = operators.result);
 
-    this.operatorId = this._project.operator
+    this.operatorId = this._project && this._project.operator
       ? (this._project.operator.id ? this._project.operator.id : this._project.operator.toString())
       : undefined;
 

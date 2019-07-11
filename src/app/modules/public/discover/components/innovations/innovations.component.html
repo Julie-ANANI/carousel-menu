@@ -1,103 +1,189 @@
-<ng-container *ngIf="totalInnovations.length > 0">
-
-  <section id="innovations-component">
-    <div class="column col-xs-12 col-11 col-mx-auto">
+<section id="innovations">
 
 
-      <!-- section filter -->
-      <div class="section-light-pad">
-        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)" (searchFieldOutput)="onInputField($event)"></app-filters>
-      </div>
-      <!-- /section filter -->
+  <!-- content -->
+  <div class="restrict-width">
+    <div class="section-light-pad">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
 
-      <!-- section recommended innovations -->
-      <ng-container *ngIf="recommendedInnovations.length > 0 && userAuthenticated && !filterActivated">
-        <div class="section-light-pad rm-pad-bottom">
-          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span></h2>
-          <app-cards [allInnovations]="recommendedInnovations"></app-cards>
-        </div>
-      </ng-container>
-      <!-- /section recommended innovations -->
-
-
-      <!-- section latest innovations -->
-      <ng-container *ngIf="!filterActivated && latestInnovations.length > 0">
-        <div class="section-light-pad rm-pad-bottom">
-          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
-          <app-cards [allInnovations]="latestInnovations"></app-cards>
-        </div>
-      </ng-container>
-      <!-- /section latest innovations -->
-
-
-      <!-- section trending innovations -->
-      <ng-container *ngIf="!filterActivated && trendingInnovations.length > 0">
-        <div class="section-light-pad rm-pad-bottom">
-          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
-          <app-cards [allInnovations]="trendingInnovations" [pagination]="true"></app-cards>
-        </div>
-      </ng-container>
-      <!-- /section all innovations -->
-
-
-      <!-- section when searching innovation -->
-      <ng-container *ngIf="filterActivated">
-        <div class="section-light-pad rm-pad-bottom">
-
-          <div class="result-heading text-background text-normal d-flex">
-
-            <div class="heading">
-              <span>
-                {{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
-                <ng-container *ngIf="searchKey">
-                  <span class="text-medium">{{ searchKey }}</span>
-                  <ng-container *ngIf="selectedFilters.length > 0"> | </ng-container>
-                </ng-container>
-              </span>
-            </div>
-
-            <div *ngFor="let filter of selectedFilters" class="c-hand filter-wrapper" (click)="onClickRemove(filter._id)">
-              <span class="text-medium">{{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i></span>
-            </div>
-
+        <!-- section fetching error -->
+        <section *ngIf="fetchingError">
+          <div class="i-error-wrapper d-flex align-center">
+            <app-error-template-1 [errorMessage]="'DISCOVER.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+              <p [innerText]="'DISCOVER.FETCHING_ERROR_SUB'" translate></p>
+            </app-error-template-1>
           </div>
+        </section>
+        <!-- /section fetching error -->
 
-          <app-cards [allInnovations]="filteredInnovations" [search]="true" [lastIndex]="filteredInnovations.length"></app-cards>
 
-          <div *ngIf="filteredInnovations.length === 0" class="section-pad rm-pad-bottom flex-centered no-result-wrapper">
-            <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
-            <h3 class="text-normal" [innerText]="'DISCOVER.NO_RESULT_HEADING'" translate></h3>
-            <span class="text-notify text-medium" [innerText]="'DISCOVER.NO_RESULT_TEXT'" translate></span>
+        <!-- section result -->
+        <section *ngIf="!fetchingError" class="d-content-wrapper">
+
+
+          <!-- filters -->
+          <div class="section-light-pad">
+            <app-filters
+              [tags]="sectorTags"
+              [stopLoading]="stopLoading"
+              (appliedFilters)="onSelectFilters($event)"
+              (searchFieldOutput)="onInputField($event)">
+            </app-filters>
           </div>
-
-        </div>
-      </ng-container>
-      <!-- /section when searching innovation -->
+          <!-- /filters -->
 
 
-    </div>
-  </section>
+          <!-- section recommended innovations -->
+          <section *ngIf="!filterActivated && recommendedInnovations.length > 0">
+            <div class="p-top-25">
+
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span>
+              </h2>
+
+              <div class="p-top-10">
+                <app-cards
+                  [allInnovations]="recommendedInnovations"
+                  [stopLoading]="stopLoading">
+                </app-cards>
+              </div>
+
+            </div>
+          </section>
+          <!-- /section recommended innovations -->
 
 
-  <!-- footer banner -->
-  <div class="section-community">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <div class="flex-between">
+          <!-- section latest innovations -->
+          <section *ngIf="!filterActivated">
+            <div class="p-top-25">
 
-        <div class="message-wrapper d-flex">
-          <i class="fas fa-paper-plane"></i>
-          <span>{{ 'DISCOVER.COMMUNITY_TEXT' | translate }}</span>
-        </div>
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.LATEST' | translate }}</span>
+              </h2>
 
-        <a [href]="getCommunityUrl()" target="_blank" rel="noopener">
-          <button type="button" class="btn btn-primary rounded">{{ 'DISCOVER.BUTTON_COMMUNITY' | translate }}</button>
-        </a>
+              <div class="p-top-10">
+                <app-cards
+                  [allInnovations]="latestInnovations"
+                  [stopLoading]="stopLoading">
+                </app-cards>
+              </div>
+
+            </div>
+          </section>
+          <!-- /section latest innovations -->
+
+
+          <!-- section trending innovations -->
+          <section *ngIf="!filterActivated">
+            <div class="p-top-25">
+
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.TRENDING' | translate }}</span>
+              </h2>
+
+              <div class="p-top-10">
+                <app-cards
+                  [allInnovations]="trendingInnovations"
+                  [isPagination]="true"
+                  [stopLoading]="stopLoading">
+                </app-cards>
+              </div>
+
+            </div>
+          </section>
+          <!-- /section trending innovations -->
+
+
+          <!-- section when searching innovation -->
+          <section *ngIf="filterActivated">
+            <div class="p-top-25">
+
+              <!-- filter applied -->
+              <div
+                class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
+                [ngClass]="{ 'loading-content': !stopLoading }">
+
+                <div [ngStyle]="{ 'margin-bottom': '0.25rem' }">
+                  <span>
+                    {{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
+                    <ng-container *ngIf="searchKey">
+                      <span class="text-medium">{{ searchKey }}</span>
+                      <ng-container *ngIf="selectedFilters.length > 0"> | </ng-container>
+                    </ng-container>
+                  </span>
+                </div>
+
+                <div
+                  *ngFor="let filter of selectedFilters"
+                  class="c-hand c-filter-activate-wrapper m-left-1 m-right-2"
+                  (click)="onClickRemove(filter._id)">
+                  <span class="text-medium">
+                    {{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i>
+                  </span>
+                </div>
+
+              </div>
+
+              <!-- innovations based on the filtered apply -->
+              <div class="p-top-10">
+                <app-cards
+                  [allInnovations]="filteredInnovations"
+                  [isPagination]="true"
+                  [stopLoading]="stopLoading">
+                </app-cards>
+              </div>
+
+              <!-- if no innovations found then no result -->
+              <div *ngIf="filteredInnovations.length === 0" class="p-top-50 flex-centered c-no-result-wrapper">
+                <img
+                  src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png"
+                  class="img-responsive"
+                  alt=" ">
+                <h3 class="text-normal m-top-50" [innerText]="'DISCOVER.NO_RESULT_HEADING'" translate></h3>
+                <span class="text-notify text-medium" [innerText]="'DISCOVER.NO_RESULT_TEXT'" translate></span>
+              </div>
+
+            </div>
+          </section>
+          <!-- /section when searching innovation -->
+
+
+        </section>
+        <!-- / section result -->
+
 
       </div>
     </div>
   </div>
-  <!-- /footer banner -->
+  <!-- /content -->
 
 
-</ng-container>
+  <!-- community banner -->
+  <section *ngIf="!fetchingError" class="d-community-banner-wrapper p-top-20">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="flex-between">
+
+        <div class="d-community-msg-wrapper d-flex align-center m-bottom-20">
+          <i class="fas fa-paper-plane m-right-50"></i>
+          <span [innerText]="'DISCOVER.COMMUNITY_TEXT'" class="p-right-50" translate></span>
+        </div>
+
+        <div class="m-bottom-20">
+          <a
+            [href]="getCommunityUrl()"
+            [innerText]="'DISCOVER.BUTTON_COMMUNITY'"
+            class="btn btn-primary rounded"
+            rel="noopener"
+            target="_blank"
+            translate>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- /community banner -->
+
+
+</section>

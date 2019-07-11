@@ -12,6 +12,8 @@ import { first } from 'rxjs/operators';
 import { Media } from '../../../../../models/media';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { Config } from '../../../../../models/config';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
 
 @Component({
   selector: 'app-discover-description',
@@ -21,7 +23,15 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 
 export class DiscoverDescriptionComponent implements OnInit {
 
-  private _innovationCard: InnovCard[] = [];
+  private _relatedInnovationConfig = {
+    fields: 'innovationCards tags principalMedia',
+    limit: '3',
+    offset: '',
+    search: '{}',
+    sort: '{ "created": -1 }'
+  };
+
+  private _innovationCard: InnovCard;
 
   private _innovation: Innovation;
 
@@ -47,48 +57,53 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _innovationsRelated: Array<{ innovationCard: InnovCard, tags: Array<Tag> }> = [];
 
-  private _innovationConfig = {
-    fields: 'innovationCards tags principalMedia',
-    limit: '3',
-    offset: '0',
-    sort: '{ "created": -1 }'
-  };
+  private _pageTitle = 'COMMON.PAGE_TITLE.DISCOVER_DESCRIPTION';
+
+  private _fetchingError: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _multiling: MultilingPipe,
               private _domSanitizer1: DomSanitizer,
+              private _translateTitleService: TranslateTitleService,
               private _location: Location,
               public _router: Router,
               private _innovationService: InnovationService) {
+
+    this._setPageTitle();
 
     this._activatedRoute.params.subscribe(params => {
       this._id = params['projectId'];
       this._lang = params['lang'];
     });
 
-    this._innovation = this._activatedRoute.snapshot.data.innovation;
-
   }
 
   ngOnInit() {
-    this._loadInnovation();
-  }
 
+    if (this._activatedRoute.snapshot.data.innovation && typeof this._activatedRoute.snapshot.data.innovation !== undefined) {
+      this._innovation = this._activatedRoute.snapshot.data.innovation;
+      this._innovationCard = InnovationFrontService.currentLangInnovationCard(this._innovation, this._lang, 'card');
+      this._pageTitle = this._innovationCard.title;
+      this._setPageTitle();
+      this._getAllTags();
+      this._getRelatedInnovations();
+      this._getOperatorDetails();
+      this._getAllShareLinks();
 
-  private _loadInnovation() {
+      if ((this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE' ) {
+        this._quizButtonDisplay = 'none';
+      }
 
-    if (this._innovation && (this._innovation.quizId && this._innovation.quizId === '') || this._innovation.status === 'DONE') {
-      this._quizButtonDisplay = 'none';
+    } else {
+      this._fetchingError = true;
     }
 
-    this._getInnovationCard();
-    this._getRelatedInnovations();
-    this._getAllTags();
-    this._getAllShareLinks();
-    this._getOperatorDetails();
   }
 
+  private _setPageTitle() {
+    this._translateTitleService.setTitle(this._pageTitle);
+  }
 
   private _getAllTags() {
     this._innovation.tags.forEach((tag: Tag) => {
@@ -99,11 +114,10 @@ export class DiscoverDescriptionComponent implements OnInit {
     });
   }
 
-
   private _getRelatedInnovations() {
     if (this._innovation.similar) {
       this._innovation.similar.forEach((item) => {
-        this._innovationService.get(item.matched_inno_id , this._innovationConfig).pipe(first()).subscribe((response: Innovation) => {
+        this._innovationService.get(item.matched_inno_id , this._relatedInnovationConfig).pipe(first()).subscribe((response: Innovation) => {
           const index = response.innovationCards.findIndex((innovCard: InnovCard) => innovCard.lang === this._lang);
           if (index !== -1) {
             this._innovationsRelated.push({innovationCard: response.innovationCards[index], tags: response.tags});
@@ -115,46 +129,34 @@ export class DiscoverDescriptionComponent implements OnInit {
     }
   }
 
-
-  private _getAllShareLinks() {
-
-    if (this._innovation.campaigns.length !== 0) {
-      this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
-    }
-
-    this._linkedInUrl = ShareService.linkedinProjectShareLink(this._innovationCard[0]);
-    this._twitterUrl = ShareService.twitterProjectShareLink(this._innovationCard[0]);
-    this._mailUrl = ShareService.mailProjectShareLink(this._innovationCard[0], this._lang);
-    this._contactUsUrl = ShareService.contactOperator(this.innovationCard[0], this._operatorEmail, this._lang);
-
-  }
-
-
   private _getOperatorDetails() {
     this._operatorEmail = this._innovation.operator ? this._innovation.operator.email : 'contact@umi.us';
   }
 
+  private _getAllShareLinks() {
 
-  private _getInnovationCard() {
-    const innovationCardIndex = this._innovation.innovationCards.findIndex( (card: InnovCard) => card.lang === this._lang);
-    this._innovationCard.push(this._innovation.innovationCards[innovationCardIndex]);
+    if (this._innovation.quizId && this._innovation.campaigns && this._innovation.campaigns.length > 0) {
+      this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
+    }
+
+    this._linkedInUrl = ShareService.linkedinProjectShareLink(this._innovationCard);
+    this._twitterUrl = ShareService.twitterProjectShareLink(this._innovationCard);
+    this._mailUrl = ShareService.mailProjectShareLink(this._innovationCard, this._lang);
+    this._contactUsUrl = ShareService.contactOperator(this._innovationCard, this._operatorEmail, this._lang);
+
   }
-
 
   public getSrc(media: Media): string {
     return InnovationFrontService.getMediaSrc(media, 'mediaSrc', '280', '177');
   }
 
-
   public getRelatedSrc(innovCard: InnovCard): string {
     return InnovationFrontService.getMediaSrc(innovCard, 'default', '280', '177');
   }
 
-
   public getLink(innovCard: InnovCard): string {
     return `wordpress/discover/${innovCard.innovation_reference}/${innovCard.lang}`;
   }
-
 
   public onClickBack() {
     if (isPlatformBrowser(this._platformId)) {
@@ -164,7 +166,6 @@ export class DiscoverDescriptionComponent implements OnInit {
     }
   }
 
-
   get lang(): string {
     return this._lang;
   }
@@ -173,7 +174,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     return this._id;
   }
 
-  get innovationCard(): InnovCard[] {
+  get innovationCard(): InnovCard {
     return this._innovationCard;
   }
 
@@ -221,8 +222,16 @@ export class DiscoverDescriptionComponent implements OnInit {
     return this._innovationsRelated;
   }
 
-  get innovationConfig(): { offset: string; limit: string; sort: string; fields: string } {
-    return this._innovationConfig;
+  get relatedInnovationConfig(): Config {
+    return this._relatedInnovationConfig;
+  }
+
+  get pageTitle(): string {
+    return this._pageTitle;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }

@@ -131,7 +131,7 @@ export class HeaderComponent implements OnDestroy {
    */
   public toggleMenuState() {
     this._displayMenuOptions = !this._displayMenuOptions;
-    this._sidebarValues.animate_state = this._sidebarValues.animate_state === 'inactive' ? 'active' : 'inactive';
+    this._sidebarValues.animate_state = 'active';
   }
 
   public closeSidebar() {

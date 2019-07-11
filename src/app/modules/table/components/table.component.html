@@ -164,7 +164,7 @@
                 [ngClass]="{ 'max-width': table._columns.length <=6 }"
                 [ngStyle]="{ 'width': column._width, 'min-width': column._width ? 'unset' : '150px' }">
               <div
-              class="tbody-td-data d-flex"
+              class="tbody-td-data d-flex relative"
               [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE' }">
 
                 <!-- button -->

@@ -67,7 +67,7 @@ export class PaginationTemplate2Component implements OnInit {
     this._pagination.currentPage = this.currentPage;
     this._pagination.previousPage = this._pagination.previousPage ? this._pagination.previousPage : 0;
     this._pagination.nextPage = this._pagination.nextPage ? this._pagination.nextPage : 2;
-    this._pagination.parPage = localStorage ? localStorage : 10;
+    this._pagination.parPage = localStorage ? localStorage : this._pagination.parPage ? this._pagination.parPage : 10;
   }
 
   private _calculatePage() {

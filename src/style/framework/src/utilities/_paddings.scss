@@ -1,5 +1,35 @@
 @import "../variables";
 
+.p-no {
+  padding: 0 !important;
+}
+
+.p-no-top {
+  padding-top: 0 !important;
+}
+
+.p-no-left {
+  padding-left: 0 !important;
+}
+
+.p-no-right {
+  padding-right: 0 !important;
+}
+
+.p-no-bottom {
+  padding-bottom: 0 !important;
+}
+
+// left
+.p-left-1 {
+  padding-left: $unit-1 !important;
+}
+
+.p-left-2 {
+  padding-left: $unit-2 !important;
+}
+
+
 // right {
 .p-right-1 {
   padding-right: $unit-1 !important;
@@ -7,6 +37,10 @@
 
 .p-right-2 {
   padding-right: $unit-2 !important;
+}
+
+.p-right-50 {
+  padding-right: 2.5rem;
 }
 
 
@@ -29,6 +63,10 @@
 
 .p-top-30 {
   padding-top: 1.5rem;
+}
+
+.p-top-50 {
+  padding-top: 2.5rem;
 }
 
 //bottom

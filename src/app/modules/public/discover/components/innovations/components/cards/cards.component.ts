@@ -1,10 +1,10 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
-import { isPlatformBrowser } from '@angular/common';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
+import { Pagination } from '../../../../../../utility-components/paginations/interfaces/pagination';
 
 @Component({
   selector: 'app-cards',
@@ -15,47 +15,60 @@ import { InnovationFrontService } from '../../../../../../../services/innovation
 export class CardsComponent {
 
   @Input() set allInnovations(value: Array<Innovation>) {
-    this._innovations = value;
-    this._totalInnovations = value.length;
+    this._totalInnovations = value;
+    this._total = value.length;
+    this._initializeInnovations();
   }
 
-  @Input() set pagination(value: boolean) {
+  @Input() set isPagination(value: boolean) {
     this._isPagination = value;
-    this._endIndex = parseInt(this._localStorage.getItem('discover-page-limit'), 10) || 50;
+    this._endIndex = parseInt(this._localStorage.getItem('discover-limit'), 10) || 25;
+    this._initializePagination();
   }
 
-  @Input() set search(value: boolean) {
-    this._isSearching = value;
+  @Input() set stopLoading(value: boolean) {
+    this._stopLoading = value;
+    this._initializeInnovations();
   }
 
-  @Input() set lastIndex(value: number) {
-    this._endIndex = value;
-  }
+  private _pagination: Pagination;
 
-  private _paginationValue: any = {};
+  private _innovations: Array<any> = [];
 
-  private _innovations: Array<Innovation> = [];
+  private _totalInnovations: Array<Innovation> = [];
 
-  private _totalInnovations: number;
+  private _total: number;
 
   private _startIndex: number = 0;
 
   private _endIndex: number = 4;
 
-  private _isPagination: boolean = false;
+  private _isPagination: boolean;
 
-  private _userLang = '';
-
-  private _isSearching: boolean = false;
+  private _stopLoading: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _localStorage: LocalStorageService,
-              private _translateService: TranslateService) {
+              private _translateService: TranslateService) { }
 
-    this._userLang = this._translateService.currentLang || this.browserLang() || 'en' ;
 
+  private _initializeInnovations() {
+    if (this._stopLoading) {
+      this._innovations = this._totalInnovations;
+    } else {
+      for (let i = 0; i < this._endIndex; i++ ) {
+        this._innovations.push(i);
+      }
+    }
   }
 
+  private _initializePagination() {
+    this._pagination = {
+      propertyName: 'discover-limit',
+      offset: 0,
+      parPage: this._endIndex
+    };
+  }
 
   /***
    * this function is to return the innovation field based on the requested 'toReturn'.
@@ -63,91 +76,67 @@ export class CardsComponent {
    * @param innovation
    */
   public getInnovationDetail(toReturn: string, innovation: Innovation):string {
-    let value = '';
     let index = 0;
 
-    if (innovation.innovationCards.length > 1) {
-      const userLangIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this._userLang);
-      if (userLangIndex !== -1) {
-        index = userLangIndex;
-      }
-    } else {
-      const indexEn = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === 'en');
-      if (indexEn !== -1) {
-        index = indexEn;
+    if (innovation && innovation.innovationCards) {
+
+      if (innovation.innovationCards.length > 1) {
+        const userLangIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.userLang);
+        if (userLangIndex !== -1) {
+          index = userLangIndex;
+        }
       } else {
-        index = 0;
-      }
-    }
-
-    switch (toReturn) {
-
-      case 'url':
-        value = `discover/${innovation.innovationCards[index].innovation_reference}/${innovation.innovationCards[index].lang}`;
-        break;
-
-      case 'title':
-        value = innovation.innovationCards[index].title;
-        break;
-
-      case 'imageUrl':
-        value = InnovationFrontService.getMediaSrc(innovation.innovationCards[index], 'default', '320', '200');
-        break;
-
-      default:
-        // do nothing...
-
-    }
-
-    return value;
-
-  }
-
-
-  /***
-   * when there is change in the paginations we detect the change and
-   * update the innovation cards with the new limit and offset value.
-   * @param value
-   */
-  public onChangePagination(value: any) {
-    if (isPlatformBrowser(this._platformId)) {
-
-      const tempOffset = parseInt(value.offset, 10);
-      const tempLimit = parseInt(value.limit, 10);
-
-      this._startIndex = tempOffset;
-      this._endIndex = tempLimit;
-
-      if (tempLimit >= this._totalInnovations) {
-        this._startIndex = 0;
-        this._endIndex = this._totalInnovations;
-      } else {
-        if (tempOffset === 0) {
-          this._startIndex = 0;
-          this._endIndex = tempLimit;
-        } else if (tempOffset > 0) {
-          this._startIndex = tempOffset;
-          this._endIndex += tempOffset;
+        const indexEn = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === 'en');
+        if (indexEn !== -1) {
+          index = indexEn;
+        } else {
+          index = 0;
         }
       }
+
+      switch (toReturn) {
+
+        case 'url':
+          return `discover/${innovation.innovationCards[index].innovation_reference}/${innovation.innovationCards[index].lang}`;
+
+        case 'title':
+          return innovation.innovationCards[index].title;
+
+        case 'imageUrl':
+          return InnovationFrontService.getMediaSrc(innovation.innovationCards[index], 'default', '320', '200');
+
+      }
+
     }
+
+    if (toReturn === 'url') {
+      return '/discover#';
+    }
+
+    return '';
+
   }
 
-
-  public browserLang(): string {
-    return this._translateService.getBrowserLang();
+  get pagination(): Pagination {
+    return this._pagination;
   }
 
-  get paginationValue(): any {
-    return this._paginationValue;
+  set pagination(value: Pagination) {
+    this._pagination = value;
+    this._startIndex = value.offset;
+    this._endIndex = value.currentPage * value.parPage;
   }
 
-  get innovations(): Array<Innovation> {
+  get innovations(): Array<any> {
     return this._innovations;
   }
 
-  get totalInnovations(): number {
+  get totalInnovations(): Array<Innovation> {
     return this._totalInnovations;
+  }
+
+  get total(): number {
+    return this._total;
   }
 
   get startIndex(): number {
@@ -163,11 +152,11 @@ export class CardsComponent {
   }
 
   get userLang(): string {
-    return this._userLang;
+    return this._translateService.currentLang ;
   }
 
-  get isSearching(): boolean {
-    return this._isSearching;
+  get stopLoading(): boolean {
+    return this._stopLoading;
   }
 
 }

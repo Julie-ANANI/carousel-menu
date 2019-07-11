@@ -1,1 +1,1 @@
-<input (keyup.enter)="filter($event)" [placeholder]="'COMMON.FILTER' | translate" [value]="config.search[prop] || ''"/>
+<input (keyup.enter)="filter($event.target.value)" [placeholder]="'COMMON.FILTER' | translate" [value]="config.search[prop] || ''"/>

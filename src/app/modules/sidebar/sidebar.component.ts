@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SidebarInterface } from './interfaces/sidebar-interface';
 
@@ -17,29 +17,13 @@ import { SidebarInterface } from './interfaces/sidebar-interface';
         opacity: 1,
         transform: 'translateX(0)'
       })),
-      transition('inactive => active', animate('500ms linear')),
-      transition('active => inactive', animate('200ms linear')),
+      transition('inactive <=> active', animate('250ms ease-in-out')),
     ]),
-
-    trigger(('animateSidebarBackdrop'), [
-      state('inactive', style({
-        display: 'none',
-        opacity: 0,
-        background: 'none'
-      })),
-      state('active', style({
-        display: 'block',
-        opacity: 1,
-        background: 'rgba(58,66,77,0.96)',
-      })),
-      transition('inactive => active', animate('.5ms linear')),
-      transition('active => inactive', animate('205ms linear')),
-    ])
 
   ]
 })
 
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
   @Input() set template(value: SidebarInterface) {
     this.setTemplate(value);
@@ -49,20 +33,15 @@ export class SidebarComponent implements OnInit {
 
   @Output() closeSidebar = new EventEmitter<SidebarInterface>(); // todo: remove this line
 
-  private _title: string; // heading
+  private _title: string;
 
-  private _state: string; // animation state
+  private _state: string = 'inactive';
 
-  private _size: string; // size
+  private _size: string;
 
-  private _type: string; // type
+  private _type: string;
 
   constructor() {}
-
-  ngOnInit(): void {
-    this._state = 'inactive';
-  }
-
 
   /***
    * This function is used to initialize the received value to the sidebar variables.
@@ -75,14 +54,13 @@ export class SidebarComponent implements OnInit {
     this._size = value.size;
   }
 
-
   /***
    * This function is to toggle the sidebar state and also to move up the scroll.
    * @param {Event} event
    * @param target
    */
-  toggleState(event: Event, target: any) {
-    if ((event.target as HTMLElement).id === 'sidebar-wrapper' || (event.target as HTMLElement).id === 'close') {
+  public toggleState(event: Event, target: any) {
+    if ((event.target as HTMLElement).id === 'close') {
       this._state = 'inactive'; // todo: remove this line
       this.templateChange.emit({animate_state: 'inactive', title: this._title, type: this._type});
       this.closeSidebar.emit({animate_state: this._state, title: this._title, type: this._type}); // todo: remove this line
