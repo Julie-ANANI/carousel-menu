@@ -94,13 +94,8 @@ export const ERROR = {
   },
 
 
-  'SECTION': {
-    'UPDATED': 'Section mise à jour.'
-  },
-
-
-  'QUESTION': {
-    'UPDATED': 'Question  mise à jour.'
+  'PRESET': {
+    'UPDATED': 'Questionnaire mis à jour.'
   },
 
 

@@ -95,13 +95,8 @@ export const ERROR = {
 
 
 
-  'SECTION': {
-    'UPDATED': 'The section has been updated.'
-  },
-
-
-  'QUESTION': {
-    'UPDATED': 'The question has been updated.'
+  'PRESET': {
+    'UPDATED': 'The configuration has been updated.'
   },
 
 
