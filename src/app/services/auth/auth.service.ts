@@ -2,12 +2,11 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CookieService, CookieOptions } from 'ngx-cookie';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
-// import { Router } from '@angular/router';
 import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
 
 
@@ -15,7 +14,6 @@ import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-ba
 export class AuthService {
 
   private _authenticated = false;
-  private _authenticatedSource = new Subject<boolean>();
   private _admin = 0;
   private _confirmed = false;
   private _redirectUrl: string;
@@ -132,7 +130,6 @@ export class AuthService {
 
   private _setAuthenticatedTo(newValue: boolean): void {
     this._authenticated = newValue;
-    this._authenticatedSource.next(newValue);
     if (isPlatformBrowser(this.platformId)) {
       this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
     }
