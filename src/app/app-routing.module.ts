@@ -38,9 +38,6 @@ const appRoutes: Routes = [
     path: 'sample', loadChildren: './modules/public/share/share.module#ShareModule'
   },
   {
-    path: 'auth', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'
-  },
-  {
     path: 'user/discover', redirectTo: 'discover'
   },
   {
