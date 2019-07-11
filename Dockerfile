@@ -1,4 +1,4 @@
-ARG VERSION
+ARG VERSION=latest
 FROM unitedmotionideas/frontbase:${VERSION} AS buildinstance
 
 ARG APP_NAME
