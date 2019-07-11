@@ -8,10 +8,13 @@ import { AccountComponent } from './components/account/account.component';
 import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../../public/share/component/synthesis-complete/synthesis-complete.component';
 
+import { AuthGuard } from '../../../guards/auth-guard.service';
+
 const clientRoutes: Routes = [
   {
     path: '',
     component: ClientComponent,
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
@@ -49,6 +52,9 @@ const clientRoutes: Routes = [
   ],
   exports: [
     RouterModule
+  ],
+  providers: [
+    AuthGuard
   ]
 })
 

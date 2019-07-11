@@ -1,1 +1,73 @@
+@import "../../../../style/framework/src/variables";
 
+#docs-css {
+
+  .accordion-wrapper {
+
+    .docs-accordion {
+      margin-bottom: 1rem;
+
+      .accordion-header {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        font-weight: $font-weight-medium;
+
+        a {
+          color: $text-primary-color;
+        }
+
+      }
+
+      .accordion-body {
+
+        .menu {
+
+          .menu-item {
+            padding-left: 1rem;
+            font-weight: $font-weight-medium;
+
+            &:hover {
+              background-color: transparent;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+.docs-divider {
+  background-color: $bg-page-color;
+  height: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.code {
+
+  code {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .comment {
+    color: $text-meta-color;
+  }
+
+  .name {
+    color: #d73e48;
+  }
+
+  .attr, .tag {
+    color: $text-primary-color;
+  }
+
+  .string {
+    color: $secondary-color;
+  }
+
+}

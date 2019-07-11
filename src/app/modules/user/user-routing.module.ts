@@ -5,7 +5,6 @@ import { UserComponent } from './user.component';
 
 import { UserService } from '../../services/user/user.service';
 import { AuthGuard } from '../../guards/auth-guard.service';
-import { DocsCssGuardService } from '../../guards/docs-css-guard.service';
 
 const userRoutes: Routes = [
   {
@@ -19,13 +18,11 @@ const userRoutes: Routes = [
         loadChildren: './admin/admin.module#AdminModule'
       },
       {
-        path: 'documentation/framework/css/overview',
-        canActivateChild: [DocsCssGuardService],
+        path: 'documentation/framework/css',
         loadChildren: './../documentation/docs-css/docs-css.module#DocsCssModule'
       },
       {
         path: '',
-        canActivateChild: [AuthGuard],
         loadChildren: './client/client.module#ClientModule'
       }
     ]
@@ -38,8 +35,7 @@ const userRoutes: Routes = [
   ],
   providers: [
     UserService,
-    AuthGuard,
-    DocsCssGuardService
+    AuthGuard
   ],
   exports: [
     RouterModule

@@ -8,18 +8,22 @@ import { DocsCssComponent } from './docs-css.component';
 import { OverviewComponent } from './overview/overview.component';
 
 import { AccordionsComponent } from './components/accordions/accordions.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TypographyComponent } from './elements/typography/typography.component';
 
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    DocsCssRoutingModule
+    DocsCssRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [
     DocsCssComponent,
     OverviewComponent,
-    AccordionsComponent
+    TypographyComponent,
+    AccordionsComponent,
   ],
 })
 
