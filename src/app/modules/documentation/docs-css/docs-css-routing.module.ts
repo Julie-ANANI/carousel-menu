@@ -8,6 +8,7 @@ import { OverviewComponent } from './overview/overview.component';
 import { AccordionsComponent } from './components/accordions/accordions.component';
 import { TypographyComponent } from './elements/typography/typography.component';
 import { TableComponent } from './elements/table/table.component';
+import { ButtonComponent } from './elements/button/button.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -18,7 +19,8 @@ const docsCssRoutes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: OverviewComponent, pathMatch: 'full' },
       { path: 'elements/typography', component: TypographyComponent, pathMatch: 'full' },
-      { path: 'elements/tables', component: TableComponent, pathMatch: 'full' },
+      { path: 'elements/table', component: TableComponent, pathMatch: 'full' },
+      { path: 'elements/button', component: ButtonComponent, pathMatch: 'full' },
       { path: 'components/accordions', component: AccordionsComponent, pathMatch: 'full' }
     ]
   }

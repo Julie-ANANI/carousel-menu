@@ -1,0 +1,93 @@
+@import "../variables";
+
+@mixin button-default-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:focus {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &:hover {
+    background-color: darken($color, 4%);
+    border-color: darken($color, 4%);
+  }
+
+}
+
+@mixin button-ghost-variant($color: $primary-color) {
+  color: $color;
+  border-color: lighten($color, 2%);
+  border-width: $border-width-lg;
+
+  &:focus {
+    color: $color;
+    border-color: lighten($color, 2%);
+    border-width: $border-width-lg;
+  }
+
+  &:hover {
+    color: $color;
+    border-color: darken($color, 10%);
+  }
+
+}
+
+@mixin button-link-variant($color: $primary-color) {
+  color: $color;
+  border: none;
+  background-color: transparent;
+
+  &:focus, &:hover {
+    color: $color;
+    border: none;
+    background-color: transparent;
+  }
+
+}
+
+@mixin button-default-action-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+
+  &:focus {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &:hover {
+    background-color: darken($color, 4%);
+    border-color: darken($color, 4%);
+  }
+
+}
+
+@mixin button-ghost-action-variant($color: $primary-color) {
+  color: $color;
+  border-color: lighten($color, 2%);
+  border-width: $border-width;
+  background-color: transparent;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+
+  &:focus {
+    color: $color;
+    background-color: transparent;
+    border-color: lighten($color, 2%);
+    border-width: $border-width;
+  }
+
+  &:hover {
+    background-color: transparent;
+    color: darken($color, 10%);
+    border-color: darken($color, 10%);
+  }
+
+}

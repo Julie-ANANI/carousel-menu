@@ -9,6 +9,7 @@ import { AccordionsComponent } from './components/accordions/accordions.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { TypographyComponent } from './elements/typography/typography.component';
 import { TableComponent } from './elements/table/table.component';
+import { ButtonComponent } from './elements/button/button.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { TableComponent } from './elements/table/table.component';
     TypographyComponent,
     TableComponent,
     AccordionsComponent,
+    ButtonComponent
   ],
 })
 

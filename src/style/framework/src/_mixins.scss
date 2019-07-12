@@ -1,52 +1,15 @@
-@import "mixins/text";
+@import "mixins/button";
 @import "mixins/clearfix";
-
+@import "mixins/position";
+@import "mixins/text";
+@import "mixins/transition";
 
 @import "variables";
 
 
 
 
-
-
-
-// Component transition
-@mixin control-transition() {
-  transition: all 0.2s ease-in-out;
-}
-
-// Flex-centered
-@mixin flex-centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-// Inline-flex centered
-@mixin inline-flex-centered {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-}
-
-// Button variant
-@mixin button-variant($color: $primary-color) {
-  color: $light-color;
-  background-color: $color;
-  border-color: $color;
-
-  &:focus, &:active, &.active {
-    color: $light-color;
-    background-color: $color;
-    border-color: $color;
-  }
-
-  &:hover {
-    background-color: lighten($color, 15%);
-    border-color: lighten($color, 15%);
-  }
-
-}
+// todo remove this
 
 // Button round variant
 @mixin button-round-variant($color: $primary-color) {
@@ -62,28 +25,6 @@
 
   &:hover {
     box-shadow: $box-shadow-button-hover;
-  }
-
-}
-
-// Ghost button variant
-@mixin ghost-button-variant($color: $primary-color) {
-  color: $color;
-  background-color: transparent;
-  border-color: $color;
-  border-width: $border-width-lg;
-
-  &:focus, &:active, &.active {
-    color: $color;
-    background-color: transparent;
-    border-color: $color;
-    border-width: $border-width-lg;
-  }
-
-  &:hover {
-    color: lighten($color, 15%);
-    background-color: transparent;
-    border-color: lighten($color, 15%);
   }
 
 }
