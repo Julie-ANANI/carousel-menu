@@ -1,5 +1,14 @@
 @import "variables";
 
+code {
+  font-size: $font-size-sm;
+  line-height: $line-height;
+  color: darken($text-alert-color, 25%);
+  border-radius: $border-radius;
+  background-color: lighten($text-alert-color, 32%);
+  padding: 0.2rem;
+}
+
 .code {
   background: $bg-page-color;
   border-radius: $border-radius;
@@ -22,6 +31,7 @@
     overflow-x: auto;
     padding: 1.25rem;
     width: 100%;
+    background-color: inherit;
     font-size: $font-size-sm;
   }
 
