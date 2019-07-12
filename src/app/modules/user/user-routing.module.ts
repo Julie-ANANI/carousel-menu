@@ -18,7 +18,7 @@ const userRoutes: Routes = [
         loadChildren: './admin/admin.module#AdminModule'
       },
       {
-        path: 'documentation/framework/css',
+        path: 'documentation/framework',
         loadChildren: './../documentation/docs-css/docs-css.module#DocsCssModule'
       },
       {
