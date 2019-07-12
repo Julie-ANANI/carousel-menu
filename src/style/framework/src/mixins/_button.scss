@@ -12,26 +12,25 @@
   }
 
   &:hover {
-    background-color: darken($color, 4%);
-    border-color: darken($color, 4%);
+    background-color: lighten($color, 10%);
+    border-color: lighten($color, 10%);
   }
 
 }
 
 @mixin button-ghost-variant($color: $primary-color) {
   color: $color;
-  border-color: lighten($color, 2%);
+  border-color: $color;
   border-width: $border-width-lg;
 
   &:focus {
     color: $color;
-    border-color: lighten($color, 2%);
+    border-color: $color;
     border-width: $border-width-lg;
   }
 
   &:hover {
-    color: $color;
-    border-color: darken($color, 10%);
+    border-color: lighten($color, 10%);
   }
 
 }
@@ -63,15 +62,15 @@
   }
 
   &:hover {
-    background-color: darken($color, 4%);
-    border-color: darken($color, 4%);
+    background-color: lighten($color, 10%);
+    border-color: lighten($color, 10%);
   }
 
 }
 
 @mixin button-ghost-action-variant($color: $primary-color) {
   color: $color;
-  border-color: lighten($color, 2%);
+  border-color: $color;
   border-width: $border-width;
   background-color: transparent;
   padding-left: 0.25rem;
@@ -80,14 +79,13 @@
   &:focus {
     color: $color;
     background-color: transparent;
-    border-color: lighten($color, 2%);
+    border-color: $color;
     border-width: $border-width;
   }
 
   &:hover {
     background-color: transparent;
-    color: darken($color, 10%);
-    border-color: darken($color, 10%);
+    border-color: lighten($color, 10%);
   }
 
 }
