@@ -3,11 +3,13 @@
     <div #content class="section-pad rm-pad-top">
 
       <!-- heading part -->
-      <div class="header sidebar-header">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="flex-between">
-            <h5 class="title m-no-bottom">{{ title | translate }}</h5>
-            <button class="btn btn-close" id="close" (click)="toggleState($event, content)"></button>
+      <div class="sidebar-header">
+        <div class="header">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="flex-between">
+              <h5 class="m-no-bottom">{{ title | translate }}</h5>
+              <button class="btn btn-close" id="close" (click)="toggleState($event, content)"></button>
+            </div>
           </div>
         </div>
       </div>
