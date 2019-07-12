@@ -34,16 +34,15 @@
     color: $background-color;
     font-weight: $font-weight-medium;
 
-    .menu {
+    .navigation-menu, .sidebar-menu {
       display: flex;
       margin: 0;
       padding: 0;
       box-shadow: none;
       background-color: transparent;
-      min-width: unset;
       list-style: none;
 
-      .menu-item, .sidebar-menu-item {
+      .navigation-menu-item, .sidebar-menu-item {
         @include inline-flex-centered();
         height: 75px;
         font-weight: $font-weight-medium;
@@ -114,7 +113,7 @@
   .sidebar-navigation-wrapper {
     width: 100%;
 
-    .menu {
+    .sidebar-menu {
       flex-direction: column;
 
       .sidebar-menu-item {
@@ -125,7 +124,7 @@
         border-bottom: 1px solid $border-color;
 
         &.sidebar-item-user {
-          background-color: $bg-dropdown-color;
+          background-color: $bg-menu-item-color;
           border-bottom: none;
 
           .d-flex {

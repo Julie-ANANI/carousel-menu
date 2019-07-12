@@ -51,7 +51,7 @@
       transform: translateY(-50%);
       z-index: $zindex-2;
       border: none;
-      color: $bg-dropdown-color;
+      color: #F2F2F2;
 
       &.btn-round {
         width: 40px;
@@ -141,7 +141,7 @@
       }
 
       &:hover, &.current-slide {
-        color: $bg-dropdown-color;
+        color: #F2F2F2;
       }
 
     }

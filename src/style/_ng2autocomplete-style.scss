@@ -41,7 +41,7 @@
 }
 
 .ng2-auto-complete > ul li:hover, .ng2-auto-complete > ul li.selected {
-  background:  $bg-dropdown-color !important;
-  border-color: $bg-dropdown-color !important;
+  background:  $bg-menu-item-color !important;
+  border-color: $bg-menu-item-color !important;
   cursor: pointer;
 }

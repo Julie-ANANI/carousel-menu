@@ -385,8 +385,8 @@ textarea.form-input {
     color: $text-primary-dark-color;
 
     &:hover, &.is-focused {
-      background:  $bg-dropdown-color;
-      border-color: $bg-dropdown-color;
+      background:  $bg-menu-item-color;
+      border-color: $bg-menu-item-color;
       cursor: pointer;
     }
 
