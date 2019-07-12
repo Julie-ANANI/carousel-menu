@@ -1,4 +1,4 @@
-<section id="accordions">
+<div id="accordions">
 
   <h1 class="title">Accordions</h1>
 
@@ -7,9 +7,9 @@
   <p class="text-md">Accordions are used to toggle sections of content.</p>
 
 
-  <div class="p-top-25">
+  <section class="p-top-25">
       <pre class="code" data-lang="HTML"><code>
-        <span class="comment">&lt;!-- standard Accordions example --&gt;</span>
+        <span class="comment">&lt;!-- standard Accordion example --&gt;</span>
         <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"accordion"</span>&gt;</span>
           <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"accordion-1"</span> <span class="attr">name</span>=<span class="string">"accordion-checkbox"</span> <span class="attr">hidden</span>&gt;</span>
           <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"accordion-header"</span> <span class="attr">for</span>=<span class="string">"accordion-1"</span>&gt;</span>
@@ -17,27 +17,27 @@
             Title
           <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
           <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"accordion-body"</span>&gt;</span>
-          <span class="comment">&lt;!-- Accordions content --&gt;</span>
+          <span class="comment">&lt;!-- Accordion content --&gt;</span>
           <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
         <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
 
-        <span class="comment">&lt;!-- mutually exclusive Accordions example (with same input names) --&gt;</span>
+        <span class="comment">&lt;!-- mutually exclusive Accordion example (with same input names) --&gt;</span>
         <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"accordion"</span>&gt;</span>
           <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">id</span>=<span class="string">"accordion-1"</span> <span class="attr">name</span>=<span class="string">"accordion-radio"</span> <span class="attr">hidden</span>&gt;</span>
           <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"accordion-header"</span> <span class="attr">for</span>=<span class="string">"accordion-1"</span>&gt;</span>
             Title
           <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
           <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"accordion-body"</span>&gt;</span>
-          <span class="comment">&lt;!-- Accordions content --&gt;</span>
+          <span class="comment">&lt;!-- Accordion content --&gt;</span>
           <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
         <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
       </code></pre>
-  </div>
+  </section>
 
 
-  <div class="p-top-25 d-flex">
+  <section class="p-top-25 d-flex">
 
-    <div class="col-6">
+    <div class="column col-6 col-xs-12">
 
       <div class="accordion">
         <input type="checkbox" id="accordion-1" hidden name="accordion-checkbox">
@@ -67,7 +67,7 @@
 
     </div>
 
-    <div class="col-6">
+    <div class="column col-6 col-xs-12">
 
       <div class="accordion">
         <input type="checkbox" id="accordion-3" hidden name="accordion-checkbox">
@@ -93,11 +93,11 @@
 
     </div>
 
-  </div>
+  </section>
 
-  <div class="p-top-25">
+  <section class="p-top-25">
       <pre class="code" data-lang="HTML"><code>
-        <span class="comment">&lt;!-- above left Accordion example --&gt;</span>
+        <span class="comment">&lt;!-- left Accordion example --&gt;</span>
         <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"accordion"</span>&gt;</span>
           <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"accordion-1"</span> <span class="attr">name</span>=<span class="string">"accordion-checkbox"</span> <span class="attr">hidden</span>&gt;</span>
           <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"accordion-header c-hand"</span> <span class="attr">for</span>=<span class="string">"accordion-1"</span>&gt;</span>
@@ -125,26 +125,26 @@
         <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
 
       </code></pre>
-  </div>
+  </section>
 
-  <div class="p-top-25">
+  <section class="p-top-25">
     <p class="text-md">Alternatively, you can use details and summary instead of input radio or checkbox trick. Add the open attribute to details to expand it.</p>
-  </div>
+  </section>
 
-  <div class="p-top-25">
+  <section class="p-top-25">
     <pre class="code" data-lang="HTML"><code>
-      <span class="comment">&lt;!-- details and summary Accordions example --&gt;</span>
+      <span class="comment">&lt;!-- details and summary Accordion example --&gt;</span>
       <span class="tag">&lt;<span class="name">details</span> <span class="attr">class</span>=<span class="string">"accordion"</span> <span class="attr">open</span>&gt;</span>
         <span class="tag">&lt;<span class="name">summary</span> <span class="attr">class</span>=<span class="string">"accordion-header"</span>&gt;</span>
           <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas accordion-icon fa-chevron-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>
           Title
         <span class="tag">&lt;/<span class="name">summary</span>&gt;</span>
         <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"accordion-body"</span>&gt;</span>
-        <span class="comment">&lt;!-- Accordions content --&gt;</span>
+        <span class="comment">&lt;!-- Accordion content --&gt;</span>
         <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
       <span class="tag">&lt;/<span class="name">details</span>&gt;</span>
     </code></pre>
-  </div>
+  </section>
 
-</section>
+</div>
 

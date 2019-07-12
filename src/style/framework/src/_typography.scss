@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: $font-weight-medium;
   line-height: $line-height;
   margin-bottom: $unit-2;
-  word-break: break-word; // todo remove
+  word-break: break-word;
 }
 
 h1 {
@@ -40,6 +40,7 @@ p {
 
 // Blockquote
 blockquote {
+  font-size: $font-size-md;
   border-left: $border-width-lg solid $border-color;
   margin-left: 0;
   padding: $unit-2 $unit-4;
@@ -90,7 +91,7 @@ dl {
   }
 
   dd {
-    margin: $unit-2 0 $unit-4 0;
+    margin: $unit-2 0;
   }
 
 }
