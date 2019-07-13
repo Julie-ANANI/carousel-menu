@@ -87,3 +87,13 @@
   }
 
 }
+
+@mixin button-loading-variant($color: $light-color) {
+  min-width: 4.25rem;
+
+  &:after {
+    border-bottom-color: $color;
+    border-left-color: $color;
+  }
+
+}

@@ -320,6 +320,11 @@
 
   &.is-link {
     @include button-link-variant($primary-color);
+
+    &.is-loading {
+      @include button-loading-variant($primary-color);
+    }
+
   }
 
   &.is-action {
@@ -328,6 +333,11 @@
 
   &.is-primary {
     @include button-default-variant($primary-color);
+
+    &.is-loading {
+      @include button-loading-variant($light-color);
+    }
+
   }
 
   &.is-outlined {
@@ -337,12 +347,24 @@
   &.is-secondary {
     @include button-default-variant($secondary-color);
 
+    &.is-link, &.is-outlined {
+
+      &.is-loading {
+        @include button-loading-variant($secondary-color);
+      }
+
+    }
+
     &.is-link {
       @include button-link-variant($secondary-color);
     }
 
     &.is-action {
       @include button-default-action-variant($secondary-color)
+    }
+
+    &.is-loading {
+      @include button-loading-variant($light-color);
     }
 
     &.is-outlined {
@@ -354,12 +376,25 @@
   &.is-info {
     @include button-default-variant($meta-color);
 
+
+    &.is-link, &.is-outlined {
+
+      &.is-loading {
+        @include button-loading-variant($meta-color);
+      }
+
+    }
+
     &.is-link {
       @include button-link-variant($meta-color);
     }
 
     &.is-action {
       @include button-default-action-variant($meta-color)
+    }
+
+    &.is-loading {
+      @include button-loading-variant($light-color);
     }
 
     &.is-outlined {
@@ -371,12 +406,24 @@
   &.is-danger {
     @include button-default-variant($alert-color);
 
+    &.is-link, &.is-outlined {
+
+      &.is-loading {
+        @include button-loading-variant($alert-color);
+      }
+
+    }
+
     &.is-link {
       @include button-link-variant($alert-color);
     }
 
     &.is-action {
       @include button-default-action-variant($alert-color)
+    }
+
+    &.is-loading {
+      @include button-loading-variant($light-color);
     }
 
     &.is-outlined {
@@ -388,12 +435,24 @@
   &.is-draft {
     @include button-default-variant($background-color);
 
+    &.is-link, &.is-outlined {
+
+      &.is-loading {
+        @include button-loading-variant($background-color);
+      }
+
+    }
+
     &.is-link {
       @include button-link-variant($background-color);
     }
 
     &.is-action {
       @include button-default-action-variant($background-color)
+    }
+
+    &.is-loading {
+      @include button-loading-variant($light-color);
     }
 
     &.is-outlined {
@@ -405,12 +464,24 @@
   &.is-success {
     @include button-default-variant($success-color);
 
+    &.is-link, &.is-outlined {
+
+      &.is-loading {
+        @include button-loading-variant($success-color);
+      }
+
+    }
+
     &.is-link {
       @include button-link-variant($success-color);
     }
 
     &.is-action {
       @include button-default-action-variant($success-color)
+    }
+
+    &.is-loading {
+      @include button-loading-variant($light-color);
     }
 
     &.is-outlined {
