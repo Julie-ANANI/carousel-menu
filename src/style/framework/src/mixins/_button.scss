@@ -18,6 +18,26 @@
 
 }
 
+@mixin button-outline-variant($color: $primary-color) {
+  color: $color;
+  border-color: $color;
+  border-width: $border-width-lg;
+  background-color: transparent;
+
+  &:focus {
+    color: $color;
+    border-color: $color;
+    border-width: $border-width-lg;
+    background-color: transparent;
+  }
+
+  &:hover {
+    border-color: lighten($color, 15%);
+    background-color: transparent;
+  }
+
+}
+
 @mixin button-ghost-variant($color: $primary-color) {
   color: $color;
   border-color: $color;
@@ -30,7 +50,7 @@
   }
 
   &:hover {
-    border-color: lighten($color, 10%);
+    border-color: lighten($color, 15%);
   }
 
 }
