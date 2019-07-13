@@ -15,7 +15,7 @@ export class DocsCssComponent {
 
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this._activeRoute = event.urlAfterRedirects.slice(28);
+        this._activeRoute = event.urlAfterRedirects.slice(31);
       }
     });
 

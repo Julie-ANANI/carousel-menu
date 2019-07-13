@@ -5,7 +5,7 @@
   overflow: auto;
   white-space: nowrap;
 
-  &.max-height {
+  &.is-max-height {
     max-height: 500px;
     padding-bottom: 0.75rem;
   }
@@ -33,7 +33,7 @@
     text-transform: uppercase;
     border-top: $border-width solid $table-tr-border-color;
 
-    &.active {
+    &.is-active {
       background-color: $table-th-hover-background-color !important;
     }
 
@@ -54,13 +54,13 @@
     border-left: $border-width solid $table-tr-border-color;
     border-right: $border-width solid $table-tr-border-color;
 
-    &.active {
+    &.is-active {
       background: $table-tr-hover-background-color;
     }
 
   }
 
-  &.table-hover {
+  &.is-hovered {
 
     thead th {
 

@@ -6,7 +6,7 @@
 
   <p class="text-md">Table include default styles for tables and data sets.</p>
   <p class="text-md">Add the <code>table</code> class to any &lt;table&gt; element. The class will automatically apply the default padding
-    , border, emphasized table header.</p>
+    ,border, emphasized table header.</p>
 
   <section class="p-top-25">
 
@@ -70,10 +70,10 @@
 
   <section class="p-top-25">
 
-    <p class="text-md">Use the <code>table-hover</code> class to &lt;table&gt; element to enable hover style over headers and rows.</p>
+    <p class="text-md">Use the <code>is-hovered</code> class to &lt;table&gt; element to enable hover style over headers and rows.</p>
 
     <div class="p-top-20">
-      <table class="table table-hover">
+      <table class="table is-hovered">
 
         <thead>
           <tr>
@@ -101,7 +101,7 @@
 
     <div class="p-top-20">
       <pre class="code" data-lang="HTML"><code>
-        <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table table-hover"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table is-hovered"</span>&gt;</span>
             ...
         <span class="tag">&lt;/<span class="name">table</span>&gt;</span>
       </code></pre>
@@ -111,21 +111,21 @@
 
   <section class="p-top-25">
 
-    <p class="text-md">Use the <code>active</code> class to make &lt;th&gt; and &lt;tr&gt; element highlighted.</p>
+    <p class="text-md">Use the <code>is-active</code> class to make &lt;th&gt; and &lt;tr&gt; element highlighted.</p>
 
     <div class="p-top-20">
       <table class="table">
 
         <thead>
           <tr>
-            <th class="active">Name</th>
+            <th class="is-active">Name</th>
             <th>Genre</th>
             <th>Release date</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr class="active">
+          <tr class="is-active">
             <td>The Shawshank Redemption</td>
             <td>Crime, Drama</td>
             <td>14 October 1994</td>
@@ -142,14 +142,14 @@
 
     <div class="p-top-20">
       <pre class="code" data-lang="HTML"><code>
-        <span class="tag">&lt;<span class="name">table</span> <span class="hljs-attr">class</span>=<span class="string">"table"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table"</span>&gt;</span>
           <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
             <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
-              <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span>name<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"is-active"</span>&gt;</span>name<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
             <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
           <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
           <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
-            <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">"is-active"</span>&gt;</span>
               <span class="tag">&lt;<span class="name">td</span>&gt;</span>The Shawshank Redemption<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
             <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
           <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
@@ -244,10 +244,10 @@
 
   <section class="p-top-25">
 
-    <p class="text-md">Use the <code>max-height</code> class with <code>table-responsive</code> to make table grows for the max-height of 500px. Once it reaches to that height it will make table scrollable verticaly.</p>
+    <p class="text-md">Use the <code>is-max-height</code> class with <code>table-responsive</code> to make table grows for the max-height of 500px. Once it reaches to that height it will make table scrollable verticaly.</p>
 
     <div class="p-top-20">
-      <div class="table-responsive max-height">
+      <div class="table-responsive is-max-height">
         <table class="table">
 
           <thead>
@@ -366,7 +366,7 @@
 
     <div class="p-top-20">
       <pre class="code" data-lang="HTML"><code>
-        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"table-responsive max-height"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"table-responsive is-max-height"</span>&gt;</span>
           <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table"</span>&gt;</span>
             ...
           <span class="tag">&lt;/<span class="name">table</span>&gt;</span>
