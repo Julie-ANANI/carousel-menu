@@ -87,25 +87,3 @@
   }
 
 }
-
-@mixin button-ghost-action-variant($color: $primary-color) {
-  color: $color;
-  border-color: $color;
-  border-width: $border-width;
-  background-color: transparent;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-
-  &:focus {
-    color: $color;
-    background-color: transparent;
-    border-color: $color;
-    border-width: $border-width;
-  }
-
-  &:hover {
-    background-color: transparent;
-    border-color: lighten($color, 10%);
-  }
-
-}
