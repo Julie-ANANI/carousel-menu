@@ -136,7 +136,7 @@
 
     <!-- executive report -->
     <div *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
-      <a href="#executive-report" pageScroll class="text-primary">
+      <a href="#executive-report" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span>Executive report</span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -148,7 +148,7 @@
 
     <!-- key-learning -->
     <div *ngIf="innovation.marketReport?.keyLearning?.conclusion || isAdminSide" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
-      <a href="#key-learnings" pageScroll class="text-primary">
+      <a href="#key-learnings" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -160,7 +160,7 @@
 
     <!-- origin -->
     <div class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
-      <a href="#origin-responses" pageScroll class="text-primary">
+      <a href="#origin-responses" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.ORIGIN'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -173,7 +173,7 @@
     <!-- map filters -->
     <div class="filter-rest-wrapper">
 
-      <a href="#map" pageScroll class="text-primary">
+      <a href="#map" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.MAP.TITLE'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -198,7 +198,7 @@
     <!-- professional filters -->
     <div class="filter-rest-wrapper filter-professional">
 
-      <a href="#professionals" pageScroll class="text-primary">
+      <a href="#professionals" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.PROFESSIONAL.TITLE'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -241,7 +241,7 @@
     <!-- questions filters -->
     <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
 
-      <a [href]="'#' + question.identifier" pageScroll class="text-primary c-hand">
+      <a [href]="'#' + question.identifier" pageScroll class="text-primary-dark c-hand">
         <div class="flex-between">
           <span>{{ question.title | multiling:userLang | FormatText }}</span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
@@ -291,7 +291,7 @@
 
     <!-- conclusion filters -->
     <div *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || isAdminSide" class="filter-rest-wrapper">
-      <a href="#conclusion" pageScroll class="text-primary">
+      <a href="#conclusion" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.CONCLUSION'" translate></span>
           <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>

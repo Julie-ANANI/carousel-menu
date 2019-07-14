@@ -21,7 +21,7 @@
             <ng-container *ngIf="editMode">
               <div *ngFor="let option of question.options"
                    class="c-hand"
-                   [ngClass]="{ 'text-primary': option.identifier !== fullAnswer.answers[question.identifier] }"
+                   [ngClass]="{ 'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier] }"
                    (click)="selectOption($event, option)">
                 <span>{{ optionLabel(option.identifier) }}</span>
               </div>
@@ -213,7 +213,7 @@
       <ng-container *ngSwitchCase="'textbox'">
         <ng-container *ngIf="fullAnswer.answers[question.identifier]">
           <div class="pad-top flex-between">
-            <span class="text-primary">{{ fullAnswer.answers[question.identifier] }}</span>
+            <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier] }}</span>
             <app-rating-item
               [editMode]="editMode"
               [prop]="question.identifier"
@@ -228,18 +228,18 @@
       <!-- scale case -->
       <ng-container *ngSwitchCase="'scale'">
         <div class="pad-top">
-          <span class="text-primary">{{ fullAnswer.answers[question.identifier ] }}</span></div>
+          <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier ] }}</span></div>
       </ng-container>
       <!-- /scale case -->
 
       <!-- star case -->
       <ng-container *ngSwitchCase="'stars'">
-        <ul *ngIf="fullAnswer.answers[question.identifier] && !editMode" class="pad-top star-wrapper text-primary">
+        <ul *ngIf="fullAnswer.answers[question.identifier] && !editMode" class="pad-top star-wrapper text-primary-dark">
           <li *ngFor="let opt of question.options">
             {{ opt.label | multiling:lang }}: <span>{{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}</span>
           </li>
         </ul>
-        <ul *ngIf="editMode" class="pad-top star-wrapper text-primary">
+        <ul *ngIf="editMode" class="pad-top star-wrapper text-primary-dark">
           <li *ngFor="let opt of question.options; index as i;">
             {{ opt.label | multiling:lang }}:
             <label for="{{question.identifier}}-benefit{{i}}-rate1">1</label>
@@ -300,7 +300,7 @@
       </div>
 
       <div class="c-pad-top">
-        <span class="text-primary">{{ fullAnswer.answers[question.identifier + 'Comment'] }}</span>
+        <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier + 'Comment'] }}</span>
       </div>
 
       <ng-container *ngIf="answerTags(question.identifier + 'Comment').length > 0">

@@ -97,3 +97,17 @@
   }
 
 }
+
+@mixin button-shadow-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:hover {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+    box-shadow: $box-shadow-button-hover;
+  }
+
+}

@@ -25,6 +25,7 @@
     z-index: 0;
   }
 
+  // Todo remove loading-lg
   &.loading-lg, &.is-lg {
     min-height: $unit-10;
 
@@ -37,12 +38,12 @@
 
   }
 
-  &.loading-white {
+  // Todo remove loading-white
+  &.loading-white, &.is-white {
 
     &::after {
-      border: $border-width-lg solid $light-color;
-      border-right-color: transparent;
-      border-top-color: transparent;
+      border-bottom-color: $light-color;
+      border-left-color: $light-color;
     }
 
   }

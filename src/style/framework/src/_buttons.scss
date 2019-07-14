@@ -328,7 +328,12 @@
   }
 
   &.is-action {
-    @include button-default-action-variant($primary-color)
+    @include button-default-action-variant($primary-color);
+
+    &.is-shadowed {
+      @include button-shadow-variant($primary-color);
+    }
+
   }
 
   &.is-primary {
@@ -336,6 +341,10 @@
 
     &.loading {
       @include button-loading-variant($light-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($primary-color);
     }
 
   }
@@ -371,6 +380,10 @@
       @include button-outline-variant($secondary-color);
     }
 
+    &.is-shadowed {
+      @include button-shadow-variant($secondary-color);
+    }
+
   }
 
   &.is-info {
@@ -399,6 +412,10 @@
 
     &.is-outlined {
       @include button-outline-variant($meta-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($meta-color);
     }
 
   }
@@ -430,6 +447,10 @@
       @include button-outline-variant($alert-color);
     }
 
+    &.is-shadowed {
+      @include button-shadow-variant($alert-color);
+    }
+
   }
 
   &.is-draft {
@@ -459,6 +480,10 @@
       @include button-outline-variant($background-color);
     }
 
+    &.is-shadowed {
+      @include button-shadow-variant($background-color);
+    }
+
   }
 
   &.is-success {
@@ -486,6 +511,10 @@
 
     &.is-outlined {
       @include button-outline-variant($success-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($success-color);
     }
 
   }
