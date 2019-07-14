@@ -1,0 +1,37 @@
+@import "../variables";
+
+.text-primary, .text-warning {
+  color: $primary-color !important;
+}
+
+.text-primary-dark {
+  color: $text-primary-dark-color !important;
+}
+
+.text-success {
+  color: $text-success-color !important;
+}
+
+.text-error, .text-alert {
+  color: $text-alert-color !important;
+}
+
+.text-notify {
+  color: $text-meta-color !important;
+}
+
+.text-secondary-dark {
+  color: $text-secondary-dark-color !important;
+}
+
+.text-background {
+  color: $text-background-color !important;
+}
+
+.text-white {
+  color: $light-color !important;
+}
+
+.text-secondary {
+  color: $secondary-color !important;
+}
