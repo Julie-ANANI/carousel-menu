@@ -11,7 +11,7 @@
       <ng-container *ngIf="isEditUser">
         <div class="operator-wrapper">
 
-          <ng-container *ngIf="isSuperAdmin && authService.userId !== user.id">
+          <ng-container *ngIf="(isSuperAdmin || isDomainAdmin)&& authService.userId !== user.id">
             <label class="form-switch" for="user-form-operator">
               <input
                 type="checkbox"
@@ -22,7 +22,7 @@
             </label>
           </ng-container>
 
-          <ng-container *ngIf="!isSuperAdmin && authService.adminLevel > 2 && authService.userId !== user.id">
+          <ng-container *ngIf="!isSuperAdmin && authService.adminLevel > 1 && authService.userId !== user.id">
             <label class="form-switch" for="user-form-role">
               <input
                 type="checkbox"

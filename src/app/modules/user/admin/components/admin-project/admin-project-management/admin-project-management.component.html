@@ -50,7 +50,7 @@
                 (ngModelChange)="changeProjectOperator($event)"
                 [ngModelOptions]="{standalone: true}">
           <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
-          <option *ngFor="let op of operators" [ngValue]="op.id">
+          <option *ngFor="let op of operators" [ngValue]="op._id">
             {{op.firstName + ' ' + op.lastName}}
           </option>
         </select>
