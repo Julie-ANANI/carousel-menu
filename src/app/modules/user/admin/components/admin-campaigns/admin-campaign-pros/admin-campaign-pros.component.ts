@@ -83,20 +83,14 @@ export class AdminCampaignProsComponent implements OnInit {
 
       this._config.limit = this._configService.configLimit('admin-campaign-pros-limit');
 
-      this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-        this._professionals = response.result;
-        this._total = response._metadata.totalCount;
-        this._noResult = this._total === 0;
-      }, () => {
-        this._fetchingError = true;
-      });
+      this._getProfessionals();
 
     }
 
   }
 
   private _getProfessionals() {
-    this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+    this._professionalsService.getAll(this._config).subscribe((response: Response) => {
       this._professionals = response.result;
       this._total = response._metadata.totalCount;
       this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
@@ -232,10 +226,6 @@ export class AdminCampaignProsComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get noResult(): boolean {
-    return this._noResult;
-  }
-
   get modalImport(): boolean {
     return this._modalImport;
   }
@@ -256,8 +246,9 @@ export class AdminCampaignProsComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get newPro(): Professional {
-    return this._newPro;
+  get noResult(): boolean {
+    return this._noResult;
+
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
@@ -184,8 +184,7 @@ export class SetupComponent implements OnInit, OnDestroy {
    * modal.
    */
   onClickConfirm() {
-    this.innovationService.submitProjectToValidation(this._innovation._id).pipe(first()).subscribe((response: Innovation) => {
-      this._innovation.status = 'SUBMITTED';
+    this.innovationService.save(this._innovation._id, {status: 'SUBMITTED'}).subscribe((response: Innovation) => {
       this.router.navigate(['user/projects']);
       this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       }, () => {
