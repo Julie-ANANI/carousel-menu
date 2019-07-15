@@ -116,8 +116,8 @@ export class AuthService {
       this._setAuthenticatedTo(res.isAuthenticated);
       this._setAdminTo(res.adminLevel);
       this._setConfirmedTo(res.isConfirmed);
-      this._setIsOperatorTo(res.user.isOperator);
       this._user = res.user || null;
+      this._setIsOperatorTo(this._user? this._user.isOperator : false );
     };
     if (this._state.hasKey(AUTH_SESSION_KEY)) {
       const res = this._state.get(AUTH_SESSION_KEY, {});
