@@ -19,6 +19,7 @@ export class AuthService {
   private _admin = 0;
   private _confirmed = false;
   private _redirectUrl: string;
+  private _isOperator: boolean = false;
 
   private _user: User;
 
@@ -43,6 +44,7 @@ export class AuthService {
     this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
     this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
     this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
+    this._setIsOperatorTo(this._cookieService.get('isOperator') === 'true' );
   }
 
   public startCookieObservator() {
@@ -78,6 +80,7 @@ export class AuthService {
           this._setAuthenticatedTo(res.isAuthenticated);
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
+          this._setIsOperatorTo(res.isOperator);
           this._user = res;
           if (res.isAuthenticated) {
             //this.startCookieObservator();
@@ -113,6 +116,7 @@ export class AuthService {
       this._setAuthenticatedTo(res.isAuthenticated);
       this._setAdminTo(res.adminLevel);
       this._setConfirmedTo(res.isConfirmed);
+      this._setIsOperatorTo(res.user.isOperator);
       this._user = res.user || null;
     };
     if (this._state.hasKey(AUTH_SESSION_KEY)) {
@@ -134,6 +138,13 @@ export class AuthService {
 
   public preRegisterDataOAuth2(provider: string, data: any): Observable<any> {
     return this._http.post(`/auth/preoauth/${provider}`, data);
+  }
+
+  private _setIsOperatorTo(newValue: boolean): void {
+    this._isOperator = newValue;
+    if (isPlatformBrowser(this.platformId)) {
+      this._cookieService.put('isOperator', newValue.toString(), this._cookieOptions);
+    }
   }
 
   private _setConfirmedTo(newValue: boolean): void {
@@ -186,6 +197,10 @@ export class AuthService {
 
   get isSuperAdmin(): boolean {
     return (this._admin & 2) === 2;
+  }
+
+  get isOperator(): boolean {
+    return this._isOperator;
   }
 
   get user () {
