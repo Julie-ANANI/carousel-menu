@@ -57,17 +57,21 @@
 // Todo remove
 @mixin button-ghost-variant($color: $primary-color) {
   color: $color;
+  background-color: transparent;
   border-color: $color;
   border-width: $border-width-lg;
 
-  &:hover {
-    border-color: lighten($color, 15%);
-  }
-
-  &:focus, &.is-active, &:active  {
+  &:focus, &:active, &.active {
     color: $color;
+    background-color: transparent;
     border-color: $color;
     border-width: $border-width-lg;
+  }
+
+  &:hover {
+    color: lighten($color, 15%);
+    background-color: transparent;
+    border-color: lighten($color, 15%);
   }
 
 }
