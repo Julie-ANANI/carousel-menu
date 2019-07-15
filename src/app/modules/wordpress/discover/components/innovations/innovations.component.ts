@@ -25,8 +25,7 @@ export class InnovationsComponent implements OnInit {
     limit: '0',
     offset: '',
     isPublic: '1',
-    search: '{}',
-    $or: '[{ "status": "EVALUATING" },{ "status": "DONE" }]',
+    search: '{"$or": [{ "status": "EVALUATING" },{ "status": "DONE" }]}',
     sort: '{ "created": -1 }'
   };
 
