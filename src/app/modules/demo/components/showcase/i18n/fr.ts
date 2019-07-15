@@ -12,7 +12,7 @@ export const SHOWCASE = {
 
   'PROFESSIONALS': 'répondants',
 
-  'INNOVATIONS_TITLE': 'Tests de Marché',
+  'INNOVATIONS_TITLE': 'Tests Marché',
 
   'INNOVATIONS': 'projets testés',
 
@@ -21,8 +21,6 @@ export const SHOWCASE = {
   'COUNTRIES': 'pays ciblés',
 
   'CLIENTS_TITLE': 'Clients',
-
-  'CLIENTS': 'Quelques entreprises qui ont testé leur marché',
 
   'SECTORS_MODAL': {
     'TITLE': 'Choisir les secteurs pour créer la vitrine'
