@@ -207,7 +207,7 @@ export class TableComponent implements OnInit {
   private _columnActive(column: Column): boolean {
     let sortKey;
 
-    for (const key in JSON.parse(this._config.sort)) {
+    for (const key in JSON.parse(JSON.stringify(this._config.sort))) {
       sortKey = key;
     }
 
