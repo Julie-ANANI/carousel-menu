@@ -8,7 +8,7 @@
   min-width: $control-width-xs;
   padding: $unit-2;
   transform: translateY($unit-1);
-  z-index: $zindex-3;
+  z-index: $zindex-2;
   box-shadow: 0 4px 16px rgba(20,23,28,0.25);
 
   &.menu-nav {
@@ -29,9 +29,9 @@
       color: inherit;
     }
 
-    &:hover {
+    &:hover, &.active {
       cursor: pointer;
-      background-color: $bg-menu-item-hover-color;
+      background-color: $bg-menu-item-color;
     }
 
     &.menu-item:not(:first-child) {

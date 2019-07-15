@@ -41,23 +41,22 @@
 
   .sidebar-container {
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     background: $bg-color-light;
     cursor: default;
   }
 
   .sidebar-header {
     position: sticky;
+    z-index: 2;
     top: 0;
     color: $light-color;
-    padding: 1.1rem 0;
   }
 
   .sidebar-body {
     flex: 1 1 100%;
-    min-height: auto;
     overflow: auto;
-    padding: 0;
+    min-height: 100vh;
     position: relative;
   }
 

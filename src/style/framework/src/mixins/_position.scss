@@ -1,0 +1,13 @@
+// Flex-centered
+@mixin flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Inline-flex centered
+@mixin inline-flex-centered {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}

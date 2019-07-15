@@ -1,0 +1,180 @@
+<div id="button">
+
+  <h1 class="title">Button</h1>
+
+  <div class="docs-divider"></div>
+
+  <p class="text-md">Button include simple button styles for actions in different types and sizes. The button is an essential element of
+    any design. It's meant to look and behave as an interactive element of your page.</p>
+
+  <p class="text-md">The <code>button</code> class can be used on &lt;a&gt;, &lt;button&gt; or &lt;input&gt; elements for a default button.</p>
+
+  <p class="text-md">There are classes <code>button-primary</code>, <code>button-link</code> and <code>ghost-primary</code> for predefined primary and link buttons.</p>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Default buttons</h2>
+
+    <div class="d-flex flex-wrap">
+      <button class="button button-primary m-right-20 m-bottom-20">Primary</button>
+      <button class="button button-secondary m-right-20 m-bottom-20">Secondary</button>
+      <button class="button button-edit m-right-20 m-bottom-20">Edit</button>
+      <button class="button button-draft m-right-20 m-bottom-20">Draft</button>
+      <button class="button button-success m-right-20 m-bottom-20">Success</button>
+      <button class="button button-error m-bottom-20">Error</button>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-primary"</span>&gt;</span>Primary<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-secondary"</span>&gt;</span>Secondary<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-edit"</span>&gt;</span>Edit<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-draft"</span>&gt;</span>Draft<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-success"</span>&gt;</span>Success<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-error"</span>&gt;</span>Error<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Ghost buttons</h2>
+
+    <div class="d-flex flex-wrap">
+      <button class="button ghost-primary m-right-20 m-bottom-20">Ghost primary</button>
+      <button class="button ghost-secondary m-right-20 m-bottom-20">Ghost secondary</button>
+      <button class="button ghost-edit m-right-20 m-bottom-20">Ghost edit</button>
+      <button class="button ghost-draft m-right-20 m-bottom-20">Ghost draft</button>
+      <button class="button ghost-success m-right-20 m-bottom-20">Ghost success</button>
+      <button class="button ghost-error m-bottom-20">Ghost error</button>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button ghost-primary"</span>&gt;</span>Ghost primary<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button ghost-secondary"</span>&gt;</span>Ghost secondary<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button ghost-edit"</span>&gt;</span>Ghost edit<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button ghost-draft"</span>&gt;</span>Ghost draft<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button ghost-success"</span>&gt;</span>Ghost success<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button ghost-error"</span>&gt;</span>Ghost error<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Link button</h2>
+
+    <p class="text-md">To make the button act as a link add the <code>button-link</code> class to the <code>button</code> class.
+      This class only works with the default button classes not with the ghost button classes.</p>
+
+    <div class="d-flex p-top-20">
+      <button class="button button-link">Link button</button>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-link"</span>&gt;</span>Link button<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Sizes</h2>
+
+    <p class="text-md">The button comes in 3 different sizes: small <code>button-sm</code>, normal i.e. default <code>button-normal</code>, and large <code>button-lg</code>.</p>
+
+    <div class="d-flex p-top-20 align-center">
+      <button class="button button-sm m-right-20 m-bottom-20">Small</button>
+      <button class="button button-normal m-right-20 m-bottom-20">Default</button>
+      <button class="button button-lg m-bottom-20">Large</button>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-sm"</span>&gt;</span>Small<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-normal"</span>&gt;</span>Default<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-lg"</span>&gt;</span>Large<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Action button</h2>
+
+    <p class="text-md">Add the <code>button-action</code> class to the <code>button</code> class to make the button as action by default it is square shape, or add another <code>circle</code> class for a round button.</p>
+
+    <div class="d-flex p-top-20 align-center">
+      <button class="button button-action button-success m-right-20 m-bottom-20"><i class="fas fa-bars"></i></button>
+      <button class="button button-action button-error circle m-bottom-20"><i class="fas fa-plus"></i></button>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-success button-action"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-bars"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-action button-error circle"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-plus"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Rounded buttons</h2>
+
+    <p class="text-md">To rounded the button add the <code>rounded</code> class with the <code>button</code> class.</p>
+
+    <div class="d-flex p-top-20">
+      <a class="button button-primary rounded m-right-20 m-bottom-20">Rounded</a>
+      <a class="button ghost-draft rounded m-bottom-20">Rounded</a>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"button button-primary rounded"</span>&gt;</span>Rounded<span class="tag">&lt;/<span class="name">a</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"button ghost-draft rounded"</span>&gt;</span>Rounded<span class="tag">&lt;/<span class="name">a</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Icon buttons</h2>
+
+    <p class="text-md">When you want to show the icon inside the button. Use <code>icon-left</code> to place the icon at the left side
+      and use <code>icon-right</code> when you want to place the icon on the right side.</p>
+
+    <div class="d-flex p-top-20">
+      <button class="button button-secondary m-right-20 m-bottom-20">
+        <i class="fab fa-facebook-f icon-left"></i> Facebook
+      </button>
+      <button class="button ghost-secondary m-bottom-20">
+        Facebook <i class="fab fa-facebook-f icon-right"></i>
+      </button>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button button-secondary"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fab fa-facebook-f icon-left"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> Facebook
+        <span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button ghost-secondary"</span>&gt;</span>
+          Facebook <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fab fa-facebook-f icon-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+</div>

@@ -5,7 +5,7 @@
   overflow: auto;
   white-space: nowrap;
 
-  &.fixed-height {
+  &.max-height {
     max-height: 500px;
     padding-bottom: 0.75rem;
   }
@@ -17,22 +17,6 @@
   border-spacing: 0;
   text-align: left;
   width: 100%;
-
-  &.table {
-
-    tbody {
-
-      tr {
-
-        &:hover {
-         background: $table-tr-hover-background-color;
-        }
-
-      }
-
-    }
-
-  }
 
   th, td {
     border-bottom: $border-width solid $table-tr-border-color;
@@ -49,7 +33,7 @@
     text-transform: uppercase;
     border-top: $border-width solid $table-tr-border-color;
 
-    &.active, &:hover {
+    &.active {
       background-color: $table-th-hover-background-color !important;
     }
 
@@ -69,6 +53,35 @@
     background-color: $bg-color-light;
     border-left: $border-width solid $table-tr-border-color;
     border-right: $border-width solid $table-tr-border-color;
+
+    &.active {
+      background: $table-tr-hover-background-color;
+    }
+
+  }
+
+  &.table-hover {
+
+    thead th {
+
+      &:hover {
+        background-color: $table-th-hover-background-color !important;
+      }
+
+    }
+
+    tbody {
+
+      tr {
+
+        &:hover {
+          background: $table-tr-hover-background-color;
+        }
+
+      }
+
+    }
+
   }
 
 }
