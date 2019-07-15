@@ -292,6 +292,22 @@
 
 }
 
+.buttons {
+  @include flex-start();
+  flex-wrap: wrap;
+  margin-bottom: -0.5rem;
+
+  .button:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+
+  .button {
+    margin-bottom: 0.5rem;
+  }
+
+}
+
+
 .button {
   @include inline-flex-centered();
   @include button-transition();
