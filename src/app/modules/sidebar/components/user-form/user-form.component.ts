@@ -368,6 +368,10 @@ export class UserFormComponent implements OnInit {
     return this._user.roles === "super-admin";
   }
 
+  get isDomainAdmin(): boolean {
+    return this._user.roles === "admin" || this._user.roles === "super-admin";
+  }
+
 
   get editInstanceDomain() {
     return this._editInstanceDomain;
