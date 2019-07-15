@@ -19,7 +19,7 @@
     }
 
     &:hover {
-      box-shadow: $box-shadow-umi;
+      box-shadow: $box-shadow-4;
     }
 
   }
@@ -170,7 +170,7 @@
           font-size: $font-size-sm;
 
           .text-link {
-            color: $text-primary-color;
+            color: $text-primary-dark-color;
           }
 
         }

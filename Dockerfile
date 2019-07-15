@@ -1,4 +1,5 @@
-FROM unitedmotionideas/frontbase:latest AS buildinstance
+ARG VERSION=latest
+FROM unitedmotionideas/frontbase:${VERSION} AS buildinstance
 
 ARG APP_NAME
 ARG ENV_NAME
@@ -9,13 +10,10 @@ WORKDIR /var/web
 # build client
 RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
 
-# update version
-RUN if [ $VERSION ]; then sed -i -e "s/latest/$VERSION/g" src/environments/version.ts; fi
-
 # upload source-map to sentry
-RUN if [ $VERSION ]; then npm install @sentry/cli; fi
-RUN if [ $VERSION ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
-RUN if [ $VERSION ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps dist/browser; fi
+RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
+RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
+RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps dist/browser; fi
 RUN rm -f /var/web/.sentryclirc
 
 # delete source-map files

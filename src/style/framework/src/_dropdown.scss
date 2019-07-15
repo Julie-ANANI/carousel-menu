@@ -14,7 +14,7 @@
     background-color: $bg-color-light;
     margin: 0;
     padding: 0.5rem 0;
-    box-shadow: $box-shadow-dropdown;
+    box-shadow: 0 4px 16px rgba(20,23,28,0.25);
     border-radius: 5px;
     list-style: none;
     overflow-y: auto;
@@ -48,14 +48,14 @@
         display: block;
       }
 
-      &:hover {
+      &:hover, &.active {
         cursor: pointer;
-        background-color: $bg-dropdown-color;
+        background-color: $bg-menu-item-color;
       }
 
       &.disabled, .drop-btn:disabled, .drop-btn[disabled], .drop-btn.disabled {
         cursor: not-allowed;
-        color: $disabled-text-color !important;
+        color: $text-disabled-color !important;
         background-color: transparent !important;
       }
 
@@ -68,11 +68,11 @@
   }
 
   &:hover {
-    z-index: 2;
 
     .dropdown-menu {
       display: block;
       opacity: 1;
+      z-index: 2;
     }
 
   }

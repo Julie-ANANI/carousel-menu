@@ -1,7 +1,7 @@
 @import "../variables";
 @import "../animation";
 
-.loading {
+.loading  {
   color: transparent !important;
   min-height: $unit-4;
   pointer-events: none;
@@ -25,7 +25,8 @@
     z-index: 0;
   }
 
-  &.loading-lg {
+  // Todo remove loading-lg
+  &.loading-lg, &.is-lg {
     min-height: $unit-10;
 
     &::after {
@@ -37,18 +38,17 @@
 
   }
 
-  &.loading-white {
+  // Todo remove loading-white
+  &.loading-white, &.is-white {
 
     &::after {
-      border: $border-width-lg solid $light-color;
-      border-right-color: transparent;
-      border-top-color: transparent;
+      border-bottom-color: $light-color;
+      border-left-color: $light-color;
     }
 
   }
 
 }
-
 
 .loading-bar {
   position: fixed;
@@ -79,15 +79,22 @@
     border-radius: 0;
   }
 
+  &.btn {
+    border: none;
+    color: transparent;
+    cursor: default !important;
+  }
+
   &::after {
     display: block;
     content: '';
     position: absolute;
+    top: 0;
     width: 100%;
     height: 100%;
     transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
-    animation: loading-content 1.5s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .3), transparent);
+    animation: loading-content 1s infinite;
   }
 
 }

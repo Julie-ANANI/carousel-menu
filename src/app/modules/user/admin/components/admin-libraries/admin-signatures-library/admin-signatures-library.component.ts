@@ -140,7 +140,7 @@ export class AdminSignaturesLibraryComponent {
 
     this._sidebarValue = {
       size: '650px',
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.EDIT_SIGNATURE'
     };
 

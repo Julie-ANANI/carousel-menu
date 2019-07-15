@@ -13,10 +13,11 @@ export class AdminProjectSynthesisComponent implements OnInit {
   private _project: Innovation;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _authService: AuthService ) {}
+              private _authService: AuthService ) {
+    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+  }
 
   ngOnInit(): void {
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
   }
 
   public adminMode(): boolean {

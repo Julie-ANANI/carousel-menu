@@ -95,13 +95,8 @@ export const ERROR = {
 
 
 
-  'SECTION': {
-    'UPDATED': 'The section has been updated.'
-  },
-
-
-  'QUESTION': {
-    'UPDATED': 'The question has been updated.'
+  'PRESET': {
+    'UPDATED': 'The configuration has been updated.'
   },
 
 
@@ -170,8 +165,8 @@ export const ERROR = {
 
 
   'ERRORS': {
-    'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check the URL is good.',
-    'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check the URL is good.',
+    'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check if the URL is good.',
+    'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check if the URL is good.',
     'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.',
     'PROJECT_FETCHING_ERROR': 'It could be because of server connection problem or we could not find the innovation that you are looking for.'
   },

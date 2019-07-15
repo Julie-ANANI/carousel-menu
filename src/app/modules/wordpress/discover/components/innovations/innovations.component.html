@@ -1,55 +1,120 @@
-<ng-container *ngIf="totalInnovations.length > 0">
+<section id="wordpress-innovations">
+  <div class="restrict-width">
+    <div class="section-light-pad">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-  <section id="innovations-component">
-    <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <!-- section filter -->
-      <div class="section-light-pad">
-        <app-filters [tags]="sectorTags" (appliedFilters)="onSelectFilters($event)"></app-filters>
-      </div>
-      <!-- /section filter -->
-
-      <!-- section latest innovations -->
-      <ng-container *ngIf="!filterActivated && latestInnovations.length > 0">
-        <div class="section-light-pad rm-pad-bottom">
-          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.LATEST' | translate }}</span></h2>
-          <app-cards [allInnovations]="latestInnovations"></app-cards>
-        </div>
-      </ng-container>
-      <!-- /section latest innovations -->
-
-      <!-- section trending innovations -->
-      <ng-container *ngIf="!filterActivated && trendingInnovations.length > 0">
-        <div class="section-light-pad rm-pad-bottom">
-          <h2 class="title-secondary text-background"><span>{{ 'DISCOVER.TRENDING' | translate }}</span></h2>
-          <app-cards [allInnovations]="trendingInnovations" [pagination]="true"></app-cards>
-        </div>
-      </ng-container>
-      <!-- /section all innovations -->
-
-      <!-- section when searching innovation -->
-      <ng-container *ngIf="filterActivated">
-        <div class="section-light-pad rm-pad-bottom">
-
-          <div class="result-heading text-background text-normal d-flex">
-
-            <div class="heading">
-              <span>{{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}</span>
-            </div>
-
-            <div *ngFor="let filter of selectedFilters" class="c-hand filter-wrapper" (click)="onClickRemove(filter._id)">
-              <span class="text-medium">{{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i></span>
-            </div>
-
+        <!-- section fetching error -->
+        <section *ngIf="fetchingError">
+          <div class="i-error-wrapper d-flex align-center">
+            <app-error-template-1 [errorMessage]="'DISCOVER.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+              <p [innerText]="'DISCOVER.FETCHING_ERROR_SUB'" translate></p>
+            </app-error-template-1>
           </div>
+        </section>
+        <!-- /section fetching error -->
 
-          <app-cards [allInnovations]="filteredInnovations" [search]="true" [lastIndex]="filteredInnovations.length"></app-cards>
 
-        </div>
-      </ng-container>
-      <!-- /section when searching innovation -->
+        <!-- section result -->
+        <section *ngIf="!fetchingError" class="d-content-wrapper">
 
+
+          <!-- filters -->
+          <div class="section-light-pad">
+            <app-filters
+              [tags]="sectorTags"
+              [stopLoading]="stopLoading"
+              (appliedFilters)="onSelectFilters($event)">
+            </app-filters>
+          </div>
+          <!-- /filters -->
+
+
+          <!-- section latest innovations -->
+          <section *ngIf="!filterActivated">
+            <div class="p-top-25">
+
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.LATEST' | translate }}</span>
+              </h2>
+
+              <div class="p-top-10">
+                <app-cards
+                  [allInnovations]="latestInnovations"
+                  [stopLoading]="stopLoading">
+                </app-cards>
+              </div>
+
+            </div>
+          </section>
+          <!-- /section latest innovations -->
+
+
+          <!-- section trending innovations -->
+          <section *ngIf="!filterActivated">
+            <div class="p-top-25">
+
+              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+                <span>{{ 'DISCOVER.TRENDING' | translate }}</span>
+              </h2>
+
+              <div class="p-top-10">
+                <app-cards
+                  [allInnovations]="trendingInnovations"
+                  [isPagination]="true"
+                  [stopLoading]="stopLoading">
+                </app-cards>
+              </div>
+
+            </div>
+          </section>
+          <!-- /section trending innovations -->
+
+
+          <!-- section when searching innovation -->
+          <section *ngIf="filterActivated">
+            <div class="p-top-25">
+
+
+              <div
+                class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
+                [ngClass]="{ 'loading-content': !stopLoading }">
+
+                <div [ngStyle]="{ 'margin-bottom': '0.25rem' }">
+                  <span>{{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}</span>
+                </div>
+
+                <div
+                  *ngFor="let filter of selectedFilters"
+                  class="c-hand c-filter-activate-wrapper m-left-1 m-right-2"
+                  (click)="onClickRemove(filter._id)">
+                  <span class="text-medium">
+                    {{ filter.label | multiling:userLang | FormatText }} <i class="fas fa-times-circle text-notify"></i>
+                  </span>
+                </div>
+
+              </div>
+
+
+              <div class="p-top-10">
+                <app-cards
+                  [allInnovations]="filteredInnovations"
+                  [isPagination]="true"
+                  [stopLoading]="stopLoading">
+                </app-cards>
+              </div>
+
+
+            </div>
+          </section>
+          <!-- /section when searching innovation -->
+
+
+        </section>
+        <!-- / section result -->
+
+
+      </div>
     </div>
-  </section>
-
-</ng-container>
+  </div>
+</section>

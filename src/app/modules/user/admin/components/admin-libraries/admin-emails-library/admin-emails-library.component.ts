@@ -115,7 +115,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
     this._emailToEdit = email;
     this._sidebarValue = {
       size: '650px',
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: email.name
     };
   }

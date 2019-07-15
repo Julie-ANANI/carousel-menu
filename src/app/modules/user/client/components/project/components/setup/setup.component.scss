@@ -103,7 +103,7 @@
 
       .pitch-check, .targeting-check, .survey-check {
         background: $border-color;
-        color: $text-primary-color;
+        color: $text-primary-dark-color;
         font-weight: $font-weight-medium;
         font-size: 10px;
       }
@@ -136,7 +136,7 @@
       position: sticky;
       background-color: white;
       top: 0;
-      box-shadow: $box-shadow-hover-umi;
+      box-shadow: $box-shadow-7;
       z-index: 11;
     }
 

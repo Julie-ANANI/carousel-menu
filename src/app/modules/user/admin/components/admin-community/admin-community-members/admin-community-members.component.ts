@@ -45,7 +45,7 @@ export class AdminCommunityMembersComponent {
     this._sidebarValue = {
       title: 'SIDEBAR.TITLE.ADD_AMBASSADOR',
       type: 'addAmbassador',
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active'
+      animate_state: 'active'
     }
 
   }

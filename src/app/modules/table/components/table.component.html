@@ -55,7 +55,7 @@
 
   <!-- when result -->
   <div *ngIf="table._total > 0" [ngStyle]="{ 'min-height': table._isNoMinHeight ? 'unset' : '500px' }">
-    <div class="table-responsive relative" [ngClass]="{ 'scroll-no': isLoadingData }">
+    <div class="table-responsive is-max-height relative" [ngClass]="{ 'scroll-no': isLoadingData }">
 
       <!-- loading style -->
       <ng-container *ngIf="isLoadingData">
@@ -164,7 +164,7 @@
                 [ngClass]="{ 'max-width': table._columns.length <=6 }"
                 [ngStyle]="{ 'width': column._width, 'min-width': column._width ? 'unset' : '150px' }">
               <div
-              class="tbody-td-data d-flex"
+              class="tbody-td-data d-flex relative"
               [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE' }">
 
                 <!-- button -->

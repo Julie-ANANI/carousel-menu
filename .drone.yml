@@ -24,6 +24,7 @@ steps:
 
 - name: dockerDev
   image: plugins/docker
+  depends_on: [baseimage]
   settings:
     target: buildinstance
     auto_tag: true
@@ -43,6 +44,7 @@ steps:
 
 - name: rancherDev
   image: peloton/drone-rancher
+  depends_on: [dockerDev]
   settings:
     url: http://206.189.56.176:8080
     access_key:

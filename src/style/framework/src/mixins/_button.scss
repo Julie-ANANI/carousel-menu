@@ -1,0 +1,151 @@
+@import "../variables";
+
+@mixin button-default-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:hover {
+    background-color: lighten($color, 10%);
+    border-color: lighten($color, 10%);
+  }
+
+  &:focus, &.is-active, &:active  {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    background-color: $color;
+    border-color: $color;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
+}
+
+@mixin button-outline-variant($color: $primary-color) {
+  color: $color;
+  border-color: $color;
+  border-width: $border-width-lg;
+  background-color: transparent;
+
+  &:hover {
+    border-color: lighten($color, 15%);
+    background-color: transparent;
+  }
+
+  &:focus, &.is-active, &:active  {
+    color: $color;
+    border-color: $color;
+    border-width: $border-width-lg;
+    background-color: transparent;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    border-color: $color;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
+}
+
+// Todo remove
+@mixin button-ghost-variant($color: $primary-color) {
+  color: $color;
+  border-color: $color;
+  border-width: $border-width-lg;
+
+  &:hover {
+    border-color: lighten($color, 15%);
+  }
+
+  &:focus, &.is-active, &:active  {
+    color: $color;
+    border-color: $color;
+    border-width: $border-width-lg;
+  }
+
+}
+
+@mixin button-link-variant($color: $primary-color) {
+  color: $color;
+  border: none;
+  background-color: transparent;
+
+  &:focus, &:hover {
+    color: $color;
+    border: none;
+    background-color: transparent;
+  }
+
+  &.is-active, &:active  {
+    color: $color;
+    border: none;
+    background-color: transparent;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
+}
+
+@mixin button-default-action-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+
+  &:focus, &.is-active, &:active  {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &:hover {
+    background-color: lighten($color, 10%);
+    border-color: lighten($color, 10%);
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: $color;
+    border-color: $color;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
+}
+
+@mixin button-loading-variant($color: $light-color) {
+  min-width: 4.25rem;
+
+  &:after {
+    border-bottom-color: $color;
+    border-left-color: $color;
+  }
+
+}
+
+@mixin button-shadow-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:hover {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+    box-shadow: $box-shadow-button-hover;
+  }
+
+}

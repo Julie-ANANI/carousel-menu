@@ -53,4 +53,8 @@ export const DISCOVER = {
 
   'ALL_SECTORS': 'Select one or more tags',
 
+  'FETCHING_ERROR': 'We are having trouble while fetching the innovations.',
+
+  'FETCHING_ERROR_SUB': 'It could be because of server connection problem.'
+
 };

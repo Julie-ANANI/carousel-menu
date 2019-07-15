@@ -13,11 +13,6 @@
 
   }
 
-  .table-responsive {
-    max-height: 500px;
-    padding-bottom: 0.75rem;
-  }
-
   .table-loading-wrapper {
     top: 0;
     left: 0;
@@ -33,14 +28,6 @@
       position: relative;
     }
 
-    th:first-child {
-      border-left: $border-width solid $table-tr-border-color;
-    }
-
-    th:last-child {
-      border-right: $border-width solid $table-tr-border-color;
-    }
-
     th, tbody td {
       max-width: 200px;
       height: 44px;
@@ -54,11 +41,6 @@
     }
 
     th {
-      color: $text-background-color;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-bold;
-      background-color: $table-th-background-color;
-      text-transform: uppercase;
 
       .th-name {
         top: 50%;
@@ -67,7 +49,7 @@
         max-width: 100%;
       }
 
-      &.active, &:hover {
+      &:hover {
         background-color: $table-th-hover-background-color !important;
       }
 
@@ -104,26 +86,25 @@
     tbody {
 
       tr {
-        color: $text-primary-color;
-        font-size: 0.65rem;
-        background-color: $bg-color-light;
-        border-left: $border-width solid $table-tr-border-color;
-        border-right: $border-width solid $table-tr-border-color;
 
         td {
 
           .tbody-td-data {
-            justify-content: space-between;
+            flex: 1;
+            max-width: 100%;
+            justify-content: flex-start;
             align-items: center;
 
             .tbody-td-action-button {
-              order: 2;
-              margin-left: 0.5rem;
+              position: absolute;
+              right: 0;
+              padding-left: 0.75rem;
 
               .btn-xs {
                 display: inline-flex;
                 transition: none;
                 visibility: hidden;
+                background-color: $bg-color-light;
               }
 
             }
@@ -202,6 +183,7 @@
             .tbody-td-data {
 
               .tbody-td-action-button {
+                background-color: $table-tr-hover-background-color;
 
                 .btn-xs {
                   visibility: visible;

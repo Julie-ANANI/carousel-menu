@@ -12,11 +12,11 @@
 
       <!-- navigation -->
       <div class="navigation-wrapper" id="navigation">
-        <ul class="menu">
+        <ul class="navigation-menu">
 
           <!-- example page -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
-            <li class="menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
+            <li class="navigation-menu-item" *ngIf="!backOfficeValue && !isMainDomain()">
               <a
                 (click)="onClickLink()"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -30,7 +30,7 @@
           </ng-container>
 
           <!-- discover page -->
-          <li class="menu-item" *ngIf="!backOfficeValue">
+          <li class="navigation-menu-item" *ngIf="!backOfficeValue">
             <a
               (click)="onClickLink()"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -43,7 +43,7 @@
 
           <!-- client my projects -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
-            <li class="menu-item" *ngIf="!backOfficeValue">
+            <li class="navigation-menu-item" *ngIf="!backOfficeValue">
               <a
                 (click)="onClickLink()"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -57,7 +57,7 @@
 
           <!-- client shared reports -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
-            <li class="menu-item" *ngIf="!backOfficeValue">
+            <li class="navigation-menu-item" *ngIf="!backOfficeValue">
               <a
                 (click)="onClickLink()"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -72,7 +72,7 @@
           <!-- admin routes -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
             <ng-container *ngFor="let route of adminRoutes">
-              <li class="menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel) && user">
+              <li class="navigation-menu-item" *ngIf="backOfficeValue && canShow(route.adminLevel) && user">
                 <a
                   (click)="onClickLink()"
                   [routerLinkActiveOptions]="{ exact: true }"
@@ -85,7 +85,7 @@
           </ng-container>
 
           <!-- language select dropdown -->
-          <li class="menu-item header-lang-dropdown">
+          <li class="navigation-menu-item header-lang-dropdown">
             <div class="dropdown" id="header-lang-dropdown">
 
               <a>
@@ -118,7 +118,7 @@
           </li>
 
           <!-- contact us -->
-          <li class="menu-item contact-button">
+          <li class="navigation-menu-item contact-button">
             <a [href]="getContactUrl()" rel="noopener" target="_blank">
               <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
             </a>
@@ -133,7 +133,7 @@
           <!-- /mobile toggle icon -->
 
           <!-- avatar account and dropdown -->
-          <li class="menu-item header-account-dropdown">
+          <li class="navigation-menu-item header-account-dropdown">
             <div class="dropdown" id="header-account-dropdown">
 
               <ng-container *ngIf="user && user.state === 'unconfirmed'">
@@ -201,7 +201,7 @@
                     <a
                       [routerLink]="'/user/account'"
                       routerLinkActive="active"
-                      (click)="onClickLink()"
+                      (click)="onClickLink(); onClickAccount();"
                       class="gtm-menu-my-account text-background">
                       {{ 'HEADER.MY_ACCOUNT' | translate }}
                     </a>
@@ -241,7 +241,7 @@
   <div class="sidebar-container">
     <nav class="sidebar-navbar">
       <div class="sidebar-navigation-wrapper" id="sidebar-navigation">
-        <ul class="menu">
+        <ul class="sidebar-menu">
 
           <!-- account and pic -->
           <ng-container *ngIf="user && user.state === 'confirmed'">
@@ -334,7 +334,7 @@
             <!-- account page -->
             <li class="sidebar-menu-item">
               <a
-                (click)="onClickLink()"
+                (click)="onClickLink(); onClickAccount();"
                 [routerLink]="'/user/account'"
                 class="gtm-menu-my-account text-background"
                 routerLinkActive="active">

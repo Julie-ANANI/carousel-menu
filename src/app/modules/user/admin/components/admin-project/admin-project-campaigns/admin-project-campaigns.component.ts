@@ -117,7 +117,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._selectCampaign = campaign;
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.EDIT_CAMPAIGN',
       type: 'editName'
     };

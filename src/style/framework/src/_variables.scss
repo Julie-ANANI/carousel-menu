@@ -29,7 +29,7 @@ $bg-color-light: $light-color !default;
 $bg-overlay-color: rgba(0,0,0,0.75) !default;
 $bg-overlay-dark-color: rgba(58,66,77,0.96)!default;
 $bg-tooltip-color: rgba(0,0,0,1) !default;
-$bg-dropdown-color: #F2F2F2 !default;
+$bg-menu-item-color: #F2F2F2 !default;
 $bg-page-color: #F5F7FA !default;
 
 
@@ -40,8 +40,8 @@ $border-meta-color: $meta-color !default;
 
 
 // text variables
-$text-primary-color: $dark-color !default;
-$text-secondary-color: #484848 !default;
+$text-primary-dark-color: $dark-color !default;
+$text-secondary-dark-color: #484848 !default;
 $text-meta-color: $meta-color !default;
 $text-success-color: $success-color !default;
 $text-warning-color: $primary-color !default;;
@@ -82,12 +82,11 @@ $button-border-color: $border-color !default;
 // box shadow variables
 $box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37) !default;
 $box-shadow-2: 0 2px 8px rgba(0,0,0,.05) !default;
-$box-shadow-umi: 0px 0px 25px 0px rgba(0,0,0,0.15) !default;
-$box-shadow-hover: 0 2px 8px 2px rgba(20,23,28,.15) !default;
-$box-shadow-hover-2: 0 12px 30px 0 rgba(0,0,0,.2) !default;
-$box-shadow-hover-umi: 0px 0px 55px 0px rgba(0,0,0,0.31) !default;
-$box-shadow-dropdown: 0 4px 16px rgba(20,23,28,0.25) !default;
-$box-shadow-search-input: 2px 2px 0 0 rgba(0,0,0,0.14) !default;
+$box-shadow-3: 0 0 1px 1px rgba(20,23,28,.1), 0 3px 1px 0 rgba(20,23,28,.1) !default;
+$box-shadow-4: 0px 0px 25px 0px rgba(0,0,0,0.15) !default;
+$box-shadow-5: 0 2px 8px 2px rgba(20,23,28,.15) !default;
+$box-shadow-6: 0 12px 30px 0 rgba(0,0,0,.2) !default;
+$box-shadow-7: 0px 0px 55px 0px rgba(0,0,0,0.31) !default;
 $box-shadow-button-hover: 0 3px 15px 0 rgba(0,0,0,.25) !default;
 
 

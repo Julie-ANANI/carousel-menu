@@ -10,7 +10,7 @@ export interface InnovationSettings {
       readonly americaSud: boolean;
     };
     exclude: Array<any>;
-    readonly comments: string;
+    comments: string;
   };
   readonly market: {
     readonly sectors: Array<string>;

@@ -63,28 +63,35 @@ export class AdminCampaignBatchComponent implements OnInit {
               private campaignService: CampaignService,
               private translateNotificationsService: TranslateNotificationsService,
               private translateService: TranslateService,
-              private localStorage: LocalStorageService) { }
+              private localStorage: LocalStorageService) {
+
+    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
+
+  }
 
   ngOnInit() {
-    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
-    this.checkBatch();
-    this.initializeNewBatch();
-    this.getQuiz();
-    this.getBatches();
+    if (this._campaign) {
+      this.checkBatch();
+      this.initializeNewBatch();
+      this.getQuiz();
+      this.getBatches();
 
-    const scenariosNames: Set<string> = new Set<string>();
-    if (this._campaign.settings && this._campaign.settings.emails) {
-      this._campaign.settings.emails.forEach((email) => {
-        if (email.modified) {
-          scenariosNames.add(email.nameWorkflow);
-        } else {
-          scenariosNames.delete(email.nameWorkflow);
-        }
+      const scenariosNames: Set<string> = new Set<string>();
+      if (this._campaign.settings && this._campaign.settings.emails) {
+        this._campaign.settings.emails.forEach((email) => {
+          if (email.modified) {
+            scenariosNames.add(email.nameWorkflow);
+          } else {
+            scenariosNames.delete(email.nameWorkflow);
+          }
+        });
+      }
+      scenariosNames.forEach((name) => {
+        this._campaignWorkflows.push(name);
       });
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     }
-    scenariosNames.forEach((name) => {
-      this._campaignWorkflows.push(name);
-    });
   }
 
 

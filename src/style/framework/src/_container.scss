@@ -1,13 +1,5 @@
 @import "variables";
 
-
-// hero container padding
-.hero-pad {
-  padding-top: 3.15rem;
-  padding-bottom: 1.25rem;
-}
-
-
 // section container padding
 .section-pad {
   padding-top: 2.5rem;
@@ -18,7 +10,6 @@
   }
 
 }
-
 
 // section light container padding
 .section-light-pad {
@@ -36,10 +27,17 @@
   padding-top: 0;
 }
 
-
 // remove padding bottom
 .rm-pad-bottom {
   padding-bottom: 0;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.width-75 {
+  width: 75%;
 }
 
 

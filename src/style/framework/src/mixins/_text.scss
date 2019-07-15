@@ -1,0 +1,30 @@
+@import "../variables";
+
+// Title mixin
+@mixin title-variant($size: 1.6rem) {
+  color: $text-primary-dark-color;
+  font-size: $size;
+  font-weight: $font-weight-medium;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  line-height: $line-height;
+  word-break: break-word;
+}
+
+// Subtitle mixin
+@mixin subtitle-variant($size: 1.6rem) {
+  color: $text-primary-dark-color;
+  font-size: $size;
+  font-weight: $font-weight-normal;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  line-height: $line-height;
+  word-break: break-word;
+}
+
+// Text Ellipsis
+@mixin text-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

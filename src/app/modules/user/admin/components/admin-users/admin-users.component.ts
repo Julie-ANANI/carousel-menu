@@ -122,7 +122,7 @@ export class AdminUsersComponent implements OnInit {
       this._selectedUser = response;
 
       this._sidebarValue = {
-        animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+        animate_state: 'active',
         title: 'SIDEBAR.TITLE.EDIT_USER',
         type: 'editUser'
       };

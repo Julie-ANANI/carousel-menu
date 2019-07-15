@@ -122,7 +122,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   public onClickAdd() {
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       type: 'addTags',
       title: 'SIDEBAR.TITLE.ADD_TAGS'
     };
@@ -168,7 +168,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tagToEdit = value;
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'COMMON.TAG.EDIT_TAG',
       type: 'editTag'
     };

@@ -1,64 +1,16 @@
+@import "mixins/button";
+@import "mixins/clearfix";
+@import "mixins/label";
+@import "mixins/position";
+@import "mixins/text";
+@import "mixins/transition";
+
 @import "variables";
 
-// Clearfix mixin
-@mixin clearfix() {
-  &::after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-}
 
 
-// Text Ellipsis
-@mixin text-ellipsis() {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-
-// Component transition
-@mixin control-transition() {
-  transition: all 0.2s ease-in-out;
-}
-
-
-// Flex-centered
-@mixin flex-centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-// Inline-flex centered
-@mixin inline-flex-centered {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-// Button variant
-@mixin button-variant($color: $primary-color) {
-  color: $light-color;
-  background-color: $color;
-  border-color: $color;
-
-  &:focus, &:active, &.active {
-    color: $light-color;
-    background-color: $color;
-    border-color: $color;
-  }
-
-  &:hover {
-    background-color: lighten($color, 15%);
-    border-color: lighten($color, 15%);
-  }
-
-}
-
+// todo remove this
 
 // Button round variant
 @mixin button-round-variant($color: $primary-color) {
@@ -78,30 +30,6 @@
 
 }
 
-
-// Ghost button variant
-@mixin ghost-button-variant($color: $primary-color) {
-  color: $color;
-  background-color: transparent;
-  border-color: $color;
-  border-width: $border-width-lg;
-
-  &:focus, &:active, &.active {
-    color: $color;
-    background-color: transparent;
-    border-color: $color;
-    border-width: $border-width-lg;
-  }
-
-  &:hover {
-    color: lighten($color, 15%);
-    background-color: transparent;
-    border-color: lighten($color, 15%);
-  }
-
-}
-
-
 // Ghost button variant
 @mixin ghost-button-no-hover-variant($color: $primary-color) {
   color: $color;
@@ -116,7 +44,6 @@
   }
 
 }
-
 
 // Button ghost background variant
 @mixin button-ghost-background-variant($color: $primary-color) {
@@ -136,7 +63,6 @@
 
 }
 
-
 // Text link variant
 @mixin text-link-variant($color: $primary-color) {
   font-weight: $font-weight-medium;
@@ -151,12 +77,10 @@
 
 }
 
-
 // Bar scale variant
 @mixin bar-scale-variant($color-1st, $color-2nd) {
   background-image: linear-gradient(-180deg, $color-1st 0%, $color-2nd 100%);
 }
-
 
 // Avatar mixin
 @mixin avatar-variant($color: $light-color, $bg-color: $primary-color) {
@@ -170,9 +94,5 @@
   width: $size;
 }
 
-
 // Label mixin
-@mixin label-variant($color: $light-color, $bg-color: $primary-color) {
-  background-color: $bg-color;
-  color: $color;
-}
+

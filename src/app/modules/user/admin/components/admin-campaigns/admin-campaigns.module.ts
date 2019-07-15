@@ -17,7 +17,7 @@ import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admi
 import { AdminCampaignStatsComponent } from './admin-campaign-stats/admin-campaign-stats.component';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
-import { SharedSearchHistoryModule} from '../../../../shared/components/shared-search-history/search-history.module';
+import { SharedSearchHistoryModule} from '../../../../shared/components/shared-search-history/shared-search-history.module';
 import { SharedSearchProsModule } from '../../../../shared/components/shared-search-pros/shared-search-pros.module';
 import { SharedSearchResultsModule } from '../../../../shared/components/shared-search-results/search-results.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';

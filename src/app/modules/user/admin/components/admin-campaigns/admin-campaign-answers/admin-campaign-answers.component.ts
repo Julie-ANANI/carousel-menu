@@ -31,7 +31,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     limit: this._configService.configLimit('admin-campaign-answers-limit'),
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{ "created": -1 }'
   };
 
   private _campaign: Campaign;
@@ -169,7 +169,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._modalAnswer = value;
 
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.EDIT_INSIGHT',
       size: '726px'
     };

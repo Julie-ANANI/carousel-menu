@@ -73,7 +73,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   configChange(value: any) {
     this._paginationConfig = value;
-    this._config.limit = value.limit
+    this._config.limit = value.limit;
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.loadHistory();

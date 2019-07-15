@@ -117,7 +117,7 @@ export class AdminEditWorkflowComponent {
 
     this._more = {
       size: '726px',
-      animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.EDIT_WORKFLOW'
     };
 

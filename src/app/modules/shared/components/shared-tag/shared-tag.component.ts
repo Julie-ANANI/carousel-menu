@@ -83,8 +83,8 @@ export class SharedTagComponent implements OnInit {
 
       const queryConf: any = { query: query, type: 'tags' };
 
-      if (this._type) {
-        queryConf.type = this._type;
+      if (this._type && this._type === 'SECTOR') {
+        queryConf['tagType'] = this._type;
       }
 
       return this._autocompleteService.get(queryConf);

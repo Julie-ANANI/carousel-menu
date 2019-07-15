@@ -184,8 +184,8 @@ export class TableComponent implements OnInit {
    */
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
-      this._table._columns[index]._isSelected = false;
       this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ? this._table._columns[index]._isSearchable : false;
+      this._table._columns[index]._isSelected = this._columnActive(value);
     });
   }
 
@@ -202,6 +202,17 @@ export class TableComponent implements OnInit {
         this._table._content[index]._isSelected = false;
       });
     }
+  }
+
+  private _columnActive(column: Column): boolean {
+    let sortKey;
+
+    for (const key in JSON.parse(this._config.sort)) {
+      sortKey = key;
+    }
+
+    return this.getAttrs(column).includes(sortKey);
+
   }
 
   /***

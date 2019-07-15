@@ -76,7 +76,7 @@
   }
 
   &.label-answer {
-    @include label-variant($text-primary-color, $label-answer-color);
+    @include label-variant($text-primary-dark-color, $label-answer-color);
     font-size: $font-size-sm;
   }
 

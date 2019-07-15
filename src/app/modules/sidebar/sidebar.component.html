@@ -1,22 +1,24 @@
-<div [@animateSidebarBackdrop]="state" class="sidebar-backdrop" id="sidebar-wrapper" (click)="toggleState($event, content)"></div>
-
-<main class="sidebar sidebar-right" [@animateSidebar]="state" [ngStyle]="{ 'width': size ? size : '452px'  }">
-  <section class="sidebar-container">
-    <div #content class="section-pad rm-pad-top">
+<div class="sidebar sidebar-right" [@animateSidebar]="state" [ngStyle]="{ 'width': size ? size : '452px'  }">
+  <div class="sidebar-container">
+    <div #content>
 
       <!-- heading part -->
-      <header class="header">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="sidebar-header flex-between">
-            <h5 class="title">{{ title | translate }}</h5>
-            <button class="btn btn-close" id="close" (click)="toggleState($event, content)"></button>
+      <div class="sidebar-header">
+        <div class="header">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="flex-between">
+              <h5 class="m-no-bottom">{{ title | translate }}</h5>
+              <button class="btn btn-close" id="close" (click)="toggleState($event, content)"></button>
+            </div>
           </div>
         </div>
-      </header>
+      </div>
 
       <!-- content part -->
-      <ng-content></ng-content>
+      <div class="sidebar-body p-bottom-50">
+        <ng-content></ng-content>
+      </div>
 
     </div>
-  </section>
-</main>
+  </div>
+</div>

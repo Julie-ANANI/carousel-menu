@@ -1,0 +1,97 @@
+<div id="docs-css">
+  <div class="restrict-width">
+    <div class="d-flex">
+
+      <aside class="sidebar-inline">
+        <div class="section-light-pad full-light">
+          <div class="accordion-wrapper">
+
+
+            <!-- overview -->
+            <div class="accordion docs-accordion">
+              <input type="checkbox" id="accordion-overview" hidden [checked]="activeRoute.includes('overview')" name="docs-accordion-checkbox">
+              <label class="accordion-header c-hand" for="accordion-overview">
+                <a [routerLink]="'overview'">Overview</a>
+              </label>
+            </div>
+
+            <!-- elements -->
+            <div class="accordion docs-accordion">
+              <input type="checkbox" id="accordion-elements" hidden [checked]="activeRoute.includes('elements')" name="docs-accordion-checkbox">
+              <label class="accordion-header c-hand" for="accordion-elements">Elements</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item">
+                    <a [routerLink]="'elements/typography'">Typography</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'elements/table'">Table</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'elements/button'">Button</a>
+                  </li>
+                  <!--<li class="menu-item">
+                    <a [routerLink]="'elements/forms'">Forms</a>
+                  </li>-->
+                  <li class="menu-item">
+                    <a [routerLink]="'elements/label'">Label</a>
+                  </li>
+                  <!--<li class="menu-item">
+                    <a [routerLink]="'elements/code'">Code</a>
+                  </li>-->
+                  <!--<li class="menu-item">
+                    <a [routerLink]="'elements/media'">Media</a>
+                  </li>-->
+                </ul>
+              </div>
+            </div>
+
+            <!-- layout -->
+            <div class="accordion docs-accordion">
+              <input type="checkbox" id="accordion-layout" hidden [checked]="activeRoute.includes('layouts')" name="docs-accordion-checkbox">
+              <label class="accordion-header c-hand" for="accordion-layout">Layout</label>
+              <div class="accordion-body">
+              </div>
+            </div>
+
+            <!-- components -->
+            <div class="accordion docs-accordion">
+              <input type="checkbox" id="accordion-components" hidden [checked]="activeRoute.includes('components')" name="docs-accordion-checkbox">
+              <label class="accordion-header c-hand" for="accordion-components">Components</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item">
+                    <a [routerLink]="'components/accordions'">Accordions</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- utilities -->
+            <div class="accordion docs-accordion">
+              <input type="checkbox" id="accordion-utilities" hidden [checked]="activeRoute.includes('utilities')" name="docs-accordion-checkbox">
+              <label class="accordion-header c-hand" for="accordion-utilities">Utilities</label>
+              <div class="accordion-body">
+              </div>
+            </div>
+
+            <!-- angular -->
+            <div class="accordion docs-accordion">
+              <input type="checkbox" id="accordion-angular" hidden [checked]="activeRoute.includes('angular')" name="docs-accordion-checkbox">
+              <label class="accordion-header c-hand" for="accordion-angular">Angular</label>
+              <div class="accordion-body">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+
+      <div class="section-light-pad full-light width-75">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </div>
+</div>
