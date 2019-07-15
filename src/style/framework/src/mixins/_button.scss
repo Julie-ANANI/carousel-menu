@@ -5,15 +5,23 @@
   background-color: $color;
   border-color: $color;
 
-  &:focus {
+  &:hover {
+    background-color: lighten($color, 10%);
+    border-color: lighten($color, 10%);
+  }
+
+  &:focus, &.is-active, &:active  {
     color: $light-color;
     background-color: $color;
     border-color: $color;
   }
 
-  &:hover {
-    background-color: lighten($color, 10%);
-    border-color: lighten($color, 10%);
+  &[disabled], &:disabled, &.disabled {
+    background-color: $color;
+    border-color: $color;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
   }
 
 }
@@ -24,16 +32,24 @@
   border-width: $border-width-lg;
   background-color: transparent;
 
-  &:focus {
+  &:hover {
+    border-color: lighten($color, 15%);
+    background-color: transparent;
+  }
+
+  &:focus, &.is-active, &:active  {
     color: $color;
     border-color: $color;
     border-width: $border-width-lg;
     background-color: transparent;
   }
 
-  &:hover {
-    border-color: lighten($color, 15%);
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
     background-color: transparent;
+    border-color: $color;
+    box-shadow: none;
+    opacity: 0.5;
   }
 
 }
@@ -43,14 +59,14 @@
   border-color: $color;
   border-width: $border-width-lg;
 
-  &:focus {
+  &:hover {
+    border-color: lighten($color, 15%);
+  }
+
+  &:focus, &.is-active, &:active  {
     color: $color;
     border-color: $color;
     border-width: $border-width-lg;
-  }
-
-  &:hover {
-    border-color: lighten($color, 15%);
   }
 
 }
@@ -66,6 +82,19 @@
     background-color: transparent;
   }
 
+  &.is-active, &:active  {
+    color: $color;
+    border: none;
+    background-color: transparent;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
 }
 
 @mixin button-default-action-variant($color: $primary-color) {
@@ -75,7 +104,7 @@
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 
-  &:focus {
+  &:focus, &.is-active, &:active  {
     color: $light-color;
     background-color: $color;
     border-color: $color;
@@ -84,6 +113,14 @@
   &:hover {
     background-color: lighten($color, 10%);
     border-color: lighten($color, 10%);
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: $color;
+    border-color: $color;
+    box-shadow: none;
+    opacity: 0.5;
   }
 
 }

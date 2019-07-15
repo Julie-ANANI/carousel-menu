@@ -318,6 +318,12 @@
     margin-right: $unit-2;
   }
 
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
   &.is-link {
     @include button-link-variant($primary-color);
 
