@@ -5,10 +5,9 @@ import { environment } from '../../../environments/environment';
 import { Campaign } from '../../models/campaign';
 import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
+import { Professional } from '../../models/professional';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
-import { QuestionReport } from '../../models/market-report';
-import { Professional } from "../../models/professional";
 
 @Injectable()
 export class InnovationService {
@@ -56,10 +55,6 @@ export class InnovationService {
     return this._http.get<InnovCard>('/innovation/card/' + innovationCardId);
   }
 
-  public getInnovationCardByLanguage(innovationId: string, lang: string): Observable<InnovCard> {
-    return this._http.get<InnovCard>('/innovation/' + innovationId + '/card', { params: {lang: lang }});
-  }
-
   public remove(innovationId: string): Observable<any> {
     return this._http.delete('/innovation/' + innovationId);
   }
@@ -68,12 +63,8 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }
 
-  public saveConsent(innovationId: string, date: number) {
+  public saveConsent(innovationId: string, date: number) { /* FIXME */
     return this._http.put(`/innovation/${innovationId}/ownerConsent`, {ownerConsent: {date: date, value: true}});
-  }
-
-  public updateMarketReport(innovationId: string, data: QuestionReport): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/marketReport', { payload: data });
   }
 
   public saveFilter(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
@@ -92,28 +83,8 @@ export class InnovationService {
     return this._http.delete('/filter/innovation/' + innovationId + '/' + filterName);
   }
 
-  public updatePreset(innovationId: string, data: any): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/updatePreset', {preset: data});
-  }
-
-  public submitProjectToValidation (innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/submit', {});
-  }
-
   public sendMailToOwner(innovationId: string, mail: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/sendMailToOwner', {mail: mail});
-  }
-
-  public validate(innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EVALUATING', {});
-  }
-
-  public endProject(innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=DONE', {});
-  }
-
-  public askRevision(innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EDITING', {});
   }
 
   public inviteCollaborators(innovationId: string, collaboratorsEmails: string): Observable<any> {
@@ -146,10 +117,6 @@ export class InnovationService {
 
   public getRecommendation(innovationId: string): Observable<any> {
     return this._http.get('/innovation/' + innovationId + '/match');
-  }
-
-  public getRecommendedInnovations(innovationId: string): Observable<any> {
-    return this._http.get('/innovation/' + innovationId + '/similar');
   }
 
   public addProsFromCommunity(professionalArray: Array<Professional>, innovationId: string): Observable<any> {
