@@ -22,8 +22,6 @@ export const SHOWCASE = {
 
   'CLIENTS_TITLE': 'Clients',
 
-  'CLIENTS': 'Some of the companies that tested their market',
-
   'SECTORS_MODAL': {
     'TITLE': 'Choose sectors to create the showcase'
   },

@@ -91,6 +91,10 @@
 
     }
 
+    .answer-wrapper, .innovation-wrapper, .map-wrapper, .client-wrapper {
+      padding: 20px 30px !important;
+    }
+
   }
 
 }
@@ -150,18 +154,6 @@
         max-width: 100%;
       }
 
-    }
-
-  }
-
-}
-
-@media (max-width: $size-sm) {
-
-  #showcase {
-
-    .answer-wrapper, .innovation-wrapper, .map-wrapper, .client-wrapper {
-      padding: 0.5rem !important;
     }
 
   }
