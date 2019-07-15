@@ -11,9 +11,9 @@ WORKDIR /var/web
 RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
 
 # upload source-map to sentry
-RUN if [ $VERSION ]; then npm install @sentry/cli; fi
-RUN if [ $VERSION ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
-RUN if [ $VERSION ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps dist/browser; fi
+RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
+RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
+RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps dist/browser; fi
 RUN rm -f /var/web/.sentryclirc
 
 # delete source-map files
