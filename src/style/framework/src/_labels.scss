@@ -2,16 +2,105 @@
 @import "mixins";
 
 .label {
-  @include label-variant($light-color, inherit);
   @include inline-flex-centered();
   text-align: center;
   font-weight: $font-weight-medium;
   font-size: $font-size-xs;
   padding: $unit-2 $unit-4;
+  color: $text-primary-dark-color;
+  background-color: #F5F5F5;
   margin: $unit-1;
   border-radius: $border-width-lg;
   line-height: $line-height-sm;
 
+  i {
+    font-size: $font-icon-sm;
+  }
+
+  &.is-black {
+    @include label-color-variant($dark-color);
+  }
+
+  &.is-primary {
+    @include label-color-variant($primary-color);
+  }
+
+  &.is-secondary {
+    @include label-color-variant($secondary-color);
+  }
+
+  &.is-progress {
+    @include label-color-variant($progress-color);
+  }
+
+  &.is-tag {
+    @include label-variant(#2295C6, #D7EBF3);
+  }
+
+  &.is-answer {
+    @include label-variant($text-primary-dark-color, #F8F4F4);
+  }
+
+  &.is-info {
+    @include label-color-variant($meta-color);
+  }
+
+  &.is-draft {
+    @include label-color-variant($background-color);
+  }
+
+  &.is-success {
+    @include label-color-variant($success-color);
+  }
+
+  &.is-danger {
+    @include label-color-variant($alert-color);
+  }
+
+  .icon-left {
+    margin-right: $unit-1;
+  }
+
+  .icon-right {
+    margin-left: $unit-2;
+  }
+
+  &.is-rounded {
+    border-radius: 25px;
+  }
+
+  &.is-sm {
+    font-size: 0.5rem;
+    padding: $unit-1 $unit-2;
+
+    i {
+      font-size: 0.4rem;
+    }
+
+  }
+
+  &.is-normal {
+    font-size: $font-size-xs;
+    padding: $unit-2 $unit-4;
+
+    i {
+      font-size: $font-icon-sm;
+    }
+
+  }
+
+  &.is-lg {
+    font-size: $font-size-md;
+    padding: $unit-3 $unit-4;
+
+    i {
+      font-size: 0.7rem;
+    }
+
+  }
+
+
+  // Todo remove this below.
   &.label-rounded {
     border-radius: 25px;
   }
@@ -29,7 +118,7 @@
   }
 
   &.label-draft {
-    @include label-variant($light-color, $label-draft-color);
+    @include label-variant($light-color, $background-color);
   }
 
   &.label-primary {
@@ -37,7 +126,7 @@
   }
 
   &.label-edit {
-    @include label-variant($light-color, $label-edit-color);
+    @include label-variant($light-color, $secondary-color);
   }
 
   &.label-meta {
@@ -76,7 +165,7 @@
   }
 
   &.label-answer {
-    @include label-variant($text-primary-dark-color, $label-answer-color);
+    @include label-variant($text-primary-dark-color, #F8F4F4);
     font-size: $font-size-sm;
   }
 
