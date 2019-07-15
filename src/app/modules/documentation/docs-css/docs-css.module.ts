@@ -12,6 +12,7 @@ import { TableComponent } from './elements/table/table.component';
 import { ButtonComponent } from './elements/button/button.component';
 import { LabelComponent } from './elements/label/label.component';
 import { CodeComponent } from './elements/code/code.component';
+import { MediaComponent } from './elements/media/media.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { CodeComponent } from './elements/code/code.component';
     LabelComponent,
     AccordionsComponent,
     ButtonComponent,
-    CodeComponent
+    CodeComponent,
+    MediaComponent
   ],
 })
 
