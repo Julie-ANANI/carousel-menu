@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TypographyComponent } from './elements/typography/typography.component';
 import { TableComponent } from './elements/table/table.component';
 import { ButtonComponent } from './elements/button/button.component';
+import { LabelComponent } from './elements/label/label.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ButtonComponent } from './elements/button/button.component';
     OverviewComponent,
     TypographyComponent,
     TableComponent,
+    LabelComponent,
     AccordionsComponent,
     ButtonComponent
   ],

@@ -101,9 +101,9 @@ export class InnovationsComponent implements OnInit {
    */
   private _applyInnoRecommendation() {
     this._innovationService.getRecommendation(this._recommendedInnovationId).subscribe((response) => {
-      /*response.forEach((inno_similar: Innovation) => {
+      response.forEach((inno_similar: Innovation) => {
         this._recommendedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
-      });*/
+      });
     });
   }
 
