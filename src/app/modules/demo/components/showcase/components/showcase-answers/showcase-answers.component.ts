@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../models/answer';
 
 @Component({
@@ -49,8 +48,7 @@ export class ShowcaseAnswersComponent {
   private _selectedAnswers: Array<Answer> = [];
 
   constructor(private _answerService: AnswerService,
-              private _authService: AuthService,
-              private _translateNotificationsService: TranslateNotificationsService) {}
+              private _authService: AuthService) {}
 
 
   private _startLoading(answers: Array<Answer>) {
@@ -80,11 +78,7 @@ export class ShowcaseAnswersComponent {
 
   public onChangeAnswer(event: Event, answer: Answer) {
     if ((event.target as HTMLInputElement).checked) {
-      if (this._selectedAnswers.length < 6) {
-        this._selectedAnswers.push(answer);
-      } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'SHOWCASE.MAX_SELECT_ANSWERS');
-      }
+      this._selectedAnswers.push(answer);
     } else {
       this._selectedAnswers = this._selectedAnswers.filter((item: Answer) => item._id !== answer._id);
     }

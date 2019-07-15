@@ -37,10 +37,6 @@ export const SHOWCASE = {
     'EDIT_CLIENTS': 'Click to select different clients.'
   },
 
-  'MAX_SELECT_ANSWERS': 'You can only select 6 answers.',
-
-  'MAX_SELECT_INNOVATIONS': 'You can only select 9 innovations.',
-
   'NAME_PLACEHOLDER': 'Name',
 
 };
