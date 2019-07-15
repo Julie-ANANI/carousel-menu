@@ -1,5 +1,6 @@
 @import "mixins/button";
 @import "mixins/clearfix";
+@import "mixins/label";
 @import "mixins/position";
 @import "mixins/text";
 @import "mixins/transition";
@@ -94,7 +95,4 @@
 }
 
 // Label mixin
-@mixin label-variant($color: $light-color, $bg-color: $primary-color) {
-  background-color: $bg-color;
-  color: $color;
-}
+
