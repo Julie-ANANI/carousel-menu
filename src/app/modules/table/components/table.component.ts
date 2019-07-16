@@ -787,4 +787,10 @@ export class TableComponent implements OnInit {
     return this._filteredContent;
   }
 
+  get visibleColumns(): Array<Column> {
+    return this._table._columns.filter(col => {
+      return !col._isHidden;
+    })
+  }
+
 }
