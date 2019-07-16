@@ -12,10 +12,10 @@
 
       <!-- navigation -->
       <div class="navigation-wrapper" id="navigation">
-        <ul class="menu">
+        <ul class="navigation-menu">
 
           <!-- language select dropdown -->
-          <li class="menu-item header-lang-dropdown">
+          <li class="navigation-menu-item header-lang-dropdown">
             <div class="dropdown" id="header-lang-dropdown">
 
               <a>
@@ -49,19 +49,19 @@
           <!-- /language select dropdown -->
 
           <!-- contact us -->
-          <li class="menu-item contact-button">
+          <li class="navigation-menu-item contact-button">
             <a [href]="getContactUrl()" rel="noopener"target="_blank">
               <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
             </a>
           </li>
 
           <!-- sign in button -->
-          <li class="menu-item">
+          <li class="navigation-menu-item">
             <button type="button" class="btn ghost-primary btn-sm" (click)="onClickSignIn($event)">{{ 'COMMON.BUTTON.SIGN_IN' | translate }}</button>
           </li>
 
           <!-- sign up button -->
-          <li class="menu-item">
+          <li class="navigation-menu-item">
             <button type="button" class="btn btn-primary btn-sm" (click)="onClickSignUp($event)">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
           </li>
 

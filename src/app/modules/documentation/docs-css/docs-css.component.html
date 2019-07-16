@@ -46,13 +46,13 @@
               </div>
             </div>
 
-            <!-- layout -->
+            <!-- layout
             <div class="accordion docs-accordion">
               <input type="checkbox" id="accordion-layout" hidden [checked]="activeRoute.includes('layouts')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-layout">Layout</label>
               <div class="accordion-body">
               </div>
-            </div>
+            </div>-->
 
             <!-- components -->
             <div class="accordion docs-accordion">
@@ -67,21 +67,21 @@
               </div>
             </div>
 
-            <!-- utilities -->
+            <!-- utilities
             <div class="accordion docs-accordion">
               <input type="checkbox" id="accordion-utilities" hidden [checked]="activeRoute.includes('utilities')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-utilities">Utilities</label>
               <div class="accordion-body">
               </div>
-            </div>
+            </div>-->
 
-            <!-- angular -->
+            <!-- angular
             <div class="accordion docs-accordion">
               <input type="checkbox" id="accordion-angular" hidden [checked]="activeRoute.includes('angular')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-angular">Angular</label>
               <div class="accordion-body">
               </div>
-            </div>
+            </div>-->
 
           </div>
         </div>
@@ -89,7 +89,9 @@
 
 
       <div class="section-light-pad full-light width-75">
-        <router-outlet></router-outlet>
+        <div class="column col-12">
+          <router-outlet></router-outlet>
+        </div>
       </div>
 
     </div>
