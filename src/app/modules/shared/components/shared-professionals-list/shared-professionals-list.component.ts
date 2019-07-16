@@ -256,8 +256,12 @@ export class SharedProfessionalsListComponent {
     this._professionalsService.save(value._id, value).subscribe(() => {
       this.onConfigChange(this._config);
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PROFILE_UPDATE_TEXT');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }, (err) => {
+      if(err && err.error.code && err.error.code === 11000) {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROFESSIONAL.MERGE_ERROR');
+      } else {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      }
     });
   }
 

@@ -182,6 +182,10 @@ export const ERROR = {
     'UPDATED': 'La signature a été mise à jour avec succès.',
     'ALREADY_EXIST': 'La signature avec la même nom existe déjà.',
     'DELETED': 'La signature a été supprimée avec succès.',
+  },
+
+  'PROFESSIONAL': {
+    'MERGE_ERROR': 'Un profesionnel avec cette adresse e-mail existe déjà. Essayez de merger à la main les deux profesionnels.<br>Demandez l\'équipe tech pour plus d\'info',
   }
 
 

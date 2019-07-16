@@ -42,9 +42,9 @@
 <!-- modal to select clients -->
 <app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
 
-  <div class="section-card d-flex text-center">
+  <div class="section-card columns text-center">
     <ng-container *ngFor="let client of totalClients">
-      <div class="card flex-centered modal-card badge badge-save" (click)="onChangeClient($event, client)" [ngClass]="{ 'active': selectedClients[client.name] }">
+      <div class="card modal-card badge badge-save" (click)="onChangeClient($event, client)" [ngClass]="{ 'active': selectedClients[client.name] }">
 
         <i class="fas fa-check-circle"></i>
 
