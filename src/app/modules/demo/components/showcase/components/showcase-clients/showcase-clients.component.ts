@@ -53,8 +53,8 @@ export class ShowcaseClientsComponent {
 
             this.topClientsChange.emit(this._totalClients);
           } else {
-            this._selectedClients = this._slides.reduce((acc, val) => {
-                val.forEach((c) => acc[c.name] = true);
+            this._selectedClients = this.topClients.reduce((acc, client) => {
+                acc[client.name] = true;
                 return acc;
               }, {} as {[clientName: string]: true});
           }
@@ -67,9 +67,7 @@ export class ShowcaseClientsComponent {
 
   }
 
-  @Input() set topClients(value: Array<Clearbit>) {
-    this._slides = this.getSlides(value);
-  }
+  @Input() topClients: Array<Clearbit> = [];
   @Output() topClientsChange: EventEmitter<Array<Clearbit>> = new EventEmitter<Array<Clearbit>>();
 
   private _totalClients: Array<Clearbit> = [];
@@ -78,19 +76,8 @@ export class ShowcaseClientsComponent {
 
   private _selectedClients: {[clientName: string]: boolean} = {};
 
-  private _slides: Array<Array<Clearbit>>;
-
   constructor(private _innovationService: InnovationService,
               private _authService: AuthService) {}
-
-  private getSlides(clients: Array<Clearbit>, chunkSize: number = 6): Array<Array<Clearbit>> {
-    const slides = [];
-    const nbSlides = Math.ceil(clients.length / chunkSize);
-    for (let i = 0; i < nbSlides ; i++) {
-      slides.push(clients.slice( chunkSize * i, (chunkSize * i) + chunkSize));
-    }
-    return slides;
-  }
 
   public onChangeClient(event: Event, client: Clearbit): void {
     event.preventDefault();
@@ -115,10 +102,6 @@ export class ShowcaseClientsComponent {
 
   get totalClients(): Array<Clearbit> {
     return this._totalClients;
-  }
-
-  get slides(): Array<Array<Clearbit>> {
-    return this._slides;
   }
 
   get modalShow(): boolean {
