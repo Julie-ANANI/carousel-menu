@@ -52,6 +52,11 @@ export class ShowcaseClientsComponent {
                 }, {} as {[clientName: string]: boolean});
 
             this.topClientsChange.emit(this._totalClients);
+          } else {
+            this._selectedClients = this._slides.reduce((acc, val) => {
+                val.forEach((c) => acc[c.name] = true);
+                return acc;
+              }, {} as {[clientName: string]: true});
           }
 
         }

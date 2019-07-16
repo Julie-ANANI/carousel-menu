@@ -27,6 +27,9 @@ export class ShowcaseAnswersComponent {
           if (!staticAnswers) {
             this._selectedAnswers = response.result.slice(0, 6);
             this._startLoading(this._selectedAnswers);
+          } else {
+            const idAnswersSelected = this.topAnswers.reduce((acc, val) => { acc[val._id] = true; return acc; }, {} as {[id: string]: true});
+            this._selectedAnswers = this._answers.filter((ans) => idAnswersSelected[ans._id]);
           }
         }
       });
