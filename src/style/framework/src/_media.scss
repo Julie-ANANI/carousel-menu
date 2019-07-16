@@ -1,5 +1,5 @@
 @import "variables";
-
+@import "mixins";
 
 // image responsive
 .img-responsive {
@@ -7,7 +7,6 @@
   height: auto;
   max-width: 100%;
 }
-
 
 // object-fit support is coming to Microsoft Edge
 // https://developer.microsoft.com/en-us/microsoft-edge/platform/status/objectfitandobjectposition/
@@ -19,8 +18,8 @@
   object-fit: contain;
 }
 
-
 .img-overlay {
+  display: flex;
 
   &:hover {
     background: $bg-overlay-color;
@@ -28,13 +27,59 @@
     img {
       transition: all 0.3s ease;
       opacity: 0.7;
-      cursor: pointer;
     }
 
   }
 
 }
 
+.img-hover-button {
+  position: relative;
+  display: flex;
+
+  .img-button {
+    @include text-ellipsis();
+    position: absolute;
+    text-align: center;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 33px;
+    padding: $unit-1 $unit-2;
+    width: 120px;
+    color: $light-color;
+    font-size: $font-size-sm;
+    border: 2px solid $light-color;
+    border-radius: 25px;
+    visibility: hidden;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.21);
+    }
+
+  }
+
+  &:hover {
+    background: $bg-overlay-color;
+
+    img {
+      transition: opacity 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .img-button {
+      opacity: 1;
+      visibility: visible;
+      cursor: pointer;
+    }
+
+  }
+
+}
 
 .media-hover {
   position: relative;
@@ -57,7 +102,7 @@
     border: 2px solid $light-color;
     border-radius: 31.5px;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
 
     &:hover {
       background-color: rgba(0,0,0,0.21);
@@ -146,11 +191,12 @@ video.video-responsive {
 
 // figure
 .figure {
-  margin: 0 0 $layout-spacing 0;
 
   .figure-caption {
     color: $meta-color;
-    margin-top: $layout-spacing;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    margin-top: $unit-2;
   }
 
 }
