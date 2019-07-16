@@ -98,7 +98,10 @@ export class SharedProfessionalsListComponent {
       _isDeletable: true,
       _isSelectable: true,
       _isEditable: true,
-      _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
+      _buttons: [
+          {_label: 'Merge', _icon: 'fas fa-object-group'},
+          {_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'},
+          {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
       _editIndex: 1,
       _columns: [
         {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
@@ -108,6 +111,7 @@ export class SharedProfessionalsListComponent {
           ]
         },
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
+        {_attrs: ['email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT', _isSearchable: true, _isSortable: true, _isHidden: true},
         {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSortable: true, _isSearchable: true},
         {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
         {_attrs: ['company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
@@ -198,21 +202,24 @@ export class SharedProfessionalsListComponent {
   public onClickActions(value: any) {
     switch (value._action) {
 
-      case 'Convert to ambassador':
+      case('Convert to ambassador'):
         if(value._rows.length) {
           if(value._rows.length > 1) {
-            console.log("Look man, I could do this action just for the first one...");
+            this._translateNotificationsService.error('ERROR.ERROR', "Look, I could do this action just for the first one...");
           }
           const link = `/user/admin/community/members/${value._rows[0]._id}`;
           this._router.navigate([link]);
         } else {
-          console.error("What? empty rows? How did you do that?");
+          this._translateNotificationsService.error('ERROR.ERROR', "What? empty rows? How did you do that?");
         }
         break;
 
-      case 'COMMON.TAG.ADD_TAGS':
+      case('COMMON.TAG.ADD_TAGS'):
         this._editProfessionalTags(value._rows);
         break;
+
+      default:
+        this._translateNotificationsService.error('ERROR.ERROR', "Idk how to do that :(");
 
     }
   }
