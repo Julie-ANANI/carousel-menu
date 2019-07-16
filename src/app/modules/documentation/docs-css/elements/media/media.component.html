@@ -146,6 +146,47 @@
       </figure>
     </div>
 
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">figure <span class="attr">class</span>=<span class="string">"figure"</span></span>&gt;</span>
+          <span class="tag">&lt;<span class="name">img <span class="attr">src</span>=<span class="string">"https://images.unsplash.com/photo-1497091071254-cc9b2ba7c48a?w=1024"</span> <span class="attr">class</span>=<span class="string">"img-responsive"</span> <span class="attr">alt</span>=<span class="string">"..."</span></span>&gt;</span>
+          <span class="tag">&lt;<span class="name">figcaption <span class="attr">class</span>=<span class="string">"figure-caption text-center"</span></span>&gt;</span>person using track pad<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">figure</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Videos</h2>
+
+    <p class="text-md">For responsive video, add a container with the <code>video-responsive</code> class. Insert any YouTube, Vimeo or other iframe/embed
+      video inside the container. The ratio is 16:9 by default. You may add <code>is-responsive-4-3</code> for 4:3 ratio video container or
+      <code>is-responsive-1-1</code> for 1:1 ratio.</p>
+
+    <div class="p-top-20">
+      <div class="video-responsive is-responsive-4-3">
+        <iframe src="https://www.youtube.com/embed/7DbslbKsQSk" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="p-top-25">
+
+      <p class="text-md">For responsive &lt;video&gt; elements, you can add the <code>is-responsive</code> class directly.</p>
+
+      <div class="p-top-20">
+        <pre class="code" data-lang="HTML"><code>
+          <span class="tag">&lt;<span class="name">div <span class="attr">class</span>=<span class="string">"video-responsive is-responsive-4-3"</span></span>&gt;</span>
+            <span class="tag">&lt;<span class="name">iframe <span class="attr">src</span>=<span class="string">"..."</span> <span class="attr">frameborder</span>=<span class="string">"0"</span> <span class="attr">allowfullscreen</span> <span class="attr">width</span>=<span class="string">"..."</span> <span class="attr">height</span>=<span class="string">"..."</span> </span>&gt;</span>
+          <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+          <span class="tag">&lt;<span class="name">video <span class="attr">class</span>=<span class="string">"video-responsive"</span> <span class="attr">src</span>=<span class="string">"..."</span></span>&gt;</span> ... <span class="tag">&lt;/<span class="name">video</span>&gt;</span>
+        </code></pre>
+      </div>
+
+    </div>
+
   </section>
 
 </div>

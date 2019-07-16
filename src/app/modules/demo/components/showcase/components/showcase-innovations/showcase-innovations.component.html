@@ -27,16 +27,11 @@
     <div *ngFor="let innovationCard of topCards" class="card card-3 animate-zoomIn">
       <a [routerLink]="['/discover', innovationCard._id, lang]" target="_blank" class="text-primary-dark text-xs">
 
-        <div class="card-image media-hover">
-
-          <figure>
+        <div class="card-image">
+          <figure class="img-hover-button">
             <img [src]="innovationCard.media" [alt]="innovationCard.title" width="186" height="116">
+            <span class="img-button">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
           </figure>
-
-          <div class="media-hover-button">
-            <span class="text-medium">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
-          </div>
-
         </div>
 
         <div class="card-header">
