@@ -17,8 +17,7 @@
 
   <!-- section client logos -->
   <div class="d-flex text-center s-c-card-wrapper flex-wrap">
-    <ng-container *ngFor="let slide of slides">
-      <div *ngFor="let client of slide" class="s-c-card-content animate-zoomIn">
+      <div *ngFor="let client of topClients" class="s-c-card-content animate-zoomIn">
 
         <ng-container *ngIf="client.logo">
           <div [attr.data-tooltip]="client.name" class="tooltip">
@@ -33,7 +32,6 @@
         </ng-container>
 
       </div>
-    </ng-container>
   </div>
   <!-- /section client logos -->
 
