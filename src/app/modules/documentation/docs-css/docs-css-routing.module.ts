@@ -10,6 +10,8 @@ import { TypographyComponent } from './elements/typography/typography.component'
 import { TableComponent } from './elements/table/table.component';
 import { ButtonComponent } from './elements/button/button.component';
 import { LabelComponent } from './elements/label/label.component';
+import { CodeComponent } from './elements/code/code.component';
+import { MediaComponent } from './elements/media/media.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -23,6 +25,8 @@ const docsCssRoutes: Routes = [
       { path: 'elements/table', component: TableComponent, pathMatch: 'full' },
       { path: 'elements/label', component: LabelComponent, pathMatch: 'full' },
       { path: 'elements/button', component: ButtonComponent, pathMatch: 'full' },
+      { path: 'elements/code', component: CodeComponent, pathMatch: 'full' },
+      { path: 'elements/media', component: MediaComponent, pathMatch: 'full' },
       { path: 'components/accordions', component: AccordionsComponent, pathMatch: 'full' }
     ]
   }

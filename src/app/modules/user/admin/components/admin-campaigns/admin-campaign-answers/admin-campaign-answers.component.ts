@@ -65,7 +65,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
               private _campaignFrontService: CampaignFrontService) {
 
     this._translateTitleService.setTitle('Answers | Campaign');
-    this._adminMode = this._authService.adminLevel > 2;
+    this._adminMode = this._authService.adminLevel > 2 || (this._authService.adminLevel > 0 && this._authService.isOperator);
 
     if (this._activatedRoute.snapshot.parent.data['campaign']) {
       this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];

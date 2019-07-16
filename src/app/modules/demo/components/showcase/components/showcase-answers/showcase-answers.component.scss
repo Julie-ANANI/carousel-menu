@@ -48,6 +48,18 @@
     .info-wrapper {
       margin-left: $unit-5;
       max-width: 73%;
+      white-space: nowrap;
+
+      h4 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
     }
 
     p {

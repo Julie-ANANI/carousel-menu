@@ -77,14 +77,21 @@ export class AdminDashboardComponent implements OnInit {
     }
 
     this.dashboardService.getOperators().subscribe((operators: any) => {
-      this.operators = operators.result.sort((a: User, b: User) => {
+      this.operators = operators.result
+        .filter((value: any) => {
+          return this.authService.adminLevel> 2 || (this.authService.user && this.authService.user.isOperator
+                                                    && value._id === this.authService.user.id);
+        })
+        .sort((a: User, b: User) => {
         return a.firstName > b.firstName ? 1 : -1;
       });
     });
 
-    this.dashboardService
-      .getOperatorData(this.operatorId)
-      .subscribe((operatorData: any) => this.operatorData = operatorData);
+    if(!this.operatorId && this.authService.adminLevel> 2) {
+      this.dashboardService
+        .getOperatorData(this.operatorId)
+        .subscribe((operatorData: any) => this.operatorData = operatorData);
+    }
 
     this.getPeriodStats();
 

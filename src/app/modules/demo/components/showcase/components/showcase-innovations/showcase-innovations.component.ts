@@ -35,7 +35,7 @@ export class ShowcaseInnovationsComponent {
           if (staticInnovations) {
             this._computeCards();
           } else {
-            this.topInnovationsChange.emit(response.result.slice(0, 9));
+            this.topInnovationsChange.emit(response.result.slice(0, 6));
           }
         }
       }, () => {
@@ -117,7 +117,7 @@ export class ShowcaseInnovationsComponent {
 
   public onClickApply(event: Event) {
     event.preventDefault();
-    const selectedInnovation = this._innovations.filter((i) => this._selectedInnovations[i._id]).slice(0, 9);
+    const selectedInnovation = this._innovations.filter((i) => this._selectedInnovations[i._id]);
     this.topInnovationsChange.emit(selectedInnovation);
     this._modalShow = false;
   }
