@@ -1,23 +1,19 @@
 @import "variables";
 @import "mixins";
 
-
 .form-group {
   margin-bottom: $unit-2;
 }
 
-
 fieldset {
   margin-bottom: $unit-4;
 }
-
 
 legend {
   font-size: $font-size-lg;
   font-weight: 500;
   margin-bottom: $unit-4;
 }
-
 
 // Form element: Label
 .form-label {
@@ -28,7 +24,6 @@ legend {
   font-size: $font-size-sm;
   padding: $unit-2 0;
 }
-
 
 // Form element: Input
 .form-input {

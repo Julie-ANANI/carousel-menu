@@ -13,6 +13,7 @@ import { ButtonComponent } from './elements/button/button.component';
 import { LabelComponent } from './elements/label/label.component';
 import { CodeComponent } from './elements/code/code.component';
 import { MediaComponent } from './elements/media/media.component';
+import { FormComponent } from './elements/form/form.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { MediaComponent } from './elements/media/media.component';
     AccordionsComponent,
     ButtonComponent,
     CodeComponent,
-    MediaComponent
+    MediaComponent,
+    FormComponent
   ],
 })
 
