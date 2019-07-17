@@ -7,6 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SharedFilterInputComponent {
   @Input() config: any;
+  @Input() size: Number = 15;
   @Output() configChange = new EventEmitter <any>();
   @Input() prop: string;
 
