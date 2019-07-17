@@ -181,140 +181,6 @@ textarea {
 
 }
 
-.form-checkbox, .form-radio {
-
-  &.is-inline-form {
-    display: inline-flex;
-    padding-top: $unit-1;
-    padding-bottom: $unit-1;
-  }
-
-  .form-icon {
-    background: $bg-color-light none;
-    height: $unit-4;
-    left: 0;
-    width: $unit-4;
-  }
-
-  input {
-
-    &:active + .form-icon {
-      background: $border-color;
-    }
-
-  }
-
-}
-
-.form-radio {
-
-  .form-icon {
-    border-radius: 50%;
-  }
-
-  input {
-
-    &:checked + .form-icon, &.active + .form-icon {
-
-      &::before {
-        background: $bg-color-light none;
-        border-radius: 50%;
-        content: "";
-        height: 4px;
-        left: 50%;
-        position: absolute;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 4px;
-      }
-    }
-
-  }
-
-}
-
-// Form element: Input hint
-.form-input-hint {
-  color: $form-input-color;
-  font-size: $font-size-xs;
-  padding: 0 0 $unit-2 0;
-
-  .has-success &, .is-success + & {
-    color: $form-success-color;
-  }
-
-  .has-error &, .is-error + & {
-    color: $form-alert-color;
-  }
-
-}
-
-
-// Form element: Error
-.form-error {
-  display: block;
-  color: $form-alert-color;
-  font-size: $font-size-xs;
-  padding: $unit-1 0 $unit-2 0;
-}
-
-
-
-
-
-
-
-
-
-
-.form-checkbox {
-
-  input {
-
-    &:checked + .form-icon {
-
-      &::before {
-        background-clip: padding-box;
-        border: $border-width-lg solid $light-color;
-        border-left-width: 0;
-        border-top-width: 0;
-        content: "";
-        height: 12px;
-        left: 50%;
-        margin-left: -4px;
-        margin-top: -8px;
-        position: absolute;
-        top: 50%;
-        transform: rotate(45deg);
-        width: 8px;
-      }
-    }
-
-    &:indeterminate + .form-icon {
-      background: $primary-color;
-      border-color: $primary-color;
-
-      &::before {
-        background: $bg-color-light;
-        content: "";
-        height: 2px;
-        left: 50%;
-        margin-left: -5px;
-        margin-top: -1px;
-        position: absolute;
-        top: 50%;
-        width: 10px;
-      }
-    }
-
-  }
-
-}
-
-
-
-
-
 // Form element: Switch
 .form-switch {
   padding-left: 2.5rem;
@@ -370,6 +236,148 @@ textarea {
 
   }
 }
+
+.form-checkbox, .form-radio {
+
+  &.is-inline-form {
+    display: inline-flex;
+    padding-top: $unit-1;
+    padding-bottom: $unit-1;
+  }
+
+  .form-icon {
+    background: $bg-color-light none;
+    height: $unit-4;
+    left: 0;
+    width: $unit-4;
+  }
+
+  input {
+
+    &:active + .form-icon {
+      background: $border-color;
+    }
+
+  }
+
+}
+
+.form-radio {
+
+  .form-icon {
+    border-radius: 50%;
+  }
+
+  input {
+
+    &:checked + .form-icon, &.active + .form-icon {
+
+      &::before {
+        background: $bg-color-light none;
+        border-radius: 50%;
+        content: "";
+        height: 4px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 4px;
+      }
+    }
+
+  }
+
+}
+
+.form-checkbox {
+
+  .form-icon {
+    border-radius: 3px;
+  }
+
+  input {
+
+    &:checked + .form-icon {
+
+      &::before {
+        background-clip: padding-box;
+        border: $border-width-lg solid $light-color;
+        border-left-width: 0;
+        border-top-width: 0;
+        content: "";
+        height: 12px;
+        left: 50%;
+        margin-left: -4px;
+        margin-top: -8px;
+        position: absolute;
+        top: 50%;
+        transform: rotate(45deg);
+        width: 8px;
+      }
+    }
+
+    &:indeterminate + .form-icon {
+      background: $primary-color;
+      border-color: $primary-color;
+
+      &::before {
+        background: $bg-color-light;
+        content: "";
+        height: 2px;
+        left: 50%;
+        margin-left: -5px;
+        margin-top: -1px;
+        position: absolute;
+        top: 50%;
+        width: 10px;
+      }
+    }
+
+  }
+
+}
+
+// Form element: Input hint
+.form-input-hint {
+  color: $form-input-color;
+  font-size: $font-size-xs;
+  padding: 0 0 $unit-2 0;
+
+  .has-success &, .is-success + & {
+    color: $form-success-color;
+  }
+
+  .has-error &, .is-error + & {
+    color: $form-alert-color;
+  }
+
+}
+
+
+// Form element: Error
+.form-error {
+  display: block;
+  color: $form-alert-color;
+  font-size: $font-size-xs;
+  padding: $unit-1 0 $unit-2 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Form suggestion
@@ -479,10 +487,15 @@ textarea {
       border-color: $form-success-color;
     }
 
-    &.disabled + .form-icon, &:disabled + .form-icon, &:not(:checked) + .form-icon {
+    &.disabled + .form-icon, &:disabled + .form-icon {
       background: $bg-color-light none;
       border-color: $form-border-color;
     }
+
+   /* &.disabled + .form-icon, &:disabled + .form-icon, &:not(:checked) + .form-icon {
+      background: $bg-color-light none;
+      border-color: $form-border-color;
+    }*/
 
   }
 

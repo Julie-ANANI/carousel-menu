@@ -108,9 +108,48 @@
 
   <section class="p-top-25">
 
+    <h2 class="title title-4">Switch</h2>
+
+    <div>
+      <div class="form-group">
+        <label class="form-switch">
+          <input type="checkbox">
+          <i class="form-icon"></i> Send me emails with news and tips
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-switch">
+          <input type="checkbox" checked>
+          <i class="form-icon"></i> Send me emails with news and tips
+        </label>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-label"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;<span class="name">/i</span>&gt;</span> Send me emails with news and tips
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-label"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;<span class="name">/i</span>&gt;</span> Send me emails with news and tips
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
     <h2 class="title title-4">Radio</h2>
 
-    <div class="col-4 col-xs-12">
+    <div>
       <div class="form-group">
         <label class="form-label">Gender</label>
         <label class="form-radio">
@@ -142,17 +181,100 @@
 
   </section>
 
-</div>
+  <section class="p-top-25">
 
-<!--
-<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
-<span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-label"</span></span>&gt;Full<span class="tag">&lt;/<span class="name">label</span>&gt;</span>
-<span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-radio is-full"</span></span>&gt;
-<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">checked</span>&gt;</span>
-<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> Male
-<span class="tag">&lt;/<span class="name">label</span>&gt;</span>
-<span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-radio is-full"</span></span>&gt;
-<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span>&gt;</span>
-<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> Female
-<span class="tag">&lt;/<span class="name">label</span>&gt;</span>
-<span class="tag">&lt;/<span class="name">div</span>&gt;</span>-->
+    <h2 class="title title-4">Checkbox</h2>
+
+    <div>
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input type="checkbox">
+          <i class="form-icon"></i> Remember me
+        </label>
+        <label class="form-checkbox">
+          <input type="checkbox" checked>
+          <i class="form-icon"></i> Remember me
+        </label>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-checkbox"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;<span class="name">/i</span>&gt;</span> Remember me
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-checkbox"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;<span class="name">/i</span>&gt;</span> Remember me
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+    <div class="p-top-25">
+
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input type="checkbox" id="select-all">
+          <i class="form-icon"></i> Select all
+        </label>
+      </div>
+
+      <div class="p-top-20">
+        <p class="text-md">You can change checkbox to <code>indeterminate</code> state by setting the indeterminate property of input checkboxes to <code>true</code>.
+          You can't make a checkbox indeterminate through HTML. There is no indeterminate attribute. It is a property of checkboxes though, which you can change via JavaScript.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Inline forms</h2>
+
+    <p class="text-md">You can add <code>is-inline-form</code> class with the <code>form-radio</code> or <code>form-checkbox</code> class to make them
+      inline in one row.</p>
+
+    <div class="p-top-20">
+      <div class="form-group">
+        <label class="form-radio is-inline-form">
+          <input type="radio" name="gender-male">
+          <i class="form-icon"></i> Male
+        </label>
+        <label class="form-radio is-inline-form">
+          <input type="radio" name="gender-female" checked>
+          <i class="form-icon"></i> Female
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-checkbox is-inline-form">
+          <input type="checkbox">
+          <i class="form-icon"></i> Remember me
+        </label>
+        <label class="form-checkbox is-inline-form">
+          <input type="checkbox" checked>
+          <i class="form-icon"></i> Remember me
+        </label>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+     <pre class="code" data-lang="HTML"><code>
+       <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-radio is-inline-form"</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-radio is-inline-form"</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+       <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+       <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-checkbox is-inline-form"</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-checkbox is-inline-form"</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+       <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+     </code></pre>
+    </div>
+
+  </section>
+
+</div>
