@@ -25,8 +25,7 @@
     z-index: 0;
   }
 
-  // Todo remove loading-lg
-  &.loading-lg, &.is-lg {
+  &.is-lg {
     min-height: $unit-10;
 
     &::after {
@@ -38,8 +37,7 @@
 
   }
 
-  // Todo remove loading-white
-  &.loading-white, &.is-white {
+  &.is-white {
 
     &::after {
       border-bottom-color: $light-color;

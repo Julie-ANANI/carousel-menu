@@ -54,7 +54,7 @@
             <div class="submit-wrapper text-center">
               <div class="login-button">
                 <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">
-                  <span *ngIf="displayLoading" class="loading loading-white"></span>
+                  <span *ngIf="displayLoading" class="loading is-white"></span>
                   {{ 'COMMON.BUTTON.CONTINUE' | translate }}
                 </button>
               </div>
@@ -73,7 +73,7 @@
             </div>
 
             <button class="btn btn-secondary gtm-signin-linkedin" (click)="onClickLinkedIn()">
-              <span *ngIf="displayLoadingLinkedIn" class="loading loading-white"></span>
+              <span *ngIf="displayLoadingLinkedIn" class="loading is-white"></span>
               <span *ngIf="!displayLoadingLinkedIn"><i class="fab fa-1x fa-linkedin-in"></i></span>
               {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
             </button>
