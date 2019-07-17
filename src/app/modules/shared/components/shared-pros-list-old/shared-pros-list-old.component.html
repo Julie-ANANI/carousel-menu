@@ -4,24 +4,24 @@
   <thead>
     <tr>
       <th></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'country'">{{ 'COMMON.LABEL.COUNTRY' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'firstName'" >{{ 'COMMON.LABEL.NAME' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'jobTitle'">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</app-shared-sort></th>
-      <th *ngIf="requestId"><app-shared-sort [(sortConfig)]="sortConfig" [property]="'company.name'">{{ 'COMMON.LABEL.COMPANY' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'email'">{{ 'COMMON.LABEL.EMAIL' | translate }}</app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'country'" label="COMMON.LABEL.COUNTRY"></app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'firstName'" label="COMMON.LABEL.NAME"></app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'jobTitle'" label="COMMON.LABEL.JOBTITLE"></app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'company.name'" label="COMMON.LABEL.COMPANY"></app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'email'" label="COMMON.LABEL.EMAIL"></app-shared-sort></th>
+      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'emailConfidence'" label="CAMPAIGNS.EMAIL_CONFIDENCE"></app-shared-sort></th>
     </tr>
     <tr>
       <th></th>
-      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="country"></sqFilter></th>
+      <th><sqFilter [size]=3 [config]="config" (configChange)="loadPros($event)" prop="country"></sqFilter></th>
       <th>
         <sqFilter [config]="config" (configChange)="loadPros($event)" prop="firstName"></sqFilter>
         <sqFilter [config]="config" (configChange)="loadPros($event)" prop="lastName"></sqFilter>
       </th>
       <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="jobTitle"></sqFilter></th>
-      <th *ngIf="requestId"><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company.name"></sqFilter></th>
+      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company.name"></sqFilter></th>
       <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="email"></sqFilter></th>
-      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="emailConfidence"></sqFilter></th>
+      <th><sqFilter [size]=3 [config]="config" (configChange)="loadPros($event)" prop="emailConfidence"></sqFilter></th>
     </tr>
   </thead>
   <tbody>
@@ -32,13 +32,10 @@
     <td>
       <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-link"></i></a>
       <i class="fa fa-list" (click)="showKeywords(pro._id)"></i>
-      <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
+      <span>{{ pro.firstName }} {{ pro.lastName }}</span>
     </td>
     <td>{{ pro.jobTitle }}</td>
-    <td>
-      <span *ngIf="requestId">{{ pro.company['name'] }}</span>
-      <span *ngIf="!requestId">{{ pro.company }}</span>
-    </td>
+    <td>{{ pro.company['name'] }}</td>
     <td>
       <span class="metas"><a [href]="'mailto:' + pro.email">{{ pro.email }}</a></span>
     </td>

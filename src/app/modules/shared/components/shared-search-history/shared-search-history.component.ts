@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import {Pagination} from '../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
+import { Config } from "../../../../models/config";
 
 @Component({
   selector: 'app-shared-search-history',
@@ -19,17 +20,15 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _requests: Array<any> = [];
   private _total = 0;
   private _googleQuota = 30000;
-  private _config: any = {
+  private _config: Config = {
     fields: 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: "10",
+    offset: "0",
+    search: "{}",
+    sort: "{created: -1}"
   };
 
-  private _paginationConfig: Pagination = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: Pagination = {limit: parseInt(this._config.limit), offset: parseInt(this._config.offset)};
 
   constructor(private _searchService: SearchService) {}
 
