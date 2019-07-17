@@ -255,7 +255,7 @@
                   <!-- if type is tags -->
                   <ng-container *ngSwitchCase="'TAG-LIST'">
                     <span class="tbody-td-tag d-flex">
-                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag label-rounded">
+                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag is-rounded">
                         {{ tag.label | multiling:userLang }}
                       </span>
                       <span *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">...</span>

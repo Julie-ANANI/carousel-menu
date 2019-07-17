@@ -32,7 +32,7 @@
   <!-- displaying tags -->
   <ng-container *ngIf="tags && tags.length > 0">
     <div class="flex-wrap d-flex">
-      <div *ngFor="let tag of tags" [title]="tag.description | multiling:userLang" class="label label-tag label-rounded">
+      <div *ngFor="let tag of tags" [title]="tag.description | multiling:userLang" class="label label-tag is-rounded">
         <i class="fas fa-tag label-left-icon"></i>
         <span class="label-text">{{ tag.label | multiling:userLang }}</span>
         <i (click)="onRemoveTag(tag)" *ngIf="editMode || isAdmin" class="fas fa-times label-cross-icon"></i>

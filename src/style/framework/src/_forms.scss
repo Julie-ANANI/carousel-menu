@@ -144,19 +144,13 @@ textarea {
 
 // Form element: Checkbox and Radio
 .form-checkbox, .form-radio, .form-switch {
-  display: inline-flex;
+  display: flex;
   line-height: $line-height-sm;
   font-weight: $font-weight-normal;
   font-size: 0.75rem;
   align-items: center;
-  padding:  $unit-1 1.25rem;
+  padding:  $layout-spacing 1.25rem;
   position: relative;
-
-  &.is-full {
-    display: flex;
-    padding-top: $layout-spacing;
-    padding-bottom: $layout-spacing;
-  }
 
   input {
     clip: rect(0, 0, 0, 0);
@@ -188,6 +182,12 @@ textarea {
 }
 
 .form-checkbox, .form-radio {
+
+  &.is-inline-form {
+    display: inline-flex;
+    padding-top: $unit-1;
+    padding-bottom: $unit-1;
+  }
 
   .form-icon {
     background: $bg-color-light none;
@@ -327,7 +327,6 @@ textarea {
     border-radius: 16px;
     height: 15px;
     left: 0;
-    top: 4px;
     width: 34px;
 
     &::before {
