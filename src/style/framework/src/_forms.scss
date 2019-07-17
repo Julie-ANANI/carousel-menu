@@ -1,23 +1,19 @@
 @import "variables";
 @import "mixins";
 
-
 .form-group {
-  margin-bottom: $unit-2;
+  margin-bottom: $layout-spacing;
 }
-
 
 fieldset {
   margin-bottom: $unit-4;
 }
-
 
 legend {
   font-size: $font-size-lg;
   font-weight: 500;
   margin-bottom: $unit-4;
 }
-
 
 // Form element: Label
 .form-label {
@@ -26,9 +22,8 @@ legend {
   color: $form-label-color;
   font-weight: $font-weight-medium;
   font-size: $font-size-sm;
-  padding: $unit-2 0;
+  padding: $layout-spacing 0;
 }
-
 
 // Form element: Input
 .form-input {
@@ -87,40 +82,21 @@ legend {
 
 }
 
-
 // Form element: Textarea
-textarea.form-input {
-  height: auto;
-  resize: none;
-  padding-right: $unit-10;
-}
+textarea {
 
+  &.form-input {
+    height: auto;
+    resize: none;
+    padding-right: $unit-10;
 
-// Form element: Input hint
-.form-input-hint {
-  color: $form-input-color;
-  font-size: $font-size-xs;
-  padding: 0 0 $unit-2 0;
+    &.is-resize {
+      resize: both;
+    }
 
-  .has-success &, .is-success + & {
-    color: $form-success-color;
-  }
-
-  .has-error &, .is-error + & {
-    color: $form-alert-color;
   }
 
 }
-
-
-// Form element: Error
-.form-error {
-  display: block;
-  color: $form-alert-color;
-  font-size: $font-size-xs;
-  padding: $unit-1 0 $unit-2 0;
-}
-
 
 // Form element: Select
 .form-select {
@@ -166,7 +142,6 @@ textarea.form-input {
 
 }
 
-
 // Form element: Checkbox and Radio
 .form-checkbox, .form-radio, .form-switch {
   display: inline-flex;
@@ -176,6 +151,12 @@ textarea.form-input {
   align-items: center;
   padding:  $unit-1 1.25rem;
   position: relative;
+
+  &.is-full {
+    display: flex;
+    padding-top: $layout-spacing;
+    padding-bottom: $layout-spacing;
+  }
 
   input {
     clip: rect(0, 0, 0, 0);
@@ -206,7 +187,6 @@ textarea.form-input {
 
 }
 
-
 .form-checkbox, .form-radio {
 
   .form-icon {
@@ -225,6 +205,66 @@ textarea.form-input {
   }
 
 }
+
+.form-radio {
+
+  .form-icon {
+    border-radius: 50%;
+  }
+
+  input {
+
+    &:checked + .form-icon, &.active + .form-icon {
+
+      &::before {
+        background: $bg-color-light none;
+        border-radius: 50%;
+        content: "";
+        height: 4px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 4px;
+      }
+    }
+
+  }
+
+}
+
+// Form element: Input hint
+.form-input-hint {
+  color: $form-input-color;
+  font-size: $font-size-xs;
+  padding: 0 0 $unit-2 0;
+
+  .has-success &, .is-success + & {
+    color: $form-success-color;
+  }
+
+  .has-error &, .is-error + & {
+    color: $form-alert-color;
+  }
+
+}
+
+
+// Form element: Error
+.form-error {
+  display: block;
+  color: $form-alert-color;
+  font-size: $font-size-xs;
+  padding: $unit-1 0 $unit-2 0;
+}
+
+
+
+
+
+
+
+
 
 
 .form-checkbox {
@@ -272,32 +312,7 @@ textarea.form-input {
 }
 
 
-.form-radio {
 
-  .form-icon {
-    border-radius: 50%;
-  }
-
-  input {
-
-    &:checked + .form-icon, &.active + .form-icon {
-
-      &::before {
-        background: $bg-color-light none;
-        border-radius: 50%;
-        content: "";
-        height: 4px;
-        left: 50%;
-        position: absolute;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 4px;
-      }
-    }
-
-  }
-
-}
 
 
 // Form element: Switch

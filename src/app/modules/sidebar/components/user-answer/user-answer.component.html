@@ -3,7 +3,7 @@
 
     <!-- section class mail REJECTED_GMAIL -->
     <ng-container *ngIf="mailType">
-      <span class="label label-draft">{{mailType}}</span>
+      <span class="label is-draft">{{mailType}}</span>
     </ng-container>
 
     <div class="column col-xs-12 col-11 col-mx-auto">
@@ -184,7 +184,7 @@
         <!-- section autoTags -->
         <ng-container *ngIf="autoTags?.length > 0">
           <div class="tags-wrapper">
-            <div *ngFor="let tag of autoTags" class="label label-autoTags label-rounded">
+            <div *ngFor="let tag of autoTags" class="label is-tag label-rounded">
               {{ tag }}
             </div>
           </div>
@@ -235,7 +235,7 @@
 
           <!-- to reject -->
           <div class="status-rejected">
-            <div class="label label-alert"><span>{{ 'ANSWER.STATUS.REJECTED' | translate }}</span></div>
+            <div class="label is-danger"><span>{{ 'ANSWER.STATUS.REJECTED' | translate }}</span></div>
             <button class="btn btn-radio rejected" [ngClass]="{ 'active': modalAnswer.status === 'REJECTED' }" (click)="updateStatus($event, 'REJECTED')">
               <span>•</span>
             </button>
@@ -243,7 +243,7 @@
 
           <!-- submitted -->
           <div class="status-submitted">
-            <div class="label label-progress"><span>{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span></div>
+            <div class="label is-progress"><span>{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span></div>
             <button class="btn btn-radio submitted" [ngClass]="{ 'active': modalAnswer.status === 'SUBMITTED' }" (click)="updateStatus($event, 'SUBMITTED')">
               <span>•</span>
             </button>
@@ -251,7 +251,7 @@
 
           <!-- validated -->
           <div class="status-validated">
-            <div class="label label-success"><span>{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span></div>
+            <div class="label is-success"><span>{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span></div>
             <button
               class="btn btn-radio validated"
               [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
@@ -284,7 +284,7 @@
       <ng-container *ngIf="modeAdmin && modalAnswer.status === 'REJECTED_GMAIL'">
         <div class="status-gmail">
 
-          <div class="label label-alert">
+          <div class="label is-danger">
             <span>{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
           </div>
 

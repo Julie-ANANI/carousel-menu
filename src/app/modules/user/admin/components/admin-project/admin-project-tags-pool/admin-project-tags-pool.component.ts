@@ -112,8 +112,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
         {_attrs: ['type'], _name: 'Type', _type: 'TEXT'},
         {_attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES',
           _choices: [
-            {_name: 'To Tag', _class: 'label label-alert'},
-            {_name: 'Tagged', _class: 'label label-success'}
+            {_name: 'To Tag', _class: 'label is-danger'},
+            {_name: 'Tagged', _class: 'label is-success'}
             ]
         }
       ],
