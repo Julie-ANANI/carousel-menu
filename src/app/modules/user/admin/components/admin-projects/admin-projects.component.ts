@@ -83,10 +83,10 @@ export class AdminProjectsComponent implements OnInit {
         {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true },
         {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true,
           _choices: [
-            {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
-            {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label label-draft'},
-            {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label label-progress'},
-            {_name: 'DONE', _alias: 'Done', _class: 'label label-success'},
+            {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+            {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
+            {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label is-progress'},
+            {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
           ]}
       ]
     };

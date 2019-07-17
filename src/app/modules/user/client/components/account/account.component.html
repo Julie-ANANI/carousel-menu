@@ -27,11 +27,11 @@
 
         <!-- Label Ambassador & linkedIn-->
         <ng-container *ngIf="userProvider === 'hubspot'">
-          <div class="label label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</div>
+          <div class="label is-draft">{{ 'COMMON.AMBASSADOR' | translate }}</div>
         </ng-container>
 
         <ng-container *ngIf="userProvider === 'external'">
-          <div class="label label-edit">LinkedIn</div>
+          <div class="label is-secondary">LinkedIn</div>
         </ng-container>
         <!-- /Label Ambassador & linkedIn -->
 
