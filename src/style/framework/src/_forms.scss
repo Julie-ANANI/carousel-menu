@@ -52,9 +52,10 @@ legend {
     color: $form-placeholder-color;
   }
 
-  &.ng-touched.ng-dirty.ng-invalid {
+  // Todo remove this
+  /*&.ng-touched.ng-dirty.ng-invalid {
     border-color: $form-alert-color;
-  }
+  }*/
 
   &.input-inline {
     display: inline-block;
@@ -65,19 +66,6 @@ legend {
   // Input types
   &[type="file"] {
     height: auto;
-  }
-
-  &.input-sm {
-    max-width: $control-width-sm;
-  }
-
-  &.input-md {
-    max-width: $control-width-md;
-  }
-
-  &.input-height-md {
-    height: 2rem;
-    font-size: 0.65rem;
   }
 
 }
@@ -142,6 +130,22 @@ textarea {
 
 }
 
+.form-input, .form-select {
+
+  &.is-xs {
+    padding: $unit-1 $layout-spacing;
+    height: auto;
+    font-size: $font-size-xs;
+  }
+
+  &.is-sm {
+    height: 2rem;
+    font-size: 0.65rem;
+  }
+
+}
+
+
 // Form element: Checkbox and Radio
 .form-checkbox, .form-radio, .form-switch {
   display: flex;
@@ -159,16 +163,6 @@ textarea {
     overflow: hidden;
     position: absolute;
     width: 1px;
-
-    &:focus + .form-icon {
-      border-color: $primary-color;
-    }
-
-    &:checked + .form-icon {
-      background: $primary-color none;
-      border-color: $primary-color;
-    }
-
   }
 
   .form-icon {
@@ -213,23 +207,14 @@ textarea {
 
   input {
 
-    &:focus + .form-icon {
-      border-color: $form-border-color;
-      background: $bg-color-light none;
-    }
-
-    &:checked + .form-icon {
+    &:checked + .form-icon, &.active + .form-icon {
+      border-color: rgba(46,204,113,0.45);
+      background: rgba(46,204,113,0.45) none;
 
       &::before {
         left: 14px;
-      }
-
-    }
-
-    &:active + .form-icon {
-
-      &::before {
-        // background: $bg-color;
+        border-color: $success-color;
+        background: $success-color none;
       }
 
     }
@@ -239,7 +224,7 @@ textarea {
 
 .form-checkbox, .form-radio {
 
-  &.is-inline-form {
+  &.is-inline {
     display: inline-flex;
     padding-top: $unit-1;
     padding-bottom: $unit-1;
@@ -254,8 +239,9 @@ textarea {
 
   input {
 
-    &:active + .form-icon {
-      background: $border-color;
+    &:checked  + .form-icon, &.active + .form-icon {
+      background: $form-success-color none;
+      border-color: $form-success-color;
     }
 
   }
@@ -337,11 +323,142 @@ textarea {
 
 }
 
-// Form element: Input hint
+.has-icon-left, .has-icon-right {
+  position: relative;
+
+  .form-input {
+
+    ~.icon {
+      font-size: 0.95rem;
+    }
+
+   &:focus {
+     border-color: $form-primary-color;
+
+     ~.icon {
+       color: $text-background-color;
+     }
+
+   }
+
+    &.is-sm, &.is-xs {
+
+      ~.icon {
+        font-size: $font-icon-lg;
+      }
+
+    }
+
+  }
+
+
+  .icon {
+    @include flex-centered();
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    height: 100%;
+    width: 1.75rem;
+    margin: 0;
+
+    &.is-left {
+      left: 0;
+    }
+
+    &.is-right {
+      right: 0;
+    }
+
+  }
+
+}
+
+.has-icon-left {
+
+  .form-input {
+    padding-left: 1.75rem;
+  }
+
+}
+
+.has-icon-right {
+
+  .form-input {
+    padding-right: 1.75rem;
+  }
+
+}
+
+// Form suggestion Todo remove this.
+.input-suggestion {
+  display: flex;
+  flex-direction: column;
+  box-shadow: $box-shadow-4;
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  z-index: 2;
+  background-color: $bg-color-light;
+  border-radius: $border-radius;
+  overflow: auto;
+  max-height: 350px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  li {
+    @include control-transition();
+    padding: $layout-spacing;
+    font-size: $font-size-sm;
+    margin-top: $unit-1;
+    color: $text-primary-dark-color;
+
+    &:hover, &.is-focused {
+      background:  $bg-menu-item-color;
+      border-color: $bg-menu-item-color;
+      cursor: pointer;
+    }
+
+    img {
+      width: 22px;
+      height: 22px;
+      margin-right: $unit-2;
+      vertical-align: middle;
+    }
+
+  }
+
+}
+
+// Form inline group
+.input-group {
+  display: inline-flex;
+  width: 100%;
+
+  .form-group {
+    width: 100%;
+    padding-left: $layout-spacing;
+    padding-right: $layout-spacing;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .input-suggestion {
+    left: $layout-spacing;
+    right: $layout-spacing;
+  }
+
+}
+
+// Form element: Input hint && validation styles
 .form-input-hint {
   color: $form-input-color;
   font-size: $font-size-xs;
-  padding: 0 0 $unit-2 0;
+  padding: $unit-1 0 $layout-spacing;
+  margin: 0;
 
   .has-success &, .is-success + & {
     color: $form-success-color;
@@ -353,8 +470,117 @@ textarea {
 
 }
 
+.form-input, .form-select {
 
-// Form element: Error
+  .has-success &, &.is-success {
+
+    &.form-input, &.ng-touched.ng-valid, &.ng-touched.ng-valid:focus, &.form-select {
+      border-color: $form-success-color;
+    }
+
+  }
+
+  .has-error &, &.is-error  {
+
+    &.form-input, &.ng-touched.ng-invalid, &.ng-touched.ng-invalid:focus, &.form-select {
+      border-color: $form-alert-color;
+    }
+
+  }
+
+}
+
+.form-checkbox, .form-radio {
+
+  .has-error &, &.is-error {
+
+    .form-icon {
+      border-color: $form-alert-color;
+    }
+
+    input {
+
+      &:checked + .form-icon {
+        background: $form-alert-color none;
+        border-color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+}
+
+.form-checkbox {
+
+  .has-error &, &.is-error {
+
+    input {
+
+      &:indeterminate + .form-icon {
+        background: $form-alert-color none;
+        border-color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+}
+
+.form-switch {
+
+  .has-error &, &.is-error {
+
+    .form-icon {
+      background: $bg-color-light none;
+      border-color: $form-alert-color;
+
+      &::before {
+        border-color: $form-alert-color;
+        background: $form-alert-color none;
+      }
+
+    }
+
+    input {
+
+      &:checked + .form-icon {
+        background: #f5afaf none;
+        border-color: $form-alert-color;
+
+        &::before {
+          border-color: $form-alert-color;
+          background: $form-alert-color none;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+// validation based on :placeholder-shown (Edge doesn't support it yet)
+.form-input {
+
+  &:not(:placeholder-shown) {
+
+    &:invalid, &.ng-touched.ng-invalid {
+      border-color: $form-alert-color;
+
+      & + .form-input-hint {
+        color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+}
+
+// Form element: Error Todo remove this
 .form-error {
   display: block;
   color: $form-alert-color;
@@ -380,180 +606,19 @@ textarea {
 
 
 
-// Form suggestion
-.input-suggestion {
-  display: flex;
-  flex-direction: column;
-  box-shadow: $box-shadow-4;
-  margin-top: 0;
-  margin-left: 0;
-  margin-bottom: 0;
-  list-style: none;
-  z-index: 2;
-  background-color: $bg-color-light;
-  border-radius: $border-radius;
-  overflow: auto;
-  max-height: 350px;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-
-  li {
-    @include control-transition();
-    padding: $unit-2;
-    font-size: $font-size-sm;
-    margin-top: $unit-1;
-    color: $text-primary-dark-color;
-
-    &:hover, &.is-focused {
-      background:  $bg-menu-item-color;
-      border-color: $bg-menu-item-color;
-      cursor: pointer;
-    }
-
-    img {
-      width: 22px;
-      height: 22px;
-      margin-right: $unit-2;
-      vertical-align: middle;
-    }
-
-  }
-
-}
-
-
-// Form inline group
-.input-group {
-
-  .form-group {
-    padding-left: $unit-2;
-    padding-right: $unit-2;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .input-suggestion {
-    left: $unit-2;
-    right: $unit-2;
-  }
-
-  &.inline {
-    display: inline-flex;
-    width: 100%;
-  }
-
-}
-
-
-// For validation states
-.form-input, .form-select {
-
-  .has-success &, &.is-success {
-
-    &.ng-touched.ng-valid, &.ng-touched.ng-valid:focus {
-      border-color: $form-success-color;
-    }
-
-  }
-
-  .has-error &, &.is-error {
-
-    &.ng-touched.ng-invalid, &.ng-touched.ng-invalid:focus {
-      border-color: $form-alert-color;
-    }
-
-  }
-
-}
-
-
-.form-checkbox, .form-radio {
-
-  .has-error &, &.is-error {
-
-    .form-icon {
-     border-color: $form-alert-color;
-    }
-
-  }
-
-  input {
-
-    &:checked  + .form-icon, &:active + .form-icon, &.active + .form-icon  {
-      background: $form-success-color none;
-      border-color: $form-success-color;
-    }
-
-    &.disabled + .form-icon, &:disabled + .form-icon {
-      background: $bg-color-light none;
-      border-color: $form-border-color;
-    }
-
-   /* &.disabled + .form-icon, &:disabled + .form-icon, &:not(:checked) + .form-icon {
-      background: $bg-color-light none;
-      border-color: $form-border-color;
-    }*/
-
-  }
 
 
 
-}
 
 
-.form-switch {
-
-  .has-error &, &.is-error {
-
-    .form-icon {
-      border-color: $form-alert-color;
-    }
-
-  }
-
-  input {
-
-    &:active + .form-icon {
-      border-color: $form-border-color;
-      background-color: $bg-color-light;
-    }
-
-    &:checked  + .form-icon  {
-      border-color: rgba(46,204,113,0.45);
-      background: rgba(46,204,113,0.45) none;
-
-      &::before {
-        border-color: $success-color;
-        background: $success-color none;
-      }
-
-    }
-
-  }
-
-}
 
 
-// validation based on :placeholder-shown (Edge doesn't support it yet)
-.form-input {
 
-  &:not(:placeholder-shown) {
 
-    &:invalid, &.ng-touched.ng-invalid {
-      border-color: $form-alert-color;
 
-      & + .form-input-hint {
-        color: $form-alert-color;
-      }
 
-    }
 
-  }
 
-}
 
 
 
@@ -606,11 +671,6 @@ input {
 
   }
 
-}
-
-.form-input-sm, .form-select-sm {
-  height: 40px;
-  font-size: 0.65rem;
 }
 
 
