@@ -31,7 +31,7 @@
     <div class="section-light-pad">
       <app-message-template-1 [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
         <div class="flex-centered">
-          <div class="loading loading-white" [ngStyle]="{ 'margin-right': '16px' }"></div>
+          <div class="loading is-white" [ngStyle]="{ 'margin-right': '16px' }"></div>
           <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
         </div>
       </app-message-template-1>
@@ -60,7 +60,7 @@
       <!-- loading style -->
       <ng-container *ngIf="isLoadingData">
         <div class="absolute table-loading-wrapper flex-centered">
-          <div class="loading loading-lg"></div>
+          <div class="loading is-lg"></div>
         </div>
       </ng-container>
 

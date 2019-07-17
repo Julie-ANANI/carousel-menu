@@ -94,8 +94,8 @@ export class AdminEditWorkflowComponent {
 
     if (this._inCampaign) {
       columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _choices: [
-          {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label label-draft'},
-          {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label label-success'},
+          {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label is-draft'},
+          {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label is-success'},
         ]});
     }
 

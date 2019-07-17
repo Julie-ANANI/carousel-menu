@@ -403,15 +403,15 @@ export class AdminCampaignBatchComponent implements OnInit {
       }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label label-success'}, {_attr: 'OpenedPred', _class: 'label label-meta'} ],
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label is-success'}, {_attr: 'OpenedPred', _class: 'label is-info'} ],
       }, {
         _attrs: ['ClickedPred', 'ClickedReel'],
         _name: 'Clicked',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label label-success'}, {_attr: 'ClickedPred', _class: 'label label-meta'} ],
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label is-success'}, {_attr: 'ClickedPred', _class: 'label is-info'} ],
       }, {
         _attrs: ['InsightsPred', 'InsightsReel'],
         _name: 'Insights',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label label-success'} , {_attr: 'InsightsPred', _class: 'label label-meta'}],
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label is-success'} , {_attr: 'InsightsPred', _class: 'label is-info'}],
       }, {
         _attrs: ['Date'],
         _name: 'Date',
@@ -424,7 +424,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
         _choices: [
           {_name: 'Sent', _class: 'label label-success'},
-          {_name: 'Planned',  _class: 'label label-progress'},
+          {_name: 'Planned',  _class: 'label is-progress'},
         ]}]
     };
 

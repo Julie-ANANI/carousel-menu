@@ -70,23 +70,23 @@ export class AdminCommunityProjectsComponent implements OnInit {
         {_attrs: ['innovation.name'], _name: 'TABLE.HEADING.PROJECTS', _type: 'TEXT'},
         {_attrs: ['nbAmbassadors', 'nbRecAmbassadors'], _name: 'Ambassador count / Suggested', _type: 'MULTI-LABEL',
           _multiLabels: [
-            {_attr: 'nbAmbassadors', _class: 'label label-success' },
-            {_attr: 'nbRecAmbassadors', _class: 'label label-draft'}
+            {_attr: 'nbAmbassadors', _class: 'label is-success' },
+            {_attr: 'nbRecAmbassadors', _class: 'label is-draft'}
           ],
         },
         {_attrs: ['nbAnswers', 'nbAnswersFromAmbassadors'], _name: 'Feedback / From Ambassador', _type: 'MULTI-LABEL',
           _multiLabels: [
-            {_attr: 'nbAnswers', _class: 'label label-success'},
-            {_attr: 'nbAnswersFromAmbassadors', _class: 'label label-draft'}
+            {_attr: 'nbAnswers', _class: 'label is-success'},
+            {_attr: 'nbAnswersFromAmbassadors', _class: 'label is-draft'}
             ],
         },
         {_attrs: ['innovation.created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
         {_attrs: ['innovation.status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
           _choices: [
-            {_name: 'EDITING', _alias: 'Editing', _class: 'label label-edit'},
-            {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label label-draft'},
-            {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label label-progress'},
-            {_name: 'DONE', _alias: 'Done', _class: 'label label-success'},
+            {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+            {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
+            {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label is-progress'},
+            {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
           ]
         }
       ]
