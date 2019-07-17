@@ -49,6 +49,10 @@ export class ShowcaseInnovationsComponent {
   private _topInnovations: Array<Innovation> = [];
   @Input() set topInnovations(value: Array<Innovation>) {
     this._topInnovations = value;
+    this._selectedInnovations = this._topInnovations.reduce((acc, val) => {
+        acc[val._id] = true;
+        return acc;
+      }, {} as {[innoId: string]: true});
     this._computeCards();
   }
   @Output() topInnovationsChange: EventEmitter<Array<Innovation>> = new EventEmitter<Array<Innovation>>();

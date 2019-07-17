@@ -17,8 +17,7 @@
 
   <!-- section client logos -->
   <div class="d-flex text-center s-c-card-wrapper flex-wrap">
-    <ng-container *ngFor="let slide of slides">
-      <div *ngFor="let client of slide" class="s-c-card-content animate-zoomIn">
+      <div *ngFor="let client of topClients" class="s-c-card-content animate-zoomIn">
 
         <ng-container *ngIf="client.logo">
           <div [attr.data-tooltip]="client.name" class="tooltip">
@@ -33,7 +32,6 @@
         </ng-container>
 
       </div>
-    </ng-container>
   </div>
   <!-- /section client logos -->
 
@@ -42,9 +40,9 @@
 <!-- modal to select clients -->
 <app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
 
-  <div class="section-card d-flex text-center">
+  <div class="section-card columns text-center">
     <ng-container *ngFor="let client of totalClients">
-      <div class="card flex-centered modal-card badge badge-save" (click)="onChangeClient($event, client)" [ngClass]="{ 'active': selectedClients[client.name] }">
+      <div class="card modal-card badge badge-save" (click)="onChangeClient($event, client)" [ngClass]="{ 'active': selectedClients[client.name] }">
 
         <i class="fas fa-check-circle"></i>
 

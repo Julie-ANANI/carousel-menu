@@ -207,8 +207,10 @@ export class TableComponent implements OnInit {
   private _columnActive(column: Column): boolean {
     let sortKey;
 
-    for (const key in JSON.parse(JSON.stringify(this._config.sort))) {
-      sortKey = key;
+    if (typeof this._config.sort === 'string') {
+      for (const key in JSON.parse(this._config.sort)) {
+        sortKey = key;
+      }
     }
 
     return this.getAttrs(column).includes(sortKey);
@@ -783,6 +785,12 @@ export class TableComponent implements OnInit {
 
   get filteredContent(): Array<any> {
     return this._filteredContent;
+  }
+
+  get visibleColumns(): Array<Column> {
+    return this._table._columns.filter(col => {
+      return !col._isHidden;
+    })
   }
 
 }

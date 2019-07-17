@@ -31,11 +31,10 @@
   }
 
   .s-c-card-wrapper {
-    flex-direction: column;
     padding-top: $unit-5;
 
     .s-c-card-content {
-      margin-bottom: $unit-5;
+      margin: $unit-3;
 
       img {
         height: 50px;
@@ -50,17 +49,8 @@
 
   }
 
-}
-
-
-@media (max-width: $size-xl) {
-
-  #showcase-clients {
-
-    .s-c-card-wrapper {
-      flex-direction: row;
-    }
-
+  .modal-card {
+    margin: 5px;
   }
 
 }
