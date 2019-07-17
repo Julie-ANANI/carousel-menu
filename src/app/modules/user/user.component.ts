@@ -32,6 +32,7 @@ export class UserComponent implements OnInit {
         if (event instanceof NavigationStart) {
           this._displayLoader = true;
         } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+          this._displayLoader = false;
           this._adminSide = this._location.path().slice(5, 11) === '/admin';
         }
       });

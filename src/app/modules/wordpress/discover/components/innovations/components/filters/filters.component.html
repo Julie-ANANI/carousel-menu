@@ -5,8 +5,8 @@
   <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
     <div
       *ngFor="let tag of highLightTags"
-      [ngClass]="{ 'label-primary': checkFilter(tag._id)}"
-      class="label label-draft label-rounded c-hand animate-tag">
+      [ngClass]="{ 'is-primary': checkFilter(tag._id)}"
+      class="label is-draft is-rounded c-hand animate-tag">
       <label class="c-hand">
         <input
           (change)="toggleFilter($event, tag)"
@@ -30,8 +30,8 @@
     <div class="d-flex sector-wrapper">
       <div
         *ngFor="let tag of suggestedTags"
-        [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }"
-        class="label label-draft label-rounded c-hand animate-appear">
+        [ngClass]="{ 'is-primary': checkSimilarFilter(tag._id) }"
+        class="label is-draft is-rounded c-hand animate-appear">
         <label class="c-hand">
           <input
             (change)="toggleSimilarFilter($event, tag)"

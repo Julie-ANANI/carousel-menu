@@ -214,8 +214,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       }, {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
         _choices: [
-          {_name: 'Sent', _class: 'label label-progress'},
-          {_name: 'Planned',  _class: 'label label-success'},
+          {_name: 'Sent', _class: 'label is-progress'},
+          {_name: 'Planned',  _class: 'label is-success'},
         ]}]
     };
   }

@@ -40,7 +40,7 @@ export class ListConfigurations {
         {_attrs: ['ambassador.industry'], _name: 'TABLE.HEADING.INDUSTRY', _type: 'TEXT'},
         {_attrs: ['self'], _name: 'To project', _type: 'MULTI-CHOICES',
           _choices: [
-            {_name: 'true', _alias: 'Added', _class: 'label label-success'},
+            {_name: 'true', _alias: 'Added', _class: 'label is-success'},
             {_name: 'false', _alias: '--'}]
         }]
     };

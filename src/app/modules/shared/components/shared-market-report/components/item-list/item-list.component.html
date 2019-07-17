@@ -2,7 +2,7 @@
   <div *ngFor="let item of listItems; let i = index;" class="card">
     <div class="card-body flex-centered text-center relative">
 
-      <div *ngIf="item.count > 1" class="label label-meta">
+      <div *ngIf="item.count > 1" class="label is-info">
         <span>{{ item.count }}x</span>
       </div>
 
