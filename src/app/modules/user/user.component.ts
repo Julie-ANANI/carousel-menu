@@ -26,21 +26,22 @@ export class UserComponent implements OnInit {
               private _loaderService: LoaderService,
               private _router: Router) {
 
-   if (isPlatformBrowser(this._platformId)) {
-     this._router.events.subscribe((event) => {
-       if (event instanceof NavigationStart) {
-         this._displayLoader = true;
-       } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-         this._adminSide = this._location.path().slice(5, 11) === '/admin';
-       }
-     });
-   }
+    if (isPlatformBrowser(this._platformId)) {
 
-    this._loaderService.isLoading$.subscribe((loading: boolean) => {
-      setTimeout(() => {
-        this._displayLoader = loading;
-      })
-    });
+      this._router.events.subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this._displayLoader = true;
+        } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+          this._adminSide = this._location.path().slice(5, 11) === '/admin';
+        }
+      });
+
+      this._loaderService.isLoading$.subscribe((loading: boolean) => {
+        setTimeout(() => {
+          this._displayLoader = loading;
+        })
+      });
+    }
 
   }
 
