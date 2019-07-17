@@ -65,7 +65,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
               private _campaignFrontService: CampaignFrontService) {
 
     this._translateTitleService.setTitle('Answers | Campaign');
-    this._adminMode = this._authService.adminLevel > 2;
+    this._adminMode = this._authService.adminLevel > 2 || (this._authService.adminLevel > 0 && this._authService.isOperator);
 
     if (this._activatedRoute.snapshot.parent.data['campaign']) {
       this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
@@ -144,13 +144,13 @@ export class AdminCampaignAnswersComponent implements OnInit {
         {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
         {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
           _choices: [
-            {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label label-success'},
-            {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label label-success'},
-            {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label label-progress'},
-            {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label label-alert'},
-            {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label label-alert'},
-            {_name: 'VALIDATED_UMIBOT', _alias: 'TABLE.STATUS.VALIDATED_UMIBOT', _class: 'label label-progress'},
-            {_name: 'REJECTED_UMIBOT', _alias: 'TABLE.STATUS.REJECTED_UMIBOT', _class: 'label label-progress'}
+            {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label is-success'},
+            {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label is-success'},
+            {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label is-progress'},
+            {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label is-danger'},
+            {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label is-danger'},
+            {_name: 'VALIDATED_UMIBOT', _alias: 'TABLE.STATUS.VALIDATED_UMIBOT', _class: 'label is-progress'},
+            {_name: 'REJECTED_UMIBOT', _alias: 'TABLE.STATUS.REJECTED_UMIBOT', _class: 'label is-progress'}
           ]
         },
       ]

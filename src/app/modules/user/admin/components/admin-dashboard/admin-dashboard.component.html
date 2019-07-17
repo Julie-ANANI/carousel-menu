@@ -7,7 +7,7 @@
     </div>
 
     <!-- Loading finished -->
-    <ng-container *ngIf="adminLevel > 2 && !spinnerDisplay">
+    <ng-container *ngIf="adminLevel > 0 && !spinnerDisplay">
 
       <!-- Section operator -->
       <div class="section-operator">
@@ -52,9 +52,9 @@
           <div class="navigate-wrapper">
             <button type="button" class="btn ghost-edit btn-xs" (click)="onClickLast()">Last Week</button>
             <div class="label-wrapper">
-              <div class="label label-success">First mail</div>
-              <div class="label label-draft">Second mail</div>
-              <div class="label label-meta">Third mail</div>
+              <div class="label is-success">First mail</div>
+              <div class="label is-draft">Second mail</div>
+              <div class="label is-info">Third mail</div>
             </div>
             <button type="button" class="btn ghost-edit btn-xs" (click)="onClickNext()">Next Week</button>
           </div>
@@ -71,19 +71,19 @@
                     <div class="batch-body">
 
                       <ng-container *ngIf="getState(batches) === 0">
-                        <div class="label label-success" (click)="showPreview($event, batches)">
+                        <div class="label is-success" (click)="showPreview($event, batches)">
                           {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
 
                       <ng-container *ngIf="getState(batches) === 1">
-                        <div class="label label-draft" (click)="showPreview($event, batches)">
+                        <div class="label is-draft" (click)="showPreview($event, batches)">
                           {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
 
                       <ng-container *ngIf="getState(batches) === 2">
-                        <div class="label label-meta" (click)="showPreview($event, batches)">
+                        <div class="label is-info" (click)="showPreview($event, batches)">
                           {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
@@ -104,19 +104,19 @@
                                 <div *ngIf="index3 > 0" class="batch-body">
 
                                   <ng-container *ngIf="getState(batchesOver) === 0">
-                                    <div class="label label-success" (click)="showPreview($event, batches)">
+                                    <div class="label is-success" (click)="showPreview($event, batches)">
                                       {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                                     </div>
                                   </ng-container>
 
                                   <ng-container *ngIf="getState(batchesOver) === 1">
-                                    <div class="label label-draft" (click)="showPreview($event, batches)">
+                                    <div class="label is-draft" (click)="showPreview($event, batches)">
                                       {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                                     </div>
                                   </ng-container>
 
                                   <ng-container *ngIf="getState(batchesOver) === 2">
-                                    <div class="label label-meta" (click)="showPreview($event, batches)">
+                                    <div class="label is-info" (click)="showPreview($event, batches)">
                                       {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                                     </div>
                                   </ng-container>

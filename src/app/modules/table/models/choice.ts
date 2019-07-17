@@ -5,4 +5,4 @@ export interface Choice {
   readonly _url?: string;
 }
 
-export type labelClass = 'label label-progress' | 'label label-success' | 'label label-alert' | 'label label-edit' | 'label label-draft' | '';
+export type labelClass = 'label is-progress' | 'label is-success' | 'label is-danger' | 'label is-secondary' | 'label is-draft' | '';

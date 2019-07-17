@@ -22,8 +22,6 @@ export const SHOWCASE = {
 
   'CLIENTS_TITLE': 'Clients',
 
-  'CLIENTS': 'Some of the companies that tested their market',
-
   'SECTORS_MODAL': {
     'TITLE': 'Choose sectors to create the showcase'
   },
@@ -38,10 +36,6 @@ export const SHOWCASE = {
     'EDIT_INNOVATIONS': 'Click to select different innovations.',
     'EDIT_CLIENTS': 'Click to select different clients.'
   },
-
-  'MAX_SELECT_ANSWERS': 'You can only select 6 answers.',
-
-  'MAX_SELECT_INNOVATIONS': 'You can only select 9 innovations.',
 
   'NAME_PLACEHOLDER': 'Name',
 

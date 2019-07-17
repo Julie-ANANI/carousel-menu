@@ -3,7 +3,7 @@
 
   <!-- top profile -->
   <ng-container *ngIf="answer && answer.profileQuality === 2">
-    <div class="label label-meta">
+    <div class="label is-info">
       <span>Top Profile</span>
     </div>
   </ng-container>
@@ -54,7 +54,7 @@
 
   <!-- tag -->
   <div *ngIf="tags && tags.length > 0" class="tag-wrapper">
-    <div *ngFor="let tag of tags" class="label label-tag label-rounded" [title]="tag.description | multiling:userLang">
+    <div *ngFor="let tag of tags" class="label label-tag is-rounded" [title]="tag.description | multiling:userLang">
       <i class="fas fa-tag"></i><span>{{ tag.label | multiling:userLang }}</span>
     </div>
   </div>

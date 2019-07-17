@@ -80,7 +80,9 @@ export class InnovationsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
         this._totalInnovations = response.result;
-        this._applyInnoRecommendation();
+        if (this._recommendedInnovationId) {
+          this._applyInnoRecommendation();
+        }
         this._getLatestInnovations();
         this._getTrendingInnovations();
         this._getAllSectorTags();

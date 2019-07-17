@@ -31,7 +31,7 @@
     <div class="section-light-pad">
       <app-message-template-1 [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
         <div class="flex-centered">
-          <div class="loading loading-white" [ngStyle]="{ 'margin-right': '16px' }"></div>
+          <div class="loading is-white" [ngStyle]="{ 'margin-right': '16px' }"></div>
           <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
         </div>
       </app-message-template-1>
@@ -55,12 +55,12 @@
 
   <!-- when result -->
   <div *ngIf="table._total > 0" [ngStyle]="{ 'min-height': table._isNoMinHeight ? 'unset' : '500px' }">
-    <div class="table-responsive max-height relative" [ngClass]="{ 'scroll-no': isLoadingData }">
+    <div class="table-responsive is-max-height relative" [ngClass]="{ 'scroll-no': isLoadingData }">
 
       <!-- loading style -->
       <ng-container *ngIf="isLoadingData">
         <div class="absolute table-loading-wrapper flex-centered">
-          <div class="loading loading-lg"></div>
+          <div class="loading is-lg"></div>
         </div>
       </ng-container>
 
@@ -85,9 +85,9 @@
             <!-- rest columns -->
             <ng-container *ngIf="!massSelection && selectedRows === 0">
               <th
-                *ngFor="let column of table._columns; let i = index;"
+                *ngFor="let column of visibleColumns; let i = index;"
                 (click)="selectColumn(getName(column))"
-                [ngClass]="{ 'active': column._isSelected, 'max-width': table._columns.length <=6 }"
+                [ngClass]="{ 'is-active': column._isSelected, 'max-width': table._columns.length <=6 }"
                 [ngStyle]="{ 'width': column._width, 'min-width': column._width ? 'unset' : '150px' }"
                 class="text-ellipsis">
 
@@ -160,7 +160,7 @@
             </ng-container>
 
             <!-- rest columns -->
-            <td *ngFor="let column of table._columns; let i = index"
+            <td *ngFor="let column of visibleColumns; let i = index"
                 [ngClass]="{ 'max-width': table._columns.length <=6 }"
                 [ngStyle]="{ 'width': column._width, 'min-width': column._width ? 'unset' : '150px' }">
               <div
@@ -255,7 +255,7 @@
                   <!-- if type is tags -->
                   <ng-container *ngSwitchCase="'TAG-LIST'">
                     <span class="tbody-td-tag d-flex">
-                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag label-rounded">
+                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag is-rounded">
                         {{ tag.label | multiling:userLang }}
                       </span>
                       <span *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">...</span>

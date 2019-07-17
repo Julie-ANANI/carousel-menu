@@ -35,7 +35,7 @@ export class ShowcaseInnovationsComponent {
           if (staticInnovations) {
             this._computeCards();
           } else {
-            this.topInnovationsChange.emit(response.result.slice(0, 9));
+            this.topInnovationsChange.emit(response.result.slice(0, 6));
           }
         }
       }, () => {
@@ -49,6 +49,10 @@ export class ShowcaseInnovationsComponent {
   private _topInnovations: Array<Innovation> = [];
   @Input() set topInnovations(value: Array<Innovation>) {
     this._topInnovations = value;
+    this._selectedInnovations = this._topInnovations.reduce((acc, val) => {
+        acc[val._id] = true;
+        return acc;
+      }, {} as {[innoId: string]: true});
     this._computeCards();
   }
   @Output() topInnovationsChange: EventEmitter<Array<Innovation>> = new EventEmitter<Array<Innovation>>();
@@ -117,7 +121,7 @@ export class ShowcaseInnovationsComponent {
 
   public onClickApply(event: Event) {
     event.preventDefault();
-    const selectedInnovation = this._innovations.filter((i) => this._selectedInnovations[i._id]).slice(0, 9);
+    const selectedInnovation = this._innovations.filter((i) => this._selectedInnovations[i._id]);
     this.topInnovationsChange.emit(selectedInnovation);
     this._modalShow = false;
   }

@@ -1,7 +1,7 @@
 @import "../variables";
 @import "../animation";
 
-.loading {
+.loading  {
   color: transparent !important;
   min-height: $unit-4;
   pointer-events: none;
@@ -25,7 +25,7 @@
     z-index: 0;
   }
 
-  &.loading-lg {
+  &.is-lg {
     min-height: $unit-10;
 
     &::after {
@@ -37,18 +37,16 @@
 
   }
 
-  &.loading-white {
+  &.is-white {
 
     &::after {
-      border: $border-width-lg solid $light-color;
-      border-right-color: transparent;
-      border-top-color: transparent;
+      border-bottom-color: $light-color;
+      border-left-color: $light-color;
     }
 
   }
 
 }
-
 
 .loading-bar {
   position: fixed;
@@ -64,12 +62,11 @@
     height: 5px;
     background-color: $primary-color;
     width: 0;
-    border-radius: 36px;
-    animation: loader 2s infinite ease;
+    border-radius: 25px;
+    animation: loader 3s infinite ease;
   }
 
 }
-
 
 .loading-content {
   position: relative;

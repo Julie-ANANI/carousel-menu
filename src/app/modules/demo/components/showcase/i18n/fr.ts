@@ -12,7 +12,7 @@ export const SHOWCASE = {
 
   'PROFESSIONALS': 'répondants',
 
-  'INNOVATIONS_TITLE': 'Tests de Marché',
+  'INNOVATIONS_TITLE': 'Tests Marché',
 
   'INNOVATIONS': 'projets testés',
 
@@ -21,8 +21,6 @@ export const SHOWCASE = {
   'COUNTRIES': 'pays ciblés',
 
   'CLIENTS_TITLE': 'Clients',
-
-  'CLIENTS': 'Quelques entreprises qui ont testé leur marché',
 
   'SECTORS_MODAL': {
     'TITLE': 'Choisir les secteurs pour créer la vitrine'
@@ -38,10 +36,6 @@ export const SHOWCASE = {
     'EDIT_INNOVATIONS': 'Cliquez pour sélectionner différentes innovations.',
     'EDIT_CLIENTS': 'Cliquez pour sélectionner différentes clients.'
   },
-
-  'MAX_SELECT_ANSWERS': 'Vous ne pouvez sélectionner que 6 réponses.',
-
-  'MAX_SELECT_INNOVATIONS': 'Vous ne pouvez sélectionner que 9 innovations.',
 
   'NAME_PLACEHOLDER': 'Nom',
 

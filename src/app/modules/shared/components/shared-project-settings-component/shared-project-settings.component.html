@@ -52,7 +52,7 @@
           <!-- Comment countries -->
           <ng-container *ngIf="!canEdit && !!innovation.settings.geography.comments">
             <p class="pd-top">
-              <span class="text text-secondary">
+              <span class="text text-secondary-dark">
                 {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.COMMENT' | translate }}
               </span>
             </p>
@@ -191,7 +191,7 @@
             <!-- Companies comment -->
             <ng-container *ngIf="!canEdit && !!innovation.settings.companies.description">
               <p class="pd-top">
-                <span class="text text-secondary">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.COMMENT' | translate }}</span>
+                <span class="text text-secondary-dark">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.COMMENT' | translate }}</span>
               </p>
               <ng-container *ngIf="!canEdit && innovation.settings.companies.description">
                 <div class="pd-input">
@@ -275,7 +275,7 @@
             <!-- Exclude professional -->
             <ng-container *ngIf="!canEdit && innovation.settings.professionals.exclude.length > 0">
               <p class="pd-para">
-                <span class="text text-secondary">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
+                <span class="text text-secondary-dark">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
               </p>
               <div class="pd-input">
                 <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">

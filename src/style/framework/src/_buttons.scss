@@ -292,6 +292,22 @@
 
 }
 
+.buttons {
+  @include flex-start();
+  flex-wrap: wrap;
+  margin-bottom: -0.5rem;
+
+  .button:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+
+  .button {
+    margin-bottom: 0.5rem;
+  }
+
+}
+
+
 .button {
   @include inline-flex-centered();
   @include button-transition();
@@ -318,133 +334,209 @@
     margin-right: $unit-2;
   }
 
-  &.button-link {
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
+  &.is-link {
     @include button-link-variant($primary-color);
+
+    &.loading {
+      @include button-loading-variant($primary-color);
+    }
+
   }
 
-  &.button-action {
-    @include button-default-action-variant($primary-color)
+  &.is-action {
+    @include button-default-action-variant($primary-color);
+
+    &.is-shadowed {
+      @include button-shadow-variant($primary-color);
+    }
+
   }
 
-  &.button-primary {
+  &.is-primary {
     @include button-default-variant($primary-color);
+
+    &.loading {
+      @include button-loading-variant($light-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($primary-color);
+    }
+
   }
 
-  &.button-secondary {
+  &.is-outlined {
+    @include button-outline-variant($primary-color);
+  }
+
+  &.is-secondary {
     @include button-default-variant($secondary-color);
 
-    &.button-link {
+    &.is-link, &.is-outlined {
+
+      &.loading {
+        @include button-loading-variant($secondary-color);
+      }
+
+    }
+
+    &.is-link {
       @include button-link-variant($secondary-color);
     }
 
-    &.button-action {
+    &.is-action {
       @include button-default-action-variant($secondary-color)
     }
 
+    &.loading {
+      @include button-loading-variant($light-color);
+    }
+
+    &.is-outlined {
+      @include button-outline-variant($secondary-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($secondary-color);
+    }
+
   }
 
-  &.button-edit {
+  &.is-info {
     @include button-default-variant($meta-color);
 
-    &.button-link {
+
+    &.is-link, &.is-outlined {
+
+      &.loading {
+        @include button-loading-variant($meta-color);
+      }
+
+    }
+
+    &.is-link {
       @include button-link-variant($meta-color);
     }
 
-    &.button-action {
+    &.is-action {
       @include button-default-action-variant($meta-color)
     }
 
+    &.loading {
+      @include button-loading-variant($light-color);
+    }
+
+    &.is-outlined {
+      @include button-outline-variant($meta-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($meta-color);
+    }
+
   }
 
-  &.button-error {
+  &.is-danger {
     @include button-default-variant($alert-color);
 
-    &.button-link {
+    &.is-link, &.is-outlined {
+
+      &.loading {
+        @include button-loading-variant($alert-color);
+      }
+
+    }
+
+    &.is-link {
       @include button-link-variant($alert-color);
     }
 
-    &.button-action {
+    &.is-action {
       @include button-default-action-variant($alert-color)
     }
 
+    &.loading {
+      @include button-loading-variant($light-color);
+    }
+
+    &.is-outlined {
+      @include button-outline-variant($alert-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($alert-color);
+    }
+
   }
 
-  &.button-draft {
+  &.is-draft {
     @include button-default-variant($background-color);
 
-    &.button-link {
+    &.is-link, &.is-outlined {
+
+      &.loading {
+        @include button-loading-variant($background-color);
+      }
+
+    }
+
+    &.is-link {
       @include button-link-variant($background-color);
     }
 
-    &.button-action {
+    &.is-action {
       @include button-default-action-variant($background-color)
     }
 
+    &.loading {
+      @include button-loading-variant($light-color);
+    }
+
+    &.is-outlined {
+      @include button-outline-variant($background-color);
+    }
+
+    &.is-shadowed {
+      @include button-shadow-variant($background-color);
+    }
+
   }
 
-  &.button-success {
+  &.is-success {
     @include button-default-variant($success-color);
 
-    &.button-link {
+    &.is-link, &.is-outlined {
+
+      &.loading {
+        @include button-loading-variant($success-color);
+      }
+
+    }
+
+    &.is-link {
       @include button-link-variant($success-color);
     }
 
-    &.button-action {
+    &.is-action {
       @include button-default-action-variant($success-color)
     }
 
-  }
-
-  &.ghost-primary {
-    @include button-ghost-variant($primary-color);
-
-    &.button-action {
-      @include button-ghost-action-variant($primary-color)
+    &.loading {
+      @include button-loading-variant($light-color);
     }
 
-  }
-
-  &.ghost-secondary {
-    @include button-ghost-variant($secondary-color);
-
-    &.button-action {
-      @include button-ghost-action-variant($secondary-color)
+    &.is-outlined {
+      @include button-outline-variant($success-color);
     }
 
-  }
-
-  &.ghost-error {
-    @include button-ghost-variant($alert-color);
-
-    &.button-action {
-      @include button-ghost-action-variant($alert-color)
-    }
-
-  }
-
-  &.ghost-edit {
-    @include button-ghost-variant($meta-color);
-
-    &.button-action {
-      @include button-ghost-action-variant($meta-color)
-    }
-
-  }
-
-  &.ghost-success {
-    @include button-ghost-variant($success-color);
-
-    &.button-action {
-      @include button-ghost-action-variant($success-color)
-    }
-
-  }
-
-  &.ghost-draft {
-    @include button-ghost-variant($background-color);
-
-    &.button-action {
-      @include button-ghost-action-variant($background-color)
+    &.is-shadowed {
+      @include button-shadow-variant($success-color);
     }
 
   }
@@ -459,17 +551,17 @@
     margin-left: $unit-2;
   }
 
-  &.rounded {
+  &.is-rounded {
     border-radius: 25px;
   }
 
-  &.circle {
+  &.is-circled {
     border-radius: 50%;
     padding-left: 0.25rem;
     padding-right: 0.25rem;
   }
 
-  &.button-normal {
+  &.is-normal {
     height: 2rem;
     font-size: $font-size-sm;
 
@@ -477,14 +569,14 @@
       font-size: $font-icon;
     }
 
-    &.circle {
+    &.is-circled {
       padding-left: 0.25rem;
       padding-right: 0.25rem;
     }
 
   }
 
-  &.button-sm {
+  &.is-sm {
     font-size: $font-size-xs;
     height: 1.5rem;
 
@@ -492,14 +584,14 @@
       font-size: $font-size-xs;
     }
 
-    &.circle {
+    &.is-circled {
       padding-left: 1px;
       padding-right: 1px;
     }
 
   }
 
-  &.button-lg {
+  &.is-lg {
     height: 3rem;
     font-size: $font-size;
 
@@ -507,7 +599,7 @@
       font-size: $font-size;
     }
 
-    &.circle {
+    &.is-circled {
       padding-left: $unit-3;
       padding-right: $unit-3;
     }

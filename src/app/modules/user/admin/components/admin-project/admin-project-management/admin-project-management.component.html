@@ -50,7 +50,7 @@
                 (ngModelChange)="changeProjectOperator($event)"
                 [ngModelOptions]="{standalone: true}">
           <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
-          <option *ngFor="let op of operators" [ngValue]="op.id">
+          <option *ngFor="let op of operators" [ngValue]="op._id">
             {{op.firstName + ' ' + op.lastName}}
           </option>
         </select>
@@ -488,7 +488,7 @@
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.VALIDATE_INSIGHTS' | translate}}
           </label>
-          <label class="label label-alert">{{currentCampaign?.stats?.campaign.nbToValidateResp}}
+          <label class="label is-danger">{{currentCampaign?.stats?.campaign.nbToValidateResp}}
             {{'PROJECT.CAMPAIGN.INSIGHTS_TO_VALIDATE' | translate}}</label>
           <button class="showOnHover btn btn-xs ghost-edit"
                   (click)="goToInsights()">

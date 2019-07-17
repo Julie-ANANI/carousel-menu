@@ -5,33 +5,73 @@
   background-color: $color;
   border-color: $color;
 
-  &:focus {
+  &:hover {
+    background-color: lighten($color, 10%);
+    border-color: lighten($color, 10%);
+  }
+
+  &:focus, &.is-active, &:active  {
     color: $light-color;
     background-color: $color;
     border-color: $color;
   }
 
-  &:hover {
-    background-color: darken($color, 4%);
-    border-color: darken($color, 4%);
+  &[disabled], &:disabled, &.disabled {
+    background-color: $color;
+    border-color: $color;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
   }
 
 }
 
+@mixin button-outline-variant($color: $primary-color) {
+  color: $color;
+  border-color: $color;
+  border-width: $border-width-lg;
+  background-color: transparent;
+
+  &:hover {
+    border-color: lighten($color, 15%);
+    background-color: transparent;
+  }
+
+  &:focus, &.is-active, &:active  {
+    color: $color;
+    border-color: $color;
+    border-width: $border-width-lg;
+    background-color: transparent;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    border-color: $color;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
+}
+
+// Todo remove
 @mixin button-ghost-variant($color: $primary-color) {
   color: $color;
-  border-color: lighten($color, 2%);
+  background-color: transparent;
+  border-color: $color;
   border-width: $border-width-lg;
 
-  &:focus {
+  &:focus, &:active, &.active {
     color: $color;
-    border-color: lighten($color, 2%);
+    background-color: transparent;
+    border-color: $color;
     border-width: $border-width-lg;
   }
 
   &:hover {
-    color: $color;
-    border-color: darken($color, 10%);
+    color: lighten($color, 15%);
+    background-color: transparent;
+    border-color: lighten($color, 15%);
   }
 
 }
@@ -47,6 +87,19 @@
     background-color: transparent;
   }
 
+  &.is-active, &:active  {
+    color: $color;
+    border: none;
+    background-color: transparent;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
 }
 
 @mixin button-default-action-variant($color: $primary-color) {
@@ -56,38 +109,47 @@
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 
-  &:focus {
+  &:focus, &.is-active, &:active  {
     color: $light-color;
     background-color: $color;
     border-color: $color;
   }
 
   &:hover {
-    background-color: darken($color, 4%);
-    border-color: darken($color, 4%);
+    background-color: lighten($color, 10%);
+    border-color: lighten($color, 10%);
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    cursor: not-allowed;
+    background-color: $color;
+    border-color: $color;
+    box-shadow: none;
+    opacity: 0.5;
   }
 
 }
 
-@mixin button-ghost-action-variant($color: $primary-color) {
-  color: $color;
-  border-color: lighten($color, 2%);
-  border-width: $border-width;
-  background-color: transparent;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+@mixin button-loading-variant($color: $light-color) {
+  min-width: 4.25rem;
 
-  &:focus {
-    color: $color;
-    background-color: transparent;
-    border-color: lighten($color, 2%);
-    border-width: $border-width;
+  &:after {
+    border-bottom-color: $color;
+    border-left-color: $color;
   }
 
+}
+
+@mixin button-shadow-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
   &:hover {
-    background-color: transparent;
-    color: darken($color, 10%);
-    border-color: darken($color, 10%);
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+    box-shadow: $box-shadow-button-hover;
   }
 
 }
