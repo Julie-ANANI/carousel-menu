@@ -14,7 +14,7 @@ export class SharedFilterInputComponent {
 
   filter(input: string) {
     const value = input;
-    this.config.search = this.config.search.length > 2 ? JSON.parse(this.config.search) : this.config.search;
+    this.config.search = JSON.parse(this.config.search);
     if (this.config.search[this.prop] && value === '') {
       delete this.config.search[this.prop];
       this.config.search = JSON.stringify(this.config.search);
