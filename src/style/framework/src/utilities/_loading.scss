@@ -64,12 +64,11 @@
     height: 5px;
     background-color: $primary-color;
     width: 0;
-    border-radius: 36px;
-    animation: loader 2s infinite ease;
+    border-radius: 25px;
+    animation: loader 3s infinite ease;
   }
 
 }
-
 
 .loading-content {
   position: relative;

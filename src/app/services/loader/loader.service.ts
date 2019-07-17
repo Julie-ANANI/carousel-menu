@@ -21,18 +21,16 @@ export class LoaderService implements OnDestroy {
 
   stopLoading (): void {
     --this._nbInProgressRequests;
+
     if (this._nbInProgressRequests <= 0) {
-
+      this._isLoadingSubject.next(false);
       this._nbInProgressRequests = 0;
-
-      setTimeout(() => {
-        this._isLoadingSubject.next(false);
-      }, 500);
-
     }
+
   }
 
   ngOnDestroy() {
     this._isLoadingSubject.complete();
   }
+
 }

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { LoaderService } from '../../services/loader/loader.service';
 //import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 //import {UserService} from "../../services/user/user.service";
@@ -15,24 +15,26 @@ import { LoaderService } from '../../services/loader/loader.service';
 
 export class UserComponent implements OnInit {
 
-  private _displayLoader: boolean;
+  private _displayLoader: boolean = true;
 
-  private _adminSide = false;
+  private _adminSide: boolean;
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private location: Location,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _location: Location,
               // private _userService: UserService,
               // private _swellRTBackend: SwellrtBackend,
               private _loaderService: LoaderService,
-              private router: Router) {
+              private _router: Router) {
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this._adminSide = this.location.path().slice(5, 11) === '/admin';
-        }
-      });
-    }
+   if (isPlatformBrowser(this._platformId)) {
+     this._router.events.subscribe((event) => {
+       if (event instanceof NavigationStart) {
+         this._displayLoader = true;
+       } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+         this._adminSide = this._location.path().slice(5, 11) === '/admin';
+       }
+     });
+   }
 
     this._loaderService.isLoading$.subscribe((loading: boolean) => {
       setTimeout(() => {
@@ -42,8 +44,8 @@ export class UserComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    this._adminSide = this.location.path().slice(5, 11) === '/admin';
+  ngOnInit() {
+    this._adminSide = this._location.path().slice(5, 11) === '/admin';
     /*this.startSwellRTClient();
     this.startSwellRTSession();*/
   }
