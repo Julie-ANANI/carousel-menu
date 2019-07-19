@@ -575,6 +575,70 @@ textarea {
 
 }
 
+// Form disabled and readonly
+.form-input, .form-select {
+
+  &:disabled, &.disabled {
+    background: $form-disabled-color none;
+    color: $form-disabled-text-color;
+    border-color: $form-border-color;
+    cursor: not-allowed;
+    opacity: .5;
+  }
+
+}
+
+input {
+
+  &:disabled, &.disabled {
+
+    &:not(:checked) + .form-icon, &:checked + .form-icon {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+
+    &:not(:checked) + .form-icon {
+      background: $form-disabled-color none;
+    }
+
+    &:checked + .form-icon {
+      background: inherit none;
+    }
+
+  }
+
+}
+
+.form-switch {
+
+  input {
+
+    &:disabled, &.disabled {
+
+      &:not(:checked) + .form-icon::before , &:checked + .form-icon::before  {
+        cursor: not-allowed;
+        opacity: .5;
+      }
+
+      &:checked + .form-icon::before {
+        background: inherit none;
+      }
+
+    }
+
+  }
+
+}
+
+.form-input {
+
+  &[readonly] {
+    background: $form-disabled-color none;
+    border-color: $form-border-color;
+  }
+
+}
+
 // Form element: Error Todo remove this
 .form-error {
   display: block;
@@ -617,56 +681,13 @@ textarea {
 
 
 
-// Form disabled and readonly
-.form-input, .form-select {
 
-  &:disabled, &.disabled {
-    background: $form-disabled-color none;
-    color: $form-disabled-text-color;
-    border-color: $form-disabled-color;
-    cursor: not-allowed;
-    opacity: .5;
-  }
 
-}
 
-.form-input {
 
-  &[readonly] {
-    background: $form-disabled-color none;
-  }
 
-}
 
-input {
 
-  &:disabled, &.disabled {
-
-    & + .form-icon {
-      background: $bg-color-light none;
-      cursor: not-allowed;
-      opacity: .5;
-    }
-
-  }
-
-}
-
-.form-switch {
-
-  input {
-
-    &:disabled, &.disabled {
-
-      & + .form-icon::before {
-        background: inherit none;
-      }
-
-    }
-
-  }
-
-}
 
 
 
