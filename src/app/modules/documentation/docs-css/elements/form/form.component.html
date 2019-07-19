@@ -400,11 +400,11 @@
         <label class="form-label m-bottom-20">Input</label>
 
         <div class="form-group m-bottom-20 has-success">
-          <input type="text" class="form-input" placeholder="Name">
+          <input type="text" class="form-input ng-dirty ng-valid ng-touched" placeholder="Name">
           <p class="form-input-hint">The name is valid.</p>
         </div>
         <div class="form-group">
-          <input type="text" class="form-input is-error" placeholder="Last Name">
+          <input type="text" class="form-input ng-dirty ng-invalid ng-touched is-error" placeholder="Last Name">
           <p class="form-input-hint">The last name is invalid.</p>
         </div>
       </div>
@@ -464,9 +464,49 @@
 
     <div class="p-top-20">
       <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group has-success"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-label"</span></span>&gt;Input<span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-input"</span> <span class="attr">placeholder</span>=<span class="string">"Name"</span></span>&gt;
+          <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"form-input-hint"</span></span>&gt;The name is valid.<span class="tag">&lt;/<span class="name">p</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-label"</span></span>&gt;Select<span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">"form-select is-error"</span>&gt;</span>
+            ...
+          <span class="tag">&lt;/<span class="name">select</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"form-input-hint"</span></span>&gt;This option is invalid..<span class="tag">&lt;/<span class="name">p</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group has-error"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-label"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;<span class="name">/i</span>&gt;</span> Send me emails with news and tips
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-checkbox is-error"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;<span class="name">/i</span>&gt;</span> Remember me
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group has-error"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-radio"</span></span>&gt;
+            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">checked</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> Male
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-radio is-error"</span></span>&gt;
+            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"form-icon"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> Female
+          <span class="tag">&lt;/<span class="name">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
       </code></pre>
     </div>
-
 
   </section>
 

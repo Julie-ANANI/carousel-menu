@@ -52,11 +52,6 @@ legend {
     color: $form-placeholder-color;
   }
 
-  // Todo remove this
-  /*&.ng-touched.ng-dirty.ng-invalid {
-    border-color: $form-alert-color;
-  }*/
-
   &.input-inline {
     display: inline-block;
     vertical-align: middle;
@@ -474,7 +469,7 @@ textarea {
 
   .has-success &, &.is-success {
 
-    &.form-input, &.ng-touched.ng-valid, &.ng-touched.ng-valid:focus, &.form-select {
+    &.form-input.ng-dirty.ng-touched.ng-valid, &.form-input.ng-dirty.ng-touched.ng-valid:focus, &.form-select {
       border-color: $form-success-color;
     }
 
@@ -482,7 +477,7 @@ textarea {
 
   .has-error &, &.is-error  {
 
-    &.form-input, &.ng-touched.ng-invalid, &.ng-touched.ng-invalid:focus, &.form-select {
+    &.form-input.ng-dirty.ng-touched.ng-invalid, &.form-input.ng-dirty.ng-touched.ng-invalid:focus, &.form-select {
       border-color: $form-alert-color;
     }
 
