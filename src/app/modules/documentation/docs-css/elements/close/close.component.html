@@ -1,0 +1,67 @@
+<div id="close">
+
+  <h1 class="title">Close</h1>
+
+  <div class="docs-divider"></div>
+
+  <p class="text-md">A versatile close cross. The <code>close</code> element is a stand-alone element that can be used in different contexts. On its own,
+    it's a simple circle with a cross. By default the cross is in white when you hover over it, it shows the overlay background.</p>
+
+  <section class="p-top-20">
+
+    <div class="d-flex">
+      <div class="text-center" [ngStyle]="{ 'background': 'linear-gradient(240deg, #3199cd 0%, #2bc1ef 100%)', 'height': '40px', 'width': '40px' }">
+        <div class="close"></div>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"close"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <p class="text-md">To show the cross icon with the background overlay use the <code>is-overlay</code> class with the <code>close</code> class.</p>
+
+    <div class="p-top-20">
+      <a class="close is-overlay"></a>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"close is-overlay"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title title-4">Sizes</h2>
+
+    <p class="text-md">It comes in 4 different sizes.</p>
+
+    <div class="p-top-20 d-flex align-center">
+      <div class="close is-overlay is-xs m-right-15"></div>
+      <div class="close is-overlay is-sm m-right-15"></div>
+      <div class="close is-overlay is-normal m-right-15"></div>
+      <div class="close is-overlay is-lg"></div>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"close is-overlay is-xs"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"close is-overlay is-sm"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"close is-overlay is-normal"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"close is-overlay is-lg"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+</div>
+

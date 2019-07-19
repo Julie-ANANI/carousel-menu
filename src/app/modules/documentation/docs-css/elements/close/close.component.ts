@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-delete',
+  selector: 'app-close',
   styleUrls: ['../../docs-css.component.scss'],
-  templateUrl: './delete.component.html'
+  templateUrl: './close.component.html'
 })
 
-export class DeleteComponent {
+export class CloseComponent {
 
   constructor() {
   }

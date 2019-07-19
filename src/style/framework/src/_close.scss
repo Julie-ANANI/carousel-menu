@@ -1,0 +1,92 @@
+@import "variables";
+@import "mixins";
+
+.close {
+  @include inline-flex-centered();
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.4s ease;
+  background: transparent;
+  border: 0;
+  color: $light-color;
+  padding: 0;
+  text-align: center;
+  outline: none;
+  position: relative;
+  min-width: unset;
+  width: 40px;
+  height: 40px;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  font-size: $font-icon-xl;
+
+  &::before {
+    display: none;
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  &::after {
+    display: block;
+    content: "\2715";
+    z-index: 2;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: $light-color;
+
+    &::before {
+      display: block;
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+
+  }
+
+  &.is-overlay {
+
+    &::before {
+      display: block;
+      background-color: rgba(10,10,10,.2);
+    }
+
+    &:hover {
+
+      &::before {
+        background-color: rgba(10,10,10,.3);
+      }
+
+    }
+
+
+  }
+
+  &.is-xs {
+    width: 20px;
+    height: 20px;
+    font-size: $font-icon-sm;
+  }
+
+  &.is-sm {
+    width: 32px;
+    height: 32px;
+    font-size: $font-icon-lg;
+  }
+
+  &.is-normal {
+    width: 40px;
+    height: 40px;
+    font-size: $font-icon-xl;
+  }
+
+  &.is-lg {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+
+}
