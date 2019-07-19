@@ -13,6 +13,7 @@ import { LabelComponent } from './elements/label/label.component';
 import { CodeComponent } from './elements/code/code.component';
 import { MediaComponent } from './elements/media/media.component';
 import { FormComponent } from './elements/form/form.component';
+import { DeleteComponent } from './elements/delete/delete.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -29,6 +30,7 @@ const docsCssRoutes: Routes = [
       { path: 'elements/code', component: CodeComponent, pathMatch: 'full' },
       { path: 'elements/media', component: MediaComponent, pathMatch: 'full' },
       { path: 'elements/form', component: FormComponent, pathMatch: 'full' },
+      { path: 'elements/delete', component: DeleteComponent, pathMatch: 'full' },
       { path: 'components/accordions', component: AccordionsComponent, pathMatch: 'full' }
     ]
   }

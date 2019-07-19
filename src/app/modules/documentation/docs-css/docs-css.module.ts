@@ -14,6 +14,7 @@ import { LabelComponent } from './elements/label/label.component';
 import { CodeComponent } from './elements/code/code.component';
 import { MediaComponent } from './elements/media/media.component';
 import { FormComponent } from './elements/form/form.component';
+import { DeleteComponent } from './elements/delete/delete.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { FormComponent } from './elements/form/form.component';
     ButtonComponent,
     CodeComponent,
     MediaComponent,
-    FormComponent
+    FormComponent,
+    DeleteComponent
   ],
 })
 
