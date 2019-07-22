@@ -52,32 +52,9 @@ legend {
     color: $form-placeholder-color;
   }
 
-  &.ng-touched.ng-dirty.ng-invalid {
-    border-color: $form-alert-color;
-  }
-
-  &.input-inline {
-    display: inline-block;
-    vertical-align: middle;
-    width: auto;
-  }
-
   // Input types
   &[type="file"] {
     height: auto;
-  }
-
-  &.input-sm {
-    max-width: $control-width-sm;
-  }
-
-  &.input-md {
-    max-width: $control-width-md;
-  }
-
-  &.input-height-md {
-    height: 2rem;
-    font-size: 0.65rem;
   }
 
 }
@@ -142,21 +119,31 @@ textarea {
 
 }
 
+.form-input, .form-select {
+
+  &.is-xs {
+    padding: $unit-1 $layout-spacing;
+    height: auto;
+    font-size: $font-size-xs;
+  }
+
+  &.is-sm {
+    height: 2rem;
+    font-size: 0.65rem;
+  }
+
+}
+
+
 // Form element: Checkbox and Radio
 .form-checkbox, .form-radio, .form-switch {
-  display: inline-flex;
+  display: flex;
   line-height: $line-height-sm;
   font-weight: $font-weight-normal;
   font-size: 0.75rem;
   align-items: center;
-  padding:  $unit-1 1.25rem;
+  padding:  $layout-spacing 1.25rem;
   position: relative;
-
-  &.is-full {
-    display: flex;
-    padding-top: $layout-spacing;
-    padding-bottom: $layout-spacing;
-  }
 
   input {
     clip: rect(0, 0, 0, 0);
@@ -165,16 +152,6 @@ textarea {
     overflow: hidden;
     position: absolute;
     width: 1px;
-
-    &:focus + .form-icon {
-      border-color: $primary-color;
-    }
-
-    &:checked + .form-icon {
-      background: $primary-color none;
-      border-color: $primary-color;
-    }
-
   }
 
   .form-icon {
@@ -187,7 +164,60 @@ textarea {
 
 }
 
+// Form element: Switch
+.form-switch {
+  padding-left: 2.5rem;
+  padding-right: 0;
+
+  .form-icon {
+    background: $bg-color-light none;
+    border-color: $form-border-color;
+    background-clip: padding-box;
+    border-radius: 16px;
+    height: 15px;
+    left: 0;
+    width: 34px;
+
+    &::before {
+      @include control-transition();
+      background: $form-meta-color none;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      height: 1.05rem;
+      position: absolute;
+      left: -4px;
+      top: -5px;
+      width: $unit-5;
+      border-color: $form-meta-color;
+    }
+
+  }
+
+  input {
+
+    &:checked + .form-icon, &.active + .form-icon {
+      border-color: rgba(46,204,113,0.45);
+      background: rgba(46,204,113,0.45) none;
+
+      &::before {
+        left: 14px;
+        border-color: $success-color;
+        background: $success-color none;
+      }
+
+    }
+
+  }
+}
+
 .form-checkbox, .form-radio {
+
+  &.is-inline {
+    display: inline-flex;
+    padding-top: $unit-1;
+    padding-bottom: $unit-1;
+  }
 
   .form-icon {
     background: $bg-color-light none;
@@ -198,8 +228,9 @@ textarea {
 
   input {
 
-    &:active + .form-icon {
-      background: $border-color;
+    &:checked  + .form-icon, &.active + .form-icon {
+      background: $form-success-color none;
+      border-color: $form-success-color;
     }
 
   }
@@ -233,41 +264,11 @@ textarea {
 
 }
 
-// Form element: Input hint
-.form-input-hint {
-  color: $form-input-color;
-  font-size: $font-size-xs;
-  padding: 0 0 $unit-2 0;
-
-  .has-success &, .is-success + & {
-    color: $form-success-color;
-  }
-
-  .has-error &, .is-error + & {
-    color: $form-alert-color;
-  }
-
-}
-
-
-// Form element: Error
-.form-error {
-  display: block;
-  color: $form-alert-color;
-  font-size: $font-size-xs;
-  padding: $unit-1 0 $unit-2 0;
-}
-
-
-
-
-
-
-
-
-
-
 .form-checkbox {
+
+  .form-icon {
+    border-radius: 3px;
+  }
 
   input {
 
@@ -311,69 +312,73 @@ textarea {
 
 }
 
+.has-icon-left, .has-icon-right {
+  position: relative;
 
+  .form-input {
 
-
-
-// Form element: Switch
-.form-switch {
-  padding-left: 2.5rem;
-  padding-right: 0;
-
-  .form-icon {
-    background: $bg-color-light none;
-    border-color: $form-border-color;
-    background-clip: padding-box;
-    border-radius: 16px;
-    height: 15px;
-    left: 0;
-    top: 4px;
-    width: 34px;
-
-    &::before {
-      @include control-transition();
-      background: $form-meta-color none;
-      border-radius: 50%;
-      content: "";
-      display: block;
-      height: 1.05rem;
-      position: absolute;
-      left: -4px;
-      top: -5px;
-      width: $unit-5;
-      border-color: $form-meta-color;
+    ~.icon {
+      font-size: 0.95rem;
     }
 
-  }
+   &:focus {
+     border-color: $form-primary-color;
 
-  input {
+     ~.icon {
+       color: $text-background-color;
+     }
 
-    &:focus + .form-icon {
-      border-color: $form-border-color;
-      background: $bg-color-light none;
-    }
+   }
 
-    &:checked + .form-icon {
+    &.is-sm, &.is-xs {
 
-      &::before {
-        left: 14px;
-      }
-
-    }
-
-    &:active + .form-icon {
-
-      &::before {
-        // background: $bg-color;
+      ~.icon {
+        font-size: $font-icon-lg;
       }
 
     }
 
   }
+
+
+  .icon {
+    @include flex-centered();
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    height: 100%;
+    width: 1.75rem;
+    margin: 0;
+
+    &.is-left {
+      left: 0;
+    }
+
+    &.is-right {
+      right: 0;
+    }
+
+  }
+
 }
 
+.has-icon-left {
 
-// Form suggestion
+  .form-input {
+    padding-left: 1.75rem;
+  }
+
+}
+
+.has-icon-right {
+
+  .form-input {
+    padding-right: 1.75rem;
+  }
+
+}
+
+// Form suggestion Todo remove this.
 .input-suggestion {
   display: flex;
   flex-direction: column;
@@ -394,7 +399,7 @@ textarea {
 
   li {
     @include control-transition();
-    padding: $unit-2;
+    padding: $layout-spacing;
     font-size: $font-size-sm;
     margin-top: $unit-1;
     color: $text-primary-dark-color;
@@ -416,106 +421,77 @@ textarea {
 
 }
 
-
 // Form inline group
 .input-group {
+  display: inline-flex;
+  width: 100%;
 
   .form-group {
-    padding-left: $unit-2;
-    padding-right: $unit-2;
+    width: 100%;
+    padding-left: $layout-spacing;
+    padding-right: $layout-spacing;
     max-width: 480px;
     margin-left: auto;
     margin-right: auto;
   }
 
   .input-suggestion {
-    left: $unit-2;
-    right: $unit-2;
-  }
-
-  &.inline {
-    display: inline-flex;
-    width: 100%;
+    left: $layout-spacing;
+    right: $layout-spacing;
   }
 
 }
 
+// Form element: Input hint && validation styles
+.form-input-hint {
+  color: $form-input-color;
+  font-size: $font-size-xs;
+  padding: $unit-1 0 $layout-spacing;
+  margin: 0;
 
-// For validation states
+  .has-success &, .is-success + & {
+    color: $form-success-color;
+  }
+
+  .has-error &, .is-error + & {
+    color: $form-alert-color;
+  }
+
+}
+
 .form-input, .form-select {
 
   .has-success &, &.is-success {
 
-    &.ng-touched.ng-valid, &.ng-touched.ng-valid:focus {
+    &.form-input.ng-dirty.ng-touched.ng-valid, &.form-input.ng-dirty.ng-touched.ng-valid:focus, &.form-select {
       border-color: $form-success-color;
     }
 
   }
 
-  .has-error &, &.is-error {
+  .has-error &, &.is-error  {
 
-    &.ng-touched.ng-invalid, &.ng-touched.ng-invalid:focus {
+    &.form-input.ng-dirty.ng-touched.ng-invalid, &.form-input.ng-dirty.ng-touched.ng-invalid:focus, &.form-select {
       border-color: $form-alert-color;
     }
 
   }
 
 }
-
 
 .form-checkbox, .form-radio {
 
   .has-error &, &.is-error {
 
     .form-icon {
-     border-color: $form-alert-color;
-    }
-
-  }
-
-  input {
-
-    &:checked  + .form-icon, &:active + .form-icon, &.active + .form-icon  {
-      background: $form-success-color none;
-      border-color: $form-success-color;
-    }
-
-    &.disabled + .form-icon, &:disabled + .form-icon, &:not(:checked) + .form-icon {
-      background: $bg-color-light none;
-      border-color: $form-border-color;
-    }
-
-  }
-
-
-
-}
-
-
-.form-switch {
-
-  .has-error &, &.is-error {
-
-    .form-icon {
       border-color: $form-alert-color;
     }
 
-  }
+    input {
 
-  input {
-
-    &:active + .form-icon {
-      border-color: $form-border-color;
-      background-color: $bg-color-light;
-    }
-
-    &:checked  + .form-icon  {
-      border-color: rgba(46,204,113,0.45);
-      background: rgba(46,204,113,0.45) none;
-
-      &::before {
-        border-color: $success-color;
-        background: $success-color none;
+      &:checked + .form-icon {
+        background: $form-alert-color none;
+        border-color: $form-alert-color;
       }
 
     }
@@ -524,6 +500,56 @@ textarea {
 
 }
 
+.form-checkbox {
+
+  .has-error &, &.is-error {
+
+    input {
+
+      &:indeterminate + .form-icon {
+        background: $form-alert-color none;
+        border-color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+}
+
+.form-switch {
+
+  .has-error &, &.is-error {
+
+    .form-icon {
+      background: $bg-color-light none;
+      border-color: $form-alert-color;
+
+      &::before {
+        border-color: $form-alert-color;
+        background: $form-alert-color none;
+      }
+
+    }
+
+    input {
+
+      &:checked + .form-icon {
+        background: #f5afaf none;
+        border-color: $form-alert-color;
+
+        &::before {
+          border-color: $form-alert-color;
+          background: $form-alert-color none;
+        }
+
+      }
+
+    }
+
+  }
+
+}
 
 // validation based on :placeholder-shown (Edge doesn't support it yet)
 .form-input {
@@ -543,25 +569,15 @@ textarea {
 
 }
 
-
-
 // Form disabled and readonly
 .form-input, .form-select {
 
   &:disabled, &.disabled {
     background: $form-disabled-color none;
     color: $form-disabled-text-color;
-    border-color: $form-disabled-color;
+    border-color: $form-border-color;
     cursor: not-allowed;
     opacity: .5;
-  }
-
-}
-
-.form-input {
-
-  &[readonly] {
-    background: $form-disabled-color none;
   }
 
 }
@@ -570,10 +586,17 @@ input {
 
   &:disabled, &.disabled {
 
-    & + .form-icon {
-      background: $bg-color-light none;
+    &:not(:checked) + .form-icon, &:checked + .form-icon {
       cursor: not-allowed;
       opacity: .5;
+    }
+
+    &:not(:checked) + .form-icon {
+      background: $form-disabled-color none;
+    }
+
+    &:checked + .form-icon {
+      background: inherit none;
     }
 
   }
@@ -586,7 +609,12 @@ input {
 
     &:disabled, &.disabled {
 
-      & + .form-icon::before {
+      &:not(:checked) + .form-icon::before , &:checked + .form-icon::before  {
+        cursor: not-allowed;
+        opacity: .5;
+      }
+
+      &:checked + .form-icon::before {
         background: inherit none;
       }
 
@@ -596,10 +624,64 @@ input {
 
 }
 
-.form-input-sm, .form-select-sm {
-  height: 40px;
-  font-size: 0.65rem;
+.form-input {
+
+  &[readonly] {
+    background: $form-disabled-color none;
+    border-color: $form-border-color;
+  }
+
 }
+
+// Form element: Error Todo remove this
+.form-error {
+  display: block;
+  color: $form-alert-color;
+  font-size: $font-size-xs;
+  padding: $unit-1 0 $unit-2 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -19,7 +19,7 @@
     -
     <span class="text-success">Coût total : {{getTotalCost()}}</span>
   </h6>
-  <sqFilter [config]="config" (configChange)="loadHistory()" prop="keywords"></sqFilter><i class="icon icon-search"></i>
+  <sqFilter [size]="30" [config]="config" (configChange)="loadHistory()" prop="keywords"></sqFilter><i class="icon icon-search"></i>
   <table class="table">
     <thead>
     <tr>

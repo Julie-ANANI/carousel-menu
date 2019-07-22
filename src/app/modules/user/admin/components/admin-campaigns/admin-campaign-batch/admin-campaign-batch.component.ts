@@ -423,7 +423,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       }, {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
         _choices: [
-          {_name: 'Sent', _class: 'label label-success'},
+          {_name: 'Sent', _class: 'label is-success'},
           {_name: 'Planned',  _class: 'label is-progress'},
         ]}]
     };
