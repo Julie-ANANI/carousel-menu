@@ -66,6 +66,8 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _countries: Array<string> = [];
 
+  private _answersByCountries: any = {};
+
   private _questions: Array<Question> = [];
 
   private _adminMode: boolean;
@@ -159,12 +161,24 @@ export class SharedMarketReportComponent implements OnInit {
 
 
   private _updateAnswersToShow(): void {
+    const addAnswer = (country: string) => {
+      if(this._answersByCountries[country]) {
+        this._answersByCountries[country] += 1;
+      } else {
+        this._answersByCountries[country] = 1;
+      }
+    };
+    this._answersByCountries = {};
     this._filteredAnswers = this._filterService.filter(this._answers);
     const countriesList = this._filteredAnswers.map(function (answer: Answer): string {
+      let answerIsAlreadyCounted = false;
       if (!!answer.country && !!answer.country.flag) {
+        answerIsAlreadyCounted = true;
+        addAnswer(answer.country.flag);
         return answer.country.flag;
       }
       if (!!answer.professional && !!answer.professional.country) {
+        if (!answerIsAlreadyCounted) addAnswer(answer.professional.country);
         return answer.professional.country;
       }
       return '';
@@ -462,6 +476,10 @@ export class SharedMarketReportComponent implements OnInit {
 
   get adminMode(): boolean {
     return this._adminMode;
+  }
+
+  get answersByCountries(): boolean {
+    return this._answersByCountries;
   }
 
   get toggleProfessional(): boolean {
