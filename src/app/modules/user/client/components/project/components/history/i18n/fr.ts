@@ -1,8 +1,8 @@
 export const HISTORY = {
-  'TITLE': 'History of your project',
+  'TITLE': 'Historique de votre projet',
   'EVENT': {
-    'STARTED': 'Started',
-    'LAUNCHED': 'Launched',
-    'NEWANSWER': 'New Answer'
+    'STARTED': 'Démarré',
+    'LAUNCHED': 'Lancé',
+    'NEWANSWER': 'Nouvelle réponse'
   }
 };

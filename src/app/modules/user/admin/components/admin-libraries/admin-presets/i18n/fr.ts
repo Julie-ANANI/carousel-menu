@@ -32,7 +32,7 @@ export const PRESETS = {
     },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de configuration',
-      'CONTENT': 'Cliquez-sur le bouton pour ajouter votre première configuration'
+      'CONTENT': 'Cliquez sur le bouton pour ajouter votre première configuration'
     },
     'NEW': 'Nouvelle configuration',
     'GO': 'Créer la configuration',
@@ -63,7 +63,7 @@ export const PRESETS = {
     },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de section',
-      'CONTENT': 'Cliquez-sur le bouton pour ajouter votre première section'
+      'CONTENT': 'Cliquez sur le bouton pour ajouter votre première section'
     },
     'NEW': 'Nouvelle section',
     'GO': 'Créer la section',

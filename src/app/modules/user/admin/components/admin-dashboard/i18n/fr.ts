@@ -17,9 +17,9 @@ export const DASHBOARD = {
   'SEE_MORE': 'voir plus ..',
 
   'MAIL_LABEL': {
-    'FIRST': 'Premier courrier',
-    'SECOND': 'Deuxième courrier',
-    'THIRD': 'Troisième courrier'
+    'FIRST': 'Premier mail',
+    'SECOND': 'Deuxième mail',
+    'THIRD': 'Troisième mail'
   },
 
   'PROJECT_STATE': {

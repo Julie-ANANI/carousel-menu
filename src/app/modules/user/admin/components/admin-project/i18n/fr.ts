@@ -14,7 +14,7 @@ export const PROJECT = {
     'MAIL': 'Partager par email',
   },
   'CAMPAIGNS': 'Campaigns',
-  'SETTINGS': 'Settings',
+  'SETTINGS': 'Réglages',
   'QUESTIONNAIRE': 'Questionnaire',
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choisir un questionnaire',
@@ -61,8 +61,8 @@ export const PROJECT = {
     'OPERATOR_FEEDBACK': 'Compte-rendu de la mission'
   },
   'CARDS': 'Description',
-  'SYNTHESIS': 'Synthesis',
-  'PROJECT_TAGS': 'Project tags',
-  'ANSWER_TAGS': 'Insight tags',
-  'MAIL_CONFIG': 'Emails settings'
+  'SYNTHESIS': 'Synthèse',
+  'PROJECT_TAGS': 'Tags projet',
+  'ANSWER_TAGS': 'Tags réponses',
+  'MAIL_CONFIG': 'Réglages Emails'
 };
