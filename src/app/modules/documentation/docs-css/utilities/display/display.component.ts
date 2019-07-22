@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-aflexbox',
+  selector: 'app-display',
   styleUrls: ['../../docs-css.component.scss'],
-  templateUrl: './flexbox.component.html'
+  templateUrl: './display.component.html'
 })
 
-export class FlexboxComponent {
+export class DisplayComponent {
 
   constructor() {
   }

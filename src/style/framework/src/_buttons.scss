@@ -593,6 +593,8 @@
 
   &.is-lg {
     height: 3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     font-size: $font-size;
 
     i {
@@ -614,6 +616,10 @@
 
   .btn-lg {
     padding: $unit-2 $unit-8;
+  }
+
+  .is-lg {
+    padding: $unit-2 $unit-5;
   }
 
 }
