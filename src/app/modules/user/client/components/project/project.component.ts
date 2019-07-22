@@ -19,8 +19,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation;
 
-  private _offerTypeImage = '';
-
   private _sidebarValue: SidebarInterface = {};
 
   private _currentPage: string;
@@ -48,12 +46,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getPage();
-    this.loadOfferType();
-
-    //let xxx = this._swellRtBackend.get();
-
-    //console.log(xxx);
-
   }
 
 
@@ -64,27 +56,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
       this._currentPage = params > 0 ? url[4].substring(0, params) : url[4];
     } else {
       this._currentPage = 'setup';
-    }
-  }
-
-
-  private loadOfferType() {
-    switch (this._innovation && this._innovation.type) {
-
-      case 'insights':
-        this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg';
-        break;
-
-      case 'apps':
-        this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg';
-        break;
-
-      case 'leads':
-        this._offerTypeImage = 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg';
-        break;
-
-      default:
-        // do nothing...
     }
   }
 
@@ -129,10 +100,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get innovation(): Innovation {
     return this._innovation;
-  }
-
-  get offerTypeImage(): string {
-    return this._offerTypeImage;
   }
 
   get sidebarValue(): SidebarInterface {

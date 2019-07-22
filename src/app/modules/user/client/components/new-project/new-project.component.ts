@@ -31,8 +31,7 @@ export class NewProjectComponent implements OnInit {
   private buildForm() {
     this._formData = this.formBuilder.group({
       choosenLang: [null, Validators.required],
-      name: [null, Validators.required],
-      type: ['apps'],
+      name: [null, Validators.required]
     });
   }
 
@@ -42,13 +41,12 @@ export class NewProjectComponent implements OnInit {
       domain: environment.domain,
       lang: this._formData.value.choosenLang,
       name: this._formData.value.name,
-      type: this._formData.value.type
     };
 
     this.innovationService.create(newProject).pipe(first()).subscribe((innovation: Innovation) => {
-        this.router.navigate(['/user/projects/' + innovation._id + '/setup'])
+        this.router.navigate(['/user/projects/' + innovation._id + '/setup']);
       }, () => {
-      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
+      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
   }

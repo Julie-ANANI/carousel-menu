@@ -121,7 +121,7 @@ export const CAMPAIGNS = {
   },
 
   'QUIZ_PAGE': {
-    'HEADING': 'Visit these link to see the questionnaire:',
+    'HEADING': 'Visit this link to see the questionnaire:',
     'BOT': 'No quiz has been generated for this campaign.'
   },
 

@@ -9,9 +9,9 @@ export const EXPLORATION = {
 
   'STATUS_TEXT': {
     'TITLE': 'Statut',
-    'C': 'Emails sent',
-    'D': 'Relaunch',
-    'F': 'Last relaunch',
+    'C': 'Emails envoyés',
+    'D': 'Relance',
+    'F': 'Dernière relance',
     'CREATED': 'Créé',
     'SUBMIT': 'Soumis',
     'REJECT': 'Rejetté',
@@ -29,10 +29,10 @@ export const EXPLORATION = {
 
   'COMPANIES_LIST_TITLE': 'Les entreprises à contacter',
 
-  'INSIGHTS_TITLE': 'Insights',
+  'INSIGHTS_TITLE': 'Réponses',
 
   'ANALYTICS': {
-    'TITLE': 'Analytics',
+    'TITLE': 'Statistiques',
     'PROFESSIONALS_REACHED': 'Professionnels contactés',
     'EMAILS_OPENED': 'Emails ouverts',
     'CLICKS': 'Visites',
