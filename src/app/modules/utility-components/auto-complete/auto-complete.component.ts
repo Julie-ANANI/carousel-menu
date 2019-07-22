@@ -200,7 +200,7 @@ export class NguiAutoCompleteComponent implements OnInit {
 
         // executing after user stopped typing
         this.delay(() => this.reloadList(keyword), delayMs);
-    }
+    };
 
     public showDropdownList(event: any): void {
         this.dropdownVisible = true;
@@ -334,7 +334,7 @@ export class NguiAutoCompleteComponent implements OnInit {
                 }
                 break;
         }
-    }
+    };
 
     public scrollToView(index: number) {
         const container = this.autoCompleteContainer.nativeElement;
