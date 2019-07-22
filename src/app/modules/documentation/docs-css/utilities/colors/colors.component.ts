@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-aflexbox',
+  selector: 'app-colors',
   styleUrls: ['../../docs-css.component.scss'],
-  templateUrl: './flexbox.component.html'
+  templateUrl: './colors.component.html'
 })
 
-export class FlexboxComponent {
+export class ColorsComponent {
 
   constructor() {
   }

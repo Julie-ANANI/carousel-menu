@@ -35,3 +35,39 @@
 .text-secondary {
   color: $secondary-color !important;
 }
+
+.bg-primary {
+  color: $light-color;
+  background-color: $primary-color !important;
+}
+
+.bg-secondary {
+  color: $light-color;
+  background-color: $secondary-color !important;
+}
+
+.bg-gray {
+  color: $light-color;
+  background-color: $meta-color !important;
+}
+
+.bg-dark {
+  color: $light-color;
+  background-color: $dark-color !important;
+}
+
+.bg-success {
+  color: $light-color;
+  background-color: $success-color !important;
+}
+
+.bg-alert {
+  color: $light-color;
+  background-color: $alert-color !important;
+}
+
+.bg-draft {
+  color: $light-color;
+  background-color: $background-color !important;
+}
+

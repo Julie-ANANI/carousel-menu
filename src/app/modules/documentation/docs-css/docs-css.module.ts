@@ -15,7 +15,7 @@ import { CodeComponent } from './elements/code/code.component';
 import { MediaComponent } from './elements/media/media.component';
 import { FormComponent } from './elements/form/form.component';
 import { CloseComponent } from './elements/close/close.component';
-import { FlexboxComponent } from './layout/flexbox/flexbox.component';
+import { ColorsComponent } from './utilities/colors/colors.component';
 
 @NgModule({
   imports: [
@@ -36,7 +36,7 @@ import { FlexboxComponent } from './layout/flexbox/flexbox.component';
     MediaComponent,
     FormComponent,
     CloseComponent,
-    FlexboxComponent
+    ColorsComponent
   ],
 })
 

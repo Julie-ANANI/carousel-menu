@@ -25,7 +25,7 @@
                     <a [routerLink]="'elements/typography'">Typography</a>
                   </li>
                   <li class="menu-item">
-                    <a [routerLink]="'elements/button'">Button</a>
+                    <a [routerLink]="'elements/buttons'">Buttons</a>
                   </li>
                   <li class="menu-item">
                     <a [routerLink]="'elements/close'">Close</a>
@@ -34,7 +34,7 @@
                     <a [routerLink]="'elements/form'">Form</a>
                   </li>
                   <li class="menu-item">
-                    <a [routerLink]="'elements/label'">Label</a>
+                    <a [routerLink]="'elements/labels'">Labels</a>
                   </li>
                   <li class="menu-item">
                     <a [routerLink]="'elements/table'">Table</a>
@@ -49,7 +49,7 @@
               </div>
             </div>
 
-            <!-- layout -->
+            <!-- layout
             <div class="accordion docs-accordion">
               <input type="checkbox" id="accordion-layout" hidden [checked]="activeRoute.includes('layouts')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-layout">Layout</label>
@@ -60,7 +60,7 @@
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> -->
 
             <!-- components -->
             <div class="accordion docs-accordion">
@@ -75,13 +75,18 @@
               </div>
             </div>
 
-            <!-- utilities
+            <!-- utilities -->
             <div class="accordion docs-accordion">
               <input type="checkbox" id="accordion-utilities" hidden [checked]="activeRoute.includes('utilities')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-utilities">Utilities</label>
               <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/colors'">Colors</a>
+                  </li>
+                </ul>
               </div>
-            </div>-->
+            </div>
 
             <!-- angular
             <div class="accordion docs-accordion">
