@@ -90,7 +90,7 @@ export const COMMON = {
     'FORGET': 'Demander le mot de passe',
     'LOG_OUT': 'Se déconnecter',
     'SIGN_UP': 'S\'Inscrire',
-    'WELCOME': 'Bienvenus',
+    'WELCOME': 'Bienvenue',
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
     'DISCOVER': 'Showroom des innovations | UMI',
@@ -101,7 +101,7 @@ export const COMMON = {
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
     'COMMUNITY_PROJECTS': 'Projets | Community',
-    'ANSWER_TAGS': 'Answer tags | Projet'
+    'ANSWER_TAGS': 'Tags réponse | Projet'
   },
 
   'LABEL': {
@@ -121,13 +121,13 @@ export const COMMON = {
     'CONTENT': 'Contenu',
     'OPERATOR': 'Opérateur',
     'ADMIN': 'Affecter comme administrateur',
-    'PROFILE_URL': 'Profile URL',
+    'PROFILE_URL': 'URL du profil',
     'CAMPAIGN_NAME': 'Nom de la campagne',
     'NAME': 'Nom',
     'TYPE': 'Type',
     'SELECT_WORKFLOW': 'Sélectionner le workflow',
     'SELECT': 'Sélectionnez',
-    'CHOOSE_LANGUAGE': 'Sélectionnez Langue :',
+    'CHOOSE_LANGUAGE': 'Sélectionnez la langue :',
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
     'SIGNATURE_NAME': 'Nom Signature',
@@ -175,7 +175,7 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir minimum 9 caractères.',
+    'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir au minimum 9 caractères.',
     'MUST_CONTAIN': 'Le mot de passe doit contenir un symbole spécial ($@&!#).'
   },
 
@@ -241,7 +241,7 @@ export const COMMON = {
   'USER': {
     'DELETE': 'Supprimer le(s) utilisateur(s)',
     'DELETE_BOARD': {
-      'HEADING': 'Supprimer le forum',
+      'HEADING': 'Suppression',
       'CONTENT':'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
     }
   },
@@ -257,7 +257,7 @@ export const COMMON = {
     'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
     'DELETE': 'Supprimer le(s) professionnel(s)',
     'DELETE_BOARD': {
-      'HEADING': 'Supprimer le forum',
+      'HEADING': 'Suppression',
       'CONTENT':'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
     }
   },
@@ -306,7 +306,7 @@ export const COMMON = {
   'MAIL_EDITOR': {
     'QUESTION': 'Dans quelle langue souhaitez-vous communiquer avec le propriétaire du projet ?',
     'SUBJECT': 'Sujet',
-    'SUBJECT_PLACEHOLDER': 'Entrez l\'objet du courrier',
+    'SUBJECT_PLACEHOLDER': 'Entrez l\'objet du mail',
     'MESSAGE': 'Message',
   },
 

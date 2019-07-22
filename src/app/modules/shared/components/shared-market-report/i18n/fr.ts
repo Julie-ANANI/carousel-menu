@@ -24,7 +24,7 @@ export const MARKET_REPORT = {
     'STATUS_TO_EVALUATING': 'Modifier la synthèse'
   },
 
-  'INSIGHT': 'Des idées',
+  'INSIGHT': 'Réponse',
 
   'CONCLUSION': 'Conclusion finale',
 
@@ -172,7 +172,7 @@ export const MARKET_REPORT = {
 
   'TOOLTIP_LOAD_VIEW': 'Charger la vue',
 
-  'TOOLTIP_UNHIDE_PROFESSIONAL': 'Démasquer le professionnel',
+  'TOOLTIP_UNHIDE_PROFESSIONAL': 'Afficher le professionnel',
 
   'TOOLTIP_HIDE_PROFESSIONAL': 'Masquer le professionnel',
 

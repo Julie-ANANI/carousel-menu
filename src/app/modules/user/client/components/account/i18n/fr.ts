@@ -9,9 +9,9 @@ export const MY_ACCOUNT = {
   'DELETE': 'Supprimer mon compte',
 
   'DELETE_MODAL': {
-    'BOARD_TITLE': 'Supprimer le forum',
+    'BOARD_TITLE': 'Suppression',
     'TITLE': 'Voulez-vous vraiment supprimer votre compte ?',
-    'CONTENT': 'C\'est triste de te voir nous quitter. Toutes vos données personnelles seront supprimées. Quoi qu\'il en soit, si vous voulez revenir, vous êtes les bienvenus !'
+    'CONTENT': 'Nous sommes tristes de vous voir partir. Toutes vos données personnelles seront supprimées. Quoi qu\'il en soit, si vous voulez revenir, vous êtes les bienvenus !'
   },
 
   'JOB_TITLE_EXAMPLE': 'Ingénieur en  aérodynamique',
