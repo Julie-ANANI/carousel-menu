@@ -52,12 +52,6 @@ legend {
     color: $form-placeholder-color;
   }
 
-  &.input-inline {
-    display: inline-block;
-    vertical-align: middle;
-    width: auto;
-  }
-
   // Input types
   &[type="file"] {
     height: auto;
