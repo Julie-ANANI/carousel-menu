@@ -16,6 +16,7 @@ import { FormComponent } from './elements/form/form.component';
 import { CloseComponent } from './elements/close/close.component';
 import { ColorsComponent } from './utilities/colors/colors.component';
 import { CursorsComponent } from './utilities/cursors/cursors.component';
+import { DisplayComponent } from './utilities/display/display.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -59,6 +60,7 @@ const docsCssRoutes: Routes = [
       },
       { path: 'utilities/colors', component: ColorsComponent, pathMatch: 'full' },
       { path: 'utilities/cursors', component: CursorsComponent, pathMatch: 'full' },
+      { path: 'utilities/display', component: DisplayComponent, pathMatch: 'full' },
     ]
   }
 ];
