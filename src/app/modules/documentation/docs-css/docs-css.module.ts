@@ -16,6 +16,7 @@ import { MediaComponent } from './elements/media/media.component';
 import { FormComponent } from './elements/form/form.component';
 import { CloseComponent } from './elements/close/close.component';
 import { ColorsComponent } from './utilities/colors/colors.component';
+import { CursorsComponent } from './utilities/cursors/cursors.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ColorsComponent } from './utilities/colors/colors.component';
     MediaComponent,
     FormComponent,
     CloseComponent,
-    ColorsComponent
+    ColorsComponent,
+    CursorsComponent
   ],
 })
 
