@@ -13,6 +13,8 @@ import { LabelComponent } from './elements/label/label.component';
 import { CodeComponent } from './elements/code/code.component';
 import { MediaComponent } from './elements/media/media.component';
 import { FormComponent } from './elements/form/form.component';
+import { CloseComponent } from './elements/close/close.component';
+import { FlexboxComponent } from './layout/flexbox/flexbox.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -29,7 +31,9 @@ const docsCssRoutes: Routes = [
       { path: 'elements/code', component: CodeComponent, pathMatch: 'full' },
       { path: 'elements/media', component: MediaComponent, pathMatch: 'full' },
       { path: 'elements/form', component: FormComponent, pathMatch: 'full' },
-      { path: 'components/accordions', component: AccordionsComponent, pathMatch: 'full' }
+      { path: 'elements/close', component: CloseComponent, pathMatch: 'full' },
+      { path: 'components/accordions', component: AccordionsComponent, pathMatch: 'full' },
+      { path: 'layout/flexbox', component: FlexboxComponent, pathMatch: 'full' }
     ]
   }
 ];
