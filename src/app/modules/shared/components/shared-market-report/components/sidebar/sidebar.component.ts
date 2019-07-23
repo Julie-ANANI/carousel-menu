@@ -327,31 +327,32 @@ export class SidebarComponent implements OnInit {
   public filterEverything(event: Event, filterArray: Array<any>, typeFilter: string) {
     event.preventDefault();
     let question: Question;
+    const isChecked = (event.target as HTMLInputElement).checked;
     switch (typeFilter) {
       case 'CONTINENT':
         filterArray.forEach(continent => {
-            this._worldmapFilterService.selectContinent(continent, (event.target as HTMLInputElement).checked);
+            this._worldmapFilterService.selectContinent(continent, isChecked);
           });
         break;
       case 'TAG':
         filterArray.forEach(tag => {
-          this._tagService.checkTag(tag._id, (event.target as HTMLInputElement).checked);
+          this._tagService.checkTag(tag._id, isChecked);
         });
         break;
       case 'textarea':
         question = filterArray[0];
         const tagArray: Array<Tag> = this._tagService.answersTagsLists[question.identifier];
         tagArray.forEach(t => {
-          this._tagService.checkAnswerTag(question.identifier, t._id, (event.target as HTMLInputElement).checked);
+          this._tagService.checkAnswerTag(question.identifier, t._id, isChecked);
         });
         break;
       case 'radio':
       case 'checkbox':
         question = filterArray[0];
-        if ((event.target as HTMLInputElement).checked) {
+        if (isChecked) {
           this._filterService.deleteFilter(question.identifier);
         } else {
-          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = (event.target as HTMLInputElement).checked; return acc; }, {} as any);
+          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = isChecked; return acc; }, {} as any);
           this._filterService.addFilter({
             status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
             questionId: question.identifier,
