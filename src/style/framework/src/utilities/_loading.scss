@@ -71,9 +71,14 @@
 .loading-content {
   position: relative;
   background-color: #DBDBDB;
+  min-height: 30px;
 
   &.card-image {
     border-radius: 0;
+  }
+
+  &.card-body {
+    margin-top: $unit-3;
   }
 
   &.btn, &.button {
