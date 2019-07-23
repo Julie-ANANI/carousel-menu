@@ -21,7 +21,7 @@ export class SharedWorldmapComponent implements OnInit{
     /*
      * TODO: Has anyone thought about how to remove a country from the list ?
      */
-    if (Array.isArray(value) && value.length > 0) {
+    if (Array.isArray(value) && value.length > 0 && !this.countriesData) {
       value.forEach((country) => {
         const country_elems = this._elem.nativeElement.getElementsByClassName(country);
         if (country_elems && country_elems.length) {
@@ -32,6 +32,21 @@ export class SharedWorldmapComponent implements OnInit{
           console.log(`This country is nowhere to be found in the svg map ${country}`);
         }
       });
+    }
+  }
+
+  @Input() set countriesData(value: any) {
+    this.showLegend = true;
+    for (let country in value) {
+      const color = value[country] < 3 ? "#97E8B9" : value[country] < 6 ? "#9BDE56" : "#39CB74";
+      const country_elems = this._elem.nativeElement.getElementsByClassName(country);
+      if (country_elems && country_elems.length) {
+        Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
+          country_el.style.fill = color;
+        });
+      } else {
+        console.log(`This country is nowhere to be found in the svg map ${country}`);
+      }
     }
   }
 
@@ -50,6 +65,8 @@ export class SharedWorldmapComponent implements OnInit{
   @Output() updateContinent = new EventEmitter<any>();
 
   @Output() hoveredContinent = new EventEmitter<string>();
+
+  public showLegend: boolean = false;
 
   /* Initialise continents selections with everything to false */
   private _continents = SharedWorldmapService.continentsList.reduce((acc, cont) => {

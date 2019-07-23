@@ -2,6 +2,10 @@
 
 #projects-list-component {
 
+  .no-result-wrapper {
+    min-height: 70vh;
+  }
+
   .card-wrapper {
     margin-bottom: -1.5rem;
 
