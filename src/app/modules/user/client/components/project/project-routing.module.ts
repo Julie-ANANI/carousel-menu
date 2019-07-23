@@ -20,7 +20,7 @@ const projectRoutes: Routes = [
           { path: 'survey', pathMatch: 'full' },
           { path: 'pitch', pathMatch: 'full' },
           { path: 'targeting', pathMatch: 'full' },
-          { path: '', redirectTo: 'targeting', pathMatch: 'full' }
+          { path: '', redirectTo: 'pitch', pathMatch: 'full' }
         ]
       },
       {

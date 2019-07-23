@@ -74,7 +74,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private getCurrentPage() {
     const url = this.router.routerState.snapshot.url.split('/');
-    this._currentPage = url.length > 0 ? url[5] : 'targeting';
+    this._currentPage = url.length > 0 ? url[5] : 'pitch';
   }
 
 
