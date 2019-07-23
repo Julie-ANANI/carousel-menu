@@ -5,6 +5,8 @@ export const MARKET_REPORT = {
 
   'RESET_FILTERS': 'Reset filters',
 
+  'FILTER_EVERYTHING': 'Filter',
+
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
     'EDITING': 'Please finish setup of your project and submit it.',

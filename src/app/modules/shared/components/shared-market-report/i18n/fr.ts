@@ -5,6 +5,8 @@ export const MARKET_REPORT = {
 
   'RESET_FILTERS': 'Réinitialiser les filtres',
 
+  'FILTER_EVERYTHING': 'Tout filtrer',
+
   'MESSAGE': {
     'SUBMITTED': 'Votre innovation est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
