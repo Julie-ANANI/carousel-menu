@@ -20,6 +20,7 @@ import { CursorsComponent } from './utilities/cursors/cursors.component';
 import { DisplayComponent } from './utilities/display/display.component';
 import { DividerComponent } from './utilities/divider/divider.component';
 import { IconComponent } from './elements/icon/icon.component';
+import { LoadingComponent } from './utilities/loading/loading.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { IconComponent } from './elements/icon/icon.component';
     CursorsComponent,
     DisplayComponent,
     DividerComponent,
-    IconComponent
+    IconComponent,
+    LoadingComponent
   ],
 })
 
