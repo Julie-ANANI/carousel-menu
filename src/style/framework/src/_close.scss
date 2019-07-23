@@ -3,10 +3,10 @@
 
 .close {
   @include inline-flex-centered();
+  @include icon-transition();
   user-select: none;
   white-space: nowrap;
   text-decoration: none;
-  transition: background-color 0.4s ease;
   background: transparent;
   border: 0;
   color: $light-color;
@@ -19,7 +19,7 @@
   height: 40px;
   font-weight: $font-weight-medium;
   line-height: $line-height-sm;
-  font-size: $font-icon-xl;
+  font-size: $font-icon-lg;
 
   &::before {
     display: none;
@@ -62,7 +62,6 @@
 
     }
 
-
   }
 
   &.is-xs {
@@ -74,13 +73,13 @@
   &.is-sm {
     width: 32px;
     height: 32px;
-    font-size: $font-icon-lg;
+    font-size: $font-icon-md;
   }
 
   &.is-normal {
     width: 40px;
     height: 40px;
-    font-size: $font-icon-xl;
+    font-size: $font-icon-lg;
   }
 
   &.is-lg {

@@ -1,82 +1,121 @@
 @import "variables";
+@import "mixins";
 
 .icon {
-  outline: none;
-  text-decoration: none;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-md;
   display: inline-block;
   position: relative;
-  margin-left: $unit-2;
-  margin-right: $unit-2;
-  cursor: pointer;
+  outline: none;
+  height: $unit-5;
+  width: $unit-5;
+  font-size: $font-icon-md;
+  text-decoration: none;
+  text-align: center;
+  margin: 0;
   color: $border-color;
 
-  &.icon-delete {
-    color: $alert-color;
+  &:hover {
+    cursor: pointer;
   }
 
-  &.icon-success {
-    color: $success-color;
+  &.is-primary {
+    color: $primary-color;
   }
 
-  &.icon-meta {
-    color: $meta-color;
-  }
-
-  &.icon-white {
-    color: $light-color;
-  }
-
-  &.icon-secondary {
+  &.is-secondary {
     color: $secondary-color;
   }
 
-}
-
-
-/*
-&.is-overlay {
-  transition: all 0.4s ease;
-  background: transparent;
-  border: 0;
-  height: 30px;
-  padding: 0;
-  color: inherit;
-  text-decoration: none;
-  position: relative;
-  width: 12px;
-  line-height: $line-height;
-
-  i {
-    font-size: $font-icon-xl;
-    margin-left: 0;
-    margin-right: 0;
+  &.is-info {
+    color: $meta-color;
   }
 
-  &:hover {
+  &.is-draft {
+    color: $background-color;
+  }
+
+  &.is-success {
+    color: $success-color;
+  }
+
+  &.is-white {
+    color: $light-color;
+  }
+
+  &.is-delete {
+    color: $alert-color;
+  }
+
+  &.is-overlay {
+    @include icon-transition();
 
     &::before {
-      display: block;
-      opacity: 0.15;
+      display: none;
+      content: '';
+      width: calc(100% + 1rem);
+      height: calc(100% + 1rem);
+      border-radius: 50%;
+      top: -40%;
+      left: -50%;
+      position: absolute;
     }
 
-    i {
-      opacity: 1;
-      z-index: 2;
+    &:hover, &.is-overlay-active {
+
+      &::before {
+        display: block;
+        background-color: rgba(0, 0, 0, 0.15);
+      }
+
     }
 
   }
 
-  &::before {
-    display: none;
-    content: '';
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: $bg-overlay-dark-color;
-    position: absolute;
-    opacity: 0;
+  &.is-sm {
+    height: 0.75rem;
+    width: 0.75rem;
+    font-size: $font-icon-sm;
+
+    &.is-overlay::before {
+      width: calc(100% + 0.75rem);
+      height: calc(100% + 0.75rem);
+    }
+
   }
 
-}*/
+  &.is-normal {
+    height: $unit-5;
+    width: $unit-5;
+    font-size: $font-icon-md;
+
+    &.is-overlay::before {
+      width: calc(100% + 1rem);
+      height: calc(100% + 1rem);
+    }
+
+  }
+
+  &.is-lg {
+    height: 1.3rem;
+    width: 1.3rem;
+    font-size: $font-icon-lg;
+
+    &.is-overlay::before {
+      width: calc(100% + 1.3rem);
+      height: calc(100% + 1.3rem);
+    }
+
+  }
+
+  &.is-xl {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: $font-icon-xl;
+
+    &.is-overlay::before {
+      width: calc(100% + 1.5rem);
+      height: calc(100% + 1.5rem);
+    }
+
+  }
+
+}
