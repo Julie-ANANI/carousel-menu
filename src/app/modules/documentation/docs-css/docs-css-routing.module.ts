@@ -14,6 +14,7 @@ import { CodeComponent } from './elements/code/code.component';
 import { MediaComponent } from './elements/media/media.component';
 import { FormComponent } from './elements/form/form.component';
 import { CloseComponent } from './elements/close/close.component';
+import { IconComponent } from './elements/icon/icon.component';
 import { ColorsComponent } from './utilities/colors/colors.component';
 import { CursorsComponent } from './utilities/cursors/cursors.component';
 import { DisplayComponent } from './utilities/display/display.component';
@@ -48,6 +49,7 @@ const docsCssRoutes: Routes = [
       { path: 'elements/media', component: MediaComponent, pathMatch: 'full' },
       { path: 'elements/form', component: FormComponent, pathMatch: 'full' },
       { path: 'elements/close', component: CloseComponent, pathMatch: 'full' },
+      { path: 'elements/icons', component: IconComponent, pathMatch: 'full' },
       {
         path: 'components',
         redirectTo: 'components/accordions',
