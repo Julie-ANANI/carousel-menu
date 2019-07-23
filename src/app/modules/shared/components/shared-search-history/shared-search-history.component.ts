@@ -25,7 +25,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     limit: "10",
     offset: "0",
     search: "{}",
-    sort: "{created: -1}"
+    sort: '{ "created": -1 }'
   };
 
   private _paginationConfig: Pagination = {limit: parseInt(this._config.limit), offset: parseInt(this._config.offset)};
