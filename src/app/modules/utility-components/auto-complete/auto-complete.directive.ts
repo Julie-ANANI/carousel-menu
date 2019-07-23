@@ -232,7 +232,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
             this.styleAutoCompleteDropdown();
             component.dropdownVisible = true;
         });
-    }
+    };
 
     public blurHandler(event: any) {
         if (this.componentRef) {
@@ -266,7 +266,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
         }
         this.dropdownJustHidden = true;
         setTimeout(() => this.dropdownJustHidden = false, 100);
-    }
+    };
 
     public styleAutoCompleteDropdown = () => {
         if (this.componentRef) {
@@ -288,7 +288,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
                 this.acDropdownEl.style.top = `${thisInputElBCR.height}px`;
             }
         }
-    }
+    };
 
     public setToStringFunction(item: any): any {
         if (item && typeof item === 'object') {
@@ -347,7 +347,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
 
             return this.inputEl;
         });
-    }
+    };
 
     public selectCustomValue = (text: string) => {
         this.customSelected.emit(text);
@@ -359,21 +359,21 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
 
             return this.inputEl;
         });
-    }
+    };
 
     public enterNewText = (value: any) => {
         this.renderValue(value);
         this.ngModelChange.emit(value);
         this.valueChanged.emit(value);
         this.hideAutoCompleteDropdown();
-    }
+    };
 
     private keydownEventHandler = (evt: any) => {
         if (this.componentRef) {
             const component = this.componentRef.instance;
             component.inputElKeyHandler(evt);
         }
-    }
+    };
 
     private inputEventHandler = (evt: any) => {
         if (this.componentRef) {
@@ -384,7 +384,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
         } else {
             this.showAutoCompleteDropdown();
         }
-    }
+    };
 
     private renderValue(item: any) {
         if (!!this.inputEl) {

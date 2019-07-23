@@ -18,6 +18,8 @@ import { CloseComponent } from './elements/close/close.component';
 import { ColorsComponent } from './utilities/colors/colors.component';
 import { CursorsComponent } from './utilities/cursors/cursors.component';
 import { DisplayComponent } from './utilities/display/display.component';
+import { DividerComponent } from './utilities/divider/divider.component';
+import { IconComponent } from './elements/icon/icon.component';
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import { DisplayComponent } from './utilities/display/display.component';
     CloseComponent,
     ColorsComponent,
     CursorsComponent,
-    DisplayComponent
+    DisplayComponent,
+    DividerComponent,
+    IconComponent
   ],
 })
 
