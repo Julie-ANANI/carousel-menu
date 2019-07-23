@@ -11,7 +11,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { SharedFilter } from '../../models/shared-filter';
 import { Tag } from '../../../../../../models/tag';
-import { SharedWorldmapService } from "../../../shared-worldmap/shared-worldmap.service";
+import { SharedWorldmapService } from '../../../shared-worldmap/shared-worldmap.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -326,31 +326,38 @@ export class SidebarComponent implements OnInit {
 
   public filterEverything(event: Event, filterArray: Array<any>, typeFilter: string) {
     event.preventDefault();
+    let question: Question;
     switch (typeFilter) {
       case 'CONTINENT':
         filterArray.forEach(continent => {
-          this._worldmapFilterService.selectContinent(continent, false);
-        });
+            this._worldmapFilterService.selectContinent(continent, (event.target as HTMLInputElement).checked);
+          });
         break;
       case 'TAG':
         filterArray.forEach(tag => {
-          this._tagService.checkTag(tag._id, false);
+          this._tagService.checkTag(tag._id, (event.target as HTMLInputElement).checked);
         });
         break;
       case 'textarea':
-        filterArray.forEach(q => {
-          this._tagService.checkAnswerTag(q.identifier, (event.target as HTMLInputElement).name, false);
+        question = filterArray[0];
+        const tagArray: Array<Tag> = this._tagService.answersTagsLists[question.identifier];
+        tagArray.forEach(t => {
+          this._tagService.checkAnswerTag(question.identifier, t._id, (event.target as HTMLInputElement).checked);
         });
         break;
       case 'radio':
       case 'checkbox':
-        const question: Question = filterArray[0];
-        const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = false; return acc; }, {} as any);
-        this._filterService.addFilter({
-          status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
-          questionId: question.identifier,
-          value: filterValue
-        });
+        question = filterArray[0];
+        if ((event.target as HTMLInputElement).checked) {
+          this._filterService.deleteFilter(question.identifier);
+        } else {
+          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = (event.target as HTMLInputElement).checked; return acc; }, {} as any);
+          this._filterService.addFilter({
+            status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
+            questionId: question.identifier,
+            value: filterValue
+          });
+        }
         break;
     }
   }

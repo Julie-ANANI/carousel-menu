@@ -183,19 +183,24 @@
     <!-- map filters -->
     <div class="filter-rest-wrapper">
 
-      <a href="#map" pageScroll class="text-primary-dark">
-        <div class="flex-between">
-          <span [innerText]="'MARKET_REPORT.MAP.TITLE'" translate></span>
-          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
-        </div>
-      </a>
-
-      <div *ngIf="continentsList?.length > 0" class="filter-reset-wrapper">
-        <span class="text-link" (click)="filterEverything($event, continentsList, 'CONTINENT')">
-            <i class="fas fa-times"></i>
-            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
-        </span>
+      <div *ngIf="continentsList?.length > 0" class="m-bottom-15">
+          <span class="d-flex align-center">
+            <label class="form-checkbox p-no-right">
+              <input
+                type="checkbox"
+                (change)="filterEverything($event, continentsList, 'CONTINENT')"
+                [checked]="!(!!filters['worldmap'])">
+              <i class="form-icon"></i>
+             </label>
+              <div [ngStyle]="{ 'flex': '1' }">
+                <a href="#map" pageScroll class="flex-between m-no-bottom">
+                  <span class="text-primary-dark">{{ 'MARKET_REPORT.MAP.TITLE' | translate }}</span>
+                  <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+                </a>
+              </div>
+          </span>
       </div>
+
       <div *ngFor="let continent of continentsList" class="form-group">
         <label class="form-checkbox">
           <input
@@ -212,30 +217,35 @@
 
     <!-- professional filters -->
     <div class="filter-rest-wrapper filter-professional">
-
-      <a href="#professionals" pageScroll class="text-primary-dark">
-        <div class="flex-between">
-          <span [innerText]="'MARKET_REPORT.PROFESSIONAL.TITLE'" translate></span>
-          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
-        </div>
-      </a>
-
-      <div *ngIf="(seeMore.professionals ? tagsList : (tagsList | slice:0:6))?.length > 0" class="filter-reset-wrapper">
-        <span class="text-link" (click)="filterEverything($event, seeMore.professionals ? tagsList : tagsList, 'TAG')">
-            <i class="fas fa-times"></i>
-            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
-        </span>
-        <div *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))" class="form-group">
-          <label class="form-checkbox">
+      <div *ngIf="(seeMore.professionals ? tagsList : (tagsList | slice:0:6))?.length > 0" class="m-bottom-15">
+        <span class="d-flex align-center">
+          <label class="form-checkbox p-no-right">
             <input
               type="checkbox"
-              [name]="tag.label | multiling:userLang"
-              (change)="checkTag($event, tag._id)"
-              [checked]="selectedTags[tag._id]">
-            <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
+              (change)="filterEverything($event, seeMore.professionals ? tagsList : tagsList, 'TAG')"
+              [checked]="!filters['tags']">
+            <i class="form-icon"></i>
           </label>
-        </div>
+            <div [ngStyle]="{ 'flex': '1' }">
+              <a href="#professionals" pageScroll class="flex-between m-no-bottom">
+                <span class="text-primary-dark" [innerText]="'MARKET_REPORT.PROFESSIONAL.TITLE'" translate></span>
+                <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+              </a>
+            </div>
+        </span>
       </div>
+
+      <div *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))" class="form-group">
+        <label class="form-checkbox">
+          <input
+            type="checkbox"
+            [name]="tag.label | multiling:userLang"
+            (change)="checkTag($event, tag._id)"
+            [checked]="selectedTags[tag._id]">
+          <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
+        </label>
+      </div>
+
 
       <!-- see more -->
       <div *ngIf="tagsList && tagsList.length > 6 && !seeMore.professionals">
@@ -264,20 +274,23 @@
 
     <!-- questions filters -->
     <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
-
-      <a [href]="'#' + question.identifier" pageScroll class="text-primary-dark c-hand">
-        <div class="flex-between">
-          <span>{{ question.title | multiling:userLang | FormatText }}</span>
-          <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
-        </div>
-      </a>
-
       <!-- textarea -->
       <ng-container *ngIf="question.controlType === 'textarea'">
-        <div *ngIf="seeMore[question.identifier]?.length > 0" class="filter-reset-wrapper">
-          <span class="text-link" (click)="filterEverything($event, question, 'textarea')">
-            <i class="fas fa-times"></i>
-            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
+        <div *ngIf=" (seeMore.professionals ? tagsList : (tagsList | slice:0:6))?.length > 0" class="m-bottom-15">
+          <span class="d-flex align-center">
+            <label class="form-checkbox p-no-right">
+            <input
+              type="checkbox"
+              (change)="filterEverything($event, [question], question.controlType)"
+              [checked]="!filters['tags']">
+            <i class="form-icon"></i>
+            </label>
+            <div [ngStyle]="{ 'flex': '1' }">
+              <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom">
+                <span class="text-primary-dark" [innerText]="question.title | multiling:userLang | FormatText"></span>
+                <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+              </a>
+            </div>
           </span>
         </div>
         <div
@@ -308,12 +321,26 @@
 
       <!-- checkbox/radio -->
       <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
-        <div *ngIf="question.options?.length > 0" class="filter-reset-wrapper">
-          <span class="text-link" (click)="filterEverything($event, [question], question.controlType)">
-            <i class="fas fa-times"></i>
-            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
+
+        <div *ngIf="question.options?.length > 0" class="m-bottom-15">
+          <span class="d-flex align-center">
+            <label class="form-checkbox p-no-right">
+            <input
+              type="checkbox"
+              (change)="filterEverything($event, [question], question.controlType)"
+              [checked]="!filters[question.identifier]">
+            <i class="form-icon"></i>
+            </label>
+            <div [ngStyle]="{ 'flex': '1' }">
+              <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom">
+                <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
+                <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+              </a>
+            </div>
           </span>
         </div>
+
+
         <div *ngFor="let option of question.options" class="form-group">
           <label class="form-checkbox">
             <input
