@@ -324,6 +324,38 @@ export class SidebarComponent implements OnInit {
   }
 
 
+  public filterEverything(event: Event, filterArray: Array<any>, typeFilter: string) {
+    event.preventDefault();
+    switch (typeFilter) {
+      case 'CONTINENT':
+        filterArray.forEach(continent => {
+          this._worldmapFilterService.selectContinent(continent, false);
+        });
+        break;
+      case 'TAG':
+        filterArray.forEach(tag => {
+          this._tagService.checkTag(tag._id, false);
+        });
+        break;
+      case 'textarea':
+        filterArray.forEach(q => {
+          this._tagService.checkAnswerTag(q.identifier, (event.target as HTMLInputElement).name, false);
+        });
+        break;
+      case 'radio':
+      case 'checkbox':
+        const question: Question = filterArray[0];
+        const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = false; return acc; }, {} as any);
+        this._filterService.addFilter({
+          status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
+          questionId: question.identifier,
+          value: filterValue
+        });
+        break;
+    }
+  }
+
+
   get activatedCustomFilters() {
     return this._activatedCustomFilters;
   }

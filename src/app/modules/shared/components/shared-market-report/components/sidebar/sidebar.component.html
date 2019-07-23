@@ -30,11 +30,13 @@
 
         <div class="dropdown-menu">
 
-          <div *ngIf="!innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" (click)="modalPreviewInnovation = true">
+          <div *ngIf="!innovation.previewMode && innovation.status !== 'DONE'" class="drop-item"
+               (click)="modalPreviewInnovation = true">
             <span>Make project visible to client</span>
           </div>
 
-          <div *ngIf="innovation.previewMode && innovation.status !== 'DONE'" class="drop-item" (click)="modalPreviewInnovation = true">
+          <div *ngIf="innovation.previewMode && innovation.status !== 'DONE'" class="drop-item"
+               (click)="modalPreviewInnovation = true">
             <span>Make project invisible to client</span>
           </div>
 
@@ -42,7 +44,8 @@
             <a href="#executive-generate" pageScroll>Generate executive report</a>
           </div>
 
-          <div *ngIf="innovation.executiveReport.totalSections > 0 && isAdminSide" class="drop-item" (click)="modalResetReport = true">
+          <div *ngIf="innovation.executiveReport.totalSections > 0 && isAdminSide" class="drop-item"
+               (click)="modalResetReport = true">
             <span>Reset executive report</span>
           </div>
 
@@ -62,7 +65,8 @@
 
     <!-- export option -->
     <div *ngIf="isOwner && !isAdminSide && !reportShared" class="text-center">
-      <button class="btn btn-primary gtm-export-synthesis" (click)="modalExport = true" [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
+      <button class="btn btn-primary gtm-export-synthesis" (click)="modalExport = true"
+              [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
       <div class="divider"></div>
     </div>
     <!-- /export option -->
@@ -74,10 +78,13 @@
       <h6 [innerText]="'MARKET_REPORT.VIEWS'" translate></h6>
 
       <div *ngFor="let filter of sharedFiltersList" class="different-views">
-        <div class="d-inline-flex tooltip tooltip-right" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_DELETE_VIEW' | translate" (click)="deleteCustomFilter($event, filter.name)">
+        <div class="d-inline-flex tooltip tooltip-right"
+             [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_DELETE_VIEW' | translate"
+             (click)="deleteCustomFilter($event, filter.name)">
           <i class="fas fa-trash-alt text-alert c-hand" aria-hidden="true"></i>
         </div>
-        <a class="c-hand text-background tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate" (click)="loadFilter(filter.name)">{{ filter.name }}</a>
+        <a class="c-hand text-background tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate"
+           (click)="loadFilter(filter.name)">{{ filter.name }}</a>
       </div>
 
       <form #shareFilterForm="ngForm" (ngSubmit)="shareNewFilter()">
@@ -95,7 +102,8 @@
         </div>
 
         <div class="text-center">
-          <button class="btn btn-sm ghost-primary" type="submit" [disabled]="!filterName" [textContent]="'MARKET_REPORT.BUTTON_SAVE_VIEW'" translate></button>
+          <button class="btn btn-sm ghost-primary" type="submit" [disabled]="!filterName"
+                  [textContent]="'MARKET_REPORT.BUTTON_SAVE_VIEW'" translate></button>
         </div>
 
       </form>
@@ -135,7 +143,8 @@
 
 
     <!-- executive report -->
-    <div *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
+    <div *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" class="filter-rest-wrapper"
+         [ngStyle]="{ 'padding-bottom': '1rem' }">
       <a href="#executive-report" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span>Executive report</span>
@@ -147,7 +156,8 @@
 
 
     <!-- key-learning -->
-    <div *ngIf="innovation.marketReport?.keyLearning?.conclusion || isAdminSide" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
+    <div *ngIf="innovation.marketReport?.keyLearning?.conclusion || isAdminSide" class="filter-rest-wrapper"
+         [ngStyle]="{ 'padding-bottom': '1rem' }">
       <a href="#key-learnings" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></span>
@@ -180,6 +190,12 @@
         </div>
       </a>
 
+      <div *ngIf="continentsList?.length > 0" class="filter-reset-wrapper">
+        <span class="text-link" (click)="filterEverything($event, continentsList, 'CONTINENT')">
+            <i class="fas fa-times"></i>
+            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
+        </span>
+      </div>
       <div *ngFor="let continent of continentsList" class="form-group">
         <label class="form-checkbox">
           <input
@@ -190,7 +206,6 @@
           <i class="form-icon"></i><span>{{ ('CONTINENTS.' + continent) | translate }}</span>
         </label>
       </div>
-
     </div>
     <!-- /map filters -->
 
@@ -205,29 +220,38 @@
         </div>
       </a>
 
-      <div *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))" class="form-group">
-        <label class="form-checkbox">
-          <input
-            type="checkbox"
-            [name]="tag.label | multiling:userLang"
-            (change)="checkTag($event, tag._id)"
-            [checked]="selectedTags[tag._id]">
-          <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
-        </label>
+      <div *ngIf="(seeMore.professionals ? tagsList : (tagsList | slice:0:6))?.length > 0" class="filter-reset-wrapper">
+        <span class="text-link" (click)="filterEverything($event, seeMore.professionals ? tagsList : tagsList, 'TAG')">
+            <i class="fas fa-times"></i>
+            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
+        </span>
+        <div *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))" class="form-group">
+          <label class="form-checkbox">
+            <input
+              type="checkbox"
+              [name]="tag.label | multiling:userLang"
+              (change)="checkTag($event, tag._id)"
+              [checked]="selectedTags[tag._id]">
+            <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
+          </label>
+        </div>
       </div>
 
       <!-- see more -->
       <div *ngIf="tagsList && tagsList.length > 6 && !seeMore.professionals">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="seeMore.professionals = true"></span>
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
+              (click)="seeMore.professionals = true"></span>
       </div>
 
       <!-- see less -->
       <div *ngIf="tagsList && tagsList.length > 6 && seeMore.professionals">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="seeMore.professionals = false"></span>
+        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
+              (click)="seeMore.professionals = false"></span>
       </div>
 
       <div *ngIf="filters['professionals']" class="professional-hide-wrapper">
-        <div *ngFor="let professional of filters['professionals'].value | keyvalue" (click)="deleteProfessionalFilter($event, professional.key)"
+        <div *ngFor="let professional of filters['professionals'].value | keyvalue"
+             (click)="deleteProfessionalFilter($event, professional.key)"
              class="tooltip c-hand" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_UNHIDE_PROFESSIONAL' | translate">
           <i class="fas fa-eye-slash text-alert" aria-hidden="true"></i>
           <span>{{ professional.value.professional?.firstName }} {{ professional.value.professional?.lastName }}</span>
@@ -250,8 +274,15 @@
 
       <!-- textarea -->
       <ng-container *ngIf="question.controlType === 'textarea'">
-        <div *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
-             class="form-group">
+        <div *ngIf="seeMore[question.identifier]?.length > 0" class="filter-reset-wrapper">
+          <span class="text-link" (click)="filterEverything($event, question, 'textarea')">
+            <i class="fas fa-times"></i>
+            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
+          </span>
+        </div>
+        <div
+          *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
+          class="form-group">
           <label class="form-checkbox">
             <input
               type="checkbox"
@@ -262,17 +293,27 @@
           </label>
         </div>
         <!-- see more -->
-        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
-          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate (click)="seeMore[question.identifier] = true"></span>
+        <div
+          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
+          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
+                (click)="seeMore[question.identifier] = true"></span>
         </div>
         <!-- see less -->
-        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
-          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate (click)="seeMore[question.identifier] = false"></span>
+        <div
+          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
+          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
+                (click)="seeMore[question.identifier] = false"></span>
         </div>
       </ng-container>
 
       <!-- checkbox/radio -->
       <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
+        <div *ngIf="question.options?.length > 0" class="filter-reset-wrapper">
+          <span class="text-link" (click)="filterEverything($event, [question], question.controlType)">
+            <i class="fas fa-times"></i>
+            <span [innerText]="'MARKET_REPORT.FILTER_EVERYTHING'" translate></span>
+          </span>
+        </div>
         <div *ngFor="let option of question.options" class="form-group">
           <label class="form-checkbox">
             <input
@@ -284,13 +325,13 @@
           </label>
         </div>
       </ng-container>
-
     </div>
     <!-- /questions filters -->
 
 
     <!-- conclusion filters -->
-    <div *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || isAdminSide" class="filter-rest-wrapper">
+    <div *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || isAdminSide"
+         class="filter-rest-wrapper">
       <a href="#conclusion" pageScroll class="text-primary-dark">
         <div class="flex-between">
           <span [innerText]="'MARKET_REPORT.CONCLUSION'" translate></span>
@@ -327,7 +368,6 @@
 <!-- /Modal to ask the admin to confirm for the preview of the innovation at the side of the client -->
 
 
-
 <!-- Modal to ask the operator to confirm for the reset of the executive report -->
 <app-modal [modalTitle]="'Confirmation Board'" [(showModal)]="modalResetReport">
 
@@ -340,7 +380,6 @@
 
 </app-modal>
 <!-- /Modal to ask the operator to confirm for the reset of the executive report -->
-
 
 
 <!-- Modal to ask the operator to sure about ending the project -->
@@ -359,6 +398,7 @@
 
 <!-- Modal to ask operator and client to export different reports -->
 <ng-container *ngIf="isOwner">
-  <app-market-report-export-modal [innovation]="innovation" [(showModal)]="modalExport"></app-market-report-export-modal>
+  <app-market-report-export-modal [innovation]="innovation"
+                                  [(showModal)]="modalExport"></app-market-report-export-modal>
 </ng-container>
 <!-- /Modal to ask operator and client to export different reports -->
