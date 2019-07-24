@@ -22,6 +22,7 @@ import { DividerComponent } from './utilities/divider/divider.component';
 import { IconComponent } from './elements/icon/icon.component';
 import { LoadingComponent } from './utilities/loading/loading.component';
 import { MarginsComponent } from './utilities/margins/margins.component';
+import { PaddingsComponent } from './utilities/paddings/paddings.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { MarginsComponent } from './utilities/margins/margins.component';
     DividerComponent,
     IconComponent,
     LoadingComponent,
-    MarginsComponent
+    MarginsComponent,
+    PaddingsComponent
   ],
 })
 
