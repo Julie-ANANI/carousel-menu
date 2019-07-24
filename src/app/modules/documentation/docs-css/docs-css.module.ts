@@ -21,6 +21,7 @@ import { DisplayComponent } from './utilities/display/display.component';
 import { DividerComponent } from './utilities/divider/divider.component';
 import { IconComponent } from './elements/icon/icon.component';
 import { LoadingComponent } from './utilities/loading/loading.component';
+import { MarginsComponent } from './utilities/margins/margins.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { LoadingComponent } from './utilities/loading/loading.component';
     DisplayComponent,
     DividerComponent,
     IconComponent,
-    LoadingComponent
+    LoadingComponent,
+    MarginsComponent
   ],
 })
 
