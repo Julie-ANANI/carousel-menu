@@ -23,6 +23,7 @@ import { IconComponent } from './elements/icon/icon.component';
 import { LoadingComponent } from './utilities/loading/loading.component';
 import { MarginsComponent } from './utilities/margins/margins.component';
 import { PaddingsComponent } from './utilities/paddings/paddings.component';
+import { PositionsComponent } from './utilities/positions/positions.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { PaddingsComponent } from './utilities/paddings/paddings.component';
     IconComponent,
     LoadingComponent,
     MarginsComponent,
-    PaddingsComponent
+    PaddingsComponent,
+    PositionsComponent
   ],
 })
 
