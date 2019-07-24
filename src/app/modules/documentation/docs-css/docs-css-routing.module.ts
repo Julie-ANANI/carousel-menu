@@ -20,6 +20,9 @@ import { CursorsComponent } from './utilities/cursors/cursors.component';
 import { DisplayComponent } from './utilities/display/display.component';
 import { DividerComponent } from './utilities/divider/divider.component';
 import { LoadingComponent } from './utilities/loading/loading.component';
+import { MarginsComponent } from './utilities/margins/margins.component';
+import { PaddingsComponent } from './utilities/paddings/paddings.component';
+import { PositionsComponent } from './utilities/positions/positions.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -67,6 +70,9 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/display', component: DisplayComponent, pathMatch: 'full' },
       { path: 'utilities/divider', component: DividerComponent, pathMatch: 'full' },
       { path: 'utilities/loading', component: LoadingComponent, pathMatch: 'full' },
+      { path: 'utilities/margins', component: MarginsComponent, pathMatch: 'full' },
+      { path: 'utilities/paddings', component: PaddingsComponent, pathMatch: 'full' },
+      { path: 'utilities/position', component: PositionsComponent, pathMatch: 'full' },
     ]
   }
 ];

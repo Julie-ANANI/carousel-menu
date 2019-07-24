@@ -5,9 +5,9 @@
   display: inline-block;
   position: relative;
   outline: none;
-  height: $unit-5;
-  width: $unit-5;
-  font-size: $font-icon-md;
+  height: 0.95rem;
+  width: 0.95rem;
+  font-size: $font-icon;
   text-decoration: none;
   text-align: center;
   margin: 0;
@@ -51,8 +51,8 @@
     &::before {
       display: none;
       content: '';
-      width: calc(100% + 1rem);
-      height: calc(100% + 1rem);
+      width: calc(100% + 0.95rem);
+      height: calc(100% + 0.95rem);
       border-radius: 50%;
       top: -40%;
       left: -50%;
@@ -83,6 +83,18 @@
   }
 
   &.is-normal {
+    height: 0.95rem;
+    width: 0.95rem;
+    font-size: $font-icon;
+
+    &.is-overlay::before {
+      width: calc(100% + 0.95rem);
+      height: calc(100% + 0.95rem);
+    }
+
+  }
+
+  &.is-md {
     height: $unit-5;
     width: $unit-5;
     font-size: $font-icon-md;
