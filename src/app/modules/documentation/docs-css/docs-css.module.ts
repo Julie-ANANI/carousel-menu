@@ -25,6 +25,7 @@ import { MarginsComponent } from './utilities/margins/margins.component';
 import { PaddingsComponent } from './utilities/paddings/paddings.component';
 import { PositionsComponent } from './utilities/positions/positions.component';
 import { RatingsComponent } from './utilities/ratings/ratings.component';
+import { ShapeComponent } from './utilities/shape/shape.component';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { RatingsComponent } from './utilities/ratings/ratings.component';
     MarginsComponent,
     PaddingsComponent,
     PositionsComponent,
-    RatingsComponent
+    RatingsComponent,
+    ShapeComponent
   ],
 })
 

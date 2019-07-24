@@ -24,6 +24,7 @@ import { MarginsComponent } from './utilities/margins/margins.component';
 import { PaddingsComponent } from './utilities/paddings/paddings.component';
 import { PositionsComponent } from './utilities/positions/positions.component';
 import { RatingsComponent } from './utilities/ratings/ratings.component';
+import { ShapeComponent } from './utilities/shape/shape.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -74,7 +75,8 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/margin', component: MarginsComponent, pathMatch: 'full' },
       { path: 'utilities/padding', component: PaddingsComponent, pathMatch: 'full' },
       { path: 'utilities/position', component: PositionsComponent, pathMatch: 'full' },
-      { path: 'utilities/rating', component: RatingsComponent, pathMatch: 'full' },
+      { path: 'utilities/ratings', component: RatingsComponent, pathMatch: 'full' },
+      { path: 'utilities/shape', component: ShapeComponent, pathMatch: 'full' },
     ]
   }
 ];
