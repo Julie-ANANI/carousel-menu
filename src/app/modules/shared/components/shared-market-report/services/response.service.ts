@@ -273,40 +273,32 @@ export class ResponseService {
    */
   static getPieChartData(barsData: Array<BarData>, answers: Array<Answer>) {
 
-    let pieChart: PieChart;
+    let positiveAnswersCount = 0;
 
-    if (barsData && barsData.length > 0 && answers && answers.length > 0) {
+    const pieChartData: PieChart = {
+      data: [],
+      colors: [],
+      labels: {fr: [], en: []},
+      labelPercentage: []
+    };
 
-      let positiveAnswersCount = 0;
+    barsData.forEach((barData) => {
 
-      const pieChartData: PieChart = {
-        data: [],
-        colors: [],
-        labels: {fr: [], en: []},
-        labelPercentage: []
-      };
+      if (barData.positive) {
+        positiveAnswersCount += barData.count;
+      }
 
-      barsData.forEach((barData) => {
+      pieChartData.data.push(barData.count);
+      pieChartData.colors.push(barData.color);
+      pieChartData.labels.fr.push(barData.label.fr);
+      pieChartData.labels.en.push(barData.label.en);
+      pieChartData.labelPercentage.push(barData.absolutePercentage);
 
-        if (barData.positive) {
-          positiveAnswersCount += barData.count;
-        }
+    });
 
-        pieChartData.data.push(barData.count);
-        pieChartData.colors.push(barData.color);
-        pieChartData.labels.fr.push(barData.label.fr);
-        pieChartData.labels.en.push(barData.label.en);
-        pieChartData.labelPercentage.push(barData.absolutePercentage);
+    pieChartData.percentage = Math.round((positiveAnswersCount * 100) / answers.length);
 
-      });
-
-      pieChartData.percentage = Math.round((positiveAnswersCount * 100) / answers.length);
-
-      pieChart = pieChartData;
-
-    }
-
-    return pieChart;
+    return pieChartData;
 
   }
 

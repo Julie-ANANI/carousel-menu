@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./synthesis-complete.component.scss']
 })
 
-export class SynthesisCompleteComponent implements OnInit {
+export class SynthesisCompleteComponent {
 
   private _projectId: string;
 
@@ -27,8 +27,6 @@ export class SynthesisCompleteComponent implements OnInit {
 
   private _pageTitle = 'COMMON.PAGE_TITLE.REPORT';
 
-  private _userLang = 'en';
-
   constructor(private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -37,17 +35,12 @@ export class SynthesisCompleteComponent implements OnInit {
 
     this._setPageTitle();
 
-    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang();
-
     this._activatedRoute.params.subscribe(params => {
       this._projectId = params['projectId'];
       this._shareKey = params['shareKey'];
       this._getSharedSynthesis();
     });
 
-  }
-
-  ngOnInit() {
   }
 
   /***
@@ -59,7 +52,7 @@ export class SynthesisCompleteComponent implements OnInit {
       this._innovation = response;
 
       if (this._innovation) {
-        const userLangIndex = this._innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this._userLang);
+        const userLangIndex = this._innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.userLang);
 
         if (userLangIndex !== -1) {
           this._pageTitle = this._innovation.innovationCards[userLangIndex].title;
@@ -97,10 +90,6 @@ export class SynthesisCompleteComponent implements OnInit {
     return this._projectId;
   }
 
-  get shareKey(): string {
-    return this._shareKey;
-  }
-
   get innovation(): Innovation {
     return this._innovation;
   }
@@ -113,12 +102,8 @@ export class SynthesisCompleteComponent implements OnInit {
     return this._notFound;
   }
 
-  get pageTitle(): string {
-    return this._pageTitle;
-  }
-
   get userLang(): string {
-    return this._userLang;
+    return this._translateService.currentLang;
   }
 
 }

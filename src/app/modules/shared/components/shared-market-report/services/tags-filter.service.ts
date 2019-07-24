@@ -9,7 +9,7 @@ export class TagsFiltersService {
 
   private _answersTagsLists: {[questionId: string]: Array<Tag>} = {};
 
-  private _tagsList: Array<Tag>;
+  private _tagsList: Array<Tag> = [];
 
   private _selectedAnswersTags: {[questionId: string]: {[id: string]: boolean}} = {};
 
