@@ -173,7 +173,7 @@ export class BarChartComponent implements OnInit {
   }
 
   get lang(): string {
-    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    return this._translateService.currentLang;
   }
 
   get pieChart(): PieChart {
