@@ -170,6 +170,8 @@ export const MARKET_REPORT = {
 
   'BUTTON_SAVE_VIEW': 'Enregistrer la vue',
 
+  'VIEWS': 'Mes vues',
+
   'TOOLTIP_DELETE_VIEW': 'Effacer la vue',
 
   'TOOLTIP_LOAD_VIEW': 'Charger la vue',
@@ -185,5 +187,19 @@ export const MARKET_REPORT = {
   'SEE_LESS': 'Voir moins',
 
   'ORIGIN': 'Origine des réponses',
+
+  'SIDEBAR': {
+    'FILTERS': 'Filtres',
+    'MAKE_VISIBLE': 'Rendre le projet visible pour le client',
+    'MAKE_INVISIBLE': 'Rendre le projet invisible pour le client',
+    'GENERATE_REPORT': 'Genérer l\'executive report',
+    'RESET_REPORT': 'Réinitialiser l\'executive report',
+    'END_PROJECT': 'Terminer le projet',
+    'CONFIRMATION': 'Confirmation',
+    'REALLY_MAKE_VISIBLE': 'Voulez vous vraiment rendre le projet visible pour le client ?',
+    'REALLY_MAKE_INVISIBLE': 'Voulez vous vraiment rendre le projet invisible pour le client ?',
+    'REALLY_RESET_REPORT': 'Voulez vous vraiment réinitialiser l\'executive report ?',
+    'REALLY_END_PROJECT': 'Voulez vous vraiment terminer le projet ? Vous ne serez plus en mesure d\'apporter des changements au projet.',
+  }
 
 };
