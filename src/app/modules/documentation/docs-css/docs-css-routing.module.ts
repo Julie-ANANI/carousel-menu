@@ -23,6 +23,7 @@ import { LoadingComponent } from './utilities/loading/loading.component';
 import { MarginsComponent } from './utilities/margins/margins.component';
 import { PaddingsComponent } from './utilities/paddings/paddings.component';
 import { PositionsComponent } from './utilities/positions/positions.component';
+import { RatingsComponent } from './utilities/ratings/ratings.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -70,9 +71,10 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/display', component: DisplayComponent, pathMatch: 'full' },
       { path: 'utilities/divider', component: DividerComponent, pathMatch: 'full' },
       { path: 'utilities/loading', component: LoadingComponent, pathMatch: 'full' },
-      { path: 'utilities/margins', component: MarginsComponent, pathMatch: 'full' },
-      { path: 'utilities/paddings', component: PaddingsComponent, pathMatch: 'full' },
+      { path: 'utilities/margin', component: MarginsComponent, pathMatch: 'full' },
+      { path: 'utilities/padding', component: PaddingsComponent, pathMatch: 'full' },
       { path: 'utilities/position', component: PositionsComponent, pathMatch: 'full' },
+      { path: 'utilities/rating', component: RatingsComponent, pathMatch: 'full' },
     ]
   }
 ];

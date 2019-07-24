@@ -24,6 +24,7 @@ import { LoadingComponent } from './utilities/loading/loading.component';
 import { MarginsComponent } from './utilities/margins/margins.component';
 import { PaddingsComponent } from './utilities/paddings/paddings.component';
 import { PositionsComponent } from './utilities/positions/positions.component';
+import { RatingsComponent } from './utilities/ratings/ratings.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { PositionsComponent } from './utilities/positions/positions.component';
     LoadingComponent,
     MarginsComponent,
     PaddingsComponent,
-    PositionsComponent
+    PositionsComponent,
+    RatingsComponent
   ],
 })
 
