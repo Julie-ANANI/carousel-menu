@@ -37,42 +37,52 @@
 }
 
 .bg-primary {
-  color: $light-color;
+  color: $light-color !important;
   background-color: $primary-color !important;
 }
 
 .bg-secondary {
-  color: $light-color;
+  color: $light-color !important;
   background-color: $secondary-color !important;
 }
 
 .bg-gray {
-  color: $light-color;
+  color: $light-color !important;
   background-color: $meta-color !important;
 }
 
 .bg-dark {
-  color: $light-color;
+  color: $light-color !important;
   background-color: $dark-color !important;
 }
 
 .bg-success {
-  color: $light-color;
+  color: $light-color !important;
   background-color: $success-color !important;
 }
 
+.bg-progress {
+  color: $light-color !important;
+  background-color: $progress-color !important;
+}
+
 .bg-alert {
-  color: $light-color;
+  color: $light-color !important;
   background-color: $alert-color !important;
 }
 
 .bg-draft {
-  color: $light-color;
+  color: $light-color !important;
   background-color: $background-color !important;
 }
 
 .bg-light {
-  color: $text-primary-dark-color;
+  color: $text-primary-dark-color !important;
   background-color: $bg-page-color !important;
+}
+
+.bg-white {
+  color: $text-primary-dark-color !important;
+  background-color: $bg-color-light !important;
 }
 
