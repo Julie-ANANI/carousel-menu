@@ -6,5 +6,87 @@
 
   <p class="text-md">Simple headings to add depth to the page.</p>
 
+  <section class="p-top-20">
+
+    <p class="text-md">There are 2 types of heading: title <code>.title</code> and subtitle <code>.subtitle</code></p>
+
+    <div class="p-top-20">
+      <h1 class="title">title</h1>
+      <h2 class="subtitle">subtitle</h2>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"subtitle"</span>&gt;</span>subtitle<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Sizes</h2>
+
+    <p class="text-md">There are 6 sizes available.</p>
+
+    <div class="columns p-top-20">
+      <div class="column col-6">
+        <h1 class="title is-1">Title 1</h1>
+        <h2 class="title is-2">Title 2</h2>
+        <h3 class="title is-3">Title 3 (default size)</h3>
+        <h4 class="title is-4">Title 4</h4>
+        <h5 class="title is-5">Title 5</h5>
+        <h6 class="title is-6">Title 6</h6>
+      </div>
+      <div class="column col-6">
+        <h1 class="subtitle is-1">Subtitle 1</h1>
+        <h2 class="subtitle is-2">Subtitle 2</h2>
+        <h3 class="subtitle is-3">Subtitle 3</h3>
+        <h4 class="subtitle is-4">Subtitle 4</h4>
+        <h5 class="subtitle is-5">Subtitle 5 (default size)</h5>
+        <h6 class="subtitle is-6">Subtitle 6</h6>
+      </div>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"title is-1"</span>&gt;</span>Title 1<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"title is-2"</span>&gt;</span>Title 2<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">"title is-3"</span>&gt;</span>Title 3 (default size)<span class="tag">&lt;/<span class="name">h3</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h4</span> <span class="attr">class</span>=<span class="string">"title is-4"</span>&gt;</span>Title 4<span class="tag">&lt;/<span class="name">h4</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">"title is-5"</span>&gt;</span>Title 5<span class="tag">&lt;/<span class="name">h5</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h6</span> <span class="attr">class</span>=<span class="string">"title is-6"</span>&gt;</span>Title 6<span class="tag">&lt;/<span class="name">h6</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"subtitle is-1"</span>&gt;</span>Subtitle 1<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"subtitle is-2"</span>&gt;</span>Subtitle 2<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">"subtitle is-3"</span>&gt;</span>Subtitle 3<span class="tag">&lt;/<span class="name">h3</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h4</span> <span class="attr">class</span>=<span class="string">"subtitle is-4"</span>&gt;</span>Subtitle 4<span class="tag">&lt;/<span class="name">h4</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">"subtitle is-5"</span>&gt;</span>Subtitle 5 (default size)<span class="tag">&lt;/<span class="name">h5</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">h6</span> <span class="attr">class</span>=<span class="string">"subtitle is-6"</span>&gt;</span>Subtitle 6<span class="tag">&lt;/<span class="name">h6</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <p class="text-md">When you combine a title and a subtitle, they move closer together. You can maintain the normal spacing between titles
+      and subtitles if you use the <code>is-spaced</code> class on the first element.</p>
+
+    <div class="p-top-20">
+      <p class="title is-1 is-spaced">Title 1</p>
+      <p class="subtitle is-3">Subtitle 3</p>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title is-1 is-spaced"</span>&gt;</span>Title 1<span class="tag">&lt;/<span class="name">p</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"subtitle is-3"</span>&gt;</span>Subtitle 3<span class="tag">&lt;/<span class="name">p</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
 </div>
 
