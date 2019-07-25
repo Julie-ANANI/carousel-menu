@@ -26,6 +26,7 @@ import { PositionsComponent } from './utilities/positions/positions.component';
 import { RatingsComponent } from './utilities/ratings/ratings.component';
 import { ShapeComponent } from './utilities/shape/shape.component';
 import { TextComponent } from './utilities/text/text.component';
+import { TitleComponent } from './utilities/title/title.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -79,6 +80,7 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/ratings', component: RatingsComponent, pathMatch: 'full' },
       { path: 'utilities/shape', component: ShapeComponent, pathMatch: 'full' },
       { path: 'utilities/text', component: TextComponent, pathMatch: 'full' },
+      { path: 'utilities/title', component: TitleComponent, pathMatch: 'full' },
     ]
   }
 ];

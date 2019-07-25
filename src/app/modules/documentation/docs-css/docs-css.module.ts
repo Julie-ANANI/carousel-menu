@@ -27,6 +27,7 @@ import { PositionsComponent } from './utilities/positions/positions.component';
 import { RatingsComponent } from './utilities/ratings/ratings.component';
 import { ShapeComponent } from './utilities/shape/shape.component';
 import { TextComponent } from './utilities/text/text.component';
+import { TitleComponent } from './utilities/title/title.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { TextComponent } from './utilities/text/text.component';
     PositionsComponent,
     RatingsComponent,
     ShapeComponent,
-    TextComponent
+    TextComponent,
+    TitleComponent
   ],
 })
 
