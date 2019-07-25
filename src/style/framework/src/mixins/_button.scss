@@ -84,6 +84,7 @@
   &:focus, &:hover {
     color: $color;
     border: none;
+    text-decoration: underline;
     background-color: transparent;
   }
 
@@ -91,6 +92,7 @@
     color: $color;
     border: none;
     background-color: transparent;
+    text-decoration: none;
   }
 
   &[disabled], &:disabled, &.disabled {
@@ -98,6 +100,7 @@
     background-color: transparent;
     box-shadow: none;
     opacity: 0.5;
+    text-decoration: none;
   }
 
 }
