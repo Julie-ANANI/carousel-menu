@@ -606,18 +606,18 @@
       </g>
     </svg>
   </div>
-  <div class="text-center info-wrapper" *ngIf="showLegend">
+  <div class="text-center info-wrapper" *ngIf="showLegend && secondThreshold">
     <div>
       <span class="shape is-circle is-sm circle-2"></span>
-      <span class="text-secondary-dark text-medium"><3 {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
+      <span class="text-secondary-dark text-medium"><{{firstThreshold}} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
     </div>
     <div>
       <span class="shape is-circle is-sm circle-3"></span>
-      <span class="text-secondary-dark text-medium">3 - 6 {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
+      <span class="text-secondary-dark text-medium">{{firstThreshold}} - {{secondThreshold}} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
     </div>
     <div>
       <span class="shape is-circle is-sm bg-success"></span>
-      <span class="text-secondary-dark text-medium">>6 {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
+      <span class="text-secondary-dark text-medium">>{{secondThreshold}} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
     </div>
   </div>
 
