@@ -63,19 +63,7 @@
 
 }
 
-// Text link variant
-@mixin text-link-variant($color: $primary-color) {
-  font-weight: $font-weight-medium;
-  font-size: $font-size-sm;
-  color: $color;
 
-  &:focus, &:visited, &:active, &.active, &:hover {
-    cursor: pointer;
-    color: $color;
-    text-decoration: underline;
-  }
-
-}
 
 // Bar scale variant
 @mixin bar-scale-variant($color-1st, $color-2nd) {

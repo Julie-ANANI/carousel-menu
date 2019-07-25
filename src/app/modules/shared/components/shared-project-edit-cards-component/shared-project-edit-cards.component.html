@@ -39,7 +39,7 @@
       </div>
 
       <ng-container *ngIf="innovation.innovationCards.length > 1 && canEdit">
-        <div class="text-delete-link">
+        <div class="text-link text-alert text-sm">
           <span (click)="onClickDelete($event)">{{ 'SHARED_PROJECT_EDIT.DELETE_LANGUAGE' | translate }}</span>
         </div>
       </ng-container>
@@ -451,7 +451,7 @@
                 <!-- delete media -->
                 <ng-container *ngIf="canEdit">
                   <div class="delete-wrapper">
-                    <span class="text-delete-link" (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                    <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
                   </div>
                 </ng-container>
 
@@ -484,14 +484,14 @@
                         <!-- make primary media -->
                         <ng-container *ngIf="canEdit">
                           <div class="main-wrapper">
-                            <span class="text-link" (click)="onClickSetMainMedia($event, media, i)">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}</span>
+                            <span class="text-link text-sm" (click)="onClickSetMainMedia($event, media, i)">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}</span>
                           </div>
                         </ng-container>
 
                         <!-- delete media -->
                         <ng-container *ngIf="canEdit">
                           <div class="delete-wrapper">
-                            <span class="text-delete-link" (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                            <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
                           </div>
                         </ng-container>
 
