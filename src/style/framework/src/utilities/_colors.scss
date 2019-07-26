@@ -38,51 +38,55 @@
 
 .bg-primary {
   color: $light-color !important;
-  background-color: $primary-color !important;
+  background: $primary-color !important;
 }
 
 .bg-secondary {
   color: $light-color !important;
-  background-color: $secondary-color !important;
+  background: $secondary-color !important;
 }
 
 .bg-gray {
   color: $light-color !important;
-  background-color: $meta-color !important;
+  background: $meta-color !important;
 }
 
 .bg-dark {
   color: $light-color !important;
-  background-color: $dark-color !important;
+  background: $dark-color !important;
 }
 
 .bg-success {
   color: $light-color !important;
-  background-color: $success-color !important;
+  background: $success-color !important;
 }
 
 .bg-progress {
   color: $light-color !important;
-  background-color: $progress-color !important;
+  background: $progress-color !important;
 }
 
 .bg-alert {
   color: $light-color !important;
-  background-color: $alert-color !important;
+  background: $alert-color !important;
 }
 
 .bg-draft {
   color: $light-color !important;
-  background-color: $background-color !important;
+  background: $background-color !important;
 }
 
 .bg-light {
   color: $text-primary-dark-color !important;
-  background-color: $bg-page-color !important;
+  background: $bg-page-color !important;
 }
 
 .bg-white {
   color: $text-primary-dark-color !important;
-  background-color: $bg-color-light !important;
+  background: $bg-color-light !important;
 }
 
+.bg-gradient-primary {
+  background: $primary-gradient-color;
+  color: $light-color;
+}
