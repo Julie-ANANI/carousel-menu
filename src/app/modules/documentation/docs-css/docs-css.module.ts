@@ -29,6 +29,7 @@ import { ShapeComponent } from './utilities/shape/shape.component';
 import { TextComponent } from './utilities/text/text.component';
 import { TitleComponent } from './utilities/title/title.component';
 import { AvatarsComponent } from './components/avatars/avatars.component';
+import { BadgesComponent } from './components/badges/badges.component';
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { AvatarsComponent } from './components/avatars/avatars.component';
     ShapeComponent,
     TextComponent,
     TitleComponent,
-    AvatarsComponent
+    AvatarsComponent,
+    BadgesComponent
   ],
 })
 
