@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   private _notificationsOptions: Options = {
     position: ['bottom', 'right'],
-    timeOut: 5000,
+    timeOut: 4000,
     lastOnBottom: true,
     maxStack: 4,
     animate: NotificationAnimationType.FromRight,
