@@ -39,7 +39,7 @@
       </div>
 
       <ng-container *ngIf="innovation.innovationCards.length > 1 && canEdit">
-        <div class="text-delete-link">
+        <div class="text-link text-alert text-sm">
           <span (click)="onClickDelete($event)">{{ 'SHARED_PROJECT_EDIT.DELETE_LANGUAGE' | translate }}</span>
         </div>
       </ng-container>
@@ -59,7 +59,7 @@
               <!-- title -->
               <div [ngStyle]="{ 'padding-top': '1.75rem' }">
 
-                <span class="shape rect">1</span>
+                <span class="shape is-rounded bg-draft">1</span>
                 <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</span>
 
                 <ng-container *ngIf="!canEdit">
@@ -99,7 +99,7 @@
               <!-- summary -->
               <div class="project-data">
 
-                <span class="shape rect">2</span>
+                <span class="shape is-rounded bg-draft">2</span>
                 <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
 
                 <ng-container *ngIf="!canEdit">
@@ -143,7 +143,7 @@
               <!-- problem -->
               <div class="project-data">
 
-                <span class="shape rect">3</span>
+                <span class="shape is-rounded bg-draft">3</span>
                 <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
 
                 <ng-container *ngIf="!canEdit">
@@ -187,7 +187,7 @@
               <!-- solution -->
               <div class="project-data">
 
-                <span class="shape rect">4</span>
+                <span class="shape is-rounded bg-draft">4</span>
                 <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
 
                 <div *ngIf="!canEdit">
@@ -230,7 +230,7 @@
               <!-- advantages -->
               <div class="project-data">
 
-                <span class="shape rect">5</span>
+                <span class="shape is-rounded bg-draft">5</span>
                 <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
 
                 <ng-container *ngIf="!canEdit">
@@ -264,7 +264,7 @@
               <!-- status -->
               <div [ngStyle]="{ 'padding-top': canEdit ? '3.5rem' : '1.75rem' }">
 
-                <span class="shape rect">6</span>
+                <span class="shape is-rounded bg-draft">6</span>
                 <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.STAGE' | translate }}</span>
 
                 <ng-container *ngIf="!canEdit">
@@ -316,7 +316,7 @@
               <!-- protected -->
               <div class="project-data">
 
-                <span class="shape rect">7</span>
+                <span class="shape is-rounded bg-draft">7</span>
                 <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.PATENTED.LABEL' | translate }}</span>
 
                 <ng-container *ngIf="!canEdit">
@@ -357,7 +357,7 @@
               <!-- diffusion -->
               <div class="project-data">
 
-                <span class="shape rect">8</span>
+                <span class="shape is-rounded bg-draft">8</span>
                 <span class="text text-question">
                   {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.A' | translate }} {{ companyName }} {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.B' | translate }}
                 </span>
@@ -421,7 +421,7 @@
       <div *ngIf="selectedCardIndex === i">
         <div class="project-data">
 
-          <span class="shape rect">9</span>
+          <span class="shape is-rounded bg-draft">9</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }}</span>
           <span class="text text-notify sub-label"> {{ 'SHARED_PROJECT_EDIT.MEDIA.SUB_LABEL' | translate }}</span>
 
@@ -451,7 +451,7 @@
                 <!-- delete media -->
                 <ng-container *ngIf="canEdit">
                   <div class="delete-wrapper">
-                    <span class="text-delete-link" (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                    <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
                   </div>
                 </ng-container>
 
@@ -484,14 +484,14 @@
                         <!-- make primary media -->
                         <ng-container *ngIf="canEdit">
                           <div class="main-wrapper">
-                            <span class="text-link" (click)="onClickSetMainMedia($event, media, i)">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}</span>
+                            <span class="text-link text-sm" (click)="onClickSetMainMedia($event, media, i)">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}</span>
                           </div>
                         </ng-container>
 
                         <!-- delete media -->
                         <ng-container *ngIf="canEdit">
                           <div class="delete-wrapper">
-                            <span class="text-delete-link" (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                            <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
                           </div>
                         </ng-container>
 

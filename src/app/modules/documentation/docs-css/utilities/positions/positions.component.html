@@ -6,5 +6,246 @@
 
   <p class="text-md">Position utilities are used for useful layout and position things, including clearfix, float and positions.</p>
 
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Clear fix</h2>
+
+    <p class="text-md">If an element is taller than the element containing it, and it is floated, it will overflow outside of its container
+      you can use the <code>clearfix</code> class to fix this problem. <a href="https://www.w3schools.com/howto/howto_css_clearfix.asp" target="_blank" class="text-link">
+        More info</a>.</p>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clearfix"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Flex</h2>
+
+    <p class="text-md">To display the element as flex and also at the same time positioned them inside the conatiner or view. You can use
+      <code>flex-start</code>, <code>flex-centered</code>, <code>flex-between</code> or <code>flex-end</code> classes.</p>
+
+    <div class="p-top-20">
+      <div class="columns m-bottom-15 text-md">
+        <div class="column col-3">
+          <div class="bg-light flex-start docs-flex">flex start</div>
+        </div>
+        <div class="column col-3">
+          <div class="bg-light flex-centered docs-flex">flex center</div>
+        </div>
+        <div class="column col-3">
+          <div class="bg-light flex-between docs-flex">
+            <span>space</span><span>between</span>
+          </div>
+        </div>
+        <div class="column col-3">
+          <div class="bg-light flex-end docs-flex">flex end</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex-start"</span>&gt;</span>flex start<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex-centered"</span>&gt;</span>flex center<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex-between"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">span</span>&gt;</span>space<span class="tag">&lt;/<span class="name">span</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">span</span>&gt;</span>between<span class="tag">&lt;/<span class="name">span</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex-end"</span>&gt;</span>flex end<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Position</h2>
+
+    <p class="text-md">The position property specifies the type of positioning method used for an element (static, relative, absolute, fixed, or sticky).</p>
+
+    <div class="p-top-20 text-md">
+      <div class="bg-light docs-position relative">
+        <span class="absolute" style="top: 0; left: 150px">Absolute text</span>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"relative"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"absolute"</span> <span class="attr">style</span>=<span class="string">"top: 0; left: 150px"</span>&gt;</span>Absolute text<span class="tag">&lt;/<span class="name">span</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+    <div class="table-responsive p-top-20">
+      <table class="table">
+
+        <thead>
+        <tr><th>Class</th><th>Type</th><th>Default value</th><th>Description</th></tr>
+        </thead>
+
+        <tbody>
+        <tr><td>static</td><td>position</td><td>static</td><td>Elements render in order, as they appear in the document flow.</td></tr>
+        <tr><td>absolute</td><td>position</td><td>absolute</td><td>The element is positioned relative to its first positioned (not static) ancestor element.</td></tr>
+        <tr><td>fixed</td><td>position</td><td>fixed</td><td>The element is positioned relative to the browser window.</td></tr>
+        <tr><td>relative</td><td>position</td><td>relative</td><td>The element is positioned relative to its normal position, so "left:20px" adds 20 pixels to the element's LEFT position.</td></tr>
+        <tr><td>sticky</td><td>position</td><td>sticky</td><td>The element is positioned based on the user's scroll position.</td></tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Float</h2>
+
+    <p class="text-md">If you want to float the element left and right in the container use the <code>float-left</code> class to float the
+    element at left and <code>float-right</code> class to float the element at the right of the container.</p>
+
+    <div class="p-top-20 text-md">
+      <div class="docs-float bg-light clearfix">
+        <span class="float-left">Left element</span>
+        <span class="float-right">Right element</span>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clearfix"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"float-left"</span>&gt;</span>Left element<span class="tag">&lt;/<span class="name">span</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"float-right"</span>&gt;</span>Right element<span class="tag">&lt;/<span class="name">span</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Justify content</h2>
+
+    <p class="text-md">The justify-content property is used to align the flex items.</p>
+
+    <div class="table-responsive p-top-20">
+      <table class="table">
+
+        <thead>
+        <tr><th>Class</th><th>Type</th><th>Default value</th><th>Description</th></tr>
+        </thead>
+
+        <tbody>
+        <tr><td>justify-center</td><td>position</td><td>center</td><td>Items are positioned at the center of the container.</td></tr>
+        <tr><td>justify-space</td><td>position</td><td>space-between</td><td>Items are positioned with space between the lines.</td></tr>
+        <tr><td>justify-start</td><td>position</td><td>flex-start</td><td>Items are positioned at the beginning of the container.</td></tr>
+        <tr><td>justify-end</td><td>position</td><td>flex-end</td><td>Items are positioned at the end of the container.</td></tr>
+        <tr><td>justify-around</td><td>position</td><td>space-around</td><td>Items are positioned with space before, between, and after the lines.</td></tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Align items</h2>
+
+    <p class="text-md">The align-items property is used to align the flex items vertically. Vertically aligns the flex items when the items
+      do not use all available space on the cross-axis.</p>
+
+    <div class="table-responsive p-top-20">
+      <table class="table">
+
+        <thead>
+        <tr><th>Class</th><th>Type</th><th>Default value</th><th>Description</th></tr>
+        </thead>
+
+        <tbody>
+        <tr><td>align-center</td><td>position</td><td>center</td><td>Items are positioned at the center of the container.</td></tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Flex wrap</h2>
+
+    <p class="text-md">The flex-wrap property specifies whether the flexible items should wrap or not. If the elements are not flexible items,
+      the flex-wrap property has no effect.</p>
+
+    <div class="table-responsive p-top-20">
+      <table class="table">
+
+        <thead>
+        <tr><th>Class</th><th>Type</th><th>Default value</th><th>Description</th></tr>
+        </thead>
+
+        <tbody>
+        <tr><td>flex-nowrap</td><td>position</td><td>nowrap</td><td>Specifies that the flexible items will not wrap.</td></tr>
+        <tr><td>flex-wrap</td><td>position</td><td>wrap</td><td>Specifies that the flexible items will wrap if necessary.</td></tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">White space</h2>
+
+    <p class="text-md">The white-space property specifies how white-space inside an element is handled.</p>
+
+    <div class="table-responsive p-top-20">
+      <table class="table">
+
+        <thead>
+        <tr><th>Class</th><th>Type</th><th>Default value</th><th>Description</th></tr>
+        </thead>
+
+        <tbody>
+        <tr><td>whitespace-nowrap</td><td>position</td><td>nowrap</td><td>Sequences of whitespace will collapse into a single whitespace. Text will never wrap to the next line.</td></tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Block</h2>
+
+    <p class="text-md">When the element is block display.</p>
+
+    <div class="table-responsive p-top-20">
+      <table class="table">
+
+        <thead>
+        <tr><th>Class</th><th>Type</th><th>Default value</th><th>Description</th></tr>
+        </thead>
+
+        <tbody>
+        <tr><td>centered</td><td>position</td><td>center</td><td>To horizontally and vertically center a block element.</td></tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </section>
+
 </div>
 

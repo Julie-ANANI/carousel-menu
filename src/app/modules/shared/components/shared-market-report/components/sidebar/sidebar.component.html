@@ -5,13 +5,13 @@
   <div class="filter-icon-wrapper flex-between text-background">
 
     <div (click)="toggleFilterBar = !toggleFilterBar">
-      <span class="text-medium" [ngStyle]="{ 'margin-right': '0.4rem' }">Filters</span>
+      <span class="text-medium" [ngStyle]="{ 'margin-right': '0.4rem' }">{{ 'MARKET_REPORT.SIDEBAR.FILTERS' | translate }}</span>
       <i class="fas fa-angle-down" [ngStyle]="{ 'vertical-align': 'middle', 'font-size': '1rem' }"></i>
     </div>
 
     <div *ngIf="toggleFilterBar" (click)="toggleFilterBar = false;">
       <i class="fas fa-times-circle"></i>
-      <span class="text-medium" [ngStyle]="{ 'margin-left': '0.4rem' }">Close</span>
+      <span class="text-medium" [ngStyle]="{ 'margin-left': '0.4rem' }">{{ 'COMMON.CLOSE' | translate }}</span>
     </div>
 
   </div>
@@ -32,25 +32,25 @@
 
           <div *ngIf="!innovation.previewMode && innovation.status !== 'DONE'" class="drop-item"
                (click)="modalPreviewInnovation = true">
-            <span>Make project visible to client</span>
+            <span>{{ 'MARKET_REPORT.SIDEBAR.MAKE_VISIBLE' | translate }}</span>
           </div>
 
           <div *ngIf="innovation.previewMode && innovation.status !== 'DONE'" class="drop-item"
                (click)="modalPreviewInnovation = true">
-            <span>Make project invisible to client</span>
+            <span>{{ 'MARKET_REPORT.SIDEBAR.MAKE_INVISIBLE' | translate }}</span>
           </div>
 
           <div class="drop-item">
-            <a href="#executive-generate" pageScroll>Generate executive report</a>
+            <a href="#executive-generate" pageScroll>{{ 'MARKET_REPORT.SIDEBAR.GENERATE_REPORT' | translate }}</a>
           </div>
 
           <div *ngIf="innovation.executiveReport.totalSections > 0 && isAdminSide" class="drop-item"
                (click)="modalResetReport = true">
-            <span>Reset executive report</span>
+            <span>{{ 'MARKET_REPORT.SIDEBAR.RESET_REPORT' | translate }}</span>
           </div>
 
           <div class="drop-item" (click)="modalEndInnovation = true">
-            <span>End project</span>
+            <span>{{ 'MARKET_REPORT.SIDEBAR.END_PROJECT' | translate }}</span>
           </div>
 
         </div>
@@ -376,19 +376,19 @@
 
 
 <!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
-<app-modal [modalTitle]="'Confirmation Board'" [(showModal)]="modalPreviewInnovation">
+<app-modal [modalTitle]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
 
   <ng-container *ngIf="!innovation.previewMode">
-    <span>Do you really want to make this project visible to the client?</span>
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
   </ng-container>
 
   <ng-container *ngIf="innovation.previewMode">
-    <span>Do you really want to make this project invisible to the client?</span>
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_INVISIBLE' | translate }}</span>
   </ng-container>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">Cancel</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickPreviewConfirm($event)">Confirm</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 
 </app-modal>
@@ -396,13 +396,13 @@
 
 
 <!-- Modal to ask the operator to confirm for the reset of the executive report -->
-<app-modal [modalTitle]="'Confirmation Board'" [(showModal)]="modalResetReport">
+<app-modal [modalTitle]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalResetReport">
 
-  <span>Do you really want to reset the executive report?</span>
+  <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_RESET_REPORT' | translate }}</span>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">Cancel</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickResetConfirm($event)">Confirm</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 
 </app-modal>
@@ -410,13 +410,13 @@
 
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-modal [modalTitle]="'Confirmation Board'" [(showModal)]="modalEndInnovation">
+<app-modal [modalTitle]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalEndInnovation">
 
-  <span>Do you really want to end this project? Please keep in mind that after this you won't be able to make any further changes.</span>
+  <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">Cancel</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickEndInnovationConfirm($event)">Confirm</button>
+    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="btn btn-sm btn-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 
 </app-modal>

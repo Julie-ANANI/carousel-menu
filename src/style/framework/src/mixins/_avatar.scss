@@ -1,0 +1,12 @@
+@import "../variables";
+
+@mixin avatar-variant($color: $light-color, $bg-color: $primary-color) {
+  background: $bg-color;
+  color: $color;
+}
+
+@mixin avatar-base($size: $unit-8) {
+  font-size: $size / 2;
+  height: $size;
+  width: $size;
+}
