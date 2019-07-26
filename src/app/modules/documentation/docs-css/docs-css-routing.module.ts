@@ -27,6 +27,7 @@ import { RatingsComponent } from './utilities/ratings/ratings.component';
 import { ShapeComponent } from './utilities/shape/shape.component';
 import { TextComponent } from './utilities/text/text.component';
 import { TitleComponent } from './utilities/title/title.component';
+import { AvatarsComponent } from './components/avatars/avatars.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -64,6 +65,7 @@ const docsCssRoutes: Routes = [
         pathMatch: 'full'
       },
       { path: 'components/accordions', component: AccordionsComponent, pathMatch: 'full' },
+      { path: 'components/avatars', component: AvatarsComponent, pathMatch: 'full' },
       {
         path: 'utilities',
         redirectTo: 'utilities/colors',
