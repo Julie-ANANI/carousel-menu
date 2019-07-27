@@ -3,7 +3,7 @@
 
     <!-- geography section -->
     <div>
-      <span class="shape rect">1</span>
+      <span class="shape is-rounded bg-draft">1</span>
       <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.LABEL' | translate }}</span>
       <div class="pd-input">
         <app-worldmap
@@ -93,7 +93,7 @@
           <!-- Activity sectors -->
           <div class="pd-ques">
 
-            <span class="shape rect">2</span>
+            <span class="shape is-rounded bg-draft">2</span>
             <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.MARKET.LABEL' | translate }}</span>
 
             <ng-container *ngIf="!canEdit">
@@ -126,7 +126,7 @@
           <!-- Type of enterprises -->
           <div class="pd-ques">
 
-            <span class="shape rect">3</span>
+            <span class="shape is-rounded bg-draft">3</span>
             <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.LABEL' | translate }}</span>
 
             <ng-container *ngIf="!canEdit && innovation.settings.companies.include.length === 0 && innovation.settings.companies.exclude.length === 0
@@ -238,7 +238,7 @@
           <!-- Professional profiles -->
           <div class="pd-ques">
 
-            <span class="shape rect">4</span>
+            <span class="shape is-rounded bg-draft">4</span>
             <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL' | translate }}</span>
 
             <ng-container *ngIf="!canEdit && innovation.settings.professionals.exclude.length === 0 && !innovation.settings.professionals.description">
@@ -311,7 +311,7 @@
           <!-- Keyword and other stuffs -->
           <div [ngStyle]="{ 'padding-top': innovation.settings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
 
-            <span class="shape rect">5</span>
+            <span class="shape is-rounded bg-draft">5</span>
             <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</span>
 
             <ng-container *ngIf="!canEdit">

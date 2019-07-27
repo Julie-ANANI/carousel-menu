@@ -63,17 +63,17 @@
           <ng-container *ngIf="!autoBatchStatus">
             <div class="section-error section-pad rm-pad-top">
 
-              <div class="shape circle circle-sm" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' ">
+              <div class="shape is-circle is-sm" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' ">
                 <i class="fas fa-check"></i>
               </div>
               <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}</span>
 
-              <div class="shape circle circle-sm left" [ngClass]=" quiz ? 'complete' : 'incomplete' ">
+              <div class="shape is-circle is-sm left" [ngClass]=" quiz ? 'complete' : 'incomplete' ">
                 <i class="fas fa-check"></i>
               </div>
               <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}</span>
 
-              <div class="shape circle circle-sm left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' ">
+              <div class="shape is-circle is-sm left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' ">
                 <i class="fas fa-check"></i>
               </div>
               <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}</span>

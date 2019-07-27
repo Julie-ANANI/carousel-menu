@@ -26,6 +26,10 @@ import { PaddingsComponent } from './utilities/paddings/paddings.component';
 import { PositionsComponent } from './utilities/positions/positions.component';
 import { RatingsComponent } from './utilities/ratings/ratings.component';
 import { ShapeComponent } from './utilities/shape/shape.component';
+import { TextComponent } from './utilities/text/text.component';
+import { TitleComponent } from './utilities/title/title.component';
+import { AvatarsComponent } from './components/avatars/avatars.component';
+import { BadgesComponent } from './components/badges/badges.component';
 
 @NgModule({
   imports: [
@@ -56,7 +60,11 @@ import { ShapeComponent } from './utilities/shape/shape.component';
     PaddingsComponent,
     PositionsComponent,
     RatingsComponent,
-    ShapeComponent
+    ShapeComponent,
+    TextComponent,
+    TitleComponent,
+    AvatarsComponent,
+    BadgesComponent
   ],
 })
 
