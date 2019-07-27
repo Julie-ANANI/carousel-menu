@@ -158,6 +158,7 @@
 
               <div class="card-title">
                 <span>{{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros</span>
+                <span *ngIf="batch.error" class="text-error">{{ 'CAMPAIGNS.BATCH_PAGE.ERROR' | translate }}</span>
                 <div *ngIf="getDeleteStatus(batch)" class="icon is-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
               </div>
 
