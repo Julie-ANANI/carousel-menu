@@ -100,7 +100,7 @@
         <!-- blacklist company -->
         <ng-container *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && modalAnswer.blacklistedCompany">
           <div class="icon is-delete"><i class="fas fa-exclamation-triangle"></i></div>
-          <span class="text text-alert text-medium">Maybe the answer comes from a blacklisted company!</span>
+          <span class="text text-alert text-medium">{{ 'ANSWER.BLACKLISTED_COMPANY' | translate }}</span>
         </ng-container>
 
         <!-- linkedin -->
