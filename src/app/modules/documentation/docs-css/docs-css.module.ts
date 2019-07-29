@@ -31,6 +31,7 @@ import { TitleComponent } from './utilities/title/title.component';
 import { AvatarsComponent } from './components/avatars/avatars.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { BannersComponent } from './components/banners/banners.component';
+import { BarsComponent } from './components/bars/bars.component';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { BannersComponent } from './components/banners/banners.component';
     TitleComponent,
     AvatarsComponent,
     BadgesComponent,
-    BannersComponent
+    BannersComponent,
+    BarsComponent
   ],
 })
 
