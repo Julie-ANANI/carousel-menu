@@ -11,10 +11,6 @@
   height: $unit-4;
   width: 100%;
 
-  &.bar-sm {
-    height: $unit-1;
-  }
-
   .bar-item {
     background: $primary-color;
     color: $light-color;
@@ -40,8 +36,15 @@
 
   }
 
-}
+  &.is-xs {
+    height: $unit-1;
+  }
 
+  &.is-sm {
+    height: $unit-2;
+  }
+
+}
 
 // Slider bar
 .bar-slider {
@@ -61,7 +64,7 @@
 
   }
 
-  .bar-slider-btn {
+  .bar-slider-button {
     background: $primary-color;
     border: 0;
     border-radius: 50%;
@@ -80,7 +83,6 @@
   }
 
 }
-
 
 // Scale bar
 .bar-scale {
