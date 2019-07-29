@@ -42,7 +42,7 @@
     width: 12px;
     min-width: unset;
     line-height: 1.5;
-    font-size: $font-icon-xl;
+    font-size: $font-icon-lg;
 
     &:hover {
 
@@ -117,7 +117,7 @@
 
     span {
       color: $light-color;
-      font-size: $font-icon-xl;
+      font-size: $font-icon-lg;
     }
 
   }
@@ -593,6 +593,8 @@
 
   &.is-lg {
     height: 3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     font-size: $font-size;
 
     i {
@@ -614,6 +616,10 @@
 
   .btn-lg {
     padding: $unit-2 $unit-8;
+  }
+
+  .is-lg {
+    padding: $unit-2 $unit-5;
   }
 
 }

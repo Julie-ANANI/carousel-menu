@@ -307,12 +307,12 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   getCatCircleClass(): string {
-    return this._catQuota > 50 ? 'circle-success' : (this._catQuota > 10 && this._catQuota <= 50) ? 'circle-progress' : 'circle-alert';
+    return this._catQuota > 50 ? 'bg-success' : (this._catQuota > 10 && this._catQuota <= 50) ? 'bg-progress' : 'bg-alert';
   }
 
 
   getCircleClass(): string {
-    return this._googleQuota > 10000 ? 'circle-success' : (this._googleQuota < 10000 && this._googleQuota > 5000) ? 'circle-progress' : 'circle-alert';
+    return this._googleQuota > 10000 ? 'bg-success' : (this._googleQuota < 10000 && this._googleQuota > 5000) ? 'bg-progress' : 'bg-alert';
   }
 
 

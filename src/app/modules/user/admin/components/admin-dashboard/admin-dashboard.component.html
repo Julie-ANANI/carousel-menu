@@ -72,18 +72,21 @@
 
                       <ng-container *ngIf="getState(batches) === 0">
                         <div class="label is-success" (click)="showPreview($event, batches)">
+                          <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error"></i>
                           {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
 
                       <ng-container *ngIf="getState(batches) === 1">
                         <div class="label is-draft" (click)="showPreview($event, batches)">
+                          <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error"></i>
                           {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
 
                       <ng-container *ngIf="getState(batches) === 2">
                         <div class="label is-info" (click)="showPreview($event, batches)">
+                          <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error"></i>
                           {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>

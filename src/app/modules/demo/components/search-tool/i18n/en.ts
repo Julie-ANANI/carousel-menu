@@ -1,13 +1,13 @@
 export const SEARCH_DEMO = {
 
-  'SOME_PROS': 'Some of the professionals',
+  'SOME_PROS': 'Quelques professionnels',
 
-  'PROFESSIONALS': 'PROFESSIONALS FOUND',
+  'PROFESSIONALS': 'PROFESSIONNELS TROUVÉS',
 
-  'NO_RESULT_HEADING': 'No result found',
+  'NO_RESULT_HEADING': 'Pas de résultats',
 
-  'NO_RESULT_TEXT': 'Try to select another country to find out the professionals you\'re looking for.',
+  'NO_RESULT_TEXT': 'Essayer de sélectionner un autre pays',
 
-  'RESULTS_FOR': 'results for '
+  'RESULTS_FOR': 'résultats pour '
 
 };

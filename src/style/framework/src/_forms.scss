@@ -348,7 +348,6 @@ textarea {
     top: 0;
     height: 100%;
     width: 1.75rem;
-    margin: 0;
 
     &.is-left {
       left: 0;
@@ -471,7 +470,7 @@ textarea {
 
   .has-error &, &.is-error  {
 
-    &.form-input.ng-dirty.ng-touched.ng-invalid, &.form-input.ng-dirty.ng-touched.ng-invalid:focus, &.form-select {
+    &.form-input.ng-dirty.ng-touched.ng-invalid, &.form-input.ng-pristine.ng-touched.ng-invalid, &.form-input.ng-dirty.ng-touched.ng-invalid:focus, &.form-select {
       border-color: $form-alert-color;
     }
 

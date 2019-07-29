@@ -1,8 +1,12 @@
 // control transition
 @mixin control-transition() {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
 }
 
 @mixin button-transition() {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
+}
+
+@mixin icon-transition() {
+  transition: all 0.4s ease;
 }

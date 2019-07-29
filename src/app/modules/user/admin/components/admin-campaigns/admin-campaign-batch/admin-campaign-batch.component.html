@@ -63,17 +63,17 @@
           <ng-container *ngIf="!autoBatchStatus">
             <div class="section-error section-pad rm-pad-top">
 
-              <div class="shape circle circle-sm" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' ">
+              <div class="shape is-circle is-sm" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' ">
                 <i class="fas fa-check"></i>
               </div>
               <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}</span>
 
-              <div class="shape circle circle-sm left" [ngClass]=" quiz ? 'complete' : 'incomplete' ">
+              <div class="shape is-circle is-sm left" [ngClass]=" quiz ? 'complete' : 'incomplete' ">
                 <i class="fas fa-check"></i>
               </div>
               <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}</span>
 
-              <div class="shape circle circle-sm left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' ">
+              <div class="shape is-circle is-sm left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' ">
                 <i class="fas fa-check"></i>
               </div>
               <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}</span>
@@ -112,7 +112,7 @@
 
             <ng-container *ngIf="batchAlreadyActivated === 'false'">
               <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
-                   class="icon icon-white absolute tooltip"
+                   class="icon is-white absolute tooltip"
                    data-tooltip="Batch Manually"
                    (click)="activateSidebar('newBatch')">
                 <i class="fas fa-cog"></i>
@@ -158,7 +158,8 @@
 
               <div class="card-title">
                 <span>{{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros</span>
-                <div *ngIf="getDeleteStatus(batch)" class="icon icon-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
+                <span *ngIf="batch.error" class="text-error">{{ 'CAMPAIGNS.BATCH_PAGE.ERROR' | translate }}</span>
+                <div *ngIf="getDeleteStatus(batch)" class="icon is-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
               </div>
 
               <label class="form-switch float-right text-medium" [for]="batch._id">

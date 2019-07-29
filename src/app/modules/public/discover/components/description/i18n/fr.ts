@@ -23,7 +23,7 @@ export const DISCOVERDESCRIPTION = {
     'C': 'Déjà disponible'
   },
 
-  'ERROR': 'Nous ne pouvons pas trouver cette innovation en ce moment. Essayez de recharger cette innovation !',
+  'ERROR': 'Nous n\'avons pas pu trouver cette innovation. Essayez de recharger la page !',
 
   'CONTACT_US': 'En savoir plus',
 
@@ -33,7 +33,7 @@ export const DISCOVERDESCRIPTION = {
 
   'BACK': 'Liste des innovations',
 
-  'SHARE_TITLE': 'PARTAGER CECI',
+  'SHARE_TITLE': 'PARTAGER',
 
   'RELATED': 'VOUS AIMEREZ PEUT-ÊTRE AUSSI'
 

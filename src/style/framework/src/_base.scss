@@ -35,4 +35,8 @@ a {
     text-decoration: none;
   }
 
+  &.is-underlined:hover {
+    text-decoration: underline;
+  }
+
 }

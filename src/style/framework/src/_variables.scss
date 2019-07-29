@@ -15,6 +15,10 @@ $disabled-text-color: #A9A9A9 !default
 $success-color: #2ECC71 !default;
 $alert-color: #EA5858 !default;
 $warning-color: #FFB300 !default;
+$notification-bg-success-color: #DFF0D8 !default;
+$notification-text-success-color: #3c763d !default;
+$notification-text-alert-color: #a94442 !default;
+$notification-bg-alert-color: #F2DEDE !default;
 
 
 // Other colors
@@ -126,8 +130,9 @@ $font-size-lg: 0.9rem !default;
 $font-icon: 0.75rem !default;
 $font-icon-xs: 0.5rem !default;
 $font-icon-sm: $unit-3 !default;
-$font-icon-lg: $unit-4 !default;
-$font-icon-xl: $unit-5 !default;;
+$font-icon-md: $unit-4 !default;
+$font-icon-lg: $unit-5 !default;
+$font-icon-xl: $unit-6 !default;
 $line-height: 1.5 !default;
 $line-height-sm: 1 !default;
 

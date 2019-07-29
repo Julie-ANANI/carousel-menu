@@ -89,12 +89,12 @@ export const CAMPAIGNS = {
       'REJECTED': 'Rejetée',
       'STANDARD': 'Standard',
       'TOP': 'Top',
-      'FILL_RATE': 'Fill rate',
-      'TIME': 'Time',
+      'FILL_RATE': 'Taux de remplissage',
+      'TIME': 'Heure',
       'FIND': 'Trouver',
       'NOT_REACHED': 'Non atteint',
       'STARS': 'Étoiles',
-      'DUPLICATE': 'Dupliquer',
+      'DUPLICATE': 'Doublons',
       'GOOD': 'Bon',
       'UNSURE': 'Incertain',
       'BAD': 'Mauvais',
@@ -111,17 +111,17 @@ export const CAMPAIGNS = {
     },
 
     'ADDED': 'Ajouté',
-    'TO_CONTACT': 'Pour contacter',
+    'TO_CONTACT': 'A contacter',
     'CONTACTED': 'Contacté',
     'OPENED': 'Ouvert',
-    'CLICKED': 'Cliquez',
+    'CLICKED': 'Clics',
     'STARTED': 'Démarré',
     'SENT': 'Envoyé',
     'VALIDATED': 'Validé',
   },
 
   'QUIZ_PAGE': {
-    'HEADING': 'Visitez ces liens pour voir le questionnaire :',
+    'HEADING': 'Visitez ce lien pour voir le questionnaire :',
     'BOT': 'Aucun quiz n\'a été généré pour cette campagne.'
   },
 
@@ -164,7 +164,8 @@ export const CAMPAIGNS = {
     'AUTO_BATCH_LABEL': 'Démarrage auto-batch',
     'NUGGETS': 'Nuggets',
     'TITLE': 'Batch de',
-    'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?'
+    'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?',
+    'ERROR': 'Il y a eu une erreur lors de l\'envoi de ce batch !'
   },
 
   'ERROR_MESSAGE': {

@@ -1,0 +1,133 @@
+@import "variables";
+@import "mixins";
+
+.icon {
+  display: inline-block;
+  position: relative;
+  outline: none;
+  height: 0.95rem;
+  width: 0.95rem;
+  font-size: $font-icon;
+  text-decoration: none;
+  text-align: center;
+  margin: 0;
+  color: $border-color;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.is-primary {
+    color: $primary-color;
+  }
+
+  &.is-secondary {
+    color: $secondary-color;
+  }
+
+  &.is-info {
+    color: $meta-color;
+  }
+
+  &.is-draft {
+    color: $background-color;
+  }
+
+  &.is-success {
+    color: $success-color;
+  }
+
+  &.is-white {
+    color: $light-color;
+  }
+
+  &.is-delete {
+    color: $alert-color;
+  }
+
+  &.is-overlay {
+    @include icon-transition();
+
+    &::before {
+      display: none;
+      content: '';
+      width: calc(100% + 0.95rem);
+      height: calc(100% + 0.95rem);
+      border-radius: 50%;
+      top: -40%;
+      left: -50%;
+      position: absolute;
+    }
+
+    &:hover, &.is-overlay-active {
+
+      &::before {
+        display: block;
+        background-color: rgba(0, 0, 0, 0.15);
+      }
+
+    }
+
+  }
+
+  &.is-sm {
+    height: 0.75rem;
+    width: 0.75rem;
+    font-size: $font-icon-sm;
+
+    &.is-overlay::before {
+      width: calc(100% + 0.75rem);
+      height: calc(100% + 0.75rem);
+    }
+
+  }
+
+  &.is-normal {
+    height: 0.95rem;
+    width: 0.95rem;
+    font-size: $font-icon;
+
+    &.is-overlay::before {
+      width: calc(100% + 0.95rem);
+      height: calc(100% + 0.95rem);
+    }
+
+  }
+
+  &.is-md {
+    height: $unit-5;
+    width: $unit-5;
+    font-size: $font-icon-md;
+
+    &.is-overlay::before {
+      width: calc(100% + 1rem);
+      height: calc(100% + 1rem);
+    }
+
+  }
+
+  &.is-lg {
+    height: 1.3rem;
+    width: 1.3rem;
+    font-size: $font-icon-lg;
+
+    &.is-overlay::before {
+      width: calc(100% + 1.3rem);
+      height: calc(100% + 1.3rem);
+    }
+
+  }
+
+  &.is-xl {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: $font-icon-xl;
+
+    &.is-overlay::before {
+      width: calc(100% + 1.5rem);
+      height: calc(100% + 1.5rem);
+    }
+
+  }
+
+}

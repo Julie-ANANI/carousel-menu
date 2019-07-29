@@ -56,9 +56,6 @@ export class AdminProjectManagementComponent implements OnInit {
   operators: Array<User> = [];
   operatorId = '';
 
-  // Offer edition
-  offers: Array<any> = [];
-
   // Preset edition
   presets: Array<Preset> = [];
 
@@ -126,8 +123,6 @@ export class AdminProjectManagementComponent implements OnInit {
             {name: 'bnpparibas'}];
 
     this._domain = this._project && this._project.settings && this._project.settings.domain ? this._project.settings.domain : '';
-
-    this.offers = [{name: 'insights', alias: 'GetInsights'}, {name: 'apps', alias: 'GetApps'}, {name: 'leads', alias: 'GetLeads'}];
 
     this._dashboardService.getOperators().subscribe((operators: any) => this.operators = operators.result);
 
@@ -290,15 +285,6 @@ export class AdminProjectManagementComponent implements OnInit {
     this._project.operator = value || null;
     this.operatorId = value || undefined;
     this.save('L\'opérateur à été mis à jour avec succès');
-  }
-
-  /***
-   * This function is call when the user change the offer of the project
-   * @param value
-   */
-  changeProjectOffer(value: any) {
-    this._project.type = value;
-    this.save('L\'offre à été mise à jour avec succès');
   }
 
   /***

@@ -28,7 +28,6 @@ export interface Innovation {
 
   readonly name?: string;
   domain?: string;
-  type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
   tags?: Array<Tag>;

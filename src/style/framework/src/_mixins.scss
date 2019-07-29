@@ -1,3 +1,4 @@
+@import "mixins/avatar";
 @import "mixins/button";
 @import "mixins/clearfix";
 @import "mixins/label";
@@ -5,12 +6,11 @@
 @import "mixins/text";
 @import "mixins/transition";
 
-@import "variables";
-
-
 
 
 // todo remove this
+
+@import "variables";
 
 // Button round variant
 @mixin button-round-variant($color: $primary-color) {
@@ -63,33 +63,10 @@
 
 }
 
-// Text link variant
-@mixin text-link-variant($color: $primary-color) {
-  font-weight: $font-weight-medium;
-  font-size: $font-size-sm;
-  color: $color;
 
-  &:focus, &:visited, &:active, &.active, &:hover {
-    cursor: pointer;
-    color: $color;
-    text-decoration: underline;
-  }
-
-}
 
 // Bar scale variant
 @mixin bar-scale-variant($color-1st, $color-2nd) {
   background-image: linear-gradient(-180deg, $color-1st 0%, $color-2nd 100%);
 }
 
-// Avatar mixin
-@mixin avatar-variant($color: $light-color, $bg-color: $primary-color) {
-  background: $bg-color;
-  color: $color;
-}
-
-@mixin avatar-base($size: $unit-8) {
-  font-size: $size / 2;
-  height: $size;
-  width: $size;
-}

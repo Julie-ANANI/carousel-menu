@@ -4,62 +4,62 @@
 .title {
   @include title-variant(1.6rem);
 
-  &.title-1 {
+  &.is-1 {
     @include title-variant(2.4rem);
   }
 
-  &.title-2 {
+  &.is-2 {
     @include title-variant(2rem);
   }
 
-  &.title-3 {
+  &.is-3 {
     @include title-variant(1.6rem);
   }
 
-  &.title-4 {
+  &.is-4 {
     @include title-variant(1.2rem);
   }
 
-  &.title-5 {
+  &.is-5 {
     @include title-variant(1rem);
   }
 
-  &.title-6 {
+  &.is-6 {
     @include title-variant(0.8rem);
   }
 
 }
 
 .subtitle {
-  @include subtitle-variant(1.6rem);
+  @include subtitle-variant(1rem);
 
-  &.subtitle-1 {
+  &.is-1 {
     @include subtitle-variant(2.4rem);
   }
 
-  &.subtitle-2 {
+  &.is-2 {
     @include subtitle-variant(2rem);
   }
 
-  &.subtitle-3 {
+  &.is-3 {
     @include subtitle-variant(1.6rem);
   }
 
-  &.subtitle-4 {
+  &.is-4 {
     @include subtitle-variant(1.2rem);
   }
 
-  &.subtitle-5 {
+  &.is-5 {
     @include subtitle-variant(1rem);
   }
 
-  &.subtitle-6 {
+  &.is-6 {
     @include subtitle-variant(0.8rem);
   }
 
 }
 
-.title:not(.spaced)+.subtitle {
+.title:not(.is-spaced)+.subtitle {
   margin-top: -1.25rem;
 }
 

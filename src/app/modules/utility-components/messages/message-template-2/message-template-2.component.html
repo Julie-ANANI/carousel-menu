@@ -1,11 +1,11 @@
 <section id="message-template-2" class="text-md text-normal">
   <div class="flex-between flex-wrap">
 
-    <div class="message-wrapper m-left-right">
+    <div class="message-wrapper m-left-auto m-right-auto">
       <ng-content></ng-content>
     </div>
 
-    <div class="bot-wrapper m-left-right" [ngClass]="{ 'animate-bot-bounceIn': animation }">
+    <div class="bot-wrapper m-left-auto m-right-auto" [ngClass]="{ 'animate-bot-bounceIn': animation }">
       <img [src]="defaultSrc" class="img-responsive" alt=" ">
     </div>
 

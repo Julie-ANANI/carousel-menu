@@ -3,7 +3,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && answers.length > 0">
-    <div class="icon icon-meta absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
+    <div class="icon is-info absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
       <i class="fas fa-bars"></i>
     </div>
   </ng-container>
@@ -27,7 +27,7 @@
     <div *ngFor="let answer of topAnswers" class="card-main card-wrapper">
       <div *ngIf="!answer.isLoading" class="d-flex animate-zoomIn card-content">
 
-        <figure class="avatar avatar-lg avatar-meta">
+        <figure class="avatar is-lg">
           <i class="fas fa-user"></i>
         </figure>
 

@@ -5,7 +5,7 @@ export const ERROR = {
 
   'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment.',
 
-  'OPERATION_ERROR': 'Nous sommes confrontés à des problèmes techniques pour mener à bien cette demande. Veuillez réessayer !',
+  'OPERATION_ERROR': 'Nous sommes confrontés à des problèmes techniques. Veuillez réessayer !',
 
   'FORM_ERROR': 'Erreur de formulaire',
 
@@ -107,7 +107,7 @@ export const ERROR = {
 
 
   'NOT_MODIFIED': {
-    'USER_ANSWER': 'Vous n\'êtes pas autorisé à effectuer des modifications en mode d\'affichage.'
+    'USER_ANSWER': 'Vous n\'êtes pas autorisé à effectuer des modifications en mode affichage.'
   },
 
 
@@ -159,7 +159,7 @@ export const ERROR = {
 
   'FILTER': {
     'ALREADY_EXIST': 'La vue avec ce nom existe déjà.',
-    'ALREADY_ACTIVATED': 'La vue est déjà activée.',
+    'ALREADY_ACTIVATED': 'La vue est déjà active.',
   },
 
 
