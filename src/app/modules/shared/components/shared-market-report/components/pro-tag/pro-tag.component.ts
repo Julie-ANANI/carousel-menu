@@ -27,7 +27,7 @@ export class ProfessionalTagComponent implements OnInit {
 
   ngOnInit() {
     if (this.questionId) {
-      this._tags = this.answer.answerTags[this.questionId];
+      this._tags = this.answer.answerTags[this.questionId] || [];
       if (this.sectorTag) this._tags = [...this._tags, ...this.answer.tags];
     } else {
       this._tags = this.answer.tags;
