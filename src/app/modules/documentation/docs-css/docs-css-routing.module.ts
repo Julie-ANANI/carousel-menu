@@ -31,6 +31,7 @@ import { AvatarsComponent } from './components/avatars/avatars.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { BannersComponent } from './components/banners/banners.component';
 import { BarsComponent } from './components/bars/bars.component';
+import { CardsComponent } from './components/cards/cards.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -72,6 +73,7 @@ const docsCssRoutes: Routes = [
       { path: 'components/badges', component: BadgesComponent, pathMatch: 'full' },
       { path: 'components/banners', component: BannersComponent, pathMatch: 'full' },
       { path: 'components/bars', component: BarsComponent, pathMatch: 'full' },
+      { path: 'components/cards', component: CardsComponent, pathMatch: 'full' },
       {
         path: 'utilities',
         redirectTo: 'utilities/colors',
