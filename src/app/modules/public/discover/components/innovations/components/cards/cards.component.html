@@ -3,7 +3,7 @@
 
   <!-- section cards -->
   <section class="c-cards-wrapper d-flex text-center flex-wrap">
-    <div *ngFor="let innovation of innovations | slice:startIndex:endIndex" class="card card-responsive m-bottom-30" [ngClass]="{ 'c-effect': stopLoading }">
+    <div *ngFor="let innovation of innovations | slice:startIndex:endIndex" class="card is-responsive m-bottom-30" [ngClass]="{ 'c-effect': stopLoading }">
       <a [href]="[getInnovationDetail('url', innovation)]" class="text-primary-dark text-xs" [ngClass]="{ 'c-default': !stopLoading }">
 
         <div class="card-image" [ngClass]="stopLoading ? 'relative' : 'loading-content'">
