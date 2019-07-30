@@ -85,5 +85,127 @@
 
   </section>
 
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Scale</h2>
+
+    <p class="text-md">Add a container element with the <code>bar-scale</code> class. And add child elements with the <code>bar-item</code> class and <code>is-number-(1-9)</code>
+      class to specify the colors. Add the child elements to the bar-item with the <code>bar-fill</code>, <code>bar-stat</code>, <code>bar-score</code>, and <code>bar-picture</code>
+      class. You need to set the value of the <code>bar-fill</code>, <code>bar-stat</code>, and <code>bar-score</code> manually.</p>
+
+    <div class="columns">
+      <div class="column col-xs-12 col-2 p-top-20">
+        <div class="bar-scale">
+          <div class="bar-item">
+            <div class="bar-fill" style="height: 50%"></div>
+            <div class="bar-stat">10</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">1</div>
+          </div>
+        </div>
+      </div>
+      <div class="column col-xs-12 col-10 p-top-20">
+        <div class="bar-scale">
+          <div class="bar-item is-number-1">
+            <div class="bar-fill" style="height: 10%"></div>
+            <div class="bar-stat">1</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">1</div>
+          </div>
+          <div class="bar-item is-number-2">
+            <div class="bar-fill" style="height: 20%"></div>
+            <div class="bar-stat">2</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">2</div>
+          </div>
+          <div class="bar-item is-number-3">
+            <div class="bar-fill" style="height: 30%"></div>
+            <div class="bar-stat">3</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">3</div>
+          </div>
+          <div class="bar-item is-number-4">
+            <div class="bar-fill" style="height: 40%"></div>
+            <div class="bar-stat">4</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">4</div>
+          </div>
+          <div class="bar-item is-number-5">
+            <div class="bar-fill" style="height: 50%"></div>
+            <div class="bar-stat">5</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">5</div>
+          </div>
+          <div class="bar-item is-number-6">
+            <div class="bar-fill" style="height: 60%"></div>
+            <div class="bar-stat">6</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">6</div>
+          </div>
+          <div class="bar-item is-number-7">
+            <div class="bar-fill" style="height: 70%"></div>
+            <div class="bar-stat">7</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">7</div>
+          </div>
+          <div class="bar-item is-number-8">
+            <div class="bar-fill" style="height: 80%"></div>
+            <div class="bar-stat">8</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">8</div>
+          </div>
+          <div class="bar-item is-number-9">
+            <div class="bar-fill" style="height: 90%"></div>
+            <div class="bar-stat">9</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">9</div>
+          </div>
+          <div class="bar-item is-number-10">
+            <div class="bar-fill" style="height: 100%"></div>
+            <div class="bar-stat">10</div>
+            <div class="bar-picture"></div>
+            <div class="bar-score">10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-top-20">
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-scale"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-fill"</span> <span class="attr">style</span>=<span class="string">"height: 50%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-stat"</span>&gt;1</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-picture"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-score"</span>&gt;10</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-scale"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item is-number-1"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-fill"</span> <span class="attr">style</span>=<span class="string">"height: 10%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-stat"</span>&gt;1</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-picture"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-score"</span>&gt;1</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item is-number-2"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-fill"</span> <span class="attr">style</span>=<span class="string">"height: 20%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-stat"</span>&gt;2</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-picture"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-score"</span>&gt;2</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        ...
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item is-number-10"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-fill"</span> <span class="attr">style</span>=<span class="string">"height: 100%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-stat"</span>&gt;10</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-picture"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-score"</span>&gt;10</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+    </code></pre>
+    </div>
+
+  </section>
+
 </div>
 
