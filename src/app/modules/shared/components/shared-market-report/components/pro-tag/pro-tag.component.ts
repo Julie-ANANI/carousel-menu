@@ -16,6 +16,8 @@ export class ProfessionalTagComponent implements OnInit {
 
   @Input() questionId: string;
 
+  @Input() sectorTag: boolean = false;
+
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   private _tags: Array<Tag>;
@@ -26,6 +28,7 @@ export class ProfessionalTagComponent implements OnInit {
   ngOnInit() {
     if (this.questionId) {
       this._tags = this.answer.answerTags[this.questionId];
+      if (this.sectorTag) this._tags = [...this._tags, ...this.answer.tags];
     } else {
       this._tags = this.answer.tags;
     }
