@@ -1,0 +1,89 @@
+<div id="bars">
+
+  <h1 class="title">Bars</h1>
+
+  <div class="docs-divider"></div>
+
+  <p class="text-md">Bars represent the progress of a task or the value within the known range.</p>
+
+  <p class="text-md">Add a container element with the <code>bar</code> class. And add child elements with the <code>bar-item</code> class.
+    The width percentage value is needed for every <code>bar-item</code>.</p>
+
+  <p class="text-md">There is the <code>is-xs</code> and <code>is-sm</code> class for thinner Bars. Also, you could use Tooltips for any <code>bar-item</code>.</p>
+
+  <div class="p-top-20">
+    <div class="bar is-xs m-bottom-25">
+      <div class="bar-item tooltip" data-tooltip="50%" style="width: 50%"></div>
+    </div>
+    <div class="bar is-sm m-bottom-25">
+      <div class="bar-item bg-draft tooltip" data-tooltip="70%" style="width: 70%"></div>
+    </div>
+    <div class="bar m-bottom-25">
+      <div class="bar-item bg-success tooltip" data-tooltip="90%" style="width: 90%"></div>
+    </div>
+  </div>
+
+  <div>
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar is-xs"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item tooltip"</span> <span class="attr">data-tooltip</span>=<span class="string">"50"</span> <span class="attr">style</span>=<span class="string">"width: 50%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar is-sm"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item tooltip bg-draft"</span> <span class="attr">data-tooltip</span>=<span class="string">"70"</span> <span class="attr">style</span>=<span class="string">"width: 70%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item tooltip bg-success"</span> <span class="attr">data-tooltip</span>=<span class="string">"90"</span> <span class="attr">style</span>=<span class="string">"width: 90%"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+    </code></pre>
+  </div>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Slider</h2>
+
+    <p class="text-md">You can add the <code>bar-slider</code> class to the Bars container. And add child elements with the <code>bar-item</code> class
+      and <code>bar-slider-button</code> inside bar-item. You need to set the <code>bar-item</code> width manually to have the slider point.</p>
+
+    <p class="text-md">If there are two <code>bar-item</code> divs in one bar-slider, you will have a range slider.</p>
+
+    <div class="p-top-20">
+      <div class="bar bar-slider m-bottom-25">
+        <div class="bar-item" style="width: 50%">
+          <button class="bar-slider-button button"></button>
+        </div>
+      </div>
+      <div class="bar bar-slider m-bottom-25">
+        <div class="bar-item" style="width:25%;">
+          <button class="bar-slider-button button"></button>
+        </div>
+        <div class="bar-item" style="width:75%;">
+          <button class="bar-slider-button button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar bar-slider"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item"</span> <span class="attr">style</span>=<span class="string">"width: 50%"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"bar-slider-button button"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar bar-slider"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item"</span> <span class="attr">style</span>=<span class="string">"width: 25%"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"bar-slider-button button"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bar-item"</span> <span class="attr">style</span>=<span class="string">"width: 75%"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"bar-slider-button button"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+    </code></pre>
+    </div>
+
+  </section>
+
+</div>
+

@@ -203,7 +203,8 @@ export const COMMON = {
     'START': 'Démarrer',
     'CREATE': 'Créer',
     'VIEW_LIKE_CLIENT': 'Afficher comme client',
-    'BACK_TO_CAMPAIGNS': 'Retour aux campagnes'
+    'BACK_TO_CAMPAIGNS': 'Retour aux campagnes',
+    'COLLABORATOR': 'Gestion des collaborateurs'
   },
 
   'PROJECT': {
