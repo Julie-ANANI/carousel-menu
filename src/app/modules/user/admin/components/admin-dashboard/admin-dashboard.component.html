@@ -96,11 +96,11 @@
 
                   <ng-container *ngIf="index2 === 4">
                     <div class="batch-body">
-                      <div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">
+                      <div class="popover" [ngClass]="{ 'is-right': index1 === 0, 'is-left': index1 === 4 }">
 
                         <div class="text-link">see more...</div>
 
-                        <div class="popover-container popover-sm">
+                        <div class="popover-container is-xs">
                           <div class="card">
                             <div class="card-body">
                               <div *ngFor="let batchesOver of days; let index3 = index">
