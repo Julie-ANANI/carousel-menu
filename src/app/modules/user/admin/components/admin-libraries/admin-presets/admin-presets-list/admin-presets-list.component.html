@@ -38,6 +38,12 @@
     <!-- questionnaire -->
     <ng-container *ngIf="!fetchingError && !noResult">
 
+      <!-- import button -->
+      <label class="btn btn-sm ghost-primary">
+        <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+        Import file
+      </label>
+
       <!-- export button -->
       <div class="text-right p-bottom-25">
         <button (click)="onClickExport()" class="btn btn-primary btn-sm" type="button">
