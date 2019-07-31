@@ -12,11 +12,6 @@
   z-index: $zindex-3;
   box-shadow: $box-shadow-menu;
 
-  &.menu-nav {
-    background: transparent;
-    box-shadow: none;
-  }
-
   .menu-item {
     @include control-transition();
     font-size: $font-size-sm;
@@ -38,10 +33,15 @@
       background-color: $bg-menu-item-color;
     }
 
-    &.menu-item:not(:first-child) {
+    &:not(:first-child) {
       margin-top: .2rem;
     }
 
+  }
+
+  &.menu-nav {
+    background: transparent;
+    box-shadow: none;
   }
 
   &.is-md {

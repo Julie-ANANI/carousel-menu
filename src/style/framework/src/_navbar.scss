@@ -2,14 +2,12 @@
 @import "mixins";
 
 .navbar, .sidebar-navbar {
-  display: flex;
-  justify-content: space-between;
+  @include flex-between();
   flex-wrap: wrap;
-  align-items: center;
   min-height: 75px;
   position: relative;
 
-  .mobile-toggle {
+  .navbar-mobile-toggle {
     @include inline-flex-centered();
     height: 75px;
     margin: 0;
@@ -24,10 +22,118 @@
 
   }
 
-  .logo {
+  .navbar-brand {
     @include inline-flex-centered();
     height: 75px;
   }
+
+  .menu {
+    min-width: unset;
+    padding: 0;
+    transform: none;
+
+    .menu-item {
+      @include inline-flex-centered();
+      background-color: $bg-color-light;
+      cursor: default;
+      height: 75px;
+      font-weight: $font-weight-medium;
+      padding: 0 $unit-3;
+      margin: 0;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        position: relative;
+
+        > span:after {
+          display: block;
+          position: absolute;
+          left: 0;
+          transform: scaleX(0);
+          content: '';
+          width: 100%;
+          height: 2px;
+          bottom: 22px;
+          visibility: hidden;
+          transform-origin: bottom left;
+          transition: all 0.25s ease-out;
+        }
+
+        &.active, &:active {
+          color: $primary-color;
+        }
+
+        &:hover {
+          color: $primary-color;
+          cursor: pointer;
+
+          > span:after {
+            visibility: visible;
+            background-color: $primary-color;
+            transform: scaleX(1);
+          }
+
+        }
+
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+
+      &.navbar-dropdown .dropdown {
+
+        a {
+          cursor: default;
+        }
+
+        .menu {
+          flex-direction: column;
+          padding: 0.5rem 0;
+
+          .menu-item {
+            height: auto;
+            padding: 0.5rem 1.1rem;
+
+            &:hover {
+              cursor: pointer;
+              background-color: $bg-menu-item-color;
+            }
+
+          }
+
+        }
+
+        &:hover {
+
+          .menu {
+            display: block;
+          }
+
+          .fa-angle-down {
+            color: $primary-color !important;
+          }
+
+          span:after {
+            visibility: visible;
+            background-color: $primary-color;
+            transform: scaleX(1);
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+
 
   .navigation-wrapper, .sidebar-navigation-wrapper {
     font-size: $font-size-sm;
