@@ -24,7 +24,7 @@
 
             <!-- back to innovations -->
             <div class="d-d-back-link">
-              <a routerLink="/discover" class="d-inline-flex align-center">
+              <a routerLink="/discover" class="text-sm d-inline-flex align-center">
                 <i class="fas fa-angle-left m-right-1 text-warning"></i>
                 <span class="text-link text-normal" [innerText]="'DISCOVERDESCRIPTION.BACK'" translate></span>
               </a>
@@ -55,7 +55,7 @@
             <div *ngFor="let media of innovationCard.media" class="d-inline-flex d-d-media-wrapper">
 
               <!-- if image -->
-              <figure *ngIf="media?.type === 'PHOTO'" class="img-overlay">
+              <figure *ngIf="media?.type === 'PHOTO'" class="img-overlay c-hand">
                 <img
                   (click)="mediaToShow(media.url)"
                   [alt]=" "
