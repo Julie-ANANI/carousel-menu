@@ -33,6 +33,7 @@ import { BadgesComponent } from './components/badges/badges.component';
 import { BannersComponent } from './components/banners/banners.component';
 import { BarsComponent } from './components/bars/bars.component';
 import { CardsComponent } from './components/cards/cards.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { CardsComponent } from './components/cards/cards.component';
     BadgesComponent,
     BannersComponent,
     BarsComponent,
-    CardsComponent
+    CardsComponent,
+    DropdownComponent
   ],
 })
 
