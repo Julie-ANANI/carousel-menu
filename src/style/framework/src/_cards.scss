@@ -15,12 +15,6 @@
     box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
   }
 
-  &.card-3 {
-    flex: 1 0 420px;
-    max-width: calc(25% - 1rem);
-    margin-right: $unit-5;
-  }
-
   .card-image {
     display: block;
     padding-top: $unit-3;
@@ -83,22 +77,35 @@
     flex: 1 1 auto;
   }
 
+  &.is-card-3, &.is-responsive {
+    margin-right: $unit-5;
+    margin-bottom: $unit-5;
+  }
+
   &.is-responsive {
     flex: 1 0 300px;
     max-width: calc(25% - 1rem);
-    margin-right: $unit-5;
+  }
+
+  &.is-card-3 {
+    flex: 1 0 420px;
+    max-width: calc(33% - 1rem);
   }
 
 }
 
-@media (max-width: $size-2x) {
+@media (min-width: $size-lg) and (max-width: $size-xl) {
 
   .is-responsive {
-    max-width: calc(25% - 1rem) !important;
+    max-width: calc(33% - 1rem) !important;
   }
 
-  .card-3 {
-    max-width: calc(33% - 1rem) !important;
+}
+
+@media (max-width: $size-lg) {
+
+  .is-card-3 {
+    max-width: calc(50% - 1rem) !important;
   }
 
 }
@@ -106,10 +113,6 @@
 @media (min-width: $size-md) and (max-width: $size-lg) {
 
   .is-responsive {
-    max-width: calc(33% - 1rem) !important;
-  }
-
-  .card-3 {
     max-width: calc(50% - 1rem) !important;
   }
 
@@ -121,37 +124,20 @@
     max-width: calc(50% - 1rem) !important;
   }
 
-  .card-3 {
-    max-width: calc(50% - 1rem) !important;
-  }
-
 }
 
-@media (min-width: $size-xs) and (max-width: $size-sm) {
-
-  .is-responsive {
-    max-width: calc(50% - 1rem) !important;
-  }
-
-  .card-3 {
-    margin-left: auto;
-    margin-right: auto !important;
-    max-width: calc(80% - 1rem) !important;
-  }
-
-}
-
-@media (max-width: $size-xs) {
+@media (max-width: $size-sm) {
 
   .is-responsive {
     flex: 100% !important;
     max-width: 100% !important;
+    margin-right: 0 !important;
   }
 
-  .card-3 {
-    margin-left: auto;
-    margin-right: auto !important;
-    max-width: 100% !important;
+  .is-card-3 {
+    flex: 100% !important;
+    margin-right: 0 !important;
+    max-width: calc(100% - 1rem) !important;
   }
 
 }
