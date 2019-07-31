@@ -111,6 +111,10 @@ export class AdminPresetsListComponent {
     this._isModalCloneAdd = false;
   }
 
+  public onClickExport() {
+    this._presetService.export();
+  }
+
   public onClickAdd() {
     this._resetModalVariables();
     this._modalTitle = 'COMMON.MODAL.TITLE_CREATE';
