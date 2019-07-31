@@ -38,6 +38,13 @@
     <!-- questionnaire -->
     <ng-container *ngIf="!fetchingError && !noResult">
 
+      <!-- export button -->
+      <div class="text-right p-bottom-25">
+        <button (click)="onClickExport()" class="btn btn-primary btn-sm" type="button">
+          {{ 'COMMON.BUTTON.EXPORT' | translate }}
+        </button>
+      </div>
+
       <!-- add button -->
       <div class="text-right p-bottom-25">
         <button (click)="onClickAdd()" class="btn btn-primary btn-sm" type="button">
