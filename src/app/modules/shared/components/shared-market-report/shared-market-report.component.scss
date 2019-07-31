@@ -32,7 +32,7 @@
         border: none;
         overflow: hidden;
 
-        &.card-responsive {
+        &.is-responsive {
           margin-bottom: 0.75rem;
         }
 
@@ -108,7 +108,7 @@
             height: 100%;
           }
 
-          &.card-3 {
+          &.is-card-3 {
             margin-bottom: $unit-5;
           }
 

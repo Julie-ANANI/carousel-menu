@@ -1,0 +1,346 @@
+<div id="cards">
+
+  <h1 class="title">Cards</h1>
+
+  <div class="docs-divider"></div>
+
+  <p class="text-md">Cards are flexible content containers.</p>
+
+  <p class="text-md">Add a container element with the <code>card</code> class. And add child elements with the <code>card-image</code>,
+    <code>card-header</code>, <code>card-body</code> and/or <code>card-footer</code> classes. The <code>card-image</code> can be placed in any position.</p>
+
+  <p class="text-md">To have the shadow effect on the card use the <code>is-shadow</code> class with the <code>card</code> class.</p>
+
+  <div class="columns">
+    <div class="column p-top-20 col-xs-12 col-4">
+      <div class="card" style="height: 100%">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" ">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Microsoft</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          Empower every person and every organization on the planet to achieve more.
+        </div>
+
+        <div class="card-footer">
+          <button class="button is-primary">Go</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="column p-top-20 col-xs-12 col-4">
+      <div class="card" style="height: 100%">
+
+        <div class="card-header">
+          <div class="card-title">Apple</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564455735015-9004295762a3" alt=" ">
+        </div>
+
+        <div class="card-body">
+          To make a contribution to the world by making tools for the mind that advance humankind.
+        </div>
+
+        <div class="card-footer">
+          <button class="button is-secondary is-outlined">Share</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="column p-top-20 col-xs-12 col-4">
+      <div class="card is-shadow" style="height: 100%">
+
+        <div class="card-header">
+          <div class="card-title">Google I/O</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </div>
+
+        <div class="card-footer">
+          <button class="button is-secondary is-link">Search</button>
+          <button class="button is-link">Go</button>
+        </div>
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564333734856-75d63dc162d6" alt=" ">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="p-top-20">
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-image"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://images.unsplash.com/photo-1564473185935-58113cba1e80"</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-header"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-title"</span>&gt;Microsoft</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-subtitle"</span>&gt;Software and hardware</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-body"</span>&gt;
+        Empower every person and every organization on the planet to achieve more.
+        </span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-footer"</span>&gt;
+          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button is-primary"</span>&gt;Go</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        </span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card is-shadow"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-header"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-title"</span>&gt;Google I/O</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-subtitle"</span>&gt;Software and hardware</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-body"</span>&gt;
+        An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-footer"</span>&gt;
+          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button is-secondary is-link"</span>&gt;Search</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button is-link"</span>&gt;Go</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+        </span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-image"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://images.unsplash.com/photo-1564333734856-75d63dc162d6"</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+    </code></pre>
+  </div>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Responsive</h2>
+
+    <p class="text-md">Add the <code>is-responsive</code> class with <code>card</code> class when you want to have multiple cards in one row they will expand and collapse according
+      to the available container and all will have the same height. Also wrap them all in a container and use <code>d-flex</code> and <code>flex-wrap</code> classes so that
+      when not much space is available they will move to the next row.</p>
+
+    <div class="p-top-20 d-flex flex-wrap">
+      <div class="card is-responsive">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Microsoft</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          Empower every person and every organization on the planet to achieve more.
+        </div>
+
+      </div>
+      <div class="card is-responsive">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564455735015-9004295762a3" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Apple</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          To make a contribution to the world by making tools for the mind that advance humankind.
+        </div>
+
+      </div>
+      <div class="card is-responsive">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564333734856-75d63dc162d6" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Google I/O</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </div>
+
+      </div>
+      <div class="card is-responsive">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564526207107-e6e4d67e25e4" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Lg</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </div>
+
+      </div>
+      <div class="card is-responsive">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564390852618-42af15576afa" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Samsung</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"d-flex flex-wrap"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card is-responsive"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-image"</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://images.unsplash.com/photo-1564473185935-58113cba1e80"</span>&gt;</span>
+            <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-header"</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-title"</span>&gt;Microsoft</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-subtitle"</span>&gt;Software and hardware</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-body"</span>&gt;
+            Empower every person and every organization on the planet to achieve more.
+            </span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          ...
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Card 3</h2>
+
+    <p class="text-md">Add the <code>is-card-3</code> class with <code>card</code> class when you want to show max 3 card in one row.</p>
+
+    <div class="p-top-20 d-flex flex-wrap">
+      <div class="card is-card-3">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Microsoft</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          Empower every person and every organization on the planet to achieve more.
+        </div>
+
+      </div>
+      <div class="card is-card-3">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564455735015-9004295762a3" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Apple</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          To make a contribution to the world by making tools for the mind that advance humankind.
+        </div>
+
+      </div>
+      <div class="card is-card-3">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564333734856-75d63dc162d6" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Google I/O</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </div>
+
+      </div>
+      <div class="card is-card-3">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564526207107-e6e4d67e25e4" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Samsung</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </div>
+
+      </div>
+      <div class="card is-card-3">
+
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1564390852618-42af15576afa" alt=" " height="154" style="height: 154px; width: 100%">
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">Samsung</div>
+          <div class="card-subtitle">Software and hardware</div>
+        </div>
+
+        <div class="card-body">
+          An immersive, three-day experience focused on exploring the next generation of technology, mobile and beyond.
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"d-flex flex-wrap"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card is-card-3"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-image"</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://images.unsplash.com/photo-1564473185935-58113cba1e80"</span>&gt;</span>
+            <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-header"</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-title"</span>&gt;Microsoft</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-subtitle"</span>&gt;Software and hardware</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-body"</span>&gt;
+            Empower every person and every organization on the planet to achieve more.
+            </span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          ...
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+</div>
+
