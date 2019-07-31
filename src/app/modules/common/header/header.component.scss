@@ -1,66 +1,53 @@
 @import "../../../../style/framework/src/variables";
 
-#header-component {
-  border: 1px solid $border-light-color;
+#header {
+  border: $border-width solid $border-light-color;
 
   .navbar {
 
-    .logo {
+    .navbar-brand {
       padding-top: 5px;
     }
 
-    .navigation-wrapper {
+    .menu {
 
-      .header-lang-dropdown {
+      .navbar-contact-button .button.is-info {
+        border-color: $border-meta-color;
+        color: $text-background-color;
+      }
+
+      .navbar-dropdown .dropdown {
 
         a {
           height: 35px;
 
-          span:after {
+          > span:after {
             bottom: 3px;
-          }
-
-          .fa-angle-down {
-            margin-left: $unit-2;
           }
 
         }
 
-        .dropdown-menu {
-          width: 46px;
+        .menu {
+          min-width: 46px;
           right: -7px;
           padding: 0;
 
-          .drop-item{
+          .menu-item {
+            height: 42px;
             padding: 0.5rem;
           }
 
         }
 
-        &:hover {
-
-          .fa-angle-down {
-            color: $primary-color !important;
-          }
-
-          span:after {
-            visibility: visible;
-            background-color: $primary-color;
-            transform: scaleX(1);
-          }
-
-        }
-
       }
 
-      .contact-button {
+    }
 
-        .btn.ghost-edit {
-          border-color: $border-meta-color;
-          color: $text-background-color;
-        }
 
-      }
+
+
+
+    .navigation-wrapper {
 
       .header-account-dropdown {
 
@@ -116,44 +103,33 @@
 
 }
 
-
 .sidebar {
   width: 260px !important;
 }
 
-
 @media (max-width: $size-md) {
 
-  #header-component {
+  #header {
 
-    .mobile-toggle {
+    .navbar-mobile-toggle {
       display: flex !important;
       margin-left: 0.5rem;
     }
 
-    .navigation-menu-item {
+    .navbar .menu.menu-nav .menu-item {
       display: none !important;
-    }
-
-    .header-lang-dropdown {
-      display: inline-flex !important;
     }
 
   }
 
 }
 
-
 @media (min-width: 841px) {
 
-  #header-component {
+  #header {
 
-    .mobile-toggle {
+    .navbar-mobile-toggle {
       display: none !important;
-    }
-
-    .navigation-menu-item {
-      display: inline-flex !important;
     }
 
   }
