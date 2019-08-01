@@ -2,6 +2,11 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="restrict-width">
 
+      <!-- import button -->
+      <label class="btn btn-sm ghost-primary m-right-25">
+        <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+        Import file
+      </label>
 
       <!-- fetching error -->
       <ng-container *ngIf="fetchingError">

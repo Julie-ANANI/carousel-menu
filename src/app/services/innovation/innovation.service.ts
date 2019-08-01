@@ -133,4 +133,10 @@ export class InnovationService {
     const url = environment.apiUrl + `/innovation/${innovationId}/export`;
     window.open(url);
   }
+
+  public import(file:File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, "import_project");
+    return this._http.post('/innovation/import/', formData);
+  }
 }
