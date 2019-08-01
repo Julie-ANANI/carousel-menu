@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
 import { isPlatformBrowser, Location } from '@angular/common';
@@ -8,6 +8,7 @@ import { initTranslation, TranslateService } from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -37,7 +38,7 @@ import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
       state('active', style({
         display: 'block',
         opacity: 1,
-        background: 'rgba(0,0,0,0.75)',
+        background: 'rgba(58,66,77,0.96)',
       })),
       transition('inactive => active', animate('.5ms ease-in-out')),
       transition('active => inactive', animate('700ms ease-in-out')),
@@ -46,7 +47,7 @@ import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
   ]
 })
 
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent {
 
   private _backOfficeValue: boolean = false; // if true, then display back office menu options.
 
@@ -70,10 +71,18 @@ export class HeaderComponent implements OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _location: Location,
+              private _router: Router,
               private _translateService: TranslateService,
               private _cookieService: CookieService) {
 
     this._initializeVariables();
+
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationStart || event instanceof NavigationEnd
+        || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this._backOfficeValue = this._location.path().slice(5, 11) === '/admin';
+      }
+    });
 
   }
 
@@ -91,7 +100,6 @@ export class HeaderComponent implements OnDestroy {
   private _initializeVariables() {
     initTranslation(this._translateService);
     this._setFlag();
-    this._backOfficeValue = this._location.path().slice(5, 11) === '/admin';
     this._sidebarValues.animate_state = 'inactive';
   }
 
@@ -213,10 +221,6 @@ export class HeaderComponent implements OnDestroy {
 
   get adminRoutes(): Array<Header> {
     return this._adminRoutes;
-  }
-
-  ngOnDestroy(): void {
-    this._backOfficeValue = false;
   }
 
 }
