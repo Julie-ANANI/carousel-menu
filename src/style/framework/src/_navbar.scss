@@ -125,6 +125,43 @@
 
       }
 
+      &.navbar-dropdown-language {
+        height: 35px;
+        width: 57px;
+
+        a > span:after {
+          bottom: 3px;
+        }
+
+        .menu {
+          min-width: unset;
+          width: 46px;
+          padding: 0;
+
+          .menu-item {
+            justify-content: center;
+            height: 42px;
+            padding: 0.5rem;
+          }
+
+        }
+
+        &:hover {
+
+          .fa-angle-down {
+            color: $primary-color !important;
+          }
+
+          a > span:after {
+            visibility: visible;
+            background-color: $primary-color;
+            transform: scaleX(1);
+          }
+
+        }
+
+      }
+
     }
 
   }

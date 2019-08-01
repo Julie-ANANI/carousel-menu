@@ -1,12 +1,26 @@
 @import "../../../../style/framework/src/variables";
 
-#header-unauth-component {
-  border: 1px solid $border-light-color;
+#header {
+  border-bottom: $border-width solid $border-light-color;
 
   .navbar {
 
-    .logo {
+    .navbar-brand {
       padding-top: 5px;
+    }
+
+    .menu {
+
+      .menu-item.navbar-contact-button .button.is-info.is-outlined {
+        color: $text-background-color;
+        border-color: transparent;
+
+        &:hover {
+          border-color: $border-meta-color;
+        }
+
+      }
+
     }
 
     .navigation-wrapper {
@@ -15,62 +29,18 @@
         flex-wrap: wrap;
       }
 
-      .header-lang-dropdown {
+    }
 
-        a {
-          height: 35px;
+  }
 
-          span:after {
-            bottom: 3px;
-          }
+}
 
-          .fa-angle-down {
-            margin-left: $unit-2;
-          }
+@media (max-width:$size-sm) {
 
-        }
+  #header {
 
-        .dropdown-menu {
-          width: 46px;
-          right: -7px;
-          padding: 0;
-
-          .drop-item{
-            padding: 0.5rem;
-          }
-
-        }
-
-        &:hover {
-
-          .fa-angle-down {
-            color: $primary-color !important;
-          }
-
-          span:after {
-            visibility: visible;
-            background-color: $primary-color;
-            transform: scaleX(1);
-          }
-
-        }
-
-      }
-
-      .contact-button {
-
-        .btn.ghost-edit {
-          color: $text-background-color;
-          border-color: transparent;
-
-          &:hover {
-            border-color: $border-meta-color;
-          }
-
-        }
-
-      }
-
+    .navbar-contact-button {
+      display: none;
     }
 
   }
