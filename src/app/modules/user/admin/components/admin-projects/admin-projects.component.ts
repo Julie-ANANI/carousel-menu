@@ -106,6 +106,14 @@ export class AdminProjectsComponent implements OnInit {
     this._router.navigate(['/user/admin/projects/project/' + value._id]);
   }
 
+  public onClickImport(file: File) {
+    this._innovationService.import(file).pipe(first()).subscribe((res: any) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   set config(value: Config) {
     this._config = value;
     this._getProjects();

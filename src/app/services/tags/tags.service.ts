@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class TagsService {
@@ -67,6 +68,17 @@ export class TagsService {
 
   public getSimilarTags(tagId: string): Observable<any> {
     return this._http.get<Array<Tag>>('/tags/' + tagId + '/match');
+  }
+
+  public exportTags(): void {
+    const url = environment.apiUrl + '/tags/export';
+    window.open(url);
+  }
+
+  public importTags(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post('/tags/import', formData);
   }
 
 }

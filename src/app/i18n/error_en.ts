@@ -91,6 +91,7 @@ export const ERROR = {
     'ALREADY_ADDED': 'The tag has been already added.',
     'FETCHING_ERROR': 'We are having trouble while fetching the tags for this innovations from the server.',
     'TAG_FETCHING_ERROR': 'We are having trouble while fetching the data for this tag.',
+    'IMPORTED': 'The tags have been imported successfully.',
   },
 
 
