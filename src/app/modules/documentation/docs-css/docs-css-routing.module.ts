@@ -19,6 +19,19 @@ import { ColorsComponent } from './utilities/colors/colors.component';
 import { CursorsComponent } from './utilities/cursors/cursors.component';
 import { DisplayComponent } from './utilities/display/display.component';
 import { DividerComponent } from './utilities/divider/divider.component';
+import { LoadingComponent } from './utilities/loading/loading.component';
+import { MarginsComponent } from './utilities/margins/margins.component';
+import { PaddingsComponent } from './utilities/paddings/paddings.component';
+import { PositionsComponent } from './utilities/positions/positions.component';
+import { RatingsComponent } from './utilities/ratings/ratings.component';
+import { ShapeComponent } from './utilities/shape/shape.component';
+import { TextComponent } from './utilities/text/text.component';
+import { TitleComponent } from './utilities/title/title.component';
+import { AvatarsComponent } from './components/avatars/avatars.component';
+import { BadgesComponent } from './components/badges/badges.component';
+import { BannersComponent } from './components/banners/banners.component';
+import { BarsComponent } from './components/bars/bars.component';
+import { CardsComponent } from './components/cards/cards.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -56,6 +69,11 @@ const docsCssRoutes: Routes = [
         pathMatch: 'full'
       },
       { path: 'components/accordions', component: AccordionsComponent, pathMatch: 'full' },
+      { path: 'components/avatars', component: AvatarsComponent, pathMatch: 'full' },
+      { path: 'components/badges', component: BadgesComponent, pathMatch: 'full' },
+      { path: 'components/banners', component: BannersComponent, pathMatch: 'full' },
+      { path: 'components/bars', component: BarsComponent, pathMatch: 'full' },
+      { path: 'components/cards', component: CardsComponent, pathMatch: 'full' },
       {
         path: 'utilities',
         redirectTo: 'utilities/colors',
@@ -65,6 +83,14 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/cursors', component: CursorsComponent, pathMatch: 'full' },
       { path: 'utilities/display', component: DisplayComponent, pathMatch: 'full' },
       { path: 'utilities/divider', component: DividerComponent, pathMatch: 'full' },
+      { path: 'utilities/loading', component: LoadingComponent, pathMatch: 'full' },
+      { path: 'utilities/margin', component: MarginsComponent, pathMatch: 'full' },
+      { path: 'utilities/padding', component: PaddingsComponent, pathMatch: 'full' },
+      { path: 'utilities/position', component: PositionsComponent, pathMatch: 'full' },
+      { path: 'utilities/ratings', component: RatingsComponent, pathMatch: 'full' },
+      { path: 'utilities/shape', component: ShapeComponent, pathMatch: 'full' },
+      { path: 'utilities/text', component: TextComponent, pathMatch: 'full' },
+      { path: 'utilities/title', component: TitleComponent, pathMatch: 'full' },
     ]
   }
 ];

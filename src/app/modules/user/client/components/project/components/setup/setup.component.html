@@ -4,14 +4,14 @@
 
     <!-- project under submitted status -->
     <ng-container *ngIf="innovation.status === 'SUBMITTED'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}
       </div>
     </ng-container>
 
     <!-- project under evaluating and reviewing status -->
     <ng-container *ngIf="innovation.reviewing && innovation.status === 'EDITING'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
@@ -20,14 +20,14 @@
 
     <!-- project under evaluating status -->
     <ng-container *ngIf="innovation.status === 'EVALUATING'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}
       </div>
     </ng-container>
 
     <!-- project under done status message -->
     <ng-container *ngIf="innovation.status === 'DONE'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}
       </div>
     </ng-container>
@@ -53,7 +53,7 @@
               </button>
             </li>
             <li [ngClass]="buttonSaveClass">
-              <div class="shape circle"><i class="fas fa-save"></i></div>
+              <div class="shape is-circle"><i class="fas fa-save"></i></div>
               <button class="btn btn-primary ghost-primary" (click)="onClickSave($event)">
                 {{ 'COMMON.BUTTON.SAVE' | translate }}
               </button>
@@ -79,19 +79,19 @@
         <ul class="tab">
           <li class="tab-item">
             <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
-              <div class="shape circle circle-md pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
+              <div class="shape is-circle is-md pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
               {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
             </a>
           </li>
           <li class="tab-item">
             <a [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
-              <div class="shape circle circle-md targeting-check" [ngClass]=" { 'complete': innovation?.settings.completion === 100 } ">{{ innovation?.settings.completion }}%</div>
+              <div class="shape is-circle is-md targeting-check" [ngClass]=" { 'complete': innovation?.settings.completion === 100 } ">{{ innovation?.settings.completion }}%</div>
               {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
             </a>
           </li>
           <li class="tab-item">
             <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
-              <div class="shape circle circle-md survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
+              <div class="shape is-circle is-md survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
               {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
             </a>
           </li>

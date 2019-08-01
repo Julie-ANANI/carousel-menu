@@ -40,7 +40,7 @@ export class StarsComponent implements OnInit {
   }
 
   get lang(): string {
-    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    return this._translateService.currentLang;
   }
 
   get notesData(): Array<{ label: Multiling; sum: number; percentage: string }> {

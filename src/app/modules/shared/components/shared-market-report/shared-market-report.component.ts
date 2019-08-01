@@ -383,7 +383,7 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   public get userLang(): string {
-    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    return this._translateService.currentLang;
   }
 
   public get domainName(): string {

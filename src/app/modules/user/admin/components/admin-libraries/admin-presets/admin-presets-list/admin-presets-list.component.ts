@@ -111,6 +111,18 @@ export class AdminPresetsListComponent {
     this._isModalCloneAdd = false;
   }
 
+  public onClickExport() {
+    this._presetService.export();
+  }
+
+  public onClickImport(file: File) {
+    this._presetService.import(file).pipe(first()).subscribe((res: any) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   public onClickAdd() {
     this._resetModalVariables();
     this._modalTitle = 'COMMON.MODAL.TITLE_CREATE';

@@ -27,7 +27,7 @@
     <div *ngFor="let answer of topAnswers" class="card-main card-wrapper">
       <div *ngIf="!answer.isLoading" class="d-flex animate-zoomIn card-content">
 
-        <figure class="avatar avatar-lg avatar-meta">
+        <figure class="avatar is-lg">
           <i class="fas fa-user"></i>
         </figure>
 
@@ -65,7 +65,7 @@
 
   <div class="card-wrapper d-flex">
     <ng-container *ngFor="let answer of answers">
-      <div class="card card-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
+      <div class="card is-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
 
         <i class="fas fa-check-circle"></i>
 

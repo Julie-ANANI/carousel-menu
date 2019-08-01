@@ -164,7 +164,8 @@ export const CAMPAIGNS = {
     'AUTO_BATCH_LABEL': 'Démarrage auto-batch',
     'NUGGETS': 'Nuggets',
     'TITLE': 'Batch de',
-    'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?'
+    'MODAL_DELETE_CONTENT': 'Voulez-vous vraiment supprimer ce batch ?',
+    'ERROR': 'Il y a eu une erreur lors de l\'envoi de ce batch !'
   },
 
   'ERROR_MESSAGE': {

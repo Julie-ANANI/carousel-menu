@@ -2,7 +2,7 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- history icon -->
-    <div class="shape circle circle-white history-wrapper c-hand absolute tooltip tooltip-left history-icon"
+    <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip tooltip-left history-icon"
          [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate"
          (click)="onClickHistoryIcon($event)">
       <i class="fas fa-history text-notify"></i>
@@ -152,7 +152,7 @@
   <hr class="hr">
 
   <div class="d-flex tags-wrapper flex-wrap">
-    <div *ngFor="let tag of sectorTags" class="card card-responsive">
+    <div *ngFor="let tag of sectorTags" class="card is-responsive">
       <label class="form-checkbox text-sm">
         <input
           (change)="onChangeTag($event, tag)"

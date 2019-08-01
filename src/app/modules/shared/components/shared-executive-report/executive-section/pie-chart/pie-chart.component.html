@@ -19,7 +19,7 @@
   <ng-container *ngIf="labels">
     <ul class="pie-data-wrapper flex-centered">
       <li *ngFor="let label of (labels | multiling:lang); let i = index">
-        <span class="shape circle circle-xs" [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }"></span>
+        <span class="shape is-circle is-xs" [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }"></span>
         <span class="response">{{ datasets[0].data[i] }}</span>
         <span class="text-label">{{ label }}</span>
         <span>({{ labelPercentage[0].percentage[i] }})</span>

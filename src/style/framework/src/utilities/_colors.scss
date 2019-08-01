@@ -37,42 +37,56 @@
 }
 
 .bg-primary {
-  color: $light-color;
-  background-color: $primary-color !important;
+  color: $light-color !important;
+  background: $primary-color !important;
 }
 
 .bg-secondary {
-  color: $light-color;
-  background-color: $secondary-color !important;
+  color: $light-color !important;
+  background: $secondary-color !important;
 }
 
 .bg-gray {
-  color: $light-color;
-  background-color: $meta-color !important;
+  color: $light-color !important;
+  background: $meta-color !important;
 }
 
 .bg-dark {
-  color: $light-color;
-  background-color: $dark-color !important;
+  color: $light-color !important;
+  background: $dark-color !important;
 }
 
 .bg-success {
-  color: $light-color;
-  background-color: $success-color !important;
+  color: $light-color !important;
+  background: $success-color !important;
+}
+
+.bg-progress {
+  color: $light-color !important;
+  background: $progress-color !important;
 }
 
 .bg-alert {
-  color: $light-color;
-  background-color: $alert-color !important;
+  color: $light-color !important;
+  background: $alert-color !important;
 }
 
 .bg-draft {
-  color: $light-color;
-  background-color: $background-color !important;
+  color: $light-color !important;
+  background: $background-color !important;
 }
 
 .bg-light {
-  color: $text-primary-dark-color;
-  background-color: $bg-page-color !important;
+  color: $text-primary-dark-color !important;
+  background: $bg-page-color !important;
 }
 
+.bg-white {
+  color: $text-primary-dark-color !important;
+  background: $bg-color-light !important;
+}
+
+.bg-gradient-primary {
+  background: $primary-gradient-color;
+  color: $light-color;
+}

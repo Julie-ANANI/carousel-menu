@@ -25,6 +25,12 @@
                 <i class="fas fa-plus m-no-left"></i>
                 {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
               </button>
+
+              <!-- import button -->
+              <label class="btn btn-sm ghost-primary m-right-25">
+                <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+                Import file
+              </label>
             </div>
 
           </div>
@@ -38,11 +44,24 @@
     <!-- questionnaire -->
     <ng-container *ngIf="!fetchingError && !noResult">
 
-      <!-- add button -->
-      <div class="text-right p-bottom-25">
-        <button (click)="onClickAdd()" class="btn btn-primary btn-sm" type="button">
-          {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
+      <div class="flex">
+        <!-- import button -->
+        <label class="btn btn-sm ghost-primary m-right-25">
+          <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+          Import file
+        </label>
+
+        <!-- export button -->
+        <button (click)="onClickExport()" class="btn btn-sm ghost-primary" type="button">
+          {{ 'COMMON.BUTTON.EXPORT' | translate }}
         </button>
+
+        <!-- add button -->
+        <div class="text-right">
+          <button (click)="onClickAdd()" class="btn btn-primary btn-sm" type="button">
+            {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
+          </button>
+        </div>
       </div>
       <!-- /add button -->
 

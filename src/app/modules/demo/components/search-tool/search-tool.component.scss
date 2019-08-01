@@ -1,4 +1,5 @@
 @import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
 
 #search-tool-component {
 
@@ -71,6 +72,13 @@
 
   }
 
+  .card-body.is-cover {
+    @include flex-centered();
+    flex-direction: column;
+    flex: 1 0 auto;
+    text-align: center;
+  }
+
   .no-result-wrapper {
     flex-direction: column;
 
@@ -93,7 +101,7 @@
     right: 6.5%;
     list-style: none;
 
-    .shape.circle.circle-sm {
+    .shape.is-circle.is-sm {
       width: 13px;
       height: 13px;
     }
@@ -217,5 +225,5 @@
   .card {
     min-height: 258px !important;
   }
-  
+
 }

@@ -39,7 +39,7 @@
       </div>
 
       <ng-container *ngIf="innovation.innovationCards.length > 1 && canEdit">
-        <div class="text-delete-link">
+        <div class="text-link text-alert text-sm">
           <span (click)="onClickDelete($event)">{{ 'SHARED_PROJECT_EDIT.DELETE_LANGUAGE' | translate }}</span>
         </div>
       </ng-container>
@@ -47,381 +47,409 @@
     </div>
     <!-- /language section -->
 
-    <!-- two columns -->
-    <div class="columns">
+    <!-- questions section -->
+    <div class="col-md-12 col-lg-10 col-xl-8 col-7">
+      <div class="restrict-container">
+        <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
+          <ng-container *ngIf="selectedCardIndex === i">
 
-      <!-- questions section -->
-      <div class="column col-md-12 col-mx-auto" [ngClass]="adminSide ? 'col-12' : 'col-7'">
-        <div class="restrict-container">
-          <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
-            <ng-container *ngIf="selectedCardIndex === i">
+            <!-- title -->
+            <div [ngStyle]="{ 'padding-top': '1.75rem' }">
 
-              <!-- title -->
-              <div [ngStyle]="{ 'padding-top': '1.75rem' }">
-
-                <span class="shape rect">1</span>
-                <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</span>
-
-                <ng-container *ngIf="!canEdit">
-                  <div class="pd-input">
-                    <p class="text">{{ innovationCard.title }}</p>
+              <span class="shape is-rounded bg-draft">1</span>
+              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</span>
+              <div class="popover">
+                <div class="icon c-default is-info"><i class="fas fa-info-circle"></i></div>
+                <div class="popover-container" style="width: 300px">
+                  <div class="card">
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.HELP'" translate></span>
                   </div>
-                </ng-container>
-
-                <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                  <div class="pd-input">
-                    <button
-                      class="btn btn-xs ghost-secondary"
-                      [ngClass]="{'disabled': innovationCard.title}"
-                      [disabled]="innovationCard.title"
-                      (click)="importTranslation($event, 'title')">
-                      {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                    </button>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="canEdit">
-                  <div class="form-group pd-input">
-                    <label for="edit-innovation-title"></label>
-                    <input
-                      type="text"
-                      id="edit-innovation-title"
-                      class="form-input"
-                      name="title"
-                      [(ngModel)]="innovationCard.title"
-                      [attr.placeholder]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
-                      (change)="notifyChanges()">
-                  </div>
-                </ng-container>
-
-              </div>
-
-              <!-- summary -->
-              <div class="project-data">
-
-                <span class="shape rect">2</span>
-                <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
-
-                <ng-container *ngIf="!canEdit">
-                  <div class="pd-input text" [innerHtml]="innovationCard.summary"></div>
-                </ng-container>
-
-                <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                  <div class="pd-input">
-                    <button
-                      class="btn btn-xs ghost-secondary"
-                      [ngClass]="{'disabled': innovationCard.summary}"
-                      [disabled]="innovationCard.summary"
-                      (click)="importTranslation($event, 'summary')">
-                      {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                    </button>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="canEdit">
-                  <div class="form-group pd-input">
-
-                    <app-text-zone
-                      id="summary"
-                      [data]="innovationCard.summary"
-                      (onTextChange)="updateData($event, 'summary')">
-                    </app-text-zone>
-
-                    <!-- todo: add placeholders
-                    [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
-                    -->
-
-                    <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.summary?.length | characterCountdown:500, 500) }">
-                      {{ innovationCard.summary?.length | characterCountdown:500 }}
-                    </div>
-
-                  </div>
-                </ng-container>
-
-              </div>
-
-              <!-- problem -->
-              <div class="project-data">
-
-                <span class="shape rect">3</span>
-                <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
-
-                <ng-container *ngIf="!canEdit">
-                  <div class="pd-input text" [innerHtml]="innovationCard.problem"></div>
-                </ng-container>
-
-                <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                  <div class="pd-input">
-                    <button
-                      class="btn btn-xs ghost-secondary"
-                      [disabled]="innovationCard.problem"
-                      [ngClass]="{'disabled': innovationCard.problem}"
-                      (click)="importTranslation($event, 'problem')">
-                      {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                    </button>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="canEdit">
-                  <div class="form-group pd-input">
-
-                    <app-text-zone
-                      id="problem"
-                      [data]="innovationCard.problem"
-                      (onTextChange)="updateData($event, 'problem')">
-                    </app-text-zone>
-
-                    <!-- todo: add placeholders
-                    [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
-                    -->
-
-                    <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.problem?.length | characterCountdown:1000, 1000) }">
-                      {{ innovationCard.problem?.length | characterCountdown:1000 }}
-                    </div>
-
-                  </div>
-                </ng-container>
-
-              </div>
-
-              <!-- solution -->
-              <div class="project-data">
-
-                <span class="shape rect">4</span>
-                <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
-
-                <div *ngIf="!canEdit">
-                  <div class="pd-input text" [innerHtml]="innovationCard.solution"></div>
                 </div>
-
-                <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                  <div class="pd-input">
-                    <button
-                      class="btn btn-xs ghost-secondary"
-                      [disabled]="innovationCard.solution"
-                      [ngClass]="{'disabled': innovationCard.solution}"
-                      (click)="importTranslation($event, 'solution')">
-                      {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                    </button>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="canEdit">
-                  <div class="form-group pd-input">
-
-                    <app-text-zone
-                      [data]="innovationCard.solution"
-                      (onTextChange)="updateData($event, 'solution')">
-                    </app-text-zone>
-
-                    <!-- todo: add placeholders
-                    [placeholder]="'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
-                    &ndash;&gt; -->
-
-                    <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.solution?.length | characterCountdown:1000, 1000) }">
-                      {{ innovationCard.solution?.length | characterCountdown:1000 }}
-                    </div>
-
-                  </div>
-                </ng-container>
-
               </div>
 
-              <!-- advantages -->
-              <div class="project-data">
+              <ng-container *ngIf="!canEdit">
+                <div class="pd-input">
+                  <p class="text">{{ innovationCard.title }}</p>
+                </div>
+              </ng-container>
 
-                <span class="shape rect">5</span>
-                <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
+              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
+                <div class="pd-input">
+                  <button
+                    class="btn btn-xs ghost-secondary"
+                    [ngClass]="{'disabled': innovationCard.title}"
+                    [disabled]="innovationCard.title"
+                    (click)="importTranslation($event, 'title')">
+                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                  </button>
+                </div>
+              </ng-container>
 
-                <ng-container *ngIf="!canEdit">
-                  <div class="pd-input">
-                    <div *ngFor="let advantage of innovationCard.advantages" class="label label-answer">
-                      {{ advantage.text }}
-                    </div>
+              <ng-container *ngIf="canEdit">
+                <div class="form-group pd-input">
+                  <label for="edit-innovation-title"></label>
+                  <input
+                    type="text"
+                    id="edit-innovation-title"
+                    class="form-input"
+                    name="title"
+                    [(ngModel)]="innovationCard.title"
+                    [attr.placeholder]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                    (change)="notifyChanges()">
+                </div>
+              </ng-container>
+
+            </div>
+
+            <!-- summary -->
+            <div class="project-data">
+
+              <span class="shape is-rounded bg-draft">2</span>
+              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
+              <div class="popover">
+                <div class="icon c-default is-info"><i class="fas fa-info-circle"></i></div>
+                <div class="popover-container" style="width: 300px">
+                  <div class="card">
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.HELP'" translate></span>
                   </div>
-                </ng-container>
-
-                <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                  <div class="pd-input">
-                    <button
-                      class="btn btn-xs ghost-secondary"
-                      [disabled]="innovationCard.advantages?.length"
-                      [ngClass]="{'disabled': innovationCard.advantages?.length}"
-                      (click)="importTranslation($event, 'advantages')">
-                      {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                    </button>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="canEdit">
-                  <div class="pd-input">
-                    <app-input-list (update)="updateAdvantage($event, i)" [config]="getConfig('advantages')"></app-input-list>
-                  </div>
-                </ng-container>
-
+                </div>
               </div>
 
-              <!-- status -->
-              <div [ngStyle]="{ 'padding-top': canEdit ? '3.5rem' : '1.75rem' }">
+              <ng-container *ngIf="!canEdit">
+                <div class="pd-input text" [innerHtml]="innovationCard.summary"></div>
+              </ng-container>
 
-                <span class="shape rect">6</span>
-                <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.STAGE' | translate }}</span>
+              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
+                <div class="pd-input">
+                  <button
+                    class="btn btn-xs ghost-secondary"
+                    [ngClass]="{'disabled': innovationCard.summary}"
+                    [disabled]="innovationCard.summary"
+                    (click)="importTranslation($event, 'summary')">
+                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                  </button>
+                </div>
+              </ng-container>
 
-                <ng-container *ngIf="!canEdit">
-                  <div class="pd-input text">
-                    <p *ngIf="innovation.projectStatus === 0">{{ 'COMMON.PROJECT_STATUS.0' | translate }}</p>
-                    <p *ngIf="innovation.projectStatus === 1">{{ 'COMMON.PROJECT_STATUS.1' | translate }}</p>
-                    <p *ngIf="innovation.projectStatus === 2">{{ 'COMMON.PROJECT_STATUS.2' | translate }}</p>
+              <ng-container *ngIf="canEdit">
+                <div class="form-group pd-input">
+
+                  <app-text-zone
+                    id="summary"
+                    [data]="innovationCard.summary"
+                    (onTextChange)="updateData($event, 'summary')">
+                  </app-text-zone>
+
+                  <!-- todo: add placeholders
+                  [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                  -->
+
+                  <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.summary?.length | characterCountdown:500, 500) }">
+                    {{ innovationCard.summary?.length | characterCountdown:500 }}
                   </div>
-                </ng-container>
 
-                <ng-container *ngIf="canEdit">
-                  <div class="form-group pd-input">
+                </div>
+              </ng-container>
 
-                    <label class="form-radio is-inline">
-                      <input
-                        type="radio"
-                        name="projectStatus"
-                        [(ngModel)]="innovation.projectStatus"
-                        [value]="0"
-                        (change)="notifyChanges()">
-                      <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
-                    </label>
+            </div>
 
-                    <label class="form-radio is-inline">
-                      <input
-                        type="radio"
-                        name="projectStatus"
-                        [(ngModel)]="innovation.projectStatus"
-                        [value]="1"
-                        (change)="notifyChanges()">
-                      <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
-                    </label>
+            <!-- problem -->
+            <div class="project-data">
 
-                    <label class="form-radio is-inline">
-                      <input
-                        type="radio"
-                        name="projectStatus"
-                        [(ngModel)]="innovation.projectStatus"
-                        [value]="2"
-                        (change)="notifyChanges()">
-                      <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
-                    </label>
-
+              <span class="shape is-rounded bg-draft">3</span>
+              <span class="text text-question m-right-1">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
+              <div class="popover">
+                <div class="icon c-default is-info"><i class="fas fa-info-circle"></i></div>
+                <div class="popover-container" style="width: 300px">
+                  <div class="card">
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.1'" class="m-bottom-1" translate></span>
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.2'" class="m-bottom-1" translate></span>
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.3'" class="m-bottom-1" translate></span>
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.4'" class="m-bottom-1" translate></span>
                   </div>
-                </ng-container>
-
+                </div>
               </div>
 
-              <!-- protected -->
-              <div class="project-data">
+              <ng-container *ngIf="!canEdit">
+                <div class="pd-input text" [innerHtml]="innovationCard.problem"></div>
+              </ng-container>
 
-                <span class="shape rect">7</span>
-                <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.PATENTED.LABEL' | translate }}</span>
+              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
+                <div class="pd-input">
+                  <button
+                    class="btn btn-xs ghost-secondary"
+                    [disabled]="innovationCard.problem"
+                    [ngClass]="{'disabled': innovationCard.problem}"
+                    (click)="importTranslation($event, 'problem')">
+                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                  </button>
+                </div>
+              </ng-container>
 
-                <ng-container *ngIf="!canEdit">
-                  <div class="pd-input text">
-                    <p *ngIf="innovation.patented === false">{{ 'COMMON.NO' | translate }}</p>
-                    <p *ngIf="innovation.patented === true">{{ 'COMMON.YES' | translate }}</p>
+              <ng-container *ngIf="canEdit">
+                <div class="form-group pd-input">
+
+                  <app-text-zone
+                    id="problem"
+                    [data]="innovationCard.problem"
+                    (onTextChange)="updateData($event, 'problem')">
+                  </app-text-zone>
+
+                  <!-- todo: add placeholders
+                  [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                  -->
+
+                  <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.problem?.length | characterCountdown:1000, 1000) }">
+                    {{ innovationCard.problem?.length | characterCountdown:1000 }}
                   </div>
-                </ng-container>
 
-                <ng-container *ngIf="canEdit">
-                  <div class="form-group pd-input">
+                </div>
+              </ng-container>
 
-                    <label class="form-radio is-inline">
-                      <input
-                        type="radio"
-                        name="patented"
-                        [(ngModel)]="innovation.patented"
-                        [value]="false"
-                        (change)="notifyChanges()">
-                      <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
-                    </label>
+            </div>
 
-                    <label class="form-radio is-inline">
-                      <input
-                        type="radio"
-                        name="patented"
-                        [(ngModel)]="innovation.patented"
-                        [value]="true"
-                        (change)="notifyChanges()">
-                      <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
-                    </label>
+            <!-- solution -->
+            <div class="project-data">
 
+              <span class="shape is-rounded bg-draft">4</span>
+              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
+              <div class="popover">
+                <div class="icon c-default is-info"><i class="fas fa-info-circle"></i></div>
+                <div class="popover-container" style="width: 300px">
+                  <div class="card">
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.HELP'" translate></span>
                   </div>
-                </ng-container>
-
+                </div>
               </div>
 
-              <!-- diffusion -->
-              <div class="project-data">
+              <div *ngIf="!canEdit">
+                <div class="pd-input text" [innerHtml]="innovationCard.solution"></div>
+              </div>
 
-                <span class="shape rect">8</span>
-                <span class="text text-question">
+              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
+                <div class="pd-input">
+                  <button
+                    class="btn btn-xs ghost-secondary"
+                    [disabled]="innovationCard.solution"
+                    [ngClass]="{'disabled': innovationCard.solution}"
+                    (click)="importTranslation($event, 'solution')">
+                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="canEdit">
+                <div class="form-group pd-input">
+
+                  <app-text-zone
+                    [data]="innovationCard.solution"
+                    (onTextChange)="updateData($event, 'solution')">
+                  </app-text-zone>
+
+                  <!-- todo: add placeholders
+                  [placeholder]="'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                  &ndash;&gt; -->
+
+                  <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.solution?.length | characterCountdown:1000, 1000) }">
+                    {{ innovationCard.solution?.length | characterCountdown:1000 }}
+                  </div>
+
+                </div>
+              </ng-container>
+
+            </div>
+
+            <!-- advantages -->
+            <div class="project-data">
+
+              <span class="shape is-rounded bg-draft">5</span>
+              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
+              <div class="popover">
+                <div class="icon c-default is-info"><i class="fas fa-info-circle"></i></div>
+                <div class="popover-container" style="width: 300px">
+                  <div class="card">
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.1'" translate class="m-bottom-1"></span>
+                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.2'" translate class="m-bottom-1"></span>
+                  </div>
+                </div>
+              </div>
+
+              <ng-container *ngIf="!canEdit">
+                <div class="pd-input">
+                  <div *ngFor="let advantage of innovationCard.advantages" class="label label-answer">
+                    {{ advantage.text }}
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
+                <div class="pd-input">
+                  <button
+                    class="btn btn-xs ghost-secondary"
+                    [disabled]="innovationCard.advantages?.length"
+                    [ngClass]="{'disabled': innovationCard.advantages?.length}"
+                    (click)="importTranslation($event, 'advantages')">
+                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="canEdit">
+                <div class="pd-input">
+                  <app-input-list (update)="updateAdvantage($event, i)" [config]="getConfig('advantages')"></app-input-list>
+                </div>
+              </ng-container>
+
+            </div>
+
+            <!-- status -->
+            <div [ngStyle]="{ 'padding-top': canEdit ? '3.5rem' : '1.75rem' }">
+
+              <span class="shape is-rounded bg-draft">6</span>
+              <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.STAGE' | translate }}</span>
+
+              <ng-container *ngIf="!canEdit">
+                <div class="pd-input text">
+                  <p *ngIf="innovation.projectStatus === 0">{{ 'COMMON.PROJECT_STATUS.0' | translate }}</p>
+                  <p *ngIf="innovation.projectStatus === 1">{{ 'COMMON.PROJECT_STATUS.1' | translate }}</p>
+                  <p *ngIf="innovation.projectStatus === 2">{{ 'COMMON.PROJECT_STATUS.2' | translate }}</p>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="canEdit">
+                <div class="form-group pd-input">
+
+                  <label class="form-radio is-inline">
+                    <input
+                      type="radio"
+                      name="projectStatus"
+                      [(ngModel)]="innovation.projectStatus"
+                      [value]="0"
+                      (change)="notifyChanges()">
+                    <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
+                  </label>
+
+                  <label class="form-radio is-inline">
+                    <input
+                      type="radio"
+                      name="projectStatus"
+                      [(ngModel)]="innovation.projectStatus"
+                      [value]="1"
+                      (change)="notifyChanges()">
+                    <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
+                  </label>
+
+                  <label class="form-radio is-inline">
+                    <input
+                      type="radio"
+                      name="projectStatus"
+                      [(ngModel)]="innovation.projectStatus"
+                      [value]="2"
+                      (change)="notifyChanges()">
+                    <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
+                  </label>
+
+                </div>
+              </ng-container>
+
+            </div>
+
+            <!-- protected -->
+            <div class="project-data">
+
+              <span class="shape is-rounded bg-draft">7</span>
+              <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.PATENTED.LABEL' | translate }}</span>
+
+              <ng-container *ngIf="!canEdit">
+                <div class="pd-input text">
+                  <p *ngIf="innovation.patented === false">{{ 'COMMON.NO' | translate }}</p>
+                  <p *ngIf="innovation.patented === true">{{ 'COMMON.YES' | translate }}</p>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="canEdit">
+                <div class="form-group pd-input">
+
+                  <label class="form-radio is-inline">
+                    <input
+                      type="radio"
+                      name="patented"
+                      [(ngModel)]="innovation.patented"
+                      [value]="false"
+                      (change)="notifyChanges()">
+                    <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
+                  </label>
+
+                  <label class="form-radio is-inline">
+                    <input
+                      type="radio"
+                      name="patented"
+                      [(ngModel)]="innovation.patented"
+                      [value]="true"
+                      (change)="notifyChanges()">
+                    <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
+                  </label>
+
+                </div>
+              </ng-container>
+
+            </div>
+
+            <!-- diffusion -->
+            <div class="project-data">
+
+              <span class="shape is-rounded bg-draft">8</span>
+              <span class="text text-question">
                   {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.A' | translate }} {{ companyName }} {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.B' | translate }}
                 </span>
 
-                <ng-container *ngIf="!canEdit">
-                  <div class="pd-input text">
-                    <p *ngIf="innovation.external_diffusion === false">{{ 'COMMON.NO' | translate }}</p>
-                    <p *ngIf="innovation.external_diffusion === true">{{ 'COMMON.YES' | translate }}</p>
-                  </div>
-                </ng-container>
+              <ng-container *ngIf="!canEdit">
+                <div class="pd-input text">
+                  <p *ngIf="innovation.external_diffusion === false">{{ 'COMMON.NO' | translate }}</p>
+                  <p *ngIf="innovation.external_diffusion === true">{{ 'COMMON.YES' | translate }}</p>
+                </div>
+              </ng-container>
 
-                <ng-container *ngIf="canEdit">
-                  <div class="form-group pd-input">
+              <ng-container *ngIf="canEdit">
+                <div class="form-group pd-input">
 
-                    <label class="form-radio is-inline">
-                      <input
-                        type="radio"
-                        name="external_diffusion"
-                        [(ngModel)]="innovation.external_diffusion"
-                        [value]="false"
-                        (change)="notifyChanges()">
-                      <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
-                    </label>
+                  <label class="form-radio is-inline">
+                    <input
+                      type="radio"
+                      name="external_diffusion"
+                      [(ngModel)]="innovation.external_diffusion"
+                      [value]="false"
+                      (change)="notifyChanges()">
+                    <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
+                  </label>
 
-                    <label class="form-radio is-inline">
-                      <input
-                        type="radio"
-                        name="external_diffusion"
-                        [(ngModel)]="innovation.external_diffusion"
-                        [value]="true"
-                        (change)="notifyChanges()">
-                      <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
-                    </label>
+                  <label class="form-radio is-inline">
+                    <input
+                      type="radio"
+                      name="external_diffusion"
+                      [(ngModel)]="innovation.external_diffusion"
+                      [value]="true"
+                      (change)="notifyChanges()">
+                    <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
+                  </label>
 
-                  </div>
-                </ng-container>
+                </div>
+              </ng-container>
 
-              </div>
+            </div>
 
-            </ng-container>
-          </div>
+          </ng-container>
         </div>
       </div>
-      <!-- questions section -->
-
-      <!-- bot section -->
-      <ng-container *ngIf="!adminSide">
-        <div class="column col-mx-auto col-5 hide-md section-pad rm-pad-bottom">
-          <app-message-template-1 [widthMax]="'321px'">
-            {{ 'SHARED_PROJECT_EDIT.BOT.HELP' | translate }}
-          </app-message-template-1>
-        </div>
-      </ng-container>
-      <!-- /bot section -->
-
     </div>
-    <!-- two columns -->
+    <!-- questions section -->
 
     <!-- media section -->
     <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
       <div *ngIf="selectedCardIndex === i">
         <div class="project-data">
 
-          <span class="shape rect">9</span>
+          <span class="shape is-rounded bg-draft">9</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }}</span>
           <span class="text text-notify sub-label"> {{ 'SHARED_PROJECT_EDIT.MEDIA.SUB_LABEL' | translate }}</span>
 
@@ -451,7 +479,7 @@
                 <!-- delete media -->
                 <ng-container *ngIf="canEdit">
                   <div class="delete-wrapper">
-                    <span class="text-delete-link" (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                    <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
                   </div>
                 </ng-container>
 
@@ -484,14 +512,14 @@
                         <!-- make primary media -->
                         <ng-container *ngIf="canEdit">
                           <div class="main-wrapper">
-                            <span class="text-link" (click)="onClickSetMainMedia($event, media, i)">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}</span>
+                            <span class="text-link text-sm" (click)="onClickSetMainMedia($event, media, i)">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}</span>
                           </div>
                         </ng-container>
 
                         <!-- delete media -->
                         <ng-container *ngIf="canEdit">
                           <div class="delete-wrapper">
-                            <span class="text-delete-link" (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
+                            <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
                           </div>
                         </ng-container>
 

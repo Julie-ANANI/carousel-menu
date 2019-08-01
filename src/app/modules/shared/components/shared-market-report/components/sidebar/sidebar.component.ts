@@ -80,8 +80,6 @@ export class SidebarComponent implements OnInit {
 
   private _modalResetReport: boolean;
 
-  private _userLang = '';
-
   private _toggleFilterBar: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -91,9 +89,7 @@ export class SidebarComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _worldmapFilterService: WorldmapFiltersService,
               private _translateService: TranslateService) {
-
     PageScrollConfig.defaultDuration = 300;
-    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
 
@@ -473,7 +469,7 @@ export class SidebarComponent implements OnInit {
   }
 
   get userLang(): string {
-    return this._userLang;
+    return this._translateService.currentLang;
   }
 
   get toggleFilterBar(): boolean {

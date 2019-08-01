@@ -20,6 +20,19 @@ import { CursorsComponent } from './utilities/cursors/cursors.component';
 import { DisplayComponent } from './utilities/display/display.component';
 import { DividerComponent } from './utilities/divider/divider.component';
 import { IconComponent } from './elements/icon/icon.component';
+import { LoadingComponent } from './utilities/loading/loading.component';
+import { MarginsComponent } from './utilities/margins/margins.component';
+import { PaddingsComponent } from './utilities/paddings/paddings.component';
+import { PositionsComponent } from './utilities/positions/positions.component';
+import { RatingsComponent } from './utilities/ratings/ratings.component';
+import { ShapeComponent } from './utilities/shape/shape.component';
+import { TextComponent } from './utilities/text/text.component';
+import { TitleComponent } from './utilities/title/title.component';
+import { AvatarsComponent } from './components/avatars/avatars.component';
+import { BadgesComponent } from './components/badges/badges.component';
+import { BannersComponent } from './components/banners/banners.component';
+import { BarsComponent } from './components/bars/bars.component';
+import { CardsComponent } from './components/cards/cards.component';
 
 @NgModule({
   imports: [
@@ -44,7 +57,20 @@ import { IconComponent } from './elements/icon/icon.component';
     CursorsComponent,
     DisplayComponent,
     DividerComponent,
-    IconComponent
+    IconComponent,
+    LoadingComponent,
+    MarginsComponent,
+    PaddingsComponent,
+    PositionsComponent,
+    RatingsComponent,
+    ShapeComponent,
+    TextComponent,
+    TitleComponent,
+    AvatarsComponent,
+    BadgesComponent,
+    BannersComponent,
+    BarsComponent,
+    CardsComponent
   ],
 })
 

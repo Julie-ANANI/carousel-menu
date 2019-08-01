@@ -1,6 +1,6 @@
 <section id="scale-component">
   <div class="bar-scale">
-    <div *ngFor="let bar of bars" class="bar-item number{{ bar }}">
+    <div *ngFor="let bar of bars" class="bar-item is-number-{{ bar }}">
 
       <ng-container *ngIf="barsData[bar]">
         <div class="bar-fill" [style.height]="barsData[bar].percentage"></div>
