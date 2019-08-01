@@ -1,7 +1,7 @@
 @import "variables";
 @import "mixins";
 
-.navbar, .sidebar-navbar {
+.navbar, .navbar-sidebar {
   @include flex-between();
   flex-wrap: wrap;
   min-height: 75px;
@@ -28,20 +28,23 @@
   }
 
   .menu {
+    display: flex;
+    align-items: center;
+    height: 75px;
     min-width: unset;
     padding: 0;
     transform: none;
 
     .menu-item {
       @include inline-flex-centered();
-      background-color: $bg-color-light;
+      background-color: transparent;
       cursor: default;
-      height: 75px;
+      height: 100%;
       font-weight: $font-weight-medium;
       padding: 0 $unit-3;
       margin: 0;
 
-      a {
+      & > a {
         display: inline-flex;
         align-items: center;
         height: 100%;
@@ -49,7 +52,7 @@
         padding: 0;
         position: relative;
 
-        > span:after {
+       & > span:after {
           display: block;
           position: absolute;
           left: 0;
@@ -85,19 +88,23 @@
         padding-right: 0;
       }
 
-      &.navbar-dropdown .dropdown {
-
-        a {
-          cursor: default;
-        }
+      &.navbar-dropdown {
 
         .menu {
+          display: none;
+          height: fit-content;
           flex-direction: column;
+          left: auto;
           padding: 0.5rem 0;
 
           .menu-item {
+            justify-content: start;
             height: auto;
             padding: 0.5rem 1.1rem;
+
+            & > a {
+              width: 100%;
+            }
 
             &:hover {
               cursor: pointer;
@@ -114,97 +121,8 @@
             display: block;
           }
 
-          .fa-angle-down {
-            color: $primary-color !important;
-          }
-
-          span:after {
-            visibility: visible;
-            background-color: $primary-color;
-            transform: scaleX(1);
-          }
-
         }
 
-      }
-
-    }
-
-  }
-
-
-
-
-  .navigation-wrapper, .sidebar-navigation-wrapper {
-    font-size: $font-size-sm;
-    color: $background-color;
-    font-weight: $font-weight-medium;
-
-    .navigation-menu, .sidebar-menu {
-      display: flex;
-      margin: 0;
-      padding: 0;
-      box-shadow: none;
-      background-color: transparent;
-      list-style: none;
-
-      .navigation-menu-item, .sidebar-menu-item {
-        @include inline-flex-centered();
-        height: 75px;
-        font-weight: $font-weight-medium;
-        margin: 0;
-        padding: 0 $unit-3;
-
-        a {
-          display: inline-flex;
-          height: 100%;
-          width: 100%;
-          align-items: center;
-          color: inherit;
-          position: relative;
-          transition: all 0.25s ease-out;
-
-          > span:after {
-            display: block;
-            position: absolute;
-            left: 0;
-            transform: scaleX(0);
-            content: '';
-            width: 100%;
-            height: 2px;
-            bottom: 22px;
-            visibility: hidden;
-            transform-origin: bottom left;
-            transition: all 0.25s ease-out;
-          }
-
-          &:hover {
-            cursor: pointer;
-            text-decoration: none;
-            color: $primary-color;
-
-            > span:after {
-              visibility: visible;
-              background-color: $primary-color;
-              transform: scaleX(1);
-            }
-
-          }
-
-          &.active {
-            color: $primary-color;
-          }
-
-        }
-
-        &:hover {
-          background-color: transparent;
-        }
-
-      }
-
-      .menu-item:last-child {
-        padding-right: 0;
       }
 
     }
@@ -213,7 +131,7 @@
 
 }
 
-.sidebar-navbar {
+/*.sidebar-navbar {
   min-height: unset;
 
   .sidebar-navigation-wrapper {
@@ -262,5 +180,5 @@
 
   }
 
-}
+}*/
 
