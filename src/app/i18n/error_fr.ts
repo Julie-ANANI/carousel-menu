@@ -90,7 +90,8 @@ export const ERROR = {
     'REMOVED': 'Le tag a été supprimé.',
     'ALREADY_ADDED': 'Le tag a déjà été ajoutée.',
     'FETCHING_ERROR': 'Nous rencontrons des problèmes pour récupérer les tags de ces innovations sur le serveur.',
-    'TAG_FETCHING_ERROR': 'Nous rencontrons des problèmes pour récupérer les données de ce tag.'
+    'TAG_FETCHING_ERROR': 'Nous rencontrons des problèmes pour récupérer les données de ce tag.',
+    'IMPORTED': 'Les tags ont été importés avec succès.',
   },
 
 
