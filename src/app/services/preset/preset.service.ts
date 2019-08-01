@@ -26,6 +26,12 @@ export class PresetService {
     window.open(url);
   }
 
+  public import(file:File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, "import_presets");
+    return this._http.post('/preset/import/', formData);
+  }
+
   public remove(presetId: string): Observable<any> {
     return this._http.delete('/preset/' + presetId);
   }

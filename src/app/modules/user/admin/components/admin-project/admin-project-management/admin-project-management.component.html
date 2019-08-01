@@ -262,7 +262,13 @@
 
     </div>
 
+
     <div class="project-summary">
+
+      <button (click)="onClickExport()" class="btn btn-sm ghost-primary" type="button">
+        {{ 'COMMON.BUTTON.EXPORT' | translate }}
+      </button>
+
       <div class="completion">
         <h6>Completion</h6>
         <span *ngFor="let innov of project.innovationCards" class="text-center">

@@ -129,4 +129,8 @@ export class InnovationService {
     return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }
 
+  public export(innovationId: string): void {
+    const url = environment.apiUrl + `/innovation/${innovationId}/export`;
+    window.open(url);
+  }
 }
