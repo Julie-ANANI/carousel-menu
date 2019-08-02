@@ -1,17 +1,100 @@
 @import "../../../../style/framework/src/variables";
 
-.flex-between {
+.input-form {
+
+  label {
+    width: 80%;
+  }
 
   .form-input {
-    margin-right: 0.4rem;
-    width: 80%;
+    border-color: $border-color;
+  }
+
+  .button.is-action {
+    box-shadow: $box-shadow-5;
+    height: 2.5rem;
+    width: 2.5rem;
+
+    i {
+      font-size: $font-icon-md;
+    }
+
+    &:hover {
+      transform: scale(1.08);
+    }
+
   }
 
 }
 
-.form-input.ng-touched.ng-invalid {
-  border-color: $border-color;
+.input-list-answer-wrapper {
+  margin: 1rem 0 0 0;
+  list-style: none;
+
+  li {
+    margin-top: 0.5rem;
+    padding: $unit-3 $unit-4;
+    border-radius: $border-radius;
+    background-color: #F8F4F4;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    .answer-wrapper {
+      flex: 1;
+      word-break: break-word;
+
+      label {
+        width: 90%;
+      }
+
+    }
+
+    .icons-wrapper {
+      margin-top: -2px;
+
+      .icon {
+        font-size: $font-icon-lg;
+      }
+
+      .fa-thumbs-up, .fa-thumbs-down {
+        font-size: 0.95rem;
+        color: $meta-color;
+      }
+
+      .fa-thumbs-up {
+
+        &.active, &:hover {
+          color: $success-color;
+        }
+
+      }
+
+      .fa-thumbs-down {
+
+        &.active, &:hover {
+          color: $alert-color;
+        }
+
+      }
+
+    }
+
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+// Todo remove this.
 
 .input-answer-wrapper {
   margin: 0;

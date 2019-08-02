@@ -136,7 +136,7 @@ export const COMMON = {
     'PRESET_NAME': 'Preset Name',
     'TAG_NAME': 'Tag Name',
     'CREATED': 'Created',
-    'COLLABORATORS': 'collaborators'
+    'COLLABORATORS': 'Collaborators',
   },
 
   'PLACEHOLDER': {
@@ -152,6 +152,7 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Enter the signature name',
     'PRESET_NAME': 'Enter the preset name',
     'EXISTING_TAG': 'Add an existing tag',
+    'INPUT_LIST_DEFAULT': 'Enter the answer here'
   },
 
   'REQUIRED': {
@@ -205,7 +206,8 @@ export const COMMON = {
     'CREATE': 'Create',
     'VIEW_LIKE_CLIENT': 'View like client',
     'BACK_TO_CAMPAIGNS': 'Back to campaigns',
-    'COLLABORATOR': 'manage collaborators'
+    'COLLABORATOR': 'manage collaborators',
+    'UPDATE': 'Update'
   },
 
   'PROJECT': {
@@ -356,7 +358,9 @@ export const COMMON = {
 
   'TOOLTIP': {
     'HISTORY': 'History',
-    'EDIT': 'edit'
+    'EDIT': 'Edit',
+    'READONLY': 'Readonly',
+    'DELETE': 'Delete'
   },
 
   'SIGNATURES': {

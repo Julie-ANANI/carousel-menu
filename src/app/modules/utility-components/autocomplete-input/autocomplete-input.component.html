@@ -3,17 +3,22 @@
   <form [formGroup]="inputForm" (ngSubmit)="addProposition(inputForm)">
 
     <ng-container *ngIf="canEdit">
-      <div class="flex-between">
-        <input
-          auto-complete
-          formControlName="answer"
-          [list-formatter]="autocompleteListFormatter.bind(this)"
-          [source]="suggestions.bind(this)"
-          value-property-name="id"
-          [display-property-name]="identifier"
-          [attr.placeholder]="placeholder | translate"
-          class="form-input">
+      <div class="flex-between input-form">
+
+        <label class="m-right-2">
+          <input
+            auto-complete
+            formControlName="answer"
+            [list-formatter]="autocompleteListFormatter.bind(this)"
+            [source]="suggestions.bind(this)"
+            value-property-name="id"
+            [display-property-name]="identifier"
+            [attr.placeholder]="placeholder | translate"
+            class="form-input">
+        </label>
+
         <button *ngIf="addButton" class="btn btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
+
       </div>
     </ng-container>
 
