@@ -34,3 +34,49 @@
   }
 
 }
+
+// Icon delete
+.icon-delete {
+
+  &::before {
+    border: $icon-border-width solid currentColor;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    border-top: 0;
+    height: .75em;
+    top: 60%;
+    width: .75em;
+  }
+
+  &::after {
+    background: currentColor;
+    box-shadow: -.25em .2em, .25em .2em;
+    height: $icon-border-width;
+    top: $icon-border-width/2;
+    width: .5em;
+  }
+
+}
+
+// Icon edit
+.icon-edit {
+
+  &::before {
+    border: $icon-border-width solid currentColor;
+    height: .4em;
+    transform: translate(-40%, -60%) rotate(-45deg);
+    width: .85em;
+  }
+
+  &::after {
+    border: .15em solid currentColor;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    height: 0;
+    left: 5%;
+    top: 95%;
+    transform: translate(0, -100%);
+    width: 0;
+  }
+
+}

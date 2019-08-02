@@ -38,6 +38,10 @@ $icon-prefix: "icon";
     font-size: 3.2rem;
   }
 
+  &:hover {
+    cursor: pointer;
+  }
+
 }
 
 // Component icon support
