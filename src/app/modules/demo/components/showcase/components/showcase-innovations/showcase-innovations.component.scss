@@ -4,12 +4,12 @@
 #showcase-innovations {
   height: 100%;
 
-  .see-more-wrapper, .icon {
+  .see-more-wrapper, .icons {
     @include control-transition();
     visibility: hidden;
   }
 
-  .icon {
+  .icons {
     top: -6px;
     right: 0;
     margin-right: 0;

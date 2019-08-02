@@ -1,0 +1,36 @@
+// Icon plus, minus, cross
+.icon-plus, .icon-minus, .icon-cross {
+
+  &::before {
+    background: currentColor;
+    height: $icon-border-width;
+    width: 100%;
+  }
+
+}
+
+.icon-plus, .icon-cross {
+
+  &::after {
+    background: currentColor;
+    height: 100%;
+    width: $icon-border-width;
+  }
+
+}
+
+.icon-cross {
+
+  &::before {
+    width: 100%;
+  }
+
+  &::after {
+    height: 100%;
+  }
+
+  &::before, &::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+}
