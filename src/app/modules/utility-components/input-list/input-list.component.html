@@ -23,7 +23,7 @@
 
     <!-- answers area -->
     <ul class="input-list-answer-wrapper">
-      <li *ngFor="let answer of answerList; let i = index" class="flex-between relative">
+      <li *ngFor="let answer of answerList; let i = index" class="flex-between">
 
         <div class="answer-wrapper d-flex align-center text-sm text-primary-dark text-medium m-right-2">
 
@@ -42,7 +42,7 @@
 
         </div>
 
-        <div class="icons-wrapper absolute p-left-3">
+        <div class="icons-wrapper p-left-3">
 
           <!-- edit icon -->
           <div style="width: 40px" class="text-center m-right-2">
@@ -53,7 +53,7 @@
           <!-- /edit icon -->
 
           <!-- if admin mode -->
-          <ng-container *ngIf="!adminMode">
+          <ng-container *ngIf="adminMode">
 
             <!-- thumbs-up icon -->
             <div style="width: 40px" class="text-center m-right-2">

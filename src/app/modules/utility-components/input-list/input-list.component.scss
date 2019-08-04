@@ -37,23 +37,25 @@
     margin-top: 0.5rem;
     border-radius: $border-radius;
     background-color: #F8F4F4;
+    position: relative;
 
     &:first-child {
       margin-top: 0;
     }
 
     .answer-wrapper {
-      padding: $unit-3 $unit-4;
-      word-break: break-word;
+      padding: 0.5rem $unit-4;
+      width: 100%;
 
       label {
-        width: 90%;
+        width: 85%;
       }
 
     }
 
     .icons-wrapper {
       display: none;
+      position: absolute;
       right: 0;
       height: 100%;
       align-items: center;
@@ -85,7 +87,7 @@
 
     }
 
-    &:hover {
+    &:hover, &:active {
 
       .icons-wrapper {
         display: flex;
@@ -97,7 +99,31 @@
 
 }
 
+@media (max-width: $size-sm) {
 
+  .input-list-answer-wrapper {
+
+    li {
+
+      .answer-wrapper {
+        padding-right: 0;
+
+        label {
+          width: 100%;
+        }
+
+      }
+
+      .icons-wrapper {
+        position: relative;
+        display: flex;
+      }
+
+    }
+
+  }
+
+}
 
 
 
