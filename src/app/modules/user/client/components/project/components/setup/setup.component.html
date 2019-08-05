@@ -4,14 +4,14 @@
 
     <!-- project under submitted status -->
     <ng-container *ngIf="innovation.status === 'SUBMITTED'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}
       </div>
     </ng-container>
 
     <!-- project under evaluating and reviewing status -->
     <ng-container *ngIf="innovation.reviewing && innovation.status === 'EDITING'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
@@ -20,14 +20,14 @@
 
     <!-- project under evaluating status -->
     <ng-container *ngIf="innovation.status === 'EVALUATING'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}
       </div>
     </ng-container>
 
     <!-- project under done status message -->
     <ng-container *ngIf="innovation.status === 'DONE'">
-      <div class="banner banner-success">
+      <div class="banner bg-success">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}
       </div>
     </ng-container>

@@ -3,7 +3,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && answers.length > 0">
-    <div class="icon is-info absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
+    <div class="icons is-info absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
       <i class="fas fa-bars"></i>
     </div>
   </ng-container>
@@ -65,7 +65,7 @@
 
   <div class="card-wrapper d-flex">
     <ng-container *ngFor="let answer of answers">
-      <div class="card card-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
+      <div class="card is-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
 
         <i class="fas fa-check-circle"></i>
 

@@ -103,7 +103,7 @@ export class CardsComponent {
           return innovation.innovationCards[index].title;
 
         case 'imageUrl':
-          return InnovationFrontService.getMediaSrc(innovation.innovationCards[index], 'default', '320', '200');
+          return InnovationFrontService.getMediaSrc(innovation.innovationCards[index], 'default', 'auto', '174');
 
       }
 

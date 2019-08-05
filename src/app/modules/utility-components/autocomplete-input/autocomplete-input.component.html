@@ -3,17 +3,22 @@
   <form [formGroup]="inputForm" (ngSubmit)="addProposition(inputForm)">
 
     <ng-container *ngIf="canEdit">
-      <div class="flex-between">
-        <input
-          auto-complete
-          formControlName="answer"
-          [list-formatter]="autocompleteListFormatter.bind(this)"
-          [source]="suggestions.bind(this)"
-          value-property-name="id"
-          [display-property-name]="identifier"
-          [attr.placeholder]="placeholder | translate"
-          class="form-input">
+      <div class="flex-between input-form">
+
+        <label class="m-right-2" style="width: 80%">
+          <input
+            auto-complete
+            formControlName="answer"
+            [list-formatter]="autocompleteListFormatter.bind(this)"
+            [source]="suggestions.bind(this)"
+            value-property-name="id"
+            [display-property-name]="identifier"
+            [attr.placeholder]="placeholder | translate"
+            class="form-input">
+        </label>
+
         <button *ngIf="addButton" class="btn btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
+
       </div>
     </ng-container>
 
@@ -44,7 +49,7 @@
 
         <span [innerHTML]="answer[identifier]"></span>
 
-        <div class="popover popover-left">
+        <div class="popover is-left">
 
           <i class="fas fa-pencil-alt"></i>
 
@@ -64,7 +69,7 @@
 
         </div>
 
-        <div class="popover popover-left">
+        <div class="popover is-left">
 
           <i class="fas fa-at" [ngClass]="{'active': answer.domain && answer.domain.length > 0}"></i>
 
@@ -98,3 +103,130 @@
   </ul>
 
 </section>
+
+<!--<div id="autocomplete-input">
+  <form [formGroup]="autoCompleteForm" (ngSubmit)="addProposition(autoCompleteForm)" novalidate>
+
+    &lt;!&ndash; input area &ndash;&gt;
+    <div *ngIf="canEdit" class="flex-between ai-input-form">
+
+      <label class="m-right-2">
+        <input
+          [attr.placeholder]="placeholder | translate"
+          [display-property-name]="identifier"
+          [list-formatter]="autocompleteListFormatter.bind(this)"
+          [source]="suggestions.bind(this)"
+          auto-complete
+          class="form-input"
+          formControlName="answer"
+          value-property-name="id">
+      </label>
+
+      <button type="submit" [disabled]="!canAdd" class="button is-action is-circled is-primary is-no-hover-effect p-no">
+        <i class="icon icon-plus"></i>
+      </button>
+
+    </div>
+    &lt;!&ndash; /input area &ndash;&gt;
+
+    &lt;!&ndash; answers area &ndash;&gt;
+    <ul class="ai-answer-wrapper">
+      <li *ngFor="let answer of answerList; let i = index" class="flex-between">
+
+        &lt;!&ndash; order icons &ndash;&gt;
+        <div class="ai-icons-wrapper">
+
+          &lt;!&ndash; move-up icon &ndash;&gt;
+          <div *ngIf="i !== 0" [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_UP' | translate" class="ai-icon-wrapper tooltip">
+            <div (click)="onClickUpIcon($event, i)" class="icon-overlay">
+              <i class="icon icon-arrow-up text-notify"></i>
+            </div>
+          </div>
+          &lt;!&ndash; /move-up icon &ndash;&gt;
+
+          &lt;!&ndash; move-down icon &ndash;&gt;
+          <div *ngIf="i !== answerList.length - 1" [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_DOWN' | translate" class="ai-icon-wrapper tooltip">
+            <div (click)="onClickDownIcon($event, i)" class="icon-overlay">
+              <i class="icon icon-arrow-down text-notify"></i>
+            </div>
+          </div>
+          &lt;!&ndash; /move-down icon &ndash;&gt;
+
+        </div>
+        &lt;!&ndash; /order icons &ndash;&gt;
+
+        &lt;!&ndash; answer &ndash;&gt;
+        <div class="ai-answer text-sm text-primary-dark m-right-2">
+
+          <span *ngIf="!(enableInputEdit && i === indexNumber)">{{ answer[identifier] }}</span>
+
+          <label *ngIf="enableInputEdit && i === indexNumber">
+            <input
+              (keyup.enter)="updateProposition($event, i, autoCompleteForm)"
+              [display-property-name]="identifier"
+              [list-formatter]="autocompleteListFormatter.bind(this)"
+              [name]="'autocomplete-text' + [i]"
+              [source]="suggestions.bind(this)"
+              [value]="answerList[i][identifier]"
+              auto-complete
+              class="form-input is-sm"
+              formControlName="updateAnswer"
+              type="text"
+              value-property-name="id">
+          </label>
+
+        </div>
+        &lt;!&ndash; /answer &ndash;&gt;
+
+        &lt;!&ndash; action icons &ndash;&gt;
+        <div class="ai-icons-wrapper">
+
+          &lt;!&ndash; edit icon &ndash;&gt;
+          <div
+            [attr.data-tooltip]="(!(enableInputEdit && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
+            class="ai-icon-wrapper tooltip">
+            <div (click)="onClickEdit($event, i)" class="icon-overlay">
+              <i class="icon icon-edit text-notify"></i>
+            </div>
+          </div>
+          &lt;!&ndash; /edit icon &ndash;&gt;
+
+          &lt;!&ndash; domain icon &ndash;&gt;
+          &lt;!&ndash; /domain icon &ndash;&gt;
+
+          &lt;!&ndash; thumbs-up icon &ndash;&gt;
+          <div class="ai-icon-wrapper">
+            <div (click)="thumbsUp($event, i)" class="icon-overlay">
+              <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
+            </div>
+          </div>
+          &lt;!&ndash; /thumbs-up icon &ndash;&gt;
+
+          &lt;!&ndash; thumbs-down icon &ndash;&gt;
+          <div class="ai-icon-wrapper">
+            <div (click)="thumbsDown($event, i)" class="icon-overlay">
+              <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
+            </div>
+          </div>
+          &lt;!&ndash; /thumbs-down icon &ndash;&gt;
+
+          &lt;!&ndash; delete icon &ndash;&gt;
+          <div
+            [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
+            class="ai-icon-wrapper m-no-right tooltip">
+            <div (click)="removeProposition($event, i)" class="icon-overlay">
+              <i class="icon icon-delete text-alert"></i>
+            </div>
+          </div>
+          &lt;!&ndash; /delete icon &ndash;&gt;
+
+
+        </div>
+        &lt;!&ndash; /action icons &ndash;&gt;
+
+      </li>
+    </ul>
+    &lt;!&ndash; /answers area &ndash;&gt;
+
+  </form>
+</div>-->

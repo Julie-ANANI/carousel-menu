@@ -3,7 +3,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && innovations.length > 0">
-    <div class="icon is-info absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
+    <div class="icons is-info absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
       <i class="fas fa-bars"></i>
     </div>
   </ng-container>
@@ -24,7 +24,7 @@
 
   <!-- section innovations -->
   <div class="section-card-wrapper section-light-pad rm-pad-top d-flex text-center justify-center">
-    <div *ngFor="let innovationCard of topCards" class="card card-3 animate-zoomIn">
+    <div *ngFor="let innovationCard of topCards" class="card is-card-3 animate-zoomIn">
       <a [routerLink]="['/discover', innovationCard._id, lang]" target="_blank" class="text-primary-dark text-xs">
 
         <div class="card-image">

@@ -10,16 +10,9 @@
   border: $border-width solid $border-color;
   word-break: break-word;
 
-  &.card-responsive {
-    margin-right: $unit-5;
-    flex: 1 0 300px;
-    max-width: calc(25% - 1rem);
-  }
-
-  &.card-3 {
-    flex: 1 0 420px;
-    max-width: calc(25% - 1rem);
-    margin-right: $unit-5;
+  &.is-shadow {
+    border: 0;
+    box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
   }
 
   .card-image {
@@ -28,10 +21,6 @@
     margin-left: auto;
     margin-right: auto;
 
-    &:first-child {
-      padding-top: 0;
-    }
-
     img {
       display: block;
       height: auto;
@@ -39,11 +28,35 @@
       object-fit: cover;
     }
 
+    &:first-child {
+      padding-top: 0;
+
+      img {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+      }
+
+    }
+
+    &:last-child {
+
+      img {
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+
+    }
+
   }
 
   .card-header, .card-body, .card-footer {
-    padding-top: $unit-3;
-    padding-bottom: 0;
+    padding: $unit-3 0.5rem 0;
+    font-size: $font-size-md;
+
+    &:last-child {
+      padding-bottom: $unit-3;
+    }
+
   }
 
   .card-header {
@@ -53,90 +66,74 @@
       font-size: $unit-5;
     }
 
-  }
-
-  .card-body {
-
-    &.card-cover {
-      @include flex-centered();
-      flex-direction: column;
-      flex: 1 0 auto;
-      text-align: center;
+    .card-subtitle {
+      font-size: $font-size-md;
+      color: $text-meta-color;
     }
 
   }
 
-  .card-justify {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1;
+  .card-body {
+    flex: 1 1 auto;
+  }
+
+  &.is-card-3, &.is-responsive {
+    margin-right: $unit-5;
+    margin-bottom: $unit-5;
+  }
+
+  &.is-responsive {
+    flex: 1 0 300px;
+    max-width: calc(25% - 1rem);
+  }
+
+  &.is-card-3 {
+    flex: 1 0 420px;
+    max-width: calc(33% - 1rem);
   }
 
 }
 
+@media (max-width: $size-xl) {
 
-@media (max-width: $size-2x) {
-
-  .card-responsive {
-    max-width: calc(25% - 1rem) !important;
-  }
-
-  .card-3 {
+  .is-responsive {
     max-width: calc(33% - 1rem) !important;
   }
 
 }
 
-@media (min-width: $size-md) and (max-width: $size-lg) {
+@media (max-width: $size-lg) {
 
-  .card-responsive {
-    max-width: calc(33% - 1rem) !important;
-  }
-
-  .card-3 {
+  .is-card-3 {
     max-width: calc(50% - 1rem) !important;
   }
 
 }
 
-@media (min-width: $size-sm) and (max-width: $size-md) {
+@media (max-width: $size-md) {
 
-  .card-responsive {
-    max-width: calc(50% - 1rem) !important;
-  }
-
-  .card-3 {
+  .is-responsive {
     max-width: calc(50% - 1rem) !important;
   }
 
 }
 
-@media (min-width: $size-xs) and (max-width: $size-sm) {
+@media (max-width: $size-sm) {
 
-  .card-responsive {
-    max-width: calc(50% - 1rem) !important;
-  }
-
-  .card-3 {
-    margin-left: auto;
-    margin-right: auto !important;
-    max-width: calc(80% - 1rem) !important;
+  .is-card-3 {
+    flex: 100% !important;
+    margin-right: 0 !important;
+    max-width: calc(100% - 1rem) !important;
   }
 
 }
 
 @media (max-width: $size-xs) {
 
-  .card-responsive {
+  .is-responsive {
     flex: 100% !important;
     max-width: 100% !important;
-  }
-
-  .card-3 {
-    margin-left: auto;
-    margin-right: auto !important;
-    max-width: 100% !important;
+    margin-right: 0 !important;
   }
 
 }

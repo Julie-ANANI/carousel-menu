@@ -1,73 +1,72 @@
-<header id="header-unauth-component" class="header">
+<header id="header">
   <div class="column col-xs-12 col-11 col-mx-auto">
-    <nav class="navbar" id="header-navbar">
+    <nav class="navbar">
 
       <!-- logo -->
-      <div class="logo" id="logo">
+      <div class="navbar-brand">
         <a routerLink="/" class="gtm-menu-logo">
-          <img [src]="getLogo()" [alt]="getCompany()" width="110px" height="33px">
+          <img [src]="getLogo()" [alt]="getCompany()" height="33" style="height: 33px; width: 110px" width="110">
         </a>
       </div>
       <!-- /logo -->
 
       <!-- navigation -->
-      <div class="navigation-wrapper" id="navigation">
-        <ul class="navigation-menu">
+      <ul class="menu menu-nav">
 
-          <!-- language select dropdown -->
-          <li class="navigation-menu-item header-lang-dropdown">
-            <div class="dropdown" id="header-lang-dropdown">
+        <!-- language select dropdown -->
+        <li class="menu-item dropdown navbar-dropdown navbar-dropdown-language c-default">
 
-              <a>
-                <span>
-                  <img
-                    [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
-                    [alt]="currentLang.toUpperCase()">
-                    <i class="fas fa-angle-down text-background"></i>
-                </span>
-              </a>
+          <a class="c-default">
+            <span>
+              <img
+                [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
+                [alt]="currentLang.toUpperCase()">
+                <i class="fas fa-angle-down text-background m-left-2"></i>
+            </span>
+          </a>
 
-              <!-- dropdown -->
-              <ul class="dropdown-menu dropdown-menu-right">
+          <!-- options -->
+          <ul class="menu">
+            <li class="menu-item text-center" (click)="setLang('fr')">
+              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
+            </li>
+            <li class="menu-item text-center" (click)="setLang('en')">
+              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
+            </li>
+          </ul>
 
-                <li class="drop-item text-center" (click)="setLang('fr')">
-                  <img
-                    [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'"
-                    [alt]="currentLang.toUpperCase()">
-                </li>
+        </li>
+        <!-- /language select dropdown -->
 
-                <li class="drop-item text-center" (click)="setLang('en')">
-                  <img
-                    [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'"
-                    [alt]="currentLang.toUpperCase()">
-                </li>
+        <!-- contact us -->
+        <li class="menu-item navbar-contact-button">
+          <a [href]="getContactUrl()" rel="noopener" target="_blank">
+            <button type="button" class="button is-info is-outlined">{{ 'HEADER.CONTACT_US' | translate }}</button>
+          </a>
+        </li>
 
-              </ul>
+        <!-- sign in button -->
+        <li class="menu-item">
+          <button
+            type="button"
+            class="button is-primary is-outlined"
+            (click)="onClickSignIn($event)">
+            {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+          </button>
+        </li>
 
-            </div>
-          </li>
-          <!-- /language select dropdown -->
+        <!-- sign up button -->
+        <li class="menu-item">
+          <button
+            type="button"
+            class="button is-primary"
+            (click)="onClickSignUp($event)">
+            {{ 'COMMON.BUTTON.SIGN_UP' | translate }}
+          </button>
+        </li>
 
-          <!-- contact us -->
-          <li class="navigation-menu-item contact-button">
-            <a [href]="getContactUrl()" rel="noopener"target="_blank">
-              <button type="button" class="btn btn-sm ghost-edit">{{ 'HEADER.CONTACT_US' | translate }}</button>
-            </a>
-          </li>
-
-          <!-- sign in button -->
-          <li class="navigation-menu-item">
-            <button type="button" class="btn ghost-primary btn-sm" (click)="onClickSignIn($event)">{{ 'COMMON.BUTTON.SIGN_IN' | translate }}</button>
-          </li>
-
-          <!-- sign up button -->
-          <li class="navigation-menu-item">
-            <button type="button" class="btn btn-primary btn-sm" (click)="onClickSignUp($event)">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
-          </li>
-
-        </ul>
-      </div>
-
+      </ul>
+      <!-- /navigation -->
 
     </nav>
   </div>
@@ -138,7 +137,12 @@
 
     <!-- login button -->
     <div class="text-center" [ngStyle]="{ 'padding-top': '0.75rem', 'padding-bottom': '0.5rem' }">
-      <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">{{ 'COMMON.BUTTON.CONTINUE' | translate }}</button>
+      <button
+        class="button is-primary gtm-signin-email"
+        type="submit"
+        [disabled]="formData.invalid">
+        {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+      </button>
     </div>
 
   </form>

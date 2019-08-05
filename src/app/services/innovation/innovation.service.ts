@@ -129,4 +129,14 @@ export class InnovationService {
     return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }
 
+  public export(innovationId: string): void {
+    const url = environment.apiUrl + `/innovation/${innovationId}/export`;
+    window.open(url);
+  }
+
+  public import(file:File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, "import_project");
+    return this._http.post('/innovation/import/', formData);
+  }
 }

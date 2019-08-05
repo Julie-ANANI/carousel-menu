@@ -156,7 +156,7 @@
           <!-- toggle ---->
           <div *ngIf="questionReceived.controlType === 'toggle'">
             <div class="toggle-wrapper rm-margin d-flex section-light-pad rm-pad-bottom">
-              <div *ngFor="let answer of answersToShow" class="card card-responsive">
+              <div *ngFor="let answer of answersToShow" class="card is-responsive">
                 <div class="card-body">
                   <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>

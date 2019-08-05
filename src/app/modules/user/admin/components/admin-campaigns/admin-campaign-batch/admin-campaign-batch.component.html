@@ -112,7 +112,7 @@
 
             <ng-container *ngIf="batchAlreadyActivated === 'false'">
               <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
-                   class="icon is-white absolute tooltip"
+                   class="icons is-white absolute tooltip"
                    data-tooltip="Batch Manually"
                    (click)="activateSidebar('newBatch')">
                 <i class="fas fa-cog"></i>
@@ -159,7 +159,7 @@
               <div class="card-title">
                 <span>{{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros</span>
                 <span *ngIf="batch.error" class="text-error">{{ 'CAMPAIGNS.BATCH_PAGE.ERROR' | translate }}</span>
-                <div *ngIf="getDeleteStatus(batch)" class="icon is-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
+                <div *ngIf="getDeleteStatus(batch)" class="icons is-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
               </div>
 
               <label class="form-switch float-right text-medium" [for]="batch._id">

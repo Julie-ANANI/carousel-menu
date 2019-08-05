@@ -691,6 +691,10 @@ export class AdminProjectManagementComponent implements OnInit {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
   }
 
+  public onClickExport() {
+    this._innovationService.export(this._project._id);
+  }
+
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }

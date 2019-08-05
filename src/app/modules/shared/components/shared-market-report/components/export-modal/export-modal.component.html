@@ -5,7 +5,7 @@
   <div class="d-flex text-center card-wrapper">
 
     <!-- resp Pdf -->
-    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.respReport)" [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
+    <div class="card is-responsive" (click)="assignExportType($event, exportTypeEnum.respReport)" [ngClass]="{ 'active': exportTypeEnum.respReport === exportType }">
       <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png"
            [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
       <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
@@ -13,7 +13,7 @@
     <!-- /resp Pdf -->
 
     <!-- csv -->
-    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.csv)" [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
+    <div class="card is-responsive" (click)="assignExportType($event, exportTypeEnum.csv)" [ngClass]="{ 'active': exportTypeEnum.csv === exportType }">
       <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png"
            [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate" class="img-responsive">
       <h5 [innerText]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A'" translate></h5>
@@ -21,7 +21,7 @@
     <!-- /csv -->
 
     <!-- executive report -->
-    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.executiveReport)"
+    <div class="card is-responsive" (click)="assignExportType($event, exportTypeEnum.executiveReport)"
          [ngClass]="{ 'active': exportTypeEnum.executiveReport === exportType }">
       <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png"
            [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">
@@ -30,7 +30,7 @@
     <!-- /executive report -->
 
     <!-- share report -->
-    <div class="card card-responsive" (click)="assignExportType($event, exportTypeEnum.shareReport)"
+    <div class="card is-responsive" (click)="assignExportType($event, exportTypeEnum.shareReport)"
          [ngClass]="{ 'active': exportTypeEnum.shareReport === exportType }">
       <img src="https://res.cloudinary.com/umi/image/upload/v1557826918/app/default-images/icons/email.svg"
            [alt]="'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate" class="img-responsive">

@@ -1,63 +1,97 @@
-<form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
+<div id="input-list">
+  <form #f="ngForm" (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)" novalidate>
 
-  <div class="flex-between">
-    <input
-      type="text"
-      class="form-input"
-      name="answers"
-      [(ngModel)]="answer"
-      required
-      [attr.placeholder]="placeholder | translate">
-    <button class="btn btn-round btn-primary" translate><i class="fas fa-plus"></i></button>
-  </div>
+    <!-- input area -->
+    <div class="flex-between il-input-form">
 
-  <ul *ngFor="let a of answerList; index as i" class="input-answer-wrapper">
+      <label class="m-right-2">
+        <input
+          type="text"
+          class="form-input"
+          name="answers"
+          [(ngModel)]="answer"
+          required
+          [attr.placeholder]="placeholder | translate">
+      </label>
 
-    <ng-container *ngIf="!adminMode">
-      <li>
-        <span>{{ a.text }}</span>
-        <a class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
-          <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
-        </a>
-      </li>
-    </ng-container>
+      <button type="submit" class="button is-action is-circled is-primary is-no-hover-effect p-no">
+        <i class="icon icon-plus"></i>
+      </button>
 
-    <ng-container *ngIf="adminMode">
-      <li>
+    </div>
+    <!-- /input area -->
 
-        <span>{{ a.text }}</span>
+    <!-- answers area -->
+    <ul class="il-answer-wrapper">
+      <li *ngFor="let answer of answerList; let i = index" class="flex-between">
 
-        <div class="popover popover-left">
+        <div class="il-answer text-sm text-primary-dark m-right-2">
 
-          <i class="fas fa-pencil-alt"></i>
+          <span *ngIf="!(enableUpdate && i === indexNumber)">{{ answer.text }}</span>
 
-          <div class="popover-container">
-            <div class="card">
-              <div class="card-body">
-                <div class="form-group">
-                  <label class="form-label" for="text">Answer</label>
-                  <input autocomplete="off" type="text" class="form-input" id="text" [(ngModel)]="a.text" name="text"/>
-                </div>
-              </div>
-              <div class="card-footer text-center">
-                <button class="btn btn-primary btn-xs" type="submit" (click)="updateItem($event)">Update</button>
-              </div>
-            </div>
-          </div>
+          <label *ngIf="enableUpdate && i === indexNumber">
+            <input
+              autocomplete="off"
+              type="text"
+              class="form-input is-sm"
+              [name]="'text' + [i]"
+              [ngModel]="answerList[i].text"
+              #updateAnswer
+              (keyup.enter)="updateProposition($event, i, updateAnswer.value)">
+          </label>
 
         </div>
 
-        <i class="fas fa-thumbs-up" [ngClass]="{ 'active': a.rating === 2 }" (click)="thumbsUp($event, i)"></i>
+        <div class="il-icons-wrapper">
 
-        <i class="fas fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown($event, i)"></i>
+          <!-- edit icon -->
+          <div
+            [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
+            class="il-icon-wrapper tooltip">
+            <div (click)="onClickEdit($event, i)" class="icon-overlay">
+              <i class="icon icon-edit text-notify"></i>
+            </div>
+          </div>
+          <!-- /edit icon -->
 
-        <a class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
-          <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
-        </a>
+          <!-- if admin mode -->
+          <ng-container *ngIf="adminMode">
+
+            <!-- thumbs-up icon -->
+            <div class="il-icon-wrapper">
+              <div (click)="thumbsUp($event, i)" class="icon-overlay">
+                <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
+              </div>
+            </div>
+            <!-- /thumbs-up icon -->
+
+            <!-- thumbs-down icon -->
+            <div class="il-icon-wrapper">
+              <div (click)="thumbsDown($event, i)" class="icon-overlay">
+                <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
+              </div>
+            </div>
+            <!-- /thumbs-down icon -->
+
+          </ng-container>
+          <!-- /if admin mode -->
+
+          <!-- delete icon -->
+          <div
+            [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
+            class="il-icon-wrapper m-no-right tooltip">
+            <div (click)="removeProposition(i)" class="icon-overlay">
+              <i class="icon icon-delete text-alert"></i>
+            </div>
+          </div>
+          <!-- /delete icon -->
+
+        </div>
 
       </li>
-    </ng-container>
+    </ul>
+    <!-- answers area -->
 
-  </ul>
+  </form>
+</div>
 
-</form>

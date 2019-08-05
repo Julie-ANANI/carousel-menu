@@ -3,6 +3,7 @@
  */
 export const TAGS = {
   "ADD":"Add a tag",
+  "EXPORT":"Export all tags",
   "LIST": "Tag list",
   "ATTACHMENTS": "Attachment explorer",
   "NEW": {

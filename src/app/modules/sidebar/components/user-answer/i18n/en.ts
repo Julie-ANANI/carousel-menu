@@ -24,6 +24,8 @@ export const ANSWER = {
 
   'COMPANY': 'Company',
 
+  'BLACKLISTED_COMPANY': 'The answer may come from a blacklisted company!',
+
   'EDIT': 'Edit',
 
   'TIME_SPENT': 'Time spent',

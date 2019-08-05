@@ -1,6 +1,13 @@
-<div [hidden]="showForm">
+<div [hidden]="showForm" class="columns p-bottom-20">
     <button (click)="showForm = !showForm" class="btn btn-primary centered">{{ 'TAGS.ADD' | translate }}
     <i class="fas fa-plus"></i></button>
+
+    <button (click)="exportTags()" class="btn ghost-primary btn-sm m-right-20 m-bottom-10">{{ 'TAGS.EXPORT' | translate }}</button>
+
+    <label class="btn ghost-primary btn-sm m-right-20 m-bottom-10">
+      <input #fileupload (change)="importTags(fileupload.files[0])" [hidden]="true" type="file"/>
+      {{ 'COMMON.BUTTON.IMPORT' | translate }}
+    </label>
 </div>
 <div class="container" [hidden]="!showForm">
     <div class="columns">

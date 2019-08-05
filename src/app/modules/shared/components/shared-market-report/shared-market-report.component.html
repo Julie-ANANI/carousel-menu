@@ -105,7 +105,7 @@
                     <h2 class="title-primary">Executive Report</h2>
 
                     <div class="template-outer-wrapper d-flex">
-                      <div *ngFor="let template of executiveTemplates" class="card card-responsive">
+                      <div *ngFor="let template of executiveTemplates" class="card is-responsive">
 
                         <img [src]="template.imageSrc" alt=" ">
 
@@ -257,7 +257,7 @@
 
                 <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'expand-wrapper' : 'collapse-wrapper' ">
                   <div class="card-wrapper d-flex section-light-pad rm-pad-bottom">
-                    <div *ngFor="let answer of filteredAnswers" class="card card-3 relative">
+                    <div *ngFor="let answer of filteredAnswers" class="card is-card-3 relative">
 
                       <div class="icon is-delete tooltip tooltip-right c-hand" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translate"
                            (click)="filterPro(answer, $event)">

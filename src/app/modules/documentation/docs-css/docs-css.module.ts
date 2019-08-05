@@ -30,6 +30,10 @@ import { TextComponent } from './utilities/text/text.component';
 import { TitleComponent } from './utilities/title/title.component';
 import { AvatarsComponent } from './components/avatars/avatars.component';
 import { BadgesComponent } from './components/badges/badges.component';
+import { BannersComponent } from './components/banners/banners.component';
+import { BarsComponent } from './components/bars/bars.component';
+import { CardsComponent } from './components/cards/cards.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 @NgModule({
   imports: [
@@ -64,7 +68,11 @@ import { BadgesComponent } from './components/badges/badges.component';
     TextComponent,
     TitleComponent,
     AvatarsComponent,
-    BadgesComponent
+    BadgesComponent,
+    BannersComponent,
+    BarsComponent,
+    CardsComponent,
+    DropdownComponent
   ],
 })
 
