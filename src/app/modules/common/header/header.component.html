@@ -177,7 +177,7 @@
                     [routerLink]="'/user/admin'"
                     routerLinkActive="active"
                     (click)="toggleBackOfficeState(); onClickLink();"
-                    class="text-background">
+                    class="text-background text-normal">
                     {{ 'HEADER.ADMIN_SIDE' | translate }}
                   </a>
                 </li>
@@ -188,7 +188,7 @@
                     routerLinkActive="active"
                     [routerLink]="'/user/projects'"
                     (click)="toggleBackOfficeState(); onClickLink();"
-                    class="text-background">
+                    class="text-background text-normal">
                     {{ 'HEADER.CLIENT_SIDE' | translate }}
                   </a>
                 </li>
@@ -199,7 +199,7 @@
                     [routerLink]="'/user/account'"
                     routerLinkActive="active"
                     (click)="onClickLink(); onClickAccount();"
-                    class="gtm-menu-my-account text-background">
+                    class="gtm-menu-my-account text-background text-normal">
                     {{ 'HEADER.MY_ACCOUNT' | translate }}
                   </a>
                 </li>
@@ -210,7 +210,7 @@
 
               <!-- log out -->
               <li class="menu-item">
-                <a [routerLink]="'/logout'" (click)="onClickLink()" class="text-background">
+                <a [routerLink]="'/logout'" (click)="onClickLink()" class="text-background text-normal">
                   {{ 'HEADER.LOG_OUT' | translate }}
                 </a>
               </li>
