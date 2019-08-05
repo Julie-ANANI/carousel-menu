@@ -338,6 +338,11 @@
     cursor: not-allowed;
     box-shadow: none;
     opacity: 0.5;
+
+    i {
+      cursor: not-allowed;
+    }
+
   }
 
   &.is-link {

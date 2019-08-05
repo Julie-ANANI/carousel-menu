@@ -360,7 +360,9 @@ export const COMMON = {
     'HISTORY': 'History',
     'EDIT': 'Edit',
     'READONLY': 'Readonly',
-    'DELETE': 'Delete'
+    'DELETE': 'Delete',
+    'MOVE_UP': 'Move up',
+    'MOVE_DOWN': 'Move down'
   },
 
   'SIGNATURES': {

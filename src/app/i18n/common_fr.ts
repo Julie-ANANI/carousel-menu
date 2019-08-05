@@ -357,7 +357,9 @@ export const COMMON = {
     'HISTORY': 'Historique',
     'EDIT': 'Éditer',
     'READONLY': 'Lecture seulement',
-    'DELETE': 'Supprimer'
+    'DELETE': 'Supprimer',
+    'MOVE_UP': 'Remonter en haut',
+    'MOVE_DOWN': 'Déplacer vers le bas'
   },
 
   'SIGNATURES': {

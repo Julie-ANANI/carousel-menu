@@ -48,7 +48,7 @@
           <div
             [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
             class="il-icon-wrapper tooltip">
-            <div (click)="onClickEdit($event, i)" [ngClass]="{ 'as-position' : adminMode }" class="icon-overlay">
+            <div (click)="onClickEdit($event, i)" class="icon-overlay">
               <i class="icon icon-edit text-notify"></i>
             </div>
           </div>
