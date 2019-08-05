@@ -1,7 +1,7 @@
 @import "../../../../style/framework/src/variables";
 @import "../../../../style/framework/src/mixins";
 
-.input-form {
+.il-input-form {
 
   label {
     width: 80%;
@@ -28,7 +28,7 @@
 
 }
 
-.input-list-answer-wrapper {
+.il-answer-wrapper {
   margin: 1rem 0 0 0;
   list-style: none;
 
@@ -37,45 +37,18 @@
     margin-top: 0.5rem;
     border-radius: $border-radius;
     background-color: #F8F4F4;
-    padding: $unit-1 $unit-2 $unit-1 $unit-3;
+    padding: $unit-2 $unit-2 $unit-2 $unit-3;
 
     &:first-child {
       margin-top: 0;
     }
 
-    .icon-wrapper {
-      width: 40px;
-      height: 32px;
+    .il-answer, .il-icons-wrapper {
+      display: flex;
+      align-items: center;
     }
 
-    .icon-overlay {
-
-      &::before {
-        width: 40px;
-        height: 40px;
-        top: -5px;
-        left: -12px;
-      }
-
-      &:hover {
-
-        &::before {
-          background-color: rgba(0, 0, 0, 0.04);
-        }
-
-      }
-
-      &.is-reset {
-
-        &::before {
-          left: 0;
-        }
-
-      }
-
-    }
-
-    .answer-wrapper {
+    .il-answer {
       width: 100%;
 
       label {
@@ -84,10 +57,28 @@
 
     }
 
-    .icons-wrapper {
-      right: 0;
-      height: 100%;
-      background-color: #F8F4F4;
+    .il-icons-wrapper {
+
+      .il-icon-wrapper {
+        @include inline-flex-centered();
+        width: 35px;
+        height: 35px;
+        position: relative;
+        text-align: center;
+        margin-right: $unit-2;
+      }
+
+      .icon-overlay {
+
+        &:hover {
+
+          &::before {
+            background-color: rgba(0, 0, 0, 0.04);
+          }
+
+        }
+
+      }
 
       .icon, .fa-thumbs-up, .fa-thumbs-down {
         font-size: $font-icon-md;

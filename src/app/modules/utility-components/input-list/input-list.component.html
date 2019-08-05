@@ -2,7 +2,7 @@
   <form #f="ngForm" (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)" novalidate>
 
     <!-- input area -->
-    <div class="flex-between input-form">
+    <div class="flex-between il-input-form">
 
       <label class="m-right-2">
         <input
@@ -22,10 +22,10 @@
     <!-- /input area -->
 
     <!-- answers area -->
-    <ul class="input-list-answer-wrapper">
+    <ul class="il-answer-wrapper">
       <li *ngFor="let answer of answerList; let i = index" class="flex-between">
 
-        <div class="answer-wrapper d-flex align-center text-sm text-primary-dark m-right-2">
+        <div class="il-answer text-sm text-primary-dark m-right-2">
 
           <span *ngIf="!(enableUpdate && i === indexNumber)">{{ answer.text }}</span>
 
@@ -42,17 +42,15 @@
 
         </div>
 
-        <div class="icons-wrapper d-flex align-center p-left-3">
+        <div class="il-icons-wrapper">
 
           <!-- edit icon -->
-          <div class="text-center m-right-2 icon-wrapper relative">
-            <span
-              [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
-              class="tooltip">
-              <span (click)="onClickEdit($event, i)" class="icon-overlay">
+          <div
+            [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
+            class="il-icon-wrapper tooltip">
+            <div (click)="onClickEdit($event, i)" [ngClass]="{ 'as-position' : adminMode }" class="icon-overlay">
               <i class="icon icon-edit text-notify"></i>
-            </span>
-            </span>
+            </div>
           </div>
           <!-- /edit icon -->
 
@@ -60,18 +58,18 @@
           <ng-container *ngIf="adminMode">
 
             <!-- thumbs-up icon -->
-            <div class="text-center m-right-2 icon-wrapper relative">
-              <span (click)="thumbsUp($event, i)" class="icon-overlay is-reset">
+            <div class="il-icon-wrapper">
+              <div (click)="thumbsUp($event, i)" class="icon-overlay">
                 <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
-              </span>
+              </div>
             </div>
             <!-- /thumbs-up icon -->
 
             <!-- thumbs-down icon -->
-            <div class="text-center m-right-2 icon-wrapper relative">
-              <span (click)="thumbsDown($event, i)" class="icon-overlay is-reset">
+            <div class="il-icon-wrapper">
+              <div (click)="thumbsDown($event, i)" class="icon-overlay">
                 <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
-              </span>
+              </div>
             </div>
             <!-- /thumbs-down icon -->
 
@@ -79,14 +77,12 @@
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div  class="text-center p-bottom-h icon-wrapper relative">
-            <span
-              [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
-              class="tooltip">
-              <span (click)="removeProposition(i)" class="icon-overlay">
+          <div
+            [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
+            class="il-icon-wrapper m-no-right tooltip">
+            <div (click)="removeProposition(i)" class="icon-overlay">
               <i class="icon icon-delete text-alert"></i>
-            </span>
-            </span>
+            </div>
           </div>
           <!-- /delete icon -->
 
