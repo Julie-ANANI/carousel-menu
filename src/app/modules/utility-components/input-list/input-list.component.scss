@@ -37,14 +37,34 @@
     margin-top: 0.5rem;
     border-radius: $border-radius;
     background-color: #F8F4F4;
-    padding: $unit-2 $unit-4;
+    padding: $unit-3 $unit-4;
 
     &:first-child {
       margin-top: 0;
     }
 
-    .w-40 {
+    .icon-wrapper {
       width: 40px;
+      height: 32px;
+    }
+
+    .icon-overlay {
+
+      &::before {
+        width: 45px;
+        height: 45px;
+        top: -6px;
+        left: -3px;
+      }
+
+      &:hover {
+
+        &::before {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+
+      }
+
     }
 
     .answer-wrapper {
@@ -71,7 +91,7 @@
 
       .fa-thumbs-up {
 
-        &.active, &:hover {
+        &.active {
           color: $success-color;
         }
 
@@ -79,7 +99,7 @@
 
       .fa-thumbs-down {
 
-        &.active, &:hover {
+        &.active {
           color: $alert-color;
         }
 
