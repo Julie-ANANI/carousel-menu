@@ -25,7 +25,7 @@
     <ul class="input-list-answer-wrapper">
       <li *ngFor="let answer of answerList; let i = index" class="flex-between">
 
-        <div class="answer-wrapper d-flex align-center text-sm text-primary-dark text-medium m-right-2">
+        <div class="answer-wrapper d-flex align-center text-sm text-primary-dark m-right-2">
 
           <span *ngIf="!(enableUpdate && i === indexNumber)">{{ answer.text }}</span>
 
@@ -45,11 +45,13 @@
         <div class="icons-wrapper d-flex align-center p-left-3">
 
           <!-- edit icon -->
-          <div
-            [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
-            class="text-center m-right-2 icon-wrapper tooltip relative">
-            <span (click)="onClickEdit($event, i)" class="icon-overlay">
+          <div class="text-center m-right-2 icon-wrapper relative">
+            <span
+              [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
+              class="tooltip">
+              <span (click)="onClickEdit($event, i)" class="icon-overlay">
               <i class="icon icon-edit text-notify"></i>
+            </span>
             </span>
           </div>
           <!-- /edit icon -->
@@ -59,7 +61,7 @@
 
             <!-- thumbs-up icon -->
             <div class="text-center m-right-2 icon-wrapper relative">
-              <span (click)="thumbsUp($event, i)" class="icon-overlay">
+              <span (click)="thumbsUp($event, i)" class="icon-overlay is-reset">
                 <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
               </span>
             </div>
@@ -67,7 +69,7 @@
 
             <!-- thumbs-down icon -->
             <div class="text-center m-right-2 icon-wrapper relative">
-              <span (click)="thumbsDown($event, i)" class="icon-overlay">
+              <span (click)="thumbsDown($event, i)" class="icon-overlay is-reset">
                 <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
               </span>
             </div>
@@ -77,9 +79,13 @@
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="text-center p-bottom-h icon-wrapper tooltip relative">
-            <span (click)="removeProposition(i)" class="icon-overlay">
+          <div  class="text-center p-bottom-h icon-wrapper relative">
+            <span
+              [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
+              class="tooltip">
+              <span (click)="removeProposition(i)" class="icon-overlay">
               <i class="icon icon-delete text-alert"></i>
+            </span>
             </span>
           </div>
           <!-- /delete icon -->
