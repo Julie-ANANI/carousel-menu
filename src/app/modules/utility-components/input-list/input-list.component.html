@@ -42,10 +42,10 @@
 
         </div>
 
-        <div class="icons-wrapper p-left-3">
+        <div class="icons-wrapper d-flex align-center p-left-3">
 
           <!-- edit icon -->
-          <div style="width: 40px" class="text-center m-right-2">
+          <div class="text-center m-right-2 w-40">
             <span class="tooltip" [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate">
               <i class="icon icon-edit text-notify" (click)="onClickEdit($event, i)"></i>
             </span>
@@ -56,13 +56,13 @@
           <ng-container *ngIf="adminMode">
 
             <!-- thumbs-up icon -->
-            <div style="width: 40px" class="text-center m-right-2">
+            <div class="text-center m-right-2 w-40">
               <i class="fas fa-thumbs-up c-hand" [ngClass]="{ 'active': answer.rating === 2 }" (click)="thumbsUp($event, i)"></i>
             </div>
             <!-- /thumbs-up icon -->
 
             <!-- thumbs-down icon -->
-            <div style="width: 40px" class="text-center m-right-2">
+            <div class="text-center m-right-2 w-40">
               <i class="fas fa-thumbs-down c-hand" [ngClass]="{ 'active': answer.rating === 0 }" (click)="thumbsDown($event, i)"></i>
             </div>
             <!-- /thumbs-down icon -->
@@ -71,7 +71,7 @@
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div style="width: 40px" class="text-center p-bottom-h">
+          <div class="text-center p-bottom-h w-40">
             <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" (click)="removeProposition(i)">
               <i class="icon icon-delete text-alert"></i>
             </span>

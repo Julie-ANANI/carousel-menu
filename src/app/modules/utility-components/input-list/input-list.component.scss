@@ -37,28 +37,28 @@
     margin-top: 0.5rem;
     border-radius: $border-radius;
     background-color: #F8F4F4;
-    position: relative;
+    padding: $unit-2 $unit-4;
 
     &:first-child {
       margin-top: 0;
     }
 
+    .w-40 {
+      width: 40px;
+    }
+
     .answer-wrapper {
-      padding: 0.5rem $unit-4;
       width: 100%;
 
       label {
-        width: 85%;
+        width: 90%;
       }
 
     }
 
     .icons-wrapper {
-      display: none;
-      position: absolute;
       right: 0;
       height: 100%;
-      align-items: center;
       background-color: #F8F4F4;
 
       .icon, .fa-thumbs-up, .fa-thumbs-down {
@@ -87,43 +87,11 @@
 
     }
 
-    &:hover, &:active {
-
-      .icons-wrapper {
-        display: flex;
-      }
-
-    }
-
   }
 
 }
 
-@media (max-width: $size-sm) {
 
-  .input-list-answer-wrapper {
-
-    li {
-
-      .answer-wrapper {
-        padding-right: 0;
-
-        label {
-          width: 100%;
-        }
-
-      }
-
-      .icons-wrapper {
-        position: relative;
-        display: flex;
-      }
-
-    }
-
-  }
-
-}
 
 
 
