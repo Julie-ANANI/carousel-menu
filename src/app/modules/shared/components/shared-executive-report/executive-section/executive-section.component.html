@@ -12,13 +12,15 @@
 
       <!-- menu -->
       <ng-container *ngIf="adminSide">
-        <div class="dropdown">
+        <div class="dropdown absolute is-right">
 
-          <i class="fas fa-bars"></i>
+          <a class="dropdown-toggle text-notify" tabindex="0">
+            <i class="icon icon-menu text-md"></i>
+          </a>
 
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)" class="drop-item">
-              <span>{{ option?.title | multiling:lang }}</span>
+          <ul class="menu is-md">
+            <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)" class="menu-item">
+              {{ option?.title | multiling:lang }}
             </li>
           </ul>
 

@@ -26,6 +26,27 @@
 
 }
 
+@mixin button-no-hover-effect-variant($color: $primary-color) {
+  color: $light-color;
+  background-color: $color;
+  border-color: $color;
+
+  &:hover, &:focus, &.is-active, &:active {
+    color: $light-color;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    background-color: $color;
+    border-color: $color;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+
+}
+
 @mixin button-outline-variant($color: $primary-color) {
   color: $color;
   border-color: $color;
@@ -50,28 +71,6 @@
     border-color: $color;
     box-shadow: none;
     opacity: 0.5;
-  }
-
-}
-
-// Todo remove
-@mixin button-ghost-variant($color: $primary-color) {
-  color: $color;
-  background-color: transparent;
-  border-color: $color;
-  border-width: $border-width-lg;
-
-  &:focus, &:active, &.active {
-    color: $color;
-    background-color: transparent;
-    border-color: $color;
-    border-width: $border-width-lg;
-  }
-
-  &:hover {
-    color: lighten($color, 15%);
-    background-color: transparent;
-    border-color: lighten($color, 15%);
   }
 
 }
@@ -110,6 +109,10 @@
   border-color: $color;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+
+  i {
+    font-size: $font-icon-sm;
+  }
 
   &:focus, &.is-active, &:active  {
     color: $light-color;
@@ -155,3 +158,34 @@
   }
 
 }
+
+
+
+
+
+
+
+
+// Todo remove
+@mixin button-ghost-variant($color: $primary-color) {
+  color: $color;
+  background-color: transparent;
+  border-color: $color;
+  border-width: $border-width-lg;
+
+  &:focus, &:active, &.active {
+    color: $color;
+    background-color: transparent;
+    border-color: $color;
+    border-width: $border-width-lg;
+  }
+
+  &:hover {
+    color: lighten($color, 15%);
+    background-color: transparent;
+    border-color: lighten($color, 15%);
+  }
+
+}
+
+

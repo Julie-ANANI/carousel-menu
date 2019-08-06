@@ -60,8 +60,8 @@
     <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
       <div
         *ngFor="let tag of highLightTags"
-        class="label is-draft is-rounded c-hand animate-tag"
-        [ngClass]="{ 'is-primary': checkFilter(tag._id)}">
+        class="label is-rounded c-hand animate-tag"
+        [ngClass]="checkFilter(tag._id) ? 'is-primary' : 'is-draft'">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"
@@ -89,8 +89,8 @@
     <div class="d-flex sector-wrapper">
       <div
         *ngFor="let tag of suggestedTags"
-        class="label is-draft is-rounded c-hand animate-appear"
-        [ngClass]="{ 'is-primary': checkSimilarFilter(tag._id) }">
+        class="label is-rounded c-hand animate-appear"
+        [ngClass]="checkSimilarFilter(tag._id) ? 'is-primary' : 'is-draft'">
         <label class="c-hand">
           <input
             (change)="toggleSimilarFilter($event, tag)"
@@ -117,8 +117,8 @@
     <div class="d-flex sector-wrapper">
       <div
         *ngFor="let tag of allTags"
-        class="label is-draft is-rounded c-hand"
-        [ngClass]="{ 'is-primary': checkFilter(tag._id) }">
+        class="label is-rounded c-hand"
+        [ngClass]=" checkFilter(tag._id) ? 'is-primary' : 'is-draft' ">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"

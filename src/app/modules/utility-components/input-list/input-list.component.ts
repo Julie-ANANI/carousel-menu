@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
-import {domainRegEx, emailRegEx} from '../../../utils/regex';
+import { domainRegEx, emailRegEx } from '../../../utils/regex';
 
 @Component({
   moduleId: module.id,
@@ -13,94 +13,141 @@ export class InputListComponent {
 
   @Input() set config(config: any) {
     if (config) {
-      this._placeholder = config.placeholder || '';
-      this.answerList = config.initialData || [];
+      this._placeholder = config.placeholder;
+      this._answerList = config.initialData || [];
     }
   }
 
   @Input() canEdit = true;
 
-  @Input() adminMode = false;
+  @Input() set adminMode(value: boolean) {
+    this._adminMode = value;
+  }
 
   @Input() isEmail = false;
 
   @Input() isDomain = false;
 
-  @Output() update = new EventEmitter<any>();
+  @Output() update: EventEmitter<any> = new EventEmitter<any>();
 
-  answer: string;
+  public answer: string;
 
-  answerList: Array<any>;
+  private _answerList: Array<any>;
 
-  _placeholder: string;
+  private _placeholder: string = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
-  constructor(private translateNotificationsService: TranslateNotificationsService) {}
+  private _adminMode: boolean = false;
 
-  addProposition(val: string): void {
-    if (this.answerList.findIndex(t => {return t.text === val}) === -1) {
+  private _enableUpdate: boolean = false;
+
+  private _indexNumber: number;
+
+  constructor(private _translateNotificationsService: TranslateNotificationsService) {
+  }
+
+  public addProposition(val: string) {
+
+    if (this._answerList.findIndex(t => { return t.text === val }) === -1) {
       // if we want to test if it's an email
       if (this.isEmail) {
         const testValue = emailRegEx;
+
         if (testValue.test(val)) {
-          this.answerList.push({text: val});
+          this._answerList.push({text: val});
           this.answer = '';
-          this.update.emit({value: this.answerList});
+          this.update.emit({ value: this._answerList });
         } else {
-          this.translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+          this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
         }
+
       } else if (this.isDomain) {
         const testValue = domainRegEx;
+
         if (testValue.test(val)) {
-          this.answerList.push({text: val});
+          this._answerList.push({text: val});
           this.answer = '';
-          this.update.emit({value: this.answerList});
+          this.update.emit({ value: this._answerList });
         } else {
-          this.translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+          this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
         }
+
       } else {
-        this.answerList.push({text: val});
+        this._answerList.push({text: val});
         this.answer = '';
-        this.update.emit({value: this.answerList});
+        this.update.emit({ value: this._answerList });
       }
+
     }
+
   }
 
-  rmProposition(i: number): void {
-    this.answerList.splice(i, 1);
-    this.update.emit({value: this.answerList});
+  public onClickEdit(event: Event, index: number) {
+    event.preventDefault();
+
+    if (this._indexNumber === index) {
+      this._enableUpdate = !this._enableUpdate;
+    } else {
+      this._enableUpdate = true;
+    }
+
+    this._indexNumber = index;
   }
 
-  thumbsUp(event: Event, index: number): void {
+  public updateProposition(event: Event, index: number, value: string) {
+    event.preventDefault();
+    this._answerList[index].text = value;
+    this.update.emit({ value: this._answerList });
+    this._enableUpdate = false;
+    this._indexNumber = null;
+  }
+
+  public removeProposition(index: number): void {
+    this._answerList.splice(index, 1);
+    this.update.emit({ value: this._answerList });
+  }
+
+  public thumbsUp(event: Event, index: number): void {
     event.preventDefault();
     if (this.adminMode) {
-      if (this.answerList[index].rating === 2) {
-        this.answerList[index].rating = 1;
+      if (this._answerList[index].rating === 2) {
+        this._answerList[index].rating = 1;
       } else {
-        this.answerList[index].rating = 2;
+        this._answerList[index].rating = 2;
       }
-      this.update.emit({value: this.answerList});
+      this.update.emit({ value: this._answerList });
     }
   }
 
-  thumbsDown(event: Event, index: number): void {
+  public thumbsDown(event: Event, index: number): void {
     event.preventDefault();
     if (this.adminMode) {
-      if (this.answerList[index].rating === 0) {
-        this.answerList[index].rating = 1;
+      if (this._answerList[index].rating === 0) {
+        this._answerList[index].rating = 1;
       } else {
-        this.answerList[index].rating = 0;
+        this._answerList[index].rating = 0;
       }
-      this.update.emit({value: this.answerList});
+      this.update.emit({ value: this._answerList });
     }
-  }
-
-  updateItem(event: Event): void {
-    event.preventDefault();
-    this.update.emit({value: this.answerList});
   }
 
   get placeholder(): string {
     return this._placeholder;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  get enableUpdate(): boolean {
+    return this._enableUpdate;
+  }
+
+  get indexNumber(): number {
+    return this._indexNumber;
+  }
+
+  get answerList(): Array<any> {
+    return this._answerList;
   }
 
 }

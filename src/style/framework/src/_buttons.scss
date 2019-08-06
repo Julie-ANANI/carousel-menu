@@ -338,6 +338,11 @@
     cursor: not-allowed;
     box-shadow: none;
     opacity: 0.5;
+
+    i {
+      cursor: not-allowed;
+    }
+
   }
 
   &.is-link {
@@ -367,6 +372,10 @@
 
     &.is-shadowed {
       @include button-shadow-variant($primary-color);
+    }
+
+    &.is-no-hover-effect {
+      @include button-no-hover-effect-variant($primary-color);
     }
 
   }
@@ -406,6 +415,10 @@
       @include button-shadow-variant($secondary-color);
     }
 
+    &.is-no-hover-effect {
+      @include button-no-hover-effect-variant($secondary-color);
+    }
+
   }
 
   &.is-info {
@@ -438,6 +451,10 @@
 
     &.is-shadowed {
       @include button-shadow-variant($meta-color);
+    }
+
+    &.is-no-hover-effect {
+      @include button-no-hover-effect-variant($meta-color);
     }
 
   }
@@ -473,6 +490,10 @@
       @include button-shadow-variant($alert-color);
     }
 
+    &.is-no-hover-effect {
+      @include button-no-hover-effect-variant($alert-color);
+    }
+
   }
 
   &.is-draft {
@@ -506,6 +527,10 @@
       @include button-shadow-variant($background-color);
     }
 
+    &.is-no-hover-effect {
+      @include button-no-hover-effect-variant($background-color);
+    }
+
   }
 
   &.is-success {
@@ -537,6 +562,10 @@
 
     &.is-shadowed {
       @include button-shadow-variant($success-color);
+    }
+
+    &.is-no-hover-effect {
+      @include button-no-hover-effect-variant($success-color);
     }
 
   }
