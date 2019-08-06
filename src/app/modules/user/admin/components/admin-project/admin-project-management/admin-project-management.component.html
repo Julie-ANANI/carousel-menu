@@ -264,11 +264,6 @@
 
 
     <div class="project-summary">
-
-      <button (click)="onClickExport()" class="btn btn-sm ghost-primary" type="button">
-        {{ 'COMMON.BUTTON.EXPORT' | translate }}
-      </button>
-
       <div class="completion">
         <h6>Completion</h6>
         <span *ngFor="let innov of project.innovationCards" class="text-center">
@@ -286,6 +281,65 @@
           <label class="form-label">{{'PROJECT.CAMPAIGN.INSIGHTS' | translate}}</label>
           <label>{{currentCampaign?.stats?.campaign?.nbResp || '?'}}</label>
         </span>
+      </div>
+
+      <div class="export">
+        <h5> {{ 'COMMON.BUTTON.EXPORT' | translate }}</h5>
+        {{ 'PROJECT.EXPORT.SELECT_FIELD' | translate }}
+        <div class="form-group">
+          <label class="form-checkbox disabled">
+            <input type="checkbox" checked>
+            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.BASE' | translate }}
+          </label>
+          <label class="form-checkbox"
+                 *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED_NO_MAIL', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']">
+            <input type="checkbox"
+                   [checked]="exportConfig.answers[status]"
+                   (change)="exportConfig.answers[status] = !exportConfig.answers[status]">
+            <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
+          </label>
+
+          <label class="form-checkbox">
+            <input type="checkbox"
+                   [checked]="exportConfig.campaigns"
+                   (change)="onChangeExportCampaigns()">
+            <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
+          </label>
+          <label class="form-radio">
+            <input type="radio"
+                   name="pros"
+                   [value]="!exportConfig.all_pros"
+                   (change)="exportConfig.all_pros = false"
+                   [disabled] = !exportConfig.campaigns>
+            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.ONLY_RESPONDENTS' | translate }}
+          </label>
+          <label class="form-radio">
+            <input type="radio"
+                   name="pros"
+                   [value]="exportConfig.all_pros"
+                   (change)="exportConfig.all_pros = true"
+                   [disabled] = !exportConfig.campaigns>
+            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.ALL_PROS' | translate }}
+          </label>
+          <label class="form-checkbox">
+            <input type="checkbox"
+                   [checked] = exportConfig.batches
+                   (change)="exportConfig.batches = !exportConfig.batches"
+                   [disabled] = !exportConfig.campaigns>
+            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.BATCHES' | translate }}
+          </label>
+          <label class="form-checkbox">
+            <input type="checkbox"
+                   [checked] = exportConfig.requests
+                   (change)="exportConfig.requests = !exportConfig.requests"
+                   [disabled] = !exportConfig.campaigns>
+            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.REQUESTS' | translate }}
+          </label>
+        </div>
+
+        <button (click)="onClickExport()" class="btn btn-sm ghost-primary" type="button">
+          {{ 'COMMON.BUTTON.EXPORT' | translate }}
+        </button>
       </div>
     </div>
   </div>

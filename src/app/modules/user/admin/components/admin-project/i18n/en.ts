@@ -38,6 +38,14 @@ export const PROJECT = {
     'VALIDATE_INSIGHTS': 'Validate insights',
     'INSIGHTS_TO_VALIDATE': 'insights to validate'
   },
+  'EXPORT': {
+    'SELECT_FIELD': 'Select which informations you want to export',
+    'BASE': 'Basic innovation data',
+    'ONLY_RESPONDENTS': 'Only the respondents',
+    'ALL_PROS': 'All the pros',
+    'BATCHES': 'Emails batches',
+    'REQUESTS': 'pros requests'
+  },
   'DELIVERY' : {
     'DELIVERY': 'Delivery',
     'PUBLIC': 'Public project',

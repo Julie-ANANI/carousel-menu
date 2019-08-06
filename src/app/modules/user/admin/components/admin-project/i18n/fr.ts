@@ -13,7 +13,7 @@ export const PROJECT = {
     'FACEBOOK': 'Partager sur Facebook',
     'MAIL': 'Partager par email',
   },
-  'CAMPAIGNS': 'Campaigns',
+  'CAMPAIGNS': 'Campagnes',
   'SETTINGS': 'Réglages',
   'QUESTIONNAIRE': 'Questionnaire',
   'PREPARATION': {
@@ -40,6 +40,14 @@ export const PROJECT = {
     'VALIDATE_INSIGHTS': 'Validation des réponses',
     'INSIGHTS_TO_VALIDATE': 'réponses à valider'
 
+  },
+  'EXPORT': {
+    'SELECT_FIELD': 'Sélectionnez les informations que vous souhaitez exporter',
+    'BASE': 'Informations de base de l\'innovation',
+    'ONLY_RESPONDENTS': 'Seulement les répondants',
+    'ALL_PROS': 'Tous les pros',
+    'BATCHES': 'batchs d\'emails',
+    'REQUESTS': 'requêtes de pros'
   },
   'DELIVERY' : {
     'DELIVERY': 'Livrable',

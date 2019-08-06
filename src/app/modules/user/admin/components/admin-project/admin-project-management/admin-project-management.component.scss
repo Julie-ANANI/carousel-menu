@@ -28,22 +28,25 @@
     font-size: $font-size-md;
 
     div {
-      height: 73px;
       padding-left: 20px;
       padding-right: 20px;
+    }
+
+    .completion, .campaign {
+      height: 73px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+
+      label {
+        color: white;
+      }
     }
 
     h6 {
       font-size: $font-size-md;
       width: 100px;
-      color: white;
-    }
-
-    label {
       color: white;
     }
     .timing, .completion {

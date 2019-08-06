@@ -36,6 +36,14 @@ export const CAMPAIGNS = {
 
   'REJECTED': 'Rejected answers',
 
+  'REJECTED_GMAIL': 'Rejected answers by mail',
+
+  'REJECTED_UMIBOT': 'Automatically rejected answers',
+
+  'VALIDATED_UMIBOT': 'Automatically validated answers',
+
+  'VALIDATED_NO_MAIL': 'Validated answers without mail',
+
   'DELETE_MODAL': {
     'TITLE': 'Are you sure?',
     'CONTENT': 'Are you sure you want to definitively delete this campaign? It may contain professionals that will be removed from the innovation.'
