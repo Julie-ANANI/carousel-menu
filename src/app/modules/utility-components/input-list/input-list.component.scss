@@ -61,29 +61,21 @@
 
       .il-icons-wrapper {
 
-        .il-icon-wrapper {
-          @include inline-flex-centered();
-          width: 35px;
-          height: 35px;
-          position: relative;
-          text-align: center;
+        .icon-container {
           margin-right: $unit-2;
-        }
 
-        .icon-overlay {
+          &.is-overlay {
 
-          &:hover {
+            &:hover {
 
-            &::before {
-              background-color: rgba(0, 0, 0, 0.04);
+              &::before {
+                background-color: rgba(0, 0, 0, 0.04);
+              }
+
             }
 
           }
 
-        }
-
-        .icon, .fa-thumbs-up, .fa-thumbs-down {
-          font-size: $font-icon-md;
         }
 
         .fa-thumbs-up, .fa-thumbs-down {
