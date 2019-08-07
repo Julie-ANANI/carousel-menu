@@ -43,19 +43,6 @@ export class AdminProjectManagementComponent implements OnInit {
   sidebarState = new Subject<string>();
   projectSubject = new Subject<Innovation>();
 
-  private _exportConfig: any = {
-    answers: {
-      SUBMITTED: false,
-      REJECTED: false,
-      VALIDATED_NO_MAIL: true,
-      VALIDATED: true,
-      REJECTED_GMAIL: false,
-      VALIDATED_UMIBOT: false,
-      REJECTED_UMIBOT: false,
-    },
-    campaigns: false
-  };
-
   // Owner edition
   isEditOwner = false;
   usersSuggestion: Array<any> = [];
@@ -704,30 +691,6 @@ export class AdminProjectManagementComponent implements OnInit {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
   }
 
-  public onClickExport() {
-    const params: Array<string> = [];
-    for (let key of Object.keys(this._exportConfig)) {
-      if (key === "answers") {
-        const statusesToExport = [];
-        for (let key of Object.keys(this._exportConfig.answers)) {
-          if (this._exportConfig.answers[key]) {
-            statusesToExport.push(key);
-          }
-        }
-        if (statusesToExport.length) {
-          params.push("answers=" + statusesToExport.join(','));
-        }
-      } else {
-        if (this._exportConfig[key]) {
-          params.push(key + "=true");
-        }
-      }
-    }
-    const urlParams = params.join('&');
-    console.log(urlParams);
-    this._innovationService.export(this._project._id, urlParams);
-  }
-
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
@@ -741,10 +704,6 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get project() {
     return this._project;
-  }
-
-  get exportConfig() {
-    return this._exportConfig;
   }
 
   get availableScenarios(): Array<EmailScenario> { return this._availableScenarios; }

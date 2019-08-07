@@ -283,34 +283,6 @@
         </span>
       </div>
 
-      <div class="export">
-        <h5> {{ 'COMMON.BUTTON.EXPORT' | translate }}</h5>
-        {{ 'PROJECT.EXPORT.SELECT_FIELD' | translate }}
-        <div class="form-group">
-          <label class="form-checkbox disabled">
-            <input type="checkbox" checked>
-            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.BASE' | translate }}
-          </label>
-          <label class="form-checkbox"
-                 *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED_NO_MAIL', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']">
-            <input type="checkbox"
-                   [checked]="exportConfig.answers[status]"
-                   (change)="exportConfig.answers[status] = !exportConfig.answers[status]">
-            <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
-          </label>
-
-          <label class="form-checkbox">
-            <input type="checkbox"
-                   [checked]="exportConfig.campaigns"
-                   (change)="exportConfig.campaigns = !exportConfig.campaigns">
-            <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
-          </label>
-        </div>
-
-        <button (click)="onClickExport()" class="btn btn-sm ghost-primary" type="button">
-          {{ 'COMMON.BUTTON.EXPORT' | translate }}
-        </button>
-      </div>
     </div>
   </div>
 

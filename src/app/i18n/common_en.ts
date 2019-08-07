@@ -136,6 +136,7 @@ export const COMMON = {
     'PRESET_NAME': 'Preset Name',
     'TAG_NAME': 'Tag Name',
     'CREATED': 'Created',
+    'CREATED_ON': 'Created on',
     'COLLABORATORS': 'Collaborators',
   },
 
@@ -208,7 +209,8 @@ export const COMMON = {
     'BACK_TO_CAMPAIGNS': 'Back to campaigns',
     'COLLABORATOR': 'manage collaborators',
     'UPDATE': 'Update',
-    'IMPORT_PROJECT': 'Import project'
+    'IMPORT_PROJECT': 'Import project',
+    'EXPORT_PROJECT': 'Export project'
   },
 
   'PROJECT': {
