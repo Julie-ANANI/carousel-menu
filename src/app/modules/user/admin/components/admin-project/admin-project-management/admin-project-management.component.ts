@@ -53,10 +53,7 @@ export class AdminProjectManagementComponent implements OnInit {
       VALIDATED_UMIBOT: false,
       REJECTED_UMIBOT: false,
     },
-    campaigns: false,
-    all_pros: false,
-    batches: false,
-    requests: false
+    campaigns: false
   };
 
   // Owner edition
@@ -705,15 +702,6 @@ export class AdminProjectManagementComponent implements OnInit {
 
   formatText(text: string) {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
-  }
-
-  public onChangeExportCampaigns() {
-    this._exportConfig.campaigns = ! this._exportConfig.campaigns;
-    if (!this._exportConfig.campaigns) {
-      this._exportConfig.all_pros = false;
-      this._exportConfig.batches = false;
-      this._exportConfig.requests = false;
-    }
   }
 
   public onClickExport() {
