@@ -22,8 +22,12 @@
         font-size: $font-icon-md;
       }
 
-      &:hover {
-        transform: scale(1.08);
+      &:not(:disabled), &:not([disabled]) {
+
+        &:hover {
+          transform: scale(1.08);
+        }
+
       }
 
     }
@@ -61,29 +65,8 @@
 
       .il-icons-wrapper {
 
-        .il-icon-wrapper {
-          @include inline-flex-centered();
-          width: 35px;
-          height: 35px;
-          position: relative;
-          text-align: center;
+        .icon-container {
           margin-right: $unit-2;
-        }
-
-        .icon-overlay {
-
-          &:hover {
-
-            &::before {
-              background-color: rgba(0, 0, 0, 0.04);
-            }
-
-          }
-
-        }
-
-        .icon, .fa-thumbs-up, .fa-thumbs-down {
-          font-size: $font-icon-md;
         }
 
         .fa-thumbs-up, .fa-thumbs-down {

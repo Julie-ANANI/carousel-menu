@@ -14,7 +14,7 @@
           [attr.placeholder]="placeholder | translate">
       </label>
 
-      <button type="submit" class="button is-action is-circled is-primary is-no-hover-effect p-no">
+      <button type="submit" [disabled]="f.form.invalid" class="button is-action is-circled is-primary is-no-hover-effect p-no">
         <i class="icon icon-plus"></i>
       </button>
 
@@ -45,12 +45,12 @@
         <div class="il-icons-wrapper">
 
           <!-- edit icon -->
-          <div
-            [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
-            class="il-icon-wrapper tooltip">
-            <div (click)="onClickEdit($event, i)" class="icon-overlay">
-              <i class="icon icon-edit text-notify"></i>
-            </div>
+          <div class="icon-container is-overlay" (click)="onClickEdit($event, i)">
+            <span
+              [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
+              class="tooltip">
+              <i class="fas fa-pencil-alt text-notify"></i>
+            </span>
           </div>
           <!-- /edit icon -->
 
@@ -58,18 +58,14 @@
           <ng-container *ngIf="adminMode">
 
             <!-- thumbs-up icon -->
-            <div class="il-icon-wrapper">
-              <div (click)="thumbsUp($event, i)" class="icon-overlay">
-                <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
-              </div>
+            <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
+              <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
             </div>
             <!-- /thumbs-up icon -->
 
             <!-- thumbs-down icon -->
-            <div class="il-icon-wrapper">
-              <div (click)="thumbsDown($event, i)" class="icon-overlay">
-                <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
-              </div>
+            <div (click)="thumbsDown($event, i)" class="icon-container is-overlay">
+              <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
             </div>
             <!-- /thumbs-down icon -->
 
@@ -77,12 +73,10 @@
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div
-            [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
-            class="il-icon-wrapper m-no-right tooltip">
-            <div (click)="removeProposition(i)" class="icon-overlay">
+          <div (click)="removeProposition(i)" class="icon-container m-no-right is-overlay">
+            <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
               <i class="icon icon-delete text-alert"></i>
-            </div>
+            </span>
           </div>
           <!-- /delete icon -->
 
