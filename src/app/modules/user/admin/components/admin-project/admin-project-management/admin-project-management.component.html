@@ -302,38 +302,8 @@
           <label class="form-checkbox">
             <input type="checkbox"
                    [checked]="exportConfig.campaigns"
-                   (change)="onChangeExportCampaigns()">
+                   (change)="exportConfig.campaigns = !exportConfig.campaigns">
             <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
-          </label>
-          <label class="form-radio">
-            <input type="radio"
-                   name="pros"
-                   [value]="!exportConfig.all_pros"
-                   (change)="exportConfig.all_pros = false"
-                   [disabled] = !exportConfig.campaigns>
-            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.ONLY_RESPONDENTS' | translate }}
-          </label>
-          <label class="form-radio">
-            <input type="radio"
-                   name="pros"
-                   [value]="exportConfig.all_pros"
-                   (change)="exportConfig.all_pros = true"
-                   [disabled] = !exportConfig.campaigns>
-            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.ALL_PROS' | translate }}
-          </label>
-          <label class="form-checkbox">
-            <input type="checkbox"
-                   [checked] = exportConfig.batches
-                   (change)="exportConfig.batches = !exportConfig.batches"
-                   [disabled] = !exportConfig.campaigns>
-            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.BATCHES' | translate }}
-          </label>
-          <label class="form-checkbox">
-            <input type="checkbox"
-                   [checked] = exportConfig.requests
-                   (change)="exportConfig.requests = !exportConfig.requests"
-                   [disabled] = !exportConfig.campaigns>
-            <i class="form-icon"></i> {{ 'PROJECT.EXPORT.REQUESTS' | translate }}
           </label>
         </div>
 
