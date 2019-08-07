@@ -22,8 +22,12 @@
         font-size: $font-icon-md;
       }
 
-      &:hover {
-        transform: scale(1.08);
+      &:not(:disabled), &:not([disabled]) {
+
+        &:hover {
+          transform: scale(1.08);
+        }
+
       }
 
     }
@@ -63,19 +67,6 @@
 
         .icon-container {
           margin-right: $unit-2;
-
-          &.is-overlay {
-
-            &:hover {
-
-              &::before {
-                background-color: rgba(0, 0, 0, 0.04);
-              }
-
-            }
-
-          }
-
         }
 
         .fa-thumbs-up, .fa-thumbs-down {

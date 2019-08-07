@@ -14,7 +14,7 @@
           [attr.placeholder]="placeholder | translate">
       </label>
 
-      <button type="submit" class="button is-action is-circled is-primary is-no-hover-effect p-no">
+      <button type="submit" [disabled]="f.form.invalid" class="button is-action is-circled is-primary is-no-hover-effect p-no">
         <i class="icon icon-plus"></i>
       </button>
 
