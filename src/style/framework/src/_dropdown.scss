@@ -39,14 +39,6 @@
 
   .dropdown-toggle.button {
 
-    &.is-outlined {
-
-      &:hover {
-        background-color: $hover-background-color;
-      }
-
-    }
-
     &.is-link {
       text-decoration: none;
       padding-left: 0;
