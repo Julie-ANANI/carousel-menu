@@ -5,7 +5,7 @@ export const ERROR = {
 
   'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment.',
 
-  'OPERATION_ERROR': 'Nous sommes confrontés à des problèmes techniques. Veuillez réessayer !',
+  'OPERATION_ERROR': 'Il y a eu quelques problèmes techniques pour donner suite à cette demande. Veuillez réessayer.',
 
   'FORM_ERROR': 'Erreur de formulaire',
 
@@ -15,7 +15,7 @@ export const ERROR = {
 
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur.',
 
-  'RELOAD_PAGE': 'Veuillez essayer de rafraîchir la page !',
+  'RELOAD_PAGE': 'Veuillez recharger la page et réessayer.',
 
   'NO_CONNECTION': 'Il semble que vous n\'êtes pas connecté.',
 
@@ -169,7 +169,9 @@ export const ERROR = {
     'PROJECT_ERROR': 'Cela peut être parce que vous essayez d\'accéder au projet qui n\'existe pas ou à cause d\'un problème de connexion au serveur ou une mauvaise URL.',
     'FETCHING': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être dû à un problème de connexion au serveur.',
     'FETCHING_CAMPAIGN_ANSWERS': 'Nous rencontrons des problèmes lors de la récupération des réponses pour cette campagne.',
-    'PROJECT_FETCHING_ERROR': 'Cela peut être dû à un problème de connexion au serveur ou au fait que nous n\'avons pas trouvé l\'innovation que vous recherchez.'
+    'PROJECT_FETCHING_ERROR': 'Cela peut être dû à un problème de connexion au serveur ou au fait que nous n\'avons pas trouvé l\'innovation que vous recherchez.',
+    'HEADING_1': 'Oups.. Quelque chose s\'est mal passé.',
+    'FETCHING_MESSAGE_1': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être possible à cause d\'un problème de connexion au serveur.'
   },
 
 
@@ -188,6 +190,5 @@ export const ERROR = {
   'PROFESSIONAL': {
     'MERGE_ERROR': 'Un profesionnel avec cette adresse e-mail existe déjà. Essayez de merger à la main les deux profesionnels.<br>Demandez l\'équipe tech pour plus d\'info',
   }
-
 
 };

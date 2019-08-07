@@ -107,7 +107,8 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   public onClickImport(file: File) {
-    this._innovationService.import(file).pipe(first()).subscribe((res: any) => {
+    this._innovationService.import(file).pipe(first()).subscribe(() => {
+      this._getProjects();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');

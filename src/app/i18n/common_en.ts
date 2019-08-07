@@ -207,7 +207,8 @@ export const COMMON = {
     'VIEW_LIKE_CLIENT': 'View like client',
     'BACK_TO_CAMPAIGNS': 'Back to campaigns',
     'COLLABORATOR': 'manage collaborators',
-    'UPDATE': 'Update'
+    'UPDATE': 'Update',
+    'IMPORT_PROJECT': 'Import project'
   },
 
   'PROJECT': {
