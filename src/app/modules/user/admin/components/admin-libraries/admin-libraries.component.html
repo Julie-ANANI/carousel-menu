@@ -1,31 +1,72 @@
-<section class="section-light-pad rm-pad-top" id="admin-libraries-component">
+<section id="admin-libraries" class="section-light-pad rm-pad-top">
 
-  <!-- header section -->
-  <div class="section-header">
+  <!-- header -->
+  <div class="header-wrapper bg-white p-top-25">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
-      <!-- heading -->
-      <h1 class="title-secondary">Libraries</h1>
+      <!-- heading and action button -->
+      <div class="flex-between flex-wrap m-bottom-15">
+
+        <!-- heading -->
+        <h4 [innerText]="'Libraries'" class="text-background m-bottom-10"></h4>
+
+        <!-- action button -->
+        <div *ngIf="options.length > 0" class="dropdown is-right m-bottom-10">
+
+          <a class="button is-danger is-outlined dropdown-toggle" tabindex="0">
+            Actions <i class="icon icon-caret icon-right"></i>
+          </a>
+
+          <ul class="menu is-md">
+            <ng-container *ngFor="let option of options">
+
+              <ng-container *ngIf="option.functionality === 'import'">
+                <li class="menu-item">
+                  <label class="fullspace c-hand">
+                    <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0], option)" />
+                    {{ option.optionName | translate }}
+                  </label>
+                </li>
+              </ng-container>
+
+              <ng-container *ngIf="option.functionality === 'export'">
+                <li class="menu-item" (click)="onClickExport($event, option)">
+                  {{ option.optionName | translate }}
+                </li>
+              </ng-container>
+
+            </ng-container>
+          </ul>
+
+        </div>
+        <!-- /action button -->
+
+      </div>
+      <!-- /heading and action button -->
 
       <!-- tabs -->
       <ul class="tab">
         <li *ngFor="let tab of tabs" class="tab-item">
-          <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLink]="tab"
+            routerLinkActive="active">
             {{ tab | translate | FormatText }}
           </a>
         </li>
       </ul>
+      <!-- /tabs -->
 
     </div>
   </div>
-  <!-- header section -->
+  <!-- /header -->
 
-  <!-- other sections -->
-  <div class="section-light-pad rm-pad-bottom">
+  <!-- different pages -->
+  <div class="p-top-25">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <router-outlet></router-outlet>
     </div>
   </div>
-  <!-- /other sections -->
+  <!-- /different pages -->
 
 </section>
