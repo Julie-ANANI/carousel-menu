@@ -30,7 +30,7 @@
 }
 
 // Text link variant
-@mixin text-link-variant($color: $primary-color) {
+@mixin text-link-variant($color: $text-warning-color) {
   font-weight: $font-weight-medium;
   font-size: inherit;
   color: $color;

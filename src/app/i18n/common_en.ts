@@ -210,7 +210,11 @@ export const COMMON = {
     'COLLABORATOR': 'manage collaborators',
     'UPDATE': 'Update',
     'IMPORT_PROJECT': 'Import project',
-    'EXPORT_PROJECT': 'Export project'
+    'EXPORT_PROJECT': 'Export project',
+    'IMPORT_WORKFLOW': 'Import workflow',
+    'EXPORT_WORKFLOW': 'Export workflow',
+    'IMPORT_QUESTIONNAIRE': 'Import questionnaire',
+    'EXPORT_QUESTIONNAIRE': 'Export questionnaire',
   },
 
   'PROJECT': {

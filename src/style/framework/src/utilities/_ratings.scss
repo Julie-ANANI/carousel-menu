@@ -23,7 +23,7 @@
       overflow: hidden;
       white-space: nowrap;
       cursor: pointer;
-      color: $primary-color;
+      color: $text-warning-color;
       font-weight: 400;
 
       &:before {
@@ -31,7 +31,7 @@
       }
 
       &:hover, &:hover ~ label {
-        color: $primary-color;
+        color: $text-warning-color;
         font-weight: 900;
       }
 

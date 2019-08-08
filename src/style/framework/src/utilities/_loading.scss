@@ -9,7 +9,7 @@
 
   &::after {
     animation: loading 500ms infinite linear;
-    border: $border-width-lg solid $primary-color;
+    border: $border-width-lg solid $border-primary-color;
     border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
@@ -40,8 +40,8 @@
   &.is-white {
 
     &::after {
-      border-bottom-color: $light-color;
-      border-left-color: $light-color;
+      border-bottom-color: $border-white-color;
+      border-left-color: $border-white-color;
     }
 
   }
@@ -60,7 +60,7 @@
     display: block;
     content: "";
     height: 4px;
-    background-color: $primary-color;
+    background-color: $bg-primary-color;
     width: 0;
     border-radius: 25px;
     animation: loader 3s infinite ease;

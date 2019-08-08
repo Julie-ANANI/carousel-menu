@@ -21,9 +21,8 @@ export class PresetService {
     return this._http.get('/preset/', {params: config});
   }
 
-  public export(): void {
-    const url = environment.apiUrl + '/preset/';
-    window.open(url);
+  public export(): string {
+    return environment.apiUrl + '/preset/';
   }
 
   public import(file:File): Observable<any> {

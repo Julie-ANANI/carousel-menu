@@ -1,6 +1,6 @@
 @import "../variables";
 
-@mixin avatar-variant($color: $text-background-color, $bg-color: $border-color) {
+@mixin avatar-variant($color: $text-background-color, $bg-color: $bg-border-color) {
   background: $bg-color;
   color: $color;
 }

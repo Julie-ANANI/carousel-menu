@@ -12,8 +12,8 @@
   width: 100%;
 
   .bar-item {
-    background: $primary-color;
-    color: $light-color;
+    background: $bg-primary-color;
+    color: $text-white-color;
     display: block;
     font-size: $font-size-sm;
     flex-shrink: 0;
@@ -65,7 +65,7 @@
   }
 
   .bar-slider-button {
-    background: $primary-color;
+    background: $bg-primary-color;
     border: 0;
     border-radius: 50%;
     height: $unit-3;
@@ -152,7 +152,7 @@
       position: absolute;
       bottom: 3rem;
       width: 1.5rem;
-      color: $light-color;
+      color: $text-white-color;
       text-align: center;
       font-weight: $font-weight-bold;
       font-size: $font-size-lg;

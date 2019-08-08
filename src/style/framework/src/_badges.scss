@@ -7,10 +7,10 @@
   &[data-badge], &:not([data-badge]) {
 
     &::after {
-      background: $primary-color;
+      background: $bg-primary-color;
       background-clip: padding-box;
       border-radius: .5rem;
-      color: $light-color;
+      color: $text-white-color;
       content: attr(data-badge);
       display: inline-block;
       transform: translate(-.1rem, -.5rem);
@@ -109,26 +109,31 @@
       right: 0;
       margin: 0;
       font-size: $font-icon-sm;
-      background: $border-color;
+      background: $bg-border-color;
       color: $light-color;
       transform: translate(50%, -50%);
     }
 
     &.is-active {
-      border-color: $success-color;
-      background-color: $bg-color-light;
+      border-color: $border-success-color;
+      background-color: $bg-light-color;
       color: $text-primary-dark-color;
 
       i {
         display: inline-flex;
-        background: $success-color;
+        background: $bg-success-color;
       }
 
     }
 
   }
 
-  // Badges for save Todo remove this
+
+
+
+
+  // Todo remove this
+  // Badges for save
   &.badge-save {
     white-space: normal;
 
@@ -147,10 +152,10 @@
       top: 0;
       right: 0;
       margin: 0;
-      background: $meta-color;
-      color: $light-color;
+      background: $bg-meta-color;
+      color: $text-white-color;
       transform: translate(50%, -50%);
-      box-shadow: 0 0 0 .1rem $bg-color-light;
+      box-shadow: 0 0 0 .1rem $border-white-color;
     }
 
     &.inactive {
@@ -162,14 +167,14 @@
     }
 
     &.active {
-      background-color: $bg-color-light;
-      border-color: $success-color;
+      background-color: $bg-light-color;
+      border-color: $border-success-color;
       color: $text-primary-dark-color;
       border-width: $border-width-lg;
 
       i {
         display: inline-flex;
-        background: $success-color;
+        background: $bg-success-color;
       }
 
       &:hover {
