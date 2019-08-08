@@ -610,12 +610,28 @@
     height: 1.5rem;
 
     i {
-      font-size: $font-size-xs;
+      font-size: $font-icon-sm;
     }
 
     &.is-circled {
       padding-left: 1px;
       padding-right: 1px;
+    }
+
+  }
+
+  &.is-md {
+    height: 2.5rem;
+    padding-left: $unit-8;
+    padding-right: $unit-8;
+
+    i {
+      font-size: $font-icon-md;
+    }
+
+    &.is-circled {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
 
   }
@@ -627,7 +643,7 @@
     font-size: $font-size;
 
     i {
-      font-size: $font-size;
+      font-size: $font-icon-lg;
     }
 
     &.is-circled {

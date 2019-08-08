@@ -2,12 +2,7 @@
 
 #admin-project {
 
-  .a-p-error-wrapper {
-    min-height: 75vh;
-  }
-
-  .a-p-header {
-    background-color: $bg-color-light;
+  .header-wrapper {
     border-bottom: $border-width solid $border-color;
   }
 

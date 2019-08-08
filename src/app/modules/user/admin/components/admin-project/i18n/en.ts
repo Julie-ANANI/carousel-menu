@@ -1,29 +1,23 @@
 export const PROJECT = {
-  'PATENTED': 'Patent protected',
-  'CONTACT_PROJECT_MANAGER': 'Contact the project manager',
-  'SOLUTION': 'Solution',
-  'PROJECT': 'Project',
-  'ISSUE': 'Issue',
-  'MARKET_BENEFITS': 'Market benefits',
-  'GALLERY': 'Gallery',
-  'SHARE': {
-    'TITLE': 'Share',
-    'LINKEDIN': 'Share on LinkedIn',
-    'TWITTER': 'Share on Twitter',
-    'FACEBOOK': 'Share on Facebook',
-    'MAIL': 'Share by email',
+
+  'DROPDOWN_MENU': {
+    'OPTION_A': 'Export project'
   },
-  'SETTINGS': 'Settings',
+
+  'MODAL': {
+    'SELECT_FIELD': 'Select the information to export',
+    'BASE': 'Basic innovation data',
+  },
+
+  'EXPORT': {
+    'ONLY_RESPONDENTS': 'Only the respondents',
+    'ALL_PROS': 'All the pros',
+    'BATCHES': 'Emails batches',
+    'REQUESTS': 'pros requests'
+  },
+
   'CAMPAIGNS': 'Campaigns',
-  'PREPARATION': {
-    'CHOOSE_PRESET': 'Choose questionnaire',
-    'EDIT_PRESET': 'Edit questionnaire',
-    'EDIT_DESCRIPTION': 'Edit project description',
-    'DESCRIPTION_TRANSLATION': 'Description translation',
-    'EDIT_MARKET_TARGETING': 'Edit market targeting',
-    'BLACKLIST_DOMAINS_EMAILS': 'Blacklist Emails / Domains',
-    'UPDATE_STATUS': 'Update status'
-  },
+
   'CAMPAIGN': {
     'CAMPAIGN': 'Campaign',
     'INSIGHTS': 'Insights',
@@ -38,14 +32,32 @@ export const PROJECT = {
     'VALIDATE_INSIGHTS': 'Validate insights',
     'INSIGHTS_TO_VALIDATE': 'insights to validate'
   },
-  'EXPORT': {
-    'SELECT_FIELD': 'Select which informations you want to export',
-    'BASE': 'Basic innovation data',
-    'ONLY_RESPONDENTS': 'Only the respondents',
-    'ALL_PROS': 'All the pros',
-    'BATCHES': 'Emails batches',
-    'REQUESTS': 'pros requests'
+
+  'SOLUTION': 'Solution',
+  'PROJECT': 'Project',
+  'ISSUE': 'Issue',
+  'MARKET_BENEFITS': 'Market benefits',
+  'GALLERY': 'Gallery',
+  'SHARE': {
+    'TITLE': 'Share',
+    'LINKEDIN': 'Share on LinkedIn',
+    'TWITTER': 'Share on Twitter',
+    'FACEBOOK': 'Share on Facebook',
+    'MAIL': 'Share by email',
   },
+  'SETTINGS': 'Settings',
+
+  'PREPARATION': {
+    'CHOOSE_PRESET': 'Choose questionnaire',
+    'EDIT_PRESET': 'Edit questionnaire',
+    'EDIT_DESCRIPTION': 'Edit project description',
+    'DESCRIPTION_TRANSLATION': 'Description translation',
+    'EDIT_MARKET_TARGETING': 'Edit market targeting',
+    'BLACKLIST_DOMAINS_EMAILS': 'Blacklist Emails / Domains',
+    'UPDATE_STATUS': 'Update status'
+  },
+
+
   'DELIVERY' : {
     'DELIVERY': 'Delivery',
     'PUBLIC': 'Public project',

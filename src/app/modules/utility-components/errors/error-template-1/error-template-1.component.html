@@ -1,14 +1,14 @@
 <section id="error-template-1" class="text-md text-normal">
   <div class="flex-between flex-wrap">
 
-    <div class="message-wrapper text-background m-left-auto m-right-auto">
+    <div class="et1-message-wrapper text-background m-right-auto p-bottom-20">
       <h4 [innerText]="errorMessage" class="title is-3 text-background is-spaced" translate></h4>
       <ng-content></ng-content>
-      <p [innerText]="'ERROR.RELOAD_PAGE'" class="m-top-10 text-normal" translate></p>
+      <p [innerText]="'ERROR.RELOAD_PAGE'" translate></p>
     </div>
 
-    <div class="bot-wrapper m-left-auto m-right-auto">
-      <img [src]="defaultSrc" class="img-responsive" alt=" ">
+    <div class="m-left-auto m-right-auto p-bottom-20">
+      <img [src]="defaultSrc" class="img-responsive" alt=" " style="height: 250px">
     </div>
 
   </div>

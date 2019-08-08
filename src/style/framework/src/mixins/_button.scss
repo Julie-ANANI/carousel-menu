@@ -50,19 +50,27 @@
 @mixin button-outline-variant($color: $primary-color) {
   color: $color;
   border-color: $color;
-  border-width: $border-width-lg;
   background-color: transparent;
-
-  &:hover {
-    border-color: lighten($color, 15%);
-    background-color: transparent;
-  }
 
   &:focus, &.is-active, &:active  {
     color: $color;
     border-color: $color;
-    border-width: $border-width-lg;
-    background-color: transparent;
+  }
+
+  &:hover, &:focus, &.is-active, &:active {
+
+    @if $color == $primary-color {
+      background-color: $hover-background-color;
+    }
+
+    @if $color == $secondary-color {
+      background-color: lighten($color, 53%);
+    }
+
+    @if $color == $alert-color {
+      background-color: lighten($color, 34%);
+    }
+
   }
 
   &[disabled], &:disabled, &.disabled {
@@ -109,10 +117,6 @@
   border-color: $color;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
-
-  i {
-    font-size: $font-icon-sm;
-  }
 
   &:focus, &.is-active, &:active  {
     color: $light-color;

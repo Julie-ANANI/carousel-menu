@@ -2,21 +2,8 @@
 
 #error-template-1 {
 
-  .message-wrapper, .bot-wrapper {
-    padding-bottom: $unit-5;
-  }
-
-  .message-wrapper {
+  .et1-message-wrapper {
     max-width: 75%;
-  }
-
-
-  .bot-wrapper {
-
-    img {
-      height: 200px;
-    }
-
   }
 
 }
@@ -25,21 +12,9 @@
 
   #error-template-1 {
 
-    .message-wrapper {
+    .et1-message-wrapper {
       order: 2;
       max-width: 100%;
-    }
-
-  }
-
-}
-
-@media (min-width: $size-xl) {
-
-  #error-template-1 {
-
-    .message-wrapper {
-      max-width: 50%;
     }
 
   }
