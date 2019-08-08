@@ -208,7 +208,7 @@ export const COMMON = {
     'BACK_TO_CAMPAIGNS': 'Retour aux campagnes',
     'COLLABORATOR': 'Gestion des collaborateurs',
     'UPDATE': 'Mise à jour',
-    'IMPORT_PROJECT': 'Importer le projet',
+    'IMPORT_PROJECT': 'Importer un projet',
     'EXPORT_PROJECT': 'Exporter le project'
   },
 

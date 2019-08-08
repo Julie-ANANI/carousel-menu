@@ -172,7 +172,7 @@ export const ERROR = {
     'PROJECT_FETCHING_ERROR': 'Cela peut être dû à un problème de connexion au serveur ou au fait que nous n\'avons pas trouvé l\'innovation que vous recherchez.',
     'HEADING_1': 'Oups.. Quelque chose s\'est mal passé.',
     'FETCHING_MESSAGE_1': 'Nous rencontrons des problèmes lors de la récupération des données.',
-    'SERVER_CONNECTION': 'Cela pourrait être possible à cause d\'un problème de connexion au serveur.'
+    'SERVER_CONNECTION': 'Cela pourrait être à cause d\'un problème de connexion au serveur.'
   },
 
 
