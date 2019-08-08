@@ -19,9 +19,14 @@
       padding: 0.5rem 1.1rem;
       width: 100%;
 
-      & > a {
+      & > a, .fullspace {
         margin: -0.5rem -1.1rem;
         padding: 0.5rem 1.1rem;
+      }
+
+      .fullspace {
+        display: block;
+        cursor: pointer;
       }
 
     }
