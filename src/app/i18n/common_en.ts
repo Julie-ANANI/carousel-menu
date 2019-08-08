@@ -212,9 +212,9 @@ export const COMMON = {
     'IMPORT_PROJECT': 'Import project',
     'EXPORT_PROJECT': 'Export project',
     'IMPORT_WORKFLOW': 'Import workflow',
-    'EXPORT_WORKFLOW': 'Export workflow',
+    'EXPORT_WORKFLOW': 'Export all the workflows',
     'IMPORT_QUESTIONNAIRE': 'Import questionnaire',
-    'EXPORT_QUESTIONNAIRE': 'Export questionnaire',
+    'EXPORT_QUESTIONNAIRE': 'Export all the questionnaires',
   },
 
   'PROJECT': {
