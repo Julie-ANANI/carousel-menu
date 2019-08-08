@@ -2,18 +2,20 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="restrict-width">
 
-      <!-- fetching error -->
-      <ng-container *ngIf="fetchingError">
-        <div class="a-p-error-wrapper d-flex align-center">
+      <!-- error -->
+      <section *ngIf="fetchingError">
+        <div class="error-wrapper d-flex align-center">
           <app-error-template-1 [errorMessage]="'ERROR.ERRORS.HEADING_1'" style="width: 100%">
-            <h5 class="subtitle text-background">{{ 'ERROR.ERRORS.FETCHING_MESSAGE_1' | translate }} {{ 'ERROR.ERRORS.SERVER_CONNECTION' | translate }}</h5>
+            <h5 class="subtitle text-background">
+              {{ 'ERROR.ERRORS.FETCHING_MESSAGE_1' | translate }} {{ 'ERROR.ERRORS.SERVER_CONNECTION' | translate }}
+            </h5>
           </app-error-template-1>
         </div>
-      </ng-container>
-      <!-- /fetching error -->
+      </section>
+      <!-- /error -->
 
-      <!-- no fetching error -->
-      <ng-container *ngIf="!fetchingError">
+      <!-- no error -->
+      <section *ngIf="!fetchingError">
 
         <!-- import button -->
         <div class="text-right p-bottom-25">
@@ -24,10 +26,14 @@
         </div>
 
         <!-- projects table -->
-        <app-shared-table [(config)]="config" [data]="table" (editRow)="navigate($event)"></app-shared-table>
+        <app-shared-table
+          [(config)]="config"
+          [data]="table"
+          (editRow)="navigate($event)">
+        </app-shared-table>
 
-      </ng-container>
-      <!-- /no fetching error -->
+      </section>
+      <!-- /no error -->
 
     </div>
   </div>

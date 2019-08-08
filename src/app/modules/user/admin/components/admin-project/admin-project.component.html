@@ -1,7 +1,7 @@
 <section id="admin-project" class="container fluid">
 
   <!-- error -->
-  <div *ngIf="fetchingError" class="section-light-pad">
+  <section *ngIf="fetchingError" class="section-light-pad">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <div class="restrict-width">
         <div class="d-flex align-center" style="min-height: 75vh">
@@ -13,14 +13,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <!-- /error -->
 
   <!-- no error -->
-  <div *ngIf="!fetchingError && project">
+  <section *ngIf="!fetchingError && project">
 
     <!-- header -->
-    <div class="a-p-header bg-white p-top-25">
+    <div class="header-wrapper bg-white p-top-25">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- title, link button and action button -->
@@ -94,13 +94,13 @@
     </div>
     <!-- /header -->
 
-    <!-- sections -->
-    <section>
+    <!-- different pages -->
+    <div>
       <router-outlet></router-outlet>
-    </section>
-    <!-- /sections -->
+    </div>
+    <!-- /different pages -->
 
-  </div>
+  </section>
   <!-- /no error -->
 
 </section>

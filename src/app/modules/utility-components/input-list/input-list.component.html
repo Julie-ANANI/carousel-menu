@@ -2,19 +2,22 @@
   <form #f="ngForm" (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)" novalidate>
 
     <!-- input area -->
-    <div class="flex-between il-input-form">
+    <div class="input-wrapper">
 
       <label class="m-right-2">
         <input
-          type="text"
+          [(ngModel)]="answer"
+          [attr.placeholder]="placeholder | translate"
           class="form-input"
           name="answers"
-          [(ngModel)]="answer"
           required
-          [attr.placeholder]="placeholder | translate">
+          type="text">
       </label>
 
-      <button type="submit" [disabled]="f.form.invalid" class="button is-action is-circled is-primary is-no-hover-effect p-no">
+      <button
+        [disabled]="f.form.invalid"
+        class="button is-action is-circled is-primary is-no-hover-effect p-no"
+        type="submit">
         <i class="icon icon-plus"></i>
       </button>
 
@@ -22,65 +25,65 @@
     <!-- /input area -->
 
     <!-- answers area -->
-    <ul class="il-answer-wrapper">
-      <li *ngFor="let answer of answerList; let i = index" class="flex-between">
+    <ul class="answers-wrapper">
+      <li *ngFor="let answer of answerList; let i = index">
 
-        <div class="il-answer text-sm text-primary-dark m-right-2">
+        <!-- text -->
+        <div class="answer-wrapper text-sm text-primary-dark m-right-2">
 
           <span *ngIf="!(enableUpdate && i === indexNumber)">{{ answer.text }}</span>
 
           <label *ngIf="enableUpdate && i === indexNumber">
             <input
-              autocomplete="off"
-              type="text"
-              class="form-input is-sm"
+              #updateAnswer
+              (keyup.enter)="updateProposition($event, i, updateAnswer.value)"
               [name]="'text' + [i]"
               [ngModel]="answerList[i].text"
-              #updateAnswer
-              (keyup.enter)="updateProposition($event, i, updateAnswer.value)">
+              autocomplete="off"
+              class="form-input is-sm"
+              type="text">
           </label>
 
         </div>
+        <!-- /text -->
 
-        <div class="il-icons-wrapper">
+        <!-- icons -->
+        <div class="icons-wrapper">
 
           <!-- edit icon -->
-          <div class="icon-container is-overlay" (click)="onClickEdit($event, i)">
+          <div class="icon-wrapper is-overlay" (click)="onClickEdit($event, i)">
             <span
               [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
               class="tooltip">
               <i class="fas fa-pencil-alt text-notify"></i>
             </span>
           </div>
-          <!-- /edit icon -->
 
           <!-- if admin mode -->
-          <ng-container *ngIf="adminMode">
+          <div *ngIf="adminMode">
 
             <!-- thumbs-up icon -->
-            <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
+            <div (click)="thumbsUp($event, i)" class="icon-wrapper is-overlay">
               <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
             </div>
-            <!-- /thumbs-up icon -->
 
             <!-- thumbs-down icon -->
-            <div (click)="thumbsDown($event, i)" class="icon-container is-overlay">
+            <div (click)="thumbsDown($event, i)" class="icon-wrapper is-overlay">
               <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
             </div>
-            <!-- /thumbs-down icon -->
 
-          </ng-container>
+          </div>
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div (click)="removeProposition(i)" class="icon-container m-no-right is-overlay">
+          <div (click)="removeProposition(i)" class="icon-wrapper m-no-right is-overlay">
             <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
               <i class="icon icon-delete text-alert"></i>
             </span>
           </div>
-          <!-- /delete icon -->
 
         </div>
+        <!-- /icons -->
 
       </li>
     </ul>

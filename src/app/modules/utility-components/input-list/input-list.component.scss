@@ -3,7 +3,8 @@
 
 #input-list {
 
-  .il-input-form {
+  .input-wrapper {
+    @include flex-between();
 
     label {
       width: 80%;
@@ -34,12 +35,13 @@
 
   }
 
-  .il-answer-wrapper {
+  .answers-wrapper {
     margin: 1rem 0 0 0;
     list-style: none;
 
     li {
       @include control-transition();
+      @include flex-between();
       margin-top: 0.5rem;
       border-radius: $border-radius;
       background-color: #F8F4F4;
@@ -49,12 +51,12 @@
         margin-top: 0;
       }
 
-      .il-answer, .il-icons-wrapper {
+      .answer-wrapper, .icons-wrapper {
         display: flex;
         align-items: center;
       }
 
-      .il-answer {
+      .answer-wrapper {
         width: 100%;
 
         label {
@@ -63,9 +65,9 @@
 
       }
 
-      .il-icons-wrapper {
+      .icons-wrapper {
 
-        .icon-container {
+        .icon-wrapper {
           margin-right: $unit-2;
         }
 
