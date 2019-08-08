@@ -4,6 +4,7 @@ import { NavigationCancel, NavigationEnd, Router } from '@angular/router';
 import { PresetService } from '../../../../../services/preset/preset.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TemplatesService } from '../../../../../services/templates/templates.service';
 
 interface ActionOption {
   functionality: string;
@@ -26,7 +27,8 @@ export class AdminLibrariesComponent {
   constructor(private _translateTitleService: TranslateTitleService,
               private _router: Router,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _presetService: PresetService,) {
+              private _presetService: PresetService,
+              private _templateService: TemplatesService) {
 
     this._translateTitleService.setTitle('Libraries');
 
@@ -73,6 +75,7 @@ export class AdminLibrariesComponent {
         break;
 
       case 'workflows':
+        this._importWorkflow(file);
         break;
 
     }
@@ -80,6 +83,15 @@ export class AdminLibrariesComponent {
 
   private _importPreset(file: File) {
     this._presetService.import(file).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+      document.location.reload();
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  private _importWorkflow(file: File) {
+    this._templateService.import(file).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
       document.location.reload();
     }, () => {

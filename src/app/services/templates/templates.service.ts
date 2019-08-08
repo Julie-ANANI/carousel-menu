@@ -66,4 +66,11 @@ export class TemplatesService {
   public saveEmail(emailObj: any): Observable<any> {
     return this._http.put('/emailtemplate/' + emailObj._id, emailObj);
   }
+
+  public import(file:File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, "import_template");
+    return this._http.post('/template/import/', formData);
+  }
+
 }
