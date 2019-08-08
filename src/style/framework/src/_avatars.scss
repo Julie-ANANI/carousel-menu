@@ -4,7 +4,7 @@
 .avatar {
   @include inline-flex-centered();
   @include avatar-base();
-  @include avatar-variant(rgba($light-color, .85), $border-color);
+  @include avatar-variant(rgba($text-white-color, .85), $bg-border-color);
   border-radius: 50%;
   font-weight: 300;
   line-height: 1.25;
@@ -21,7 +21,7 @@
   }
 
   .avatar-icon, .avatar-presence {
-    background: $bg-color-light;
+    background: $bg-light-color;
     bottom: 14.64%;
     height: 50%;
     padding: $border-width-lg;
@@ -34,21 +34,21 @@
 
   .avatar-presence {
     background: $meta-color;
-    box-shadow: 0 0 0 $border-width-lg $light-color;
+    box-shadow: 0 0 0 $border-width-lg $border-white-color;
     border-radius: 50%;
     height: .5em;
     width: .5em;
 
     &.is-online {
-      background: $success-color;
+      background: $bg-success-color;
     }
 
     &.is-busy {
-      background: $alert-color;
+      background: $bg-alert-color;
     }
 
     &.is-away {
-      background: $primary-color;
+      background: $bg-primary-color;
     }
 
   }

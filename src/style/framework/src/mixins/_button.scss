@@ -1,7 +1,7 @@
 @import "../variables";
 
-@mixin button-default-variant($color: $primary-color) {
-  color: $light-color;
+@mixin button-default-variant($color: $bg-primary-color) {
+  color: $text-white-color;
   background-color: $color;
   border-color: $color;
 
@@ -11,7 +11,7 @@
   }
 
   &:focus, &.is-active, &:active  {
-    color: $light-color;
+    color: $text-white-color;
     background-color: $color;
     border-color: $color;
   }
@@ -26,13 +26,13 @@
 
 }
 
-@mixin button-no-hover-effect-variant($color: $primary-color) {
-  color: $light-color;
+@mixin button-no-hover-effect-variant($color: $bg-primary-color) {
+  color: $text-white-color;
   background-color: $color;
   border-color: $color;
 
   &:hover, &:focus, &.is-active, &:active {
-    color: $light-color;
+    color: $text-white-color;
     background-color: $color;
     border-color: $color;
   }
@@ -47,7 +47,7 @@
 
 }
 
-@mixin button-outline-variant($color: $primary-color) {
+@mixin button-outline-variant($color: $bg-primary-color) {
   color: $color;
   border-color: $color;
   background-color: transparent;
@@ -83,7 +83,7 @@
 
 }
 
-@mixin button-link-variant($color: $primary-color) {
+@mixin button-link-variant($color: $bg-primary-color) {
   color: $color;
   border: none;
   background-color: transparent;
@@ -111,15 +111,15 @@
 
 }
 
-@mixin button-default-action-variant($color: $primary-color) {
-  color: $light-color;
+@mixin button-default-action-variant($color: $bg-primary-color) {
+  color: $text-white-color;
   background-color: $color;
   border-color: $color;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 
   &:focus, &.is-active, &:active  {
-    color: $light-color;
+    color: $text-white-color;
     background-color: $color;
     border-color: $color;
   }
@@ -139,7 +139,7 @@
 
 }
 
-@mixin button-loading-variant($color: $light-color) {
+@mixin button-loading-variant($color: $bg-light-color) {
   min-width: 4.25rem;
 
   &:after {
@@ -149,13 +149,13 @@
 
 }
 
-@mixin button-shadow-variant($color: $primary-color) {
-  color: $light-color;
+@mixin button-shadow-variant($color: $bg-primary-color) {
+  color: $text-white-color;
   background-color: $color;
   border-color: $color;
 
   &:hover {
-    color: $light-color;
+    color: $text-white-color;
     background-color: $color;
     border-color: $color;
     box-shadow: $box-shadow-button-hover;

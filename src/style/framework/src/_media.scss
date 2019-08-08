@@ -50,9 +50,9 @@
     height: 33px;
     padding: $unit-1 $unit-2;
     width: 120px;
-    color: $light-color;
+    color: $text-white-color;
     font-size: $font-size-sm;
-    border: 2px solid $light-color;
+    border: 2px solid $border-white-color;
     border-radius: 25px;
     visibility: hidden;
     font-weight: $font-weight-medium;
@@ -139,7 +139,7 @@ video.video-responsive {
 .figure {
 
   .figure-caption {
-    color: $meta-color;
+    color: $text-meta-color;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
     margin-top: $unit-2;

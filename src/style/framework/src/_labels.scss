@@ -18,19 +18,19 @@
   }
 
   &.is-black {
-    @include label-color-variant($dark-color);
+    @include label-color-variant($bg-dark-color);
   }
 
   &.is-primary {
-    @include label-color-variant($primary-color);
+    @include label-color-variant($bg-primary-color);
   }
 
   &.is-secondary {
-    @include label-color-variant($secondary-color);
+    @include label-color-variant($bg-secondary-color);
   }
 
   &.is-progress {
-    @include label-color-variant($progress-color);
+    @include label-color-variant($bg-progress-color);
   }
 
   &.is-tag {
@@ -42,19 +42,19 @@
   }
 
   &.is-info {
-    @include label-color-variant($meta-color);
+    @include label-color-variant($bg-meta-color);
   }
 
   &.is-draft {
-    @include label-color-variant($background-color);
+    @include label-color-variant($bg-background-color);
   }
 
   &.is-success {
-    @include label-color-variant($success-color);
+    @include label-color-variant($bg-success-color);
   }
 
   &.is-danger {
-    @include label-color-variant($alert-color);
+    @include label-color-variant($bg-alert-color);
   }
 
   .icon-left {
@@ -98,6 +98,11 @@
     }
 
   }
+
+
+
+
+
 
 
   // Todo remove this below.
