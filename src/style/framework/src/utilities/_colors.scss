@@ -1,7 +1,7 @@
 @import "../variables";
 
 .text-primary, .text-warning {
-  color: $primary-color !important;
+  color: $text-warning-color !important;
 }
 
 .text-primary-dark {
@@ -29,7 +29,7 @@
 }
 
 .text-white {
-  color: $light-color !important;
+  color: $text-white-color !important;
 }
 
 .text-secondary {
@@ -37,43 +37,43 @@
 }
 
 .bg-primary {
-  color: $light-color !important;
-  background: $primary-color !important;
+  color: $text-white-color !important;
+  background: $bg-primary-color !important;
 }
 
 .bg-secondary {
-  color: $light-color !important;
-  background: $secondary-color !important;
+  color: $text-white-color !important;
+  background: $bg-secondary-color !important;
 }
 
 .bg-gray {
-  color: $light-color !important;
-  background: $meta-color !important;
+  color: $text-white-color !important;
+  background: $bg-meta-color !important;
 }
 
 .bg-dark {
-  color: $light-color !important;
-  background: $dark-color !important;
+  color: $text-white-color !important;
+  background: $bg-dark-color !important;
 }
 
 .bg-success {
-  color: $light-color !important;
-  background: $success-color !important;
+  color: $text-white-color !important;
+  background: $bg-success-color !important;
 }
 
 .bg-progress {
-  color: $light-color !important;
-  background: $progress-color !important;
+  color: $text-white-color !important;
+  background: $bg-progress-color !important;
 }
 
 .bg-alert {
-  color: $light-color !important;
-  background: $alert-color !important;
+  color: $text-white-color !important;
+  background: $bg-alert-color !important;
 }
 
 .bg-draft {
-  color: $light-color !important;
-  background: $background-color !important;
+  color: $text-white-color !important;
+  background: $bg-background-color !important;
 }
 
 .bg-light {
@@ -88,5 +88,5 @@
 
 .bg-gradient-primary {
   background: $primary-gradient-color;
-  color: $light-color;
+  color: $text-white-color;
 }
