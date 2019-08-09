@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class TemplatesService {
@@ -70,7 +71,11 @@ export class TemplatesService {
   public import(file:File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, "import_template");
-    return this._http.post('/template/import/', formData);
+    return this._http.post('/template/import/all', formData);
+  }
+
+  public static export(): string {
+    return environment.apiUrl + '/template/';
   }
 
 }

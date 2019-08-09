@@ -17,6 +17,8 @@ export const ERROR = {
 
   'RELOAD_PAGE': 'Veuillez recharger la page et réessayer.',
 
+  'RELOADING_PAGE': 'La page va se recharger automatiquement en quelques secondes. Merci de votre patience.',
+
   'NO_CONNECTION': 'Il semble que vous n\'êtes pas connecté.',
 
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',

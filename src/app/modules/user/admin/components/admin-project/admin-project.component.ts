@@ -43,7 +43,6 @@ export class AdminProjectComponent implements OnInit {
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
               private _authService: AuthService,
-              private _innovationService: InnovationService,
               private _frontendService: FrontendService) {
 
     this._setPageTitle('COMMON.PAGE_TITLE.PROJECT');
@@ -128,7 +127,7 @@ export class AdminProjectComponent implements OnInit {
     }
 
     const urlParams = params.join('&');
-    window.open(this._innovationService.export(this._project._id, urlParams));
+    window.open(InnovationService.export(this._project._id, urlParams));
     this.closeModal();
   }
 

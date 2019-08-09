@@ -17,6 +17,8 @@ export const ERROR = {
 
   'RELOAD_PAGE': 'Please reload the page and try again.',
 
+  'RELOADING_PAGE': 'The page is going to reload automatically in few seconds. Thank you for your patience.',
+
   'NO_CONNECTION': 'It seems that you are currently offline.',
 
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',

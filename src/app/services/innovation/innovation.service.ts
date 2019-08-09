@@ -129,7 +129,7 @@ export class InnovationService {
     return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }
 
-  public export(innovationId: string, params: string): string {
+  public static export(innovationId: string, params: string): string {
     return environment.apiUrl + `/innovation/${innovationId}/export?${params}`;
   }
 
@@ -138,4 +138,5 @@ export class InnovationService {
     formData.append('file', file, "import_project");
     return this._http.post('/innovation/import/', formData);
   }
+
 }

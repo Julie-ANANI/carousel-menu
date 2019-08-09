@@ -67,6 +67,30 @@ export class AdminLibrariesComponent {
     }
   }
 
+  private _importPreset(file: File) {
+    this._presetService.import(file).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.RELOADING_PAGE');
+      setTimeout(() => {
+        document.location.reload();
+      }, 5000);
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  private _importWorkflow(file: File) {
+    this._templateService.import(file).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.RELOADING_PAGE');
+      setTimeout(() => {
+        document.location.reload();
+      }, 5000);
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   public onClickImport(file: File, option: ActionOption) {
     switch (option.activePage) {
 
@@ -81,34 +105,17 @@ export class AdminLibrariesComponent {
     }
   }
 
-  private _importPreset(file: File) {
-    this._presetService.import(file).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
-      document.location.reload();
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
-    });
-  }
-
-  private _importWorkflow(file: File) {
-    this._templateService.import(file).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
-      document.location.reload();
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
-    });
-  }
-
   public onClickExport(event: Event, option: ActionOption) {
     event.preventDefault();
 
     switch (option.activePage) {
 
       case 'questionnaire':
-        window.open(this._presetService.export());
+        window.open(PresetService.export());
         break;
 
       case 'workflows':
+        window.open(TemplatesService.export());
         break;
 
     }

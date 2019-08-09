@@ -21,7 +21,7 @@ export class PresetService {
     return this._http.get('/preset/', {params: config});
   }
 
-  public export(): string {
+  public static export(): string {
     return environment.apiUrl + '/preset/';
   }
 
