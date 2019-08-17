@@ -15,7 +15,6 @@
     }
 
     .button.is-action {
-      box-shadow: $box-shadow-5;
       height: 2.5rem;
       width: 2.5rem;
 
@@ -24,6 +23,7 @@
       }
 
       &:not(:disabled), &:not([disabled]) {
+        box-shadow: $box-shadow-5;
 
         &:hover {
           transform: scale(1.08);
@@ -67,8 +67,8 @@
 
       .icons-wrapper {
 
-        .icon-wrapper {
-          margin-right: $unit-2;
+        .icon-container {
+          margin-right: $unit-1;
         }
 
         .fa-thumbs-up, .fa-thumbs-down {

@@ -51,7 +51,7 @@
         <div class="icons-wrapper">
 
           <!-- edit icon -->
-          <div class="icon-wrapper is-overlay" (click)="onClickEdit($event, i)">
+          <div class="icon-container is-overlay" (click)="onClickEdit($event, i)">
             <span
               [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
               class="tooltip">
@@ -60,15 +60,15 @@
           </div>
 
           <!-- if admin mode -->
-          <div *ngIf="adminMode">
+          <div *ngIf="adminMode" class="d-flex">
 
             <!-- thumbs-up icon -->
-            <div (click)="thumbsUp($event, i)" class="icon-wrapper is-overlay">
+            <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
               <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
             </div>
 
             <!-- thumbs-down icon -->
-            <div (click)="thumbsDown($event, i)" class="icon-wrapper is-overlay">
+            <div (click)="thumbsDown($event, i)" class="icon-container is-overlay">
               <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
             </div>
 
@@ -76,7 +76,7 @@
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div (click)="removeProposition(i)" class="icon-wrapper m-no-right is-overlay">
+          <div (click)="removeProposition(i)" class="icon-container m-no-right is-overlay">
             <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
               <i class="icon icon-delete text-alert"></i>
             </span>
