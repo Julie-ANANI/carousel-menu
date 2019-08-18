@@ -79,7 +79,8 @@
       display: none !important;
     }
 
-    .navbar .menu.menu-nav .menu-item.navbar-dropdown-language {
+    .navbar .menu.menu-nav .menu-item.navbar-dropdown-language,
+    .navbar .menu.menu-nav .menu-item.navbar-dropdown-language .menu .menu-item {
       display: inline-flex !important;
     }
 

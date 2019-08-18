@@ -169,11 +169,12 @@
 }
 
 .navbar-sidebar {
-  min-height: unset;
+  min-height: 100vh;
+  align-items: flex-start;
 
   .menu {
     width: 100%;
-    height: unset;
+    height: 100%;
     align-items: flex-start;
     flex-direction: column;
 
