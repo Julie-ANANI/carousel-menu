@@ -12,3 +12,23 @@
 
 }
 
+@media (max-width: $size-md) {
+
+  #admin-project {
+
+    .header-wrapper {
+
+      .flex-between {
+        margin-bottom: 0.5rem;
+
+        .dropdown.is-right .menu {
+          left: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+}
