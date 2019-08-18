@@ -7,18 +7,4 @@
   min-height: 74px;
   color: $light-color;
   font-size: $unit-5;
-
-  &.header-primary {
-    background-color: $background-color;
-  }
-
-  &.header-secondary {
-    background-color: $secondary-color;
-  }
-
-  &.header-hero {
-    background-color: $background-color;
-    padding-top: 2.5rem;
-  }
-
 }
