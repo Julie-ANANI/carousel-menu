@@ -95,12 +95,12 @@
           height: fit-content;
           flex-direction: column;
           left: auto;
-          padding: 0.5rem 0;
+          padding: $unit-2 0;
 
           .menu-item {
             justify-content: start;
             height: auto;
-            padding: 0.5rem 1.1rem;
+            padding: $unit-2 1.1rem;
 
             & > a {
               width: 100%;
@@ -141,7 +141,7 @@
           .menu-item {
             justify-content: center;
             height: 42px;
-            padding: 0.5rem;
+            padding: $unit-2;
           }
 
         }
