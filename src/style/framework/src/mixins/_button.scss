@@ -59,16 +59,28 @@
 
   &:hover, &:focus, &.is-active, &:active {
 
-    @if $color == $primary-color {
+    @if $color == $bg-primary-color {
       background-color: $hover-background-color;
     }
 
-    @if $color == $secondary-color {
+    @if $color == $bg-secondary-color {
       background-color: lighten($color, 53%);
     }
 
-    @if $color == $alert-color {
+    @if $color == $bg-alert-color {
       background-color: lighten($color, 34%);
+    }
+
+    @if $color == $bg-success-color {
+      background-color: lighten($color, 46%);
+    }
+
+    @if $color == $bg-meta-color {
+      background-color: lighten($color, 30%);
+    }
+
+    @if $color == $bg-background-color {
+      background-color: lighten($color, 57%);
     }
 
   }
