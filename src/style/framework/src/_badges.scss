@@ -7,11 +7,10 @@
   &[data-badge], &:not([data-badge]) {
 
     &::after {
-      background: $primary-color;
+      background: $bg-primary-color;
       background-clip: padding-box;
       border-radius: .5rem;
-      box-shadow: 0 0 0 .1rem $bg-color-light;
-      color: $light-color;
+      color: $text-white-color;
       content: attr(data-badge);
       display: inline-block;
       transform: translate(-.1rem, -.5rem);
@@ -22,9 +21,9 @@
   &[data-badge] {
 
     &::after {
-      font-size: $font-size-sm;
+      font-size: 0.65rem;
       height: .9rem;
-      line-height: 1;
+      line-height: $line-height-sm;
       min-width: .9rem;
       padding: .1rem .2rem;
       text-align: center;
@@ -36,16 +35,16 @@
   &:not([data-badge]), &[data-badge=""] {
 
     &::after {
-      height: 6px;
-      min-width: 6px;
+      height: 0.3rem;
+      min-width: 0.3rem;
       padding: 0;
-      width: 6px;
+      width: 0.3rem;
     }
 
   }
 
   // Badges for Buttons
-  &.btn {
+  &.btn, &.button {
 
     &::after {
       position: absolute;
@@ -64,12 +63,12 @@
       top: 14.64%;
       right: 14.64%;
       transform: translate(50%, -50%);
-      z-index: $zindex-1;
+      z-index: $zindex-1 + 1;
     }
 
   }
 
-  &.avatar-xs {
+  &.is-xs {
 
     &::after {
       content: "";
@@ -81,6 +80,59 @@
 
   }
 
+  &.is-sm {
+
+    &::after {
+      height: 0.8rem;
+      font-size: $font-icon-xs;
+    }
+
+  }
+
+  // icon
+  &.is-icon {
+    white-space: normal;
+
+    &::after {
+      display: none;
+    }
+
+    i {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      font-size: $font-icon-sm;
+      background: $bg-border-color;
+      color: $light-color;
+      transform: translate(50%, -50%);
+    }
+
+    &.is-active {
+      border-color: $border-success-color;
+      background-color: $bg-light-color;
+      color: $text-primary-dark-color;
+
+      i {
+        display: inline-flex;
+        background: $bg-success-color;
+      }
+
+    }
+
+  }
+
+
+
+
+
+  // Todo remove this
   // Badges for save
   &.badge-save {
     white-space: normal;
@@ -100,10 +152,10 @@
       top: 0;
       right: 0;
       margin: 0;
-      background: $meta-color;
-      color: $light-color;
+      background: $bg-meta-color;
+      color: $text-white-color;
       transform: translate(50%, -50%);
-      box-shadow: 0 0 0 .1rem $bg-color-light;
+      box-shadow: 0 0 0 .1rem $border-white-color;
     }
 
     &.inactive {
@@ -115,14 +167,14 @@
     }
 
     &.active {
-      background-color: $bg-color-light;
-      border-color: $success-color;
+      background-color: $bg-light-color;
+      border-color: $border-success-color;
       color: $text-primary-dark-color;
       border-width: $border-width-lg;
 
       i {
         display: inline-flex;
-        background: $success-color;
+        background: $bg-success-color;
       }
 
       &:hover {

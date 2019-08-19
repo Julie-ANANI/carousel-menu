@@ -22,22 +22,5 @@ export const NEW_PROJECT = {
 
   'PROJECT_NAME': 'Project name is required.',
 
-  'APPS': {
-    'LINE1': 'Discover new application fields',
-    'LINE2': 'Address new markets and industries',
-    'LINE3': 'Turn R&D from a cost center to a profit center'
-  },
-
-  'INSIGHTS': {
-    'LINE1': 'Validate your market potential',
-    'LINE2': 'Adjust project-market fit ',
-    'LINE3': 'Make the right decision: Go, No-Go, Adjust'
-  },
-
-  'LEADS': {
-    'LINE1': 'Access full contact details',
-    'LINE2': 'Close deals in your markets',
-    'LINE3': 'Get in touch with potential prospects on demand'
-  }
 
 };

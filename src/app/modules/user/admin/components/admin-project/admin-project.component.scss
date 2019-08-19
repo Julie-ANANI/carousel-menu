@@ -2,23 +2,33 @@
 
 #admin-project {
 
-  .a-p-error-wrapper {
-    min-height: 75vh;
-  }
-
-  .a-p-header {
-    background-color: $bg-color-light;
+  .header-wrapper {
     border-bottom: $border-width solid $border-color;
   }
 
   .tab {
     border-bottom: none;
+  }
 
-    li:last-child {
-      border-bottom: none;
+}
+
+@media (max-width: $size-md) {
+
+  #admin-project {
+
+    .header-wrapper {
+
+      .flex-between {
+        margin-bottom: 0.5rem;
+
+        .dropdown.is-right .menu {
+          left: 0;
+        }
+
+      }
+
     }
 
   }
 
 }
-

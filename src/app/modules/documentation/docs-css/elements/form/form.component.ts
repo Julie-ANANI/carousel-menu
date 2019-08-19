@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-form',
@@ -6,9 +7,16 @@ import { Component } from '@angular/core';
   templateUrl: './form.component.html'
 })
 
-export class FormComponent {
+export class FormComponent implements OnInit {
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,) {
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this._platformId)) {
+      let checkbox = document.getElementById('select-all');
+      (checkbox as HTMLInputElement).indeterminate = true;
+    }
   }
 
 }

@@ -1,47 +1,66 @@
 @import "framework/src/variables";
 
 // This is the style that are related to the notification that we see in the bottom.
-
+.simple-notification-wrapper {
+  z-index: 9999 !important;
+  width: 320px !important;
+}
 
 .simple-notification {
-  border: $border-width solid transparent !important;
-  border-radius: $border-radius !important;
+  box-shadow: $box-shadow-4;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 0.5rem 0.75rem !important;
   word-wrap: break-word !important;
 }
 
-.simple-notification-wrapper {
-  z-index: 9999 !important;
-}
-
 .simple-notification .sn-title {
-  font-size: $font-size-lg !important;
-  line-height: 1.5 !important;
+  font-size: 1.1rem !important;
+  line-height: $line-height !important;
   padding-right: 0 !important;
-  font-weight: $font-weight-bold;
-  padding-bottom: $unit-2 !important;
+  font-weight: 700;
+  padding-bottom: 0.5rem !important;
 }
 
 .simple-notification .sn-content {
-  font-size: $font-size-md !important;
-  line-height: 1.5 !important;
+  font-size: 0.75rem !important;
+  line-height: $line-height !important;
   padding-right: 0 !important;
   padding-bottom: 0.5rem !important;
 }
 
 .simple-notification.success {
-  background: $success-color !important;
-  color: $light-color !important;
-  border-color: $success-color !important;
+  background: $notification-bg-success-color !important;
+  color: $notification-text-success-color !important;
+
+  .icon svg {
+    fill: $notification-text-success-color !important;
+  }
+
 }
 
 .simple-notification.error {
-  background: $alert-color !important;
-  color: $light-color !important;
-  border-color: $alert-color !important;
+  background: $notification-bg-alert-color !important;
+  color: $notification-text-alert-color !important;
+
+  .icon svg {
+    fill: $notification-text-alert-color !important;
+  }
+
 }
 
 .simple-notification .icon {
-  width: 40px !important;
-  height: 40px !important;
+  width: 25px !important;
+  height: 25px !important;
+  top: 12px !important;
+  right: 12px !important;
   padding: 0 !important;
+}
+
+@media (max-width: $size-xs) {
+
+  .simple-notification-wrapper {
+    width: 280px !important;
+  }
+
 }

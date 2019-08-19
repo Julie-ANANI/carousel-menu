@@ -24,35 +24,12 @@
   position: fixed;
 }
 
-.align-center {
-  align-items: center;
+.sticky {
+  position: sticky;
 }
 
-.justify-center {
-  justify-content: center;
-}
-
-.justify-space {
-  justify-content: space-between;
-}
-
-.whitespace-nowrap {
-  white-space: nowrap;
-}
-
-.flex-nowrap {
-  flex-wrap: nowrap;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.centered {
-  display: block;
-  float: none;
-  margin-left: auto;
-  margin-right: auto;
+.static {
+  position: static;
 }
 
 .flex-centered {
@@ -78,3 +55,56 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-space {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.centered {
+  display: block;
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+
+
+
+
+
+
+

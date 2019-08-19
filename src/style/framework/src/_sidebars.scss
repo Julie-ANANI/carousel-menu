@@ -33,7 +33,7 @@
   position: fixed;
   left: 0;
   width: $control-width-sm;
-  background: $bg-color-light;
+  background: $bg-light-color;
   bottom: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -42,7 +42,7 @@
   .sidebar-container {
     width: 100%;
     min-height: 100vh;
-    background: $bg-color-light;
+    background: $bg-light-color;
     cursor: default;
   }
 

@@ -104,7 +104,7 @@
                 display: inline-flex;
                 transition: none;
                 visibility: hidden;
-                background-color: $bg-color-light;
+                background-color: $bg-light-color;
               }
 
             }
@@ -291,6 +291,8 @@
             .tbody-td-data {
 
               .tbody-td-action-button {
+                position: relative;
+                order: 2;
 
                 .btn-xs {
                   visibility: visible;

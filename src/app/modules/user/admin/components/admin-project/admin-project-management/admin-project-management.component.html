@@ -100,32 +100,6 @@
 
       </div>
 
-      <!-- Project offer -->
-      <div class="project-line">
-
-        <label class="form-switch" for="seeOffer">
-          <input
-            type="checkbox"
-            name="seeOffer"
-            id="seeOffer"
-            checked>
-          <i class="form-icon"></i>
-          {{ 'PROJECT_LIST.OFFER'| translate }}
-        </label>
-
-        <select class="form-select"
-                name="setOffer"
-                id="setOffer"
-                [ngModel]="project.type"
-                (ngModelChange)="changeProjectOffer($event)"
-                [ngModelOptions]="{standalone: true}">
-          <option *ngFor="let offer of offers" [ngValue]="offer.name">
-            {{offer.alias}}
-          </option>
-        </select>
-        <div></div>
-      </div>
-
       <!-- Project preset choice -->
       <div class="project-line">
 
@@ -288,6 +262,7 @@
 
     </div>
 
+
     <div class="project-summary">
       <div class="completion">
         <h6>Completion</h6>
@@ -307,6 +282,7 @@
           <label>{{currentCampaign?.stats?.campaign?.nbResp || '?'}}</label>
         </span>
       </div>
+
     </div>
   </div>
 

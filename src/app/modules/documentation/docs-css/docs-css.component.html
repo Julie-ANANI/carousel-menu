@@ -25,19 +25,25 @@
                     <a [routerLink]="'elements/typography'">Typography</a>
                   </li>
                   <li class="menu-item">
-                    <a [routerLink]="'elements/table'">Table</a>
+                    <a [routerLink]="'elements/buttons'">Buttons</a>
                   </li>
                   <li class="menu-item">
-                    <a [routerLink]="'elements/button'">Button</a>
+                    <a [routerLink]="'elements/close'">Close</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'elements/code'">Code</a>
                   </li>
                   <li class="menu-item">
                     <a [routerLink]="'elements/form'">Form</a>
                   </li>
                   <li class="menu-item">
-                    <a [routerLink]="'elements/label'">Label</a>
+                    <a [routerLink]="'elements/icons'">Icons</a>
                   </li>
                   <li class="menu-item">
-                    <a [routerLink]="'elements/code'">Code</a>
+                    <a [routerLink]="'elements/table'">Table</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'elements/labels'">Labels</a>
                   </li>
                   <li class="menu-item">
                     <a [routerLink]="'elements/media'">Media</a>
@@ -51,8 +57,13 @@
               <input type="checkbox" id="accordion-layout" hidden [checked]="activeRoute.includes('layouts')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-layout">Layout</label>
               <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item">
+                    <a [routerLink]="'layout/flexbox'">Flexbox grid</a>
+                  </li>
+                </ul>
               </div>
-            </div>-->
+            </div> -->
 
             <!-- components -->
             <div class="accordion docs-accordion">
@@ -63,17 +74,73 @@
                   <li class="menu-item">
                     <a [routerLink]="'components/accordions'">Accordions</a>
                   </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'components/avatars'">Avatars</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'components/badges'">Badges</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'components/banners'">Banners</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'components/bars'">Bars</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'components/cards'">Cards</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'components/dropdown'">Dropdown</a>
+                  </li>
                 </ul>
               </div>
             </div>
 
-            <!-- utilities
+            <!-- utilities -->
             <div class="accordion docs-accordion">
               <input type="checkbox" id="accordion-utilities" hidden [checked]="activeRoute.includes('utilities')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-utilities">Utilities</label>
               <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/colors'">Colors</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/cursors'">Cursors</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/display'">Display</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/divider'">Divider</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/loading'">Loading</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/margin'">Margin</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/padding'">Padding</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/position'">Position</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/ratings'">Ratings</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/shape'">Shape</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/text'">Text</a>
+                  </li>
+                  <li class="menu-item">
+                    <a [routerLink]="'utilities/title'">Title</a>
+                  </li>
+                </ul>
               </div>
-            </div>-->
+            </div>
 
             <!-- angular
             <div class="accordion docs-accordion">

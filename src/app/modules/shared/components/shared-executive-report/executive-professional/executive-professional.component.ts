@@ -62,7 +62,7 @@ export class ExecutiveProfessionalComponent {
   }
 
   public get userLang(): string {
-    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    return this._translateService.currentLang;
   }
 
   get answers(): Array<Answer> {

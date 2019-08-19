@@ -26,7 +26,7 @@
         <h6 *ngIf="innovation.owner?.email" class="text-email text-normal">{{ innovation.owner?.email }}</h6>
       </ng-container>
 
-      <div *ngIf="innovation.executiveReport?.objective"  class="goal-text label label-tag label-rounded">
+      <div *ngIf="innovation.executiveReport?.objective"  class="goal-text label label-tag is-rounded">
         <span>{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}</span>
       </div>
 

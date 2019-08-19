@@ -10,7 +10,7 @@
 
 
     <!-- history icon -->
-    <div class="shape circle circle-white history-wrapper c-hand absolute tooltip tooltip-left" [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate" (click)="onClickHistoryIcon($event)">
+    <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip tooltip-left" [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate" (click)="onClickHistoryIcon($event)">
       <i class="fas fa-history text-notify"></i>
     </div>
     <!-- /history icon -->
@@ -73,19 +73,19 @@
           <!-- display stats -->
           <ul class="text-center info-wrapper absolute">
             <li class="flex-start">
-              <span class="shape circle circle-sm circle-4"></span>
+              <span class="shape is-circle is-sm circle-4"></span>
               <span class="text-secondary-dark text-medium">< {{ scale[0] }} </span>
             </li>
             <li class="flex-start">
-              <span class="shape circle circle-sm circle-2"></span>
+              <span class="shape is-circle is-sm circle-2"></span>
               <span class="text-secondary-dark text-medium">{{ scale[0] }} - {{ scale[1] }}</span>
             </li>
             <li class="flex-start">
-              <span class="shape circle circle-sm circle-3"></span>
+              <span class="shape is-circle is-sm circle-3"></span>
               <span class="text-secondary-dark text-medium">{{ scale[1] }} - {{ scale[2] }}</span>
             </li>
             <li class="flex-start">
-              <span class="shape circle circle-sm circle-success"></span>
+              <span class="shape is-circle is-sm bg-success"></span>
               <span class="text-secondary-dark text-medium">> {{ scale[2] }}</span>
             </li>
           </ul>
@@ -177,10 +177,10 @@
 
         <ng-container *ngIf="slicedPros.length > 0">
           <div class="card-wrapper d-flex">
-            <div *ngFor="let professional of slicedPros" class="card card-responsive text-center">
+            <div *ngFor="let professional of slicedPros" class="card is-responsive text-center">
 
               <ng-container *ngIf="professional?.isLoading">
-                <div class="card-body card-cover">
+                <div class="card-body is-cover">
                   <i class="fa fa-cog fa-2x text-warning fa-spin"></i>
                 </div>
               </ng-container>
@@ -193,7 +193,7 @@
                   </div>
                 </ng-container>
 
-                <div class="card-body card-cover animate-card-appear">
+                <div class="card-body is-cover animate-card-appear">
 
                   <!-- name -->
                   <ng-container *ngIf="professional && (professional.firstName || professional.lastName)">

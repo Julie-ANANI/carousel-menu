@@ -4,7 +4,7 @@
 
       <div *ngIf="tag.count > 1" class="tag-count">{{ tag.count }}X</div>
 
-      <div class="label label-tag label-rounded" [ngStyle]="{ 'background-color': tagColor }">
+      <div class="label label-tag is-rounded" [ngStyle]="{ 'background-color': tagColor }">
         <i class="fas fa-tag"></i>
         <span class="label-text">{{ tag.label | multiling:userLang }}</span>
       </div>

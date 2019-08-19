@@ -1,8 +1,8 @@
 @import "../variables";
 
 .star-rating {
-  overflow: hidden;
   display: inline-block;
+  overflow: hidden;
 
   &:not(:checked) {
 
@@ -17,13 +17,13 @@
       font-style: normal;
       text-decoration: inherit;
       float: right;
-      width: 20px;
-      height: 28px;
+      width: 1.2rem;
+      height: 1.4rem;
       padding: 0 1px;
       overflow: hidden;
       white-space: nowrap;
       cursor: pointer;
-      color: $primary-color;
+      color: $text-warning-color;
       font-weight: 400;
 
       &:before {
@@ -31,7 +31,7 @@
       }
 
       &:hover, &:hover ~ label {
-        color: $primary-color;
+        color: $text-warning-color;
         font-weight: 900;
       }
 

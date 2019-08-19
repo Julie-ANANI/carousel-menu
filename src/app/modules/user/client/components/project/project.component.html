@@ -1,7 +1,7 @@
  <section *ngIf="innovation" class="section-pad rm-pad-top" id="project-component">
 
     <!-- header section -->
-    <div class="header header-hero">
+    <div class="header bg-draft p-top-25">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- heading -->
@@ -12,14 +12,13 @@
 
         <!-- info -->
         <div class="info-wrapper">
-          <img [src]="offerTypeImage" alt=" ">
           <span class="text text-notify">
             {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
             &nbsp;•&nbsp;
             {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
             &nbsp;•&nbsp;
             {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-            <span class="text-link gtm-edit-collaborators" (click)="editCollaborator($event)">{{ 'COMMON.EDIT' | translate | lowercase}}</span>
+            <span class="text-link gtm-edit-collaborators" (click)="editCollaborator($event)">{{ 'COMMON.BUTTON.COLLABORATOR' | translate }}</span>
           </span>
         </div>
 

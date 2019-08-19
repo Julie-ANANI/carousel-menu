@@ -121,7 +121,7 @@
   /********************************** Market report ***************************************/
 
   #market-report, #market-report-container {
-    background-color: $bg-color-light !important;
+    background-color: $bg-light-color !important;
 
     #key-learnings, #origin-responses, #map, #professionals, #questions, #conclusion {
       display: none !important;
@@ -171,7 +171,7 @@
     }
 
     #umi-intro {
-      background-color: $bg-color-light !important;
+      background-color: $bg-light-color !important;
 
       img {
         width: 1320px !important;

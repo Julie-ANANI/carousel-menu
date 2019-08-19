@@ -13,6 +13,10 @@
     margin-top: 0;
   }
 
+  .text-link {
+    font-size: $font-size-sm;
+  }
+
   .pd-ques {
     padding-top: 2rem;
   }
@@ -49,7 +53,7 @@
 
   .fas {
     vertical-align: -2px;
-    font-size: $font-icon-xl;
+    font-size: $font-icon-lg;
   }
 
   .char-remaining {

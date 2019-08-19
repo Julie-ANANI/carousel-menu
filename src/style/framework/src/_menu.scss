@@ -1,43 +1,55 @@
 @import "variables";
+@import "mixins";
 
 .menu {
-  background: $bg-color-light;
+  background: $bg-light-color;
   border-radius: $border-radius;
   list-style: none;
   margin: 0;
   min-width: $control-width-xs;
   padding: $unit-2;
   transform: translateY($unit-1);
-  z-index: $zindex-2;
-  box-shadow: 0 4px 16px rgba(20,23,28,0.25);
-
-  &.menu-nav {
-    background: transparent;
-    box-shadow: none;
-  }
+  z-index: $zindex-3;
+  box-shadow: $box-shadow-menu;
 
   .menu-item {
+    @include control-transition();
     font-size: $font-size-sm;
     text-decoration: none;
     margin-top: 0;
     color: $text-background-color;
     font-weight: normal;
     padding: 0.5rem;
+    cursor: pointer;
 
-    a {
+    & > a {
       display: block;
       color: inherit;
+      margin: -0.5rem;
+      padding: 0.5rem;
     }
 
-    &:hover, &.active {
-      cursor: pointer;
+    &:hover, &:focus, &:active, &.active {
       background-color: $bg-menu-item-color;
     }
 
-    &.menu-item:not(:first-child) {
+    &:not(:first-child) {
       margin-top: .2rem;
     }
 
+  }
+
+  &.menu-nav {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  &.is-md {
+    width: 230px;
+  }
+
+  &.is-lg {
+    width: 300px;
   }
 
 }

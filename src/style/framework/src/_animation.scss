@@ -1,6 +1,7 @@
 /* Manually forked from Animate.css */
 /* daneden/animate.css | MIT license | https://github.com/daneden/animate.css */
 
+@import "variables";
 
 /********************************** Fading entrances  ***************************************/
 
@@ -480,6 +481,22 @@
 
   100% {
     transform: translateX(100%);
+  }
+
+}
+
+/********************************** Menu ***************************************/
+
+@keyframes menu-slide-down {
+
+  0% {
+    opacity: 0;
+    transform: translateY(-$unit-8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 
 }

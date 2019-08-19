@@ -6,37 +6,45 @@ $disabled-color: #DBDBDB !default;
 $meta-color: #97A4B1 !default;
 $dark-color: #333333 !default;
 $background-color: #4F5D6B !default;
-$hover-background-color: #FFF9EB !default;
 $light-color: #FFFFFF !default;
-$disabled-text-color: #A9A9A9 !default
-
-
-// control variables
 $success-color: #2ECC71 !default;
 $alert-color: #EA5858 !default;
-$warning-color: #FFB300 !default;
+$page-color: #F5F7FA !default;
+$hover-background-color: #FFF9EB !default;
+
+
+// gradient variables
+$primary-gradient-color: linear-gradient(240deg, #3199cd 0%, #2bc1ef 100%) !default;
+
+
+// notification variables
+$notification-bg-success-color: #DFF0D8 !default;
+$notification-text-success-color: #3c763d !default;
+$notification-text-alert-color: #a94442 !default;
+$notification-bg-alert-color: #F2DEDE !default;
+
+
+// table variables
+$table-th-background-color: #F5F8FA !default;
+$table-tr-hover-background-color: #F5F8FA !default;
+$table-th-hover-background-color: #E1EAF1 !default;
+$table-tr-border-color: #DFE3EB !default;
 
 
 // Other colors
-$body-bg-color: $light-color;
-$body-font-color: $dark-color;
-$link-color: $primary-color;
-$page-color: #F5F5F5 !default;
-
-
-// background variables
-$bg-color-light: $light-color !default;
-$bg-overlay-color: rgba(0,0,0,0.75) !default;
-$bg-overlay-dark-color: rgba(58,66,77,0.96)!default;
-$bg-tooltip-color: rgba(0,0,0,1) !default;
-$bg-menu-item-color: #F2F2F2 !default;
-$bg-page-color: #F5F7FA !default;
+$body-bg-color: $light-color !default;
+$body-font-color: $dark-color !default;
+$link-color: $primary-color !default;
 
 
 //border variables
 $border-color: #E0E0E0 !default;
 $border-light-color: #f1f1f1 !default;
 $border-meta-color: $meta-color !default;
+$border-primary-color: $primary-color !default;
+$border-success-color: $success-color !default;
+$border-white-color: $light-color !default;
+$border-alert-color: $alert-color !default;
 
 
 // text variables
@@ -47,7 +55,26 @@ $text-success-color: $success-color !default;
 $text-warning-color: $primary-color !default;;
 $text-alert-color: $alert-color !default;
 $text-background-color: $background-color !default;
-$text-disabled-color: $disabled-text-color !default;
+$text-white-color: $light-color !default;
+$text-disabled-color: #A9A9A9 !default;
+
+
+// background variables
+$bg-primary-color: $primary-color !default;
+$bg-progress-color: $progress-color !default;
+$bg-secondary-color: $secondary-color !default;
+$bg-meta-color: $meta-color !default;
+$bg-background-color: $background-color !default;
+$bg-success-color: $success-color !default;
+$bg-alert-color: $alert-color !default;
+$bg-light-color: $light-color !default;
+$bg-dark-color: $dark-color !default;
+$bg-page-color: $page-color !default;
+$bg-overlay-color: rgba(0,0,0,0.75) !default;
+$bg-overlay-dark-color: rgba(58,66,77,0.96)!default;
+$bg-tooltip-color: rgba(0,0,0,1) !default;
+$bg-menu-item-color: #F2F2F2 !default;
+$bg-border-color: $border-color !default;
 
 
 // form variables
@@ -56,19 +83,13 @@ $form-input-color: #262831 !default;
 $form-label-color: $dark-color !default;
 $form-border-color: $border-color !default;
 $form-primary-color: $primary-color !default;
-$form-alert-color: $alert-color !default;
-$form-success-color: $success-color !default;
-$form-disabled-color: $disabled-color !default;
-$form-disabled-text-color: $disabled-text-color !default;
+$form-disabled-color: #eef0f3 !default;
+$form-disabled-text-color: #A9A9A9 !default;
 $form-meta-color: $meta-color !default;
 
 
-// gradient variables
-$primary-gradient-color: linear-gradient(240deg, #3199cd 0%, #2bc1ef 100%) !default;
-
-
 // button variables
-$button-disabled-text-color: $disabled-text-color !default;
+$button-disabled-text-color: #A9A9A9 !default;
 $button-disabled-bg-color: $disabled-color !default;
 $button-border-color: $border-color !default;
 
@@ -81,14 +102,8 @@ $box-shadow-4: 0px 0px 25px 0px rgba(0,0,0,0.15) !default;
 $box-shadow-5: 0 2px 8px 2px rgba(20,23,28,.15) !default;
 $box-shadow-6: 0 12px 30px 0 rgba(0,0,0,.2) !default;
 $box-shadow-7: 0px 0px 55px 0px rgba(0,0,0,0.31) !default;
+$box-shadow-menu: 0 4px 16px rgba(20,23,28,0.25) !default;
 $box-shadow-button-hover: 0 3px 15px 0 rgba(0,0,0,.25) !default;
-
-
-// table variables
-$table-th-background-color: #F5F8FA !default;
-$table-tr-hover-background-color: #F5F8FA !default;
-$table-th-hover-background-color: #E1EAF1 !default;
-$table-tr-border-color: #DFE3EB !default;
 
 
 // Fonts
@@ -126,8 +141,9 @@ $font-size-lg: 0.9rem !default;
 $font-icon: 0.75rem !default;
 $font-icon-xs: 0.5rem !default;
 $font-icon-sm: $unit-3 !default;
-$font-icon-lg: $unit-4 !default;
-$font-icon-xl: $unit-5 !default;;
+$font-icon-md: $unit-4 !default;
+$font-icon-lg: $unit-5 !default;
+$font-icon-xl: $unit-6 !default;
 $line-height: 1.5 !default;
 $line-height-sm: 1 !default;
 

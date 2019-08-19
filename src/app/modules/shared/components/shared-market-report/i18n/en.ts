@@ -5,6 +5,8 @@ export const MARKET_REPORT = {
 
   'RESET_FILTERS': 'Reset filters',
 
+  'FILTER_EVERYTHING': 'Filter',
+
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
     'EDITING': 'Please finish setup of your project and submit it.',
@@ -183,5 +185,20 @@ export const MARKET_REPORT = {
   'SEE_LESS': 'See less',
 
   'ORIGIN': 'Origin of responses',
+
+  'SIDEBAR': {
+    'FILTERS': 'Filters',
+    'MAKE_VISIBLE': 'Make project visible to client',
+    'MAKE_INVISIBLE': 'Make project invisible to client',
+    'GENERATE_REPORT': 'Generate executive report',
+    'RESET_REPORT': 'Reset executive report',
+    'END_PROJECT': 'End project',
+    'CONFIRMATION': 'Confirmation',
+    'REALLY_MAKE_VISIBLE': 'Do you really want to make this project visible to the client?',
+    'REALLY_MAKE_INVISIBLE': 'Do you really want to make this project invisible to the client?',
+    'REALLY_RESET_REPORT': 'Do you really want to reset the executive report?',
+    'REALLY_END_PROJECT': 'Do you really want to end this project? Please keep in mind that after this you won\'t be able to make any further changes.',
+    '': '',
+  }
 
 };

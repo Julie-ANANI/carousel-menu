@@ -1,6 +1,23 @@
 export const PROJECT = {
-  'PATENTED': 'Protégé par brevet',
-  'CONTACT_PROJECT_MANAGER': 'Contacter le responsable',
+
+  'DROPDOWN_MENU': {
+    'OPTION_A': 'Exporter le projet'
+  },
+
+  'MODAL': {
+    'SELECT_FIELD': 'Sélectionnez les informations à exporter',
+    'BASE': 'Informations de base de l\'innovation',
+  },
+
+  'EXPORT': {
+    'ONLY_RESPONDENTS': 'Seulement les répondants',
+    'ALL_PROS': 'Tous les pros',
+    'BATCHES': 'batchs d\'emails',
+    'REQUESTS': 'requêtes de pros'
+  },
+
+  'CAMPAIGNS': 'Campagnes',
+
   'SOLUTION': 'Solution',
   'PROJECT': 'Projet',
   'ISSUE': 'Problématique',
@@ -13,8 +30,8 @@ export const PROJECT = {
     'FACEBOOK': 'Partager sur Facebook',
     'MAIL': 'Partager par email',
   },
-  'CAMPAIGNS': 'Campaigns',
-  'SETTINGS': 'Settings',
+
+  'SETTINGS': 'Réglages',
   'QUESTIONNAIRE': 'Questionnaire',
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choisir un questionnaire',
@@ -41,6 +58,7 @@ export const PROJECT = {
     'INSIGHTS_TO_VALIDATE': 'réponses à valider'
 
   },
+
   'DELIVERY' : {
     'DELIVERY': 'Livrable',
     'PUBLIC': 'Projet public',
@@ -61,8 +79,8 @@ export const PROJECT = {
     'OPERATOR_FEEDBACK': 'Compte-rendu de la mission'
   },
   'CARDS': 'Description',
-  'SYNTHESIS': 'Synthesis',
-  'PROJECT_TAGS': 'Project tags',
-  'ANSWER_TAGS': 'Insight tags',
-  'MAIL_CONFIG': 'Emails settings'
+  'SYNTHESIS': 'Synthèse',
+  'PROJECT_TAGS': 'Tags projet',
+  'ANSWER_TAGS': 'Tags réponses',
+  'MAIL_CONFIG': 'Réglages Emails'
 };

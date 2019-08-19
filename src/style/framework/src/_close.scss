@@ -1,0 +1,91 @@
+@import "variables";
+@import "mixins";
+
+.close {
+  @include inline-flex-centered();
+  @include icon-transition();
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  color: $text-white-color;
+  padding: 0;
+  text-align: center;
+  outline: none;
+  position: relative;
+  min-width: unset;
+  width: 2rem;
+  height: 2rem;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  font-size: $font-icon-lg;
+
+  &::before {
+    display: none;
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  &::after {
+    display: block;
+    content: "\2715";
+    z-index: 2;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: $text-white-color;
+
+    &::before {
+      display: block;
+      background-color: rgba(58, 66, 77, 0.10);
+    }
+
+  }
+
+  &.is-background {
+
+    &::before {
+      display: block;
+      background-color: rgba(10,10,10,.2);
+    }
+
+    &:hover {
+
+      &::before {
+        background-color: rgba(10,10,10,.3);
+      }
+
+    }
+
+  }
+
+  &.is-xs {
+    width: 1rem;
+    height: 1rem;
+    font-size: $font-icon-sm;
+  }
+
+  &.is-sm {
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: $font-icon-md;
+  }
+
+  &.is-normal {
+    width: 2rem;
+    height: 2rem;
+    font-size: $font-icon-lg;
+  }
+
+  &.is-lg {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.3rem;
+  }
+
+}

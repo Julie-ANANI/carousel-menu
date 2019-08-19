@@ -7,5 +7,7 @@ export const HEADER = {
   'MY_PROJECTS': 'My Projects',
   'SHARED_REPORTS': 'Shared Reports',
   'DISCOVER': 'Innovation Portfolio',
-  'CONTACT_US': 'Talk to us'
+  'CONTACT_US': 'Talk to us',
+  'CLIENT_SIDE': 'Client Side',
+  'ADMIN_SIDE': 'Admin Side'
 };

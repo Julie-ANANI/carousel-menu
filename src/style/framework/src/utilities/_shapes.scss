@@ -4,73 +4,59 @@
 .shape {
   @include inline-flex-centered();
   @include control-transition();
-  cursor: default;
-  text-align: center;
-  background-color: $background-color;
-  color: $light-color;
+  color: $text-primary-dark-color;
   font-weight: $font-weight-medium;
-  font-size: $font-size-sm;
+  background-color: $bg-border-color;
   line-height: $line-height-sm;
+  font-size: $font-size-sm;
   margin-right: $unit-2;
-  border: $border-width solid $background-color;
+  word-break: break-all;
+  text-align: center;
+  overflow: hidden;
+  padding: 0.1rem;
 
-  &.circle {
-    width: 50px;
-    height: 50px;
+  &.is-circle {
     border-radius: 50%;
-    background-color: $border-color;
-    color: $dark-color;
-    border-color: $border-color;
-    font-size: 0.65rem;
-
-    &.circle-md {
-      width: 35px;
-      height: 35px;
-    }
-
-    &.circle-sm {
-      width: 20px;
-      height: 20px;
-    }
-
-    &.circle-xs {
-      width: 10px;
-      height: 10px;
-    }
-
-    &.circle-success {
-      background-color: $success-color;
-      border-color: $success-color;
-    }
-
-    &.circle-white {
-      background-color: $bg-color-light;
-      border-color: $light-color;
-    }
-
-    &.circle-alert {
-      background-color: $alert-color;
-      border-color: $alert-color;
-    }
-
-    &.circle-meta {
-      background-color: $meta-color;
-      border-color: $meta-color;
-    }
-
-    &.circle-progress {
-      background-color: $progress-color;
-      border-color: $progress-color;
-    }
-
   }
 
-  &.rect {
-    font-size: $font-size-lg;
-    width: 40px;
-    height: 40px;
-    border-width: $border-width-lg;
+  &.is-rounded {
     border-radius: $border-radius;
+  }
+
+  &.is-circle, &.is-rounded {
+    width: 2rem;
+    height: 2rem;
+
+    &.is-xs {
+      width: 0.6rem;
+      height: 0.6rem;
+      padding: 0;
+      font-size: 0.5rem;
+    }
+
+    &.is-sm {
+      width: 1rem;
+      height: 1rem;
+      font-size: $font-icon-xs;
+    }
+
+    &.is-md {
+      width: 1.75rem;
+      height: 1.75rem;
+      font-size: 0.65rem;
+    }
+
+    &.is-normal {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    &.is-lg {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: $font-size-lg;
+    }
+
   }
 
 }

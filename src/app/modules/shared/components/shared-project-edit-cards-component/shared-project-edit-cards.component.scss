@@ -6,7 +6,6 @@
     margin: 0;
   }
 
-
   .flex-between, .flex-start {
     flex-wrap: wrap;
   }
@@ -169,6 +168,10 @@
 
     .upload-wrapper {
       flex-direction: column;
+    }
+
+    .popover {
+      display: none;
     }
 
   }
