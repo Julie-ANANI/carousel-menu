@@ -314,7 +314,7 @@ button::-moz-focus-inner,
  * Change the border, margin, and padding in all browsers (opinionated) (changed).
  */
 
-fieldset {
+fieldset, blockquote {
   border: 0;
   margin: 0;
   padding: 0;

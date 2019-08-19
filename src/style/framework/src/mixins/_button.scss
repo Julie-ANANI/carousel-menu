@@ -26,27 +26,6 @@
 
 }
 
-@mixin button-no-hover-effect-variant($color: $bg-primary-color) {
-  color: $text-white-color;
-  background-color: $color;
-  border-color: $color;
-
-  &:hover, &:focus, &.is-active, &:active {
-    color: $text-white-color;
-    background-color: $color;
-    border-color: $color;
-  }
-
-  &[disabled], &:disabled, &.disabled {
-    background-color: $color;
-    border-color: $color;
-    cursor: not-allowed;
-    box-shadow: none;
-    opacity: 0.5;
-  }
-
-}
-
 @mixin button-outline-variant($color: $bg-primary-color) {
   color: $color;
   border-color: $color;
@@ -171,6 +150,10 @@
     background-color: $color;
     border-color: $color;
     box-shadow: $box-shadow-button-hover;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    box-shadow: none;
   }
 
 }
