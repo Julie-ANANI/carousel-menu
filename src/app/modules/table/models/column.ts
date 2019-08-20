@@ -4,7 +4,7 @@ import { MultiLabel } from './multi-label';
 export interface Column {
   _isSelected?: boolean;
   _isSearchable?: boolean;
-  _isHidden?: boolean,
+  _isHidden?: boolean;
   readonly _attrs: string[];
   readonly _type: types;
   readonly _name?: string;

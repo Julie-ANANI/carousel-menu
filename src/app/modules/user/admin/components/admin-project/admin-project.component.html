@@ -145,10 +145,11 @@
       </div>
 
       <label class="form-checkbox">
-          <input type="checkbox"
-                 (change)="projectExportConfig.anonymous = !projectExportConfig.anonymous"
-                 [checked]="projectExportConfig.anonymous">
-          <i class="form-icon"></i> {{ 'PROJECT.MODAL.ANON' | translate }}
+        <input
+          (change)="projectExportConfig.anonymous = !projectExportConfig.anonymous"
+          [checked]="projectExportConfig.anonymous"
+          type="checkbox">
+        <i class="form-icon"></i> {{ 'PROJECT.MODAL.ANON' | translate }}
       </label>
 
     </div>

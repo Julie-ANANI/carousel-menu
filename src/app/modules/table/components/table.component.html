@@ -227,8 +227,8 @@
                   <!-- if type is check -->
                   <ng-container *ngSwitchCase="'CHECK'">
                     <span>
-                      <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 0" class="fas fa-times text-error"></i>
-                      <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 1" class="fas fa-check text-success"></i>
+                      <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 0" class="icon icon-cross text-alert"></i>
+                      <i *ngIf="getContentValue(row, getAttrs(column)[0]) == 1" class="icon icon-check text-success"></i>
                     </span>
                   </ng-container>
 
@@ -252,8 +252,8 @@
 
                   <!-- if type is tags -->
                   <ng-container *ngSwitchCase="'TAG-LIST'">
-                    <span class="tbody-td-tag d-flex">
-                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label label-tag is-rounded">
+                    <span class="d-flex">
+                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label is-sm is-tag is-rounded">
                         {{ tag.label | multiling:userLang }}
                       </span>
                       <span *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">...</span>
