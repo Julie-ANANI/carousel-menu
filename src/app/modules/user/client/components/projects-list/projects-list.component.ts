@@ -44,7 +44,7 @@ export class ProjectsListComponent implements OnInit {
   private _deleteModal = false;
 
   private _config: any = {
-    fields: 'name created updated status collaborators principalMedia',
+    fields: 'name created updated status collaborators principalMedia innovationCards',
     limit: '10',
     offset: '0',
     search: '{}',
