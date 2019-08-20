@@ -86,6 +86,7 @@
                 <div class="card-body">
                   <app-market-comment-2
                     [answer]="answer"
+                    [canEditTags]="adminSide"
                     [questionId]="questionReceived.identifier+'Comment'"
                     (modalAnswerChange)="seeAnswer($event)">
                   </app-market-comment-2>
@@ -147,7 +148,12 @@
             <div class="section-light-pad rm-pad-bottom rm-margin">
               <div *ngFor="let answer of answersToShow" class="card">
                 <div class="card-body less-padding">
-                  <app-market-comment-2 [answer]="answer" [questionId]="questionReceived.identifier" (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
+                  <app-market-comment-2
+                    [answer]="answer"
+                    [canEditTags]="adminSide"
+                    [questionId]="questionReceived.identifier"
+                    (modalAnswerChange)="seeAnswer($event)">
+                  </app-market-comment-2>
                 </div>
               </div>
             </div>
@@ -182,7 +188,11 @@
       <div class="comment-wrapper rm-margin">
         <div *ngFor="let answer of answersWithComment" class="card">
           <div class="card-body less-padding">
-            <app-market-comment-2 [answer]="answer" [questionId]="questionReceived.identifier+'Comment'" (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
+            <app-market-comment-2
+              [answer]="answer"
+              [canEditTags]="adminSide"
+              [questionId]="questionReceived.identifier+'Comment'"
+              (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
           </div>
         </div>
       </div>

@@ -132,7 +132,7 @@ export class SharedTagComponent implements OnInit {
   }
 
   get userLang(): string {
-    return this._translateService.currentLang || 'en';
+    return this._translateService.currentLang;
   }
 
   get canAdd(): boolean {

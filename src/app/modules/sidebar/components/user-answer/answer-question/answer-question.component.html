@@ -1,4 +1,4 @@
-<ng-container *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode)">
+<ng-container *ngIf="fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode">
   <section class="answer-question-component">
 
     <!-- question label -->
@@ -143,16 +143,6 @@
                 <label for="{{question.identifier}}-{{option.identifier}}">
                   {{ optionLabel(option.identifier) }}
                 </label>
-                <!-- Rating checkbox question, not really implemented yet
-                  <ng-container *ngIf="editMode">
-                    <app-rating-item
-                      [editMode]="editMode"
-                      [prop]="question.identifier"
-                      [rating]="fullAnswer.answers[question.identifier + 'Quality']"
-                      (ratingChange)="updateQuality($event)">
-                    </app-rating-item>
-                  </ng-container>
-                -->
               </li>
             </ul>
           </ng-container>

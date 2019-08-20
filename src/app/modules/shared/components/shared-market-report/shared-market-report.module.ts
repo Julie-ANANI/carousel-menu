@@ -24,6 +24,7 @@ import { BluesquareComponent } from './components/bluesquare/bluesquare.componen
 import { ProfessionalTagComponent } from './components/pro-tag/pro-tag.component';
 import { SharedMarketReportComponent } from './shared-market-report.component';
 import { SharedMarketCommentComponent } from './components/professional-comment/professional-comment.component';
+import { SharedTagModule } from '../shared-tag/shared-tag.module';
 import { QuestionConclusionComponent } from './components/question-conclusion/question-conclusion.component';
 import { QuestionSectionComponent } from './components/question-section/question-section.component';
 import { ScaleComponent } from './components/scale/scale.component';
@@ -60,6 +61,7 @@ import { WorldmapFiltersService } from './services/worldmap-filter.service';
     MessageTemplate1Module,
     ModalModule,
     SharedExecutiveReportModule,
+    SharedTagModule,
     PieChartModule,
     SharedMainPageModule
   ],
