@@ -332,6 +332,7 @@
     font-size: $font-icon;
     margin-left: $unit-2;
     margin-right: $unit-2;
+    text-decoration: none;
   }
 
   &[disabled], &:disabled, &.disabled {

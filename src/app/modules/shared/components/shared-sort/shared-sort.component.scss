@@ -13,20 +13,20 @@
     margin-left: 5px;
     margin-bottom: 10px;
 
-    .fa-angle-up, .fa-angle-down {
-      font-size: 0.6rem;
+    .icon-arrow-up, .icon-arrow-down {
+      font-size: 0.48rem;
       color: #CBD6E2;
     }
 
     span {
-      height: 8px;
+      height: 8.5px;
     }
 
   }
 
   &:hover {
 
-    .icon-wrapper .fa-angle-down {
+    .icon-wrapper .icon-arrow-down {
       color: $primary-color;
     }
 
@@ -36,11 +36,11 @@
 
     .icon-wrapper {
 
-      .fa-angle-up {
+      .icon-arrow-up {
         color: $primary-color !important;
       }
 
-      .fa-angle-down {
+      .icon-arrow-downdown {
         color: $meta-color;
       }
 
@@ -48,7 +48,7 @@
 
     &:hover {
 
-      .fa-angle-down {
+      .icon-arrow-down {
         color: $primary-color !important;
       }
 
@@ -60,11 +60,11 @@
 
     .icon-wrapper {
 
-      .fa-angle-down {
+      .icon-arrow-down {
         color: $primary-color !important;
       }
 
-      .fa-angle-up {
+      .icon-arrow-up {
         color: $meta-color;
       }
 
@@ -72,7 +72,7 @@
 
     &:hover {
 
-      .fa-angle-up {
+      .icon-arrow-up {
         color: $primary-color !important;
       }
 
