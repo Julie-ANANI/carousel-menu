@@ -113,6 +113,9 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
 
+  /**
+   *
+   */
   public getMessage(): string {
     switch (this._innovation.status) {
 
