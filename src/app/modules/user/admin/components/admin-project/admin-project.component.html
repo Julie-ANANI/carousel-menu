@@ -147,6 +147,13 @@
         <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
       </label>
 
+      <label class="form-checkbox">
+          <input type="checkbox"
+                 (change)="projectExportConfig.anonymous = !projectExportConfig.anonymous"
+                 [checked]="projectExportConfig.anonymous">
+          <i class="form-icon"></i> {{ 'PROJECT.MODAL.ANON' | translate }}
+      </label>
+
     </div>
 
   </div>

@@ -7,6 +7,7 @@ export const PROJECT = {
   'MODAL': {
     'SELECT_FIELD': 'Select the information to export',
     'BASE': 'Basic innovation data',
+    'ANON': 'Anonymize personal data'
   },
 
   'EXPORT': {
