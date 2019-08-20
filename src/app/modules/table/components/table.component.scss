@@ -2,17 +2,6 @@
 
 #table-wrapper {
 
-  .table-header-wrapper {
-    flex-wrap: wrap;
-    padding-bottom: 0.5rem;
-
-    .title {
-      margin-bottom: $unit-5;
-      margin-right: $unit-5;
-    }
-
-  }
-
   .table-loading-wrapper {
     top: 0;
     left: 0;
@@ -58,25 +47,8 @@
         font-weight: $font-weight-medium;
         background-color: $table-th-background-color !important;
 
-        .btn {
-          border: none;
-          padding: 0;
-          font-size: $font-size-sm;
-
-          i {
-            margin-left: 0;
-            margin-right: 0.3rem;
-            font-size: 0.7rem;
-          }
-
-          &:hover {
-            text-decoration: underline;
-          }
-
-        }
-
-        .th-selected-heading, .th-action-button {
-          margin-right: 1.25rem;
+        .button span:hover{
+          text-decoration: underline;
         }
 
       }
@@ -100,11 +72,15 @@
               right: 0;
               padding-left: 0.75rem;
 
-              .btn-xs {
-                display: inline-flex;
+              .button {
+                display: none;
                 transition: none;
+                padding: $unit-2 $unit-3;
+                border-width: $border-width-lg;
                 visibility: hidden;
-                background-color: $bg-light-color;
+                color: $text-background-color;
+                background-color: $table-th-hover-background-color;
+                border-color: $table-tr-border-color;
               }
 
             }
@@ -152,17 +128,6 @@
 
               }
 
-              .tbody-td-tag {
-
-                .label-tag {
-                  background-color: #D7EBF3;
-                  color: #2295C6;
-                  font-size: 0.5rem;
-                  padding: $unit-1 $unit-3;
-                }
-
-              }
-
               .tbody-td-multi-choice-label {
                 margin: 0;
                 padding: $unit-2 $unit-4;
@@ -185,11 +150,15 @@
               .tbody-td-action-button {
                 background-color: $table-tr-hover-background-color;
 
-                .btn-xs {
+                .button {
+                  display: inline-flex;
                   visibility: visible;
-                  color: $text-background-color;
-                  background-color: $table-th-hover-background-color;
-                  border-color: $table-tr-border-color;
+
+                  &:hover {
+                    background-color: transparent !important;
+                    transition: background-color 0.2s ease !important;
+                  }
+
                 }
 
               }
@@ -231,41 +200,21 @@
           display: none;
         }
 
-        .hr {
-          margin-left: auto;
-          margin-right: auto;
-          width: 75%;
-          border-width: 2px;
-          border-color: $primary-color;
-        }
-
         &:hover {
           cursor: pointer;
           background-color: $table-th-hover-background-color;
         }
 
         &.active {
-          border-color: $primary-color;
+          border-color: $border-primary-color;
 
           i {
             display: block;
-            color: $primary-color;
+            color: $text-warning-color;
           }
 
         }
 
-      }
-
-    }
-
-    .btn-xs {
-      min-width: unset;
-      height: unset;
-      padding: 0.3rem $unit-3;
-
-      &:hover {
-        background-color: transparent !important;
-        transition: background-color 0.2s ease !important;
       }
 
     }
@@ -294,7 +243,8 @@
                 position: relative;
                 order: 2;
 
-                .btn-xs {
+                .button {
+                  display: inline-flex;
                   visibility: visible;
                 }
 

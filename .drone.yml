@@ -1,7 +1,7 @@
 kind: pipeline
 name: default
 
-## UMI development steps
+## UMI development steps -
 steps:
 - name: baseimage
   image: plugins/docker
@@ -56,9 +56,9 @@ steps:
     timeout: 240
   when:
     event:
-    - push
+      - push
     branch:
-    - development
+      - development
 
 ## UMI production steps
 ## This will build the base image. The base image for the front is the same for all instances
