@@ -3,7 +3,7 @@ import { Answer } from '../../../../../../models/answer';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from '../../../../../../services/translation/translation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import {AnswerService} from "../../../../../../services/answer/answer.service";
+import { AnswerService } from '../../../../../../services/answer/answer.service';
 
 @Component({
   selector: 'app-market-comment',
