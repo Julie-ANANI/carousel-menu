@@ -1,7 +1,7 @@
 kind: pipeline
 name: default
 
-## UMI development steps ???
+## UMI development steps -
 steps:
 - name: baseimage
   image: plugins/docker
