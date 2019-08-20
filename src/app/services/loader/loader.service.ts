@@ -21,12 +21,8 @@ export class LoaderService implements OnDestroy {
 
   stopLoading (): void {
     --this._nbInProgressRequests;
-
-    if (this._nbInProgressRequests === -1) {
-      this._isLoadingSubject.next(false);
-    }
-
     if (this._nbInProgressRequests <= 0) {
+      this._isLoadingSubject.next(false);
       this._nbInProgressRequests = 0;
     }
 
