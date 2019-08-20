@@ -4,16 +4,15 @@
 #showcase-innovations {
   height: 100%;
 
-  .see-more-wrapper, .icons {
+  .see-more-wrapper, .icon-container {
     @include control-transition();
     visibility: hidden;
   }
 
-  .icons {
+  .icon-container {
     top: -6px;
     right: 0;
     margin-right: 0;
-    font-size: $font-icon-lg;
   }
 
   h2, h3 {
@@ -58,7 +57,7 @@
 
   &:hover {
 
-    .icon, .see-more-wrapper {
+    .icon-container, .see-more-wrapper {
       visibility: visible;
     }
 

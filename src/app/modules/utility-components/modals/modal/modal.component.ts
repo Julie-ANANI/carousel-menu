@@ -13,35 +13,29 @@ export class ModalComponent implements OnInit, OnDestroy {
     this._show = value;
   }
 
-  @Input() set modalPosition(value: string) {
-    this._position = value;
-  }
-
-  @Input() set widthMax(value: string) {
+  @Input() set maxWidth(value: string) {
     this._maxWidth = value;
   }
 
-  @Input() set heightMax(value: string) {
-    this._maxHeight = value;
+  @Input() set title(value: string) {
+    this._title = value;
   }
 
-  @Input() set modalTitle(value: string) {
-    this._title = value;
+  @Input() set enableCloseButton(value: boolean) {
+    this._enableCloseButton = value;
   }
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private readonly _element: any;
 
-  private _show: boolean;
+  private _show: boolean = false;
 
-  private _maxWidth: string;
+  private _maxWidth: string = '640px';
 
-  private _maxHeight: string;
+  private _title: string = '';
 
-  private _title: string;
-
-  private _position = '';
+  private _enableCloseButton: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _elementRef: ElementRef) {
@@ -56,12 +50,14 @@ export class ModalComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  toggleState(event: Event) {
+  public toggleState(event: Event) {
+    const classesToCheck: Array<string> = ['modal-overlay', 'modal-close is-sm', 'button modal-cancel', 'close'];
     const { className } = (event.target as any);
-    if (className === 'modal-overlay' || className === 'btn btn-close' || className === 'btn btn-sm btn-cancel' || className === 'btn btn-cancel' ) {
+
+    if (classesToCheck.indexOf(className) !== -1) {
       this.showModalChange.emit(false);
     }
+
   }
 
   get element(): any {
@@ -84,16 +80,12 @@ export class ModalComponent implements OnInit, OnDestroy {
     return this._maxWidth;
   }
 
-  get maxHeight(): string {
-    return this._maxHeight;
-  }
-
   get title(): string {
     return this._title;
   }
 
-  get position(): string {
-    return this._position;
+  get enableCloseButton(): boolean {
+    return this._enableCloseButton;
   }
 
   ngOnDestroy(): void {

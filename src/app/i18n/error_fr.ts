@@ -172,7 +172,7 @@ export const ERROR = {
     'FETCHING': 'Nous rencontrons des problèmes lors de la récupération des données. Cela pourrait être dû à un problème de connexion au serveur.',
     'FETCHING_CAMPAIGN_ANSWERS': 'Nous rencontrons des problèmes lors de la récupération des réponses pour cette campagne.',
     'PROJECT_FETCHING_ERROR': 'Cela peut être dû à un problème de connexion au serveur ou au fait que nous n\'avons pas trouvé l\'innovation que vous recherchez.',
-    'HEADING_1': 'Oups.. Quelque chose s\'est mal passé.',
+    'HEADING_1': 'Oups. quelque chose s\'est mal passé..',
     'FETCHING_MESSAGE_1': 'Nous rencontrons des problèmes lors de la récupération des données.',
     'SERVER_CONNECTION': 'Cela pourrait être à cause d\'un problème de connexion au serveur.'
   },

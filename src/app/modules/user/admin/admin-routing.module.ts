@@ -6,7 +6,6 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { AdminProfessionalsComponent } from './components/admin-professionals/admin-professionals.component';
 import { AdminProjectComponent } from './components/admin-project/admin-project.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
-import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
@@ -144,12 +143,6 @@ const adminRoutes: Routes = [
         component: AdminLibrariesComponent,
         children: [
           ...librariesRoutes
-        ]
-      },
-      {
-        path: 'patents',
-        children: [
-          { path: '', component: AdminPatentsComponent, pathMatch: 'full' }
         ]
       },
       {

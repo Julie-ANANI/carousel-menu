@@ -34,6 +34,7 @@ import { BarsComponent } from './components/bars/bars.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -78,6 +79,7 @@ const docsCssRoutes: Routes = [
       { path: 'components/cards', component: CardsComponent, pathMatch: 'full' },
       { path: 'components/dropdown', component: DropdownComponent, pathMatch: 'full' },
       { path: 'components/menu', component: MenuComponent, pathMatch: 'full' },
+      { path: 'components/modal', component: ModalComponent, pathMatch: 'full' },
       {
         path: 'utilities',
         redirectTo: 'utilities/colors',

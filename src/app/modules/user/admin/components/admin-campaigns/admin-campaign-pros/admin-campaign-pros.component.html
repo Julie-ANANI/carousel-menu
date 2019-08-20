@@ -113,35 +113,30 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalImport" [modalTitle]="'COMMON.MODAL.TITLE_IMPORT'">
+<app-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_IMPORT'">
 
-  <label class="form-label">{{ 'CAMPAIGNS.LABEL_IMPORT' | translate }}</label>
-  <app-autocomplete-input
-    (update)="updateCampaign($event)"
-    [onlyOne]="true"
-    [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
-  </app-autocomplete-input>
+  <section class="modal-body">
 
-  <div class="text-center p-top-25">
-    <label class="btn btn-sm ghost-primary">
-      <input #fileupload type="file" [hidden]="true" (change)="onClickImportCsv(fileupload.files[0])" />
-      Import file
-    </label>
-  </div>
+    <label class="form-label">{{ 'CAMPAIGNS.LABEL_IMPORT' | translate }}</label>
+    <app-autocomplete-input
+      (update)="updateCampaign($event)"
+      [onlyOne]="true"
+      [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
+    </app-autocomplete-input>
 
-  <div class="modal-footer">
+    <div class="text-center p-top-25">
+      <label class="btn btn-sm ghost-primary">
+        <input #fileupload type="file" [hidden]="true" (change)="onClickImportCsv(fileupload.files[0])" />
+        Import file
+      </label>
+    </div>
 
-    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+  </section>
 
-    <button
-      (click)="onClickConfirm()"
-      [disabled]="!originCampaign.length"
-      [innerText]="'COMMON.BUTTON.CONFIRM'"
-      class="btn btn-sm btn-primary"
-      translate>
-    </button>
-
-  </div>
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL'  | translate }}</button>
+    <button (click)="onClickConfirm()" [disabled]="!originCampaign.length" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>
 <!-- /modal -->

@@ -172,7 +172,7 @@ export const ERROR = {
     'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check if the URL is good.',
     'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.',
     'PROJECT_FETCHING_ERROR': 'It could be possible because of server connection problem or we could not find the project that you are looking for.',
-    'HEADING_1': 'Oups... Something went wrong.',
+    'HEADING_1': 'Oups. something went wrong...',
     'FETCHING_MESSAGE_1': 'There was an error while fetching the data from the server.',
     'SERVER_CONNECTION': 'It could be possible because of server connection problem.'
   },

@@ -6,7 +6,7 @@ The selector of this component is **"<app-modal-media>"**. It includes 2 input: 
 
 In the html file of the parent component, add this 
 
-<app-modal [(showModal)]="displayVariable" [widthMax]="width">
+<app-modal [(showModal)]="displayVariable" [maxWidth]="width">
 <br>**"Add your content here"** 
 <br></app-modal>
 

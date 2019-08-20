@@ -20,17 +20,22 @@
 
 
 <!-- modal to delete -->
-<app-modal [(showModal)]="showDeleteModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+<app-modal [(showModal)]="showDeleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
-  {{ 'USERS.PITCH-DELETE' | translate }}
-  <ul>
-    <li *ngFor="let country of countriesToRemove">{{country.name}}</li>
-  </ul>
+  <section class="modal-body">
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="removeCountries()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+    {{ 'USERS.PITCH-DELETE' | translate }}
+
+    <ul>
+      <li *ngFor="let country of countriesToRemove">{{country.name}}</li>
+    </ul>
+
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="removeCountries()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>
 <!-- /modal to delete -->
