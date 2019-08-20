@@ -294,7 +294,7 @@
                   <!-- if type is text -->
                   <ng-container *ngSwitchDefault>
                     <span *ngFor="let attr of getAttrs(column)">
-                      {{ (getContentValue(row, attr)|| " - ").toString() }}
+                      {{ (getContentValue(row, attr)|| " - ").toString() | FormatText:true}}
                     </span>
                  </ng-container>
 

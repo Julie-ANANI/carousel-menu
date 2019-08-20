@@ -36,7 +36,8 @@ export class AdminProjectComponent implements OnInit {
       VALIDATED_UMIBOT: false,
       REJECTED_UMIBOT: false,
     },
-    campaigns: false
+    campaigns: false,
+    anonymous: true
   };
 
   constructor(private _activatedRoute: ActivatedRoute,
