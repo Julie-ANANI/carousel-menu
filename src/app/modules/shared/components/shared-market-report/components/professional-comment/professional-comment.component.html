@@ -10,14 +10,31 @@
   </app-pro-tag>
 
 
-  <!-- divider -->
-  <hr *ngIf="answer.answers[questionId] && answer.answers[questionId].length > 0" class="hr">
+  <ng-container *ngIf="answer.answers[questionId] && answer.answers[questionId].length > 0">
+
+    <!-- divider -->
+    <hr class="hr">
+
+    <!-- comment -->
+    <div *ngIf="!showTranslation" class="comment-wrapper text-center">
+      <span>{{ answer.answers[questionId] }}</span>
+      <button *ngIf="answer.used_language != currentLang"
+              class="button is-secondary is-sm is-outlined"
+              (click)="showTranslation = true">
+        {{ 'COMMON.TRANSLATE' | translate}}
+      </button>
+    </div>
+
+    <!-- translated comment -->
+    <div *ngIf="showTranslation" class="comment-wrapper text-center">
+      <span>{{ answer.answers_translations[questionId][currentLang] }}</span>
+      <button class="button is-secondary is-sm is-outlined" (click)="showTranslation = false">
+        {{ 'COMMON.RESET' | translate}}
+      </button>
+    </div>
 
 
-  <!-- comment -->
-  <div *ngIf="answer.answers[questionId] && answer.answers[questionId].length > 0" class="comment-wrapper text-center">
-    <span>{{ answer.answers[questionId] }}</span>
-  </div>
 
+  </ng-container>
 
 </section>
