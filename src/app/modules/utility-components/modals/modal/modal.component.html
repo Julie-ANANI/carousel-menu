@@ -1,18 +1,23 @@
-<section (click)="toggleState($event)" *ngIf="showModal">
-  <div [ngClass]="showModal ? 'active' : 'inactive'" class="modal">
-    <div [ngStyle]="{ 'align-items': position ? 'normal' : 'center' }" class="modal-overlay">
-      <div [ngStyle]="{ 'max-width': maxWidth ? maxWidth : '640px', 'top': position ? position : 'auto' }" class="modal-container">
+<div (click)="toggleState($event)" [ngClass]="showModal ? 'active' : 'inactive'" class="modal">
+  <div class="modal-overlay"></div>
+  <div [ngStyle]="{ 'max-width': maxWidth }" class="modal-container">
 
-        <div *ngIf="title" class="header modal-header">
-          <h5 class="m-no-bottom">{{ title | translate }}</h5>
-          <button class="btn btn-close"></button>
-        </div>
+    <!-- header -->
+    <header *ngIf="title" class="modal-header">
+      <p class="modal-title" [innerText]="title" translate></p>
+      <button type="button" class="close" aria-label="close"></button>
+    </header>
+    <!-- /header -->
 
-        <div class="modal-body" [ngStyle]="{ 'max-height': maxHeight ? maxHeight : '80vh' }">
-          <ng-content></ng-content>
-        </div>
+    <!-- content -->
+    <ng-content></ng-content>
+    <!-- /content -->
 
-      </div>
+    <!-- close button -->
+    <div *ngIf="enableCloseButton">
+      <button type="button" class="modal-close is-sm" aria-label="close"></button>
     </div>
+    <!-- /close button -->
+
   </div>
-</section>
+</div>

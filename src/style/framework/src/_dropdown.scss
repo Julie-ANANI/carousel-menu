@@ -13,15 +13,13 @@
     max-height: 500px;
     top: 100%;
     overflow-y: auto;
-    padding: 0.5rem 0;
 
     .menu-item {
-      padding: 0.5rem 1.1rem;
       width: 100%;
 
-      & > a, .fullspace {
-        margin: -0.5rem -1.1rem;
-        padding: 0.5rem 1.1rem;
+      .fullspace {
+        margin: (-$unit-2) -0.6rem;
+        padding: $unit-2 0.6rem;
       }
 
       .fullspace {

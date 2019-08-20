@@ -134,7 +134,7 @@
 
 
   <!-- modal to ask user to sure about submitting the project -->
-  <app-modal [(showModal)]="submitModal" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+  <app-modal [(showModal)]="submitModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
     {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL.CONTENT' | translate }}
     <div class="modal-footer">
       <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>

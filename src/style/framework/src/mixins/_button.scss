@@ -10,28 +10,7 @@
     border-color: lighten($color, 10%);
   }
 
-  &:focus, &.is-active, &:active  {
-    color: $text-white-color;
-    background-color: $color;
-    border-color: $color;
-  }
-
-  &[disabled], &:disabled, &.disabled {
-    background-color: $color;
-    border-color: $color;
-    cursor: not-allowed;
-    box-shadow: none;
-    opacity: 0.5;
-  }
-
-}
-
-@mixin button-no-hover-effect-variant($color: $bg-primary-color) {
-  color: $text-white-color;
-  background-color: $color;
-  border-color: $color;
-
-  &:hover, &:focus, &.is-active, &:active {
+  &:focus, &.active, &:active  {
     color: $text-white-color;
     background-color: $color;
     border-color: $color;
@@ -52,23 +31,35 @@
   border-color: $color;
   background-color: transparent;
 
-  &:focus, &.is-active, &:active  {
+  &:focus, &.active, &:active  {
     color: $color;
     border-color: $color;
   }
 
-  &:hover, &:focus, &.is-active, &:active {
+  &:hover, &:focus, &.active, &:active {
 
-    @if $color == $primary-color {
+    @if $color == $bg-primary-color {
       background-color: $hover-background-color;
     }
 
-    @if $color == $secondary-color {
+    @if $color == $bg-secondary-color {
       background-color: lighten($color, 53%);
     }
 
-    @if $color == $alert-color {
+    @if $color == $bg-alert-color {
       background-color: lighten($color, 34%);
+    }
+
+    @if $color == $bg-success-color {
+      background-color: lighten($color, 46%);
+    }
+
+    @if $color == $bg-meta-color {
+      background-color: lighten($color, 30%);
+    }
+
+    @if $color == $bg-background-color {
+      background-color: lighten($color, 57%);
     }
 
   }
@@ -95,7 +86,7 @@
     background-color: transparent;
   }
 
-  &.is-active, &:active  {
+  &.active, &:active  {
     color: $color;
     border: none;
     background-color: transparent;
@@ -118,7 +109,7 @@
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 
-  &:focus, &.is-active, &:active  {
+  &:focus, &.active, &:active  {
     color: $text-white-color;
     background-color: $color;
     border-color: $color;
@@ -159,6 +150,10 @@
     background-color: $color;
     border-color: $color;
     box-shadow: $box-shadow-button-hover;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    box-shadow: none;
   }
 
 }

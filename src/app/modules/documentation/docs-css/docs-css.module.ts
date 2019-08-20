@@ -34,6 +34,8 @@ import { BannersComponent } from './components/banners/banners.component';
 import { BarsComponent } from './components/bars/bars.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   imports: [
@@ -72,7 +74,9 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     BannersComponent,
     BarsComponent,
     CardsComponent,
-    DropdownComponent
+    DropdownComponent,
+    MenuComponent,
+    ModalComponent
   ],
 })
 

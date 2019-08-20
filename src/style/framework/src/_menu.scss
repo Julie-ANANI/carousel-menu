@@ -7,7 +7,7 @@
   list-style: none;
   margin: 0;
   min-width: $control-width-xs;
-  padding: $unit-2;
+  padding: $unit-2 0;
   transform: translateY($unit-1);
   z-index: $zindex-3;
   box-shadow: $box-shadow-menu;
@@ -19,14 +19,14 @@
     margin-top: 0;
     color: $text-background-color;
     font-weight: normal;
-    padding: 0.5rem;
+    padding: $unit-2 0.6rem;
     cursor: pointer;
 
     & > a {
       display: block;
       color: inherit;
-      margin: -0.5rem;
-      padding: 0.5rem;
+      margin: (-$unit-2) -0.6rem;
+      padding: $unit-2 0.6rem;
     }
 
     &:hover, &:focus, &:active, &.active {
@@ -34,7 +34,7 @@
     }
 
     &:not(:first-child) {
-      margin-top: .2rem;
+      margin-top: .1rem;
     }
 
   }
@@ -42,6 +42,10 @@
   &.menu-nav {
     background: transparent;
     box-shadow: none;
+  }
+
+  &.is-xs {
+    width: $control-width-xs;
   }
 
   &.is-md {

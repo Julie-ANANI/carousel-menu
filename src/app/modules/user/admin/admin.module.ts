@@ -5,7 +5,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 
@@ -84,7 +83,6 @@ import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-p
     AdminCommunityModule
   ],
   declarations: [
-    AdminPatentsComponent,
     AdminSettingsComponent
   ],
   providers: [

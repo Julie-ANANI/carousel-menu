@@ -42,9 +42,9 @@ p {
 // Blockquote
 blockquote {
   font-size: $font-size-md;
-  border-left: $border-width-lg solid $border-color;
-  margin-left: 0;
-  padding: $unit-2 $unit-4;
+  border-left: 5px solid $border-color;
+  padding: $unit-5;
+  background-color: #f5f5f5;
 
   p:last-child {
     margin-bottom: 0;

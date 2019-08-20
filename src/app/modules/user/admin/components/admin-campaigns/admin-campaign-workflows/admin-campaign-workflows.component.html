@@ -75,11 +75,16 @@
 
 
 <!-- modal to ask for the confirmation if importing the same template -->
-<app-modal [(showModal)]="modalImport" [modalTitle]="'COMMON.MODAL.TITLE_CONFIRMATION'">
-  {{ modalContent | translate }}
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+<app-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+
+  <section class="modal-body">
+    {{ modalContent | translate }}
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
 </app-modal>
 <!-- /modal to ask for the confirmation if importing the same template -->

@@ -54,15 +54,19 @@
   </tfoot>
 </table>
 
-<app-modal [(showModal)]="keywordsModal" [modalTitle]="'Keywords'">
-  <small><strong>{{nbSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
+<app-modal [(showModal)]="keywordsModal" [title]="'Keywords'">
 
-  <ul>
-    <li *ngFor="let keywords of proKeywords">{{ keywords }}</li>
-  </ul>
+  <section class="modal-body">
+    <small><strong>{{nbSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-  </div>
+    <ul>
+      <li *ngFor="let keywords of proKeywords">{{ keywords }}</li>
+    </ul>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+  </footer>
+
 </app-modal>
 

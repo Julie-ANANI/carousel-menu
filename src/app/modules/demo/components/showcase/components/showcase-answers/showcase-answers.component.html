@@ -1,10 +1,11 @@
 <section id="showcase-answers" class="relative">
 
-
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && answers.length > 0">
-    <div class="icons is-info absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
-      <i class="fas fa-bars"></i>
+    <div class="icon-container is-overlay text-notify absolute" (click)="openModal($event)">
+      <span class="tooltip" [attr.data-tooltip]="'Menu'">
+        <i class="icon icon-menu"></i>
+      </span>
     </div>
   </ng-container>
   <!-- /bar icon -->
@@ -61,36 +62,38 @@
 
 
 <!-- modal to select the answers -->
-<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
+<app-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
 
-  <div class="card-wrapper d-flex">
-    <ng-container *ngFor="let answer of answers">
-      <div class="card is-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
+ <section class="modal-body">
+   <div class="card-wrapper d-flex">
+     <ng-container *ngFor="let answer of answers">
+       <div class="card is-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
 
-        <i class="fas fa-check-circle"></i>
+         <i class="fas fa-check-circle"></i>
 
-        <ng-container *ngIf="isAdmin">
-          <label class="absolute c-hand">
-            <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
-          </label>
-        </ng-container>
+         <ng-container *ngIf="isAdmin">
+           <label class="absolute c-hand">
+             <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
+           </label>
+         </ng-container>
 
-        <h4 class="text-background text-medium text-xs">{{ answer.job }}</h4>
+         <h4 class="text-background text-medium text-xs">{{ answer.job }}</h4>
 
-        <div class="flex-start">
-          <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
-          <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
-        </div>
+         <div class="flex-start">
+           <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
+           <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
+         </div>
 
-      </div>
-    </ng-container>
-  </div>
+       </div>
+     </ng-container>
+   </div>
+ </section>
 
   <ng-container *ngIf="isAdmin">
-    <div class="modal-footer">
-      <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-      <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
-    </div>
+    <footer class="modal-footer">
+      <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+      <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    </footer>
   </ng-container>
 
 </app-modal>

@@ -3,8 +3,10 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && innovations.length > 0">
-    <div class="icons is-info absolute tooltip" [attr.data-tooltip]="'Menu'" (click)="openModal($event)">
-      <i class="fas fa-bars"></i>
+    <div class="icon-container is-overlay text-notify absolute" (click)="openModal($event)">
+      <span class="tooltip" [attr.data-tooltip]="'Menu'">
+        <i class="icon icon-menu"></i>
+      </span>
     </div>
   </ng-container>
   <!-- /bar icon -->
@@ -55,35 +57,37 @@
 
 
 <!-- modal to select innovations -->
-<app-modal [(showModal)]="modalShow" [widthMax]="'90vw'" [modalPosition]="'70px'">
+<app-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
 
-  <div class="modal-card-wrapper d-flex text-center">
-    <ng-container *ngFor="let innovationCard of cards">
-      <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard._id) }">
+  <section class="modal-body">
+    <div class="modal-card-wrapper d-flex text-center">
+      <ng-container *ngFor="let innovationCard of cards">
+        <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard._id) }">
 
-        <i class="fas fa-check-circle"></i>
+          <i class="fas fa-check-circle"></i>
 
-        <label class="absolute">
-          <input type="checkbox" (change)="onChangeInnovation($event, innovationCard)" [checked]="activeInnovation(innovationCard._id)">
-        </label>
+          <label class="absolute">
+            <input type="checkbox" (change)="onChangeInnovation($event, innovationCard)" [checked]="activeInnovation(innovationCard._id)">
+          </label>
 
-        <figure class="card-image">
-          <img [src]="innovationCard.media" alt=" " width="186" height="116">
-        </figure>
+          <figure class="card-image">
+            <img [src]="innovationCard.media" alt=" " width="186" height="116">
+          </figure>
 
-        <div class="card-header">
-          <div class="card-title text-xs">{{ innovationCard.title }}</div>
+          <div class="card-header">
+            <div class="card-title text-xs">{{ innovationCard.title }}</div>
+          </div>
+
         </div>
+      </ng-container>
+    </div>
+  </section>
 
-      </div>
-    </ng-container>
-  </div>
 
-
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-    <button class="btn btn-sm btn-primary" (click)="onClickApply($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
-  </div>
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>
 <!-- /modal to select innovations -->
