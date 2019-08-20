@@ -27,28 +27,30 @@
 
 
 <!-- modal to add the new workflow -->
-<app-modal [(showModal)]="modalAdd" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+<app-modal [(showModal)]="modalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
-  <div class="form-group">
-    <label class="form-label" for="add-workflow">Workflow Name</label>
-    <input
-      type="text"
-      id="add-workflow"
-      [(ngModel)]="newScenarioName"
-      name="scenarioName"
-      placeholder="Enter the workflow name"
-      class="form-input">
-    <label class="form-label" for="add-workflow-signature">Workflow default signature</label>
+  <section class="modal-body">
+    <div class="form-group">
+      <label class="form-label" for="add-workflow">Workflow Name</label>
+      <input
+        type="text"
+        id="add-workflow"
+        [(ngModel)]="newScenarioName"
+        name="scenarioName"
+        placeholder="Enter the workflow name"
+        class="form-input">
+      <label class="form-label" for="add-workflow-signature">Workflow default signature</label>
       <select class="form-select" id="add-workflow-signature" [ngModel]="scenarioSignature" (ngModelChange)="changeScenarioSignature($event)">
-          <option [ngValue]="null" selected>Select one signature</option>
-          <option *ngFor="let signature of signatures" [ngValue]="signature">{{signature.name}}</option>
+        <option [ngValue]="null" selected>Select one signature</option>
+        <option *ngFor="let signature of signatures" [ngValue]="signature">{{signature.name}}</option>
       </select>
-  </div>
+    </div>
+  </section>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()" [disabled]="!newScenarioName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickConfirm()" [disabled]="!newScenarioName" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>
 <!-- /modal to add the new workflow -->

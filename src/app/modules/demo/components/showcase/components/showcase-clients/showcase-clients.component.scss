@@ -3,19 +3,18 @@
 #showcase-clients {
   height: 100%;
 
-  .icons {
+  .icon-container {
     top: -6px;
     right: 0;
     margin-right: 0;
-    font-size: $font-icon-lg;
   }
 
-  .see-more-wrapper, .icons {
+  .see-more-wrapper, .icon-container {
     visibility: hidden;
   }
 
   &:hover {
-    .icon, .see-more-wrapper {
+    .icon-container, .see-more-wrapper {
       visibility: visible;
     }
   }

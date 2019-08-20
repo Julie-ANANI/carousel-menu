@@ -384,7 +384,7 @@
 
 
 <!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
-<app-modal [modalTitle]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
+<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
 
   <ng-container *ngIf="!innovation.previewMode">
     <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
@@ -404,7 +404,7 @@
 
 
 <!-- Modal to ask the operator to confirm for the reset of the executive report -->
-<app-modal [modalTitle]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalResetReport">
+<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalResetReport">
 
   <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_RESET_REPORT' | translate }}</span>
 
@@ -418,7 +418,7 @@
 
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-modal [modalTitle]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalEndInnovation">
+<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalEndInnovation">
 
   <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
 

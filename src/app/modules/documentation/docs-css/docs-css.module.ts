@@ -35,6 +35,7 @@ import { BarsComponent } from './components/bars/bars.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import { MenuComponent } from './components/menu/menu.component';
     BarsComponent,
     CardsComponent,
     DropdownComponent,
-    MenuComponent
+    MenuComponent,
+    ModalComponent
   ],
 })
 

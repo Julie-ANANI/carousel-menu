@@ -107,45 +107,42 @@
 
 
 <!-- modals for different actions -->
-<app-modal [(showModal)]="showModal">
+<app-modal [(showModal)]="showModal" [enableCloseButton]="true">
+  <section class="modal-body">
 
-  <!-- close button -->
-  <div class="text-right m-bottom-2">
-    <div (click)="closeModal()" class="close text-notify is-sm"></div>
-  </div>
-  <!-- /close button -->
+    <!-- project modal -->
+    <div *ngIf="isProjectModal">
 
-  <!-- project modal -->
-  <div *ngIf="isProjectModal">
+      <div class="text-center m-bottom-25">
+        <h3 [innerText]="'PROJECT.MODAL.SELECT_FIELD'" class="text-background text-normal" translate></h3>
+      </div>
 
-    <div class="text-center m-bottom-25">
-      <h3 [innerText]="'PROJECT.MODAL.SELECT_FIELD'" class="text-background text-normal" translate></h3>
-    </div>
+      <div class="form-group">
 
-    <div class="form-group">
+        <label class="form-checkbox">
+          <input type="checkbox" checked disabled>
+          <i class="form-icon"></i> {{ 'PROJECT.MODAL.BASE' | translate }}
+        </label>
 
-      <label class="form-checkbox">
-        <input type="checkbox" checked disabled>
-        <i class="form-icon"></i> {{ 'PROJECT.MODAL.BASE' | translate }}
-      </label>
+        <label
+          *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED_NO_MAIL', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']"
+          class="form-checkbox">
+          <input
+            (change)="projectExportConfig.answers[status] = !projectExportConfig.answers[status]"
+            [checked]="projectExportConfig.answers[status]"
+            type="checkbox">
+          <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
+        </label>
 
-      <label
-        *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED_NO_MAIL', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']"
-        class="form-checkbox">
-        <input
-          (change)="projectExportConfig.answers[status] = !projectExportConfig.answers[status]"
-          [checked]="projectExportConfig.answers[status]"
-          type="checkbox">
-        <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
-      </label>
+        <label class="form-checkbox">
+          <input
+            (change)="projectExportConfig.campaigns = !projectExportConfig.campaigns"
+            [checked]="projectExportConfig.campaigns"
+            type="checkbox">
+          <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
+        </label>
 
-      <label class="form-checkbox">
-        <input
-          (change)="projectExportConfig.campaigns = !projectExportConfig.campaigns"
-          [checked]="projectExportConfig.campaigns"
-          type="checkbox">
-        <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
-      </label>
+      </div>
 
       <label class="form-checkbox">
           <input type="checkbox"
@@ -155,18 +152,17 @@
       </label>
 
     </div>
+    <!-- /project modal -->
 
-  </div>
-  <!-- /project modal -->
+    <!-- export button -->
+    <div class="m-top-40 m-bottom-15 text-center">
+      <button (click)="onClickExport($event)" class="button is-primary is-md" type="button">
+        <ng-container *ngIf="isProjectModal">{{ 'COMMON.BUTTON.EXPORT_PROJECT' | translate }}</ng-container>
+      </button>
+    </div>
+    <!-- /export button -->
 
-  <!-- export button -->
-  <div class="m-top-40 m-bottom-15 text-center">
-    <button (click)="onClickExport($event)" class="button is-primary is-md" type="button">
-      <ng-container *ngIf="isProjectModal">{{ 'COMMON.BUTTON.EXPORT_PROJECT' | translate }}</ng-container>
-    </button>
-  </div>
-  <!-- /export button -->
-
+  </section>
 </app-modal>
 <!-- /modals for different actions -->
 

@@ -320,7 +320,7 @@
   text-decoration: none;
   line-height: $line-height-sm;
   background: transparent;
-  border: $border-width solid $border-primary-color;
+  border: $border-width solid transparent;
   font-size: $font-size-sm;
   height: 2rem;
   color: $text-warning-color;
@@ -374,10 +374,6 @@
       @include button-shadow-variant($bg-primary-color);
     }
 
-    &.is-no-hover-effect {
-      @include button-no-hover-effect-variant($bg-primary-color);
-    }
-
   }
 
   &.is-outlined {
@@ -415,10 +411,6 @@
       @include button-shadow-variant($bg-secondary-color);
     }
 
-    &.is-no-hover-effect {
-      @include button-no-hover-effect-variant($bg-secondary-color);
-    }
-
   }
 
   &.is-info {
@@ -451,10 +443,6 @@
 
     &.is-shadowed {
       @include button-shadow-variant($bg-meta-color);
-    }
-
-    &.is-no-hover-effect {
-      @include button-no-hover-effect-variant($bg-meta-color);
     }
 
   }
@@ -490,10 +478,6 @@
       @include button-shadow-variant($bg-alert-color);
     }
 
-    &.is-no-hover-effect {
-      @include button-no-hover-effect-variant($bg-alert-color);
-    }
-
   }
 
   &.is-draft {
@@ -527,10 +511,6 @@
       @include button-shadow-variant($bg-background-color);
     }
 
-    &.is-no-hover-effect {
-      @include button-no-hover-effect-variant($bg-background-color);
-    }
-
   }
 
   &.is-success {
@@ -562,10 +542,6 @@
 
     &.is-shadowed {
       @include button-shadow-variant($bg-success-color);
-    }
-
-    &.is-no-hover-effect {
-      @include button-no-hover-effect-variant($bg-success-color);
     }
 
   }
@@ -630,8 +606,8 @@
     }
 
     &.is-circled {
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+      padding-left: $unit-2;
+      padding-right: $unit-2;
     }
 
   }

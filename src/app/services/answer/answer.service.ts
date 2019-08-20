@@ -31,7 +31,7 @@ export class AnswerService {
     return this._http.delete('/answer/' + answerId);
   }
 
-  public save(answerId: string, answerObj: Answer): Observable<any> {
+  public save(answerId: string, answerObj: any): Observable<any> {
     return this._http.put('/answer/' + answerId, answerObj);
   }
 

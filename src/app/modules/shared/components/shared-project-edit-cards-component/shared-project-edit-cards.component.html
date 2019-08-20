@@ -564,18 +564,21 @@
 
   </section>
 
+</ng-container>
 
-  <!-- modal to ask user to sure about deleting the innovation card the project -->
-  <app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+<!-- modal to ask user to sure about deleting the innovation card the project -->
+<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+
+  <section class="modal-body">
     {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
     {{ 'COMMON.LANG.' + innovation.innovationCards[selectedCardIndex].lang | uppercase | translate }}
     {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
-    <div class="modal-footer">
-      <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-      <button class="btn btn-sm btn-primary" (click)="onClickConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-    </div>
-  </app-modal>
-  <!-- /modal to ask user to sure about deleting the innovation card the project -->
+  </section>
 
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
-</ng-container>
+</app-modal>
+<!-- /modal to ask user to sure about deleting the innovation card the project -->

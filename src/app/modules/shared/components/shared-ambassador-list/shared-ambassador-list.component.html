@@ -33,36 +33,38 @@
 
 
 <!-- modal to ask the operator to confirm to delete the ambassador -->
-<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
-  <ng-container *ngIf="context && context.deleteType === 'Campaign'">
+  <section class="modal-body">
+    <ng-container *ngIf="context && context.deleteType === 'Campaign'">
 
-    <ng-container *ngIf="prosToRemoves && prosToRemoves.length === 1">
-      <span>Do you really want to delete this ambassador from this project campaign?</span>
+      <ng-container *ngIf="prosToRemoves && prosToRemoves.length === 1">
+        <span>Do you really want to delete this ambassador from this project campaign?</span>
+      </ng-container>
+
+      <ng-container *ngIf="prosToRemoves && prosToRemoves.length > 1">
+        <span>Do you really want to delete all these ambassadors from this project campaign?</span>
+      </ng-container>
+
     </ng-container>
 
-    <ng-container *ngIf="prosToRemoves && prosToRemoves.length > 1">
-      <span>Do you really want to delete all these ambassadors from this project campaign?</span>
+
+    <ng-container *ngIf="!context">
+
+      <ng-container *ngIf="prosToRemoves && prosToRemoves.length === 1">
+        <span>Do you really want to delete this ambassador? This will delete the ambassador from the database completely.</span>
+      </ng-container>
+
+      <ng-container *ngIf="prosToRemoves && prosToRemoves.length > 1">
+        <span>Do you really want to delete all these ambassadors? This will delete the ambassadors from the database completely.</span>
+      </ng-container>
+
     </ng-container>
+  </section>
 
-  </ng-container>
-
-
-  <ng-container *ngIf="!context">
-
-    <ng-container *ngIf="prosToRemoves && prosToRemoves.length === 1">
-      <span>Do you really want to delete this ambassador? This will delete the ambassador from the database completely.</span>
-    </ng-container>
-
-    <ng-container *ngIf="prosToRemoves && prosToRemoves.length > 1">
-      <span>Do you really want to delete all these ambassadors? This will delete the ambassadors from the database completely.</span>
-    </ng-container>
-
-  </ng-container>
-
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel" [innerText]="'COMMON.BUTTON.CANCEL'" translate></button>
-    <button class="btn btn-sm btn-primary" (click)="deleteAmbassador($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" translate></button>
-  </div>
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="deleteAmbassador($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>

@@ -23,21 +23,26 @@
 </div>
 
 <!-- MODAL : Ajout de pros à une campagne -->
-<app-modal [(showModal)]="addToCampaignModal" [modalTitle]="'SEARCH.CAMPAIGN.TITLE'">
-  <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
+<app-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
 
-  <app-autocomplete-input
-    (update)="updateCampaign($event)"
-    [onlyOne]="true"
-    [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}"></app-autocomplete-input>
+  <section class="modal-body">
+    <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length">
+    <app-autocomplete-input
+      (update)="updateCampaign($event)"
+      [onlyOne]="true"
+      [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
+    </app-autocomplete-input>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length" class="button is-primary">
       {{ 'SEARCH.CAMPAIGN.ADDANDSEE' | translate }}
     </button>
-    <button class="btn btn-sm btn-primary" (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length">
+    <button (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length" class="button is-primary">
       {{ 'SEARCH.ADD' | translate }}
     </button>
-  </div>
+  </footer>
+
 </app-modal>
