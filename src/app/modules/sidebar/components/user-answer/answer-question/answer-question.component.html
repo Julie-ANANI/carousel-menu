@@ -199,22 +199,6 @@
       </ng-container>
       <!-- /textarea case -->
 
-      <!-- textbox case -->
-      <ng-container *ngSwitchCase="'textbox'">
-        <ng-container *ngIf="fullAnswer.answers[question.identifier]">
-          <div class="pad-top flex-between">
-            <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier] }}</span>
-            <app-rating-item
-              [editMode]="editMode"
-              [prop]="question.identifier"
-              [rating]="fullAnswer.answers[question.identifier + 'Quality']"
-              (ratingChange)="updateQuality($event)">
-            </app-rating-item>
-          </div>
-        </ng-container>
-      </ng-container>
-      <!-- /textbox case -->
-
       <!-- scale case -->
       <ng-container *ngSwitchCase="'scale'">
         <div class="pad-top">
