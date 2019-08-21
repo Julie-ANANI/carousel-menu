@@ -189,31 +189,32 @@
         <ng-container *ngIf="fullAnswer.answers[question.identifier] && !editMode">
           <div class="pad-top">
             <div class="label label-answer">
-              <span>{{ fullAnswer.answers[question.identifier] }}</span>
+
+              <ng-container *ngIf="!showQuestionTranslation">
+                <span>{{ fullAnswer.answers[question.identifier] }}</span>
+                <button *ngIf="adminMode && fullAnswer.used_language != lang"
+                        class="button is-secondary is-sm is-outlined"
+                        (click)="showQuestionTranslation = true">
+                  {{ 'COMMON.TRANSLATE' | translate}}
+                </button>
+              </ng-container>
+
+              <ng-container *ngIf="showQuestionTranslation">
+                <span>{{ fullAnswer.answers_translations[question.identifier][lang] }}</span>
+                <button *ngIf="adminMode" class="button is-secondary is-sm is-outlined" (click)="showQuestionTranslation = false">
+                  {{ 'COMMON.RESET' | translate}}
+                </button>
+              </ng-container>
+
               <span *ngIf="fullAnswer.answers[question.identifier + 'Quality'] === 2" class="sa-thumbs-up"><i class="fas fa-thumbs-up"></i></span>
               <span *ngIf="fullAnswer.answers[question.identifier + 'Quality'] === 0" class="sa-thumbs-down"><i class="fas fa-thumbs-down"></i></span>
+
             </div>
           </div>
         </ng-container>
 
       </ng-container>
       <!-- /textarea case -->
-
-      <!-- textbox case -->
-      <ng-container *ngSwitchCase="'textbox'">
-        <ng-container *ngIf="fullAnswer.answers[question.identifier]">
-          <div class="pad-top flex-between">
-            <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier] }}</span>
-            <app-rating-item
-              [editMode]="editMode"
-              [prop]="question.identifier"
-              [rating]="fullAnswer.answers[question.identifier + 'Quality']"
-              (ratingChange)="updateQuality($event)">
-            </app-rating-item>
-          </div>
-        </ng-container>
-      </ng-container>
-      <!-- /textbox case -->
 
       <!-- scale case -->
       <ng-container *ngSwitchCase="'scale'">
@@ -289,8 +290,20 @@
         <span>{{ 'COMMON.COMMENT' | translate }}</span>
       </div>
 
-      <div class="c-pad-top">
+      <div class="c-pad-top" *ngIf="!showCommentTranslation">
         <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier + 'Comment'] }}</span>
+        <button *ngIf="adminMode && fullAnswer.used_language != lang"
+                class="button is-secondary is-sm is-outlined"
+                (click)="showCommentTranslation = true">
+          {{ 'COMMON.TRANSLATE' | translate}}
+        </button>
+      </div>
+
+      <div class="c-pad-top" *ngIf="showCommentTranslation">
+        <span class="text-primary-dark">{{ fullAnswer.answers_translations[question.identifier + 'Comment'][lang] }}</span>
+        <button *ngIf="adminMode" class="button is-secondary is-sm is-outlined" (click)="showCommentTranslation = false">
+          {{ 'COMMON.RESET' | translate}}
+        </button>
       </div>
 
       <ng-container *ngIf="answerTags(question.identifier + 'Comment').length > 0">

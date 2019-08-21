@@ -143,8 +143,8 @@
             </div>
           </div>
 
-          <!-- textarea or textbox -->
-          <div *ngIf="questionReceived.controlType === 'textarea' || questionReceived.controlType === 'textbox'">
+          <!-- textarea -->
+          <div *ngIf="questionReceived.controlType === 'textarea'">
             <div class="section-light-pad rm-pad-bottom rm-margin">
               <div *ngFor="let answer of answersToShow" class="card">
                 <div class="card-body less-padding">

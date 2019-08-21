@@ -45,24 +45,6 @@
 
   </div>
 
-  <ng-container *ngIf="answer.answers[questionId]?.length > 0">
-
-    <ng-container *ngIf="!showTranslation">
-      <p class="text">{{ answer.answers[questionId] }}</p>
-      <button *ngIf="answer.used_language != currentLang"
-              class="button is-secondary is-sm is-outlined"
-              (click)="showTranslation = true">
-        {{ 'COMMON.TRANSLATE' | translate}}
-      </button>
-    </ng-container>
-
-    <ng-container *ngIf="showTranslation">
-      <p class="text">{{ answer.answers_translations[questionId][currentLang] }}</p>
-      <button class="button is-secondary is-sm is-outlined" (click)="showTranslation = false">
-        {{ 'COMMON.RESET' | translate}}
-      </button>
-    </ng-container>
-
-  </ng-container>
+  <p *ngIf="answer.answers[questionId]?.length > 0" class="text">{{ answer.answers[questionId] }}</p>
 
 </section>
