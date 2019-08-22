@@ -4,31 +4,43 @@
   border-bottom: $border-width solid $border-light-color;
 
   .navbar {
+    border-bottom: 0;
 
-    .navbar-brand {
-      padding-top: 5px;
-    }
+    .navbar-menu {
 
-    .menu {
+      .navbar-item {
 
-      .menu-item.navbar-contact-button .button.is-info.is-outlined {
-        color: $text-background-color;
-        border-color: transparent;
-        border-width: $border-width-lg;
-        background-color: transparent;
+        &.dropdown-lang {
 
-        &:hover {
-          border-color: $border-meta-color;
+          .navbar-dropdown {
+            min-width: unset;
+            width: 46px;
+            left: -4px;
+
+            .navbar-item {
+              height: 42px;
+              padding: $unit-2;
+              justify-content: center;
+            }
+
+          }
+
         }
 
-      }
+        &.has-button .button {
+          border-width: $border-width-lg;
+        }
 
-    }
+        &.has-button .button.is-info {
+          border-color: transparent;
+          background-color: transparent;
 
-    .navigation-wrapper {
+          &:hover {
+            border-color: $border-meta-color;
+          }
 
-      .menu {
-        flex-wrap: wrap;
+        }
+
       }
 
     }
@@ -37,12 +49,63 @@
 
 }
 
-@media (max-width:$size-sm) {
+
+@media screen and (max-width: $size-lg) {
 
   #header {
 
-    .navbar-contact-button {
-      display: none;
+    .navbar {
+
+      .navbar-menu {
+
+        &.active,&:active {
+
+          .navbar-item {
+
+            &.has-dropdown {
+
+              .dropdown-toggle {
+                padding-top: $unit-3;
+                padding-bottom: $unit-3;
+
+                .icon.icon-arrow-down {
+                  top: 0.9rem;
+                }
+
+              }
+
+              .navbar-dropdown {
+                display: none;
+                width: 100%;
+                left: unset;
+                padding-top: 0.6rem !important;
+
+                .navbar-item {
+                  justify-content: flex-start;
+                  padding-left: 1.1rem;
+                }
+
+                &.m-show-langs {
+                  display: block;
+                }
+
+              }
+
+            }
+
+            &.has-button a.button.is-info {
+              flex-grow: 1;
+              justify-content: flex-start;
+              padding: 0;
+              border: 0;
+            }
+
+          }
+
+        }
+
+      }
+
     }
 
   }

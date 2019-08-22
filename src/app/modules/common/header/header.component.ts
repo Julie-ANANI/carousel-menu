@@ -57,6 +57,8 @@ export class HeaderComponent {
 
   private _sidebarValues: SidebarInterface = {};
 
+  private _showLangs: boolean = false;
+
   private _adminRoutes: Array<Header> = [
     { pageName: 'Dashboard', pageLink: '/user/admin', adminLevel: 1 },
     { pageName: 'Users', pageLink: '/user/admin/users', adminLevel: 1 },
@@ -88,7 +90,7 @@ export class HeaderComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(_event: Event) {
-    if (window.innerWidth > 840) {
+    if (window.innerWidth > 960) {
       this._sidebarValues.animate_state = 'inactive';
     }
   }
@@ -186,6 +188,11 @@ export class HeaderComponent {
     return this.currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
   }
 
+  public toggleLangOptions(event: Event) {
+    event.preventDefault();
+    this._showLangs = !this._showLangs;
+  }
+
   get backOfficeValue(): boolean {
     return this._backOfficeValue;
   }
@@ -221,6 +228,14 @@ export class HeaderComponent {
 
   get adminRoutes(): Array<Header> {
     return this._adminRoutes;
+  }
+
+  get showLangs(): boolean {
+    return this._showLangs;
+  }
+
+  get displayMenuOptions(): boolean {
+    return this._displayMenuOptions;
   }
 
 }
