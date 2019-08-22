@@ -4,55 +4,41 @@
   border-bottom: $border-width solid $border-light-color;
 
   .navbar {
+    border-bottom: 0;
 
-    .navbar-brand {
-      padding-top: 5px;
-    }
+    .navbar-menu {
 
-    .menu {
+      .navbar-item {
 
-      .navbar-contact-button .button.is-info {
-        border-color: $border-meta-color;
-        border-width: $border-width-lg;
-        color: $text-background-color;
-        background-color: transparent;
-      }
+        &.dropdown-lang {
 
-      .navbar-dropdown-profile {
+          .navbar-dropdown {
+            min-width: unset;
+            width: 46px;
+            left: -4px;
 
-        .menu-item {
-          padding: 0;
-
-          & > a {
-            padding: $unit-2 1.1rem;
-          }
-
-          &.menu-item-user {
-
-            span:after {
-              display: none;
-            }
-
-            .user-info {
-              color: $text-background-color;
-              margin-left: $unit-2;
-              word-break: break-all;
-              max-width: 195px;
-              flex-direction: column;
-
-              .text-email {
-                font-size: 0.65rem;
-                font-weight: $font-weight-normal;
-              }
-
+            .navbar-item {
+              height: 42px;
+              padding: $unit-2;
+              justify-content: center;
             }
 
           }
 
         }
 
-        .divider {
-          margin: $unit-2 1.1rem;
+        &.dropdown-user {
+
+          .user-info-wrapper {
+
+            .info {
+              flex-direction: column;
+              word-break: break-all;
+              max-width: 195px;
+            }
+
+          }
+
         }
 
       }
@@ -65,36 +51,48 @@
 
 .sidebar {
   width: 260px !important;
-}
 
-@media (max-width: $size-lg) {
+  .sidebar-container {
 
-  #header {
+    .navbar-sidebar {
 
-    .navbar-mobile-toggle {
-      display: flex !important;
-      margin-left: 0.5rem;
-    }
+      .navbar-menu {
 
-    .navbar .menu.menu-nav .menu-item {
-      display: none !important;
-    }
+        .navbar-item {
 
-    .navbar .menu.menu-nav .menu-item.navbar-dropdown-language,
-    .navbar .menu.menu-nav .menu-item.navbar-dropdown-language .menu .menu-item {
-      display: inline-flex !important;
+          &.lang-wrapper {
+            background-color: $bg-page-color;
+            padding-left: 2rem;
+          }
+
+        }
+
+      }
+
     }
 
   }
 
 }
 
-@media (min-width: 961px) {
+@media screen and (min-width: $size-lg) {
 
   #header {
 
-    .navbar-mobile-toggle {
-      display: none !important;
+    .navbar {
+
+      .navbar-menu {
+
+        .navbar-item {
+
+          &.has-button .button {
+            border-width: $border-width-lg;
+          }
+
+        }
+
+      }
+
     }
 
   }

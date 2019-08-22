@@ -2,70 +2,71 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar">
 
-      <!-- logo -->
+      <!-- brand -->
       <div class="navbar-brand">
-        <a routerLink="/" class="gtm-menu-logo">
-          <img [src]="getLogo()" [alt]="getCompany()" height="33" style="height: 33px; width: 110px" width="110">
+        <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
+          <img [alt]="getCompany()" [src]="getLogo()" height="33" style="height: 33px; width: 110px" width="110">
         </a>
       </div>
-      <!-- /logo -->
+      <!-- /brand -->
+
+      <!-- hamburger icon for mobile -->
+      <div class="navbar-burger" (click)="toggleMenuState($event)">
+        <i class="icon icon-menu"></i>
+        <span class="m-left-2 text-medium">Menu</span>
+      </div>
+      <!-- /hamburger icon for mobile -->
 
       <!-- navigation -->
-      <ul class="menu menu-nav">
+      <div class="navbar-menu" [ngClass]="{ 'active': displayMenuOptions }">
 
         <!-- language select dropdown -->
-        <li class="menu-item dropdown navbar-dropdown navbar-dropdown-language c-default">
+        <div class="navbar-item has-dropdown dropdown-lang" (click)="toggleLangOptions($event)">
 
-          <a class="c-default">
-            <span>
+          <span>
+            <a class="dropdown-toggle">
               <img
                 [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
                 [alt]="currentLang.toUpperCase()">
-                <i class="fas fa-angle-down text-background m-left-2"></i>
-            </span>
-          </a>
+                <i class="icon icon-arrow-down" style="font-size: 0.5rem"></i>
+            </a>
+          </span>
 
           <!-- options -->
-          <ul class="menu">
-            <li class="menu-item text-center" (click)="setLang('fr')">
+          <ul class="navbar-dropdown p-no" [ngClass]="{ 'm-show-langs': showLangs }">
+            <li class="navbar-item text-center" (click)="setLang('fr')">
               <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
             </li>
-            <li class="menu-item text-center" (click)="setLang('en')">
+            <li class="navbar-item text-center" (click)="setLang('en')">
               <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
             </li>
           </ul>
 
-        </li>
+        </div>
         <!-- /language select dropdown -->
 
         <!-- contact us -->
-        <li class="menu-item navbar-contact-button">
-          <a [href]="getContactUrl()" rel="noopener" target="_blank">
-            <button type="button" class="button is-info is-outlined">{{ 'HEADER.CONTACT_US' | translate }}</button>
+        <div class="navbar-item has-button">
+          <a [href]="getContactUrl()" rel="noopener" target="_blank" class="button is-info text-background is-outlined">
+            {{ 'HEADER.CONTACT_US' | translate }}
           </a>
-        </li>
+        </div>
 
         <!-- sign in button -->
-        <li class="menu-item">
-          <button
-            type="button"
-            class="button is-primary is-outlined"
-            (click)="onClickSignIn($event)">
+        <div class="navbar-item has-button">
+          <button (click)="onClickSignIn($event)" class="button is-primary is-outlined" type="button">
             {{ 'LOG_IN.LOG_IN_BTN' | translate }}
           </button>
-        </li>
+        </div>
 
         <!-- sign up button -->
-        <li class="menu-item">
-          <button
-            type="button"
-            class="button is-primary"
-            (click)="onClickSignUp($event)">
+        <div class="navbar-item has-button m-no-right">
+          <button (click)="onClickSignUp($event)" class="button is-primary" type="button">
             {{ 'COMMON.BUTTON.SIGN_UP' | translate }}
           </button>
-        </li>
+        </div>
 
-      </ul>
+      </div>
       <!-- /navigation -->
 
     </nav>
@@ -73,36 +74,38 @@
 </header>
 
 
-
 <!-- sign up sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-  <app-signup-form [sidebarState]="sidebarValue.animate_state" (finalOutput)="createUser($event)"></app-signup-form>
+  <app-signup-form
+    (finalOutput)="createUser($event)"
+    [sidebarState]="sidebarValue.animate_state">
+  </app-signup-form>
 </app-sidebar>
 <!-- /sign up sidebar -->
 
 
 <!-- sign in modal -->
-<app-modal [(showModal)]="modalSignIn" [maxWidth]="'380px'" [enableCloseButton]="true">
+<app-modal [(showModal)]="modalSignIn" [maxWidth]="'400px'" [enableCloseButton]="true">
   <section class="modal-body">
 
     <!-- heading -->
     <div class="text-center">
-      <h2 class="title-primary text-background" [ngStyle]="{ 'font-size': '1.4rem' }">{{ 'LOG_IN.HEADING' | translate }}</h2>
+      <h2 class="title-primary text-background" style="font-size: 1.4rem">{{ 'LOG_IN.HEADING' | translate }}</h2>
     </div>
 
     <!-- form -->
     <form novalidate [formGroup]="formData" (submit)="onClickContinue()">
 
       <!-- email address -->
-      <div class="form-group has-error">
+      <div class="form-group has-error m-bottom-15">
         <label class="form-label" for="header-unauth-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
 
         <input
-          type="email"
-          id="header-unauth-email"
           class="form-input"
           formControlName="email"
-          placeholder="john@catco.com">
+          id="header-unauth-email"
+          placeholder="john@catco.com"
+          type="email">
 
         <ng-container *ngIf="formData.get('email').touched">
 
@@ -123,11 +126,11 @@
         <label class="form-label" for="header-unauth-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
 
         <input
+          [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate "
           class="form-input"
-          type="password"
-          id="header-unauth-password"
           formControlName="password"
-          [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
+          id="header-unauth-password"
+          type="password">
 
         <ng-container *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
           <span class="form-input-hint">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
@@ -137,8 +140,9 @@
       <!-- /password -->
 
       <!-- login button -->
-      <div class="text-center" [ngStyle]="{ 'padding-top': '0.75rem', 'padding-bottom': '0.5rem' }">
-        <button class="button is-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">
+      <div class="text-center p-top-15 p-bottom-10">
+        <button [disabled]="formData.invalid" class="button is-primary is-md gtm-signin-email" style="min-width: 150px" type="submit">
+          <span *ngIf="displayLoading" class="loading is-white absolute" style="left: 1.25rem"></span>
           {{ 'LOG_IN.LOG_IN_BTN' | translate }}
         </button>
       </div>

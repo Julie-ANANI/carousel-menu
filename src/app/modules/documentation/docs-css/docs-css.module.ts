@@ -36,6 +36,7 @@ import { CardsComponent } from './components/cards/cards.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { ModalComponent } from './components/modal/modal.component';
     CardsComponent,
     DropdownComponent,
     MenuComponent,
-    ModalComponent
+    ModalComponent,
+    NavbarComponent,
   ],
 })
 
