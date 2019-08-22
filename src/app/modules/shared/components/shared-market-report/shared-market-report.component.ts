@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -239,6 +240,29 @@ export class SharedMarketReportComponent implements OnInit {
         const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
         this._tagFiltersService.setAnswerTags(identifier, tags);
       });
+
+      /*
+       * Compute matrix
+       * this is a P.O.C for next-steps redaction
+       */
+      if (this._adminSide && isPlatformBrowser(this._platformId)) {
+        ['context', 'marketNeed', 'relevance', 'differentiation'].reduce((acc, a) => {
+          acc.forEach((b) => {
+            /* calc matrix a/b */
+            const m = this.answers.reduce((acc, answer) => {
+              const res_a = Number(answer.answers[a]), res_b = Number(answer.answers[b]);
+              if (Number.isInteger(res_a) && 0 <= res_a && res_a < 4 && Number.isInteger(res_b) && 0 <= res_b && res_b < 4) {
+                acc[3 - res_a][res_b]++;
+              }
+              return acc;
+            }, [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
+            /* print res in console */
+            console.log(a + '\n^\n' + m.join('\n') + '  >' + b);
+          });
+          acc.push(a);
+          return acc;
+        }, []);
+      }
 
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
