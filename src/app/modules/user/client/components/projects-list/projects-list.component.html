@@ -5,16 +5,16 @@
 
       <!-- section add button -->
       <div class="text-right" *ngIf="!noResult">
-        <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-rounded is-shadowed">
-          {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+        <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-lg is-rounded is-shadowed">
+          <i class="icon icon-left text-xs icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
         </button>
       </div>
 
       <!-- section no project -->
       <ng-container *ngIf="noResult">
         <div class="no-result-wrapper flex-centered">
-          <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-lg">
-            {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+          <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-rounded is-shadowed is-xl">
+            <i class="icon icon-left text-sm icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
           </button>
         </div>
       </ng-container>

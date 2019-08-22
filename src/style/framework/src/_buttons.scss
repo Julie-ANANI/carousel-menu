@@ -558,7 +558,7 @@
   }
 
   &.is-rounded {
-    border-radius: 25px;
+    border-radius: 1.25rem;
   }
 
   &.is-circled {
@@ -597,7 +597,7 @@
 
   }
 
-  &.is-md {
+  &.is-lg {
     height: 2.5rem;
     padding-left: $unit-8;
     padding-right: $unit-8;
@@ -613,7 +613,7 @@
 
   }
 
-  &.is-lg {
+  &.is-xl {
     height: 3rem;
     padding-left: 2rem;
     padding-right: 2rem;
@@ -621,6 +621,10 @@
 
     i {
       font-size: $font-icon-lg;
+    }
+
+    &.is-rounded {
+      border-radius: 1.8rem;
     }
 
     &.is-circled {
@@ -640,7 +644,7 @@
     padding: $unit-2 $unit-8;
   }
 
-  .is-lg {
+  .is-xl {
     padding: $unit-2 $unit-5;
   }
 
