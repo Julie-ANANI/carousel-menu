@@ -308,7 +308,7 @@
 }
 
 
-.button {
+.button, .pagination-previous-control, .pagination-next-control, .pagination-link {
   @include inline-flex-centered();
   @include button-transition();
   text-align: center;

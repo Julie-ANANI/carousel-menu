@@ -36,6 +36,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -82,6 +83,7 @@ const docsCssRoutes: Routes = [
       { path: 'components/menu', component: MenuComponent, pathMatch: 'full' },
       { path: 'components/modal', component: ModalComponent, pathMatch: 'full' },
       { path: 'components/navbar', component: NavbarComponent, pathMatch: 'full' },
+      { path: 'components/pagination', component: PaginationComponent, pathMatch: 'full' },
       {
         path: 'utilities',
         redirectTo: 'utilities/colors',

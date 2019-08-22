@@ -37,6 +37,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MenuComponent,
     ModalComponent,
     NavbarComponent,
+    PaginationComponent
   ],
 })
 

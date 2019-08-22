@@ -94,7 +94,7 @@
 
 }
 
-@media (max-width: $size-xl) {
+@media screen and (max-width: $size-xl) {
 
   .is-responsive {
     max-width: calc(33% - 1rem) !important;
@@ -102,7 +102,7 @@
 
 }
 
-@media (max-width: $size-lg) {
+@media screen and (max-width: $size-lg) {
 
   .is-card-3 {
     max-width: calc(50% - 1rem) !important;
@@ -110,7 +110,7 @@
 
 }
 
-@media (max-width: $size-md) {
+@media screen and (max-width: $size-md) {
 
   .is-responsive {
     max-width: calc(50% - 1rem) !important;
@@ -118,7 +118,7 @@
 
 }
 
-@media (max-width: $size-sm) {
+@media screen and (max-width: $size-sm) {
 
   .is-card-3 {
     flex: 100% !important;
@@ -128,7 +128,7 @@
 
 }
 
-@media (max-width: $size-xs) {
+@media screen and (max-width: $size-xs) {
 
   .is-responsive {
     flex: 100% !important;
