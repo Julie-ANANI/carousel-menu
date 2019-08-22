@@ -59,7 +59,7 @@ export class AdminCommunityMemberComponent implements OnInit {
   private _allSectorTags: Array<Tag> = [];
 
   private _configInnovation = {
-    fields: 'innovationCards principalMedia',
+    fields: 'innovationCards principalMedia tags',
     limit: '0',
     offset: '0',
     isPublic: '1',
