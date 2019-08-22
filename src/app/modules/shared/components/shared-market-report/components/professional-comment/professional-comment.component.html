@@ -16,21 +16,8 @@
     <hr class="hr">
 
     <!-- comment -->
-    <div *ngIf="!showTranslation" class="comment-wrapper text-center">
+    <div class="comment-wrapper text-center">
       <span>{{ answer.answers[questionId] }}</span>
-      <button *ngIf="answer.used_language != currentLang"
-              class="button is-secondary is-sm is-outlined"
-              (click)="showTranslation = true">
-        {{ 'COMMON.TRANSLATE' | translate}}
-      </button>
-    </div>
-
-    <!-- translated comment -->
-    <div *ngIf="showTranslation" class="comment-wrapper text-center">
-      <span>{{ answer.answers_translations[questionId][currentLang] }}</span>
-      <button class="button is-secondary is-sm is-outlined" (click)="showTranslation = false">
-        {{ 'COMMON.RESET' | translate}}
-      </button>
     </div>
 
 

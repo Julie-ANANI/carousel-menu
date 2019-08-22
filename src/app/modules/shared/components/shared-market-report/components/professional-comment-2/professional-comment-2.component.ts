@@ -3,7 +3,7 @@ import { Answer } from '../../../../../../models/answer';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { TranslationService } from '../../../../../../services/translation/translation.service';
+import { Tag } from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-market-comment-2',
@@ -15,49 +15,63 @@ export class SharedMarketComment2Component {
 
   @Input() answer: Answer;
 
+  @Input() canEditTags: boolean;
+
   @Input() questionId: string;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  private _showTranslation = false;
-
   constructor(private answerService: AnswerService,
               private translateService: TranslateService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private deepl: TranslationService) { }
+              private translateNotificationsService: TranslateNotificationsService) { }
 
   public seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
   }
 
-  set showTranslation(value: boolean) {
-    if (!!value) {
-      try {
-        if (this.answer.answers_translations[this.questionId][this.currentLang]) {
-          this._showTranslation = true;
+  public addTag(tag: Tag, q_identifier: string): void {
+    console.log(tag);
+    this.answerService
+      .addTag(this.answer._id, tag._id, q_identifier)
+      .subscribe((a: any) => {
+        if (this.answer.answerTags[q_identifier]) {
+          this.answer.answerTags[q_identifier].push(tag);
         } else {
-          throw new Error('no translation');
+          this.answer.answerTags[q_identifier] = [tag];
         }
-      } catch (_err) {
-        if (!this.answer.answers_translations[this.questionId]) {
-          this.answer.answers_translations[this.questionId] = {};
-        }
-        this.deepl.translate(this.answer.answers[this.questionId], this.currentLang).subscribe((value) => {
-          this.answer.answers_translations[this.questionId][this.currentLang] = value.translation;
-          this._showTranslation = true;
-          const objToSave = {answers_translations: {[this.questionId]: {[this.currentLang]: value.translation}}};
-          this.answerService.save(this.answer._id, objToSave).subscribe((value) => {});
-        }, (_e) => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-        });
-      }
-    } else {
-      this._showTranslation = false;
-    }
+        this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      }, (err: any) => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+      });
   }
 
-  get showTranslation(): boolean {
-    return this._showTranslation;
+  createTag(tag: Tag, q_identifier: string): void {
+    this.answerService.createTag(this.answer._id, tag, q_identifier)
+      .subscribe((a: any) => {
+        if (this.answer.answerTags[q_identifier]) {
+          this.answer.answerTags[q_identifier].push(tag);
+        } else {
+          this.answer.answerTags[q_identifier] = [tag];
+        }
+        this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      }, (err: any) => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+      });
+  }
+
+  public removeTag(tag: Tag, q_identifier: string): void {
+    this.answerService
+      .removeTag(this.answer._id, tag._id, q_identifier)
+      .subscribe((a: any) => {
+        this.answer.answerTags[q_identifier] = this.answer.answerTags[q_identifier].filter(t => t._id !== tag._id);
+        this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+      }, (err: any) => {
+        this.translateNotificationsService.error('ERROR.ERROR', err.message);
+      });
+  }
+
+  public answerTags(identifier: string): Array<any> {
+    return this.answer.answerTags[identifier] ? this.answer.answerTags[identifier] : [];
   }
 
   get currentLang(): string {

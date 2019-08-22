@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { Question } from '../../../../../models/question';
 import { Answer } from '../../../../../models/answer';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslationService } from '../../../../../services/translation/translation.service';
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { Tag } from '../../../../../models/tag';
 
@@ -35,9 +36,14 @@ export class AnswerQuestionComponent {
 
   _fullAnswer: Answer;
 
+  private _showQuestionTranslation = false;
+
+  private _showCommentTranslation = false;
+
   constructor(private _translateService: TranslateService,
               private _notificationsService: TranslateNotificationsService,
-              private _answerService: AnswerService) { }
+              private _answerService: AnswerService,
+              private _deepl: TranslationService) { }
 
   updateQuality(object: {key: string, value: 0 | 1 | 2}) {
     this.fullAnswer.answers[object.key + 'Quality'] = object.value;
@@ -107,6 +113,66 @@ export class AnswerQuestionComponent {
 
   public answerTags(identifier: string): Array<any> {
     return this.fullAnswer.answerTags && this.fullAnswer.answerTags[identifier] ? this.fullAnswer.answerTags[identifier] : [];
+  }
+
+  set showQuestionTranslation(value: boolean) {
+    if (!!value) {
+      try {
+        if (this._fullAnswer.answers_translations[this.question.identifier][this.lang]) {
+          this._showQuestionTranslation = true;
+        } else {
+          throw new Error('no translation');
+        }
+      } catch (_err) {
+        if (!this._fullAnswer.answers_translations[this.question.identifier]) {
+          this._fullAnswer.answers_translations[this.question.identifier] = {};
+        }
+        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this.lang).subscribe((value) => {
+          this._fullAnswer.answers_translations[this.question.identifier][this.lang] = value.translation;
+          this._showQuestionTranslation = true;
+          const objToSave = {answers_translations: {[this.question.identifier]: {[this.lang]: value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).subscribe((value) => {});
+        }, (_e) => {
+          this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+        });
+      }
+    } else {
+      this._showQuestionTranslation = false;
+    }
+  }
+
+  get showQuestionTranslation(): boolean {
+    return this._showQuestionTranslation;
+  }
+
+  set showCommentTranslation(value: boolean) {
+    if (!!value) {
+      try {
+        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.lang]) {
+          this._showCommentTranslation = true;
+        } else {
+          throw new Error('no translation');
+        }
+      } catch (_err) {
+        if (!this._fullAnswer.answers_translations[this.question.identifier + 'Comment']) {
+          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'] = {};
+        }
+        this._deepl.translate(this._fullAnswer.answers[this.question.identifier + 'Comment'], this.lang).subscribe((value) => {
+          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.lang] = value.translation;
+          this._showCommentTranslation = true;
+          const objToSave = {answers_translations: {[this.question.identifier + 'Comment']: {[this.lang]: value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).subscribe((value) => {});
+        }, (_e) => {
+          this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+        });
+      }
+    } else {
+      this._showCommentTranslation = false;
+    }
+  }
+
+  get showCommentTranslation(): boolean {
+    return this._showCommentTranslation;
   }
 
   get lang (): string {
