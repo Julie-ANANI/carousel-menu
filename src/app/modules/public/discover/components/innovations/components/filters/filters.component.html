@@ -60,8 +60,8 @@
     <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
       <div
         *ngFor="let tag of highLightTags"
-        class="label label-draft label-rounded c-hand animate-tag"
-        [ngClass]="{ 'label-primary': checkFilter(tag._id)}">
+        class="label is-rounded c-hand animate-tag"
+        [ngClass]="checkFilter(tag._id) ? 'is-primary' : 'is-draft'">
         <label class="c-hand">
           <input
             (change)="toggleFilter($event, tag)"
@@ -89,8 +89,8 @@
     <div class="d-flex sector-wrapper">
       <div
         *ngFor="let tag of suggestedTags"
-        class="label label-draft label-rounded c-hand animate-appear"
-        [ngClass]="{ 'label-primary': checkSimilarFilter(tag._id) }">
+        class="label is-rounded c-hand animate-appear"
+        [ngClass]="checkSimilarFilter(tag._id) ? 'is-primary' : 'is-draft'">
         <label class="c-hand">
           <input
             (change)="toggleSimilarFilter($event, tag)"
@@ -112,53 +112,57 @@
 
 
 <!-- modal tags -->
-<app-modal [(showModal)]="modalTag" [modalPosition]="'150px'" [widthMax]="'90%'" [modalTitle]="'DISCOVER.ALL_SECTORS'">
-  <div class="modal-tag-wrapper">
-    <div class="d-flex sector-wrapper">
-      <div
-        *ngFor="let tag of allTags"
-        class="label label-draft label-rounded c-hand"
-        [ngClass]="{ 'label-primary': checkFilter(tag._id) }">
-        <label class="c-hand">
-          <input
-            (change)="toggleFilter($event, tag)"
-            [checked]="checkFilter(tag._id)"
-            [id]="tag._id"
-            [name]="tag.label | multiling:userLang"
-            [value]="tag.label | multiling:userLang"
-            type="checkbox">
-          {{ tag.label | multiling:userLang }}
-        </label>
+<app-modal [(showModal)]="modalTag" [maxWidth]="'840px'" [title]="'DISCOVER.ALL_SECTORS'">
+  <section class="modal-body">
+    <div class="modal-tag-wrapper">
+      <div class="d-flex sector-wrapper">
+        <div
+          *ngFor="let tag of allTags"
+          class="label is-rounded c-hand"
+          [ngClass]=" checkFilter(tag._id) ? 'is-primary' : 'is-draft' ">
+          <label class="c-hand">
+            <input
+              (change)="toggleFilter($event, tag)"
+              [checked]="checkFilter(tag._id)"
+              [id]="tag._id"
+              [name]="tag.label | multiling:userLang"
+              [value]="tag.label | multiling:userLang"
+              type="checkbox">
+            {{ tag.label | multiling:userLang }}
+          </label>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </app-modal>
 <!-- /modal tags -->
 
 
 <!-- modal share -->
-<app-modal [(showModal)]="modalShare" [modalPosition]="'250px'">
-  <div class="modal-share-wrapper text-center">
+<app-modal [(showModal)]="modalShare" [enableCloseButton]="true">
+  <section class="modal-body">
+    <div class="modal-share-wrapper text-center">
 
-    <h3 class="text-background text-normal" [innerText]="'DISCOVER.MODAL_SHARE.TITLE'" translate></h3>
+      <h3 class="text-background text-normal" [innerText]="'DISCOVER.MODAL_SHARE.TITLE'" translate></h3>
 
-    <div *ngIf="!urlCopied">
-      <button
-        (click)="onClickCopy($event)"
-        class="btn btn-sm ghost-edit"
-        type="button">
-        {{ 'DISCOVER.TOOLTIP_TEXT' | translate }}
-      </button>
+      <div *ngIf="!urlCopied">
+        <button
+          (click)="onClickCopy($event)"
+          class="btn btn-sm ghost-edit"
+          type="button">
+          {{ 'DISCOVER.TOOLTIP_TEXT' | translate }}
+        </button>
+      </div>
+
+      <div *ngIf="urlCopied">
+        <button
+          class="btn btn-sm ghost-success c-not-allowed"
+          type="button">
+          {{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}
+        </button>
+      </div>
+
     </div>
-
-    <div *ngIf="urlCopied">
-      <button
-        class="btn btn-sm ghost-success c-not-allowed"
-        type="button">
-        {{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}
-      </button>
-    </div>
-
-  </div>
+  </section>
 </app-modal>
 <!-- /modal share -->

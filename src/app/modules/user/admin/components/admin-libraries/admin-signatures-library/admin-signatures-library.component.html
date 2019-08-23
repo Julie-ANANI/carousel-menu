@@ -75,63 +75,56 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalOpen" [modalTitle]="isModalAdd ? 'COMMON.MODAL.TITLE_CREATE' : 'COMMON.MODAL.TITLE_DELETE'">
+<app-modal [(showModal)]="modalOpen" [title]="isModalAdd ? 'COMMON.MODAL.TITLE_CREATE' : 'COMMON.MODAL.TITLE_DELETE'">
 
-  <!-- isAdd -->
-  <ng-container *ngIf="isModalAdd">
-    <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
-      <label class="form-label" for="add-email">{{ 'COMMON.LABEL.SIGNATURE_NAME' | translate }}</label>
-      <input
-        [(ngModel)]="newSignatureName"
-        class="form-input"
-        id="add-email"
-        name="emailName"
-        [placeholder]="'COMMON.PLACEHOLDER.SIGNATURE_NAME' | translate"
-        type="text">
-    </div>
-  </ng-container>
-  <!-- /isAdd -->
-
-  <!-- isDelete -->
-  <ng-container *ngIf="isModalDelete">
-    <div class="text-background text-medium">{{ 'COMMON.SIGNATURES.DELETE_SIGNATURES' | translate }}</div>
-
-    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
-      <li *ngFor="let signature of signaturesToRemove" class="m-right-3 m-top-1">
-        {{ signature.name }}
-      </li>
-    </ul>
-  </ng-container>
-  <!-- /isDelete -->
-
-  <div class="modal-footer">
-
-    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+  <section class="modal-body">
 
     <!-- isAdd -->
     <ng-container *ngIf="isModalAdd">
-      <button
-        (click)="onAddConfirm()"
-        [disabled]="!newSignatureName"
-        [innerText]="'COMMON.BUTTON.CONFIRM'"
-        class="btn btn-sm btn-primary"
-        translate>
-      </button>
+      <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
+        <label class="form-label" for="add-email">{{ 'COMMON.LABEL.SIGNATURE_NAME' | translate }}</label>
+        <input
+          [(ngModel)]="newSignatureName"
+          class="form-input"
+          id="add-email"
+          name="emailName"
+          [placeholder]="'COMMON.PLACEHOLDER.SIGNATURE_NAME' | translate"
+          type="text">
+      </div>
     </ng-container>
     <!-- /isAdd -->
 
     <!-- isDelete -->
     <ng-container *ngIf="isModalDelete">
-      <button
-        (click)="onDeleteConfirm()"
-        [innerText]="'COMMON.BUTTON.CONFIRM'"
-        class="btn btn-sm btn-primary"
-        translate>
-      </button>
+      <div class="text-background text-medium">{{ 'COMMON.SIGNATURES.DELETE_SIGNATURES' | translate }}</div>
+
+      <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+        <li *ngFor="let signature of signaturesToRemove" class="m-right-3 m-top-1">
+          {{ signature.name }}
+        </li>
+      </ul>
     </ng-container>
     <!-- /isDelete -->
 
-  </div>
+  </section>
+
+  <footer class="modal-footer">
+
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+
+    <!-- isAdd -->
+    <ng-container *ngIf="isModalAdd">
+      <button (click)="onAddConfirm()" [disabled]="!newSignatureName" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    </ng-container>
+    <!-- /isAdd -->
+
+    <!-- isDelete -->
+    <ng-container *ngIf="isModalDelete">
+      <button (click)="onDeleteConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    </ng-container>
+    <!-- /isDelete -->
+
+  </footer>
 
 </app-modal>
 <!-- /modal -->

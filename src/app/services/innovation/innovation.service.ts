@@ -112,7 +112,7 @@ export class InnovationService {
   }
 
   public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
-    return this._http.get(`/sharing/synthesis/${id}/${sharedKey}`);
+    return this._http.get(`/sharing/synthesis/${id}/${sharedKey}?fields=innovationCards`); //TODO I don't like hardcoded things
   }
 
   public getRecommendation(innovationId: string): Observable<any> {
@@ -127,6 +127,16 @@ export class InnovationService {
 
   public shareSynthesis(projectId: string): Observable<any> {
     return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
+  }
+
+  public static export(innovationId: string, params: string): string {
+    return environment.apiUrl + `/innovation/${innovationId}/export?${params}`;
+  }
+
+  public import(file:File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, "import_project");
+    return this._http.post('/innovation/import/', formData);
   }
 
 }

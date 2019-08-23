@@ -15,7 +15,7 @@
   white-space: nowrap;
   text-decoration: none;
   line-height: $line-height-sm;
-  background: $bg-color-light;
+  background: $bg-light-color;
   border: $border-width solid $primary-color;
   font-size: $font-size-sm;
   height: 2.5rem;
@@ -42,7 +42,7 @@
     width: 12px;
     min-width: unset;
     line-height: 1.5;
-    font-size: $font-icon-xl;
+    font-size: $font-icon-lg;
 
     &:hover {
 
@@ -117,7 +117,7 @@
 
     span {
       color: $light-color;
-      font-size: $font-icon-xl;
+      font-size: $font-icon-lg;
     }
 
   }
@@ -247,13 +247,13 @@
 // Cancel button class that you have to add with button class
 .btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active, .btn-cancel:not(:disabled).active {
   color: $meta-color;
-  background-color: $bg-color-light;
+  background-color: $bg-light-color;
   border: none;
 }
 
 .btn-cancel:not(:disabled):hover {
   color: lighten($meta-color, 15%);
-  background-color: $bg-color-light;
+  background-color: $bg-light-color;
   border: none;
 }
 
@@ -308,7 +308,7 @@
 }
 
 
-.button {
+.button, .pagination-previous-control, .pagination-next-control, .pagination-link {
   @include inline-flex-centered();
   @include button-transition();
   text-align: center;
@@ -320,10 +320,10 @@
   text-decoration: none;
   line-height: $line-height-sm;
   background: transparent;
-  border: $border-width solid $primary-color;
+  border: $border-width solid transparent;
   font-size: $font-size-sm;
   height: 2rem;
-  color: $primary-color;
+  color: $text-warning-color;
   border-radius: $border-radius;
   padding: $unit-2 $unit-5;
   font-weight: $font-weight-medium;
@@ -332,211 +332,217 @@
     font-size: $font-icon;
     margin-left: $unit-2;
     margin-right: $unit-2;
+    text-decoration: none;
   }
 
   &[disabled], &:disabled, &.disabled {
     cursor: not-allowed;
     box-shadow: none;
     opacity: 0.5;
+
+    i {
+      cursor: not-allowed;
+    }
+
   }
 
   &.is-link {
-    @include button-link-variant($primary-color);
+    @include button-link-variant($bg-primary-color);
 
     &.loading {
-      @include button-loading-variant($primary-color);
+      @include button-loading-variant($bg-primary-color);
     }
 
   }
 
   &.is-action {
-    @include button-default-action-variant($primary-color);
+    @include button-default-action-variant($bg-primary-color);
 
     &.is-shadowed {
-      @include button-shadow-variant($primary-color);
+      @include button-shadow-variant($bg-primary-color);
     }
 
   }
 
   &.is-primary {
-    @include button-default-variant($primary-color);
+    @include button-default-variant($bg-primary-color);
 
     &.loading {
-      @include button-loading-variant($light-color);
+      @include button-loading-variant($bg-light-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($primary-color);
+      @include button-shadow-variant($bg-primary-color);
     }
 
   }
 
   &.is-outlined {
-    @include button-outline-variant($primary-color);
+    @include button-outline-variant($bg-primary-color);
   }
 
   &.is-secondary {
-    @include button-default-variant($secondary-color);
+    @include button-default-variant($bg-secondary-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($secondary-color);
+        @include button-loading-variant($bg-secondary-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($secondary-color);
+      @include button-link-variant($bg-secondary-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($secondary-color)
+      @include button-default-action-variant($bg-secondary-color)
     }
 
     &.loading {
-      @include button-loading-variant($light-color);
+      @include button-loading-variant($bg-light-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($secondary-color);
+      @include button-outline-variant($bg-secondary-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($secondary-color);
+      @include button-shadow-variant($bg-secondary-color);
     }
 
   }
 
   &.is-info {
-    @include button-default-variant($meta-color);
+    @include button-default-variant($bg-meta-color);
 
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($meta-color);
+        @include button-loading-variant($bg-meta-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($meta-color);
+      @include button-link-variant($bg-meta-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($meta-color)
+      @include button-default-action-variant($bg-meta-color)
     }
 
     &.loading {
-      @include button-loading-variant($light-color);
+      @include button-loading-variant($bg-light-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($meta-color);
+      @include button-outline-variant($bg-meta-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($meta-color);
+      @include button-shadow-variant($bg-meta-color);
     }
 
   }
 
   &.is-danger {
-    @include button-default-variant($alert-color);
+    @include button-default-variant($bg-alert-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($alert-color);
+        @include button-loading-variant($bg-alert-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($alert-color);
+      @include button-link-variant($bg-alert-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($alert-color)
+      @include button-default-action-variant($bg-alert-color)
     }
 
     &.loading {
-      @include button-loading-variant($light-color);
+      @include button-loading-variant($bg-light-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($alert-color);
+      @include button-outline-variant($bg-alert-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($alert-color);
+      @include button-shadow-variant($bg-alert-color);
     }
 
   }
 
   &.is-draft {
-    @include button-default-variant($background-color);
+    @include button-default-variant($bg-background-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($background-color);
+        @include button-loading-variant($bg-background-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($background-color);
+      @include button-link-variant($bg-background-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($background-color)
+      @include button-default-action-variant($bg-background-color)
     }
 
     &.loading {
-      @include button-loading-variant($light-color);
+      @include button-loading-variant($bg-light-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($background-color);
+      @include button-outline-variant($bg-background-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($background-color);
+      @include button-shadow-variant($bg-background-color);
     }
 
   }
 
   &.is-success {
-    @include button-default-variant($success-color);
+    @include button-default-variant($bg-success-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($success-color);
+        @include button-loading-variant($bg-success-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($success-color);
+      @include button-link-variant($bg-success-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($success-color)
+      @include button-default-action-variant($bg-success-color)
     }
 
     &.loading {
-      @include button-loading-variant($light-color);
+      @include button-loading-variant($bg-light-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($success-color);
+      @include button-outline-variant($bg-success-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($success-color);
+      @include button-shadow-variant($bg-success-color);
     }
 
   }
@@ -552,7 +558,7 @@
   }
 
   &.is-rounded {
-    border-radius: 25px;
+    border-radius: 1.25rem;
   }
 
   &.is-circled {
@@ -581,7 +587,7 @@
     height: 1.5rem;
 
     i {
-      font-size: $font-size-xs;
+      font-size: $font-icon-sm;
     }
 
     &.is-circled {
@@ -592,11 +598,33 @@
   }
 
   &.is-lg {
+    height: 2.5rem;
+    padding-left: $unit-8;
+    padding-right: $unit-8;
+
+    i {
+      font-size: $font-icon-md;
+    }
+
+    &.is-circled {
+      padding-left: $unit-2;
+      padding-right: $unit-2;
+    }
+
+  }
+
+  &.is-xl {
     height: 3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     font-size: $font-size;
 
     i {
-      font-size: $font-size;
+      font-size: $font-icon-lg;
+    }
+
+    &.is-rounded {
+      border-radius: 1.8rem;
     }
 
     &.is-circled {
@@ -614,6 +642,10 @@
 
   .btn-lg {
     padding: $unit-2 $unit-8;
+  }
+
+  .is-xl {
+    padding: $unit-2 $unit-5;
   }
 
 }

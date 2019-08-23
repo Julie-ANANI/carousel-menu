@@ -19,6 +19,7 @@ export const ANSWER = {
   'UNVALIDATED_ANSWER': 'Réponse non validée',
   'JOB': 'Poste',
   'COMPANY': 'Entreprise',
+  'BLACKLISTED_COMPANY': 'La réponse provient peut-être d\'une entreprise blacklistée !',
   'EDIT': 'Editer',
   'TIME_SPENT': 'Temps passé',
   'REJECT_ANSWER': 'Rejeter',

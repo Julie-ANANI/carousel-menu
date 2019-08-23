@@ -21,7 +21,7 @@ export class ShowcaseInnovationsComponent {
 
     if (this._tags.length > 0) {
       const config = {
-        fields: 'created name principalMedia status',
+        fields: 'created name principalMedia status innovationCards',
         isPublic: '1',
         status: JSON.stringify({$in: ['EVALUATING', 'DONE']}),
         tags: JSON.stringify({ $in: this._tags }),

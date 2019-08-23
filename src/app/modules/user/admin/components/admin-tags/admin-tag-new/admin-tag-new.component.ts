@@ -88,6 +88,17 @@ export class AdminTagNewComponent {
     this.formData.get('attachments').setValue(event.value);
   }
 
+  public exportTags() {
+    this._tagsService.exportTags();
+  }
+  public importTags(file: File) {
+    this._tagsService.importTags(file).subscribe(() => {
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.TAGS.IMPORTED');
+    }, () => {
+      this._notificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
   get codeTypes(): Array<any> { return this._codeTypes; }
 
   get addAttachmentConfig() { return this._addAttachmentConfig; }

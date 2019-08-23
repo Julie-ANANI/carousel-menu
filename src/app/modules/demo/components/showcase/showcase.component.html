@@ -2,7 +2,7 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- history icon -->
-    <div class="shape circle circle-white history-wrapper c-hand absolute tooltip tooltip-left history-icon"
+    <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip tooltip-left history-icon"
          [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate"
          (click)="onClickHistoryIcon($event)">
       <i class="fas fa-history text-notify"></i>
@@ -134,48 +134,41 @@
 
 
 <!-- modal to modify the tags -->
-<app-modal [(showModal)]="modalShow" [widthMax]="'70vw'" [modalPosition]="'70px'">
+<app-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
 
-  <div class="flex-between">
+  <section class="modal-body">
+
     <h2 class="text text-background m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
-    <button type="button" class="btn btn-close p-right-1 text-notify text-md" (click)="modalShow = false"></button>
-  </div>
 
-  <ng-container *ngIf="selectedTagsStats.length">
-    <div class="selected-wrapper">
-      <div *ngFor="let selected of selectedTagsStats" class="label label-tag label-rounded">
-        <span>{{ selected.tag.label | multiling:currentLang }}</span>
+    <ng-container *ngIf="selectedTagsStats.length">
+      <div class="selected-wrapper">
+        <div *ngFor="let selected of selectedTagsStats" class="label label-tag is-rounded">
+          <span>{{ selected.tag.label | multiling:currentLang }}</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <hr class="hr">
+
+    <div class="d-flex tags-wrapper flex-wrap">
+      <div *ngFor="let tag of sectorTags" class="card is-responsive">
+        <label class="form-checkbox text-sm">
+          <input
+            (change)="onChangeTag($event, tag)"
+            [name]="tag.label | multiling:currentLang"
+            type="checkbox">
+          <i class="form-icon"></i>
+          <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
+        </label>
       </div>
     </div>
-  </ng-container>
 
-  <hr class="hr">
+  </section>
 
-  <div class="d-flex tags-wrapper flex-wrap">
-    <div *ngFor="let tag of sectorTags" class="card card-responsive">
-      <label class="form-checkbox text-sm">
-        <input
-          (change)="onChangeTag($event, tag)"
-          [name]="tag.label | multiling:currentLang"
-          type="checkbox">
-        <i class="form-icon"></i>
-        <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
-      </label>
-    </div>
-  </div>
-
-  <div class="modal-footer">
-
-    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
-
-    <button
-      (click)="onClickApply($event)"
-      [innerText]="'COMMON.BUTTON.CONFIRM'"
-      class="btn btn-sm btn-primary"
-      translate>
-    </button>
-
-  </div>
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>
 <!-- /modal to modify the tags -->

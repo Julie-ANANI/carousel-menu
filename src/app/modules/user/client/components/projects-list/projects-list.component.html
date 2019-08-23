@@ -4,20 +4,18 @@
     <div class="column col-xs-12 col-11 col-mx-auto">
 
       <!-- section add button -->
-      <div class="text-right">
-        <button routerLink="new" (click)="$event.preventDefault()" class="btn btn-primary">
-          {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+      <div class="text-right" *ngIf="!noResult">
+        <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-lg is-rounded is-shadowed">
+          <i class="icon icon-left text-xs icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
         </button>
       </div>
 
       <!-- section no project -->
       <ng-container *ngIf="noResult">
-        <div class="section-pad rm-pad-bottom">
-          <app-message-template-1 [widthMax]="'380px'">
-            <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}</span>
-            <br>
-            <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}</span>
-          </app-message-template-1>
+        <div class="no-result-wrapper flex-centered">
+          <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-rounded is-shadowed is-xl">
+            <i class="icon icon-left text-sm icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+          </button>
         </div>
       </ng-container>
 
@@ -45,7 +43,7 @@
                     •
                     {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
                     |
-                    <span class="icon icon-delete tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" (click)="onClickDelete($event, innovation._id)">
+                    <span class="icons is-delete tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" (click)="onClickDelete($event, innovation._id)">
                       <i class="fas fa-trash-alt"></i>
                     </span>
                   </p>
@@ -74,18 +72,19 @@
     </div>
   </section>
 
-
-  <!-- delete project confirmation modal -->
-  <app-modal [(showModal)]="deleteModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-
-    <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</span>
-
-    <div class="modal-footer">
-      <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-      <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-    </div>
-
-  </app-modal>
-  <!-- /delete project confirmation modal -->
-
 </ng-container>
+
+<!-- delete project confirmation modal -->
+<app-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+
+  <section class="modal-body">
+    <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</span>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickSubmit($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
+</app-modal>
+<!-- /delete project confirmation modal -->

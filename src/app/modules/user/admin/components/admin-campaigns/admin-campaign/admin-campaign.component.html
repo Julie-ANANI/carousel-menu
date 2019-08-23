@@ -7,7 +7,7 @@
 
         <div class="heading-wrapper">
           <span class="title-primary">{{ getHeading() }}</span><span class="title-primary title-campaign">&nbsp;/&nbsp;{{ campaign.title }}</span>&nbsp;
-          <a [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/settings'" class="text-link">Back to project</a>
+          <a [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/campaigns'" class="text-link text-sm">{{ 'COMMON.BUTTON.BACK_TO_CAMPAIGNS' | translate }}</a>
         </div>
 
         <ul class="tab">

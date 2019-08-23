@@ -1,6 +1,5 @@
 @import "variables";
 
-
 .container {
   margin-left: auto;
   margin-right: auto;
@@ -38,12 +37,10 @@
   padding-right: 0;
 }
 
-
 // Responsive breakpoint system
 .show-xs, .show-sm, .show-md, .show-lg, .show-xl {
   display: none !important;
 }
-
 
 // Responsive grid system
 .columns {

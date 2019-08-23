@@ -9,7 +9,7 @@
 
   &::after {
     animation: loading 500ms infinite linear;
-    border: $border-width-lg solid $primary-color;
+    border: $border-width-lg solid $border-primary-color;
     border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
@@ -25,8 +25,7 @@
     z-index: 0;
   }
 
-  // Todo remove loading-lg
-  &.loading-lg, &.is-lg {
+  &.is-lg {
     min-height: $unit-10;
 
     &::after {
@@ -38,12 +37,11 @@
 
   }
 
-  // Todo remove loading-white
-  &.loading-white, &.is-white {
+  &.is-white {
 
     &::after {
-      border-bottom-color: $light-color;
-      border-left-color: $light-color;
+      border-bottom-color: $border-white-color;
+      border-left-color: $border-white-color;
     }
 
   }
@@ -61,25 +59,29 @@
   &::after {
     display: block;
     content: "";
-    height: 5px;
-    background-color: $primary-color;
+    height: 4px;
+    background-color: $bg-primary-color;
     width: 0;
-    border-radius: 36px;
-    animation: loader 2s infinite ease;
+    border-radius: 25px;
+    animation: loader 3s infinite ease;
   }
 
 }
 
-
 .loading-content {
   position: relative;
   background-color: #DBDBDB;
+  min-height: 20px;
 
   &.card-image {
     border-radius: 0;
   }
 
-  &.btn {
+  &.card-body {
+    margin-top: $unit-3;
+  }
+
+  &.btn, &.button {
     border: none;
     color: transparent;
     cursor: default !important;

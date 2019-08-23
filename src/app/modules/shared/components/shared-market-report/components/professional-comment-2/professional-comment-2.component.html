@@ -1,16 +1,35 @@
 <section id="professional-comment-2-component">
 
+  <div class="flex-start">
+
   <!-- name -->
-  <p *ngIf="!answer?.professional?.firstName" class="text-medium">
+  <p *ngIf="!answer.professional?.firstName" class="text-medium">
     <span>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
   </p>
 
-  <p *ngIf="answer?.professional && answer?.professional?.firstName">
+  <p *ngIf="answer.professional?.firstName">
       <span class="text-link" (click)="seeAnswer(answer)">
         {{ answer?.professional?.firstName | FormatText }} {{ answer?.professional?.lastName }}
       </span>
   </p>
   <!-- /name -->
+
+  <!-- tag button -->
+  <ng-container *ngIf="answerTags(questionId).length > 0 || canEditTags">
+    <div class="pad-top">
+      <app-shared-tag
+        [tags]="answerTags(questionId)"
+        [editMode]="canEditTags"
+        [projectId]="answer.innovation"
+        (addTag)="addTag($event, questionId)"
+        (createTag)="createTag($event, questionId)"
+        (removeTag)="removeTag($event, questionId)">
+      </app-shared-tag>
+    </div>
+  </ng-container>
+  <!-- /tag button -->
+
+  </div>
 
   <div class="detail-wrapper d-flex text-notify text-medium">
 
@@ -18,10 +37,10 @@
       <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
     </div>
 
-    <p *ngIf="answer.job || answer?.professional?.jobTitle || answer.company?.name || answer?.professional?.company">
-      <ng-container *ngIf="answer.job || answer?.professional?.jobTitle">{{ answer.job || answer?.professional?.jobTitle }}</ng-container>
-      <ng-container *ngIf="answer.job || answer?.professional?.jobTitle && answer.company?.name || answer?.professional?.company">-</ng-container>
-      <ng-container *ngIf="answer.company?.name || answer?.professional?.company">{{ answer.company?.name || answer?.professional?.company }}</ng-container>
+    <p *ngIf="answer.job || answer.professional?.jobTitle || answer.company?.name || answer.professional?.company">
+      <ng-container *ngIf="answer.job || answer.professional?.jobTitle">{{ answer.job || answer.professional?.jobTitle }}</ng-container>
+      <ng-container *ngIf="(answer.job || answer.professional?.jobTitle) && (answer.company?.name || answer.professional?.company)">-</ng-container>
+      <ng-container *ngIf="answer.company?.name || answer.professional?.company">{{ answer.company?.name || answer.professional?.company }}</ng-container>
     </p>
 
   </div>

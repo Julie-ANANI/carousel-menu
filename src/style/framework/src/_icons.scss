@@ -1,0 +1,225 @@
+@import "variables";
+@import "mixins";
+
+.icon-container {
+  @include inline-flex-centered();
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  margin: 0;
+  font-size: $font-icon;
+  color: $text-meta-color;
+  width: 1.75rem;
+  height: 1.75rem;
+
+  &.is-overlay {
+
+    &::before {
+      display: none;
+      content: '';
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    &:hover, &.active {
+
+      &::before {
+        display: block;
+        cursor: pointer;
+        background-color: rgba(58, 66, 77, 0.10);
+      }
+
+    }
+
+  }
+
+  .tooltip {
+    @include inline-flex-centered();
+    height: 100%;
+    width: 100%;
+  }
+
+  &.is-xs {
+    font-size: $font-icon-xs;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &.is-sm {
+    font-size: $font-icon-sm;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.is-normal {
+    font-size: $font-icon;
+    width: 1.55rem;
+    height: 1.55rem;
+  }
+
+  &.is-md {
+    font-size: $font-icon-md;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &.is-lg {
+    font-size: $font-icon-lg;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  &.is-xl {
+    font-size: $font-icon-xl;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+// Todo remove this
+.icons {
+  display: inline-block;
+  position: relative;
+  outline: none;
+  height: 0.95rem;
+  width: 0.95rem;
+  font-size: $font-icon;
+  text-decoration: none;
+  text-align: center;
+  margin: 0;
+  color: $border-color;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.is-primary {
+    color: $primary-color;
+  }
+
+  &.is-secondary {
+    color: $secondary-color;
+  }
+
+  &.is-info {
+    color: $meta-color;
+  }
+
+  &.is-draft {
+    color: $background-color;
+  }
+
+  &.is-success {
+    color: $success-color;
+  }
+
+  &.is-white {
+    color: $light-color;
+  }
+
+  &.is-delete {
+    color: $alert-color;
+  }
+
+  &.is-overlay {
+    @include icon-transition();
+
+    &::before {
+      display: none;
+      content: '';
+      width: calc(100% + 0.95rem);
+      height: calc(100% + 0.95rem);
+      border-radius: 50%;
+      top: -40%;
+      left: -50%;
+      position: absolute;
+    }
+
+    &:hover, &.is-overlay-active {
+
+      &::before {
+        display: block;
+        background-color: rgba(0, 0, 0, 0.15);
+      }
+
+    }
+
+  }
+
+  &.is-sm {
+    height: 0.75rem;
+    width: 0.75rem;
+    font-size: $font-icon-sm;
+
+    &.is-overlay::before {
+      width: calc(100% + 0.75rem);
+      height: calc(100% + 0.75rem);
+    }
+
+  }
+
+  &.is-normal {
+    height: 0.95rem;
+    width: 0.95rem;
+    font-size: $font-icon;
+
+    &.is-overlay::before {
+      width: calc(100% + 0.95rem);
+      height: calc(100% + 0.95rem);
+    }
+
+  }
+
+  &.is-md {
+    height: $unit-5;
+    width: $unit-5;
+    font-size: $font-icon-md;
+
+    &.is-overlay::before {
+      width: calc(100% + 1rem);
+      height: calc(100% + 1rem);
+    }
+
+  }
+
+  &.is-lg {
+    height: 1.3rem;
+    width: 1.3rem;
+    font-size: $font-icon-lg;
+
+    &.is-overlay::before {
+      width: calc(100% + 1.3rem);
+      height: calc(100% + 1.3rem);
+    }
+
+  }
+
+  &.is-xl {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: $font-icon-xl;
+
+    &.is-overlay::before {
+      width: calc(100% + 1.5rem);
+      height: calc(100% + 1.5rem);
+    }
+
+  }
+
+}

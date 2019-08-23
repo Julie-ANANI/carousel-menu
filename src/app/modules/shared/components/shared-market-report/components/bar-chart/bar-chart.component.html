@@ -69,7 +69,7 @@
                      (mouseleave)="toggleFilterIcon[i] = false;"
                      [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate"
                      [ngStyle]="{ 'width': '20px' }"
-                     [ngClass]="toggleFilterIcon[i] ? 'icon-delete' : 'icon-meta'"
+                     [ngClass]="toggleFilterIcon[i] ? 'is-delete' : 'is-info'"
                      class="c-hand icon tooltip">
                   <i class="fas icon-size" [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash' : 'fa-eye'"></i>
                 </div>

@@ -2,18 +2,18 @@
 @import "mixins";
 
 .modal {
+  @include absolute-full-page();
+  display: none;
   position: fixed;
   overflow: hidden;
-  padding: $unit-2;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 8997;
 
   &.active {
     display: flex;
     opacity: 1;
-    z-index: 8998;
   }
 
   &.inactive {
@@ -22,59 +22,91 @@
   }
 
   .modal-overlay {
-    @include flex-centered();
-    cursor: default;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
-    z-index: 8999;
+    @include absolute-full-page();
     background: $bg-overlay-dark-color;
   }
 
   .modal-container {
     display: flex;
     flex-direction: column;
-    border-radius: 3px;
+    border-radius: 6px;
     opacity: 1;
-    background-color: $bg-color-light;
-    position: fixed;
-    padding: 0;
-    text-align: unset;
     overflow: hidden;
-    width: 95%;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
     z-index: 1;
     animation: .2s slideInDown;
+    max-height: calc(100vh - 50px);
 
     .modal-header {
-      display: flex;
-      align-items: center;
+      @include flex-start();
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
       background: $primary-gradient-color;
-      justify-content: space-between;
-      color: $light-color;
-      padding: 1.1rem 1.25rem;
+      padding: $unit-5;
+      position: relative;
+      flex-shrink: 0;
 
-      .btn {
-        min-width: 0;
+      .modal-title {
+        color: $light-color;
+        flex-grow: 1;
+        flex-shrink: 0;
+        line-height: $line-height-sm;
+        font-weight: $font-weight-medium;
+        margin: 0;
       }
 
     }
 
     .modal-body {
-      padding: 1.1rem 1.25rem;
+      display: block;
+      background-color: $bg-light-color;
+      flex-grow: 1;
+      flex-shrink: 1;
+      padding: $unit-5;
       font-size: $font-size-md;
       position: relative;
-      max-height: 50vh;
       overflow-y: auto;
     }
 
     .modal-footer {
-      padding: 2rem 0 0 0;
-      text-align: right;
+      @include flex-end();
+      padding: $unit-5;
+      position: relative;
+      flex-shrink: 0;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      background-color: $bg-light-color;
 
-      .btn-cancel {
-        margin-right: 0.5rem;
+      .modal-cancel {
+        color: $text-meta-color;
+        border: 0;
+        background: transparent;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+      }
+
+      .button:not(:last-child) {
+        margin-right: $unit-5;
+      }
+
+    }
+
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    &:hover {
+
+      &::before {
+        background-color: rgba(10,10,10,.3);
       }
 
     }

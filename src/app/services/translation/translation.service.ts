@@ -7,8 +7,8 @@ export class TranslationService {
 
   constructor(private _http: HttpClient) {}
 
-  public translate(text: string, lang: string): Observable<any> {
-    return this._http.get('/misc/translate', {params: {text: text, lang: lang}});
+  public translate(text: string, lang: string): Observable<{translation: string}> {
+    return this._http.get<{translation: string}>('/misc/translate', {params: {text: text, lang: lang}});
   }
 
 }

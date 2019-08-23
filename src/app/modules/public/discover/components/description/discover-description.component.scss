@@ -22,7 +22,7 @@
   .label.label-tag {
     padding-left: 0;
     padding-top: 0;
-    background-color: $bg-color-light;
+    background-color: $bg-light-color;
   }
 
   img {
@@ -34,7 +34,7 @@
     .text-link {
       color: #777777;
 
-      &:hover, &:focus {
+      &:hover {
         color: $primary-color;
       }
 

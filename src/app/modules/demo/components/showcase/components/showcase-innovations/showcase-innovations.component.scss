@@ -4,16 +4,15 @@
 #showcase-innovations {
   height: 100%;
 
-  .see-more-wrapper, .icon {
+  .see-more-wrapper, .icon-container {
     @include control-transition();
     visibility: hidden;
   }
 
-  .icon {
+  .icon-container {
     top: -6px;
     right: 0;
     margin-right: 0;
-    font-size: $font-icon-xl;
   }
 
   h2, h3 {
@@ -33,7 +32,7 @@
 
   .section-card-wrapper {
 
-    .card-3  {
+    .is-card-3  {
       overflow: hidden;
       min-width: 218px;
 
@@ -58,7 +57,7 @@
 
   &:hover {
 
-    .icon, .see-more-wrapper {
+    .icon-container, .see-more-wrapper {
       visibility: visible;
     }
 
@@ -70,7 +69,7 @@
   flex-wrap: wrap;
   margin-right: -$unit-5;
 
-  .card-3, .modal-card {
+  .is-card-3, .modal-card {
     margin-bottom: $unit-5;
     border: none;
     background-color: transparent;

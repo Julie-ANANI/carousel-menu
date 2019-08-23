@@ -32,7 +32,7 @@
   <!-- displaying tags -->
   <ng-container *ngIf="tags && tags.length > 0">
     <div class="flex-wrap d-flex">
-      <div *ngFor="let tag of tags" [title]="tag.description | multiling:userLang" class="label label-tag label-rounded">
+      <div *ngFor="let tag of tags" [title]="tag.description | multiling:userLang" class="label label-tag is-rounded">
         <i class="fas fa-tag label-left-icon"></i>
         <span class="label-text">{{ tag.label | multiling:userLang }}</span>
         <i (click)="onRemoveTag(tag)" *ngIf="editMode || isAdmin" class="fas fa-times label-cross-icon"></i>
@@ -46,19 +46,23 @@
 
 
 <!-- modal to create new tag -->
-<app-modal [(showModal)]="showModal" [modalTitle]="'COMMON.MODAL.TITLE_CREATE'">
+<app-modal [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
-  <div class="text-medium text-background p-bottom-15">{{ 'COMMON.TAG.CREATE_NEW_TAG' | translate }}</div>
+  <section class="modal-body">
 
-  <div>
-    <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.NAME' | translate }}</p>
-    <p class="text-sm m-no-bottom">"{{ tagForm.get('tag').value }}"</p>
-  </div>
+    <div class="text-medium text-background p-bottom-15">{{ 'COMMON.TAG.CREATE_NEW_TAG' | translate }}</div>
 
-  <div class="modal-footer">
-    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
-    <button (click)="createNewTag()" class="btn btn-sm btn-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+    <div>
+      <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.NAME' | translate }}</p>
+      <p class="text-sm m-no-bottom">"{{ tagForm.get('tag').value }}"</p>
+    </div>
+
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="createNewTag()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>
 <!-- /modal to create new tag -->

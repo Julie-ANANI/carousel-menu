@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../../models/answer';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-market-comment',
@@ -15,10 +16,15 @@ export class SharedMarketCommentComponent {
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private translateService: TranslateService) {
+  }
 
   public seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
+  }
+
+  get currentLang(): string {
+    return this.translateService.currentLang;
   }
 
 }

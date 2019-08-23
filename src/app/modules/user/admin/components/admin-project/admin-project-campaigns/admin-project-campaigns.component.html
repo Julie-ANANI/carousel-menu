@@ -28,9 +28,9 @@
               <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">
                 <span>{{ campaign.title }}</span>
               </a>
-              <span *ngIf="campaign.type === 'COMMUNITY'" class="label label-success">{{campaign.type}}</span>
-              <span *ngIf="getAuthorizationLevel(2)" class="text-link" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
-              <p class="text text-notify">
+              <span *ngIf="campaign.type === 'COMMUNITY'" class="label is-success">{{campaign.type}}</span>
+              <span *ngIf="getAuthorizationLevel(2)" class="text-link text-sm" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
+              <p class="d-flex text text-notify align-center">
                 {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
                 •
                 {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.ANSWERS' | translate }}
@@ -42,8 +42,10 @@
                   <!--|
                   <span class="text text-notify clone">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>-->
                   |
-                  <span (click)="onClickDelete($event, campaign)" class="icon icon-delete tooltip" data-tooltip="Delete Campaign">
-                    <i class="fas fa-trash-alt"></i>
+                  <span (click)="onClickDelete($event, campaign)" class="icon-container is-overlay text-alert">
+                    <span class="tooltip" data-tooltip="Delete Campaign">
+                      <i class="icon icon-delete"></i>
+                    </span>
                   </span>
                 </ng-container>
               </p>
@@ -58,12 +60,17 @@
 
 
 <!-- modal to ask the admin to delete the campaign -->
-<app-modal [(showModal)]="activateModal" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-  {{ 'COMMON.CAMPAIGN.DELETE_BOARD.CONTENT' | translate }}
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+<app-modal [(showModal)]="activateModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+
+  <section class="modal-body">
+    {{ 'COMMON.CAMPAIGN.DELETE_BOARD.CONTENT' | translate }}
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickSubmit()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
 </app-modal>
 <!-- /modal to ask the admin to delete the campaign -->
 

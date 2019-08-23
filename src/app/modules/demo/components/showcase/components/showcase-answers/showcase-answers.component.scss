@@ -4,16 +4,15 @@
 #showcase-answers {
   height: 100%;
 
-  .see-more-wrapper, .icon {
+  .see-more-wrapper, .icon-container {
     @include control-transition();
     visibility: hidden;
   }
 
-  .icon {
+  .icon-container {
     top: -6px;
     right: 0;
     margin-right: 0;
-    font-size: $font-icon-xl;
   }
 
   h2, h3 {
@@ -72,7 +71,7 @@
 
   &:hover {
 
-    .icon, .see-more-wrapper {
+    .icon-container, .see-more-wrapper {
       visibility: visible;
     }
 

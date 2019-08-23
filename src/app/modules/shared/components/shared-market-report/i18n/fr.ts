@@ -5,6 +5,8 @@ export const MARKET_REPORT = {
 
   'RESET_FILTERS': 'Réinitialiser les filtres',
 
+  'FILTER_EVERYTHING': 'Tout filtrer',
+
   'MESSAGE': {
     'SUBMITTED': 'Votre innovation est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
@@ -24,7 +26,7 @@ export const MARKET_REPORT = {
     'STATUS_TO_EVALUATING': 'Modifier la synthèse'
   },
 
-  'INSIGHT': 'Des idées',
+  'INSIGHT': 'Réponse',
 
   'CONCLUSION': 'Conclusion finale',
 
@@ -168,11 +170,13 @@ export const MARKET_REPORT = {
 
   'BUTTON_SAVE_VIEW': 'Enregistrer la vue',
 
+  'VIEWS': 'Mes vues',
+
   'TOOLTIP_DELETE_VIEW': 'Effacer la vue',
 
   'TOOLTIP_LOAD_VIEW': 'Charger la vue',
 
-  'TOOLTIP_UNHIDE_PROFESSIONAL': 'Démasquer le professionnel',
+  'TOOLTIP_UNHIDE_PROFESSIONAL': 'Afficher le professionnel',
 
   'TOOLTIP_HIDE_PROFESSIONAL': 'Masquer le professionnel',
 
@@ -183,5 +187,19 @@ export const MARKET_REPORT = {
   'SEE_LESS': 'Voir moins',
 
   'ORIGIN': 'Origine des réponses',
+
+  'SIDEBAR': {
+    'FILTERS': 'Filtres',
+    'MAKE_VISIBLE': 'Rendre le projet visible pour le client',
+    'MAKE_INVISIBLE': 'Rendre le projet invisible pour le client',
+    'GENERATE_REPORT': 'Genérer l\'executive report',
+    'RESET_REPORT': 'Réinitialiser l\'executive report',
+    'END_PROJECT': 'Terminer le projet',
+    'CONFIRMATION': 'Confirmation',
+    'REALLY_MAKE_VISIBLE': 'Voulez vous vraiment rendre le projet visible pour le client ?',
+    'REALLY_MAKE_INVISIBLE': 'Voulez vous vraiment rendre le projet invisible pour le client ?',
+    'REALLY_RESET_REPORT': 'Voulez vous vraiment réinitialiser l\'executive report ?',
+    'REALLY_END_PROJECT': 'Voulez vous vraiment terminer le projet ? Vous ne serez plus en mesure d\'apporter des changements au projet.',
+  }
 
 };

@@ -36,6 +36,14 @@ export const CAMPAIGNS = {
 
   'REJECTED': 'Rejected answers',
 
+  'REJECTED_GMAIL': 'Rejected answers by mail',
+
+  'REJECTED_UMIBOT': 'Automatically rejected answers',
+
+  'VALIDATED_UMIBOT': 'Automatically validated answers',
+
+  'VALIDATED_NO_MAIL': 'Validated answers without mail',
+
   'DELETE_MODAL': {
     'TITLE': 'Are you sure?',
     'CONTENT': 'Are you sure you want to definitively delete this campaign? It may contain professionals that will be removed from the innovation.'
@@ -121,7 +129,7 @@ export const CAMPAIGNS = {
   },
 
   'QUIZ_PAGE': {
-    'HEADING': 'Visit these link to see the questionnaire:',
+    'HEADING': 'Visit this link to see the questionnaire:',
     'BOT': 'No quiz has been generated for this campaign.'
   },
 
@@ -166,6 +174,7 @@ export const CAMPAIGNS = {
     'NUGGETS': 'Nuggets',
     'TITLE': 'Batch for',
     'MODAL_DELETE_CONTENT': 'Do you really want to delete this batch?',
+    'ERROR': 'There has been an error when sending this batch!',
     'CREATING_BATCH': 'We are in progress of creating the batch for this campaign. Please be patient!',
   },
 

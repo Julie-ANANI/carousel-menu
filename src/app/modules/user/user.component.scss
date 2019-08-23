@@ -1,9 +1,9 @@
-.main-wrapper {
-  display: flex;
+#main-wrapper {
   min-height: 100vh;
   flex-direction: column;
-}
 
-.body-wrapper {
-  flex: 1 0 auto;
+  .body-wrapper {
+    flex: 1 0 auto;
+  }
+
 }

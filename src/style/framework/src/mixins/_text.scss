@@ -28,3 +28,16 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+// Text link variant
+@mixin text-link-variant($color: $text-warning-color) {
+  font-weight: $font-weight-medium;
+  font-size: inherit;
+  color: $color;
+
+  &:focus, &:visited, &:active, &.active, &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+}

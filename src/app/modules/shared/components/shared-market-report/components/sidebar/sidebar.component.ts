@@ -11,7 +11,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { SharedFilter } from '../../models/shared-filter';
 import { Tag } from '../../../../../../models/tag';
-import { SharedWorldmapService } from "../../../shared-worldmap/shared-worldmap.service";
+import { SharedWorldmapService } from '../../../shared-worldmap/shared-worldmap.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -80,8 +80,6 @@ export class SidebarComponent implements OnInit {
 
   private _modalResetReport: boolean;
 
-  private _userLang = '';
-
   private _toggleFilterBar: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -91,9 +89,7 @@ export class SidebarComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _worldmapFilterService: WorldmapFiltersService,
               private _translateService: TranslateService) {
-
     PageScrollConfig.defaultDuration = 300;
-    this._userLang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
 
@@ -324,6 +320,46 @@ export class SidebarComponent implements OnInit {
   }
 
 
+  public filterEverything(event: Event, filterArray: Array<any>, typeFilter: string) {
+    event.preventDefault();
+    let question: Question;
+    const isChecked = (event.target as HTMLInputElement).checked;
+    switch (typeFilter) {
+      case 'CONTINENT':
+        filterArray.forEach(continent => {
+            this._worldmapFilterService.selectContinent(continent, isChecked);
+          });
+        break;
+      case 'TAG':
+        filterArray.forEach(tag => {
+          this._tagService.checkTag(tag._id, isChecked);
+        });
+        break;
+      case 'textarea':
+        question = filterArray[0];
+        const tagArray: Array<Tag> = this._tagService.answersTagsLists[question.identifier];
+        tagArray.forEach(t => {
+          this._tagService.checkAnswerTag(question.identifier, t._id, isChecked);
+        });
+        break;
+      case 'radio':
+      case 'checkbox':
+        question = filterArray[0];
+        if (isChecked) {
+          this._filterService.deleteFilter(question.identifier);
+        } else {
+          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = isChecked; return acc; }, {} as any);
+          this._filterService.addFilter({
+            status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
+            questionId: question.identifier,
+            value: filterValue
+          });
+        }
+        break;
+    }
+  }
+
+
   get activatedCustomFilters() {
     return this._activatedCustomFilters;
   }
@@ -433,7 +469,7 @@ export class SidebarComponent implements OnInit {
   }
 
   get userLang(): string {
-    return this._userLang;
+    return this._translateService.currentLang;
   }
 
   get toggleFilterBar(): boolean {

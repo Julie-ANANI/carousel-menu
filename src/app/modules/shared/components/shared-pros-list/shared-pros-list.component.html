@@ -35,11 +35,16 @@
 
 
 <!-- modal to ask admin to sure about deleting the professional(s) -->
-<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
-  {{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+
+  <section class="modal-body">
+    {{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
 </app-modal>
 <!-- /modal to ask admin to sure about deleting the professional(s) -->

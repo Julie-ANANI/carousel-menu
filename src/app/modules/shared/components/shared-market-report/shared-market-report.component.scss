@@ -8,7 +8,7 @@
   }
 
   .bg-white {
-    background-color: $bg-color-light;
+    background-color: $bg-light-color;
     border-radius: $border-radius;
   }
 
@@ -32,7 +32,7 @@
         border: none;
         overflow: hidden;
 
-        &.card-responsive {
+        &.is-responsive {
           margin-bottom: 0.75rem;
         }
 
@@ -108,7 +108,7 @@
             height: 100%;
           }
 
-          &.card-3 {
+          &.is-card-3 {
             margin-bottom: $unit-5;
           }
 
@@ -162,7 +162,7 @@
     top: 0;
     position: sticky;
     height: 100vh;
-    background-color: $bg-color-light;
+    background-color: $bg-light-color;
     overflow-y: auto;
     overflow-x: hidden;
     border-right: $border-width solid $border-color;

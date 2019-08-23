@@ -1,5 +1,64 @@
 @import "../variables";
 
+.divider, .divider-vert {
+  display: block;
+  position: relative;
+
+  &[data-content]::after {
+    background: $bg-light-color;
+    color: $text-meta-color;
+    content: attr(data-content);
+    display: inline-block;
+    font-size: $font-size-sm;
+    padding: 0 $unit-2;
+    font-weight: $font-weight-medium;
+    transform: translateY(-0.9rem);
+  }
+
+}
+
+.divider {
+  border-top: $border-width solid $border-color;
+  height: $border-width;
+  margin: $unit-2 0;
+  text-align: center;
+
+  &[data-content] {
+    margin: $unit-4 0;
+  }
+
+}
+
+.divider-vert {
+  display: block;
+  padding: $unit-4;
+
+  &::before {
+    border-left: $border-width solid $border-color;
+    bottom: $unit-2;
+    content: "";
+    display: block;
+    left: 50%;
+    position: absolute;
+    top: $unit-2;
+    transform: translateX(-50%);
+  }
+
+  &[data-content]::after {
+    left: 50%;
+    padding: $unit-1 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+}
+
+
+
+
+
+// todo this remove
 .or-divider {
   color: $meta-color;
   font-size: 0.7rem;
@@ -25,14 +84,10 @@
 
 }
 
+// Todo this remove
 .hr {
   border: $border-width solid $border-color;
   border-radius: $border-radius;
 }
 
-.divider {
-  background-color: $border-color;
-  margin: $unit-2 0;
-  height: 1px;
-  overflow: hidden;
-}
+

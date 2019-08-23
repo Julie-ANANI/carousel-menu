@@ -1,43 +1,59 @@
 @import "variables";
+@import "mixins";
 
 .menu {
-  background: $bg-color-light;
+  background: $bg-light-color;
   border-radius: $border-radius;
   list-style: none;
   margin: 0;
   min-width: $control-width-xs;
-  padding: $unit-2;
+  padding: $unit-2 0;
   transform: translateY($unit-1);
-  z-index: $zindex-2;
-  box-shadow: 0 4px 16px rgba(20,23,28,0.25);
+  z-index: $zindex-3;
+  box-shadow: $box-shadow-menu;
+
+  .menu-item {
+    @include control-transition();
+    font-size: $font-size-sm;
+    text-decoration: none;
+    margin-top: 0;
+    color: $text-background-color;
+    font-weight: normal;
+    padding: $unit-2 0.6rem;
+    cursor: pointer;
+
+    & > a {
+      display: block;
+      color: inherit;
+      margin: (-$unit-2) -0.6rem;
+      padding: $unit-2 0.6rem;
+    }
+
+    &:hover, &:focus, &:active, &.active {
+      background-color: $bg-menu-item-color;
+    }
+
+    &:not(:first-child) {
+      margin-top: .1rem;
+    }
+
+  }
 
   &.menu-nav {
     background: transparent;
     box-shadow: none;
   }
 
-  .menu-item {
-    font-size: $font-size-sm;
-    text-decoration: none;
-    margin-top: 0;
-    color: $text-background-color;
-    font-weight: normal;
-    padding: 0.5rem;
+  &.is-xs {
+    width: $control-width-xs;
+  }
 
-    a {
-      display: block;
-      color: inherit;
-    }
+  &.is-md {
+    width: 230px;
+  }
 
-    &:hover, &.active {
-      cursor: pointer;
-      background-color: $bg-menu-item-color;
-    }
-
-    &.menu-item:not(:first-child) {
-      margin-top: .2rem;
-    }
-
+  &.is-lg {
+    width: 300px;
   }
 
 }

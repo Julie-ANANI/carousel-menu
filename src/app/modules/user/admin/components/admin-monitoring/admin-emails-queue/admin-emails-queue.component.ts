@@ -68,10 +68,10 @@ export class AdminEmailQueueComponent implements OnInit {
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},
               {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
                 _choices: [
-                  {_name: 'QUEUED', _alias: 'Queued', _class: 'label label-draft'},
-                  {_name: 'PROCESSING', _alias: 'Processing', _class: 'label label-progress'},
-                  {_name: 'CANCELED', _alias: 'Canceled', _class: 'label label-edit'},
-                  {_name: 'DONE', _alias: 'Done', _class: 'label label-success'}
+                  {_name: 'QUEUED', _alias: 'Queued', _class: 'label is-draft'},
+                  {_name: 'PROCESSING', _alias: 'Processing', _class: 'label is-progress'},
+                  {_name: 'CANCELED', _alias: 'Canceled', _class: 'label is-secondary'},
+                  {_name: 'DONE', _alias: 'Done', _class: 'label is-success'}
                 ]
               }
               ]

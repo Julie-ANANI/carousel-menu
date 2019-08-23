@@ -33,6 +33,12 @@ export class HeaderUnauthComponent implements OnInit {
 
   private _modalSignIn: boolean = false;
 
+  private _displayMenuOptions: boolean = false; // on small devices if true then display menu options.
+
+  private _displayLoading = false;
+
+  private _showLangs: boolean = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateNotificationsService: TranslateNotificationsService,
               private _authService: AuthService,
@@ -51,7 +57,6 @@ export class HeaderUnauthComponent implements OnInit {
     this._buildForm();
   }
 
-
   private _buildForm() {
     this._formData = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -59,11 +64,9 @@ export class HeaderUnauthComponent implements OnInit {
     });
   }
 
-
   private _setFlag() {
     this._flag = this._currentLang === 'en' ? 'US' : 'FR';
   }
-
 
   /***
    * set the lang as current lang.
@@ -82,6 +85,18 @@ export class HeaderUnauthComponent implements OnInit {
 
   }
 
+  /***
+   * to toggle the value of menu options display.
+   */
+  public toggleMenuState(event: Event) {
+    event.preventDefault();
+    this._displayMenuOptions = !this._displayMenuOptions;
+  }
+
+  public toggleLangOptions(event: Event) {
+    event.preventDefault();
+    this._showLangs = !this._showLangs;
+  }
 
   /***
    * this function is called when the user clicks on the sign in button.
@@ -93,18 +108,19 @@ export class HeaderUnauthComponent implements OnInit {
     this._modalSignIn = true;
   }
 
-
   /***
    * this function is called when the user clicks on the continue buttion in the
    * sign in form wrapper and redirect the user according to the requested page.
    */
   public onClickContinue() {
     if (this._formData.valid) {
+      this._displayLoading = true;
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
       this._authService.login(user).pipe(first()).subscribe(() => {
       }, () => {
+        this._displayLoading = false;
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
       });
@@ -115,7 +131,6 @@ export class HeaderUnauthComponent implements OnInit {
       }
     }
   }
-
 
   /***
    * this function open the sign up sidebar where user can
@@ -132,7 +147,6 @@ export class HeaderUnauthComponent implements OnInit {
     }
 
   }
-
 
   /***
    * this function is to register the new client.
@@ -162,16 +176,13 @@ export class HeaderUnauthComponent implements OnInit {
     }
   }
 
-
   public getLogo(): string {
     return environment.logoURL;
   }
 
-
   public getCompany(): string {
     return environment.companyShortName;
   }
-
 
   public getContactUrl(): string {
     return this._currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
@@ -207,6 +218,18 @@ export class HeaderUnauthComponent implements OnInit {
 
   set modalSignIn(value: boolean) {
     this._modalSignIn = value;
+  }
+
+  get displayMenuOptions(): boolean {
+    return this._displayMenuOptions;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
+  }
+
+  get showLangs(): boolean {
+    return this._showLangs;
   }
 
 }

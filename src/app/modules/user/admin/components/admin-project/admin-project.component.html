@@ -1,72 +1,169 @@
 <section id="admin-project" class="container fluid">
 
-
-  <!-- fetching error -->
-  <div *ngIf="fetchingError" class="section-light-pad">
-    <div class="restrict-width">
-      <div class="a-p-error-wrapper d-flex align-center">
-        <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
-          <p [innerText]="'ERROR.ERRORS.PROJECT_FETCHING_ERROR'" translate></p>
-        </app-error-template-1>
-      </div>
-    </div>
-  </div>
-  <!-- /fetching error -->
-
-
-  <!-- project -->
-  <div *ngIf="!fetchingError && project" class="a-p-header p-top-25">
+  <!-- error -->
+  <section *ngIf="fetchingError" class="section-light-pad">
     <div class="column col-xs-12 col-11 col-mx-auto">
-
-
-      <!-- title -->
-      <div class="d-flex flex-wrap align-center">
-        <h1 class="a-title-header m-right-15">{{ title }}</h1>
-        <a [routerLink]="['/user/projects/', project._id]" class="m-bottom-2" target="_blank">
-          <span class="text-link">{{ 'COMMON.BUTTON.VIEW_LIKE_CLIENT' | translate }}</span>
-        </a>
+      <div class="restrict-width">
+        <div class="d-flex align-center" style="min-height: 75vh">
+          <app-error-template-1 [errorMessage]="'ERROR.ERRORS.HEADING_1'" style="width: 100%">
+            <h6 class="subtitle text-background">
+              {{ 'ERROR.ERRORS.FETCHING_MESSAGE_1' | translate }} {{ 'ERROR.ERRORS.PROJECT_FETCHING_ERROR' | translate }}
+            </h6>
+          </app-error-template-1>
+        </div>
       </div>
-      <!-- title -->
-
-
-      <!-- metadata -->
-      <div class="d-flex flex-wrap m-bottom-3">
-        <p class="text-sm text-medium text-notify">
-          <span *ngIf="project?.owner?.name">{{ project?.owner?.name }}</span>
-          <span *ngIf="project?.owner?.company" class="m-left-1 m-right-1">-</span>
-          <span *ngIf="project?.owner?.company">{{ project?.owner?.company }}</span>
-          <span *ngIf="project.created" class="m-left-1 m-right-1">-</span>
-          <span>{{ 'COMMON.LABEL.CREATED' | translate }} {{ project.created | date:dateFormat }}</span>
-          <span class="m-left-1 m-right-1">-</span>
-          <span>{{ project.collaborators.length }} {{ 'COMMON.LABEL.COLLABORATORS' | translate }}</span>
-        </p>
-      </div>
-      <!-- /metadata -->
-
-
-      <!-- tabs -->
-      <ul class="tab">
-        <li *ngFor="let tab of authorizedTabs" class="tab-item">
-          <a
-            [routerLinkActiveOptions]="{ exact: true }"
-            [routerLink]="['/user/admin/projects/project', project._id, tab]"
-            routerLinkActive="active">
-            {{ 'PROJECT.' + tab.toUpperCase() | translate }}
-          </a>
-        </li>
-      </ul>
-      <!-- /tabs -->
-
-
     </div>
-  </div>
-  <!-- /project -->
+  </section>
+  <!-- /error -->
+
+  <!-- no error -->
+  <section *ngIf="!fetchingError && project">
+
+    <!-- header -->
+    <div class="header-wrapper bg-white p-top-25">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        <!-- title, link button and action button -->
+        <div class="flex-between flex-wrap">
+
+          <!-- title and link button -->
+          <div class="d-flex flex-wrap align-center m-bottom-1">
+
+            <h4 [innerText]="title" class="text-background"></h4>
+
+            <a
+              [innerText]="'COMMON.BUTTON.VIEW_LIKE_CLIENT'"
+              [routerLink]="['/user/projects/', project._id]"
+              class="button is-link is-sm"
+              target="_blank"
+              translate>
+            </a>
+
+          </div>
+
+          <!-- action button -->
+          <div class="dropdown is-right m-bottom-1">
+
+            <a class="button is-danger is-outlined dropdown-toggle" tabindex="0">
+              Actions <i class="icon icon-caret icon-right"></i>
+            </a>
+
+            <ul class="menu is-md">
+              <li
+                (click)="openModal($event, 'project')"
+                [innerText]="'PROJECT.DROPDOWN_MENU.OPTION_A'"
+                class="menu-item"
+                translate>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+        <!-- /title, link button and action button -->
+
+        <!-- metadata -->
+        <div class="d-flex flex-wrap m-bottom-3">
+          <p class="text-sm text-medium text-notify">
+            <span *ngIf="project?.owner?.name">{{ project?.owner?.name }}</span>
+            <span *ngIf="project?.owner?.company" class="m-left-1 m-right-1">-</span>
+            <span *ngIf="project?.owner?.company">{{ project?.owner?.company }}</span>
+            <span *ngIf="project.created" class="m-left-1 m-right-1">-</span>
+            <span>{{ 'COMMON.LABEL.CREATED_ON' | translate }} {{ project.created | date:dateFormat }}</span>
+            <span class="m-left-1 m-right-1">-</span>
+            <span>{{ project.collaborators.length }} {{ 'COMMON.LABEL.COLLABORATORS' | translate | lowercase }}</span>
+          </p>
+        </div>
+        <!-- /metadata -->
+
+        <!-- tabs -->
+        <ul class="tab">
+          <li *ngFor="let tab of authorizedTabs" class="tab-item">
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="['/user/admin/projects/project', project._id, tab]"
+              routerLinkActive="active">
+              {{ 'PROJECT.' + tab.toUpperCase() | translate }}
+            </a>
+          </li>
+        </ul>
+        <!-- /tabs -->
 
 
-  <!-- other sections -->
-  <router-outlet></router-outlet>
-  <!-- /other sections -->
+      </div>
+    </div>
+    <!-- /header -->
 
+    <!-- different pages -->
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /different pages -->
+
+  </section>
+  <!-- /no error -->
 
 </section>
+
+
+<!-- modals for different actions -->
+<app-modal [(showModal)]="showModal" [enableCloseButton]="true">
+  <section class="modal-body">
+
+    <!-- project modal -->
+    <div *ngIf="isProjectModal">
+
+      <div class="text-center m-bottom-25">
+        <h3 [innerText]="'PROJECT.MODAL.SELECT_FIELD'" class="text-background text-normal" translate></h3>
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-checkbox">
+          <input type="checkbox" checked disabled>
+          <i class="form-icon"></i> {{ 'PROJECT.MODAL.BASE' | translate }}
+        </label>
+
+        <label
+          *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED_NO_MAIL', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']"
+          class="form-checkbox">
+          <input
+            (change)="projectExportConfig.answers[status] = !projectExportConfig.answers[status]"
+            [checked]="projectExportConfig.answers[status]"
+            type="checkbox">
+          <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
+        </label>
+
+        <label class="form-checkbox">
+          <input
+            (change)="projectExportConfig.campaigns = !projectExportConfig.campaigns"
+            [checked]="projectExportConfig.campaigns"
+            type="checkbox">
+          <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
+        </label>
+
+        <label class="form-checkbox">
+          <input
+            (change)="projectExportConfig.anonymous = !projectExportConfig.anonymous"
+            [checked]="projectExportConfig.anonymous"
+            type="checkbox">
+          <i class="form-icon"></i> {{ 'PROJECT.MODAL.ANON' | translate }}
+        </label>
+
+      </div>
+
+    </div>
+    <!-- /project modal -->
+
+    <!-- export button -->
+    <div class="m-top-40 m-bottom-15 text-center">
+      <button (click)="onClickExport($event)" class="button is-primary is-lg" type="button">
+        <ng-container *ngIf="isProjectModal">{{ 'COMMON.BUTTON.EXPORT_PROJECT' | translate }}</ng-container>
+      </button>
+    </div>
+    <!-- /export button -->
+
+  </section>
+</app-modal>
+<!-- /modals for different actions -->
 

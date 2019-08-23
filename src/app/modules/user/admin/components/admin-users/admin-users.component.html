@@ -58,20 +58,22 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalDelete" [modalTitle]="'COMMON.MODAL.TITLE_DELETE'">
+<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
-  <div class="text-background text-medium">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>
+  <section class="modal-body">
+    <div class="text-background text-medium">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>
 
-  <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
-    <li *ngFor="let user of usersToRemove" class="m-right-3 m-top-1">
-      {{ user?.firstName }} {{ user?.lastName }}
-    </li>
-  </ul>
+    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+      <li *ngFor="let user of usersToRemove" class="m-right-3 m-top-1">
+        {{ user?.firstName }} {{ user?.lastName }}
+      </li>
+    </ul>
+  </section>
 
-  <div class="modal-footer">
-    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
-    <button (click)="onClickConfirm()" class="btn btn-sm btn-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
 
 </app-modal>
 <!-- /modal -->

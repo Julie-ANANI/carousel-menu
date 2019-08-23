@@ -52,9 +52,9 @@
           <div class="navigate-wrapper">
             <button type="button" class="btn ghost-edit btn-xs" (click)="onClickLast()">Last Week</button>
             <div class="label-wrapper">
-              <div class="label label-success">First mail</div>
-              <div class="label label-draft">Second mail</div>
-              <div class="label label-meta">Third mail</div>
+              <div class="label is-success">First mail</div>
+              <div class="label is-draft">Second mail</div>
+              <div class="label is-info">Third mail</div>
             </div>
             <button type="button" class="btn ghost-edit btn-xs" (click)="onClickNext()">Next Week</button>
           </div>
@@ -71,19 +71,22 @@
                     <div class="batch-body">
 
                       <ng-container *ngIf="getState(batches) === 0">
-                        <div class="label label-success" (click)="showPreview($event, batches)">
+                        <div class="label is-success" (click)="showPreview($event, batches)">
+                          <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error"></i>
                           {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
 
                       <ng-container *ngIf="getState(batches) === 1">
-                        <div class="label label-draft" (click)="showPreview($event, batches)">
+                        <div class="label is-draft" (click)="showPreview($event, batches)">
+                          <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error"></i>
                           {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
 
                       <ng-container *ngIf="getState(batches) === 2">
-                        <div class="label label-meta" (click)="showPreview($event, batches)">
+                        <div class="label is-info" (click)="showPreview($event, batches)">
+                          <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error"></i>
                           {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
                         </div>
                       </ng-container>
@@ -93,30 +96,30 @@
 
                   <ng-container *ngIf="index2 === 4">
                     <div class="batch-body">
-                      <div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">
+                      <div class="popover" [ngClass]="{ 'is-right': index1 === 0, 'is-left': index1 === 4 }">
 
                         <div class="text-link">see more...</div>
 
-                        <div class="popover-container popover-sm">
+                        <div class="popover-container is-xs">
                           <div class="card">
                             <div class="card-body">
                               <div *ngFor="let batchesOver of days; let index3 = index">
                                 <div *ngIf="index3 > 0" class="batch-body">
 
                                   <ng-container *ngIf="getState(batchesOver) === 0">
-                                    <div class="label label-success" (click)="showPreview($event, batches)">
+                                    <div class="label is-success" (click)="showPreview($event, batches)">
                                       {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                                     </div>
                                   </ng-container>
 
                                   <ng-container *ngIf="getState(batchesOver) === 1">
-                                    <div class="label label-draft" (click)="showPreview($event, batches)">
+                                    <div class="label is-draft" (click)="showPreview($event, batches)">
                                       {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                                     </div>
                                   </ng-container>
 
                                   <ng-container *ngIf="getState(batchesOver) === 2">
-                                    <div class="label label-meta" (click)="showPreview($event, batches)">
+                                    <div class="label is-info" (click)="showPreview($event, batches)">
                                       {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
                                     </div>
                                   </ng-container>

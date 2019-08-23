@@ -2,8 +2,8 @@ export const TABLE = {
 
   'STATUS': {
     'STATUS': 'Statut',
-    'TO_MODIFY': 'To modify',
-    'MODIFIED': 'Modified',
+    'TO_MODIFY': 'A modifier',
+    'MODIFIED': 'Modifié',
     'VALIDATED': 'Validé',
     'REJECTED': 'Rejeté',
     'VALIDATED_NO_MAIL': 'Valider sans envoyer de mail',

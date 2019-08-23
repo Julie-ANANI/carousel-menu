@@ -59,7 +59,7 @@ export class AdminCommunityMemberComponent implements OnInit {
   private _allSectorTags: Array<Tag> = [];
 
   private _configInnovation = {
-    fields: 'innovationCards principalMedia',
+    fields: 'innovationCards principalMedia tags',
     limit: '0',
     offset: '0',
     isPublic: '1',
@@ -154,8 +154,8 @@ export class AdminCommunityMemberComponent implements OnInit {
           _name: 'Open',
           _type: 'MULTI-CHOICES',
           _choices: [
-            {_name: '', _alias: '', _class: 'label label-alert'},
-            {_name: '', _alias: '',  _class: 'label label-success'},
+            {_name: '', _alias: '', _class: 'label is-danger'},
+            {_name: '', _alias: '',  _class: 'label is-success'},
           ]
         },
         {
@@ -163,8 +163,8 @@ export class AdminCommunityMemberComponent implements OnInit {
           _name: 'Click',
           _type: 'MULTI-CHOICES',
           _choices: [
-            {_name: '', _alias: '', _class: 'label label-alert'},
-            {_name: '', _alias: '',  _class: 'label label-success'},
+            {_name: '', _alias: '', _class: 'label is-danger'},
+            {_name: '', _alias: '',  _class: 'label is-success'},
           ]
         }
       ]
@@ -189,8 +189,8 @@ export class AdminCommunityMemberComponent implements OnInit {
           _name: 'Feedback',
           _type: 'MULTI-LABEL',
           _multiLabels: [
-            {_attr: '', _class: 'label label-success'},
-            {_attr: '', _class: 'label label-draft'}
+            {_attr: '', _class: 'label is-success'},
+            {_attr: '', _class: 'label is-draft'}
           ],
         }
       ]

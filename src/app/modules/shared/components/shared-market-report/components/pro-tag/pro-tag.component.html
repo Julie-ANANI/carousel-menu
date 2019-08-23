@@ -3,7 +3,7 @@
 
   <!-- top profile -->
   <ng-container *ngIf="answer && answer.profileQuality === 2">
-    <div class="label label-meta">
+    <div class="label is-info">
       <span>Top Profile</span>
     </div>
   </ng-container>
@@ -28,7 +28,7 @@
     <ng-container *ngIf="answer && answer.professional && answer.professional.firstName">
       <p>
         <span class="text-link" (click)="seeAnswer($event, answer)">
-          {{ answer.professional.firstName | FormatText }} {{ answer.professional?.lastName }}
+          {{ answer.professional.firstName | FormatText:true }} {{ answer.professional?.lastName | FormatText:true }}
         </span>
       </p>
     </ng-container>
@@ -37,14 +37,14 @@
     <!-- job -->
     <ng-container *ngIf="answer.job || answer?.professional?.jobTitle">
       <p class="text text-background">
-        {{ answer.job || answer?.professional?.jobTitle }}
+        {{ (answer.job || answer?.professional?.jobTitle) | FormatText:true }}
       </p>
     </ng-container>
 
     <!-- company -->
     <ng-container *ngIf="answer.company?.name || answer.professional?.company">
       <p class="text-notify text-medium">
-        {{ answer?.company?.name || answer?.professional?.company }}
+        {{ (answer?.company?.name || answer?.professional?.company) |FormatText:true }}
       </p>
     </ng-container>
 
@@ -54,7 +54,7 @@
 
   <!-- tag -->
   <div *ngIf="tags && tags.length > 0" class="tag-wrapper">
-    <div *ngFor="let tag of tags" class="label label-tag label-rounded" [title]="tag.description | multiling:userLang">
+    <div *ngFor="let tag of tags" class="label label-tag is-rounded" [title]="tag.description | multiling:userLang">
       <i class="fas fa-tag"></i><span>{{ tag.label | multiling:userLang }}</span>
     </div>
   </div>

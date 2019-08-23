@@ -1,21 +1,12 @@
 @import "../../../../../../style/framework/src/variables";
 
-#admin-libraries-component {
+#admin-libraries {
 
-  .section-header {
-    background: white;
-    padding-top: 1.57rem;
-
-    .title-secondary {
-      color: $background-color;
-    }
+  .header-wrapper {
+    border-bottom: $border-width solid $border-color;
 
     .tab {
-
-      .tab-item {
-        margin-right: 2.5rem;
-      }
-
+      border-bottom: none;
     }
 
   }

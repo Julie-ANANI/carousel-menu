@@ -7,7 +7,7 @@ export const ERROR = {
 
   'FORM_ERROR': 'Form error',
 
-  'OPERATION_ERROR': 'We are facing some technical issues to carry out this request. Please try again!',
+  'OPERATION_ERROR': 'There were some technical issues to carry out this request. Please try again.',
 
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
@@ -15,7 +15,9 @@ export const ERROR = {
 
   'SERVER_ERROR': 'We are having trouble while connecting to the server.',
 
-  'RELOAD_PAGE': 'Please try to refresh the page!',
+  'RELOAD_PAGE': 'Please reload the page and try again.',
+
+  'RELOADING_PAGE': 'The page is going to reload automatically in few seconds. Thank you for your patience.',
 
   'NO_CONNECTION': 'It seems that you are currently offline.',
 
@@ -91,6 +93,7 @@ export const ERROR = {
     'ALREADY_ADDED': 'The tag has been already added.',
     'FETCHING_ERROR': 'We are having trouble while fetching the tags for this innovations from the server.',
     'TAG_FETCHING_ERROR': 'We are having trouble while fetching the data for this tag.',
+    'IMPORTED': 'The tags have been imported successfully.',
   },
 
 
@@ -168,7 +171,10 @@ export const ERROR = {
     'PROFESSIONAL_ERROR': 'It could be because you are trying to access the professional that doesn\'t exist or server connection problem or check if the URL is good.',
     'PROJECT_ERROR': 'It could be because you are trying to access the project that doesn\'t exist or server connection problem or check if the URL is good.',
     'FETCHING': 'We are having trouble while fetching the data. It could be because of server connection problem.',
-    'PROJECT_FETCHING_ERROR': 'It could be because of server connection problem or we could not find the innovation that you are looking for.'
+    'PROJECT_FETCHING_ERROR': 'It could be possible because of server connection problem or we could not find the project that you are looking for.',
+    'HEADING_1': 'Oups. something went wrong...',
+    'FETCHING_MESSAGE_1': 'There was an error while fetching the data from the server.',
+    'SERVER_CONNECTION': 'It could be possible because of server connection problem.'
   },
 
 
@@ -185,8 +191,7 @@ export const ERROR = {
   },
 
   'PROFESSIONAL': {
-    'MERGE_ERROR': 'A professional with that e-mail already exists. Try to manually merge both professionals.<br>FOr more info, ask the tech team',
+    'MERGE_ERROR': 'A professional with that e-mail already exists. Try to manually merge both professionals.<br>For more info, ask the tech team',
   }
-
 
 };

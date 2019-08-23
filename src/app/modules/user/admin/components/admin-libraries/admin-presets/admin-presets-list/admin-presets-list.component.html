@@ -25,6 +25,7 @@
                 <i class="fas fa-plus m-no-left"></i>
                 {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
               </button>
+
             </div>
 
           </div>
@@ -65,87 +66,79 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalOpen" [modalTitle]="modalTitle">
+<app-modal [(showModal)]="modalOpen" [title]="modalTitle">
 
-  <!-- isAdd -->
-  <ng-container *ngIf="isModalAdd || isModalCloneAdd">
-    <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
-      <label class="form-label" for="add-preset" *ngIf="isModalAdd">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
-      <label class="form-label" for="add-preset" *ngIf="isModalCloneAdd">Preset Clone</label>
-      <input
-        [(ngModel)]="newPresetName"
-        class="form-input"
-        id="add-preset"
-        name="preset"
-        [placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate"
-        type="text">
-    </div>
-  </ng-container>
-  <!-- /isAdd -->
+  <section class="modal-body">
 
-  <!-- isDelete -->
-  <ng-container *ngIf="isModalDelete">
-    <div class="text-background text-medium">{{ 'PRESETS.MODAL.DELETE' | translate }}</div>
+    <!-- isAdd -->
+    <ng-container *ngIf="isModalAdd || isModalCloneAdd">
+      <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
+        <label class="form-label" for="add-preset" *ngIf="isModalAdd">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
+        <label class="form-label" for="add-preset" *ngIf="isModalCloneAdd">Preset Clone</label>
+        <input
+          [(ngModel)]="newPresetName"
+          class="form-input"
+          id="add-preset"
+          name="preset"
+          [placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate"
+          type="text">
+      </div>
+    </ng-container>
+    <!-- /isAdd -->
 
-    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
-      <li *ngFor="let preset of presetsToRemove" class="m-right-3 m-top-1">
-        {{ preset.name }}
-      </li>
-    </ul>
-  </ng-container>
-  <!-- /isDelete -->
+    <!-- isDelete -->
+    <ng-container *ngIf="isModalDelete">
+      <div class="text-background text-medium">{{ 'PRESETS.MODAL.DELETE' | translate }}</div>
 
-  <!-- isClone -->
-  <ng-container *ngIf="isModalClone">
-    <div class="text-background text-medium">{{ 'PRESETS.MODAL.CLONE' | translate }}</div>
+      <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+        <li *ngFor="let preset of presetsToRemove" class="m-right-3 m-top-1">
+          {{ preset.name }}
+        </li>
+      </ul>
+    </ng-container>
+    <!-- /isDelete -->
 
-    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
-      <li class="m-right-3 m-top-1">
-        {{ presetToClone.name }}
-      </li>
-    </ul>
-  </ng-container>
-  <!-- /isClone -->
+    <!-- isClone -->
+    <ng-container *ngIf="isModalClone">
+      <div class="text-background text-medium">{{ 'PRESETS.MODAL.CLONE' | translate }}</div>
 
-  <div class="modal-footer">
+      <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+        <li class="m-right-3 m-top-1">
+          {{ presetToClone.name }}
+        </li>
+      </ul>
+    </ng-container>
+    <!-- /isClone -->
 
-    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="btn btn-sm btn-cancel" translate></button>
+  </section>
+
+  <footer class="modal-footer">
+
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
 
     <!-- isAdd || isCloneAdd -->
     <ng-container *ngIf="isModalAdd || isModalCloneAdd">
       <button
         (click)="isModalAdd ? onAddConfirm() : onClickCloneAdd()"
         [disabled]="!newPresetName"
-        [innerText]="'COMMON.BUTTON.CONFIRM'"
-        class="btn btn-sm btn-primary"
-        translate>
+        class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}
       </button>
     </ng-container>
     <!-- /isAdd || /isCloneAdd -->
 
     <!-- isDelete -->
     <ng-container *ngIf="isModalDelete">
-      <button
-        (click)="onDeleteConfirm()"
-        [innerText]="'COMMON.BUTTON.CONFIRM'"
-        class="btn btn-sm btn-primary"
-        translate>
-      </button>
+      <button (click)="onDeleteConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
     </ng-container>
     <!-- /isDelete -->
 
     <!-- isClone -->
     <ng-container *ngIf="isModalClone">
-      <button
-        (click)="onCloneConfirm()"
-        [innerText]="'COMMON.BUTTON.CONFIRM'"
-        class="btn btn-sm btn-primary"
-        translate>
-      </button>
+      <button (click)="onCloneConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
     </ng-container>
     <!-- /isClone -->
 
-  </div>
+  </footer>
 
 </app-modal>
 <!-- /modal -->

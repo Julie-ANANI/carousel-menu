@@ -1,11 +1,11 @@
 @import "../../../../style/framework/src/variables";
 
-#footer-component {
+#footer {
   min-height: 50px;
 
   .navbar {
     min-height: 50px;
-    font-size: $font-size-sm;
+    border-bottom: 0;
 
     .privacy-wrapper {
 
@@ -21,7 +21,7 @@
 
 @media (max-width: $size-sm) {
 
-  #footer-component {
+  #footer {
 
     .navbar {
       flex-direction: column;
@@ -39,5 +39,5 @@
     }
 
   }
-  
+
 }

@@ -9,10 +9,10 @@
         <div class="column col-xl-12 col-6 col-mx-auto">
 
           <div class="ques-1">
-            <span class="shape rect">1</span>
+            <span class="shape is-rounded bg-draft">1</span>
             <span class="text text-question">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
             <div class="form-group" [ngStyle]="{ 'padding-top': '1rem' }">
-              <label class="form-radio" for="new-project-frLang">
+              <label class="form-radio is-inline" for="new-project-frLang">
                 <input
                   type="radio"
                   name="choosenLang"
@@ -21,7 +21,7 @@
                   id="new-project-frLang">
                 <i class="form-icon"></i>{{ 'COMMON.LANG.FR' | translate }}
               </label>
-              <label class="form-radio" for="new-project-enLang">
+              <label class="form-radio is-inline" for="new-project-enLang">
                 <input
                   type="radio"
                   name="choosenLang"
@@ -34,7 +34,7 @@
           </div>
 
           <div class="ques-2">
-            <span class="shape rect">2</span>
+            <span class="shape is-rounded bg-draft">2</span>
             <span class="text text-question">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
             <div class="form-group has-error" [ngStyle]="{ 'padding-top': '1rem' }">
               <label for="new-project-companyName"></label>
@@ -71,7 +71,7 @@
       </div>
       <!-- /section 3 -->
 
-      <!-- section 4 -->
+      <!-- section 4
       <div class="section-info">
         <div class="columns col-gapless text-center">
           <div class="column col-sm-12 col-4 col-mx-auto">
@@ -88,7 +88,7 @@
           </div>
         </div>
       </div>
-      <!-- /section 4 -->
+      /section 4 -->
 
     </form>
   </div>

@@ -1,70 +1,105 @@
 @import "../../../../style/framework/src/variables";
 
-#header-unauth-component {
-  border: 1px solid $border-light-color;
+#header {
+  border-bottom: $border-width solid $border-light-color;
 
   .navbar {
+    border-bottom: 0;
 
-    .logo {
-      padding-top: 5px;
-    }
+    .navbar-menu {
 
-    .navigation-wrapper {
+      .navbar-item {
 
-      .menu {
-        flex-wrap: wrap;
-      }
+        &.dropdown-lang {
 
-      .header-lang-dropdown {
+          .navbar-dropdown {
+            min-width: unset;
+            width: 46px;
+            left: -4px;
 
-        a {
-          height: 35px;
+            .navbar-item {
+              height: 42px;
+              padding: $unit-2;
+              justify-content: center;
+            }
 
-          span:after {
-            bottom: 3px;
-          }
-
-          .fa-angle-down {
-            margin-left: $unit-2;
           }
 
         }
 
-        .dropdown-menu {
-          width: 46px;
-          right: -7px;
-          padding: 0;
-
-          .drop-item{
-            padding: 0.5rem;
-          }
-
+        &.has-button .button {
+          border-width: $border-width-lg;
         }
 
-        &:hover {
-
-          .fa-angle-down {
-            color: $primary-color !important;
-          }
-
-          span:after {
-            visibility: visible;
-            background-color: $primary-color;
-            transform: scaleX(1);
-          }
-
-        }
-
-      }
-
-      .contact-button {
-
-        .btn.ghost-edit {
-          color: $text-background-color;
+        &.has-button .button.is-info {
           border-color: transparent;
+          background-color: transparent;
 
           &:hover {
             border-color: $border-meta-color;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+@media screen and (max-width: $size-lg) {
+
+  #header {
+
+    .navbar {
+
+      .navbar-menu {
+
+        &.active,&:active {
+
+          .navbar-item {
+
+            &.has-dropdown {
+
+              .dropdown-toggle {
+                padding-top: $unit-3;
+                padding-bottom: $unit-3;
+
+                .icon.icon-arrow-down {
+                  top: 0.9rem;
+                }
+
+              }
+
+              .navbar-dropdown {
+                display: none;
+                width: 100%;
+                left: unset;
+                padding-top: 0.6rem !important;
+
+                .navbar-item {
+                  justify-content: flex-start;
+                  padding-left: 1.1rem;
+                }
+
+                &.m-show-langs {
+                  display: block;
+                }
+
+              }
+
+            }
+
+            &.has-button a.button.is-info {
+              flex-grow: 1;
+              justify-content: flex-start;
+              padding: 0;
+              border: 0;
+            }
+
           }
 
         }

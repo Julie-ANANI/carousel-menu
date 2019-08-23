@@ -3,7 +3,7 @@
 #executive-report-wrapper {
 
   .page-first {
-    background-color: $bg-color-light;
+    background-color: $bg-light-color;
     display: flex;
     border-radius: $border-radius;
   }
@@ -14,7 +14,7 @@
 
   .section {
     display: inline-flex;
-    background-color: $bg-color-light;
+    background-color: $bg-light-color;
     padding: 25px;
   }
 
@@ -36,7 +36,7 @@
     width: 66.67%;
     display: flex;
     flex-wrap: wrap;
-    background-color: $bg-color-light;
+    background-color: $bg-light-color;
   }
 
   .section-2, .section-4 {

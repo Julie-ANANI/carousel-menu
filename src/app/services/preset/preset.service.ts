@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class PresetService {
@@ -18,6 +19,16 @@ export class PresetService {
 
   public getAll(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/preset/', {params: config});
+  }
+
+  public static export(): string {
+    return environment.apiUrl + '/preset/';
+  }
+
+  public import(file:File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, "import_presets");
+    return this._http.post('/preset/import/', formData);
   }
 
   public remove(presetId: string): Observable<any> {

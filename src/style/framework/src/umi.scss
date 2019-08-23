@@ -2,6 +2,8 @@
 /* normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Spectre.css v0.4.7 | MIT License | github.com/picturepan2/spectre */
 
+// Icons
+@import "icons/icons";
 
 // Variables
 @import "variables";
@@ -14,14 +16,12 @@
 // Elements
 @import "typography";
 @import "tables";
-@import "banners";
 @import "buttons";
 @import "codes";
-@import "dropdown";
+@import "close";
 @import "forms";
-@import "header";
+@import "icons";
 @import "labels";
-@import "stats";
 @import "media";
 
 // Layout
@@ -32,13 +32,18 @@
 @import "avatars";
 @import "badges";
 @import "bars";
+@import "banners";
 @import "cards";
 @import "carousels";
+@import "dropdown";
+@import "header";
 @import "menu";
 @import "modal";
 @import "navbar";
+@import "pagination";
 @import "popovers";
 @import "sidebars";
+@import "stats";
 @import "tabs";
 @import "tooltip";
 
