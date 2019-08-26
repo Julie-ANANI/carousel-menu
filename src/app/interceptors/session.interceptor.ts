@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import * as SessionVerificationController from '@umius/umi-session-verifications';
 import { environment } from '../../environments/environment';
 import { ErrorService } from '../services/error/error.service';
-
-const SessionVerification = new SessionVerificationController();
 
 @Injectable()
 export class SessionInterceptor implements HttpInterceptor {
@@ -26,9 +23,10 @@ export class SessionInterceptor implements HttpInterceptor {
   // Request Interceptor to append Authorization Header
   private setAuthorizationHeader(req: HttpRequest<any>): HttpRequest<any> {
     // Make a clone of the request then append the Authorization Header
-    SessionVerification.setHeader(req, 'umi-front-application');
     return req.clone({
-      headers: req.headers.set('instance-domain', environment.domain),
+      headers: req.headers
+        .set('instance-domain', environment.domain)
+        .set('api-token', 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ'),
       withCredentials: true
     });
   }

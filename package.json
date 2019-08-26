@@ -34,7 +34,6 @@
     "@sentry/browser": "^5.5.0",
     "@types/express": "^4.11.1",
     "@types/jasmine": "^2.8.9",
-    "@umius/umi-session-verifications": "latest",
     "angular2-notifications": "^1.0.4",
     "angular2-uuid": "^1.1.1",
     "core-js": "^2.5.4",
