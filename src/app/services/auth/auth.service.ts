@@ -91,6 +91,24 @@ export class AuthService {
       );
   }
 
+  public forceLogin(userId: string): Observable<User> {
+    return this._http.post('/auth/forceLogin', {userId: userId})
+      .pipe(
+        map((res: any) => {
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._setIsOperatorTo(res.isOperator);
+          this._user = res;
+          if (res.isAuthenticated) {
+            //this.startCookieObservator();
+          }
+          return res;
+        }),
+        catchError((error: Response) => throwError(error.json()))
+      );
+  }
+
   public logout(): Observable<any> {
     return this._http.get('/auth/logout')
       .pipe(
