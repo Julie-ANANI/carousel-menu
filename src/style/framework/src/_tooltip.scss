@@ -1,11 +1,6 @@
 @import "variables";
 @import "mixins";
 
-
-/*
-  add the tooltip class and the data-tooltip attribute, which contains the tooltip content,
-  to non self closing elements.
- */
 .tooltip {
   position: relative;
 
@@ -35,7 +30,7 @@
     z-index: 300;
   }
 
-  &.tooltip-wrap::before {
+  &.is-multiline::before {
     width: 100%;
     white-space: normal;
   }
@@ -67,7 +62,7 @@
   }
 
 
-  &.tooltip-right {
+  &.is-right {
 
     &::before, &::after {
       bottom: 50%;
@@ -97,7 +92,7 @@
 
   }
 
-  &.tooltip-left {
+  &.is-left {
 
     &::before, &::after {
       bottom: 50%;
@@ -128,7 +123,7 @@
 
   }
 
-  &.tooltip-bottom {
+  &.is-bottom {
 
     &::before, &::after {
       bottom: auto;
@@ -163,10 +158,14 @@
 
 @media (max-width: $size-sm) {
 
-  &.tooltip-hide-sm {
+  .tooltip {
 
-    &::before, &::after {
-      display: none !important;
+    &.is-hide-sm {
+
+      &::before, &::after {
+        display: none !important;
+      }
+
     }
 
   }

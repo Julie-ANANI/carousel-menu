@@ -2,7 +2,7 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- history icon -->
-    <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip tooltip-left history-icon"
+    <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip is-left history-icon"
          [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate"
          (click)="onClickHistoryIcon($event)">
       <i class="fas fa-history text-notify"></i>
@@ -61,7 +61,7 @@
 
           <!-- modify tag link -->
           <div
-            class="text-link text-xs tooltip tooltip-hide-sm"
+            class="text-link text-xs tooltip is-hide-sm"
             [attr.data-tooltip]="'SHOWCASE.TOOLTIP.MODIFY_TAGS' | translate"
             (click)="modifyTag()">
             <span [innerText]="'SHOWCASE.MODIFY'" translate></span>
