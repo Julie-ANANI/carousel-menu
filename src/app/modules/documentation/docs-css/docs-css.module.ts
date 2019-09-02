@@ -38,6 +38,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { PopoversComponent } from './components/popovers/popovers.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     MenuComponent,
     ModalComponent,
     NavbarComponent,
-    PaginationComponent
+    PaginationComponent,
+    PopoversComponent
   ],
 })
 
