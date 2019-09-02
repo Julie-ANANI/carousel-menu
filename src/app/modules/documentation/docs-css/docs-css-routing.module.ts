@@ -38,6 +38,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PopoversComponent } from './components/popovers/popovers.component';
+import { TabsComponent } from './components/tabs/tabs.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -86,6 +87,7 @@ const docsCssRoutes: Routes = [
       { path: 'components/navbar', component: NavbarComponent, pathMatch: 'full' },
       { path: 'components/pagination', component: PaginationComponent, pathMatch: 'full' },
       { path: 'components/popovers', component: PopoversComponent, pathMatch: 'full' },
+      { path: 'components/tabs', component: TabsComponent, pathMatch: 'full' },
       {
         path: 'utilities',
         redirectTo: 'utilities/colors',
