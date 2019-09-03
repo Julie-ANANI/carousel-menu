@@ -230,7 +230,7 @@ export class SharedMarketReportComponent implements OnInit {
         });
         return acc;
       }, {} as {[id: string]: Tag});
-      this._tagFiltersService.tagsList = Object.values(tagsDict);
+      this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
 
       /*
        * compute tags lists for each questions of type textarea
