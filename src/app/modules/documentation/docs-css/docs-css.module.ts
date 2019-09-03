@@ -41,6 +41,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { PopoversComponent } from './components/popovers/popovers.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   imports: [
@@ -86,7 +87,8 @@ import { TooltipsComponent } from './components/tooltips/tooltips.component';
     PaginationComponent,
     PopoversComponent,
     TabsComponent,
-    TooltipsComponent
+    TooltipsComponent,
+    SidebarComponent
   ],
 })
 

@@ -40,6 +40,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { PopoversComponent } from './components/popovers/popovers.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -88,6 +89,7 @@ const docsCssRoutes: Routes = [
       { path: 'components/navbar', component: NavbarComponent, pathMatch: 'full' },
       { path: 'components/pagination', component: PaginationComponent, pathMatch: 'full' },
       { path: 'components/popovers', component: PopoversComponent, pathMatch: 'full' },
+      { path: 'components/sidebar', component: SidebarComponent, pathMatch: 'full' },
       { path: 'components/tabs', component: TabsComponent, pathMatch: 'full' },
       { path: 'components/tooltips', component: TooltipsComponent, pathMatch: 'full' },
       {

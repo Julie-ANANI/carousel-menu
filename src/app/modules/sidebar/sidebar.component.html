@@ -1,24 +1,22 @@
-<div class="sidebar sidebar-right" [@animateSidebar]="state" [ngStyle]="{ 'width': size ? size : '452px'  }">
-  <div class="sidebar-container">
-    <div #content>
+<div [@animateSidebar]="state" [ngStyle]="{ 'width': size ? size : '452px'  }" class="sidebar is-right">
+  <div #content class="sidebar-container">
 
-      <!-- heading part -->
-      <div class="sidebar-header">
-        <div class="header">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="flex-between">
-              <h5 class="m-no-bottom">{{ title | translate }}</h5>
-              <button class="btn btn-close" id="close" (click)="toggleState($event, content)"></button>
-            </div>
-          </div>
+    <!-- header -->
+    <header class="sidebar-header">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="flex-between relative">
+          <p class="sidebar-title" [innerText]="title" translate></p>
+          <button (click)="toggleState($event, content)" aria-label="close" class="close absolute" id="close" type="button"></button>
         </div>
       </div>
+    </header>
+    <!-- /header -->
 
-      <!-- content part -->
-      <div class="sidebar-body p-bottom-50">
-        <ng-content></ng-content>
-      </div>
+    <!-- content -->
+    <section class="sidebar-body p-bottom-50">
+      <ng-content></ng-content>
+    </section>
+    <!-- /content -->
 
-    </div>
   </div>
 </div>
