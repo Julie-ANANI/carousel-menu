@@ -1,27 +1,29 @@
 <header id="header">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <nav class="navbar">
+  <div class="container">
+    <div class="columns">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <nav class="navbar">
 
-      <!-- brand -->
-      <div class="navbar-brand">
-        <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
-          <img [alt]="getCompany()" [src]="getLogo()" height="33" style="height: 33px; width: 110px" width="110">
-        </a>
-      </div>
-      <!-- /brand -->
+          <!-- brand -->
+          <div class="navbar-brand">
+            <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
+              <img [alt]="getCompany()" [src]="getLogo()" height="33" style="height: 33px; width: 110px" width="110">
+            </a>
+          </div>
+          <!-- /brand -->
 
-      <!-- hamburger icon for mobile -->
-      <div class="navbar-burger" (click)="toggleMenuState($event)">
-        <i class="icon icon-menu"></i>
-        <span class="m-left-2 text-medium">Menu</span>
-      </div>
-      <!-- /hamburger icon for mobile -->
+          <!-- hamburger icon for mobile -->
+          <div class="navbar-burger" (click)="toggleMenuState($event)">
+            <i class="icon icon-menu"></i>
+            <span class="m-left-2 text-medium">Menu</span>
+          </div>
+          <!-- /hamburger icon for mobile -->
 
-      <!-- navigation -->
-      <div class="navbar-menu" [ngClass]="{ 'active': displayMenuOptions }">
+          <!-- navigation -->
+          <div class="navbar-menu" [ngClass]="{ 'active': displayMenuOptions }">
 
-        <!-- language select dropdown -->
-        <div class="navbar-item has-dropdown dropdown-lang" (click)="toggleLangOptions($event)">
+            <!-- language select dropdown -->
+            <div class="navbar-item has-dropdown dropdown-lang" (click)="toggleLangOptions($event)">
 
           <span>
             <a class="dropdown-toggle">
@@ -32,44 +34,46 @@
             </a>
           </span>
 
-          <!-- options -->
-          <ul class="navbar-dropdown p-no" [ngClass]="{ 'm-show-langs': showLangs }">
-            <li class="navbar-item text-center" (click)="setLang('fr')">
-              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
-            </li>
-            <li class="navbar-item text-center" (click)="setLang('en')">
-              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
-            </li>
-          </ul>
+              <!-- options -->
+              <ul class="navbar-dropdown p-no" [ngClass]="{ 'm-show-langs': showLangs }">
+                <li class="navbar-item text-center" (click)="setLang('fr')">
+                  <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
+                </li>
+                <li class="navbar-item text-center" (click)="setLang('en')">
+                  <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
+                </li>
+              </ul>
 
-        </div>
-        <!-- /language select dropdown -->
+            </div>
+            <!-- /language select dropdown -->
 
-        <!-- contact us -->
-        <div class="navbar-item has-button">
-          <a [href]="getContactUrl()" rel="noopener" target="_blank" class="button is-info text-background is-outlined">
-            {{ 'HEADER.CONTACT_US' | translate }}
-          </a>
-        </div>
+            <!-- contact us -->
+            <div class="navbar-item has-button">
+              <a [href]="getContactUrl()" rel="noopener" target="_blank" class="button is-info text-background is-outlined">
+                {{ 'HEADER.CONTACT_US' | translate }}
+              </a>
+            </div>
 
-        <!-- sign in button -->
-        <div class="navbar-item has-button">
-          <button (click)="onClickSignIn($event)" class="button is-primary is-outlined" type="button">
-            {{ 'LOG_IN.LOG_IN_BTN' | translate }}
-          </button>
-        </div>
+            <!-- sign in button -->
+            <div class="navbar-item has-button">
+              <button (click)="onClickSignIn($event)" class="button is-primary is-outlined" type="button">
+                {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+              </button>
+            </div>
 
-        <!-- sign up button -->
-        <div class="navbar-item has-button m-no-right">
-          <button (click)="onClickSignUp($event)" class="button is-primary" type="button">
-            {{ 'COMMON.BUTTON.SIGN_UP' | translate }}
-          </button>
-        </div>
+            <!-- sign up button -->
+            <div class="navbar-item has-button m-no-right">
+              <button (click)="onClickSignUp($event)" class="button is-primary" type="button">
+                {{ 'COMMON.BUTTON.SIGN_UP' | translate }}
+              </button>
+            </div>
 
+          </div>
+          <!-- /navigation -->
+
+        </nav>
       </div>
-      <!-- /navigation -->
-
-    </nav>
+    </div>
   </div>
 </header>
 
