@@ -3,10 +3,14 @@
 
     <!-- header -->
     <header class="sidebar-header">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="flex-between relative">
-          <p class="sidebar-title" [innerText]="title" translate></p>
-          <button (click)="toggleState($event, content)" aria-label="close" class="close absolute" id="close" type="button"></button>
+      <div class="container">
+        <div class="columns">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="flex-between relative">
+              <p class="sidebar-title" [innerText]="title" translate></p>
+              <button (click)="toggleState($event, content)" aria-label="close" class="close absolute" id="close" type="button"></button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -14,7 +18,11 @@
 
     <!-- content -->
     <section class="sidebar-body p-bottom-50">
-      <ng-content></ng-content>
+      <div class="container">
+        <div class="columns d-block">
+          <ng-content></ng-content>
+        </div>
+      </div>
     </section>
     <!-- /content -->
 

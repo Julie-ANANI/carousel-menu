@@ -42,6 +42,7 @@ import { PopoversComponent } from './components/popovers/popovers.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FlexboxComponent } from './layout/flexbox/flexbox.component';
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     PopoversComponent,
     TabsComponent,
     TooltipsComponent,
-    SidebarComponent
+    SidebarComponent,
+    FlexboxComponent
   ],
 })
 

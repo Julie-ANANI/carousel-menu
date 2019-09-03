@@ -41,6 +41,7 @@ import { PopoversComponent } from './components/popovers/popovers.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FlexboxComponent } from './layout/flexbox/flexbox.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -72,6 +73,12 @@ const docsCssRoutes: Routes = [
       { path: 'elements/form', component: FormComponent, pathMatch: 'full' },
       { path: 'elements/close', component: CloseComponent, pathMatch: 'full' },
       { path: 'elements/icons', component: IconComponent, pathMatch: 'full' },
+      {
+        path: 'layout',
+        redirectTo: 'layout/flexbox',
+        pathMatch: 'full'
+      },
+      { path: 'layout/flexbox', component: FlexboxComponent, pathMatch: 'full' },
       {
         path: 'components',
         redirectTo: 'components/accordions',
