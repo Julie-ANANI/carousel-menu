@@ -43,6 +43,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FlexboxComponent } from './layout/flexbox/flexbox.component';
+import { ResponsiveComponent } from './layout/responsive/responsive.component';
 
 @NgModule({
   imports: [
@@ -90,7 +91,8 @@ import { FlexboxComponent } from './layout/flexbox/flexbox.component';
     TabsComponent,
     TooltipsComponent,
     SidebarComponent,
-    FlexboxComponent
+    FlexboxComponent,
+    ResponsiveComponent
   ],
 })
 

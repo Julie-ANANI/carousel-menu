@@ -42,6 +42,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FlexboxComponent } from './layout/flexbox/flexbox.component';
+import { ResponsiveComponent } from './layout/responsive/responsive.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -79,6 +80,7 @@ const docsCssRoutes: Routes = [
         pathMatch: 'full'
       },
       { path: 'layout/flexbox', component: FlexboxComponent, pathMatch: 'full' },
+      { path: 'layout/responsive', component: ResponsiveComponent, pathMatch: 'full' },
       {
         path: 'components',
         redirectTo: 'components/accordions',
