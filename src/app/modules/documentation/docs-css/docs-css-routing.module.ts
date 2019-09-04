@@ -43,6 +43,7 @@ import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FlexboxComponent } from './layout/flexbox/flexbox.component';
 import { ResponsiveComponent } from './layout/responsive/responsive.component';
+import { MessageTemplatesComponent } from './angular/message-templates/message-templates.component';
 
 const docsCssRoutes: Routes = [
   {
@@ -118,6 +119,12 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/shape', component: ShapeComponent, pathMatch: 'full' },
       { path: 'utilities/text', component: TextComponent, pathMatch: 'full' },
       { path: 'utilities/title', component: TitleComponent, pathMatch: 'full' },
+      {
+        path: 'angualr',
+        redirectTo: 'angular/message-template-1',
+        pathMatch: 'full'
+      },
+      { path: 'angular/message-template-1', component: MessageTemplatesComponent, pathMatch: 'full' },
     ]
   }
 ];

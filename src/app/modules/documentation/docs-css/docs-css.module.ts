@@ -44,13 +44,18 @@ import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FlexboxComponent } from './layout/flexbox/flexbox.component';
 import { ResponsiveComponent } from './layout/responsive/responsive.component';
+import { MessageTemplatesComponent } from './angular/message-templates/message-templates.component';
+import { MessageTemplate1Module } from '../../utility-components/messages/message-template-1/message-template-1.module';
+import { MessageTemplate2Module } from '../../utility-components/messages/message-template-2/message-template-2.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     DocsCssRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MessageTemplate1Module,
+    MessageTemplate2Module
   ],
   declarations: [
     DocsCssComponent,
@@ -92,7 +97,8 @@ import { ResponsiveComponent } from './layout/responsive/responsive.component';
     TooltipsComponent,
     SidebarComponent,
     FlexboxComponent,
-    ResponsiveComponent
+    ResponsiveComponent,
+    MessageTemplatesComponent
   ],
 })
 

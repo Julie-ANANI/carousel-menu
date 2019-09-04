@@ -169,13 +169,18 @@
               </div>
             </div>
 
-            <!-- angular
+            <!-- angular -->
             <div class="accordion docs-accordion">
               <input type="checkbox" id="accordion-angular" hidden [checked]="activeRoute.includes('angular')" name="docs-accordion-checkbox">
               <label class="accordion-header c-hand" for="accordion-angular">Angular</label>
               <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item">
+                    <a [routerLink]="'angular/message-templates'">Message Templates</a>
+                  </li>
+                </ul>
               </div>
-            </div>-->
+            </div>
 
           </div>
         </div>
