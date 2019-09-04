@@ -22,6 +22,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   private _checkLogin(url: string): boolean {
 
+    // Store the attempted URL for redirecting
+    this._authService.redirectUrl = url;
+
     if (this._authService.isAuthenticated ) {
 
       if (this._authService.isConfirmed || url === '/logout') {
@@ -34,12 +37,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     }
 
-    // Store the attempted URL for redirecting
-    this._authService.redirectUrl = url;
-
     // Navigate to the login page with extras
     this._router.navigate(['/login']);
     return false;
+
   }
 
 }
