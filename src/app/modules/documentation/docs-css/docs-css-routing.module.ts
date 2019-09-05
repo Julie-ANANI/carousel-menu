@@ -124,7 +124,7 @@ const docsCssRoutes: Routes = [
         redirectTo: 'angular/message-template-1',
         pathMatch: 'full'
       },
-      { path: 'angular/message-template-1', component: MessageTemplatesComponent, pathMatch: 'full' },
+      { path: 'angular/message-templates', component: MessageTemplatesComponent, pathMatch: 'full' },
     ]
   }
 ];
