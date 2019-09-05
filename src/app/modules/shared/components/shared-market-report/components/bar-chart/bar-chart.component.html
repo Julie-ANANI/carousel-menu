@@ -64,14 +64,15 @@
             <div class="flex-between text-medium">
 
               <div>
-                <div (click)="filterAnswer(barData, $event); toggleFilterIcon[i] = false"
-                     (mouseenter)="toggleFilterIcon[i] = true;"
-                     (mouseleave)="toggleFilterIcon[i] = false;"
-                     [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate"
-                     [ngStyle]="{ 'width': '20px' }"
-                     [ngClass]="toggleFilterIcon[i] ? 'is-delete' : 'is-info'"
-                     class="c-hand icon tooltip">
-                  <i class="fas icon-size" [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash' : 'fa-eye'"></i>
+                <div
+                  (click)="filterAnswer(barData, $event); toggleFilterIcon[i] = false"
+                  (mouseenter)="toggleFilterIcon[i] = true;"
+                  (mouseleave)="toggleFilterIcon[i] = false;"
+                  style="width: 20px; height: 20px"
+                  class="c-hand icon-container">
+                  <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate">
+                    <i class="fas icon-size" [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash text-alert' : 'fa-eye text-info'"></i>
+                  </span>
                 </div>
                 <span class="bar-name text-background">{{ barData.label | multiling:lang }}</span>
               </div>
