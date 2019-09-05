@@ -1,33 +1,31 @@
 <footer id="footer" class="bg-draft">
-  <div class="container">
-    <div class="columns">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <nav class="navbar bg-draft text-sm flex-between">
+  <div class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <nav class="navbar bg-draft text-sm flex-between">
 
-          <!-- copyright -->
-          <div class="copyright-wrapper">
-            <span>© {{ copyrightDate }} {{ companyName }}</span>
-          </div>
-          <!-- /copyright -->
+        <!-- copyright -->
+        <div class="copyright-wrapper">
+          <span>© {{ copyrightDate }} {{ companyName }}</span>
+        </div>
+        <!-- /copyright -->
 
-          <!-- terms and privacy -->
-          <div class="privacy-wrapper text-medium">
+        <!-- terms and privacy -->
+        <div class="privacy-wrapper text-medium">
 
-            <a [href]="getTermsLink()" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
-              {{ 'FOOTER.TERMS' | translate }}
-            </a>
+          <a [href]="getTermsLink()" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
+            {{ 'FOOTER.TERMS' | translate }}
+          </a>
 
-            |
+          |
 
-            <a [href]="getPrivacyLink()" class="gtm-end-user-licence-agreement c-hand" rel="noopener" target="_blank">
-              {{ 'FOOTER.PRIVACY' | translate }}
-            </a>
+          <a [href]="getPrivacyLink()" class="gtm-end-user-licence-agreement c-hand" rel="noopener" target="_blank">
+            {{ 'FOOTER.PRIVACY' | translate }}
+          </a>
 
-          </div>
-          <!-- /terms and privacy -->
+        </div>
+        <!-- /terms and privacy -->
 
-        </nav>
-      </div>
+      </nav>
     </div>
   </div>
 </footer>
