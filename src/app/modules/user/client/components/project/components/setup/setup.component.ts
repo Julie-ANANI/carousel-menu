@@ -219,16 +219,8 @@ export class SetupComponent implements OnInit, OnDestroy {
     return this._scrollOn;
   }
 
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
-  }
-
   get currentPage(): string {
     return this._currentPage;
-  }
-
-  get saveChanges(): boolean {
-    return this._saveChanges;
   }
 
   get buttonSaveClass(): string {

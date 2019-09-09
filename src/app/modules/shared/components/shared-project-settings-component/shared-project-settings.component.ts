@@ -37,13 +37,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _adminSide = false;
 
-  private _displayCountriesToExcludeSection = false;
-
   private _displayCountriesCommentSection = false;
-
-  private _displayCompanyToExcludeSection = false;
-
-  private _displayCompanyToIncludeSection = false;
 
   private _displayPersonsToExcludeSection = false;
 
@@ -154,16 +148,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
 
-  get displayCountriesToExcludeSection(): boolean {
-    return this._displayCountriesToExcludeSection;
-  }
-
-
-  set displayCountriesToExcludeSection(value: boolean) {
-    this._displayCountriesToExcludeSection = value;
-  }
-
-
   get displayCountriesCommentSection(): boolean {
     return this._displayCountriesCommentSection;
   }
@@ -180,29 +164,9 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
 
-  get displayCompanyToExcludeSection(): boolean {
-    return this._displayCompanyToExcludeSection;
-  }
-
-
-  set displayCompanyToExcludeSection(value: boolean) {
-    this._displayCompanyToExcludeSection = value;
-  }
-
-
   addCompanyToInclude(event: {value: Array<string>}): void {
     this._innovation.settings.companies.include = event.value;
     this.updateSettings();
-  }
-
-
-  get displayCompanyToIncludeSection(): boolean {
-    return this._displayCompanyToIncludeSection;
-  }
-
-
-  set displayCompanyToIncludeSection(value: boolean) {
-    this._displayCompanyToIncludeSection = value;
   }
 
 
@@ -255,18 +219,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   addKeywordToExclude(event: {value: Array<string>}): void {
     this._innovation.settings.keywords = event.value;
-    this.updateSettings();
-  }
-
-
-  addDomainToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
-    this.updateSettings();
-  }
-
-
-  addEMailToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
