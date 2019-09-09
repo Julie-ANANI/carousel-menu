@@ -11,8 +11,6 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { DomSanitizer } from '@angular/platform-browser';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 
-declare const tinymce: any;
-
 @Component({
   selector: 'app-shared-project-edit-cards',
   templateUrl: 'shared-project-edit-cards.component.html',
@@ -54,8 +52,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
   private _saveChanges = false;
 
   private _modalDelete = false;
-
-  private _editors: Array<any> = [];
 
   constructor(private translationService: TranslationService,
               private innovationService: InnovationService,
@@ -367,10 +363,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
     return this._companyName;
   }
 
-  get saveChanges(): boolean {
-    return this._saveChanges;
-  }
-
   set modalDelete(value: boolean) {
     this._modalDelete = value;
   }
@@ -379,15 +371,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
     return this._modalDelete;
   }
 
-  get editors(): Array<any> {
-    return this._editors;
-  }
-
   ngOnDestroy(): void {
-    if (Array.isArray(this._editors) && this._editors.length > 0) {
-      this._editors.forEach((ed) => tinymce.remove(ed));
-    }
-
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
 
