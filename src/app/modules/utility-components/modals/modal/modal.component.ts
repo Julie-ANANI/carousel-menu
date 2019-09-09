@@ -1,5 +1,4 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, OnDestroy, Output, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -7,7 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./modal.component.scss']
 })
 
-export class ModalComponent implements OnInit, OnDestroy {
+export class ModalComponent {
 
   @Input() set showModal(value: boolean) {
     this._show = value;
@@ -27,8 +26,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private readonly _element: any;
-
   private _show: boolean = false;
 
   private _maxWidth: string = '640px';
@@ -36,19 +33,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   private _title: string = '';
 
   private _enableCloseButton: boolean = false;
-
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private _elementRef: ElementRef) {
-
-    this._element = this._elementRef.nativeElement;
-
-  }
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      document.body.appendChild(this._element);
-    }
-  }
 
   public toggleState(event: Event) {
     const classesToCheck: Array<string> = ['modal-overlay', 'modal-close is-sm', 'button modal-cancel', 'close'];
@@ -60,20 +44,8 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   }
 
-  get element(): any {
-    return this._element;
-  }
-
   get showModal() {
     return this._show;
-  }
-
-  get show(): boolean {
-    return this._show;
-  }
-
-  set show(value: boolean) {
-    this._show = value;
   }
 
   get maxWidth(): string {
@@ -86,10 +58,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   get enableCloseButton(): boolean {
     return this._enableCloseButton;
-  }
-
-  ngOnDestroy(): void {
-    this._element.remove();
   }
 
 }

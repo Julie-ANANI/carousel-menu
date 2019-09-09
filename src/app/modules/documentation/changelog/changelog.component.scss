@@ -1,0 +1,31 @@
+@import "../../../../style/framework/src/variables";
+
+#changelog {
+
+  .cl-hero {
+    padding-top: 1.25rem;
+
+    h1 {
+      margin-bottom: 0.5rem;
+      font-weight: normal;
+    }
+
+  }
+
+  .text-italic {
+    font-style: italic;
+    font-size: $font-size-sm;
+    margin-left: $unit-2;
+  }
+
+  .list {
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+
+    li {
+      margin-top: 0.2rem;
+    }
+
+  }
+
+}

@@ -86,7 +86,7 @@
       <h6 [innerText]="'MARKET_REPORT.VIEWS'" translate></h6>
 
       <div *ngFor="let filter of sharedFiltersList" class="different-views">
-        <div class="d-inline-flex tooltip tooltip-right"
+        <div class="d-inline-flex tooltip is-right"
              [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_DELETE_VIEW' | translate"
              (click)="deleteCustomFilter($event, filter.name)">
           <i class="fas fa-trash-alt text-alert c-hand" aria-hidden="true"></i>

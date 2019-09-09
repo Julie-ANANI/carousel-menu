@@ -1,11 +1,9 @@
-<section id="innovations">
-
+<div id="innovations">
 
   <!-- content -->
-  <div class="restrict-width">
-    <div class="section-light-pad">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-
+  <section class="container fluid grid-2xl">
+    <div class="p-top-25 p-bottom-25">
+      <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- section fetching error -->
         <section *ngIf="fetchingError">
@@ -17,10 +15,8 @@
         </section>
         <!-- /section fetching error -->
 
-
         <!-- section result -->
         <section *ngIf="!fetchingError" class="d-content-wrapper">
-
 
           <!-- filters -->
           <div class="section-light-pad">
@@ -32,7 +28,6 @@
             </app-filters>
           </div>
           <!-- /filters -->
-
 
           <!-- section recommended innovations -->
           <section *ngIf="!filterActivated && recommendedInnovationId">
@@ -53,7 +48,6 @@
           </section>
           <!-- /section recommended innovations -->
 
-
           <!-- section latest innovations -->
           <section *ngIf="!filterActivated">
             <div class="p-top-25">
@@ -72,7 +66,6 @@
             </div>
           </section>
           <!-- /section latest innovations -->
-
 
           <!-- section trending innovations -->
           <section *ngIf="!filterActivated">
@@ -93,7 +86,6 @@
             </div>
           </section>
           <!-- /section trending innovations -->
-
 
           <!-- section when searching innovation -->
           <section *ngIf="filterActivated">
@@ -148,42 +140,40 @@
           </section>
           <!-- /section when searching innovation -->
 
-
         </section>
         <!-- / section result -->
 
-
       </div>
     </div>
-  </div>
+  </section>
   <!-- /content -->
-
 
   <!-- community banner -->
   <section *ngIf="!fetchingError" class="d-community-banner-wrapper p-top-20">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <div class="flex-between">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+        <div class="flex-between">
 
-        <div class="d-community-msg-wrapper d-flex align-center m-bottom-20">
-          <i class="fas fa-paper-plane m-right-50"></i>
-          <span [innerText]="'DISCOVER.COMMUNITY_TEXT'" class="p-right-50" translate></span>
+          <div class="d-community-msg-wrapper d-flex align-center m-bottom-20">
+            <i class="fas fa-paper-plane m-right-50"></i>
+            <span [innerText]="'DISCOVER.COMMUNITY_TEXT'" class="p-right-50" translate></span>
+          </div>
+
+          <div class="m-bottom-20">
+            <a
+              [href]="getCommunityUrl()"
+              [innerText]="'DISCOVER.BUTTON_COMMUNITY'"
+              class="btn btn-primary rounded"
+              rel="noopener"
+              target="_blank"
+              translate>
+            </a>
+          </div>
+
         </div>
-
-        <div class="m-bottom-20">
-          <a
-            [href]="getCommunityUrl()"
-            [innerText]="'DISCOVER.BUTTON_COMMUNITY'"
-            class="btn btn-primary rounded"
-            rel="noopener"
-            target="_blank"
-            translate>
-          </a>
-        </div>
-
       </div>
     </div>
   </section>
   <!-- /community banner -->
 
-
-</section>
+</div>

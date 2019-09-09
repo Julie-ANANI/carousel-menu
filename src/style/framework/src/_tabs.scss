@@ -28,7 +28,7 @@
 
       i {
         margin-right: $unit-2;
-        font-size: $font-icon;
+        font-size: inherit;
       }
 
       &:focus, &:hover {
@@ -49,36 +49,11 @@
 
   }
 
-
-  &.tab-block {
+  &.is-fullwidth {
 
     .tab-item {
-      flex: 1 0 0;
+      flex: 1 0 auto;
       text-align: center;
-
-      a {
-        margin: 0;
-      }
-
-      .badge {
-
-        &[data-badge]::after {
-          position: absolute;
-          right: $unit-h;
-          top: $unit-h;
-          transform: translate(0, 0);
-        }
-
-      }
-
-    }
-
-  }
-
-  &:not(.tab-block) {
-
-    .badge {
-      padding-right: 0;
     }
 
   }
@@ -86,7 +61,7 @@
 }
 
 
-@media (max-width: $size-sm) {
+@media screen and (max-width: $size-sm) {
 
   .tab {
 

@@ -1,0 +1,126 @@
+<div id="sidebar">
+
+  <h1 class="title">Sidebar</h1>
+
+  <div class="docs-divider"></div>
+
+  <p class="text-md">A classic sidebar, in which you can include any content you want.</p>
+
+  <p class="text-md">Add a separate container with the <code>sidebar-backdrop</code> class to show the overlay. Declare it before the
+    main container of the <code>sidebar</code>. Add the <code>active</code> or <code>inactive</code> class to appear and disappear it.</p>
+
+  <p class="text-md">To show the full page sidebar add the main container with the <code>sidebar</code> class. By default the position is left.
+    To have it in right use the <code>is-right</code> class with it. By default is it visible but you can add the <code>active</code>
+    or <code>inactive</code> class to appear and disappear it.</p>
+
+  <p class="text-md">Add the child elements with the <code>sidebar-container</code>. Inside that add the child elements with
+    the <code>sidebar-header</code> and <code>sidebar-body</code>.</p>
+
+  <p class="text-md">To have the different width just play with the width css property of the main container that includes
+    the <code>sidebar</code> class.</p>
+
+  <div class="columns">
+    <div class="column p-top-20 col-xs-12 col-6">
+      <button class="button is-primary" (click)="toggleSidebar = !toggleSidebar">left sidebar</button>
+    </div>
+    <div class="column p-top-20 col-xs-12 col-6">
+      <button class="button is-primary" (click)="rightSidebar = !rightSidebar">right sidebar</button>
+    </div>
+  </div>
+
+  <!-- left sidebar -->
+  <div class="sidebar-backdrop" [ngClass]="toggleSidebar ? 'active' : 'inactive'" (click)="toggleSidebar = !toggleSidebar"></div>
+  <div class="sidebar" [ngClass]="toggleSidebar ? 'active' : 'inactive'">
+    <div class="sidebar-container">
+      <div class="sidebar-header">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="flex-between">
+            <p class="sidebar-title">Title</p>
+            <button (click)="toggleSidebar = !toggleSidebar" aria-label="close" class="close" type="button"></button>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          Add content here
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- right sidebar -->
+  <div class="sidebar-backdrop" [ngClass]="rightSidebar ? 'active' : 'inactive'" (click)="rightSidebar = !rightSidebar"></div>
+  <div class="sidebar is-right" [ngClass]="rightSidebar ? 'active' : 'inactive'">
+    <div class="sidebar-container">
+      <div class="sidebar-header">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="flex-between">
+            <p class="sidebar-title">Title</p>
+            <button (click)="rightSidebar = !rightSidebar" aria-label="close" class="close" type="button"></button>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          Add content here
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-top-20">
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sidebar-backdrop inactive"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sidebar inactive"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sidebar-container"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sidebar-header"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"column col-xs-12 col-11 col-mx-auto"</span>&gt;</span>
+              <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex-between"</span>&gt;</span>
+                <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"sidebar-title"</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">p</span>&gt;</span>
+                <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"close"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+              <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sidebar-body"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"column col-xs-12 col-11 col-mx-auto"</span>&gt;</span>
+              <span class="comment">&lt;!-- Add any content here --&gt;</span>
+            <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+          <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+      <span class="comment">&lt;!-- Right sidebar --&gt;</span>
+      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sidebar is-right inactive"</span>&gt;</span>
+        <span class="comment"> ... </span>
+      <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+    </code></pre>
+  </div>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Inline</h2>
+
+    <p class="text-md">When you want to have the sidebar inside the page. Add the main container with the <code>sidebar-inline</code>.
+      You can also add the above mentioned classes in it.</p>
+
+    <p class="text-md">By default its height is 100vh. To have the different height and width just play with the height and width
+      css property.</p>
+
+    <div class="p-top-20">
+      <aside class="sidebar-inline text-sm" style="height: 200px">
+        Inline sidebar
+      </aside>
+    </div>
+
+    <div class="p-top-20">
+      <pre class="code" data-lang="HTML"><code>
+        <span class="tag">&lt;<span class="name">aside</span> <span class="attr">class</span>=<span class="string">"sidebar-inline"</span> <span class="attr">style</span>=<span class="string">"height: 200px"</span>&gt;</span>
+          Inline sidebar
+        <span class="tag">&lt;/<span class="name">aside</span>&gt;</span>
+      </code></pre>
+    </div>
+
+  </section>
+
+</div>
+

@@ -40,7 +40,7 @@
       height: 0;
       z-index: 399;
       border: 12px solid transparent;
-      bottom: 12px;
+      bottom: 9px;
     }
 
   }
@@ -48,7 +48,7 @@
   *:focus + .popover-container, &:hover .popover-container, .popover-container:hover, &.active + .popover-container {
     display: block;
     opacity: 1;
-    transform: translate(-50%, calc(-100% - 9px)) scale(1);
+    transform: translate(-50%, calc(-100% - 12px)) scale(1);
     border-bottom: 4px solid $primary-color;
   }
 
@@ -102,7 +102,7 @@
 
     .popover-container::before {
       left: calc(50% - 16px);
-      top: -27px;
+      top: -28px;
       bottom: auto;
       border-color: transparent;
     }

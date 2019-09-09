@@ -1,19 +1,9 @@
-@import "../../../style/framework/src/variables";
-
 .sidebar {
 
-  .sidebar-container {
+  .sidebar-header {
 
-    .header {
-      background: $primary-gradient-color;
-    }
-
-    .sidebar-header {
-
-      .btn {
-        min-width: 0;
-      }
-
+    .close {
+      right: -0.6rem;
     }
 
   }

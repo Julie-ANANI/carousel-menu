@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DocsCssGuardService } from '../../../guards/docs-css-guard.service';
+import { DocsGuardService } from '../../../guards/docs-guard.service';
 
 import { DocsCssComponent } from './docs-css.component';
 import { OverviewComponent } from './overview/overview.component';
@@ -37,12 +37,19 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { PopoversComponent } from './components/popovers/popovers.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TooltipsComponent } from './components/tooltips/tooltips.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FlexboxComponent } from './layout/flexbox/flexbox.component';
+import { ResponsiveComponent } from './layout/responsive/responsive.component';
+import { MessageTemplatesComponent } from './angular/message-templates/message-templates.component';
 
 const docsCssRoutes: Routes = [
   {
     path: '',
     component: DocsCssComponent,
-    canActivateChild: [DocsCssGuardService],
+    canActivateChild: [DocsGuardService],
     children: [
       {
         path: '',
@@ -69,6 +76,13 @@ const docsCssRoutes: Routes = [
       { path: 'elements/close', component: CloseComponent, pathMatch: 'full' },
       { path: 'elements/icons', component: IconComponent, pathMatch: 'full' },
       {
+        path: 'layout',
+        redirectTo: 'layout/flexbox',
+        pathMatch: 'full'
+      },
+      { path: 'layout/flexbox', component: FlexboxComponent, pathMatch: 'full' },
+      { path: 'layout/responsive', component: ResponsiveComponent, pathMatch: 'full' },
+      {
         path: 'components',
         redirectTo: 'components/accordions',
         pathMatch: 'full'
@@ -84,6 +98,10 @@ const docsCssRoutes: Routes = [
       { path: 'components/modal', component: ModalComponent, pathMatch: 'full' },
       { path: 'components/navbar', component: NavbarComponent, pathMatch: 'full' },
       { path: 'components/pagination', component: PaginationComponent, pathMatch: 'full' },
+      { path: 'components/popovers', component: PopoversComponent, pathMatch: 'full' },
+      { path: 'components/sidebar', component: SidebarComponent, pathMatch: 'full' },
+      { path: 'components/tabs', component: TabsComponent, pathMatch: 'full' },
+      { path: 'components/tooltips', component: TooltipsComponent, pathMatch: 'full' },
       {
         path: 'utilities',
         redirectTo: 'utilities/colors',
@@ -101,6 +119,12 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/shape', component: ShapeComponent, pathMatch: 'full' },
       { path: 'utilities/text', component: TextComponent, pathMatch: 'full' },
       { path: 'utilities/title', component: TitleComponent, pathMatch: 'full' },
+      {
+        path: 'angular',
+        redirectTo: 'angular/message-template-1',
+        pathMatch: 'full'
+      },
+      { path: 'angular/message-templates', component: MessageTemplatesComponent, pathMatch: 'full' },
     ]
   }
 ];
@@ -110,7 +134,7 @@ const docsCssRoutes: Routes = [
     RouterModule.forChild(docsCssRoutes)
   ],
   providers: [
-    DocsCssGuardService
+    DocsGuardService
   ],
   exports: [
     RouterModule

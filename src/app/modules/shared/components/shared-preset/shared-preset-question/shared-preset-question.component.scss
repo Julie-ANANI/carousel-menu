@@ -118,6 +118,7 @@
 
     .option-list {
       display: flex;
+      overflow-y: auto;
 
       .option {
         display: flex;

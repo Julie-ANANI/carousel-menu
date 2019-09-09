@@ -16,9 +16,13 @@ const AUTH_SESSION_KEY = makeStateKey('authSession');
 export class AuthService {
 
   private _authenticated = false;
+
   private _admin = 0;
+
   private _confirmed = false;
+
   private _redirectUrl: string;
+
   private _isOperator: boolean = false;
 
   private _user: User;
@@ -251,9 +255,14 @@ export class AuthService {
   }
 
   set redirectUrl (redirectUrl: string) {
-    if (urlRegEx.test(redirectUrl)) {
+    let url = `${environment.clientUrl}${redirectUrl}`;
+
+    if (urlRegEx.test(url)) {
+      this._redirectUrl = redirectUrl;
+    } else if (environment.local) {
       this._redirectUrl = redirectUrl;
     }
+
   }
 
 }

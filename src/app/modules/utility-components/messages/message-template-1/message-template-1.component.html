@@ -1,9 +1,16 @@
-<section id="message-template-1" class="text-center">
-  <div class="message-wrapper" [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px' }">
-    <div class="message-content" [ngStyle]="{ 'background-color': backgroundColor }">
+<div id="message-template-1">
+  <div [ngStyle]="{ 'max-width': wrapperWidth ? wrapperWidth : '273px' }" class="m-bottom-10 m-left-auto m-right-auto">
+
+    <div [ngStyle]="{ 'background-color': backgroundColor }" class="message-content-wrapper">
       <ng-content></ng-content>
     </div>
-    <div class="triangle" [ngStyle]="{ 'border-top-color': backgroundColor }"></div>
+
+    <div [ngStyle]="{ 'border-top-color': backgroundColor }" class="triangle"></div>
+
   </div>
-  <div><img [src]="imageSrc ? imageSrc : defaultSrc" class="bot-wrapper" alt=" "></div>
-</section>
+
+  <div class="bot-wrapper">
+    <img [src]="imageSrc ? imageSrc : defaultSrc" alt=" " class="img-responsive">
+  </div>
+
+</div>
