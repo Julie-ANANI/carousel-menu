@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DocsCssGuardService } from '../../../guards/docs-css-guard.service';
+import { DocsGuardService } from '../../../guards/docs-guard.service';
 
 import { DocsCssComponent } from './docs-css.component';
 import { OverviewComponent } from './overview/overview.component';
@@ -49,7 +49,7 @@ const docsCssRoutes: Routes = [
   {
     path: '',
     component: DocsCssComponent,
-    canActivateChild: [DocsCssGuardService],
+    canActivateChild: [DocsGuardService],
     children: [
       {
         path: '',
@@ -120,7 +120,7 @@ const docsCssRoutes: Routes = [
       { path: 'utilities/text', component: TextComponent, pathMatch: 'full' },
       { path: 'utilities/title', component: TitleComponent, pathMatch: 'full' },
       {
-        path: 'angualr',
+        path: 'angular',
         redirectTo: 'angular/message-template-1',
         pathMatch: 'full'
       },
@@ -134,7 +134,7 @@ const docsCssRoutes: Routes = [
     RouterModule.forChild(docsCssRoutes)
   ],
   providers: [
-    DocsCssGuardService
+    DocsGuardService
   ],
   exports: [
     RouterModule
