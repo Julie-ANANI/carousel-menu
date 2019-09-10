@@ -1,0 +1,73 @@
+@import '../../../../../style/framework/src/variables';
+
+#shared-targeting-world {
+
+  .stw-continents-wrapper {
+    margin-bottom: -0.6rem;
+
+    .stw-continent {
+      margin-right: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+  }
+
+  .stw-incl-excl-country-wrapper {
+
+    .stw-country-wrapper {
+      margin-right: 2rem;
+      margin-top: 1.5rem;
+      flex: 1;
+      min-width: 350px;
+
+      .icon-container {
+        margin-left: $unit-1;
+        margin-bottom: $unit-2;
+      }
+
+    }
+
+  }
+
+}
+
+.modal-body {
+
+  &.is-stw-modal {
+
+    .stw-modal-continent-wrapper {
+      padding-bottom: 2.5rem;
+
+      .form-group {
+
+        &.is-continent {
+          border-bottom: $border-width solid $border-color;
+          margin-bottom: 1rem;
+
+          .form-label {
+            font-size: 0.9rem;
+            margin-right: 1rem;
+          }
+
+          .form-checkbox {
+            font-size: $font-size-xs;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@media screen and (max-width: $size-sm) {
+
+  #shared-targeting-world {
+
+  }
+
+
+}

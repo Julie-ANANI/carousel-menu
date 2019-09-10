@@ -1,0 +1,130 @@
+<div id="shared-targeting-world">
+
+  <!-- continents -->
+  <div class="stw-continents-wrapper">
+
+    <h6 class="text-normal m-bottom-25">{{ 'SHARED_TARGETING_WORLD.SELECT_CONTINENTS' | translate }}</h6>
+
+    <div *ngIf="continents.length > 0" class="d-flex flex-wrap">
+      <div *ngFor="let continent of continents" class="d-inline-flex stw-continent text-center">
+        <div class="form-group">
+          <label class="form-label">{{ ('CONTINENTS.' + continent) | translate }}</label>
+
+          <label class="form-checkbox is-inline text-sm">
+            <input
+              (change)="onChangeContinentInclude($event, continent)"
+              [disabled]="checkContinent(continent, 'include')"
+              [id]="continent"
+              [name]="continent"
+              [value]="continent"
+              type="checkbox">
+            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.INCLUDE' | translate }}
+          </label>
+
+          <label class="form-checkbox is-inline text-sm">
+            <input
+              (change)="onChangeContinentExclude($event, continent)"
+              [disabled]="checkContinent(continent, 'exclude')"
+              [id]="continent"
+              [name]="continent"
+              [value]="continent"
+              type="checkbox">
+            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.EXCLUDE' | translate }}
+          </label>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /continents -->
+
+  <!-- include / exclude countries -->
+  <div class="d-flex flex-wrap stw-incl-excl-country-wrapper">
+
+    <!-- include -->
+    <div class="stw-country-wrapper">
+
+      <div class="d-flex align-center">
+        <h6 class="text-normal">{{ 'SHARED_TARGETING_WORLD.SPECIFY_COUNTRIES_TO_INCLUDE' | translate }}</h6>
+        <div class="icon-container is-overlay" (click)="openModal($event)">
+          <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.ADVANCE_SETTINGS' | translate">
+            <i class="fas fa-cog"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-top-20">
+        <app-autocomplete-input></app-autocomplete-input>
+      </div>
+
+    </div>
+    <!-- /include -->
+
+    <!-- exclude -->
+    <div class="stw-country-wrapper">
+
+      <div class="d-flex align-center">
+        <h6 class="text-normal">{{ 'SHARED_TARGETING_WORLD.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</h6>
+        <div class="icon-container is-overlay" (click)="openModal($event)">
+          <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.ADVANCE_SETTINGS' | translate">
+            <i class="fas fa-cog"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-top-20">
+        <app-autocomplete-input></app-autocomplete-input>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /include / exclude countries -->
+
+</div>
+
+
+<!-- modal for advance settings -->
+<app-modal [(showModal)]="showModal" [maxWidth]="'960px'" [enableCloseButton]="true">
+
+  <section class="modal-body is-stw-modal">
+
+    <div class="text-center p-bottom-30">
+      <h3 class="text-background">{{ 'SHARED_TARGETING_WORLD.MODAL.HEADING' | translate }}</h3>
+    </div>
+
+    <div *ngIf="continents.length > 0">
+      <div *ngFor="let continent of continents" class="stw-modal-continent-wrapper">
+
+        <div class="form-group flex-start is-continent">
+          <label class="form-label">{{ ('CONTINENTS.' + continent) | translate }}</label>
+
+          <label class="form-checkbox is-inline">
+            <input
+              [id]="continent"
+              [name]="continent"
+              [value]="continent"
+              type="checkbox">
+            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.INCLUDE' | translate }}
+          </label>
+
+          <label class="form-checkbox is-inline">
+            <input
+              [id]="continent"
+              [name]="continent"
+              [value]="continent"
+              type="checkbox">
+            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.EXCLUDE' | translate }}
+          </label>
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </section>
+
+</app-modal>
+<!-- /modal for advance settings -->

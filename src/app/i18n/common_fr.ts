@@ -368,7 +368,8 @@ export const COMMON = {
     'READONLY': 'Lecture seulement',
     'DELETE': 'Supprimer',
     'MOVE_UP': 'Remonter en haut',
-    'MOVE_DOWN': 'Déplacer vers le bas'
+    'MOVE_DOWN': 'Déplacer vers le bas',
+    'ADVANCE_SETTINGS': 'Paramètres avancés'
   },
 
   'SIGNATURES': {

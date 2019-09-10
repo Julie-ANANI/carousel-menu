@@ -371,7 +371,8 @@ export const COMMON = {
     'READONLY': 'Readonly',
     'DELETE': 'Delete',
     'MOVE_UP': 'Move up',
-    'MOVE_DOWN': 'Move down'
+    'MOVE_DOWN': 'Move down',
+    'ADVANCE_SETTINGS': 'Advance settings'
   },
 
   'SIGNATURES': {

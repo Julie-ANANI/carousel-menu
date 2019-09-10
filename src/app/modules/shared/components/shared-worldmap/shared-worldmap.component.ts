@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
-import { SharedWorldmapService } from './shared-worldmap.service';
+import { SharedWorldmapService } from './services/shared-worldmap.service';
 
 @Component({
   selector: 'app-worldmap',

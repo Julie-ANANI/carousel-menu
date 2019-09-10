@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SharedWorldmapService } from '../../shared-worldmap/shared-worldmap.service';
+import { SharedWorldmapService } from '../../shared-worldmap/services/shared-worldmap.service';
 import { Answer } from '../../../../../models/answer';
 import { Filter } from '../models/filter';
 import { Tag } from '../../../../../models/tag';

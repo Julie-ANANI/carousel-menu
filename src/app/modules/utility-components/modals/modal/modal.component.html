@@ -1,4 +1,4 @@
-<div (click)="toggleState($event)" [ngClass]="showModal ? 'active' : 'inactive'" class="modal">
+<div *ngIf="showModal" (click)="toggleState($event)" class="modal active">
   <div class="modal-overlay"></div>
   <div [ngStyle]="{ 'max-width': maxWidth }" class="modal-container">
 

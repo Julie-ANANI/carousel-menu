@@ -16,11 +16,16 @@
     </div>
     <!-- /geography section -->
 
+    <!-- testing targeting world -->
+    <app-shared-targeting-world>
+    </app-shared-targeting-world>
+    <!-- /testing targeting world -->
+
     <!-- question section -->
     <div [ngClass]="adminSide ? 'col-11 col-xs-12' : 'col-md-12 col-7 col-lg-10 col-xl-8'">
       <div class="restrict-container">
 
-        <!-- Exclude countries -->
+        <!-- Exclude countries
         <ng-container *ngIf="!canEdit && innovation.settings.geography.exclude.length > 0">
           <div class="pd-para">
               <span class="text">
@@ -44,9 +49,9 @@
             </div>
           </div>
         </ng-container>
-        <!-- /Exclude countries -->
+        /Exclude countries -->
 
-        <!-- Comment countries -->
+        <!-- Comment countries
         <ng-container *ngIf="!canEdit && !!innovation.settings.geography.comments">
           <p class="pd-top">
             <span class="text text-secondary-dark">
@@ -85,7 +90,7 @@
           </ng-container>
 
         </ng-container>
-        <!-- /Comment countries -->
+         /Comment countries -->
 
         <!-- Activity sectors -->
         <div class="pd-ques">
