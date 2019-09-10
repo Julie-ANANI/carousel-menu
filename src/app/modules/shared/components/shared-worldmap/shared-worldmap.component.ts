@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { SharedWorldmapService } from './shared-worldmap.service';
 
 @Component({
@@ -21,7 +21,6 @@ export class SharedWorldmapComponent implements OnInit{
     /*
      * TODO: Has anyone thought about how to remove a country from the list ?
      */
-    /* TEST COUNTRIES SETTER ON IE
     if (Array.isArray(value) && value.length > 0 && !this.countriesData) {
       value.forEach((country) => {
         const country_elems = this._elem.nativeElement.getElementsByClassName(country);
@@ -34,7 +33,6 @@ export class SharedWorldmapComponent implements OnInit{
         }
       });
     }
-     */
   }
 
   @Input() set countriesData(countries: any) {
@@ -140,11 +138,11 @@ export class SharedWorldmapComponent implements OnInit{
   }, {} as any);
 
   constructor(private _elem: ElementRef,
-              /*private _worldmap: SharedWorldmapService,
-              private _viewContainerRef: ViewContainerRef*/) {}
+              private _worldmap: SharedWorldmapService,
+              private _viewContainerRef: ViewContainerRef) {}
 
   ngOnInit() {
-    // this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
+    this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
 
@@ -196,8 +194,7 @@ export class SharedWorldmapComponent implements OnInit{
    * @returns {boolean}
    */
   public getContinentSelectionStatus(continent: string): boolean {
-    // return !!this._continents[continent];
-    return false;
+    return !!this._continents[continent];
   }
 
 
