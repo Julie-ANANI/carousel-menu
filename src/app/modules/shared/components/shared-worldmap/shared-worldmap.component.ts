@@ -196,7 +196,8 @@ export class SharedWorldmapComponent implements OnInit{
    * @returns {boolean}
    */
   public getContinentSelectionStatus(continent: string): boolean {
-    return !!this._continents[continent];
+    // return !!this._continents[continent];
+    return false;
   }
 
 
