@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SharedWorldmapService } from './shared-worldmap.service';
 
 @Component({
@@ -140,11 +140,11 @@ export class SharedWorldmapComponent implements OnInit{
   }, {} as any);
 
   constructor(private _elem: ElementRef,
-              private _worldmap: SharedWorldmapService,
-              private _viewContainerRef: ViewContainerRef) {}
+              /*private _worldmap: SharedWorldmapService,
+              private _viewContainerRef: ViewContainerRef*/) {}
 
   ngOnInit() {
-    this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
+    // this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
 
