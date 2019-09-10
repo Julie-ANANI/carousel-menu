@@ -5,6 +5,7 @@ import { ExtraOptions, Routes, RouterModule } from '@angular/router';
 import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
+import { AdHocAuthGuard } from "./guards/adhoc-auth-guard.service";
 import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthesis-guard.service';
 
 // Components
@@ -59,7 +60,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'demo',
-    canActivate: [AuthGuard, AdminAuthGuard],
+    canActivate: [AuthGuard, AdHocAuthGuard],
     children: [ ...demoRoutes ]
   },
   {
@@ -94,6 +95,7 @@ const config: ExtraOptions = {
     AuthGuard,
     NonAuthGuard,
     AdminAuthGuard,
+    AdHocAuthGuard,
     ShareSynthesisGuard
   ]
 })

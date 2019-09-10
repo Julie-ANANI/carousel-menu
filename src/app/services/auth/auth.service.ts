@@ -10,6 +10,8 @@ import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
 import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
 
+import {Md5} from 'ts-md5/dist/md5';
+
 const AUTH_SESSION_KEY = makeStateKey('authSession');
 
 @Injectable()
@@ -88,6 +90,7 @@ export class AuthService {
           this._user = res;
           if (res.isAuthenticated) {
             //this.startCookieObservator();
+            this._setMHash(res.email);
           }
           return res;
         }),
@@ -106,6 +109,7 @@ export class AuthService {
           this._user = res;
           if (res.isAuthenticated) {
             //this.startCookieObservator();
+            this._setMHash(res.email);
           }
           return res;
         }),
@@ -190,6 +194,12 @@ export class AuthService {
     }
   }
 
+  private _setMHash(newValue: string): void {
+    const md5 = new Md5();
+    const mhash = md5.appendStr(newValue).end()
+    this._cookieService.put('mhash', `${mhash}`, this._cookieOptions);
+  }
+
   public getUserInfo(): any {
     if (this._user) {
       return {
@@ -199,6 +209,10 @@ export class AuthService {
     } else {
       return {};
     }
+  }
+
+  public getMHash(): any {
+    return this._cookieService.get('mhash') || null;
   }
 
   get isAuthenticated(): boolean {
