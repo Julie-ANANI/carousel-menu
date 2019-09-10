@@ -21,6 +21,7 @@ export class SharedWorldmapComponent implements OnInit{
     /*
      * TODO: Has anyone thought about how to remove a country from the list ?
      */
+    /* TEST COUNTRIES SETTER ON IE
     if (Array.isArray(value) && value.length > 0 && !this.countriesData) {
       value.forEach((country) => {
         const country_elems = this._elem.nativeElement.getElementsByClassName(country);
@@ -33,6 +34,7 @@ export class SharedWorldmapComponent implements OnInit{
         }
       });
     }
+     */
   }
 
   @Input() set countriesData(countries: any) {
