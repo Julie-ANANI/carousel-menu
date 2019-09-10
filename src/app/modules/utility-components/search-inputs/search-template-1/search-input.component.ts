@@ -53,8 +53,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     if (value !== null) {
       this.suggestions.forEach((items: any) => {
         const index = this._localSuggestions.findIndex((item: any) => item.text === items.text);
-        const temp = items.text.toLowerCase().includes(value.toLowerCase());
-        if (temp) {
+        if (items.text.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
           if (index === -1) {
             this._localSuggestions.push(items);
           }

@@ -9,7 +9,7 @@
 
               <!-- overview -->
               <div class="accordion docs-accordion">
-                <input type="checkbox" id="accordion-overview" hidden [checked]="activeRoute.includes('overview')" name="docs-accordion-checkbox">
+                <input type="checkbox" id="accordion-overview" hidden [checked]="activeRoute.indexOf('overview') !== -1" name="docs-accordion-checkbox">
                 <label class="accordion-header c-hand" for="accordion-overview">
                   <a [routerLink]="'overview'">Overview</a>
                 </label>
@@ -17,7 +17,7 @@
 
               <!-- elements -->
               <div class="accordion docs-accordion">
-                <input type="checkbox" id="accordion-elements" hidden [checked]="activeRoute.includes('elements')" name="docs-accordion-checkbox">
+                <input type="checkbox" id="accordion-elements" hidden [checked]="activeRoute.indexOf('elements') !== -1" name="docs-accordion-checkbox">
                 <label class="accordion-header c-hand" for="accordion-elements">Elements</label>
                 <div class="accordion-body">
                   <ul class="menu menu-nav">
@@ -54,7 +54,7 @@
 
               <!-- layout -->
               <div class="accordion docs-accordion">
-                <input type="checkbox" id="accordion-layout" hidden [checked]="activeRoute.includes('layout')" name="docs-accordion-checkbox">
+                <input type="checkbox" id="accordion-layout" hidden [checked]="activeRoute.indexOf('layout') !== -1" name="docs-accordion-checkbox">
                 <label class="accordion-header c-hand" for="accordion-layout">Layout</label>
                 <div class="accordion-body">
                   <ul class="menu menu-nav">
@@ -70,7 +70,7 @@
 
               <!-- components -->
               <div class="accordion docs-accordion">
-                <input type="checkbox" id="accordion-components" hidden [checked]="activeRoute.includes('components')" name="docs-accordion-checkbox">
+                <input type="checkbox" id="accordion-components" hidden [checked]="activeRoute.indexOf('components') !== -1" name="docs-accordion-checkbox">
                 <label class="accordion-header c-hand" for="accordion-components">Components</label>
                 <div class="accordion-body">
                   <ul class="menu menu-nav">
@@ -125,7 +125,7 @@
 
               <!-- utilities -->
               <div class="accordion docs-accordion">
-                <input type="checkbox" id="accordion-utilities" hidden [checked]="activeRoute.includes('utilities')" name="docs-accordion-checkbox">
+                <input type="checkbox" id="accordion-utilities" hidden [checked]="activeRoute.indexOf('utilities') !== -1" name="docs-accordion-checkbox">
                 <label class="accordion-header c-hand" for="accordion-utilities">Utilities</label>
                 <div class="accordion-body">
                   <ul class="menu menu-nav">
@@ -171,7 +171,7 @@
 
               <!-- angular -->
               <div class="accordion docs-accordion">
-                <input type="checkbox" id="accordion-angular" hidden [checked]="activeRoute.includes('angular')" name="docs-accordion-checkbox">
+                <input type="checkbox" id="accordion-angular" hidden [checked]="activeRoute.indexOf('angular') !== -1" name="docs-accordion-checkbox">
                 <label class="accordion-header c-hand" for="accordion-angular">Angular</label>
                 <div class="accordion-body">
                   <ul class="menu menu-nav">

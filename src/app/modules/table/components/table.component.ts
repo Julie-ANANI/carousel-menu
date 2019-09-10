@@ -213,7 +213,7 @@ export class TableComponent implements OnInit {
       }
     }
 
-    return this.getAttrs(column).includes(sortKey);
+    return this.getAttrs(column).indexOf(sortKey) !== -1;
 
   }
 
@@ -726,13 +726,13 @@ export class TableComponent implements OnInit {
               tmpContent = tmpContent ? tmpContent[i] : '-';
             }
 
-            if (tmpContent && tmpContent.toString().toLowerCase().includes(searchValue)) {
+            if (tmpContent && tmpContent.toString().toLowerCase().indexOf(searchValue) !== -1) {
               return true;
             }
 
           }
 
-        } else if (contentKey === searchKey && content[searchKey] && content[searchKey].toString().toLowerCase().includes(searchValue)) {
+        } else if (contentKey === searchKey && content[searchKey] && content[searchKey].toString().toLowerCase().indexOf(searchValue) !== -1) {
           return true;
         }
 
