@@ -71,6 +71,7 @@ export const SEARCH = {
   "HISTORY": {
     "NORESULT": "Vous n'avez pas encore fait de recherches :-(",
     "SEARCHES": "Recherches",
+    "KEYWORDS": "Mots clés",
     "SHOW": "Afficher l'historique",
     "HIDE": "Cacher l'historique",
     "TYPE": "Type",
@@ -81,7 +82,7 @@ export const SEARCH = {
     "TIME": "Durée",
     "STATUS": "Statut",
     "COST": "Coût",
-    "FLAG": "Flag",
+    "FLAG": "Statut mails",
     "ALL": "Tous",
     "RESET": "Reset",
     "DONE": "OK",
@@ -95,9 +96,9 @@ export const SEARCH = {
     "PERSONBYCOUNTRIES": "Pros par pays",
     "PERSONBYREGIONS": "Pros par régions",
     "EMAILS_FOUND": "Emails trouvés",
-    "EMAILS_QUEUED": "Recherche emails en attente",
-    "EMAILS_SEARCHING": "Recherche emails en cours",
-    "PROS_ADDED": "Pros ajoutés à une campagne"
+    "EMAILS_QUEUED": "Emails en attente",
+    "EMAILS_SEARCHING": "Emails en cours",
+    "PROS_ADDED": "Pros ajoutés"
   },
   "CAMPAIGN": {
     "TITLE": "Ajoutez à une campagne",

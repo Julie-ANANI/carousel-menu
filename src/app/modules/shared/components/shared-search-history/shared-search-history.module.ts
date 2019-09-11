@@ -10,6 +10,7 @@ import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-in
 import { PaginationTemplate1Module } from '../../../utility-components/paginations/pagination-template-1/pagination-template-1.module';
 import { SharedSearchMultiModule } from '../shared-search-multi/shared-search-multi.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
+import { TableModule } from "../../../table/table.module";
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
     TranslateModule.forChild(),
     PaginationTemplate1Module,
     SharedSearchMultiModule,
-    CountryFlagModule
+    CountryFlagModule,
+    TableModule
   ],
   declarations: [
     SharedSearchHistoryComponent,

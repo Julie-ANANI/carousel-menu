@@ -71,6 +71,7 @@ export const SEARCH = {
   "HISTORY": {
     "NORESULT": "You haven't done any research yet :-(",
     "SEARCHES": "Searches",
+    "KEYWORDS": "Keywords",
     "SHOW": "Show the history",
     "HIDE": "Hide the history",
     "TYPE": "Type",
@@ -81,7 +82,7 @@ export const SEARCH = {
     "TIME": "Time",
     "STATUS": "Status",
     "COST": "Cost",
-    "FLAG": "Flag",
+    "FLAG": "Email Status",
     "ALL": "Tous",
     "RESET": "Reset",
     "DONE": "OK",
@@ -97,7 +98,7 @@ export const SEARCH = {
     "EMAILS_FOUND": "Emails found",
     "EMAILS_QUEUED": "Emails queued",
     "EMAILS_SEARCHING": "Emails searching",
-    "PROS_ADDED": "Pros added to campaign"
+    "PROS_ADDED": "Pros added"
   },
   "CAMPAIGN": {
     "TITLE": "Add to a campaign",

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
-import {Pagination} from '../../../utility-components/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 import { Config } from "../../../../models/config";
+import { Table } from '../../../table/models/table';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -16,6 +16,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   @Input() mails: boolean;
 
 
+  private _tableInfos: Table;
   private _paused = false;
   private _requests: Array<any> = [];
   private _total = 0;
@@ -27,8 +28,6 @@ export class SharedSearchHistoryComponent implements OnInit {
     search: "{}",
     sort: '{ "created": -1 }'
   };
-
-  private _paginationConfig: Pagination = {limit: parseInt(this._config.limit), offset: parseInt(this._config.offset)};
 
   constructor(private _searchService: SearchService) {}
 
@@ -67,31 +66,39 @@ export class SharedSearchHistoryComponent implements OnInit {
           this._total = result._metadata.totalCount;
           this._paused = result._metadata.paused;
         }
-      });
-  }
 
-  configChange(value: any) {
-    this._paginationConfig = value;
-    this._config.limit = value.limit;
-    this._config.offset = value.offset;
-    window.scroll(0, 0);
-    this.loadHistory();
+        this._tableInfos = {
+          _selector: 'admin-search-history-limit',
+          _title: 'SEARCH.HISTORY.SEARCHES',
+          _content: this._requests,
+          _total: this._total,
+          _editIndex: 1,
+          _isSearchable: true,
+          _isPaginable: true,
+          _isTitle: true,
+          _columns: [
+            {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
+            {_attrs: ['country'], _name: 'SEARCH.COUNTRY', _type: 'COUNTRY', _enableTooltip: false},
+            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
+            {_attrs: ['status'], _name: 'SEARCH.HISTORY.STATUS', _type: 'MULTI-CHOICES', _choices: [
+              {_name: 'DONE', _alias: 'SEARCH.HISTORY.DONE', _class: 'label is-success'},
+              {_name: 'PROCESSING', _alias: 'SEARCH.HISTORY.PROCESSING', _class: 'label is-progress'},
+              {_name: 'QUEUED', _alias: 'SEARCH.HISTORY.QUEUED', _class: 'label is-danger'},
+              {_name: 'CANCELED', _alias: 'SEARCH.HISTORY.CANCELED', _class: 'label is-danger'}
+            ]},
+            {_attrs: ['flag'], _name: 'SEARCH.HISTORY.FLAG', _type: 'MULTI-CHOICES', _choices: [
+                {_name: 'PROS_ADDED', _alias: 'SEARCH.HISTORY.PROS_ADDED', _class: 'label is-success'},
+                {_name: 'EMAILS_FOUND', _alias: 'SEARCH.HISTORY.EMAILS_FOUND', _class: 'label is-success'},
+                {_name: 'EMAILS_SEARCHING', _alias: 'SEARCH.HISTORY.EMAILS_SEARCHING', _class: 'label is-progress'},
+                {_name: 'EMAILS_QUEUED', _alias: 'SEARCH.HISTORY.EMAILS_QUEUED', _class: 'label is-danger'}
+              ]},
+          ]
+        };
+      });
   }
 
   public relaunchRequests() {
     this._searchService.relaunchRequests().pipe(first()).subscribe((_: any) => {
-      this.loadHistory();
-    });
-  }
-
-  public pauseModule() {
-    this._searchService.pauseModule().pipe(first()).subscribe((_: any) => {
-      this.loadHistory();
-    });
-  }
-
-  public relaunchMailRequests() {
-    this._searchService.relaunchMailRequests().pipe(first()).subscribe((_: any) => {
       this.loadHistory();
     });
   }
@@ -174,7 +181,11 @@ export class SharedSearchHistoryComponent implements OnInit {
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get googleQuota(): number { return this._googleQuota; }
-  get config(): any { return this._config; }
+  get config(): Config { return this._config; }
+  set config(value: Config) {
+    this._config = value;
+    this.loadHistory();
+  }
   get paused(): boolean { return this._paused; }
-  get paginationConfig(): Pagination { return this._paginationConfig; }
+  get tableInfos(): Table { return this._tableInfos; }
 }
