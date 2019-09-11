@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 import { SharedTargetingWorldInterface } from './interfaces/shared-targeting-world-interface';
 
@@ -9,6 +9,11 @@ import { SharedTargetingWorldInterface } from './interfaces/shared-targeting-wor
 })
 
 export class SharedTargetingWorldComponent {
+
+  @Input() set continentsConfiguration(value: any) {
+    console.log(value);
+    this._initializeContinents(value);
+  }
 
   @Output() dataChange: EventEmitter<SharedTargetingWorldInterface> = new EventEmitter<SharedTargetingWorldInterface>();
 
@@ -22,6 +27,18 @@ export class SharedTargetingWorldComponent {
   };
 
   constructor() { }
+
+  private _initializeContinents(value: any) {
+    for (const prop in value) {
+      if (value.hasOwnProperty(prop)) {
+        if (value[prop] && this.targetingWorldData.includeContinents.in) {
+          this.targetingWorldData.includeContinents.push(prop);
+        }
+      }
+      console.log(value[prop]);
+    }
+    console.log(this.targetingWorldData);
+  }
 
   public onChangeContinentInclude(event: Event, continent: string) {
 
