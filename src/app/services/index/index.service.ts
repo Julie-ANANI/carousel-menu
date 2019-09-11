@@ -7,8 +7,8 @@ export class IndexService {
 
   constructor(private _http: HttpClient) { }
 
-  public getWholeSet(config: { type: string, fields: Array<string>, filterBy: any }): Observable<any> {
-    return this._http.post('/index/getWholeSet', config);
+  public getWholeSet(config: { type: 'countries', fields?: Array<string>, filterBy?: any }): Observable<any> {
+    return this._http.post('/index/getWholeSet', { query: config });
   }
 
 }
