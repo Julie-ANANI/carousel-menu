@@ -1,6 +1,6 @@
 export const SHARED_TARGETING_WORLD = {
 
-  'SELECT_CONTINENTS': 'Select the continents that you want to include or exclude.',
+  'SELECT_CONTINENTS': 'Select the continents that you want to include.',
 
   'INCLUDE': 'Include',
 
@@ -12,6 +12,11 @@ export const SHARED_TARGETING_WORLD = {
 
   'MODAL': {
     'HEADING': 'Select the country or continent.'
+  },
+
+  'PLACEHOLDER': {
+    'TO_EXCLUDE_COUNTRY': 'Enter the country name to be excluded',
+    'TO_INCLUDE_COUNTRY': 'Enter the country name to be included',
   }
 
 };

@@ -16,6 +16,7 @@ import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
 import { InnovationFrontService } from '../../services/innovation/innovation-front.service';
 import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinner-loader.module';
+import { IndexService } from '../../services/index/index.service';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinne
     AutocompleteService,
     ShareService,
     AnswerService,
-    InnovationFrontService
+    InnovationFrontService,
+    IndexService
   ]
 })
 

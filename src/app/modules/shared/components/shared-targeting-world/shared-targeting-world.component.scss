@@ -2,16 +2,6 @@
 
 #shared-targeting-world {
 
-  .stw-continents-wrapper {
-    margin-bottom: -0.6rem;
-
-    .stw-continent {
-      margin-right: 0.5rem;
-      margin-bottom: 0.6rem;
-    }
-
-  }
-
   .stw-incl-excl-country-wrapper {
 
     .stw-country-wrapper {
@@ -33,7 +23,7 @@
 
 .modal-body {
 
-  &.is-stw-modal {
+  &.is-stw {
 
     .stw-modal-continent-wrapper {
       padding-bottom: 2.5rem;
@@ -42,15 +32,11 @@
 
         &.is-continent {
           border-bottom: $border-width solid $border-color;
-          margin-bottom: 1rem;
-
-          .form-label {
-            font-size: 0.9rem;
-            margin-right: 1rem;
-          }
+          padding-bottom: $unit-o;
 
           .form-checkbox {
-            font-size: $font-size-xs;
+            font-weight: $font-weight-medium;
+            font-size: 0.85rem;
           }
 
         }

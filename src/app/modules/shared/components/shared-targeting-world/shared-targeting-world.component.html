@@ -1,53 +1,38 @@
 <div id="shared-targeting-world">
 
   <!-- continents -->
-  <div class="stw-continents-wrapper">
+  <div *ngIf="continents.length > 0">
 
-    <h6 class="text-normal m-bottom-25">{{ 'SHARED_TARGETING_WORLD.SELECT_CONTINENTS' | translate }}</h6>
+    <h6 class="text-normal m-bottom-15">{{ 'SHARED_TARGETING_WORLD.SELECT_CONTINENTS' | translate }}</h6>
 
-    <div *ngIf="continents.length > 0" class="d-flex flex-wrap">
-      <div *ngFor="let continent of continents" class="d-inline-flex stw-continent text-center">
-        <div class="form-group">
-          <label class="form-label">{{ ('CONTINENTS.' + continent) | translate }}</label>
-
-          <label class="form-checkbox is-inline text-sm">
-            <input
-              (change)="onChangeContinentInclude($event, continent)"
-              [disabled]="checkContinent(continent, 'include')"
-              [id]="continent"
-              [name]="continent"
-              [value]="continent"
-              type="checkbox">
-            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.INCLUDE' | translate }}
-          </label>
-
-          <label class="form-checkbox is-inline text-sm">
-            <input
-              (change)="onChangeContinentExclude($event, continent)"
-              [disabled]="checkContinent(continent, 'exclude')"
-              [id]="continent"
-              [name]="continent"
-              [value]="continent"
-              type="checkbox">
-            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.EXCLUDE' | translate }}
-          </label>
-
-        </div>
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let continent of continents" class="m-right-20">
+        <label class="form-checkbox text-sm">
+          <input
+            (change)="onChangeContinentInclude($event, continent)"
+            [checked]="checkContinent(continent, 'include')"
+            [disabled]="!isEditable"
+            [id]="continent"
+            [name]="continent"
+            [value]="continent"
+            type="checkbox">
+          <i class="form-icon"></i>{{ ('CONTINENTS.' + continent) | translate }}
+        </label>
       </div>
     </div>
 
   </div>
   <!-- /continents -->
 
-  <!-- include / exclude countries -->
-  <div class="d-flex flex-wrap stw-incl-excl-country-wrapper">
+  <!-- include / exclude countries questions -->
+  <div *ngIf="isEditable" class="d-flex flex-wrap stw-incl-excl-country-wrapper">
 
     <!-- include -->
     <div class="stw-country-wrapper">
 
       <div class="d-flex align-center">
         <h6 class="text-normal">{{ 'SHARED_TARGETING_WORLD.SPECIFY_COUNTRIES_TO_INCLUDE' | translate }}</h6>
-        <div class="icon-container is-overlay" (click)="openModal($event)">
+        <div class="icon-container is-xs text-sm" (click)="openModal($event)">
           <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.ADVANCE_SETTINGS' | translate">
             <i class="fas fa-cog"></i>
           </span>
@@ -55,7 +40,7 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input></app-autocomplete-input>
+        <app-autocomplete-input [config]="autoCompleteConfig('include')"></app-autocomplete-input>
       </div>
 
     </div>
@@ -66,7 +51,7 @@
 
       <div class="d-flex align-center">
         <h6 class="text-normal">{{ 'SHARED_TARGETING_WORLD.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</h6>
-        <div class="icon-container is-overlay" (click)="openModal($event)">
+        <div class="icon-container is-xs text-sm" (click)="openModal($event)">
           <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.ADVANCE_SETTINGS' | translate">
             <i class="fas fa-cog"></i>
           </span>
@@ -74,13 +59,13 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input></app-autocomplete-input>
+        <app-autocomplete-input [config]="autoCompleteConfig('exclude')"></app-autocomplete-input>
       </div>
 
     </div>
 
   </div>
-  <!-- /include / exclude countries -->
+  <!-- /include / exclude countries questions -->
 
 </div>
 
@@ -88,7 +73,7 @@
 <!-- modal for advance settings -->
 <app-modal [(showModal)]="showModal" [maxWidth]="'960px'" [enableCloseButton]="true">
 
-  <section class="modal-body is-stw-modal">
+  <section class="modal-body is-stw">
 
     <div class="text-center p-bottom-30">
       <h3 class="text-background">{{ 'SHARED_TARGETING_WORLD.MODAL.HEADING' | translate }}</h3>
@@ -97,27 +82,18 @@
     <div *ngIf="continents.length > 0">
       <div *ngFor="let continent of continents" class="stw-modal-continent-wrapper">
 
-        <div class="form-group flex-start is-continent">
-          <label class="form-label">{{ ('CONTINENTS.' + continent) | translate }}</label>
-
-          <label class="form-checkbox is-inline">
+        <div class="form-group is-continent">
+          <label class="form-checkbox">
             <input
+              (change)="onChangeContinentInclude($event, continent)"
+              [checked]="checkContinent(continent, 'include')"
+              [disabled]="!isEditable"
               [id]="continent"
               [name]="continent"
               [value]="continent"
               type="checkbox">
-            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.INCLUDE' | translate }}
+            <i class="form-icon"></i>{{ ('CONTINENTS.' + continent) | translate }}
           </label>
-
-          <label class="form-checkbox is-inline">
-            <input
-              [id]="continent"
-              [name]="continent"
-              [value]="continent"
-              type="checkbox">
-            <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.EXCLUDE' | translate }}
-          </label>
-
         </div>
 
       </div>
@@ -128,3 +104,33 @@
 
 </app-modal>
 <!-- /modal for advance settings -->
+
+
+<!--
+<div class="form-group">
+
+  <label class="form-checkbox is-inline text-sm">
+    <input
+      (change)="onChangeContinentInclude($event, continent)"
+      [checked]="checkContinent(continent, 'include')"
+      [disabled]="checkContinent(continent, 'exclude') || !isEditable"
+      [id]="continent"
+      [name]="continent"
+      [value]="continent"
+      type="checkbox">
+    <i class="form-icon"></i>{{ ('CONTINENTS.' + continent) | translate }}
+  </label>
+
+  <label class="form-checkbox is-inline text-sm">
+    <input
+      (change)="onChangeContinentExclude($event, continent)"
+      [checked]="checkContinent(continent, 'exclude')"
+      [disabled]="checkContinent(continent, 'include') || !isEditable"
+      [id]="continent"
+      [name]="continent"
+      [value]="continent"
+      type="checkbox">
+    <i class="form-icon"></i>{{ 'SHARED_TARGETING_WORLD.EXCLUDE' | translate }}
+  </label>
+
+</div>-->
