@@ -2,9 +2,8 @@
 @import "mixins";
 
 .modal {
-  @include absolute-full-page();
+  @include fixed-full-page();
   display: none;
-  position: fixed;
   overflow: hidden;
   align-items: center;
   justify-content: center;

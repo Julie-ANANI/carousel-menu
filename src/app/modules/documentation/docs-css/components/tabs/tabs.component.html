@@ -1,0 +1,97 @@
+<div id="tabs">
+
+  <h1 class="title">Tabs</h1>
+
+  <div class="docs-divider"></div>
+
+  <p class="text-md">Simple responsive horizontal navigation tabs, with different styles.</p>
+
+  <p class="text-md">Add a container element with the <code>tab</code> class. And add child elements with the <code>tab-item</code> class. Inside
+    the tab-item element add the &lt;a&gt; element. The default tabs style has a single border at the bottom. Add the <code>active</code> class with the <code>tab-item</code> class
+    or &lt;a&gt; element to make it highlighted.</p>
+
+  <div class="p-top-20">
+    <ul class="tab">
+      <li class="tab-item active"><a>Tab 1</a></li>
+      <li class="tab-item"><a>Tab 2</a></li>
+      <li class="tab-item"><a>Tab 3</a></li>
+      <li class="tab-item"><a>Tab 4</a></li>
+    </ul>
+  </div>
+
+  <div class="p-top-20">
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"tab"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"tab-item active"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span>&gt;</span>Tab 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"tab-item"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span>&gt;</span>Tab 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        ...
+      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>
+    </code></pre>
+  </div>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Icons</h2>
+
+    <ul class="tab">
+      <li class="tab-item active">
+        <a><i class="fas fa-pencil-alt"></i>Tab 1</a>
+      </li>
+      <li class="tab-item">
+        <a><i class="icon icon-plus"></i>Tab 2</a>
+      </li>
+    </ul>
+
+    <div class="p-top-20">
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"tab"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"tab-item active"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-pencil-alt"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>Tab 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"tab-item"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon icon-plus"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>Tab 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>
+    </code></pre>
+    </div>
+
+  </section>
+
+  <section class="p-top-25">
+
+    <h2 class="title is-4">Fullwidth</h2>
+
+    <p class="text-md">If you want the tabs to take up the whole width available, use the <code>is-fullwidth</code> class.</p>
+
+    <div class="p-top-20">
+      <ul class="tab is-fullwidth">
+        <li class="tab-item active">
+          <a><i class="fas fa-pencil-alt"></i>Tab 1</a>
+        </li>
+        <li class="tab-item">
+          <a><i class="icon icon-plus"></i>Tab 2</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="p-top-20">
+    <pre class="code" data-lang="HTML"><code>
+      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"tab is-fullwidth"</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"tab-item active"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-pencil-alt"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>Tab 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"tab-item"</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon icon-plus"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>Tab 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>
+    </code></pre>
+    </div>
+
+  </section>
+
+</div>
+

@@ -54,7 +54,7 @@ export const DISCOVER = {
 
   'RELATED_SECTORS': 'Tag(s) suggéré(s)',
 
-  'ALL_SECTORS': 'Sélectionnez une ou plusieurs tags',
+  'ALL_SECTORS': 'Sélectionnez un ou plusieurs tags',
 
   'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des innovations.',
 

@@ -1,74 +1,78 @@
 <ng-container *ngIf="innovations">
 
-  <section class="section-pad" id="projects-list-component">
-    <div class="column col-xs-12 col-11 col-mx-auto">
+  <section id="projects-list">
+    <div class="container grid-2xl p-top-50 p-bottom-50">
+      <div class="columns">
+        <div class="column col-md-12 col-11 col-mx-auto">
 
-      <!-- section add button -->
-      <div class="text-right" *ngIf="!noResult">
-        <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-lg is-rounded is-shadowed">
-          <i class="icon icon-left text-xs icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
-        </button>
-      </div>
-
-      <!-- section no project -->
-      <ng-container *ngIf="noResult">
-        <div class="no-result-wrapper flex-centered">
-          <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-rounded is-shadowed is-xl">
-            <i class="icon icon-left text-sm icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
-          </button>
-        </div>
-      </ng-container>
-
-      <!-- section projects -->
-      <ng-container *ngIf="!noResult">
-        <div class="section-pad rm-pad-bottom">
-
-          <!-- projects -->
-          <div class="card-wrapper" [@listAnimation]="innovations.length">
-            <div *ngFor="let innovation of innovations" class="card-project">
-              <div class="card-content d-inline-flex">
-
-                <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
-
-                <div class="project-description">
-
-                  <a [routerLink]="getRelevantLink(innovation)">
-                    <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
-                  </a>
-
-                  <p class="text text-notify text-medium">
-                    {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
-                    •
-                    {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
-                    •
-                    {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-                    |
-                    <span class="icons is-delete tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" (click)="onClickDelete($event, innovation._id)">
-                      <i class="fas fa-trash-alt"></i>
-                    </span>
-                  </p>
-
-                </div>
-
-              </div>
-            </div>
+          <!-- section add button -->
+          <div class="text-right" *ngIf="!noResult">
+            <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-lg is-rounded is-shadowed">
+              <i class="icon icon-left text-xs icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+            </button>
           </div>
 
-          <!-- section pagination -->
-          <ng-container *ngIf="total > 10">
-            <div class="flex-centered section-light-pad rm-pad-bottom">
-              <app-pagination-2
-                [(pagination)]="pagination"
-                [ngStyle]="{ 'width': '100%' }"
-                [totalCount]="total">
-              </app-pagination-2>
+          <!-- section no project -->
+          <ng-container *ngIf="noResult">
+            <div class="no-result-wrapper flex-centered">
+              <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-rounded is-shadowed is-xl">
+                <i class="icon icon-left text-sm icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+              </button>
             </div>
           </ng-container>
 
-        </div>
-      </ng-container>
-      <!-- /section projects -->
+          <!-- section projects -->
+          <ng-container *ngIf="!noResult">
+            <div class="section-pad rm-pad-bottom">
 
+              <!-- projects -->
+              <div class="card-wrapper" [@listAnimation]="innovations.length">
+                <div *ngFor="let innovation of innovations" class="card-project">
+                  <div class="card-content d-inline-flex">
+
+                    <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
+
+                    <div class="project-description">
+
+                      <a [routerLink]="getRelevantLink(innovation)">
+                        <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+                      </a>
+
+                      <p class="text text-notify text-medium">
+                        {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
+                        •
+                        {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
+                        •
+                        {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+                        |
+                        <span class="icons is-delete tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" (click)="onClickDelete($event, innovation._id)">
+                      <i class="fas fa-trash-alt"></i>
+                    </span>
+                      </p>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- section pagination -->
+              <ng-container *ngIf="total > 10">
+                <div class="flex-centered section-light-pad rm-pad-bottom">
+                  <app-pagination-2
+                    [(pagination)]="pagination"
+                    [ngStyle]="{ 'width': '100%' }"
+                    [totalCount]="total">
+                  </app-pagination-2>
+                </div>
+              </ng-container>
+
+            </div>
+          </ng-container>
+          <!-- /section projects -->
+
+        </div>
+      </div>
     </div>
   </section>
 

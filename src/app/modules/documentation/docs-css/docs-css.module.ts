@@ -38,13 +38,24 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { PopoversComponent } from './components/popovers/popovers.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TooltipsComponent } from './components/tooltips/tooltips.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FlexboxComponent } from './layout/flexbox/flexbox.component';
+import { ResponsiveComponent } from './layout/responsive/responsive.component';
+import { MessageTemplatesComponent } from './angular/message-templates/message-templates.component';
+import { MessageTemplate1Module } from '../../utility-components/messages/message-template-1/message-template-1.module';
+import { MessageTemplate2Module } from '../../utility-components/messages/message-template-2/message-template-2.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     DocsCssRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MessageTemplate1Module,
+    MessageTemplate2Module
   ],
   declarations: [
     DocsCssComponent,
@@ -80,7 +91,14 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     MenuComponent,
     ModalComponent,
     NavbarComponent,
-    PaginationComponent
+    PaginationComponent,
+    PopoversComponent,
+    TabsComponent,
+    TooltipsComponent,
+    SidebarComponent,
+    FlexboxComponent,
+    ResponsiveComponent,
+    MessageTemplatesComponent
   ],
 })
 

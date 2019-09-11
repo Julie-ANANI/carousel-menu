@@ -20,7 +20,7 @@ export class FilterPipe implements PipeTransform {
         return items.filter(singleItem => {
             let valid = true;
             validFields.forEach(field => {
-                valid = valid && singleItem[field].toLowerCase().includes(fields[field].toLowerCase());
+                valid = valid && singleItem[field].toLowerCase().indexOf(fields[field].toLowerCase()) !== -1;
             });
             return valid;
         });

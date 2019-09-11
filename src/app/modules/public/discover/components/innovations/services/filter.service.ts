@@ -51,7 +51,7 @@ export class FilterService {
         if (searchFieldInput) {
           // we check if there is any card containing searchFieldInput
           const containSearchFieldInput = innovation.innovationCards.some((card: InnovCard) => {
-            return card.title.toLowerCase().includes(searchFieldInput.toLowerCase());
+            return card.title.toLowerCase().indexOf(searchFieldInput.toLowerCase()) !== -1;
           });
           if (!containSearchFieldInput) {
             return false;

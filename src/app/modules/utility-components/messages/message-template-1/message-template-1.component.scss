@@ -2,44 +2,35 @@
 
 #message-template-1 {
 
-  .message-wrapper, .bot-wrapper {
-    margin-left: auto;
-    margin-right: auto;
+  .message-content-wrapper {
+    padding: 1rem 0.75rem;
+    border-radius: 6px;
+    color: $light-color;
+    background: $bg-background-color;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    position: relative;
+    text-align: center;
   }
 
-  .message-content, .triangle {
-    animation-name: fadeIn;
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-  }
-
-  .message-wrapper {
-    margin-bottom: 0.75rem;
-
-    .message-content {
-      padding: 1rem 0.75rem;
-      border-radius: $border-radius;
-      color: #FFFFFF;
-      background: $background-color;
-      font-size: $font-size-sm;
-      font-weight: $font-weight-medium;
-      position: relative;
-    }
-
-    .triangle {
-      border-top: 12px solid $background-color;
-      border-right: 25px solid transparent;
-      transform: skewX(75deg);
-      margin-left: 75px;
-      width: 0;
-      height: 0;
-      position: relative;
-    }
-
+  .triangle {
+    border-top: 12px solid $background-color;
+    border-right: 25px solid transparent;
+    transform: skewX(75deg);
+    margin-left: 3.75rem;
+    width: 0;
+    height: 0;
+    position: relative;
   }
 
   .bot-wrapper {
-    height: 7.496rem;
+
+    img {
+      margin-left: auto;
+      margin-right: auto;
+      height: 7.496rem;
+    }
+
   }
 
 }

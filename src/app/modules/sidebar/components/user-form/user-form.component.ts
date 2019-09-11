@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { User } from '../../../../models/user.model';
 import { Innovation } from '../../../../models/innovation';
 import { Professional } from '../../../../models/professional';
@@ -9,7 +11,7 @@ import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
-import { distinctUntilChanged, first } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { Clearbit } from '../../../../models/clearbit';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
@@ -65,7 +67,7 @@ export class UserFormComponent implements OnInit {
     }
   };
 
-  @Input() set type(type: string) {
+  @Input() set type(type: 'editUser' | 'professional' | 'addPro') {
     this._type = type;
     this.loadTemplate();
   }
@@ -102,7 +104,7 @@ export class UserFormComponent implements OnInit {
 
   private _tags: Tag[] = [];
 
-  private _type = '';
+  private _type: 'editUser' | 'professional' | 'addPro';
 
   private _updateInstanceDomainConfig: {
     placeholder: string,
@@ -125,8 +127,10 @@ export class UserFormComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platform: Object,
               private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
+              private router: Router,
               private sanitizer: DomSanitizer,
               private translateService: TranslateService,
+              private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
               private userService: UserService,
               private _authService: AuthService,
@@ -312,7 +316,7 @@ export class UserFormComponent implements OnInit {
   }
 
   showKeywords() {
-    this.searchService.getProKeywords(this._pro.personId).pipe(first()).subscribe((keywords: Array<string>) => {
+    this.searchService.getProKeywords(this._pro.personId).subscribe((keywords: Array<string>) => {
       this._proKeywords = keywords;
     });
   }
@@ -353,15 +357,25 @@ export class UserFormComponent implements OnInit {
         email: this._userForm.get("email").value,
         sort: '{ "created": -1 }'
       };
-      this._professionalService.getAll(config).pipe(first())
+      this._professionalService.getAll(config)
         .subscribe( response => {
           if(response && response.result && response.result.length) {
             this._userForm.patchValue(response.result[0]);
           }
         }, err => {
-          console.error(err);
+          this.translateNotificationsService.success('ERROR.ERROR', err.message);
         });
     }
+  }
+
+  public impersonateUser(event: Event) {
+    event.preventDefault();
+    this._authService.forceLogin(this._user.id).subscribe(response => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', '');
+      this.router.navigate(['/user']);
+    }, err => {
+      this.translateNotificationsService.error('ERROR.ERROR', err.message);
+    });
   }
 
   get isSuperAdmin(): boolean {
@@ -443,6 +457,10 @@ export class UserFormComponent implements OnInit {
 
   set company(value: Clearbit) {
     this._company = value;
+  }
+
+  get type() {
+    return this._type;
   }
 
 }

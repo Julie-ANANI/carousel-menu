@@ -3,8 +3,12 @@
     <form novalidate [formGroup]="userForm" (ngSubmit)="onClickSave()" autocomplete="off">
 
       <!-- save button -->
-      <div class="save-wrapper text-right">
-        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+      <div class="buttons">
+        <button type="button"
+                class="button is-secondary is-outlined"
+                *ngIf="authService.isSuperAdmin && type == 'editUser'"
+                (click)="impersonateUser($event)">Impersonate</button>
+        <button type="submit" class="button is-primary" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
       </div>
 
       <!-- operator -->

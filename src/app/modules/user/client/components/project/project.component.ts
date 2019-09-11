@@ -114,10 +114,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     return this._currentPage;
   }
 
-  get saveChanges(): boolean {
-    return this._saveChanges;
-  }
-
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();

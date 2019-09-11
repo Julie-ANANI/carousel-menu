@@ -10,26 +10,38 @@
 
   $grid-spacing: ($layout-spacing / ($layout-spacing * 0 + 1)) * $html-font-size;
 
+  &.grid-2xl {
+    max-width: $size-2x;
+  }
+
   &.grid-xl {
-    max-width: $grid-spacing * 2 + $size-xl;
+    max-width: $size-xl;
   }
 
   &.grid-lg {
-    max-width: $grid-spacing * 2 + $size-lg;
+    max-width: $size-lg;
   }
 
   &.grid-md {
-    max-width: $grid-spacing * 2 + $size-md;
+    max-width: $size-md;
   }
 
   &.grid-sm {
-    max-width: $grid-spacing * 2 + $size-sm;
+    max-width: $size-sm;
   }
 
   &.grid-xs {
-    max-width: $grid-spacing * 2 + $size-xs;
+    max-width: $size-xs;
+    //max-width: $grid-spacing * 2 + $size-xs;
   }
 
+}
+
+// todo remove this.
+.restrict-width {
+  max-width: $size-2x;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .fluid {

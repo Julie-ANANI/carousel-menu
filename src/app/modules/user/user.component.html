@@ -1,17 +1,17 @@
 <!-- loading bar -->
 <div *ngIf="displayLoader" class="loading-bar"></div>
 
-<section class="d-flex" id="main-wrapper">
+<div class="d-flex" id="user">
 
   <app-header></app-header>
 
-  <div [ngStyle]=" { 'background': adminSide ? '#F5F7FA' : '#FFFFFF' } " class="body-wrapper">
+  <main [ngStyle]=" { 'background': adminSide ? '#F5F7FA' : '#FFFFFF' } " id="main-wrapper">
     <router-outlet></router-outlet>
-  </div>
+  </main>
 
   <app-footer></app-footer>
 
-</section>
+</div>
 
 
 

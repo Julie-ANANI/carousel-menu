@@ -119,7 +119,7 @@ export class AdminUsersComponent implements OnInit {
   public onClickEdit(value: User) {
     const us = new User(value);
 
-    this._userService.get(us.id).pipe(first()).subscribe((response: User) => {
+    this._userService.get(us.id).subscribe((response: User) => {
       this._selectedUser = response;
 
       this._sidebarValue = {

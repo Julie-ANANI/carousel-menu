@@ -10,15 +10,21 @@ import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
 import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
 
+import {Md5} from 'ts-md5/dist/md5';
+
 const AUTH_SESSION_KEY = makeStateKey('authSession');
 
 @Injectable()
 export class AuthService {
 
   private _authenticated = false;
+
   private _admin = 0;
+
   private _confirmed = false;
+
   private _redirectUrl: string;
+
   private _isOperator: boolean = false;
 
   private _user: User;
@@ -84,6 +90,26 @@ export class AuthService {
           this._user = res;
           if (res.isAuthenticated) {
             //this.startCookieObservator();
+            this._setMHash(res.email);
+          }
+          return res;
+        }),
+        catchError((error: Response) => throwError(error.json()))
+      );
+  }
+
+  public forceLogin(userId: string): Observable<User> {
+    return this._http.post('/auth/forceLogin', {userId: userId})
+      .pipe(
+        map((res: any) => {
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._setIsOperatorTo(res.isOperator);
+          this._user = res;
+          if (res.isAuthenticated) {
+            //this.startCookieObservator();
+            this._setMHash(res.email);
           }
           return res;
         }),
@@ -168,6 +194,12 @@ export class AuthService {
     }
   }
 
+  private _setMHash(newValue: string): void {
+    const md5 = new Md5();
+    const mhash = md5.appendStr(newValue).end()
+    this._cookieService.put('mhash', `${mhash}`, this._cookieOptions);
+  }
+
   public getUserInfo(): any {
     if (this._user) {
       return {
@@ -177,6 +209,10 @@ export class AuthService {
     } else {
       return {};
     }
+  }
+
+  public getMHash(): any {
+    return this._cookieService.get('mhash') || null;
   }
 
   get isAuthenticated(): boolean {
@@ -233,9 +269,14 @@ export class AuthService {
   }
 
   set redirectUrl (redirectUrl: string) {
-    if (urlRegEx.test(redirectUrl)) {
+    let url = `${environment.clientUrl}${redirectUrl}`;
+
+    if (urlRegEx.test(url)) {
+      this._redirectUrl = redirectUrl;
+    } else if (environment.local) {
       this._redirectUrl = redirectUrl;
     }
+
   }
 
 }

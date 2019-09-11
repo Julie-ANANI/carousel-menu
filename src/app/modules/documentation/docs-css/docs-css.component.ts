@@ -15,11 +15,11 @@ export class DocsCssComponent {
   constructor(private _router: Router,
               private _translateTitleService: TranslateTitleService) {
 
-    this._translateTitleService.setTitle('UMI | Documentation');
-
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this._activeRoute = event.urlAfterRedirects.slice(31);
+        const url = event.urlAfterRedirects.split('/');
+        this._activeRoute = url[url.length - 1];
+        this._translateTitleService.setTitle(`${this._activeRoute[0].toUpperCase()}${this._activeRoute.slice(1)} | UMI`);
       }
     });
 

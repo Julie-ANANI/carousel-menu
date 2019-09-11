@@ -1,97 +1,98 @@
 <header id="header">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <nav class="navbar">
+  <div class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <nav class="navbar">
 
-      <!-- brand -->
-      <div class="navbar-brand">
-        <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
-          <img [alt]="getCompany()" [src]="getLogo()" height="33" style="height: 33px; width: 110px" width="110">
-        </a>
-      </div>
-      <!-- /brand -->
-
-      <!-- hamburger icon for mobile -->
-      <div class="navbar-burger" (click)="toggleMenuState()">
-        <i class="icon icon-menu"></i>
-        <span class="m-left-2 text-medium">Menu</span>
-      </div>
-      <!-- /hamburger icon for mobile -->
-
-      <!-- navigation -->
-      <div class="navbar-menu">
-
-        <!-- example page -->
-        <ng-container *ngIf="user && user.state === 'confirmed' && !backOfficeValue && !isMainDomain()">
-          <a
-            (click)="onClickLink()"
-            [routerLinkActiveOptions]="{ exact: true }"
-            [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
-            class="gtm-menu-sample-synthesis navbar-item"
-            routerLinkActive="active"
-            target="_blank">
-            <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
+        <!-- brand -->
+        <div class="navbar-brand">
+          <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
+            <img [alt]="getCompany()" [src]="getLogo()" height="33" style="height: 33px; width: 110px" width="110">
           </a>
-        </ng-container>
-        <!-- /example page -->
+        </div>
+        <!-- /brand -->
 
-        <!-- discover page -->
-        <ng-container *ngIf="!backOfficeValue">
-          <a
-            (click)="onClickLink()"
-            [routerLinkActiveOptions]="{ exact: true }"
-            [routerLink]="'/discover'"
-            class="gtm-menu-discover navbar-item"
-            routerLinkActive="active">
-            <span>{{ 'HEADER.DISCOVER' | translate }}</span>
-          </a>
-        </ng-container>
-        <!-- /discover page -->
+        <!-- hamburger icon for mobile -->
+        <div class="navbar-burger" (click)="toggleMenuState()">
+          <i class="icon icon-menu"></i>
+          <span class="m-left-2 text-medium">Menu</span>
+        </div>
+        <!-- /hamburger icon for mobile -->
 
-        <!-- client my projects -->
-        <ng-container *ngIf="user && user.state === 'confirmed' && !backOfficeValue">
-          <a
-            (click)="onClickLink()"
-            [routerLinkActiveOptions]="{ exact: true }"
-            [routerLink]="'/user/projects'"
-            class="gtm-menu-my-projects navbar-item"
-            routerLinkActive="active">
-            <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
-          </a>
-        </ng-container>
-        <!-- /client my projects -->
+        <!-- navigation -->
+        <div class="navbar-menu">
 
-        <!-- client shared reports -->
-        <ng-container *ngIf="user && user.state === 'confirmed' && !backOfficeValue">
-          <a
-            (click)="onClickLink()"
-            [routerLinkActiveOptions]="{ exact: true }"
-            [routerLink]="'/user/synthesis'"
-            class="gtm-menu-my-reports navbar-item"
-            routerLinkActive="active">
-            <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
-          </a>
-        </ng-container>
-        <!-- /client shared reports -->
+          <!-- example page -->
+          <ng-container *ngIf="user && user.state === 'confirmed' && !backOfficeValue && !isMainDomain()">
+            <a
+              (click)="onClickLink()"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+              class="gtm-menu-sample-synthesis navbar-item"
+              routerLinkActive="active"
+              target="_blank">
+              <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
+            </a>
+          </ng-container>
+          <!-- /example page -->
 
-        <!-- admin routes -->
-        <ng-container *ngIf="user && user.state === 'confirmed'">
-          <ng-container *ngFor="let route of adminRoutes">
-            <ng-container *ngIf="backOfficeValue && canShow(route.adminLevel) && user">
-              <a
-                (click)="onClickLink()"
-                [routerLinkActiveOptions]="{ exact: true }"
-                [routerLink]="route.pageLink"
-                class="navbar-item"
-                routerLinkActive="active">
-                <span>{{ route.pageName }}</span>
-              </a>
+          <!-- discover page -->
+          <ng-container *ngIf="!backOfficeValue">
+            <a
+              (click)="onClickLink()"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="'/discover'"
+              class="gtm-menu-discover navbar-item"
+              routerLinkActive="active">
+              <span>{{ 'HEADER.DISCOVER' | translate }}</span>
+            </a>
+          </ng-container>
+          <!-- /discover page -->
+
+          <!-- client my projects -->
+          <ng-container *ngIf="user && user.state === 'confirmed' && !backOfficeValue">
+            <a
+              (click)="onClickLink()"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="'/user/projects'"
+              class="gtm-menu-my-projects navbar-item"
+              routerLinkActive="active">
+              <span>{{ 'HEADER.MY_PROJECTS' | translate }}</span>
+            </a>
+          </ng-container>
+          <!-- /client my projects -->
+
+          <!-- client shared reports -->
+          <ng-container *ngIf="user && user.state === 'confirmed' && !backOfficeValue">
+            <a
+              (click)="onClickLink()"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="'/user/synthesis'"
+              class="gtm-menu-my-reports navbar-item"
+              routerLinkActive="active">
+              <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
+            </a>
+          </ng-container>
+          <!-- /client shared reports -->
+
+          <!-- admin routes -->
+          <ng-container *ngIf="user && user.state === 'confirmed'">
+            <ng-container *ngFor="let route of adminRoutes">
+              <ng-container *ngIf="backOfficeValue && canShow(route.adminLevel) && user">
+                <a
+                  (click)="onClickLink()"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  [routerLink]="route.pageLink"
+                  class="navbar-item"
+                  routerLinkActive="active">
+                  <span>{{ route.pageName }}</span>
+                </a>
+              </ng-container>
             </ng-container>
           </ng-container>
-        </ng-container>
-        <!-- /admin routes -->
+          <!-- /admin routes -->
 
-        <!-- language select dropdown -->
-        <div class="navbar-item has-dropdown dropdown-lang">
+          <!-- language select dropdown -->
+          <div class="navbar-item has-dropdown dropdown-lang">
 
           <span>
             <a class="dropdown-toggle">
@@ -102,123 +103,124 @@
             </a>
           </span>
 
-          <!-- options -->
-          <ul class="navbar-dropdown p-no">
-            <li class="navbar-item text-center" (click)="setLang('fr')">
-              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
-            </li>
-            <li class="navbar-item text-center" (click)="setLang('en')">
-              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
-            </li>
-          </ul>
+            <!-- options -->
+            <ul class="navbar-dropdown p-no">
+              <li class="navbar-item text-center" (click)="setLang('fr')">
+                <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
+              </li>
+              <li class="navbar-item text-center" (click)="setLang('en')">
+                <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
+              </li>
+            </ul>
 
-        </div>
-        <!-- /language select dropdown -->
-
-        <!-- contact us button -->
-        <ng-container *ngIf="!backOfficeValue">
-          <div class="navbar-item has-button">
-            <a [href]="getContactUrl()" rel="noopener" target="_blank">
-              <button type="button" class="button is-info text-background is-outlined">
-                {{ 'HEADER.CONTACT_US' | translate }}
-              </button>
-            </a>
           </div>
-        </ng-container>
-        <!-- /contact us button -->
+          <!-- /language select dropdown -->
 
-        <!-- account dropdown -->
-        <div class="navbar-item has-dropdown has-avatar dropdown-user is-right m-no-right">
-
-          <!-- user unconfirmed -->
-          <ng-container *ngIf="user && user.state === 'unconfirmed'">
-            <figure class="avatar dropdown-toggle is-lg text-notify">
-              <i class="fas fa-user"></i>
-            </figure>
-          </ng-container>
-
-          <!-- user confirmed -->
-          <ng-container *ngIf="user && user.state === 'confirmed'">
-            <figure class="avatar dropdown-toggle is-lg" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
-              <ng-container *ngIf="hasProfilePic()">
-                <img [src]="profilePicture" class="img-responsive" alt=" ">
-              </ng-container>
-            </figure>
-          </ng-container>
-
-          <!-- options -->
-          <div class="navbar-dropdown" style="width: 300px">
-
-            <ng-container *ngIf="user && user.state === 'confirmed'">
-
-              <a (click)="onClickLink()" [routerLink]="'/user/account'" class="gtm-menu-my-account navbar-item user-info-wrapper">
-
-                <figure class="avatar is-lg m-right-2" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
-                  <ng-container *ngIf="hasProfilePic()">
-                    <img [src]="profilePicture" class="img-responsive" alt=" ">
-                  </ng-container>
-                </figure>
-
-                <div class="d-flex info">
-                  <span class="text-medium text-ellipsis">{{ user.name }}</span>
-                  <span class="text-ellipsis" style="font-size: 0.65rem">{{ user.email }}</span>
-                </div>
-
+          <!-- contact us button -->
+          <ng-container *ngIf="!backOfficeValue">
+            <div class="navbar-item has-button">
+              <a [href]="getContactUrl()" rel="noopener" target="_blank">
+                <button type="button" class="button is-info text-background is-outlined">
+                  {{ 'HEADER.CONTACT_US' | translate }}
+                </button>
               </a>
+            </div>
+          </ng-container>
+          <!-- /contact us button -->
 
-              <!-- admin side -->
-              <ng-container *ngIf="!backOfficeValue && canShow(1)">
-                <a
-                  (click)="toggleBackOfficeState(); onClickLink();"
-                  [routerLink]="'/user/admin'"
-                  class="navbar-item"
-                  routerLinkActive="active">
-                  {{ 'HEADER.ADMIN_SIDE' | translate }}
-                </a>
-              </ng-container>
+          <!-- account dropdown -->
+          <div class="navbar-item has-dropdown has-avatar dropdown-user is-right m-no-right">
 
-              <!-- client side -->
-              <ng-container *ngIf="backOfficeValue && canShow(1)">
-                <a
-                  (click)="toggleBackOfficeState(); onClickLink();"
-                  [routerLink]="'/user/projects'"
-                  class="navbar-item"
-                  routerLinkActive="active">
-                  {{ 'HEADER.CLIENT_SIDE' | translate }}
-                </a>
-              </ng-container>
-
-              <!-- account page -->
-              <a
-                (click)="onClickLink(); onClickAccount();"
-                [routerLink]="'/user/account'"
-                class="gtm-menu-my-account navbar-item"
-                routerLinkActive="active">
-                {{ 'HEADER.MY_ACCOUNT' | translate }}
-              </a>
-
-              <div class="navbar-divider"></div>
-
+            <!-- user unconfirmed -->
+            <ng-container *ngIf="user && user.state === 'unconfirmed'">
+              <figure class="avatar dropdown-toggle is-lg text-notify">
+                <i class="fas fa-user"></i>
+              </figure>
             </ng-container>
 
-            <!-- log out -->
-            <a
-              (click)="onClickLink()"
-              [routerLink]="'/logout'"
-              class="navbar-item">
-              {{ 'HEADER.LOG_OUT' | translate }}
-            </a>
+            <!-- user confirmed -->
+            <ng-container *ngIf="user && user.state === 'confirmed'">
+              <figure class="avatar dropdown-toggle is-lg" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                <ng-container *ngIf="hasProfilePic()">
+                  <img [src]="profilePicture" class="img-responsive" alt=" ">
+                </ng-container>
+              </figure>
+            </ng-container>
+
+            <!-- options -->
+            <div class="navbar-dropdown" style="width: 300px">
+
+              <ng-container *ngIf="user && user.state === 'confirmed'">
+
+                <a (click)="onClickLink()" [routerLink]="'/user/account'" class="gtm-menu-my-account navbar-item user-info-wrapper">
+
+                  <figure class="avatar is-lg m-right-2" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
+                    <ng-container *ngIf="hasProfilePic()">
+                      <img [src]="profilePicture" class="img-responsive" alt=" ">
+                    </ng-container>
+                  </figure>
+
+                  <div class="d-flex info">
+                    <span class="text-medium text-ellipsis">{{ user.name }}</span>
+                    <span class="text-ellipsis" style="font-size: 0.65rem">{{ user.email }}</span>
+                  </div>
+
+                </a>
+
+                <!-- admin side -->
+                <ng-container *ngIf="!backOfficeValue && canShow(1)">
+                  <a
+                    (click)="toggleBackOfficeState(); onClickLink();"
+                    [routerLink]="'/user/admin'"
+                    class="navbar-item"
+                    routerLinkActive="active">
+                    {{ 'HEADER.ADMIN_SIDE' | translate }}
+                  </a>
+                </ng-container>
+
+                <!-- client side -->
+                <ng-container *ngIf="backOfficeValue && canShow(1)">
+                  <a
+                    (click)="toggleBackOfficeState(); onClickLink();"
+                    [routerLink]="'/user/projects'"
+                    class="navbar-item"
+                    routerLinkActive="active">
+                    {{ 'HEADER.CLIENT_SIDE' | translate }}
+                  </a>
+                </ng-container>
+
+                <!-- account page -->
+                <a
+                  (click)="onClickLink(); onClickAccount();"
+                  [routerLink]="'/user/account'"
+                  class="gtm-menu-my-account navbar-item"
+                  routerLinkActive="active">
+                  {{ 'HEADER.MY_ACCOUNT' | translate }}
+                </a>
+
+                <div class="navbar-divider"></div>
+
+              </ng-container>
+
+              <!-- log out -->
+              <a
+                (click)="onClickLink()"
+                [routerLink]="'/logout'"
+                class="navbar-item">
+                {{ 'HEADER.LOG_OUT' | translate }}
+              </a>
+
+            </div>
+            <!-- /options -->
 
           </div>
-          <!-- /options -->
+          <!-- /account dropdown  -->
 
         </div>
-        <!-- /account dropdown  -->
+        <!-- /navigation -->
 
-      </div>
-      <!-- /navigation -->
-
-    </nav>
+      </nav>
+    </div>
   </div>
 </header>
 
