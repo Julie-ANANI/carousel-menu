@@ -1,1 +1,6 @@
-<app-shared-table [(config)]="config" [data]="tableInfos" (editRow)="goToProject($event)"></app-shared-table>
+<app-shared-table
+  [(config)]="config"
+  [data]="tableInfos"
+  (editRow)="goToRequest($event)"
+  (performAction)="onClickActions($event)"
+></app-shared-table>

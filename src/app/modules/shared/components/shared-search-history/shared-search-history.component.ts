@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { Config } from "../../../../models/config";
 import { Table } from '../../../table/models/table';
@@ -29,7 +30,10 @@ export class SharedSearchHistoryComponent implements OnInit {
     sort: '{ "created": -1 }'
   };
 
-  constructor(private _searchService: SearchService) {}
+  constructor(
+    private _searchService: SearchService,
+    private _notificationsService: TranslateNotificationsService
+  ) {}
 
   ngOnInit(): void {
     // On récupère le quota Google
@@ -59,6 +63,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         if(result.requests) {
           this._requests = result.requests.map((request: any) => {
             request.keywords = request.keywords || request.oldKeywords[0].original;
+            request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
             return request;
           });
         }
@@ -75,9 +80,17 @@ export class SharedSearchHistoryComponent implements OnInit {
           _editIndex: 1,
           _isSearchable: true,
           _isPaginable: true,
+          _isSelectable: true,
           _isTitle: true,
+          _buttons: [
+            { _icon: 'fas fa-times', _label: 'SEARCH.HISTORY.CANCEL' },
+            { _icon: 'fas fa-hourglass-half', _label: 'SEARCH.HISTORY.BACK_QUEUE' },
+            { _icon: 'fas fa-share-square', _label: 'SEARCH.ADDTOCAMPAIGN' }
+          ],
           _columns: [
             {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
+            {_attrs: ['pros'], _name: '', _type: 'TEXT', _isSearchable: false, _isSortable: false},
+            {_attrs: ['metadata.user.name'], _name: 'PROJECT_LIST.OPERATOR', _type: 'TEXT', _isSearchable: false, _isSortable: false},
             {_attrs: ['country'], _name: 'SEARCH.COUNTRY', _type: 'COUNTRY', _enableTooltip: false},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
             {_attrs: ['status'], _name: 'SEARCH.HISTORY.STATUS', _type: 'MULTI-CHOICES', _choices: [
@@ -95,6 +108,27 @@ export class SharedSearchHistoryComponent implements OnInit {
           ]
         };
       });
+  }
+
+  goToRequest(request: any) {
+    // this._router.navigate([this.getRelevantLink(project)]);
+    window.open(`user/admin/search/results/${request._id}`, '_blank')
+  }
+
+  public onClickActions(value: any) {
+    const requestsIds = value._rows.map((r: any) => r._id);
+    if (value._action === 'SEARCH.HISTORY.CANCEL') {
+      this._searchService.cancelManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
+        requestsIds.forEach((requestId : string) => {
+          this._requests[this._getRequestIndex(requestId, this._requests)].status = 'CANCELED';
+          this._notificationsService.success('Requêtes annulées', `Les requêtes ont bien été annulées`);
+        });
+      });
+    } else if (value._action === 'SEARCH.HISTORY.BACK_QUEUE') {
+      console.log('a');
+    } else {
+      console.log(value._action);
+    }
   }
 
   public relaunchRequests() {
@@ -164,18 +198,6 @@ export class SharedSearchHistoryComponent implements OnInit {
         return array.indexOf(request);
       }
     }
-  }
-
-  getTotalCost() {
-    let totalCost = 0;
-    if (this._requests) {
-      for (const cost of this._requests) {
-        if (cost.cost) {
-          totalCost += cost.cost.totalCost;
-        }
-      }
-    }
-    return totalCost.toFixed(2);
   }
 
   get requests(): Array<any> { return this._requests; }

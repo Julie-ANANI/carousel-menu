@@ -89,7 +89,7 @@ export const SEARCH = {
     "PROCESSING": "En cours",
     "QUEUED": "En attente",
     "CANCELED": "Annulée",
-    "CANCEL": "Annuler la requête",
+    "CANCEL": "Annuler les requêtes",
     "BACK_QUEUE": "Remettre en attente",
     "PERPAGE": "par page",
     "PRO": "Professionnel",
