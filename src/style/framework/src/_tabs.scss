@@ -12,16 +12,16 @@
 
   .tab-item {
     color: $text-background-color;
-    margin: 0 $unit-6 0 0;
-    padding: 0;
+    margin: 0;
+    padding: 0 0.75rem;
 
     a {
       @include tab-transition();
       @include flex-centered();
-      font-size: $font-size-md;
+      font-size: 0.75rem;
       font-weight: normal;
       margin: 0;
-      padding: $unit-2 $unit-5;
+      padding: 0.5rem 0.75rem;
       text-decoration: none;
       color: inherit;
       border-bottom: $border-width-lg solid transparent;
@@ -41,10 +41,6 @@
     &.active a, a.active {
       border-bottom-color: $border-primary-color;
       color: $text-warning-color;
-    }
-
-    &.tab-item-lg {
-      margin-right: 2.5rem;
     }
 
   }
@@ -67,7 +63,6 @@
 
     .tab-item {
       flex-basis: 100% !important;
-      margin-right: 0 !important;
       border-bottom: $border-width solid $border-color;
     }
 
