@@ -60,7 +60,9 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._element.remove();
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.removeChild(this._element);
+    }
   }
 
   public toggleState(event: Event) {
