@@ -1,12 +1,24 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output, PLATFORM_ID,
+  ViewEncapsulation
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
-export class ModalComponent {
+export class ModalComponent implements OnInit, OnDestroy {
 
   @Input() set showModal(value: boolean) {
     this._show = value;
@@ -33,6 +45,23 @@ export class ModalComponent {
   private _title: string = '';
 
   private _enableCloseButton: boolean = false;
+
+  private readonly _element: any;
+
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object, private _elementRef: ElementRef) {
+    this._element = this._elementRef.nativeElement;
+  }
+
+  ngOnInit(): void {
+    // move element to bottom of page (just before </body>) so it can be displayed above everything else
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.appendChild(this._element);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this._element.remove();
+  }
 
   public toggleState(event: Event) {
     const classesToCheck: Array<string> = ['modal-overlay', 'modal-close is-sm', 'button modal-cancel', 'close'];
