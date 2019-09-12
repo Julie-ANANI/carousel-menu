@@ -122,6 +122,17 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._selectedRequest = request;
   }
 
+  public updateInno(object: any) {
+    if (object.value.length) {
+      this._config.innovation = JSON.stringify({
+        "$in": object.value.map((v: any) => v._id)
+      });
+    } else {
+      delete this._config.innovation;
+    }
+    this.loadHistory();
+  }
+
   public onClickActions(value: any) {
     const requestsIds = value._rows.map((r: any) => r._id);
     if (value._action === 'SEARCH.HISTORY.CANCEL') {

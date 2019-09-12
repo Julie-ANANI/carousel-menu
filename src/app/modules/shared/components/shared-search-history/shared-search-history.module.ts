@@ -13,6 +13,7 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
 import { TableModule } from "../../../table/table.module";
 import { SidebarModule } from "../../../sidebar/sidebar.module";
 import { SidebarSearchHistoryModule } from "../../../sidebar/components/sidebar-search-history/sidebar-search-history.module";
+import { AutocompleteInputModule } from "../../../utility-components/autocomplete-input/autocomplete-input.module";
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { SidebarSearchHistoryModule } from "../../../sidebar/components/sidebar-
     CountryFlagModule,
     TableModule,
     SidebarModule,
-    SidebarSearchHistoryModule
+    SidebarSearchHistoryModule,
+    AutocompleteInputModule
   ],
   declarations: [
     SharedSearchHistoryComponent,
