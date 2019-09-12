@@ -11,6 +11,8 @@ import { PaginationTemplate1Module } from '../../../utility-components/paginatio
 import { SharedSearchMultiModule } from '../shared-search-multi/shared-search-multi.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { TableModule } from "../../../table/table.module";
+import { SidebarModule } from "../../../sidebar/sidebar.module";
+import { SidebarSearchHistoryModule } from "../../../sidebar/components/sidebar-search-history/sidebar-search-history.module";
 
 @NgModule({
   imports: [
@@ -22,7 +24,9 @@ import { TableModule } from "../../../table/table.module";
     PaginationTemplate1Module,
     SharedSearchMultiModule,
     CountryFlagModule,
-    TableModule
+    TableModule,
+    SidebarModule,
+    SidebarSearchHistoryModule
   ],
   declarations: [
     SharedSearchHistoryComponent,

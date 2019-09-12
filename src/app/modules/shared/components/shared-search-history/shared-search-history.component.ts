@@ -4,6 +4,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { first } from 'rxjs/operators';
 import { Config } from "../../../../models/config";
 import { Table } from '../../../table/models/table';
+import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
 
 @Component({
   selector: 'app-shared-search-history',
@@ -17,7 +18,9 @@ export class SharedSearchHistoryComponent implements OnInit {
   @Input() mails: boolean;
 
 
+  private _sidebarValue: SidebarInterface = {};
   private _tableInfos: Table;
+  private _selectedRequest: any = null;
   private _paused = false;
   private _requests: Array<any> = [];
   private _total = 0;
@@ -91,7 +94,7 @@ export class SharedSearchHistoryComponent implements OnInit {
             {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
             {_attrs: ['pros'], _name: '', _type: 'TEXT', _isSearchable: false, _isSortable: false},
             {_attrs: ['metadata.user.name'], _name: 'PROJECT_LIST.OPERATOR', _type: 'TEXT', _isSearchable: false, _isSortable: false},
-            {_attrs: ['country'], _name: 'SEARCH.COUNTRY', _type: 'COUNTRY', _enableTooltip: false},
+            {_attrs: ['country'], _name: 'SEARCH.HISTORY.TARGETTING', _type: 'COUNTRY', _enableTooltip: false},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
             {_attrs: ['status'], _name: 'SEARCH.HISTORY.STATUS', _type: 'MULTI-CHOICES', _choices: [
               {_name: 'DONE', _alias: 'SEARCH.HISTORY.DONE', _class: 'label is-success'},
@@ -110,9 +113,13 @@ export class SharedSearchHistoryComponent implements OnInit {
       });
   }
 
-  goToRequest(request: any) {
-    // this._router.navigate([this.getRelevantLink(project)]);
-    window.open(`user/admin/search/results/${request._id}`, '_blank')
+  openSidebar(request: any) {
+    this._sidebarValue = {
+      animate_state: 'active',
+      title: request.keywords,
+      size: '726px'
+    };
+    this._selectedRequest = request;
   }
 
   public onClickActions(value: any) {
@@ -200,14 +207,44 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
-  get requests(): Array<any> { return this._requests; }
-  get total(): number { return this._total; }
-  get googleQuota(): number { return this._googleQuota; }
-  get config(): Config { return this._config; }
+  get requests(): Array<any> {
+    return this._requests;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get googleQuota(): number {
+    return this._googleQuota;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
   set config(value: Config) {
     this._config = value;
     this.loadHistory();
   }
-  get paused(): boolean { return this._paused; }
-  get tableInfos(): Table { return this._tableInfos; }
+
+  get paused(): boolean {
+    return this._paused;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get selectedRequest(): any {
+    return this._selectedRequest;
+  }
 }

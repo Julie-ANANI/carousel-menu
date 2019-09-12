@@ -1,0 +1,7 @@
+<div class="column col-11 col-mx-auto" *ngIf="request">
+  <h3> {{ request.pros }}  ({{ request.cost?.totalCost }}€)</h3>
+  <h6>{{ 'SEARCH.HISTORY.LAUNCHED_BY' | translate}} {{ request.metadata.user.name }}
+    le {{request.created | date:'d/MM/yy à hh:mm:ss'}} </h6>
+  <h6> {{ 'SEARCH.HISTORY.TIME' | translate }}: {{ request.elapsedTime  | date:'m:ss' }} </h6>
+</div>
+

@@ -1,6 +1,15 @@
 <app-shared-table
   [(config)]="config"
   [data]="tableInfos"
-  (editRow)="goToRequest($event)"
+  (editRow)="openSidebar($event)"
   (performAction)="onClickActions($event)"
 ></app-shared-table>
+
+
+<!-- sidebar to request details -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-search-history
+    [request]="selectedRequest">
+  </app-sidebar-search-history>
+</app-sidebar>
+<!-- /sidebar to advanced search -->
