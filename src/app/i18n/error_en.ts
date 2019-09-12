@@ -97,6 +97,11 @@ export const ERROR = {
   },
 
 
+  'COUNTRY': {
+    'ALREADY_ADDED': 'The country has been already added.',
+    'ALREADY_EXCLUDED': 'The country has been already excluded.'
+  },
+
 
   'PRESET': {
     'UPDATED': 'The configuration has been updated.'

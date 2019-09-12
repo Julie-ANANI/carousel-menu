@@ -17,6 +17,6 @@ export const SHARED_TARGETING_WORLD = {
   'PLACEHOLDER': {
     'TO_EXCLUDE_COUNTRY': 'Enter the country name to be excluded',
     'TO_INCLUDE_COUNTRY': 'Enter the country name to be included',
-  }
+  },
 
 };

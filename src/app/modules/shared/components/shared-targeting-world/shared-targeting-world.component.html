@@ -9,8 +9,8 @@
       <div *ngFor="let continent of continents" class="m-right-20">
         <label class="form-checkbox text-sm">
           <input
-            (change)="onChangeContinentInclude($event, continent)"
-            [checked]="checkContinent(continent, 'include')"
+            (change)="onChangeContinent($event, continent)"
+            [checked]="checkContinent(continent)"
             [disabled]="!isEditable"
             [id]="continent"
             [name]="continent"
@@ -25,7 +25,7 @@
   <!-- /continents -->
 
   <!-- include / exclude countries questions -->
-  <div *ngIf="isEditable" class="d-flex flex-wrap stw-incl-excl-country-wrapper">
+  <div class="d-flex flex-wrap stw-incl-excl-country-wrapper">
 
     <!-- include -->
     <div class="stw-country-wrapper">
@@ -40,7 +40,10 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input [config]="autoCompleteConfig('include')"></app-autocomplete-input>
+        <app-autocomplete-input
+          [config]="autoCompleteConfig('include')"
+          (update)="addCountryToInclude($event)">
+        </app-autocomplete-input>
       </div>
 
     </div>
@@ -59,7 +62,10 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input [config]="autoCompleteConfig('exclude')"></app-autocomplete-input>
+        <app-autocomplete-input
+          [config]="autoCompleteConfig('exclude')"
+          (update)="addCountryToExclude($event)">
+        </app-autocomplete-input>
       </div>
 
     </div>
@@ -85,8 +91,8 @@
         <div class="form-group is-continent">
           <label class="form-checkbox">
             <input
-              (change)="onChangeContinentInclude($event, continent)"
-              [checked]="checkContinent(continent, 'include')"
+              (change)="onChangeContinent($event, continent)"
+              [checked]="checkContinent(continent)"
               [disabled]="!isEditable"
               [id]="continent"
               [name]="continent"

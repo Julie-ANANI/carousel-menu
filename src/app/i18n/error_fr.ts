@@ -97,6 +97,12 @@ export const ERROR = {
   },
 
 
+  'COUNTRY': {
+    'ALREADY_ADDED': 'Le pays a déjà été ajouté.',
+    'ALREADY_EXCLUDED': 'Le pays a déjà été exclu.'
+  },
+
+
   'PRESET': {
     'UPDATED': 'Questionnaire mis à jour.'
   },
