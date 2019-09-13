@@ -131,17 +131,17 @@ export class SharedWorldmapComponent implements OnInit{
   private _secondThreshold: number;
 
   /* Initialise continents selections with everything to false */
-  private _continents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
+  private _continents = this._sharedWorldmapService.continentsList.reduce((acc, cont) => {
     acc[cont] = false;
     return acc;
   }, {} as any);
 
   constructor(private _elem: ElementRef,
-              private _worldmap: SharedWorldmapService,
+              private _sharedWorldmapService: SharedWorldmapService,
               private _viewContainerRef: ViewContainerRef) {}
 
   ngOnInit() {
-    this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
+    this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
 
@@ -165,7 +165,7 @@ export class SharedWorldmapComponent implements OnInit{
    */
   public switchWorldCheckbox($event: any): void {
     const worldCheckboxValue = $event.target.checked;
-    SharedWorldmapService.continentsList.forEach((continent) => {
+    this._sharedWorldmapService.continentsList.forEach((continent) => {
       this._continents[continent] = worldCheckboxValue;
     });
   }
@@ -181,7 +181,7 @@ export class SharedWorldmapComponent implements OnInit{
       this._continents[continent] = !this._continents[continent];
       this.updateContinent.emit({
         continents: this._continents,
-        allChecked: SharedWorldmapService.areAllContinentChecked(this._continents)
+        allChecked: this._sharedWorldmapService.areAllContinentChecked(this._continents)
       });
     }
   }
