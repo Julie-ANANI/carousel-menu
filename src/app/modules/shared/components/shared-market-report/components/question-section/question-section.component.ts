@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { QuestionTagsService } from '../../services/question-tags.service';
 
 @Component({
   selector: 'app-question-section',
@@ -65,8 +66,6 @@ export class QuestionSectionComponent implements OnInit {
 
   private _readonly: boolean;
 
-  private _tags: Array<Tag>;
-
   private _stats: {nbAnswers?: number, percentage?: number};
 
   private _showComment: boolean;
@@ -76,7 +75,8 @@ export class QuestionSectionComponent implements OnInit {
               private _location: Location,
               private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _questionTagsService: QuestionTagsService) {
 
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
@@ -114,7 +114,8 @@ export class QuestionSectionComponent implements OnInit {
 
       this._answersToShow = this._responseService.getAnswersToShow(this._answersReceived, this._questionReceived);
 
-      this._tags = ResponseService.getTagsList(this._answersToShow, this.questionReceived);
+      const tags = ResponseService.getTagsList(this._answersToShow, this._questionReceived);
+      this._questionTagsService.answersTagsLists[this._questionReceived._id] = tags;
 
       // filter comments
       switch (this._questionReceived.controlType) {
@@ -219,10 +220,6 @@ export class QuestionSectionComponent implements OnInit {
 
   get stats() {
     return this._stats;
-  }
-
-  get tags() {
-    return this._tags;
   }
 
   get lang(): string {

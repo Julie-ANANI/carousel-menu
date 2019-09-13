@@ -5,7 +5,6 @@
     <ng-container *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
       <app-bar-chart
         [answers]="answersToShow"
-        [tags]="tags"
         [innovation]="innovation"
         [question]="questionReceived"
         [readonly]="readonly"
@@ -26,8 +25,7 @@
           [innovation]="innovation"
           [question]="questionReceived"
           [readonly]="readonly"
-          [stats]="stats"
-          [tags]="tags">
+          [stats]="stats">
         </app-question-conclusion>
       </div>
 

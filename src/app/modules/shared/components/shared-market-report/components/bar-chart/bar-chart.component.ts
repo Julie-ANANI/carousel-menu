@@ -4,7 +4,6 @@ import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
-import { Tag } from '../../../../../../models/tag';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ResponseService } from '../../services/response.service';
@@ -28,8 +27,6 @@ export class BarChartComponent implements OnInit {
     this._answers = value;
     this._updateAnswersData();
   }
-
-  @Input() tags: Array<Tag>;
 
   @Input() question: Question;
 
