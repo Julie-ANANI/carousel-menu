@@ -360,6 +360,21 @@
           </label>
         </div>
       </ng-container>
+
+      <!-- other types -->
+      <ng-container *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox' && question.controlType !== 'radio'">
+        <div class="m-bottom-15">
+          <span class="d-flex align-center">
+            <div style="flex: 1;">
+              <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
+                <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
+                <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+              </a>
+            </div>
+          </span>
+        </div>
+      </ng-container>
+
     </div>
     <!-- /questions filters -->
 
