@@ -21,7 +21,7 @@
         </label>
       </div>
 
-      <div *ngFor="let continent of continents" class="m-right-20">
+      <div *ngFor="let continent of getContinents()" class="m-right-20">
         <label class="form-checkbox text-sm">
           <input
             (change)="onChangeContinent($event, continent)"
@@ -103,7 +103,7 @@
     </div>
 
     <div *ngIf="continents.length > 0">
-      <div *ngFor="let continent of continents" class="stw-modal-continent-wrapper">
+      <div *ngFor="let continent of getContinents()" class="stw-modal-continent-wrapper">
 
         <!-- continents -->
         <div class="form-group is-continent">

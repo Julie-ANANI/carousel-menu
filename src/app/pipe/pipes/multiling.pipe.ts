@@ -1,9 +1,13 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Injectable, Pipe, PipeTransform} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Multiling } from '../../models/multiling';
 
 @Pipe({
   name: 'multiling'
+})
+
+@Injectable({
+  providedIn: 'root',
 })
 
 export class MultilingPipe implements PipeTransform {
