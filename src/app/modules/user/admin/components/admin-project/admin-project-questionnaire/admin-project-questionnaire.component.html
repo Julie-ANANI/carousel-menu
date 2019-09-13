@@ -12,9 +12,12 @@
 
     <div class="column col-11 col-mx-auto" *ngIf="project.preset">
 
-      <p class="text-md" *ngIf="quizLink">
-        Quiz link: <a class="text-link" [href]="quizLink" [innerText]="quizLink" target="_blank"></a>
-      </p>
+      <div class="flex-between">
+        <p class="text-md" *ngIf="quizLink">
+          <a class="text-link" [href]="quizLink" [innerText]="quizLink" target="_blank"></a>
+        </p>
+        <button *ngIf="project.preset" (click)="generateQuiz($event)" class="button is-primary is-outlined">Generate quiz page</button>
+      </div>
 
       <app-shared-preset
         [preset]="project.preset"

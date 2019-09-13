@@ -33,9 +33,20 @@ export class AdminProjectQuestionnaireComponent {
   public savePreset(_preset: Preset): void {
     const project = { preset: this._project.preset };
     this._innovationService.save(this._project._id, project).subscribe((result: any) => {
-      this._notificationService.success('ERROR.SUCCESS', 'ERROR.PRESET.UPDATED');
       this._project = result;
       this.updateQuizLink();
+      this._notificationService.success('ERROR.SUCCESS', 'ERROR.PRESET.UPDATED');
+    });
+  }
+
+  public generateQuiz(event: Event) {
+    event.preventDefault();
+    this._innovationService.createQuiz(this._project._id).subscribe((result: any) => {
+      this._project = result;
+      this.updateQuizLink();
+      this._notificationService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
+    }, (err: any) => {
+      this._notificationService.error('ERROR.ERROR', err.message);
     });
   }
 
