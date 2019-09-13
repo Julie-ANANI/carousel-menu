@@ -3,7 +3,7 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 @Injectable()
 export class SharedWorldmapService {
 
-  private static _continentsList = ['africa', 'asia', 'europe', 'oceania', 'russia', 'americaNord', 'americaSud'];
+  private static _continentsList = ['africa', 'americaNord', 'americaSud', 'asia', 'europe', 'oceania'];
 
   private _countries: {[country: string]: string} = {}; // a mapping of countries -> continent
 

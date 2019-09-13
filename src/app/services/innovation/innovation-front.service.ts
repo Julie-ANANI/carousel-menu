@@ -112,17 +112,9 @@ export class InnovationFrontService {
   */
 
   projectLevel(value: Innovation) {
-    this.projectFieldsRequired = 3;
+    this.projectFieldsRequired = 1;
 
     if (value.external_diffusion !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.projectStatus !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.patented !== null) {
       this.totalFieldsPresent++;
     }
 
@@ -141,10 +133,10 @@ export class InnovationFrontService {
       this.settingsFieldsPresent++;
     }
 
-    if (value.settings.geography.exclude.length || value.settings.geography.comments.length || value.settings.geography.continentTarget.russia
-      || value.settings.geography.continentTarget.oceania || value.settings.geography.continentTarget.europe || value.settings.geography.continentTarget.asia
-      || value.settings.geography.continentTarget.americaSud || value.settings.geography.continentTarget.americaNord
-      || value.settings.geography.continentTarget.africa) {
+    if (value.settings.geography.exclude.length || value.settings.geography.comments.length
+      || value.settings.geography.continentTarget.oceania || value.settings.geography.continentTarget.europe
+      || value.settings.geography.continentTarget.asia  || value.settings.geography.continentTarget.americaSud
+      || value.settings.geography.continentTarget.americaNord || value.settings.geography.continentTarget.africa) {
       this.totalFieldsPresent++;
       this.settingsFieldsPresent++;
     }

@@ -46,11 +46,6 @@ export class SidebarSearchComponent {
       checked: false
     },
     {
-      key: 'russia',
-      name: 'Russia',
-      checked: false
-    },
-    {
       key: 'americaNord',
       name: 'North America',
       checked: false
