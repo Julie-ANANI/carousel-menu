@@ -4,7 +4,6 @@ export interface InnovationSettings {
       readonly africa: boolean;
       readonly oceania: boolean;
       readonly asia: boolean;
-      readonly russia: boolean;
       readonly europe: boolean;
       readonly americaNord: boolean;
       readonly americaSud: boolean;

@@ -1,8 +1,7 @@
 export const COUNTRIES: {[c: string]: Array<string>} = {
   europe: ['AL', 'AD', 'AM', 'AT', 'BY', 'BE', 'BA', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FO', 'FI', 'FR', 'DE', 'GR',
     'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MK', 'MT', 'MD', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES',
-    'SE', 'CH', 'UA', 'UK'],
-  russia: ['RU'],
+    'SE', 'CH', 'UA', 'UK', 'RU'],
   americaNord: ['CA', 'US'],
   asia: ['AF', 'AZ', 'BH', 'BD', 'IO', 'BT', 'KH', 'CN', 'HK', 'GE', 'IN', 'ID', 'IR', 'IQ', 'IL', 'JP', 'JO', 'KZ',
     'KP', 'KR', 'KW', 'KG', 'LA', 'LB', 'MO', 'MY', 'MN', 'MM', 'NP', 'OM', 'PK', 'PH', 'QA', 'SA', 'SG', 'LK', 'TW',

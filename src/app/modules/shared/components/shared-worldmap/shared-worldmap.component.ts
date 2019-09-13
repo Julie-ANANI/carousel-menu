@@ -117,8 +117,7 @@ export class SharedWorldmapComponent implements OnInit{
       americaSud: false,
       asia: false,
       europe: false,
-      oceania: false,
-      russia: false
+      oceania: false
     };
   }
 

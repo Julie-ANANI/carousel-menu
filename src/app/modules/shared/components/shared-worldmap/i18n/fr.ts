@@ -4,6 +4,5 @@ export const CONTINENTS = {
   'americaSud': 'Amérique du Sud',
   'asia': 'Asie',
   'europe': 'Europe',
-  'oceania': 'Oceanie',
-  'russia': 'Russie'
+  'oceania': 'Oceanie'
 };

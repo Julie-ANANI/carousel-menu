@@ -141,10 +141,10 @@ export class InnovationFrontService {
       this.settingsFieldsPresent++;
     }
 
-    if (value.settings.geography.exclude.length || value.settings.geography.comments.length || value.settings.geography.continentTarget.russia
-      || value.settings.geography.continentTarget.oceania || value.settings.geography.continentTarget.europe || value.settings.geography.continentTarget.asia
-      || value.settings.geography.continentTarget.americaSud || value.settings.geography.continentTarget.americaNord
-      || value.settings.geography.continentTarget.africa) {
+    if (value.settings.geography.exclude.length || value.settings.geography.comments.length
+      || value.settings.geography.continentTarget.oceania || value.settings.geography.continentTarget.europe
+      || value.settings.geography.continentTarget.asia  || value.settings.geography.continentTarget.americaSud
+      || value.settings.geography.continentTarget.americaNord || value.settings.geography.continentTarget.africa) {
       this.totalFieldsPresent++;
       this.settingsFieldsPresent++;
     }
