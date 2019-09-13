@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 import { SharedTargetingWorldInterface } from './interfaces/shared-targeting-world-interface';
 import { IndexService } from '../../../../services/index/index.service';
@@ -12,10 +12,9 @@ import { TranslateNotificationsService } from '../../../../services/notification
   styleUrls: ['./shared-targeting-world.component.scss']
 })
 
-export class SharedTargetingWorldComponent implements OnInit {
+export class SharedTargetingWorldComponent {
 
   @Input() set continentsConfiguration(value: any) {
-    console.log(value);
     this._initializeContinents(value);
   }
 
@@ -27,36 +26,20 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   continents: Array<string> = SharedWorldmapService.continentsList;
 
+  allCountries: Array<Country> = [];
+
+  continentCountries: {[continent: string]: Array<Country>} = {};
+
   showModal: boolean = false;
 
   targetingWorldData: SharedTargetingWorldInterface = {
     includeContinents: [],
-    includeCountries: [],
-    excludeCountries: []
+    includeCountries: []
   };
-
-  allCountries: Array<Country> = [];
-
-  africaCountries: Array<Country> = [];
-
-  asiaCountries: Array<Country> = [];
-
-  russiaCountries: Array<Country> = [];
-
-  europeCountries: Array<Country> = [];
-
-  oceaniaCountries: Array<Country> = [];
-
-  northAmericaCountries: Array<Country> = [];
-
-  southAmericaCountries: Array<Country> = [];
 
   constructor(private _indexService: IndexService,
               private _translateNotificationService: TranslateNotificationsService) {
     this._getAllCountries();
-  }
-
-  ngOnInit() {
   }
 
   private _getAllCountries() {
@@ -71,25 +54,26 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   private _allContinentsCountries() {
-    if (this.allCountries.length > 0 && this.continents.length > 0 ) {
-      this.allCountries.forEach((country) => {
-        if (country.continent.toLowerCase() === 'asia') {
-          this.asiaCountries.push(country)
-        } else if (country.continent.toLowerCase() === 'africa') {
-          this.africaCountries.push(country)
-        } else if (country.continent.toLowerCase() === 'europe') {
-          this.europeCountries.push(country)
-        } else if (country.continent.toLowerCase() === 'oceania') {
-          this.oceaniaCountries.push(country)
-        } else if (country.continent.toLowerCase() === 'americas' && country.subcontinent.toLowerCase() === 'northern america') {
-          this.northAmericaCountries.push(country)
-        } else if (country.continent.toLowerCase() === 'americas' && country.subcontinent.toLowerCase() === 'south america' || 'caribbean') {
-          this.southAmericaCountries.push(country)
-        } else if (country.continent.toLowerCase() === 'russia') {
-          this.russiaCountries.push(country)
+    this.continentCountries = this.allCountries.reduce((acc, country) => {
+      const continent_name = country.continent.toLowerCase();
+
+      if (continent_name === 'americas') {
+        const subcontinent_name = country.subcontinent.toLowerCase();
+
+        if (subcontinent_name === 'northern america') {
+          acc['americaNord'].push(country);
+        } else {
+          acc['americaSud'].push(country);
         }
-      });
-    }
+
+      } else {
+        acc[continent_name].push(country);
+      }
+
+      return acc;
+
+      }, { 'africa': [], 'americaNord': [], 'americaSud': [], 'antarctic': [], 'asia': [], 'europe': [], 'oceania': [] } );
+
   }
 
   private _initializeContinents(value: any) {
@@ -104,23 +88,13 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _countriesToInclude() {
     this.targetingWorldData.includeCountries = [];
-
-    if (this.targetingWorldData.includeContinents.length > 0) {
-      this.targetingWorldData.includeContinents.forEach((continent) => {
-        this.targetingWorldData.includeCountries.push(...this._getCountriesByContinent(continent));
-      });
-    }
-
+    this.targetingWorldData.includeContinents.forEach((continent) => {
+      this.targetingWorldData.includeCountries.push(...this.getCountriesByContinent(continent));
+    });
   }
 
-  private _getCountriesByContinent(continent: string): Array<Country> {
-    if (continent === 'americaNord') {
-      return this.northAmericaCountries;
-    } else if (continent === 'americaSud') {
-      return this.southAmericaCountries
-    } else {
-      return this.allCountries.filter((country) => country.continent.toLowerCase() === continent.toLowerCase());
-    }
+  public getCountriesByContinent(continent_name: string): Array<Country> {
+    return this.continentCountries[continent_name];
   }
 
   public autoCompleteConfig(type: string): any {
@@ -141,11 +115,35 @@ export class SharedTargetingWorldComponent implements OnInit {
     }
   }
 
+  public onChangeSelectAll(event: Event) {
+    if (this.isEditable) {
+      if ((event.target as HTMLInputElement).checked) {
+
+        const values = this.continents.reduce((acc, continent) => {
+          acc[continent] = true;
+          return acc;
+        }, {} as any);
+
+        this._initializeContinents(values);
+        this._countriesToInclude();
+
+      } else {
+        this.targetingWorldData.includeCountries = [];
+        this.targetingWorldData.includeContinents = [];
+      }
+      this._emitChanges();
+    }
+  }
+
+  public checkSelectAll(): boolean {
+    return this.targetingWorldData.includeContinents.length === this.continents.length;
+  }
+
   public onChangeContinent(event: Event, continent: string) {
     if (this.isEditable) {
       if ((event.target as HTMLInputElement).checked) {
         this.targetingWorldData.includeContinents.push(continent);
-        this.targetingWorldData.includeCountries.push(...this._getCountriesByContinent(continent));
+        this.targetingWorldData.includeCountries.push(...this.getCountriesByContinent(continent));
       } else {
         this.targetingWorldData.includeContinents = this.targetingWorldData.includeContinents.filter((value) => value !== continent);
         this._countriesToInclude();
@@ -158,21 +156,34 @@ export class SharedTargetingWorldComponent implements OnInit {
     return this.targetingWorldData.includeContinents.some((value) => value === continent);
   }
 
+  public openModal(event: Event) {
+    event.preventDefault();
+    this.showModal = true;
+  }
+
   public addCountryToInclude(event: { value: Array<Country> }) {
-    event.value.forEach((country: Country) => {
-      if(!this.targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
-        this.targetingWorldData.includeCountries.push(this._getCountryByName(country.name));
-        this._emitChanges();
-      } else {
-        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.COUNTRY.ALREADY_ADDED');
-      }
-    });
+    if (this.isEditable) {
+      event.value.forEach((country: Country) => {
+        if(!this.targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
+          this.targetingWorldData.includeCountries.push(this._getCountryByName(country.name));
+          this._emitChanges();
+        }
+      });
+    }
+  }
+
+  private _getCountryByName(searchName: string): Country {
+    return this.allCountries.find((countries) => countries.name.toLowerCase() === searchName.toLowerCase());
+  }
+
+  public removeCountry(event: {value: Country}) {
+    this._filterIncludedCountries(event.value);
   }
 
   public addCountryToExclude(event: { value: Array<Country> }) {
     event.value.forEach((country: Country) => {
-      if(!this.targetingWorldData.excludeCountries.some((existedCountry) => existedCountry.name === country.name)) {
-        this.targetingWorldData.excludeCountries.push(this._getCountryByName(country.name));
+      if(this.targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
+        this._filterIncludedCountries(country);
         this._emitChanges();
       } else {
         this._translateNotificationService.error('ERROR.ERROR', 'ERROR.COUNTRY.ALREADY_EXCLUDED');
@@ -180,32 +191,31 @@ export class SharedTargetingWorldComponent implements OnInit {
     });
   }
 
-  public openModal(event: Event) {
-    event.preventDefault();
-    this.showModal = true;
-  }
-
   private _emitChanges() {
-    console.log(this.targetingWorldData);
     this.targetingDataChanged.emit(this.targetingWorldData);
   }
 
-  private _getCountryByName(searchName: string): Country {
-    return this.allCountries.find((countries) => countries.name.toLowerCase() === searchName.toLowerCase());
+  public getFlagSrc(code: string): string {
+    return `https://res.cloudinary.com/umi/image/upload/c_fill,h_60,w_60/app/flags/${code}.png`;
+  }
+
+  public onChangeCountry(event: Event, country: Country, continent: string) {
+    if (this.isEditable) {
+      if ((event.target as HTMLInputElement).checked) {
+        this.targetingWorldData.includeCountries.push(country);
+      } else {
+        this._filterIncludedCountries(country);
+      }
+      this._emitChanges();
+    }
+  }
+
+  private _filterIncludedCountries(country: Country) {
+    this.targetingWorldData.includeCountries = this.targetingWorldData.includeCountries.filter((value) => value.name !== country.name);
+  }
+
+  public checkCountry(country: Country): boolean {
+    return this.targetingWorldData.includeCountries.some((value) => value.name === country.name);
   }
 
 }
-
-/*  public onChangeContinentExclude(event: Event, continent: string) {
-    if (this.isEditable) {
-
-      if ((event.target as HTMLInputElement).checked) {
-        this.targetingWorldData.excludeContinents.push(continent)
-      } else {
-        this.targetingWorldData.excludeContinents = this.targetingWorldData.excludeContinents.filter((value) => value !== continent);
-      }
-
-      this._emitChanges();
-    }
-    console.log(this.targetingWorldData);
-  }*/

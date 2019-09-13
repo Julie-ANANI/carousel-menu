@@ -13,7 +13,7 @@ import { ModalModule } from '../../../utility-components/modals/modal/modal.modu
     CommonModule,
     TranslateModule.forChild(),
     AutocompleteInputModule,
-    ModalModule
+    ModalModule,
   ],
   declarations: [
     SharedTargetingWorldComponent

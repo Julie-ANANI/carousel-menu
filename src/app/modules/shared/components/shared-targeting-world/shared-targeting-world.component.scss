@@ -33,10 +33,35 @@
         &.is-continent {
           border-bottom: $border-width solid $border-color;
           padding-bottom: $unit-o;
+          margin-bottom: 0.75rem;
 
           .form-checkbox {
             font-weight: $font-weight-medium;
             font-size: 0.85rem;
+          }
+
+        }
+
+      }
+
+      .country-list-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -1rem;
+        margin-bottom: -1rem;
+
+        .card {
+          border: none;
+
+          .avatar {
+            width: 1.5rem;
+            height: 1.5rem;
+
+            img {
+              width: 1.5rem;
+              border: 1px solid $border-color;
+            }
+
           }
 
         }

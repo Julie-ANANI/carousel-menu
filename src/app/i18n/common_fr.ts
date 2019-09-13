@@ -129,6 +129,7 @@ export const COMMON = {
     'TYPE': 'Type',
     'SELECT_WORKFLOW': 'Sélectionner le workflow',
     'SELECT': 'Sélectionnez',
+    'SELECT_ALL': 'Sélectionner tout',
     'CHOOSE_LANGUAGE': 'Sélectionnez la langue :',
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
