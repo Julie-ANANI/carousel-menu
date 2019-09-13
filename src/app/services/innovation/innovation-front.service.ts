@@ -112,17 +112,9 @@ export class InnovationFrontService {
   */
 
   projectLevel(value: Innovation) {
-    this.projectFieldsRequired = 3;
+    this.projectFieldsRequired = 1;
 
     if (value.external_diffusion !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.projectStatus !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.patented !== null) {
       this.totalFieldsPresent++;
     }
 

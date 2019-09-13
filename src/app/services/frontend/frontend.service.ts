@@ -12,6 +12,7 @@ export interface Values {
 
 @Injectable()
 export class FrontendService {
+
   totalFieldsPresent: number;
   totalFieldsRequired: number;
 
@@ -72,17 +73,9 @@ export class FrontendService {
   */
 
   projectLevel(value: Innovation) {
-    this.projectFieldsRequired = 3;
+    this.projectFieldsRequired = 1;
 
     if (value.external_diffusion !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.projectStatus !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.patented !== null) {
       this.totalFieldsPresent++;
     }
 

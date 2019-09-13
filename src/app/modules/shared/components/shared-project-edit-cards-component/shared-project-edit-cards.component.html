@@ -302,103 +302,10 @@
 
             </div>
 
-            <!-- status -->
-            <div [ngStyle]="{ 'padding-top': canEdit ? '3.5rem' : '1.75rem' }">
-
-              <span class="shape is-rounded bg-draft">6</span>
-              <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.STAGE' | translate }}</span>
-
-              <ng-container *ngIf="!canEdit">
-                <div class="pd-input text">
-                  <p *ngIf="innovation.projectStatus === 0">{{ 'COMMON.PROJECT_STATUS.0' | translate }}</p>
-                  <p *ngIf="innovation.projectStatus === 1">{{ 'COMMON.PROJECT_STATUS.1' | translate }}</p>
-                  <p *ngIf="innovation.projectStatus === 2">{{ 'COMMON.PROJECT_STATUS.2' | translate }}</p>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="form-group pd-input">
-
-                  <label class="form-radio is-inline">
-                    <input
-                      type="radio"
-                      name="projectStatus"
-                      [(ngModel)]="innovation.projectStatus"
-                      [value]="0"
-                      (change)="notifyChanges()">
-                    <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
-                  </label>
-
-                  <label class="form-radio is-inline">
-                    <input
-                      type="radio"
-                      name="projectStatus"
-                      [(ngModel)]="innovation.projectStatus"
-                      [value]="1"
-                      (change)="notifyChanges()">
-                    <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
-                  </label>
-
-                  <label class="form-radio is-inline">
-                    <input
-                      type="radio"
-                      name="projectStatus"
-                      [(ngModel)]="innovation.projectStatus"
-                      [value]="2"
-                      (change)="notifyChanges()">
-                    <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
-                  </label>
-
-                </div>
-              </ng-container>
-
-            </div>
-
-            <!-- protected -->
-            <div class="project-data">
-
-              <span class="shape is-rounded bg-draft">7</span>
-              <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.PATENTED.LABEL' | translate }}</span>
-
-              <ng-container *ngIf="!canEdit">
-                <div class="pd-input text">
-                  <p *ngIf="innovation.patented === false">{{ 'COMMON.NO' | translate }}</p>
-                  <p *ngIf="innovation.patented === true">{{ 'COMMON.YES' | translate }}</p>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="form-group pd-input">
-
-                  <label class="form-radio is-inline">
-                    <input
-                      type="radio"
-                      name="patented"
-                      [(ngModel)]="innovation.patented"
-                      [value]="false"
-                      (change)="notifyChanges()">
-                    <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
-                  </label>
-
-                  <label class="form-radio is-inline">
-                    <input
-                      type="radio"
-                      name="patented"
-                      [(ngModel)]="innovation.patented"
-                      [value]="true"
-                      (change)="notifyChanges()">
-                    <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
-                  </label>
-
-                </div>
-              </ng-container>
-
-            </div>
-
             <!-- diffusion -->
             <div class="project-data">
 
-              <span class="shape is-rounded bg-draft">8</span>
+              <span class="shape is-rounded bg-draft">6</span>
               <span class="text text-question">
                   {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.A' | translate }} {{ companyName }} {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.B' | translate }}
                 </span>
@@ -449,7 +356,7 @@
       <div *ngIf="selectedCardIndex === i">
         <div class="project-data">
 
-          <span class="shape is-rounded bg-draft">9</span>
+          <span class="shape is-rounded bg-draft">7</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }}</span>
           <span class="text text-notify sub-label"> {{ 'SHARED_PROJECT_EDIT.MEDIA.SUB_LABEL' | translate }}</span>
 

@@ -65,10 +65,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
   }
 
-  public generateComponentId(postfix: string): string {
-    return `${this.innovation._id}_${postfix}`;
-  }
-
 
   /***
    * this function is to notify all the changes that the user made

@@ -51,9 +51,7 @@ export interface Innovation {
 
   feedback?: string;
   thanks?: boolean;
-  projectStatus?: number;
   readonly reviewing?: any;
-  patented?: boolean;
   isPublic?: boolean;
   external_diffusion?: boolean;
   readonly launched?: Date;
