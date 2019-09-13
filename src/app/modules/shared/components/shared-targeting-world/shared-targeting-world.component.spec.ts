@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SharedTargetingWorldComponent } from './shared-targeting-world.component';
 
-describe('SharedTargetingDetailComponent', () => {
+describe('SharedTargetingWorldComponent', () => {
   let component: SharedTargetingWorldComponent;
   let fixture: ComponentFixture<SharedTargetingWorldComponent>;
 

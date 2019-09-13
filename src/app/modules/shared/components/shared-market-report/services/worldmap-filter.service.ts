@@ -7,13 +7,12 @@ export class WorldmapFiltersService {
 
   private _selectedContinents: {[c: string]: boolean};
 
-  constructor(private filterService: FilterService,
-              private _sharedWorldmapService: SharedWorldmapService) {
+  constructor(private filterService: FilterService) {
     this.reset();
   }
 
   public reset() {
-    this._selectedContinents = this._sharedWorldmapService.continentsList.reduce((acc, cont) => {
+    this._selectedContinents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
       acc[cont] = true;
       return acc;
     }, {} as {[c: string]: boolean});
@@ -21,7 +20,7 @@ export class WorldmapFiltersService {
 
   public selectContinent(continent: string, value: boolean) {
     this._selectedContinents[continent] = value;
-    const remove = this._sharedWorldmapService.areAllContinentChecked(this._selectedContinents);
+    const remove = SharedWorldmapService.areAllContinentChecked(this._selectedContinents);
     if (!remove) {
       this.filterService.addFilter(
         {

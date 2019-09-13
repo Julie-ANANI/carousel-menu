@@ -85,7 +85,6 @@ export class SidebarComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _filterService: FilterService,
               private _innovationService: InnovationService,
-              private _sharedWorldmapService: SharedWorldmapService,
               private _tagService: TagsFiltersService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _worldmapFilterService: WorldmapFiltersService,
@@ -378,7 +377,7 @@ export class SidebarComponent implements OnInit {
   }
 
   get continentsList(): Array<string> {
-    return this._sharedWorldmapService.continentsList;
+    return SharedWorldmapService.continentsList;
   }
 
   get filteredContinents() {

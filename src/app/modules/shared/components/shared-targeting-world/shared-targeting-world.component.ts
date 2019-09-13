@@ -24,7 +24,7 @@ export class SharedTargetingWorldComponent {
 
   @Output() targetingDataChanged: EventEmitter<SharedTargetingWorldInterface> = new EventEmitter<SharedTargetingWorldInterface>();
 
-  continents: Array<string> = this._sharedWorldmapService.continentsList;
+  continents: Array<string> = SharedWorldmapService.continentsList;
 
   allCountries: Array<Country> = [];
 
@@ -38,7 +38,6 @@ export class SharedTargetingWorldComponent {
   };
 
   constructor(private _indexService: IndexService,
-              private _sharedWorldmapService: SharedWorldmapService,
               private _translateNotificationService: TranslateNotificationsService) {
     this._getAllCountries();
   }
