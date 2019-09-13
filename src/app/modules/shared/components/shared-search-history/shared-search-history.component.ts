@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 import { Config } from "../../../../models/config";
 import { Table } from '../../../table/models/table';
 import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
+import { COUNTRIES } from "../shared-search-pros/COUNTRIES";
+import { countries } from '../../../../models/static-data/country';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -26,7 +28,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _total = 0;
   private _googleQuota = 30000;
   private _config: Config = {
-    fields: 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results',
+    fields: 'entity keywords oldKeywords created country elapsedTime status countries cost flag campaign motherRequest totalResults metadata results',
     limit: "10",
     offset: "0",
     search: "{}",
@@ -67,6 +69,23 @@ export class SharedSearchHistoryComponent implements OnInit {
           this._requests = result.requests.map((request: any) => {
             request.keywords = request.keywords || request.oldKeywords[0].original;
             request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
+            if (request.countries && request.countries.length) {
+              request.targetting = "";
+              const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
+              request.countries.forEach((country: string) => {
+                if (COUNTRIES.europe.indexOf(country) != - 1) counter.EU++;
+                else if (COUNTRIES.americaNord.indexOf(country) != - 1) counter.NA++;
+                else if (COUNTRIES.americaSud.indexOf(country) != - 1) counter.SA++;
+                else if (COUNTRIES.asia.indexOf(country) != - 1) counter.AS++;
+                else if (COUNTRIES.africa.indexOf(country) != - 1) counter.AF++;
+                else if (COUNTRIES.oceania.indexOf(country) != - 1) counter.OC++;
+              });
+              for (let key of Object.keys(counter)) {
+                if (counter[key]) request.targetting += ` ${key}(${counter[key]})`;
+              }
+            } else if (request.country) {
+              request.targetting = countries[request.country];
+            }
             return request;
           });
         }
@@ -94,7 +113,7 @@ export class SharedSearchHistoryComponent implements OnInit {
             {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
             {_attrs: ['pros'], _name: '', _type: 'TEXT', _isSearchable: false, _isSortable: false},
             {_attrs: ['metadata.user.name'], _name: 'PROJECT_LIST.OPERATOR', _type: 'TEXT', _isSearchable: false, _isSortable: false},
-            {_attrs: ['country'], _name: 'SEARCH.HISTORY.TARGETTING', _type: 'COUNTRY', _enableTooltip: false},
+            {_attrs: ['targetting'], _name: 'SEARCH.HISTORY.TARGETTING', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
             {_attrs: ['status'], _name: 'SEARCH.HISTORY.STATUS', _type: 'MULTI-CHOICES', _choices: [
               {_name: 'DONE', _alias: 'SEARCH.HISTORY.DONE', _class: 'label is-success'},
