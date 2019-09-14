@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,12 +8,52 @@ import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 
 @Component({
   moduleId: module.id,
-  selector: 'app-autocomplete-input',
-  templateUrl: './autocomplete-input.component.html',
-  styleUrls: ['./autocomplete-input.component.scss']
+  selector: 'app-auto-complete-input',
+  templateUrl: './auto-complete-input.component.html',
+  styleUrls: ['./auto-complete-input.component.scss']
 })
 
-export class AutocompleteInputComponent implements OnInit {
+export class AutoCompleteInputComponent {
+
+  @Input() tempActive: boolean = true; // its temp don't use it.
+
+  @Input() isEditable: boolean = true; // false: will disable it.
+
+  @Input() isShowable: boolean = true; // false: to hide the input field.
+
+  @Input() isShowButton: boolean = true; // false: to hide the button.
+
+  @Input() isAdmin: boolean = false;
+
+  @Input() set config(config: { placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean }) {
+    if (config) {
+
+      this._identifier = config.identifier || 'name';
+      this._canOrder = config.canOrder || false;
+      this._placeholder = config.placeholder || 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
+      this._autocompleteType = config.type || '';
+
+      if (config.initialData && Array.isArray(config.initialData)) {
+        this.answerList = [];
+
+        config.initialData.forEach(value => {
+          if (this.answerList.findIndex(t => {
+            return t === value;
+          }) === -1) {
+            this.answerList.push(value);
+          }
+        });
+      }
+
+    }
+  }
+
+  @Output() update = new EventEmitter<any>();
+
+  @Output() add = new EventEmitter<any>();
+
+  @Output() remove = new EventEmitter<any>();
+
 
   @Input() canEdit = true;
 
@@ -27,32 +67,11 @@ export class AutocompleteInputComponent implements OnInit {
 
   @Input() addButton = true; // this is to add the plus button.
 
-  @Input() set config(config: { placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean }) {
-    if (config) {
-      this._identifier = config.identifier || 'name';
-      this._canOrder = config.canOrder || false;
-      this._placeholder = config.placeholder || '';
-      this._autocompleteType = config.type || '';
-      if (config.initialData && Array.isArray(config.initialData)) {
-        this.answerList = [];
-        config.initialData.forEach(val => {
-          if (this.answerList.findIndex(t => {
-            return t === val;
-          }) === -1) {
-            this.answerList.push(val);
-          }
-        });
-      }
-    }
-  }
 
-  @Output() update = new EventEmitter<any>();
 
-  @Output() add = new EventEmitter<any>();
 
-  @Output() remove = new EventEmitter<any>();
 
-  inputForm: FormGroup;
+  autoCompleteInputForm: FormGroup;
 
   companyName: FormControl = new FormControl();
 
@@ -60,27 +79,29 @@ export class AutocompleteInputComponent implements OnInit {
 
   answer = '';
 
-  private _placeholder = '';
+  private _placeholder: string;
 
-  private _autocompleteType = '';
+  private _autocompleteType: string;
 
   private _identifier: string;
 
   private _canOrder: boolean;
 
-  constructor(private _fbuilder: FormBuilder,
-              private _sanitizer: DomSanitizer,
-              private _autocompleteService: AutocompleteService,
-              private _multiling: MultilingPipe,
-              private _translateService: TranslateService) {}
+  private _customAnswerList: Array<any> = [];
 
-  ngOnInit() {
-    this.inputForm = this._fbuilder.group({
-      answer : '',
+  constructor(private _formBuilder: FormBuilder,
+              private _domSanitizer: DomSanitizer,
+              private _autocompleteService: AutocompleteService,
+              private _multilingPipe: MultilingPipe,
+              private _translateService: TranslateService) {
+
+    this.autoCompleteInputForm = this._formBuilder.group({
+      answer: '',
     });
+
   }
 
-  suggestions(query: any): Observable<Array<{name: string, domain: string, flag: string}>> {
+  public suggestions(query: any): Observable<Array<{name: string, domain: string, flag: string}>> {
     const queryConf = {
       query: query,
       type: this._autocompleteType
@@ -88,14 +109,14 @@ export class AutocompleteInputComponent implements OnInit {
     return this._autocompleteService.get(queryConf);
   }
 
-  autocompleteListFormatter(data: any): SafeHtml {
-    const text = this.autocompleteValueFormatter(data);
-    return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
+  public autocompleteListFormatter(data: any): SafeHtml {
+    const text = this._autocompleteValueFormatter(data);
+    return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   }
 
-  autocompleteValueFormatter(data: any): string {
+  private _autocompleteValueFormatter(data: any): string {
     if (this.multiLangObjects) {
-      return this._multiling.transform(data[this._identifier], this._translateService.currentLang);
+      return this._multilingPipe.transform(data[this._identifier], this._translateService.currentLang);
     } else {
       return data[this._identifier];
     }
@@ -115,7 +136,7 @@ export class AutocompleteInputComponent implements OnInit {
         } else {
           this.answerList.push(val);
         }
-        this.inputForm.get('answer').setValue('');
+        this.autoCompleteInputForm.get('answer').setValue('');
         this.update.emit({value: this.answerList});
       }
     }
@@ -124,7 +145,7 @@ export class AutocompleteInputComponent implements OnInit {
     if (typeof val === 'string') {
       val = {[this._identifier]: val};
     } else if (this.multiLangObjects) {
-      val.name = this._multiling.transform(val.name, this._translateService.currentLang);
+      val.name = this._multilingPipe.transform(val.name, this._translateService.currentLang);
     }
 
     if (val && this.answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
@@ -133,7 +154,7 @@ export class AutocompleteInputComponent implements OnInit {
       } else {
         this.answerList.push(val);
       }
-      this.inputForm.get('answer').setValue('');
+      this.autoCompleteInputForm.get('answer').setValue('');
       this.update.emit({value: this.answerList});
       this.add.emit({value: val});
     }
@@ -162,11 +183,10 @@ export class AutocompleteInputComponent implements OnInit {
 
   }
 
-  rmProposition(event: Event, i: number): void {
-    event.preventDefault();
-    const val = this.answerList.splice(i, 1).pop();
-    this.update.emit({value: this.answerList});
-    this.remove.emit({value: val});
+  public removeProposition(index: number) {
+    const val = this.answerList.splice(index, 1).pop();
+    this.update.emit({ value: this.answerList });
+    this.remove.emit({ value: val });
   }
 
   thumbsUp(event: Event, index: number): void {
@@ -202,6 +222,10 @@ export class AutocompleteInputComponent implements OnInit {
     this.update.emit({value: this.answerList});
   }
 
+  get canAdd(): boolean {
+    return this.autoCompleteInputForm.get('answer').value && (!this.onlyOne || this.answerList.length === 0);
+  }
+
   get placeholder(): string {
     return this._placeholder;
   }
@@ -214,8 +238,8 @@ export class AutocompleteInputComponent implements OnInit {
     return this._canOrder;
   }
 
-  get canAdd(): boolean {
-    return this.inputForm.get('answer').value && (!this.onlyOne || this.answerList.length === 0);
+  get customAnswerList(): Array<any> {
+   return this._customAnswerList;
   }
 
 }

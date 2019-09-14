@@ -1,20 +1,83 @@
-<section>
+<div *ngIf="!tempActive" id="auto-complete-input">
+  <form [formGroup]="autoCompleteInputForm" (ngSubmit)="addProposition(autoCompleteInputForm)" novalidate>
 
-  <form [formGroup]="inputForm" (ngSubmit)="addProposition(inputForm)">
+    <!-- input area -->
+    <div *ngIf="isShowable" class="aci-input-wrapper">
+
+      <label class="m-right-2">
+        <input
+          [attr.placeholder]="placeholder | translate"
+          [display-property-name]="identifier"
+          [list-formatter]="autocompleteListFormatter.bind(this)"
+          [source]="suggestions.bind(this)"
+          auto-complete
+          class="form-input"
+          formControlName="answer"
+          value-property-name="id">
+      </label>
+
+      <button
+        *ngIf="isShowButton"
+        [disabled]="!canAdd || !isEditable"
+        class="button is-action is-circled is-primary is-shadowed p-no">
+        <i class="icon icon-plus"></i>
+      </button>
+
+    </div>
+    <!-- /input area -->
+
+    <!-- answer area -->
+    <ul *ngIf="answerList.length > 0" class="aci-answers-wrapper">
+      <li *ngFor="let answer of answerList; let i = index">
+
+        <!-- text -->
+        <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2">
+          <span [innerHTML]="answer[identifier]"></span>
+        </div>
+        <!-- text -->
+
+        <!-- icons -->
+        <div class="aci-icons-wrapper">
+
+          <!-- delete icon -->
+          <div (click)="removeProposition(i)" class="icon-container m-no-right is-overlay">
+            <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
+              <i class="icon icon-delete text-alert"></i>
+            </span>
+          </div>
+
+        </div>
+        <!-- /icons -->
+
+      </li>
+    </ul>
+    <!-- /answer area -->
+
+
+  </form>
+</div>
+
+
+
+
+<!-- todo remove this -->
+<div *ngIf="tempActive">
+
+  <form [formGroup]="autoCompleteInputForm" (ngSubmit)="addProposition(autoCompleteInputForm)">
 
     <ng-container *ngIf="canEdit">
       <div class="flex-between input-form">
 
         <label class="m-right-2" style="width: 80%">
           <input
-            auto-complete
-            formControlName="answer"
+            [attr.placeholder]="placeholder | translate"
+            [display-property-name]="identifier"
             [list-formatter]="autocompleteListFormatter.bind(this)"
             [source]="suggestions.bind(this)"
-            value-property-name="id"
-            [display-property-name]="identifier"
-            [attr.placeholder]="placeholder | translate"
-            class="form-input">
+            auto-complete
+            class="form-input"
+            formControlName="answer"
+            value-property-name="id">
         </label>
 
         <button *ngIf="addButton" class="btn btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
@@ -36,7 +99,7 @@
           <i class="fas fa-angle-down" aria-label="Down" role="button" (click)="down($event, i)"></i>
         </ng-container>
 
-        <a class="delete" aria-label="Close" role="button" (click)="rmProposition($event, i)">
+        <a class="delete" aria-label="Close" role="button" (click)="removeProposition(i)">
           <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
         </a>
 
@@ -93,7 +156,7 @@
 
         <i class="fas fa-thumbs-down" [ngClass]="{'active': answer.rating === 0}" (click)="thumbsDown($event, i)"></i>
 
-        <a class="delete" aria-label="Close" role="button" (click)="rmProposition($event, i)">
+        <a class="delete" aria-label="Close" role="button" (click)="removeProposition(i)">
           <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
         </a>
 
@@ -102,7 +165,7 @@
 
   </ul>
 
-</section>
+</div>
 
 <!--<div id="autocomplete-input">
   <form [formGroup]="autoCompleteForm" (ngSubmit)="addProposition(autoCompleteForm)" novalidate>

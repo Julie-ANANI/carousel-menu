@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { AutocompleteInputComponent } from './autocomplete-input.component';
+import { AutoCompleteInputComponent } from './auto-complete-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NguiAutoCompleteModule } from '../auto-complete/auto-complete.module';
@@ -16,11 +16,11 @@ import { NguiAutoCompleteModule } from '../auto-complete/auto-complete.module';
     RouterModule
   ],
   declarations: [
-    AutocompleteInputComponent
+    AutoCompleteInputComponent
   ],
   exports: [
-    AutocompleteInputComponent
+    AutoCompleteInputComponent
   ]
 })
 
-export class AutocompleteInputModule {}
+export class AutoCompleteInputModule {}

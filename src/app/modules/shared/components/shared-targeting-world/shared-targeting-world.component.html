@@ -56,11 +56,12 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input
+        <app-auto-complete-input
+          [tempActive]="false"
           [config]="autoCompleteConfig('include')"
           (update)="addCountryToInclude($event)"
-          (remove)="removeCountry($event)">
-        </app-autocomplete-input>
+          (remove)="removeIncludedCountry($event)">
+        </app-auto-complete-input>
       </div>
 
     </div>
@@ -79,10 +80,12 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input
+        <app-auto-complete-input
+          [tempActive]="false"
           [config]="autoCompleteConfig('exclude')"
-          (update)="addCountryToExclude($event)">
-        </app-autocomplete-input>
+          (update)="addCountryToExclude($event)"
+          (remove)="removeExcludedCountry($event)">
+        </app-auto-complete-input>
       </div>
 
     </div>
@@ -128,7 +131,7 @@
 
               <label class="form-checkbox p-no-right">
                 <input
-                  (change)="onChangeCountry($event, country, continent)"
+                  (change)="onChangeCountry($event, country)"
                   [checked]="checkCountry(country)"
                   [disabled]="!isEditable"
                   [id]="country.name"

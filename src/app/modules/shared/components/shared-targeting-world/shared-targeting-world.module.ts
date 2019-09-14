@@ -4,15 +4,14 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedTargetingWorldComponent } from './shared-targeting-world.component';
 
-import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
+import { AutoCompleteInputModule } from '../../../utility-components/auto-complete-input/auto-complete-input.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
-
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    AutocompleteInputModule,
+    AutoCompleteInputModule,
     ModalModule,
   ],
   declarations: [

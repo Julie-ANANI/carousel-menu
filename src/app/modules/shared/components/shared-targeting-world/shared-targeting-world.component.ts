@@ -15,8 +15,13 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class SharedTargetingWorldComponent {
 
+  @Input() set excludeCountries(value: Array<Country>) {
+    this._excludeCountries = value;
+  }
+
   @Input() set continentsConfiguration(value: any) {
     this._initializeContinents(value);
+    this._getAllCountries();
   }
 
   @Input() isEditable: boolean = true;
@@ -38,17 +43,18 @@ export class SharedTargetingWorldComponent {
     includeCountries: []
   };
 
+  private _excludeCountries: Array<Country> = [];
+
   constructor(private _indexService: IndexService,
               private _translateService: TranslateService,
-              private _translateNotificationService: TranslateNotificationsService) {
-    this._getAllCountries();
-  }
+              private _translateNotificationService: TranslateNotificationsService) { }
 
   private _getAllCountries() {
     this._indexService.getWholeSet({ type: 'countries' }).subscribe((response: Response) => {
       this._allCountries = response.result;
       this._allContinentsCountries();
       this._countriesToInclude();
+      this._countriesToExclude();
       this._emitChanges();
     }, () => {
       this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
@@ -95,6 +101,40 @@ export class SharedTargetingWorldComponent {
     });
   }
 
+  private _countriesToExclude() {
+    this._excludeCountries.forEach((existCountry) => this._countryToExclude(existCountry));
+  }
+
+  private _countryToExclude(value: Country) {
+    const index = this._allCountries.findIndex((existCountry) => existCountry.name === value.name);
+
+    if (index !== -1) {
+      const findCountry = this._allCountries[index];
+      let continent = findCountry.continent.toLowerCase();
+
+      if (continent === 'americas') {
+        const subContinent = findCountry.subcontinent.toLowerCase();
+        if (subContinent === 'northern america') {
+          continent = 'americaNord';
+        } else {
+          continent = 'americaSud';
+        }
+      }
+
+      if (this._targetingWorldData.includeContinents.some((existContinent) => existContinent.toLowerCase() === continent)) {
+        if (this._targetingWorldData.includeCountries.some((existCountry) => existCountry.name === value.name)) {
+          this._filterIncludedCountries(value);
+          this._excludeCountries.push(value);
+          this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.EXCLUDED');
+        }
+      } else {
+        this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.ALREADY_EXCLUDED');
+      }
+
+    }
+
+  }
+
   public getCountriesByContinent(continent_name: string): Array<Country> {
     return this._continentCountries[continent_name];
   }
@@ -105,6 +145,7 @@ export class SharedTargetingWorldComponent {
       case 'exclude':
         return {
           placeholder: 'SHARED_TARGETING_WORLD.PLACEHOLDER.TO_EXCLUDE_COUNTRY',
+          initialData: this._excludeCountries,
           type: 'countries'
         };
 
@@ -168,6 +209,7 @@ export class SharedTargetingWorldComponent {
       event.value.forEach((country: Country) => {
         if(!this._targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
           this._targetingWorldData.includeCountries.push(this._getCountryByName(country.name));
+          this._filterExcludedCountries(country);
           this._emitChanges();
         }
       });
@@ -178,19 +220,23 @@ export class SharedTargetingWorldComponent {
     return this._allCountries.find((countries) => countries.name.toLowerCase() === searchName.toLowerCase());
   }
 
-  public removeCountry(event: {value: Country}) {
+  public removeIncludedCountry(event: { value: Country }) {
+    this._countryToExclude(event.value);
     this._filterIncludedCountries(event.value);
+    this._emitChanges();
   }
 
   public addCountryToExclude(event: { value: Array<Country> }) {
     event.value.forEach((country: Country) => {
-      if(this._targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
-        this._filterIncludedCountries(country);
-        this._emitChanges();
-      } else {
-        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.COUNTRY.ALREADY_EXCLUDED');
-      }
+      this._countryToExclude(country);
     });
+    this._emitChanges();
+  }
+
+  public removeExcludedCountry(event: { value: Country }) {
+    this._filterExcludedCountries(event.value);
+    this._countriesToInclude();
+    this._emitChanges();
   }
 
   private _emitChanges() {
@@ -201,19 +247,26 @@ export class SharedTargetingWorldComponent {
     return `https://res.cloudinary.com/umi/image/upload/c_fill,h_60,w_60/app/flags/${code}.png`;
   }
 
-  public onChangeCountry(event: Event, country: Country, continent: string) {
+  public onChangeCountry(event: Event, country: Country) {
     if (this.isEditable) {
       if ((event.target as HTMLInputElement).checked) {
         this._targetingWorldData.includeCountries.push(country);
+        this._filterExcludedCountries(country);
+        this._emitChanges();
       } else {
-        this._filterIncludedCountries(country);
+        const event = { value: country };
+        this.removeIncludedCountry(event);
       }
-      this._emitChanges();
+
     }
   }
 
   private _filterIncludedCountries(country: Country) {
     this._targetingWorldData.includeCountries = this._targetingWorldData.includeCountries.filter((value) => value.name !== country.name);
+  }
+
+  private _filterExcludedCountries(country: Country) {
+    this._excludeCountries = this._excludeCountries.filter((value) => value.name !== country.name);
   }
 
   public checkCountry(country: Country): boolean {
@@ -246,6 +299,10 @@ export class SharedTargetingWorldComponent {
 
   get targetingWorldData(): SharedTargetingWorldInterface {
     return this._targetingWorldData;
+  }
+
+  get excludeCountries(): Array<Country> {
+    return this._excludeCountries;
   }
 
 }
