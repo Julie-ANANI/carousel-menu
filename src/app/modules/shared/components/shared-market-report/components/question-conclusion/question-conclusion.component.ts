@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { QuestionTagsService } from '../../services/question-tags.service';
+import { DataService } from '../../services/data.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
@@ -35,7 +35,7 @@ export class QuestionConclusionComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _translateService: TranslateService,
-              private _questionTagsService: QuestionTagsService,
+              private _dataService: DataService,
               private _translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
@@ -62,7 +62,7 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   get tags(): Array<Tag> {
-    return this._questionTagsService.answersTagsLists[this.question._id];
+    return this._dataService.answersTagsLists[this.question._id];
   }
 
   get answersOrigin(): { [p: string]: number } {

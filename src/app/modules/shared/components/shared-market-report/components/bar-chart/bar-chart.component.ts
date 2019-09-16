@@ -12,6 +12,7 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { PieChart } from '../../../../../../models/pie-chart';
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-bar-chart',
@@ -22,11 +23,6 @@ import { PieChart } from '../../../../../../models/pie-chart';
 export class BarChartComponent implements OnInit {
 
   @Input() innovation: Innovation;
-
-  @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
-    this._updateAnswersData();
-  }
 
   @Input() question: Question;
 
@@ -44,8 +40,6 @@ export class BarChartComponent implements OnInit {
 
   private _formBarChart: FormGroup;
 
-  private _answers: Array<Answer>;
-
   private _barsData: Array<BarData> = [];
 
   private _pieChart: PieChart;
@@ -55,6 +49,7 @@ export class BarChartComponent implements OnInit {
   private _toggleFilterIcon: {[index: string]: boolean} = {};
 
   constructor(private _translateService: TranslateService,
+              private _dataService: DataService,
               private _filterService: FilterService,
               private _location: Location,
               private _formBuilder: FormBuilder,
@@ -67,44 +62,23 @@ export class BarChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._updateAnswersData();
-    this._buildForm();
-    this._patchForm();
-  }
-
-
-  /***
-   * Build the form using quesId.
-   */
-  private _buildForm() {
+    /* Build Form */
     this._formBarChart = this._formBuilder.group({
       [this.question._id]: ['']
     });
-  }
 
-
-  /***
-   * Patch the abstract value for each question.
-   */
-  private _patchForm() {
+    /* Patch form */
     const value = this._responseService.getInnovationAbstract(this.innovation, this.question._id);
     this._formBarChart.get(this.question._id).setValue(value);
-  }
 
-
-  private _updateAnswersData(): void {
-    if (this.question && this.question.identifier && Array.isArray(this.question.options)) {
-
-      this._barsData = ResponseService.getBarsData(this.question, this._answers);
-
+    /* Update Answers Data */
+    this._dataService.getAnswers(this.question._id).subscribe((answers: Array<Answer>) => {
+      this._barsData = ResponseService.getBarsData(this.question, answers);
       if (this.question.controlType === 'radio') {
-        this._pieChart = ResponseService.getPieChartData(this._barsData, this._answers);
+        this._pieChart = ResponseService.getPieChartData(this._barsData, answers);
       }
-
-    }
-
+    });
   }
-
 
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();

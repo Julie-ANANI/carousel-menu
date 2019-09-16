@@ -37,8 +37,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 
 import { CommonService } from '../../../../services/common/common.service';
+import { DataService } from './services/data.service';
 import { FilterService } from './services/filters.service';
-import { QuestionTagsService } from './services/question-tags.service';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
@@ -68,12 +68,11 @@ import { WorldmapFiltersService } from './services/worldmap-filter.service';
   ],
   providers: [
     CommonService,
+    DataService,
     FilterService,
-    QuestionTagsService,
     ResponseService,
     TagsFiltersService,
-    WorldmapFiltersService,
-
+    WorldmapFiltersService
   ],
   declarations: [
     SharedMarketReportComponent,

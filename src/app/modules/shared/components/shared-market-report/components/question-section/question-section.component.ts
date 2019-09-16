@@ -10,7 +10,8 @@ import { Location } from '@angular/common';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
-import { QuestionTagsService } from '../../services/question-tags.service';
+import { DataService } from '../../services/data.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-question-section',
@@ -62,8 +63,6 @@ export class QuestionSectionComponent implements OnInit {
 
   private _answersWithComment: Array<Answer> = [];
 
-  private _answersToShow: Array<Answer> = [];
-
   private _readonly: boolean;
 
   private _stats: {nbAnswers?: number, percentage?: number};
@@ -76,35 +75,24 @@ export class QuestionSectionComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _questionTagsService: QuestionTagsService) {
+              private _dataService: DataService) {
 
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
   }
 
   ngOnInit() {
-    this._buildForm();
-    this._patchForm();
-    this._updateAnswersData();
-  }
-
-
-  /***
-   * Build the form using quesId.
-   */
-  private _buildForm() {
+    /* Build Form */
     this._formQuestionSection = this._formBuilder.group({
       [this._questionReceived._id]: ['']
     });
-  }
 
-
-  /***
-   * Patch the abstract value for each question.
-   */
-  private _patchForm() {
+    /* Patch Form */
     const value = this._responseService.getInnovationAbstract(this._innovation, this._questionReceived._id);
     this._formQuestionSection.get(this._questionReceived._id).setValue(value);
+
+    /* Update Answers Data */
+    this._updateAnswersData();
   }
 
 
@@ -112,10 +100,11 @@ export class QuestionSectionComponent implements OnInit {
     if (this._questionReceived && this._questionReceived.identifier) {
       const id = this._questionReceived.identifier;
 
-      this._answersToShow = this._responseService.getAnswersToShow(this._answersReceived, this._questionReceived);
+      const answersToShow = this._responseService.getAnswersToShow(this._answersReceived, this._questionReceived);
+      this._dataService.setAnswers(this._questionReceived._id, answersToShow);
 
-      const tags = ResponseService.getTagsList(this._answersToShow, this._questionReceived);
-      this._questionTagsService.answersTagsLists[this._questionReceived._id] = tags;
+      const tags = ResponseService.getTagsList(answersToShow, this._questionReceived);
+      this._dataService.answersTagsLists[this._questionReceived._id] = tags;
 
       // filter comments
       switch (this._questionReceived.controlType) {
@@ -152,8 +141,8 @@ export class QuestionSectionComponent implements OnInit {
         });
 
       this._stats = {
-        nbAnswers: this._answersToShow.length,
-        percentage: Math.round((this._answersToShow.length * 100) / this._answersReceived.length)
+        nbAnswers: answersToShow.length,
+        percentage: Math.round((answersToShow.length * 100) / this._answersReceived.length)
       };
 
     }
@@ -210,8 +199,8 @@ export class QuestionSectionComponent implements OnInit {
     return this._toggleAnswers;
   }
 
-  get answersToShow(): Array<Answer> {
-    return this._answersToShow;
+  get answersToShow(): Observable<Array<Answer>> {
+    return this._dataService.getAnswers(this._questionReceived._id);
   }
 
   get answersWithComment(): Array<Answer> {
