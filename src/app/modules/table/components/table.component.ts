@@ -10,6 +10,8 @@ import { Pagination } from '../../utility-components/paginations/interfaces/pagi
 import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 import { ConfigService } from '../../../services/config/config.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-shared-table',
   templateUrl: './table.component.html',
@@ -574,6 +576,23 @@ export class TableComponent implements OnInit {
    */
   public isSortable(column: Column) {
     return column._isSortable;
+  }
+
+  /**
+   * This function counts the number of days/months/years to some future date.
+   * The format of the column must be like this:
+   *    columnName-days
+   * for example: createdAt-90 will take the value at the column 'createdAt' (which
+   * should be a valid date) and count the number of days to arrive to 90 days.
+   * @param row
+   * @param key
+   */
+  public countDaysTo(row: any, key: string) {
+    let _skey = key.split('-');
+    let _time = _skey.length > 1 ? _skey[1] : 0;
+    let _key: string = _skey[0];
+    let value = moment(this.getContentValue(row, _key));
+    return value.add(_time, 'days').fromNow();
   }
 
   /***
