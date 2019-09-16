@@ -159,7 +159,7 @@ export class SharedTargetingWorldComponent {
   }
 
   public onChangeSelectAll(event: Event) {
-    if (this.isEditable) {
+    if (this.isEditable || this.isAdmin) {
       if ((event.target as HTMLInputElement).checked) {
 
         const values = this._continents.reduce((acc, continent) => {
@@ -183,7 +183,7 @@ export class SharedTargetingWorldComponent {
   }
 
   public onChangeContinent(event: Event, continent: string) {
-    if (this.isEditable) {
+    if (this.isEditable || this.isAdmin) {
       if ((event.target as HTMLInputElement).checked) {
         this._targetingWorldData.includeContinents.push(continent);
         this._targetingWorldData.includeCountries.push(...this.getCountriesByContinent(continent));
@@ -205,7 +205,7 @@ export class SharedTargetingWorldComponent {
   }
 
   public addCountryToInclude(event: { value: Array<Country> }) {
-    if (this.isEditable) {
+    if (this.isEditable || this.isAdmin) {
       event.value.forEach((country: Country) => {
         if(!this._targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
           this._targetingWorldData.includeCountries.push(this._getCountryByName(country.name));
@@ -248,7 +248,7 @@ export class SharedTargetingWorldComponent {
   }
 
   public onChangeCountry(event: Event, country: Country) {
-    if (this.isEditable) {
+    if (this.isEditable || this.isAdmin) {
       if ((event.target as HTMLInputElement).checked) {
         this._targetingWorldData.includeCountries.push(country);
         this._filterExcludedCountries(country);
