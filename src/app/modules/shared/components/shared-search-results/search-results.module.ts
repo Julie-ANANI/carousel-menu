@@ -7,7 +7,7 @@ import { SharedSearchResultsComponent } from './shared-search-results.component'
 
 import { SharedProsListModule } from '../shared-pros-list/shared-pros-list.module';
 import { SharedProsListOldModule } from '../shared-pros-list-old/shared-pros-list-old.module';
-import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
+import { AutoCompleteInputModule } from '../../../utility-components/auto-complete-input/auto-complete-input.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 
@@ -18,7 +18,7 @@ import { ModalModule } from "../../../utility-components/modals/modal/modal.modu
     SharedProsListModule,
     TranslateModule.forChild(),
     SharedProsListOldModule,
-    AutocompleteInputModule,
+    AutoCompleteInputModule,
     CountryFlagModule,
     ModalModule
   ],

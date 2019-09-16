@@ -30,7 +30,6 @@ export class SharedMarketComment2Component {
   }
 
   public addTag(tag: Tag, q_identifier: string): void {
-    console.log(tag);
     this.answerService
       .addTag(this.answer._id, tag._id, q_identifier)
       .subscribe((a: any) => {

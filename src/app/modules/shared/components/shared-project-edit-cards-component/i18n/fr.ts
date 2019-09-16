@@ -43,7 +43,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'PROBLEM': {
-      'LABEL': ' Quels sont les enjeux ou les problèmes qui ont motivé la création de ce projet ? ',
+      'LABEL': 'Quelles sont les problématiques du marché ?',
       'PLACEHOLDER': 'Cette partie est entièrement consacrée à expliquer pourquoi ce concept/innovation a vu le jour, à quel problème mondial ou problème de marché il répond, etc.',
       'ERROR': 'Veuillez décrire le problème qui a motivé votre projet s\'il vous plaît.',
       'HELP': {
@@ -55,7 +55,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'SOLUTION': {
-      'LABEL': 'Quelle solution proposez-vous et quels en sont les avantages ?',
+      'LABEL': 'Décrivez votre solution et comment elle répond à la problématique décrite ?',
       'PLACEHOLDER': 'La description de la solution doit détailler en quoi consiste exactement l\'innovation et ' +
         'comment elle répond aux problèmes susmentionnés de la question précédente. Il n\'est pas nécessaire d\'être ' +
         'trop technique avec beaucoup de chiffres, mais certaines informations dans ce sens aident les répondants à se ' +
@@ -78,13 +78,6 @@ export const SHARED_PROJECT_EDIT = {
       }
     }
 
-  },
-
-  'STAGE': 'À quel stade en est votre projet ?',
-
-  'PATENTED': {
-    'LABEL': 'Votre projet est-t-il protégé par un brevet ?',
-    'ERROR': 'Veuillez indiquer si votre projet est protégé s\'il vous plaît.'
   },
 
   'MEDIA': {

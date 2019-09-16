@@ -1,0 +1,84 @@
+@import '../../../../../style/framework/src/variables';
+
+#shared-targeting-world {
+
+  .stw-incl-excl-country-wrapper {
+
+    .stw-country-wrapper {
+      margin-right: 2rem;
+      margin-top: 1.5rem;
+      flex: 1;
+      min-width: 350px;
+
+      .icon-container {
+        margin-left: $unit-1;
+        margin-bottom: $unit-2;
+      }
+
+    }
+
+  }
+
+}
+
+.modal-body {
+
+  &.is-stw {
+
+    .stw-modal-continent-wrapper {
+      padding-bottom: 2.5rem;
+
+      .form-group {
+
+        &.is-continent {
+          border-bottom: $border-width solid $border-color;
+          padding-bottom: $unit-o;
+          margin-bottom: 0.75rem;
+
+          .form-checkbox {
+            font-weight: $font-weight-medium;
+            font-size: 0.85rem;
+          }
+
+        }
+
+      }
+
+      .country-list-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -1rem;
+        margin-bottom: -1rem;
+
+        .card {
+          border: none;
+
+          .avatar {
+            width: 1.75rem;
+            height: 1.75rem;
+
+            img {
+              width: 1.75rem;
+              border: 1px solid $border-color;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@media screen and (max-width: $size-sm) {
+
+  #shared-targeting-world {
+
+  }
+
+
+}

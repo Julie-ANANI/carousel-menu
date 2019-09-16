@@ -17,7 +17,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
-import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
+import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 

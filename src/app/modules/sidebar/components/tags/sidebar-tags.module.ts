@@ -7,7 +7,7 @@ import { TagsComponent } from './tags.component';
 
 import { SidebarModule } from '../../sidebar.module';
 import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
-import { AutocompleteInputModule } from '../../../utility-components/autocomplete-input/autocomplete-input.module';
+import { AutoCompleteInputModule } from '../../../utility-components/auto-complete-input/auto-complete-input.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { NguiAutoCompleteModule } from '../../../utility-components/auto-complete/auto-complete.module';
 
@@ -19,7 +19,7 @@ import { NguiAutoCompleteModule } from '../../../utility-components/auto-complet
     TranslateModule.forChild(),
     SidebarModule,
     SharedTagModule,
-    AutocompleteInputModule,
+    AutoCompleteInputModule,
     PipeModule,
     NguiAutoCompleteModule,
   ],

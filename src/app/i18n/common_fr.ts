@@ -129,6 +129,7 @@ export const COMMON = {
     'TYPE': 'Type',
     'SELECT_WORKFLOW': 'Sélectionner le workflow',
     'SELECT': 'Sélectionnez',
+    'SELECT_ALL': 'Sélectionner tout',
     'CHOOSE_LANGUAGE': 'Sélectionnez la langue :',
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
@@ -368,7 +369,8 @@ export const COMMON = {
     'READONLY': 'Lecture seulement',
     'DELETE': 'Supprimer',
     'MOVE_UP': 'Remonter en haut',
-    'MOVE_DOWN': 'Déplacer vers le bas'
+    'MOVE_DOWN': 'Déplacer vers le bas',
+    'ADVANCE_SETTINGS': 'Paramètres avancés'
   },
 
   'SIGNATURES': {

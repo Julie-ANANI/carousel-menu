@@ -118,11 +118,11 @@
   <section class="modal-body">
 
     <label class="form-label">{{ 'CAMPAIGNS.LABEL_IMPORT' | translate }}</label>
-    <app-autocomplete-input
+    <app-auto-complete-input
       (update)="updateCampaign($event)"
       [onlyOne]="true"
       [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
-    </app-autocomplete-input>
+    </app-auto-complete-input>
 
     <div class="text-center p-top-25">
       <label class="btn btn-sm ghost-primary">

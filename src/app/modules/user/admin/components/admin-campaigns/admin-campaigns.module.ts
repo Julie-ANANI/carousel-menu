@@ -24,7 +24,7 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
-import { AutocompleteInputModule } from "../../../../utility-components/autocomplete-input/autocomplete-input.module";
+import { AutoCompleteInputModule } from "../../../../utility-components/auto-complete-input/auto-complete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-answer/sidebar-user-answer.module';
 import { SidebarBatchFormModule } from '../../../../sidebar/components/batch-form/sidebar-batch-form.module';
 import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
@@ -49,7 +49,7 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
     AdminEditWorkflowModule,
     TableModule,
     PipeModule,
-    AutocompleteInputModule,
+    AutoCompleteInputModule,
     SidebarUserAnswerModule,
     SidebarBatchFormModule,
     MessageTemplate1Module,

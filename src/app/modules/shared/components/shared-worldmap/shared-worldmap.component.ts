@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
-import { SharedWorldmapService } from './shared-worldmap.service';
+import { SharedWorldmapService } from './services/shared-worldmap.service';
 
 @Component({
   selector: 'app-worldmap',
@@ -117,8 +117,7 @@ export class SharedWorldmapComponent implements OnInit{
       americaSud: false,
       asia: false,
       europe: false,
-      oceania: false,
-      russia: false
+      oceania: false
     };
   }
 
@@ -138,11 +137,11 @@ export class SharedWorldmapComponent implements OnInit{
   }, {} as any);
 
   constructor(private _elem: ElementRef,
-              private _worldmap: SharedWorldmapService,
+              private _sharedWorldmapService: SharedWorldmapService,
               private _viewContainerRef: ViewContainerRef) {}
 
   ngOnInit() {
-    this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
+    this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
 

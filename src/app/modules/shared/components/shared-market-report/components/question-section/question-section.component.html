@@ -4,8 +4,6 @@
     <!-- if the question type is checkbox or radio -->
     <ng-container *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
       <app-bar-chart
-        [answers]="answersToShow"
-        [tags]="tags"
         [innovation]="innovation"
         [question]="questionReceived"
         [readonly]="readonly"
@@ -26,8 +24,7 @@
           [innovation]="innovation"
           [question]="questionReceived"
           [readonly]="readonly"
-          [stats]="stats"
-          [tags]="tags">
+          [stats]="stats">
         </app-question-conclusion>
       </div>
 
@@ -96,7 +93,6 @@
 
             <div class="clearbit-icon-wrapper">
               <app-item-list
-                [answers]="answersToShow"
                 [innovation]="innovation"
                 [question]="questionReceived"
                 [readonly]="readonly"
@@ -132,21 +128,21 @@
           <!-- star -->
           <div *ngIf="questionReceived.controlType === 'stars'">
             <div class="section-light-pad rm-pad-bottom">
-              <app-stars [answers]="answersToShow" [innovation]="innovation" [question]="questionReceived"></app-stars>
+              <app-stars [innovation]="innovation" [question]="questionReceived"></app-stars>
             </div>
           </div>
 
           <!-- rating -->
           <div *ngIf="questionReceived.controlType === 'scale'">
             <div class="section-light-pad rm-pad-bottom">
-              <app-scale [answers]="answersToShow" [question]="questionReceived"></app-scale>
+              <app-scale [question]="questionReceived"></app-scale>
             </div>
           </div>
 
           <!-- textarea -->
           <div *ngIf="questionReceived.controlType === 'textarea'">
             <div class="section-light-pad rm-pad-bottom rm-margin">
-              <div *ngFor="let answer of answersToShow" class="card">
+              <div *ngFor="let answer of answersToShow | async" class="card">
                 <div class="card-body less-padding">
                   <app-market-comment-2
                     [answer]="answer"
@@ -162,7 +158,7 @@
           <!-- toggle ---->
           <div *ngIf="questionReceived.controlType === 'toggle'">
             <div class="toggle-wrapper rm-margin d-flex section-light-pad rm-pad-bottom">
-              <div *ngFor="let answer of answersToShow" class="card is-responsive">
+              <div *ngFor="let answer of answersToShow | async" class="card is-responsive">
                 <div class="card-body">
                   <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>

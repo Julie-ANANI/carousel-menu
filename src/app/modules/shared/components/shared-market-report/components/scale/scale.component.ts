@@ -10,11 +10,6 @@ import { Question } from '../../../../../../models/question';
 })
 export class ScaleComponent implements OnInit {
 
-  @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
-    this._updateAnswersData();
-  }
-
   @Input() question: Question;
 
   private _answers: Array<Answer>;

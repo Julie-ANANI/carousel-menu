@@ -14,11 +14,6 @@ import { ResponseService } from '../../services/response.service';
 
 export class StarsComponent implements OnInit {
 
-  @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
-    this._updateAnswersData();
-  }
-
   @Input() innovation: Innovation;
 
   @Input() question: Question;
