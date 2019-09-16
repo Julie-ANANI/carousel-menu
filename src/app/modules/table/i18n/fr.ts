@@ -39,7 +39,8 @@ export const TABLE = {
     'CONTENT': 'Contenu',
     'SECTIONS': 'Sections',
     'PROJECTS': 'Projets',
-    'AMBASSADOR': 'Ambassadeur'
+    'AMBASSADOR': 'Ambassadeur',
+    'TTR':  'Temps de sortie'
   },
 
   'TITLE': {
