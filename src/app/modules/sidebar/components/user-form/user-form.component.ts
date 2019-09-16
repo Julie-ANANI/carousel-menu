@@ -106,6 +106,8 @@ export class UserFormComponent implements OnInit {
 
   private _type: 'editUser' | 'professional' | 'addPro';
 
+  private _isProShielded = false;
+
   private _updateInstanceDomainConfig: {
     placeholder: string,
     initialData: Array<string>,
@@ -186,6 +188,12 @@ export class UserFormComponent implements OnInit {
       this._userForm.patchValue(this._pro);
       this._company = { name: this._pro.company };
       this._proKeywords = null;
+      this._professionalService.isShielded(this._pro._id)
+        .subscribe(response=>{
+          this._isProShielded = response && response.result.length;
+        }, err=>{
+          console.error(err);
+        });
     }
   }
 
@@ -461,6 +469,10 @@ export class UserFormComponent implements OnInit {
 
   get type() {
     return this._type;
+  }
+
+  get isProShielded(): boolean {
+    return this._isProShielded;
   }
 
 }

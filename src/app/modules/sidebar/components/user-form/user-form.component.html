@@ -86,6 +86,15 @@
         </div>
       </ng-container>
 
+      <!-- is shielded? -->
+      <ng-container *ngIf="isProfessional && isProShielded">
+        <div class="form-group">
+          <label class="form-label"></label>
+          <span><i class="fas fa-user-shield"></i></span> This professional protected by shield.
+        </div>
+      </ng-container>
+
+
       <!-- show tags -->
       <ng-container *ngIf="isProfessional && tags.length > 0">
         <div class="form-group">
