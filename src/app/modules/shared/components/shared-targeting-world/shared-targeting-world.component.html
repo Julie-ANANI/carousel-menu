@@ -12,7 +12,7 @@
           <input
             (change)="onChangeSelectAll($event)"
             [checked]="checkSelectAll()"
-            [disabled]="!isEditable"
+            [disabled]="!isEditable && !isAdmin"
             id="selectAll"
             name="selectAll"
             value="selectAll"
@@ -21,12 +21,12 @@
         </label>
       </div>
 
-      <div *ngFor="let continent of continents" class="m-right-20">
+      <div *ngFor="let continent of getContinents()" class="m-right-20">
         <label class="form-checkbox text-sm">
           <input
             (change)="onChangeContinent($event, continent)"
             [checked]="checkContinent(continent)"
-            [disabled]="!isEditable"
+            [disabled]="!isEditable && !isAdmin"
             [id]="continent"
             [name]="continent"
             [value]="continent"
@@ -56,11 +56,14 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input
-          [config]="autoCompleteConfig('include')"
+        <app-auto-complete-input
+          (remove)="removeIncludedCountry($event)"
           (update)="addCountryToInclude($event)"
-          (remove)="removeCountry($event)">
-        </app-autocomplete-input>
+          [config]="autoCompleteConfig('include')"
+          [isAdmin]="isAdmin"
+          [isEditable]="isEditable"
+          [tempActive]="false">
+        </app-auto-complete-input>
       </div>
 
     </div>
@@ -79,10 +82,14 @@
       </div>
 
       <div class="p-top-20">
-        <app-autocomplete-input
+        <app-auto-complete-input
+          (remove)="removeExcludedCountry($event)"
+          (update)="addCountryToExclude($event)"
           [config]="autoCompleteConfig('exclude')"
-          (update)="addCountryToExclude($event)">
-        </app-autocomplete-input>
+          [isAdmin]="isAdmin"
+          [isEditable]="isEditable"
+          [tempActive]="false">
+        </app-auto-complete-input>
       </div>
 
     </div>
@@ -103,7 +110,7 @@
     </div>
 
     <div *ngIf="continents.length > 0">
-      <div *ngFor="let continent of continents" class="stw-modal-continent-wrapper">
+      <div *ngFor="let continent of getContinents()" class="stw-modal-continent-wrapper">
 
         <!-- continents -->
         <div class="form-group is-continent">
@@ -111,7 +118,7 @@
             <input
               (change)="onChangeContinent($event, continent)"
               [checked]="checkContinent(continent)"
-              [disabled]="!isEditable"
+              [disabled]="!isEditable && !isAdmin"
               [id]="continent"
               [name]="continent"
               [value]="continent"
@@ -128,9 +135,9 @@
 
               <label class="form-checkbox p-no-right">
                 <input
-                  (change)="onChangeCountry($event, country, continent)"
+                  (change)="onChangeCountry($event, country)"
                   [checked]="checkCountry(country)"
-                  [disabled]="!isEditable"
+                  [disabled]="!isEditable && !isAdmin"
                   [id]="country.name"
                   [name]="country.name"
                   [value]="country.name"

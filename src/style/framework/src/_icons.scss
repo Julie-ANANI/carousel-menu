@@ -82,6 +82,20 @@
     cursor: pointer;
   }
 
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &.is-overlay::before  {
+      background-color: transparent;
+    }
+
+    .tooltip::before, .tooltip::after {
+      display: none;
+    }
+
+  }
+
 }
 
 

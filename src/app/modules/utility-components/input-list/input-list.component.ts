@@ -42,8 +42,7 @@ export class InputListComponent {
 
   private _indexNumber: number;
 
-  constructor(private _translateNotificationsService: TranslateNotificationsService) {
-  }
+  constructor(private _translateNotificationsService: TranslateNotificationsService) {}
 
   public addProposition(val: string) {
 
