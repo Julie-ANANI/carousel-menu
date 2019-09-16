@@ -11,7 +11,6 @@ import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module'
 import { AutoCompleteInputModule } from '../../../utility-components/auto-complete-input/auto-complete-input.module';
 import { InputListModule } from '../../../utility-components/input-list/input-list.module';
 import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
-import { SharedTargetingWorldModule } from '../shared-targeting-world/shared-targeting-world.module';
 
 @NgModule({
   imports: [
@@ -23,8 +22,7 @@ import { SharedTargetingWorldModule } from '../shared-targeting-world/shared-tar
     SharedWorldmapModule,
     AutoCompleteInputModule,
     InputListModule,
-    MessageTemplate1Module,
-    SharedTargetingWorldModule
+    MessageTemplate1Module
   ],
   declarations: [
     SharedProjectSettingsComponent
