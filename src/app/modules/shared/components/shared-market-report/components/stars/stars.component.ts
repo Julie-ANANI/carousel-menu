@@ -4,6 +4,7 @@ import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
+import { DataService } from '../../services/data.service';
 import { ResponseService } from '../../services/response.service';
 
 @Component({
@@ -18,20 +19,15 @@ export class StarsComponent implements OnInit {
 
   @Input() question: Question;
 
-  private _answers: Array<Answer> = [];
-
   private _notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
 
-  constructor(private _translateService: TranslateService) { }
+  constructor(private _translateService: TranslateService,
+              private _dataService: DataService) { }
 
   ngOnInit() {
-    this._updateAnswersData();
-  }
-
-  private _updateAnswersData(): void {
-    if (this.question && this.question.identifier) {
-      this._notesData = ResponseService.getStarsAnswers(this.question, this._answers);
-    }
+    this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
+      this._notesData = ResponseService.getStarsAnswers(this.question, answers);
+    });
   }
 
   get lang(): string {
