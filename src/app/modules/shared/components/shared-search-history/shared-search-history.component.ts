@@ -158,11 +158,17 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._searchService.cancelManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId : string) => {
           this._requests[this._getRequestIndex(requestId, this._requests)].status = 'CANCELED';
-          this._notificationsService.success('Requêtes annulées', `Les requêtes ont bien été annulées`);
         });
+        this._notificationsService.success('Requêtes annulées', `Les requêtes ont bien été annulées`);
       });
     } else if (value._action === 'SEARCH.HISTORY.BACK_QUEUE') {
-      console.log('a');
+      this._searchService.queueManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
+        requestsIds.forEach((requestId : string) => {
+          const request = this._requests[this._getRequestIndex(requestId, this._requests)]
+          if (request.status != "DONE") request.status = 'QUEUED';
+        });
+        this._notificationsService.success('Requêtes mises en attente', `Les requêtes ont bien été mises en attente`);
+      });
     } else {
       console.log(value._action);
     }

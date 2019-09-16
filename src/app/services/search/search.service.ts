@@ -151,4 +151,12 @@ export class SearchService {
     };
     return this._http.get('/search/get', {params: query});
   }
+
+  public queueManyRequests(requestIds: Array<String>): Observable<any> {
+    const query = {
+      params: JSON.stringify({requestIds: requestIds}),
+      path: '/request/queue/many'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
 }
