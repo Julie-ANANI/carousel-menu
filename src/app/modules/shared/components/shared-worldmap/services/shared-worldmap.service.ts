@@ -13,6 +13,20 @@ export class SharedWorldmapService {
     return SharedWorldmapService._continentsList.every((c) => selectedContinents[c] === true);
   }
 
+  public static reinitializeContinents(): any {
+    return SharedWorldmapService._continentsList.reduce((acc, cont) => {
+      acc[cont] = false;
+      return acc;
+    }, {} as any);
+  }
+
+  public static reinitializeContinentsToTrue(): any {
+    return SharedWorldmapService._continentsList.reduce((acc, cont) => {
+      acc[cont] = true;
+      return acc;
+    }, {} as any);
+  }
+
   public loadCountriesFromViewContainerRef (viewContainerRef: ViewContainerRef) {
     if (Object.keys(this._countries).length === 0) {
       SharedWorldmapService._continentsList.forEach((continent) => {
