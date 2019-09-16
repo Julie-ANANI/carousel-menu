@@ -45,7 +45,7 @@ export class ItemListComponent implements OnInit {
 
   ngOnInit() {
     /* Update Answers Data */
-    this._dataService.getAnswers(this.question._id).subscribe((answers: Array<Answer>) => {
+    this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
 
       const answerItems: {[value: string]: {rating: number, count: number, domain: string, logo: string, answers: Array<Answer>}} = {};
 

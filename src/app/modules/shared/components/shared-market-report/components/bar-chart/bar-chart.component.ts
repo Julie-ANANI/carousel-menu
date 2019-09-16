@@ -72,7 +72,7 @@ export class BarChartComponent implements OnInit {
     this._formBarChart.get(this.question._id).setValue(value);
 
     /* Update Answers Data */
-    this._dataService.getAnswers(this.question._id).subscribe((answers: Array<Answer>) => {
+    this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
       this._barsData = ResponseService.getBarsData(this.question, answers);
       if (this.question.controlType === 'radio') {
         this._pieChart = ResponseService.getPieChartData(this._barsData, answers);
