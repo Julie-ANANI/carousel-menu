@@ -18,7 +18,7 @@
 
       <button
         *ngIf="isShowButton"
-        [disabled]="!canAdd || !isEditable"
+        [disabled]="(!canAdd || !isEditable) && !isAdmin"
         class="button is-action is-circled is-primary is-shadowed p-no">
         <i class="icon icon-plus"></i>
       </button>
@@ -40,7 +40,7 @@
         <div class="aci-icons-wrapper">
 
           <!-- delete icon -->
-          <div (click)="removeProposition(i)" class="icon-container m-no-right is-overlay">
+          <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable && !isAdmin }" class="icon-container m-no-right is-overlay">
             <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
               <i class="icon icon-delete text-alert"></i>
             </span>

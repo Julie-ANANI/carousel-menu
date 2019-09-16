@@ -5,6 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
+import { AutoCompleteInputConfigInterface } from './interfaces/auto-complete-input-config-interface';
+import { AnswerList } from './interfaces/auto-complete-input-answerlist-interface';
+import { AutoCompleteInputSuggestionInterface } from './interfaces/auto-complete-input-suggestion-interface';
 
 @Component({
   moduleId: module.id,
@@ -19,13 +22,13 @@ export class AutoCompleteInputComponent {
 
   @Input() isEditable: boolean = true; // false: will disable it.
 
-  @Input() isShowable: boolean = true; // false: to hide the input field.
+  @Input() isShowable: boolean = true; // false: to hide the form field.
 
   @Input() isShowButton: boolean = true; // false: to hide the button.
 
   @Input() isAdmin: boolean = false;
 
-  @Input() set config(config: { placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean }) {
+  @Input() set config(config: AutoCompleteInputConfigInterface) {
     if (config) {
 
       this._identifier = config.identifier || 'name';
@@ -34,13 +37,13 @@ export class AutoCompleteInputComponent {
       this._autocompleteType = config.type || '';
 
       if (config.initialData && Array.isArray(config.initialData)) {
-        this.answerList = [];
+        this._answerList = [];
 
         config.initialData.forEach(value => {
-          if (this.answerList.findIndex(t => {
+          if (this._answerList.findIndex(t => {
             return t === value;
           }) === -1) {
-            this.answerList.push(value);
+            this._answerList.push(value);
           }
         });
       }
@@ -53,7 +56,6 @@ export class AutoCompleteInputComponent {
   @Output() add = new EventEmitter<any>();
 
   @Output() remove = new EventEmitter<any>();
-
 
   @Input() canEdit = true;
 
@@ -71,11 +73,11 @@ export class AutoCompleteInputComponent {
 
 
 
-  autoCompleteInputForm: FormGroup;
+  private readonly _autoCompleteInputForm: FormGroup;
 
   companyName: FormControl = new FormControl();
 
-  answerList: Array<{name: string, domain: string, flag: string; url: string, rating: number}> = [];
+  private _answerList: Array<AnswerList> = [];
 
   answer = '';
 
@@ -87,21 +89,19 @@ export class AutoCompleteInputComponent {
 
   private _canOrder: boolean;
 
-  private _customAnswerList: Array<any> = [];
-
   constructor(private _formBuilder: FormBuilder,
               private _domSanitizer: DomSanitizer,
               private _autocompleteService: AutocompleteService,
               private _multilingPipe: MultilingPipe,
               private _translateService: TranslateService) {
 
-    this.autoCompleteInputForm = this._formBuilder.group({
+    this._autoCompleteInputForm = this._formBuilder.group({
       answer: '',
     });
 
   }
 
-  public suggestions(query: any): Observable<Array<{name: string, domain: string, flag: string}>> {
+  public suggestions(query: any): Observable<Array<AutoCompleteInputSuggestionInterface>> {
     const queryConf = {
       query: query,
       type: this._autocompleteType
@@ -130,14 +130,14 @@ export class AutoCompleteInputComponent {
       if (typeof val === 'string') {
         val = {[this._identifier]: val};
       }
-      if (val && this.answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
+      if (val && this._answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
         if (this.onlyOne) {
-          this.answerList = [val];
+          this._answerList = [val];
         } else {
-          this.answerList.push(val);
+          this._answerList.push(val);
         }
-        this.autoCompleteInputForm.get('answer').setValue('');
-        this.update.emit({value: this.answerList});
+        this._autoCompleteInputForm.get('answer').setValue('');
+        this.update.emit({value: this._answerList});
       }
     }
 
@@ -148,14 +148,14 @@ export class AutoCompleteInputComponent {
       val.name = this._multilingPipe.transform(val.name, this._translateService.currentLang);
     }
 
-    if (val && this.answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
+    if (val && this._answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
       if (this.onlyOne) {
-        this.answerList = [val];
+        this._answerList = [val];
       } else {
-        this.answerList.push(val);
+        this._answerList.push(val);
       }
-      this.autoCompleteInputForm.get('answer').setValue('');
-      this.update.emit({value: this.answerList});
+      this._autoCompleteInputForm.get('answer').setValue('');
+      this.update.emit({value: this._answerList});
       this.add.emit({value: val});
     }
 
@@ -165,9 +165,9 @@ export class AutoCompleteInputComponent {
     event.preventDefault();
 
     if (i !== 0) {
-      const elem = this.answerList.splice(i, 1);
-      this.answerList.splice(i - 1, 0, elem[0]);
-      this.update.emit({value: this.answerList});
+      const elem = this._answerList.splice(i, 1);
+      this._answerList.splice(i - 1, 0, elem[0]);
+      this.update.emit({value: this._answerList});
     }
 
   }
@@ -175,30 +175,32 @@ export class AutoCompleteInputComponent {
   down(event: Event, i: number): void {
     event.preventDefault();
 
-    if (i !== this.answerList.length - 1) {
-      const elem = this.answerList.splice(i, 1);
-      this.answerList.splice(i + 1, 0, elem[0]);
-      this.update.emit({value: this.answerList});
+    if (i !== this._answerList.length - 1) {
+      const elem = this._answerList.splice(i, 1);
+      this._answerList.splice(i + 1, 0, elem[0]);
+      this.update.emit({value: this._answerList});
     }
 
   }
 
   public removeProposition(index: number) {
-    const val = this.answerList.splice(index, 1).pop();
-    this.update.emit({ value: this.answerList });
-    this.remove.emit({ value: val });
+    if (this.isEditable || this.isAdmin) {
+      const val = this._answerList.splice(index, 1).pop();
+      this.update.emit({ value: this._answerList });
+      this.remove.emit({ value: val });
+    }
   }
 
   thumbsUp(event: Event, index: number): void {
     event.preventDefault();
 
     if (this.adminMode) {
-      if (this.answerList[index].rating === 2) {
-        this.answerList[index].rating = 1;
+      if (this._answerList[index].rating === 2) {
+        this._answerList[index].rating = 1;
       } else {
-        this.answerList[index].rating = 2;
+        this._answerList[index].rating = 2;
       }
-      this.update.emit({value: this.answerList});
+      this.update.emit({value: this._answerList});
     }
 
   }
@@ -207,23 +209,23 @@ export class AutoCompleteInputComponent {
     event.preventDefault();
 
     if (this.adminMode) {
-      if (this.answerList[index].rating === 0) {
-        this.answerList[index].rating = 1;
+      if (this._answerList[index].rating === 0) {
+        this._answerList[index].rating = 1;
       } else {
-        this.answerList[index].rating = 0;
+        this._answerList[index].rating = 0;
       }
-      this.update.emit({value: this.answerList});
+      this.update.emit({value: this._answerList});
     }
 
   }
 
   updateItem(event: Event): void {
     event.preventDefault();
-    this.update.emit({value: this.answerList});
+    this.update.emit({value: this._answerList});
   }
 
   get canAdd(): boolean {
-    return this.autoCompleteInputForm.get('answer').value && (!this.onlyOne || this.answerList.length === 0);
+    return this._autoCompleteInputForm.get('answer').value && (!this.onlyOne || this._answerList.length === 0);
   }
 
   get placeholder(): string {
@@ -238,8 +240,12 @@ export class AutoCompleteInputComponent {
     return this._canOrder;
   }
 
-  get customAnswerList(): Array<any> {
-   return this._customAnswerList;
+  get autoCompleteInputForm(): FormGroup {
+    return this._autoCompleteInputForm;
+  }
+
+  get answerList(): Array<AnswerList> {
+    return this._answerList;
   }
 
 }
