@@ -13,7 +13,7 @@ export class ShieldService {
   }
 
   public get(id: string, config: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get(`/shield/${id?id:''}`, config);
+    return this._http.get(`/shield/${id?id:''}`, {params:config});
   }
 
 
