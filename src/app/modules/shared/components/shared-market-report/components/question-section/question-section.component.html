@@ -84,7 +84,7 @@
                   <app-market-comment-2
                     [answer]="answer"
                     [canEditTags]="adminSide"
-                    [questionId]="questionReceived.identifier+'Comment'"
+                    [question]="questionReceived"
                     (modalAnswerChange)="seeAnswer($event)">
                   </app-market-comment-2>
                 </div>
@@ -147,7 +147,7 @@
                   <app-market-comment-2
                     [answer]="answer"
                     [canEditTags]="adminSide"
-                    [questionId]="questionReceived.identifier"
+                    [question]="questionReceived"
                     (modalAnswerChange)="seeAnswer($event)">
                   </app-market-comment-2>
                 </div>
@@ -187,7 +187,7 @@
             <app-market-comment-2
               [answer]="answer"
               [canEditTags]="adminSide"
-              [questionId]="questionReceived.identifier+'Comment'"
+              [question]="questionReceived"
               (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
           </div>
         </div>

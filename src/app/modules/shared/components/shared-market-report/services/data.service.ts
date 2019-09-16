@@ -1,24 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
+import { Question } from '../../../../../models/question';
 import { Tag } from '../../../../../models/tag';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { ResponseService } from './response.service';
 
 @Injectable()
 export class DataService {
 
-  private answersToShow: {[questionId: string]: Subject<Array<Answer>>} = {};
+  private answersToShow: {[questionId: string]: BehaviorSubject<Array<Answer>>} = {};
 
   public answersTagsLists: {[questionId: string]: Array<Tag>} = {};
 
-  public getAnswers(questionId: string): Observable<Array<Answer>> {
-    return this.answersToShow[questionId].asObservable();
+  public getAnswers(question: Question): Observable<Array<Answer>> {
+    return this.answersToShow[question._id].asObservable();
   }
 
-  public setAnswers(questionId: string, answers: Array<Answer>): void {
-    if (!this.answersToShow[questionId]) {
-      this.answersToShow[questionId] = new Subject();
+  public setAnswers(question: Question, answers: Array<Answer>): void {
+    if (!this.answersToShow[question._id]) {
+      this.answersToShow[question._id] = new BehaviorSubject(answers);
+    } else {
+      this.answersToShow[question._id].next(answers);
     }
-    this.answersToShow[questionId].next(answers);
+
+    /* Update tags */
+    this.updateTagsList(question);
+  }
+
+  public updateTagsList(question: Question) {
+    const answers = this.answersToShow[question._id].getValue();
+    this.answersTagsLists[question._id] = ResponseService.getTagsList(answers, question);
   }
 
 }

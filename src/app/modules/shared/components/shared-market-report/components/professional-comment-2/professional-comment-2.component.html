@@ -15,15 +15,15 @@
   <!-- /name -->
 
   <!-- tag button -->
-  <ng-container *ngIf="answerTags(questionId).length > 0 || canEditTags">
+  <ng-container *ngIf="answerTags.length > 0 || canEditTags">
     <div class="pad-top">
       <app-shared-tag
-        [tags]="answerTags(questionId)"
+        [tags]="answerTags"
         [editMode]="canEditTags"
         [projectId]="answer.innovation"
-        (addTag)="addTag($event, questionId)"
-        (createTag)="createTag($event, questionId)"
-        (removeTag)="removeTag($event, questionId)">
+        (addTag)="addTag($event)"
+        (createTag)="createTag($event)"
+        (removeTag)="removeTag($event)">
       </app-shared-tag>
     </div>
   </ng-container>

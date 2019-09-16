@@ -101,10 +101,7 @@ export class QuestionSectionComponent implements OnInit {
       const id = this._questionReceived.identifier;
 
       const answersToShow = this._responseService.getAnswersToShow(this._answersReceived, this._questionReceived);
-      this._dataService.setAnswers(this._questionReceived._id, answersToShow);
-
-      const tags = ResponseService.getTagsList(answersToShow, this._questionReceived);
-      this._dataService.answersTagsLists[this._questionReceived._id] = tags;
+      this._dataService.setAnswers(this._questionReceived, answersToShow);
 
       // filter comments
       switch (this._questionReceived.controlType) {
@@ -200,7 +197,7 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   get answersToShow(): Observable<Array<Answer>> {
-    return this._dataService.getAnswers(this._questionReceived._id);
+    return this._dataService.getAnswers(this._questionReceived);
   }
 
   get answersWithComment(): Array<Answer> {
