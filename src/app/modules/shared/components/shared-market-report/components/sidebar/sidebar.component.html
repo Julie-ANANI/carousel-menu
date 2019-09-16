@@ -284,14 +284,14 @@
     <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
       <!-- textarea -->
       <ng-container *ngIf="question.controlType === 'textarea'">
-        <div *ngIf="answersTagsLists[question.identifier]?.length > 0" class="m-bottom-15">
+        <div class="m-bottom-15">
           <span class="d-flex align-center">
-            <label class="form-checkbox p-no-right">
-            <input
-              type="checkbox"
-              (change)="filterEverything($event, [question], question.controlType)"
-              [checked]="!filters[question.identifier]">
-            <i class="form-icon"></i>
+            <label *ngIf="answersTagsLists[question.identifier]?.length > 0" class="form-checkbox p-no-right">
+              <input
+                type="checkbox"
+                (change)="filterEverything($event, [question], question.controlType)"
+                [checked]="!filters[question.identifier]">
+              <i class="form-icon"></i>
             </label>
             <div style="flex: 1;">
               <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
@@ -301,30 +301,32 @@
             </div>
           </span>
         </div>
-        <div
-          *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
-          class="form-group">
-          <label class="form-checkbox">
-            <input
-              type="checkbox"
-              [name]="answerTag._id"
-              (change)="checkAnswerTag($event, question.identifier)"
-              [checked]="selectedAnswersTags[question.identifier][answerTag._id]">
-            <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
-          </label>
-        </div>
-        <!-- see more -->
-        <div
-          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
-          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
-                (click)="seeMore[question.identifier] = true"></span>
-        </div>
-        <!-- see less -->
-        <div
-          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
-          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
-                (click)="seeMore[question.identifier] = false"></span>
-        </div>
+        <ng-container *ngIf="answersTagsLists[question.identifier]?.length > 0">
+          <div
+            *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
+            class="form-group">
+            <label class="form-checkbox">
+              <input
+                type="checkbox"
+                [name]="answerTag._id"
+                (change)="checkAnswerTag($event, question.identifier)"
+                [checked]="selectedAnswersTags[question.identifier][answerTag._id]">
+              <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
+            </label>
+          </div>
+          <!-- see more -->
+          <div
+            *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
+            <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
+                  (click)="seeMore[question.identifier] = true"></span>
+          </div>
+          <!-- see less -->
+          <div
+            *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
+            <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
+                  (click)="seeMore[question.identifier] = false"></span>
+          </div>
+        </ng-container>
       </ng-container>
 
       <!-- checkbox/radio -->
