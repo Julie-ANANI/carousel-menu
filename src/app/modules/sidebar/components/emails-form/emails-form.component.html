@@ -63,12 +63,12 @@
       <app-shared-table [config]="config" [data]="tableInfos" *ngIf="isShowCampaignInfos"></app-shared-table>
 
       <!-- Create new filter on a country -->
-      <app-autocomplete-input
+      <app-auto-complete-input
         *ngIf="isFilterCountry"
         (update)="updateCountry($event)"
         [onlyOne]="true"
         [config]="getConfig('countries')">
-      </app-autocomplete-input>
+      </app-auto-complete-input>
 
       <!-- If a country is selected we show the settings -->
       <div class="form-group country-wrapper" *ngIf="(country !== null) || (isEditCountry)" style="margin-top: 50px">

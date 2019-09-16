@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AdminMonitoringComponent } from './admin-monitoring.component';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
 import { AdminAnswersGmailComponent } from './admin-answers-gmail/admin-answers-gmail.component';
+import { AdminProfessionalShieldComponent } from "./admin-professional-shield/admin-professional-shield.component";
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
@@ -28,6 +29,7 @@ import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-fo
     AdminEmailQueueComponent,
     AdminAnswersGmailComponent,
     AdminBatchInformationComponent,
+    AdminProfessionalShieldComponent
   ],
   exports: [
     AdminMonitoringComponent

@@ -21,7 +21,7 @@ import { SharedProjectSettingsModule } from '../../../../shared/components/share
 import { SharedTagModule } from '../../../../shared/components/shared-tag/shared-tag.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/admin-project-questionnaire.module';
-import { AutocompleteInputModule } from '../../../../utility-components/autocomplete-input/autocomplete-input.module';
+import { AutoCompleteInputModule } from '../../../../utility-components/auto-complete-input/auto-complete-input.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
 import { SidebarTagsModule } from '../../../../sidebar/components/tags/sidebar-tags.module';
@@ -49,7 +49,7 @@ import { MessageTemplate2Module } from '../../../../utility-components/messages/
     RouterModule,
     SidebarModule,
     FormsModule,
-    AutocompleteInputModule,
+    AutoCompleteInputModule,
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule,
     ProgressBarModule,

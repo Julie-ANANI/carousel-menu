@@ -16,13 +16,6 @@
     </div>
     <!-- /geography section -->
 
-    <!-- testing targeting world
-    <app-shared-targeting-world
-      [continentsConfiguration]="continentTarget"
-      [isEditable]="canEdit">
-    </app-shared-targeting-world>
-    /testing targeting world -->
-
     <!-- question section -->
     <div [ngClass]="adminSide ? 'col-11 col-xs-12' : 'col-md-12 col-7 col-lg-10 col-xl-8'">
       <div class="restrict-container">
@@ -47,11 +40,11 @@
                 {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
               </span>
             <div class="pd-input">
-              <app-autocomplete-input (update)="addCountryToExclude($event)" [config]="getConfig('countries')"></app-autocomplete-input>
+              <app-auto-complete-input (update)="addCountryToExclude($event)" [config]="getConfig('countries')"></app-auto-complete-input>
             </div>
           </div>
         </ng-container>
-        <!-- /Exclude countries -->
+         <!-- /Exclude countries -->
 
         <!-- Comment countries -->
         <ng-container *ngIf="!canEdit && !!innovation.settings.geography.comments">
@@ -92,7 +85,7 @@
           </ng-container>
 
         </ng-container>
-         <!-- /Comment countries -->
+        <!-- /Comment countries -->
 
         <!-- Activity sectors -->
         <div class="pd-ques">
@@ -160,7 +153,7 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-autocomplete-input (update)="addCompanyToInclude($event)" [config]="getConfig('includedCompanies')"></app-autocomplete-input>
+                <app-auto-complete-input (update)="addCompanyToInclude($event)" [config]="getConfig('includedCompanies')"></app-auto-complete-input>
               </div>
             </div>
           </ng-container>
@@ -186,7 +179,7 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-autocomplete-input (update)="addCompanyToExclude($event)" [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
+                <app-auto-complete-input (update)="addCompanyToExclude($event)" [config]="getConfig('excludedCompanies')"></app-auto-complete-input>
               </div>
             </div>
           </ng-container>

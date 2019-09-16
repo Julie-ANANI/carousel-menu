@@ -54,6 +54,7 @@ import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
 import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
 import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
+import { ShieldService } from "../../../services/shield/shield.service";
 
 @NgModule({
   imports: [
@@ -114,7 +115,8 @@ import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-p
     PresetsResolver,
     CampaignAnswersResolver,
     CampaignProfessionalsResolver,
-    ProjectTagsPoolResolver
+    ProjectTagsPoolResolver,
+    ShieldService
   ]
 })
 
