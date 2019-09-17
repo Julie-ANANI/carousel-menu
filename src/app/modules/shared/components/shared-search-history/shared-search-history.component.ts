@@ -7,6 +7,9 @@ import { Table } from '../../../table/models/table';
 import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
 import { COUNTRIES } from "../shared-search-pros/COUNTRIES";
 import { countries } from '../../../../models/static-data/country';
+import { Campaign } from "../../../../models/campaign";
+import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-shared-search-history',
@@ -23,6 +26,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _sidebarValue: SidebarInterface = {};
   private _tableInfos: Table;
   private _selectedRequest: any = null;
+  private _requestsToImport: Array<any> = [];
   private _paused = false;
   private _requests: Array<any> = [];
   private _total = 0;
@@ -34,9 +38,13 @@ export class SharedSearchHistoryComponent implements OnInit {
     search: "{}",
     sort: '{ "created": -1 }'
   };
+  private _chosenCampaign: Array<any> = [];
+  private _addToCampaignModal: boolean = false;
 
   constructor(
-    private _searchService: SearchService,
+    private _router: Router,
+     private _searchService: SearchService,
+    private _professionalsService: ProfessionalsService,
     private _notificationsService: TranslateNotificationsService
   ) {}
 
@@ -169,8 +177,30 @@ export class SharedSearchHistoryComponent implements OnInit {
         this._notificationsService.success('Requêtes mises en attente', `Les requêtes ont bien été mises en attente`);
       });
     } else {
-      console.log(value._action);
+      this._requestsToImport = requestsIds;
+      this._addToCampaignModal = true;
     }
+  }
+
+  updateCampaign(event: any) {
+    this._chosenCampaign = event.value;
+  }
+
+  addToCampaign(campaigns: Array<Campaign>, goToCampaign?: boolean) {
+    this._addToCampaignModal = false;
+    const campaign = campaigns[0];
+    const params: any = {
+      newCampaignId: campaign._id,
+      newInnovationId: campaign.innovation,
+      requestIds: this._requestsToImport,
+    };
+    this._professionalsService.addFromHistory(params).subscribe((result: any) => {
+      this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
+      if (goToCampaign) {
+        this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
+      }
+      this._requestsToImport = [];
+    });
   }
 
   public relaunchRequests() {
@@ -235,5 +265,11 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   get selectedRequest(): any {
     return this._selectedRequest;
+  }
+  get chosenCampaign(): Array<any> {
+    return this._chosenCampaign;
+  }
+  get addToCampaignModal () {
+    return this._addToCampaignModal;
   }
 }

@@ -34,3 +34,29 @@
   </app-sidebar-search-history>
 </app-sidebar>
 <!-- /sidebar to advanced search -->
+
+
+<!-- MODAL : Ajout de pros à une campagne -->
+<app-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
+
+  <section class="modal-body">
+    <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
+
+    <app-autocomplete-input
+      (update)="updateCampaign($event)"
+      [onlyOne]="true"
+      [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
+    </app-autocomplete-input>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length" class="button is-primary">
+      {{ 'SEARCH.CAMPAIGN.ADDANDSEE' | translate }}
+    </button>
+    <button (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length" class="button is-primary">
+      {{ 'SEARCH.ADD' | translate }}
+    </button>
+  </footer>
+
+</app-modal>
