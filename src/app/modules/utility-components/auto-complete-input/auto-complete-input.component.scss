@@ -38,6 +38,8 @@
   .aci-answers-wrapper {
     margin: 1rem 0 0 0;
     list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
 
     li {
       @include control-transition();
@@ -49,6 +51,15 @@
 
       &:first-child {
         margin-top: 0;
+
+        .aci-icons-wrapper {
+
+          .tooltip::before, .tooltip::after {
+            display: none;
+          }
+
+        }
+
       }
 
       .aci-answer-wrapper, .aci-icons-wrapper {

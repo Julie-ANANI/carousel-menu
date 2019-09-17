@@ -28,6 +28,8 @@ export class AutoCompleteInputComponent {
 
   @Input() isAdmin: boolean = false;
 
+  @Input() onlyOne: boolean = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
+
   @Input() set config(config: AutoCompleteInputConfigInterface) {
     if (config) {
 
@@ -46,6 +48,7 @@ export class AutoCompleteInputComponent {
             this._answerList.push(value);
           }
         });
+
       }
 
     }
@@ -61,7 +64,7 @@ export class AutoCompleteInputComponent {
 
   @Input() forceSelection = false; // si le booléen est à true, on accepte un string hors auto-complete
 
-  @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
+
 
   @Input() adminMode = false;
 
@@ -122,7 +125,7 @@ export class AutoCompleteInputComponent {
     }
   }
 
-  addProposition(val: any): void {
+  public addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
 
     if (val) {

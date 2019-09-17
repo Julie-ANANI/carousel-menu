@@ -192,6 +192,7 @@ export class SharedTargetingWorldComponent implements OnInit {
       case 'include':
         return {
           placeholder: 'SHARED_TARGETING_WORLD.PLACEHOLDER.TO_INCLUDE_COUNTRY',
+          initialData: this._targetingWorldData.includeCountries,
           type: 'countries'
         };
 
@@ -202,6 +203,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     if (this.isEditable || this.isAdmin) {
       event.value.forEach((country: Country) => {
         if(!this._targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
+          this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.INCLUDED');
           this._targetingWorldData.includeCountries.push(this._getCountryByName(country.name));
           this._filterExcludedCountries(country);
           this._emitChanges();
@@ -219,7 +221,7 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   public removeIncludedCountry(event: { value: Country }) {
-    this._countryToExclude(event.value);
+    this._countryToExclude(event.value, true);
     this._emitChanges();
   }
 
@@ -265,6 +267,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     if (this._targetingWorldData.includeCountries.some((existCountry) => existCountry.continent === event.value.continent
       && existCountry.subcontinent === event.value.subcontinent)) {
       this._targetingWorldData.includeCountries.push(event.value);
+      this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.INCLUDED');
     }
     this._filterExcludedCountries(event.value);
     this._emitChanges();

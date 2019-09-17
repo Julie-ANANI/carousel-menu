@@ -17,8 +17,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
-    console.log(this._innovation.settings.geography)
-
   }
 
   @Input() set editable(value: boolean) {
@@ -136,15 +134,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
       this.updateSettings();
     }
   }
-
-
-  /**
-   * Add a country to the exclusion list
-   */
-  /*addCountryToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.geography.exclude = event.value;
-    this.updateSettings();
-  }*/
 
 
   get continentTarget(): any {

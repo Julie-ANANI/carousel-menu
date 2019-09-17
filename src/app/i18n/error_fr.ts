@@ -99,6 +99,8 @@ export const ERROR = {
 
   'COUNTRY': {
     'ADDED': 'Ce pays a été ajouté.',
+    'INCLUDED': 'Ce pays a été inclus.',
+    'ALREADY_ADDED': 'Ce pays a déjà été ajouté.',
     'EXCLUDED': 'Ce pays a été exclu.',
     'ALREADY_EXCLUDED': 'Ce pays a déjà été exclu.'
   },
