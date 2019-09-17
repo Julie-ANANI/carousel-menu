@@ -27,7 +27,7 @@
     <!-- /input area -->
 
     <!-- answer area -->
-    <ul *ngIf="answerList.length > 0" class="aci-answers-wrapper">
+    <ul *ngIf="answerList.length > 0" class="aci-answers-wrapper" [ngClass]="{ 'fixed-height': answerList.length > 5 }">
       <li *ngFor="let answer of answerList; let i = index">
 
         <!-- text -->
@@ -37,7 +37,7 @@
         <!-- text -->
 
         <!-- icons -->
-        <div [ngClass]="{ 'hide-tooltip': answerList.length > 4 }" class="aci-icons-wrapper">
+        <div class="aci-icons-wrapper">
 
           <!-- delete icon -->
           <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable && !isAdmin }" class="icon-container m-no-right is-overlay">

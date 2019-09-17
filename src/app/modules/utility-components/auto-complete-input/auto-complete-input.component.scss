@@ -38,9 +38,6 @@
   .aci-answers-wrapper {
     margin: 1rem 0 0 0;
     list-style: none;
-    max-height: 300px;
-    overflow: hidden;
-    overflow-y: auto;
 
     li {
       @include control-transition();
@@ -52,15 +49,6 @@
 
       &:first-child {
         margin-top: 0;
-
-        .hide-tooltip {
-
-          .tooltip::before, .tooltip::after {
-            display: none;
-          }
-
-        }
-
       }
 
       .aci-answer-wrapper, .aci-icons-wrapper {
@@ -76,6 +64,29 @@
 
         .icon-container {
           margin-right: $unit-1;
+        }
+
+      }
+
+    }
+
+    &.fixed-height {
+      max-height: 320px;
+      overflow: hidden;
+      overflow-y: auto;
+
+      li {
+
+        &:first-child {
+
+          .aci-icons-wrapper {
+
+            .tooltip::before, .tooltip::after {
+              display: none;
+            }
+
+          }
+
         }
 
       }
