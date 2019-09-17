@@ -1,6 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { SharedWorldmapService } from './services/shared-worldmap.service';
-import { Country } from '../../../../models/country';
 
 @Component({
   selector: 'app-shared-worldmap',
@@ -8,15 +7,19 @@ import { Country } from '../../../../models/country';
   styleUrls: ['shared-worldmap.component.scss']
 })
 
-export class SharedWorldmapComponent implements OnInit{
+export class SharedWorldmapComponent implements OnInit {
 
-  @Input() tempActive: boolean = true; // its temp don't use it.
-
-  @Input() maxWidth: string;
+  @Input() width: string;
 
   @Input() countriesColor: string = '#2ECC71';
 
-  @Input() set targetingCountries(value: Array<Country>) {
+  @Input() isEditable = true;
+
+  @Input() synthesis = false;
+
+  // todo uncomment this
+
+  /*@Input() set targetingCountries(value: Array<Country>) {
 
     Array.prototype.forEach.call(this._elementRef.nativeElement.getElementsByClassName('country'), (country_el: HTMLElement) => {
       country_el.style.fill = '#E2E2E2';
@@ -24,30 +27,20 @@ export class SharedWorldmapComponent implements OnInit{
 
     if (Array.isArray(value) && value.length > 0) {
       value.forEach((country) => {
-        const countryElement = this._elementRef.nativeElement.getElementsByClassName(country.code);
+        const countryElement = this._elementRef.nativeElement.getElementsByClassName(country);
         if (countryElement && countryElement.length) {
           Array.prototype.forEach.call(countryElement, (country_el: HTMLElement) => {
             country_el.style.fill = this.countriesColor;
           });
         } else {
-          console.log(`${country.code} is nowhere to be found in the map.`);
+          console.log(`${country} is nowhere to be found in the map.`);
         }
       });
     }
 
-  }
+  }*/
 
-
-
-
-
-  // todo remove all these
-
-  @Input() width = '800px';
-
-  @Input() isEditable = true;
-
-  @Input() synthesis = false;
+  // todo remove all these  not use it just temporary.
 
   @Input() set countries(value: Array<string>) {
     /*
@@ -58,6 +51,7 @@ export class SharedWorldmapComponent implements OnInit{
         const country_elems = this._elementRef.nativeElement.getElementsByClassName(country);
         if (country_elems && country_elems.length) {
           Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
+            console.log(country_el);
             country_el.style.fill = this.countriesColor;
           });
         } else {

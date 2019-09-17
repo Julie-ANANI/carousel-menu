@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 import { SharedTargetingWorldInterface } from './interfaces/shared-targeting-world-interface';
 import { IndexService } from '../../../../services/index/index.service';
 import { Country } from '../../../../models/country';
 import { Response } from '../../../../models/response';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
+import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-targeting-world',

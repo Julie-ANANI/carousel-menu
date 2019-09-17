@@ -4,8 +4,6 @@ import * as _ from 'lodash';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../models/innovation';
 import { Subject } from 'rxjs';
-import { SharedTargetingWorldInterface } from '../shared-targeting-world/interfaces/shared-targeting-world-interface';
-import {SharedWorldmapService} from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -135,6 +133,14 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Add a country to the exclusion list
+   */
+  addCountryToExclude(event: {value: Array<string>}): void {
+    this._innovation.settings.geography.exclude = event.value;
+    this.updateSettings();
+  }
+
   get continentTarget(): any {
     return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
   }
@@ -214,7 +220,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this.updateSettings();
   }
 
-  public onTargetingChanged(value: SharedTargetingWorldInterface) {
+  /*public onTargetingChanged(value: SharedTargetingWorldInterface) {
     this._innovation.settings.geography.continentTarget = SharedWorldmapService.reinitializeContinents();
 
     value.includeContinents.forEach((value) => {
@@ -225,7 +231,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this._innovation.settings.geography.exclude = value.excludeCountries;
 
     this.updateSettings();
-  }
+  }*/
 
   updateSettings() {
     if (this._canEdit) {

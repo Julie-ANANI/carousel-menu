@@ -7,13 +7,16 @@
       <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.LABEL' | translate }}</span>
       <div class="pd-input">
         <app-shared-worldmap
-          [targetingCountries]="innovation.settings.geography.include">
+          (updateContinent)="continentModificationDrain($event)"
+          [initialConfiguration]="continentTarget"
+          [isEditable]="canEdit"
+          [width]="'auto'">
         </app-shared-worldmap>
       </div>
     </div>
     <!-- /geography section -->
 
-    <!-- target world -->
+    <!-- target world
     <div *ngIf="canEdit" class="column col-md-12 col-11">
       <div class="pd-input">
         <app-shared-targeting-world
@@ -24,7 +27,7 @@
         </app-shared-targeting-world>
       </div>
     </div>
-    <!-- /target world -->
+     /target world -->
 
     <!-- question section -->
     <div class="column" [ngClass]="adminSide ? 'col-11 col-xs-12' : 'col-md-12 col-7 col-lg-10 col-xl-8'">
@@ -44,7 +47,7 @@
           </div>
         </ng-container>
 
-        <!--<ng-container *ngIf="canEdit">
+        <ng-container *ngIf="canEdit">
           <div class="pd-para">
               <span class="text">
                 {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
@@ -53,7 +56,7 @@
               <app-auto-complete-input (update)="addCountryToExclude($event)" [config]="getConfig('countries')"></app-auto-complete-input>
             </div>
           </div>
-        </ng-container>-->
+        </ng-container>
          <!-- /Exclude countries -->
 
         <!-- Comment countries -->

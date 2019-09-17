@@ -1,7 +1,7 @@
-<div id="shared-worldmap">
+<!--<div id="shared-world-map">
 
-  <!-- map svg -->
-  <div [ngStyle]="{ 'max-width': maxWidth }" class="swm-map-wrapper">
+  &lt;!&ndash; map svg &ndash;&gt;
+  <div [ngStyle]="{ 'width': width }" class="swm-map-wrapper">
     <svg viewBox="0 0 800 330" version="1.1" xmlns="http://www.w3.org/2000/svg">
       <g class="continent europe">
         <g class="ex-yougoslavie">
@@ -560,14 +560,14 @@
       </g>
     </svg>
   </div>
-  <!-- /map svg -->
+  &lt;!&ndash; /map svg &ndash;&gt;
 
 
-</div>
+</div>-->
 
 
-<!--
-<section *ngIf="tempActive" [ngClass]="synthesis ? 'synthesis-wrapper' :  'not-synthesis-wrapper'">
+
+<section [ngClass]="synthesis ? 'synthesis-wrapper' :  'not-synthesis-wrapper'">
 
   <ng-container *ngIf="isEditable && !synthesis">
     <label class="form-switch">
@@ -1188,5 +1188,4 @@
   </div>
 
 </section>
--->
 

@@ -24,7 +24,7 @@ import { SharedTargetingWorldModule } from '../shared-targeting-world/shared-tar
     AutoCompleteInputModule,
     InputListModule,
     MessageTemplate1Module,
-    SharedTargetingWorldModule
+    SharedTargetingWorldModule,
   ],
   declarations: [
     SharedProjectSettingsComponent
