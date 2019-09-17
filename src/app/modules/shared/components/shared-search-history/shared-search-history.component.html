@@ -1,3 +1,17 @@
+<h6>
+  <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
+  <span *ngIf="paused" class="text-error">Module en pause</span>
+  <span *ngIf="!paused" class="text-success">
+      Module en fonctionnement
+    </span>
+  -
+  <span [ngClass]="{
+  'text-success': googleQuota > 10000,
+  'text-warning': googleQuota < 10000 && googleQuota > 5000,
+  'text-error': googleQuota < 5000}">
+    {{ googleQuota }} requêtes google restantes</span>
+</h6>
+
 <div class="column col-6 col-mx-auto p-20">
   <app-autocomplete-input
     (update)="updateInno($event)"
