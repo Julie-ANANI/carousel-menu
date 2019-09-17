@@ -6,6 +6,7 @@ import { ResponseService } from '../../../shared-market-report/services/response
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PieChart } from '../../../../../../models/pie-chart';
+import {DataService} from "../../../shared-market-report/services/data.service";
 
 @Component({
   selector: 'app-pie-chart',
@@ -19,14 +20,7 @@ export class PieChartComponent implements OnInit {
     this._question = value;
   }
 
-  @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
-    this._loadData();
-  }
-
   private _question: Question;
-
-  private _answers: Array<Answer> = [];
 
   private _pieChart: PieChart;
 
@@ -45,6 +39,7 @@ export class PieChartComponent implements OnInit {
   private _isBrowser: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _dataService: DataService,
               private _translateService: TranslateService) {
 
     this._isBrowser = isPlatformBrowser(this.platformId);
@@ -52,16 +47,11 @@ export class PieChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._loadData();
-  }
-
-  private _loadData() {
-    if (this._question && this._question.identifier && Array.isArray(this._question.options)) {
-
-      this._barsData = ResponseService.getBarsData(this._question, this._answers);
+    this._dataService.getAnswers(this._question).subscribe((answers: Array<Answer>) => {
+      this._barsData = ResponseService.getBarsData(this._question, answers);
 
       if (this._question.controlType === 'radio') {
-        this._pieChart = ResponseService.getPieChartData(this._barsData, this._answers);
+        this._pieChart = ResponseService.getPieChartData(this._barsData, answers);
 
         if (this._pieChart) {
           this._colors = [{backgroundColor: this._pieChart.colors || []}];
@@ -72,28 +62,15 @@ export class PieChartComponent implements OnInit {
         }
 
       }
-
-    }
+    });
   }
 
   get lang(): string {
     return this._translateService.currentLang;
   }
 
-  get question(): Question {
-    return this._question;
-  }
-
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
   get pieChart(): PieChart {
     return this._pieChart;
-  }
-
-  get barsData(): Array<BarData> {
-    return this._barsData;
   }
 
   get colors() {

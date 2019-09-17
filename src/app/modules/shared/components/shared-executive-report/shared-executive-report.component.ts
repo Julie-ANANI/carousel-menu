@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
 import { Answer } from '../../../../models/answer';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -10,7 +10,7 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
   styleUrls: ['./shared-executive-report.component.scss']
 })
 
-export class SharedExecutiveReportComponent implements OnInit {
+export class SharedExecutiveReportComponent {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
@@ -27,9 +27,6 @@ export class SharedExecutiveReportComponent implements OnInit {
 
   constructor (private _answerService: AnswerService,
                private _translateNotificationsService: TranslateNotificationsService) { }
-
-  ngOnInit(): void {
-  }
 
   private _getAnswers() {
     if (this._innovation) {

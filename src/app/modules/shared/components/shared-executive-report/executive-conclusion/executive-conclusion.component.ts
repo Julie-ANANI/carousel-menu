@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { User } from '../../../../../models/user.model';
 import { environment } from '../../../../../../environments/environment';
 import { Innovation } from '../../../../../models/innovation';
 
@@ -11,19 +10,7 @@ import { Innovation } from '../../../../../models/innovation';
 
 export class ExecutiveConclusionComponent {
 
-  @Input() set project(value: Innovation) {
-
-    if (value.marketReport && value.marketReport.finalConclusion) {
-      this._conclusion = value.marketReport.finalConclusion.conclusion;
-    }
-
-    this._operator = value.operator || null;
-
-  }
-
-  private _conclusion = '';
-
-  private _operator: User;
+  @Input() project: Innovation;
 
   public companyUrl(): string {
     return environment.companyURL;
@@ -35,14 +22,6 @@ export class ExecutiveConclusionComponent {
 
   public isMainDomain(): boolean {
     return environment.domain === 'umi' || environment.domain === 'dynergie';
-  }
-
-  get conclusion(): string {
-    return this._conclusion;
-  }
-
-  get operator(): User {
-    return this._operator;
   }
 
 }

@@ -5,7 +5,7 @@ import { DataService } from '../../services/data.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
-import { environment } from "../../../../../../../environments/environment";
+import { environment } from '../../../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { PieChart } from '../../../../../../models/pie-chart';
 
