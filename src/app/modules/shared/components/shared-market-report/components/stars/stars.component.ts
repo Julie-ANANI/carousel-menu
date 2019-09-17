@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
-import { Innovation } from '../../../../../../models/innovation';
 import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
 import { DataService } from '../../services/data.service';
@@ -14,8 +13,6 @@ import { ResponseService } from '../../services/response.service';
 })
 
 export class StarsComponent implements OnInit {
-
-  @Input() innovation: Innovation;
 
   @Input() question: Question;
 
