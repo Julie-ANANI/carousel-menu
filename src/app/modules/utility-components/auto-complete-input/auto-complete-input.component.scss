@@ -39,6 +39,7 @@
     margin: 1rem 0 0 0;
     list-style: none;
     max-height: 300px;
+    overflow: hidden;
     overflow-y: auto;
 
     li {
@@ -52,7 +53,7 @@
       &:first-child {
         margin-top: 0;
 
-        .aci-icons-wrapper {
+        .hide-tooltip {
 
           .tooltip::before, .tooltip::after {
             display: none;

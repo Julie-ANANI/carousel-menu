@@ -37,7 +37,7 @@
         <!-- text -->
 
         <!-- icons -->
-        <div class="aci-icons-wrapper">
+        <div [ngClass]="{ 'hide-tooltip': answerList.length > 4 }" class="aci-icons-wrapper">
 
           <!-- delete icon -->
           <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable && !isAdmin }" class="icon-container m-no-right is-overlay">
