@@ -156,27 +156,24 @@ export class SharedTargetingWorldComponent implements OnInit {
   public onChangeContinent(event: Event, continent: string) {
     if (this.isEditable || this.isAdmin) {
 
-      this._filterCountriesOfContinent(continent);
-      this._filterExCountriesOfContinent(continent);
-
       if ((event.target as HTMLInputElement).checked) {
         this._targetingWorldData.includeContinents.push(continent);
-        this._targetingWorldData.includeCountries.push(...this.getCountriesByContinent(continent));
       } else {
         this._targetingWorldData.includeContinents = this._targetingWorldData.includeContinents.filter((value) => value !== continent);
       }
 
+      this._targetingWorldData.includeCountries = [];
+      this._includeCountries();
+      this._filterExCountriesOfContinent(continent);
       this._emitChanges();
 
     }
   }
 
-  private _filterCountriesOfContinent(continent: string) {
-    this._targetingWorldData.includeCountries = this._targetingWorldData.includeCountries.filter((value) => value.continent.toLowerCase() !== continent);
-  }
-
   private _filterExCountriesOfContinent(continent: string) {
-    this._targetingWorldData.excludeCountries = this._targetingWorldData.excludeCountries.filter((value) => value.continent.toLowerCase() !== continent);
+    this._targetingWorldData.excludeCountries = this._targetingWorldData.excludeCountries.filter((value) => {
+      return this.getCountriesByContinent(continent).indexOf(value) < 0;
+    });
   }
 
   public autoCompleteConfig(type: string): any {
@@ -204,7 +201,7 @@ export class SharedTargetingWorldComponent implements OnInit {
       event.value.forEach((country: Country) => {
         if(!this._targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
           this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.INCLUDED');
-          this._targetingWorldData.includeCountries.push(this._getCountryByName(country.name));
+          this._targetingWorldData.includeCountries = [...this._targetingWorldData.includeCountries, this._getCountryByName(country.name)];
           this._filterExcludedCountries(country);
           this._emitChanges();
         }
@@ -266,7 +263,7 @@ export class SharedTargetingWorldComponent implements OnInit {
   public removeExcludedCountry(event: { value: Country }) {
     if (this._targetingWorldData.includeCountries.some((existCountry) => existCountry.continent === event.value.continent
       && existCountry.subcontinent === event.value.subcontinent)) {
-      this._targetingWorldData.includeCountries.push(event.value);
+      this._targetingWorldData.includeCountries = [...this._targetingWorldData.includeCountries, event.value];
       this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.INCLUDED');
     }
     this._filterExcludedCountries(event.value);
@@ -286,7 +283,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     if (this.isEditable || this.isAdmin) {
 
       if ((event.target as HTMLInputElement).checked) {
-        this._targetingWorldData.includeCountries.push(country);
+        this._targetingWorldData.includeCountries = [...this._targetingWorldData.includeCountries, country];
         this._filterExcludedCountries(country);
       } else {
         const event = { value: country };

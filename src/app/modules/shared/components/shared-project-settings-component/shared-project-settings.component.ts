@@ -135,7 +135,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-
   get continentTarget(): any {
     return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
   }
