@@ -11,8 +11,7 @@ export interface InnovationSettings {
       readonly americaNord: boolean;
       readonly americaSud: boolean;
     };
-    //exclude: Array<Country>;
-    exclude: Array<string>;
+    exclude: Array<Country>;
     include: Array<Country>;
     comments: string;
   };

@@ -13,13 +13,7 @@ export class SharedWorldmapComponent implements OnInit {
 
   @Input() countriesColor: string = '#2ECC71';
 
-  @Input() isEditable = true;
-
-  @Input() synthesis = false;
-
-  // todo uncomment this
-
-  /*@Input() set targetingCountries(value: Array<Country>) {
+  @Input() set targetingCountries(value: Array<string>) {
 
     Array.prototype.forEach.call(this._elementRef.nativeElement.getElementsByClassName('country'), (country_el: HTMLElement) => {
       country_el.style.fill = '#E2E2E2';
@@ -38,9 +32,13 @@ export class SharedWorldmapComponent implements OnInit {
       });
     }
 
-  }*/
+  }
 
   // todo remove all these  not use it just temporary.
+
+  @Input() isEditable = true;
+
+  @Input() synthesis = false;
 
   @Input() set countries(value: Array<string>) {
     /*
@@ -51,7 +49,6 @@ export class SharedWorldmapComponent implements OnInit {
         const country_elems = this._elementRef.nativeElement.getElementsByClassName(country);
         if (country_elems && country_elems.length) {
           Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
-            console.log(country_el);
             country_el.style.fill = this.countriesColor;
           });
         } else {

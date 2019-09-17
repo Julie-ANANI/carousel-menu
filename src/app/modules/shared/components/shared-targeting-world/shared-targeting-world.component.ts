@@ -84,6 +84,10 @@ export class SharedTargetingWorldComponent implements OnInit {
         this._filterExCountriesFromIncluded();
       }
 
+      if (!this.isEditable) {
+        this._emitChanges();
+      }
+
     }, () => {
       this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
