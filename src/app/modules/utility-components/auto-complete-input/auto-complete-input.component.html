@@ -27,7 +27,7 @@
     <!-- /input area -->
 
     <!-- answer area -->
-    <ul *ngIf="answerList.length > 0" class="aci-answers-wrapper" [ngClass]="{ 'fixed-height': answerList.length > 5 }">
+    <ul *ngIf="answerList.length > 0" [ngClass]="{ 'fixed-height': answerList.length > 5 }" class="aci-answers-wrapper">
       <li *ngFor="let answer of answerList; let i = index">
 
         <!-- text -->
