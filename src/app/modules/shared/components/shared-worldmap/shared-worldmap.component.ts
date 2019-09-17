@@ -1,17 +1,49 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { SharedWorldmapService } from './services/shared-worldmap.service';
+import { Country } from '../../../../models/country';
 
 @Component({
-  selector: 'app-worldmap',
+  selector: 'app-shared-worldmap',
   templateUrl: 'shared-worldmap.component.html',
   styleUrls: ['shared-worldmap.component.scss']
 })
 
 export class SharedWorldmapComponent implements OnInit{
 
-  @Input() width = '800px';
+  @Input() tempActive: boolean = true; // its temp don't use it.
 
-  @Input() countriesColor: string;
+  @Input() maxWidth: string;
+
+  @Input() countriesColor: string = '#2ECC71';
+
+  @Input() set targetingCountries(value: Array<Country>) {
+
+    Array.prototype.forEach.call(this._elementRef.nativeElement.getElementsByClassName('country'), (country_el: HTMLElement) => {
+      country_el.style.fill = '#E2E2E2';
+    });
+
+    if (Array.isArray(value) && value.length > 0) {
+      value.forEach((country) => {
+        const countryElement = this._elementRef.nativeElement.getElementsByClassName(country.code);
+        if (countryElement && countryElement.length) {
+          Array.prototype.forEach.call(countryElement, (country_el: HTMLElement) => {
+            country_el.style.fill = this.countriesColor;
+          });
+        } else {
+          console.log(`${country.code} is nowhere to be found in the map.`);
+        }
+      });
+    }
+
+  }
+
+
+
+
+
+  // todo remove all these
+
+  @Input() width = '800px';
 
   @Input() isEditable = true;
 
@@ -23,7 +55,7 @@ export class SharedWorldmapComponent implements OnInit{
      */
     if (Array.isArray(value) && value.length > 0 && !this.countriesData) {
       value.forEach((country) => {
-        const country_elems = this._elem.nativeElement.getElementsByClassName(country);
+        const country_elems = this._elementRef.nativeElement.getElementsByClassName(country);
         if (country_elems && country_elems.length) {
           Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
             country_el.style.fill = this.countriesColor;
@@ -99,7 +131,7 @@ export class SharedWorldmapComponent implements OnInit{
 
     for (let country in countries) {
       const color = countries[country] < this._firstThreshold ? "#97E8B9" : countries[country] < this._secondThreshold ? "#9BDE56" : "#39CB74";
-      const country_elems = this._elem.nativeElement.getElementsByClassName(country);
+      const country_elems = this._elementRef.nativeElement.getElementsByClassName(country);
       if (country_elems && country_elems.length) {
         Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
           country_el.style.fill = color;
@@ -125,18 +157,16 @@ export class SharedWorldmapComponent implements OnInit{
 
   @Output() hoveredContinent = new EventEmitter<string>();
 
+  /* Initialise continents selections with everything to false */
+  private _continents = SharedWorldmapService.reinitializeContinents();
+
   public showLegend: boolean = false;
 
   private _firstThreshold: number;
+
   private _secondThreshold: number;
 
-  /* Initialise continents selections with everything to false */
-  private _continents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
-    acc[cont] = false;
-    return acc;
-  }, {} as any);
-
-  constructor(private _elem: ElementRef,
+  constructor(private _elementRef: ElementRef,
               private _sharedWorldmapService: SharedWorldmapService,
               private _viewContainerRef: ViewContainerRef) {}
 
