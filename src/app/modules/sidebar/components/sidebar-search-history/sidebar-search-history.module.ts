@@ -7,6 +7,7 @@ import { SidebarSearchHistoryComponent } from './sidebar-search-history.componen
 
 import { SidebarModule } from '../../sidebar.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
+import { TableModule } from "../../../table/table.module";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
     ReactiveFormsModule,
     TranslateModule.forChild(),
     SidebarModule,
-    CountryFlagModule
+    CountryFlagModule,
+    TableModule
   ],
   declarations: [
    SidebarSearchHistoryComponent

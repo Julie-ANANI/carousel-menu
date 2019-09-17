@@ -28,7 +28,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _total = 0;
   private _googleQuota = 30000;
   private _config: Config = {
-    fields: 'entity keywords oldKeywords created country elapsedTime status countries cost flag campaign motherRequest totalResults metadata results',
+    fields: 'entity keywords created country elapsedTime status countries cost flag campaign innovation motherRequest totalResults metadata results',
     limit: "10",
     offset: "0",
     search: "{}",
@@ -67,7 +67,6 @@ export class SharedSearchHistoryComponent implements OnInit {
       .subscribe((result: any) => {
         if(result.requests) {
           this._requests = result.requests.map((request: any) => {
-            request.keywords = request.keywords || request.oldKeywords[0].original;
             request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
             if (request.countries && request.countries.length) {
               request.targetting = "";
@@ -188,22 +187,6 @@ export class SharedSearchHistoryComponent implements OnInit {
       }
     });
   }
-
-  public getChildren (request: any) {
-    if (!request.loaded) {
-      this._searchService.getRequests({
-        'motherRequest': request._id,
-        'region': '',
-        'fields': 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results'
-      })
-        .pipe(first())
-        .subscribe((children: any) => {
-          request.request = children.requests;
-          request.loaded = true;
-        });
-    }
-    request.show = !request.show;
-  };
 
   public stopRequest (requestId: string) {
     this._searchService.stopRequest(requestId).pipe(first()).subscribe((res: any) => {
