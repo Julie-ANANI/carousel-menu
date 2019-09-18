@@ -13,10 +13,10 @@
 </h6>
 
 <div class="column col-6 col-mx-auto p-20">
-  <app-autocomplete-input
+  <app-auto-complete-input
     (update)="updateInno($event)"
     [config]="{placeholder: 'Innovation', type: 'innovation'}">
-  </app-autocomplete-input>
+  </app-auto-complete-input>
 </div>
 
 <app-shared-table
@@ -42,11 +42,11 @@
   <section class="modal-body">
     <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
 
-    <app-autocomplete-input
+    <app-auto-complete-input
       (update)="updateCampaign($event)"
       [onlyOne]="true"
       [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
-    </app-autocomplete-input>
+    </app-auto-complete-input>
   </section>
 
   <footer class="modal-footer">
