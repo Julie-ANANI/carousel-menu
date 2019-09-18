@@ -13,16 +13,9 @@ export class SharedWorldmapService {
     return SharedWorldmapService._continentsList.every((c) => selectedContinents[c] === true);
   }
 
-  public static reinitializeContinents(): any {
+  public static setContinents(value: boolean): any {
     return SharedWorldmapService._continentsList.reduce((acc, cont) => {
-      acc[cont] = false;
-      return acc;
-    }, {} as any);
-  }
-
-  public static reinitializeContinentsToTrue(): any {
-    return SharedWorldmapService._continentsList.reduce((acc, cont) => {
-      acc[cont] = true;
+      acc[cont] = value;
       return acc;
     }, {} as any);
   }
@@ -34,7 +27,7 @@ export class SharedWorldmapService {
         Array.prototype.forEach.call(continent_elem, (continent_el: HTMLElement) => {
           const countries_elems = continent_el.getElementsByTagName('path');
           Array.prototype.forEach.call(countries_elems, (country_el: HTMLElement) => {
-            this._countries[country_el.getAttribute('class')] = continent;
+            this._countries[country_el.getAttribute('id')] = continent;
           });
         });
       });

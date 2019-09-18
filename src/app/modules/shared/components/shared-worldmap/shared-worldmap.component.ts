@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { SharedWorldmapService } from './services/shared-worldmap.service';
 
 @Component({
@@ -13,59 +13,74 @@ export class SharedWorldmapComponent implements OnInit {
 
   @Input() countriesColor: string = '#2ECC71';
 
+  /***
+   * use this when you have only the list of the
+   * countries and want to paint them.
+   * @param value
+   */
   @Input() set targetingCountries(value: Array<string>) {
 
-    Array.prototype.forEach.call(this._elementRef.nativeElement.getElementsByClassName('country'), (country_el: HTMLElement) => {
-      country_el.style.fill = '#E2E2E2';
-    });
+    this._reinitializeMap();
 
     if (Array.isArray(value) && value.length > 0) {
       value.forEach((country) => {
-        const countryElement = this._elementRef.nativeElement.getElementsByClassName(country);
-        if (countryElement && countryElement.length) {
-          Array.prototype.forEach.call(countryElement, (country_el: HTMLElement) => {
-            country_el.style.fill = this.countriesColor;
-          });
-        } else {
-          console.log(`${country} is nowhere to be found in the map.`);
-        }
+        this._colorCountry(country);
       });
     }
 
   }
 
-  // todo remove all these  not use it just temporary.
-
-  @Input() isEditable = true;
-
-  @Input() synthesis = false;
-
-  @Input() set countries(value: Array<string>) {
-    /*
-     * TODO: Has anyone thought about how to remove a country from the list ?
-     */
-    if (Array.isArray(value) && value.length > 0 && !this.countriesData) {
-      value.forEach((country) => {
-        const country_elems = this._elementRef.nativeElement.getElementsByClassName(country);
-        if (country_elems && country_elems.length) {
-          Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
-            country_el.style.fill = this.countriesColor;
-          });
-        } else {
-          console.log(`This country is nowhere to be found in the svg map ${country}`);
-        }
-      });
-    }
-  }
-
+  /***
+   * use this when with the list of countries you have the data
+   * and base on that data you want to paint the map.
+   * @param countries
+   */
   @Input() set countriesData(countries: any) {
-    this.showLegend = true;
+    this._calculateCountriesData(countries);
+  }
+
+  private _showLegend: boolean = false;
+
+  private _firstThreshold: number;
+
+  private _secondThreshold: number;
+
+  constructor(private _elementRef: ElementRef,
+              private _sharedWorldmapService: SharedWorldmapService,
+              private _viewContainerRef: ViewContainerRef) {}
+
+  ngOnInit() {
+    this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
+  }
+
+  private _reinitializeMap() {
+    Array.prototype.forEach.call(this._elementRef.nativeElement.getElementsByClassName('country'), (country_el: HTMLElement) => {
+      country_el.style.fill = '#E2E2E2';
+    });
+  }
+
+  private _colorCountry(country: string, color: string = this.countriesColor) {
+    const countryElement = this._elementRef.nativeElement.getElementsByClassName(country);
+
+    if (countryElement && countryElement.length) {
+      Array.prototype.forEach.call(countryElement, (country_el: HTMLElement) => {
+        country_el.style.fill = color;
+      });
+    } else {
+      console.log(`${country} is nowhere to be found in the map.`);
+    }
+
+  }
+
+  private _calculateCountriesData(countries: any) {
+    this._showLegend = true;
 
     // First we create an array with all the values, without doublons
     const valuesSet = new Set();
     for (let key in countries) {
       valuesSet.add(countries[key]);
     }
+
     const results = Array.from(valuesSet).sort((a, b) => a - b);
 
     // auxiliary function to calculate the squared deviation of an array
@@ -77,6 +92,7 @@ export class SharedWorldmapComponent implements OnInit {
         return 0;
       }
     };
+
     if (results.length) {
       let firstGroup: Array<number> = [];
       let secondGroup: Array<number> = [];
@@ -102,11 +118,14 @@ export class SharedWorldmapComponent implements OnInit {
           }
         }
       }
+
       if (!optimalGroups) {
         // Si on n'a pas pu entrer dans toutes les boucles et donc définir le set optimal, on garde le set de départ
         optimalGroups = [firstGroup, secondGroup, thirdGroup];
       }
+
       optimalGroups = optimalGroups.filter(arr => arr.length > 0);
+
       if (optimalGroups.length === 1) {
         this._firstThreshold = 0;
         this._secondThreshold = 0;
@@ -120,106 +139,13 @@ export class SharedWorldmapComponent implements OnInit {
       }
     }
 
+    this._reinitializeMap();
+
     for (let country in countries) {
       const color = countries[country] < this._firstThreshold ? "#97E8B9" : countries[country] < this._secondThreshold ? "#9BDE56" : "#39CB74";
-      const country_elems = this._elementRef.nativeElement.getElementsByClassName(country);
-      if (country_elems && country_elems.length) {
-        Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
-          country_el.style.fill = color;
-        });
-      } else {
-        console.log(`This country is nowhere to be found in the svg map ${country}`);
-      }
+      this._colorCountry(country, color)
     }
-  }
 
-  @Input() set initialConfiguration(initialConfiguration: {[c: string]: boolean}) {
-    this._continents = initialConfiguration || {
-      africa: false,
-      americaNord: false,
-      americaSud: false,
-      asia: false,
-      europe: false,
-      oceania: false
-    };
-  }
-
-  @Output() updateContinent = new EventEmitter<any>();
-
-  @Output() hoveredContinent = new EventEmitter<string>();
-
-  /* Initialise continents selections with everything to false */
-  private _continents = SharedWorldmapService.reinitializeContinents();
-
-  public showLegend: boolean = false;
-
-  private _firstThreshold: number;
-
-  private _secondThreshold: number;
-
-  constructor(private _elementRef: ElementRef,
-              private _sharedWorldmapService: SharedWorldmapService,
-              private _viewContainerRef: ViewContainerRef) {}
-
-  ngOnInit() {
-    this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
-  }
-
-
-  /**
-   * Checks whether all the continents have been selected
-   * @returns {boolean}
-   */
-  public areAllContinentChecked(): boolean {
-    const keys = Object.keys(this._continents);
-    let i = 0;
-    while (i < keys.length && this._continents[keys[i]]) {
-      i++;
-    }
-    return i === keys.length;
-  }
-
-
-  /**
-   * Selects/Unselects all the countries
-   * @param $event the value of the checkbox
-   */
-  public switchWorldCheckbox($event: any): void {
-    const worldCheckboxValue = $event.target.checked;
-    SharedWorldmapService.continentsList.forEach((continent) => {
-      this._continents[continent] = worldCheckboxValue;
-    });
-  }
-
-
-  /**
-   * Processes the click over one continent
-   * @param continent
-   */
-  public clickOnContinent(event: Event, continent: string): void {
-    event.preventDefault();
-    if (this.isEditable) {
-      this._continents[continent] = !this._continents[continent];
-      this.updateContinent.emit({
-        continents: this._continents,
-        allChecked: SharedWorldmapService.areAllContinentChecked(this._continents)
-      });
-    }
-  }
-
-
-  /**
-   * Indicates selection status of a continent
-   * @param continent the continent to test
-   * @returns {boolean}
-   */
-  public getContinentSelectionStatus(continent: string): boolean {
-    return !!this._continents[continent];
-  }
-
-
-  public onHoverChange(continent: string): void {
-    this.hoveredContinent.emit(continent);
   }
 
   get firstThreshold(): number {
@@ -229,4 +155,9 @@ export class SharedWorldmapComponent implements OnInit {
   get secondThreshold(): number {
     return this._secondThreshold;
   }
+
+  get showLegend(): boolean {
+    return this._showLegend;
+  }
+
 }

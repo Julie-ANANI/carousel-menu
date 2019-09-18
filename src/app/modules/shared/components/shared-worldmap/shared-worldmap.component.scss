@@ -15,6 +15,26 @@
 
   }
 
+  .swm-legend-wrapper {
+    display: inline-flex;
+    align-items: center;
+    margin: 0.5rem;
+    font-size: 0.65rem;
+    color: $text-secondary-dark-color;
+    font-weight: $font-weight-medium;
+
+    .circle-1 {
+      border-color: #94E9B8;
+      background-color: #94E9B8;
+    }
+
+    .circle-2 {
+      border-color: #99E04B;
+      background-color: #99E04B;
+    }
+
+  }
+
 }
 
 
