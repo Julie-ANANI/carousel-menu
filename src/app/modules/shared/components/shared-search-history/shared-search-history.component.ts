@@ -272,4 +272,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   get addToCampaignModal () {
     return this._addToCampaignModal;
   }
+
+  set addToCampaignModal(value: boolean) {
+    this._addToCampaignModal = value;
+  }
 }
