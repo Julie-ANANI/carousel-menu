@@ -40,7 +40,7 @@
 <app-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
 
   <section class="modal-body">
-    <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
+    <small><strong>{{ total }}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
 
     <app-auto-complete-input
       (update)="updateCampaign($event)"
