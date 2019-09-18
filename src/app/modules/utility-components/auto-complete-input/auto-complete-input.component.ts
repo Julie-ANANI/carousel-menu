@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -29,6 +29,8 @@ export class AutoCompleteInputComponent {
   @Input() isAdmin: boolean = false;
 
   @Input() onlyOne: boolean = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
+
+  @Input() multiLangObjects: boolean = false;
 
   @Input() set config(config: AutoCompleteInputConfigInterface) {
     if (config) {
@@ -60,29 +62,11 @@ export class AutoCompleteInputComponent {
 
   @Output() remove = new EventEmitter<any>();
 
-  @Input() canEdit = true;
-
-  @Input() forceSelection = false; // si le booléen est à true, on accepte un string hors auto-complete
-
-
-
-  @Input() adminMode = false;
-
-  @Input() multiLangObjects = false;
-
-  @Input() addButton = true; // this is to add the plus button.
-
-
-
-
-
   private readonly _autoCompleteInputForm: FormGroup;
-
-  companyName: FormControl = new FormControl();
 
   private _answerList: Array<AnswerList> = [];
 
-  answer = '';
+  private _answer: string = '';
 
   private _placeholder: string;
 
@@ -129,24 +113,28 @@ export class AutoCompleteInputComponent {
     val = val ? val.get('answer').value : '';
 
     if (val) {
+
       // Verify here if the value has the expected fields (name, logo and domain)
       if (typeof val === 'string') {
-        val = {[this._identifier]: val};
+        val = { [this._identifier]: val };
       }
+
       if (val && this._answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
         if (this.onlyOne) {
           this._answerList = [val];
         } else {
           this._answerList.push(val);
         }
+
         this._autoCompleteInputForm.get('answer').setValue('');
-        this.update.emit({value: this._answerList});
+        this.update.emit({ value: this._answerList });
       }
+
     }
 
     // Verify here if the value has the expected fields (name, logo and domain)
     if (typeof val === 'string') {
-      val = {[this._identifier]: val};
+      val = { [this._identifier]: val };
     } else if (this.multiLangObjects) {
       val.name = this._multilingPipe.transform(val.name, this._translateService.currentLang);
     }
@@ -157,31 +145,32 @@ export class AutoCompleteInputComponent {
       } else {
         this._answerList.push(val);
       }
+
       this._autoCompleteInputForm.get('answer').setValue('');
-      this.update.emit({value: this._answerList});
-      this.add.emit({value: val});
+      this.update.emit({ value: this._answerList });
+      this.add.emit({ value: val });
     }
 
   }
 
-  up(event: Event, i: number): void {
+  public onClickOrderUp(event: Event, i: number): void {
     event.preventDefault();
 
     if (i !== 0) {
       const elem = this._answerList.splice(i, 1);
       this._answerList.splice(i - 1, 0, elem[0]);
-      this.update.emit({value: this._answerList});
+      this.update.emit({ value: this._answerList });
     }
 
   }
 
-  down(event: Event, i: number): void {
+  public onClickOrderDown(event: Event, i: number): void {
     event.preventDefault();
 
     if (i !== this._answerList.length - 1) {
       const elem = this._answerList.splice(i, 1);
       this._answerList.splice(i + 1, 0, elem[0]);
-      this.update.emit({value: this._answerList});
+      this.update.emit({ value: this._answerList });
     }
 
   }
@@ -194,24 +183,25 @@ export class AutoCompleteInputComponent {
     }
   }
 
-  thumbsUp(event: Event, index: number): void {
+  public thumbsUp(event: Event, index: number): void {
     event.preventDefault();
 
-    if (this.adminMode) {
+    if (this.isAdmin) {
       if (this._answerList[index].rating === 2) {
         this._answerList[index].rating = 1;
       } else {
         this._answerList[index].rating = 2;
       }
+
       this.update.emit({value: this._answerList});
     }
 
   }
 
-  thumbsDown(event: Event, index: number): void {
+  public thumbsDown(event: Event, index: number): void {
     event.preventDefault();
 
-    if (this.adminMode) {
+    if (this.isAdmin) {
       if (this._answerList[index].rating === 0) {
         this._answerList[index].rating = 1;
       } else {
@@ -222,9 +212,9 @@ export class AutoCompleteInputComponent {
 
   }
 
-  updateItem(event: Event): void {
+  public updateItem(event: Event): void {
     event.preventDefault();
-    this.update.emit({value: this._answerList});
+    this.update.emit({ value: this._answerList });
   }
 
   get canAdd(): boolean {
@@ -249,6 +239,14 @@ export class AutoCompleteInputComponent {
 
   get answerList(): Array<AnswerList> {
     return this._answerList;
+  }
+
+  get answer(): string {
+    return this._answer;
+  }
+
+  set answer(value: string) {
+    this._answer = value;
   }
 
 }
