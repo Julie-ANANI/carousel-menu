@@ -13,7 +13,7 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
 import { TableModule } from "../../../table/table.module";
 import { SidebarModule } from "../../../sidebar/sidebar.module";
 import { SidebarSearchHistoryModule } from "../../../sidebar/components/sidebar-search-history/sidebar-search-history.module";
-import { AutocompleteInputModule } from "../../../utility-components/autocomplete-input/autocomplete-input.module";
+import { AutoCompleteInputModule } from "../../../utility-components/auto-complete-input/auto-complete-input.module";
 import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 
 @NgModule({
@@ -29,7 +29,7 @@ import { ModalModule } from "../../../utility-components/modals/modal/modal.modu
     TableModule,
     SidebarModule,
     SidebarSearchHistoryModule,
-    AutocompleteInputModule,
+    AutoCompleteInputModule,
     ModalModule
   ],
   declarations: [
