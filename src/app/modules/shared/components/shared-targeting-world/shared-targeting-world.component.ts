@@ -100,7 +100,7 @@ export class SharedTargetingWorldComponent implements OnInit {
        * we are emitting here because of the old innovations.
        * so that we can have the calculated values for them.
        */
-      if (!this.isEditable) {
+      if (!this.isEditable || this.isAdmin) {
         this._emitChanges();
       }
 
@@ -165,7 +165,7 @@ export class SharedTargetingWorldComponent implements OnInit {
       this._targetingWorldData.excludeCountries = [];
 
       if ((event.target as HTMLInputElement).checked) {
-        this._continentsConfiguration = SharedWorldmapService.reinitializeContinentsToTrue();
+        this._continentsConfiguration = SharedWorldmapService.setContinents(true);
         this._initializeContinents();
         this._includeCountries();
       }
