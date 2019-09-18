@@ -58,6 +58,11 @@ export class SharedTargetingWorldComponent implements OnInit {
     this._getAllCountries();
   }
 
+  /***
+   * if the continent value is true then we push it in the
+   * this._targetingWorldData.includeContinents array.
+   * @private
+   */
   private _initializeContinents() {
     const value = this._continentsConfiguration;
 
@@ -71,6 +76,13 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   }
 
+  /***
+   * here we are calling the api to get the all countries into this._allCountries and
+   * then we check the this.__targetingWorldData.includeCountries and
+   * this.__targetingWorldData.excludeCountries values
+   * and based on that perform the respective function.
+   * @private
+   */
   private _getAllCountries() {
     this._indexService.getWholeSet({ type: 'countries' }).subscribe((response: Response) => {
       this._allCountries = response.result;
@@ -84,6 +96,10 @@ export class SharedTargetingWorldComponent implements OnInit {
         this._filterExCountriesFromIncluded();
       }
 
+      /***
+       * we are emitting here because of the old innovations.
+       * so that we can have the calculated values for them.
+       */
       if (!this.isEditable) {
         this._emitChanges();
       }
@@ -93,6 +109,11 @@ export class SharedTargetingWorldComponent implements OnInit {
     });
   }
 
+  /***
+   * we get the list of the continent countries and store them in the
+   * this._continentCountries array.
+   * @private
+   */
   private _allContinentsCountries() {
     this._continentCountries = this._allCountries.reduce((acc, country) => {
       const continent_name = country.continent.toLowerCase();
@@ -200,6 +221,11 @@ export class SharedTargetingWorldComponent implements OnInit {
     }
   }
 
+  /***
+   * this function is called when the value is output from the
+   * autoCompleteInput include.
+   * @param event
+   */
   public addCountryToInclude(event: { value: Array<Country> }) {
     if (this.isEditable || this.isAdmin) {
       event.value.forEach((country: Country) => {
@@ -221,12 +247,26 @@ export class SharedTargetingWorldComponent implements OnInit {
     this._targetingWorldData.excludeCountries = this._targetingWorldData.excludeCountries.filter((value) => value.name !== country.name);
   }
 
+  /***
+   * this function is called when we delete the include country form the
+   * list.
+   * @param event
+   */
   public removeIncludedCountry(event: { value: Country }) {
-    this._countryToExclude(event.value, true);
+    this._countryToExclude(event.value);
     this._emitChanges();
   }
 
-  private _countryToExclude(value: Country, notify: boolean = false) {
+  /***
+   * based on the value receive to this function we
+   * find the country from this._allCountries and then we
+   * check if that country is in this._targetingWorldData.includeCountries
+   * if yes then we filter that country from the same list and add it in
+   * this._targetingWorldData.excludeCountries.
+   * @param value
+   * @private
+   */
+  private _countryToExclude(value: Country) {
     const index = this._allCountries.findIndex((existCountry) => existCountry.name === value.name);
 
     if (index !== -1) {
@@ -239,11 +279,9 @@ export class SharedTargetingWorldComponent implements OnInit {
           this._targetingWorldData.excludeCountries.push(findCountry);
         }
 
-        if (notify) {
-          this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.EXCLUDED');
-        }
+        this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.EXCLUDED');
 
-      } else if (notify) {
+      } else {
         this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.ALREADY_EXCLUDED');
       }
 
@@ -255,15 +293,27 @@ export class SharedTargetingWorldComponent implements OnInit {
     this._targetingWorldData.includeCountries = this._targetingWorldData.includeCountries.filter((value) => value.name !== country.name);
   }
 
+  /***
+   * this function is called when the value is output from the
+   * autoCompleteInput exclude.
+   * @param event
+   */
   public addCountryToExclude(event: { value: Array<Country> }) {
     event.value.forEach((country: Country) => {
       if (!this._targetingWorldData.excludeCountries.some((value) => value.name === country.name)) {
-        this._countryToExclude(country, true);
+        this._countryToExclude(country);
       }
     });
     this._emitChanges();
   }
 
+  /***
+   * this function is called when we delete the country from the exclude
+   * list. Here we also check if the country of the same continent
+   * is present in the this._targetingWorldData.includeCountries then we put back
+   * that country into this._targetingWorldData.includeCountries.
+   * @param event
+   */
   public removeExcludedCountry(event: { value: Country }) {
     if (this._targetingWorldData.includeCountries.some((existCountry) => existCountry.continent === event.value.continent
       && existCountry.subcontinent === event.value.subcontinent)) {
