@@ -45,5 +45,7 @@ export class CountryFlagComponent {
     return this._name;
   }
 
-
+  get countryToDisplay(): Boolean {
+    return !!this._country;
+  }
 }

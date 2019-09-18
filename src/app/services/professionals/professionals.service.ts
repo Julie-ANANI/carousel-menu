@@ -40,6 +40,10 @@ export class ProfessionalsService {
     return this._http.post(`/professional/addFromRequest/${config.newCampaignId}/${config.newInnovationId}`, config);
   }
 
+  public addFromHistory(config: any): Observable<any> {
+    return this._http.post(`/professional/addFromHistory/${config.newCampaignId}/${config.newInnovationId}`, config);
+  }
+
   public export(config: any): Observable<any> {
     return this._http.post('/professional/exportCSV', config);
   }
