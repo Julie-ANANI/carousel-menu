@@ -1,7 +1,6 @@
 import { COMMON } from './common_en';
 import { ERROR } from './error_en';
 import { ADMIN_USERS } from '../modules/user/admin/components/admin-users/i18n/en';
-import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
 import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
 import { DASHBOARD } from '../modules/user/admin/components/admin-dashboard/i18n/en';
@@ -34,6 +33,7 @@ import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
 import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/en';
 import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/en';
 import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/en';
+import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
 
 export const en = {
   'COMMON': COMMON,

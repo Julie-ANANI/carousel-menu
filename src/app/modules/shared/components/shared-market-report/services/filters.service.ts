@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SharedWorldmapService } from '../../shared-worldmap/services/shared-worldmap.service';
 import { Answer } from '../../../../../models/answer';
 import { Filter } from '../models/filter';
 import { Tag } from '../../../../../models/tag';
 import { Subject } from 'rxjs';
+import {SharedWorldmapService} from '../../shared-worldmap/services/shared-worldmap.service';
 
 @Injectable()
 export class FilterService {

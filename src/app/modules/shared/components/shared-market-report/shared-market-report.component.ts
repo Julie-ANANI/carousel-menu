@@ -16,9 +16,9 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
-import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import {SharedWorldmapService} from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -93,7 +93,7 @@ export class SharedMarketReportComponent implements OnInit {
               private _authService: AuthService,
               private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
-              private _sharedWorldmapService: SharedWorldmapService,
+              private _sharedWorldMapService: SharedWorldmapService,
               private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {
@@ -185,7 +185,7 @@ export class SharedMarketReportComponent implements OnInit {
       }
       return '';
     });
-    this._answersOrigins = this._sharedWorldmapService.getCountriesRepartition(countriesList);
+    this._answersOrigins = this._sharedWorldMapService.getCountriesRepartition(countriesList);
   }
 
 

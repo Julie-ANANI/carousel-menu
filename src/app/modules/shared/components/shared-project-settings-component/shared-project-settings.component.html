@@ -6,21 +6,31 @@
       <span class="shape is-rounded bg-draft">1</span>
       <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.LABEL' | translate }}</span>
       <div class="pd-input">
-        <app-worldmap
-          (updateContinent)="continentModificationDrain($event)"
-          [initialConfiguration]="continentTarget"
-          [isEditable]="canEdit"
-          [width]="'auto'">
-        </app-worldmap>
+        <app-shared-worldmap [targetingCountries]="targetingCountries"></app-shared-worldmap>
       </div>
     </div>
     <!-- /geography section -->
 
+    <!-- target world -->
+    <div class="column col-md-12 col-11">
+      <div class="pd-input">
+        <app-shared-targeting-world
+          (targetingDataChanged)="onTargetingChanged($event)"
+          [continentsConfiguration]="innovation.settings.geography.continentTarget"
+          [excludeCountries]="innovation.settings.geography.exclude"
+          [includeCountries]="innovation.settings.geography.include"
+          [isAdmin]="adminSide"
+          [isEditable]="canEdit">
+        </app-shared-targeting-world>
+      </div>
+    </div>
+    <!-- /target world -->
+
     <!-- question section -->
-    <div [ngClass]="adminSide ? 'col-11 col-xs-12' : 'col-md-12 col-7 col-lg-10 col-xl-8'">
+    <div class="column" [ngClass]="adminSide ? 'col-11 col-xs-12' : 'col-md-12 col-7 col-lg-10 col-xl-8'">
       <div class="restrict-container">
 
-        <!-- Exclude countries -->
+        <!-- Exclude countries
         <ng-container *ngIf="!canEdit && innovation.settings.geography.exclude.length > 0">
           <div class="pd-para">
               <span class="text">
@@ -44,11 +54,11 @@
             </div>
           </div>
         </ng-container>
-         <!-- /Exclude countries -->
+        /Exclude countries -->
 
         <!-- Comment countries -->
         <ng-container *ngIf="!canEdit && !!innovation.settings.geography.comments">
-          <p class="pd-top">
+          <p class="pd-para">
             <span class="text text-secondary-dark">
               {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.COMMENT' | translate }}
             </span>
@@ -153,7 +163,7 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-auto-complete-input (update)="addCompanyToInclude($event)" [config]="getConfig('includedCompanies')"></app-auto-complete-input>
+                <app-auto-complete-input (update)="addCompanyToInclude($event)" [config]="getConfig('includedCompanies')" [tempActive]="false"></app-auto-complete-input>
               </div>
             </div>
           </ng-container>
@@ -179,7 +189,7 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-auto-complete-input (update)="addCompanyToExclude($event)" [config]="getConfig('excludedCompanies')"></app-auto-complete-input>
+                <app-auto-complete-input (update)="addCompanyToExclude($event)" [config]="getConfig('excludedCompanies')" [tempActive]="false"></app-auto-complete-input>
               </div>
             </div>
           </ng-container>

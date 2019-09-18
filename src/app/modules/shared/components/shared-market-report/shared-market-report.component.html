@@ -231,15 +231,7 @@
               <!-- map -->
               <section class="section-light-pad" id="map">
                 <div class="map-wrapper">
-                  <app-worldmap
-                    (updateContinent)="filterByContinents($event)"
-                    [countries]="countries"
-                    [countriesColor]="'#2ECC71'"
-                    [initialConfiguration]="mapSelectedContinents"
-                    [synthesis]="true"
-                    [countriesData]="answersByCountries"
-                    [width]="'auto'">
-                  </app-worldmap>
+                  <app-shared-worldmap [countriesData]="answersByCountries"></app-shared-worldmap>
                 </div>
               </section>
               <!-- /map -->

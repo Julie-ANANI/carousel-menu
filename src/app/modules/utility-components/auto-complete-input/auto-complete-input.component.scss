@@ -70,6 +70,29 @@
 
     }
 
+    &.fixed-height {
+      max-height: 320px;
+      overflow: hidden;
+      overflow-y: auto;
+
+      li {
+
+        &:first-child {
+
+          .aci-icons-wrapper {
+
+            .tooltip::before, .tooltip::after {
+              display: none;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
   }
 
 }

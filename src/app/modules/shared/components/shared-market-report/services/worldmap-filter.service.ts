@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FilterService } from './filters.service';
-import { SharedWorldmapService } from '../../shared-worldmap/services/shared-worldmap.service';
+import {SharedWorldmapService} from '../../shared-worldmap/services/shared-worldmap.service';
 
 @Injectable()
 export class WorldmapFiltersService {

@@ -151,12 +151,7 @@
         <!-- section click rate -->
         <div class="section-rate">
           <h3 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h3>
-          <app-worldmap
-            [countries]="countries"
-            [countriesColor]="'#2ECC71'"
-            [isEditable]="false"
-            [width]="'auto'">
-          </app-worldmap>
+          <app-shared-worldmap [targetingCountries]="countries"></app-shared-worldmap>
         </div>
         <!-- /section click rate -->
 

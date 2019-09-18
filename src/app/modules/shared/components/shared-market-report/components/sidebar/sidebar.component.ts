@@ -11,8 +11,8 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { SharedFilter } from '../../models/shared-filter';
 import { Tag } from '../../../../../../models/tag';
-import { SharedWorldmapService } from '../../../shared-worldmap/services/shared-worldmap.service';
 import { TranslateService } from '@ngx-translate/core';
+import {SharedWorldmapService} from '../../../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-market-report-sidebar',
