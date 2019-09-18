@@ -1,6 +1,6 @@
 <section class="pie-chart">
 
-  <p class="percentage">{{ percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}</p>
+  <p class="percentage">{{ pieChart?.percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}</p>
 
   <ng-container *ngIf="isBrowser && pieChart">
     <canvas
@@ -10,17 +10,17 @@
       [datasets]="datasets"
       [legend]="false"
       [colors]="colors"
-      [labels]="labels | multiling:lang">
+      [labels]="pieChart.labels | multiling:lang">
     </canvas>
   </ng-container>
 
-  <ng-container *ngIf="labels">
+  <ng-container *ngIf="pieChart">
     <ul class="pie-data-wrapper flex-centered">
-      <li *ngFor="let label of (labels | multiling:lang); let i = index">
+      <li *ngFor="let label of (pieChart.labels | multiling:lang); let i = index">
         <span class="shape is-circle is-xs" [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }"></span>
-        <span class="response">{{ datasets[0].data[i] }}</span>
+        <span class="response">{{ pieChart.data[i] }}</span>
         <span class="text-label">{{ label }}</span>
-        <span>({{ labelPercentage[0].percentage[i] }})</span>
+        <span>({{ pieChart.labelPercentage[i] }})</span>
       </li>
     </ul>
   </ng-container>
