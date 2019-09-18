@@ -6,12 +6,6 @@
       <span class="shape is-rounded bg-draft">1</span>
       <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.LABEL' | translate }}</span>
       <div class="pd-input">
-        <!--<app-shared-worldmap
-          (updateContinent)="continentModificationDrain($event)"
-          [initialConfiguration]="continentTarget"
-          [isEditable]="canEdit"
-          [width]="'auto'">
-        </app-shared-worldmap>-->
         <app-shared-worldmap [targetingCountries]="targetingCountries"></app-shared-worldmap>
       </div>
     </div>
@@ -25,6 +19,7 @@
           [continentsConfiguration]="innovation.settings.geography.continentTarget"
           [excludeCountries]="innovation.settings.geography.exclude"
           [includeCountries]="innovation.settings.geography.include"
+          [isAdmin]="adminSide"
           [isEditable]="canEdit">
         </app-shared-targeting-world>
       </div>

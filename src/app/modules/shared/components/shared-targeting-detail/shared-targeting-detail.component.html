@@ -10,12 +10,7 @@
 
         <h3 class="title-secondary" [innerText]="'MARKET_REPORT.TARGET_COUNTRIES'" translate [ngStyle]="{ 'margin-bottom': '0' }"></h3>
 
-        <app-shared-worldmap
-          [initialConfiguration]="continentTarget"
-          [countriesColor]="'#2ECC71'"
-          [isEditable]="false"
-          [width]="'auto'">
-        </app-shared-worldmap>
+        <app-shared-worldmap [targetingCountries]="targetCountries"></app-shared-worldmap>
 
         <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">
           <h3 class="title-secondary" [innerText]="'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE'" translate></h3>

@@ -137,14 +137,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Add a country to the exclusion list
-   */
-  /*addCountryToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.geography.exclude = event.value;
-    this.updateSettings();
-  }*/
-
   get continentTarget(): any {
     return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
   }
@@ -225,7 +217,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onTargetingChanged(value: SharedTargetingWorldInterface) {
-    this._innovation.settings.geography.continentTarget = SharedWorldmapService.reinitializeContinents();
+    this._innovation.settings.geography.continentTarget = SharedWorldmapService.setContinents(false);
 
     value.includeContinents.forEach((value) => {
       this._innovation.settings.geography.continentTarget[value] = true;
