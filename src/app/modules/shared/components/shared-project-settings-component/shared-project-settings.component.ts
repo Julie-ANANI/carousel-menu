@@ -4,6 +4,8 @@ import * as _ from 'lodash';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../models/innovation';
 import { Subject } from 'rxjs';
+import { SharedTargetingWorldInterface } from '../shared-targeting-world/interfaces/shared-targeting-world-interface';
+import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -15,6 +17,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
+    this._includeCountries();
   }
 
   @Input() set editable(value: boolean) {
@@ -46,6 +49,8 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   private _displayCompanyCommentSection = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
+
+  private _targetingCountries: Array<string> = [];
 
   constructor(private translateService: TranslateService,
               private innovationFrontService: InnovationFrontService) { }
@@ -133,16 +138,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  /**
-   * Add a country to the exclusion list
-   */
-  addCountryToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.geography.exclude = event.value;
-    this.updateSettings();
-  }
-
-
   get continentTarget(): any {
     return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
   }
@@ -222,6 +217,27 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this.updateSettings();
   }
 
+  public onTargetingChanged(value: SharedTargetingWorldInterface) {
+    this._innovation.settings.geography.continentTarget = SharedWorldmapService.setContinents(false);
+
+    value.includeContinents.forEach((value) => {
+      this._innovation.settings.geography.continentTarget[value] = true;
+    });
+
+    this._innovation.settings.geography.include = value.includeCountries;
+    this._innovation.settings.geography.exclude = value.excludeCountries;
+    this._includeCountries();
+
+    this.updateSettings();
+  }
+
+  private _includeCountries() {
+    this._targetingCountries = [];
+
+    this._innovation.settings.geography.include.forEach((country) => {
+      this._targetingCountries.push(country.code);
+    });
+  }
 
   updateSettings() {
     if (this._canEdit) {
@@ -253,6 +269,10 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   get adminSide(): boolean {
     return this._adminSide;
+  }
+
+  get targetingCountries(): Array<string> {
+    return this._targetingCountries;
   }
 
   ngOnDestroy(): void {

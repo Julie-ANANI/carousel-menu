@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject, Input, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Input } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -17,9 +16,9 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
-import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import {SharedWorldmapService} from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -87,15 +86,14 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _toggleProfessional: boolean;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateService: TranslateService,
+  constructor(private _translateService: TranslateService,
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService,
               private _authService: AuthService,
               private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
-              private _sharedWorldmapService: SharedWorldmapService,
+              private _sharedWorldMapService: SharedWorldmapService,
               private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {
@@ -187,7 +185,7 @@ export class SharedMarketReportComponent implements OnInit {
       }
       return '';
     });
-    this._answersOrigins = this._sharedWorldmapService.getCountriesRepartition(countriesList);
+    this._answersOrigins = this._sharedWorldMapService.getCountriesRepartition(countriesList);
   }
 
 
@@ -240,29 +238,6 @@ export class SharedMarketReportComponent implements OnInit {
         const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
         this._tagFiltersService.setAnswerTags(identifier, tags);
       });
-
-      /*
-       * Compute matrix
-       * this is a P.O.C for next-steps redaction
-       */
-      if (this._adminSide && isPlatformBrowser(this._platformId)) {
-        ['context', 'marketNeed', 'relevance', 'differentiation'].reduce((acc, a) => {
-          acc.forEach((b) => {
-            /* calc matrix a/b */
-            const m = this.answers.reduce((acc, answer) => {
-              const res_a = Number(answer.answers[a]), res_b = Number(answer.answers[b]);
-              if (Number.isInteger(res_a) && 0 <= res_a && res_a < 4 && Number.isInteger(res_b) && 0 <= res_b && res_b < 4) {
-                acc[3 - res_a][res_b]++;
-              }
-              return acc;
-            }, [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
-            /* print res in console */
-            console.log(a + '\n^\n' + m.join('\n') + '  >' + b);
-          });
-          acc.push(a);
-          return acc;
-        }, []);
-      }
 
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');

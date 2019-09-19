@@ -50,7 +50,7 @@ export class ExecutiveProfessionalComponent {
       }
     });
 
-    if (this._professionalsAnswer.length === 0 || this._professionalsAnswer.length < 4) {
+    if (this._professionalsAnswer.length < 4) {
       this._answers.forEach((items) => {
         const find = this._professionalsAnswer.find((professional) => professional._id === items._id);
         if (!find) {

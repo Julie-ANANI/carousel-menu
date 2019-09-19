@@ -26,9 +26,6 @@ import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
     FormatText,
     ScrapeHTMLTags
   ],
-  providers: [
-    MultilingPipe,
-  ],
   exports: [
     CharacterCountdown,
     DomSanitizerPipe,

@@ -9,7 +9,7 @@
     </ng-container>
 
     <!-- section no campaign -->
-    <ng-container *ngIf="noResult">
+    <ng-container *ngIf="campaigns.length === 0">
       <div class="section-pad rm-pad-bottom">
         <app-message-template-1 [widthMax]="'354px'">
           {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
@@ -20,7 +20,7 @@
     </ng-container>
 
     <!-- section campaigns -->
-    <ng-container *ngIf="!noResult">
+    <ng-container *ngIf="campaigns.length > 0">
       <div class="section-light-pad rm-pad-bottom">
         <div [@listAnimation]="campaigns.length">
           <div *ngFor="let campaign of campaigns" class="card-campaign">

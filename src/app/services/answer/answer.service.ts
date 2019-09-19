@@ -41,10 +41,10 @@ export class AnswerService {
     return this._http.post('/answer/' + answerId + '/tag', { params: params});
   }
 
-  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
+  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<Tag> {
     const params: any = { tag: tag };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.post('/answer/' + answerId + '/new-tag', { params: params});
+    return this._http.post<Tag>('/answer/' + answerId + '/new-tag', { params: params});
   }
 
   public removeTag(answerId: string, tagId: string, questionId?: string): Observable<any> {

@@ -96,11 +96,11 @@
         <ng-container *ngIf="editCountry">
           <div class="form-group">
             <label class="form-label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
-            <app-autocomplete-input
+            <app-auto-complete-input
               (update)="updateCountry($event)"
               [onlyOne]="true"
               [config]="{ placeholder: 'COMMON.PLACEHOLDER.COUNTRY', type: 'countries' }">
-            </app-autocomplete-input>
+            </app-auto-complete-input>
           </div>
         </ng-container>
 

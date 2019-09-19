@@ -40,6 +40,10 @@ export class ProfessionalsService {
     return this._http.post(`/professional/addFromRequest/${config.newCampaignId}/${config.newInnovationId}`, config);
   }
 
+  public addFromHistory(config: any): Observable<any> {
+    return this._http.post(`/professional/addFromHistory/${config.newCampaignId}/${config.newInnovationId}`, config);
+  }
+
   public export(config: any): Observable<any> {
     return this._http.post('/professional/exportCSV', config);
   }
@@ -70,5 +74,9 @@ export class ProfessionalsService {
 
   public cleanPros(): Observable<any> {
     return this._http.get(`/professional/update/database`);
+  }
+
+  public isShielded(id: string): Observable<any> {
+    return this._http.get(`/shield/?professional=${id}&fields=email`);
   }
 }

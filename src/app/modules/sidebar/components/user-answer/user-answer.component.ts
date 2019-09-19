@@ -176,9 +176,9 @@ export class UserAnswerComponent {
 
 
   public createTag(tag: Tag): void {
-    this._answerService.createTag(this._modalAnswer._id, tag).subscribe(() => {
+    this._answerService.createTag(this._modalAnswer._id, tag).subscribe((newTag) => {
       this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
-      this._modalAnswer.tags.push(tag);
+      this._modalAnswer.tags.push(newTag);
       this.answerUpdated.emit(true);
       }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');

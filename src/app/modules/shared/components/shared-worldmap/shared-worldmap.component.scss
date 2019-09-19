@@ -1,67 +1,38 @@
 @import "../../../../../style/framework/src/variables";
 
-.world-map {
-  margin-left: auto;
-  margin-right: auto;
-}
+#shared-world-map {
 
-.not-synthesis-wrapper {
+  .swm-map-wrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $size-2x;
 
-  path, g {
-    fill: #E2E2E2;
-    cursor: pointer;
+    .country {
+      fill: #E2E2E2;
+      stroke: $light-color;
+    }
+
   }
 
-  g.selected, path.selected, .selected g, .selected path {
-    fill: $success-color;
-  }
+  .swm-legend-wrapper {
+    display: inline-flex;
+    align-items: center;
+    margin: 0.5rem;
+    font-size: 0.65rem;
+    color: $text-secondary-dark-color;
+    font-weight: $font-weight-medium;
 
-  g.clickable:not(.selected):hover, path.clickable:not(.selected):hover, .clickable:not(.selected):hover g, .clickable:not(.selected):hover path {
-    fill: $primary-color;
-  }
+    .circle-1 {
+      border-color: #94E9B8;
+      background-color: #94E9B8;
+    }
 
-  g.disabled, path.disabled, .disabled g, .disabled path {
-    cursor: not-allowed;
-  }
+    .circle-2 {
+      border-color: #99E04B;
+      background-color: #99E04B;
+    }
 
-}
-
-.synthesis-wrapper {
-
-  path, g {
-    fill: #E2E2E2;
-    cursor: pointer;
-  }
-
-  g.selected, path.filtered, .filtered g, .filtered path {
-    fill: $alert-color !important;
-  }
-
-}
-
-.info-wrapper {
-  font-size: $font-size-sm;
-
-  div {
-    display: inline-block;
-    margin: 10px;
-  }
-
-  .shape.is-circle.is-sm {
-    width: 13px;
-    height: 13px;
-  }
-
-  .circle-3 {
-    border-color: #99E04B;
-    background-color: #99E04B;
-  }
-
-  .circle-2 {
-    border-color: #94E9B8;
-    background-color: #94E9B8;
   }
 
 }
-
-

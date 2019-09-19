@@ -18,7 +18,7 @@ export class InputListComponent {
     }
   }
 
-  @Input() canEdit = true;
+  @Input() canEdit: boolean = true;
 
   @Input() set adminMode(value: boolean) {
     this._adminMode = value;
@@ -42,8 +42,7 @@ export class InputListComponent {
 
   private _indexNumber: number;
 
-  constructor(private _translateNotificationsService: TranslateNotificationsService) {
-  }
+  constructor(private _translateNotificationsService: TranslateNotificationsService) {}
 
   public addProposition(val: string) {
 

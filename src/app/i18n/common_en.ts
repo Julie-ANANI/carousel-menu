@@ -131,6 +131,7 @@ export const COMMON = {
     'TYPE': 'Type',
     'SELECT_WORKFLOW': 'Select the workflow',
     'SELECT': 'Select',
+    'SELECT_ALL': 'Select All',
     'CHOOSE_LANGUAGE': 'Choose Language:',
     'SEARCH_BY': 'Search by',
     'SIGNATURE_NAME': 'Signature Name',
@@ -140,6 +141,8 @@ export const COMMON = {
     'CREATED': 'Created',
     'CREATED_ON': 'Created on',
     'COLLABORATORS': 'Collaborators',
+    'DOMAIN_NAME': 'Domain Name',
+    'ANSWER': 'Answer'
   },
 
   'PLACEHOLDER': {
@@ -155,7 +158,7 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Enter the signature name',
     'PRESET_NAME': 'Enter the preset name',
     'EXISTING_TAG': 'Add an existing tag',
-    'INPUT_LIST_DEFAULT': 'Enter the answer here'
+    'INPUT_LIST_DEFAULT': 'Enter the input here'
   },
 
   'REQUIRED': {
@@ -371,7 +374,8 @@ export const COMMON = {
     'READONLY': 'Readonly',
     'DELETE': 'Delete',
     'MOVE_UP': 'Move up',
-    'MOVE_DOWN': 'Move down'
+    'MOVE_DOWN': 'Move down',
+    'ADVANCE_SETTINGS': 'Advance settings'
   },
 
   'SIGNATURES': {

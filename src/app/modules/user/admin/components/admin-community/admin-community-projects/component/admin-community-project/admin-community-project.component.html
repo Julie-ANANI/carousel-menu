@@ -63,12 +63,11 @@
           <li class="stat-container map-wrapper">
             <h5 class="stat-heading">Targeting</h5>
             <div class="stat-body">
-              <app-worldmap
-                [countries]="targetCountries"
+              <app-shared-worldmap
                 [countriesColor]="'#4F5D6B'"
-                [isEditable]="false"
+                [targetingCountries]="targetCountries"
                 [width]="'140px'">
-              </app-worldmap>
+              </app-shared-worldmap>
             </div>
           </li>
 

@@ -1,0 +1,36 @@
+<div class="column col-11 col-mx-auto" *ngIf="request">
+  <h3> {{ request.pros }}  ({{ request.cost?.totalCost }}€)</h3>
+  <h6>{{ 'SEARCH.HISTORY.LAUNCHED_BY' | translate}} {{ request.metadata.user.name }}
+    le {{request.created | date:'d/MM/yy à hh:mm:ss'}} </h6>
+  <h6> {{ 'SEARCH.HISTORY.TIME' | translate }}: {{ request.elapsedTime  | date:'m:ss' }} </h6>
+
+  <h6> {{ 'SEARCH.HISTORY.TARGETTING' | translate }}</h6>
+
+  Liens :
+  <ul>
+    <li class="text-link">
+      <a [href]="'/user/admin/search/results/' + request._id" target="_blank">{{ 'SEARCH.HISTORY.REQUEST' | translate }}</a>
+    </li>
+    <li class="text-link" *ngIf="request.campaign">
+      <a [href]="'/user/admin/campaigns/campaign/' + request.campaign" target="_blank">{{ 'PROJECT.CAMPAIGN.CAMPAIGN' | translate }}</a>
+    </li>
+    <li class="text-link" *ngIf="request.innovation">
+      <a [href]="'/user/admin/projects/project/' + request.innovation" target="_blank">{{ 'COMMON.PAGE_TITLE.PROJECT' | translate }}</a>
+    </li>
+  </ul>
+
+
+  <span class="text-link" (click)="getChildren()" *ngIf="request.entity === 'PERSON_BY_COUNTRIES'">
+    <span *ngIf="!showChildren">Voir</span><span *ngIf="showChildren">Cacher</span> les requêtes filles
+  </span>
+
+  <div *ngIf="showChildren">
+    <app-shared-table
+      [(config)]="config"
+      [data]="tableInfos"
+      (editRow)="goToRequest($event)"
+      (performAction)="onClickActions($event)"
+    ></app-shared-table>
+  </div>
+</div>
+

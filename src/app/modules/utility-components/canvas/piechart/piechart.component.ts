@@ -22,13 +22,7 @@ export class PiechartComponent implements OnInit {
 
   private _colors: Array<{backgroundColor: Array<string>}>;
 
-  private _labels: {[prop: string]: Array<string>};
-
   private _lang: string;
-
-  private _percentage: number;
-
-  private _labelPercentage: Array<{percentage: Array<string>}>;
 
   private _isBrowser: boolean;
 
@@ -48,10 +42,7 @@ export class PiechartComponent implements OnInit {
   private _loadData() {
     if (this._pieChart) {
       this._colors = [{backgroundColor: this._pieChart.colors || []}];
-      this._labels = this._pieChart.labels || {};
       this._datasets = [{data: this._pieChart.data || []}];
-      this._percentage = this._pieChart.percentage;
-      this._labelPercentage = [{percentage: this._pieChart.labelPercentage || []}];
     }
   }
 
@@ -68,20 +59,8 @@ export class PiechartComponent implements OnInit {
     return this._colors;
   }
 
-  get labels() {
-    return this._labels;
-  }
-
   get lang() {
     return this._lang;
-  }
-
-  get percentage() {
-    return this._percentage;
-  }
-
-  get labelPercentage(): Array<{ percentage: Array<string> }> {
-    return this._labelPercentage;
   }
 
   get isBrowser(): boolean {

@@ -1,0 +1,161 @@
+<div id="auto-complete-input">
+
+  <!-- input area -->
+  <form [formGroup]="autoCompleteInputForm" (ngSubmit)="addProposition(autoCompleteInputForm)" novalidate>
+    <div *ngIf="isShowable" class="aci-input-wrapper">
+
+      <label class="m-right-2">
+        <input
+          [attr.placeholder]="placeholder | translate"
+          [display-property-name]="identifier"
+          [list-formatter]="autocompleteListFormatter.bind(this)"
+          [source]="suggestions.bind(this)"
+          auto-complete
+          class="form-input"
+          formControlName="answer"
+          value-property-name="id">
+      </label>
+
+      <button
+        *ngIf="isShowButton"
+        [disabled]="!canAdd || !isEditable"
+        class="button is-action is-circled is-primary is-shadowed p-no">
+        <i class="icon icon-plus"></i>
+      </button>
+
+    </div>
+  </form>
+  <!-- /input area -->
+
+  <!-- answer area -->
+  <ul *ngIf="answerList.length > 0 && !isHideAnswerList" [ngClass]="{ 'fixed-height': answerList.length > 5 }" class="aci-answers-wrapper">
+    <li *ngFor="let answer of answerList; let i = index">
+
+      <!-- can order -->
+      <div *ngIf="canOrder" class="aci-icons-wrapper">
+
+        <!-- up icon -->
+        <div (click)="onClickOrderUp($event, i)" class="icon-container m-no-left is-overlay">
+          <span [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_UP' | translate" class="tooltip">
+            <i class="icon icon-arrow-up"></i>
+          </span>
+        </div>
+
+        <!-- down icon -->
+        <div (click)="onClickOrderDown($event, i)" class="icon-container m-no-left m-right-2 is-overlay">
+          <span [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_DOWN' | translate" class="tooltip">
+            <i class="icon icon-arrow-down"></i>
+          </span>
+        </div>
+
+      </div>
+      <!-- /can order -->
+
+      <!-- text -->
+      <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2">
+        <span [innerHTML]="answer[identifier]"></span>
+      </div>
+      <!-- text -->
+
+      <!-- icons -->
+      <div class="aci-icons-wrapper">
+
+        <!-- if admin mode -->
+        <div *ngIf="isAdmin" class="d-flex">
+
+          <!-- edit-icon -->
+          <div class="popover">
+
+            <div class="icon-container is-overlay c-default">
+              <i class="fas fa-pencil-alt text-notify"></i>
+            </div>
+
+            <div class="popover-container" style="width: 260px">
+              <div class="card p-no">
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label" for="answer">{{ 'COMMON.LABEL.ANSWER' | translate }}</label>
+                    <input
+                      [(ngModel)]="answer[identifier]"
+                      autocomplete="off"
+                      class="form-input"
+                      id="answer"
+                      name="answer"
+                      type="text"/>
+                  </div>
+                </div>
+
+                <div class="card-footer text-center">
+                  <button (click)="updateItem($event)" class="button is-primary is-sm" type="submit">
+                    {{ 'COMMON.BUTTON.UPDATE' | translate }}
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- domain-icon -->
+          <div class="popover">
+
+            <div class="icon-container is-overlay c-default" [ngClass]="{ 'opacity': !(answer.domain && answer.domain.length > 0) } ">
+              <i class="fas fa-at"></i>
+            </div>
+
+            <div class="popover-container" style="width: 260px">
+              <div class="card p-no">
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label" for="domain">{{ 'COMMON.LABEL.DOMAIN_NAME' | translate }}</label>
+                    <input
+                      [(ngModel)]="answer.domain"
+                      autocomplete="off"
+                      class="form-input"
+                      id="domain"
+                      name="domain"
+                      type="text"/>
+                  </div>
+                </div>
+
+                <div class="card-footer text-center">
+                  <button (click)="updateItem($event)" class="button is-primary is-sm" type="submit">
+                    {{ 'COMMON.BUTTON.UPDATE' | translate }}
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- thumbs-up icon -->
+          <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
+            <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
+          </div>
+
+          <!-- thumbs-down icon -->
+          <div (click)="thumbsDown($event, i)" class="icon-container is-overlay">
+            <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
+          </div>
+
+        </div>
+        <!-- /if admin mode -->
+
+        <!-- delete icon -->
+        <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable && !isAdmin }" class="icon-container is-overlay">
+          <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
+            <i class="icon icon-delete text-alert"></i>
+          </span>
+        </div>
+
+      </div>
+      <!-- /icons -->
+
+    </li>
+  </ul>
+  <!-- /answer area -->
+
+</div>

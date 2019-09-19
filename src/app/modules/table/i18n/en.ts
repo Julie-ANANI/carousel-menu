@@ -38,6 +38,8 @@ export const TABLE = {
     'CONTENT': 'Content',
     'SECTIONS': 'Sections',
     'PROJECTS': 'Projects',
+    'AMBASSADOR': 'Ambassador',
+    'TTR':  'Release time'
   },
 
   'TITLE': {
