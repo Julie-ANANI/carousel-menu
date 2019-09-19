@@ -10,6 +10,9 @@ import { countries } from '../../../../models/static-data/country';
 import { Campaign } from "../../../../models/campaign";
 import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 import { Router } from "@angular/router";
+import { InnovationService } from "../../../../services/innovation/innovation.service";
+import { Tag } from "../../../../models/tag";
+import { TagsService } from "../../../../services/tags/tags.service";
 
 @Component({
   selector: 'app-shared-search-history',
@@ -22,7 +25,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   @Input() status: string;
   @Input() mails: boolean;
 
-
+  private _tags: Array<Tag> = [];
+  private _projects: Array<{name: string, _id: string}> = [];
   private _sidebarValue: SidebarInterface = {};
   private _tableInfos: Table;
   private _selectedRequest: any = null;
@@ -43,8 +47,10 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   constructor(
     private _router: Router,
-     private _searchService: SearchService,
+    private _searchService: SearchService,
+    private _tagsService: TagsService,
     private _professionalsService: ProfessionalsService,
+    private _innovationService: InnovationService,
     private _notificationsService: TranslateNotificationsService
   ) {}
 
@@ -119,15 +125,14 @@ export class SharedSearchHistoryComponent implements OnInit {
           _columns: [
             {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
             {_attrs: ['pros'], _name: '', _type: 'TEXT', _isSearchable: false, _isSortable: false},
-            {_attrs: ['metadata.user.name'], _name: 'PROJECT_LIST.OPERATOR', _type: 'TEXT', _isSearchable: false, _isSortable: false},
             {_attrs: ['targetting'], _name: 'SEARCH.HISTORY.TARGETTING', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
             {_attrs: ['status'], _name: 'SEARCH.HISTORY.STATUS', _type: 'MULTI-CHOICES', _choices: [
-              {_name: 'DONE', _alias: 'SEARCH.HISTORY.DONE', _class: 'label is-success'},
-              {_name: 'PROCESSING', _alias: 'SEARCH.HISTORY.PROCESSING', _class: 'label is-progress'},
-              {_name: 'QUEUED', _alias: 'SEARCH.HISTORY.QUEUED', _class: 'label is-danger'},
-              {_name: 'CANCELED', _alias: 'SEARCH.HISTORY.CANCELED', _class: 'label is-danger'}
-            ]},
+                {_name: 'DONE', _alias: 'SEARCH.HISTORY.DONE', _class: 'label is-success'},
+                {_name: 'PROCESSING', _alias: 'SEARCH.HISTORY.PROCESSING', _class: 'label is-progress'},
+                {_name: 'QUEUED', _alias: 'SEARCH.HISTORY.QUEUED', _class: 'label is-danger'},
+                {_name: 'CANCELED', _alias: 'SEARCH.HISTORY.CANCELED', _class: 'label is-danger'}
+              ]},
             {_attrs: ['flag'], _name: 'SEARCH.HISTORY.FLAG', _type: 'MULTI-CHOICES', _choices: [
                 {_name: 'PROS_ADDED', _alias: 'SEARCH.HISTORY.PROS_ADDED', _class: 'label is-success'},
                 {_name: 'EMAILS_FOUND', _alias: 'SEARCH.HISTORY.EMAILS_FOUND', _class: 'label is-success'},
@@ -149,14 +154,60 @@ export class SharedSearchHistoryComponent implements OnInit {
   }
 
   public updateInno(object: any) {
-    if (object.value.length) {
+    this._projects = object.value;
+    if (this._projects.length) {
       this._config.innovation = JSON.stringify({
-        "$in": object.value.map((v: any) => v._id)
+        "$in": this._projects.map((v: any) => v._id)
       });
     } else {
       delete this._config.innovation;
     }
     this.loadHistory();
+  }
+
+  public onAddTag(value: any) {
+    const id = value.tag ? value.tag : value._id;
+
+    this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
+      this._tags.push(res.tags[0]);
+      this._updateInnoByTag();
+    }, () => {
+      this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.TAG_FETCHING_ERROR');
+    });
+  }
+
+  public onRemoveTag(tag: any) {
+    this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
+  }
+
+  private _updateInnoByTag() {
+    const config: Config = {
+      fields: 'name',
+      limit: '0',
+      offset: '',
+      search: '{}',
+      tags: this._tags[0]._id,
+      sort: '{ "created": -1 }'
+    };
+    const self = this;
+    const tmp = [...this._projects];
+    this._projects = [];
+    this._innovationService.getAll(config).pipe(first()).subscribe((innovations: any) => {
+      innovations.result.forEach((project: any) => {
+        if (tmp.findIndex(p => p._id === project._id) === -1) {
+          tmp.push(project);
+        }
+      });
+      self.updateInno({value: tmp});
+    });
+  }
+
+
+  public innoAutoCompleteConfig (): {placeholder: string, type: string, initialData: Array<any>} {
+    return {
+      placeholder: 'Innovation',
+      type: 'innovation',
+      initialData: this._projects};
   }
 
   public onClickActions(value: any) {
@@ -226,12 +277,6 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
-  public updateDatabase(){
-    this._searchService.updateDatabase().pipe(first()).subscribe((result: any) => {
-      console.log("OK");
-    });
-  }
-
   get requests(): Array<any> {
     return this._requests;
   }
@@ -278,8 +323,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   get addToCampaignModal () {
     return this._addToCampaignModal;
   }
-
-  set addToCampaignModal(value: boolean) {
-    this._addToCampaignModal = value;
+  get tags () {
+    return this._tags;
   }
 }
