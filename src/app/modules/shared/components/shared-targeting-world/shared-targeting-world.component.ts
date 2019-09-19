@@ -49,6 +49,8 @@ export class SharedTargetingWorldComponent implements OnInit {
     excludeCountries: []
   };
 
+  private _showToggleList: boolean = false;
+
   constructor(private _indexService: IndexService,
               private _translateService: TranslateService,
               private _translateNotificationService: TranslateNotificationsService) { }
@@ -298,14 +300,14 @@ export class SharedTargetingWorldComponent implements OnInit {
    * autoCompleteInput exclude.
    * @param event
    */
-  public addCountryToExclude(event: { value: Array<Country> }) {
+  /*public addCountryToExclude(event: { value: Array<Country> }) {
     event.value.forEach((country: Country) => {
       if (!this._targetingWorldData.excludeCountries.some((value) => value.name === country.name)) {
         this._countryToExclude(country);
       }
     });
     this._emitChanges();
-  }
+  }*/
 
   /***
    * this function is called when we delete the country from the exclude
@@ -314,7 +316,7 @@ export class SharedTargetingWorldComponent implements OnInit {
    * that country into this._targetingWorldData.includeCountries.
    * @param event
    */
-  public removeExcludedCountry(event: { value: Country }) {
+  /*public removeExcludedCountry(event: { value: Country }) {
     if (this._targetingWorldData.includeCountries.some((existCountry) => existCountry.continent === event.value.continent
       && existCountry.subcontinent === event.value.subcontinent)) {
       this._targetingWorldData.includeCountries = [...this._targetingWorldData.includeCountries, event.value];
@@ -322,7 +324,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     }
     this._filterExcludedCountries(event.value);
     this._emitChanges();
-  }
+  }*/
 
   public openModal(event: Event) {
     event.preventDefault();
@@ -346,6 +348,11 @@ export class SharedTargetingWorldComponent implements OnInit {
 
       this._emitChanges();
     }
+  }
+
+  public onClickToggle(event: Event) {
+    event.preventDefault();
+    this._showToggleList = !this._showToggleList;
   }
 
   private _emitChanges() {
@@ -386,6 +393,10 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   get targetingWorldData(): SharedTargetingWorldInterface {
     return this._targetingWorldData;
+  }
+
+  get showToggleList(): boolean {
+    return this._showToggleList;
   }
 
 }

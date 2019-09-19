@@ -57,18 +57,18 @@
 
       <div class="p-top-20">
         <app-auto-complete-input
-          (remove)="removeIncludedCountry($event)"
           (update)="addCountryToInclude($event)"
           [config]="autoCompleteConfig('include')"
           [isAdmin]="isAdmin"
-          [isEditable]="isEditable">
+          [isEditable]="isEditable"
+          [isHideAnswerList]="true">
         </app-auto-complete-input>
       </div>
 
     </div>
     <!-- /include -->
 
-    <!-- exclude -->
+    <!-- exclude
     <div class="stw-country-wrapper">
 
       <div class="d-flex align-center">
@@ -90,10 +90,75 @@
         </app-auto-complete-input>
       </div>
 
-    </div>
+    </div> -->
 
   </div>
   <!-- /include / exclude countries questions -->
+
+  <!-- toggle list -->
+  <div class="stw-toggle-list-wrapper">
+
+    <!-- toggle button -->
+    <button (click)="onClickToggle($event)" class="button is-link p-no" type="button">
+      {{ 'SHARED_TARGETING_WORLD.COUNTRY_SELECTED' | translate }} ({{ targetingWorldData.includeCountries.length }})
+      <i class="icon icon-right" [ngClass]="showToggleList ? 'icon-arrow-down' : 'icon-arrow-right' "></i>
+    </button>
+    <!-- /toggle button -->
+
+    <!-- list -->
+    <div *ngIf="continents.length > 0" [ngClass]="showToggleList ? 'd-block' : 'd-none'" class="m-top-25">
+      <div *ngFor="let continent of getContinents()" class="stw-continent-list-wrapper">
+
+        <!-- continents -->
+        <div class="form-group is-continent">
+          <label class="form-checkbox">
+            <input
+              (change)="onChangeContinent($event, continent)"
+              [checked]="checkContinent(continent)"
+              [disabled]="!isEditable && !isAdmin"
+              [id]="continent"
+              [name]="continent"
+              [value]="continent"
+              type="checkbox">
+            <i class="form-icon"></i>{{ ('CONTINENTS.' + continent) | translate }}
+          </label>
+        </div>
+        <!-- /continents -->
+
+        <!-- countries -->
+        <div class="country-list-wrapper">
+          <div *ngFor="let country of getCountriesByContinent(continent)" class="card is-responsive">
+            <div class="d-flex align-center" style="min-height: 40px">
+
+              <label class="form-checkbox p-no-right">
+                <input
+                  (change)="onChangeCountry($event, country)"
+                  [checked]="checkCountry(country)"
+                  [disabled]="!isEditable && !isAdmin"
+                  [id]="country.name"
+                  [name]="country.name"
+                  [value]="country.name"
+                  type="checkbox">
+                <i class="form-icon"></i>
+              </label>
+
+              <figure class="avatar m-right-2">
+                <img [src]="getFlagSrc(country.code)" alt=" ">
+              </figure>
+
+              <span class="text-xs">{{ country.name }}</span>
+
+            </div>
+          </div>
+        </div>
+        <!-- /countries -->
+
+      </div>
+    </div>
+    <!-- /list -->
+
+  </div>
+  <!-- /toggle list -->
 
 </div>
 
@@ -101,14 +166,14 @@
 <!-- modal for advance settings -->
 <app-modal [(showModal)]="showModal" [maxWidth]="'960px'" [enableCloseButton]="true">
 
-  <section class="modal-body is-stw">
+  <section class="modal-body">
 
     <div class="text-center p-bottom-30">
       <h3 class="text-background">{{ 'SHARED_TARGETING_WORLD.MODAL.HEADING' | translate }}</h3>
     </div>
 
     <div *ngIf="continents.length > 0">
-      <div *ngFor="let continent of getContinents()" class="stw-modal-continent-wrapper">
+      <div *ngFor="let continent of getContinents()" class="stw-continent-list-wrapper">
 
         <!-- continents -->
         <div class="form-group is-continent">

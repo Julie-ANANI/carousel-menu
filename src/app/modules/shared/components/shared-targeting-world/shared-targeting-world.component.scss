@@ -5,10 +5,11 @@
   .stw-incl-excl-country-wrapper {
 
     .stw-country-wrapper {
-      margin-right: 2rem;
+      //margin-right: 2rem;
+      //min-width: 350px;
       margin-top: 1.5rem;
       flex: 1;
-      min-width: 350px;
+      max-width: 550px;
 
       .icon-container {
         margin-left: $unit-1;
@@ -19,51 +20,48 @@
 
   }
 
+  .stw-toggle-list-wrapper {
+    margin-top: 1rem;
+  }
+
 }
 
-.modal-body {
+.stw-continent-list-wrapper {
+  padding-bottom: 2.5rem;
 
-  &.is-stw {
+  .form-group {
 
-    .stw-modal-continent-wrapper {
-      padding-bottom: 2.5rem;
+    &.is-continent {
+      border-bottom: $border-width solid $border-color;
+      padding-bottom: $unit-o;
+      margin-bottom: 0.75rem;
 
-      .form-group {
-
-        &.is-continent {
-          border-bottom: $border-width solid $border-color;
-          padding-bottom: $unit-o;
-          margin-bottom: 0.75rem;
-
-          .form-checkbox {
-            font-weight: $font-weight-medium;
-            font-size: 0.85rem;
-          }
-
-        }
-
+      .form-checkbox {
+        font-weight: $font-weight-medium;
+        font-size: 0.85rem;
+        display: inline-flex;
       }
 
-      .country-list-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        margin-right: -1rem;
-        margin-bottom: -1rem;
+    }
 
-        .card {
-          border: none;
+  }
 
-          .avatar {
-            width: 1.75rem;
-            height: 1.75rem;
+  .country-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -1rem;
+    margin-bottom: -1rem;
 
-            img {
-              width: 1.75rem;
-              border: 1px solid $border-color;
-            }
+    .card {
+      border: none;
 
-          }
+      .avatar {
+        width: 1.75rem;
+        height: 1.75rem;
 
+        img {
+          width: 1.75rem;
+          border: 1px solid $border-color;
         }
 
       }
@@ -74,11 +72,36 @@
 
 }
 
-@media screen and (max-width: $size-sm) {
+@media screen and (max-width: $size-xl) {
 
-  #shared-targeting-world {
-
+  .is-responsive {
+    max-width: calc(25% - 1rem) !important;
   }
 
+}
+
+@media screen and (max-width: $size-lg) {
+
+  .is-responsive {
+    max-width: calc(33% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-sm) {
+
+  .is-responsive {
+    max-width: calc(50% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-xs) {
+
+  .is-responsive {
+    flex: 100% !important;
+    max-width: 100% !important;
+    margin-right: 0 !important;
+  }
 
 }
