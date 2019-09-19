@@ -1,7 +1,7 @@
-<div *ngIf="!tempActive" id="auto-complete-input">
-  <form [formGroup]="autoCompleteInputForm" (ngSubmit)="addProposition(autoCompleteInputForm)" novalidate>
+<div id="auto-complete-input">
 
-    <!-- input area -->
+  <!-- input area -->
+  <form [formGroup]="autoCompleteInputForm" (ngSubmit)="addProposition(autoCompleteInputForm)" novalidate>
     <div *ngIf="isShowable" class="aci-input-wrapper">
 
       <label class="m-right-2">
@@ -18,278 +18,144 @@
 
       <button
         *ngIf="isShowButton"
-        [disabled]="(!canAdd || !isEditable) && !isAdmin"
+        [disabled]="!canAdd || !isEditable"
         class="button is-action is-circled is-primary is-shadowed p-no">
         <i class="icon icon-plus"></i>
       </button>
 
     </div>
-    <!-- /input area -->
-
-    <!-- answer area -->
-    <ul *ngIf="answerList.length > 0" [ngClass]="{ 'fixed-height': answerList.length > 5 }" class="aci-answers-wrapper">
-      <li *ngFor="let answer of answerList; let i = index">
-
-        <!-- text -->
-        <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2">
-          <span [innerHTML]="answer[identifier]"></span>
-        </div>
-        <!-- text -->
-
-        <!-- icons -->
-        <div class="aci-icons-wrapper">
-
-          <!-- delete icon -->
-          <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable && !isAdmin }" class="icon-container m-no-right is-overlay">
-            <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
-              <i class="icon icon-delete text-alert"></i>
-            </span>
-          </div>
-
-        </div>
-        <!-- /icons -->
-
-      </li>
-    </ul>
-    <!-- /answer area -->
-
-
   </form>
-</div>
+  <!-- /input area -->
 
+  <!-- answer area -->
+  <ul *ngIf="answerList.length > 0" [ngClass]="{ 'fixed-height': answerList.length > 5 }" class="aci-answers-wrapper">
+    <li *ngFor="let answer of answerList; let i = index">
 
+      <!-- can order -->
+      <div *ngIf="canOrder" class="aci-icons-wrapper">
 
+        <!-- up icon -->
+        <div (click)="onClickOrderUp($event, i)" class="icon-container m-no-left is-overlay">
+          <span [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_UP' | translate" class="tooltip">
+            <i class="icon icon-arrow-up"></i>
+          </span>
+        </div>
 
-<!-- todo remove this -->
-<div *ngIf="tempActive">
-
-  <form [formGroup]="autoCompleteInputForm" (ngSubmit)="addProposition(autoCompleteInputForm)">
-
-    <ng-container *ngIf="canEdit">
-      <div class="flex-between input-form">
-
-        <label class="m-right-2" style="width: 80%">
-          <input
-            [attr.placeholder]="placeholder | translate"
-            [display-property-name]="identifier"
-            [list-formatter]="autocompleteListFormatter.bind(this)"
-            [source]="suggestions.bind(this)"
-            auto-complete
-            class="form-input"
-            formControlName="answer"
-            value-property-name="id">
-        </label>
-
-        <button *ngIf="addButton" class="btn btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
+        <!-- down icon -->
+        <div (click)="onClickOrderDown($event, i)" class="icon-container m-no-left m-right-2 is-overlay">
+          <span [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_DOWN' | translate" class="tooltip">
+            <i class="icon icon-arrow-down"></i>
+          </span>
+        </div>
 
       </div>
-    </ng-container>
+      <!-- /can order -->
 
-  </form>
-
-  <ul *ngFor="let answer of answerList; index as i" class="input-answer-wrapper">
-
-    <ng-container *ngIf="!adminMode">
-      <li>
-
+      <!-- text -->
+      <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2">
         <span [innerHTML]="answer[identifier]"></span>
+      </div>
+      <!-- text -->
 
-        <ng-container *ngIf="canOrder">
-          <i class="fas fa-angle-up" aria-label="Up" role="button" (click)="up($event, i)"></i>
-          <i class="fas fa-angle-down" aria-label="Down" role="button" (click)="down($event, i)"></i>
-        </ng-container>
+      <!-- icons -->
+      <div class="aci-icons-wrapper">
 
-        <a class="delete" aria-label="Close" role="button" (click)="removeProposition(i)">
-          <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
-        </a>
+        <!-- if admin mode -->
+        <div *ngIf="isAdmin" class="d-flex">
 
-      </li>
-    </ng-container>
+          <!-- edit-icon -->
+          <div class="popover">
 
+            <div class="icon-container is-overlay c-default">
+              <i class="fas fa-pencil-alt text-notify"></i>
+            </div>
 
-    <ng-container *ngIf="adminMode">
-      <li>
+            <div class="popover-container" style="width: 260px">
+              <div class="card p-no">
 
-        <span [innerHTML]="answer[identifier]"></span>
-
-        <div class="popover is-left">
-
-          <i class="fas fa-pencil-alt"></i>
-
-          <div class="popover-container">
-            <div class="card">
-              <div class="card-body">
-                <div class="form-group">
-                  <label class="form-label" for="autocomplete-text">Answer</label>
-                  <input autocomplete="off" type="text" id="autocomplete-text" class="form-input" [(ngModel)]="answer[identifier]" name="text"/>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label" for="answer">{{ 'COMMON.LABEL.ANSWER' | translate }}</label>
+                    <input
+                      [(ngModel)]="answer[identifier]"
+                      autocomplete="off"
+                      class="form-input"
+                      id="answer"
+                      name="answer"
+                      type="text"/>
+                  </div>
                 </div>
-              </div>
-              <div class="card-footer text-center">
-                <button class="btn btn-primary btn-xs" type="submit" (click)="updateItem($event)">Update</button>
+
+                <div class="card-footer text-center">
+                  <button (click)="updateItem($event)" class="button is-primary is-sm" type="submit">
+                    {{ 'COMMON.BUTTON.UPDATE' | translate }}
+                  </button>
+                </div>
+
               </div>
             </div>
+
+          </div>
+
+          <!-- domain-icon -->
+          <div class="popover">
+
+            <div class="icon-container is-overlay c-default" [ngClass]="{ 'opacity': !(answer.domain && answer.domain.length > 0) } ">
+              <i class="fas fa-at"></i>
+            </div>
+
+            <div class="popover-container" style="width: 260px">
+              <div class="card p-no">
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label" for="domain">{{ 'COMMON.LABEL.DOMAIN_NAME' | translate }}</label>
+                    <input
+                      [(ngModel)]="answer.domain"
+                      autocomplete="off"
+                      class="form-input"
+                      id="domain"
+                      name="domain"
+                      type="text"/>
+                  </div>
+                </div>
+
+                <div class="card-footer text-center">
+                  <button (click)="updateItem($event)" class="button is-primary is-sm" type="submit">
+                    {{ 'COMMON.BUTTON.UPDATE' | translate }}
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- thumbs-up icon -->
+          <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
+            <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
+          </div>
+
+          <!-- thumbs-down icon -->
+          <div (click)="thumbsDown($event, i)" class="icon-container is-overlay">
+            <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
           </div>
 
         </div>
+        <!-- /if admin mode -->
 
-        <div class="popover is-left">
-
-          <i class="fas fa-at" [ngClass]="{'active': answer.domain && answer.domain.length > 0}"></i>
-
-          <div class="popover-container">
-            <div class="card">
-              <div class="card-body">
-                <div class="form-group">
-                  <label class="form-label" for="domain">Domain Name</label>
-                  <input autocomplete="off" type="text" id="domain" class="form-input" [(ngModel)]="answer.domain" name="domain"/>
-                </div>
-              </div>
-              <div class="card-footer text-center">
-                <button class="btn btn-primary btn-xs" type="submit" (click)="updateItem($event)">Update</button>
-              </div>
-            </div>
-          </div>
-
+        <!-- delete icon -->
+        <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable && !isAdmin }" class="icon-container is-overlay">
+          <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
+            <i class="icon icon-delete text-alert"></i>
+          </span>
         </div>
 
-        <i class="fas fa-thumbs-up" [ngClass]="{'active': answer.rating === 2}" (click)="thumbsUp($event, i)"></i>
+      </div>
+      <!-- /icons -->
 
-        <i class="fas fa-thumbs-down" [ngClass]="{'active': answer.rating === 0}" (click)="thumbsDown($event, i)"></i>
-
-        <a class="delete" aria-label="Close" role="button" (click)="removeProposition(i)">
-          <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="" alt=" ">
-        </a>
-
-      </li>
-    </ng-container>
-
+    </li>
   </ul>
+  <!-- /answer area -->
 
 </div>
-
-<!--<div id="autocomplete-input">
-  <form [formGroup]="autoCompleteForm" (ngSubmit)="addProposition(autoCompleteForm)" novalidate>
-
-    &lt;!&ndash; input area &ndash;&gt;
-    <div *ngIf="canEdit" class="flex-between ai-input-form">
-
-      <label class="m-right-2">
-        <input
-          [attr.placeholder]="placeholder | translate"
-          [display-property-name]="identifier"
-          [list-formatter]="autocompleteListFormatter.bind(this)"
-          [source]="suggestions.bind(this)"
-          auto-complete
-          class="form-input"
-          formControlName="answer"
-          value-property-name="id">
-      </label>
-
-      <button type="submit" [disabled]="!canAdd" class="button is-action is-circled is-primary is-no-hover-effect p-no">
-        <i class="icon icon-plus"></i>
-      </button>
-
-    </div>
-    &lt;!&ndash; /input area &ndash;&gt;
-
-    &lt;!&ndash; answers area &ndash;&gt;
-    <ul class="ai-answer-wrapper">
-      <li *ngFor="let answer of answerList; let i = index" class="flex-between">
-
-        &lt;!&ndash; order icons &ndash;&gt;
-        <div class="ai-icons-wrapper">
-
-          &lt;!&ndash; move-up icon &ndash;&gt;
-          <div *ngIf="i !== 0" [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_UP' | translate" class="ai-icon-wrapper tooltip">
-            <div (click)="onClickUpIcon($event, i)" class="icon-overlay">
-              <i class="icon icon-arrow-up text-notify"></i>
-            </div>
-          </div>
-          &lt;!&ndash; /move-up icon &ndash;&gt;
-
-          &lt;!&ndash; move-down icon &ndash;&gt;
-          <div *ngIf="i !== answerList.length - 1" [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_DOWN' | translate" class="ai-icon-wrapper tooltip">
-            <div (click)="onClickDownIcon($event, i)" class="icon-overlay">
-              <i class="icon icon-arrow-down text-notify"></i>
-            </div>
-          </div>
-          &lt;!&ndash; /move-down icon &ndash;&gt;
-
-        </div>
-        &lt;!&ndash; /order icons &ndash;&gt;
-
-        &lt;!&ndash; answer &ndash;&gt;
-        <div class="ai-answer text-sm text-primary-dark m-right-2">
-
-          <span *ngIf="!(enableInputEdit && i === indexNumber)">{{ answer[identifier] }}</span>
-
-          <label *ngIf="enableInputEdit && i === indexNumber">
-            <input
-              (keyup.enter)="updateProposition($event, i, autoCompleteForm)"
-              [display-property-name]="identifier"
-              [list-formatter]="autocompleteListFormatter.bind(this)"
-              [name]="'autocomplete-text' + [i]"
-              [source]="suggestions.bind(this)"
-              [value]="answerList[i][identifier]"
-              auto-complete
-              class="form-input is-sm"
-              formControlName="updateAnswer"
-              type="text"
-              value-property-name="id">
-          </label>
-
-        </div>
-        &lt;!&ndash; /answer &ndash;&gt;
-
-        &lt;!&ndash; action icons &ndash;&gt;
-        <div class="ai-icons-wrapper">
-
-          &lt;!&ndash; edit icon &ndash;&gt;
-          <div
-            [attr.data-tooltip]="(!(enableInputEdit && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
-            class="ai-icon-wrapper tooltip">
-            <div (click)="onClickEdit($event, i)" class="icon-overlay">
-              <i class="icon icon-edit text-notify"></i>
-            </div>
-          </div>
-          &lt;!&ndash; /edit icon &ndash;&gt;
-
-          &lt;!&ndash; domain icon &ndash;&gt;
-          &lt;!&ndash; /domain icon &ndash;&gt;
-
-          &lt;!&ndash; thumbs-up icon &ndash;&gt;
-          <div class="ai-icon-wrapper">
-            <div (click)="thumbsUp($event, i)" class="icon-overlay">
-              <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
-            </div>
-          </div>
-          &lt;!&ndash; /thumbs-up icon &ndash;&gt;
-
-          &lt;!&ndash; thumbs-down icon &ndash;&gt;
-          <div class="ai-icon-wrapper">
-            <div (click)="thumbsDown($event, i)" class="icon-overlay">
-              <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
-            </div>
-          </div>
-          &lt;!&ndash; /thumbs-down icon &ndash;&gt;
-
-          &lt;!&ndash; delete icon &ndash;&gt;
-          <div
-            [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
-            class="ai-icon-wrapper m-no-right tooltip">
-            <div (click)="removeProposition($event, i)" class="icon-overlay">
-              <i class="icon icon-delete text-alert"></i>
-            </div>
-          </div>
-          &lt;!&ndash; /delete icon &ndash;&gt;
-
-
-        </div>
-        &lt;!&ndash; /action icons &ndash;&gt;
-
-      </li>
-    </ul>
-    &lt;!&ndash; /answers area &ndash;&gt;
-
-  </form>
-</div>-->

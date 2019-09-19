@@ -141,6 +141,8 @@ export const COMMON = {
     'CREATED': 'Created',
     'CREATED_ON': 'Created on',
     'COLLABORATORS': 'Collaborators',
+    'DOMAIN_NAME': 'Domain Name',
+    'ANSWER': 'Answer'
   },
 
   'PLACEHOLDER': {

@@ -18,7 +18,7 @@ export class InputListComponent {
     }
   }
 
-  @Input() canEdit = true;
+  @Input() canEdit: boolean = true;
 
   @Input() set adminMode(value: boolean) {
     this._adminMode = value;

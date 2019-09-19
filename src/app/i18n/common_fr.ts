@@ -139,7 +139,9 @@ export const COMMON = {
     'TAG_NAME': 'Nom du tag',
     'CREATED': 'Créé',
     'CREATED_ON': 'Créé le',
-    'COLLABORATORS': 'Collaborateurs'
+    'COLLABORATORS': 'Collaborateurs',
+    'DOMAIN_NAME': 'Nom de domaine',
+    'ANSWER': 'Réponse'
   },
 
   'PLACEHOLDER': {

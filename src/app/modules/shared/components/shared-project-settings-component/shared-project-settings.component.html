@@ -163,7 +163,10 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-auto-complete-input (update)="addCompanyToInclude($event)" [config]="getConfig('includedCompanies')" [tempActive]="false"></app-auto-complete-input>
+                <app-auto-complete-input
+                  (update)="addCompanyToInclude($event)"
+                  [config]="getConfig('includedCompanies')">
+                </app-auto-complete-input>
               </div>
             </div>
           </ng-container>
@@ -189,7 +192,10 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-auto-complete-input (update)="addCompanyToExclude($event)" [config]="getConfig('excludedCompanies')" [tempActive]="false"></app-auto-complete-input>
+                <app-auto-complete-input
+                  (update)="addCompanyToExclude($event)"
+                  [config]="getConfig('excludedCompanies')">
+                </app-auto-complete-input>
               </div>
             </div>
           </ng-container>
