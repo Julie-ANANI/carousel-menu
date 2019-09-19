@@ -30,32 +30,6 @@
     <div class="column" [ngClass]="adminSide ? 'col-11 col-xs-12' : 'col-md-12 col-7 col-lg-10 col-xl-8'">
       <div class="restrict-container">
 
-        <!-- Exclude countries
-        <ng-container *ngIf="!canEdit && innovation.settings.geography.exclude.length > 0">
-          <div class="pd-para">
-              <span class="text">
-                {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-              </span>
-            <div class="pd-input">
-              <div *ngFor="let country of innovation.settings.geography.exclude" class="label label-answer">
-                {{ country.name }}
-              </div>
-            </div>
-          </div>
-        </ng-container>
-
-        <ng-container *ngIf="canEdit">
-          <div class="pd-para">
-              <span class="text">
-                {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-              </span>
-            <div class="pd-input">
-              <app-auto-complete-input (update)="addCountryToExclude($event)" [config]="getConfig('countries')"></app-auto-complete-input>
-            </div>
-          </div>
-        </ng-container>
-        /Exclude countries -->
-
         <!-- Comment countries -->
         <ng-container *ngIf="!canEdit && !!innovation.settings.geography.comments">
           <p class="pd-para">
@@ -66,7 +40,7 @@
           <div class="pd-input"><p class="text">{{ innovation.settings.geography.comments }}</p></div>
         </ng-container>
 
-        <ng-container *ngIf="canEdit">
+        <!--<ng-container *ngIf="canEdit">
 
           <p class="pd-para">
               <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
@@ -94,7 +68,7 @@
             </div>
           </ng-container>
 
-        </ng-container>
+        </ng-container>-->
         <!-- /Comment countries -->
 
         <!-- Activity sectors -->

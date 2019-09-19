@@ -40,10 +40,10 @@
   </div>
   <!-- /continents -->
 
-  <!-- include / exclude countries questions -->
+  <!-- include / exclude countries questions
   <div class="d-flex flex-wrap stw-incl-excl-country-wrapper">
 
-    <!-- include -->
+     include
     <div class="stw-country-wrapper">
 
       <div class="d-flex align-center">
@@ -66,9 +66,9 @@
       </div>
 
     </div>
-    <!-- /include -->
+     /include
 
-    <!-- exclude
+     exclude
     <div class="stw-country-wrapper">
 
       <div class="d-flex align-center">
@@ -90,10 +90,10 @@
         </app-auto-complete-input>
       </div>
 
-    </div> -->
+    </div>
 
   </div>
-  <!-- /include / exclude countries questions -->
+   /include / exclude countries questions -->
 
   <!-- toggle list -->
   <div class="stw-toggle-list-wrapper">
@@ -163,7 +163,7 @@
 </div>
 
 
-<!-- modal for advance settings -->
+<!-- modal for advance settings
 <app-modal [(showModal)]="showModal" [maxWidth]="'960px'" [enableCloseButton]="true">
 
   <section class="modal-body">
@@ -175,7 +175,7 @@
     <div *ngIf="continents.length > 0">
       <div *ngFor="let continent of getContinents()" class="stw-continent-list-wrapper">
 
-        <!-- continents -->
+         continents
         <div class="form-group is-continent">
           <label class="form-checkbox">
             <input
@@ -189,9 +189,9 @@
             <i class="form-icon"></i>{{ ('CONTINENTS.' + continent) | translate }}
           </label>
         </div>
-        <!-- /continents -->
+         /continents
 
-        <!-- countries -->
+         countries
         <div class="country-list-wrapper">
           <div *ngFor="let country of getCountriesByContinent(continent)" class="card is-responsive">
             <div class="d-flex align-center" style="min-height: 40px">
@@ -217,7 +217,7 @@
             </div>
           </div>
         </div>
-        <!-- /countries -->
+         /countries
 
       </div>
     </div>
@@ -226,4 +226,4 @@
   </section>
 
 </app-modal>
-<!-- /modal for advance settings -->
+ /modal for advance settings -->
