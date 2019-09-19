@@ -32,6 +32,8 @@ export class AutoCompleteInputComponent {
 
   @Input() multiLangObjects: boolean = false;
 
+  @Input() isHideAnswerList: boolean = false; // true: to hide the answer list.
+
   @Input() set config(config: AutoCompleteInputConfigInterface) {
     if (config) {
 

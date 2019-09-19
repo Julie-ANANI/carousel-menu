@@ -28,7 +28,7 @@
   <!-- /input area -->
 
   <!-- answer area -->
-  <ul *ngIf="answerList.length > 0" [ngClass]="{ 'fixed-height': answerList.length > 5 }" class="aci-answers-wrapper">
+  <ul *ngIf="answerList.length > 0 && !isHideAnswerList" [ngClass]="{ 'fixed-height': answerList.length > 5 }" class="aci-answers-wrapper">
     <li *ngFor="let answer of answerList; let i = index">
 
       <!-- can order -->
