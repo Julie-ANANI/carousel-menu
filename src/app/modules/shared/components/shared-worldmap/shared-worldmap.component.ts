@@ -1,5 +1,14 @@
-import { Component, ElementRef, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { SharedWorldmapService } from './services/shared-worldmap.service';
+import { Response } from '../../../../models/response';
+import { IndexService } from '../../../../services/index/index.service';
+import { Country } from '../../../../models/country';
+
+export interface Tooltip {
+  flag?: string;
+  name?: string;
+  value?: number;
+}
 
 @Component({
   selector: 'app-shared-worldmap',
@@ -12,6 +21,16 @@ export class SharedWorldmapComponent implements OnInit {
   @Input() width: string;
 
   @Input() countriesColor: string = '#2ECC71';
+
+  @Input() isShowTooltip: boolean = false; // true: to show the information over the country.
+
+  /***
+   * thresholds to color the countries.
+   * @param value
+   */
+  @Input() set quartiles (value: [number, number, number]) {
+    this._quartiles = value;
+  }
 
   /***
    * use this when you have only the list of the
@@ -45,12 +64,66 @@ export class SharedWorldmapComponent implements OnInit {
 
   private _secondThreshold: number;
 
+  private _quartiles: [number, number, number];
+
+  tooltipPosition: any = {};
+
+  tooltipInfo: Tooltip = null;
+
+  allCountries: Array<Country> = [];
+
+  maxValue: number = 10000; // Above this value, we display > 10000 instead of the true value
+
+  minValue: number = 10; // Below this value, we display < 10 instead of the true value
+
   constructor(private _elementRef: ElementRef,
+              private _indexService: IndexService,
               private _sharedWorldmapService: SharedWorldmapService,
               private _viewContainerRef: ViewContainerRef) {}
 
   ngOnInit() {
+    this._getAllCountries();
     this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
+  }
+
+  private _getAllCountries() {
+    this._indexService.getWholeSet({ type: 'countries' }).subscribe((response: Response) => {
+      this.allCountries = response.result;
+    });
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+
+    const id = (event.target as HTMLElement).id;
+
+    if (id) {
+      this._setTooltipInfo(id);
+
+      this.tooltipPosition = {
+        left: `${event.clientX - (event.clientX - event.offsetX) - 3}px`,
+        top: `${event.offsetY + 30}px`,
+        opacity: 1,
+        display: 'block'
+      }
+
+    } else {
+      this.tooltipPosition = {
+        opacity: 0,
+        display: 'none'
+      }
+    }
+
+  }
+
+  private _setTooltipInfo(countryId: string) {
+    const country = this.allCountries.find((country) => country.code === countryId);
+    if (country) {
+      this.tooltipInfo = {
+        flag: country.code,
+        name: country.name
+      }
+    }
   }
 
   private _reinitializeMap() {
@@ -148,6 +221,10 @@ export class SharedWorldmapComponent implements OnInit {
 
   }
 
+  public getFlagSrc(code: string): string {
+    return `https://res.cloudinary.com/umi/image/upload/c_scale,h_30,w_30/app/flags/${code}.png`;
+  }
+
   get firstThreshold(): number {
     return this._firstThreshold;
   }
@@ -158,6 +235,10 @@ export class SharedWorldmapComponent implements OnInit {
 
   get showLegend(): boolean {
     return this._showLegend;
+  }
+
+  get quartiles(): [number, number, number]{
+    return this._quartiles;
   }
 
 }

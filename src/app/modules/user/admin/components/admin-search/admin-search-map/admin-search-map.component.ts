@@ -13,9 +13,11 @@ export class AdminSearchMapComponent {
 
   @Input() set countriesData (value: any) {
     this._countriesData = value;
+    console.log(value);
   }
 
   @Input() set quartiles (value: [number, number, number]) {
+    console.log(value);
     this._quartiles = value;
   }
 
