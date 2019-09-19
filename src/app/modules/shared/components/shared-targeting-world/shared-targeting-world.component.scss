@@ -71,3 +71,37 @@
   }
 
 }
+
+@media screen and (max-width: $size-xl) {
+
+  .is-responsive {
+    max-width: calc(25% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-lg) {
+
+  .is-responsive {
+    max-width: calc(33% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-sm) {
+
+  .is-responsive {
+    max-width: calc(50% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-xs) {
+
+  .is-responsive {
+    flex: 100% !important;
+    max-width: 100% !important;
+    margin-right: 0 !important;
+  }
+
+}
