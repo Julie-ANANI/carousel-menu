@@ -19,4 +19,6 @@ export const SHARED_TARGETING_WORLD = {
     'TO_INCLUDE_COUNTRY': 'Entrez le nom du pays à inclure',
   },
 
+  'COUNTRY_SELECTED': 'Pays sélectionné',
+
 };
