@@ -119,7 +119,6 @@ export class SharedSearchHistoryComponent implements OnInit {
           _columns: [
             {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
             {_attrs: ['pros'], _name: '', _type: 'TEXT', _isSearchable: false, _isSortable: false},
-            {_attrs: ['metadata.user.name'], _name: 'PROJECT_LIST.OPERATOR', _type: 'TEXT', _isSearchable: false, _isSortable: false},
             {_attrs: ['targetting'], _name: 'SEARCH.HISTORY.TARGETTING', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
             {_attrs: ['status'], _name: 'SEARCH.HISTORY.STATUS', _type: 'MULTI-CHOICES', _choices: [
