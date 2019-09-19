@@ -226,6 +226,12 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
+  public updateDatabase(){
+    this._searchService.updateDatabase().pipe(first()).subscribe((result: any) => {
+      console.log("OK");
+    });
+  }
+
   get requests(): Array<any> {
     return this._requests;
   }
