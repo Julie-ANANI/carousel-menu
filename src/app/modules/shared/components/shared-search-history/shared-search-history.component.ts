@@ -32,7 +32,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _total = 0;
   private _googleQuota = 30000;
   private _config: Config = {
-    fields: 'entity keywords created country elapsedTime status countries cost flag campaign innovation motherRequest totalResults metadata results',
+    fields: 'entity region keywords created country elapsedTime status countries cost flag campaign innovation motherRequest totalResults metadata results',
     limit: "10",
     offset: "0",
     search: "{}",
@@ -76,7 +76,10 @@ export class SharedSearchHistoryComponent implements OnInit {
         if(result.requests) {
           this._requests = result.requests.map((request: any) => {
             request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
-            if (request.countries && request.countries.length) {
+            if (request.region) {
+              request.targetting = request.region;
+              request.keywords = request.keywords.replace(`"${request.region}"`, "");
+            } else if (request.countries && request.countries.length) {
               request.targetting = "";
               const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
               request.countries.forEach((country: string) => {
