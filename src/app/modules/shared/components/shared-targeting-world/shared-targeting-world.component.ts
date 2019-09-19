@@ -203,7 +203,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     });
   }
 
-  public autoCompleteConfig(type: string): any {
+/*  public autoCompleteConfig(type: string): any {
     switch (type) {
 
       case 'exclude':
@@ -221,14 +221,14 @@ export class SharedTargetingWorldComponent implements OnInit {
         };
 
     }
-  }
+  }*/
 
   /***
    * this function is called when the value is output from the
    * autoCompleteInput include.
    * @param event
    */
-  public addCountryToInclude(event: { value: Array<Country> }) {
+  /*public addCountryToInclude(event: { value: Array<Country> }) {
     if (this.isEditable || this.isAdmin) {
       event.value.forEach((country: Country) => {
         if(!this._targetingWorldData.includeCountries.some((existedCountry) => existedCountry.name === country.name)) {
@@ -239,11 +239,11 @@ export class SharedTargetingWorldComponent implements OnInit {
         }
       });
     }
-  }
+  }*/
 
-  private _getCountryByName(searchName: string): Country {
+  /*private _getCountryByName(searchName: string): Country {
     return this._allCountries.find((countries) => countries.name.toLowerCase() === searchName.toLowerCase());
-  }
+  }*/
 
   private _filterExcludedCountries(country: Country) {
     this._targetingWorldData.excludeCountries = this._targetingWorldData.excludeCountries.filter((value) => value.name !== country.name);

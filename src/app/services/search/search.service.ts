@@ -49,14 +49,6 @@ export class SearchService {
     return this._http.get('/search/get', {params: {path: '/metadataRequest/' + requestId}});
   }
 
-  public stopRequest(requestId: string): Observable<any> {
-    return this._http.get('/search/stop', {params: {id: requestId}});
-  }
-
-  public cancelRequest(requestId: string, cancel: boolean): Observable<any> {
-    return this._http.get('/search/cancel', {params: {id: requestId, cancel: JSON.stringify(cancel)}});
-  }
-
   public getPros(config: {[header: string]: string | string[]}, requestId: string): Observable<any> {
     config = this._commonService.configToString(config);
     return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params: config});
@@ -148,6 +140,14 @@ export class SearchService {
     const query = {
       params: JSON.stringify({requestIds: requestIds}),
       path: '/request/cancel/many'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public stopManyRequests(requestIds: Array<String>): Observable<any> {
+    const query = {
+      params: JSON.stringify({requestIds: requestIds}),
+      path: '/request/stop/many'
     };
     return this._http.get('/search/get', {params: query});
   }

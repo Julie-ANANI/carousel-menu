@@ -114,6 +114,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           _buttons: [
             { _icon: 'fas fa-times', _label: 'SEARCH.HISTORY.CANCEL' },
             { _icon: 'fas fa-hourglass-half', _label: 'SEARCH.HISTORY.BACK_QUEUE' },
+            { _icon: 'fas fa-times', _label: 'SEARCH.HISTORY.STOP' },
             { _icon: 'fas fa-share-square', _label: 'SEARCH.ADDTOCAMPAIGN' }
           ],
           _columns: [
@@ -170,10 +171,18 @@ export class SharedSearchHistoryComponent implements OnInit {
     } else if (value._action === 'SEARCH.HISTORY.BACK_QUEUE') {
       this._searchService.queueManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId : string) => {
-          const request = this._requests[this._getRequestIndex(requestId, this._requests)]
+          const request = this._requests[this._getRequestIndex(requestId, this._requests)];
           if (request.status != "DONE") request.status = 'QUEUED';
         });
         this._notificationsService.success('Requêtes mises en attente', `Les requêtes ont bien été mises en attente`);
+      });
+    } else if (value._action === 'SEARCH.HISTORY.STOP') {
+      this._searchService.stopManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
+        requestsIds.forEach((requestId : string) => {
+          const request = this._requests[this._getRequestIndex(requestId, this._requests)];
+          request.status = 'DONE';
+        });
+        this._notificationsService.success('Requêtes arrêtées', `Les requêtes ont bien été arrêtées`);
       });
     } else {
       this._requestsToImport = requestsIds;

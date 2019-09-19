@@ -37,7 +37,7 @@ export const SHARED_PROJECT_SETTINGS = {
     'PLACEHOLDER': 'Industrial component manufacturers, consumer goods retail, software development studios... Ex: IBM, Intel',
     'TO_EXCLUDE': 'Indicate companies to be excluded',
     'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Company name to be excluded',
-    'TO_INCLUDE': 'Indicate companies to be contacted',
+    'TO_INCLUDE': 'Example of companies to be targeted',
     'NEW_COMPANY_TO_INCLUDE_PLACEHOLDER': 'Company name to be included',
     'COMMENT': 'Any additional comments for this section?'
   },
