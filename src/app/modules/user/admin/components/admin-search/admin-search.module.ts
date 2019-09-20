@@ -14,7 +14,6 @@ import { SharedSearchMailModule } from '../../../../shared/components/shared-sea
 import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
 import { CountryFlagModule } from "../../../../utility-components/country-flag/country-flag.module";
-import { AdminSearchMapModule } from "./admin-search-map/admin-search-map.module";
 import { ModalModule } from "../../../../utility-components/modals/modal/modal.module";
 
 
@@ -26,7 +25,6 @@ import { ModalModule } from "../../../../utility-components/modals/modal/modal.m
     SharedSearchHistoryModule,
     TranslateModule.forChild(),
     SharedSearchMailModule,
-    AdminSearchMapModule,
     FormsModule,
     RouterModule,
     CountryFlagModule,
