@@ -15,6 +15,7 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
 import { SidebarModule } from "../../../sidebar/sidebar.module";
 import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-search-tool/sidebar-search-tool.module";
 import { SearchInput3Module } from '../../../utility-components/search-inputs/search-template-3/search-input-3.module';
+import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { SearchInput3Module } from '../../../utility-components/search-inputs/se
     CountryFlagModule,
     SidebarModule,
     SidebarSearchToolModule,
-    SearchInput3Module
+    SearchInput3Module,
+    SharedWorldmapModule
   ],
   declarations: [
     SearchToolComponent

@@ -68,6 +68,10 @@
               [maxValue]="10000"
               [minValue]="10"
             ></admin-search-map>
+            <app-shared-worldmap
+              [quartiles]="scale"
+              [demoCountriesData]="searchResult.metadata">
+            </app-shared-worldmap>
           </div>
 
           <!-- display stats -->

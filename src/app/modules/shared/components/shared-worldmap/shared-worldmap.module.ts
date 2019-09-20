@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+
 import { SharedWorldmapComponent } from './shared-worldmap.component';
-import {SharedWorldmapService} from './services/shared-worldmap.service';
+
+import { SharedWorldmapService} from './services/shared-worldmap.service';
+import { IndexService } from '../../../../services/index/index.service';
 
 @NgModule({
   imports: [
@@ -13,7 +16,8 @@ import {SharedWorldmapService} from './services/shared-worldmap.service';
     SharedWorldmapComponent
   ],
   providers: [
-    SharedWorldmapService
+    SharedWorldmapService,
+    IndexService
   ],
   entryComponents: [
     SharedWorldmapComponent

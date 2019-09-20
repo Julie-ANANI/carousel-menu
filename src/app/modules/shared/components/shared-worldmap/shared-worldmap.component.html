@@ -584,9 +584,30 @@
     </div>
     <div class="swm-legend-wrapper">
       <span class="shape is-circle is-xs bg-success"></span>
-      <span> > {{secondThreshold}} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
+      <span> > {{ secondThreshold }} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
     </div>
   </div>
   <!-- /legends -->
+
+  <!-- quartiles -->
+  <div *ngIf="quartiles" class="text-center">
+    <div class="swm-legend-wrapper">
+      <span class="shape is-circle is-xs circle-3"></span>
+      <span> < {{ quartiles[0] }} </span>
+    </div>
+    <div class="swm-legend-wrapper">
+      <span class="shape is-circle is-xs circle-1"></span>
+      <span> {{ quartiles[0] }} - {{ quartiles[1] }} </span>
+    </div>
+    <div class="swm-legend-wrapper">
+      <span class="shape is-circle is-xs circle-2"></span>
+      <span> {{ quartiles[1] }} - {{ quartiles[2] }} </span>
+    </div>
+    <div class="swm-legend-wrapper">
+      <span class="shape is-circle is-xs bg-success"></span>
+      <span> > {{ quartiles[2] }} </span>
+    </div>
+  </div>
+  <!-- quartiles -->
 
 </div>

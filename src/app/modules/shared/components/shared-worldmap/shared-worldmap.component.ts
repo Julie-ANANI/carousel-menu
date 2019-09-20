@@ -22,7 +22,10 @@ export class SharedWorldmapComponent implements OnInit {
 
   @Input() countriesColor: string = '#2ECC71';
 
-  @Input() isShowTooltip: boolean = false; // true: to show the information over the country.
+  // true: to show the information over the country.
+  @Input() set isShowTooltip(value: boolean) {
+    this._isShowTooltip = value;
+  }
 
   /***
    * thresholds to color the countries.
@@ -51,11 +54,20 @@ export class SharedWorldmapComponent implements OnInit {
 
   /***
    * use this when with the list of countries you have the data
-   * and base on that data you want to paint the map.
+   * and base on that data you want to paint the map. For
+   * example synthesis.
    * @param countries
    */
   @Input() set countriesData(countries: any) {
     this._calculateCountriesData(countries);
+  }
+
+  /***
+   * for the demo.
+   * @param value
+   */
+  @Input() set demoCountriesData(value: any) {
+    this._calculateDemoCountries(value);
   }
 
   private _showLegend: boolean = false;
@@ -66,11 +78,15 @@ export class SharedWorldmapComponent implements OnInit {
 
   private _quartiles: [number, number, number];
 
+  private _isShowTooltip: boolean = false;
+
   tooltipPosition: any = {};
 
   tooltipInfo: Tooltip = null;
 
   allCountries: Array<Country> = [];
+
+  hoverCountryId: string = '';
 
   maxValue: number = 10000; // Above this value, we display > 10000 instead of the true value
 
@@ -98,11 +114,11 @@ export class SharedWorldmapComponent implements OnInit {
     const id = (event.target as HTMLElement).id;
 
     if (id) {
-      this._setTooltipInfo(id);
+      this.hoverCountryId = id;
 
       this.tooltipPosition = {
         left: `${event.clientX - (event.clientX - event.offsetX) - 3}px`,
-        top: `${event.offsetY + 30}px`,
+        top: `${event.offsetY + 25}px`,
         opacity: 1,
         display: 'block'
       }
@@ -114,16 +130,6 @@ export class SharedWorldmapComponent implements OnInit {
       }
     }
 
-  }
-
-  private _setTooltipInfo(countryId: string) {
-    const country = this.allCountries.find((country) => country.code === countryId);
-    if (country) {
-      this.tooltipInfo = {
-        flag: country.code,
-        name: country.name
-      }
-    }
   }
 
   private _reinitializeMap() {
@@ -221,6 +227,27 @@ export class SharedWorldmapComponent implements OnInit {
 
   }
 
+  private _calculateDemoCountries(value: any) {
+    const country = this.allCountries.find((country) => country.code === this.hoverCountryId);
+    let displayedNumber = country && country.code ? value[country.code] : "NA";
+
+    console.log(displayedNumber);
+
+
+  }
+
+  /*private _setTooltipInfo(countryId: string) {
+    const country = this.allCountries.find((country) => country.code === countryId);
+
+    if (country) {
+      this.tooltipInfo = {
+        flag: country.code,
+        name: country.name
+      }
+    }
+
+  }*/
+
   public getFlagSrc(code: string): string {
     return `https://res.cloudinary.com/umi/image/upload/c_scale,h_30,w_30/app/flags/${code}.png`;
   }
@@ -239,6 +266,10 @@ export class SharedWorldmapComponent implements OnInit {
 
   get quartiles(): [number, number, number]{
     return this._quartiles;
+  }
+
+  get isShowTooltip(): boolean {
+    return this._isShowTooltip;
   }
 
 }
