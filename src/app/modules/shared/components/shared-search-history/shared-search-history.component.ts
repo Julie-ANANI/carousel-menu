@@ -82,6 +82,8 @@ export class SharedSearchHistoryComponent implements OnInit {
             if (request.region) {
               request.targetting = request.region;
               request.keywords = request.keywords.replace(`"${request.region}"`, "");
+            } else if (request.country) {
+              request.targetting = countries[request.country];
             } else if (request.countries && request.countries.length) {
               request.targetting = "";
               const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
@@ -96,8 +98,6 @@ export class SharedSearchHistoryComponent implements OnInit {
               for (let key of Object.keys(counter)) {
                 if (counter[key]) request.targetting += ` ${key}(${counter[key]})`;
               }
-            } else if (request.country) {
-              request.targetting = countries[request.country];
             }
             return request;
           });
