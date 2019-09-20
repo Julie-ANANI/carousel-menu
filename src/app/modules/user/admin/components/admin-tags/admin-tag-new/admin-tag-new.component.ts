@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../../../services/tags/tags.service';
+import { IndexService } from '../../../../../../services/index/index.service';
 import { TagAttachment } from '../../../../../../models/tag-attachment';
 import { Tag } from '../../../../../../models/tag';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
@@ -62,6 +63,7 @@ export class AdminTagNewComponent {
   });
 
   constructor(private _tagsService: TagsService,
+              private _indexService: IndexService,
               private _translateService: TranslateService,
               private _multiling: MultilingPipe,
               private _notificationsService: TranslateNotificationsService) {}
@@ -96,6 +98,27 @@ export class AdminTagNewComponent {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.TAGS.IMPORTED');
     }, () => {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    });
+  }
+
+  public resetIndex() {
+    this._indexService.resetElasticsearch().subscribe((value) => {
+      console.log(value);
+    });
+  }
+
+  public loadMappings() {
+    this._indexService.loadMappings().subscribe((value) => {
+      console.log(value);
+    });
+  }
+
+  public loadData() {
+    const dataToLoad = ['innovations', 'tags', 'campaigns', 'professionals'];
+    dataToLoad.forEach(d => {
+      this._indexService.loadIndex(d).subscribe((value) => {
+        console.log(value);
+      });
     });
   }
 

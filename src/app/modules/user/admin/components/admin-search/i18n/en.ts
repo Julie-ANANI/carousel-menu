@@ -91,6 +91,7 @@ export const SEARCH = {
     "QUEUED": "Queued",
     "CANCELED": "Canceled",
     "CANCEL": "Cancel the requests",
+    "STOP": "STOP the requests",
     "BACK_QUEUE": "Put back in queue",
     "PERPAGE": "per page",
     "PRO": "Professional",
