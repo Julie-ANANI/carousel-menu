@@ -1,7 +1,7 @@
 <div id="shared-world-map" class="relative">
 
   <!-- country info -->
-  <div id="country-tooltip" class="text-sm" [ngStyle]="tooltipPosition">
+  <div *ngIf="isShowableTooltip" id="country-tooltip" class="text-sm" [ngStyle]="tooltipPosition">
     <div class="d-flex align-center">
       <img [src]="getFlagSrc(tooltipInfo?.flag)" alt=" " width="23" height="16">
       <h3 class="text-normal">{{ tooltipInfo?.name }}</h3>
@@ -590,7 +590,7 @@
   <!-- /legends -->
 
   <!-- quartiles -->
-  <div *ngIf="quartiles" class="text-center">
+  <div *ngIf="quartiles && isShowableQuartiles" class="text-center">
     <div class="swm-legend-wrapper">
       <span class="shape is-circle is-xs circle-3"></span>
       <span> < {{ quartiles[0] }} </span>

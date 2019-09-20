@@ -10,7 +10,6 @@ import { SearchService } from '../../../../services/search/search.service';
 import { CommonService } from '../../../../services/common/common.service';
 import { DownloadService } from "../../../../services/download/download.service";
 
-import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { SidebarModule } from "../../../sidebar/sidebar.module";
 import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-search-tool/sidebar-search-tool.module";
@@ -25,7 +24,6 @@ import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap
     SearchToolRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminSearchMapModule,
     CountryFlagModule,
     SidebarModule,
     SidebarSearchToolModule,
