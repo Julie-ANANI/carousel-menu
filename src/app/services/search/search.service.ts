@@ -167,4 +167,10 @@ export class SearchService {
     return this._http.get('/search/get', {params: query});
   }
   */
+  public loadRequestIndex(): Observable<any> {
+    const query = {
+      path: '/index/create'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
 }
