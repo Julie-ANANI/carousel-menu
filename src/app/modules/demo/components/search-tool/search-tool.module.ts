@@ -10,11 +10,11 @@ import { SearchService } from '../../../../services/search/search.service';
 import { CommonService } from '../../../../services/common/common.service';
 import { DownloadService } from "../../../../services/download/download.service";
 
-import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { SidebarModule } from "../../../sidebar/sidebar.module";
 import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-search-tool/sidebar-search-tool.module";
 import { SearchInput3Module } from '../../../utility-components/search-inputs/search-template-3/search-input-3.module';
+import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
 
 @NgModule({
   imports: [
@@ -24,11 +24,11 @@ import { SearchInput3Module } from '../../../utility-components/search-inputs/se
     SearchToolRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminSearchMapModule,
     CountryFlagModule,
     SidebarModule,
     SidebarSearchToolModule,
-    SearchInput3Module
+    SearchInput3Module,
+    SharedWorldmapModule
   ],
   declarations: [
     SearchToolComponent
