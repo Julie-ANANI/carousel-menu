@@ -10,6 +10,7 @@ import { countries } from '../../../../models/static-data/country';
 import { Campaign } from "../../../../models/campaign";
 import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 import { Router } from "@angular/router";
+import { ConfigService } from "../../../../services/config/config.service";
 
 @Component({
   selector: 'app-shared-search-history',
@@ -43,7 +44,8 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   constructor(
     private _router: Router,
-     private _searchService: SearchService,
+    private _searchService: SearchService,
+    private _configService: ConfigService,
     private _professionalsService: ProfessionalsService,
     private _notificationsService: TranslateNotificationsService
   ) {}
@@ -66,6 +68,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     if (this.status) {
       this.config.status = this.status;
     }
+    this._config.limit = this._configService.configLimit('admin-search-history-limit');
     this.loadHistory();
   }
 
