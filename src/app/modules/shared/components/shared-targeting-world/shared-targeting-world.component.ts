@@ -141,7 +141,12 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _includeCountries() {
     this._targetingWorldData.includeContinents.forEach((continent) => {
-      this._targetingWorldData.includeCountries.push(...this.getCountriesByContinent(continent));
+      this.getCountriesByContinent(continent).forEach((country: Country) => {
+        const index = this._targetingWorldData.includeCountries.findIndex((value) => value.name === country.name);
+        if (index === -1) {
+          this._targetingWorldData.includeCountries.push(country);
+        }
+      });
     });
   }
 
@@ -185,16 +190,22 @@ export class SharedTargetingWorldComponent implements OnInit {
 
       if ((event.target as HTMLInputElement).checked) {
         this._targetingWorldData.includeContinents.push(continent);
+        this._includeCountries();
       } else {
         this._targetingWorldData.includeContinents = this._targetingWorldData.includeContinents.filter((value) => value !== continent);
+        this._filterInCountriesOfContinent(continent);
       }
 
-      this._targetingWorldData.includeCountries = [];
-      this._includeCountries();
       this._filterExCountriesOfContinent(continent);
       this._emitChanges();
 
     }
+  }
+
+  private _filterInCountriesOfContinent(continent: string) {
+    this._targetingWorldData.includeCountries = this._targetingWorldData.includeCountries.filter((value) => {
+      return this.getCountriesByContinent(continent).indexOf(value) < 0;
+    });
   }
 
   private _filterExCountriesOfContinent(continent: string) {
