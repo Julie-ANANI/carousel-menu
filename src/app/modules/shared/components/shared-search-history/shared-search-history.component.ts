@@ -222,7 +222,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._addToCampaignModal = false;
     const params: any = {
       newCampaignId: campaign._id,
-      newInnovationId: campaign.innovation,
+      newInnovationId: campaign.innovation._id,
       requestIds: this._requestsToImport,
       newTargetCountries: this._geography.include.map((country) => country.code)
     };

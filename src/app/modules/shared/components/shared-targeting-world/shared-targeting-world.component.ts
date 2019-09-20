@@ -118,7 +118,7 @@ export class SharedTargetingWorldComponent implements OnInit {
       const countries = this.getCountriesByContinent(continent);
       if (Array.isArray(countries)) {
         countries.forEach((country: Country) => {
-          const index = this._geography.include.findIndex((value) => value.name === country.name);
+          const index = this._geography.include.findIndex((value) => value.code === country.code);
           if (index === -1) {
             this._geography.include.push(country);
           }
@@ -133,7 +133,7 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _filterExCountriesFromIncluded() {
     this._geography.include = this._geography.include.filter((value) => {
-      return this._geography.exclude.some((value2) => value2.name !== value.name);
+      return this._geography.exclude.some((value2) => value2.code !== value.code);
     });
   }
 
@@ -193,7 +193,7 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   private _filterExcludedCountries(country: Country) {
-    this._geography.exclude = this._geography.exclude.filter((value) => value.name !== country.name);
+    this._geography.exclude = this._geography.exclude.filter((value) => value.code !== country.code);
   }
 
   /***
@@ -216,15 +216,15 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @private
    */
   private _countryToExclude(value: Country) {
-    const index = this._allCountries.findIndex((existCountry) => existCountry.name === value.name);
+    const index = this._allCountries.findIndex((existCountry) => existCountry.code === value.code);
 
     if (index !== -1) {
       const findCountry = this._allCountries[index];
 
-      if (this._geography.include.some((existCountry) => existCountry.name === value.name)) {
+      if (this._geography.include.some((existCountry) => existCountry.code === value.code)) {
         this._filterIncludedCountries(findCountry);
 
-        if (!this._geography.exclude.some((existCountry) => existCountry.name === findCountry.name)) {
+        if (!this._geography.exclude.some((existCountry) => existCountry.code === findCountry.code)) {
           this._geography.exclude.push(findCountry);
         }
 
@@ -239,11 +239,11 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   private _filterIncludedCountries(country: Country) {
-    this._geography.include = this._geography.include.filter((value) => value.name !== country.name);
+    this._geography.include = this._geography.include.filter((value) => value.code !== country.code);
   }
 
   public checkCountry(country: Country): boolean {
-    return this._geography.include.some((value) => value.name === country.name);
+    return this._geography.include.some((value) => value.code === country.code);
   }
 
   public onChangeCountry(event: Event, country: Country) {
