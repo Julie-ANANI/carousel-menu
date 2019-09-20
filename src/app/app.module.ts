@@ -25,6 +25,7 @@ import { LoaderService } from './services/loader/loader.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { ConfigService } from './services/config/config.service';
 import { UserService } from "./services/user/user.service";
+import { IndexService } from './services/index/index.service';
 
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
@@ -71,7 +72,8 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     // { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
     SwellrtBackend,
     MouseService,
-    ConfigService
+    ConfigService,
+    IndexService
   ],
   bootstrap: [
     AppComponent
