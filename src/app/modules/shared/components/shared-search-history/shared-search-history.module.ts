@@ -15,6 +15,7 @@ import { SidebarModule } from "../../../sidebar/sidebar.module";
 import { SidebarSearchHistoryModule } from "../../../sidebar/components/sidebar-search-history/sidebar-search-history.module";
 import { AutoCompleteInputModule } from "../../../utility-components/auto-complete-input/auto-complete-input.module";
 import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
+import {SharedTargetingWorldModule} from "../shared-targeting-world/shared-targeting-world.module";
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { ModalModule } from "../../../utility-components/modals/modal/modal.modu
     SidebarModule,
     SidebarSearchHistoryModule,
     AutoCompleteInputModule,
-    ModalModule
+    ModalModule,
+    SharedTargetingWorldModule
   ],
   declarations: [
     SharedSearchHistoryComponent,

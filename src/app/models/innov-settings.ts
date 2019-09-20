@@ -11,7 +11,7 @@ export interface GeographySettings {
   };
   exclude: Array<Country>;
   include: Array<Country>;
-  comments: string;
+  comments?: string;
 }
 
 export interface InnovationSettings {
