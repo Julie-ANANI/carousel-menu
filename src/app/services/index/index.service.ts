@@ -11,4 +11,20 @@ export class IndexService {
     return this._http.post('/index/getWholeSet', { query: config });
   }
 
+  public loadIndex(resourceType: string): Observable<any> {
+    return this._http.get('/index/create/' + resourceType);
+  }
+
+  public loadMappings(): Observable<any> {
+    return this._http.get('/index/createMappings');
+  }
+
+  public resetElasticsearch(): Observable<any> {
+    return this._http.delete('/index/destroyAll');
+  }
+
+  public launchIndexMan(): Observable<any> {
+    return this._http.delete('/index/loadIndexData');
+  }
+
 }
