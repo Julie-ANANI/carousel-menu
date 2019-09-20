@@ -11,6 +11,9 @@ import { Campaign } from "../../../../models/campaign";
 import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 import { Router } from "@angular/router";
 import { ConfigService } from "../../../../services/config/config.service";
+import { CampaignService } from '../../../../services/campaign/campaign.service';
+import { GeographySettings } from '../../../../models/innov-settings';
+import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -39,13 +42,15 @@ export class SharedSearchHistoryComponent implements OnInit {
     search: "{}",
     sort: '{ "created": -1 }'
   };
-  private _chosenCampaign: Array<any> = [];
+  private _chosenCampaign: Campaign;
   private _addToCampaignModal: boolean = false;
+  private _geography: GeographySettings;
 
   constructor(
     private _router: Router,
-    private _searchService: SearchService,
     private _configService: ConfigService,
+    private _campaignService: CampaignService,
+    private _searchService: SearchService,
     private _professionalsService: ProfessionalsService,
     private _notificationsService: TranslateNotificationsService
   ) {}
@@ -197,16 +202,29 @@ export class SharedSearchHistoryComponent implements OnInit {
   }
 
   updateCampaign(event: any) {
-    this._chosenCampaign = event.value;
+    if (Array.isArray(event.value)) {
+      if (event.value.length > 0) {
+        this._campaignService.get(event.value[0]._id).subscribe((campaign) => {
+          this._geography = {
+            include: campaign.targetCountries.map((country) => { return {code: country}; }),
+            exclude: [],
+            continentTarget: SharedWorldmapService.setContinents(false)
+          };
+          this._chosenCampaign = campaign;
+        });
+      } else {
+        this._chosenCampaign = undefined;
+      }
+    }
   }
 
-  addToCampaign(campaigns: Array<Campaign>, goToCampaign?: boolean) {
+  addToCampaign(campaign: Campaign, goToCampaign?: boolean) {
     this._addToCampaignModal = false;
-    const campaign = campaigns[0];
     const params: any = {
       newCampaignId: campaign._id,
-      newInnovationId: campaign.innovation,
+      newInnovationId: campaign.innovation._id,
       requestIds: this._requestsToImport,
+      newTargetCountries: this._geography.include.map((country) => country.code)
     };
     this._professionalsService.addFromHistory(params).subscribe((result: any) => {
       this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
@@ -280,7 +298,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   get selectedRequest(): any {
     return this._selectedRequest;
   }
-  get chosenCampaign(): Array<any> {
+
+  get chosenCampaign(): Campaign {
     return this._chosenCampaign;
   }
   get addToCampaignModal () {
@@ -290,4 +309,13 @@ export class SharedSearchHistoryComponent implements OnInit {
   set addToCampaignModal(value: boolean) {
     this._addToCampaignModal = value;
   }
+
+  get geography() {
+    return this._geography;
+  }
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
+  }
+
 }
