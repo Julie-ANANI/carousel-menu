@@ -1,6 +1,5 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +21,7 @@ export class CardsComponent {
 
   @Input() set isPagination(value: boolean) {
     this._isPagination = value;
-    this._endIndex = this._localStorage.getItem('discover-limit') ? parseInt(this._localStorage.getItem('discover-limit'), 10) || 25 : 25;
+    this._endIndex = 25;
     this._initializePagination();
   }
 
@@ -56,7 +55,6 @@ export class CardsComponent {
   private _stopLoading: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _localStorage: LocalStorageService,
               private _activatedRoute: ActivatedRoute) {
 
     this._activatedRoute.params.subscribe(params => {
