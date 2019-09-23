@@ -61,11 +61,12 @@
           <!-- display map -->
           <div class="map-wrapper">
             <app-shared-worldmap
-              [demoCountriesData]="searchResult.metadata"
+              [countriesData]="searchResult.metadata"
               [isShowableTooltip]="true"
               [maxValue]="10000"
               [minValue]="10"
-              [quartiles]="scale">
+              [quartiles]="scale"
+              [type]="'demo'">
             </app-shared-worldmap>
           </div>
 
