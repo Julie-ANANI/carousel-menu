@@ -125,6 +125,7 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._cookieService.removeAll();
+          this._redirectUrl = '';
           this._user = null;
           //this.stopSwellRTSession();
           clearInterval(this._cookieObserver);
@@ -196,7 +197,7 @@ export class AuthService {
 
   private _setMHash(newValue: string): void {
     const md5 = new Md5();
-    const mhash = md5.appendStr(newValue).end()
+    const mhash = md5.appendStr(newValue).end();
     this._cookieService.put('mhash', `${mhash}`, this._cookieOptions);
   }
 
