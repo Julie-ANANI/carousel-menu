@@ -122,7 +122,7 @@
 
         <!-- objectives -->
         <ng-container *ngIf="currentPage === 'objectives'">
-          <app-objectives [project]="innovation"></app-objectives>
+          <app-objectives [project]="innovation" [editable]="canEdit"></app-objectives>
         </ng-container>
 
         <!-- survey -->

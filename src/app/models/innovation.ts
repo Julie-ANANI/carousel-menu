@@ -74,6 +74,7 @@ export interface Innovation {
     }]
   };
 
+  objectives?: string;
   roadmap?: {
     launch: Date,
     solicitations: Date,

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ProjectRoutingModule } from './project-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -40,7 +41,8 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     SidebarUserAnswerModule,
     SharedMarketReportModule,
     MessageTemplate1Module,
-    ModalModule
+    ModalModule,
+    FormsModule
   ],
   declarations: [
     ProjectComponent,

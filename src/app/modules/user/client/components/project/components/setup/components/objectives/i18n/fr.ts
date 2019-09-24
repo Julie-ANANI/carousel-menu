@@ -1,5 +1,7 @@
 export const OBJECTIVES = {
 
+  'OBJECTIVES': 'Objectifs',
+
   'ROADMAP': {
     'LAUNCH': 'Point de cadrage',
     'SOLICITATIONS': 'Envoi des sollicitations',

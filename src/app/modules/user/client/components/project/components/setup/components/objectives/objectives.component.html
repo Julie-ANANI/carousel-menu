@@ -1,6 +1,25 @@
 <ng-container *ngIf="innovation">
   <section id="objectives-component">
 
+    <section class="section-pad">
+      <div class="section-light-pad bg-white full-light">
+
+        <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.OBJECTIVES'"></h2>
+
+        <div *ngIf="editable" class="form-group relative">
+          <label for="project-objective"></label>
+          <textarea class="form-input" id="project-objective" rows="5"
+                    [(ngModel)]="innovation.objectives"
+                    placeholder="Describe the objective of this innovation within 120 words.">
+          </textarea>
+          <button class="button is-primary" (click)="saveObjectives($event)" translate [innerText]="'COMMON.SAVE'"></button>
+        </div>
+
+        <p *ngIf="!editable" [innerText]="innovation.objectives"></p>
+
+      </div>
+    </section>
+
     <p *ngIf="innovation.roadmap.launch">
       <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.LAUNCH'"></span>
       : {{ innovation.roadmap.launch | date:'dd/MM/yyyy' }}

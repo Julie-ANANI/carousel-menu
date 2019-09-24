@@ -1,5 +1,7 @@
 export const OBJECTIVES = {
 
+  'OBJECTIVES': 'Objectives',
+
   'ROADMAP': {
     'LAUNCH': 'Launch point',
     'SOLICITATIONS': 'Sending solicitations',
