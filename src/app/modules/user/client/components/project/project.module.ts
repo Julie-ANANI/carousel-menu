@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
+import { ObjectivesComponent } from './components/setup/components/objectives/objectives.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
 
@@ -45,6 +46,7 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
+    ObjectivesComponent,
     SurveyComponent,
     HistoryProjectComponent
   ],

@@ -1,0 +1,25 @@
+<ng-container *ngIf="innovation">
+  <section id="objectives-component">
+
+    <p *ngIf="innovation.roadmap.launch">
+      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.LAUNCH'"></span>
+      {{ innovation.roadmap.launch }}
+    </p>
+
+    <p *ngIf="innovation.roadmap.solicitations">
+      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.SOLICITATIONS'"></span>
+      {{ innovation.roadmap.solicitations }}
+    </p>
+
+    <p *ngIf="innovation.roadmap.adjustment">
+      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.ADJUSTEMENT'"></span>
+      {{ innovation.roadmap.adjustment }}
+    </p>
+
+    <p *ngIf="innovation.roadmap.synthesis">
+      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.SYNTHESIS'"></span>
+      {{ innovation.roadmap.synthesis }}
+    </p>
+
+  </section>
+</ng-container>

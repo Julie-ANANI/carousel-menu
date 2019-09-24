@@ -74,6 +74,13 @@ export interface Innovation {
     }]
   };
 
+  roadmap?: {
+    launch: Date,
+    solicitations: Date,
+    adjustment: Date,
+    synthesis: Date
+  };
+
   operator?: User;
   previewMode?: boolean;
   completion?: number;

@@ -90,6 +90,12 @@
             </a>
           </li>
           <li class="tab-item">
+            <a [ngClass]="{ 'active': currentPage === 'objectives' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'objectives')">
+              <div class="shape is-circle is-md objectives-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
+              {{ 'PROJECT_MODULE.SETUP.OBJECTIVES_TAB' | translate }}
+            </a>
+          </li>
+          <li class="tab-item">
             <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
               <div class="shape is-circle is-md survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
               {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
@@ -112,6 +118,11 @@
         <!-- targeting -->
         <ng-container *ngIf="currentPage === 'targeting'">
           <app-shared-project-settings [project]="innovation" [editable]="canEdit"></app-shared-project-settings>
+        </ng-container>
+
+        <!-- objectives -->
+        <ng-container *ngIf="currentPage === 'objectives'">
+          <app-objectives [project]="innovation"></app-objectives>
         </ng-container>
 
         <!-- survey -->
