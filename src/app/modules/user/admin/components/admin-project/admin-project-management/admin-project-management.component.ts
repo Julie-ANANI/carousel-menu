@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {InnovationService} from '../../../../../../services/innovation/innovation.service';
 import {TranslateService} from '@ngx-translate/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Tag} from '../../../../../../models/tag';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {Innovation} from '../../../../../../models/innovation';
@@ -44,7 +44,6 @@ export class AdminProjectManagementComponent implements OnInit {
   projectSubject = new Subject<Innovation>();
 
   // Owner edition
-  isEditOwner = false;
   usersSuggestion: Array<any> = [];
   owner: any = {};
   displayUserSuggestion = false;
@@ -87,10 +86,10 @@ export class AdminProjectManagementComponent implements OnInit {
   };
 
   public formData: FormGroup = this._formBuilder.group({
-    domainen: ['', [Validators.required]],
-    domainfr: ['', [Validators.required]],
     owner: '',
   });
+
+  public edit: {[k: string]: boolean} = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -186,7 +185,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * This function reset the data
    */
   resetData() {
-    this.isEditOwner = false;
+    this.edit = {};
     this.formData.reset();
   }
 
@@ -221,10 +220,23 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  // Preparation section
-
-  editOwner() {
-    this.isEditOwner = true;
+  saveRoadmap(date: 'launch' | 'solicitations' | 'adjustment' | 'synthesis') {
+    switch (date) {
+      case 'launch':
+      case 'solicitations':
+      case 'adjustment':
+      case 'synthesis':
+        this._innovationService.save(this._project._id, {roadmap: this._project.roadmap}).subscribe((data: any) => {
+          this._project = data;
+          this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'The date has been updated');
+        }, (err: any) => {
+          this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
+        });
+        break;
+      default:
+        throw new Error(`Unknown ${date} type.`);
+    }
+    this.edit = {};
   }
 
   /***

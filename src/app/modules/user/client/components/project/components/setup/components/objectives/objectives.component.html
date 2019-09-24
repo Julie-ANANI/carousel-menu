@@ -3,22 +3,22 @@
 
     <p *ngIf="innovation.roadmap.launch">
       <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.LAUNCH'"></span>
-      {{ innovation.roadmap.launch }}
+      : {{ innovation.roadmap.launch | date:'dd/MM/yyyy' }}
     </p>
 
     <p *ngIf="innovation.roadmap.solicitations">
       <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.SOLICITATIONS'"></span>
-      {{ innovation.roadmap.solicitations }}
+      : {{ innovation.roadmap.solicitations | date:'dd/MM/yyyy' }}
     </p>
 
     <p *ngIf="innovation.roadmap.adjustment">
       <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.ADJUSTEMENT'"></span>
-      {{ innovation.roadmap.adjustment }}
+      : {{ innovation.roadmap.adjustment | date:'dd/MM/yyyy' }}
     </p>
 
     <p *ngIf="innovation.roadmap.synthesis">
       <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.SYNTHESIS'"></span>
-      {{ innovation.roadmap.synthesis }}
+      : {{ innovation.roadmap.synthesis | date:'dd/MM/yyyy' }}
     </p>
 
   </section>

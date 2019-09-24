@@ -1,4 +1,4 @@
-<div class="section-light-pad" id="admin-followed" [formGroup]="formData">
+<div class="section-light-pad" id="admin-followed">
 
   <h6>Setup</h6>
 
@@ -68,10 +68,10 @@
           <i class="form-icon"></i>
           {{ 'COMMON.PROJECT.OWNER' | translate }}
         </label>
-        <label *ngIf="!isEditOwner" class="form-label">{{project.owner.name}}</label>
+        <label *ngIf="!edit.owner" class="form-label">{{project.owner.name}}</label>
 
         <!-- if we click on update we show an autoComplete of all users -->
-        <div class="form-group" style="position: relative" *ngIf="isEditOwner">
+        <div [formGroup]="formData" class="form-group" style="position: relative" *ngIf="edit.owner">
           <input
             class="form-input"
             formControlName="owner"
@@ -93,9 +93,117 @@
         </div>
 
         <button class="btn btn-xs ghost-edit"
-                [ngClass]="{'showOnHover': !isEditOwner}"
-                (click)="isEditOwner ? ownerEditionFinished() : editOwner()">
-          {{(isEditOwner ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
+                [ngClass]="{'showOnHover': !edit.owner}"
+                (click)="edit.owner ? ownerEditionFinished() : edit.owner = true">
+          {{(edit.owner ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
+        </button>
+
+      </div>
+
+      <!-- Launch Date -->
+      <div class="project-line">
+
+        <label class="form-switch" for="editLaunchDate">
+          <input
+            type="checkbox"
+            name="editLaunchDate"
+            id="editLaunchDate"
+            checked>
+          <i class="form-icon"></i>
+          Launch Date
+        </label>
+
+        <label *ngIf="!edit.launchDate" class="form-label">{{ project.roadmap.launch | date:'dd MMM yyyy' }}</label>
+
+        <div class="form-group" style="position: relative" *ngIf="edit.launchDate">
+          <input type="date" [(ngModel)]="project.roadmap.launch">
+        </div>
+
+        <button class="btn btn-xs ghost-edit"
+                [ngClass]="{'showOnHover': !edit.launchDate}"
+                (click)="edit.launchDate ? saveRoadmap('launch') : edit.launchDate = true">
+          {{(edit.launchDate ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
+        </button>
+
+      </div>
+
+      <!-- Solicitations Date -->
+      <div class="project-line">
+
+        <label class="form-switch" for="editSolicitationsDate">
+          <input
+            type="checkbox"
+            name="editSolicitationsDate"
+            id="editSolicitationsDate"
+            checked>
+          <i class="form-icon"></i>
+          Solicitations Date
+        </label>
+
+        <label *ngIf="!edit.solicitationsDate" class="form-label">{{ project.roadmap.solicitations | date:'dd MMM yyyy' }}</label>
+
+        <div class="form-group" style="position: relative" *ngIf="edit.solicitationsDate">
+          <input type="date" [(ngModel)]="project.roadmap.solicitations">
+        </div>
+
+        <button class="btn btn-xs ghost-edit"
+                [ngClass]="{'showOnHover': !edit.solicitationsDate}"
+                (click)="edit.solicitationsDate ? saveRoadmap('solicitations') : edit.solicitationsDate = true">
+          {{(edit.solicitationsDate ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
+        </button>
+
+      </div>
+
+      <!-- Adjustment Date -->
+      <div class="project-line">
+
+        <label class="form-switch" for="editAdjustmentDate">
+          <input
+            type="checkbox"
+            name="editAdjustmentDate"
+            id="editAdjustmentDate"
+            checked>
+          <i class="form-icon"></i>
+          Adjustment Date
+        </label>
+
+        <label *ngIf="!edit.adjustmentDate" class="form-label">{{ project.roadmap.adjustment | date:'dd MMM yyyy' }}</label>
+
+        <div class="form-group" style="position: relative" *ngIf="edit.adjustmentDate">
+          <input type="date" [(ngModel)]="project.roadmap.adjustment">
+        </div>
+
+        <button class="btn btn-xs ghost-edit"
+                [ngClass]="{'showOnHover': !edit.adjustmentDate}"
+                (click)="edit.adjustmentDate ? saveRoadmap('adjustment') : edit.adjustmentDate = true">
+          {{(edit.adjustmentDate ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
+        </button>
+
+      </div>
+
+      <!-- Synthesis Date -->
+      <div class="project-line">
+
+        <label class="form-switch" for="editSynthesisDate">
+          <input
+            type="checkbox"
+            name="editSynthesisDate"
+            id="editSynthesisDate"
+            checked>
+          <i class="form-icon"></i>
+          Synthesis Date
+        </label>
+
+        <label *ngIf="!edit.synthesisDate" class="form-label">{{ project.roadmap.synthesis | date:'dd MMM yyyy' }}</label>
+
+        <div class="form-group" style="position: relative" *ngIf="edit.synthesisDate">
+          <input type="date" [(ngModel)]="project.roadmap.synthesis">
+        </div>
+
+        <button class="btn btn-xs ghost-edit"
+                [ngClass]="{'showOnHover': !edit.synthesisDate}"
+                (click)="edit.synthesisDate ? saveRoadmap('synthesis') : edit.synthesisDate = true">
+          {{(edit.synthesisDate ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
         </button>
 
       </div>
