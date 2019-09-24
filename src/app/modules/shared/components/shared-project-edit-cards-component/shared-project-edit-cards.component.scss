@@ -1,75 +1,71 @@
 @import "../../../../../style/framework/src/variables";
 
-#shared-project-edit-cards-component {
+#shared-project-edit-cards {
 
-  p {
-    margin: 0;
+  .spec-text-question {
+    font-size: 0.85rem;
+    color: $text-primary-dark-color;
+    margin-right: $unit-1;
   }
 
-  .flex-between, .flex-start {
-    flex-wrap: wrap;
+  .shape.is-rounded {
+    font-size: 0.75rem;
+    margin-right: $unit-4;
   }
 
-  .options {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-
-    li {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      padding: $unit-2;
-
-      .btn-radio {
-        margin-right: $unit-2;
-      }
-
-    }
-
-    li.active {
-
-      .btn-radio {
-        background-color: $success-color;
-        border-color: $success-color;
-
-        span {
-          color: white;
-        }
-
-      }
-
-    }
-
-    .text-link {
-      font-size: $font-size-md;
-      font-weight: $font-weight-normal;
-    }
-
+  .popover .popover-container {
+    width: 300px;
   }
 
-  .pd-input {
-    padding-top: $unit-5;
-    position: relative;
+  p, .spec-text-answer {
+    color: $text-secondary-dark-color;
+    font-size: 0.75rem;
   }
 
-  .form-group {
-    margin-bottom: $unit-5;
-  }
-
-  .project-data {
-    padding-top: 2.5rem;
+  .spec-text-op {
+    font-size: $font-size-md;
+    color: $text-secondary-color;
+    margin-right: $unit-2;
   }
 
   .char-remaining {
-    top: $unit-6;
+    top: $unit-1;
+    font-size: $font-size-sm;
+    color: $text-success-color;
+    font-weight: $font-weight-medium;
+    position: absolute;
+    right: $unit-2;
   }
 
-  .sub-label {
-    font-size: $font-size-sm;
+  textarea.form-input {
+    padding-right: $unit-2;
   }
+
+  .spec-media-upload-wrapper {
+
+    .spec-image-upload-wrapper, .spec-video-upload-wrapper {
+      flex: 1;
+      width: 100%;
+    }
+
+    .divider-vert {
+      height: 220px;
+    }
+
+  }
+
+  iframe {
+    width: 240px;
+    height: 159px;
+    border: $border-width solid $border-color;
+  }
+
+  .spec-secondary-media-wrapper {
+    display: inline-flex;
+    margin: 1.25rem 0.5rem 0 0.5rem;
+  }
+
+
 
   .main-media-wrapper, .secondary-media-wrapper {
     padding-bottom: $unit-5;
@@ -106,11 +102,7 @@
 
     }
 
-    iframe {
-      width: 240px;
-      height: 159px;
-      border-width: 0;
-    }
+
 
   }
 
@@ -122,56 +114,25 @@
 
   }
 
-  .upload-wrapper {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: -$unit-2;
-
-    .image-upload-wrapper {
-      flex: 1;
-      margin-bottom: $unit-2;
-    }
-
-    .or-wrapper {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-
-      .text {
-        font-size: $font-size-sm;
-        margin: 1.25rem;
-      }
-
-    }
-
-    .video-upload-wrapper {
-      flex: 1;
-      margin-bottom: $unit-2;
-    }
-
-  }
-
-
-  .form-input.ng-touched.ng-invalid {
-    border-color: $border-color;
-  }
-
-
 }
 
 
 
 @media (max-width: $size-sm) {
 
-  #shared-project-edit-cards-component {
-
-    .upload-wrapper {
-      flex-direction: column;
-    }
+  #shared-project-edit-cards {
 
     .popover {
       display: none;
+    }
+
+    .spec-media-upload-wrapper {
+      flex-direction: column;
+
+      .divider-vert {
+        height: auto;
+      }
+
     }
 
   }
