@@ -16,6 +16,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
+    this._setTargetCountries();
   }
 
   @Input() set editable(value: boolean) {
@@ -113,6 +114,10 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
           initialData: ''
         };
     }
+  }
+
+  private _setTargetCountries() {
+    this._targetingCountries = this._innovation.settings.geography.include.map((country) => country.code);
   }
 
   get continentTarget(): any {
@@ -225,7 +230,8 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   set geography(value: GeographySettings) {
     this._innovation.settings.geography = value;
-    this._targetingCountries = this._innovation.settings.geography.include.map((country) => country.code);
+    this._setTargetCountries();
+    this.updateSettings();
   }
 
   ngOnDestroy(): void {
