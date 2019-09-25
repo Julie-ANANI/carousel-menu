@@ -282,7 +282,7 @@ export class SharedWorldmapComponent implements OnInit {
 
   public clickOnCountry(event: Event) {
     event.preventDefault();
-    const country: string = event.srcElement.id;
+    const country: string = (event.target as SVGPathElement).id;
     this.onCountryClick.emit(country);
   }
 
