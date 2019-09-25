@@ -257,14 +257,14 @@ export class SharedWorldmapComponent implements OnInit {
         let leftPosition;
 
         if (document.documentElement.clientWidth - event.clientX > 200) {
-          leftPosition = `${event.clientX - (event.clientX - event.offsetX) - 3}px`;
+          leftPosition = `${event.clientX - (event.clientX - event.layerX) - 3}px`;
         } else {
-          leftPosition =  `${event.offsetX - 180}px`;
+          leftPosition =  `${event.layerX - 180}px`;
         }
 
         this._tooltipPosition = {
           left: leftPosition,
-          top: `${event.offsetY + 25}px`,
+          top: `${event.layerY + 25}px`,
           opacity: 1,
           display: 'block'
         }
