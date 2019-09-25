@@ -209,7 +209,9 @@ export class SharedSearchHistoryComponent implements OnInit {
       requestIds: this._requestsToImport,
     };
     this._professionalsService.addFromHistory(params).subscribe((result: any) => {
-      this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
+      this._notificationsService.success(
+        'Import des requêtes en cours',
+        'Les pros seront bien déplacés d\'ici quelques minutes');
       if (goToCampaign) {
         this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
       }
