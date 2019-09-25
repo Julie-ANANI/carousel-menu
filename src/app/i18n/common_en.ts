@@ -49,6 +49,7 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
+  'STATUS': 'Status',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
@@ -290,6 +291,8 @@ export const COMMON = {
   'MY_ACCOUNT': 'My account',
 
   'PROJECTS': 'Projects',
+
+  'MISSIONS': 'Missions',
 
   'CAMPAIGNS': 'Campaigns',
 

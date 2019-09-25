@@ -213,7 +213,7 @@ export class InnovationFormComponent implements OnInit {
     }
 
     if (this.statusValid === false) {
-      this._notificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
+      this._notificationsService.error('COMMON.STATUS' , 'Vous ne pouvez pas revenir à ce status');
     } else {
       this._isChange = true;
       this._project.status = event;

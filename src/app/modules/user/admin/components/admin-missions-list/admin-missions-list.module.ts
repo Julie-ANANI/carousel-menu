@@ -4,7 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {TableModule} from '../../../../table/table.module';
-import {AdminProjectsListComponent} from './admin-projects-list.component';
+import { AdminMissionsListComponent } from './admin-missions-list.component';
+import { MissionService } from '../../../../../services/mission/mission.service';
 
 @NgModule({
   imports: [
@@ -15,11 +16,14 @@ import {AdminProjectsListComponent} from './admin-projects-list.component';
     TranslateModule.forChild()
   ],
   declarations: [
-    AdminProjectsListComponent
+    AdminMissionsListComponent
+  ],
+  providers: [
+    MissionService
   ],
   exports: [
-    AdminProjectsListComponent
+    AdminMissionsListComponent
   ]
 })
 
-export class AdminProjectsListModule { }
+export class AdminMissionsListModule { }
