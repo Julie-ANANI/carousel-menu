@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
@@ -51,7 +52,8 @@ export class ShowcaseComponent {
   
   private _fetchingError: boolean;
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _activatedRoute: ActivatedRoute,
               private _multilingPipe: MultilingPipe,
               private _tagService: TagsService,
               private _translateService: TranslateService,
@@ -178,13 +180,15 @@ export class ShowcaseComponent {
       countLeads: 0,
       geographicalRepartition: [] // we don't need this here, we already have _countries
     });
-    console.log('--------------------------------');
-    console.log(`Answers/Inno: ${Math.round(this._stats.totalAnswers / this._stats.totalInnovations)}`);
-    console.log(`Context: ${this._stats.countContext}/${this._stats.totalCountContext}`);
-    console.log(`Need: ${this._stats.countNeed}/${this._stats.totalCountNeed}`);
-    console.log(`Relevance: ${this._stats.countRelevance}/${this._stats.totalCountRelevance}`);
-    console.log(`Diff: ${this._stats.countDiff}/${this._stats.totalCountDiff}`);
-    console.log(`Leads: ${this._stats.countLeads}`);
+    if (isPlatformBrowser(this._platformId)) {
+      console.log('--------------------------------');
+      console.log(`Answers/Inno: ${Math.round(this._stats.totalAnswers / this._stats.totalInnovations)}`);
+      console.log(`Context: ${this._stats.countContext}/${this._stats.totalCountContext}`);
+      console.log(`Need: ${this._stats.countNeed}/${this._stats.totalCountNeed}`);
+      console.log(`Relevance: ${this._stats.countRelevance}/${this._stats.totalCountRelevance}`);
+      console.log(`Diff: ${this._stats.countDiff}/${this._stats.totalCountDiff}`);
+      console.log(`Leads: ${this._stats.countLeads}`);
+    }
   }
 
 
