@@ -59,7 +59,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this._innovation._id) {
+    if (this._innovation && this._innovation._id) {
       this.innovationService.campaigns(this._innovation._id).subscribe((campaigns: any) => {
         this._campaigns = campaigns.result;
       }, () => {

@@ -148,8 +148,8 @@
 
 
               <!-- executive report -->
-              <ng-container *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared">
-                <section id="executive-report" class="section-light-pad">
+              <ng-container *ngIf="innovation.executiveReport && innovation.executiveReport.totalSections">
+                <section *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" id="executive-report" class="section-light-pad">
                   <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
                 </section>
               </ng-container>

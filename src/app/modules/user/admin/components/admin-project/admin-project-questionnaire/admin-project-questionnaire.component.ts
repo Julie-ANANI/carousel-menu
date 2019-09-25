@@ -26,7 +26,7 @@ export class AdminProjectQuestionnaireComponent {
 
   private updateQuizLink() {
     if (this._project.quizId && Array.isArray(this._project.campaigns) && this._project.campaigns.length > 0) {
-      this._quizLink =  `${environment.quizUrl}/quiz/${this._project.quizId}/${this._project.campaigns[0]._id}`;
+      this._quizLink =  this._project && this._project.quizId ? `${environment.quizUrl}/quiz/${this._project.quizId}/${this._project.campaigns[0]._id}` : '';
     }
   }
 

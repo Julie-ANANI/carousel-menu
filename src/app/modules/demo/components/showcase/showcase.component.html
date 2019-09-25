@@ -116,10 +116,11 @@
             </h3>
 
             <app-shared-worldmap
-              [demoCountriesData]="countries"
-              [isShowableTooltip]="true"
+              [countriesData]="countries"
               [isShowableQuartiles]="false"
-              [quartiles]="quartiles">
+              [isShowableTooltip]="true"
+              [quartiles]="quartiles"
+              [type]="'demo'">
             </app-shared-worldmap>
 
           </div>
