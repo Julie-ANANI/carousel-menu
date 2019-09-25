@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { SharedWorldmapService } from './services/shared-worldmap.service';
 import { Response } from '../../../../models/response';
 import { IndexService } from '../../../../services/index/index.service';
@@ -83,6 +83,8 @@ export class SharedWorldmapComponent implements OnInit {
     this._countriesData = value;
     this._initializeTemplate();
   }
+
+  @Output() onCountryClick = new EventEmitter<any>();
 
   private _showLegend: boolean = false;
 
@@ -275,6 +277,13 @@ export class SharedWorldmapComponent implements OnInit {
       }
 
     }
+  }
+
+
+  public clickOnCountry(event: Event) {
+    event.preventDefault();
+    const country: string = event.srcElement.id;
+    this.onCountryClick.emit(country);
   }
 
   private _setTooltipInfo(countryId: string) {
