@@ -226,7 +226,8 @@ export const COMMON = {
   'PROJECT': {
     'OWNER': 'Owner',
     'TITLE': 'Title',
-    'DOMAIN': 'Domain'
+    'DOMAIN': 'Domain',
+    'MISSION': 'Mission'
   },
 
   'PROJECT_STATE': {

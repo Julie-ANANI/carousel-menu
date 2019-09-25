@@ -77,8 +77,7 @@
             formControlName="owner"
             id="user"
             type="text"
-            [attr.placeholder]="'USERS.SEARCH' | translate"
-            (click)="onSuggestUsers()">
+            [attr.placeholder]="'USERS.SEARCH' | translate">
           <ul
             *ngIf="formData.get('owner').value"
             class="input-suggestion"
@@ -96,6 +95,44 @@
                 [ngClass]="{'showOnHover': !edit.owner}"
                 (click)="edit.owner ? ownerEditionFinished() : edit.owner = true">
           {{(edit.owner ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
+        </button>
+
+      </div>
+
+      <!-- Mission -->
+      <div class="project-line">
+        <label class="form-switch" for="editMission">
+          <input
+            type="checkbox"
+            name="editMission"
+            id="editMission"
+            [checked]="!!project.mission">
+          <i class="form-icon"></i>
+          {{ 'COMMON.PROJECT.MISSION' | translate }}
+        </label>
+        <label *ngIf="!edit.mission" class="form-label">{{project.mission?.name}}</label>
+
+        <!-- if we click on update we show an autoComplete of all users -->
+        <div class="form-group" [formGroup]="formData" *ngIf="edit.mission">
+          <label class="form-label" for="project-mission"></label>
+          <input
+            auto-complete
+            class="form-input"
+            formControlName="mission"
+            id="project-mission"
+            type="text"
+            [min-chars]="2"
+            [list-formatter]="autocompleteMissionListFormatter"
+            [source]="missionsSuggestions"
+            [accept-user-input]="false"
+            (valueChanged)="selectMission($event)"
+            [attr.placeholder]="'COMMON.PROJECT.MISSION' | translate">
+        </div>
+
+        <button class="btn btn-xs ghost-edit"
+                [ngClass]="{'showOnHover': !edit.mission}"
+                (click)="edit.mission = !edit.mission">
+          {{(edit.mission ? 'COMMON.BUTTON.CANCEL' : 'COMMON.CHANGE') | translate}}
         </button>
 
       </div>
