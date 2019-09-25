@@ -1,1 +1,28 @@
-<app-shared-table [(config)]="config" [data]="tableInfos" (editRow)="editMission($event)"></app-shared-table>
+<div id="admin-missions-list">
+  <button class="button is-primary" (click)="showCreateModal($event)">
+    <i class="fas fa-plus icon-left"></i> Create new Mission
+  </button>
+  <app-shared-table [(config)]="config" [data]="tableInfos" (editRow)="editMission($event)"></app-shared-table>
+</div>
+
+<app-modal [(showModal)]="showModalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
+
+  <section class="modal-body">
+    <div class="form-group">
+      <label class="form-label" for="add-mission">Mission Name</label>
+      <input
+        type="text"
+        id="add-mission"
+        [(ngModel)]="newMissionName"
+        name="missionName"
+        placeholder="Enter the mission name"
+        class="form-input">
+    </div>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickCreate($event)" [disabled]="!newMissionName" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
+</app-modal>

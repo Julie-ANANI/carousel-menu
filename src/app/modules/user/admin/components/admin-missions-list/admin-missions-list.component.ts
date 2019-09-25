@@ -13,15 +13,12 @@ import { Mission } from '../../../../../models/mission';
 })
 export class AdminMissionsListComponent implements OnInit {
 
-  private _missions: Array<Mission> = [];
-
-  public selectedMissionIdToBeDeleted: string;
-
   private _tableInfos: Table;
 
-  private _total: number;
-
   private _config: Config;
+
+  public showModalAdd: boolean;
+  public newMissionName: string;
 
   constructor(private _missionService: MissionService,
               private _translateService: TranslateService) {}
@@ -31,7 +28,6 @@ export class AdminMissionsListComponent implements OnInit {
   }
 
   build (): void {
-    this._missions = [];
     this._config = {
       fields: '',
       limit: '10',
@@ -47,15 +43,11 @@ export class AdminMissionsListComponent implements OnInit {
 
   loadMissions(): void {
     this._missionService.getAll(this._config).subscribe((missions: any) => {
-
-      this._missions = missions.result;
-      this._total = missions._metadata.totalCount;
-
       this._tableInfos = {
         _selector: 'admin-dashboard-limit',
         _title: 'COMMON.MISSIONS',
-        _content: this._missions,
-        _total: this._total,
+        _content: missions.result,
+        _total: missions._metadata.totalCount,
         _editIndex: 1,
         _isSearchable: true,
         _isPaginable: true,
@@ -69,16 +61,28 @@ export class AdminMissionsListComponent implements OnInit {
     });
   }
 
-  /**
-   * Suppression et mise à jour de la vue
-   */
+  public showCreateModal(event: Event) {
+    event.preventDefault();
+    this.newMissionName = '';
+    this.showModalAdd = true;
+  }
+
+  public onClickCreate(event: Event) {
+    event.preventDefault();
+    const mission = {name: this.newMissionName };
+    this._missionService.create(mission).subscribe((savedMission: Mission) => {
+        this._tableInfos._content.push(savedMission);
+        this._tableInfos._total = this._tableInfos._total + 1;
+        this.showModalAdd = false;
+    });
+  }
+
   public removeMission(event: Event, missionId: string) {
     event.preventDefault();
     this._missionService
       .remove(missionId)
       .subscribe((_: any) => {
         // this._missions.splice(this._getMissionIndex(missionId), 1);
-        this.selectedMissionIdToBeDeleted = null;
       });
   }
 
@@ -95,8 +99,6 @@ export class AdminMissionsListComponent implements OnInit {
     this._config = value;
     this.loadMissions();
   }
-
-  get total () { return this._total; }
 
   get tableInfos(): Table { return this._tableInfos; }
 
