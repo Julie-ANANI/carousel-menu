@@ -89,7 +89,8 @@ export const SHARED_PROJECT_EDIT = {
     'UPLOAD_VIDEO': 'Télécharger la video',
     'SLIDE': 'faites glisser les fichiers ici',
     'URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
-    'MAKE_MAIN': 'En faire le média principal'
+    'MAKE_MAIN': 'En faire le média principal',
+    'NO_MEDIA': 'Aucun média téléchargé.'
   },
 
   'EXTERNAL_DIFFUSION': {

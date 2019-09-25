@@ -48,7 +48,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
   }
 
   /***
-   * this fucntion is called when the user clicks on one of the lang,
+   * this function is called when the user clicks on one of the lang,
    * and according to that we display the lang form.
    * @param event
    * @param index
@@ -109,7 +109,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
     }
   }
 
-  containsLanguage(lang: string): boolean {
+  public containsLanguage(lang: string): boolean {
     return this.innovation.innovationCards.some((c) => c.lang === lang);
   }
 
@@ -118,7 +118,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * modal, and it deletes the selected lang card.
    * @param event
    */
-  onClickConfirm(event: Event) {
+  public onClickConfirm(event: Event) {
     event.preventDefault();
 
     if (this.isEditable) {
@@ -229,7 +229,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    */
   public uploadImage(media: Media, cardIdx: number): void {
     this.innovation.innovationCards[cardIdx].media.push(media);
-    this.checkPrincipalMedia(media, cardIdx);
+    this._checkPrincipalMedia(media, cardIdx);
     this.notifyChanges();
   }
 
@@ -239,7 +239,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * @param media
    * @param cardIdx
    */
-  checkPrincipalMedia(media: Media, cardIdx: number) {
+  private _checkPrincipalMedia(media: Media, cardIdx: number) {
     if (this.innovation.innovationCards[this._selectedCardIndex].media.length > 0) {
       if (!this.innovation.innovationCards[this._selectedCardIndex].principalMedia) {
         this.innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[this._selectedCardIndex]._id, media._id)
@@ -258,13 +258,12 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
     this.innovationService.addNewMediaVideoToInnovationCard(this.innovation._id, this.innovation.innovationCards[this._selectedCardIndex]._id, video)
       .subscribe(res => {
       this.innovation.innovationCards[this._selectedCardIndex].media.push(res);
-      this.checkPrincipalMedia(res, this._selectedCardIndex);
+      this._checkPrincipalMedia(res, this._selectedCardIndex);
       this.notifyChanges();
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
   }
-
 
   /***
    * this function is called when the user clicks on the delete button to delete the media.
@@ -272,7 +271,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * @param media
    * @param index
    */
-  onClickDeleteMedia(event: Event, media: Media, index: number) {
+  public onClickDeleteMedia(event: Event, media: Media, index: number) {
     event.preventDefault();
 
     this.innovationService.deleteMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[index]._id, media._id)
@@ -283,14 +282,13 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
           this.innovation.innovationCards[index].principalMedia = null;
         }
 
-        this.checkPrincipalMedia(this.innovation.innovationCards[this._selectedCardIndex].media[0], this._selectedCardIndex);
+        this._checkPrincipalMedia(this.innovation.innovationCards[this._selectedCardIndex].media[0], this._selectedCardIndex);
         this.notifyChanges();
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
 
   }
-
 
   /***
    * this function is called when the user wants to make the media as primary media.
@@ -298,7 +296,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    * @param media
    * @param index
    */
-  onClickSetMainMedia(event: Event, media: Media, index: number) {
+  public onClickSetMainMedia(event: Event, media: Media, index: number) {
     event.preventDefault();
 
     this.innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[index]._id, media._id)
@@ -306,7 +304,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
         this.innovation.innovationCards[index].principalMedia = media;
         this.notifyChanges();
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
       });
 
   }
@@ -351,7 +349,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
-
   }
 
 }

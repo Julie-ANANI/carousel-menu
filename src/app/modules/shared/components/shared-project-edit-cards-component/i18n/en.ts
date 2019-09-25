@@ -90,7 +90,8 @@ export const SHARED_PROJECT_EDIT = {
     'UPLOAD_VIDEO': 'Upload Video',
     'SLIDE': 'drag the file here',
     'URL': 'Enter the address of your Youtube or Vimeo video here',
-    'MAKE_MAIN': 'Make it as main media'
+    'MAKE_MAIN': 'Make as main media',
+    'NO_MEDIA': 'No media uploaded.'
   },
 
   'EXTERNAL_DIFFUSION': {
