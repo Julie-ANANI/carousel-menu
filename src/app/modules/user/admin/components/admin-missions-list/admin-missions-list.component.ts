@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MissionService } from '../../../../../services/mission/mission.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Table } from '../../../../table/models/table';
 import {Config} from '../../../../../models/config';
 import { Mission } from '../../../../../models/mission';
@@ -21,6 +22,7 @@ export class AdminMissionsListComponent implements OnInit {
   public newMissionName: string;
 
   constructor(private _missionService: MissionService,
+              private _notificationService: TranslateNotificationsService,
               private _translateService: TranslateService) {}
 
   ngOnInit(): void {
@@ -49,6 +51,8 @@ export class AdminMissionsListComponent implements OnInit {
         _content: missions.result,
         _total: missions._metadata.totalCount,
         _editIndex: 1,
+        _isDeletable: true,
+        _isSelectable: true,
         _isSearchable: true,
         _isPaginable: true,
         _isTitle: true,
@@ -71,24 +75,27 @@ export class AdminMissionsListComponent implements OnInit {
     event.preventDefault();
     const mission = {name: this.newMissionName };
     this._missionService.create(mission).subscribe((savedMission: Mission) => {
+        this._notificationService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
         this._tableInfos._content.push(savedMission);
         this._tableInfos._total = this._tableInfos._total + 1;
         this.showModalAdd = false;
     });
   }
 
-  public removeMission(event: Event, missionId: string) {
-    event.preventDefault();
-    this._missionService
-      .remove(missionId)
-      .subscribe((_: any) => {
-        // this._missions.splice(this._getMissionIndex(missionId), 1);
+  public removeMissions(event: Array<Mission>) {
+    event.forEach((mission: Mission) => {
+      this._missionService.remove(mission._id).subscribe((removedMission: Mission) => {
+        this._notificationService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
+        this._tableInfos._content = this._tableInfos._content.filter((m) => m._id !== removedMission._id);
+        this._tableInfos._total = this._tableInfos._total - 1;
+      }, (err) => {
+        this._notificationService.error('ERROR.ERROR', err.message);
       });
+    });
   }
 
-  public editMission(event: Event) {
-    event.preventDefault();
-    console.log('edit');
+  public editMission(mission: Mission) {
+    console.log(`edit ${mission.name}`);
   }
 
   get config(): Config {

@@ -2,7 +2,7 @@
   <button class="button is-primary" (click)="showCreateModal($event)">
     <i class="fas fa-plus icon-left"></i> Create new Mission
   </button>
-  <app-shared-table [(config)]="config" [data]="tableInfos" (editRow)="editMission($event)"></app-shared-table>
+  <app-shared-table [(config)]="config" [data]="tableInfos" (editRow)="editMission($event)" (removeRows)="removeMissions($event)"></app-shared-table>
 </div>
 
 <app-modal [(showModal)]="showModalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">

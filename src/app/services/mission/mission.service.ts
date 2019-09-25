@@ -22,11 +22,11 @@ export class MissionService {
   }
 
   public remove(missionId: string): Observable<Mission> {
-    return this._http.delete<Mission>('/answer/' + missionId);
+    return this._http.delete<Mission>('/mission/' + missionId);
   }
 
   public save(missionId: string, missionObj: Mission): Observable<Mission> {
-    return this._http.put<Mission>('/answer/' + missionId, missionObj);
+    return this._http.put<Mission>('/mission/' + missionId, missionObj);
   }
 
 }
