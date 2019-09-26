@@ -1,0 +1,25 @@
+<section id="mission-form-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <form novalidate [formGroup]="missionForm" (ngSubmit)="onSave($event)" autocomplete="off">
+
+      <!-- save button -->
+      <div class="save-wrapper text-right">
+        <button class="btn btn-primary" type="submit">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+      </div>
+
+      <!-- campaign name -->
+      <ng-container>
+        <div class="form-group">
+          <label class="form-label" for="mission-name">{{ 'COMMON.LABEL.NAME' | translate }}</label>
+          <input
+            class="form-input"
+            formControlName="name"
+            id="mission-name"
+            type="text"
+            placeholder="Enter the mission name">
+        </div>
+      </ng-container>
+
+    </form>
+  </div>
+</section>

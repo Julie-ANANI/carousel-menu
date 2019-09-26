@@ -5,6 +5,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Table } from '../../../../table/models/table';
 import {Config} from '../../../../../models/config';
 import { Mission } from '../../../../../models/mission';
+import {SidebarInterface} from "../../../../sidebar/interfaces/sidebar-interface";
 
 
 @Component({
@@ -20,6 +21,13 @@ export class AdminMissionsListComponent implements OnInit {
 
   public showModalAdd: boolean;
   public newMissionName: string;
+
+  public sidebarValue: SidebarInterface = {
+    animate_state: 'inactive',
+    title: 'SIDEBAR.TITLE.EDIT_MISSION'
+  };
+
+  private _selectedMission: Mission;
 
   constructor(private _missionService: MissionService,
               private _notificationService: TranslateNotificationsService,
@@ -95,7 +103,8 @@ export class AdminMissionsListComponent implements OnInit {
   }
 
   public editMission(mission: Mission) {
-    console.log(`edit ${mission.name}`);
+    this._selectedMission = mission;
+    this.sidebarValue = {...this.sidebarValue, animate_state: 'active'};
   }
 
   get config(): Config {
@@ -110,5 +119,7 @@ export class AdminMissionsListComponent implements OnInit {
   get tableInfos(): Table { return this._tableInfos; }
 
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
+
+  get selectedMission(): Mission { return this._selectedMission; }
 
 }
