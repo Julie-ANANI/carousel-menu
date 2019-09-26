@@ -27,4 +27,8 @@ export class IndexService {
     return this._http.delete('/index/loadIndexData');
   }
 
+  public find(query: string, resource: string): Observable<any> {
+    return this._http.post('/index/searchIndex', {query: {resources: [resource], data: query}});
+  }
+
 }

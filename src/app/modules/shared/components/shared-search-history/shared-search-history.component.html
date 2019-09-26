@@ -19,6 +19,17 @@
   </app-auto-complete-input>
 </div>
 
+<div class="analysis-content">
+  <ng-container *ngIf="suggestions.length">
+    <p class="text-primary m-h"> {{ 'SEARCH.ROBOT.SUGGESTED' | translate }} </p>
+    <ul class="text-secondary text-sm">
+      <li *ngFor="let suggestion of suggestions" class="d-inline-flex m-right-10">
+        {{suggestion}}
+      </li>
+    </ul>
+  </ng-container>
+</div>
+
 <app-shared-table
   [(config)]="config"
   [data]="tableInfos"
