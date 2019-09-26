@@ -122,4 +122,12 @@ export class AdminMissionsListComponent implements OnInit {
 
   get selectedMission(): Mission { return this._selectedMission; }
 
+  set selectedMission(value: Mission) {
+    this._selectedMission = value;
+    this._tableInfos._content = this._tableInfos._content.map((mission) => {
+      return value._id === mission._id ? value : mission;
+    });
+    this.sidebarValue = {...this.sidebarValue, animate_state: 'inactive'};
+  }
+
 }

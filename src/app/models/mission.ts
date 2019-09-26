@@ -4,7 +4,7 @@ import { User } from './user.model';
 export interface  Milestone {
  name: string;
  code: string;
- dueDate: Date;
+ dueDate: string;
 }
 
 export interface Mission {
