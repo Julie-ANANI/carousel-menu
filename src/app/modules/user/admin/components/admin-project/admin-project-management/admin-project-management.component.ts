@@ -222,25 +222,6 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  saveRoadmap(date: 'launch' | 'solicitations' | 'adjustment' | 'synthesis') {
-    switch (date) {
-      case 'launch':
-      case 'solicitations':
-      case 'adjustment':
-      case 'synthesis':
-        this._innovationService.save(this._project._id, {roadmap: this._project.roadmap}).subscribe((data: any) => {
-          this._project = data;
-          this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'The date has been updated');
-        }, (err: any) => {
-          this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
-        });
-        break;
-      default:
-        throw new Error(`Unknown ${date} type.`);
-    }
-    this.edit = {};
-  }
-
   public missionsSuggestions = (searchString: string): Observable<Array<{name: string}>> => {
     return this._autoCompleteService.get({query: searchString, type: 'mission'});
   };

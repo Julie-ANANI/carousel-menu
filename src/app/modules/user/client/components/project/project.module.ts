@@ -24,6 +24,8 @@ import { SharedMarketReportModule } from '../../../../shared/components/shared-m
 import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
+import { MissionService } from '../../../../../services/mission/mission.service';
+
 
 @NgModule({
   imports: [
@@ -51,6 +53,9 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     ObjectivesComponent,
     SurveyComponent,
     HistoryProjectComponent
+  ],
+  providers: [
+    MissionService
   ],
   exports: [
     ProjectComponent

@@ -89,7 +89,7 @@
               {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
             </a>
           </li>
-          <li class="tab-item">
+          <li class="tab-item" *ngIf="innovation.mission">
             <a [ngClass]="{ 'active': currentPage === 'objectives' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'objectives')">
               <div class="shape is-circle is-md objectives-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
               {{ 'PROJECT_MODULE.SETUP.OBJECTIVES_TAB' | translate }}

@@ -77,14 +77,6 @@ export interface Innovation {
 
   mission?: Mission | string;
 
-  objectives?: string;
-  roadmap?: {
-    launch: Date,
-    solicitations: Date,
-    adjustment: Date,
-    synthesis: Date
-  };
-
   operator?: User;
   previewMode?: boolean;
   completion?: number;

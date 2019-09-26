@@ -9,7 +9,7 @@ export interface  Milestone {
 
 export interface Mission {
   readonly _id?: string;
-  name: string;
+  name?: string;
   innovations?: Array<Innovation>;
   goal?: string;
   client?: User;

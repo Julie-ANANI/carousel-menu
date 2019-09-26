@@ -1,4 +1,4 @@
-<ng-container *ngIf="innovation">
+<ng-container *ngIf="mission">
   <section id="objectives-component">
 
     <section class="section-pad">
@@ -9,36 +9,31 @@
         <div *ngIf="editable" class="form-group relative">
           <label for="project-objective"></label>
           <textarea class="form-input" id="project-objective" rows="5"
-                    [(ngModel)]="innovation.objectives"
+                    [(ngModel)]="mission.goal"
                     placeholder="Describe the objective of this innovation within 120 words.">
           </textarea>
           <button class="button is-primary" (click)="saveObjectives($event)" translate [innerText]="'COMMON.SAVE'"></button>
         </div>
 
-        <p *ngIf="!editable" [innerText]="innovation.objectives"></p>
+        <p *ngIf="!editable" [innerText]="mission.goal"></p>
 
       </div>
     </section>
 
-    <p *ngIf="innovation.roadmap.launch">
-      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.LAUNCH'"></span>
-      : {{ innovation.roadmap.launch | date:'dd/MM/yyyy' }}
-    </p>
+    <section class="section-pad" *ngIf="mission.milestoneDates.length > 0">
+      <div class="section-light-pad bg-white full-light">
 
-    <p *ngIf="innovation.roadmap.solicitations">
-      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.SOLICITATIONS'"></span>
-      : {{ innovation.roadmap.solicitations | date:'dd/MM/yyyy' }}
-    </p>
+        <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP'"></h2>
 
-    <p *ngIf="innovation.roadmap.adjustment">
-      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.ADJUSTEMENT'"></span>
-      : {{ innovation.roadmap.adjustment | date:'dd/MM/yyyy' }}
-    </p>
+        <p *ngFor="let milestone of mission.milestoneDates">
+          <span [innerText]="milestone.name"></span>
+          : {{ milestone.dueDate | date:'dd/MM/yyyy' }}
+        </p>
 
-    <p *ngIf="innovation.roadmap.synthesis">
-      <span translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP.SYNTHESIS'"></span>
-      : {{ innovation.roadmap.synthesis | date:'dd/MM/yyyy' }}
-    </p>
+      </div>
+    </section>
+
+
 
   </section>
 </ng-container>
