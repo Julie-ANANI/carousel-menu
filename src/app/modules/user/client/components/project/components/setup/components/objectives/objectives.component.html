@@ -1,37 +1,35 @@
 <ng-container *ngIf="mission">
   <section id="objectives-component">
 
-    <section class="section-pad">
-      <div class="section-light-pad bg-white full-light">
 
-        <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.OBJECTIVES'"></h2>
+    <div class="section-light-pad">
 
-        <div *ngIf="editable" class="form-group relative">
-          <label for="project-objective"></label>
-          <textarea class="form-input" id="project-objective" rows="5"
-                    [(ngModel)]="mission.goal"
-                    placeholder="Describe the objective of this innovation within 120 words.">
-          </textarea>
-          <button class="button is-primary" (click)="saveObjectives($event)" translate [innerText]="'COMMON.SAVE'"></button>
-        </div>
+      <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.OBJECTIVES'"></h2>
 
-        <p *ngIf="!editable" [innerText]="mission.goal"></p>
-
+      <div *ngIf="editable" class="form-group relative">
+        <label for="project-objective"></label>
+        <textarea class="form-input" id="project-objective" rows="5"
+                  [(ngModel)]="mission.goal"
+                  placeholder="Describe the objective of this innovation within 120 words.">
+        </textarea>
+        <button class="button is-primary" (click)="saveObjectives($event)" translate [innerText]="'COMMON.SAVE'"></button>
       </div>
-    </section>
 
-    <section class="section-pad" *ngIf="mission.milestoneDates.length > 0">
-      <div class="section-light-pad bg-white full-light">
+      <p *ngIf="!editable" [innerText]="mission.goal"></p>
 
-        <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP'"></h2>
+    </div>
 
-        <p *ngFor="let milestone of mission.milestoneDates">
-          <span [innerText]="milestone.name"></span>
-          : {{ milestone.dueDate | date:'dd/MM/yyyy' }}
-        </p>
 
-      </div>
-    </section>
+    <div class="section-light-pad" *ngIf="mission.milestoneDates.length > 0">
+
+      <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP'"></h2>
+
+      <p *ngFor="let milestone of mission.milestoneDates">
+        <span [innerText]="milestone.name"></span>
+        : {{ milestone.dueDate | date:'dd/MM/yyyy' }}
+      </p>
+
+    </div>
 
 
 
