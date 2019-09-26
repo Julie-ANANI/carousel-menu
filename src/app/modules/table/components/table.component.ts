@@ -144,22 +144,23 @@ export class TableComponent implements OnInit {
    * @private
    */
   private _getFilteredContent(rows: Array<any>) {
-    this._pagination.parPage = parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10;
+      this._pagination.parPage = this._table._isPaginable ?
+        parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10 :
+        rows.length;
 
-    this._table._total = rows.length;
+      this._table._total = rows.length;
 
-    if (this._pagination.offset >= this._table._total) {
-      this._pagination.offset = 0;
-      this._pagination.currentPage = 1;
-    }
+      if (this._pagination.offset >= this._table._total) {
+        this._pagination.offset = 0;
+        this._pagination.currentPage = 1;
+      }
 
-    const startIndex = this._pagination.offset;
-    const endIndex = this._pagination.offset + this._pagination.parPage;
+      const startIndex = this._pagination.offset;
+      const endIndex = this._pagination.offset + this._pagination.parPage;
 
-    this._isSearching = this._isSearching && this._table._total === 0;
+      this._isSearching = this._isSearching && this._table._total === 0;
 
-    this._filteredContent = rows.slice(startIndex, endIndex);
-
+      this._filteredContent = rows.slice(startIndex, endIndex);
   }
 
   /***
