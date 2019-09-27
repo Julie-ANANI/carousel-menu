@@ -239,11 +239,18 @@
       <input type="text" class="form-input" placeholder="Fichier import" id="name" [(ngModel)]="importRequestKeywords">
     </div>
 
-    <div class="text-center">
+    <div class="text-center text-sm">
       <label class="button is-primary is-outlined">
         <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
         <i class="fas fa-file-import icon-left"></i> {{ 'COMMON.BUTTON.IMPORT_PROS' | translate }}
       </label>
+      <p class="text-justify">
+        Le fichier doit utiliser ces <b>noms exacts</b> pour les colonnes: <b>First Name UMI</b>,
+        <b>Last Name UMI</b>, <b>Company UMI</b>, Language, Email UMI, emailConfidence, Linkedin, Company Site, Country UMI, Job UMI.
+      </p>
+      <p>
+        Les colonnes en gras sont obligatoires, les autres facultatives. L'ordre des colonnes n'a pas d'importance.
+      </p>
     </div>
 
   </section>
