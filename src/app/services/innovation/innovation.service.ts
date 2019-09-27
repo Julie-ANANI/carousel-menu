@@ -8,6 +8,7 @@ import { InnovCard } from '../../models/innov-card';
 import { Professional } from '../../models/professional';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
+import { InnovCardComment } from '../../models/innov-card-comment';
 
 @Injectable()
 export class InnovationService {
@@ -63,6 +64,10 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }
 
+  public saveInnovationCardComment(innovationId: string, innovationCardId: string, commentObj: InnovCardComment): Observable<any> {
+    return this._http.post(`/innovation/${innovationId}/card/${innovationCardId}/comment`, commentObj);
+  }
+
   public saveConsent(innovationId: string, date: number) { /* FIXME */
     return this._http.put(`/innovation/${innovationId}/ownerConsent`, {ownerConsent: {date: date, value: true}});
   }
@@ -93,11 +98,9 @@ export class InnovationService {
     });
   }
 
-
   public removeCollaborator(innovationId: string, collaborator: User): Observable<any> {
     return this._http.delete('/innovation/' + innovationId + '/collaborator/' + collaborator.id);
   }
-
 
   public createQuiz(innovationId: string): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/quiz', {});

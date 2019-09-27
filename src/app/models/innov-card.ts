@@ -1,13 +1,11 @@
 import { Media } from './media';
 import { Model } from './model';
+import { InnovCardComment } from './innov-card-comment';
 
 export class InnovCard extends Model {
   readonly _id?: string;
   readonly innovation_reference?: string;
   readonly lang: string;
-  readonly principalMediaIdx?: number;
-  readonly principal?: boolean;
-
   title?: string;
   media?: Array<Media>;
   principalMedia?: Media;
@@ -15,9 +13,6 @@ export class InnovCard extends Model {
   problem?: string;
   solution?: string;
   completion?: number;
-
-  advantages?: Array<{
-    text: string
-  }>;
-
+  advantages?: Array<{ text: string }>;
+  operatorComment?: InnovCardComment
 }

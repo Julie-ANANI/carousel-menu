@@ -31,6 +31,8 @@ export const ERROR = {
 
   'ALREADY_EXIST': 'A user with this e-mail address is already registered in the system.',
 
+  'CARD_NOT_FOUND': 'We could not find the innovation that you are looking for.',
+
 
   'FORM': {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',
@@ -80,7 +82,9 @@ export const ERROR = {
     'SAVE_ERROR': 'You have to save all changes before proceeding.',
     'SUBMITTED': 'Submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validate.',
-    'NOT_ALLOWED': 'You are not allowed to perform this action anymore.',
+    'NOT_ALLOWED': 'You are not allowed to perform this action.',
+    'COMMENT_NOT_FOUND': 'We could not find the comment for the requested innovation.',
+    'NOT_SUBMITTED_MODE':'The comments can only be added when the innovation status is Submitted.',
   },
 
 
