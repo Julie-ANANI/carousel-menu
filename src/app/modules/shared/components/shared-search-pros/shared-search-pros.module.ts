@@ -7,6 +7,7 @@ import { SharedSearchProsComponent } from './shared-search-pros.component';
 
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SidebarSearchModule } from '../../../sidebar/components/sidebar-search/sidebar-search.module';
+import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SidebarSearchModule } from '../../../sidebar/components/sidebar-search/
     SidebarModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarSearchModule
+    SidebarSearchModule,
+    ModalModule
   ],
   declarations: [
     SharedSearchProsComponent

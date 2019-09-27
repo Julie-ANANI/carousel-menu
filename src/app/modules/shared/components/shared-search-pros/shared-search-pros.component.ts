@@ -7,7 +7,6 @@ import { InnovationSettings } from '../../../../models/innov-settings';
 import { COUNTRIES } from './COUNTRIES';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -37,10 +36,13 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _displayLoader = false;
 
+  private _showModal = false;
+
+  private _importRequestKeywords: string = "";
+
   constructor(private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
-              private authService: AuthService,
-              private proService: ProfessionalsService) {
+              private authService: AuthService) {
 
     this.searchService.getCountriesSettings().pipe(first()).subscribe((countriesSettings: any) => {
       this._countriesSettings = countriesSettings.countries;
@@ -323,9 +325,15 @@ export class SharedSearchProsComponent implements OnInit {
     this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.SEARCH.SETTINGS_UPDATED');
   }
 
-  cleanPros() {
-    this.proService.cleanPros().pipe(first()).subscribe((_: any) => {
-      console.log("OK");
+  public onClickImport(file: File) {
+    let fileName = this._importRequestKeywords;
+    if (this.campaign) {
+      fileName += `,${this.campaign._id},${this.campaign.innovation._id}`;
+    }
+    this.searchService.importList(file, fileName).pipe(first()).subscribe(() => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
   }
 
@@ -369,6 +377,22 @@ export class SharedSearchProsComponent implements OnInit {
 
   get displayLoader(): boolean {
     return this._displayLoader;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get importRequestKeywords(): string {
+    return this._importRequestKeywords;
+  }
+
+  set importRequestKeywords(value: string) {
+    this._importRequestKeywords = value;
   }
 
   get catResult(): any {

@@ -216,6 +216,7 @@ export const COMMON = {
     'UPDATE': 'Update',
     'IMPORT_PROJECT': 'Import project',
     'EXPORT_PROJECT': 'Export project',
+    'IMPORT_PROS': 'Import a list of pros',
     'IMPORT_WORKFLOW': 'Import workflow',
     'EXPORT_WORKFLOW': 'Export all the workflows',
     'IMPORT_QUESTIONNAIRE': 'Import questionnaire',

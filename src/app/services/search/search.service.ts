@@ -173,4 +173,10 @@ export class SearchService {
     };
     return this._http.get('/search/get', {params: query});
   }
+
+  public importList(file:File, fileName: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, fileName);
+    return this._http.post('/search/mailsList/', formData);
+  }
 }
