@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Innovation} from '../../../../models/innovation';
 import {InnovationSettings} from '../../../../models/innov-settings';
@@ -6,13 +6,16 @@ import {TemplatesService} from '../../../../services/templates/templates.service
 import {EmailSignature} from '../../../../models/email-signature';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {FrontendService} from '../../../../services/frontend/frontend.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import {takeUntil} from 'rxjs/operators';
+import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-innovation-form',
   templateUrl: './innovation-form.component.html',
   styleUrls: ['./innovation-form.component.scss']
 })
-export class InnovationFormComponent implements OnInit {
+export class InnovationFormComponent implements OnInit, OnDestroy {
 
   @Input() setProject: Subject<Innovation>;
 
@@ -55,9 +58,32 @@ export class InnovationFormComponent implements OnInit {
   statusValid = true;
   private _signatures: Array<EmailSignature> = [];
 
+  private _saveCardComment: boolean = false;
+
+  private _selectedCardIndex: number = 0;
+
+  private _ngUnsubscribe: Subject<boolean> = new Subject();
+
   constructor(private _templatesService: TemplatesService,
-              private _notificationsService: TranslateNotificationsService,
-              private frontendService: FrontendService) { }
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _innovationService: InnovationService,
+              private _innovationFrontService: InnovationFrontService,
+              private frontendService: FrontendService) {
+
+    this._innovationFrontService.getSelectedInnovationIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: number) => {
+
+      if (response && this._saveCardComment) {
+        this._saveComment();
+      }
+
+      this._selectedCardIndex = response;
+    });
+
+    this._innovationFrontService.getCardCommentNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: boolean) => {
+      this._saveCardComment = response;
+    });
+
+  }
 
   ngOnInit() {
 
@@ -143,12 +169,25 @@ export class InnovationFormComponent implements OnInit {
 
   }
 
+  private _saveComment() {
+    if (this._saveCardComment) {
+      this._saveCardComment = false;
+      this._innovationService.saveInnovationCardComment(this._project._id, this._project.innovationCards[this._selectedCardIndex]._id,
+        this._project.innovationCards[this._selectedCardIndex].operatorComment).subscribe(() => { }, (err) => {
+        this._translateNotificationsService.error('ERROR.ERROR', err.error.message)
+      });
+    }
+  }
+
   // TODO : Implement functionality to send mail
   onSubmit() {
     this._isChange = false;
     switch (this.type) {
       case('pitch') : {
         this.calculatePercentage();
+        if (this._saveCardComment) {
+          this._saveComment();
+        }
         this.projectChange.emit(this._project);
         break;
       } case('targeting'): {
@@ -213,7 +252,7 @@ export class InnovationFormComponent implements OnInit {
     }
 
     if (this.statusValid === false) {
-      this._notificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
+      this._translateNotificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
     } else {
       this._isChange = true;
       this._project.status = event;
@@ -279,4 +318,10 @@ export class InnovationFormComponent implements OnInit {
   get signatures(): Array<EmailSignature> {
     return this._signatures;
   }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
 }

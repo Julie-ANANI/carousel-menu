@@ -1,5 +1,6 @@
 import { Media } from './media';
 import { Model } from './model';
+import { InnovCardComment } from './innov-card-comment';
 
 export class InnovCard extends Model {
   readonly _id?: string;
@@ -13,4 +14,5 @@ export class InnovCard extends Model {
   solution?: string;
   completion?: number;
   advantages?: Array<{ text: string }>;
+  operatorComment?: InnovCardComment
 }

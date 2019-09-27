@@ -69,7 +69,7 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING'" class="popover">
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
               <div class="icon-container c-default">
                 <i class="fas fa-info-circle"></i>
               </div>
@@ -116,49 +116,67 @@
           </div>
           <!-- /not editable -->
 
-          <!-- comment umi -->
-          <div class="m-top-25">
+          <!-- operator comment -->
+          <div *ngIf="isVisible('title') || allowAdminToComment">
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.title.comment || isAdminSide" class="m-top-25">
 
-            <div class="form-group m-top-20">
-              <label>
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.title.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.title.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.title.comment"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
                   class="form-input"
                   id="title-comment"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /comment umi -->
+
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.title.suggestion || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.title.suggestion && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.title.suggestion"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                  <input
+                    (change)="onChangeComment($event)"
+                    [(ngModel)]="innovationCard.operatorComment.title.suggestion"
+                    [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
+                    autocomplete="off"
+                    class="form-input"
+                    name="title-suggestion"
+                    type="text">
+                </label>
+              </div>
+
+            </div>
+            <!-- /suggestion umi -->
 
           </div>
-          <!-- /comment umi -->
-
-          <!-- suggestion umi -->
-          <div class="m-top-25">
-
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
-
-            <div class="form-group m-top-20">
-              <label>
-                <input
-                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
-                  autocomplete="off"
-                  class="form-input"
-                  name="title-suggestion"
-                  type="text">
-              </label>
-            </div>
-
-          </div>
-          <!-- /suggestion umi -->
+          <!-- /operator comment -->
 
         </div>
         <!-- /title -->
@@ -173,7 +191,7 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING'" class="popover">
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
               <div class="icon-container c-default">
                 <i class="fas fa-info-circle"></i>
               </div>
@@ -222,49 +240,67 @@
           </div>
           <!-- /not editable -->
 
-          <!-- comment umi -->
-          <div class="m-top-25">
+          <!-- operator comment -->
+          <div *ngIf="isVisible('summary') || allowAdminToComment">
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.summary.comment || isAdminSide" class="m-top-25">
 
-            <div class="form-group m-top-20">
-              <label>
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.summary.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.summary.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.summary.comment"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
                   class="form-input"
                   id="summary-comment"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /comment umi -->
 
-          </div>
-          <!-- /comment umi -->
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.summary.suggestion || isAdminSide" class="m-top-25">
 
-          <!-- suggestion umi -->
-          <div class="m-top-25">
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+              <div *ngIf="innovationCard.operatorComment.summary.suggestion && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.summary.suggestion"></p>
+              </div>
 
-            <div class="form-group m-top-20">
-              <label>
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.summary.suggestion"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
                   class="form-input"
                   id="summary-suggestion"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /suggestion umi -->
 
           </div>
-          <!-- /suggestion umi -->
+          <!-- /operator comment -->
 
         </div>
         <!-- /summary -->
@@ -279,7 +315,7 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING'" class="popover">
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
               <div class="icon-container c-default">
                 <i class="fas fa-info-circle"></i>
               </div>
@@ -331,49 +367,67 @@
           </div>
           <!-- /not editable -->
 
-          <!-- comment umi -->
-          <div class="m-top-25">
+          <!-- operator comment -->
+          <div *ngIf="isVisible('problem')|| allowAdminToComment">
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.problem.comment || isAdminSide" class="m-top-25">
 
-            <div class="form-group m-top-20">
-              <label>
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.problem.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.problem.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.problem.comment"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
                   class="form-input"
                   id="problem-comment"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /comment umi -->
 
-          </div>
-          <!-- /comment umi -->
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.problem.suggestion || isAdminSide" class="m-top-25">
 
-          <!-- suggestion umi -->
-          <div class="m-top-25">
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+              <div *ngIf="innovationCard.operatorComment.problem.suggestion && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.problem.suggestion"></p>
+              </div>
 
-            <div class="form-group m-top-20">
-              <label>
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.problem.suggestion"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
                   class="form-input"
                   id="problem-suggestion"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /suggestion umi -->
 
           </div>
-          <!-- /suggestion umi -->
+          <!-- /operator comment -->
 
         </div>
         <!-- /problem -->
@@ -388,7 +442,7 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING'" class="popover">
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
               <div class="icon-container c-default">
                 <i class="fas fa-info-circle"></i>
               </div>
@@ -437,49 +491,67 @@
           </div>
           <!-- /not editable -->
 
-          <!-- comment umi -->
-          <div class="m-top-25">
+          <!-- operator comment -->
+          <div *ngIf="isVisible('solution') || allowAdminToComment">
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.solution.comment || isAdminSide" class="m-top-25">
 
-            <div class="form-group m-top-20">
-              <label>
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.solution.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.solution.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.solution.comment"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
                   class="form-input"
                   id="solution-comment"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /comment umi -->
 
-          </div>
-          <!-- /comment umi -->
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.solution.suggestion || isAdminSide" class="m-top-25">
 
-          <!-- suggestion umi -->
-          <div class="m-top-25">
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+              <div *ngIf="innovationCard.operatorComment.solution.suggestion && isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.solution.suggestion"></p>
+              </div>
 
-            <div class="form-group m-top-20">
-              <label>
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.solution.suggestion"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
                   class="form-input"
                   id="solution-suggestion"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /suggestion umi -->
 
           </div>
-          <!-- /suggestion umi -->
+          <!-- operator comment -->
 
         </div>
         <!-- /solution -->
@@ -494,7 +566,7 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING'" class="popover">
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
               <div class="icon-container c-default">
                 <i class="fas fa-info-circle"></i>
               </div>
@@ -531,27 +603,39 @@
           </div>
           <!-- /input field -->
 
-          <!-- comment umi -->
-          <div class="m-top-25">
+          <!-- operator comment -->
+          <div  *ngIf="innovationCard.operatorComment.advantages.comment || allowAdminToComment">
 
-            <div class="d-flex align-center">
-              <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
-              <div class="label is-primary text-md">UMI</div>
-            </div>
+            <!-- comment umi -->
+            <div class="m-top-25">
 
-            <div class="form-group m-top-20">
-              <label>
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.advantages.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.advantages.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
                 <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.advantages.comment"
                   [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
                   class="form-input"
                   id="advantage-comment"
                   rows="5">
                 </textarea>
-              </label>
+                </label>
+              </div>
+
             </div>
+            <!-- /comment umi -->
 
           </div>
-          <!-- /comment umi -->
+          <!-- /operator comment -->
 
         </div>
         <!-- /advantages -->
@@ -619,7 +703,7 @@
 
           <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }} </span>
 
-          <span *ngIf="innovation.status === 'EDITING'" class="popover">
+          <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
             <div class="icon-container c-default">
               <i class="fas fa-info-circle"></i>
             </div>
@@ -663,7 +747,7 @@
         <!-- media display -->
 
         <!-- no media uploaded -->
-        <div *ngIf="innovation.status !== 'EDITING' && innovationCard.media?.length === 0" class="m-top-25">
+        <div *ngIf="innovation.status !== 'EDITING' && innovationCard.media?.length === 0 && !isAdminSide" class="m-top-25">
           <span class="spec-text-answer">{{ 'SHARED_PROJECT_EDIT.MEDIA.NO_MEDIA' | translate }}</span>
         </div>
         <!-- /no media uploaded -->
