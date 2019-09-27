@@ -530,7 +530,7 @@
                 <div class="label is-primary text-md">UMI</div>
               </div>
 
-              <div *ngIf="innovationCard.operatorComment.solution.suggestion && isAdminSide" class="m-top-20">
+              <div *ngIf="innovationCard.operatorComment.solution.suggestion && !isAdminSide" class="m-top-20">
                 <p [innerText]="innovationCard.operatorComment.solution.suggestion"></p>
               </div>
 
