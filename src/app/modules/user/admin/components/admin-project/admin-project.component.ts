@@ -30,7 +30,6 @@ export class AdminProjectComponent implements OnInit {
     answers: {
       SUBMITTED: false,
       REJECTED: false,
-      VALIDATED_NO_MAIL: true,
       VALIDATED: true,
       REJECTED_GMAIL: false,
       VALIDATED_UMIBOT: false,
