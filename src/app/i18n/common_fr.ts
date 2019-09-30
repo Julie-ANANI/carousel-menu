@@ -215,6 +215,7 @@ export const COMMON = {
     'COLLABORATOR': 'Gestion des collaborateurs',
     'UPDATE': 'Mise à jour',
     'IMPORT_PROJECT': 'Importer un projet',
+    'IMPORT_PROS': 'Importer une liste de pros',
     'EXPORT_PROJECT': 'Exporter le project',
     'IMPORT_WORKFLOW': 'Importer un workflow',
     'EXPORT_WORKFLOW': 'Exporter tous les workflow',

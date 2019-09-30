@@ -199,13 +199,14 @@
         </div>
 
         <div class="remaining-wrapper">
+          <div>
+            <a (click)="showModal = true">{{ 'COMMON.BUTTON.IMPORT_PROS' | translate }}</a>
+          </div>
           <div class="d-flex align-center">
             <span class="shape is-circle is-xs" [ngClass]="getCircleClass()"></span>
-            <span>Search Emails</span>
+            <span>Remaining requests: {{ googleQuota }}</span>
           </div>
-          <div><span>Remaining requests: {{ googleQuota }}</span></div>
         </div>
-
       </div>
       <!-- /input -->
 
@@ -225,6 +226,40 @@
 </app-sidebar>
 <!-- /sidebar to advanced search -->
 
+
+
+<!-- MODAL : import a professionals list -->
+<app-modal [(showModal)]="showModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
+
+  <section class="modal-body"> <!-- import button -->
+    <div class="form-group">
+      <label class="form-label" for="name">
+        Nom à donner à la requête:
+      </label>
+      <input type="text" class="form-input" placeholder="Fichier import" id="name" [(ngModel)]="importRequestKeywords">
+    </div>
+
+    <div class="text-center text-sm">
+      <label class="button is-primary is-outlined">
+        <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+        <i class="fas fa-file-import icon-left"></i> {{ 'COMMON.BUTTON.IMPORT_PROS' | translate }}
+      </label>
+      <p class="text-justify">
+        Le fichier doit utiliser ces <b>noms exacts</b> pour les colonnes: <b>First Name UMI</b>,
+        <b>Last Name UMI</b>, <b>Company UMI</b>, Language, Email UMI, emailConfidence, Linkedin, Company Site, Country UMI, Job UMI.
+      </p>
+      <p>
+        Les colonnes en gras sont obligatoires, les autres facultatives. L'ordre des colonnes n'a pas d'importance.
+      </p>
+    </div>
+
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+  </footer>
+
+</app-modal>
 
 <!--<div class="columns">
   <div class="column col-5 col-ml-auto">
