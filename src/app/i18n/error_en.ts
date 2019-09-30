@@ -111,7 +111,7 @@ export const ERROR = {
 
 
   'PRESET': {
-    'UPDATED': 'The configuration has been updated.'
+    'UPDATED': 'The questionnaire has been updated.'
   },
 
 
@@ -128,7 +128,8 @@ export const ERROR = {
 
 
   'QUIZ': {
-    'CREATED': 'The quiz has been created successfully.'
+    'CREATED': 'The quiz has been created successfully.',
+    'GENERATED': 'The quiz has been generated successfully.',
   },
 
 
