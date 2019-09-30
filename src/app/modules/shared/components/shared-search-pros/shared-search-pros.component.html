@@ -221,7 +221,9 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-search
     [params]="params"
-    (paramsChange)="updateSettings($event)">
+    (paramsChange)="updateSettings($event)"
+    [geography]="geography"
+    (geographyChange)="onGeographyChange($event)">
   </app-sidebar-search>
 </app-sidebar>
 <!-- /sidebar to advanced search -->

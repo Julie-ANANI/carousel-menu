@@ -3,10 +3,9 @@ import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
-import { InnovationSettings } from '../../../../models/innov-settings';
-import { COUNTRIES } from './COUNTRIES';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
+import {GeographySettings} from "../../../../models/innov-settings";
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -21,6 +20,19 @@ export class SharedSearchProsComponent implements OnInit {
   private _suggestions: Array<{ expected_result: number, search_keywords: string; keywords: string }> = [];
 
   private _params: any;
+
+  private _geography: GeographySettings = {
+    continentTarget: {
+      africa: false,
+      oceania: false,
+      asia: false,
+      europe: false,
+      americaNord: false,
+      americaSud: false
+    },
+    exclude: [],
+    include: []
+  };
 
   private _sidebarValue: SidebarInterface = {};
 
@@ -90,8 +102,12 @@ export class SharedSearchProsComponent implements OnInit {
       this._params.count = 100;
       this._params.campaign = this.campaign._id;
       this._params.innovation = this.campaign.innovation._id;
-      if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings) {
-        this._params.countries = this.getTargetCountries(this.campaign.innovation.settings);
+      if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings
+        && this.campaign.innovation.settings.geography) {
+        this._geography = this.campaign.innovation.settings.geography;
+        if (this.campaign.innovation.settings.geography.include) {
+          this._params.countries = this.campaign.innovation.settings.geography.include.map(c => c.code);
+        }
       }
     }
 
@@ -151,28 +167,6 @@ export class SharedSearchProsComponent implements OnInit {
     }
 
     return (numberOfRequests || 1) * this._params.count / 10;
-
-  }
-
-  private getTargetCountries(settings: InnovationSettings): Array<string> {
-    let countries: Array<string> = [];
-
-    if (settings && settings.geography) {
-      // On ajoute d'abord les pays appartenants aux continents sélectionnés
-      const continents = settings.geography.continentTarget as {[c: string]: boolean};
-      for (const continent in continents) {
-        if (continents[continent]) {
-          countries = countries.concat(COUNTRIES[continent]);
-        }
-      }
-
-      // Puis on enlève les pays exclus
-      if (settings.geography.exclude) {
-        countries = countries.filter((c: any) => settings.geography.exclude.map((c: any) => c.flag).indexOf(c) === -1);
-      }
-
-    }
-    return countries;
 
   }
 
@@ -337,6 +331,11 @@ export class SharedSearchProsComponent implements OnInit {
     });
   }
 
+  public onGeographyChange(value: GeographySettings) {
+    this._geography = value;
+    this._params.countries = value.include;
+  }
+
 
   get suggestions(): Array<{ expected_result: number; search_keywords: string; keywords: string }> {
     return this._suggestions;
@@ -397,6 +396,10 @@ export class SharedSearchProsComponent implements OnInit {
 
   get catResult(): any {
     return this._catResult;
+  }
+
+  get geography(): GeographySettings {
+    return this._geography;
   }
 
 }

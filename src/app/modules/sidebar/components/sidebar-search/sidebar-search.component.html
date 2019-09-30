@@ -55,24 +55,7 @@
         [3]
       </label>
     </div>
-    <div>
-      <h4>{{ 'SEARCH.COUNTRY_LIST' | translate }}</h4>
-      <div class="d-flex">
-        <div *ngFor="let group of groups; let i = index">
-          <input type="checkbox" [(ngModel)]="group.checked" (click)="selectGroup(i)" [name]="group.name"/> {{group.name}}
-        </div>
-      </div>
-      <div *ngFor="let continent of continents">
-        <input type="checkbox" [(ngModel)]="continent.checked" (click)="selectContinent(continent)" [name]="continent.name"/> {{continent.name}}
-        <div class="continent">
-          <div *ngFor="let country of countries[continent.key]" class="flag"
-               (click)="checkCountry(country)"
-               [ngClass]="{'checked': params.countries.indexOf(country) > -1}">
-            <app-country-flag [country]="country"></app-country-flag>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-shared-targeting-world [(geography)]="geography" [isEditable]="true"></app-shared-targeting-world>
   </form>
 </div>
 
