@@ -52,13 +52,13 @@
   <section class="modal-body">
 
     <small><strong>{{ total }}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
-
-    <app-auto-complete-input
-      (update)="updateCampaign($event)"
-      [onlyOne]="true"
-      [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
-    </app-auto-complete-input>
-
+    <div id="campaign-autocomplete">
+      <app-auto-complete-input
+        (update)="updateCampaign($event)"
+        [onlyOne]="true"
+        [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
+      </app-auto-complete-input>
+    </div>
     <app-shared-targeting-world *ngIf="chosenCampaign" [(geography)]="geography" [isEditable]="true"></app-shared-targeting-world>
 
   </section>
