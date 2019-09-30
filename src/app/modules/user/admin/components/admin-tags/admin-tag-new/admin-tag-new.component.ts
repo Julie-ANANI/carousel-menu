@@ -116,12 +116,6 @@ export class AdminTagNewComponent {
   }
 
   public loadData() {
-    const dataToLoad = ['innovations', 'tags', 'campaigns', 'professionals'];
-    dataToLoad.forEach(d => {
-      this._indexService.loadIndex(d).subscribe((value) => {
-        console.log(value);
-      });
-    });
     this._searchService.loadRequestIndex().subscribe((value) => {
       console.log(value);
     });
