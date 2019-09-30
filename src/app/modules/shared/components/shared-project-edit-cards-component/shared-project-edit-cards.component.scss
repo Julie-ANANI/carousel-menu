@@ -1,177 +1,98 @@
 @import "../../../../../style/framework/src/variables";
 
-#shared-project-edit-cards-component {
+#shared-project-edit-cards {
 
-  p {
-    margin: 0;
+  .spec-text-question {
+    font-size: 0.85rem;
+    color: $text-primary-dark-color;
+    margin-right: $unit-1;
   }
 
-  .flex-between, .flex-start {
-    flex-wrap: wrap;
+  .shape.is-rounded {
+    font-size: 0.75rem;
+    margin-right: $unit-4;
   }
 
-  .options {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-
-    li {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      padding: $unit-2;
-
-      .btn-radio {
-        margin-right: $unit-2;
-      }
-
-    }
-
-    li.active {
-
-      .btn-radio {
-        background-color: $success-color;
-        border-color: $success-color;
-
-        span {
-          color: white;
-        }
-
-      }
-
-    }
-
-    .text-link {
-      font-size: $font-size-md;
-      font-weight: $font-weight-normal;
-    }
-
+  .popover .popover-container {
+    width: 300px;
   }
 
-  .pd-input {
-    padding-top: $unit-5;
-    position: relative;
+  p, .spec-text-answer {
+    color: $text-secondary-dark-color;
+    font-size: 0.75rem;
   }
 
-  .form-group {
-    margin-bottom: $unit-5;
-  }
-
-  .project-data {
-    padding-top: 2.5rem;
+  .spec-text-op {
+    font-size: $font-size-md;
+    color: $text-secondary-color;
+    margin-right: $unit-2;
+    font-weight: $font-weight-medium;
   }
 
   .char-remaining {
-    top: $unit-6;
-  }
-
-  .sub-label {
+    top: $unit-1;
     font-size: $font-size-sm;
+    color: $text-success-color;
+    font-weight: $font-weight-medium;
+    position: absolute;
+    right: $unit-2;
   }
 
-  .main-media-wrapper, .secondary-media-wrapper {
-    padding-bottom: $unit-5;
-    text-align: center;
-
-    p {
-      margin-bottom: $unit-2;
-    }
-
-    .media-body {
-      display: inline-flex;
-      margin-top: $unit-2;
-    }
-
-    .delete-wrapper, .main-wrapper {
-      padding-top: $unit-2;
-    }
-
-    .media-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-
-      .media-body {
-        margin-left: $unit-2;
-        margin-right: $unit-2;
-        flex-direction: column;
-
-        .delete-wrapper {
-          padding-bottom: $unit-5;
-        }
-
-      }
-
-    }
-
-    iframe {
-      width: 240px;
-      height: 159px;
-      border-width: 0;
-    }
-
+  textarea.form-input {
+    padding-right: $unit-2;
   }
 
-  .secondary-media-wrapper {
+  .spec-media-upload-wrapper {
 
-    .delete-wrapper {
-      padding-top: 0;
-    }
-
-  }
-
-  .upload-wrapper {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: -$unit-2;
-
-    .image-upload-wrapper {
+    .spec-image-upload-wrapper, .spec-video-upload-wrapper {
       flex: 1;
-      margin-bottom: $unit-2;
+      width: 100%;
     }
 
-    .or-wrapper {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-
-      .text {
-        font-size: $font-size-sm;
-        margin: 1.25rem;
-      }
-
-    }
-
-    .video-upload-wrapper {
-      flex: 1;
-      margin-bottom: $unit-2;
+    .divider-vert {
+      height: 220px;
     }
 
   }
 
-
-  .form-input.ng-touched.ng-invalid {
-    border-color: $border-color;
+  iframe {
+    width: 240px;
+    height: 159px;
+    border: $border-width solid $border-color;
   }
 
+  .spec-secondary-media-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 1.25rem 0.5rem 0 0.5rem;
+  }
 
 }
 
-
-
 @media (max-width: $size-sm) {
 
-  #shared-project-edit-cards-component {
+  #shared-project-edit-cards {
 
-    .upload-wrapper {
-      flex-direction: column;
+    .spec-text-question {
+      margin-right: 0;
     }
 
     .popover {
       display: none;
+    }
+
+    .spec-media-upload-wrapper {
+      flex-direction: column;
+
+      .divider-vert {
+        height: auto;
+      }
+
+    }
+
+    .spec-secondary-media-wrapper {
+      margin-left: 0;
+      margin-right: 0;
     }
 
   }

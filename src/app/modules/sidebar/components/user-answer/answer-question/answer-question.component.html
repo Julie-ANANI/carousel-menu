@@ -116,9 +116,9 @@
           <div class="pad-top">
             <app-input-list
               (update)="setAnswer($event)"
-              [canEdit]="true"
+              [isEditable]="true"
               [config]="{ placeholder: 'Enter your response', initialData: fullAnswer.answers[question.identifier] || [] }"
-              [adminMode]="editMode">
+              [isAdminMode]="editMode">
             </app-input-list>
           </div>
         </ng-container>

@@ -1,13 +1,14 @@
 @import "../../../../../style/framework/src/variables";
 @import "../../../../../style/framework/src/mixins";
 
-#shared-world-map {
+#shared-worldmap {
 
-  #country-tooltip {
+  .country-tooltip {
     background-color: $bg-light-color;
     box-shadow: $box-shadow-menu;
     padding: 0.75rem 1rem;
     width: fit-content;
+    min-width: max-content;
     border-radius: 6px;
     position: absolute;
     opacity: 0;

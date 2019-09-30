@@ -6,9 +6,9 @@ export const SHARED_PROJECT_EDIT = {
     'IMPORT_TRANSLATION': 'Importer une traduction',
 
     'LANGUAGE': {
-      'HEADING': 'Vous décrivez votre projet en :',
+      'HEADING': 'Vous décrivez le projet en :',
       'UPDATE_TEXT': 'Actualiser la langue du projet',
-      'ADD_PROJECT_LANGUAGE': 'ou cliquez ici si vous souhaitez ajouter le projet en'
+      'ADD_PROJECT_LANGUAGE': 'ou ajoutez le projet dans'
     },
 
     'SET_AS_MAIN_LANG': 'Devenir langue principale',
@@ -82,14 +82,15 @@ export const SHARED_PROJECT_EDIT = {
 
   'MEDIA': {
     'LABEL': 'Vous souhaitez ajouter des images ou des vidéos pour mieux illustrer votre projet ?',
-    'SUB_LABEL': '(Nous vous le recommandons car les projets avec des illustrations ont un taux de réponse bien meilleur.)',
+    'HELP': 'Nous vous le recommandons car les projets avec des illustrations ont un taux de réponse bien meilleur.',
     'UPLOAD_PICTURE': 'Télécharger la photo',
     'MAIN': 'Média principal',
     'SECONDARY': 'Média(s) secondaire(s)',
     'UPLOAD_VIDEO': 'Télécharger la video',
     'SLIDE': 'faites glisser les fichiers ici',
     'URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
-    'MAKE_MAIN': 'En faire le média principal'
+    'MAKE_MAIN': 'En faire le média principal',
+    'NO_MEDIA': 'Aucun média téléchargé.'
   },
 
   'EXTERNAL_DIFFUSION': {
@@ -104,6 +105,14 @@ export const SHARED_PROJECT_EDIT = {
 
   'INNOVATION_PREVIEW': 'Aperçu',
 
-  'DELETE_LANGUAGE': 'Supprimer la langue du projet'
+  'COMMENT': 'Commentaire',
+
+  'SUGGESTION': 'Proposition',
+
+  'PLACEHOLDERS': {
+    'COMMENT': 'Commentaire de l\'opérateur',
+    'SUGGESTION': 'Suggestion de l\'opérateur',
+  }
+
 
 };

@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { SharedWorldmapService } from './services/shared-worldmap.service';
 import { Response } from '../../../../models/response';
 import { IndexService } from '../../../../services/index/index.service';
@@ -84,6 +84,8 @@ export class SharedWorldmapComponent implements OnInit {
     this._initializeTemplate();
   }
 
+  @Output() onCountryClick: EventEmitter<string> = new EventEmitter<string>();
+
   private _showLegend: boolean = false;
 
   private _firstThreshold: number;
@@ -109,6 +111,16 @@ export class SharedWorldmapComponent implements OnInit {
 
   ngOnInit() {
     this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
+  }
+
+  @HostListener('click', ['$event'])
+  onMouseClick(event: MouseEvent) {
+    if (this.type === 'demo') {
+      const id = (event.target as HTMLElement).id;
+      if (id && id !== 'shared-worldmap') {
+        this.onCountryClick.emit(id);
+      }
+    }
   }
 
   private _reinitializeMap() {
@@ -255,14 +267,14 @@ export class SharedWorldmapComponent implements OnInit {
         let leftPosition;
 
         if (document.documentElement.clientWidth - event.clientX > 200) {
-          leftPosition = `${event.clientX - (event.clientX - event.offsetX) - 3}px`;
+          leftPosition = `${event.clientX - (event.clientX - event.layerX) - 3}px`;
         } else {
-          leftPosition =  `${event.offsetX - 180}px`;
+          leftPosition =  `${event.layerX - 180}px`;
         }
 
         this._tooltipPosition = {
           left: leftPosition,
-          top: `${event.offsetY + 25}px`,
+          top: `${event.layerY + 25}px`,
           opacity: 1,
           display: 'block'
         }

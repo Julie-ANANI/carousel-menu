@@ -1,7 +1,7 @@
 <div class="column col-mx-auto col-xs-12 col-11">
 <form novalidate>
 
-  <div class="form-group-inline-space">
+  <div class="form-group-inline-space flex-between">
     <div class="input-group">
       <select class="form-select"
               *ngIf="isStatus"
@@ -19,10 +19,9 @@
   </div>
 
   <app-shared-project-edit-cards
-    [project]="project"
-    [editable]="true"
-    [sideAdmin]="true"
-    [modeAdmin]="true"
+    [innovation]="project"
+    [isEditable]="true"
+    [isAdminSide]="true"
     *ngIf="isPitch">
   </app-shared-project-edit-cards>
 
