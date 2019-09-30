@@ -5,6 +5,7 @@ import { Media } from './media';
 // import { Preset } from './preset';
 import { Tag } from './tag';
 import { User } from './user.model';
+import { Mission } from './mission';
 
 export interface InnovationMetadataValues {
   preparation?: number;
@@ -73,6 +74,8 @@ export interface Innovation {
       value: string
     }]
   };
+
+  mission?: Mission | string;
 
   operator?: User;
   previewMode?: boolean;

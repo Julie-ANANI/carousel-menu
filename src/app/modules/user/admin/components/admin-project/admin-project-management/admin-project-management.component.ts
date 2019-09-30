@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {InnovationService} from '../../../../../../services/innovation/innovation.service';
 import {TranslateService} from '@ngx-translate/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Tag} from '../../../../../../models/tag';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {Innovation} from '../../../../../../models/innovation';
 import {Preset} from '../../../../../../models/preset';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 import {DashboardService} from '../../../../../../services/dashboard/dashboard.service';
@@ -24,6 +24,7 @@ import {EmailScenario} from '../../../../../../models/email-scenario';
 import {TagsService} from '../../../../../../services/tags/tags.service';
 import {FrontendService} from '../../../../../../services/frontend/frontend.service';
 import {EmailTemplate} from '../../../../../../models/email-template';
+import {Mission} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -44,7 +45,6 @@ export class AdminProjectManagementComponent implements OnInit {
   projectSubject = new Subject<Innovation>();
 
   // Owner edition
-  isEditOwner = false;
   usersSuggestion: Array<any> = [];
   owner: any = {};
   displayUserSuggestion = false;
@@ -87,10 +87,11 @@ export class AdminProjectManagementComponent implements OnInit {
   };
 
   public formData: FormGroup = this._formBuilder.group({
-    domainen: ['', [Validators.required]],
-    domainfr: ['', [Validators.required]],
     owner: '',
+    mission: ''
   });
+
+  public edit: {[k: string]: boolean} = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -186,7 +187,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * This function reset the data
    */
   resetData() {
-    this.isEditOwner = false;
+    this.edit = {};
     this.formData.reset();
   }
 
@@ -221,10 +222,23 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  // Preparation section
+  public missionsSuggestions = (searchString: string): Observable<Array<{name: string}>> => {
+    return this._autoCompleteService.get({query: searchString, type: 'mission'});
+  };
 
-  editOwner() {
-    this.isEditOwner = true;
+  public autocompleteMissionListFormatter = (data: Mission): string => {
+    return data.name;
+  };
+
+  public selectMission(event: Mission) {
+    this.edit.mission = false;
+    this._innovationService.save(this._project._id, {mission: event._id}).subscribe((data: any) => {
+      this._project = data;
+      this._project.mission = event;
+      this._notificationsService.success('ERROR.SUCCESS' , 'The project has been updated');
+    }, (err: any) => {
+      this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
+    });
   }
 
   /***

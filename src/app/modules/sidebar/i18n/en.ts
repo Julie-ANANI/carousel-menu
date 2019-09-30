@@ -19,6 +19,7 @@ export const SIDEBAR = {
     'SEARCH_HISTORY': 'Search History',
     'SHOWCASE_HISTORY': 'Showcase History',
     'EDIT_SIGNATURE': 'Edit Signature',
+    'EDIT_MISSION': 'Edit Mission'
   },
 
   'LABELS': {
