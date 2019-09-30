@@ -89,6 +89,12 @@
               {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
             </a>
           </li>
+          <li class="tab-item" *ngIf="innovation.mission">
+            <a [ngClass]="{ 'active': currentPage === 'objectives' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'objectives')">
+              <div class="shape is-circle is-md objectives-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
+              {{ 'PROJECT_MODULE.SETUP.OBJECTIVES_TAB' | translate }}
+            </a>
+          </li>
           <li class="tab-item">
             <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
               <div class="shape is-circle is-md survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
@@ -106,12 +112,17 @@
 
         <!-- pitch -->
         <div *ngIf="currentPage === 'pitch'">
-          <app-shared-project-edit-cards [project]="innovation" [editable]="canEdit"></app-shared-project-edit-cards>
+          <app-shared-project-edit-cards [innovation]="innovation" [isEditable]="canEdit"></app-shared-project-edit-cards>
         </div>
 
         <!-- targeting -->
         <ng-container *ngIf="currentPage === 'targeting'">
           <app-shared-project-settings [project]="innovation" [editable]="canEdit"></app-shared-project-settings>
+        </ng-container>
+
+        <!-- objectives -->
+        <ng-container *ngIf="currentPage === 'objectives'">
+          <app-objectives [project]="innovation" [editable]="canEdit"></app-objectives>
         </ng-container>
 
         <!-- survey -->

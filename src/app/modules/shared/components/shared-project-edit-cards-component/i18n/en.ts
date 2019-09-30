@@ -3,12 +3,12 @@ export const SHARED_PROJECT_EDIT = {
   'DESCRIPTION': {
     'SUBMIT_BUTTON': 'Submit',
 
-    'IMPORT_TRANSLATION': 'Import a translation',
+    'IMPORT_TRANSLATION': 'Import translation',
 
     'LANGUAGE': {
-      'HEADING': 'You are describing your project in:',
+      'HEADING': 'You are describing the project in:',
       'UPDATE_TEXT': 'Update your project language',
-      'ADD_PROJECT_LANGUAGE': 'or click here if you would like to add the project in'
+      'ADD_PROJECT_LANGUAGE': 'or add the project in'
     },
 
     'SET_AS_MAIN_LANG': 'Set as main language',
@@ -83,14 +83,15 @@ export const SHARED_PROJECT_EDIT = {
 
   'MEDIA': {
     'LABEL': 'Would you like to add images or videos to better illustrate your project?',
-    'SUB_LABEL': '(We highly recommended and projects with media attached tend to have a much better response rate.)',
+    'HELP': 'We highly recommended and projects with media attached tend to have a much better response rate.',
     'MAIN': 'Main Media',
     'SECONDARY': 'Secondary Medias',
     'UPLOAD_PICTURE': 'Upload Picture',
     'UPLOAD_VIDEO': 'Upload Video',
     'SLIDE': 'drag the file here',
     'URL': 'Enter the address of your Youtube or Vimeo video here',
-    'MAKE_MAIN': 'Make it as main media'
+    'MAKE_MAIN': 'Make as main media',
+    'NO_MEDIA': 'No media uploaded.'
   },
 
   'EXTERNAL_DIFFUSION': {
@@ -105,6 +106,13 @@ export const SHARED_PROJECT_EDIT = {
 
   'INNOVATION_PREVIEW': 'Preview',
 
-  'DELETE_LANGUAGE': 'Delete Selected Language'
+  'COMMENT': 'Comment',
+
+  'SUGGESTION': 'Suggestion',
+
+  'PLACEHOLDERS': {
+    'COMMENT': 'Operator comment',
+    'SUGGESTION': 'Operator suggestion',
+  }
 
 };

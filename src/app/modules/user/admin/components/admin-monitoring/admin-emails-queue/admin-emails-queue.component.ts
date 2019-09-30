@@ -66,7 +66,7 @@ export class AdminEmailQueueComponent implements OnInit {
             _columns: [
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSearchable: true},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},
-              {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
+              {_attrs: ['status'], _name: 'COMMON.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
                 _choices: [
                   {_name: 'QUEUED', _alias: 'Queued', _class: 'label is-draft'},
                   {_name: 'PROCESSING', _alias: 'Processing', _class: 'label is-progress'},

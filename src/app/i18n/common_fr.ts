@@ -50,6 +50,7 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
+  'STATUS': 'Status',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
@@ -224,7 +225,8 @@ export const COMMON = {
   'PROJECT': {
     'OWNER': 'Propriétaire',
     'TITLE': 'Titre',
-    'DOMAIN': 'Domaine'
+    'DOMAIN': 'Domaine',
+    'MISSION': 'Mission'
   },
 
   'PROJECT_STATE': {
@@ -288,6 +290,8 @@ export const COMMON = {
   'MY_ACCOUNT': 'Mon compte',
 
   'PROJECTS': 'Projets',
+
+  'MISSIONS': 'Missions',
 
   'CAMPAIGNS': 'Campagnes',
 

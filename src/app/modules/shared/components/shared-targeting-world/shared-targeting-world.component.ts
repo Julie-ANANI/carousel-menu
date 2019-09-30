@@ -182,13 +182,13 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _filterInCountriesOfContinent(continent: string) {
     this._geography.include = this._geography.include.filter((value) => {
-      return this.getCountriesByContinent(continent).indexOf(value) < 0;
+      return this.getCountriesByContinent(continent).findIndex((value2) => value2.code === value.code) === -1;
     });
   }
 
   private _filterExCountriesOfContinent(continent: string) {
     this._geography.exclude = this._geography.exclude.filter((value) => {
-      return this.getCountriesByContinent(continent).indexOf(value) < 0;
+      return this.getCountriesByContinent(continent).findIndex((value2) => value2.code === value.code) === -1;
     });
   }
 

@@ -84,7 +84,7 @@ export class SharedWorldmapComponent implements OnInit {
     this._initializeTemplate();
   }
 
-  @Output() onCountryClick = new EventEmitter<any>();
+  @Output() onCountryClick: EventEmitter<string> = new EventEmitter<string>();
 
   private _showLegend: boolean = false;
 
@@ -111,6 +111,16 @@ export class SharedWorldmapComponent implements OnInit {
 
   ngOnInit() {
     this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
+  }
+
+  @HostListener('click', ['$event'])
+  onMouseClick(event: MouseEvent) {
+    if (this.type === 'demo') {
+      const id = (event.target as HTMLElement).id;
+      if (id && id !== 'shared-worldmap') {
+        this.onCountryClick.emit(id);
+      }
+    }
   }
 
   private _reinitializeMap() {
@@ -277,13 +287,6 @@ export class SharedWorldmapComponent implements OnInit {
       }
 
     }
-  }
-
-
-  public clickOnCountry(event: Event) {
-    event.preventDefault();
-    const country: string = (event.target as SVGPathElement).id;
-    this.onCountryClick.emit(country);
   }
 
   private _setTooltipInfo(countryId: string) {

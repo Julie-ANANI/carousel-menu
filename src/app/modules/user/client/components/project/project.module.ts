@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ProjectRoutingModule } from './project-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
+import { ObjectivesComponent } from './components/setup/components/objectives/objectives.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
 
@@ -21,6 +23,8 @@ import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-ans
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+
+import { MissionService } from '../../../../../services/mission/mission.service';
 
 
 @NgModule({
@@ -39,14 +43,19 @@ import { ModalModule } from '../../../../utility-components/modals/modal/modal.m
     SidebarUserAnswerModule,
     SharedMarketReportModule,
     MessageTemplate1Module,
-    ModalModule
+    ModalModule,
+    FormsModule
   ],
   declarations: [
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
+    ObjectivesComponent,
     SurveyComponent,
     HistoryProjectComponent
+  ],
+  providers: [
+    MissionService
   ],
   exports: [
     ProjectComponent
