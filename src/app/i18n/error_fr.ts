@@ -111,7 +111,7 @@ export const ERROR = {
 
 
   'PRESET': {
-    'UPDATED': 'Questionnaire mis à jour.'
+    'UPDATED': 'La questionnaire mis à jour.'
   },
 
 
@@ -128,7 +128,8 @@ export const ERROR = {
 
 
   'QUIZ': {
-    'CREATED': 'Le quiz a été créé.'
+    'CREATED': 'Le quiz a été créé.',
+    'GENERATED': 'Le quiz a été généré avec succès.',
   },
 
 

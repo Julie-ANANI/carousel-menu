@@ -11,28 +11,20 @@ import { environment } from '../../../../../../../../../../environments/environm
 
 export class SurveyComponent implements OnInit {
 
-  @Input() set project(value: Innovation) {
-    this._innovation = value;
-  }
+  @Input() innovation: Innovation;
 
   private _url = '';
 
-  private _innovation: Innovation;
-
-  constructor(private translateService: TranslateService) { }
+  constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    if (this._innovation.quizId) {
-      this._url = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/preview?lang=' + this.translateService.currentLang;
+    if (this.innovation && this.innovation.quizId) {
+      this._url = environment.quizUrl + '/quiz/' + this.innovation.quizId + '/preview?lang=' + this._translateService.currentLang;
     }
   }
 
   get url() {
     return this._url;
-  }
-
-  get innovation(): Innovation {
-    return this._innovation;
   }
 
 }
