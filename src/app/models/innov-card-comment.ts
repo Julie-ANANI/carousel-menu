@@ -2,7 +2,6 @@ import { User } from './user.model';
 
 export interface InnovCardComment {
   innovationCardId?: string;
-  solved?: Date;
   owner?: User;
 
   title?: {
