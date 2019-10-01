@@ -319,9 +319,13 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
   }
 
   public isVisible(field: string): boolean {
-    return this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field]
-      && (this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field].comment
-        || this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field].suggestion);
+    if (this.innovation && this.innovation.innovationCards[this._selectedCardIndex]
+      && this.innovation.innovationCards[this._selectedCardIndex].operatorComment && this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field]) {
+      return this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field]
+        && (this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field].comment
+          || this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field].suggestion);
+    }
+    return false;
   }
 
   get allowAdminToComment(): boolean {
