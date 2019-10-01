@@ -81,4 +81,13 @@ export class AnswerService {
   public importFromQuiz(answer: any): Observable<any> {
     return this._http.post(`/campaign/${answer.campaignId}/answer`, answer);
   }
+
+  public answerReassign(campaignId: string, quizAnswerId: string, answerId: string, newPro: any): Observable<any> {
+    const body = {
+      answerId: quizAnswerId,
+      answerUmiAppId: answerId,
+      user: newPro
+    };
+    return this._http.post(`/campaign/${campaignId}/answerReassign`, body);
+  }
 }

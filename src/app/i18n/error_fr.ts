@@ -118,6 +118,7 @@ export const ERROR = {
   'ANSWER': {
     'UPDATED': 'La réponse a été mise à jour avec succès.',
     'IMPORTED': 'Les réponses ont été importées avec succès.',
+    'REASSIGNED': 'La réponse a été reassignée avec succès.',
     'STATUS_UPDATE': 'Le statut a été mis à jour avec succès.'
   },
 
