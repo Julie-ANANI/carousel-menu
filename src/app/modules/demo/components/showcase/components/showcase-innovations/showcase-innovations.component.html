@@ -2,7 +2,7 @@
 
 
   <!-- bar icon -->
-  <ng-container *ngIf="isAdmin && innovations.length > 0">
+  <ng-container *ngIf="isAdmin && count > 0">
     <div class="icon-container is-overlay text-notify absolute" (click)="openModal($event)">
       <span class="tooltip" [attr.data-tooltip]="'Menu'">
         <i class="icon icon-menu"></i>
@@ -27,7 +27,7 @@
   <!-- section innovations -->
   <div class="section-card-wrapper section-light-pad rm-pad-top d-flex text-center justify-center">
     <div *ngFor="let innovationCard of topCards" class="card is-card-3 animate-zoomIn">
-      <a [routerLink]="['/discover', innovationCard._id, lang]" target="_blank" class="text-primary-dark text-xs">
+      <a [routerLink]="['/discover', innovationCard.innovation._id, lang]" target="_blank" class="text-primary-dark text-xs">
 
         <div class="card-image">
           <figure class="img-hover-button">
@@ -62,12 +62,12 @@
   <section class="modal-body">
     <div class="modal-card-wrapper d-flex text-center">
       <ng-container *ngFor="let innovationCard of cards">
-        <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard._id) }">
+        <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard.innovation._id) }">
 
           <i class="fas fa-check-circle"></i>
 
           <label class="absolute">
-            <input type="checkbox" (change)="onChangeInnovation($event, innovationCard)" [checked]="activeInnovation(innovationCard._id)">
+            <input type="checkbox" (change)="onChangeInnovation($event, innovationCard)" [checked]="activeInnovation(innovationCard.innovation._id)">
           </label>
 
           <figure class="card-image">
