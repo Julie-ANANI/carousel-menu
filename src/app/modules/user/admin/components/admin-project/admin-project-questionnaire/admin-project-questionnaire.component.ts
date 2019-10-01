@@ -25,6 +25,7 @@ export class AdminProjectQuestionnaireComponent {
     if (this._activatedRoute.snapshot.parent.data['innovation']) {
       this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
       this._setQuizLink();
+      console.log(this._innovation);
     }
 
   }

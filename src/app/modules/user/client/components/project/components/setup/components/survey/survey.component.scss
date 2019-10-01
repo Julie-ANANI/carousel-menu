@@ -2,4 +2,70 @@
 
 #survey {
 
+  .s-templates-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 1rem;
+    padding-top: 1.25rem;
+
+    .card {
+      box-shadow: 0 -1px 1px 0 rgba(0,0,0,.05), 0 1px 2px 0 rgba(0,0,0,.2);
+
+      .img-button {
+        transform: translateY(-45%);
+        top: 45%;
+
+        &.s-t-btn-second {
+          transform: translateY(-68%);
+          max-width: fit-content;
+          top: 68%;
+          color: $text-white-color;
+          padding: $unit-1 $unit-4;
+
+          &:hover {
+            background-color: $bg-primary-color;
+            border-color: $primary-color;
+          }
+
+        }
+
+      }
+
+      .card-header {
+        text-align: center;
+        padding: 1.25rem;
+
+        .card-title {
+          font-weight: $font-weight-normal;
+          font-size: 0.75rem;
+        }
+
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
+
+        .img-hover-button {
+          background: $bg-overlay-dark-color;
+
+          img {
+            transition: opacity 0.2s ease;
+            opacity: 0.5;
+          }
+
+          .img-button {
+            opacity: 1;
+            visibility: visible;
+            cursor: pointer;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
 }

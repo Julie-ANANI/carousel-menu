@@ -10,6 +10,9 @@ import { ExplorationComponent } from './components/exploration/exploration.compo
 import { ObjectivesComponent } from './components/setup/components/objectives/objectives.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
+import { QuestionnaireTemplate1Component } from './components/setup/components/survey/components/questionnaire-template-1/questionnaire-template-1.component';
+import { QuestionnaireTemplate2Component } from './components/setup/components/survey/components/questionnaire-template-2/questionnaire-template-2.component';
+import { QuestionnaireTemplate3Component } from './components/setup/components/survey/components/questionnaire-template-3/questionnaire-template-3.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
@@ -52,7 +55,10 @@ import { MissionService } from '../../../../../services/mission/mission.service'
     ExplorationComponent,
     ObjectivesComponent,
     SurveyComponent,
-    HistoryProjectComponent
+    HistoryProjectComponent,
+    QuestionnaireTemplate1Component,
+    QuestionnaireTemplate2Component,
+    QuestionnaireTemplate3Component
   ],
   providers: [
     MissionService

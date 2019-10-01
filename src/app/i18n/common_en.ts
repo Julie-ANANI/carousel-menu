@@ -196,6 +196,7 @@ export const COMMON = {
     'CONFIRM': 'Confirm',
     'IMPORT': 'Import',
     'EXPORT': 'Export',
+    'SELECT': 'Select',
     'SEND': 'Send',
     'PRINT': 'Print',
     'PREVIEW': 'Preview',

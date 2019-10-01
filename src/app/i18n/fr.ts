@@ -33,6 +33,9 @@ import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
 import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/fr';
 import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/fr';
 import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/fr';
+import { QUESTIONNAIRE_TEMPLATE_1 } from '../modules/user/client/components/project/components/setup/components/survey/components/questionnaire-template-1/i18n/fr';
+import { QUESTIONNAIRE_TEMPLATE_2 } from '../modules/user/client/components/project/components/setup/components/survey/components/questionnaire-template-2/i18n/fr';
+import { QUESTIONNAIRE_TEMPLATE_3 } from '../modules/user/client/components/project/components/setup/components/survey/components/questionnaire-template-3/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -69,5 +72,8 @@ export const fr = {
   'SHOWCASE': SHOWCASE,
   'SEARCH_DEMO': SEARCH_DEMO,
   'COMMUNITY': COMMUNITY,
-  'SHARED_TARGETING_WORLD': SHARED_TARGETING_WORLD
+  'SHARED_TARGETING_WORLD': SHARED_TARGETING_WORLD,
+  'QUESTIONNAIRE_TEMPLATE_1': QUESTIONNAIRE_TEMPLATE_1,
+  'QUESTIONNAIRE_TEMPLATE_2': QUESTIONNAIRE_TEMPLATE_2,
+  'QUESTIONNAIRE_TEMPLATE_3': QUESTIONNAIRE_TEMPLATE_3
 };

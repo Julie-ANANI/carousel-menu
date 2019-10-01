@@ -1,18 +1,127 @@
 <div *ngIf="innovation" id="survey">
 
-  <!-- section no survey
+  <!-- section questionnaire template -->
+  <section>
+
+    <!-- choose template -->
+    <div>
+
+      <div class="divider" [attr.data-content]="'PROJECT_MODULE.SETUP.SURVEY.STEPS.1' | translate | uppercase"></div>
+
+      <div class="s-templates-wrapper">
+
+        <div class="card is-card-3">
+
+          <div class="card-image">
+            <figure class="img-hover-button">
+
+              <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" ">
+
+              <span [innerText]="'COMMON.BUTTON.PREVIEW'" class="img-button" translate (click)="onClickPreview($event, 'template1')"></span>
+              <span [innerText]="'COMMON.BUTTON.SELECT'" class="img-button s-t-btn-second" translate (click)="onClickSelect($event, 'template1')"></span>
+
+            </figure>
+          </div>
+
+          <div class="card-header">
+            <div class="card-title" [innerText]="'Génération de leads'" translate></div>
+          </div>
+
+        </div>
+
+        <div class="card is-card-3">
+
+          <div class="card-image">
+            <figure class="img-hover-button">
+
+              <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" ">
+
+              <span [innerText]="'COMMON.BUTTON.PREVIEW'" class="img-button" translate (click)="onClickPreview($event, 'template2')"></span>
+              <span [innerText]="'COMMON.BUTTON.SELECT'" class="img-button s-t-btn-second" translate (click)="onClickSelect($event, 'template2')"></span>
+
+            </figure>
+          </div>
+
+          <div class="card-header">
+            <div class="card-title" [innerText]="'Recherche d’applications/Marché'" translate></div>
+          </div>
+
+        </div>
+
+        <div class="card is-card-3">
+
+          <div class="card-image">
+            <figure class="img-hover-button">
+
+              <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" ">
+
+              <span [innerText]="'COMMON.BUTTON.PREVIEW'" class="img-button" translate (click)="onClickPreview($event, 'template3')"></span>
+              <span [innerText]="'COMMON.BUTTON.SELECT'" class="img-button s-t-btn-second" translate (click)="onClickSelect($event, 'template3')"></span>
+
+            </figure>
+          </div>
+
+          <div class="card-header">
+            <div class="card-title" [innerText]="'Validation du potentiel de l’innovation'" translate></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- /choose template -->
+
+  </section>
+  <!-- section questionnaire template -->
+
+  <!-- section to show selected template edit -->
+  <section *ngIf="selectedTemplate" class="p-top-25">
+
+    <div class="divider" [attr.data-content]="'PROJECT_MODULE.SETUP.SURVEY.STEPS.2' | translate | uppercase"></div>
+
+    <div [ngSwitch]="selectedTemplate">
+
+      <!-- template 1 -->
+      <div *ngSwitchCase="'template1'">
+        <app-questionnaire-template-1></app-questionnaire-template-1>
+      </div>
+
+      <!-- template 2 -->
+      <div *ngSwitchCase="'template2'">
+        <app-questionnaire-template-2></app-questionnaire-template-2>
+      </div>
+
+      <!-- template 3 -->
+      <div *ngSwitchCase="'template3'">
+        <app-questionnaire-template-3></app-questionnaire-template-3>
+      </div>
+
+    </div>
+
+  </section>
+  <!-- /section to show selected template edit -->
+
+</div>
+
+
+<!-- modal to preview the template -->
+<app-modal [(showModal)]="showModel" [enableCloseButton]="true">
+  <section class="modal-body">
+
+  </section>
+</app-modal>
+<!-- /modal to preview the template -->
+
+<!-- section no survey
   <ng-container *ngIf="!innovation.quizId">
     <app-message-template-1 [widthMax]="'359px'">
       {{ 'PROJECT_MODULE.SETUP.SURVEY.NO_QUIZ' | translate }}
     </app-message-template-1>
   </ng-container> -->
 
-  <!-- section survey
-  <ng-container *ngIf="innovation.quizId">
-    <p class="text">{{ 'PROJECT_MODULE.SETUP.SURVEY.DONT_SHARE_QUIZ' | translate }}</p>
-    <a class="text-link" [href]="url" target="_blank"><span>{{ url }}</span></a>
-  </ng-container> -->
-
-
-
-</div>
+<!-- section survey
+<ng-container *ngIf="innovation.quizId">
+  <p class="text">{{ 'PROJECT_MODULE.SETUP.SURVEY.DONT_SHARE_QUIZ' | translate }}</p>
+  <a class="text-link" [href]="url" target="_blank"><span>{{ url }}</span></a>
+</ng-container> -->

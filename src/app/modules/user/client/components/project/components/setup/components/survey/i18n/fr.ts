@@ -5,8 +5,12 @@ export const SURVEY = {
   'DONT_SHARE_QUIZ': 'Visitez ce lien pour voir le questionnaire qui sera envoyé aux professionnels du marché. Ne partagez pas ce lien qui est disponible à titre d\'exemple seulement.',
 
   'STEPS': {
-    '1': 'Choose a template and start editing it.'
-  }
+    '1': 'Sélectionnez un modèle et pour le modifier',
+    '2': 'Modèle sélectionné :'
+  },
 
+  'template': {
+
+  },
 
 };
