@@ -149,6 +149,8 @@ export class SharedSearchHistoryComponent implements OnInit {
                 {_name: 'EMAILS_SEARCHING', _alias: 'SEARCH.HISTORY.EMAILS_SEARCHING', _class: 'label is-progress'},
                 {_name: 'EMAILS_QUEUED', _alias: 'SEARCH.HISTORY.EMAILS_QUEUED', _class: 'label is-danger'}
               ]},
+            {_attrs: ['metadata.shield'], _name: 'SEARCH.HISTORY.NBSHIELD', _type: 'TEXT', _isSortable: true},
+            {_attrs: ['metadata.ambassadors'], _name: 'SEARCH.HISTORY.NBAMB', _type: 'TEXT', _isSortable: true},
           ]
         };
       });
