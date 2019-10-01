@@ -26,5 +26,7 @@ export const ANSWER = {
   'UNCOMPLETE_ANSWER': 'À compléter',
   'VALID_ANSWER': 'Valider',
   'VALID_ANSWER_NO_MAIL': 'Valider sans mail merci',
-  'INVALID_ANSWER': 'Invalider'
+  'INVALID_ANSWER': 'Invalider',
+  'EDIT_ANSWER': 'Editer la réponse',
+  'REASSIGN_ANSWER': 'Réassigner la réponse'
 };
