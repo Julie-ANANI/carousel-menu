@@ -236,25 +236,10 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
    */
   public uploadImage(media: Media, cardIdx: number): void {
     this.innovation.innovationCards[cardIdx].media.push(media);
-    this._checkPrincipalMedia(media, cardIdx);
-    this.notifyChanges();
-  }
-
-
-  /***
-   * this function is to make the uploaded image or video as a primary image automatically, if not.
-   * @param media
-   * @param cardIdx
-   */
-  private _checkPrincipalMedia(media: Media, cardIdx: number) {
-    if (this.innovation.innovationCards[this._selectedCardIndex].media.length > 0) {
-      if (!this.innovation.innovationCards[this._selectedCardIndex].principalMedia) {
-        this._innovationService.setPrincipalMediaOfInnovationCard(this.innovation._id, this.innovation.innovationCards[this._selectedCardIndex]._id, media._id)
-          .subscribe((res) => {
-            this.innovation.innovationCards[cardIdx].principalMedia = media;
-          });
-      }
+    if (!this.innovation.innovationCards[cardIdx].principalMedia) {
+      this.innovation.innovationCards[this._selectedCardIndex].principalMedia = media;
     }
+    this.notifyChanges();
   }
 
   /***
@@ -265,7 +250,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
     this._innovationService.addNewMediaVideoToInnovationCard(this.innovation._id, this.innovation.innovationCards[this._selectedCardIndex]._id, video)
       .subscribe(res => {
       this.innovation.innovationCards[this._selectedCardIndex].media.push(res);
-      this._checkPrincipalMedia(res, this._selectedCardIndex);
+      this.innovation.innovationCards[this._selectedCardIndex].principalMedia = res;
       this.notifyChanges();
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
@@ -286,10 +271,10 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
         this.innovation.innovationCards[index].media = this.innovation.innovationCards[index].media.filter((m) => m._id !== media._id);
 
         if (this.innovation.innovationCards[index].principalMedia._id === media._id) {
-          this.innovation.innovationCards[index].principalMedia = null;
+          const randomMedia = this.innovation.innovationCards[this._selectedCardIndex].media[0];
+          this.innovation.innovationCards[index].principalMedia = randomMedia;
         }
 
-        this._checkPrincipalMedia(this.innovation.innovationCards[this._selectedCardIndex].media[0], this._selectedCardIndex);
         this.notifyChanges();
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
