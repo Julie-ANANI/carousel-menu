@@ -4,6 +4,13 @@ export const PROJECT = {
     'OPTION_A': 'Export project'
   },
 
+  'PRESET': {
+    'CAN_EDIT': 'Modify by client',
+    'HIDE': 'Hide for client',
+    'GENERATE_QUIZ': 'Generate quiz',
+    'QUIZ_URL': 'URL to access the quiz:'
+  },
+
   'MODAL': {
     'SELECT_FIELD': 'Select the information to export',
     'BASE': 'Basic innovation data',

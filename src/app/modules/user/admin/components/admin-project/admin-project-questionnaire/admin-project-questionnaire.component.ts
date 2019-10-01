@@ -3,55 +3,71 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
-import { Preset } from '../../../../../../models/preset';
 import { environment } from '../../../../../../../environments/environment';
+import { Preset } from '../../../../../../models/preset';
 
 @Component({
   selector: 'app-admin-project-questionnaire',
   templateUrl: './admin-project-questionnaire.component.html',
   styleUrls: ['./admin-project-questionnaire.component.scss']
 })
+
 export class AdminProjectQuestionnaireComponent {
 
-  private _project: Innovation;
+  private _innovation: Innovation;
+
   private _quizLink: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _notificationService: TranslateNotificationsService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) {
 
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-    this.updateQuizLink();
+    if (this._activatedRoute.snapshot.parent.data['innovation']) {
+      this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
+      this._setQuizLink();
+    }
+
   }
 
-  private updateQuizLink() {
-    if (this._project.quizId && Array.isArray(this._project.campaigns) && this._project.campaigns.length > 0) {
-      this._quizLink =  this._project && this._project.quizId ? `${environment.quizUrl}/quiz/${this._project.quizId}/${this._project.campaigns[0]._id}` : '';
+  private _setQuizLink() {
+    if (this._innovation && this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
+      this._quizLink = `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` || '';
     }
   }
 
-  public savePreset(_preset: Preset): void {
-    const project = { preset: this._project.preset };
-    this._innovationService.save(this._project._id, project).subscribe((result: any) => {
-      this._project = result;
-      this.updateQuizLink();
-      this._notificationService.success('ERROR.SUCCESS', 'ERROR.PRESET.UPDATED');
-    });
+  public saveInnovation() {
+   this._innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
+      this._innovation = response;
+      this._setQuizLink();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PRESET.UPDATED');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    })
   }
 
   public generateQuiz(event: Event) {
     event.preventDefault();
-    this._innovationService.createQuiz(this._project._id).subscribe((result: any) => {
-      this._project = result;
-      this.updateQuizLink();
-      this._notificationService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
+
+    this._innovationService.createQuiz(this._innovation._id).subscribe((result: any) => {
+      this._innovation = result;
+      this._setQuizLink();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.GENERATED');
     }, (err: any) => {
-      this._notificationService.error('ERROR.ERROR', err.message);
+      this._translateNotificationsService.error('ERROR.ERROR', err.message);
     });
+
   }
 
-  get project() { return this._project; }
+  public savePreset(_preset: Preset): void {
+    this.saveInnovation();
+  }
 
-  get quizLink() { return this._quizLink; }
+  get innovation() {
+    return this._innovation;
+  }
+
+  get quizLink() {
+    return this._quizLink;
+  }
 
 }

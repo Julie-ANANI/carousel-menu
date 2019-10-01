@@ -89,4 +89,10 @@ export interface Innovation {
   percentages?: InnovationMetadataValues;
 
   _metadata?: any;
+
+  presetAccess?: {
+    editable: boolean,
+    hidden: boolean
+  },
+
 }
