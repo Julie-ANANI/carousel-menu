@@ -1,4 +1,5 @@
 import { SURVEY } from '../components/survey/i18n/fr';
+import { OBJECTIVES } from '../components/objectives/i18n/fr';
 
 export const SETUP = {
   'TITLE': 'Détails du projet',
@@ -27,9 +28,13 @@ export const SETUP = {
 
   'TARGETING_TAB': 'Ciblage',
 
+  'OBJECTIVES_TAB': 'Objectifs',
+
   'SURVEY_TAB': 'Questionnaire',
 
   'SURVEY': SURVEY,
+
+  'OBJECTIVES': OBJECTIVES,
 
   'PREVIEW': 'Aperçu',
 

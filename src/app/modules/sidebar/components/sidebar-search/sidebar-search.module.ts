@@ -7,6 +7,7 @@ import {SidebarSearchComponent} from './sidebar-search.component';
 
 import { SidebarModule } from '../../sidebar.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
+import { SharedTargetingWorldModule } from "../../../shared/components/shared-targeting-world/shared-targeting-world.module";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
     ReactiveFormsModule,
     TranslateModule.forChild(),
     SidebarModule,
-    CountryFlagModule
+    CountryFlagModule,
+    SharedTargetingWorldModule
   ],
   declarations: [
    SidebarSearchComponent

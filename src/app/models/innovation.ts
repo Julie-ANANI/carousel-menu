@@ -5,6 +5,7 @@ import { Media } from './media';
 // import { Preset } from './preset';
 import { Tag } from './tag';
 import { User } from './user.model';
+import { Mission } from './mission';
 
 export interface InnovationMetadataValues {
   preparation?: number;
@@ -74,6 +75,8 @@ export interface Innovation {
     }]
   };
 
+  mission?: Mission | string;
+
   operator?: User;
   previewMode?: boolean;
   completion?: number;
@@ -86,4 +89,10 @@ export interface Innovation {
   percentages?: InnovationMetadataValues;
 
   _metadata?: any;
+
+  presetAccess: {
+    editable: boolean,
+    hidden: boolean
+  },
+
 }

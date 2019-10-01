@@ -3,11 +3,9 @@ import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
-import { InnovationSettings } from '../../../../models/innov-settings';
-import { COUNTRIES } from './COUNTRIES';
 import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
+import {GeographySettings} from "../../../../models/innov-settings";
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -23,6 +21,19 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _params: any;
 
+  private _geography: GeographySettings = {
+    continentTarget: {
+      africa: false,
+      oceania: false,
+      asia: false,
+      europe: false,
+      americaNord: false,
+      americaSud: false
+    },
+    exclude: [],
+    include: []
+  };
+
   private _sidebarValue: SidebarInterface = {};
 
   private _googleQuota = 30000;
@@ -37,10 +48,13 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _displayLoader = false;
 
+  private _showModal = false;
+
+  private _importRequestKeywords: string = "";
+
   constructor(private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
-              private authService: AuthService,
-              private proService: ProfessionalsService) {
+              private authService: AuthService) {
 
     this.searchService.getCountriesSettings().pipe(first()).subscribe((countriesSettings: any) => {
       this._countriesSettings = countriesSettings.countries;
@@ -88,8 +102,12 @@ export class SharedSearchProsComponent implements OnInit {
       this._params.count = 100;
       this._params.campaign = this.campaign._id;
       this._params.innovation = this.campaign.innovation._id;
-      if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings) {
-        this._params.countries = this.getTargetCountries(this.campaign.innovation.settings);
+      if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings
+        && this.campaign.innovation.settings.geography) {
+        this._geography = this.campaign.innovation.settings.geography;
+        if (this.campaign.innovation.settings.geography.include) {
+          this._params.countries = this.campaign.innovation.settings.geography.include.map(c => c.code);
+        }
       }
     }
 
@@ -149,28 +167,6 @@ export class SharedSearchProsComponent implements OnInit {
     }
 
     return (numberOfRequests || 1) * this._params.count / 10;
-
-  }
-
-  private getTargetCountries(settings: InnovationSettings): Array<string> {
-    let countries: Array<string> = [];
-
-    if (settings && settings.geography) {
-      // On ajoute d'abord les pays appartenants aux continents sélectionnés
-      const continents = settings.geography.continentTarget as {[c: string]: boolean};
-      for (const continent in continents) {
-        if (continents[continent]) {
-          countries = countries.concat(COUNTRIES[continent]);
-        }
-      }
-
-      // Puis on enlève les pays exclus
-      if (settings.geography.exclude) {
-        countries = countries.filter((c: any) => settings.geography.exclude.map((c: any) => c.flag).indexOf(c) === -1);
-      }
-
-    }
-    return countries;
 
   }
 
@@ -323,10 +319,21 @@ export class SharedSearchProsComponent implements OnInit {
     this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.SEARCH.SETTINGS_UPDATED');
   }
 
-  cleanPros() {
-    this.proService.cleanPros().pipe(first()).subscribe((_: any) => {
-      console.log("OK");
+  public onClickImport(file: File) {
+    let fileName = this._importRequestKeywords;
+    if (this.campaign) {
+      fileName += `,${this.campaign._id},${this.campaign.innovation._id}`;
+    }
+    this.searchService.importList(file, fileName).pipe(first()).subscribe(() => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
+  }
+
+  public onGeographyChange(value: GeographySettings) {
+    this._geography = value;
+    this._params.countries = value.include;
   }
 
 
@@ -371,8 +378,28 @@ export class SharedSearchProsComponent implements OnInit {
     return this._displayLoader;
   }
 
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get importRequestKeywords(): string {
+    return this._importRequestKeywords;
+  }
+
+  set importRequestKeywords(value: string) {
+    this._importRequestKeywords = value;
+  }
+
   get catResult(): any {
     return this._catResult;
+  }
+
+  get geography(): GeographySettings {
+    return this._geography;
   }
 
 }

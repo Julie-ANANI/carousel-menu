@@ -6,7 +6,7 @@ import { TableModule } from '../../../../table/table.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebar/sidebar.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
-import { AdminProjectsListModule } from '../admin-projects-list/admin-projects-list.module';
+import { AdminMissionsListModule } from '../admin-missions-list/admin-missions-list.module';
 import { SidebarInnovationPreviewModule } from '../../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
 
@@ -19,7 +19,7 @@ import { SharedLoaderModule } from '../../../../shared/components/shared-loader/
     TableModule,
     TranslateModule.forChild(),
     PipeModule,
-    AdminProjectsListModule,
+    AdminMissionsListModule,
     FormsModule,
     SharedLoaderModule
   ],

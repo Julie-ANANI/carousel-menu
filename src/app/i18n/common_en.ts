@@ -49,6 +49,7 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
+  'STATUS': 'Status',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
@@ -216,6 +217,7 @@ export const COMMON = {
     'UPDATE': 'Update',
     'IMPORT_PROJECT': 'Import project',
     'EXPORT_PROJECT': 'Export project',
+    'IMPORT_PROS': 'Import a list of pros',
     'IMPORT_WORKFLOW': 'Import workflow',
     'EXPORT_WORKFLOW': 'Export all the workflows',
     'IMPORT_QUESTIONNAIRE': 'Import questionnaire',
@@ -225,7 +227,8 @@ export const COMMON = {
   'PROJECT': {
     'OWNER': 'Owner',
     'TITLE': 'Title',
-    'DOMAIN': 'Domain'
+    'DOMAIN': 'Domain',
+    'MISSION': 'Mission'
   },
 
   'PROJECT_STATE': {
@@ -290,6 +293,8 @@ export const COMMON = {
   'MY_ACCOUNT': 'My account',
 
   'PROJECTS': 'Projects',
+
+  'MISSIONS': 'Missions',
 
   'CAMPAIGNS': 'Campaigns',
 

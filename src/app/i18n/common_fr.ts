@@ -50,6 +50,7 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
+  'STATUS': 'Status',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
@@ -214,6 +215,7 @@ export const COMMON = {
     'COLLABORATOR': 'Gestion des collaborateurs',
     'UPDATE': 'Mise à jour',
     'IMPORT_PROJECT': 'Importer un projet',
+    'IMPORT_PROS': 'Importer une liste de pros',
     'EXPORT_PROJECT': 'Exporter le project',
     'IMPORT_WORKFLOW': 'Importer un workflow',
     'EXPORT_WORKFLOW': 'Exporter tous les workflow',
@@ -224,7 +226,8 @@ export const COMMON = {
   'PROJECT': {
     'OWNER': 'Propriétaire',
     'TITLE': 'Titre',
-    'DOMAIN': 'Domaine'
+    'DOMAIN': 'Domaine',
+    'MISSION': 'Mission'
   },
 
   'PROJECT_STATE': {
@@ -288,6 +291,8 @@ export const COMMON = {
   'MY_ACCOUNT': 'Mon compte',
 
   'PROJECTS': 'Projets',
+
+  'MISSIONS': 'Missions',
 
   'CAMPAIGNS': 'Campagnes',
 

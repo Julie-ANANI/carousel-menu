@@ -6,7 +6,6 @@ export const TABLE = {
     'MODIFIED': 'Modifié',
     'VALIDATED': 'Validé',
     'REJECTED': 'Rejeté',
-    'VALIDATED_NO_MAIL': 'Valider sans envoyer de mail',
     'SUBMITTED': 'A regarder',
     'REJECTED_GMAIL': 'Rejeté par Mail',
     'REJECTED_UMIBOT': 'Rejeté auto',

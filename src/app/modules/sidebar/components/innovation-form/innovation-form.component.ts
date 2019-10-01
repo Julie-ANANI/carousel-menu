@@ -252,7 +252,7 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
     }
 
     if (this.statusValid === false) {
-      this._translateNotificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
+      this._translateNotificationsService.error('COMMON.STATUS' , 'Vous ne pouvez pas revenir à ce status');
     } else {
       this._isChange = true;
       this._project.status = event;

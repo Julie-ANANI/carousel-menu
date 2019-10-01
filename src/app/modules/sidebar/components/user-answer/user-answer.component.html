@@ -269,27 +269,11 @@
             <div class="label is-success"><span>{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span></div>
             <button
               class="btn btn-radio validated"
-              [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
-              (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
+              [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' }"
+              (click)="updateStatus($event, 'VALIDATED')">
               <span>•</span>
             </button>
           </div>
-
-          <!-- email -->
-          <ng-container *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'">
-            <div class="status-email">
-              <label class="form-switch text-medium" for="answer-email">
-                <input
-                  type="checkbox"
-                  name="answer-email"
-                  id="answer-email"
-                  (change)="sendEmail($event, 'VALIDATED')"
-                  [disabled]="!editMode"
-                  [checked]="modalAnswer.status === 'VALIDATED'">
-                <i class="form-icon"></i>{{ 'ANSWER.STATUS.EMAIL' | translate }}
-              </label>
-            </div>
-          </ng-container>
 
         </div>
       </ng-container>

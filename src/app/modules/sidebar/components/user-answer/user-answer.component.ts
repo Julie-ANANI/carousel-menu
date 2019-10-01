@@ -155,15 +155,6 @@ export class UserAnswerComponent {
   }
 
 
-  public sendEmail(event: Event, status: any) {
-    if ((event.target as HTMLInputElement).checked) {
-      this.updateStatus(event, status);
-    } else {
-      this.updateStatus(event, 'VALIDATED_NO_MAIL');
-    }
-  }
-
-
   public addTag(tag: Tag): void {
     this._answerService.addTag(this._modalAnswer._id, tag._id).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
