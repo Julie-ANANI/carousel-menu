@@ -115,7 +115,7 @@ export class ShowcaseInnovationsComponent {
   public onChangeInnovation(event: Event, card: any) {
     const innoIdx = this._selectedInnovations.findIndex((inno) => inno._id === card.innovation._id);
     if (innoIdx === -1) {
-      this._selectedInnovations.push(card.innovation);
+      this._selectedInnovations = [...this._selectedInnovations, card.innovation];
     } else {
       this._selectedInnovations = this._selectedInnovations.filter((inno) => inno._id !== card.innovation._id);
     }
