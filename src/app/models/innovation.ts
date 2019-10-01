@@ -90,7 +90,7 @@ export interface Innovation {
 
   _metadata?: any;
 
-  presetAccess: {
+  presetAccess?: {
     editable: boolean,
     hidden: boolean
   },
