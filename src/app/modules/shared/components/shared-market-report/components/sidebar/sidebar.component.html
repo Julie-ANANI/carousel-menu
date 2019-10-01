@@ -403,46 +403,58 @@
 <!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
 <app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
 
-  <ng-container *ngIf="!innovation.previewMode">
-    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
-  </ng-container>
+  <section class="modal-body">
+    <ng-container *ngIf="!innovation.previewMode">
+      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
+    </ng-container>
 
-  <ng-container *ngIf="innovation.previewMode">
-    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_INVISIBLE' | translate }}</span>
-  </ng-container>
+    <ng-container *ngIf="innovation.previewMode">
+      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_INVISIBLE' | translate }}</span>
+    </ng-container>
+  </section>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
 
 </app-modal>
 <!-- /Modal to ask the admin to confirm for the preview of the innovation at the side of the client -->
 
 
 <!-- Modal to ask the operator to confirm for the reset of the executive report -->
-<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalResetReport">
+<app-modal [(showModal)]="modalResetReport" [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'">
 
-  <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_RESET_REPORT' | translate }}</span>
+  <section class="modal-body">
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_RESET_REPORT' | translate }}</span>
+  </section>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
 
 </app-modal>
 <!-- /Modal to ask the operator to confirm for the reset of the executive report -->
 
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalEndInnovation">
+<app-modal [(showModal)]="modalEndInnovation" [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'">
 
-  <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
+  <section class="modal-body">
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
+  </section>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
 
 </app-modal>
 <!-- /Modal to ask operator to sure about ending the project -->
