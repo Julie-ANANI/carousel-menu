@@ -30,7 +30,7 @@ export class ShowcaseInnovationsComponent {
       this._innovationService.getAll(config).subscribe((response: any) => {
         if (Array.isArray(response.result)) {
           this._innovations = response.result;
-          this._count = this._innovations.length;
+          this._count = response.result.length;
           const staticInnovations = value.every((t) => t.static);
           if (staticInnovations) {
             this._computeCards();
@@ -49,10 +49,7 @@ export class ShowcaseInnovationsComponent {
   private _topInnovations: Array<Innovation> = [];
   @Input() set topInnovations(value: Array<Innovation>) {
     this._topInnovations = value;
-    this._selectedInnovations = this._topInnovations.reduce((acc, val) => {
-        acc[val._id] = true;
-        return acc;
-      }, {} as {[innoId: string]: true});
+    this._selectedInnovations = value;
     this._computeCards();
   }
   @Output() topInnovationsChange: EventEmitter<Array<Innovation>> = new EventEmitter<Array<Innovation>>();
@@ -61,11 +58,11 @@ export class ShowcaseInnovationsComponent {
 
   private _innovations: Array<Innovation> = [];
 
-  private _cards: Array<{title: string, _id: string, media: string}> = [];
+  private _cards: Array<{title: string, media: string}> = [];
 
-  private _topCards: Array<{title: string, _id: string, media: string}> = [];
+  private _topCards: Array<{title: string, media: string, innovation: Innovation}> = [];
 
-  private _selectedInnovations: {[innoId: string]: boolean} = {};
+  private _selectedInnovations: Array<Innovation> = [];
 
   private _count = 0;
 
@@ -95,9 +92,9 @@ export class ShowcaseInnovationsComponent {
 
       }
       return {
-        _id: innovation._id,
         title: innovationCard.title,
-        media: InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200')
+        media: InnovationFrontService.getMediaSrc(innovationCard, 'default', '320', '200'),
+        innovation: innovation
       };
     };
 
@@ -112,17 +109,21 @@ export class ShowcaseInnovationsComponent {
   }
 
   public activeInnovation(id: string) {
-    return this._selectedInnovations[id];
+    return this._selectedInnovations.findIndex((inno: Innovation) => inno._id === id) !== -1;
   }
 
   public onChangeInnovation(event: Event, card: any) {
-    this._selectedInnovations[card._id] = (event.target as HTMLInputElement).checked;
+    const innoIdx = this._selectedInnovations.findIndex((inno) => inno._id === card.innovation._id);
+    if (innoIdx === -1) {
+      this._selectedInnovations.push(card.innovation);
+    } else {
+      this._selectedInnovations = this._selectedInnovations.filter((inno) => inno._id !== card.innovation._id);
+    }
   }
 
   public onClickApply(event: Event) {
     event.preventDefault();
-    const selectedInnovation = this._innovations.filter((i) => this._selectedInnovations[i._id]);
-    this.topInnovationsChange.emit(selectedInnovation);
+    this.topInnovationsChange.emit(this._selectedInnovations);
     this._modalShow = false;
   }
 
@@ -136,10 +137,6 @@ export class ShowcaseInnovationsComponent {
 
   get topCards() {
     return this._topCards;
-  }
-
-  get innovations(): Array<Innovation> {
-    return this._innovations;
   }
 
   get count(): number {

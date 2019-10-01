@@ -51,6 +51,17 @@ export class UserAnswerComponent {
 
   private _editMode = false;
 
+  private _assignNewPro = false;
+
+  private _newPro: {firstName: string, lastName: string, email: string, jobTitle: string, company: string, country: string} = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    jobTitle: "",
+    company: "",
+    country: "",
+  };
+
   private _innovationId = '';
 
   modeAdmin = false;
@@ -199,6 +210,32 @@ export class UserAnswerComponent {
 
   }
 
+  public reassignAnswer(event: Event): void {
+    event.preventDefault();
+
+    this._newPro.jobTitle = this._modalAnswer.job;
+    this._newPro.country = this._modalAnswer.country.flag;
+    this._newPro.company = this._modalAnswer.company.name;
+    this._answerService.answerReassign(
+      this._modalAnswer.campaign,
+      this._modalAnswer.originalAnswerReference,
+      this._modalAnswer._id,
+      this._newPro).subscribe((_res: any) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.REASSIGNED');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+    this._assignNewPro = false;
+    this._newPro = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      jobTitle: "",
+      company: "",
+      country: "",
+    };
+  }
+
   get meta(): any {
     return this._modalAnswer.meta || {};
   }
@@ -229,6 +266,22 @@ export class UserAnswerComponent {
 
   get editMode(): boolean {
     return this._editMode;
+  }
+
+  get assignNewPro(): boolean {
+    return this._assignNewPro;
+  }
+
+  set assignNewPro(value: boolean) {
+    this._assignNewPro = value;
+  }
+
+  get newPro(): any {
+    return this._newPro;
+  }
+
+  set newPro(value: any) {
+    this._newPro = value;
   }
 
   get innovationId(): string {

@@ -333,7 +333,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   public onGeographyChange(value: GeographySettings) {
     this._geography = value;
-    this._params.countries = value.include;
+    this._params.countries = value.include.map(c => c.code);
   }
 
 

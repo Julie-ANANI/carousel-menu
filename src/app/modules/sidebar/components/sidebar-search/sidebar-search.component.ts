@@ -22,7 +22,7 @@ export class SidebarSearchComponent {
     event.target.id = "close";
     this.close.emit(event);
     this.paramsChange.emit(this.params);
-    this.geographyChange.emit(this.geographyChange);
+    this.geographyChange.emit(this.geography);
   }
 
 }
