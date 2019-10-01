@@ -30,6 +30,8 @@ export class AnswerQuestionComponent {
       this._fullAnswer.answers[this.question.identifier] = {};
     }
     this._commenting = !!(this._fullAnswer.answers && this._fullAnswer.answers[this.question.identifier + 'Comment']);
+    this._showQuestionTranslation = false;
+    this._showCommentTranslation = false;
   }
 
   _commenting: boolean;
