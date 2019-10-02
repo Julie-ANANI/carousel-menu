@@ -25,7 +25,7 @@ export interface Innovation {
     action: 'SUBMIT' | 'REJECT' | 'VALIDATE' | 'FINISH'
     user: User,
     date: Date
-  }>
+  }>;
 
   readonly name?: string;
   domain?: string;
@@ -34,7 +34,6 @@ export interface Innovation {
   tags?: Array<Tag>;
   preset?: any; // This isn't preset anymore -> we don't have ObjectID.
   readonly quizId?: string;
-  comments?: string;
 
   marketReport?: {
     [questionIdentifier: string]: QuestionReport
@@ -93,6 +92,6 @@ export interface Innovation {
   presetAccess?: {
     editable: boolean,
     hidden: boolean
-  },
+  };
 
 }
