@@ -82,7 +82,7 @@ export const SHARED_PROJECT_EDIT = {
   },
 
   'MEDIA': {
-    'LABEL': 'Would you like to add images or videos to better illustrate your project?',
+    'LABEL': 'Add images or videos to my project',
     'HELP': 'We highly recommended and projects with media attached tend to have a much better response rate.',
     'MAIN': 'Main Media',
     'SECONDARY': 'Secondary Medias',

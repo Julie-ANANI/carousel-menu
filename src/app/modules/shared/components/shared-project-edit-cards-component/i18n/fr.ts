@@ -81,7 +81,7 @@ export const SHARED_PROJECT_EDIT = {
   },
 
   'MEDIA': {
-    'LABEL': 'Vous souhaitez ajouter des images ou des vidéos pour mieux illustrer votre projet ?',
+    'LABEL': 'Ajouter des images ou des vidéos à mon projet',
     'HELP': 'Nous vous le recommandons car les projets avec des illustrations ont un taux de réponse bien meilleur.',
     'UPLOAD_PICTURE': 'Télécharger la photo',
     'MAIN': 'Média principal',
