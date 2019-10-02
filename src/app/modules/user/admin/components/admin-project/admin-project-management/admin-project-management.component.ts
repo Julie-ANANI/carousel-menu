@@ -5,7 +5,6 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Tag} from '../../../../../../models/tag';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {Innovation} from '../../../../../../models/innovation';
-import {Preset} from '../../../../../../models/preset';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
 import {Observable, Subject} from 'rxjs';
@@ -15,7 +14,6 @@ import {DashboardService} from '../../../../../../services/dashboard/dashboard.s
 import {UserService} from '../../../../../../services/user/user.service';
 import {User} from '../../../../../../models/user.model';
 import {AuthService} from '../../../../../../services/auth/auth.service';
-import {PresetService} from '../../../../../../services/preset/preset.service';
 import {InnovCard} from '../../../../../../models/innov-card';
 import {domainRegEx, emailRegEx} from '../../../../../../utils/regex';
 import {Campaign} from '../../../../../../models/campaign';
@@ -56,9 +54,6 @@ export class AdminProjectManagementComponent implements OnInit {
   operators: Array<User> = [];
   operatorId = '';
 
-  // Preset edition
-  presets: Array<Preset> = [];
-
   // Innovation edition
   isInnovationSidebar = false;
 
@@ -81,11 +76,6 @@ export class AdminProjectManagementComponent implements OnInit {
   private _availableScenarios: Array<EmailScenario> = [];
   private _modifiedScenarios: Array<EmailScenario> = [];
 
-  private _config = {
-    search: '{}',
-    sort: '{"created":-1}'
-  };
-
   public formData: FormGroup = this._formBuilder.group({
     owner: '',
     mission: ''
@@ -98,7 +88,6 @@ export class AdminProjectManagementComponent implements OnInit {
               private _autoCompleteService: AutocompleteService,
               private _authService: AuthService,
               private _router: Router,
-              private _presetService: PresetService,
               private _userService: UserService,
               private _tagService: TagsService,
               private _notificationsService: TranslateNotificationsService,
@@ -130,10 +119,6 @@ export class AdminProjectManagementComponent implements OnInit {
     this.operatorId = this._project && this._project.operator
       ? (this._project.operator.id ? this._project.operator.id : this._project.operator.toString())
       : undefined;
-
-    this._presetService.getAll(this._config).subscribe((p: any) => {
-      this.presets = p.result;
-    });
 
     this._project.innovationCards.forEach(value => this.innovCards.push(new InnovCard(value)));
 
@@ -299,56 +284,6 @@ export class AdminProjectManagementComponent implements OnInit {
     this._project.operator = value || null;
     this.operatorId = value || undefined;
     this.save('L\'opérateur à été mis à jour avec succès');
-  }
-
-  /***
-   * This function is call when the user change the preset of the project
-   * @param {string} presetName
-   */
-  public updatePreset(presetName: string): void {
-    if (presetName) {
-      const preset = this.presets.find(value => value.name === presetName);
-      this._innovationService.save(this._project._id, {preset: preset}).subscribe((data: any) => {
-        this._activatedRoute.snapshot.parent.data['innovation'] = data;
-        this._project = data;
-        this.save('Le questionnaire a bien été affecté au projet');
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
-      });
-    } else {
-      this.save('Il n\'existe plus de questionnaire correspondant à ce projet');
-    }
-  }
-
-  /***
-   * This function check if a project has a preset
-   * @returns {boolean}
-   */
-  public hasPreset(): boolean {
-    const p = this._project.preset;
-
-    return (p && p.sections && p.constructor === Object && Object.keys(p.sections).length > 0);
-  }
-
-  /***
-   * This function is call when the user click on the button show
-   * Go to the preset edition page
-   */
-  goToPresetEdition() {
-    this._router.navigate(['/user/admin/projects/project/' + this._project._id + '/questionnaire']);
-  }
-
-  /***
-   * This function generates the quiz for the project.
-   */
-  generateQuiz(event: Event) {
-    event.preventDefault();
-    this._innovationService.createQuiz(this._project._id).subscribe((result: any) => {
-      this._project = result;
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
-    }, (err: any) => {
-      this._notificationsService.error('ERROR.ERROR', err.message);
-    });
   }
 
   /***

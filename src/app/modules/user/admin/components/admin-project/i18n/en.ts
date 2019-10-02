@@ -7,6 +7,7 @@ export const PROJECT = {
   'PRESET': {
     'CAN_EDIT': 'Modify by client',
     'HIDE': 'Hide for client',
+    'IMPORT': 'Import preset',
     'GENERATE_QUIZ': 'Generate quiz',
     'QUIZ_URL': 'URL to access the quiz:'
   },
@@ -57,7 +58,6 @@ export const PROJECT = {
 
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choose questionnaire',
-    'EDIT_PRESET': 'Edit questionnaire',
     'EDIT_DESCRIPTION': 'Edit project description',
     'DESCRIPTION_TRANSLATION': 'Description translation',
     'EDIT_MARKET_TARGETING': 'Edit market targeting',

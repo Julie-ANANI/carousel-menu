@@ -136,6 +136,7 @@ export const COMMON = {
     'SEARCH_BY': 'Recherche par',
     'SIGNATURE_NAME': 'Nom Signature',
     'LANGUAGE': 'Langue',
+    'PRESET': 'Preset',
     'PRESET_NAME': 'Nom du Preset',
     'TAG_NAME': 'Nom du tag',
     'CREATED': 'Créé',

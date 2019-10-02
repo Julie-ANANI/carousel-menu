@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { AdminProjectQuestionnaireComponent } from './admin-project-questionnaire.component';
 
 import { SharedPresetModule } from '../../../../../shared/components/shared-preset/shared-preset.module';
-import { FormsModule } from '@angular/forms';
+import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
+import { NguiAutoCompleteModule } from '../../../../../utility-components/auto-complete/auto-complete.module';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     SharedPresetModule,
-    FormsModule
+    FormsModule,
+    ModalModule,
+    NguiAutoCompleteModule
   ],
   declarations: [
     AdminProjectQuestionnaireComponent,

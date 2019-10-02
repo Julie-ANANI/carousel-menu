@@ -4,16 +4,26 @@
     <!-- section actions -->
     <section class="flex-between apq-toggle-wrapper">
 
-      <!-- generate quiz -->
-      <div *ngIf="innovation.preset" class="m-top-25 m-right-10">
+      <div class="buttons m-top-25 m-right-10">
+        <!-- import preset -->
         <button
+          (click)="openPresetSelection($event)"
+          [innerText]="'PROJECT.PRESET.IMPORT'"
+          class="button is-secondary is-outlined"
+          translate>
+        </button>
+        <!-- /import preset -->
+
+        <!-- generate quiz -->
+        <button
+          *ngIf="innovation.preset"
           (click)="generateQuiz($event)"
-          [innerText]="'PROJECT.PRESET.GENERATE_QUIZ' | translate"
+          [innerText]="'PROJECT.PRESET.GENERATE_QUIZ'"
           class="button is-primary is-outlined"
           translate>
         </button>
+        <!-- /generate quiz -->
       </div>
-      <!-- /generate quiz -->
 
       <!-- edit & hide preset -->
       <div class="d-flex flex-wrap m-top-25">
@@ -68,3 +78,33 @@
 
   </div>
 </div>
+
+
+<!-- modal -->
+<app-modal [(showModal)]="showPresetModal" [title]="'COMMON.MODAL.TITLE_IMPORT'">
+
+  <section class="modal-body">
+
+    <div class="form-group">
+      <label class="form-label" for="preset-choice">{{ 'COMMON.LABEL.PRESET' | translate }}</label>
+      <input
+        auto-complete
+        class="form-input"
+        id="preset-choice"
+        type="text"
+        [accept-user-input]="false"
+        [list-formatter]="autocompletePresetListFormatter"
+        [source]="presetSuggestions"
+        (valueChanged)="choosePreset($event)"
+        [attr.placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate">
+    </div>
+
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button [disabled]="!chosenPreset" (click)="importPreset($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
+</app-modal>
+<!-- /modal -->

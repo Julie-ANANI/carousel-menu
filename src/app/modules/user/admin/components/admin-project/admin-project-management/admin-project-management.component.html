@@ -138,58 +138,6 @@
 
       </div>
 
-      <!-- Project preset choice -->
-      <div class="project-line">
-
-        <label class="form-switch" for="choosePreset">
-          <input
-            type="checkbox"
-            name="choosePreset"
-            id="choosePreset"
-            [checked]="hasPreset()">
-          <i class="form-icon"></i>
-          {{ 'PROJECT.PREPARATION.CHOOSE_PRESET'| translate }}
-        </label>
-
-        <select class="form-select"
-                name="setPreset"
-                id="setPreset"
-                [ngModel]="project.preset ? project.preset.name : undefined"
-                (ngModelChange)="updatePreset($event)"
-                [ngModelOptions]="{standalone: true}">
-          <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
-          <option *ngFor="let p of presets;" [ngValue]="p.name">
-            {{p.name}}
-          </option>
-        </select>
-        <div></div>
-      </div>
-
-      <!-- Project preset edition -->
-      <div class="project-line">
-        <label class="form-switch" for="editPreset">
-          <input
-            type="checkbox"
-            name="editPreset"
-            id="editPreset"
-            [checked]="getMetadata('preparation', 'questionnaire')"
-            (change)="setMetadata('preparation', 'questionnaire', $event)">
-          <i class="form-icon"></i>
-          {{ 'PROJECT.PREPARATION.EDIT_PRESET' | translate }}
-        </label>
-
-        <button class="showOnHover btn btn-xs ghost-primary"
-                (click)="generateQuiz($event)">
-          {{'COMMON.GENERATE' | translate}}
-        </button>
-
-        <button class="showOnHover btn btn-xs ghost-edit"
-                (click)="goToPresetEdition()">
-          {{'COMMON.EDIT' | translate}}
-        </button>
-
-      </div>
-
       <!-- Project description edition -->
       <div class="project-line">
         <label class="form-switch" for="editProjectDescription">
