@@ -3,7 +3,6 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
 import { Table } from '../../../../table/models/table';
-import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../models/config';
 import { Response } from '../../../../../models/response';
@@ -38,7 +37,6 @@ export class AdminProjectsComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
               private _innovationService: InnovationService,
-              private _router: Router,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
@@ -104,7 +102,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   public navigate(value: Innovation) {
-    this._router.navigate(['/user/admin/projects/project/' + value._id]);
+    window.open(`/user/admin/projects/project/${value._id}`, '_blank');
   }
 
   public onClickImport(file: File) {
