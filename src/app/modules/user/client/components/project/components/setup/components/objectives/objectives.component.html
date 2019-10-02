@@ -4,7 +4,7 @@
 
     <div class="section-light-pad">
 
-      <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.OBJECTIVES'"></h2>
+      <h4 class="subtitle is-4" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.OBJECTIVES'"></h4>
 
       <div *ngIf="editable" class="form-group relative">
         <label for="project-objective"></label>
@@ -19,10 +19,50 @@
 
     </div>
 
+    <!-- diffusion -->
+    <div class="section-light-pad">
+
+      <!-- ques -->
+      <h4 class="subtitle is-4">
+        {{ 'PROJECT_MODULE.SETUP.OBJECTIVES.EXTERNAL_DIFFUSION.A' | translate }} {{ companyName }} {{ 'PROJECT_MODULE.SETUP.OBJECTIVES.EXTERNAL_DIFFUSION.B' | translate }}
+      </h4>
+      <!-- /ques -->
+
+      <!-- selection -->
+      <div class="form-group m-top-20">
+
+        <label class="form-radio is-inline">
+          <input
+            (change)="saveInnovation($event)"
+            [(ngModel)]="innovation.external_diffusion"
+            [disabled]="innovation.status !== 'EDITING'"
+            [value]="false"
+            name="external_diffusion"
+            type="radio">
+          <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
+        </label>
+
+        <label class="form-radio is-inline">
+          <input
+            (change)="saveInnovation($event)"
+            [(ngModel)]="innovation.external_diffusion"
+            [disabled]="innovation.status !== 'EDITING'"
+            [value]="true"
+            name="external_diffusion"
+            type="radio">
+          <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
+        </label>
+
+      </div>
+      <!-- /selection -->
+
+    </div>
+    <!-- /diffusion -->
+
 
     <div class="section-light-pad" *ngIf="mission.milestoneDates.length > 0">
 
-      <h2 class="title-primary" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP'"></h2>
+      <h4 class="subtitle is-4" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP'"></h4>
 
       <p *ngFor="let milestone of mission.milestoneDates">
         <span [innerText]="milestone.name"></span>

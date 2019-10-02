@@ -29,8 +29,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
   private _selectedCardIndex: number = 0;
 
-  private _companyName: string = environment.companyShortName;
-
   private _saveChanges: boolean = false;
 
   private _showModal: boolean = false;
@@ -338,10 +336,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
   get selectedCardIndex(): number {
     return this._selectedCardIndex;
-  }
-
-  get companyName(): string {
-    return this._companyName;
   }
 
   set showModal(value: boolean) {

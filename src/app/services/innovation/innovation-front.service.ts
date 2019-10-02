@@ -31,8 +31,6 @@ export class InnovationFrontService {
 
   settingsFieldsPresent: number;
 
-  projectFieldsRequired: number;
-
   innovCardFieldsRequired: number;
 
   innovCardFieldsPresent: number;
@@ -49,18 +47,12 @@ export class InnovationFrontService {
     We are calculating the percentage for the project.
    */
   completionCalculation(project: Innovation) {
-    this.projectFieldsRequired = 0;
     this.settingsFieldsRequired = 0;
     this.settingsFieldsPresent = 0;
     this.innovCardFieldsRequired = 0;
     this.innovCardFieldsPresent = 0;
     this.totalFieldsPresent = 0;
     this._calculatedValues.innovationCardsPercentage = [];
-
-    /*
-      method to calculate the percentage at project level.
-     */
-    this.projectLevel(project);
 
     /*
       method to calculate the percentage in project settings.
@@ -72,26 +64,12 @@ export class InnovationFrontService {
      */
     this.innovCardLevel(project);
 
-    this.totalFieldsRequired = this.projectFieldsRequired + this.settingsFieldsRequired + this.innovCardFieldsRequired;
+    this.totalFieldsRequired = this.settingsFieldsRequired + this.innovCardFieldsRequired;
 
     /*
       now calculating the total project completion percentage.
      */
     this._calculatedValues.totalPercentage = (this.totalFieldsPresent * 100) / this.totalFieldsRequired;
-
-  }
-
-  /*
-    Here we are calculating the values that we have at project level
-    and we are checking that are field or not.
-  */
-
-  projectLevel(value: Innovation) {
-    this.projectFieldsRequired = 1;
-
-    if (value.external_diffusion !== null) {
-      this.totalFieldsPresent++;
-    }
 
   }
 

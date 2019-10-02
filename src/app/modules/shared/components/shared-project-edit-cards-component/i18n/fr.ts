@@ -93,12 +93,6 @@ export const SHARED_PROJECT_EDIT = {
     'NO_MEDIA': 'Aucun média téléchargé.'
   },
 
-  'EXTERNAL_DIFFUSION': {
-    'A': 'Souhaitez-vous autoriser',
-    'B' : 'à diffuser votre projet auprès de sa communauté ?',
-    'ERROR': 'Veuillez indiquer si vous autorisez la diffusion de votre projet s\'il vous plaît.'
-  },
-
   'BOT': {
     'HELP': 'Vous avez de la difficulté à décrire votre projet ? Notre équipe est toujours là pour vous aider !'
   },

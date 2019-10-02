@@ -640,52 +640,6 @@
         </div>
         <!-- /advantages -->
 
-        <!-- diffusion -->
-        <div class="m-top-50">
-
-          <!-- ques -->
-          <div>
-
-            <span class="shape is-rounded is-md bg-draft">6</span>
-
-            <span class="spec-text-question">
-              {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.A' | translate }} {{ companyName }} {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.B' | translate }}
-            </span>
-
-          </div>
-          <!-- /ques -->
-
-          <!-- selection -->
-          <div class="form-group m-top-20">
-
-            <label class="form-radio is-inline">
-              <input
-                (change)="notifyChanges()"
-                [(ngModel)]="innovation.external_diffusion"
-                [disabled]="!isEditable"
-                [value]="false"
-                name="external_diffusion"
-                type="radio">
-              <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
-            </label>
-
-            <label class="form-radio is-inline">
-              <input
-                (change)="notifyChanges()"
-                [(ngModel)]="innovation.external_diffusion"
-                [disabled]="!isEditable"
-                [value]="true"
-                name="external_diffusion"
-                type="radio">
-              <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
-            </label>
-
-          </div>
-          <!-- /selection -->
-
-        </div>
-        <!-- /diffusion -->
-
       </div>
     </div>
   </section>
@@ -699,7 +653,7 @@
         <!-- ques -->
         <div>
 
-          <span class="shape is-rounded is-md bg-draft">7</span>
+          <span class="shape is-rounded is-md bg-draft">6</span>
 
           <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }} </span>
 
