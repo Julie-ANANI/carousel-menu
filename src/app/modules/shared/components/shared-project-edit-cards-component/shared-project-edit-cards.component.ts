@@ -198,7 +198,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
   public onChangeComment(event: Event) {
     event.preventDefault();
-    if (this.innovation.status === 'SUBMITTED' && this.isAdminSide) {
+    if (this.allowAdminToComment) {
       this._innovationFrontService.setCardCommentNotifyChanges(true);
     }
   }
@@ -329,7 +329,7 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
   }
 
   get allowAdminToComment(): boolean {
-    return this.isAdminSide && this.innovation && this.innovation.status === 'SUBMITTED';
+    return this.isAdminSide && this.innovation && (this.innovation.status === 'SUBMITTED' || this.innovation.status === 'EDITING');
   }
 
   get companyDomain(): string {
