@@ -23,7 +23,7 @@
           <label class="form-switch">
             <input
               (change)="saveInnovation()"
-              [(ngModel)]="innovation.presetAccess.editable"
+              [(ngModel)]="innovation.preset.accessibility.editable"
               id="presetModify"
               name="presetModify"
               type="checkbox">
@@ -36,7 +36,7 @@
           <label class="form-switch">
             <input
               (change)="saveInnovation()"
-              [(ngModel)]="innovation.presetAccess.hidden"
+              [(ngModel)]="innovation.preset.accessibility.hidden"
               id="presetHide"
               name="presetHide"
               type="checkbox">
