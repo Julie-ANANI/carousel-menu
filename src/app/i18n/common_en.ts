@@ -252,6 +252,7 @@ export const COMMON = {
   'OR': 'Or',
 
   'LANGUAGE': 'Language',
+
   'LANG': {
     'FR': 'French',
     'EN': 'English'
@@ -381,7 +382,8 @@ export const COMMON = {
     'DELETE': 'Delete',
     'MOVE_UP': 'Move up',
     'MOVE_DOWN': 'Move down',
-    'ADVANCE_SETTINGS': 'Advance settings'
+    'ADVANCE_SETTINGS': 'Advance settings',
+    'SAVE_CHANGES': 'Save changes'
   },
 
   'SIGNATURES': {

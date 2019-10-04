@@ -378,7 +378,8 @@ export const COMMON = {
     'DELETE': 'Supprimer',
     'MOVE_UP': 'Remonter en haut',
     'MOVE_DOWN': 'Déplacer vers le bas',
-    'ADVANCE_SETTINGS': 'Paramètres avancés'
+    'ADVANCE_SETTINGS': 'Paramètres avancés',
+    'SAVE_CHANGES': 'Sauvegarder les modifications'
   },
 
   'SIGNATURES': {

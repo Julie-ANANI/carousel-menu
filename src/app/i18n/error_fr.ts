@@ -111,7 +111,8 @@ export const ERROR = {
 
 
   'PRESET': {
-    'UPDATED': 'La questionnaire mis à jour.'
+    'UPDATED': 'La questionnaire mis à jour.',
+    'LOADED': 'Le modèle a été chargé avec succès.'
   },
 
 
