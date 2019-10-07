@@ -120,6 +120,7 @@ export const COMMON = {
     'COUNTRY': 'Pays',
     'DATE': 'Date',
     'TIME': 'Heure',
+    'SELECT': 'Sélectionner',
     'STARTED': 'Lancé',
     'CONTENT': 'Contenu',
     'OPERATOR': 'Opérateur',
@@ -129,7 +130,6 @@ export const COMMON = {
     'NAME': 'Nom',
     'TYPE': 'Type',
     'SELECT_WORKFLOW': 'Sélectionner le workflow',
-    'SELECT': 'Sélectionnez',
     'SELECT_ALL': 'Sélectionner tout',
     'CHOOSE_LANGUAGE': 'Sélectionnez la langue :',
     'TECHNOLOGIES': 'Technologies',
@@ -203,6 +203,7 @@ export const COMMON = {
     'SIGN_IN': 'Se Connecter',
     'SIGN_UP': 'Commencer',
     'DELETE': 'Supprimer',
+    'SELECT': 'Sélectionner',
     'CLOSE': 'Fermer',
     'DOWNLOAD': 'Télécharger',
     'SHARE': 'Partager',
@@ -378,7 +379,8 @@ export const COMMON = {
     'DELETE': 'Supprimer',
     'MOVE_UP': 'Remonter en haut',
     'MOVE_DOWN': 'Déplacer vers le bas',
-    'ADVANCE_SETTINGS': 'Paramètres avancés'
+    'ADVANCE_SETTINGS': 'Paramètres avancés',
+    'SAVE_CHANGES': 'Sauvegarder les modifications'
   },
 
   'SIGNATURES': {

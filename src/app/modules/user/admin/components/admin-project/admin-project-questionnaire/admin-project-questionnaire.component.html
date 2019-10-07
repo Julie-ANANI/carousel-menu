@@ -26,14 +26,14 @@
       </div>
 
       <!-- edit & hide preset -->
-      <div class="d-flex flex-wrap m-top-25">
+      <div *ngIf="isVisible" class="d-flex flex-wrap m-top-25">
 
         <!-- edit toggle -->
         <div class="form-group">
           <label class="form-switch">
             <input
               (change)="saveInnovation()"
-              [(ngModel)]="innovation.presetAccess.editable"
+              [(ngModel)]="innovation.preset.accessibility.editable"
               id="presetModify"
               name="presetModify"
               type="checkbox">
@@ -46,7 +46,7 @@
           <label class="form-switch">
             <input
               (change)="saveInnovation()"
-              [(ngModel)]="innovation.presetAccess.hidden"
+              [(ngModel)]="innovation.preset.accessibility.hidden"
               id="presetHide"
               name="presetHide"
               type="checkbox">

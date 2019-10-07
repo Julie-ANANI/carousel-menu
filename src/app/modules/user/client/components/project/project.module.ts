@@ -23,6 +23,7 @@ import { SidebarUserAnswerModule } from '../../../../sidebar/components/user-ans
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { SharedTextZoneModule } from '../../../../shared/components/shared-text-zone/shared-text-zone.module';
 
 import { MissionService } from '../../../../../services/mission/mission.service';
 
@@ -44,7 +45,8 @@ import { MissionService } from '../../../../../services/mission/mission.service'
     SharedMarketReportModule,
     MessageTemplate1Module,
     ModalModule,
-    FormsModule
+    FormsModule,
+    SharedTextZoneModule,
   ],
   declarations: [
     ProjectComponent,
