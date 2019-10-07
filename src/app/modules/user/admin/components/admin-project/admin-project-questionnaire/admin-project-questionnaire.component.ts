@@ -62,6 +62,10 @@ export class AdminProjectQuestionnaireComponent {
     this.saveInnovation();
   }
 
+  get isVisible(): boolean {
+    return !environment.production;
+  }
+
   get innovation() {
     return this._innovation;
   }
