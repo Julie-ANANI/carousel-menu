@@ -6,7 +6,7 @@ export const SURVEY = {
     'Do not share this link, this is available as an example only.',
 
   'STEPS': {
-    '1': 'Select a template to edit it',
+    '1': 'Select a template and start editing it',
     '2': 'Selected template',
   },
 

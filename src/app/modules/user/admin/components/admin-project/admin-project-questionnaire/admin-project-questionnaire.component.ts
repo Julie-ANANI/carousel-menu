@@ -98,7 +98,7 @@ export class AdminProjectQuestionnaireComponent {
   }
 
   get isVisible(): boolean {
-    return !environment.production;
+    return environment.production;
   }
 
   get innovation() {
