@@ -31,7 +31,7 @@
     &:first-child {
       padding-top: 0;
 
-      img {
+      .img-hover-button, img {
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
       }
@@ -40,7 +40,7 @@
 
     &:last-child {
 
-      img {
+      .img-hover-button, img {
         border-bottom-left-radius: $border-radius;
         border-bottom-right-radius: $border-radius;
       }
