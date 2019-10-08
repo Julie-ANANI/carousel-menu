@@ -92,7 +92,7 @@ export class AdminCampaignProsComponent implements OnInit {
   private _getProfessionals() {
     this._professionalsService.getAll(this._config).subscribe((response: Response) => {
       this._professionals = response.result;
-      this._total = response._metadata.totalCount;
+      this._total = response._metadata.totalCount || response.result.length;
       this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');

@@ -18,7 +18,8 @@ export const SIDEBAR = {
     'INSIGHT': 'Insight',
     'SEARCH_HISTORY': 'Historique de recherche',
     'SHOWCASE_HISTORY': 'Historique de la vitrine',
-    'EDIT_SIGNATURE': 'Modifier la signature'
+    'EDIT_SIGNATURE': 'Modifier la signature',
+    'EDIT_MISSION': 'Modifier la Mission'
   },
 
   'LABELS': {

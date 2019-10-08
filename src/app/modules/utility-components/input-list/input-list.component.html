@@ -8,6 +8,7 @@
         <input
           [(ngModel)]="answer"
           [attr.placeholder]="placeholder | translate"
+          autocomplete="off"
           class="form-input"
           name="answers"
           required
@@ -15,7 +16,7 @@
       </label>
 
       <button
-        [disabled]="f.form.invalid"
+        [disabled]="f.form.invalid || !isEditable"
         class="button is-action is-circled is-primary is-shadowed p-no"
         type="submit">
         <i class="icon icon-plus"></i>
@@ -51,7 +52,8 @@
         <div class="icons-wrapper">
 
           <!-- edit icon -->
-          <div class="icon-container is-overlay" (click)="onClickEdit($event, i)">
+          <div (click)="onClickEdit($event, i)" [ngClass]="{ 'disabled': !isEditable }"
+               class="icon-container is-overlay">
             <span
               [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
               class="tooltip">
@@ -60,7 +62,7 @@
           </div>
 
           <!-- if admin mode -->
-          <div *ngIf="adminMode" class="d-flex">
+          <div *ngIf="isAdminMode" class="d-flex">
 
             <!-- thumbs-up icon -->
             <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
@@ -76,7 +78,8 @@
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div (click)="removeProposition(i)" class="icon-container m-no-right is-overlay">
+          <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable }"
+               class="icon-container m-no-right is-overlay">
             <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
               <i class="icon icon-delete text-alert"></i>
             </span>

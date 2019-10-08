@@ -12,32 +12,21 @@ export const ANSWER = {
     'REJECTED_GMAIL': 'Rejected by Mail',
     'VALIDATED': 'Validated',
     'SUBMITTED': 'To look at',
-    'VALIDATED_NO_MAIL': 'Validate without sending mail',
     'EMAIL': 'Send email'
   },
 
   'VALIDATED_ANSWER': 'Answer validated',
-
   'UNVALIDATED_ANSWER': 'Answer not validated',
-
   'JOB': 'Job',
-
   'COMPANY': 'Company',
-
   'BLACKLISTED_COMPANY': 'The answer may come from a blacklisted company!',
-
   'EDIT': 'Edit',
-
   'TIME_SPENT': 'Time spent',
-
   'REJECT_ANSWER': 'Reject',
-
   'UNCOMPLETE_ANSWER': 'To Complete',
-
   'VALID_ANSWER': 'Validate',
-
   'VALID_ANSWER_NO_MAIL': 'Validate without sending mail',
-
-  'INVALID_ANSWER': 'Invalidate'
-
+  'INVALID_ANSWER': 'Invalidate',
+  'EDIT_ANSWER': 'Edit the answer',
+  'REASSIGN_ANSWER': 'Reassign the answer'
 };

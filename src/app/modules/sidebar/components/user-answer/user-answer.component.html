@@ -15,7 +15,21 @@
             {{ 'COMMON.BUTTON.IMPORT' | translate }}
           </button>
 
-          <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
+          <!-- cancel reassign button -->
+          <button class="btn ghost-primary m-20" *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && assignNewPro" (click)="assignNewPro = false">
+            {{ 'COMMON.BUTTON.CANCEL' | translate}}
+          </button>
+
+          <!-- confirm reassign button -->
+          <button
+            class="btn btn-primary m-20"
+            *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && assignNewPro"
+            (click)="reassignAnswer($event)"
+            [disabled]="!newPro.firstName || !newPro.lastName || !newPro.email">
+            {{ 'COMMON.BUTTON.CONFIRM' | translate}}
+          </button>
+
+          <button class="btn btn-primary m-20" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
             {{ 'COMMON.BUTTON.SAVE' | translate }}
           </button>
 
@@ -31,7 +45,7 @@
           <div class="title-wrapper d-flex">
 
             <!-- name -->
-            <h4>
+            <h4 *ngIf="!assignNewPro">
 
               <ng-container *ngIf="modalAnswer.professional?.firstName || modalAnswer.professional?.lastName">
                 {{ modalAnswer.professional?.firstName | FormatText:true }} {{ modalAnswer.professional?.lastName | FormatText:true }}
@@ -43,6 +57,34 @@
 
             </h4>
             <!-- /name -->
+
+            <!-- name edition (when reassigning answer) -->
+            <ng-container *ngIf="assignNewPro">
+              <div class="form-group">
+                <label class="form-label" for="answer-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
+                <input
+                  type="text"
+                  [(ngModel)]="newPro.firstName"
+                  id="answer-firstName"
+                  alt="First name"
+                  class="form-input"
+                  [attr.placeholder]="'COMMON.LABEL.FIRSTNAME' | translate">
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="assignNewPro">
+              <div class="form-group">
+                <label class="form-label" for="answer-lastName">{{ 'COMMON.LABEL.NAME' | translate }}</label>
+                <input
+                  type="text"
+                  [(ngModel)]="newPro.lastName"
+                  id="answer-lastName"
+                  alt="Last name"
+                  class="form-input"
+                  [attr.placeholder]="'COMMON.LABEL.LASTNAME' | translate">
+              </div>
+            </ng-container>
+            <!-- /name edition (when reassigning answer) -->
 
             <!-- rating -->
             <ng-container *ngIf="editMode">
@@ -57,7 +99,7 @@
             </ng-container>
 
             <!-- country -->
-            <ng-container *ngIf="!editCountry">
+            <ng-container *ngIf="!editCountry && !assignNewPro">
               <div class="country-wrapper flex-between">
 
                 <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
@@ -76,7 +118,7 @@
           </div>
 
           <!-- edit button -->
-          <ng-container *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft'">
+          <ng-container *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && !assignNewPro">
             <div class="button-wrapper">
               <label class="form-switch text-medium" for="answer-editMode">
                 <input
@@ -85,15 +127,25 @@
                   id="answer-editMode"
                   (change)="changeMode($event)"
                   [checked]="editMode">
-                <i class="form-icon"></i>{{ 'Edit user' }}
+                <i class="form-icon"></i>{{ 'ANSWER.EDIT_ANSWER' | translate}}
               </label>
             </div>
           </ng-container>
 
+          <!-- reassign button -->
+          <div class="button-wrapper">
+            <a
+              class="text-medium"
+              *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && !assignNewPro"
+              (click)="assignNewPro = true">
+              {{ 'ANSWER.REASSIGN_ANSWER' | translate}}
+            </a>
+          </div>
+
         </div>
 
         <!-- edit country -->
-        <ng-container *ngIf="editCountry">
+        <ng-container *ngIf="editCountry || assignNewPro">
           <div class="form-group">
             <label class="form-label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
             <app-auto-complete-input
@@ -105,13 +157,13 @@
         </ng-container>
 
         <!-- blacklist company -->
-        <ng-container *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && modalAnswer.blacklistedCompany">
+        <ng-container *ngIf="modeAdmin && modalAnswer.localStatus !== 'draft' && modalAnswer.blacklistedCompany && !assignNewPro">
           <div class="icon-container text-alert"><i class="fas fa-exclamation-triangle"></i></div>
           <span class="text text-alert text-medium">{{ 'ANSWER.BLACKLISTED_COMPANY' | translate }}</span>
         </ng-container>
 
         <!-- linkedin -->
-        <ng-container *ngIf="modeAdmin && modalAnswer.professional?.profileUrl">
+        <ng-container *ngIf="modeAdmin && modalAnswer.professional?.profileUrl && !assignNewPro">
           <div class="linkedin-wrapper">
             <span class="icon-container text-secondary picto"><i class="fab fa-linkedin-in"></i></span>
             <a [href]="modalAnswer.professional.profileUrl" target="_blank">
@@ -126,7 +178,7 @@
 
             <span class="icon-container text-notify picto"><i class="fas fa-address-card" aria-hidden="true"></i></span>
 
-            <ng-container *ngIf="!editJob">
+            <ng-container *ngIf="!editJob && !assignNewPro">
               <span>{{ (modalAnswer.job || modalAnswer.professional?.jobTitle) | FormatText:true }}</span>
               <span
                 *ngIf="modeAdmin && editMode"
@@ -137,7 +189,7 @@
               </span>
             </ng-container>
 
-            <ng-container *ngIf="editJob">
+            <ng-container *ngIf="editJob || assignNewPro">
               <div class="form-group">
                 <label class="form-label" for="answer-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
                 <input
@@ -159,7 +211,7 @@
 
             <span class="icon-container text-notify picto"><i class="fas fa-building" aria-hidden="true"></i></span>
 
-            <ng-container *ngIf="!editCompany">
+            <ng-container *ngIf="!editCompany && !assignNewPro">
               <span>{{ (modalAnswer.company.name || modalAnswer.professional?.company) | FormatText:true }}</span>
               <span
                 *ngIf="modeAdmin && editMode"
@@ -170,7 +222,7 @@
               </span>
             </ng-container>
 
-            <ng-container *ngIf="editCompany">
+            <ng-container *ngIf="editCompany || assignNewPro">
               <div class="form-group">
                 <label class="form-label" for="answer-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
                 <input
@@ -187,12 +239,26 @@
         </ng-container>
 
         <!-- email -->
-        <ng-container *ngIf="modalAnswer.professional?.email">
+        <ng-container *ngIf="modalAnswer.professional?.email && !assignNewPro">
           <div class="email-wrapper">
             <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
             <a [href]="'mailto:'+modalAnswer.professional.email">
               <span class="text-link">{{ modalAnswer.professional.email }}</span>
             </a>
+          </div>
+        </ng-container>
+
+        <!-- edit email -->
+        <ng-container *ngIf="assignNewPro">
+          <div class="form-group">
+            <label class="form-label" for="answer-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+            <input
+              type="text"
+              [(ngModel)]="newPro.email"
+              id="answer-email"
+              alt="Email"
+              class="form-input"
+              [attr.placeholder]="'COMMON.LABEL.EMAIL' | translate">
           </div>
         </ng-container>
 
@@ -269,27 +335,11 @@
             <div class="label is-success"><span>{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span></div>
             <button
               class="btn btn-radio validated"
-              [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL' }"
-              (click)="updateStatus($event, 'VALIDATED_NO_MAIL')">
+              [ngClass]="{ 'active': modalAnswer.status === 'VALIDATED' }"
+              (click)="updateStatus($event, 'VALIDATED')">
               <span>•</span>
             </button>
           </div>
-
-          <!-- email -->
-          <ng-container *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'">
-            <div class="status-email">
-              <label class="form-switch text-medium" for="answer-email">
-                <input
-                  type="checkbox"
-                  name="answer-email"
-                  id="answer-email"
-                  (change)="sendEmail($event, 'VALIDATED')"
-                  [disabled]="!editMode"
-                  [checked]="modalAnswer.status === 'VALIDATED'">
-                <i class="form-icon"></i>{{ 'ANSWER.STATUS.EMAIL' | translate }}
-              </label>
-            </div>
-          </ng-container>
 
         </div>
       </ng-container>

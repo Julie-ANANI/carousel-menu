@@ -92,13 +92,9 @@
         .card {
           padding: 0.5rem;
 
-          .icon {
-            position: absolute;
+          .icon-container {
             top: 4px;
             left: 10px;
-            margin-left: 0;
-            margin-right: 0;
-            font-size: $font-icon;
             visibility: hidden;
           }
 
@@ -115,7 +111,7 @@
           &:hover {
             box-shadow: $box-shadow-7;
 
-            .icon {
+            .icon-container {
               visibility: visible;
             }
 

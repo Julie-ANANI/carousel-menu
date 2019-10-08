@@ -1,29 +1,110 @@
-<div class="container">
-  <div class="columns">
+<div *ngIf="innovation" id="admin-project-questionnaire">
+  <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <div class="column col-11 col-mx-auto" *ngIf="!project.preset">
-      <div class="bot-wrapper text-center">
-        <span class="bot-rect">Importez d'abord un questionnaire dans l'onglet Settings avant de pouvoir le modifier.</span>
-        <br>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-        <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
+    <!-- section actions -->
+    <section class="flex-between apq-toggle-wrapper">
+
+      <div class="buttons m-top-25 m-right-10">
+        <!-- import preset -->
+        <button
+          (click)="openPresetSelection($event)"
+          [innerText]="'PROJECT.PRESET.IMPORT'"
+          class="button is-secondary is-outlined"
+          translate>
+        </button>
+        <!-- /import preset -->
+
+        <!-- generate quiz -->
+        <button
+          *ngIf="innovation.preset"
+          (click)="generateQuiz($event)"
+          [innerText]="'PROJECT.PRESET.GENERATE_QUIZ'"
+          class="button is-primary is-outlined"
+          translate>
+        </button>
+        <!-- /generate quiz -->
       </div>
-    </div>
 
-    <div class="column col-11 col-mx-auto" *ngIf="project.preset">
+      <!-- edit & hide preset
+      <div class="d-flex flex-wrap m-top-25">
 
-      <div class="flex-between">
-        <p class="text-md" *ngIf="quizLink">
-          <a class="text-link" [href]="quizLink" [innerText]="quizLink" target="_blank"></a>
-        </p>
-        <button *ngIf="project.preset" (click)="generateQuiz($event)" class="button is-primary is-outlined">Generate quiz page</button>
+        edit toggle
+        <div class="form-group">
+          <label class="form-switch">
+            <input
+              (change)="saveInnovation()"
+              [(ngModel)]="innovation.preset.accessibility.editable"
+              id="presetModify"
+              name="presetModify"
+              type="checkbox">
+            <i class="form-icon"></i>{{ 'PROJECT.PRESET.CAN_EDIT' | translate }}
+          </label>
+        </div>
+
+         hide toggle
+        <div class="form-group">
+          <label class="form-switch">
+            <input
+              (change)="saveInnovation()"
+              [(ngModel)]="innovation.preset.accessibility.hidden"
+              id="presetHide"
+              name="presetHide"
+              type="checkbox">
+            <i class="form-icon"></i>{{ 'PROJECT.PRESET.HIDE' | translate }}
+          </label>
+        </div>
+
       </div>
+       /edit & hide preset -->
 
+    </section>
+    <!-- /section actions -->
+
+    <!-- section quiz link -->
+    <section *ngIf="quizLink" class="m-top-25">
+      <span [innerText]="'PROJECT.PRESET.QUIZ_URL'" class="text-md m-right-2" translate></span>
+      <a [href]="quizLink" [innerText]="quizLink" class="text-link text-md" target="_blank"></a>
+    </section>
+    <!-- /section quiz link -->
+
+    <!-- section to add preset -->
+    <section class="m-top-25">
       <app-shared-preset
-        [preset]="project.preset"
+        [preset]="innovation.preset"
         (save)="savePreset($event)">
       </app-shared-preset>
-    </div>
+    </section>
+    <!-- /section to add preset -->
 
   </div>
 </div>
+
+
+<!-- modal -->
+<app-modal [(showModal)]="showPresetModal" [title]="'COMMON.MODAL.TITLE_IMPORT'">
+
+  <section class="modal-body">
+
+    <div class="form-group">
+      <label class="form-label" for="preset-choice">{{ 'COMMON.LABEL.PRESET' | translate }}</label>
+      <input
+        auto-complete
+        class="form-input"
+        id="preset-choice"
+        type="text"
+        [accept-user-input]="false"
+        [list-formatter]="autocompletePresetListFormatter"
+        [source]="presetSuggestions"
+        (valueChanged)="choosePreset($event)"
+        [attr.placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate">
+    </div>
+
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button [disabled]="!chosenPreset" (click)="importPreset($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
+</app-modal>
+<!-- /modal -->

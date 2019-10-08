@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-project-cards',
@@ -41,7 +40,6 @@ export class AdminProjectCardsComponent implements OnInit {
     event.preventDefault();
 
     this.innovationService.save(this.project._id, this.project)
-      .pipe(first())
       .subscribe((data: Innovation) => {
         this.lastSavedDate = new Date(data.updated);
         this.shouldSave = false;
@@ -49,11 +47,6 @@ export class AdminProjectCardsComponent implements OnInit {
       }, (err: any) => {
         this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
-  }
-
-  commentKeyupHandlerFunction(event: { content: string }) {
-    this.project.comments = event['content'];
-    this.shouldSave = true;
   }
 
   public updateProject(event: Innovation) {

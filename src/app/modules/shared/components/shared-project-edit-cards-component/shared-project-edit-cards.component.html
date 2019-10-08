@@ -1,480 +1,820 @@
-<ng-container *ngIf="innovation">
+<div *ngIf="innovation" id="shared-project-edit-cards">
 
-  <section id="shared-project-edit-cards-component">
+  <!-- language section -->
+  <section *ngIf="innovation.innovationCards" class="flex-between flex-wrap">
+    <div class="d-flex align-center flex-wrap">
 
-    <!-- language section -->
-    <div class="flex-between">
-
-      <div class="flex-start">
-
-        <!-- ques -->
-        <div class="text text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.LANGUAGE.HEADING' | translate }}</div>
-
-        <!-- selection -->
-        <ul class="options">
-
-          <li
-            *ngFor="let innovationCard of innovation.innovationCards; let i = index;"
-            [ngClass]="{'active': selectedCardIndex === i }"
-            (click)="onLangSelect($event, i)">
-            <div class="btn btn-radio"><span>•</span></div>
-            <span class="text">{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
-          </li>
-
-          <ng-container *ngIf="innovation.innovationCards?.length < 2 && canEdit">
-            <p class="text text-notify">
-              {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.LANGUAGE.ADD_PROJECT_LANGUAGE' | translate }}
-              <span class="text-link">
-                <span *ngIf="!containsLanguage('fr')" (click)="onCreateInnovationCard($event, 'fr')">
-                  {{ 'COMMON.LANG.FR' | translate }}
-                </span>
-                <span *ngIf="!containsLanguage('en')" (click)="onCreateInnovationCard($event, 'en')">
-                  {{ 'COMMON.LANG.EN' | translate }}
-                </span>
-              </span>
-            </p>
-          </ng-container>
-
-        </ul>
+      <!-- ques -->
+      <div class="spec-text-question m-right-4">
+        <span>{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.LANGUAGE.HEADING' | translate }}</span>
       </div>
 
-      <ng-container *ngIf="innovation.innovationCards.length > 1 && canEdit">
-        <div class="text-link text-alert text-sm">
-          <span (click)="onClickDelete($event)">{{ 'SHARED_PROJECT_EDIT.DELETE_LANGUAGE' | translate }}</span>
-        </div>
-      </ng-container>
-
-    </div>
-    <!-- /language section -->
-
-    <!-- questions section -->
-    <div [ngClass]="adminSide ? 'col-11 col-xs-12' : 'col-md-12 col-7 col-lg-10 col-xl-8'">
-      <div class="restrict-container">
-        <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
-          <ng-container *ngIf="selectedCardIndex === i">
-
-            <!-- title -->
-            <div [ngStyle]="{ 'padding-top': '1.75rem' }">
-
-              <span class="shape is-rounded bg-draft">1</span>
-              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</span>
-              <div class="popover">
-                <div class="icons c-default is-info"><i class="fas fa-info-circle"></i></div>
-                <div class="popover-container" style="width: 300px">
-                  <div class="card">
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.HELP'" translate></span>
-                  </div>
-                </div>
-              </div>
-
-              <ng-container *ngIf="!canEdit">
-                <div class="pd-input">
-                  <p class="text">{{ innovationCard.title }}</p>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                <div class="pd-input">
-                  <button
-                    class="btn btn-xs ghost-secondary"
-                    [ngClass]="{'disabled': innovationCard.title}"
-                    [disabled]="innovationCard.title"
-                    (click)="importTranslation($event, 'title')">
-                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                  </button>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="form-group pd-input">
-                  <label for="edit-innovation-title"></label>
-                  <input
-                    type="text"
-                    id="edit-innovation-title"
-                    class="form-input"
-                    name="title"
-                    [(ngModel)]="innovationCard.title"
-                    [attr.placeholder]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
-                    (change)="notifyChanges()">
-                </div>
-              </ng-container>
-
-            </div>
-
-            <!-- summary -->
-            <div class="project-data">
-
-              <span class="shape is-rounded bg-draft">2</span>
-              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
-              <div class="popover">
-                <div class="icons c-default is-info"><i class="fas fa-info-circle"></i></div>
-                <div class="popover-container" style="width: 300px">
-                  <div class="card">
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.HELP'" translate></span>
-                  </div>
-                </div>
-              </div>
-
-              <ng-container *ngIf="!canEdit">
-                <div class="pd-input text" [innerHtml]="innovationCard.summary"></div>
-              </ng-container>
-
-              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                <div class="pd-input">
-                  <button
-                    class="btn btn-xs ghost-secondary"
-                    [ngClass]="{'disabled': innovationCard.summary}"
-                    [disabled]="innovationCard.summary"
-                    (click)="importTranslation($event, 'summary')">
-                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                  </button>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="form-group pd-input">
-
-                  <app-text-zone
-                    id="summary"
-                    [data]="innovationCard.summary"
-                    (onTextChange)="updateData($event, 'summary')">
-                  </app-text-zone>
-
-                  <!-- todo: add placeholders
-                  [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
-                  -->
-
-                  <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.summary?.length | characterCountdown:500, 500) }">
-                    {{ innovationCard.summary?.length | characterCountdown:500 }}
-                  </div>
-
-                </div>
-              </ng-container>
-
-            </div>
-
-            <!-- problem -->
-            <div class="project-data">
-
-              <span class="shape is-rounded bg-draft">3</span>
-              <span class="text text-question m-right-1">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
-              <div class="popover">
-                <div class="icons c-default is-info"><i class="fas fa-info-circle"></i></div>
-                <div class="popover-container" style="width: 300px">
-                  <div class="card">
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.1'" class="m-bottom-1" translate></span>
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.2'" class="m-bottom-1" translate></span>
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.3'" class="m-bottom-1" translate></span>
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.4'" class="m-bottom-1" translate></span>
-                  </div>
-                </div>
-              </div>
-
-              <ng-container *ngIf="!canEdit">
-                <div class="pd-input text" [innerHtml]="innovationCard.problem"></div>
-              </ng-container>
-
-              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                <div class="pd-input">
-                  <button
-                    class="btn btn-xs ghost-secondary"
-                    [disabled]="innovationCard.problem"
-                    [ngClass]="{'disabled': innovationCard.problem}"
-                    (click)="importTranslation($event, 'problem')">
-                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                  </button>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="form-group pd-input">
-
-                  <app-text-zone
-                    id="problem"
-                    [data]="innovationCard.problem"
-                    (onTextChange)="updateData($event, 'problem')">
-                  </app-text-zone>
-
-                  <!-- todo: add placeholders
-                  [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
-                  -->
-
-                  <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.problem?.length | characterCountdown:1000, 1000) }">
-                    {{ innovationCard.problem?.length | characterCountdown:1000 }}
-                  </div>
-
-                </div>
-              </ng-container>
-
-            </div>
-
-            <!-- solution -->
-            <div class="project-data">
-
-              <span class="shape is-rounded bg-draft">4</span>
-              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
-              <div class="popover">
-                <div class="icons c-default is-info"><i class="fas fa-info-circle"></i></div>
-                <div class="popover-container" style="width: 300px">
-                  <div class="card">
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.HELP'" translate></span>
-                  </div>
-                </div>
-              </div>
-
-              <div *ngIf="!canEdit">
-                <div class="pd-input text" [innerHtml]="innovationCard.solution"></div>
-              </div>
-
-              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                <div class="pd-input">
-                  <button
-                    class="btn btn-xs ghost-secondary"
-                    [disabled]="innovationCard.solution"
-                    [ngClass]="{'disabled': innovationCard.solution}"
-                    (click)="importTranslation($event, 'solution')">
-                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                  </button>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="form-group pd-input">
-
-                  <app-text-zone
-                    [data]="innovationCard.solution"
-                    (onTextChange)="updateData($event, 'solution')">
-                  </app-text-zone>
-
-                  <!-- todo: add placeholders
-                  [placeholder]="'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
-                  &ndash;&gt; -->
-
-                  <div class="char-remaining" [ngStyle]="{ 'color': getColor(innovationCard.solution?.length | characterCountdown:1000, 1000) }">
-                    {{ innovationCard.solution?.length | characterCountdown:1000 }}
-                  </div>
-
-                </div>
-              </ng-container>
-
-            </div>
-
-            <!-- advantages -->
-            <div class="project-data">
-
-              <span class="shape is-rounded bg-draft">5</span>
-              <span class="text text-question m-right-2">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
-              <div class="popover">
-                <div class="icons c-default is-info"><i class="fas fa-info-circle"></i></div>
-                <div class="popover-container" style="width: 300px">
-                  <div class="card">
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.1'" translate class="m-bottom-1"></span>
-                    <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.2'" translate class="m-bottom-1"></span>
-                  </div>
-                </div>
-              </div>
-
-              <ng-container *ngIf="!canEdit">
-                <div class="pd-input">
-                  <div *ngFor="let advantage of innovationCard.advantages" class="label label-answer">
-                    {{ advantage.text }}
-                  </div>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="adminSide && innovation.innovationCards?.length > 1">
-                <div class="pd-input">
-                  <button
-                    class="btn btn-xs ghost-secondary"
-                    [disabled]="innovationCard.advantages?.length"
-                    [ngClass]="{'disabled': innovationCard.advantages?.length}"
-                    (click)="importTranslation($event, 'advantages')">
-                    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
-                  </button>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="pd-input">
-                  <app-input-list (update)="updateAdvantage($event, i)" [config]="getConfig('advantages')"></app-input-list>
-                </div>
-              </ng-container>
-
-            </div>
-
-            <!-- diffusion -->
-            <div class="project-data">
-
-              <span class="shape is-rounded bg-draft">6</span>
-              <span class="text text-question">
-                  {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.A' | translate }} {{ companyName }} {{ 'SHARED_PROJECT_EDIT.EXTERNAL_DIFFUSION.B' | translate }}
-                </span>
-
-              <ng-container *ngIf="!canEdit">
-                <div class="pd-input text">
-                  <p *ngIf="innovation.external_diffusion === false">{{ 'COMMON.NO' | translate }}</p>
-                  <p *ngIf="innovation.external_diffusion === true">{{ 'COMMON.YES' | translate }}</p>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="canEdit">
-                <div class="form-group pd-input">
-
-                  <label class="form-radio is-inline">
-                    <input
-                      type="radio"
-                      name="external_diffusion"
-                      [(ngModel)]="innovation.external_diffusion"
-                      [value]="false"
-                      (change)="notifyChanges()">
-                    <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
-                  </label>
-
-                  <label class="form-radio is-inline">
-                    <input
-                      type="radio"
-                      name="external_diffusion"
-                      [(ngModel)]="innovation.external_diffusion"
-                      [value]="true"
-                      (change)="notifyChanges()">
-                    <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
-                  </label>
-
-                </div>
-              </ng-container>
-
-            </div>
-
-          </ng-container>
-        </div>
-      </div>
-    </div>
-    <!-- questions section -->
-
-    <!-- media section -->
-    <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
-      <div *ngIf="selectedCardIndex === i">
-        <div class="project-data">
-
-          <span class="shape is-rounded bg-draft">7</span>
-          <span class="text text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }}</span>
-          <span class="text text-notify sub-label"> {{ 'SHARED_PROJECT_EDIT.MEDIA.SUB_LABEL' | translate }}</span>
-
-          <div class="pd-input">
-
-            <!-- media display -->
-
-              <!-- main media -->
-              <div *ngIf="innovationCard.principalMedia" class="main-media-wrapper">
-
-                <p class="text text-notify">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAIN' | translate }}</p>
-
-                <!-- photo -->
-                <ng-container *ngIf="innovationCard.principalMedia.type === 'PHOTO'">
-                  <div class="media-body">
-                    <img [src]="getSrc(innovationCard.principalMedia, 'mediaSrc')" alt=" ">
-                  </div>
-                </ng-container>
-
-                <!-- video -->
-                <ng-container *ngIf="innovationCard.principalMedia.type === 'VIDEO'">
-                  <div class="media-body">
-                    <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationCard.principalMedia.video.embeddableUrl)"></iframe>
-                  </div>
-                </ng-container>
-
-                <!-- delete media -->
-                <ng-container *ngIf="canEdit">
-                  <div class="delete-wrapper">
-                    <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)">{{ 'COMMON.DELETE' | translate }}</span>
-                  </div>
-                </ng-container>
-
-              </div>
-
-              <!-- secondary medias -->
-              <ng-container *ngIf="innovationCard.media?.length > 0">
-                <div class="secondary-media-wrapper">
-
-                  <p class="text text-notify">{{ 'SHARED_PROJECT_EDIT.MEDIA.SECONDARY' | translate }}</p>
-
-                  <div class="media-content">
-                    <ng-container *ngFor="let media of innovationCard.media">
-                      <div *ngIf="innovationCard.principalMedia?._id !== media._id" class="media-body">
-
-                        <!-- photo -->
-                        <ng-container *ngIf="media.type === 'PHOTO'">
-                          <div class="media-body">
-                            <img [src]="getSrc(media, 'mediaSrc')" alt=" ">
-                          </div>
-                        </ng-container>
-
-                        <!-- video -->
-                        <ng-container *ngIf="media.type === 'VIDEO'">
-                          <div class="media-body">
-                            <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"></iframe>
-                          </div>
-                        </ng-container>
-
-                        <!-- make primary media -->
-                        <ng-container *ngIf="canEdit">
-                          <div class="main-wrapper">
-                            <span class="text-link text-sm" (click)="onClickSetMainMedia($event, media, i)">{{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}</span>
-                          </div>
-                        </ng-container>
-
-                        <!-- delete media -->
-                        <ng-container *ngIf="canEdit">
-                          <div class="delete-wrapper">
-                            <span class="text-link text-alert text-sm" (click)="onClickDeleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</span>
-                          </div>
-                        </ng-container>
-
-                      </div>
-                    </ng-container>
-                  </div>
-
-                </div>
-              </ng-container>
-
-            <!-- /media display -->
-
-            <!-- uploading medias -->
-            <ng-container *ngIf="canEdit">
-              <div class="upload-wrapper">
-
-                <div class="image-upload-wrapper">
-                  <app-shared-upload-zone-photo
-                    [uri]="'/innovation/'+innovation._id+'/innovationCard/'+innovationCard._id+'/media/image'"
-                    (cbFn)="uploadImage($event, i)">
-                  </app-shared-upload-zone-photo>
-                </div>
-
-                <div class="or-wrapper">
-                  <span class="text text-notify text-medium">{{ 'COMMON.OR' | translate }}</span>
-                </div>
-
-                <div class="video-upload-wrapper">
-                  <app-shared-upload-zone-video (cbFn)="uploadVideo($event)"></app-shared-upload-zone-video>
-                </div>
-
-              </div>
-            </ng-container>
-
+      <!-- selection and deletion -->
+      <div class="d-flex align-center">
+
+        <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;"
+             class="form-group d-flex align-center m-no-bottom m-right-25">
+
+          <label class="form-radio is-inline p-right-1">
+            <input
+              (change)="onLangChange($event, i)"
+              [checked]="selectedCardIndex === i"
+              [id]="innovationCard.lang"
+              [name]="innovationCard.lang"
+              [value]="innovationCard.lang"
+              type="radio">
+            <i class="form-icon"></i>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}
+          </label>
+
+          <div (click)="onClickDelete($event)" [ngClass]="{ 'disabled': innovation.innovationCards.length === 1 || !isEditable }"
+               class="icon-container">
+            <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate">
+              <i class="icon icon-delete text-alert"></i>
+            </span>
           </div>
 
         </div>
+
+        <div *ngIf="innovation.innovationCards.length < 2 && isEditable" class="text-notify p-bottom-1"
+             style="font-size: 0.75rem">
+          <span> {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.LANGUAGE.ADD_PROJECT_LANGUAGE' | translate }} </span>
+          <span *ngIf="!containsLanguage('fr')" (click)="onCreateInnovationCard($event, 'fr')" class="text-link">
+            {{ 'COMMON.LANG.FR' | translate }}
+          </span>
+          <span *ngIf="!containsLanguage('en')" (click)="onCreateInnovationCard($event, 'en')" class="text-link">
+            {{ 'COMMON.LANG.EN' | translate }}
+          </span>
+        </div>
+
+      </div>
+      <!-- /selection and deletion -->
+
+    </div>
+  </section>
+  <!-- /language section -->
+
+  <!-- questions section -->
+  <section *ngIf="innovation.innovationCards"
+           [ngClass]="isAdminSide ? 'col-11 col-xs-12' : 'col-md-12 col-lg-10 col-xl-8 col-7'">
+    <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
+      <div *ngIf="selectedCardIndex === i">
+
+        <!-- title -->
+        <div class="m-top-50">
+
+          <!-- ques -->
+          <div>
+
+            <span class="shape is-rounded is-md bg-draft">1</span>
+
+            <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</span>
+
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
+              <div class="icon-container c-default">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="popover-container">
+                <div class="card">
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.HELP'" translate></span>
+                </div>
+              </div>
+            </span>
+
+          </div>
+          <!-- /ques -->
+
+          <!-- translation button -->
+          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+            <button
+              (click)="importTranslation($event, 'title')"
+              [disabled]="innovationCard.title"
+              class="button is-secondary is-outlined"
+              type="button">
+              {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+            </button>
+          </div>
+          <!-- /translation button -->
+
+          <!-- input field -->
+          <div *ngIf="isEditable" class="form-group m-top-25">
+            <label>
+              <input
+                (change)="notifyChanges()"
+                [(ngModel)]="innovationCard.title"
+                [attr.placeholder]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                autocomplete="off"
+                class="form-input"
+                name="title"
+                type="text">
+            </label>
+          </div>
+          <!-- /input field -->
+
+          <!-- not editable -->
+          <div *ngIf="!isEditable" class="m-top-25">
+            <p [innerText]="innovationCard.title"></p>
+          </div>
+          <!-- /not editable -->
+
+          <!-- operator comment -->
+          <div *ngIf="isVisible('title') || allowAdminToComment">
+
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.title.comment || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.title.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.title.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.title.comment"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
+                  class="form-input"
+                  id="title-comment"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /comment umi -->
+
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.title.suggestion || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.title.suggestion && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.title.suggestion"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                  <input
+                    (change)="onChangeComment($event)"
+                    [(ngModel)]="innovationCard.operatorComment.title.suggestion"
+                    [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
+                    autocomplete="off"
+                    class="form-input"
+                    name="title-suggestion"
+                    type="text">
+                </label>
+              </div>
+
+            </div>
+            <!-- /suggestion umi -->
+
+          </div>
+          <!-- /operator comment -->
+
+        </div>
+        <!-- /title -->
+
+        <!-- summary -->
+        <div class="m-top-50">
+
+          <!-- ques -->
+          <div>
+
+            <span class="shape is-rounded is-md bg-draft">2</span>
+
+            <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
+
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
+              <div class="icon-container c-default">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="popover-container">
+                <div class="card">
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.HELP'" translate></span>
+                </div>
+              </div>
+            </span>
+
+          </div>
+          <!-- /ques -->
+
+          <!-- translation button -->
+          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+            <button
+              (click)="importTranslation($event, 'summary')"
+              [disabled]="innovationCard.summary"
+              class="button is-secondary is-outlined"
+              type="button">
+              {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+            </button>
+          </div>
+          <!-- /translation button -->
+
+          <!-- input filed -->
+          <div *ngIf="isEditable" class="form-group m-top-25 relative">
+
+            <app-text-zone
+              (onTextChange)="updateData($event, 'summary')"
+              [data]="innovationCard.summary"
+              id="summary">
+            </app-text-zone>
+
+            <div [ngStyle]="{ 'color': getColor(innovationCard.summary?.length | characterCountdown:500, 500) }"
+                 class="char-remaining">
+              <span>{{ innovationCard.summary?.length | characterCountdown:500 }}</span>
+            </div>
+
+          </div>
+          <!-- /input filed -->
+
+          <!-- not editable -->
+          <div *ngIf="!isEditable" class="m-top-25">
+            <div class="spec-text-answer" [innerHTML]="innovationCard.summary"></div>
+          </div>
+          <!-- /not editable -->
+
+          <!-- operator comment -->
+          <div *ngIf="isVisible('summary') || allowAdminToComment">
+
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.summary.comment || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.summary.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.summary.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.summary.comment"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
+                  class="form-input"
+                  id="summary-comment"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /comment umi -->
+
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.summary.suggestion || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.summary.suggestion && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.summary.suggestion"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.summary.suggestion"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
+                  class="form-input"
+                  id="summary-suggestion"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /suggestion umi -->
+
+          </div>
+          <!-- /operator comment -->
+
+        </div>
+        <!-- /summary -->
+
+        <!-- problem -->
+        <div class="m-top-50">
+
+          <!-- ques -->
+          <div>
+
+            <span class="shape is-rounded is-md bg-draft">3</span>
+
+            <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
+
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
+              <div class="icon-container c-default">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="popover-container">
+                <div class="card">
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.1'" class="m-bottom-1" translate></span>
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.2'" class="m-bottom-1" translate></span>
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.3'" class="m-bottom-1" translate></span>
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.PROBLEM.HELP.4'" class="m-bottom-1" translate></span>
+                </div>
+              </div>
+            </span>
+
+          </div>
+          <!-- /ques -->
+
+          <!-- translation button -->
+          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+            <button
+              (click)="importTranslation($event, 'problem')"
+              [disabled]="innovationCard.problem"
+              class="button is-secondary is-outlined"
+              type="button">
+              {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+            </button>
+          </div>
+          <!-- /translation button -->
+
+          <!-- input filed -->
+          <div *ngIf="isEditable" class="form-group m-top-25 relative">
+
+            <app-text-zone
+              (onTextChange)="updateData($event, 'problem')"
+              [data]="innovationCard.problem"
+              id="problem">
+            </app-text-zone>
+
+            <div [ngStyle]="{ 'color': getColor(innovationCard.problem?.length | characterCountdown:1000, 1000) }"
+                 class="char-remaining">
+              <span>{{ innovationCard.problem?.length | characterCountdown:1000 }}</span>
+            </div>
+
+          </div>
+          <!-- /input filed -->
+
+          <!-- not editable -->
+          <div *ngIf="!isEditable" class="m-top-25">
+            <div class="spec-text-answer" [innerHTML]="innovationCard.problem"></div>
+          </div>
+          <!-- /not editable -->
+
+          <!-- operator comment -->
+          <div *ngIf="isVisible('problem')|| allowAdminToComment">
+
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.problem.comment || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.problem.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.problem.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.problem.comment"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
+                  class="form-input"
+                  id="problem-comment"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /comment umi -->
+
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.problem.suggestion || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.problem.suggestion && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.problem.suggestion"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.problem.suggestion"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
+                  class="form-input"
+                  id="problem-suggestion"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /suggestion umi -->
+
+          </div>
+          <!-- /operator comment -->
+
+        </div>
+        <!-- /problem -->
+
+        <!-- solution -->
+        <div class="m-top-50">
+
+          <!-- ques -->
+          <div>
+
+            <span class="shape is-rounded is-md bg-draft">4</span>
+
+            <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
+
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
+              <div class="icon-container c-default">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="popover-container">
+                <div class="card">
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.SOLUTION.HELP'" translate></span>
+                </div>
+              </div>
+            </span>
+
+          </div>
+          <!-- /ques -->
+
+          <!-- translation button -->
+          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+            <button
+              (click)="importTranslation($event, 'solution')"
+              [disabled]="innovationCard.solution"
+              class="button is-secondary is-outlined"
+              type="button">
+              {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+            </button>
+          </div>
+          <!-- /translation button -->
+
+          <!-- input filed -->
+          <div *ngIf="isEditable" class="form-group m-top-25 relative">
+
+            <app-text-zone
+              (onTextChange)="updateData($event, 'solution')"
+              [data]="innovationCard.solution"
+              id="solution">
+            </app-text-zone>
+
+            <div [ngStyle]="{ 'color': getColor(innovationCard.solution?.length | characterCountdown:1000, 1000) }"
+                 class="char-remaining">
+              <span>{{ innovationCard.solution?.length | characterCountdown:1000 }}</span>
+            </div>
+
+          </div>
+          <!-- /input filed -->
+
+          <!-- not editable -->
+          <div *ngIf="!isEditable" class="m-top-25">
+            <div class="spec-text-answer" [innerHTML]="innovationCard.solution"></div>
+          </div>
+          <!-- /not editable -->
+
+          <!-- operator comment -->
+          <div *ngIf="isVisible('solution') || allowAdminToComment">
+
+            <!-- comment umi -->
+            <div *ngIf="innovationCard.operatorComment.solution.comment || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.solution.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.solution.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.solution.comment"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
+                  class="form-input"
+                  id="solution-comment"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /comment umi -->
+
+            <!-- suggestion umi -->
+            <div *ngIf="innovationCard.operatorComment.solution.suggestion || isAdminSide" class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.solution.suggestion && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.solution.suggestion"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.solution.suggestion"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
+                  class="form-input"
+                  id="solution-suggestion"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /suggestion umi -->
+
+          </div>
+          <!-- operator comment -->
+
+        </div>
+        <!-- /solution -->
+
+        <!-- advantages -->
+        <div class="m-top-50">
+
+          <!-- ques -->
+          <div>
+
+            <span class="shape is-rounded is-md bg-draft">5</span>
+
+            <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
+
+            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
+              <div class="icon-container c-default">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="popover-container">
+                <div class="card">
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.1'" class="m-bottom-1" translate></span>
+                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.2'" class="m-bottom-1" translate></span>
+                </div>
+              </div>
+            </span>
+
+          </div>
+          <!-- /ques -->
+
+          <!-- translation button -->
+          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+            <button
+              (click)="importTranslation($event, 'advantages')"
+              [disabled]="innovationCard.advantages"
+              class="button is-secondary is-outlined"
+              type="button">
+              {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+            </button>
+          </div>
+          <!-- /translation button -->
+
+          <!-- input field -->
+          <div class="m-top-25">
+            <app-input-list
+              (update)="updateAdvantage($event, i)"
+              [config]="config('advantages')"
+              [isEditable]="isEditable">
+            </app-input-list>
+          </div>
+          <!-- /input field -->
+
+          <!-- operator comment -->
+          <div  *ngIf="innovationCard.operatorComment.advantages.comment || allowAdminToComment">
+
+            <!-- comment umi -->
+            <div class="m-top-25">
+
+              <div class="d-flex align-center">
+                <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
+                <div class="label is-primary text-md">UMI</div>
+              </div>
+
+              <div *ngIf="innovationCard.operatorComment.advantages.comment && !isAdminSide" class="m-top-20">
+                <p [innerText]="innovationCard.operatorComment.advantages.comment"></p>
+              </div>
+
+              <div *ngIf="allowAdminToComment" class="form-group m-top-20">
+                <label>
+                <textarea
+                  (change)="onChangeComment($event)"
+                  [(ngModel)]="innovationCard.operatorComment.advantages.comment"
+                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
+                  class="form-input"
+                  id="advantage-comment"
+                  rows="5">
+                </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /comment umi -->
+
+          </div>
+          <!-- /operator comment -->
+
+        </div>
+        <!-- /advantages -->
+
       </div>
     </div>
-    <!-- /media section -->
-
-
   </section>
+  <!-- questions section -->
 
-</ng-container>
+  <!-- media section -->
+  <section *ngIf="innovation.innovationCards" class="m-top-50">
+    <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
+      <div *ngIf="selectedCardIndex === i">
+
+        <!-- ques -->
+        <div>
+
+          <span class="shape is-rounded is-md bg-draft">6</span>
+
+          <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }} </span>
+
+          <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
+            <div class="icon-container c-default">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="popover-container">
+              <div class="card">
+                <span [innerText]="'SHARED_PROJECT_EDIT.MEDIA.HELP'"  translate></span>
+              </div>
+            </div>
+          </span>
+
+        </div>
+        <!-- /ques -->
+
+        <!-- media upload -->
+        <div *ngIf="isEditable" class="m-top-25">
+          <div class="flex-between flex-wrap spec-media-upload-wrapper">
+
+            <!-- image upload -->
+            <div class="spec-image-upload-wrapper">
+              <app-shared-upload-zone-photo
+                [uri]="'/innovation/'+innovation._id+'/innovationCard/'+innovationCard._id+'/media/image'"
+                (cbFn)="uploadImage($event, i)">
+              </app-shared-upload-zone-photo>
+            </div>
+            <!-- /image upload -->
+
+            <!-- divider -->
+            <div class="divider-vert m-25" [attr.data-content]="'COMMON.OR' | translate | uppercase"></div>
+            <!-- /divider -->
+
+            <!-- video upload -->
+            <div class="spec-video-upload-wrapper">
+              <app-shared-upload-zone-video (cbFn)="uploadVideo($event)"></app-shared-upload-zone-video>
+            </div>
+            <!-- /video upload -->
+
+          </div>
+        </div>
+        <!-- /media upload -->
+
+        <!-- media display -->
+
+        <!-- no media uploaded -->
+        <div *ngIf="innovation.status !== 'EDITING' && innovationCard.media?.length === 0 && !isAdminSide" class="m-top-25">
+          <span class="spec-text-answer">{{ 'SHARED_PROJECT_EDIT.MEDIA.NO_MEDIA' | translate }}</span>
+        </div>
+        <!-- /no media uploaded -->
+
+        <!-- main media -->
+        <div *ngIf="innovationCard.principalMedia" class="text-center m-top-40">
+
+          <div class="text-notify text-md text-medium">
+            <span>{{ 'SHARED_PROJECT_EDIT.MEDIA.MAIN' | translate }}</span>
+          </div>
+
+          <!-- photo -->
+          <div *ngIf="innovationCard.principalMedia.type === 'PHOTO'" class="m-top-25">
+            <div class="d-inline-flex">
+              <figure>
+                <img
+                  [src]="mediaSrc(innovationCard.principalMedia, 'mediaSrc')"
+                  alt=" "
+                  class="img-responsive"
+                  height="159"
+                  width="240">
+              </figure>
+            </div>
+          </div>
+          <!-- /photo -->
+
+          <!-- video -->
+          <div *ngIf="innovationCard.principalMedia.type === 'VIDEO'" class="m-top-25">
+            <div class="d-inline-flex">
+              <iframe
+                [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationCard.principalMedia.video.embeddableUrl)"
+                height="159"
+                width="240">
+              </iframe>
+            </div>
+          </div>
+          <!-- /video -->
+
+          <!-- delete -->
+          <div *ngIf="isEditable">
+            <span (click)="onClickDeleteMedia($event, innovationCard.principalMedia, i)" class="text-alert text-link text-sm">
+              {{ 'COMMON.DELETE' | translate }}
+            </span>
+          </div>
+          <!-- /delete -->
+
+        </div>
+        <!-- /main media -->
+
+        <!-- secondary medias -->
+        <div *ngIf="secondaryMedias.length > 0" class="text-center m-top-40">
+
+          <div class="text-notify text-md text-medium">
+            <span>{{ 'SHARED_PROJECT_EDIT.MEDIA.SECONDARY' | translate }}</span>
+          </div>
+
+          <div class="flex-centered flex-wrap">
+            <div *ngFor="let media of secondaryMedias" class="spec-secondary-media-wrapper">
+
+              <!-- photo -->
+              <figure *ngIf="media.type === 'PHOTO'">
+                <img
+                  [src]="mediaSrc(media, 'mediaSrc')"
+                  alt=" "
+                  class="img-responsive"
+                  height="159"
+                  width="240">
+              </figure>
+              <!-- /photo -->
+
+              <!-- video -->
+              <iframe
+                *ngIf="media.type === 'VIDEO'"
+                [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                height="159"
+                width="240">
+              </iframe>
+              <!-- /video -->
+
+              <!-- make main media -->
+              <div *ngIf="isEditable && innovationCard.principalMedia.type !== 'VIDEO'">
+                <span (click)="onClickSetMainMedia($event, media, i)" class="text-link text-sm">
+                  {{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}
+                </span>
+              </div>
+              <!-- /make main media -->
+
+              <!-- delete -->
+              <div *ngIf="isEditable">
+                <span (click)="onClickDeleteMedia($event, media, i)" class="text-alert text-link text-sm">
+                  {{ 'COMMON.DELETE' | translate }}
+                </span>
+              </div>
+              <!-- /delete -->
+
+            </div>
+          </div>
+
+        </div>
+        <!-- /secondary medias -->
+
+        <!-- /media display -->
+
+      </div>
+    </div>
+  </section>
+  <!-- /media section -->
+
+</div>
+
 
 <!-- modal to ask user to sure about deleting the innovation card the project -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-modal [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}

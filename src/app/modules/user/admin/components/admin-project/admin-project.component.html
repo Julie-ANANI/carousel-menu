@@ -125,7 +125,7 @@
         </label>
 
         <label
-          *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED_NO_MAIL', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']"
+          *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']"
           class="form-checkbox">
           <input
             (change)="projectExportConfig.answers[status] = !projectExportConfig.answers[status]"

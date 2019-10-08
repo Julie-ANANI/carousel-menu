@@ -41,8 +41,6 @@ export const CAMPAIGNS = {
 
   'VALIDATED_UMIBOT': 'Réponses validées auto',
 
-  'VALIDATED_NO_MAIL': 'Réponses validées sans mail',
-
   'DELETE_MODAL': {
     'TITLE': 'Êtes-vous sûr(e) ?',
     'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette campagne ? Elle peut contenir  des professionnels qui seront supprimés de l\'innovation !'

@@ -19,6 +19,7 @@ const projectRoutes: Routes = [
         children: [
           { path: 'survey', pathMatch: 'full' },
           { path: 'pitch', pathMatch: 'full' },
+          { path: 'objectives', pathMatch: 'full' },
           { path: 'targeting', pathMatch: 'full' },
           { path: '', redirectTo: 'pitch', pathMatch: 'full' }
         ]

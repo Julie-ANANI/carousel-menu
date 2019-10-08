@@ -21,8 +21,6 @@ export const EXPLORATION = {
 
   'CONTACT_BUTTON': 'Contact us',
 
-  'COMMENTS': 'Our comments',
-
   'ACCOUNT_MANAGER': 'Your account manager:',
 
   'ANALYTICS': {

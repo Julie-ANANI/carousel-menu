@@ -21,8 +21,6 @@ export const EXPLORATION = {
 
   'CONTACT_BUTTON': 'Nous contacter',
 
-  'COMMENTS': 'Nos commentaires',
-
   'ACCOUNT_MANAGER': 'Votre gestionnaire de compte:',
 
   'CLICK_MAP_TITLE': 'Cartographie des répondants',

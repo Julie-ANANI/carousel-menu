@@ -1,21 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {InnovationService} from '../../../../../../services/innovation/innovation.service';
 import {TranslateService} from '@ngx-translate/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Tag} from '../../../../../../models/tag';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {Innovation} from '../../../../../../models/innovation';
-import {Preset} from '../../../../../../models/preset';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 import {DashboardService} from '../../../../../../services/dashboard/dashboard.service';
 import {UserService} from '../../../../../../services/user/user.service';
 import {User} from '../../../../../../models/user.model';
 import {AuthService} from '../../../../../../services/auth/auth.service';
-import {PresetService} from '../../../../../../services/preset/preset.service';
 import {InnovCard} from '../../../../../../models/innov-card';
 import {domainRegEx, emailRegEx} from '../../../../../../utils/regex';
 import {Campaign} from '../../../../../../models/campaign';
@@ -24,6 +22,7 @@ import {EmailScenario} from '../../../../../../models/email-scenario';
 import {TagsService} from '../../../../../../services/tags/tags.service';
 import {FrontendService} from '../../../../../../services/frontend/frontend.service';
 import {EmailTemplate} from '../../../../../../models/email-template';
+import {Mission} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -44,7 +43,6 @@ export class AdminProjectManagementComponent implements OnInit {
   projectSubject = new Subject<Innovation>();
 
   // Owner edition
-  isEditOwner = false;
   usersSuggestion: Array<any> = [];
   owner: any = {};
   displayUserSuggestion = false;
@@ -55,9 +53,6 @@ export class AdminProjectManagementComponent implements OnInit {
   // Operator edition
   operators: Array<User> = [];
   operatorId = '';
-
-  // Preset edition
-  presets: Array<Preset> = [];
 
   // Innovation edition
   isInnovationSidebar = false;
@@ -81,23 +76,18 @@ export class AdminProjectManagementComponent implements OnInit {
   private _availableScenarios: Array<EmailScenario> = [];
   private _modifiedScenarios: Array<EmailScenario> = [];
 
-  private _config = {
-    search: '{}',
-    sort: '{"created":-1}'
-  };
-
   public formData: FormGroup = this._formBuilder.group({
-    domainen: ['', [Validators.required]],
-    domainfr: ['', [Validators.required]],
     owner: '',
+    mission: ''
   });
+
+  public edit: {[k: string]: boolean} = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
               private _authService: AuthService,
               private _router: Router,
-              private _presetService: PresetService,
               private _userService: UserService,
               private _tagService: TagsService,
               private _notificationsService: TranslateNotificationsService,
@@ -129,10 +119,6 @@ export class AdminProjectManagementComponent implements OnInit {
     this.operatorId = this._project && this._project.operator
       ? (this._project.operator.id ? this._project.operator.id : this._project.operator.toString())
       : undefined;
-
-    this._presetService.getAll(this._config).subscribe((p: any) => {
-      this.presets = p.result;
-    });
 
     this._project.innovationCards.forEach(value => this.innovCards.push(new InnovCard(value)));
 
@@ -186,7 +172,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * This function reset the data
    */
   resetData() {
-    this.isEditOwner = false;
+    this.edit = {};
     this.formData.reset();
   }
 
@@ -221,10 +207,23 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  // Preparation section
+  public missionsSuggestions = (searchString: string): Observable<Array<{name: string}>> => {
+    return this._autoCompleteService.get({query: searchString, type: 'mission'});
+  };
 
-  editOwner() {
-    this.isEditOwner = true;
+  public autocompleteMissionListFormatter = (data: Mission): string => {
+    return data.name;
+  };
+
+  public selectMission(event: Mission) {
+    this.edit.mission = false;
+    this._innovationService.save(this._project._id, {mission: event._id}).subscribe((data: any) => {
+      this._project = data;
+      this._project.mission = event;
+      this._notificationsService.success('ERROR.SUCCESS' , 'The project has been updated');
+    }, (err: any) => {
+      this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
+    });
   }
 
   /***
@@ -285,56 +284,6 @@ export class AdminProjectManagementComponent implements OnInit {
     this._project.operator = value || null;
     this.operatorId = value || undefined;
     this.save('L\'opérateur à été mis à jour avec succès');
-  }
-
-  /***
-   * This function is call when the user change the preset of the project
-   * @param {string} presetName
-   */
-  public updatePreset(presetName: string): void {
-    if (presetName) {
-      const preset = this.presets.find(value => value.name === presetName);
-      this._innovationService.save(this._project._id, {preset: preset}).subscribe((data: any) => {
-        this._activatedRoute.snapshot.parent.data['innovation'] = data;
-        this._project = data;
-        this.save('Le questionnaire a bien été affecté au projet');
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
-      });
-    } else {
-      this.save('Il n\'existe plus de questionnaire correspondant à ce projet');
-    }
-  }
-
-  /***
-   * This function check if a project has a preset
-   * @returns {boolean}
-   */
-  public hasPreset(): boolean {
-    const p = this._project.preset;
-
-    return (p && p.sections && p.constructor === Object && Object.keys(p.sections).length > 0);
-  }
-
-  /***
-   * This function is call when the user click on the button show
-   * Go to the preset edition page
-   */
-  goToPresetEdition() {
-    this._router.navigate(['/user/admin/projects/project/' + this._project._id + '/questionnaire']);
-  }
-
-  /***
-   * This function generates the quiz for the project.
-   */
-  generateQuiz(event: Event) {
-    event.preventDefault();
-    this._innovationService.createQuiz(this._project._id).subscribe((result: any) => {
-      this._project = result;
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
-    }, (err: any) => {
-      this._notificationsService.error('ERROR.ERROR', err.message);
-    });
   }
 
   /***

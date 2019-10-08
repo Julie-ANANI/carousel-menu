@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { NotificationsService, Notification } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
 
+
 @Injectable()
 export class TranslateNotificationsService {
 
@@ -26,5 +27,7 @@ export class TranslateNotificationsService {
       config
     );
   }
+
+
 
 }

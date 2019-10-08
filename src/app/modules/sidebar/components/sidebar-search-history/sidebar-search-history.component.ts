@@ -53,7 +53,7 @@ export class SidebarSearchHistoryComponent {
           }
 
           this._tableInfos = {
-            _selector: 'admin-search-history-limit',
+            _selector: 'admin-sidebar-search-history-limit',
             _title: 'SEARCH.HISTORY.SEARCHES',
             _content: this._requests,
             _total: this._total,

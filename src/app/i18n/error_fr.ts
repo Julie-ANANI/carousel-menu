@@ -31,6 +31,8 @@ export const ERROR = {
 
   'PAGE_NOT_FOUND': 'Pas de page par ici...',
 
+  'CARD_NOT_FOUND': 'Nous n\'avons pas trouvé l\'innovation que vous recherchez.',
+
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
@@ -80,7 +82,9 @@ export const ERROR = {
     'SAVE_ERROR': 'Vous devez sauvegarder toutes les modifications avant de continuer.',
     'SUBMITTED': 'Soumis',
     'SUBMITTED_TEXT': 'Votre projet a été envoyé pour validation.',
-    'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'
+    'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.',
+    'COMMENT_NOT_FOUND': 'Nous n\'avons pas trouvé le commentaire sur l\'innovation demandée.',
+    'NOT_SUBMITTED_MODE':'Les commentaires ne peuvent être ajoutés que lorsque le statut d\'innovation est soumis.'
   },
 
 
@@ -107,13 +111,15 @@ export const ERROR = {
 
 
   'PRESET': {
-    'UPDATED': 'Questionnaire mis à jour.'
+    'UPDATED': 'La questionnaire mis à jour.',
+    'LOADED': 'Le modèle a été chargé avec succès.'
   },
 
 
   'ANSWER': {
     'UPDATED': 'La réponse a été mise à jour avec succès.',
     'IMPORTED': 'Les réponses ont été importées avec succès.',
+    'REASSIGNED': 'La réponse a été reassignée avec succès.',
     'STATUS_UPDATE': 'Le statut a été mis à jour avec succès.'
   },
 
@@ -124,7 +130,8 @@ export const ERROR = {
 
 
   'QUIZ': {
-    'CREATED': 'Le quiz a été créé.'
+    'CREATED': 'Le quiz a été créé.',
+    'GENERATED': 'Le quiz a été généré avec succès.',
   },
 
 

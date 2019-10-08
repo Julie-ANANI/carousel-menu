@@ -10,6 +10,11 @@ import { countries } from '../../../../models/static-data/country';
 import { Campaign } from "../../../../models/campaign";
 import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 import { Router } from "@angular/router";
+import { ConfigService } from "../../../../services/config/config.service";
+import { CampaignService } from '../../../../services/campaign/campaign.service';
+import { GeographySettings } from '../../../../models/innov-settings';
+import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
+import { IndexService } from '../../../../services/index/index.service';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -29,6 +34,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _requestsToImport: Array<any> = [];
   private _paused = false;
   private _requests: Array<any> = [];
+  private _suggestedKeywords: Array<string> = [];
   private _total = 0;
   private _googleQuota = 30000;
   private _config: Config = {
@@ -38,14 +44,18 @@ export class SharedSearchHistoryComponent implements OnInit {
     search: "{}",
     sort: '{ "created": -1 }'
   };
-  private _chosenCampaign: Array<any> = [];
+  private _chosenCampaign: Campaign;
   private _addToCampaignModal: boolean = false;
+  private _geography: GeographySettings;
 
   constructor(
     private _router: Router,
-     private _searchService: SearchService,
+    private _configService: ConfigService,
+    private _campaignService: CampaignService,
+    private _searchService: SearchService,
     private _professionalsService: ProfessionalsService,
-    private _notificationsService: TranslateNotificationsService
+    private _notificationsService: TranslateNotificationsService,
+    private _indexService: IndexService
   ) {}
 
   ngOnInit(): void {
@@ -66,10 +76,12 @@ export class SharedSearchHistoryComponent implements OnInit {
     if (this.status) {
       this.config.status = this.status;
     }
+    this._config.limit = this._configService.configLimit('admin-search-history-limit');
     this.loadHistory();
   }
 
   public loadHistory() {
+    this._suggestedKeywords = [];
     this._searchService.getRequests(this._config)
       .pipe(first())
       .subscribe((result: any) => {
@@ -79,6 +91,8 @@ export class SharedSearchHistoryComponent implements OnInit {
             if (request.region) {
               request.targetting = request.region;
               request.keywords = request.keywords.replace(`"${request.region}"`, "");
+            } else if (request.country) {
+              request.targetting = countries[request.country];
             } else if (request.countries && request.countries.length) {
               request.targetting = "";
               const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
@@ -93,8 +107,6 @@ export class SharedSearchHistoryComponent implements OnInit {
               for (let key of Object.keys(counter)) {
                 if (counter[key]) request.targetting += ` ${key}(${counter[key]})`;
               }
-            } else if (request.country) {
-              request.targetting = countries[request.country];
             }
             return request;
           });
@@ -137,6 +149,8 @@ export class SharedSearchHistoryComponent implements OnInit {
                 {_name: 'EMAILS_SEARCHING', _alias: 'SEARCH.HISTORY.EMAILS_SEARCHING', _class: 'label is-progress'},
                 {_name: 'EMAILS_QUEUED', _alias: 'SEARCH.HISTORY.EMAILS_QUEUED', _class: 'label is-danger'}
               ]},
+            {_attrs: ['metadata.shield'], _name: 'SEARCH.HISTORY.NBSHIELD', _type: 'TEXT', _isSortable: true},
+            {_attrs: ['metadata.ambassadors'], _name: 'SEARCH.HISTORY.NBAMB', _type: 'TEXT', _isSortable: true},
           ]
         };
       });
@@ -194,19 +208,34 @@ export class SharedSearchHistoryComponent implements OnInit {
   }
 
   updateCampaign(event: any) {
-    this._chosenCampaign = event.value;
+    if (Array.isArray(event.value)) {
+      if (event.value.length > 0) {
+        this._campaignService.get(event.value[0]._id).subscribe((campaign) => {
+          this._geography = {
+            include: campaign.targetCountries.map((country) => { return {code: country}; }),
+            exclude: [],
+            continentTarget: SharedWorldmapService.setContinents(false)
+          };
+          this._chosenCampaign = campaign;
+        });
+      } else {
+        this._chosenCampaign = undefined;
+      }
+    }
   }
 
-  addToCampaign(campaigns: Array<Campaign>, goToCampaign?: boolean) {
+  addToCampaign(campaign: Campaign, goToCampaign?: boolean) {
     this._addToCampaignModal = false;
-    const campaign = campaigns[0];
     const params: any = {
       newCampaignId: campaign._id,
-      newInnovationId: campaign.innovation,
+      newInnovationId: campaign.innovation._id,
       requestIds: this._requestsToImport,
+      newTargetCountries: this._geography.include.map((country) => country.code)
     };
     this._professionalsService.addFromHistory(params).subscribe((result: any) => {
-      this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
+      this._notificationsService.success(
+        'Import des requêtes en cours',
+        'Les pros seront bien déplacés d\'ici quelques minutes');
       if (goToCampaign) {
         this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
       }
@@ -237,6 +266,36 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
+  private _keywordsSuggestion(query: string) {
+    const byCount = function(array: Array<any>) {
+      let itm, a = [], L = array.length, o = {};
+      for (let i = 0; i < L; i++) {
+        itm = array[i];
+        if (!itm) {continue; }
+        if (o[itm] === undefined) {o[itm] = 1; } else {++o[itm]; }
+      }
+      for (let p in o) {a[a.length] = p; }
+      return a.sort(function(a, b) {
+        return o[b] - o[a];
+      });
+    };
+
+    let tmp: Array<any> = [];
+    const kw: Array<string> = [];
+    this._indexService.find(query, 'requests').subscribe((res) => {
+      res['requests'].forEach((request: object) => {
+        this._suggestedKeywords.push('');
+        tmp = request['_source']['keywords'].split('"');
+        for (let i = 1; i < tmp.length; i += 2) {
+          if (!(query.split('%20').includes(tmp[i]))) {
+            kw.push(tmp[i]);
+          }
+        }
+      });
+      this._suggestedKeywords = byCount(kw).slice(0, 4) || [];
+    });
+  }
+
   get requests(): Array<any> {
     return this._requests;
   }
@@ -255,7 +314,11 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   set config(value: Config) {
     this._config = value;
+    const tmp = JSON.parse(value.search);
     this.loadHistory();
+    if ('keywords' in tmp) {
+      this._keywordsSuggestion(tmp['keywords']);
+    }
   }
 
   get paused(): boolean {
@@ -277,7 +340,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   get selectedRequest(): any {
     return this._selectedRequest;
   }
-  get chosenCampaign(): Array<any> {
+
+  get chosenCampaign(): Campaign {
     return this._chosenCampaign;
   }
   get addToCampaignModal () {
@@ -286,5 +350,17 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   set addToCampaignModal(value: boolean) {
     this._addToCampaignModal = value;
+  }
+
+  get geography() {
+    return this._geography;
+  }
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
+  }
+
+  get suggestions() {
+    return this._suggestedKeywords;
   }
 }

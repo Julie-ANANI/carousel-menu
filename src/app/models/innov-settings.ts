@@ -1,20 +1,22 @@
 import { Country } from './country';
 
+export interface GeographySettings {
+  continentTarget: {
+    readonly africa: boolean;
+    readonly oceania: boolean;
+    readonly asia: boolean;
+    readonly europe: boolean;
+    readonly americaNord: boolean;
+    readonly americaSud: boolean;
+  };
+  exclude: Array<Country>;
+  include: Array<Country>;
+  comments?: string;
+}
+
 export interface InnovationSettings {
 
-  readonly geography: {
-    continentTarget: {
-      readonly africa: boolean;
-      readonly oceania: boolean;
-      readonly asia: boolean;
-      readonly europe: boolean;
-      readonly americaNord: boolean;
-      readonly americaSud: boolean;
-    };
-    exclude: Array<Country>;
-    include: Array<Country>;
-    comments: string;
-  };
+  geography: GeographySettings;
 
   readonly market: {
     readonly sectors: Array<string>;

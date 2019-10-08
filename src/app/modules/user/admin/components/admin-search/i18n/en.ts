@@ -101,7 +101,9 @@ export const SEARCH = {
     "EMAILS_FOUND": "Emails found",
     "EMAILS_QUEUED": "Emails queued",
     "EMAILS_SEARCHING": "Emails searching",
-    "PROS_ADDED": "Pros added"
+    "PROS_ADDED": "Pros added",
+    "NBSHIELD": "Under shield",
+    "NBAMB": "Ambassadors"
   },
   "CAMPAIGN": {
     "TITLE": "Add to a campaign",

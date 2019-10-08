@@ -9,7 +9,6 @@ import { CAMPAIGNS } from '../modules/user/admin/components/admin-campaigns/i18n
 import { SEARCH } from '../modules/user/admin/components/admin-search/i18n/en';
 import { BLACKLISTS } from '../modules/user/admin/components/admin-settings/admin-email-blacklist/i18n/en';
 import { TAGS } from '../modules/user/admin/components/admin-tags/i18n/en';
-import { PROJECT_LIST } from '../modules/user/admin/components/admin-projects-list/i18n/en';
 import { PROJECT_MODULE } from '../modules/user/client/components/project/i18n/en';
 import { DISCOVER } from '../modules/public/discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/description/i18n/en';
@@ -59,7 +58,6 @@ export const en = {
   'SEARCH': SEARCH,
   'BLACKLISTS': BLACKLISTS,
   'TAGS': TAGS,
-  'PROJECT_LIST': PROJECT_LIST,
   'PROJECT_MODULE': PROJECT_MODULE,
   'SHARE': SHARE,
   'RESET_PASSWORD': RESET_PASSWORD,
@@ -71,5 +69,5 @@ export const en = {
   'SHOWCASE': SHOWCASE,
   'SEARCH_DEMO': SEARCH_DEMO,
   'COMMUNITY': COMMUNITY,
-  'SHARED_TARGETING_WORLD': SHARED_TARGETING_WORLD
+  'SHARED_TARGETING_WORLD': SHARED_TARGETING_WORLD,
 };
