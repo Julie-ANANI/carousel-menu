@@ -107,7 +107,12 @@ export class SearchToolComponent {
     this._slicedPros = [];
     this._searchStopped = false;
     this._searchResult.metadata = result.metadata || {};
-    this._searchResult.pros = result.pros;
+    //FIXME: hack un peu dégueu pour éviter le bug UK/GB, à enlever quand on aura enfin harmonisé ça en base
+    this._searchResult.metadata["GB"] = this._searchResult.metadata["UK"];
+    this._searchResult.pros = result.pros.map((pro: any) => {
+      if (pro.country === "UK") pro.country = "GB";
+      return pro;
+    });
     this._scale = result.scale || [50, 200, 1500];
   }
 
@@ -120,7 +125,7 @@ export class SearchToolComponent {
       });
 
       setTimeout(() => {
-        this._totalProfessional(this._searchResult.metadata && this._searchResult.metadata.world ? this._searchResult.metadata.world : 0);
+        this._totalProfessional(this._searchResult.metadata && this._searchResult.metadata["world"] ? this._searchResult.metadata["world"] : 0);
       }, 2005);
     }
   }

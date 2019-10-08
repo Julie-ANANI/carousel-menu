@@ -1,12 +1,6 @@
 export interface SearchTool {
   metadata?: {
-    world?: number;
-    asia?: number;
-    africa?: number;
-    oceania?: number;
-    europe?: number;
-    northAmerica?: number;
-    southAmerica?: number;
+    (s: string): number;
   },
 
   pros?: Array<{
