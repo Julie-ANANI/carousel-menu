@@ -74,9 +74,10 @@ export class SurveyComponent implements OnDestroy {
   }
 
   private _checkRequirements() {
-    this._innovation.preset.requirements = this._innovation.preset.requirements.filter((value: PresetRequirement) => {
+    this._innovation.preset.requirements = [];
+    /*this._innovation.preset.requirements = this._innovation.preset.requirements.filter((value: PresetRequirement) => {
       return this._templateLangs.findIndex((lang) => lang === value.lang) !== -1;
-    });
+    });*/
   }
 
   private _setSelectedIndex(): number {
@@ -223,6 +224,10 @@ export class SurveyComponent implements OnDestroy {
     return this._innovation && this._innovation.preset
       && this._innovation.preset.requirements
       && this._innovation.preset.requirements.length > 0;
+  }
+
+  get isExecutable(): boolean {
+    return environment.production;
   }
 
   get innovation(): Innovation {
