@@ -23,9 +23,11 @@ export class SurveyComponent implements OnDestroy {
     if (value) {
       this._innovation = value;
       this._quizUrl();
-      this._presetLangs();
-      this._checkRequirements();
-      this._selectedIndex = this._setSelectedIndex();
+      if (this.isExecutable) {
+        this._presetLangs();
+        this._checkRequirements();
+        this._selectedIndex = this._setSelectedIndex();
+      }
     }
   }
 
@@ -223,6 +225,10 @@ export class SurveyComponent implements OnDestroy {
     return this._innovation && this._innovation.preset
       && this._innovation.preset.requirements
       && this._innovation.preset.requirements.length > 0;
+  }
+
+  get isExecutable(): boolean {
+    return environment.production;
   }
 
   get innovation(): Innovation {
