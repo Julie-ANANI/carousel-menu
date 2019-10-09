@@ -14,7 +14,7 @@ export interface InnovationMetadataValues {
 }
 
 export interface Innovation {
-  __v?: number;
+
   readonly _id?: string;
   owner?: User;
   readonly campaigns?: Array<any>;
