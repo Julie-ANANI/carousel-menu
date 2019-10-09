@@ -217,7 +217,8 @@ export class SurveyComponent implements OnDestroy {
   }
 
   get isHidden(): boolean {
-    return this._innovation.preset && this._innovation.preset.accessibility.hidden;
+    return false;
+    //return this._innovation.preset && this._innovation.preset.accessibility.hidden;
   }
 
   get hasRequirement(): boolean {
