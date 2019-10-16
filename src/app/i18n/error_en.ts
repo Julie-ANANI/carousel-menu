@@ -162,6 +162,8 @@ export const ERROR = {
       'DELETED': 'The batch has been deleted successfully.',
       'FREEZED': 'The batch has been frozen successfully.',
       'UPDATED': 'The batch has been updated successfully.',
+      'AUTOBATCH_ON': 'The autobatch is on for this campaign. Batches will be created soon.',
+      'AUTOBATCH_OFF': 'The autobatch is off for this campaign. No new batch will be created.',
     },
     'SEARCH': {
       'SETTINGS_UPDATED': 'The settings have been updated successfully.',

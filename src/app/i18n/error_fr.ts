@@ -162,6 +162,8 @@ export const ERROR = {
       'DELETED': 'Le batch a été supprimé avec succès.',
       'FREEZED': 'Le batch a été mis en pause avec succès.',
       'UPDATED': 'Le batch a été mis à jour avec succès.',
+      'AUTOBATCH_ON': 'L\'autobatch est activé pour cette campagne. Les batchs seront bientôt créés.',
+      'AUTOBATCH_OFF': 'L\'autobatch est désactivé pour cette campagne. Aucun nouveau batch ne sera créé.',
     },
     'SEARCH': {
       'SETTINGS_UPDATED': 'Les paramètres ont été mis à jour avec succès.',
