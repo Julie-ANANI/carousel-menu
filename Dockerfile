@@ -25,7 +25,7 @@ RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
 # gzip every files for the browser
 RUN gzip -k -r dist/browser/
 
-RUN npm run webpack:server
+#RUN npm run webpack:server
 
 EXPOSE  3080
 CMD ["npm", "run", "serve:ssr"]
