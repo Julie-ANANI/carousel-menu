@@ -49,7 +49,7 @@
     "ngx-socket-io": "^3.0.1",
     "print-js": "^1.0.47",
     "rxjs": "^6.5.1",
-    "rxjs-compat": "^6.3.3",
+    "rxjs-compat": "^6.5.3",
     "rxjs-tslint": "^0.1.7",
     "tinymce": "^4.7.6",
     "ts-md5": "^1.2.6",
