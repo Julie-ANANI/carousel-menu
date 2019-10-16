@@ -198,7 +198,7 @@ export class AdminCampaignBatchComponent implements OnInit {
 
 
   private createNewBatch(formValue: FormGroup) {
-    const newBatch = {
+    const newBatch: Batch = {
       size: formValue.value['pros'],
       firstMail: formValue.value['send'] === 'true' ? Date.now() : this.computeDate(formValue.value['date'], formValue.value['time']||"00:00"),
       sendNow: formValue.value['send'],
