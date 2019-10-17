@@ -8,7 +8,8 @@ ARG VERSION
 WORKDIR /var/web
 
 # build client
-RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
+RUN echo build ${APP_NAME} -c=${ENV_NAME} --prod
+RUN ng build --verbose --progress ${APP_NAME} -c=${ENV_NAME} --prod
 
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
@@ -25,7 +26,7 @@ RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
 # gzip every files for the browser
 RUN gzip -k -r dist/browser/
 
-#RUN npm run webpack:server
+RUN npm run webpack:server
 
 EXPOSE  3080
 CMD ["npm", "run", "serve:ssr"]
