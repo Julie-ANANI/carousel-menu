@@ -60,7 +60,10 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId);
   }
 
-  public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
+  /*public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
+    return this._http.put('/innovation/' + innovationId, innovationObj);
+  }*/
+  public save(innovationId: string, innovationObj: Innovation): Observable<any> {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }
 
