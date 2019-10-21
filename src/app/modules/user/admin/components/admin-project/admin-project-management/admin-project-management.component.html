@@ -494,7 +494,7 @@
 
         <label class="label is-danger">{{publishedNote()}}</label>
         <button class="btn btn-xs ghost-edit"
-                [ngClass]="{disabled: hasBeenPublished()}"
+                [ngClass]="{disabled: !project.isPublic || hasBeenPublished()}"
                 (click)="publish()">
           Publish
         </button>
