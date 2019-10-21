@@ -491,6 +491,13 @@
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.PUBLIC' | translate}}
         </label>
+
+        <label class="label is-danger">{{publishedNote()}}</label>
+        <button class="btn btn-xs ghost-edit"
+                [ngClass]="{disabled: hasBeenPublished()}"
+                (click)="publish()">
+          Publish
+        </button>
       </div>
 
       <!-- Update answer tags -->
