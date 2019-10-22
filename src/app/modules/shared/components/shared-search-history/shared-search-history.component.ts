@@ -130,7 +130,8 @@ export class SharedSearchHistoryComponent implements OnInit {
             { _icon: 'fas fa-times', _label: 'SEARCH.HISTORY.CANCEL' },
             { _icon: 'fas fa-hourglass-half', _label: 'SEARCH.HISTORY.BACK_QUEUE' },
             { _icon: 'fas fa-times', _label: 'SEARCH.HISTORY.STOP' },
-            { _icon: 'fas fa-share-square', _label: 'SEARCH.ADDTOCAMPAIGN' }
+            { _icon: 'fas fa-share-square', _label: 'SEARCH.ADDTOCAMPAIGN' },
+            { _icon: 'fas fa-envelope', _label: 'SEARCH.HISTORY.SEARCH_MAILS' }
           ],
           _columns: [
             {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
@@ -200,6 +201,20 @@ export class SharedSearchHistoryComponent implements OnInit {
           request.status = 'DONE';
         });
         this._notificationsService.success('Requêtes arrêtées', `Les requêtes ont bien été arrêtées`);
+      });
+    }  else if (value._action === 'SEARCH.HISTORY.SEARCH_MAILS') {
+      requestsIds.forEach((requestId: string) => {
+        const params: any = {
+          requestId: requestId,
+          query: {
+            motherRequestId: requestId
+          },
+          all: true
+        };
+
+        this._searchService.searchMails(params).subscribe((result: any) => {
+          this._notificationsService.success('Recherche lancée', `La recherche de mails a été lancée`);
+        });
       });
     } else {
       this._requestsToImport = requestsIds;

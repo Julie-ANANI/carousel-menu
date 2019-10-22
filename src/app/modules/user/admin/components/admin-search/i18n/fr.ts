@@ -93,6 +93,7 @@ export const SEARCH = {
     "CANCEL": "Annuler les requêtes",
     "STOP": "Arrêter les requêtes",
     "BACK_QUEUE": "Remettre en attente",
+    "SEARCH_MAILS": "Rechercher les emails",
     "PERPAGE": "par page",
     "PRO": "Professionnel",
     "LAUNCHED_BY": "Lancée par",
