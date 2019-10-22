@@ -145,4 +145,8 @@ export class InnovationService {
     return this._http.post('/innovation/import/', formData);
   }
 
+  public publishToCommunity(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/communityPublish');
+  }
+
 }
