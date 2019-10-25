@@ -60,6 +60,9 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId);
   }
 
+  /*public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
+    return this._http.put('/innovation/' + innovationId, innovationObj);
+  }*/
   public save(innovationId: string, innovationObj: Innovation): Observable<any> {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }
@@ -140,6 +143,10 @@ export class InnovationService {
     const formData = new FormData();
     formData.append('file', file, "import_project");
     return this._http.post('/innovation/import/', formData);
+  }
+
+  public publishToCommunity(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/communityPublish');
   }
 
 }

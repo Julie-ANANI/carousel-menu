@@ -621,6 +621,27 @@ export class AdminProjectManagementComponent implements OnInit {
     });
   }
 
+  public hasBeenPublished(): boolean{
+    return !!this._project['published'];
+  }
+
+  public publishedNote(): string {
+    return this.hasBeenPublished() ? `Published on ${this._project['published']}` : 'Not yet published';
+  }
+
+  public publish() {
+    this._innovationService.publishToCommunity(this._project._id).subscribe(published=>{
+      if(published) {
+        this._project['published'] = published;
+      } else {
+        this._project['published'] = null;
+      }
+    }, err=>{
+      this._project['published'] = null;
+      this._notificationsService.error('Error', 'Cannot publish the innovation at this time!');
+    });
+  }
+
   /***
    * This function is call when the user close the sidebar
    * @param {string} value

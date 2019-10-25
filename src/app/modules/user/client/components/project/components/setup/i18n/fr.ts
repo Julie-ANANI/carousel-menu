@@ -18,7 +18,7 @@ export const SETUP = {
     'REVIEWING': {
       'A': 'Votre projet doit être modifié. Veuillez',
       'B': ' lire ',
-      'C': 'nos commentaires que nous vous avons envoyés par courrier.'
+      'C': 'nos commentaires pour améliorer votre fiche.'
     },
     'PREVIEW_MODE': 'La synthèse partielle de votre innovation est disponible.',
     'DONE': 'La synthèse complète de votre projet est disponible.',

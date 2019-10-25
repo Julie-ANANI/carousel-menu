@@ -1,4 +1,4 @@
-FROM node:10.13.0 AS baseimage
+FROM node:10.16.3 AS baseimage
 
 ARG APP_NAME
 ARG ENV_NAME
