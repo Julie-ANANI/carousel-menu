@@ -164,7 +164,7 @@
 
             <div class="card-body">
               <app-shared-table
-                [data]="tableBatch(batchIndex)"
+                [data]="getBatch(batchIndex)"
                 [config]="config"
                 (editRow)="OnClickEdit($event, batch)">
               </app-shared-table>

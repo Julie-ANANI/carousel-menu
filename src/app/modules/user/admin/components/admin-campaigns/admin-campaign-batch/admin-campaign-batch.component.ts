@@ -569,8 +569,12 @@ export class AdminCampaignBatchComponent implements OnInit {
     return this._stats;
   }
 
-  tableBatch(index: number) {
+  getBatch(index: number) {
     return this._tableBatch[index];
+  }
+
+  get tableBatch() {
+    return this._tableBatch;
   }
 
   get currentBatch(): Batch {
