@@ -85,6 +85,10 @@ export class CampaignService {
     return this._http.put(`/batch/${batch._id}`, batch);
   }
 
+  public updateBatchStatus(batchId: string, status: number): Observable<any> {
+    return this._http.get(`/batch/${batchId}/updateStatus?status=${status}`);
+  }
+
   public deleteBatch(batchId: string): Observable<any> {
     return this._http.delete(`/batch/${batchId}`);
   }

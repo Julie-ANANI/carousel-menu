@@ -98,5 +98,8 @@
     </form>
 
     <p *ngIf="!isNewBatch && contentCurrent">BatchId : {{ contentCurrent._id }}</p>
+    <p *ngIf="!isNewBatch && contentCurrent">Changer statut:
+      <input type="number" (change)="updateBatchStatus($event)">
+    </p>
   </div>
 </section>
