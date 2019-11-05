@@ -1,0 +1,107 @@
+@import '../../../../../style/framework/src/variables';
+
+#shared-targeting-world {
+
+  .stw-incl-excl-country-wrapper {
+
+    .stw-country-wrapper {
+      //margin-right: 2rem;
+      //min-width: 350px;
+      margin-top: 1.5rem;
+      flex: 1;
+      max-width: 550px;
+
+      .icon-container {
+        margin-left: $unit-1;
+        margin-bottom: $unit-2;
+      }
+
+    }
+
+  }
+
+  .stw-toggle-list-wrapper {
+    margin-top: 0.75rem;
+  }
+
+}
+
+.stw-continent-list-wrapper {
+  padding-bottom: 2.5rem;
+
+  .form-group {
+
+    &.is-continent {
+      border-bottom: $border-width solid $border-color;
+      padding-bottom: $unit-o;
+      margin-bottom: 0.75rem;
+
+      .form-checkbox {
+        font-weight: $font-weight-medium;
+        font-size: 0.85rem;
+        display: inline-flex;
+      }
+
+    }
+
+  }
+
+  .country-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -1rem;
+    margin-bottom: -1rem;
+
+    .card {
+      border: none;
+
+      .avatar {
+        width: 1.75rem;
+        height: 1.75rem;
+
+        img {
+          width: 1.75rem;
+          border: 1px solid $border-color;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@media screen and (max-width: $size-xl) {
+
+  .is-responsive {
+    max-width: calc(25% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-lg) {
+
+  .is-responsive {
+    max-width: calc(33% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-sm) {
+
+  .is-responsive {
+    max-width: calc(50% - 1rem) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-xs) {
+
+  .is-responsive {
+    flex: 100% !important;
+    max-width: 100% !important;
+    margin-right: 0 !important;
+  }
+
+}

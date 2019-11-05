@@ -49,6 +49,7 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
+  'STATUS': 'Status',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
@@ -131,15 +132,19 @@ export const COMMON = {
     'TYPE': 'Type',
     'SELECT_WORKFLOW': 'Select the workflow',
     'SELECT': 'Select',
+    'SELECT_ALL': 'Select All',
     'CHOOSE_LANGUAGE': 'Choose Language:',
     'SEARCH_BY': 'Search by',
     'SIGNATURE_NAME': 'Signature Name',
     'LANGUAGE': 'Language',
+    'PRESET': 'Preset',
     'PRESET_NAME': 'Preset Name',
     'TAG_NAME': 'Tag Name',
     'CREATED': 'Created',
     'CREATED_ON': 'Created on',
     'COLLABORATORS': 'Collaborators',
+    'DOMAIN_NAME': 'Domain Name',
+    'ANSWER': 'Answer'
   },
 
   'PLACEHOLDER': {
@@ -155,7 +160,7 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Enter the signature name',
     'PRESET_NAME': 'Enter the preset name',
     'EXISTING_TAG': 'Add an existing tag',
-    'INPUT_LIST_DEFAULT': 'Enter the answer here'
+    'INPUT_LIST_DEFAULT': 'Enter the input here'
   },
 
   'REQUIRED': {
@@ -192,6 +197,7 @@ export const COMMON = {
     'CONFIRM': 'Confirm',
     'IMPORT': 'Import',
     'EXPORT': 'Export',
+    'SELECT': 'Select',
     'SEND': 'Send',
     'PRINT': 'Print',
     'PREVIEW': 'Preview',
@@ -213,6 +219,7 @@ export const COMMON = {
     'UPDATE': 'Update',
     'IMPORT_PROJECT': 'Import project',
     'EXPORT_PROJECT': 'Export project',
+    'IMPORT_PROS': 'Import a list of pros',
     'IMPORT_WORKFLOW': 'Import workflow',
     'EXPORT_WORKFLOW': 'Export all the workflows',
     'IMPORT_QUESTIONNAIRE': 'Import questionnaire',
@@ -222,7 +229,8 @@ export const COMMON = {
   'PROJECT': {
     'OWNER': 'Owner',
     'TITLE': 'Title',
-    'DOMAIN': 'Domain'
+    'DOMAIN': 'Domain',
+    'MISSION': 'Mission'
   },
 
   'PROJECT_STATE': {
@@ -245,6 +253,7 @@ export const COMMON = {
   'OR': 'Or',
 
   'LANGUAGE': 'Language',
+
   'LANG': {
     'FR': 'French',
     'EN': 'English'
@@ -287,6 +296,8 @@ export const COMMON = {
   'MY_ACCOUNT': 'My account',
 
   'PROJECTS': 'Projects',
+
+  'MISSIONS': 'Missions',
 
   'CAMPAIGNS': 'Campaigns',
 
@@ -371,7 +382,9 @@ export const COMMON = {
     'READONLY': 'Readonly',
     'DELETE': 'Delete',
     'MOVE_UP': 'Move up',
-    'MOVE_DOWN': 'Move down'
+    'MOVE_DOWN': 'Move down',
+    'ADVANCE_SETTINGS': 'Advance settings',
+    'SAVE_CHANGES': 'Save changes'
   },
 
   'SIGNATURES': {

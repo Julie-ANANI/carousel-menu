@@ -49,14 +49,6 @@ export class SearchService {
     return this._http.get('/search/get', {params: {path: '/metadataRequest/' + requestId}});
   }
 
-  public stopRequest(requestId: string): Observable<any> {
-    return this._http.get('/search/stop', {params: {id: requestId}});
-  }
-
-  public cancelRequest(requestId: string, cancel: boolean): Observable<any> {
-    return this._http.get('/search/cancel', {params: {id: requestId, cancel: JSON.stringify(cancel)}});
-  }
-
   public getPros(config: {[header: string]: string | string[]}, requestId: string): Observable<any> {
     config = this._commonService.configToString(config);
     return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params: config});
@@ -142,5 +134,49 @@ export class SearchService {
       path: `/person/${personId}/getKeywords`,
     };
     return this._http.get('/search/get', {params: query});
+  }
+
+  public cancelManyRequests(requestIds: Array<String>): Observable<any> {
+    const query = {
+      params: JSON.stringify({requestIds: requestIds}),
+      path: '/request/cancel/many'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public stopManyRequests(requestIds: Array<String>): Observable<any> {
+    const query = {
+      params: JSON.stringify({requestIds: requestIds}),
+      path: '/request/stop/many'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public queueManyRequests(requestIds: Array<String>): Observable<any> {
+    const query = {
+      params: JSON.stringify({requestIds: requestIds}),
+      path: '/request/queue/many'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+/*
+  public updateDatabase() {
+    const query = {
+      path: `/request/update/database`,
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+  */
+  public loadRequestIndex(): Observable<any> {
+    const query = {
+      path: '/index/create'
+    };
+    return this._http.get('/search/get', {params: query});
+  }
+
+  public importList(file:File, fileName: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, fileName);
+    return this._http.post('/search/mailsList/', formData);
   }
 }

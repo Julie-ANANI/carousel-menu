@@ -1,67 +1,71 @@
 @import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
 
-.world-map {
-  margin-left: auto;
-  margin-right: auto;
+#shared-worldmap {
+
+  .country-tooltip {
+    background-color: $bg-light-color;
+    box-shadow: $box-shadow-menu;
+    padding: 0.75rem 1rem;
+    width: fit-content;
+    min-width: max-content;
+    border-radius: 6px;
+    position: absolute;
+    opacity: 0;
+    display: none;
+
+    img {
+      width: 23px;
+      height: 16px;
+    }
+
+    h3 {
+      margin-left: $unit-2;
+    }
+
+    h3, p {
+      margin-bottom: 0;
+      font-size: $font-size-sm;
+    }
+
+  }
+
+  .swm-map-wrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $size-2x;
+
+    .country {
+      fill: #E2E2E2;
+      stroke: $light-color;
+    }
+
+  }
+
+  .swm-legend-wrapper {
+    display: inline-flex;
+    align-items: center;
+    margin: 0.5rem;
+    font-size: 0.65rem;
+    color: $text-secondary-dark-color;
+    font-weight: $font-weight-medium;
+
+    .circle-1 {
+      border-color: #94E9B8;
+      background-color: #94E9B8;
+    }
+
+    .circle-2 {
+      border-color: #99E04B;
+      background-color: #99E04B;
+    }
+
+    .circle-3 {
+      border-color: #D9D9D9;
+      background-color: #D9D9D9;
+    }
+
+  }
+
 }
-
-.not-synthesis-wrapper {
-
-  path, g {
-    fill: #E2E2E2;
-    cursor: pointer;
-  }
-
-  g.selected, path.selected, .selected g, .selected path {
-    fill: $success-color;
-  }
-
-  g.clickable:not(.selected):hover, path.clickable:not(.selected):hover, .clickable:not(.selected):hover g, .clickable:not(.selected):hover path {
-    fill: $primary-color;
-  }
-
-  g.disabled, path.disabled, .disabled g, .disabled path {
-    cursor: not-allowed;
-  }
-
-}
-
-.synthesis-wrapper {
-
-  path, g {
-    fill: #E2E2E2;
-    cursor: pointer;
-  }
-
-  g.selected, path.filtered, .filtered g, .filtered path {
-    fill: $alert-color !important;
-  }
-
-}
-
-.info-wrapper {
-  font-size: $font-size-sm;
-
-  div {
-    display: inline-block;
-    margin: 10px;
-  }
-
-  .shape.is-circle.is-sm {
-    width: 13px;
-    height: 13px;
-  }
-
-  .circle-3 {
-    border-color: #99E04B;
-    background-color: #99E04B;
-  }
-
-  .circle-2 {
-    border-color: #94E9B8;
-    background-color: #94E9B8;
-  }
-
-}
-
-

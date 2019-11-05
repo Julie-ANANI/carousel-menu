@@ -5,6 +5,7 @@ import { Media } from './media';
 // import { Preset } from './preset';
 import { Tag } from './tag';
 import { User } from './user.model';
+import { Mission } from './mission';
 
 export interface InnovationMetadataValues {
   preparation?: number;
@@ -13,7 +14,7 @@ export interface InnovationMetadataValues {
 }
 
 export interface Innovation {
-  __v?: number;
+
   readonly _id?: string;
   owner?: User;
   readonly campaigns?: Array<any>;
@@ -24,7 +25,7 @@ export interface Innovation {
     action: 'SUBMIT' | 'REJECT' | 'VALIDATE' | 'FINISH'
     user: User,
     date: Date
-  }>
+  }>;
 
   readonly name?: string;
   domain?: string;
@@ -33,7 +34,6 @@ export interface Innovation {
   tags?: Array<Tag>;
   preset?: any; // This isn't preset anymore -> we don't have ObjectID.
   readonly quizId?: string;
-  comments?: string;
 
   marketReport?: {
     [questionIdentifier: string]: QuestionReport
@@ -51,9 +51,7 @@ export interface Innovation {
 
   feedback?: string;
   thanks?: boolean;
-  projectStatus?: number;
   readonly reviewing?: any;
-  patented?: boolean;
   isPublic?: boolean;
   external_diffusion?: boolean;
   readonly launched?: Date;
@@ -76,6 +74,8 @@ export interface Innovation {
     }]
   };
 
+  mission?: Mission | string;
+
   operator?: User;
   previewMode?: boolean;
   completion?: number;
@@ -88,4 +88,5 @@ export interface Innovation {
   percentages?: InnovationMetadataValues;
 
   _metadata?: any;
+
 }

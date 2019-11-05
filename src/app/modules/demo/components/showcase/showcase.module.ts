@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { AdminSearchMapModule } from '../../../user/admin/components/admin-search/admin-search-map/admin-search-map.module';
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 
@@ -24,13 +23,13 @@ import { ShowcaseHistoryModule } from '../../../sidebar/components/showcase-hist
 import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../utility-components/messages/message-template-2/message-template-2.module';
+import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    AdminSearchMapModule,
     CountryFlagModule,
     ModalModule,
     PipeModule,
@@ -39,7 +38,8 @@ import { MessageTemplate2Module } from '../../../utility-components/messages/mes
     ShowcaseHistoryModule,
     MessageTemplate1Module,
     ErrorTemplate1Module,
-    MessageTemplate2Module
+    MessageTemplate2Module,
+    SharedWorldmapModule
   ],
   declarations: [
     ShowcaseAnswersComponent,

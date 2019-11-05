@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FilterService } from '../../services/filters.service';
+import { DataService } from '../../services/data.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
@@ -21,11 +21,6 @@ export interface Item {
 
 export class ItemListComponent implements OnInit {
 
-  @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
-    this._updateAnswersData();
-  }
-
   @Input() public innovation: Innovation;
 
   @Input() public question: Question;
@@ -42,24 +37,19 @@ export class ItemListComponent implements OnInit {
 
   @Output() updateNumberOfItems = new EventEmitter<number>();
 
-  private _answers: Array<Answer>;
-
   private _details: boolean;
 
   private _listItems: Array<Item>;
 
-  constructor(private _filterService: FilterService) { }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit() {
-    this._updateAnswersData();
-  }
-
-  private _updateAnswersData(): void {
-    if (this.question && this.question.identifier) {
+    /* Update Answers Data */
+    this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
 
       const answerItems: {[value: string]: {rating: number, count: number, domain: string, logo: string, answers: Array<Answer>}} = {};
 
-      this._answers.forEach((answer) => {
+      answers.forEach((answer) => {
         if (answer.answers[this.question.identifier] && Array.isArray(answer.answers[this.question.identifier])) {
           answer.answers[this.question.identifier].forEach((item: any) => {
             const key = this.question.controlType !== 'clearbit' ? item.text : item.name;
@@ -91,7 +81,7 @@ export class ItemListComponent implements OnInit {
             domain: answerItems[key].domain,
             logo: answerItems[key].logo,
             answers: answerItems[key].answers,
-          }
+          };
         })
         .filter((a) => (a.rating !== 0))
         .sort((a, b) => {
@@ -107,15 +97,6 @@ export class ItemListComponent implements OnInit {
         });
 
       this.updateNumberOfItems.emit(this._listItems.length);
-    }
-  }
-
-  public filterAnswer(item: Item, event: Event) {
-    event.preventDefault();
-    this._filterService.addFilter({
-      status: this.question.controlType === 'clearbit' ? 'CLEARBIT' : 'LIST',
-      questionId: this.question.identifier,
-      value: item.value
     });
   }
 

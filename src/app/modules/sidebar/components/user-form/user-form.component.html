@@ -55,12 +55,12 @@
 
           <ng-container *ngIf="editInstanceDomain">
             <label class="form-label">New domain:</label>
-            <app-autocomplete-input
+            <app-auto-complete-input
               id="domain"
               (update)="updateInstanceDomain($event)"
               [onlyOne]="true"
               [config]="buildInstanceDomainListConfig()">
-            </app-autocomplete-input>
+            </app-auto-complete-input>
           </ng-container>
 
         </div>
@@ -85,6 +85,15 @@
 
         </div>
       </ng-container>
+
+      <!-- is shielded? -->
+      <ng-container *ngIf="isProfessional && isProShielded">
+        <div class="form-group">
+          <label class="form-label"></label>
+          <span><i class="fas fa-user-shield"></i></span> This professional protected by shield.
+        </div>
+      </ng-container>
+
 
       <!-- show tags -->
       <ng-container *ngIf="isProfessional && tags.length > 0">

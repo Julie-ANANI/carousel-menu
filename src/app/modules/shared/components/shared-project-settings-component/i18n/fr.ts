@@ -35,7 +35,7 @@ export const SHARED_PROJECT_SETTINGS = {
     'PLACEHOLDER': 'Ex : Les équipementiers et constructeurs automobiles, et les sociétés de transport',
     'TO_EXCLUDE': 'Indiquer les entreprises à exclure',
     'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Nom de l\'entreprise à exclure',
-    'TO_INCLUDE': 'Indiquer les entreprises à contacter',
+    'TO_INCLUDE': 'Exemple d\'entreprises à cibler',
     'NEW_COMPANY_TO_INCLUDE_PLACEHOLDER': 'Nom de l\'entreprise à inclure',
     'COMMENT': 'D\'autres commentaires sur cette section ?'
   },

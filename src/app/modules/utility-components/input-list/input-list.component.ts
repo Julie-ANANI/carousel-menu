@@ -18,15 +18,13 @@ export class InputListComponent {
     }
   }
 
-  @Input() canEdit = true;
+  @Input() isEditable: boolean = true;
 
-  @Input() set adminMode(value: boolean) {
-    this._adminMode = value;
-  }
+  @Input() isAdminMode: boolean = false;
 
-  @Input() isEmail = false;
+  @Input() isEmail: boolean = false;
 
-  @Input() isDomain = false;
+  @Input() isDomain: boolean = false;
 
   @Output() update: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,14 +34,11 @@ export class InputListComponent {
 
   private _placeholder: string = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
-  private _adminMode: boolean = false;
-
   private _enableUpdate: boolean = false;
 
   private _indexNumber: number;
 
-  constructor(private _translateNotificationsService: TranslateNotificationsService) {
-  }
+  constructor(private _translateNotificationsService: TranslateNotificationsService) {}
 
   public addProposition(val: string) {
 
@@ -84,13 +79,18 @@ export class InputListComponent {
   public onClickEdit(event: Event, index: number) {
     event.preventDefault();
 
-    if (this._indexNumber === index) {
-      this._enableUpdate = !this._enableUpdate;
-    } else {
-      this._enableUpdate = true;
+    if (this.isEditable) {
+
+      if (this._indexNumber === index) {
+        this._enableUpdate = !this._enableUpdate;
+      } else {
+        this._enableUpdate = true;
+      }
+
+      this._indexNumber = index;
+
     }
 
-    this._indexNumber = index;
   }
 
   public updateProposition(event: Event, index: number, value: string) {
@@ -104,14 +104,16 @@ export class InputListComponent {
   }
 
   public removeProposition(index: number): void {
-    this._answerList.splice(index, 1);
-    this.update.emit({ value: this._answerList });
+    if (this.isEditable) {
+      this._answerList.splice(index, 1);
+      this.update.emit({ value: this._answerList });
+    }
   }
 
   public thumbsUp(event: Event, index: number): void {
     event.preventDefault();
 
-    if (this.adminMode) {
+    if (this.isAdminMode) {
       if (this._answerList[index].rating === 2) {
         this._answerList[index].rating = 1;
       } else {
@@ -125,7 +127,7 @@ export class InputListComponent {
   public thumbsDown(event: Event, index: number): void {
     event.preventDefault();
 
-    if (this.adminMode) {
+    if (this.isAdminMode) {
       if (this._answerList[index].rating === 0) {
         this._answerList[index].rating = 1;
       } else {
@@ -138,10 +140,6 @@ export class InputListComponent {
 
   get placeholder(): string {
     return this._placeholder;
-  }
-
-  get adminMode(): boolean {
-    return this._adminMode;
   }
 
   get enableUpdate(): boolean {

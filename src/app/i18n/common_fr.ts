@@ -50,6 +50,7 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
+  'STATUS': 'Status',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
@@ -119,6 +120,7 @@ export const COMMON = {
     'COUNTRY': 'Pays',
     'DATE': 'Date',
     'TIME': 'Heure',
+    'SELECT': 'Sélectionner',
     'STARTED': 'Lancé',
     'CONTENT': 'Contenu',
     'OPERATOR': 'Opérateur',
@@ -128,17 +130,20 @@ export const COMMON = {
     'NAME': 'Nom',
     'TYPE': 'Type',
     'SELECT_WORKFLOW': 'Sélectionner le workflow',
-    'SELECT': 'Sélectionnez',
+    'SELECT_ALL': 'Sélectionner tout',
     'CHOOSE_LANGUAGE': 'Sélectionnez la langue :',
     'TECHNOLOGIES': 'Technologies',
     'SEARCH_BY': 'Recherche par',
     'SIGNATURE_NAME': 'Nom Signature',
     'LANGUAGE': 'Langue',
+    'PRESET': 'Preset',
     'PRESET_NAME': 'Nom du Preset',
     'TAG_NAME': 'Nom du tag',
     'CREATED': 'Créé',
     'CREATED_ON': 'Créé le',
-    'COLLABORATORS': 'Collaborateurs'
+    'COLLABORATORS': 'Collaborateurs',
+    'DOMAIN_NAME': 'Nom de domaine',
+    'ANSWER': 'Réponse'
   },
 
   'PLACEHOLDER': {
@@ -198,6 +203,7 @@ export const COMMON = {
     'SIGN_IN': 'Se Connecter',
     'SIGN_UP': 'Commencer',
     'DELETE': 'Supprimer',
+    'SELECT': 'Sélectionner',
     'CLOSE': 'Fermer',
     'DOWNLOAD': 'Télécharger',
     'SHARE': 'Partager',
@@ -211,6 +217,7 @@ export const COMMON = {
     'COLLABORATOR': 'Gestion des collaborateurs',
     'UPDATE': 'Mise à jour',
     'IMPORT_PROJECT': 'Importer un projet',
+    'IMPORT_PROS': 'Importer une liste de pros',
     'EXPORT_PROJECT': 'Exporter le project',
     'IMPORT_WORKFLOW': 'Importer un workflow',
     'EXPORT_WORKFLOW': 'Exporter tous les workflow',
@@ -221,7 +228,8 @@ export const COMMON = {
   'PROJECT': {
     'OWNER': 'Propriétaire',
     'TITLE': 'Titre',
-    'DOMAIN': 'Domaine'
+    'DOMAIN': 'Domaine',
+    'MISSION': 'Mission'
   },
 
   'PROJECT_STATE': {
@@ -285,6 +293,8 @@ export const COMMON = {
   'MY_ACCOUNT': 'Mon compte',
 
   'PROJECTS': 'Projets',
+
+  'MISSIONS': 'Missions',
 
   'CAMPAIGNS': 'Campagnes',
 
@@ -368,7 +378,9 @@ export const COMMON = {
     'READONLY': 'Lecture seulement',
     'DELETE': 'Supprimer',
     'MOVE_UP': 'Remonter en haut',
-    'MOVE_DOWN': 'Déplacer vers le bas'
+    'MOVE_DOWN': 'Déplacer vers le bas',
+    'ADVANCE_SETTINGS': 'Paramètres avancés',
+    'SAVE_CHANGES': 'Sauvegarder les modifications'
   },
 
   'SIGNATURES': {

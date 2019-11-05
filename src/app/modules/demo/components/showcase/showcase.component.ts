@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
@@ -51,7 +52,8 @@ export class ShowcaseComponent {
   
   private _fetchingError: boolean;
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _activatedRoute: ActivatedRoute,
               private _multilingPipe: MultilingPipe,
               private _tagService: TagsService,
               private _translateService: TranslateService,
@@ -154,8 +156,12 @@ export class ShowcaseComponent {
     this._stats = this._selectedTagsStats.reduce((acc, stats) => {
       acc.totalInnovations = acc.totalInnovations + stats.totalInnovations;
       acc.totalAnswers = acc.totalAnswers + stats.totalAnswers;
+      acc.countContext = acc.countContext + stats.countContext;
+      acc.totalCountContext = acc.totalCountContext + stats.totalCountContext;
       acc.countNeed = acc.countNeed + stats.countNeed;
       acc.totalCountNeed = acc.totalCountNeed + stats.totalCountNeed;
+      acc.countRelevance = acc.countRelevance + stats.countRelevance;
+      acc.totalCountRelevance = acc.totalCountRelevance + stats.totalCountRelevance;
       acc.countDiff = acc.countDiff + stats.countDiff;
       acc.totalCountDiff = acc.totalCountDiff + stats.totalCountDiff;
       acc.countLeads = acc.countLeads + stats.countLeads;
@@ -163,18 +169,26 @@ export class ShowcaseComponent {
     }, {
       totalInnovations: 0,
       totalAnswers: 0,
+      countContext: 0,
+      totalCountContext: 0,
       countNeed: 0,
       totalCountNeed: 0,
+      countRelevance: 0,
+      totalCountRelevance: 0,
       countDiff: 0,
       totalCountDiff: 0,
       countLeads: 0,
       geographicalRepartition: [] // we don't need this here, we already have _countries
     });
-    console.log('--------------------------------');
-    console.log(`Answers/Inno: ${Math.round(this._stats.totalAnswers / this._stats.totalInnovations)}`);
-    console.log(`Need: ${this._stats.countNeed}/${this._stats.totalCountNeed}`);
-    console.log(`Diff: ${this._stats.countDiff}/${this._stats.totalCountDiff}`);
-    console.log(`Leads: ${this._stats.countLeads}`);
+    if (isPlatformBrowser(this._platformId)) {
+      console.log('--------------------------------');
+      console.log(`Answers/Inno: ${Math.round(this._stats.totalAnswers / this._stats.totalInnovations)}`);
+      console.log(`Context: ${this._stats.countContext}/${this._stats.totalCountContext}`);
+      console.log(`Need: ${this._stats.countNeed}/${this._stats.totalCountNeed}`);
+      console.log(`Relevance: ${this._stats.countRelevance}/${this._stats.totalCountRelevance}`);
+      console.log(`Diff: ${this._stats.countDiff}/${this._stats.totalCountDiff}`);
+      console.log(`Leads: ${this._stats.countLeads}`);
+    }
   }
 
 

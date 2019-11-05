@@ -1,4 +1,5 @@
 import { SURVEY } from '../components/survey/i18n/en';
+import { OBJECTIVES } from '../components/objectives/i18n/en';
 
 export const SETUP = {
   'TITLE': 'Project details',
@@ -18,7 +19,7 @@ export const SETUP = {
     'REVIEWING': {
       'A': 'Your project needs to be modified. Please ',
       'B': 'read',
-      'C': 'our comments that we have sent you by mail.'
+      'C': 'our comments to improve the description.'
     },
     'PREVIEW_MODE': 'The partial synthesis of your project is available.',
     'DONE': 'The complete synthesis of your project is available.',
@@ -28,9 +29,13 @@ export const SETUP = {
 
   'TARGETING_TAB': 'Targeting',
 
+  'OBJECTIVES_TAB': 'Objectives',
+
   'SURVEY_TAB': 'Survey',
 
   'SURVEY': SURVEY,
+
+  'OBJECTIVES': OBJECTIVES,
 
   'PREVIEW': 'Preview',
 

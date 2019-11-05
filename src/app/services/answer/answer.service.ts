@@ -41,10 +41,10 @@ export class AnswerService {
     return this._http.post('/answer/' + answerId + '/tag', { params: params});
   }
 
-  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
+  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<Tag> {
     const params: any = { tag: tag };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.post('/answer/' + answerId + '/new-tag', { params: params});
+    return this._http.post<Tag>('/answer/' + answerId + '/new-tag', { params: params});
   }
 
   public removeTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
@@ -53,8 +53,8 @@ export class AnswerService {
     return this._http.delete('/answer/' + answerId + '/tag', { params: params});
   }
 
-  public getInnovationValidAnswers(innovationId: string): Observable<{answers: Array<Answer>}> {
-    return this._http.get<{answers: Array<Answer>}>('/innovation/' + innovationId + '/validAnswers');
+  public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
+    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous:''}`);
   }
 
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
@@ -80,5 +80,14 @@ export class AnswerService {
 
   public importFromQuiz(answer: any): Observable<any> {
     return this._http.post(`/campaign/${answer.campaignId}/answer`, answer);
+  }
+
+  public answerReassign(campaignId: string, quizAnswerId: string, answerId: string, newPro: any): Observable<any> {
+    const body = {
+      answerId: quizAnswerId,
+      answerUmiAppId: answerId,
+      user: newPro
+    };
+    return this._http.post(`/campaign/${campaignId}/answerReassign`, body);
   }
 }

@@ -145,7 +145,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
         {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
           _choices: [
             {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label is-success'},
-            {_name: 'VALIDATED_NO_MAIL', _alias: 'TABLE.STATUS.VALIDATED_NO_MAIL', _class: 'label is-success'},
             {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label is-progress'},
             {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label is-danger'},
             {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label is-danger'},
@@ -180,7 +179,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     switch (action._label) {
 
       case 'ANSWER.VALID_ANSWER':
-        this._updateStatus(action._rows, 'VALIDATED_NO_MAIL');
+        this._updateStatus(action._rows, 'VALIDATED');
         break;
 
       case 'ANSWER.REJECT_ANSWER':
@@ -189,7 +188,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     }
   }
 
-  private _updateStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL'
+  private _updateStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED'
     | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT') {
     rows.forEach((row: Answer) => {
       row.status = status;

@@ -12,6 +12,8 @@ import { SharedInnovationDetailModule } from '../../../../shared/components/shar
 import { SharedTargetingDetailModule } from '../../../../shared/components/shared-targeting-detail/shared-targeting-detail.module';
 import { SharedExecutiveReportModule } from '../../../../shared/components/shared-executive-report/shared-executive-report.module';
 
+import { TagsService } from '../../../../../services/tags/tags.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +28,9 @@ import { SharedExecutiveReportModule } from '../../../../shared/components/share
   ],
   declarations: [
     SynthesisCompleteComponent
+  ],
+  providers: [
+    TagsService
   ],
   exports: [
     SynthesisCompleteComponent

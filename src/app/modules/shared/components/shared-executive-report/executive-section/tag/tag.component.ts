@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Tag } from '../../../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss']
 })
-export class TagComponent implements OnInit {
+export class TagComponent {
 
   @Input() set tags(value: Array<Tag>) {
     this._tags = value;
@@ -22,8 +22,6 @@ export class TagComponent implements OnInit {
   private _tagColor = '#4F5D6B';
 
   constructor(private _translateService: TranslateService) { }
-
-  ngOnInit() { }
 
   get userLang(): string {
     return this._translateService.currentLang;

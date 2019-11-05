@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../models/innovation';
 import { Subject } from 'rxjs';
+import {GeographySettings} from "../../../../models/innov-settings";
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -15,6 +16,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
+    this._setTargetCountries();
   }
 
   @Input() set editable(value: boolean) {
@@ -37,8 +39,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _adminSide = false;
 
-  private _displayCountriesCommentSection = false;
-
   private _displayPersonsToExcludeSection = false;
 
   private _displayKeywordsSection = false;
@@ -46,6 +46,8 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   private _displayCompanyCommentSection = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
+
+  private _targetingCountries: Array<string> = [];
 
   constructor(private translateService: TranslateService,
               private innovationFrontService: InnovationFrontService) { }
@@ -55,7 +57,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   private getCommentSections() {
-    this._displayCountriesCommentSection = this._innovation.settings.geography && this._innovation.settings.geography.comments && this._innovation.settings.geography.comments.length > 0;
     this._displayCompanyCommentSection = this._innovation.settings.companies.description.length > 0;
     this._displayPersonsToExcludeSection = this._innovation.settings.professionals && this._innovation.settings.professionals.exclude && this._innovation.settings.professionals.exclude.length > 0;
     this._displayKeywordsSection = this._innovation.settings.keywords.length > 0;
@@ -70,12 +71,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
    */
   getConfig(type: string): any {
     switch (type) {
-      case 'countries':
-        return {
-          placeholder: 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-            initialData: this._innovation.settings && this._innovation.settings.geography ? this._innovation.settings.geography.exclude || [] : [],
-            type: 'countries'
-        };
       case 'excludedPeople':
         return {
           placeholder: 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
@@ -121,42 +116,13 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  /**
-   * This method receives the event from a click in some continent. It should update the geography.continentTarget
-   * @param event
-   */
-  continentModificationDrain(event: any) {
-    if (event) {
-      this._innovation.settings.geography.continentTarget = event.continents;
-      this.updateSettings();
-    }
+  private _setTargetCountries() {
+    this._targetingCountries = this._innovation.settings.geography.include.map((country) => country.code);
   }
-
-
-  /**
-   * Add a country to the exclusion list
-   */
-  addCountryToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.geography.exclude = event.value;
-    this.updateSettings();
-  }
-
 
   get continentTarget(): any {
     return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
   }
-
-
-  get displayCountriesCommentSection(): boolean {
-    return this._displayCountriesCommentSection;
-  }
-
-
-  set displayCountriesCommentSection(value: boolean) {
-    this._displayCountriesCommentSection = value;
-  }
-
 
   addCompanyToExclude(event: {value: Array<string>}): void {
     this._innovation.settings.companies.exclude = event.value;
@@ -222,7 +188,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this.updateSettings();
   }
 
-
   updateSettings() {
     if (this._canEdit) {
       this.innovationFrontService.setNotifyChanges(true);
@@ -253,6 +218,20 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   get adminSide(): boolean {
     return this._adminSide;
+  }
+
+  get targetingCountries() {
+    return this._targetingCountries;
+  }
+
+  get geography() {
+    return this._innovation.settings.geography;
+  }
+
+  set geography(value: GeographySettings) {
+    this._innovation.settings.geography = value;
+    this._setTargetCountries();
+    this.updateSettings();
   }
 
   ngOnDestroy(): void {

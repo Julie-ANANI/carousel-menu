@@ -30,6 +30,8 @@ export class AnswerQuestionComponent {
       this._fullAnswer.answers[this.question.identifier] = {};
     }
     this._commenting = !!(this._fullAnswer.answers && this._fullAnswer.answers[this.question.identifier + 'Comment']);
+    this._showQuestionTranslation = false;
+    this._showCommentTranslation = false;
   }
 
   _commenting: boolean;
@@ -88,11 +90,11 @@ export class AnswerQuestionComponent {
 
   createTag(tag: Tag, q_identifier: string): void {
     this._answerService.createTag(this.fullAnswer._id, tag, q_identifier)
-      .subscribe((a: any) => {
+      .subscribe((newTag: Tag) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
-          this.fullAnswer.answerTags[q_identifier].push(tag);
+          this.fullAnswer.answerTags[q_identifier].push(newTag);
         } else {
-          this.fullAnswer.answerTags[q_identifier] = [tag];
+          this.fullAnswer.answerTags[q_identifier] = [newTag];
         }
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, (err: any) => {

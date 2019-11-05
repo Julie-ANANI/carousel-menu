@@ -12,13 +12,12 @@ export interface Values {
 
 @Injectable()
 export class FrontendService {
+
   totalFieldsPresent: number;
   totalFieldsRequired: number;
 
   settingsFieldsRequired: number;
   settingsFieldsPresent: number;
-
-  projectFieldsRequired: number;
 
   innovCardFieldsRequired: number;
   innovCardFieldsPresent: number;
@@ -33,18 +32,12 @@ export class FrontendService {
     We are calculating the percentage for the project.
    */
   completionCalculation(project: Innovation) {
-    this.projectFieldsRequired = 0;
     this.settingsFieldsRequired = 0;
     this.settingsFieldsPresent = 0;
     this.innovCardFieldsRequired = 0;
     this.innovCardFieldsPresent = 0;
     this.totalFieldsPresent = 0;
     this._calculatedValues.innovationCardsPercentage = [];
-
-    /*
-      method to calculate the percentage at project level.
-     */
-    this.projectLevel(project);
 
     /*
       method to calculate the percentage in project settings.
@@ -56,35 +49,12 @@ export class FrontendService {
      */
     this.innovCardLevel(project);
 
-    this.totalFieldsRequired = this.projectFieldsRequired + this.settingsFieldsRequired + this.innovCardFieldsRequired;
+    this.totalFieldsRequired = this.settingsFieldsRequired + this.innovCardFieldsRequired;
 
     /*
       now calculating the total project completion percentage.
      */
     this._calculatedValues.totalPercentage = (this.totalFieldsPresent * 100) / this.totalFieldsRequired;
-
-  }
-
-
-  /*
-    Here we are calculating the values that we have at project level
-    and we are checking that are field or not.
-  */
-
-  projectLevel(value: Innovation) {
-    this.projectFieldsRequired = 3;
-
-    if (value.external_diffusion !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.projectStatus !== null) {
-      this.totalFieldsPresent++;
-    }
-
-    if (value.patented !== null) {
-      this.totalFieldsPresent++;
-    }
 
   }
 
@@ -101,10 +71,10 @@ export class FrontendService {
       this.settingsFieldsPresent++;
     }
 
-    if (value.settings.geography.exclude.length || value.settings.geography.comments.length || value.settings.geography.continentTarget.russia
-      || value.settings.geography.continentTarget.oceania || value.settings.geography.continentTarget.europe || value.settings.geography.continentTarget.asia
-      || value.settings.geography.continentTarget.americaSud || value.settings.geography.continentTarget.americaNord
-      || value.settings.geography.continentTarget.africa) {
+    if (value.settings.geography.exclude.length || value.settings.geography.comments.length
+      || value.settings.geography.continentTarget.oceania || value.settings.geography.continentTarget.europe
+      || value.settings.geography.continentTarget.asia || value.settings.geography.continentTarget.americaSud
+      || value.settings.geography.continentTarget.americaNord || value.settings.geography.continentTarget.africa) {
       this.totalFieldsPresent++;
       this.settingsFieldsPresent++;
     }
@@ -167,14 +137,10 @@ export class FrontendService {
   calculateInnovationMetadataPercentages(project: Innovation, level: 'preparation' | 'campaign' | 'delivery') {
     if (project._metadata[level] !== undefined) {
       const keys = Object.keys(project._metadata[level]) || [];
-      this._innovationMetadataCalculatedValues[level] = Math.round( (((keys.filter(value => project._metadata[level][value] === true).length) * 100) / keys.length));
+      this._innovationMetadataCalculatedValues[level] = Math.round( (((keys.filter(value => project._metadata[level][value] === true && value !== 'anonymous_answers').length) * 100) / keys.length-1));
     } else {
       this._innovationMetadataCalculatedValues[level] = 0;
     }
-  }
-
-  get innovationMetadataCalculatedValues(): InnovationMetadataValues {
-    return this._innovationMetadataCalculatedValues;
   }
 
   get calculatedPercentages(): Values {

@@ -56,7 +56,7 @@
       <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
 
       <!-- section no batches -->
-      <ng-container *ngIf="noResult">
+      <ng-container *ngIf="!tableBatch.length">
         <div class="section-light-pad">
 
           <!-- note -->
@@ -103,26 +103,19 @@
                     id="auto-batch"
                     [disabled]="!autoBatchStatus"
                     [value]="campaign.autoBatch"
-                    (change)="onFirstAutoBatch($event)"
+                    (change)="onSwitchAutoBatch($event)"
                     [ngModel]="campaign.autoBatch">
                   <i class="form-icon"></i>
                 </label>
               </div>
             </div>
 
-            <ng-container *ngIf="batchAlreadyActivated === 'false'">
+            <ng-container>
               <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
                    class="icons is-white absolute tooltip"
                    data-tooltip="Batch Manually"
                    (click)="activateSidebar('newBatch')">
                 <i class="fas fa-cog"></i>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="batchAlreadyActivated === 'true'">
-              <div class="notify-wrapper">
-                <p>{{ 'CAMPAIGNS.BATCH_PAGE.CREATING_BATCH' | translate }}</p>
-                <div class="loading is-lg"></div>
               </div>
             </ng-container>
 
@@ -133,7 +126,7 @@
       <!-- /section no batches -->
 
       <!-- section batches -->
-      <ng-container *ngIf="!noResult">
+      <ng-container *ngIf="tableBatch.length">
         <div class="section-light-pad rm-pad-bottom">
 
           <!-- section status -->
@@ -171,7 +164,7 @@
 
             <div class="card-body">
               <app-shared-table
-                [data]="tableBatch(batchIndex)"
+                [data]="getBatch(batchIndex)"
                 [config]="config"
                 (editRow)="OnClickEdit($event, batch)">
               </app-shared-table>

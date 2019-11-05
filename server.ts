@@ -3,6 +3,7 @@ import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
 // hack to let the server forward a cookie in CookieServerInterceptor
+// @ts-ignore
 import * as XHR2 from 'xhr2';
 XHR2.prototype._restrictedHeaders.cookie = false;
 

@@ -7,7 +7,6 @@ import { environment } from '../../../../../../../environments/environment';
 import { Campaign } from '../../../../../../models/campaign';
 import { Innovation } from '../../../../../../models/innovation';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
@@ -49,8 +48,6 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _noResult = false;
-
   constructor(private activatedRoute: ActivatedRoute,
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -62,16 +59,10 @@ export class AdminProjectCampaignsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCampaigns();
-  }
-
-
-  private getCampaigns() {
     if (this._innovation && this._innovation._id) {
-      this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((campaigns: any) => {
+      this.innovationService.campaigns(this._innovation._id).subscribe((campaigns: any) => {
         this._campaigns = campaigns.result;
-        this._noResult = campaigns.result.length === 0;
-      },() => {
+      }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
     }
@@ -102,10 +93,10 @@ export class AdminProjectCampaignsComponent implements OnInit {
       title: (this._campaigns.length + 1) + '. ' + newTitle
     };
 
-    this.campaignService.create(this._newCampaign).pipe(first()).subscribe((response: any) => {
+    this.campaignService.create(this._newCampaign).subscribe((response: Campaign) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.ADDED');
       this._campaigns.push(response);
-    },() => {
+    }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
@@ -128,7 +119,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
   updateCampaign(formGroup: FormGroup) {
     this._selectCampaign.title = formGroup.value['title'];
 
-    this.campaignService.put(this._selectCampaign).pipe(first()).subscribe((response: any) => {
+    this.campaignService.put(this._selectCampaign).subscribe((response: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
       }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -141,7 +132,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
   onClickUpdateStatus(event: Event, campaign: Campaign) {
     event.preventDefault();
 
-    this.campaignService.updateStats(campaign._id).pipe(first()).subscribe((stats: any) => {
+    this.campaignService.updateStats(campaign._id).subscribe((stats: any) => {
       campaign.stats = stats;
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
       }, () => {
@@ -159,9 +150,9 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
 
   onClickSubmit() {
-    this.campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe((response: any) => {
+    this.campaignService.remove(this._selectCampaign._id).subscribe((response: any) => {
+      this._campaigns = this._campaigns.filter((c) => c._id !== this._selectCampaign._id);
       this._selectCampaign = null;
-      this.getCampaigns();
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.DELETED');
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -193,9 +184,6 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   get selectCampaign(): Campaign {
     return this._selectCampaign;
-  }
-  get noResult(): boolean {
-    return this._noResult;
   }
 
 }

@@ -1,18 +1,234 @@
-<ng-container *ngIf="innovation">
-  <section id="survey-component">
+<div *ngIf="innovation" id="survey">
 
-    <!-- section no survey -->
-    <ng-container *ngIf="!innovation.quizId">
-      <app-message-template-1 [widthMax]="'359px'">
-        {{ 'PROJECT_MODULE.SETUP.SURVEY.NO_QUIZ' | translate }}
-      </app-message-template-1>
-    </ng-container>
+  <!-- if no quiz id -->
+  <section *ngIf="!innovation.quizId && isHidden">
+    <app-message-template-1 [widthMax]="'359px'">
+      {{ 'PROJECT_MODULE.SETUP.SURVEY.NO_QUIZ' | translate }}
+    </app-message-template-1>
+  </section>
+  <!-- /if no quiz id -->
 
-    <!-- section survey -->
-    <ng-container *ngIf="innovation.quizId">
-      <p class="text">{{ 'PROJECT_MODULE.SETUP.SURVEY.DONT_SHARE_QUIZ' | translate }}</p>
-      <a class="text-link" [href]="url" target="_blank"><span>{{ url }}</span></a>
-    </ng-container>
+  <!-- if quiz id -->
+  <section *ngIf="innovation.quizId" class="text-md p-bottom-50">
+    <p [innerText]="'PROJECT_MODULE.SETUP.SURVEY.DONT_SHARE_QUIZ'" translate></p>
+    <a [href]="url" [innerText]="url" class="text-link" target="_blank"></a>
+  </section>
+  <!-- /if quiz id -->
+
+  <!-- if hidden is false *ngIF=!isHidden -->
+  <section *ngIf="false">
+
+    <!-- section questionnaire template -->
+    <div>
+
+      <!-- view templates -->
+      <div>
+
+        <div class="divider" [attr.data-content]="'PROJECT_MODULE.SETUP.SURVEY.STEPS.1' | translate | uppercase"></div>
+
+        <div class="s-templates-wrapper">
+
+          <div class="card is-card-3">
+
+            <div class="card-image">
+              <figure class="img-hover-button">
+
+                <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" ">
+
+                <span
+                  (click)="onClickPreview($event, 'marketResearch')"
+                  [innerText]="'COMMON.BUTTON.PREVIEW'" class="img-button"
+                  translate>
+                </span>
+
+                <span
+                  (click)="onClickSelect($event, 'marketResearch')"
+                  *ngIf="isEditable"
+                  [innerText]="'COMMON.BUTTON.SELECT'"
+                  [ngClass]="{ 'is-active': isEditable }"
+                  class="img-button s-t-btn-second"
+                  translate>
+                </span>
+
+              </figure>
+            </div>
+
+            <div class="card-header">
+              <div [innerText]="'PROJECT_MODULE.SETUP.SURVEY.TEMPLATE_HEADING.RECHERCHE'" class="card-title" translate></div>
+            </div>
+
+          </div>
+
+          <div class="card is-card-3">
+
+            <div class="card-image">
+              <figure class="img-hover-button">
+
+                <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" ">
+
+                <span
+                  (click)="onClickPreview($event, 'potentialValidation')"
+                  [innerText]="'COMMON.BUTTON.PREVIEW'"
+                  class="img-button"
+                  translate>
+                </span>
+
+                <span
+                  (click)="onClickSelect($event, 'potentialValidation')"
+                  *ngIf="isEditable"
+                  [innerText]="'COMMON.BUTTON.SELECT'"
+                  [ngClass]="{ 'is-active': isEditable }"
+                  class="img-button s-t-btn-second"
+                  translate>
+                </span>
+
+              </figure>
+            </div>
+
+            <div class="card-header">
+              <div [innerText]="'PROJECT_MODULE.SETUP.SURVEY.TEMPLATE_HEADING.VALIDATION'" class="card-title" translate></div>
+            </div>
+
+          </div>
+
+          <div class="card is-card-3">
+
+            <div class="card-image">
+              <figure class="img-hover-button">
+
+                <img src="https://images.unsplash.com/photo-1564473185935-58113cba1e80" alt=" ">
+
+                <span
+                  (click)="onClickPreview($event, 'leadGeneration')"
+                  [innerText]="'COMMON.BUTTON.PREVIEW'"
+                  class="img-button"
+                  translate>
+                </span>
+
+                <span
+                  (click)="onClickSelect($event, 'leadGeneration')"
+                  *ngIf="isEditable"
+                  [innerText]="'COMMON.BUTTON.SELECT'"
+                  [ngClass]="{ 'is-active': isEditable }"
+                  class="img-button s-t-btn-second"
+                  translate>
+                </span>
+
+              </figure>
+            </div>
+
+            <div class="card-header">
+              <div [innerText]="'PROJECT_MODULE.SETUP.SURVEY.TEMPLATE_HEADING.GENERATION'" class="card-title" translate></div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <!-- /view templates -->
+
+      <!-- already a template -->
+      <div *ngIf="hasRequirement && isShowableButton" class="p-top-25">
+
+        <div class="divider" [attr.data-content]="'COMMON.OR' | translate | uppercase"></div>
+
+        <div class="m-top-50 text-center">
+          <button
+            (click)="loadExistTemplate()"
+            [innerText]="isEditable ? 'PROJECT_MODULE.SETUP.SURVEY.BUTTON_LAST' : 'PROJECT_MODULE.SETUP.SURVEY.BUTTON_LAST_VIEW'"
+            class="button is-primary is-lg"
+            translate>
+          </button>
+        </div>
+
+      </div>
+      <!-- /already a template -->
+
+    </div>
+    <!-- section questionnaire template -->
+
+    <!-- section to show selected template edit -->
+    <section *ngIf="hasRequirement && !isShowableButton" class="p-top-25">
+
+      <div class="divider" [attr.data-content]="'PROJECT_MODULE.SETUP.SURVEY.STEPS.2' | translate | uppercase"></div>
+
+      <!-- editor -->
+      <div class="col-sm-12 col-10 col-mx-auto m-top-50">
+        <div class="s-template-editor-wrapper">
+
+          <!-- heading anf lang select -->
+          <div class="m-bottom-40 flex-between flex-wrap">
+
+            <div>
+              <h1 class="title text-background m-bottom-2" [innerText]="getHeading()" translate></h1>
+              <span class="divider"></span>
+            </div>
+
+            <div class="form-group">
+              <label *ngFor="let lang of templateLangs; let i = index;" class="form-radio is-inline">
+                <input
+                  (change)="onChangeLang(i, lang)"
+                  [checked]="selectedLang === lang"
+                  [id]=lang
+                  [value]=lang
+                  name="lang"
+                  type="radio">
+                <i class="form-icon"></i>{{ 'COMMON.LANG.' + lang.toUpperCase() | translate }}
+              </label>
+            </div>
+
+          </div>
+          <!-- /heading anf lang select -->
+
+          <!-- text zone -->
+          <div *ngFor="let requirement of innovation.preset.requirements;">
+            <div *ngIf="selectedLang === requirement.lang">
+              <app-text-zone
+                (onTextChange)="updateData($event)"
+                [data]="requirement.text"
+                [id]="requirement.lang"
+                [zoneHeight]="'1280'">
+              </app-text-zone>
+            </div>
+          </div>
+          <!-- /text zone -->
+
+        </div>
+      </div>
+      <!-- /editor -->
+
+    </section>
+    <!-- /section to show selected template edit -->
 
   </section>
-</ng-container>
+  <!-- /if hidden is false -->
+
+</div>
+
+
+<!-- modal to preview the template -->
+<app-modal [(showModal)]="showModel" [enableCloseButton]="true" [maxWidth]="'960px'">
+  <section class="modal-body">
+
+  </section>
+</app-modal>
+<!-- /modal to preview the template -->
+
+
+<!-- modal to confirm load of template when their is already template exist -->
+<app-modal [(showModal)]="showModelTemplate" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+
+  <section class="modal-body">
+    <div>
+      <span [innerText]="'PROJECT_MODULE.SETUP.SURVEY.MODAL.TEMPLATE_EXIST'" translate></span>
+    </div>
+  </section>
+
+  <footer class="modal-footer">
+    <button [innerText]="'COMMON.BUTTON.CANCEL'" class="button modal-cancel" translate></button>
+    <button (click)="onClickConfirm($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" class="button is-primary" translate></button>
+  </footer>
+
+</app-modal>
+<!-- /modal to confirm load of template when their is already template exist -->

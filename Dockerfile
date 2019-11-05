@@ -8,7 +8,8 @@ ARG VERSION
 WORKDIR /var/web
 
 # build client
-RUN ng build ${APP_NAME} -c=${ENV_NAME} --prod
+RUN echo build ${APP_NAME} -c=${ENV_NAME} --prod
+RUN ng build --progress ${APP_NAME} -c=${ENV_NAME} --prod
 
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi

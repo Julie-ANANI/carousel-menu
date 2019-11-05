@@ -54,9 +54,9 @@
                                 <option *ngFor="let ctype of codeTypes" [ngValue]="ctype.value">{{ctype.name}}</option>
                             </select>-->
                             <label class="form-label h4" for="attachments">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
-                            <app-autocomplete-input id="attachments"
+                            <app-auto-complete-input id="attachments"
                                                     (update)="addAttachment($event)"
-                                                    [config]="addAttachmentConfig"></app-autocomplete-input>
+                                                    [config]="addAttachmentConfig"></app-auto-complete-input>
                         </div>
                         <div class="column col-6 col-mx-auto">
                           <label class="form-label h4" for="type">{{ 'TAGS.TYPE.LABEL' | translate }}</label>
@@ -78,5 +78,9 @@
             </div>
 
         </form>
+    </div>
+  <!-- Congratulation, you found these buttons ! please delete it and ask Iaphane for a free beer-->
+    <div class="text-right m-bottom-25">
+      <button (click)="loadData()" class="btn btn-sm rounded shadow btn-edit" type="button">LOAD REQUESTS</button>
     </div>
 </div>

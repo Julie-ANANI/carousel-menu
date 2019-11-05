@@ -10,6 +10,8 @@ import { Pagination } from '../../utility-components/paginations/interfaces/pagi
 import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 import { ConfigService } from '../../../services/config/config.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-shared-table',
   templateUrl: './table.component.html',
@@ -142,22 +144,23 @@ export class TableComponent implements OnInit {
    * @private
    */
   private _getFilteredContent(rows: Array<any>) {
-    this._pagination.parPage = parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10;
+      this._pagination.parPage = this._table._isPaginable ?
+        parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10 :
+        rows.length;
 
-    this._table._total = rows.length;
+      this._table._total = rows.length;
 
-    if (this._pagination.offset >= this._table._total) {
-      this._pagination.offset = 0;
-      this._pagination.currentPage = 1;
-    }
+      if (this._pagination.offset >= this._table._total) {
+        this._pagination.offset = 0;
+        this._pagination.currentPage = 1;
+      }
 
-    const startIndex = this._pagination.offset;
-    const endIndex = this._pagination.offset + this._pagination.parPage;
+      const startIndex = this._pagination.offset;
+      const endIndex = this._pagination.offset + this._pagination.parPage;
 
-    this._isSearching = this._isSearching && this._table._total === 0;
+      this._isSearching = this._isSearching && this._table._total === 0;
 
-    this._filteredContent = rows.slice(startIndex, endIndex);
-
+      this._filteredContent = rows.slice(startIndex, endIndex);
   }
 
   /***
@@ -574,6 +577,23 @@ export class TableComponent implements OnInit {
    */
   public isSortable(column: Column) {
     return column._isSortable;
+  }
+
+  /**
+   * This function counts the number of days/months/years to some future date.
+   * The format of the column must be like this:
+   *    columnName-days
+   * for example: createdAt-90 will take the value at the column 'createdAt' (which
+   * should be a valid date) and count the number of days to arrive to 90 days.
+   * @param row
+   * @param key
+   */
+  public countDaysTo(row: any, key: string) {
+    let _skey = key.split('-');
+    let _time = _skey.length > 1 ? _skey[1] : 0;
+    let _key: string = _skey[0];
+    let value = moment(this.getContentValue(row, _key));
+    return value.add(_time, 'days').fromNow();
   }
 
   /***

@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { DataService } from '../../services/data.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
-import { environment } from "../../../../../../../environments/environment";
+import { environment } from '../../../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { PieChart } from '../../../../../../models/pie-chart';
 
@@ -15,10 +16,6 @@ import { PieChart } from '../../../../../../models/pie-chart';
 })
 
 export class QuestionConclusionComponent implements OnInit {
-
-  @Input() set tags(value: Array<Tag>) {
-    this._receivedTags = value;
-  }
 
   @Input() set originAnswers(value: any) {
     this._answersOrigin = value;
@@ -34,12 +31,11 @@ export class QuestionConclusionComponent implements OnInit {
 
   @Input() stats: { nbAnswers: number, percentage: number };
 
-  private _receivedTags: Array<Tag> = [];
-
   private _answersOrigin: {[c: string]: number} = null;
 
   constructor(private _innovationService: InnovationService,
               private _translateService: TranslateService,
+              private _dataService: DataService,
               private _translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
@@ -65,8 +61,8 @@ export class QuestionConclusionComponent implements OnInit {
     return this._translateService.currentLang;
   }
 
-  get receivedTags(): Array<Tag> {
-    return this._receivedTags;
+  get tags(): Array<Tag> {
+    return this._dataService.answersTagsLists[this.question._id];
   }
 
   get answersOrigin(): { [p: string]: number } {

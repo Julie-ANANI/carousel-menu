@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {CampaignService} from "../../../../services/campaign/campaign.service";
 
 @Component({
   selector: 'app-batch-form',
@@ -63,7 +64,8 @@ export class BatchFormComponent {
 
   private _hideInput = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private campaignService: CampaignService) { }
 
   private buildForm() {
     this._formData = this.formBuilder.group( {
@@ -156,6 +158,13 @@ export class BatchFormComponent {
       this.batchOutput.emit(this._formData);
     }
 
+  }
+
+  public updateBatchStatus(event: Event){
+    const status = (event.target as HTMLInputElement).valueAsNumber;
+    this.campaignService.updateBatchStatus(this._contentCurrent._id, status).subscribe(result => {
+      console.log(result);
+    });
   }
 
 

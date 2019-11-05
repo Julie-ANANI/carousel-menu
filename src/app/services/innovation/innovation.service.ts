@@ -8,6 +8,7 @@ import { InnovCard } from '../../models/innov-card';
 import { Professional } from '../../models/professional';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
+import { InnovCardComment } from '../../models/innov-card-comment';
 
 @Injectable()
 export class InnovationService {
@@ -59,8 +60,15 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId);
   }
 
+  /*public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
+    return this._http.put('/innovation/' + innovationId, innovationObj);
+  }*/
   public save(innovationId: string, innovationObj: Innovation): Observable<any> {
     return this._http.put('/innovation/' + innovationId, innovationObj);
+  }
+
+  public saveInnovationCardComment(innovationId: string, innovationCardId: string, commentObj: InnovCardComment): Observable<any> {
+    return this._http.post(`/innovation/${innovationId}/card/${innovationCardId}/comment`, commentObj);
   }
 
   public saveConsent(innovationId: string, date: number) { /* FIXME */
@@ -93,11 +101,9 @@ export class InnovationService {
     });
   }
 
-
   public removeCollaborator(innovationId: string, collaborator: User): Observable<any> {
     return this._http.delete('/innovation/' + innovationId + '/collaborator/' + collaborator.id);
   }
-
 
   public createQuiz(innovationId: string): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/quiz', {});
@@ -137,6 +143,10 @@ export class InnovationService {
     const formData = new FormData();
     formData.append('file', file, "import_project");
     return this._http.post('/innovation/import/', formData);
+  }
+
+  public publishToCommunity(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/communityPublish');
   }
 
 }

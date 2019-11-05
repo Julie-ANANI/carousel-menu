@@ -10,7 +10,6 @@ import { CAMPAIGNS } from '../modules/user/admin/components/admin-campaigns/i18n
 import { SEARCH } from '../modules/user/admin/components/admin-search/i18n/fr';
 import { BLACKLISTS } from '../modules/user/admin/components/admin-settings/admin-email-blacklist/i18n/fr';
 import { TAGS } from '../modules/user/admin/components/admin-tags/i18n/fr';
-import { PROJECT_LIST } from '../modules/user/admin/components/admin-projects-list/i18n/fr';
 import { PROJECT_MODULE } from '../modules/user/client/components/project/i18n/fr';
 import { DISCOVER } from '../modules/public/discover/i18n/fr';
 import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/description/i18n/fr';
@@ -33,6 +32,7 @@ import { SHOWCASE } from '../modules/demo/components/showcase/i18n/fr';
 import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
 import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/fr';
 import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/fr';
+import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -58,7 +58,6 @@ export const fr = {
   'SEARCH': SEARCH,
   'BLACKLISTS': BLACKLISTS,
   'TAGS': TAGS,
-  'PROJECT_LIST': PROJECT_LIST,
   'PROJECT_MODULE': PROJECT_MODULE,
   'SHARE': SHARE,
   'RESET_PASSWORD': RESET_PASSWORD,
@@ -69,5 +68,6 @@ export const fr = {
   'SHARED_PROJECT_EDIT': SHARED_PROJECT_EDIT,
   'SHOWCASE': SHOWCASE,
   'SEARCH_DEMO': SEARCH_DEMO,
-  'COMMUNITY': COMMUNITY
+  'COMMUNITY': COMMUNITY,
+  'SHARED_TARGETING_WORLD': SHARED_TARGETING_WORLD,
 };

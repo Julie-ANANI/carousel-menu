@@ -284,14 +284,14 @@
     <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
       <!-- textarea -->
       <ng-container *ngIf="question.controlType === 'textarea'">
-        <div *ngIf="answersTagsLists[question.identifier]?.length > 0" class="m-bottom-15">
+        <div class="m-bottom-15">
           <span class="d-flex align-center">
-            <label class="form-checkbox p-no-right">
-            <input
-              type="checkbox"
-              (change)="filterEverything($event, [question], question.controlType)"
-              [checked]="!filters[question.identifier]">
-            <i class="form-icon"></i>
+            <label *ngIf="answersTagsLists[question.identifier]?.length > 0" class="form-checkbox p-no-right">
+              <input
+                type="checkbox"
+                (change)="filterEverything($event, [question], question.controlType)"
+                [checked]="!filters[question.identifier]">
+              <i class="form-icon"></i>
             </label>
             <div style="flex: 1;">
               <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
@@ -301,30 +301,32 @@
             </div>
           </span>
         </div>
-        <div
-          *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
-          class="form-group">
-          <label class="form-checkbox">
-            <input
-              type="checkbox"
-              [name]="answerTag._id"
-              (change)="checkAnswerTag($event, question.identifier)"
-              [checked]="selectedAnswersTags[question.identifier][answerTag._id]">
-            <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
-          </label>
-        </div>
-        <!-- see more -->
-        <div
-          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
-          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
-                (click)="seeMore[question.identifier] = true"></span>
-        </div>
-        <!-- see less -->
-        <div
-          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
-          <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
-                (click)="seeMore[question.identifier] = false"></span>
-        </div>
+        <ng-container *ngIf="answersTagsLists[question.identifier]?.length > 0">
+          <div
+            *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
+            class="form-group">
+            <label class="form-checkbox">
+              <input
+                type="checkbox"
+                [name]="answerTag._id"
+                (change)="checkAnswerTag($event, question.identifier)"
+                [checked]="selectedAnswersTags[question.identifier][answerTag._id]">
+              <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
+            </label>
+          </div>
+          <!-- see more -->
+          <div
+            *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
+            <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
+                  (click)="seeMore[question.identifier] = true"></span>
+          </div>
+          <!-- see less -->
+          <div
+            *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
+            <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
+                  (click)="seeMore[question.identifier] = false"></span>
+          </div>
+        </ng-container>
       </ng-container>
 
       <!-- checkbox/radio -->
@@ -360,6 +362,21 @@
           </label>
         </div>
       </ng-container>
+
+      <!-- other types -->
+      <ng-container *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox' && question.controlType !== 'radio'">
+        <div class="m-bottom-15">
+          <span class="d-flex align-center">
+            <div style="flex: 1;">
+              <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
+                <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
+                <i class="fas fa-angle-right text-notify" aria-hidden="true"></i>
+              </a>
+            </div>
+          </span>
+        </div>
+      </ng-container>
+
     </div>
     <!-- /questions filters -->
 
@@ -386,46 +403,58 @@
 <!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
 <app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
 
-  <ng-container *ngIf="!innovation.previewMode">
-    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
-  </ng-container>
+  <section class="modal-body">
+    <ng-container *ngIf="!innovation.previewMode">
+      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
+    </ng-container>
 
-  <ng-container *ngIf="innovation.previewMode">
-    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_INVISIBLE' | translate }}</span>
-  </ng-container>
+    <ng-container *ngIf="innovation.previewMode">
+      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_INVISIBLE' | translate }}</span>
+    </ng-container>
+  </section>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
 
 </app-modal>
 <!-- /Modal to ask the admin to confirm for the preview of the innovation at the side of the client -->
 
 
 <!-- Modal to ask the operator to confirm for the reset of the executive report -->
-<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalResetReport">
+<app-modal [(showModal)]="modalResetReport" [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'">
 
-  <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_RESET_REPORT' | translate }}</span>
+  <section class="modal-body">
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_RESET_REPORT' | translate }}</span>
+  </section>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
 
 </app-modal>
 <!-- /Modal to ask the operator to confirm for the reset of the executive report -->
 
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalEndInnovation">
+<app-modal [(showModal)]="modalEndInnovation" [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'">
 
-  <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
+  <section class="modal-body">
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
+  </section>
 
-  <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </div>
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
 
 </app-modal>
 <!-- /Modal to ask operator to sure about ending the project -->

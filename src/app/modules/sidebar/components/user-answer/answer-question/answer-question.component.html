@@ -72,12 +72,13 @@
 
         <ng-container *ngIf="editMode">
           <div class="pad-top">
-            <app-autocomplete-input
+            <app-auto-complete-input
               (update)="setAnswer($event)"
-              [canEdit]="true"
               [config]="{ placeholder: 'COMMON.LABEL.COMPANY', initialData: fullAnswer.answers[question.identifier] || [], type: 'company' }"
-              [adminMode]="editMode">
-            </app-autocomplete-input>
+              [isAdmin]="editMode"
+              [isEditable]="true"
+              [tempActive]="false">
+            </app-auto-complete-input>
           </div>
         </ng-container>
 
@@ -115,9 +116,9 @@
           <div class="pad-top">
             <app-input-list
               (update)="setAnswer($event)"
-              [canEdit]="true"
+              [isEditable]="true"
               [config]="{ placeholder: 'Enter your response', initialData: fullAnswer.answers[question.identifier] || [] }"
-              [adminMode]="editMode">
+              [isAdminMode]="editMode">
             </app-input-list>
           </div>
         </ng-container>

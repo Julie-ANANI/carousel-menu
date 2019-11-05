@@ -4,6 +4,14 @@ export const PROJECT = {
     'OPTION_A': 'Export project'
   },
 
+  'PRESET': {
+    'CAN_EDIT': 'Modify by client',
+    'HIDE': 'Hide for client',
+    'IMPORT': 'Import preset',
+    'GENERATE_QUIZ': 'Generate quiz',
+    'QUIZ_URL': 'URL to access the quiz:'
+  },
+
   'MODAL': {
     'SELECT_FIELD': 'Select the information to export',
     'BASE': 'Basic innovation data',
@@ -24,6 +32,7 @@ export const PROJECT = {
     'INSIGHTS': 'Insights',
     'PITCH_EDIT_DESCRIPTION': 'Please complete the edition of project description',
     'EDIT_ANSWER_TAGS': 'Edit answer tags',
+    'ANONYMIZE_ANSWER': 'Make answers anonymous for the clients',
     'CREATE_CAMPAIGN': 'Please create a campaign to pursue the project ',
     'FIND_PROFESSIONALS': 'Find professionals',
     'ACTIVATE_AB_TESTING': 'Activate AB testing',
@@ -50,7 +59,6 @@ export const PROJECT = {
 
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choose questionnaire',
-    'EDIT_PRESET': 'Edit questionnaire',
     'EDIT_DESCRIPTION': 'Edit project description',
     'DESCRIPTION_TRANSLATION': 'Description translation',
     'EDIT_MARKET_TARGETING': 'Edit market targeting',

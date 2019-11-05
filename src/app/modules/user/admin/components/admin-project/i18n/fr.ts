@@ -4,6 +4,14 @@ export const PROJECT = {
     'OPTION_A': 'Exporter le projet'
   },
 
+  'PRESET': {
+    'CAN_EDIT': 'Modifier par client',
+    'HIDE': 'Cacher pour le client',
+    'IMPORT': 'Importer un preset',
+    'GENERATE_QUIZ': 'Générer un quizz',
+    'QUIZ_URL': 'URL pour accéder au quiz :'
+  },
+
   'MODAL': {
     'SELECT_FIELD': 'Sélectionnez les informations à exporter',
     'BASE': 'Informations de base de l\'innovation',
@@ -36,7 +44,6 @@ export const PROJECT = {
   'QUESTIONNAIRE': 'Questionnaire',
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choisir un questionnaire',
-    'EDIT_PRESET': 'Editer le questionnaire',
     'EDIT_DESCRIPTION': 'Editer la description du projet',
     'DESCRIPTION_TRANSLATION': 'Traduction de la description',
     'EDIT_MARKET_TARGETING': 'Editer le ciblage marché',
@@ -49,6 +56,7 @@ export const PROJECT = {
     'INSIGHTS': 'Réponses',
     'PITCH_EDIT_DESCRIPTION': 'Veuillez finir l\'édition de la description du projet',
     'EDIT_ANSWER_TAGS': 'Editer les tags pour les réponses',
+    'ANONYMIZE_ANSWER': 'Rendre anonymes les réponses pour le client',
     'CREATE_CAMPAIGN': 'Veuillez créer une campagne pour poursuivre le projet',
     'FIND_PROFESSIONALS': 'Trouver des professionnels',
     'ACTIVATE_AB_TESTING': 'Activer l\'AB testing ',

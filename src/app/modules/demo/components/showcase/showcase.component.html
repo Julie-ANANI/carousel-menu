@@ -115,11 +115,13 @@
               {{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span>
             </h3>
 
-            <admin-search-map
+            <app-shared-worldmap
               [countriesData]="countries"
+              [isShowableQuartiles]="false"
+              [isShowableTooltip]="true"
               [quartiles]="quartiles"
-              [width]="'100%'">
-            </admin-search-map>
+              [type]="'demo'">
+            </app-shared-worldmap>
 
           </div>
         </div>

@@ -12,9 +12,17 @@ export interface TagStats {
 
   totalAnswers?: number;
 
+  countContext?: number;
+
+  totalCountContext?: number;
+
   countNeed?: number;
 
   totalCountNeed?: number;
+
+  countRelevance?: number;
+
+  totalCountRelevance?: number;
 
   countDiff?: number;
 

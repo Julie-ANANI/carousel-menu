@@ -8,22 +8,22 @@
     <h2 class="title-primary" [innerText]="'MARKET_REPORT.EXECUTIVE_TEMPLATE.CONCLUSION_HEADING'" translate></h2>
 
     <!-- operator comment -->
-    <div class="conclusion-text" [innerHtml]="conclusion"></div>
+    <div class="conclusion-text" [innerHtml]="project.marketReport?.finalConclusion?.conclusion"></div>
 
     <!-- Operator contact -->
-    <div *ngIf="operator && isMainDomain()" class="operator-contact">
+    <div *ngIf="project.operator && isMainDomain()" class="operator-contact">
 
       <!-- name -->
-      <h6 class="name">{{ operator.name }}</h6>
+      <h6 class="name">{{ project.operator.name }}</h6>
 
       <!-- job title -->
-      <h6 class="job">{{ operator.jobTitle }}</h6>
+      <h6 class="job">{{ project.operator.jobTitle }}</h6>
 
       <!-- phone number -->
-      <h6 class="phone">{{ operator.phone }}</h6>
+      <h6 class="phone">{{ project.operator.phone }}</h6>
 
       <!-- email -->
-      <h6 class="text-link"><a [href]="'mailto:' + operator.email">{{ operator.email }}</a></h6>
+      <h6 class="text-link"><a [href]="'mailto:' + project.operator.email">{{ project.operator.email }}</a></h6>
 
     </div>
     <!-- /operator contact -->

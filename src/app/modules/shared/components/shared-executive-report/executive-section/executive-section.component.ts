@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
 import { ResponseService } from '../../shared-market-report/services/response.service';
@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Tag } from '../../../../../models/tag';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { DataService } from '../../shared-market-report/services/data.service';
 
 @Component({
   selector: 'app-executive-section',
@@ -15,7 +16,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
   styleUrls: ['./executive-section.component.scss']
 })
 
-export class ExecutiveSectionComponent implements OnInit {
+export class ExecutiveSectionComponent {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
@@ -33,8 +34,6 @@ export class ExecutiveSectionComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
-  private _answersToShow: Array<Answer> = [];
-
   private _innovation: Innovation;
 
   private _sectionMenuOptions: Array<Question> = [];
@@ -51,9 +50,8 @@ export class ExecutiveSectionComponent implements OnInit {
 
   private _stats: { nbAnswers?: number, percentage?: number };
 
-  private _tags: Array<Tag> = [];
-
   constructor(private _responseService: ResponseService,
+              private _dataService: DataService,
               private _location: Location,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
@@ -62,8 +60,6 @@ export class ExecutiveSectionComponent implements OnInit {
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
   }
-
-  ngOnInit() { }
 
 
   /***
@@ -115,16 +111,15 @@ export class ExecutiveSectionComponent implements OnInit {
 
       if (this._questionSelected) {
 
-        this._answersToShow = this._responseService.getAnswersToShow(this._answers, this._questionSelected);
+        const answersToShow = this._responseService.getAnswersToShow(this._answers, this._questionSelected);
+        this._dataService.setAnswers(this._questionSelected, answersToShow);
 
         this._stats = {
-          nbAnswers: this._answersToShow.length,
-          percentage: Math.round((this._answersToShow.length * 100) / this._answers.length)
+          nbAnswers: answersToShow.length,
+          percentage: Math.round((answersToShow.length * 100) / this._answers.length)
         };
 
         this._getAbstractValue();
-
-        this._getTags();
 
       }
 
@@ -150,24 +145,8 @@ export class ExecutiveSectionComponent implements OnInit {
 
   }
 
-
-  /***
-   * this functions is to get the tags list for the particular question.
-   */
-  private _getTags() {
-    this._tags = ResponseService.getTagsList(this._answers, this._questionSelected);
-  }
-
   get lang(): string {
     return this._translateService.currentLang;
-  }
-
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
-  get answersToShow(): Array<Answer> {
-    return this._answersToShow;
   }
 
   get innovation(): Innovation {
@@ -180,10 +159,6 @@ export class ExecutiveSectionComponent implements OnInit {
 
   get questions(): Array<Question> {
     return this._questions;
-  }
-
-  get sectionNumber(): number {
-    return this._sectionNumber;
   }
 
   get questionSelected(): Question {
@@ -203,7 +178,7 @@ export class ExecutiveSectionComponent implements OnInit {
   }
 
   get tags(): Array<Tag> {
-    return this._tags;
+    return this._dataService.answersTagsLists[this._questionSelected._id];
   }
 
 }

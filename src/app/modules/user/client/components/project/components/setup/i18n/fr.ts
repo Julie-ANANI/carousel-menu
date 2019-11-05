@@ -1,4 +1,5 @@
 import { SURVEY } from '../components/survey/i18n/fr';
+import { OBJECTIVES } from '../components/objectives/i18n/fr';
 
 export const SETUP = {
   'TITLE': 'Détails du projet',
@@ -17,7 +18,7 @@ export const SETUP = {
     'REVIEWING': {
       'A': 'Votre projet doit être modifié. Veuillez',
       'B': ' lire ',
-      'C': 'nos commentaires que nous vous avons envoyés par courrier.'
+      'C': 'nos commentaires pour améliorer votre fiche.'
     },
     'PREVIEW_MODE': 'La synthèse partielle de votre innovation est disponible.',
     'DONE': 'La synthèse complète de votre projet est disponible.',
@@ -27,9 +28,13 @@ export const SETUP = {
 
   'TARGETING_TAB': 'Ciblage',
 
+  'OBJECTIVES_TAB': 'Objectifs',
+
   'SURVEY_TAB': 'Questionnaire',
 
   'SURVEY': SURVEY,
+
+  'OBJECTIVES': OBJECTIVES,
 
   'PREVIEW': 'Aperçu',
 
