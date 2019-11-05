@@ -59,7 +59,17 @@
         [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
       </app-auto-complete-input>
     </div>
+    <label class="form-switch" for="launchNewRequests">
+      <input
+        type="checkbox"
+        name="role"
+        id="launchNewRequests"
+        [checked]="launchNewRequests"
+        (change)="launchNewRequests = !launchNewRequests">
+      <i class="form-icon"></i>Lancer des nouvelles requêtes pour compléter le ciblage
+    </label>
     <app-shared-targeting-world *ngIf="chosenCampaign" [(geography)]="geography" [isEditable]="true"></app-shared-targeting-world>
+
 
   </section>
 

@@ -45,6 +45,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     sort: '{ "created": -1 }'
   };
   private _chosenCampaign: Campaign;
+  private _launchNewRequests: boolean = false;
   private _addToCampaignModal: boolean = false;
   private _geography: GeographySettings;
 
@@ -245,6 +246,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       newCampaignId: campaign._id,
       newInnovationId: campaign.innovation._id,
       requestIds: this._requestsToImport,
+      launchNewRequests: this._launchNewRequests,
       newTargetCountries: this._geography.include.map((country) => country.code)
     };
     this._professionalsService.addFromHistory(params).subscribe((result: any) => {
@@ -377,5 +379,13 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   get suggestions() {
     return this._suggestedKeywords;
+  }
+
+  get launchNewRequests(): boolean {
+    return this._launchNewRequests;
+  }
+
+  set launchNewRequests(value: boolean) {
+    this._launchNewRequests = value;
   }
 }
