@@ -50,6 +50,8 @@ export class ExplorationComponent implements OnInit {
 
   private _tableInfos: Table;
 
+  private _anonymousAnswers: boolean = false;
+
   private _config: Config = {
     fields: '',
     limit: '10',
@@ -65,26 +67,46 @@ export class ExplorationComponent implements OnInit {
 
   ngOnInit() {
     this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this._innovation.name);
+    if (this._innovation) {
+      this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
+    }
     this.loadAnswers();
   }
 
   loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innovation._id).pipe(first()).subscribe((response: any) => {
+    this.answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first()).subscribe((response: any) => {
 
-      this._tableInfos = {
-        _selector: 'client-answer',
-        _content: response.answers,
-        _total: response.answers.length,
-        _editIndex: 1,
-        _isLocal: true,
-        _isPaginable: true,
-        _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-          {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
-        ]
-      };
+      if (this._anonymousAnswers) {
+        this._tableInfos = {
+          _selector: 'client-answer',
+          _content: response.answers,
+          _total: response.answers.length,
+          _editIndex: 1,
+          _isLocal: true,
+          _isPaginable: true,
+          _columns: [
+            //{_attrs: [], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+            {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+            {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
+            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+          ]
+        };
+      } else {
+        this._tableInfos = {
+          _selector: 'client-answer',
+          _content: response.answers,
+          _total: response.answers.length,
+          _editIndex: 1,
+          _isLocal: true,
+          _isPaginable: true,
+          _columns: [
+            {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+            {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+            {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
+            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+          ]
+        };
+      }
 
       this._countries = response.answers.reduce((acc: any, answer: any) => {
         if (acc.indexOf(answer.country.flag) === -1) {

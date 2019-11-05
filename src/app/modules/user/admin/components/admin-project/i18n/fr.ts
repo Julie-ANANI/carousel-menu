@@ -56,6 +56,7 @@ export const PROJECT = {
     'INSIGHTS': 'Réponses',
     'PITCH_EDIT_DESCRIPTION': 'Veuillez finir l\'édition de la description du projet',
     'EDIT_ANSWER_TAGS': 'Editer les tags pour les réponses',
+    'ANONYMIZE_ANSWER': 'Rendre anonymes les réponses pour le client',
     'CREATE_CAMPAIGN': 'Veuillez créer une campagne pour poursuivre le projet',
     'FIND_PROFESSIONALS': 'Trouver des professionnels',
     'ACTIVATE_AB_TESTING': 'Activer l\'AB testing ',

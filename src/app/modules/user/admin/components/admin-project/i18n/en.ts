@@ -32,6 +32,7 @@ export const PROJECT = {
     'INSIGHTS': 'Insights',
     'PITCH_EDIT_DESCRIPTION': 'Please complete the edition of project description',
     'EDIT_ANSWER_TAGS': 'Edit answer tags',
+    'ANONYMIZE_ANSWER': 'Make answers anonymous for the clients',
     'CREATE_CAMPAIGN': 'Please create a campaign to pursue the project ',
     'FIND_PROFESSIONALS': 'Find professionals',
     'ACTIVATE_AB_TESTING': 'Activate AB testing',

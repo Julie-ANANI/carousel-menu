@@ -28,6 +28,10 @@ import {SharedWorldmapService} from '../shared-worldmap/services/shared-worldmap
 
 export class SharedMarketReportComponent implements OnInit {
 
+  @Input() set adminMode(value: boolean) {
+    this._adminMode = value;
+  }
+
   @Input() set project(value: Innovation) {
     if (value) {
       this._innovation = value;
@@ -38,10 +42,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   @Input() set reportShared(value: boolean) {
     this._reportShared = value;
-  }
-
-  @Input() set adminMode(value: boolean) {
-    this._adminMode = value;
   }
 
   @Input() set adminSide(value: boolean) {
@@ -85,6 +85,8 @@ export class SharedMarketReportComponent implements OnInit {
   private _companies: Array<Clearbit>;
 
   private _toggleProfessional: boolean;
+
+  private _anonymousAnswers: boolean = false;
 
   constructor(private _translateService: TranslateService,
               private _answerService: AnswerService,
@@ -159,6 +161,8 @@ export class SharedMarketReportComponent implements OnInit {
      */
     this._executiveTemplates = executiveTemplate;
 
+    this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers && !this._adminMode;
+
   }
 
 
@@ -193,7 +197,7 @@ export class SharedMarketReportComponent implements OnInit {
    * This function is to fetch the answers from the server.
    */
   private _getAnswers() {
-    this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
+    this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).subscribe((response) => {
       this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });

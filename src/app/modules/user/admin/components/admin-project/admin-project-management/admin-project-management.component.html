@@ -314,6 +314,22 @@
         </button>
       </div>
 
+      <!-- Answer anonymization-->
+      <div class="project-line">
+
+        <label class="form-switch" for="anonymizeAnswers">
+          <input
+              type="checkbox"
+              name="anonymizeAnswers"
+              id="anonymizeAnswers"
+              [checked]="getMetadata('campaign', 'anonymous_answers')"
+              (change)="setMetadata('campaign', 'anonymous_answers', $event)">
+          <i class="form-icon"></i>
+          {{'PROJECT.CAMPAIGN.ANONYMIZE_ANSWER' | translate}}
+        </label>
+        <label class="form-label">This will affect all the campaigns!</label>
+      </div>
+
       <!-- If no campaigns is created, we show an info bot to ask us to create a campaign -->
       <div *ngIf="currentCampaign === null">
         <div class="bot-wrapper text-center">

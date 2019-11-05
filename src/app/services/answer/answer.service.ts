@@ -53,8 +53,8 @@ export class AnswerService {
     return this._http.delete('/answer/' + answerId + '/tag', { params: params});
   }
 
-  public getInnovationValidAnswers(innovationId: string): Observable<{answers: Array<Answer>}> {
-    return this._http.get<{answers: Array<Answer>}>('/innovation/' + innovationId + '/validAnswers');
+  public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
+    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous:''}`);
   }
 
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
