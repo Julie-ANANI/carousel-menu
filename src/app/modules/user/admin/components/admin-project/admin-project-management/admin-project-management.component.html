@@ -77,7 +77,8 @@
             formControlName="owner"
             id="user"
             type="text"
-            [attr.placeholder]="'USERS.SEARCH' | translate">
+            [attr.placeholder]="'USERS.SEARCH' | translate"
+            (click)="onSuggestUsers()">
           <ul
             *ngIf="formData.get('owner').value"
             class="input-suggestion"
