@@ -87,7 +87,7 @@ export class ExplorationComponent implements OnInit {
           _columns: [
             //{_attrs: [], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-            {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
+            //{_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
           ]
         };

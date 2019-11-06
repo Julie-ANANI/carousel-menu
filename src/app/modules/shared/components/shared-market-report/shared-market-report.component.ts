@@ -202,6 +202,31 @@ export class SharedMarketReportComponent implements OnInit {
         return b.profileQuality - a.profileQuality;
       });
 
+      if( this._anonymousAnswers ) {
+        this._answers = <Array<Answer>>this._answers.map( answer => {
+          const _answer = {};
+          Object.keys(answer).forEach(key => {
+            switch(key) {
+              case('company'):
+                _answer[key] = {
+                  'name': ''
+                };
+                break;
+              case('professional'):
+                if (answer[key]['company']) {
+                  _answer[key]['company'] = {
+                    'name': ''
+                  };
+                }
+                break;
+              default:
+                _answer[key] = answer[key];
+            }
+          });
+          return _answer;
+        });
+      }
+
       this._filteredAnswers = this._answers;
 
       this._updateAnswersToShow();
