@@ -782,7 +782,7 @@
               <!-- /video -->
 
               <!-- make main media -->
-              <div *ngIf="isEditable && innovationCard.principalMedia.type !== 'VIDEO'">
+              <div *ngIf="isEditable && innovationCard.principalMedia && innovationCard.principalMedia.type !== 'VIDEO'">
                 <span (click)="onClickSetMainMedia($event, media, i)" class="text-link text-sm">
                   {{ 'SHARED_PROJECT_EDIT.MEDIA.MAKE_MAIN' | translate }}
                 </span>

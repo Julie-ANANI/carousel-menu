@@ -62,8 +62,16 @@ export class AnswerService {
     window.open(url);
   }
 
-  public getExportUrl(innovationId: string, client: Boolean): string {
-    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
+  public getExportUrl(innovationId: string, client: Boolean, anonymous?: Boolean): string {
+    const query = [];
+    if(client !== undefined) {
+      query.push(`client=${!!client}`);
+    }
+    if(anonymous) {
+      query.push(`anonymous=${!!anonymous}`);
+    }
+    const _query = query.join('&');
+    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (_query.length ? '?'+ _query : '');
   }
 
   public importFromGmail(file: File): Observable<any> {
