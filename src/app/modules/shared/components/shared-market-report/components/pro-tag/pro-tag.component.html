@@ -22,7 +22,11 @@
 
     <!-- name -->
     <ng-container *ngIf="!answer?.professional?.firstName">
-      <p class="text-medium">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</p>
+      <p class="text-medium">
+        <span class="text-link" (click)="seeAnswer($event, answer)">
+          {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
+        </span>
+      </p>
     </ng-container>
 
     <ng-container *ngIf="answer && answer.professional && answer.professional.firstName">

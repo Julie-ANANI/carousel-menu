@@ -26,6 +26,7 @@ export class ExportModalComponent {
   @Input() set innovation(value: Innovation) {
     this._needConsent = (!!value.ownerConsent && !value.ownerConsent.value) || !this._authService.isAdmin;
     this._innovation = value;
+    this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
   }
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -37,6 +38,8 @@ export class ExportModalComponent {
   private _needConsent = true;
 
   private _showExportModal: boolean = false;
+
+  private _anonymousAnswers: boolean = false;
 
   public exportTypeEnum = ExportType;
 
@@ -80,7 +83,7 @@ export class ExportModalComponent {
     switch (this._exportType) {
 
       case (ExportType.csv):
-        window.open(this._answerService.getExportUrl(this._innovation._id, true));
+        window.open(this._answerService.getExportUrl(this._innovation._id, true, this._anonymousAnswers));
         break;
 
       case (ExportType.executiveReport):

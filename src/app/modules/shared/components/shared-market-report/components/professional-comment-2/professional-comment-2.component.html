@@ -4,7 +4,9 @@
 
   <!-- name -->
   <p *ngIf="!answer.professional?.firstName" class="text-medium">
-    <span>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
+    <span class="text-link" (click)="seeAnswer(answer)">
+        {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
+      </span>
   </p>
 
   <p *ngIf="answer.professional?.firstName">
