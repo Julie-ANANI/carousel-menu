@@ -248,6 +248,31 @@
           </div>
         </ng-container>
 
+        <!-- second email -->
+        <ng-container *ngIf="modalAnswer.professional?.contactEmail && !assignNewPro">
+          <div class="email-wrapper">
+            <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
+            <a [href]="'mailto:'+modalAnswer.professional.contactEmail">
+              <span class="text-link">{{ modalAnswer.professional.contactEmail }}</span>
+            </a>
+          </div>
+        </ng-container>
+
+        <!-- assign second email -->
+        <ng-container *ngIf="!modalAnswer.professional?.contactEmail && !assignNewPro">
+          <ng-container *ngIf="addNewEmail">
+            <div class="email-wrapper">
+              <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
+              <input type="email" [(ngModel)]="newEmail">
+              <button class="btn ghost-primary" (click)="addContactEmail()">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!addNewEmail">
+            <a class="text-xs" (click)="addNewEmail = true">{{ 'ANSWER.ADD_NEW_EMAIL' | translate }}</a>
+          </ng-container>
+
+        </ng-container>
+
         <!-- edit email -->
         <ng-container *ngIf="assignNewPro">
           <div class="form-group">

@@ -28,5 +28,6 @@ export const ANSWER = {
   'VALID_ANSWER_NO_MAIL': 'Valider sans mail merci',
   'INVALID_ANSWER': 'Invalider',
   'EDIT_ANSWER': 'Editer la réponse',
-  'REASSIGN_ANSWER': 'Réassigner la réponse'
+  'REASSIGN_ANSWER': 'Réassigner la réponse',
+  'ADD_NEW_EMAIL': 'Ajouter un deuxième email'
 };

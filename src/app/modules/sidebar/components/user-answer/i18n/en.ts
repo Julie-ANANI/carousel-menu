@@ -28,5 +28,6 @@ export const ANSWER = {
   'VALID_ANSWER_NO_MAIL': 'Validate without sending mail',
   'INVALID_ANSWER': 'Invalidate',
   'EDIT_ANSWER': 'Edit the answer',
-  'REASSIGN_ANSWER': 'Reassign the answer'
+  'REASSIGN_ANSWER': 'Reassign the answer',
+  'ADD_NEW_EMAIL': 'Add a second email'
 };

@@ -19,6 +19,8 @@ export interface Professional {
 
   email: string;
 
+  contactEmail?: string;
+
   firstName: string;
 
   lastName: string;
