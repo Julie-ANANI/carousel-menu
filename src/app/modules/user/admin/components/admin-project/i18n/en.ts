@@ -91,5 +91,6 @@ export const PROJECT = {
   'SYNTHESIS': 'Synthesis',
   'PROJECT_TAGS': 'Project tags',
   'ANSWER_TAGS': 'Answer tags',
+  'FOLLOW_UP': 'Follow up',
   'MAIL_CONFIG': 'Email Configuration'
 };
