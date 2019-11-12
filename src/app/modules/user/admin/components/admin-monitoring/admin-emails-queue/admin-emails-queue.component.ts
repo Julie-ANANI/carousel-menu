@@ -3,7 +3,7 @@ import { EmailQueueModel } from '../../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import {Table} from '../../../../../table/models/table';
-import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
+import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 

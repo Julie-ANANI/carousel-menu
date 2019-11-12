@@ -10,7 +10,7 @@ import { Question } from '../../../../models/question';
 import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment } from '../../../../../environments/environment';
-import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Executive, executiveTemplate } from './models/template';

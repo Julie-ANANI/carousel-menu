@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SidebarInterface } from "../../../../../../../sidebar/interfaces/sidebar-interface";
+import { SidebarInterface } from "../../../../../../../sidebars/interfaces/sidebar-interface";
 import { Innovation } from '../../../../../../../../models/innovation';
 import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';

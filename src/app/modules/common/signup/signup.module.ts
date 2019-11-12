@@ -4,8 +4,8 @@ import { SignupComponent } from "./signup.component";
 import { SignupRoutingModule } from "./signup-routing.module";
 import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../../services/user/user.service';
-import { SidebarModule } from '../../sidebar/sidebar.module';
-import { SidebarSignupFormModule } from '../../sidebar/components/signup-form/sidebar-signup-form.module';
+import { SidebarModule } from '../../sidebars/templates/sidebar/sidebar.module';
+import { SidebarSignupFormModule } from '../../sidebars/components/signup-form/sidebar-signup-form.module';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 
 @NgModule({

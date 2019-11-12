@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Innovation } from '../../../../../../models/innovation';
 import { Table } from '../../../../../table/models/table';
 import { Tag } from '../../../../../../models/tag';
-import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { first } from 'rxjs/operators';

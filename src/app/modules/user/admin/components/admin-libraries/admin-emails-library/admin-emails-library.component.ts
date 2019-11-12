@@ -3,7 +3,7 @@ import { TemplatesService } from '../../../../../../services/templates/templates
 import { TransactionalEmail } from '../../../../../../models/transactionnal-email';
 import { Table } from '../../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
 

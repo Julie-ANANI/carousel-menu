@@ -4,7 +4,7 @@ import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
-import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Professional } from '../../../../../../models/professional';
 import { Config } from '../../../../../../models/config';

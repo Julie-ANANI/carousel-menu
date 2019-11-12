@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { EmailScenario } from '../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../models/email-template';
-import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../models/email-signature';
 import { Config } from '../../../../../models/config';
 import { Column } from '../../../../table/models/column';
@@ -163,7 +163,7 @@ export class AdminEditWorkflowComponent {
     this._isModifiedEn = this._isModified('en');
     this._isModifiedFr = this._isModified('fr');
   }
-  
+
 
   private _isModified(language: string) {
     return this._campaignScenario.emails.reduce((acc, current) => {

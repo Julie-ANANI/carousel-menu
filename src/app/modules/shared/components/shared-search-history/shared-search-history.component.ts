@@ -4,7 +4,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { first } from 'rxjs/operators';
 import { Config } from "../../../../models/config";
 import { Table } from '../../../table/models/table';
-import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
+import { SidebarInterface } from "../../../sidebars/interfaces/sidebar-interface";
 import { COUNTRIES } from "../shared-search-pros/COUNTRIES";
 import { countries } from '../../../../models/static-data/country';
 import { Campaign } from "../../../../models/campaign";

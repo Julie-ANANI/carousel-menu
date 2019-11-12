@@ -6,9 +6,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedProsListModule } from '../../../../../shared/components/shared-pros-list/shared-pros-list.module';
 import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { AdminCommunityResponsesComponent } from "./admin-community-responses.component";
-import { SidebarModule } from "../../../../../sidebar/sidebar.module";
+import { SidebarModule } from "../../../../../sidebars/templates/sidebar/sidebar.module";
 import { SharedAnswerListModule } from "../../../../../shared/components/shared-answers-list/shared-answer-list.module";
-import { SidebarUserAnswerModule } from "../../../../../sidebar/components/user-answer/sidebar-user-answer.module";
+import { SidebarUserAnswerModule } from "../../../../../sidebars/components/user-answer/sidebar-user-answer.module";
 
 
 @NgModule({

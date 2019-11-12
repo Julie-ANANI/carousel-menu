@@ -10,7 +10,7 @@ import { Innovation } from '../../../../../../../models/innovation';
 import { Question } from '../../../../../../../models/question';
 import { Section } from '../../../../../../../models/section';
 import { Table } from '../../../../../../table/models/table';
-import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../../../models/config';
 

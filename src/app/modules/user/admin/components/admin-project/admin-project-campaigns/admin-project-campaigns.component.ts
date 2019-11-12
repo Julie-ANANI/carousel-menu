@@ -9,7 +9,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
-import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 
 @Component({
   selector: 'app-admin-project-campaigns',

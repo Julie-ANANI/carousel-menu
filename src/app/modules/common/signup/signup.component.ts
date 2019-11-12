@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { AuthService } from '../../../services/auth/auth.service';
-import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
 import { FormGroup } from '@angular/forms';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user/user.service';

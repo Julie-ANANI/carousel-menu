@@ -109,7 +109,7 @@
 
 @media (max-width: $size-md) {
 
-  .sidebar {
+  .sidebar:not(.is-not-responsive) {
     width: 65% !important;
   }
 
@@ -117,7 +117,7 @@
 
 @media (max-width: $size-sm) {
 
-  .sidebar {
+  .sidebar:not(.is-not-responsive) {
     width: 90% !important;
   }
 

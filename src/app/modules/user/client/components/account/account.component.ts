@@ -8,7 +8,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
-import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { countries } from '../../../../../models/static-data/country';
 import { Observable } from 'rxjs';

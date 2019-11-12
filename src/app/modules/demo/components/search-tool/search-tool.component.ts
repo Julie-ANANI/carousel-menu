@@ -4,7 +4,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
-import { SidebarInterface } from "../../../sidebar/interfaces/sidebar-interface";
+import { SidebarInterface } from "../../../sidebars/interfaces/sidebar-interface";
 import { AuthService } from "../../../../services/auth/auth.service";
 import { DownloadService } from "../../../../services/download/download.service";
 import { countries } from "../../../../models/static-data/country";

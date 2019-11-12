@@ -6,9 +6,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedAmbassadorListComponent } from './shared-ambassador-list.component';
 
 import { TableModule } from '../../../table/table.module';
-import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
-import { SidebarTagsModule } from '../../../sidebar/components/tags/sidebar-tags.module';
+import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
+import { SidebarUserFormModule } from '../../../sidebars/components/user-form/sidebar-user-form.module';
+import { SidebarTagsModule } from '../../../sidebars/components/tags/sidebar-tags.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
 import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';

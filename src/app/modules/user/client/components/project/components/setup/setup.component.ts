@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import { SidebarInterface } from '../../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 
