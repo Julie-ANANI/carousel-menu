@@ -42,7 +42,7 @@ export class ShowcaseHistoryComponent implements OnInit {
     _isDeletable: true,
     _isSearchable: true,
     _isSelectable: true,
-    _editIndex: 1,
+    _clickIndex: 1,
     _editButtonLabel: 'Load',
     _isPaginable: true,
     _columns: [

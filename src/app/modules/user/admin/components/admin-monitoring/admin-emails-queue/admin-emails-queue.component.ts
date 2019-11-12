@@ -62,7 +62,7 @@ export class AdminEmailQueueComponent implements OnInit {
             _isSearchable: true,
             _isTitle: true,
             _isPaginable: true,
-            _editIndex: 1,
+            _clickIndex: 1,
             _columns: [
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSearchable: true},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},

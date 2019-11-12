@@ -131,7 +131,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
       _isSelectable: true,
       _isPaginable: true,
       _isEditable: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _isTitle: true,
       _isLocal: true,
       _buttons: [{_label: 'ANSWER.VALID_ANSWER', _icon: 'fas fa-check'}, {_label: 'ANSWER.REJECT_ANSWER', _icon: 'fas fa-times'}],

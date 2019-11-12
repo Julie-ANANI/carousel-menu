@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
@@ -18,7 +18,7 @@ import * as moment from 'moment';
   styleUrls: ['./table.component.scss']
 })
 
-export class TableComponent implements OnInit {
+export class TableComponent {
 
   /***
    * Input use to set the config for the tables linked with the back office
@@ -84,13 +84,12 @@ export class TableComponent implements OnInit {
 
   private _filteredContent: Array<any> = [];
 
+  private _selectedIndex: number = null;
+
   constructor(private _translateService: TranslateService,
               private _configService: ConfigService,
               private _localStorageService: LocalStorageService) {
     this._initializeTable();
-  }
-
-  ngOnInit(): void {
   }
 
   /***
@@ -102,7 +101,7 @@ export class TableComponent implements OnInit {
       _selector: '',
       _title: 'TABLE.TITLE.RESULTS',
       _total: -1,
-      _editIndex: 1,
+      _clickIndex: 1,
       _columns: [],
       _content: [],
     }
@@ -297,12 +296,14 @@ export class TableComponent implements OnInit {
   }
 
   /***
-   * This function is call when the user click on the edit button
+   * This function is call when the user click on the click name
    * Emit the Output editRow
    * @param {Row} row
+   * @param selectIndex
    */
-  public edit(row: Row) {
+  public edit(row: Row, selectIndex: number) {
     this.editRow.emit(row);
+    this._selectedIndex = selectIndex;
   }
 
   /***
@@ -658,6 +659,13 @@ export class TableComponent implements OnInit {
 
   }
 
+  public disabledRow(content: any): boolean {
+    if (this._table._isRowDisabled) {
+      return this._table._isRowDisabled(content);
+  }
+    return false;
+  }
+
   get table(): Table {
     return this._table;
   }
@@ -811,6 +819,10 @@ export class TableComponent implements OnInit {
     return this._table._columns.filter(col => {
       return !col._isHidden;
     })
+  }
+
+  get selectedIndex(): number {
+    return this._selectedIndex;
   }
 
 }

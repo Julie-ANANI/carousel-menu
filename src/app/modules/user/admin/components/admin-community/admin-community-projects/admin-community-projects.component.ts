@@ -63,7 +63,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
       _total: this._total,
       _isSearchable: true,
       _isTitle: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _isLocal: true,
       _isPaginable: true,
       _columns: [

@@ -47,7 +47,7 @@ export class SharedAnswersListComponent {
         _isSearchable: true,
         _isSelectable: true,
         _isEditable: true,
-        _editIndex: 1,
+        _clickIndex: 1,
         _buttons: [{_label: 'ANSWER.VALID_ANSWER'}, {_label: 'ANSWER.REJECT_ANSWER'}],
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},

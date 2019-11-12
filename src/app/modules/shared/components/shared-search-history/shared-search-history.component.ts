@@ -122,7 +122,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           _title: 'SEARCH.HISTORY.SEARCHES',
           _content: this._requests,
           _total: this._total,
-          _editIndex: 1,
+          _clickIndex: 1,
           _isSearchable: true,
           _isPaginable: true,
           _isSelectable: true,

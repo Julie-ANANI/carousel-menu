@@ -71,7 +71,7 @@ export class AdminProjectsComponent implements OnInit {
       _isSearchable: true,
       _isEditable: false,
       _isTitle: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _isPaginable: true,
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true },

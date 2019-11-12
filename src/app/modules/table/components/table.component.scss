@@ -55,6 +55,14 @@
 
     }
 
+    th:first-child, tbody tr {
+      border-left-color: transparent;
+    }
+
+    th:last-child, tbody tr {
+      border-right-color: transparent;
+    }
+
     tbody {
 
       tr {
@@ -169,8 +177,16 @@
 
         }
 
-        &.active, &:hover {
+        &:hover {
           background-color: $table-tr-hover-background-color;
+        }
+
+        &.active {
+          background-color: #FFFBF1;
+        }
+
+        &.disabled {
+          background-color: #F0F0F0;
         }
 
       }
@@ -200,7 +216,7 @@
           display: none;
         }
 
-        &:hover {
+        &:not(.disabled):hover {
           cursor: pointer;
           background-color: $table-th-hover-background-color;
         }

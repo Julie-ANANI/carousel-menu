@@ -86,7 +86,7 @@ export class AdminUsersComponent implements OnInit {
       _isEditable: true,
       _isTitle: true,
       _isPaginable: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _columns: [
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
         {_attrs: ['email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT', _isSearchable: true, _isSortable: true, _isHidden: true},

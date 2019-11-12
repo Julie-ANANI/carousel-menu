@@ -7,9 +7,10 @@ export interface Table {
   readonly _isEditable?: boolean;
   readonly _isTitle?: boolean;
   readonly _isDeletable?: boolean;
+  readonly _isRowDisabled?: any;
   readonly _isSearchable?: boolean;
   readonly _columns: Array<Column>;
-  readonly _editIndex?: number;
+  readonly _clickIndex?: number;
   readonly _isPaginable?: boolean;
   readonly _editButtonLabel?: string;
   readonly _buttons?: Array<{ _icon?: string, _label: string }>;

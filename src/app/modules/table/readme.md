@@ -10,7 +10,7 @@
 6. <b>_isDeletable:</b> set this value to true, if you want to perform the 'Delete' action either on the single row or multiple row.  
 7. <b>_isSearchable:</b> set this value to true, if you want user to perform the 'Search' operation on the table content.  
 8. <b>_columns*:</b> defines the columns for the table.
-9. <b>_editIndex:</b> defines on which column you want to show the 'Edit/Show' button.
+9. <b>_clickIndex:</b> defines on which column you want to show the 'Edit/Show' button.
 10. <b>_isPaginable:</b> set this value to true, if you want to introduce the pagination for the table.
 11. <b>_editButtonLabel:</b> defines the label for the edit button apart from 'Edit/Show'.
 12. <b>_buttons:</b> defines the array of actions you want to perform apart from delete action on the single row or multiple row.

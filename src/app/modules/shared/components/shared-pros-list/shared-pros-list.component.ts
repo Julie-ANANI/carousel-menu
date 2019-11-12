@@ -81,7 +81,7 @@ export class SharedProsListComponent {
           _isSelectable: true,
           _isEditable: true,
           _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
-          _editIndex: 2,
+          _clickIndex: 2,
           _columns: [
             {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true,
               _choices: [
@@ -120,7 +120,7 @@ export class SharedProsListComponent {
           _isSelectable: true,
           _isEditable: true,
           _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
-          _editIndex: 2,
+          _clickIndex: 2,
           _columns: [
             {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true,
               _choices: [
