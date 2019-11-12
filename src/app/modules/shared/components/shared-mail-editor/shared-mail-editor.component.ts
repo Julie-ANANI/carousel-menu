@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 import { EmailTemplate } from '../../../../models/email-template';
 
@@ -25,6 +25,10 @@ export class SharedMailEditorComponent implements OnInit {
     this.changeLanguage(value);
   }
 
+  @Input() set customFields(value: Array<{label: string, value: string}>) {
+    this._customFields = value;
+  }
+
   @Input() noLanguage: Boolean;
 
   @Input() set id(value: string) {
@@ -34,6 +38,10 @@ export class SharedMailEditorComponent implements OnInit {
   @Output() languageChange = new EventEmitter<string>();
 
   @Output() emailChange = new EventEmitter<any>();
+
+  @ViewChild('textZone') child: any;
+
+  private _customFields: Array<{label: string, value: string}> = [];
 
   private _signatures: Array<EmailSignature> = [];
 
@@ -59,6 +67,10 @@ export class SharedMailEditorComponent implements OnInit {
       en: {language: 'en', subject: '', content: ''},
       fr: {language: 'fr', subject: '', content: ''}
     };
+  }
+
+  public insertTextAtCursor(text: string) {
+    this.child.insertTextAtCursor(text)
   }
 
 
@@ -119,5 +131,9 @@ export class SharedMailEditorComponent implements OnInit {
 
   get id(): string {
     return this._id;
+  }
+
+  get customFields(): Array<{label: string, value: string}> {
+    return this._customFields;
   }
 }
