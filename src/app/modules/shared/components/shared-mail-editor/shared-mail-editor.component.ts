@@ -52,7 +52,9 @@ export class SharedMailEditorComponent implements OnInit {
   ngOnInit() {
     this._signatures = [];
     this._editionMode = true;
-    this._email = {language: this._language, subject: '', content: ''};
+    if (!this._email) {
+      this._email = {language: this._language, subject: '', content: ''};
+    }
     this._emailsObject = {
       en: {language: 'en', subject: '', content: ''},
       fr: {language: 'fr', subject: '', content: ''}
