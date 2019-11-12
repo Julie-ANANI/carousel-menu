@@ -32,7 +32,8 @@ import { MessageTemplate1Module } from '../../../../utility-components/messages/
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../utility-components/messages/message-template-2/message-template-2.module';
-import {AdminProjectFollowUpComponent} from "./admin-project-follow-up/admin-project-follow-up.component";
+import { AdminProjectFollowUpComponent } from "./admin-project-follow-up/admin-project-follow-up.component";
+import { SharedMailEditorModule } from "../../../../shared/components/shared-mail-editor/shared-mail-editor.module";
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import {AdminProjectFollowUpComponent} from "./admin-project-follow-up/admin-pro
     SidebarCampaignFormModule,
     MessageTemplate1Module,
     ModalModule,
+    SharedMailEditorModule,
     ErrorTemplate1Module,
     MessageTemplate2Module
   ],

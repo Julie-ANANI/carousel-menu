@@ -89,4 +89,37 @@ export interface Innovation {
 
   _metadata?: any;
 
+  followUpEmails?: {
+    ccEmail: string,
+    interview: {
+      fr: {
+        subject: string,
+        content: string
+      },
+      en: {
+        subject: string,
+        content: string
+      }
+    },
+    opening: {
+      fr: {
+        subject: string,
+        content: string
+      },
+      en: {
+        subject: string,
+        content: string
+      }
+    },
+    noFollow: {
+      fr: {
+        subject: string,
+        content: string
+      },
+      en: {
+        subject: string,
+        content: string
+      }
+    }
+  }
 }

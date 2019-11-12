@@ -1,5 +1,35 @@
 <section id="admin-project-FOLLOW-UP" class="section-light-pad">
   <div class="column col-xs-12 col-11 col-mx-auto">
-    FOLLOW-UP
+    <a (click)="modal='interview'">Editer mail rdv</a><br>
+    <a (click)="modal='opening'">Editer mail ouverture</a><br>
+    <a (click)="modal='noFollow'">Editer mail sans suite</a><br>
   </div>
 </section>
+
+<app-modal [(showModal)]="modal" [title]="modal" *ngIf="email" [maxWidth]="'950px'">
+
+  <section class="modal-body">
+    <app-shared-mail-editor
+      [emailsObject]="email"
+      [inputLanguage]="'fr'"
+      [noLanguage]="true"
+      (emailChange)="email = $event">
+    </app-shared-mail-editor>
+
+    <app-shared-mail-editor
+      [emailsObject]="email"
+      [inputLanguage]="'en'"
+      [noLanguage]="true"
+      (emailChange)="email = $event">
+    </app-shared-mail-editor>
+
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="saveTemplates()" class="button is-primary">
+      {{ 'COMMON.BUTTON.SAVE' | translate }}
+    </button>
+  </footer>
+
+</app-modal>
