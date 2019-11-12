@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Professional } from '../../../../models/professional';
-import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { AdvSearchService } from "../../../../services/advsearch/advsearch.service";
 import { Router } from '@angular/router';

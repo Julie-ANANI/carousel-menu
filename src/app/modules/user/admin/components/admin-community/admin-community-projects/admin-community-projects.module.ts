@@ -8,11 +8,11 @@ import { AdminCommunityProjectsComponent } from "./admin-community-projects.comp
 import { AdminCommunityProjectComponent } from "./component/admin-community-project/admin-community-project.component";
 
 import { PipeModule } from '../../../../../../pipe/pipe.module';
-import { SidebarModule } from "../../../../../sidebar/sidebar.module";
+import { SidebarModule } from "../../../../../sidebars/templates/sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
 import { SharedAmbassadorListModule } from "../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
 import { SharedWorldmapModule } from "../../../../../shared/components/shared-worldmap/shared-worldmap.module";
-import { SidebarCommunityFormModule } from "../../../../../sidebar/components/community-form/sidebar-community-form.module";
+import { SidebarCommunityFormModule } from "../../../../../sidebars/components/community-form/sidebar-community-form.module";
 import { ErrorTemplate1Module } from '../../../../../utility-components/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../../utility-components/messages/message-template-2/message-template-2.module';
 

@@ -8,7 +8,7 @@ import { Campaign } from '../../../../../../models/campaign';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { SidebarInterface } from '../../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Config } from '../../../../../../models/config';

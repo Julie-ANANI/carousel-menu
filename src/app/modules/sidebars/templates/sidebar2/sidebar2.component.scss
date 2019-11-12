@@ -1,0 +1,57 @@
+@import "../../../../../style/framework/src/variables";
+
+#sidebar2 {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  height: 100vh;
+  z-index: $zindexSidebar-0;
+  background: $bg-light-color;
+  box-shadow: 0 0 24px 0 rgba(0,0,0,0.32);
+
+  .sidebar-border {
+    min-height: 100vh;
+    width: 30px;
+    background: $bg-primary-gradient-color;
+    z-index: 1;
+  }
+
+  .sidebar-toggle {
+    top: 35px;
+    right: -17px;
+    z-index: 1;
+
+    .button.is-action.is-circled {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+    }
+
+  }
+
+  .sidebar {
+    box-shadow: unset;
+    position: unset;
+    z-index: unset;
+    transform-origin: left;
+
+    &.inactive, &.active {
+      transition-duration: 100ms;
+    }
+
+    .sidebar-body {
+      padding: 50px 25px;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      &.active {
+        opacity: 1;
+        transition: opacity 100ms ease-in-out;
+      }
+
+    }
+
+  }
+
+}

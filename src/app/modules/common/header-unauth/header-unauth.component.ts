@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { User } from '../../../models/user.model';

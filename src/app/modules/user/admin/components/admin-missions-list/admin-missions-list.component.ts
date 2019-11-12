@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Table } from '../../../../table/models/table';
 import {Config} from '../../../../../models/config';
 import { Mission } from '../../../../../models/mission';
-import {SidebarInterface} from "../../../../sidebar/interfaces/sidebar-interface";
+import {SidebarInterface} from "../../../../sidebars/interfaces/sidebar-interface";
 
 
 @Component({

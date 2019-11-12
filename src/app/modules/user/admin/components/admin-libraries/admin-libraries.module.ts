@@ -14,8 +14,8 @@ import { AdminCountryManagementModule } from '../admin-settings/admin-country-ma
 import { AdminEmailsLibraryModule } from './admin-emails-library/admin-emails-library.module';
 import { AdminPresetsModule } from './admin-presets/admin-presets.module';
 import { TableModule } from '../../../../table/table.module';
-import { SidebarModule } from '../../../../sidebar/sidebar.module';
-import { SidebarEmailFormModule } from '../../../../sidebar/components/emails-form/sidebar-email-form.module';
+import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
+import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
 @NgModule({

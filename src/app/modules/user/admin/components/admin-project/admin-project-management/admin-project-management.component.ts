@@ -6,7 +6,7 @@ import {Tag} from '../../../../../../models/tag';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {Innovation} from '../../../../../../models/innovation';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
+import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {Observable, Subject} from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';

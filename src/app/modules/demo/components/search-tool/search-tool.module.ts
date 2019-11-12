@@ -11,8 +11,8 @@ import { CommonService } from '../../../../services/common/common.service';
 import { DownloadService } from "../../../../services/download/download.service";
 
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { SidebarModule } from "../../../sidebar/sidebar.module";
-import { SidebarSearchToolModule } from "../../../sidebar/components/sidebar-search-tool/sidebar-search-tool.module";
+import { SidebarModule } from "../../../sidebars/templates/sidebar/sidebar.module";
+import { SidebarSearchToolModule } from "../../../sidebars/components/sidebar-search-tool/sidebar-search-tool.module";
 import { SearchInput3Module } from '../../../utility-components/search-inputs/search-template-3/search-input-3.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
 

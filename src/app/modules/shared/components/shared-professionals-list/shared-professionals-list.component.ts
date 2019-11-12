@@ -5,7 +5,7 @@ import { Config } from '../../../../models/config';
 import { ProfessionalsService} from '../../../../services/professionals/professionals.service';
 import { first} from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Campaign } from '../../../../models/campaign';
 import { Router } from '@angular/router';
 import { Tag } from '../../../../models/tag';

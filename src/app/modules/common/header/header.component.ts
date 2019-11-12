@@ -7,7 +7,7 @@ import { Header } from './interface/header';
 import { initTranslation, TranslateService } from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { SidebarInterface } from '../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 @Component({

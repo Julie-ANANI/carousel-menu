@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { User } from '../../../../../models/user.model';
 import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../models/config';
 import { Response } from '../../../../../models/response';

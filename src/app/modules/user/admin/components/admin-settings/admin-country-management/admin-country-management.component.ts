@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
 import { first } from 'rxjs/operators';
-import {SidebarInterface} from '../../../../../sidebar/interfaces/sidebar-interface';
+import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
 import {Table} from '../../../../../table/models/table';

@@ -5,8 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedSearchProsComponent } from './shared-search-pros.component';
 
-import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { SidebarSearchModule } from '../../../sidebar/components/sidebar-search/sidebar-search.module';
+import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
+import { SidebarSearchModule } from '../../../sidebars/components/sidebar-search/sidebar-search.module';
 import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 
 @NgModule({

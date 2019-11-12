@@ -3,7 +3,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
-import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import {GeographySettings} from "../../../../models/innov-settings";
 

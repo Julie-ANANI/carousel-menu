@@ -12,7 +12,7 @@ import { TAGS } from '../modules/user/admin/components/admin-tags/i18n/en';
 import { PROJECT_MODULE } from '../modules/user/client/components/project/i18n/en';
 import { DISCOVER } from '../modules/public/discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/description/i18n/en';
-import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/en';
+import { ANSWER } from '../modules/sidebars/components/user-answer/i18n/en';
 import { LOG_IN } from '../modules/common/login/i18n/en';
 import { SIGN_UP } from '../modules/common/signup/i18n/en';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
@@ -24,7 +24,7 @@ import { HEADER } from '../modules/common/header/i18n/en';
 import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/en';
 import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/en';
 import { TABLE } from '../modules/table/i18n/en';
-import { SIDEBAR } from '../modules/sidebar/i18n/en';
+import { SIDEBAR } from '../modules/sidebars/i18n/en';
 import { SHARED_PROJECT_SETTINGS } from '../modules/shared/components/shared-project-settings-component/i18n/en';
 import { SHARED_PROJECT_EDIT } from '../modules/shared/components/shared-project-edit-cards-component/i18n/en';
 import { SHOWCASE } from '../modules/demo/components/showcase/i18n/en';
@@ -33,6 +33,7 @@ import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n
 import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/en';
 import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/en';
 import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
+import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -70,4 +71,5 @@ export const en = {
   'SEARCH_DEMO': SEARCH_DEMO,
   'COMMUNITY': COMMUNITY,
   'SHARED_TARGETING_WORLD': SHARED_TARGETING_WORLD,
+  'SHARED_FOLLOW_UP': SHARED_FOLLOW_UP
 };

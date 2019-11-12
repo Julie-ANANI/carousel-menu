@@ -18,8 +18,8 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { PipeModule } from '../../../../pipe/pipe.module';
-import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { ShowcaseHistoryModule } from '../../../sidebar/components/showcase-history/showcase-history.module';
+import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
+import { ShowcaseHistoryModule } from '../../../sidebars/components/showcase-history/showcase-history.module';
 import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ErrorTemplate1Module } from '../../../utility-components/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../utility-components/messages/message-template-2/message-template-2.module';

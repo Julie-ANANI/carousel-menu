@@ -45,7 +45,7 @@ export const projectRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'follow_up',
+    path: 'follow-up',
     component: AdminProjectFollowUpComponent,
     pathMatch: 'full'
   }

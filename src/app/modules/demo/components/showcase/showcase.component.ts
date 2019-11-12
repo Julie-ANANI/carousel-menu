@@ -9,7 +9,7 @@ import { Answer } from '../../../../models/answer';
 import { Clearbit } from '../../../../models/clearbit';
 import { Innovation } from '../../../../models/innovation';
 import { Showcase } from '../../../../models/showcase';
-import { SidebarInterface } from '../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
 import { forkJoin } from 'rxjs';
@@ -49,7 +49,7 @@ export class ShowcaseComponent {
   private _quartiles = [1, 1, 1];
 
   private _modalShow = false;
-  
+
   private _fetchingError: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -70,7 +70,7 @@ export class ShowcaseComponent {
     }
 
     const tagStats = this._activatedRoute.snapshot.data['tagsStats'];
-    
+
     if (Array.isArray(tagStats)) {
       this._selectedTagsStats = tagStats;
       this._recomputeData();

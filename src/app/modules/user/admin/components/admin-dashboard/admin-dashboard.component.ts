@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovCard } from '../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
-import { SidebarInterface } from '../../../../sidebar/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 
 

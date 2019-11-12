@@ -9,8 +9,8 @@ import { HeaderUnauthComponent } from './header-unauth.component';
 import { UserService } from '../../../services/user/user.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 
-import { SidebarModule}  from '../../sidebar/sidebar.module';
-import { SidebarSignupFormModule } from '../../sidebar/components/signup-form/sidebar-signup-form.module';
+import { SidebarModule}  from '../../sidebars/templates/sidebar/sidebar.module';
+import { SidebarSignupFormModule } from '../../sidebars/components/signup-form/sidebar-signup-form.module';
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
 
 
