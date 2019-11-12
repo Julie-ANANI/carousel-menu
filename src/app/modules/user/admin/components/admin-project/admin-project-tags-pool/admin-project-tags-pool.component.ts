@@ -105,7 +105,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       _isDeletable: true,
       _isSelectable: true,
       _isEditable: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _columns: [
         {_attrs: ['label'], _name: 'Label', _type: 'MULTILING'},
         {_attrs: ['description'], _name: 'Description', _type: 'MULTILING'},

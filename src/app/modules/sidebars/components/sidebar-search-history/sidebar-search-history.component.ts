@@ -57,7 +57,7 @@ export class SidebarSearchHistoryComponent {
             _title: 'SEARCH.HISTORY.SEARCHES',
             _content: this._requests,
             _total: this._total,
-            _editIndex: 1,
+            _clickIndex: 1,
             _isSearchable: false,
             _isPaginable: false,
             _isSelectable: true,

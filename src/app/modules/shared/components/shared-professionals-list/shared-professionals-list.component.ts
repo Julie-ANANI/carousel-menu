@@ -102,7 +102,7 @@ export class SharedProfessionalsListComponent {
           {_label: 'Merge', _icon: 'fas fa-object-group'},
           {_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'},
           {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'icon icon-plus'}],
-      _editIndex: 1,
+      _clickIndex: 1,
       _columns: [
         {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [

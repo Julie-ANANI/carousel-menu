@@ -80,7 +80,7 @@ export class AdminSignaturesLibraryComponent {
       _isPaginable: true,
       _isEditable: true,
       _isTitle: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _isNoMinHeight: true,
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},

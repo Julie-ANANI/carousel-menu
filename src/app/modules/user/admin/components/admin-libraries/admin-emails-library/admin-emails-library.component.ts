@@ -94,7 +94,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
       _isDeletable: true,
       _isSelectable: true,
       _isEditable: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _columns: [
         {_attrs: [`name`], _name: 'Nom', _type: 'TEXT'},
         {_attrs: [`${this.language}.subject`], _name: 'Objet', _type: 'TEXT'},

@@ -58,7 +58,7 @@ export class AdminMissionsListComponent implements OnInit {
         _title: 'COMMON.MISSIONS',
         _content: missions.result,
         _total: missions._metadata.totalCount,
-        _editIndex: 1,
+        _clickIndex: 1,
         _isDeletable: true,
         _isSelectable: true,
         _isSearchable: true,

@@ -92,7 +92,7 @@ export class AdminPresetsListComponent {
       _isSelectable: true,
       _isPaginable: true,
       _isTitle: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _buttons: [{ _icon: 'fas fa-clone', _label: 'Clone' }],
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},

@@ -89,7 +89,7 @@ export class AdminCountryManagementComponent implements OnInit {
             _isDeletable: true,
             _isSelectable: true,
             _isEditable: true,
-            _editIndex: 1,
+            _clickIndex: 1,
             _columns: [
               {_attrs: ['name'], _name: 'COMMON.COUNTRY', _type: 'TEXT', _isSearchable: true, _isSortable: true},
               {_attrs: ['acceptation'], _name: 'COMMON.BLACKLIST.ACCEPTATION', _type: 'PROGRESS', _isSearchable: true, _isSortable: true},

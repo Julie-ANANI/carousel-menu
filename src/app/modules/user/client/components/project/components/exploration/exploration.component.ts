@@ -81,7 +81,7 @@ export class ExplorationComponent implements OnInit {
           _selector: 'client-answer',
           _content: response.answers,
           _total: response.answers.length,
-          _editIndex: 1,
+          _clickIndex: 1,
           _isLocal: true,
           _isPaginable: true,
           _columns: [
@@ -96,7 +96,7 @@ export class ExplorationComponent implements OnInit {
           _selector: 'client-answer',
           _content: response.answers,
           _total: response.answers.length,
-          _editIndex: 1,
+          _clickIndex: 1,
           _isLocal: true,
           _isPaginable: true,
           _columns: [
