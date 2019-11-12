@@ -38,7 +38,8 @@ export const TABLE = {
     'SECTIONS': 'Sections',
     'PROJECTS': 'Projects',
     'AMBASSADOR': 'Ambassador',
-    'TTR':  'Release time'
+    'TTR':  'Release time',
+    'OBJECTIVE': 'Objective'
   },
 
   'TITLE': {
@@ -58,5 +59,7 @@ export const TABLE = {
   },
 
   'SELECTED_ROWS': 'selected',
+
+  'CHOOSE': 'Choose'
 
 };

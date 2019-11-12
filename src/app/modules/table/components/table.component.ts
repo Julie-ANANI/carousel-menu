@@ -433,7 +433,7 @@ export class TableComponent {
    * @param {Column} column
    * @returns {Choice[]}
    */
-  public static getChoices(column: Column): Choice[] {
+  public getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
@@ -445,7 +445,7 @@ export class TableComponent {
    * @returns {Choice}
    */
   public getChoice(column: Column, name: string): Choice {
-    return TableComponent.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
+    return this.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
   }
 
   /***
@@ -664,6 +664,11 @@ export class TableComponent {
       return this._table._isRowDisabled(content);
   }
     return false;
+  }
+
+  public onClickDropdownItem(content: any, item: Choice) {
+    console.log(content);
+    console.log(item);
   }
 
   get table(): Table {

@@ -170,12 +170,13 @@
             <td *ngFor="let column of visibleColumns; let i = index"
                 [ngClass]="{ 'max-width': table._columns.length <= 6 }"
                 [ngStyle]="{ 'width': column._width, 'min-width': column._width ? 'unset' : '150px' }">
+
               <div class="tbody-td-data d-flex relative"
                    [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE' }">
 
                 <div
                 [ngClass]="{ 'td-type-image': getType(column) === 'COUNTRY' || getType(column) === 'PICTURE',
-                'enable-tooltip': column._enableTooltip || getType(column) === 'COUNTRY',
+                'enable-tooltip': column._enableTooltip || getType(column) === 'COUNTRY' || getType(column) === 'DROPDOWN',
                 'td-type-tag': getType(column) === 'TAG-LIST' }"
                 [ngSwitch]="getType(column)"
                 class="tbody-td-content text-ellipsis">
@@ -288,6 +289,40 @@
                     </span>
                   </ng-container>
                   <!-- /if type is multi-choices -->
+
+
+                  <!-- if type is a dropdown -->
+                  <ng-container *ngSwitchCase="'DROPDOWN'">
+                    <span class="dropdown is-right">
+
+                      <a
+                        [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))
+                        ? getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0])))) : 'button is-info'"
+                        class="is-link dropdown-toggle"
+                        tabindex="0">
+
+                        <ng-container *ngIf="!(getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]))))">
+                          {{ 'TABLE.CHOOSE' | translate }} <i class="icon icon-caret"></i>
+                        </ng-container>
+
+                        <ng-container *ngIf="(getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]))))">
+                          {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])))) | translate }} <i class="icon icon-caret"></i>
+                        </ng-container>
+
+                      </a>
+
+                      <ul class="menu">
+                        <li
+                          (click)="table._isLocal ? onClickDropdownItem(filteredContent[row], item) : onClickDropdownItem(table._content[row], item)"
+                          *ngFor="let item of this.getChoices(column)"
+                          class="menu-item">
+                          {{ item._alias | translate }}
+                        </li>
+                      </ul>
+
+                    </span>
+                  </ng-container>
+                  <!-- /if type is a dropdown -->
 
 
                   <!-- if type is multi-image-choices -->

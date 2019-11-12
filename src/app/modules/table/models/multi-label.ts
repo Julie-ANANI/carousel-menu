@@ -1,4 +1,4 @@
-import {labelClass} from './choice';
+import { labelClass } from './choice';
 
 export interface MultiLabel {
   readonly _attr: string;
