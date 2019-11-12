@@ -126,6 +126,10 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     this._configEditor('text');
   }
 
+  public insertTextAtCursor(text: string) {
+    tinymce.activeEditor.execCommand('mceInsertContent', false, text);
+  }
+
   public startCollaborativeEditor() {
     this._swellRTBackend.openDocument( 'id-document' )
       .then(_object => {

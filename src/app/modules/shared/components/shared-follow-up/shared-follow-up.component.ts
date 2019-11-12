@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { TranslateNotificationsService } from "../../../../services/notifications/notifications.service";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { Innovation } from "../../../../models/innovation";
+import {InnovationFrontService} from "../../../../services/innovation/innovation-front.service";
 
 @Component({
   selector: 'shared-follow-up',
@@ -12,7 +13,10 @@ import { Innovation } from "../../../../models/innovation";
 
 export class SharedFollowUpComponent implements OnInit {
 
+  private _customFields: {fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} = {en: [], fr: []};
+
   private _modal: string = '';
+
   private _project: Innovation ;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -30,6 +34,22 @@ export class SharedFollowUpComponent implements OnInit {
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+    this._customFields = {
+      fr: [
+        { value: '*|FIRSTNAME|*', label: 'Prénom du pro'},
+        { value: '*|LASTNAME|*', label: 'Nom du pro'},
+        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title')},
+        { value: '*|COMPANY_NAME|*', label: this._project.owner.company},
+        { value: '*|CLIENT_NAME|*', label: `${this._project.owner.firstName} ${this._project.owner.lastName}`}
+      ],
+      en: [
+        { value: '*|FIRSTNAME|*', label: 'Prénom du pro'},
+        { value: '*|LASTNAME|*', label: 'Nom du pro'},
+        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'title')},
+        { value: '*|COMPANY_NAME|*', label: this._project.owner.company},
+        { value: '*|CLIENT_NAME|*', label: `${this._project.owner.firstName} ${this._project.owner.lastName}`}
+      ]
+    };
   }
 
   get email(): any {
@@ -46,6 +66,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   get project(): Innovation {
     return this._project;
+  }
+
+  get customFields(): {fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} {
+    return this._customFields;
   }
 
 }
