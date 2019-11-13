@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { Sidebar2Component } from './sidebar2.component';
+import { SidebarLeftComponent } from './sidebar-left.component';
 
 @NgModule({
   imports: [
@@ -10,11 +10,11 @@ import { Sidebar2Component } from './sidebar2.component';
     TranslateModule.forChild(),
   ],
   declarations: [
-    Sidebar2Component,
+    SidebarLeftComponent,
   ],
   exports: [
-    Sidebar2Component,
+    SidebarLeftComponent,
   ]
 })
 
-export class Sidebar2Module {}
+export class SidebarLeftModule {}

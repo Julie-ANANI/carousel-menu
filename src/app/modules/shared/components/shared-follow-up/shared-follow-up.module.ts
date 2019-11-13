@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedFollowUpComponent } from './shared-follow-up.component';
 
-import { Sidebar2Module } from '../../../sidebars/templates/sidebar2/sidebar2.module';
+import { SidebarLeftModule } from '../../../sidebars/templates/sidebar-left/sidebar-left.module';
 import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 import { SharedMailEditorModule } from "../shared-mail-editor/shared-mail-editor.module";
 
@@ -12,7 +12,7 @@ import { SharedMailEditorModule } from "../shared-mail-editor/shared-mail-editor
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    Sidebar2Module,
+    SidebarLeftModule,
     ModalModule,
     SharedMailEditorModule
   ],

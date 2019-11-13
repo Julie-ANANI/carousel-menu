@@ -33,6 +33,7 @@ export class TableComponent {
    * @param {Table} value
    */
   @Input() set data(value: Table) {
+    this._selectedIndex = null;
     this._loadData(value);
   }
 
@@ -69,6 +70,13 @@ export class TableComponent {
    * @type {EventEmitter<any>}
    */
   @Output() selectRows: EventEmitter<any> = new EventEmitter<any>();
+
+  /***
+   * Output call when the user selects the item from the
+   * dropdown list.
+   * @type {EventEmitter<{content: any, item: Choice}>}
+   */
+  @Output() dropdownAction: EventEmitter<{content: any, item: Choice}> = new EventEmitter<{content: any, item: Choice}>();
 
   private _table: Table;
 
@@ -433,7 +441,7 @@ export class TableComponent {
    * @param {Column} column
    * @returns {Choice[]}
    */
-  public static getChoices(column: Column): Choice[] {
+  public getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
@@ -445,7 +453,7 @@ export class TableComponent {
    * @returns {Choice}
    */
   public getChoice(column: Column, name: string): Choice {
-    return TableComponent.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
+    return this.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
   }
 
   /***
@@ -660,10 +668,11 @@ export class TableComponent {
   }
 
   public disabledRow(content: any): boolean {
-    if (this._table._isRowDisabled) {
-      return this._table._isRowDisabled(content);
+    return this._table._isRowDisabled ? this._table._isRowDisabled(content) : false;
   }
-    return false;
+
+  public onClickDropdownItem(content: any, item: Choice) {
+    this.dropdownAction.emit({content: content, item: item});
   }
 
   get table(): Table {
