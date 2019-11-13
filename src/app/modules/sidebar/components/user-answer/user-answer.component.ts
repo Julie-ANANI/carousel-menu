@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
+import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 
 @Component({
   selector: 'app-user-answer',
@@ -47,6 +48,8 @@ export class UserAnswerComponent {
 
   private _editCompany = false;
 
+  private _addNewEmail = false;
+
   private _editCountry = false;
 
   private _editMode = false;
@@ -62,12 +65,15 @@ export class UserAnswerComponent {
     country: "",
   };
 
+  public newEmail = "";
+
   private _innovationId = '';
 
   modeAdmin = false;
 
   constructor(private _translateService: TranslateService,
               private _answerService: AnswerService,
+              private _professionalsService: ProfessionalsService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._floor = Math.floor;
@@ -236,6 +242,14 @@ export class UserAnswerComponent {
     };
   }
 
+  public addContactEmail() {
+    this._professionalsService.addContactEmail(this._modalAnswer.professional._id, this.newEmail).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.SUCCESS');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ERROR');
+    });
+  }
+
   get meta(): any {
     return this._modalAnswer.meta || {};
   }
@@ -266,6 +280,14 @@ export class UserAnswerComponent {
 
   get editMode(): boolean {
     return this._editMode;
+  }
+
+  get addNewEmail(): boolean {
+    return this._addNewEmail;
+  }
+
+  set addNewEmail(value: boolean) {
+    this._addNewEmail = value;
   }
 
   get assignNewPro(): boolean {

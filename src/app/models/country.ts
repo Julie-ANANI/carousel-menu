@@ -6,4 +6,5 @@ export interface Country {
   uri?: string;
   continent?: string;
   subcontinent?: string;
+  flag?: string;
 }

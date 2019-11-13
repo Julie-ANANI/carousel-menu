@@ -13,6 +13,7 @@ import { AutoCompleteInputModule } from '../../../utility-components/auto-comple
 import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility-components/input-list/input-list.module';
+import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
 
 @NgModule({
   imports: [
@@ -31,6 +32,9 @@ import { InputListModule } from '../../../utility-components/input-list/input-li
     UserAnswerComponent,
     AnswerQuestionComponent,
     RatingItemComponent
+  ],
+  providers: [
+    ProfessionalsService
   ],
   exports: [
     UserAnswerComponent

@@ -79,4 +79,8 @@ export class ProfessionalsService {
   public isShielded(id: string): Observable<any> {
     return this._http.get(`/shield/?professional=${id}&fields=email`);
   }
+
+  public addContactEmail(professionalId: string, email: string): Observable<any> {
+    return this._http.get(`/professional/${professionalId}/addContactEmail?email=${email}`);
+  }
 }
