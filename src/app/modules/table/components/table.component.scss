@@ -143,6 +143,53 @@
                 max-width: 100%;
               }
 
+              .dropdown {
+
+                .button-dropdown {
+                  padding: 6px 9px;
+                  height: unset;
+                  font-size: $font-size-xs;
+
+                  &:not(.is-link).is-info {
+
+                    &:hover, &:disabled, &[disabled] {
+                      background-color: $bg-meta-color;
+                    }
+
+                    &:disabled, &[disabled] {
+                      opacity: 0.8;
+                    }
+
+                  }
+
+                  &.is-secondary {
+
+                    &:hover, &:disabled, &[disabled] {
+                      background-color: $bg-secondary-color;
+                    }
+
+                    &:disabled, &[disabled] {
+                      opacity: 0.8;
+                    }
+
+                  }
+
+                  &.is-danger {
+
+                    &:hover, &:disabled, &[disabled] {
+                      background-color: $bg-alert-color;
+                    }
+
+                    &:disabled, &[disabled] {
+                      opacity: 0.8;
+                    }
+
+                  }
+
+                }
+
+              }
+
             }
 
           }

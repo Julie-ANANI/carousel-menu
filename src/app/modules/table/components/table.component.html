@@ -297,22 +297,23 @@
                   <ng-container *ngSwitchCase="'DROPDOWN'">
                     <span class="dropdown is-right">
 
-                      <a
+                      <button
                         [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))
                         ? getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0])))) : 'button is-info is-link'"
-                        class="dropdown-toggle"
+                        [disabled]="disabledRow(row)"
+                        class="button-dropdown dropdown-toggle"
                         tabindex="0">
 
                         <ng-container *ngIf="!(getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]))))">
-                          {{ 'TABLE.CHOOSE' | translate }} <i class="icon icon-arrow-down text-primary"></i>
+                          {{ 'TABLE.CHOOSE' | translate }} <i class="icon icon-right icon-arrow-down text-primary"></i>
                         </ng-container>
 
                         <ng-container *ngIf="(getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]))))">
                           {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])))) | translate }}
-                          <i class="icon icon-arrow-down"></i>
+                          <i class="icon icon-right icon-arrow-down"></i>
                         </ng-container>
 
-                      </a>
+                      </button>
 
                       <ul class="menu">
                         <li
