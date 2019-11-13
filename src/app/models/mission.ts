@@ -7,6 +7,12 @@ export interface  Milestone {
  dueDate: string;
 }
 
+export interface MailConfiguration {
+  domain: string;
+  service: string;
+  region: string;
+}
+
 export interface Mission {
   readonly _id?: string;
   name?: string;
@@ -15,4 +21,5 @@ export interface Mission {
   client?: User;
   team?: Array<User>;
   milestoneDates?: Array<Milestone>;
+  mailConf?: Array<MailConfiguration>
 }

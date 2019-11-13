@@ -47,4 +47,7 @@ export class EmailService {
     return this._http.delete('/mail/filteredCountries/' + countryId);
   }
 
+  public getMailServiceConfigurations(): Observable<any> {
+    return this._http.get('/mail/mailDomainConfigurations');
+  }
 }

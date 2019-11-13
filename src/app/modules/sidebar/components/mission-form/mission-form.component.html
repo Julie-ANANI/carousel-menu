@@ -64,6 +64,26 @@
         </div>
       </div>
 
+      <!-- Mail service/domain configuration -->
+      <div formArrayName="mailConf">
+        <div class="form-group">
+          <h5 class="title is-5" translate [innerText]="'PROJECT_MODULE.SETUP.EMAIL_DOMAINS'"></h5>
+          <ng-container *ngFor="let config of mailServicesConfigurations.controls; index as i">
+            <div [formGroupName]="i" class="columns">
+              <label class="form-switch" for="mail-service-{{i}}">
+                <input
+                    type="checkbox"
+                    id="mail-service-{{i}}"
+                    (click)="toggleDomain($event, i)"
+                    [checked]="selectedServiceMeta[config.get('service').value+'_'+config.get('domain').value]">
+                <i class="form-icon"></i>
+                {{getServiceDomainLabel(i)}}
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
     </form>
   </div>
 </section>

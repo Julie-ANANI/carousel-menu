@@ -50,4 +50,6 @@ export const SETUP = {
     'CONTENT': 'Do you really want to delete this project?'
   },
 
+  'EMAIL_DOMAINS': 'Domains to be used'
+
 };
