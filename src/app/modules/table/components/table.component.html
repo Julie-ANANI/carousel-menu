@@ -252,7 +252,8 @@
                       class="tbody-td-multiLabel"
                       [ngClass]="{ 'td-type-left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
                       'td-type-right-label' : getAttrIndex(column, attr) === getAttrs(column).length - 1 && getAttrs(column).length !== 1,
-                      'td-type-middle-label' : getAttrIndex(column, attr) !== 0 && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
+                      'td-type-middle-label' : getAttrIndex(column, attr) !== 0
+                      && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
                       {{ (getContentValue(row, attr) || " - ").toString() }}
                     </span>
                   </ng-container>
@@ -269,7 +270,8 @@
                   <!-- if type is tags -->
                   <ng-container *ngSwitchCase="'TAG-LIST'">
                     <span class="d-flex">
-                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2" class="label is-sm is-tag is-rounded">
+                      <span *ngFor="let tag of getContentValue(row, getAttrs(column)[0]) | slice:0:2"
+                            class="label is-sm is-tag is-rounded">
                         {{ tag.label | multiling:userLang }}
                       </span>
                       <span *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">...</span>
@@ -297,23 +299,25 @@
 
                       <a
                         [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))
-                        ? getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0])))) : 'button is-info'"
-                        class="is-link dropdown-toggle"
+                        ? getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0])))) : 'button is-info is-link'"
+                        class="dropdown-toggle"
                         tabindex="0">
 
                         <ng-container *ngIf="!(getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]))))">
-                          {{ 'TABLE.CHOOSE' | translate }} <i class="icon icon-caret"></i>
+                          {{ 'TABLE.CHOOSE' | translate }} <i class="icon icon-arrow-down text-primary"></i>
                         </ng-container>
 
                         <ng-container *ngIf="(getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]))))">
-                          {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])))) | translate }} <i class="icon icon-caret"></i>
+                          {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])))) | translate }}
+                          <i class="icon icon-arrow-down"></i>
                         </ng-container>
 
                       </a>
 
                       <ul class="menu">
                         <li
-                          (click)="table._isLocal ? onClickDropdownItem(filteredContent[row], item) : onClickDropdownItem(table._content[row], item)"
+                          (click)="table._isLocal ? onClickDropdownItem(filteredContent[row], item)
+                          : onClickDropdownItem(table._content[row], item)"
                           *ngFor="let item of this.getChoices(column)"
                           class="menu-item">
                           {{ item._alias | translate }}

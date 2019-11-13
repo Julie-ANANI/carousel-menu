@@ -70,6 +70,13 @@ export class TableComponent {
    */
   @Output() selectRows: EventEmitter<any> = new EventEmitter<any>();
 
+  /***
+   * Output call when the user selects the item from the
+   * dropdown list.
+   * @type {EventEmitter<{content: any, item: Choice}>}
+   */
+  @Output() dropdownAction: EventEmitter<{content: any, item: Choice}> = new EventEmitter<{content: any, item: Choice}>();
+
   private _table: Table;
 
   private _isSearching: boolean;
@@ -660,15 +667,11 @@ export class TableComponent {
   }
 
   public disabledRow(content: any): boolean {
-    if (this._table._isRowDisabled) {
-      return this._table._isRowDisabled(content);
-  }
-    return false;
+    return this._table._isRowDisabled ? this._table._isRowDisabled(content) : false;
   }
 
   public onClickDropdownItem(content: any, item: Choice) {
-    console.log(content);
-    console.log(item);
+    this.dropdownAction.emit({content: content, item: item});
   }
 
   get table(): Table {
