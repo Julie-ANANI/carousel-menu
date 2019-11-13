@@ -33,6 +33,7 @@ export class TableComponent {
    * @param {Table} value
    */
   @Input() set data(value: Table) {
+    this._selectedIndex = null;
     this._loadData(value);
   }
 
