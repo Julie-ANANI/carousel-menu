@@ -135,7 +135,7 @@
 <!-- /sidebar -->
 
 
-<app-modal [(showModal)]="modal" [title]="modal" *ngIf="email" [maxWidth]="'950px'">
+<app-modal [(showModal)]="showModal" *ngIf="email && showModal" [maxWidth]="'950px'">
 
   <section class="modal-body">
     <app-shared-mail-editor

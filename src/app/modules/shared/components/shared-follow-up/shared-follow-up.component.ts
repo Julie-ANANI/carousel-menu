@@ -36,8 +36,6 @@ export class SharedFollowUpComponent {
 
   private _showModal: boolean = false;
 
-  private _modal: string = '';
-
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
@@ -54,16 +52,16 @@ export class SharedFollowUpComponent {
       fr: [
         { value: '*|FIRSTNAME|*', label: 'Prénom du pro' },
         { value: '*|LASTNAME|*', label: 'Nom du pro' },
-        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title') },
-        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : '' },
-        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : '' }
+        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title') || 'TITLE'},
+        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : 'COMPANY_NAME' },
+        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
       ],
       en: [
         { value: '*|FIRSTNAME|*', label: 'First name' },
         { value: '*|LASTNAME|*', label: 'Last name' },
-        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'title')},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : '' },
-        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : '' }
+        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'title') || 'TITLE'},
+        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : 'COMPANY_NAME' },
+        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
       ]
     };
   }
@@ -83,15 +81,7 @@ export class SharedFollowUpComponent {
   }
 
   get email(): any {
-    return this._modal ? this._project.followUpEmails[this._modal] : null;
-  }
-
-  get modal(): string {
-    return this._modal;
-  }
-
-  set modal(value: string) {
-    this._modal = value;
+    return this._modalTemplateType ? this._project.followUpEmails[this._modalTemplateType] : null;
   }
 
   get project(): Innovation {
