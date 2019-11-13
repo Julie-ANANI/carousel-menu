@@ -71,6 +71,28 @@
           </div>
         </ng-container>
 
+        <!-- ccEmail -->
+        <ng-container *ngIf="editionMode && ccEmailField">
+          <div class="form-group">
+            <label class="form-label" for="shared-mail-editor-ccEmail">{{ 'COMMON.MAIL_EDITOR.CC' | translate }}</label>
+            <input
+              class="form-input"
+              [(ngModel)]="ccEmail"
+              (ngModelChange)="onCcEmailUpdate($event)"
+              name="ccEmail"
+              type="text"
+              id="shared-mail-editor-ccEmail"
+              [placeholder]="'COMMON.MAIL_EDITOR.CC_PLACEHOLDER' | translate">
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="!editionMode && ccEmailField">
+          <div class="form-group">
+            <label class="form-label" for="shared-mail-editor-ccEmail">{{ 'COMMON.MAIL_EDITOR.CC' | translate }}</label>
+            <p class="text">{{ ccEmail }}</p>
+          </div>
+        </ng-container>
+
         <!-- message -->
         <ng-container *ngIf="editionMode">
 

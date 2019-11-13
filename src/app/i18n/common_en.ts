@@ -331,6 +331,8 @@ export const COMMON = {
   'MAIL_EDITOR': {
     'QUESTION': 'Which language would you like to communicate with the project owner?',
     'SUBJECT': 'Subject',
+    'CC': 'CC',
+    'CC_PLACEHOLDER': 'email in copy',
     'SUBJECT_PLACEHOLDER': 'Enter the subject of the mail',
     'MESSAGE': 'Message',
   },

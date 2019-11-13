@@ -32,6 +32,10 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
+  public updateCcEmail(email:string) {
+    this._project.followUpEmails.ccEmail = email;
+  }
+
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this._customFields = {
