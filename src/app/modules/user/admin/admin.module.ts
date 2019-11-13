@@ -48,7 +48,6 @@ import { QuizService } from '../../../services/quiz/quiz.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
 import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
-import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver';
 import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
 import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
@@ -110,7 +109,6 @@ import { ShieldService } from "../../../services/shield/shield.service";
     PresetResolver,
     AdvSearchService,
     ProfessionalResolver,
-    InnovationFrontService,
     SignaturesResolver,
     PresetsResolver,
     CampaignAnswersResolver,

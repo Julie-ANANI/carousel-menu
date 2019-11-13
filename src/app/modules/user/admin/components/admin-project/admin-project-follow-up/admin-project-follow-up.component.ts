@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Innovation } from '../../../../../../models/innovation';
 
 @Component({
   selector: 'app-admin-project-follow-up',
@@ -8,11 +10,18 @@ import { Component } from '@angular/core';
 
 export class AdminProjectFollowUpComponent {
 
-  constructor() {
+  private _innovation: Innovation = <Innovation> {};
+
+  constructor(private _activatedRoute: ActivatedRoute) {
+
+    if (this._activatedRoute.snapshot.parent.data['innovation']) {
+      this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
+    }
+
   }
 
-  ngOnInit(): void {
+  get innovation(): Innovation {
+    return this._innovation;
   }
-
 
 }

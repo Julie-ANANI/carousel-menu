@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { Component, Input } from '@angular/core';
 import { TranslateNotificationsService } from "../../../../services/notifications/notifications.service";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { Innovation } from "../../../../models/innovation";
 import { InnovationFrontService } from "../../../../services/innovation/innovation-front.service";
-import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 
 @Component({
   selector: 'shared-follow-up',
@@ -12,23 +11,31 @@ import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
   styleUrls: ['./shared-follow-up.component.scss']
 })
 
-export class SharedFollowUpComponent implements OnInit {
+export class SharedFollowUpComponent {
 
-  private _customFields: {fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} = {en: [], fr: []};
+  @Input() set project(value: Innovation) {
+    if (value) {
+      this._project = value;
+      this._initializeMailCustomFields();
+    }
+  }
+
+  private _project: Innovation = <Innovation> {};
+
+  private _customFields: { fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} = {
+    en: [],
+    fr: []
+  };
 
   private _modal: string = '';
 
-  private _project: Innovation;
-
   private _sidebarTemplate: SidebarInterface = {
-    animate_state: 'active',
+    animate_state: 'inactive',
     type: 'follow-up'
   };
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService) {
-  }
+  constructor(private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   public saveTemplates() {
     this._innovationService.save(this._project._id, this._project).subscribe((response: Innovation) => {
@@ -38,28 +45,27 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
-  public updateCcEmail(email:string) {
-    this._project.followUpEmails.ccEmail = email;
-  }
-
-  ngOnInit(): void {
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+  private _initializeMailCustomFields() {
     this._customFields = {
       fr: [
-        { value: '*|FIRSTNAME|*', label: 'Prénom du pro'},
-        { value: '*|LASTNAME|*', label: 'Nom du pro'},
-        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title')},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner.company},
-        { value: '*|CLIENT_NAME|*', label: `${this._project.owner.firstName} ${this._project.owner.lastName}`}
+        { value: '*|FIRSTNAME|*', label: 'Prénom du pro' },
+        { value: '*|LASTNAME|*', label: 'Nom du pro' },
+        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title') },
+        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : '' },
+        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : '' }
       ],
       en: [
-        { value: '*|FIRSTNAME|*', label: 'Prénom du pro'},
-        { value: '*|LASTNAME|*', label: 'Nom du pro'},
+        { value: '*|FIRSTNAME|*', label: 'First name' },
+        { value: '*|LASTNAME|*', label: 'Last name' },
         { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'title')},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner.company},
-        { value: '*|CLIENT_NAME|*', label: `${this._project.owner.firstName} ${this._project.owner.lastName}`}
+        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : '' },
+        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : '' }
       ]
     };
+  }
+
+  public updateCcEmail(email:string) {
+    this._project.followUpEmails.ccEmail = email;
   }
 
   get email(): any {

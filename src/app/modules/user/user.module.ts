@@ -13,7 +13,6 @@ import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
-import { InnovationFrontService } from '../../services/innovation/innovation-front.service';
 import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinner-loader.module';
 
 @NgModule({
@@ -33,8 +32,7 @@ import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinne
     InnovationResolver,
     AutocompleteService,
     ShareService,
-    AnswerService,
-    InnovationFrontService
+    AnswerService
   ]
 })
 
