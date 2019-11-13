@@ -3,11 +3,11 @@ import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 @Component({
   selector: 'sidebar2',
-  templateUrl: './sidebar2.component.html',
-  styleUrls: ['./sidebar2.component.scss']
+  templateUrl: './sidebar-left.component.html',
+  styleUrls: ['./sidebar-left.component.scss']
 })
 
-export class Sidebar2Component {
+export class SidebarLeftComponent {
 
   @Input() set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = {
