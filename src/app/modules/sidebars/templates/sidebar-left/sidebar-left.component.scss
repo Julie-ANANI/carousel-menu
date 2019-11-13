@@ -1,6 +1,6 @@
 @import "../../../../../style/framework/src/variables";
 
-#sidebar2 {
+#sidebar-left {
   top: 0;
   bottom: 0;
   left: 0;
@@ -44,10 +44,11 @@
       padding: 50px 25px;
       overflow-x: hidden;
       overflow-y: auto;
+      opacity: 0;
 
       &.active {
         opacity: 1;
-        transition: opacity 100ms ease-in-out;
+        transition: opacity 200ms ease-in-out;
       }
 
     }

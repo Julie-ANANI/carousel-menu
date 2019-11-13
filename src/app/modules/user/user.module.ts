@@ -9,7 +9,6 @@ import { HeaderModule } from '../common/header/header.module';
 import { UserComponent } from './user.component';
 
 import { UserService } from '../../services/user/user.service';
-import { InnovationService } from '../../services/innovation/innovation.service';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { ShareService } from '../../services/share/share.service';
@@ -31,7 +30,6 @@ import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinne
   ],
   providers: [
     UserService,
-    InnovationService,
     InnovationResolver,
     AutocompleteService,
     ShareService,

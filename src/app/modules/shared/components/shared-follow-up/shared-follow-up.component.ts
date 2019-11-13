@@ -3,7 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { TranslateNotificationsService } from "../../../../services/notifications/notifications.service";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { Innovation } from "../../../../models/innovation";
-import {InnovationFrontService} from "../../../../services/innovation/innovation-front.service";
+import { InnovationFrontService } from "../../../../services/innovation/innovation-front.service";
+import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
 
 @Component({
   selector: 'shared-follow-up',
@@ -17,7 +18,12 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _modal: string = '';
 
-  private _project: Innovation ;
+  private _project: Innovation;
+
+  private _sidebarTemplate: SidebarInterface = {
+    animate_state: 'active',
+    type: 'follow-up'
+  };
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -70,6 +76,14 @@ export class SharedFollowUpComponent implements OnInit {
 
   get customFields(): {fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} {
     return this._customFields;
+  }
+
+  get sidebarTemplate(): SidebarInterface {
+    return this._sidebarTemplate;
+  }
+
+  set sidebarTemplate(value: SidebarInterface) {
+    this._sidebarTemplate = value;
   }
 
 }

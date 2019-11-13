@@ -6,8 +6,14 @@
 
 
 <!-- sidebar -->
-<sidebar2></sidebar2>
+<sidebar2 [(sidebarTemplate)]="sidebarTemplate">
+  <sidebar-market-report
+    [templateType]="sidebarTemplate.type"
+    (closeSidebar)="sidebarTemplate.animate_state = 'inactive'">
+  </sidebar-market-report>
+</sidebar2>
 <!-- /sidebar -->
+
 
 <app-modal [(showModal)]="modal" [title]="modal" *ngIf="email" [maxWidth]="'950px'">
 

@@ -1,0 +1,107 @@
+<div id="sidebar-market-report">
+
+  <!-- selected contacts -->
+  <div *ngIf="templateType === 'follow-up'">
+
+    <!-- no contact selected -->
+    <h6 [innerText]="'SIDEBAR_MARKET_REPORT.SELECT_CONTACTS_CRITERIA'" class="m-no-bottom text-bold" translate></h6>
+    <!-- /no contact selected -->
+
+  </div>
+  <!-- /selected contacts -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- views wrapper -->
+  <div class="view-wrapper">
+
+    <!-- title -->
+    <h6 [innerText]="'SIDEBAR_MARKET_REPORT.MY_VIEWS'" translate></h6>
+    <!-- /title -->
+
+
+    <!-- show views -->
+    <div *ngFor="let filter of sharedFiltersList" class="d-flex align-center m-top-1 m-bottom-1">
+
+      <div (click)="deleteCustomFilter($event, filter.name)"
+           [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
+           class="c-hand m-right-1 tooltip is-right">
+        <img
+          [ngStyle]="{ 'height': '13px', 'width': '12px'}"
+          alt=" "
+          src="https://res.cloudinary.com/umi/image/upload/v1573650537/pictos/delete/picto-delete-danger.svg">
+      </div>
+
+      <a
+        (click)="loadFilter(filter.name)"
+        [attr.data-tooltip]="'SIDEBAR_MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate"
+        [ngStyle]="{ 'margin-top': '1px' }"
+        class="c-hand tooltip text-medium text-xs text-background">
+        {{ filter.name }}
+      </a>
+
+    </div>
+    <!-- /show views -->
+
+
+    <!-- form to register view -->
+    <form (ngSubmit)="registerNewFilter()">
+
+      <div class="form-group p-top-1">
+        <label>
+          <input
+            [(ngModel)]="filterName"
+            [ngModelOptions]="{ standalone: true }"
+            [placeholder]="'SIDEBAR_MARKET_REPORT.FORM_VIEW_PLACEHOLDER' | translate"
+            class="form-input is-sm"
+            type="text">
+        </label>
+      </div>
+
+      <div class="text-center p-top-1">
+        <button
+          [disabled]="!filterName"
+          [ngStyle]="{ 'border-width': '2px', 'opacity': '1' }"
+          [textContent]="'COMMON.BUTTON.SAVE'"
+          class="button is-draft is-outlined is-sm"
+          translate
+          type="submit">
+        </button>
+      </div>
+
+    </form>
+    <!-- /form to register view -->
+
+  </div>
+  <!-- /views wrapper -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- view activated -->
+  <div *ngIf="activatedCustomFilters.length > 0">
+
+    <h6 [innerText]="'SIDEBAR_MARKET_REPORT.ACTIVATED_VIEW'" class="m-bottom-2" translate></h6>
+
+    <div *ngFor="let filter of activatedCustomFilters" class="m-top-1">
+      <span (click)="unloadFilter($event, filter)"
+            class="d-flex align-center text-background text-medium m-bottom-1 text-xs c-hand">
+        <i class="icon text-primary m-right-2 icon-cross"></i>
+        {{ filter }}
+      </span>
+    </div>
+
+    <div class="divider"></div>
+
+  </div>
+  <!-- /view activated -->
+
+
+</div>

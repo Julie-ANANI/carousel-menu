@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FilterService } from './filters.service';
 import {SharedWorldmapService} from '../../shared-worldmap/services/shared-worldmap.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class WorldmapFiltersService {
 
   private _selectedContinents: {[c: string]: boolean};
