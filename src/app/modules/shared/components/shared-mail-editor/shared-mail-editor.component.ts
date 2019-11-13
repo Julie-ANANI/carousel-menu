@@ -27,6 +27,10 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Input() set customFields(value: Array<{label: string, value: string}>) {
     this._customFields = value;
+    this._variableMapping = {};
+      this._customFields.forEach(field => {
+      this._variableMapping[field.value.replace(/[\|\*]/g, '')] = field.label;
+    })
   }
 
   @Input() set ccEmail(value: string) {
@@ -67,6 +71,8 @@ export class SharedMailEditorComponent implements OnInit {
   private _ccEmail = "";
 
   public ccEmailField = false;
+
+  private _variableMapping: any = {};
 
   ngOnInit() {
     this._signatures = [];
@@ -155,5 +161,9 @@ export class SharedMailEditorComponent implements OnInit {
 
   get customFields(): Array<{label: string, value: string}> {
     return this._customFields;
+  }
+
+  get variableMapping(): any {
+    return this._variableMapping;
   }
 }
