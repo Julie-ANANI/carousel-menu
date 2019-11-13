@@ -20,6 +20,8 @@
   <section class="modal-body">
     <app-shared-mail-editor
       [emailsObject]="email"
+      [ccEmail]="project.followUpEmails.ccEmail"
+      (ccEmailChange)="updateCcEmail($event)"
       [inputLanguage]="'fr'"
       [noLanguage]="true"
       [customFields]="customFields.fr"

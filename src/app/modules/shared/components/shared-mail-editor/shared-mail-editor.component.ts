@@ -29,6 +29,11 @@ export class SharedMailEditorComponent implements OnInit {
     this._customFields = value;
   }
 
+  @Input() set ccEmail(value: string) {
+    this._ccEmail = value;
+    this.ccEmailField = true;
+  }
+
   @Input() noLanguage: Boolean;
 
   @Input() set id(value: string) {
@@ -36,6 +41,8 @@ export class SharedMailEditorComponent implements OnInit {
   }
 
   @Output() languageChange = new EventEmitter<string>();
+
+  @Output() ccEmailChange = new EventEmitter<string>();
 
   @Output() emailChange = new EventEmitter<any>();
 
@@ -56,6 +63,10 @@ export class SharedMailEditorComponent implements OnInit {
   private _languageHasBeenSet: Boolean = false;
 
   private _editionMode = true;
+
+  private _ccEmail = "";
+
+  public ccEmailField = false;
 
   ngOnInit() {
     this._signatures = [];
@@ -88,6 +99,11 @@ export class SharedMailEditorComponent implements OnInit {
     }
   }
 
+  onCcEmailUpdate(event: any) {
+    this._ccEmail = event;
+    this.ccEmailChange.emit(this._ccEmail);
+  }
+
 
   onUpdate(event: any) {
     this._emailsObject[this._language].subject = event;
@@ -115,6 +131,10 @@ export class SharedMailEditorComponent implements OnInit {
 
   get languageHasBeenSet(): Boolean {
     return this._languageHasBeenSet;
+  }
+
+  get ccEmail(): string {
+    return this._ccEmail;
   }
 
   get email(): EmailTemplate {
