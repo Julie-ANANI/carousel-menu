@@ -23,6 +23,10 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  @Input() set variableMapping(value: any) {
+    this._variableMapping = value;
+  }
+
   @Input() zoneHeight: string = '250';
 
   @Output() onTextChange = new EventEmitter<any>();
@@ -39,6 +43,14 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   private _sharedEditor: any;
   private _sharedText: any;
   //private _name: string;
+
+  private _variableMapping: any = {
+    FIRSTNAME: 'Prénom',
+    LASTNAME: 'Nom',
+    TITLE: 'Nom de l\'inno',
+    COMPANY_NAME: 'Nom de l\'entreprise',
+    CLIENT_NAME: 'Nom du client'
+  };
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _swellRTBackend: SwellrtBackend) {
@@ -61,7 +73,9 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.platformId) && !this.readonly) {
       tinymce.init({
         selector: '#' + this._htmlId,
-        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor'], // Voir .angular-cli.json
+        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'variable'], // Voir .angular-cli.json
+        variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
+        variable_mapper: this._variableMapping,
         default_link_target: '_blank',
         width: "inherit",
         height: this.zoneHeight,

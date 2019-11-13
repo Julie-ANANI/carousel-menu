@@ -42,9 +42,9 @@ export class SharedFollowUpComponent implements OnInit {
       fr: [
         { value: '*|FIRSTNAME|*', label: 'Prénom du pro'},
         { value: '*|LASTNAME|*', label: 'Nom du pro'},
-        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title')},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner.company},
-        { value: '*|CLIENT_NAME|*', label: `${this._project.owner.firstName} ${this._project.owner.lastName}`}
+        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title') || 'TITLE'},
+        { value: '*|COMPANY_NAME|*', label: this._project.owner.company || 'COMPANY_NAME'},
+        { value: '*|CLIENT_NAME|*', label: `${this._project.owner.firstName} ${this._project.owner.lastName}` || 'CLIENT_NAME'}
       ],
       en: [
         { value: '*|FIRSTNAME|*', label: 'Prénom du pro'},

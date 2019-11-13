@@ -110,11 +110,9 @@
               #textZone
               [readonly]="!editionMode"
               [data]="email.content || ''"
+              [variableMapping]="variableMapping"
               (onTextChange)="updateContent($event)">
             </app-text-zone>
-            <p class="text text-notify">
-              Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*
-            </p>
           </div>
         </ng-container>
 
