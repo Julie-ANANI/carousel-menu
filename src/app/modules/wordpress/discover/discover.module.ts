@@ -9,11 +9,9 @@ import { InnovationsComponent } from './components/innovations/innovations.compo
 import { FiltersComponent } from './components/innovations/components/filters/filters.component';
 import { CardsComponent } from './components/innovations/components/cards/cards.component';
 
-import { InnovationService } from '../../../services/innovation/innovation.service';
 import { ShareService } from '../../../services/share/share.service';
 import { UserService } from '../../../services/user/user.service';
 import { FilterService } from '../../public/discover/components/innovations/services/filter.service';
-import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
@@ -36,13 +34,11 @@ import { PaginationTemplate2Module } from '../../utility-components/paginations/
     PaginationTemplate2Module
   ],
   providers:[
-    InnovationService,
     InnovationResolver,
     ShareService,
     UserService,
     TagsService,
-    FilterService,
-    InnovationFrontService
+    FilterService
   ],
   declarations: [
     DiscoverComponent,

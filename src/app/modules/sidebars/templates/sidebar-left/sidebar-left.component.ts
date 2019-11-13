@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 @Component({
@@ -11,9 +11,13 @@ export class SidebarLeftComponent {
 
   @Input() set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = {
-      size: value.size || '263px'
+      size: value.size || '263px',
+      animate_state: value.animate_state || 'inactive',
+      type: value.type || ''
     }
   }
+
+  @Output() sidebarTemplateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();
 
   private _sidebarTemplate: SidebarInterface = {
     animate_state: 'inactive',
@@ -30,6 +34,12 @@ export class SidebarLeftComponent {
     }, 300);
 
     this._sidebarTemplate.animate_state = this._sidebarTemplate.animate_state === 'inactive' ? 'active' : 'inactive';
+
+    this.sidebarTemplateChange.emit({
+      animate_state: this._sidebarTemplate.animate_state,
+      size: this._sidebarTemplate.size,
+      type: this._sidebarTemplate.type
+    });
 
   }
 

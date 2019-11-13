@@ -1,0 +1,16 @@
+@import "../../../../../style/framework/src/variables";
+
+#sidebar-market-report {
+
+  .divider {
+    margin: 25px 0;
+    border-color: $border-meta-color;
+    height: 2px;
+  }
+
+  h6 {
+    font-size: $font-size-sm;
+    margin-bottom: $unit-1;
+  }
+
+}

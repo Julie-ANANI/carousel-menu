@@ -3,9 +3,9 @@ import { Answer } from '../../../../../models/answer';
 import { Filter } from '../models/filter';
 import { Tag } from '../../../../../models/tag';
 import { Subject } from 'rxjs';
-import {SharedWorldmapService} from '../../shared-worldmap/services/shared-worldmap.service';
+import { SharedWorldmapService } from '../../shared-worldmap/services/shared-worldmap.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FilterService {
 
   private _filters: {[questionId: string]: Filter} = {};

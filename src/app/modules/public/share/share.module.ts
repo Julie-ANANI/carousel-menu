@@ -12,7 +12,6 @@ import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderModule } from '../../common/header/header.module';
 
 import { UserService } from '../../../services/user/user.service';
-import { InnovationService } from '../../../services/innovation/innovation.service';
 import { AnswerService } from '../../../services/answer/answer.service';
 import { ShareService } from '../../../services/share/share.service';
 
@@ -33,7 +32,6 @@ import { ShareService } from '../../../services/share/share.service';
   ],
   providers: [
     UserService,
-    InnovationService,
     AnswerService,
     ShareService
   ]

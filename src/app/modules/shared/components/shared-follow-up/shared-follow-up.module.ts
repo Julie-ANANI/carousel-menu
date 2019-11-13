@@ -7,6 +7,8 @@ import { SharedFollowUpComponent } from './shared-follow-up.component';
 import { SidebarLeftModule } from '../../../sidebars/templates/sidebar-left/sidebar-left.module';
 import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
 import { SharedMailEditorModule } from "../shared-mail-editor/shared-mail-editor.module";
+import { SidebarMarketReportModule } from '../../../sidebars/components/sidebar-market-report/sidebar-market-report.module';
+import { TableModule } from '../../../table/table.module';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { SharedMailEditorModule } from "../shared-mail-editor/shared-mail-editor
     TranslateModule.forChild(),
     SidebarLeftModule,
     ModalModule,
-    SharedMailEditorModule
+    SharedMailEditorModule,
+    SidebarMarketReportModule,
+    TableModule
   ],
   declarations: [
     SharedFollowUpComponent

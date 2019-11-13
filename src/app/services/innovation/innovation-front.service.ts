@@ -20,7 +20,7 @@ export interface Values {
   totalPercentage?: number;
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class InnovationFrontService {
 
   totalFieldsPresent: number;

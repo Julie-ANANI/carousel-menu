@@ -10,7 +10,7 @@ import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
 import { InnovCardComment } from '../../models/innov-card-comment';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class InnovationService {
 
   constructor(private _http: HttpClient) {
