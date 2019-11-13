@@ -27,12 +27,16 @@ export class SharedFollowUpComponent {
     fr: []
   };
 
-  private _modal: string = '';
-
   private _sidebarTemplate: SidebarInterface = {
     animate_state: 'inactive',
     type: 'follow-up'
   };
+
+  private _modalTemplateType: string = '';
+
+  private _showModal: boolean = false;
+
+  private _modal: string = '';
 
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -62,6 +66,16 @@ export class SharedFollowUpComponent {
         { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : '' }
       ]
     };
+  }
+
+  public onClickSee(event: Event, type: string) {
+    event.preventDefault();
+    this._modalTemplateType = type;
+    this._showModal = true;
+  }
+
+  public onClickDone(event: Event) {
+    event.preventDefault();
   }
 
   public updateCcEmail(email:string) {
@@ -94,6 +108,18 @@ export class SharedFollowUpComponent {
 
   set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = value;
+  }
+
+  get modalTemplateType(): string {
+    return this._modalTemplateType;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
   }
 
 }

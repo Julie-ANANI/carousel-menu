@@ -92,6 +92,10 @@
   flex-wrap: wrap;
 }
 
+.flex-d-column {
+  flex-direction: column;
+}
+
 .centered {
   display: block;
   float: none;

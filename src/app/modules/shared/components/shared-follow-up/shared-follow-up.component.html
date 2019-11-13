@@ -1,11 +1,127 @@
 <div id="shared-follow-up">
-  <a (click)="modal='interview'">Editer mail rdv</a><br>
-  <a (click)="modal='opening'">Editer mail ouverture</a><br>
-  <a (click)="modal='noFollow'">Editer mail sans suite</a><br>
+  <section class="columns">
+
+    <!-- table -->
+    <div class="column col-xl-12 col-9">
+      <div class="p-bottom-25">
+
+      </div>
+    </div>
+    <!-- /table -->
+
+
+    <!-- emails and finish button -->
+    <div class="column col-sm-12 col-md-5 col-lg-4 col-3">
+      <div [ngStyle]="{ 'min-height': '470px' }" class="d-flex justify-space flex-d-column p-bottom-25">
+
+        <!-- emails -->
+        <div>
+
+          <!-- title -->
+          <h6 class="text-sm text-notify m-no-bottom" [innerText]="'EMAILS'"></h6>
+          <!-- /title -->
+
+
+          <!-- appointment -->
+          <div class="p-bottom-h">
+
+            <p class="text-bold m-no-bottom">
+              <span [innerText]="'SHARED_FOLLOW_UP.APPOINTMENT'" [ngStyle]="{ 'color': '#1E3147' }"
+                    class="text-sm m-right-2" translate></span>
+              <span (click)="onClickSee($event, 'interview')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
+                    [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs" translate></span>
+            </p>
+
+            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+              <span>{{ '4' }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
+              <span>{{ '21' }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
+            </p>
+
+          </div>
+          <!-- /appointment -->
+
+
+          <!-- divider -->
+          <div class="divider"></div>
+          <!-- /divider -->
+
+
+          <!-- open -->
+          <div class="p-top-h p-bottom-h">
+
+            <p class="text-bold m-no-bottom">
+              <span [innerText]="'SHARED_FOLLOW_UP.OPEN'" [ngStyle]="{ 'color': '#1E3147' }"
+                    class="text-sm m-right-2" translate></span>
+              <span (click)="onClickSee($event, 'opening')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
+                    [ngStyle]="{ 'margin-top': '3px' }"
+                    class="text-link text-xs" translate></span>
+            </p>
+
+            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+              <span>{{ '4' }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
+              <span>{{ '21' }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
+            </p>
+
+          </div>
+          <!-- /open -->
+
+
+          <!-- divider -->
+          <div class="divider"></div>
+          <!-- /divider -->
+
+
+          <!-- thank -->
+          <div class="p-top-h p-bottom-h">
+
+            <p class="text-bold m-no-bottom">
+              <span [innerText]="'SHARED_FOLLOW_UP.THANK'" [ngStyle]="{ 'color': '#1E3147' }"
+                    class="text-sm m-right-2" translate></span>
+              <span (click)="onClickSee($event, 'noFollow')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
+                    [ngStyle]="{ 'margin-top': '3px' }"
+                    class="text-link text-xs" translate></span>
+            </p>
+
+            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+              <span>{{ '4' }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
+              <span>{{ '21' }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
+            </p>
+
+          </div>
+          <!-- /thank -->
+
+        </div>
+        <!-- /emails -->
+
+
+        <!-- button -->
+        <div class="text-center">
+
+          <p class="m-bottom-15 text-notify text-sm">
+           {{ '1' }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
+          </p>
+
+          <button
+            (click)="onClickDone($event)"
+            [textContent]="'SHARED_FOLLOW_UP.BUTTON_DONE'"
+            class="button is-lg is-primary"
+            translate>
+          </button>
+
+        </div>
+        <!-- /button -->
+
+      </div>
+    </div>
+    <!-- /emails and finish button -->
+
+  </section>
 </div>
 
 
-<!--
+<!--<a (click)="modal='interview'">Editer mail rdv</a><br>
+  <a (click)="modal='opening'">Editer mail ouverture</a><br>
+  <a (click)="modal='noFollow'">Editer mail sans suite</a><br>
   -->
 
 
