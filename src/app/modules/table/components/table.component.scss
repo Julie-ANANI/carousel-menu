@@ -145,6 +145,34 @@
 
               .dropdown {
 
+                &.disabled, &:disabled, &[disabled] {
+
+                  .button-dropdown {
+                    cursor: not-allowed;
+
+                    &:not(.is-link).is-info {
+                      background-color: $bg-meta-color;
+                      opacity: 0.8;
+                    }
+
+                    &.is-secondary {
+                      background-color: $bg-secondary-color;
+                      opacity: 0.8;
+                    }
+
+                    &.is-danger {
+                      background-color: $bg-alert-color;
+                      opacity: 0.8;
+                    }
+
+                  }
+
+                  .menu {
+                    display: none;
+                  }
+
+                }
+
                 .button-dropdown {
                   padding: 6px 9px;
                   height: unset;
@@ -152,36 +180,24 @@
 
                   &:not(.is-link).is-info {
 
-                    &:hover, &:disabled, &[disabled] {
+                    &:hover {
                       background-color: $bg-meta-color;
-                    }
-
-                    &:disabled, &[disabled] {
-                      opacity: 0.8;
                     }
 
                   }
 
                   &.is-secondary {
 
-                    &:hover, &:disabled, &[disabled] {
+                    &:hover {
                       background-color: $bg-secondary-color;
-                    }
-
-                    &:disabled, &[disabled] {
-                      opacity: 0.8;
                     }
 
                   }
 
                   &.is-danger {
 
-                    &:hover, &:disabled, &[disabled] {
+                    &:hover {
                       background-color: $bg-alert-color;
-                    }
-
-                    &:disabled, &[disabled] {
-                      opacity: 0.8;
                     }
 
                   }

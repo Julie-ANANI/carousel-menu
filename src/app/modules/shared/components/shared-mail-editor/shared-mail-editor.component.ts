@@ -6,6 +6,16 @@ import { Professional } from "../../../../models/professional";
 
 type editorTypes = 'FOLLOW-UP' | '';
 
+interface EmailsObject {
+  fr: EmailTemplate;
+  en: EmailTemplate;
+}
+
+interface Mapping {
+  en: Array<{label: string, value: string}>;
+  fr: Array<{label: string, value: string}>;
+}
+
 @Component({
   selector: 'shared-mail-editor',
   templateUrl: './shared-mail-editor.component.html',
@@ -20,9 +30,8 @@ export class SharedMailEditorComponent {
     }
   }
 
-  @Input() set emailsObject(value: any) {
+  @Input() set emailsObject(value: EmailsObject) {
     if (value) {
-      console.log(value);
       this._emailsObject = value;
       this._email = this._emailsObject[this._language];
     }
@@ -32,16 +41,18 @@ export class SharedMailEditorComponent {
     if (value) {
       this._customField = value[this._translateService.currentLang];
 
-      this._customField.forEach( (field) => {
-        this._variableMapping[field.value.replace(/[\|\*]/g, '')] = field.label;
-      });
+      for (let valueKey in value) {
+        value[valueKey].forEach( (field) => {
+          this._variableMapping[valueKey][field.value.replace(/[\|\*]/g, '')] = field.label;
+        });
+      }
+
     }
   }
 
   @Input() set ccEmail(value: string) {
     if (value) {
       this._ccEmail = value;
-      this._ccEmailField = true;
     }
   }
 
@@ -57,8 +68,6 @@ export class SharedMailEditorComponent {
     }
   }
 
-  @Input() isEditable: boolean = true;
-
   @Input() signatures: Array<EmailSignature> = [];
 
   @Input() noLanguage: Boolean;
@@ -67,7 +76,7 @@ export class SharedMailEditorComponent {
 
   @Output() languageChange = new EventEmitter<string>();
 
-  @Output() ccEmailChange = new EventEmitter<string>();
+  @Output() ccEmailChange: EventEmitter<string> = new EventEmitter<string>();
 
   @Output() emailChange = new EventEmitter<any>();
 
@@ -81,7 +90,7 @@ export class SharedMailEditorComponent {
 
   private _customField: Array<{label: string, value: string}> = [];
 
-  private _emailsObject: any = {
+  private _emailsObject: EmailsObject = {
     en: { language: 'en', subject: '', content: '' },
     fr: { language: 'fr', subject: '', content: '' }
   };
@@ -96,13 +105,14 @@ export class SharedMailEditorComponent {
 
   private _languageHasBeenSet: boolean = false;
 
-  private _editionMode: boolean = true;
+  private _isEditableMode: boolean = true;
 
   private _ccEmail: string = '';
 
-  private _ccEmailField: boolean = false;
-
-  private _variableMapping: any = {};
+  private _variableMapping: Mapping = {
+    en: [],
+    fr: []
+  };
 
   constructor(private _translateService: TranslateService) { }
 
@@ -117,7 +127,7 @@ export class SharedMailEditorComponent {
   }
 
   public insertTextAtCursor(text: string) {
-    this.child.insertTextAtCursor(text)
+    this.child.insertTextAtCursor(text);
   }
 
   public onClickTestEmails(event: Event) {
@@ -132,14 +142,19 @@ export class SharedMailEditorComponent {
     */
   }
 
+  public updateChanges(event: Event) {
+    event.preventDefault();
+    this.emailsObjectChange.emit(this._emailsObject);
+    this.ccEmailChange.emit(this._ccEmail);
+  }
+
+  public onPreview() {
+    this._isEditableMode = !this._isEditableMode;
+  }
+
   setLanguage(value: string) {
     this.changeLanguage(value);
     this.languageChange.emit(value);
-  }
-
-  onCcEmailUpdate(event: any) {
-    this._ccEmail = event;
-    this.ccEmailChange.emit(this._ccEmail);
   }
 
   onUpdate(event: any) {
@@ -150,10 +165,6 @@ export class SharedMailEditorComponent {
   updateContent(event: any) {
     this._emailsObject[this._language].content = event.content;
     this.emailChange.emit(this._emailsObject);
-  }
-
-  onPreview() {
-    this._editionMode = !this._editionMode;
   }
 
   get language(): string {
@@ -176,20 +187,16 @@ export class SharedMailEditorComponent {
     this._email = value;
   }
 
-  get editionMode(): boolean {
-    return this._editionMode;
+  get isEditableMode(): boolean {
+    return this._isEditableMode;
   }
 
   get customField(): Array<{label: string, value: string}> {
     return this._customField;
   }
 
-  get variableMapping(): any {
+  get variableMapping(): Mapping {
     return this._variableMapping;
-  }
-
-  get ccEmailField(): boolean {
-    return this._ccEmailField;
   }
 
   get templateType(): editorTypes {
@@ -198,6 +205,10 @@ export class SharedMailEditorComponent {
 
   get professionals(): Array<Professional> {
     return this._professionals;
+  }
+
+  get emailsObject(): EmailsObject {
+    return this._emailsObject;
   }
 
 }

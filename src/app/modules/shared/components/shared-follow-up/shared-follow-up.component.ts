@@ -8,6 +8,7 @@ import { AnswerService } from "../../../../services/answer/answer.service";
 import { Answer } from "../../../../models/answer";
 import { Table } from "../../../table/models/table";
 import { Professional } from "../../../../models/professional";
+import { Config } from '../../../../models/config';
 
 @Component({
   selector: 'shared-follow-up',
@@ -24,12 +25,12 @@ export class SharedFollowUpComponent implements OnInit {
     }
   }
 
-  private _config: any = {
+  private _config: Config = {
     fields: '',
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created": "-1"}'
+    sort: '{ "created": "-1" }'
   };
 
   private _project: Innovation = <Innovation> {};
@@ -76,9 +77,9 @@ export class SharedFollowUpComponent implements OnInit {
           {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
           {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
           {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN', _choices: [
-              {_name: 'INTERVIEW', _alias: 'INTERVIEW', _class: 'button is-secondary'},
-              {_name: 'OPENING', _alias: 'OPENING', _class: 'button is-draft'},
-              {_name: 'NO_FOLLOW', _alias: 'NO_FOLLOW', _class: 'button is-danger'}
+              {_name: 'INTERVIEW', _alias: 'Interview', _class: 'button is-secondary'},
+              {_name: 'OPENING', _alias: 'Opening', _class: 'button is-draft'},
+              {_name: 'NO_FOLLOW', _alias: 'No follow', _class: 'button is-danger'}
             ]},
         ]
       };
@@ -87,12 +88,12 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
-
-  public saveTemplates() {
+  public saveProject() {
     this._innovationService.save(this._project._id, this._project).subscribe((response: Innovation) => {
+      this._project = response;
       this._translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SAVED_TEXT');
     }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
     });
   }
 
@@ -127,13 +128,14 @@ export class SharedFollowUpComponent implements OnInit {
     this._showModal = true;
   }
 
+
   public onClickDone(event: Event) {
     event.preventDefault();
   }
 
-  public updateCcEmail(email:string) {
+  /*public updateCcEmail(email:string) {
     this._project.followUpEmails.ccEmail = email;
-  }
+  }*/
 
   seeAnswer(answer: Answer) {
     console.log(answer);
@@ -144,7 +146,6 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   set emailsObject(value: any) {
-    console.log(value);
     this._project.followUpEmails[this._modalTemplateType] = value;
   }
 
@@ -188,7 +189,11 @@ export class SharedFollowUpComponent implements OnInit {
     return this._tableInfos;
   }
 
-  get config(): any {
+  set config(value: Config) {
+    this._config = value;
+  }
+
+  get config(): Config {
     return this._config;
   }
 

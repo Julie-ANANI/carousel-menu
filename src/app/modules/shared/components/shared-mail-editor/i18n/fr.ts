@@ -4,6 +4,10 @@ export const SHARED_MAIL_EDITOR = {
 
   'TEST_EMAILS': 'Tester les emails',
 
-  'TEST_WITH_CONTACT': 'Tester avec un contact'
+  'TEST_WITH_CONTACT': 'Tester avec un contact',
+
+  'SUBJECT': 'Sujet',
+
+  'SUBJECT_PLACEHOLDER': 'Entrez l\'objet du mail',
 
 };

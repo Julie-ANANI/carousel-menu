@@ -5,7 +5,7 @@
     <div class="column col-xl-12 col-9">
       <div class="p-bottom-25">
         <app-shared-table
-          [config]="config"
+          [(config)]="config"
           [data]="tableInfos"
           (editRow)="seeAnswer($event)"
           (performAction)="performActions($event)">
@@ -17,7 +17,7 @@
 
     <!-- emails and finish button -->
     <div class="column col-sm-12 col-md-5 col-lg-4 col-3">
-      <div [ngStyle]="{ 'min-height': '470px' }" class="d-flex justify-space flex-d-column p-bottom-25">
+      <div [ngStyle]="{ 'min-height': '522px' }" class="d-flex justify-space flex-d-column p-bottom-25">
 
         <!-- emails -->
         <div>
@@ -135,11 +135,11 @@
 
 
 <!-- modal for mails -->
-<app-modal *ngIf="emailsObject && showModal" [(showModal)]="showModal" [maxWidth]="'940px'">
+<app-modal *ngIf="emailsObject && showModal" [(showModal)]="showModal" [maxWidth]="'1024px'">
   <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
     <!-- heading -->
-    <h5 [innerText]="'SHARED_FOLLOW_UP.' + this._modalTemplateType.toUpperCase()"
+    <h5 [innerText]="'SHARED_FOLLOW_UP.' + this.modalTemplateType.toUpperCase()"
         class="title text-lg text-bold text-center"
         translate>
     </h5>
@@ -147,7 +147,7 @@
 
 
     <!-- close button -->
-    <div class="absolute" [ngStyle]="{ 'right': '15px', 'top': '23px' }">
+    <div [ngStyle]="{ 'right': '15px', 'top': '23px' }" class="absolute">
       <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
     </div>
     <!-- /close button -->
@@ -158,11 +158,19 @@
       <shared-mail-editor
         [templateType]="'FOLLOW-UP'"
         [professionals]="pros"
+        [(ccEmail)]="project.followUpEmails.ccEmail"
         [customFields]="customFields"
         [(emailsObject)]="emailsObject">
       </shared-mail-editor>
     </div>
     <!-- /mail wrapper -->
+
+
+    <!-- save button -->
+    <div  class="text-center">
+      <button (click)="saveProject()" [textContent]="'COMMON.BUTTON.SAVE'" class="button is-primary" translate></button>
+    </div>
+    <!-- /save button -->
 
   </section>
 </app-modal>

@@ -295,7 +295,7 @@
 
                   <!-- if type is a dropdown -->
                   <ng-container *ngSwitchCase="'DROPDOWN'">
-                    <span class="dropdown is-right">
+                    <span class="dropdown is-right" [ngClass]="{ 'disabled': disabledRow(row) }">
 
                       <a
                         [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))

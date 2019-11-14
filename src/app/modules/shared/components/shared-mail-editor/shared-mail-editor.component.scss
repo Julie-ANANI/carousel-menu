@@ -2,9 +2,11 @@
 
 #shared-mail-editor {
 
-}
-
-#shared-mail-editor-component {
+  .label.is-tag {
+    margin: 0;
+    border-radius: 3px;
+    padding: 4px 10px;
+  }
 
   .section-header {
     display: flex;

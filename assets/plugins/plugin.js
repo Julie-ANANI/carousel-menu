@@ -91,7 +91,7 @@ tinymce.PluginManager.add('variable', function(editor) {
         });
 
         var variable = cleanValue;
-        return '<span style="color:#0B90C6; background-color: #CCEBF8; padding: 4px; border-radius: 3px" data-original-variable="' + variable + '" contenteditable="false">' + cleanMappedValue + '</span>';
+        return '<span style="color:#0B90C6; background-color: #CCEBF8; padding: 4px 10px; font-size: 12px; border-radius: 3px; margin-left: 2px; margin-right: 4px;" data-original-variable="' + variable + '" contenteditable="false">' + cleanMappedValue + '</span>';
     }
 
     /**
