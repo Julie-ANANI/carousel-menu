@@ -55,6 +55,12 @@
                 class="menu-item"
                 translate>
               </li>
+              <li
+                (click)="onClickImportFollowUp($event)"
+                *ngIf="!project.followUpEmails"
+                [innerText]="'Import follow up emails'"
+                class="menu-item">
+              </li>
             </ul>
 
           </div>

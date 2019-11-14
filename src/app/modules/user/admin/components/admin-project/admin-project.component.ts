@@ -42,6 +42,7 @@ export class AdminProjectComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
+              private _innovationService: InnovationService,
               private _authService: AuthService,
               private _frontendService: FrontendService) {
 
@@ -96,6 +97,13 @@ export class AdminProjectComponent implements OnInit {
 
     }
 
+  }
+
+  public onClickImportFollowUp(event: Event) {
+    event.preventDefault();
+    this._innovationService.updateFollowUpEmails(this._project._id).subscribe((result: Innovation) => {
+      this._project.followUpEmails = result.followUpEmails;
+    });
   }
 
   public closeModal() {
