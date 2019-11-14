@@ -1,3 +1,76 @@
+<div id="shared-mail-editor">
+  <div [ngSwitch]="templateType">
+
+    <!-- type = 'FOLLOW-UP' -->
+    <div *ngSwitchCase="'FOLLOW-UP'">
+
+      <!-- insert field / test emails / test with contact -->
+      <div *ngIf="isEditable" class="flex-centered flex-wrap">
+
+        <!-- insert field -->
+        <div *ngIf="customField && customField.length" class="dropdown m-left-10 m-bottom-10 m-right-10">
+
+          <a class="button is-link is-draft dropdown-toggle" tabindex="0">
+            <i class="fas fa-link icon-left text-primary"></i> {{ 'SHARED_MAIL_EDITOR.INSERT_FIELD' | translate }}
+          </a>
+
+          <ul class="menu">
+            <li
+              (click)="insertTextAtCursor(field.value)"
+              *ngFor="let field of customField"
+              [innerText]="field.value"
+              class="menu-item">
+            </li>
+          </ul>
+
+        </div>
+        <!-- /insert field -->
+
+
+        <!-- test emails -->
+        <div class="m-left-10 m-bottom-10 m-right-10">
+          <button
+            (click)="onClickTestEmails($event)"
+            [ngStyle]="{ 'text-decoration': 'none' }"
+            class="button is-draft is-link"
+            type="button">
+            <i class="fas fa-paper-plane icon-left text-primary"></i> {{ 'SHARED_MAIL_EDITOR.TEST_EMAILS' | translate }}
+          </button>
+        </div>
+        <!-- /test emails -->
+
+
+        <!-- test with contact -->
+        <div class="m-left-10 m-bottom-10 m-right-10">
+          <label>
+            <select class="form-select p-left-15" [ngStyle]="{ 'height': 'unset', 'font-size': '13px' }">
+              <option [ngValue]="undefined">{{ 'SHARED_MAIL_EDITOR.TEST_WITH_CONTACT' | translate }}</option>
+            </select>
+          </label>
+        </div>
+        <!-- /test with contact -->
+
+      </div>
+      <!-- /insert field / test emails / test with contact -->
+
+
+      <!-- divider -->
+      <div *ngIf="isEditable" class="divider is-lg"></div>
+      <!-- /divider -->
+
+
+    </div>
+    <!-- /type = 'FOLLOW-UP' -->
+
+
+  </div>
+</div>
+
+
+
+
+
+
 <ng-container *ngIf="email">
   <section id="shared-mail-editor-component">
 
@@ -96,12 +169,12 @@
         <!-- message -->
         <ng-container *ngIf="editionMode">
 
-          <div class="dropdown" *ngIf="customFields && customFields.length">
+          <div class="dropdown" *ngIf="customField && customField.length">
             <a class="button is-draft is-link dropdown-toggle" tabindex="0">
               <i class="fas fa-link"> </i>Insérer un champ <i class="fas fa-caret-down"> </i>
             </a>
             <ul class="menu">
-              <li *ngFor="let field of customFields" class="menu-item" (click)="insertTextAtCursor(field.value)">{{ field.label }}</li>
+              <li *ngFor="let field of customField" class="menu-item" (click)="insertTextAtCursor(field.value)">{{ field.label }}</li>
             </ul>
           </div>
           <div class="form-group">

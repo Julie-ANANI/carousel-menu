@@ -35,6 +35,7 @@ import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/fr'
 import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/fr';
 import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/fr';
 import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-market-report/i18n/fr';
+import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -73,5 +74,6 @@ export const fr = {
   'COMMUNITY': COMMUNITY,
   'SHARED_TARGETING_WORLD': SHARED_TARGETING_WORLD,
   'SHARED_FOLLOW_UP': SHARED_FOLLOW_UP,
-  'SIDEBAR_MARKET_REPORT': SIDEBAR_MARKET_REPORT
+  'SIDEBAR_MARKET_REPORT': SIDEBAR_MARKET_REPORT,
+  'SHARED_MAIL_EDITOR': SHARED_MAIL_EDITOR
 };

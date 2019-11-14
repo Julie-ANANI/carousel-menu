@@ -6,11 +6,11 @@ export const SHARED_FOLLOW_UP = {
 
   'BUTTON_DONE': 'I\'m done'!,
 
-  'APPOINTMENT': 'Proposer un rendez-vous',
+  'INTERVIEW': 'Proposer un rendez-vous',
 
-  'OPEN': 'Laisser une ouverture',
+  'OPENING': 'Laisser une ouverture',
 
-  'THANK': 'Remercier sans suite',
+  'NOFOLLOW': 'Remercier sans suite',
 
   'BUTTON_SEE': 'Voir',
 

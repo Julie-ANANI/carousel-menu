@@ -90,7 +90,9 @@ export interface Innovation {
   _metadata?: any;
 
   followUpEmails?: {
+
     ccEmail: string,
+
     interview: {
       fr: {
         subject: string,
@@ -101,6 +103,7 @@ export interface Innovation {
         content: string
       }
     },
+
     opening: {
       fr: {
         subject: string,
@@ -111,6 +114,7 @@ export interface Innovation {
         content: string
       }
     },
+
     noFollow: {
       fr: {
         subject: string,
@@ -121,5 +125,7 @@ export interface Innovation {
         content: string
       }
     }
+
   }
+
 }

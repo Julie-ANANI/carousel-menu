@@ -33,14 +33,14 @@
     [editable]="true">
   </app-shared-project-settings>
 
-  <app-shared-mail-editor *ngIf="isStatus || isMail"
-                          [signatures]="signatures"
-                          [emailsObject]="email"
-                          [inputLanguage]="project.owner.language"
-                          [noLanguage]="true"
-                          (emailChange)="email = $event"
-                          (languageChange)="updateOwnerLanguage($event)">
-  </app-shared-mail-editor>
+  <shared-mail-editor *ngIf="isStatus || isMail"
+                      [signatures]="signatures"
+                      [emailsObject]="email"
+                      [inputLanguage]="project.owner.language"
+                      [noLanguage]="true"
+                      (emailChange)="email = $event"
+                      (languageChange)="updateOwnerLanguage($event)">
+  </shared-mail-editor>
 
   <div *ngIf="isUserSatisfaction" class="form-group-inline-space satisfaction">
 

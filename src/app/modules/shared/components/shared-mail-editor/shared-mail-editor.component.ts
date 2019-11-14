@@ -1,48 +1,62 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 import { EmailTemplate } from '../../../../models/email-template';
+import { TranslateService } from '@ngx-translate/core';
+
+type editorTypes = 'FOLLOW-UP' | '';
 
 @Component({
-  selector: 'app-shared-mail-editor',
+  selector: 'shared-mail-editor',
   templateUrl: './shared-mail-editor.component.html',
   styleUrls: ['./shared-mail-editor.component.scss']
 })
 
-export class SharedMailEditorComponent implements OnInit {
+export class SharedMailEditorComponent {
 
-  @Input() set emailsObject(value: any) {
-    this._emailsObject = value;
+  @Input() set templateType(value: editorTypes) {
     if (value) {
-      this._email = this._emailsObject[this.language];
+      this._templateType = value;
     }
   }
 
-  @Input() set signatures(value: Array<EmailSignature> ){
-    this._signatures = value;
+  @Input() set emailsObject(value: any) {
+    if (value) {
+      console.log(value);
+      this._emailsObject = value;
+      this._email = this._emailsObject[this._language];
+    }
   }
 
-  @Input() set inputLanguage(value: any) {
-    this.changeLanguage(value);
-  }
+  @Input() set customFields(value: { [prop: string]: Array<{label: string, value: string}> }) {
+    if (value) {
+      this._customField = value[this._translateService.currentLang];
 
-  @Input() set customFields(value: Array<{label: string, value: string}>) {
-    this._customFields = value;
-    this._variableMapping = {};
-      this._customFields.forEach(field => {
-      this._variableMapping[field.value.replace(/[\|\*]/g, '')] = field.label;
-    })
+      this._customField.forEach( (field) => {
+        this._variableMapping[field.value.replace(/[\|\*]/g, '')] = field.label;
+      });
+    }
   }
 
   @Input() set ccEmail(value: string) {
-    this._ccEmail = value;
-    this.ccEmailField = true;
+    if (value) {
+      this._ccEmail = value;
+      this._ccEmailField = true;
+    }
   }
+
+  @Input() set inputLanguage(value: any) {
+    if (value) {
+      this.changeLanguage(value);
+    }
+  }
+
+  @Input() isEditable: boolean = true;
+
+  @Input() signatures: Array<EmailSignature> = [];
 
   @Input() noLanguage: Boolean;
 
-  @Input() set id(value: string) {
-    this._id = value;
-  }
+  @Input() id: string = '';
 
   @Output() languageChange = new EventEmitter<string>();
 
@@ -50,59 +64,60 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Output() emailChange = new EventEmitter<any>();
 
+  @Output() emailsObjectChange: EventEmitter<any> = new EventEmitter<any>();
+
   @ViewChild('textZone') child: any;
 
-  private _customFields: Array<{label: string, value: string}> = [];
+  private _templateType: editorTypes = '';
 
-  private _signatures: Array<EmailSignature> = [];
+  private _customField: Array<{label: string, value: string}> = [];
 
-  private _emailsObject: any = {};
+  private _emailsObject: any = {
+    en: { language: 'en', subject: '', content: '' },
+    fr: { language: 'fr', subject: '', content: '' }
+  };
 
-  private _language = 'en';
+  private _language: string = 'en';
 
-  private _id: string;
+  private _email: EmailTemplate = {
+    language: this._language,
+    subject: '',
+    content: ''
+  };
 
-  private _email: EmailTemplate;
+  private _languageHasBeenSet: boolean = false;
 
-  private _languageHasBeenSet: Boolean = false;
+  private _editionMode: boolean = true;
 
-  private _editionMode = true;
+  private _ccEmail: string = '';
 
-  private _ccEmail = "";
-
-  public ccEmailField = false;
+  private _ccEmailField: boolean = false;
 
   private _variableMapping: any = {};
 
-  ngOnInit() {
-    this._signatures = [];
-    this._editionMode = true;
-    if (!this._email) {
-      this._email = {language: this._language, subject: '', content: ''};
+  constructor(private _translateService: TranslateService) { }
+
+  public changeLanguage(value: string) {
+    this._language = value;
+    this._languageHasBeenSet = true;
+
+    if (this._emailsObject) {
+      this._email = this._emailsObject[this._language];
     }
-    this._emailsObject = {
-      en: {language: 'en', subject: '', content: ''},
-      fr: {language: 'fr', subject: '', content: ''}
-    };
+
   }
 
   public insertTextAtCursor(text: string) {
     this.child.insertTextAtCursor(text)
   }
 
+  public onClickTestEmails(event: Event) {
+    event.preventDefault();
+  }
 
   setLanguage(value: string) {
     this.changeLanguage(value);
     this.languageChange.emit(value);
-  }
-
-
-  changeLanguage(value: string) {
-    if (value) this._languageHasBeenSet = true;
-    this._language = value;
-    if (this._emailsObject) {
-      this._email = this._emailsObject[this._language];
-    }
   }
 
   onCcEmailUpdate(event: any) {
@@ -110,25 +125,18 @@ export class SharedMailEditorComponent implements OnInit {
     this.ccEmailChange.emit(this._ccEmail);
   }
 
-
   onUpdate(event: any) {
     this._emailsObject[this._language].subject = event;
     this.emailChange.emit(this._emailsObject);
   }
-
 
   updateContent(event: any) {
     this._emailsObject[this._language].content = event.content;
     this.emailChange.emit(this._emailsObject);
   }
 
-
   onPreview() {
     this._editionMode = !this._editionMode;
-  }
-
-  get signatures(): Array<EmailSignature> {
-    return this._signatures;
   }
 
   get language(): string {
@@ -155,15 +163,20 @@ export class SharedMailEditorComponent implements OnInit {
     return this._editionMode;
   }
 
-  get id(): string {
-    return this._id;
-  }
-
-  get customFields(): Array<{label: string, value: string}> {
-    return this._customFields;
+  get customField(): Array<{label: string, value: string}> {
+    return this._customField;
   }
 
   get variableMapping(): any {
     return this._variableMapping;
   }
+
+  get ccEmailField(): boolean {
+    return this._ccEmailField;
+  }
+
+  get templateType(): editorTypes {
+    return this._templateType;
+  }
+
 }

@@ -4,13 +4,13 @@
     <button type="submit" class="btn btn-primary" (click)="onClickSave()">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
   </div>
 
-  <app-shared-mail-editor
+  <shared-mail-editor
     [id]="id"
     [emailsObject]="emailsObject"
     [inputLanguage]="language"
     [signatures]="signatures"
     (emailChange)="onChangeEmail($event)">
-  </app-shared-mail-editor>
+  </shared-mail-editor>
 
 </div>
 

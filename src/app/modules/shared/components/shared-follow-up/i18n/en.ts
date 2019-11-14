@@ -1,17 +1,16 @@
 export const SHARED_FOLLOW_UP = {
 
-
   'CONTACT_WITHOUT_OBJECTIVE': 'contact without objective',
 
   'CONTACTS_WITHOUT_OBJECTIVE': 'contacts without objective',
 
   'BUTTON_DONE': 'I\'m done!',
 
-  'APPOINTMENT': 'Propose an appointment',
+  'INTERVIEW': 'Propose an appointment',
 
-  'OPEN': 'Leave an opening',
+  'OPENING': 'Leave an opening',
 
-  'THANK': 'Thank without further action',
+  'NOFOLLOW': 'Thank without further action',
 
   'BUTTON_SEE': 'See',
 

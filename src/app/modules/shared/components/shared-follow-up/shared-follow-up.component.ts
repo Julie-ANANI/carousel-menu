@@ -66,6 +66,12 @@ export class SharedFollowUpComponent {
     };
   }
 
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._showModal = false;
+    this._modalTemplateType = '';
+  }
+
   public onClickSee(event: Event, type: string) {
     event.preventDefault();
     this._modalTemplateType = type;
@@ -80,7 +86,12 @@ export class SharedFollowUpComponent {
     this._project.followUpEmails.ccEmail = email;
   }
 
-  get email(): any {
+  set emailsObject(value: any) {
+    console.log(value);
+    this._project.followUpEmails[this._modalTemplateType] = value;
+  }
+
+  get emailsObject(): any {
     return this._modalTemplateType ? this._project.followUpEmails[this._modalTemplateType] : null;
   }
 

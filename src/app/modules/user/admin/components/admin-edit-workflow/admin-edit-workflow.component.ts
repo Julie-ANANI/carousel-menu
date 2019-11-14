@@ -104,7 +104,7 @@ export class AdminEditWorkflowComponent {
       _content: this._emails,
       _total: this._total,
       _isEditable: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _isNoMinHeight: true,
       _columns: columns
     };

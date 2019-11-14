@@ -26,7 +26,7 @@
           <div class="p-bottom-h">
 
             <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.APPOINTMENT'" [ngStyle]="{ 'color': '#1E3147' }"
+              <span [innerText]="'SHARED_FOLLOW_UP.INTERVIEW'" [ngStyle]="{ 'color': '#1E3147' }"
                     class="text-sm m-right-2" translate></span>
               <span (click)="onClickSee($event, 'interview')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
                     [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs" translate></span>
@@ -42,7 +42,7 @@
 
 
           <!-- divider -->
-          <div class="divider"></div>
+          <div class="divider is-lg"></div>
           <!-- /divider -->
 
 
@@ -50,7 +50,7 @@
           <div class="p-top-h p-bottom-h">
 
             <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.OPEN'" [ngStyle]="{ 'color': '#1E3147' }"
+              <span [innerText]="'SHARED_FOLLOW_UP.OPENING'" [ngStyle]="{ 'color': '#1E3147' }"
                     class="text-sm m-right-2" translate></span>
               <span (click)="onClickSee($event, 'opening')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
                     [ngStyle]="{ 'margin-top': '3px' }"
@@ -67,7 +67,7 @@
 
 
           <!-- divider -->
-          <div class="divider"></div>
+          <div class="divider is-lg"></div>
           <!-- /divider -->
 
 
@@ -75,7 +75,7 @@
           <div class="p-top-h p-bottom-h">
 
             <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.THANK'" [ngStyle]="{ 'color': '#1E3147' }"
+              <span [innerText]="'SHARED_FOLLOW_UP.NOFOLLOW'" [ngStyle]="{ 'color': '#1E3147' }"
                     class="text-sm m-right-2" translate></span>
               <span (click)="onClickSee($event, 'noFollow')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
                     [ngStyle]="{ 'margin-top': '3px' }"
@@ -119,12 +119,6 @@
 </div>
 
 
-<!--<a (click)="modal='interview'">Editer mail rdv</a><br>
-  <a (click)="modal='opening'">Editer mail ouverture</a><br>
-  <a (click)="modal='noFollow'">Editer mail sans suite</a><br>
-  -->
-
-
 <!-- sidebar -->
 <sidebar2 [(sidebarTemplate)]="sidebarTemplate">
   <sidebar-market-report
@@ -135,9 +129,41 @@
 <!-- /sidebar -->
 
 
-<app-modal [(showModal)]="showModal" *ngIf="email && showModal" [maxWidth]="'950px'">
+<!-- modal for mails -->
+<app-modal *ngIf="emailsObject && showModal" [(showModal)]="showModal" [maxWidth]="'940px'">
+  <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
-  <section class="modal-body">
+    <!-- heading -->
+    <h5 [innerText]="'SHARED_FOLLOW_UP.' + this._modalTemplateType.toUpperCase()"
+        class="title text-lg text-bold text-center"
+        translate>
+    </h5>
+    <!-- /heading -->
+
+
+    <!-- close button -->
+    <div class="absolute" [ngStyle]="{ 'right': '15px', 'top': '23px' }">
+      <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
+    </div>
+    <!-- /close button -->
+
+
+    <!-- mail wrapper -->
+    <div>
+      <shared-mail-editor
+        [templateType]="'FOLLOW-UP'"
+        [customFields]="customFields"
+        [(emailsObject)]="emailsObject">
+      </shared-mail-editor>
+    </div>
+    <!-- /mail wrapper -->
+
+  </section>
+</app-modal>
+<!-- /modal for mails -->
+
+
+<!--<section class="modal-body">
     <app-shared-mail-editor
       [emailsObject]="email"
       [ccEmail]="project.followUpEmails.ccEmail"
@@ -163,6 +189,4 @@
     <button (click)="saveTemplates()" class="button is-primary">
       {{ 'COMMON.BUTTON.SAVE' | translate }}
     </button>
-  </footer>
-
-</app-modal>
+  </footer>-->

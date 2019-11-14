@@ -27,6 +27,10 @@
     margin: $unit-4 0;
   }
 
+  &.is-lg {
+    border-top-width: 2px;
+  }
+
 }
 
 .divider-vert {
