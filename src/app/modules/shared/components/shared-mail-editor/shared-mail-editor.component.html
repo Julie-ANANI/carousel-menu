@@ -7,6 +7,26 @@
       <!-- insert field / test emails / test with contact -->
       <div *ngIf="isEditableMode" class="flex-centered flex-wrap">
 
+        <!-- insert field -->
+        <div *ngIf="customField && customField.length" class="dropdown m-left-10 m-bottom-10 m-right-10">
+
+          <a class="button is-link is-draft dropdown-toggle" tabindex="0">
+            <i class="fas fa-link icon-left text-primary"></i> {{ 'SHARED_MAIL_EDITOR.INSERT_FIELD' | translate }}
+          </a>
+
+          <ul class="menu">
+            <li
+              (click)="insertTextAtCursor(field.value)"
+              *ngFor="let field of customField"
+              [innerText]="field.label"
+              class="menu-item">
+            </li>
+          </ul>
+
+        </div>
+        <!-- /insert field -->
+
+
         <!-- test emails -->
         <div class="m-left-10 m-bottom-10 m-right-10">
           <button
@@ -97,31 +117,10 @@
             </div>
             <!-- /cc -->
 
-            <!-- insert field -->
-            <div
-              *ngIf="isEditableMode && customFields.en && customFields.en.length"
-              class="dropdown m-left-10 m-bottom-10 m-right-10">
-
-              <a class="button is-link is-draft dropdown-toggle" tabindex="0">
-                <i class="fas fa-link icon-left text-primary"></i> {{ 'SHARED_MAIL_EDITOR.INSERT_FIELD' | translate }}
-              </a>
-
-              <ul class="menu">
-                <li
-                  (click)="insertTextAtCursor(field.value, 'en')"
-                  *ngFor="let field of customFields.en"
-                  [innerText]="field.label"
-                  class="menu-item">
-                </li>
-              </ul>
-
-            </div>
-            <!-- /insert field -->
-
 
             <!-- message -->
             <app-text-zone
-                #textZoneEn
+                #textZone
                 [hideToolbar]="true"
                 (onTextChange)="updateChanges($event)"
                 [data]="emailsObject['en'].content || ''"
@@ -184,29 +183,10 @@
             </div>
             <!-- /cc -->
 
-            <!-- insert field -->
-            <div *ngIf="isEditableMode && customFields.fr && customFields.fr.length" class="dropdown m-left-10 m-bottom-10 m-right-10">
-
-              <a class="button is-link is-draft dropdown-toggle" tabindex="0">
-                <i class="fas fa-link icon-left text-primary"></i> {{ 'SHARED_MAIL_EDITOR.INSERT_FIELD' | translate }}
-              </a>
-
-              <ul class="menu">
-                <li
-                  (click)="insertTextAtCursor(field.value, 'fr')"
-                  *ngFor="let field of customFields.fr"
-                  [innerText]="field.label"
-                  class="menu-item">
-                </li>
-              </ul>
-
-            </div>
-            <!-- /insert field -->
-
 
             <!-- message -->
             <app-text-zone
-                #textZoneFr
+                #textZone
                 [hideToolbar]="true"
                 (onTextChange)="updateChanges($event)"
                 [data]="emailsObject['fr'].content || ''"
