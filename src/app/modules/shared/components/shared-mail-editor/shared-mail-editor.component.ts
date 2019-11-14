@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 import { EmailTemplate } from '../../../../models/email-template';
-import { TranslateService } from '@ngx-translate/core';
 import { Professional } from "../../../../models/professional";
 
 type editorTypes = 'FOLLOW-UP' | '';
@@ -39,7 +38,7 @@ export class SharedMailEditorComponent {
 
   @Input() set customFields(value: { [prop: string]: Array<{label: string, value: string}> }) {
     if (value) {
-      this._customField = value[this._translateService.currentLang];
+      this._customFields = value;
 
       for (let valueKey in value) {
         value[valueKey].forEach( (field) => {
@@ -82,13 +81,15 @@ export class SharedMailEditorComponent {
 
   @Output() emailsObjectChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('textZone') child: any;
+  @ViewChild('textZoneFr') textZoneFr: any;
+
+  @ViewChild('textZoneEn') textZoneEn: any;
 
   private _professionals: Array<Professional> = [];
 
   private _templateType: editorTypes = '';
 
-  private _customField: Array<{label: string, value: string}> = [];
+  private _customFields: { [prop: string]: Array<{label: string, value: string}> } = {fr: [], en: []};
 
   private _emailsObject: EmailsObject = {
     en: { language: 'en', subject: '', content: '' },
@@ -114,7 +115,7 @@ export class SharedMailEditorComponent {
     fr: []
   };
 
-  constructor(private _translateService: TranslateService) { }
+  constructor() { }
 
   public changeLanguage(value: string) {
     this._language = value;
@@ -126,8 +127,12 @@ export class SharedMailEditorComponent {
 
   }
 
-  public insertTextAtCursor(text: string) {
-    this.child.insertTextAtCursor(text);
+  public insertTextAtCursor(text: string, lang: string) {
+    if (lang === 'fr') {
+      this.textZoneFr.insertTextAtCursor(text);
+    } else {
+      this.textZoneEn.insertTextAtCursor(text);
+    }
   }
 
   public onClickTestEmails(event: Event) {
@@ -143,7 +148,6 @@ export class SharedMailEditorComponent {
   }
 
   public updateChanges(event: Event) {
-    event.preventDefault();
     this.emailsObjectChange.emit(this._emailsObject);
     this.ccEmailChange.emit(this._ccEmail);
   }
@@ -191,8 +195,8 @@ export class SharedMailEditorComponent {
     return this._isEditableMode;
   }
 
-  get customField(): Array<{label: string, value: string}> {
-    return this._customField;
+  get customFields(): { [prop: string]: Array<{label: string, value: string}> } {
+    return this._customFields;
   }
 
   get variableMapping(): Mapping {
