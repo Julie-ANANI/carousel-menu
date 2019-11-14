@@ -18,7 +18,7 @@
             <li
               (click)="insertTextAtCursor(field.value)"
               *ngFor="let field of customField"
-              [innerText]="field.value"
+              [innerText]="field.label"
               class="menu-item">
             </li>
           </ul>
@@ -121,6 +121,7 @@
             <!-- message -->
             <app-text-zone
                 #textZone
+                [hideToolbar]="true"
                 (onTextChange)="updateChanges($event)"
                 [data]="emailsObject['en'].content || ''"
                 [readonly]="!isEditableMode"
@@ -186,6 +187,7 @@
             <!-- message -->
             <app-text-zone
                 #textZone
+                [hideToolbar]="true"
                 (onTextChange)="updateChanges($event)"
                 [data]="emailsObject['fr'].content || ''"
                 [readonly]="!isEditableMode"
