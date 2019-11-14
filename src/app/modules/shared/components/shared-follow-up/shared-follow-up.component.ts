@@ -101,14 +101,14 @@ export class SharedFollowUpComponent implements OnInit {
         { value: '*|FIRSTNAME|*', label: 'Prénom du pro' },
         { value: '*|LASTNAME|*', label: 'Nom du pro' },
         { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'title') || 'TITLE'},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : 'COMPANY_NAME' },
+        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
         { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
       ],
       en: [
         { value: '*|FIRSTNAME|*', label: 'First name' },
         { value: '*|LASTNAME|*', label: 'Last name' },
         { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'title') || 'TITLE'},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company : 'COMPANY_NAME' },
+        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
         { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
       ]
     };
