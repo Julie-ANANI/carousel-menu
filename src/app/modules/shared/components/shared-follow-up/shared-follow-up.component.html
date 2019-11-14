@@ -4,7 +4,12 @@
     <!-- table -->
     <div class="column col-xl-12 col-9">
       <div class="p-bottom-25">
-
+        <app-shared-table
+          [config]="config"
+          [data]="tableInfos"
+          (editRow)="seeAnswer($event)"
+          (performAction)="performActions($event)">
+        </app-shared-table>
       </div>
     </div>
     <!-- /table -->

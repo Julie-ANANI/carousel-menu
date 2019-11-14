@@ -30,4 +30,5 @@ export interface Answer {
   isLoading?: boolean;
   scoreStatus?: number;
   autoTags?: Array<string>;
+  followUp?: {objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', date?: Date};
 }

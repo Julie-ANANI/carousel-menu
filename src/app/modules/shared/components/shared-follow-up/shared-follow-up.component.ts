@@ -1,9 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateNotificationsService } from "../../../../services/notifications/notifications.service";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { Innovation } from "../../../../models/innovation";
 import { InnovationFrontService } from "../../../../services/innovation/innovation-front.service";
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
+import { AnswerService } from "../../../../services/answer/answer.service";
+import { Answer } from "../../../../models/answer";
+import { Table } from "../../../table/models/table";
 
 @Component({
   selector: 'shared-follow-up',
@@ -11,7 +14,7 @@ import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface
   styleUrls: ['./shared-follow-up.component.scss']
 })
 
-export class SharedFollowUpComponent {
+export class SharedFollowUpComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
     if (value) {
@@ -20,7 +23,19 @@ export class SharedFollowUpComponent {
     }
   }
 
+  private _config: any = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created": "-1"}'
+  };
+
   private _project: Innovation = <Innovation> {};
+
+  private _answers: Array<Answer> = [];
+
+  private _tableInfos: Table;
 
   private _customFields: { fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} = {
     en: [],
@@ -37,7 +52,40 @@ export class SharedFollowUpComponent {
   private _showModal: boolean = false;
 
   constructor(private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _answerService: AnswerService,
+              private _translateNotificationsService: TranslateNotificationsService) {}
+
+  ngOnInit() {
+    this._answerService.getInnovationValidAnswers(this._project._id).subscribe((response) => {
+      this._answers = response.answers.map((answer: Answer) => {
+        answer.followUp = answer.followUp || {};
+        return answer;
+      });
+      this._tableInfos = {
+        _selector: 'follow-up-answers',
+        _content: this._answers,
+        _total: this._answers.length,
+        _isSearchable: false,
+        _isSelectable: true,
+        _isEditable: true,
+        _clickIndex: 1,
+        _buttons: [{_label: 'ANSWER.VALID_ANSWER'}, {_label: 'ANSWER.REJECT_ANSWER'}],
+        _columns: [
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
+          {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
+          {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
+          {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN', _choices: [
+              {_name: 'INTERVIEW', _alias: 'INTERVIEW', _class: 'button is-secondary'},
+              {_name: 'OPENING', _alias: 'OPENING', _class: 'button is-draft'},
+              {_name: 'NO_FOLLOW', _alias: 'NO_FOLLOW', _class: 'button is-danger'}
+            ]},
+        ]
+      };
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR_EN');
+    });
+  }
+
 
   public saveTemplates() {
     this._innovationService.save(this._project._id, this._project).subscribe((response: Innovation) => {
@@ -86,6 +134,14 @@ export class SharedFollowUpComponent {
     this._project.followUpEmails.ccEmail = email;
   }
 
+  seeAnswer(answer: Answer) {
+    console.log(answer);
+  }
+
+  performActions(action: any) {
+    console.log(action._label);
+  }
+
   set emailsObject(value: any) {
     console.log(value);
     this._project.followUpEmails[this._modalTemplateType] = value;
@@ -121,6 +177,18 @@ export class SharedFollowUpComponent {
 
   set showModal(value: boolean) {
     this._showModal = value;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get config(): any {
+    return this._config;
   }
 
 }

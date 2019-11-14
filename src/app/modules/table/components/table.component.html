@@ -297,10 +297,9 @@
                   <ng-container *ngSwitchCase="'DROPDOWN'">
                     <span class="dropdown is-right">
 
-                      <button
+                      <a
                         [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))
                         ? getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0])))) : 'button is-info is-link'"
-                        [disabled]="disabledRow(row)"
                         class="button-dropdown dropdown-toggle"
                         tabindex="0">
 
@@ -313,7 +312,7 @@
                           <i class="icon icon-right icon-arrow-down"></i>
                         </ng-container>
 
-                      </button>
+                      </a>
 
                       <ul class="menu">
                         <li

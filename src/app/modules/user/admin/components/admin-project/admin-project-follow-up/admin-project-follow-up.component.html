@@ -2,6 +2,12 @@
   <div class="container fluid grid-2xl">
     <div class="column col-11 col-mx-auto">
       <div *ngIf="innovation" class="p-top-25">
+        <button
+          *ngIf="!innovation.followUpEmails"
+          (click)="updateFollowUpEmails()"
+          class="button btn-primary">
+          Import follow-up emails
+        </button>
         <shared-follow-up [project]="innovation"></shared-follow-up>
       </div>
     </div>
