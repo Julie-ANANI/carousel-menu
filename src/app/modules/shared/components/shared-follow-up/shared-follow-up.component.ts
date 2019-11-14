@@ -131,6 +131,11 @@ export class SharedFollowUpComponent implements OnInit {
 
   public onClickDone(event: Event) {
     event.preventDefault();
+    this._innovationService.finishLinking(this.project._id).subscribe((value) => {
+      this._translateNotificationsService.success('ERROR.PROJECT.LINKING', 'ERROR.PROJECT.LINKING_DONE');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
   }
 
   /*public updateCcEmail(email:string) {

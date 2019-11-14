@@ -84,7 +84,9 @@ export const ERROR = {
     'SUBMITTED_TEXT': 'Your project has been sent to validate.',
     'NOT_ALLOWED': 'You are not allowed to perform this action.',
     'COMMENT_NOT_FOUND': 'We could not find the comment for the requested innovation.',
-    'NOT_SUBMITTED_MODE':'The comments can only be added when the innovation status is Submitted.',
+    'NOT_SUBMITTED_MODE': 'The comments can only be added when the innovation status is Submitted.',
+    'LINKING': 'Linking',
+    'LINKING_DONE': 'Your request for contact has been taken into account'
   },
 
 
