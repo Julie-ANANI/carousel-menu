@@ -84,7 +84,9 @@ export const ERROR = {
     'SUBMITTED_TEXT': 'Votre projet a été envoyé pour validation.',
     'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.',
     'COMMENT_NOT_FOUND': 'Nous n\'avons pas trouvé le commentaire sur l\'innovation demandée.',
-    'NOT_SUBMITTED_MODE':'Les commentaires ne peuvent être ajoutés que lorsque le statut d\'innovation est soumis.'
+    'NOT_SUBMITTED_MODE': 'Les commentaires ne peuvent être ajoutés que lorsque le statut d\'innovation est soumis.',
+    'LINKING': 'Mise en relation',
+    'LINKING_DONE': 'Votre demande de mise en relation a été prise en compte'
   },
 
 

@@ -98,4 +98,8 @@ export class AnswerService {
     };
     return this._http.post(`/campaign/${campaignId}/answerReassign`, body);
   }
+
+  public updateLinkingStatus(answerId: string, newStatus: string): Observable<any> {
+    return this._http.get('/answer/' + answerId + '/updateFollowUp' + `?status=${newStatus}`);
+  }
 }

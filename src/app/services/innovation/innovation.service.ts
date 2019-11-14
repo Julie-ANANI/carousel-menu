@@ -153,4 +153,8 @@ export class InnovationService {
     return this._http.get('/innovation/' + innovationId + '/updateFollowUpEmails');
   }
 
+  public finishLinking(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/linking');
+  }
+
 }
