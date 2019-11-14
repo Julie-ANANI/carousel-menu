@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { EmailSignature } from '../../../../models/email-signature';
 import { EmailTemplate } from '../../../../models/email-template';
 import { TranslateService } from '@ngx-translate/core';
+import { Professional } from "../../../../models/professional";
 
 type editorTypes = 'FOLLOW-UP' | '';
 
@@ -44,6 +45,12 @@ export class SharedMailEditorComponent {
     }
   }
 
+  @Input() set professionals(value: Array<Professional>) {
+    if (value) {
+      this._professionals = value;
+    }
+  }
+
   @Input() set inputLanguage(value: any) {
     if (value) {
       this.changeLanguage(value);
@@ -67,6 +74,8 @@ export class SharedMailEditorComponent {
   @Output() emailsObjectChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('textZone') child: any;
+
+  private _professionals: Array<Professional> = [];
 
   private _templateType: editorTypes = '';
 
@@ -113,6 +122,14 @@ export class SharedMailEditorComponent {
 
   public onClickTestEmails(event: Event) {
     event.preventDefault();
+  }
+
+  public onSelectProfessional(professional: Professional) {
+    console.log(professional);
+    /* FIXME
+    this._variableMapping[professional.language].FIRSTNAME = professional.firstName;
+    this._variableMapping[professional.language].LASTNAME = professional.lastName;
+    */
   }
 
   setLanguage(value: string) {
@@ -177,6 +194,10 @@ export class SharedMailEditorComponent {
 
   get templateType(): editorTypes {
     return this._templateType;
+  }
+
+  get professionals(): Array<Professional> {
+    return this._professionals;
   }
 
 }

@@ -43,8 +43,14 @@
         <!-- test with contact -->
         <div class="m-left-10 m-bottom-10 m-right-10">
           <label>
-            <select class="form-select p-left-15" [ngStyle]="{ 'height': 'unset', 'font-size': '13px' }">
+            <select
+              class="form-select p-left-15"
+              [ngStyle]="{ 'height': 'unset', 'font-size': '13px' }"
+              (change)="onSelectProfessional($event.target.value)">
               <option [ngValue]="undefined">{{ 'SHARED_MAIL_EDITOR.TEST_WITH_CONTACT' | translate }}</option>
+              <option
+                *ngFor="let professional of professionals"
+                [ngValue]="professional">{{ professional.firstName }} {{ professional.lastName }}</option>
             </select>
           </label>
         </div>

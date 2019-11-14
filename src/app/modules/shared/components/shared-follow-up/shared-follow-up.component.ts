@@ -7,6 +7,7 @@ import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface
 import { AnswerService } from "../../../../services/answer/answer.service";
 import { Answer } from "../../../../models/answer";
 import { Table } from "../../../table/models/table";
+import { Professional } from "../../../../models/professional";
 
 @Component({
   selector: 'shared-follow-up',
@@ -189,6 +190,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   get config(): any {
     return this._config;
+  }
+
+  get pros(): Array<Professional> {
+    return this._answers.map(answer => answer.professional);
   }
 
 }
