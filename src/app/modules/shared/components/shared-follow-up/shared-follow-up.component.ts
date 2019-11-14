@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateNotificationsService } from "../../../../services/notifications/notifications.service";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { Innovation } from "../../../../models/innovation";
@@ -9,6 +9,8 @@ import { Answer } from "../../../../models/answer";
 import { Table } from "../../../table/models/table";
 import { Professional } from "../../../../models/professional";
 import { Config } from '../../../../models/config';
+import { first } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'shared-follow-up',
@@ -21,13 +23,14 @@ export class SharedFollowUpComponent implements OnInit {
   @Input() set project(value: Innovation) {
     if (value) {
       this._project = value;
+      this._getAnswers();
       this._initializeMailCustomFields();
     }
   }
 
   private _config: Config = {
     fields: '',
-    limit: '10',
+    limit: '',
     offset: '0',
     search: '{}',
     sort: '{ "created": "-1" }'
@@ -53,39 +56,54 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _showModal: boolean = false;
 
-  constructor(private _innovationService: InnovationService,
+  private _total: number = -1;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _innovationService: InnovationService,
               private _answerService: AnswerService,
-              private _translateNotificationsService: TranslateNotificationsService) {}
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._answerService.getInnovationValidAnswers(this._project._id).subscribe((response) => {
-      this._answers = response.answers.map((answer: Answer) => {
-        answer.followUp = answer.followUp || {};
-        return answer;
+    this._initializeTable();
+  }
+
+  private _initializeTable() {
+    this._tableInfos = {
+      _selector: 'follow-up-answers',
+      _content: this._answers,
+      _total: this._total,
+      _isSelectable: true,
+      _isEditable: true,
+      _clickIndex: 1,
+      _columns: [
+        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
+        {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
+        {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
+        {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN', _choices: [
+            {_name: 'INTERVIEW', _alias: 'Interview', _class: 'button is-secondary'},
+            {_name: 'OPENING', _alias: 'Opening', _class: 'button is-draft'},
+            {_name: 'NO_FOLLOW', _alias: 'No follow', _class: 'button is-danger'}
+          ]},
+      ]
+    };
+  }
+
+  private _getAnswers() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._answerService.getInnovationValidAnswers(this._project._id).pipe(first()).subscribe((response) => {
+
+        this._answers = response.answers.map((answer: Answer) => {
+          answer.followUp = answer.followUp || {};
+          return answer;
+        });
+
+        this._total = this._answers.length;
+        this._initializeTable();
+
+      }, () => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
-      this._tableInfos = {
-        _selector: 'follow-up-answers',
-        _content: this._answers,
-        _total: this._answers.length,
-        _isSearchable: false,
-        _isSelectable: true,
-        _isEditable: true,
-        _clickIndex: 1,
-        _buttons: [{_label: 'ANSWER.VALID_ANSWER'}, {_label: 'ANSWER.REJECT_ANSWER'}],
-        _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
-          {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
-          {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
-          {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN', _choices: [
-              {_name: 'INTERVIEW', _alias: 'Interview', _class: 'button is-secondary'},
-              {_name: 'OPENING', _alias: 'Opening', _class: 'button is-draft'},
-              {_name: 'NO_FOLLOW', _alias: 'No follow', _class: 'button is-danger'}
-            ]},
-        ]
-      };
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR_EN');
-    });
+    }
   }
 
   public saveProject() {
@@ -137,10 +155,6 @@ export class SharedFollowUpComponent implements OnInit {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
-
-  /*public updateCcEmail(email:string) {
-    this._project.followUpEmails.ccEmail = email;
-  }*/
 
   seeAnswer(answer: Answer) {
     console.log(answer);
@@ -204,6 +218,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   get pros(): Array<Professional> {
     return this._answers.map(answer => answer.professional);
+  }
+
+  get total(): number {
+    return this._total;
   }
 
 }

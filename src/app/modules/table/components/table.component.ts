@@ -292,16 +292,6 @@ export class TableComponent {
     this.configChange.emit(this._config);
   }
 
-  /***
-   * This function returns the label of the button.
-   */
-  public getButtonLabel(): string {
-    if (this._table._editButtonLabel) {
-      return this._table._editButtonLabel;
-    } else {
-      return this._table._isEditable ? 'COMMON.BUTTON.EDIT' : 'COMMON.BUTTON.SHOW';
-    }
-  }
 
   /***
    * This function is call when the user click on the click name

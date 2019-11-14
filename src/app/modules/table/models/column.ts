@@ -12,6 +12,7 @@ export interface Column {
   readonly _choices?: Choice[];
   readonly _multiLabels?: MultiLabel[];
   readonly _width?: string;
+  readonly _maxWidth?: string;
   readonly _enableTooltip?: boolean;
   readonly _imgHeight?: string;
 }

@@ -4,12 +4,23 @@
     <!-- table -->
     <div class="column col-xl-12 col-9">
       <div class="p-bottom-25">
+
+        <!-- heading -->
+        <h6 class="text-sm text-notify m-bottom-10">
+          <span class="text-background">{{ this.tableInfos._total === -1 ? 0 : this.tableInfos._total }}</span> contacts /
+          <span class="text-background">{{ '60' }}</span> {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECT' | translate }}
+        </h6>
+        <!-- /heading -->
+
+        <!-- table -->
         <app-shared-table
           [(config)]="config"
           [data]="tableInfos"
           (editRow)="seeAnswer($event)"
           (performAction)="performActions($event)">
         </app-shared-table>
+        <!-- /table -->
+
       </div>
     </div>
     <!-- /table -->
@@ -17,14 +28,14 @@
 
     <!-- emails and finish button -->
     <div class="column col-sm-12 col-md-5 col-lg-4 col-3">
-      <div [ngStyle]="{ 'min-height': '522px' }" class="d-flex justify-space flex-d-column p-bottom-25">
+      <div [ngStyle]="{ 'min-height': '552px' }" class="d-flex justify-space flex-d-column p-bottom-25">
 
         <!-- emails -->
         <div>
 
-          <!-- title -->
+          <!-- heading -->
           <h6 class="text-sm text-notify m-no-bottom" [innerText]="'EMAILS'"></h6>
-          <!-- /title -->
+          <!-- /heading -->
 
 
           <!-- appointment -->

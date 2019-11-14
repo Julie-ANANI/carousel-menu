@@ -22,4 +22,6 @@ export const SHARED_FOLLOW_UP = {
 
   'EMAILS_SENT': 'emails envoyés',
 
+  'WITHOUT_OBJECT': 'sans objectif'
+
 };
