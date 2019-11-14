@@ -15,6 +15,8 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
   @Input() readonly = false;
 
+  @Input() hideToolbar = false;
+
   @Input() set data(value: string) {
     this._text = value;
     this._contentHash = SharedTextZoneComponent.hashString(value);
@@ -87,7 +89,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
         // paste_retain_style_properties: "color font-size font-weight",
         paste_retain_style_properties: 'none',
         fontsize_formats: "8pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
-        toolbar : 'undo redo | fontsizeselect | bold italic underline forecolor | bullist numlist | link',
+        toolbar : !this.hideToolbar && 'undo redo | fontsizeselect | bold italic underline forecolor | bullist numlist | link',
         skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
         setup: (editor: any) => {
           this.editor = editor;
