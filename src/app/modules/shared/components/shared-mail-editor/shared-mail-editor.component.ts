@@ -143,7 +143,6 @@ export class SharedMailEditorComponent {
   }
 
   public updateChanges(event: Event) {
-    event.preventDefault();
     this.emailsObjectChange.emit(this._emailsObject);
     this.ccEmailChange.emit(this._ccEmail);
   }

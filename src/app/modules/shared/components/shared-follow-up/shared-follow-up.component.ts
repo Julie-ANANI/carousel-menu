@@ -186,11 +186,6 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
-  /*
-  public updateCcEmail(email:string) {
-    this._project.followUpEmails.ccEmail = email;
-  }*/
-
   seeAnswer(answer: Answer) {
     console.log(answer);
   }
@@ -234,9 +229,7 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   get emailsObject(): any {
-    return this._project.followUpEmails[this._modalTemplateType]
-      ? this._project.followUpEmails[this._modalTemplateType]
-      : this._project.followUpEmails[this._modalTemplateType] = { en: {content: '', subject: ''}, fr: {content: '', subject: ''} };
+    return this._project.followUpEmails[this._modalTemplateType] || { en: {content: '', subject: ''}, fr: {content: '', subject: ''} }
   }
 
   get project(): Innovation {
