@@ -95,9 +95,10 @@ export class SharedFollowUpComponent implements OnInit {
         {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
         {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN',
           _choices: [
-            {_name: 'INTERVIEW', _alias: 'Interview', _class: 'button is-secondary'},
-            {_name: 'OPENING', _alias: 'Opening', _class: 'button is-draft'},
-            {_name: 'NO_FOLLOW', _alias: 'No follow', _class: 'button is-danger'}
+            {_name: 'INTERVIEW', _alias: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW', _class: 'button is-secondary'},
+            {_name: 'OPENING', _alias: 'SHARED_FOLLOW_UP.BUTTON.OPENING', _class: 'button is-draft'},
+            {_name: 'NO_FOLLOW', _alias: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW', _class: 'button is-danger'},
+            {_name: '', _alias: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE', _class: ''}
           ]},
       ]
     };
