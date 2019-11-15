@@ -138,9 +138,11 @@ export class SharedFollowUpComponent implements OnInit {
   public assignObjective(event: any) {
     const answerId = event.content._id;
     const objective = event.item._name;
-    this._answerService.updateLinkingStatus(answerId, objective).subscribe(() => {
+    this._answerService.updateLinkingStatus([answerId], objective).subscribe(() => {
       const answerToUpdate = this._answers.findIndex(answer => answer._id === answerId);
       this._answers[answerToUpdate].followUp.objective = objective;
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
 
@@ -169,6 +171,11 @@ export class SharedFollowUpComponent implements OnInit {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
   }
+
+  /*
+  public updateCcEmail(email:string) {
+    this._project.followUpEmails.ccEmail = email;
+  }*/
 
   seeAnswer(answer: Answer) {
     console.log(answer);
