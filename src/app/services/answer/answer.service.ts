@@ -100,6 +100,6 @@ export class AnswerService {
   }
 
   public updateLinkingStatus(arrayAnswers: Array<string>, newStatus: string): Observable<any> {
-    return this._http.post('/answer/updateFollowUp', {status: newStatus, answers: arrayAnswers});
+    return this._http.post('/answer/update/followUp', {status: newStatus, answers: arrayAnswers});
   }
 }

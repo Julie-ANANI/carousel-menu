@@ -22,6 +22,21 @@ export const SHARED_FOLLOW_UP = {
 
   'EMAILS_SENT': 'emails envoyés',
 
-  'WITHOUT_OBJECT': 'sans objectif'
+  'WITHOUT_OBJECTIVE': 'sans objectif',
 
+  'BUTTON': {
+    'INTERVIEW': 'Rendez-vous',
+
+    'OPENING': 'Ouverture',
+
+    'NO_FOLLOW': 'Sans suite',
+
+    'WITHOUT_OBJECTIVE': 'Sans objectif',
+
+  },
+
+  'MODAL': {
+    'WARNING_1': 'Parmi les professionnels que vous avez sélectionnés, certains ont déjà un objectif assigné :',
+    'WARNING_2': 'Veuillez confimer que vous voulez remplacer ces objectifs par votre nouveau choix',
+  }
 };

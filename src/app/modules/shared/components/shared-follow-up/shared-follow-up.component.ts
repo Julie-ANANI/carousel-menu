@@ -42,6 +42,12 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _tableInfos: Table;
 
+  private _pendingAction: {
+    answersIds?: Array<string>,
+    objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW'
+    assignedAnswers?: Array<{name: string, objective: string}>
+  } = {};
+
   private _customFields: { fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} = {
     en: [],
     fr: []
@@ -54,7 +60,9 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _modalTemplateType: string = '';
 
-  private _showModal: boolean = false;
+  private _showEmailsModal: boolean = false;
+
+  private _showWarningModal: boolean = false;
 
   private _total: number = -1;
 
@@ -75,6 +83,12 @@ export class SharedFollowUpComponent implements OnInit {
       _isSelectable: true,
       _isEditable: true,
       _clickIndex: 1,
+      _buttons: [
+        { _label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
+        { _label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
+        { _label: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW'},
+        { _label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
+      ],
       _columns: [
         {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
         {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
@@ -152,14 +166,14 @@ export class SharedFollowUpComponent implements OnInit {
 
   public closeModal(event: Event) {
     event.preventDefault();
-    this._showModal = false;
+    this._showEmailsModal = false;
     this._modalTemplateType = '';
   }
 
   public onClickSee(event: Event, type: string) {
     event.preventDefault();
     this._modalTemplateType = type;
-    this._showModal = true;
+    this._showEmailsModal = true;
   }
 
 
@@ -182,7 +196,37 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   performActions(action: any) {
-    console.log(action._label);
+    const objective = action._action === 'WITHOUT_OBJECTIVE' ? '' : action._action.split('.').slice(-1)[0];
+    const answersIds = action._rows.map((answer: any) => answer._id);
+    // First we check if some of the selected users already have an objective
+    const assignedAnswers = action._rows
+      .filter((answer: any) => answer.followUp.objective && answer.followUp.objective != objective)
+      .map((answer: any) => {
+        return {name: `${answer.professional.firstName} ${answer.professional.lastName}`, objective: answer.followUp.objective};
+      });
+    if (assignedAnswers.length) {
+      // If so, we open the confirmation modal
+      this._showWarningModal = true;
+      this._pendingAction = {
+        answersIds: answersIds,
+        objective: objective,
+        assignedAnswers: assignedAnswers
+      };
+    } else {
+      // Otherwise, we save the objectives
+      this.updateManyObjectives(answersIds, objective);
+    }
+  }
+
+  public updateManyObjectives(answersIds: Array<string>, objective: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW') {
+    this._pendingAction = {};
+    this._showWarningModal = false;
+    this._answerService.updateLinkingStatus(answersIds, objective).subscribe(() => {
+      answersIds.forEach((answerId: string) => {
+        const answerToUpdate = this._answers.findIndex(answer => answer._id === answerId);
+        this._answers[answerToUpdate].followUp.objective = objective;
+      });
+    });
   }
 
   set emailsObject(value: any) {
@@ -215,12 +259,20 @@ export class SharedFollowUpComponent implements OnInit {
     return this._modalTemplateType;
   }
 
-  get showModal(): boolean {
-    return this._showModal;
+  get showEmailsModal(): boolean {
+    return this._showEmailsModal;
   }
 
-  set showModal(value: boolean) {
-    this._showModal = value;
+  set showEmailsModal(value: boolean) {
+    this._showEmailsModal = value;
+  }
+
+  get showWarningModal(): boolean {
+    return this._showWarningModal;
+  }
+
+  set showWarningModal(value: boolean) {
+    this._showWarningModal = value;
   }
 
   get answers(): Array<Answer> {
@@ -277,5 +329,10 @@ export class SharedFollowUpComponent implements OnInit {
   get total(): number {
     return this._total;
   }
+
+  get pendingAction(): {answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW'} {
+    return this._pendingAction;
+  }
+
 
 }

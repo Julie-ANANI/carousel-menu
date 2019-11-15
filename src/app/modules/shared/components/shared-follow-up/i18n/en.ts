@@ -22,6 +22,22 @@ export const SHARED_FOLLOW_UP = {
 
   'EMAILS_SENT': 'emails sent',
 
-  'WITHOUT_OBJECT': 'without object'
+  'WITHOUT_OBJECTIVE': 'without objective',
+
+  'BUTTON': {
+    'INTERVIEW': 'Appointment',
+
+    'OPENING': 'Opening',
+
+    'NO_FOLLOW': 'No further action',
+
+    'WITHOUT_OBJECTIVE': 'Without objective'
+
+  },
+
+  'MODAL': {
+    'WARNING_1': 'Among the professionals you selected, some of them already have an assigned objective:',
+    'WARNING_2': 'Please confirm that you want to override these objectives with your new choice',
+  }
 
 };

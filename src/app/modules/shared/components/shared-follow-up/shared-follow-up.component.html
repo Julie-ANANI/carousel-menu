@@ -8,7 +8,7 @@
         <!-- heading -->
         <h6 class="text-sm text-notify m-bottom-10">
           <span class="text-background">{{ this.tableInfos._total === -1 ? 0 : this.tableInfos._total }}</span> contacts /
-          <span class="text-background">{{ prosWithoutObjective.length }}</span> {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECT' | translate }}
+          <span class="text-background">{{ prosWithoutObjective.length }}</span> {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
         </h6>
         <!-- /heading -->
 
@@ -147,7 +147,7 @@
 
 
 <!-- modal for mails -->
-<app-modal *ngIf="emailsObject && showModal" [(showModal)]="showModal" [maxWidth]="'1024px'">
+<app-modal *ngIf="emailsObject && showEmailsModal" [(showModal)]="showEmailsModal" [maxWidth]="'1024px'">
   <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
     <!-- heading -->
@@ -183,6 +183,48 @@
       <button (click)="saveProject()" [textContent]="'COMMON.BUTTON.SAVE'" class="button is-primary" translate></button>
     </div>
     <!-- /save button -->
+
+  </section>
+</app-modal>
+<!-- /modal for mails -->
+
+<!-- modal for warning : objective already assigned -->
+<app-modal [(showModal)]="showWarningModal">
+  <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
+    <!-- close button -->
+    <div [ngStyle]="{ 'right': '15px', 'top': '23px' }" class="absolute">
+      <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
+    </div>
+    <!-- /close button -->
+
+    <div>
+      <p>
+        {{ 'SHARED_FOLLOW_UP.MODAL.WARNING_1' | translate }}
+      </p>
+
+      <ul>
+        <li *ngFor="let pro of pendingAction.assignedAnswers">
+          {{ pro.name }}: {{ 'SHARED_FOLLOW_UP.BUTTON.' + pro.objective | translate }}
+        </li>
+      </ul>
+
+      <p>
+        {{ 'SHARED_FOLLOW_UP.MODAL.WARNING_2' | translate }}
+      </p>
+    </div>
+
+
+    <!-- confirm button -->
+    <button
+      (click)="updateManyObjectives(pendingAction.answersIds, pendingAction.objective)"
+      [textContent]="'COMMON.BUTTON.CONFIRM'"
+      class="button is-primary"
+      translate>
+    </button>
+    <!-- /confirm button -->
+    <!-- cancel button -->
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <!-- /cancel button -->
 
   </section>
 </app-modal>
