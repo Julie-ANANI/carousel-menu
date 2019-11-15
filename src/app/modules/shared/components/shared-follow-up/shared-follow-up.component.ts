@@ -38,6 +38,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _project: Innovation = <Innovation> {};
 
+  private _modalAnswer: Answer = null;
+
+  private _sidebarValue: SidebarInterface = {};
+
   private _answers: Array<Answer> = [];
 
   private _tableInfos: Table;
@@ -188,7 +192,13 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   seeAnswer(answer: Answer) {
-    console.log(answer);
+    this._modalAnswer = answer;
+
+    this._sidebarValue = {
+      animate_state: 'active',
+      title: 'SIDEBAR.TITLE.EDIT_INSIGHT',
+      size: '726px'
+    };
   }
 
   performActions(action: any) {
@@ -328,5 +338,20 @@ export class SharedFollowUpComponent implements OnInit {
     return this._pendingAction;
   }
 
+  get modalAnswer(): Answer {
+    return this._modalAnswer;
+  }
+
+  set modalAnswer(modalAnswer: Answer) {
+    this._modalAnswer = modalAnswer;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
 
 }
