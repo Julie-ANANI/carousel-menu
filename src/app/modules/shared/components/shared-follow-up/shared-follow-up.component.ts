@@ -136,8 +136,12 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   public assignObjective(event: any) {
-    const answerToUpdate = this._answers.findIndex(answer => answer._id === event.content._id);
-    this._answers[answerToUpdate].followUp.objective = event.item._name;
+    const answerId = event.content._id;
+    const objective = event.item._name;
+    this._answerService.updateLinkingStatus(answerId, objective).subscribe(() => {
+      const answerToUpdate = this._answers.findIndex(answer => answer._id === answerId);
+      this._answers[answerToUpdate].followUp.objective = objective;
+    });
   }
 
   private _prosByObjective(objective: string, sent: boolean): Array<Answer> {
