@@ -135,6 +135,11 @@ export class SharedFollowUpComponent implements OnInit {
     };
   }
 
+  public assignObjective(event: any) {
+    const answerToUpdate = this._answers.findIndex(answer => answer._id === event.content._id);
+    this._answers[answerToUpdate].followUp.objective = event.item._name;
+  }
+
   private _prosByObjective(objective: string, sent: boolean): Array<Answer> {
     return this._answers.filter(answer => !!answer.followUp.date === sent && answer.followUp.objective === objective);
   }
@@ -224,11 +229,14 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   get pros(): Array<Professional> {
-    return this._answers.map(answer => answer.professional);
+    if (this._modalTemplateType) {
+      return this._prosByObjective(this._modalTemplateType.toUpperCase(), false).map(answer => answer.professional);
+    }
+    return [];
   }
 
   get prosWithoutObjective(): Array<Answer> {
-    return this._answers.filter(answer => !answer.followUp.date);
+    return this._answers.filter(answer => !answer.followUp.objective);
   }
 
   get prosInterview(): Array<Answer> {
