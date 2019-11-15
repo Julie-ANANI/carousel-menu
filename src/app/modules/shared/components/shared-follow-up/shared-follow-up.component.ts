@@ -79,7 +79,8 @@ export class SharedFollowUpComponent implements OnInit {
         {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
         {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
         {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
-        {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN', _choices: [
+        {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN',
+          _choices: [
             {_name: 'INTERVIEW', _alias: 'Interview', _class: 'button is-secondary'},
             {_name: 'OPENING', _alias: 'Opening', _class: 'button is-draft'},
             {_name: 'NO_FOLLOW', _alias: 'No follow', _class: 'button is-danger'}
@@ -169,7 +170,9 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   get emailsObject(): any {
-    return this._modalTemplateType ? this._project.followUpEmails[this._modalTemplateType] : null;
+    return this._project.followUpEmails[this._modalTemplateType]
+      ? this._project.followUpEmails[this._modalTemplateType]
+      : this._project.followUpEmails[this._modalTemplateType] = { en: {content: '', subject: ''}, fr: {content: '', subject: ''} };
   }
 
   get project(): Innovation {

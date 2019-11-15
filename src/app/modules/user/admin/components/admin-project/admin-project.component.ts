@@ -7,6 +7,7 @@ import { FrontendService } from '../../../../../services/frontend/frontend.servi
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-project',
@@ -101,7 +102,7 @@ export class AdminProjectComponent implements OnInit {
 
   public onClickImportFollowUp(event: Event) {
     event.preventDefault();
-    this._innovationService.updateFollowUpEmails(this._project._id).subscribe((result: Innovation) => {
+    this._innovationService.updateFollowUpEmails(this._project._id).pipe(first()).subscribe((result: Innovation) => {
       this._project.followUpEmails = result.followUpEmails;
     });
   }
