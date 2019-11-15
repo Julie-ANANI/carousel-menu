@@ -135,6 +135,10 @@ export class SharedFollowUpComponent implements OnInit {
     };
   }
 
+  private _prosByObjective(objective: string, sent: boolean): Array<Answer> {
+    return this._answers.filter(answer => !!answer.followUp.date === sent && answer.followUp.objective === objective);
+  }
+
   public closeModal(event: Event) {
     event.preventDefault();
     this._showModal = false;
@@ -221,6 +225,34 @@ export class SharedFollowUpComponent implements OnInit {
 
   get pros(): Array<Professional> {
     return this._answers.map(answer => answer.professional);
+  }
+
+  get prosWithoutObjective(): Array<Answer> {
+    return this._answers.filter(answer => !answer.followUp.date);
+  }
+
+  get prosInterview(): Array<Answer> {
+    return this._prosByObjective('INTERVIEW', false);
+  }
+
+  get prosInterviewSent(): Array<Answer> {
+    return this._prosByObjective('INTERVIEW', true);
+  }
+
+  get prosOpening(): Array<Answer> {
+    return this._prosByObjective('OPENING', false);
+  }
+
+  get prosOpeningSent(): Array<Answer> {
+    return this._prosByObjective('OPENING', true);
+  }
+
+  get prosNoFollow(): Array<Answer> {
+    return this._prosByObjective('NO_FOLLOW', false);
+  }
+
+  get prosNoFollowSent(): Array<Answer> {
+    return this._prosByObjective('NO_FOLLOW', true);
   }
 
   get total(): number {
