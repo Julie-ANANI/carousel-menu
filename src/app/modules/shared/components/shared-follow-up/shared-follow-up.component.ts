@@ -342,7 +342,7 @@ export class SharedFollowUpComponent implements OnInit {
     return this._total;
   }
 
-  get pendingAction(): {answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW'} {
+  get pendingAction(): {answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', assignedAnswers?: Array<{name: string, objective: string}>} {
     return this._pendingAction;
   }
 
