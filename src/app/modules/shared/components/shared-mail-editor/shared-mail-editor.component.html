@@ -65,17 +65,12 @@
       <!-- /divider -->
 
       <!-- Preview for one professional -->
-      <div [hidden]="!professionalPreview">
-        <div class="form-group">
-          <label class="form-label">{{ 'COMMON.MAIL_EDITOR.MESSAGE' | translate }}</label>
-          <p class="text" [innerHTML]="professionalPreview"></p>
-        </div>
-      </div>
+      <div [hidden]="!professionalPreview" class="text-sm p-top-15 p-bottom-25" [innerHTML]="professionalPreview"></div>
       <!-- /Preview for one professional -->
 
 
       <!-- editors -->
-      <div class="columns" [hidden]="professionalPreview">
+      <div class="columns" [ngClass]="{ 'd-none': !!professionalPreview }">
 
         <!-- in english -->
         <div class="column col-md-12 col-6">
