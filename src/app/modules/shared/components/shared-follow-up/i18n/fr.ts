@@ -38,5 +38,6 @@ export const SHARED_FOLLOW_UP = {
   'MODAL': {
     'WARNING_1': 'Parmi les professionnels que vous avez sélectionnés, certains ont déjà un objectif assigné :',
     'WARNING_2': 'Veuillez confimer que vous voulez remplacer ces objectifs par votre nouveau choix',
+    'EMAILS_READY': 'emails prêts !',
   }
 };

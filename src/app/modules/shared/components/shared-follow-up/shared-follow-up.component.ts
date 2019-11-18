@@ -75,6 +75,8 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _showWarningModal: boolean = false;
 
+  private _showSendModal: boolean = true;
+
   private _total: number = -1;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -190,13 +192,16 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
 
-  public onClickDone(event: Event) {
+  public onClickConfirm(event: Event) {
     event.preventDefault();
+    /*
+    TODO: this function is to notify Kate when we put this tab on the client side
     this._innovationService.finishLinking(this.project._id).subscribe((value) => {
       this._translateNotificationsService.success('ERROR.PROJECT.LINKING', 'ERROR.PROJECT.LINKING_DONE');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
+    */
   }
 
   seeAnswer(answer: Answer) {
@@ -277,6 +282,14 @@ export class SharedFollowUpComponent implements OnInit {
 
   set showEmailsModal(value: boolean) {
     this._showEmailsModal = value;
+  }
+
+  get showSendModal(): boolean {
+    return this._showSendModal;
+  }
+
+  set showSendModal(value: boolean) {
+    this._showSendModal = value;
   }
 
   get showWarningModal(): boolean {

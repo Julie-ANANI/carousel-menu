@@ -38,6 +38,7 @@ export const SHARED_FOLLOW_UP = {
   'MODAL': {
     'WARNING_1': 'Among the professionals you selected, some of them already have an assigned objective:',
     'WARNING_2': 'Please confirm that you want to override these objectives with your new choice',
+    'EMAILS_READY': 'emails ready!',
   }
 
 };

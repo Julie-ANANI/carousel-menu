@@ -119,7 +119,7 @@
           </p>
 
           <button
-            (click)="onClickDone($event)"
+            (click)="showSendModal = true"
             [textContent]="'SHARED_FOLLOW_UP.BUTTON_DONE'"
             class="button is-lg is-primary"
             translate>
@@ -237,6 +237,101 @@
     <!-- cancel button -->
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <!-- /cancel button -->
+
+  </section>
+</app-modal>
+<!-- /modal for mails -->
+
+
+<!-- modal for sending emails : are you sure ? -->
+<app-modal [(showModal)]="showSendModal">
+  <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
+    <!-- close button -->
+    <div [ngStyle]="{ 'right': '15px', 'top': '23px' }" class="absolute">
+      <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
+    </div>
+    <!-- /close button -->
+    <h5 class="text-center">
+      {{ prosInterview.length + prosOpening.length + prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.MODAL.EMAILS_READY' | translate }}
+    </h5>
+
+    <div class="columns" style="min-height: 150px">
+
+      <div class="col-6">
+        <img src="https://res.cloudinary.com/umi/image/upload/v1574086949/pictos/mix/email.svg" alt=" " class="img-responsive">
+      </div>
+
+      <div class="d-flex justify-center flex-d-column col-6">
+        <!-- emails -->
+          <!-- appointment -->
+          <div class="p-bottom-h">
+
+            <p class="text-bold m-no-bottom">
+              <span [innerText]="'SHARED_FOLLOW_UP.INTERVIEW'" [ngStyle]="{ 'color': '#1E3147' }"
+                    class="text-sm m-right-2" translate></span>
+            </p>
+
+            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+              <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}</span>
+            </p>
+
+          </div>
+          <!-- /appointment -->
+
+          <!-- divider -->
+          <div class="divider"></div>
+          <!-- /divider -->
+
+          <!-- open -->
+          <div class="p-top-h p-bottom-h">
+
+            <p class="text-bold m-no-bottom">
+              <span [innerText]="'SHARED_FOLLOW_UP.OPENING'" [ngStyle]="{ 'color': '#1E3147' }"
+                    class="text-sm m-right-2" translate></span>
+            </p>
+
+            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+              <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}</span>
+            </p>
+
+          </div>
+          <!-- /open -->
+
+          <!-- divider -->
+          <div class="divider"></div>
+          <!-- /divider -->
+
+          <!-- thank -->
+          <div class="p-top-h p-bottom-h">
+
+            <p class="text-bold m-no-bottom">
+              <span [innerText]="'SHARED_FOLLOW_UP.NOFOLLOW'" [ngStyle]="{ 'color': '#1E3147' }"
+                    class="text-sm m-right-2" translate></span>
+            </p>
+
+            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+              <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}</span>
+            </p>
+
+          </div>
+          <!-- /thank -->
+        <!-- /emails -->
+      </div>
+
+    </div>
+
+    <!-- button -->
+    <div class="text-center">
+
+      <button
+        (click)="onClickConfirm($event)"
+        [textContent]="'COMMON.BUTTON.SEND'"
+        class="button is-lg is-primary"
+        translate>
+      </button>
+
+    </div>
+    <!-- /button -->
 
   </section>
 </app-modal>
