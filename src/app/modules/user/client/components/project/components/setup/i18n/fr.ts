@@ -49,4 +49,5 @@ export const SETUP = {
     'CONTENT': 'Voulez-vous vraiment supprimer ce projet ?'
   },
 
+  'EMAIL_DOMAINS': 'Domaines à utiliser'
 };
