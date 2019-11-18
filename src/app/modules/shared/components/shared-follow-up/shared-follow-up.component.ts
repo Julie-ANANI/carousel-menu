@@ -11,6 +11,8 @@ import { Professional } from "../../../../models/professional";
 import { Config } from '../../../../models/config';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
+import { Question } from "../../../../models/question";
+import { ResponseService } from "../shared-market-report/services/response.service";
 
 @Component({
   selector: 'shared-follow-up',
@@ -23,6 +25,9 @@ export class SharedFollowUpComponent implements OnInit {
   @Input() set project(value: Innovation) {
     if (value) {
       this._project = value;
+      if (this._project.preset && this._project.preset.sections) {
+        this._questions = ResponseService.getPresets(this._project);
+      }
       this._getAnswers();
       this._initializeMailCustomFields();
     }
@@ -37,6 +42,8 @@ export class SharedFollowUpComponent implements OnInit {
   };
 
   private _project: Innovation = <Innovation> {};
+
+  private _questions: Array<Question> = [];
 
   private _modalAnswer: Answer = null;
 
@@ -352,6 +359,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
   }
 
 }
