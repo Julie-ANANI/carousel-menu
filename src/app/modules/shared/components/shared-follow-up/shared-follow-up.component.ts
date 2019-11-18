@@ -173,6 +173,7 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   private _prosByObjective(objective: string, sent: boolean): Array<Answer> {
+    objective = objective === 'NOFOLLOW' ? 'NO_FOLLOW': objective;
     return this._answers.filter(answer => !!answer.followUp.date === sent && answer.followUp.objective === objective);
   }
 

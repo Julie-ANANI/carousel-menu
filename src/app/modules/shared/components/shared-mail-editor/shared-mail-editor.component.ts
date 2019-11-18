@@ -12,8 +12,8 @@ interface EmailsObject {
 }
 
 interface Mapping {
-  en: Array<{label: string, value: string}>;
-  fr: Array<{label: string, value: string}>;
+  en: any;
+  fr: any;
 }
 
 @Component({
@@ -42,7 +42,7 @@ export class SharedMailEditorComponent {
       this._customField = value[this._translateService.currentLang];
 
       for (let valueKey in value) {
-        value[valueKey].forEach( (field) => {
+        value[valueKey].forEach( (field: {label: string, value: string}) => {
           this._variableMapping[valueKey][field.value.replace(/[\|\*]/g, '')] = field.label;
         });
       }
@@ -110,9 +110,11 @@ export class SharedMailEditorComponent {
   private _ccEmail: string = '';
 
   private _variableMapping: Mapping = {
-    en: [],
-    fr: []
+    en: {},
+    fr: {}
   };
+
+  private _professionalPreview: string = '';
 
   constructor(private _translateService: TranslateService) { }
 
@@ -134,12 +136,19 @@ export class SharedMailEditorComponent {
     event.preventDefault();
   }
 
-  public onSelectProfessional(professional: Professional) {
-    console.log(professional);
-    /* FIXME
-    this._variableMapping[professional.language].FIRSTNAME = professional.firstName;
-    this._variableMapping[professional.language].LASTNAME = professional.lastName;
-    */
+  public onSelectProfessional(professionalId: string) {
+    if (professionalId) {
+      const pro = this._professionals.find(pro => pro._id === professionalId);
+      const language = pro.language;
+      this._professionalPreview = `<h5>${this._emailsObject[language].subject}</h5><p>${this._emailsObject[language].content}</p>`
+        .replace(/\*\|FIRSTNAME\|\*/g, pro.firstName)
+        .replace(/\*\|LASTNAME\|\*/g, pro.lastName)
+        .replace(/\*\|TITLE\|\*/g, this._variableMapping[language].TITLE)
+        .replace(/\*\|CLIENT_NAME\|\*/g, this._variableMapping[language].CLIENT_NAME)
+        .replace(/\*\|COMPANY_NAME\|\*/g, this._variableMapping[language].COMPANY_NAME);
+    } else {
+      this._professionalPreview = '';
+    }
   }
 
   public updateChanges(event: Event) {
@@ -208,6 +217,10 @@ export class SharedMailEditorComponent {
 
   get emailsObject(): EmailsObject {
     return this._emailsObject;
+  }
+
+  get professionalPreview(): string {
+    return this._professionalPreview;
   }
 
 }
