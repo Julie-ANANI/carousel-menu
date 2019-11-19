@@ -75,7 +75,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _showWarningModal: boolean = false;
 
-  private _showSendModal: boolean = true;
+  private _showSendModal: boolean = false;
 
   private _total: number = -1;
 
