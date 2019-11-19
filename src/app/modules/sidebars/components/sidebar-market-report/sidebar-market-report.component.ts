@@ -7,6 +7,10 @@ import { FilterService } from '../../../shared/components/shared-market-report/s
 import { Answer } from '../../../../models/answer';
 import { first } from 'rxjs/operators';
 import { Question } from '../../../../models/question';
+import { SharedWorldmapService } from "../../../shared/components/shared-worldmap/services/shared-worldmap.service";
+import {Tag} from "../../../../models/tag";
+import {TagsFiltersService} from "../../../shared/components/shared-market-report/services/tags-filter.service";
+import {WorldmapFiltersService} from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
 
 @Component({
   selector: 'sidebar-market-report',
@@ -60,6 +64,8 @@ export class SidebarMarketReportComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _worldmapFilterService: WorldmapFiltersService,
+              private _tagService: TagsFiltersService,
               private _filterService: FilterService,) { }
 
   ngOnInit() {
@@ -144,6 +150,52 @@ export class SidebarMarketReportComponent implements OnInit {
     this._filterService.deleteFilter(name);
   }
 
+
+  public checkCountry(event: Event) {
+    event.preventDefault();
+    this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
+  }
+
+
+  public filterEverything(event: Event, filterArray: Array<any>, typeFilter: string) {
+    event.preventDefault();
+    let question: Question;
+    const isChecked = (event.target as HTMLInputElement).checked;
+    switch (typeFilter) {
+      case 'CONTINENT':
+        filterArray.forEach(continent => {
+          this._worldmapFilterService.selectContinent(continent, isChecked);
+        });
+        break;
+      case 'TAG':
+        filterArray.forEach(tag => {
+          this._tagService.checkTag(tag._id, isChecked);
+        });
+        break;
+      case 'textarea':
+        question = filterArray[0];
+        const tagArray: Array<Tag> = this._tagService.answersTagsLists[question.identifier];
+        tagArray.forEach(t => {
+          this._tagService.checkAnswerTag(question.identifier, t._id, isChecked);
+        });
+        break;
+      case 'radio':
+      case 'checkbox':
+        question = filterArray[0];
+        if (isChecked) {
+          this._filterService.deleteFilter(question.identifier);
+        } else {
+          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = isChecked; return acc; }, {} as any);
+          this._filterService.addFilter({
+            status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
+            questionId: question.identifier,
+            value: filterValue
+          });
+        }
+        break;
+    }
+  }
+
   get templateType(): string {
     return this._templateType;
   }
@@ -174,6 +226,22 @@ export class SidebarMarketReportComponent implements OnInit {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  get continentsList(): Array<string> {
+    return SharedWorldmapService.continentsList;
+  }
+
+  get tagsList(): Array<Tag> {
+    return this._tagService.tagsList;
+  }
+
+  get answersTagsLists(): {[questionId: string]: Array<Tag>} {
+    return this._tagService.answersTagsLists;
+  }
+
+  get filters() {
+    return this._filterService.filters;
   }
 
 

@@ -4,13 +4,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
 import { SidebarMarketReportComponent } from './sidebar-market-report.component';
+import {PipeModule} from "../../../../pipe/pipe.module";
 
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    FormsModule
+    FormsModule,
+    PipeModule,
   ],
   declarations: [
    SidebarMarketReportComponent

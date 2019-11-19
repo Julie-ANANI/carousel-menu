@@ -152,6 +152,7 @@
 <sidebar-left [(sidebarTemplate)]="sidebarTemplate">
   <sidebar-market-report
     [templateType]="sidebarTemplate.type"
+    [questions]="questions"
     (closeSidebar)="sidebarTemplate.animate_state = 'inactive'">
   </sidebar-market-report>
 </sidebar-left>
