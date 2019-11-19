@@ -91,9 +91,9 @@ export interface Innovation {
 
   followUpEmails?: {
 
-    ccEmail: string,
+    ccEmail?: string,
 
-    interview: {
+    interview?: {
       fr: {
         subject: string,
         content: string
@@ -104,7 +104,7 @@ export interface Innovation {
       }
     },
 
-    opening: {
+    opening?: {
       fr: {
         subject: string,
         content: string
@@ -115,7 +115,7 @@ export interface Innovation {
       }
     },
 
-    noFollow: {
+    noFollow?: {
       fr: {
         subject: string,
         content: string

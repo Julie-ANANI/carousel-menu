@@ -25,6 +25,7 @@ export class SharedFollowUpComponent implements OnInit {
   @Input() set project(value: Innovation) {
     if (value) {
       this._project = value;
+      this._project.followUpEmails = this._project.followUpEmails || {};
       if (this._project.preset && this._project.preset.sections) {
         this._questions = ResponseService.getPresets(this._project);
       }
