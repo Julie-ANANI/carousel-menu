@@ -86,7 +86,9 @@ export const ERROR = {
     'COMMENT_NOT_FOUND': 'Nous n\'avons pas trouvé le commentaire sur l\'innovation demandée.',
     'NOT_SUBMITTED_MODE': 'Les commentaires ne peuvent être ajoutés que lorsque le statut d\'innovation est soumis.',
     'LINKING': 'Mise en relation',
-    'LINKING_DONE': 'Votre demande de mise en relation a été prise en compte'
+    'LINKING_DONE': 'Votre demande de mise en relation a été prise en compte',
+    'SEND_EMAILS': 'Envoi des emails',
+    'SEND_EMAILS_OK': 'Les emails ont bien été envoyés',
   },
 
 

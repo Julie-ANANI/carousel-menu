@@ -203,6 +203,12 @@ export class SharedFollowUpComponent implements OnInit {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
     */
+
+    this._innovationService.sendFollowUpEmails(this.project._id).subscribe((value) => {
+      this._translateNotificationsService.success('ERROR.PROJECT.SEND_EMAILS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
   }
 
   seeAnswer(answer: Answer) {

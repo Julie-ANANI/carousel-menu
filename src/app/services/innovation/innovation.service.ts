@@ -157,4 +157,9 @@ export class InnovationService {
     return this._http.get('/innovation/' + innovationId + '/linking');
   }
 
+  public sendFollowUpEmails(innovationId: string, objective?: string): Observable<any> {
+    const urlParams = objective ? `?objective=${objective}` : '';
+    return this._http.get('/innovation/' + innovationId + '/sendFollowUpEmails' + urlParams);
+  }
+
 }

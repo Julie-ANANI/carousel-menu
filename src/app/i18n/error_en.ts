@@ -86,7 +86,9 @@ export const ERROR = {
     'COMMENT_NOT_FOUND': 'We could not find the comment for the requested innovation.',
     'NOT_SUBMITTED_MODE': 'The comments can only be added when the innovation status is Submitted.',
     'LINKING': 'Linking',
-    'LINKING_DONE': 'Your request for contact has been taken into account'
+    'LINKING_DONE': 'Your request for contact has been taken into account',
+    'SEND_EMAILS': 'Sending the emails',
+    'SEND_EMAILS_OK': 'The emails have been sent successfully',
   },
 
 
