@@ -76,6 +76,8 @@ export class SharedMailEditorComponent {
 
   @Output() languageChange = new EventEmitter<string>();
 
+  @Output() sendTestEmails = new EventEmitter();
+
   @Output() ccEmailChange: EventEmitter<string> = new EventEmitter<string>();
 
   @Output() emailChange = new EventEmitter<any>();
@@ -134,6 +136,7 @@ export class SharedMailEditorComponent {
 
   public onClickTestEmails(event: Event) {
     event.preventDefault();
+    this.sendTestEmails.emit();
   }
 
   public onSelectProfessional(professionalId: string) {

@@ -72,6 +72,8 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _modalTemplateType: string = '';
 
+  private _loadingButton: boolean = false;
+
   private _showEmailsModal: boolean = false;
 
   private _showWarningModal: boolean = false;
@@ -195,6 +197,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   public onClickConfirm(event: Event) {
     event.preventDefault();
+    this._loadingButton = true;
     /*
     TODO: this function is to notify Kate when we put this tab on the client side
     this._innovationService.finishLinking(this.project._id).subscribe((value) => {
@@ -205,6 +208,17 @@ export class SharedFollowUpComponent implements OnInit {
     */
 
     this._innovationService.sendFollowUpEmails(this.project._id).subscribe((value) => {
+      this._translateNotificationsService.success('ERROR.PROJECT.SEND_EMAILS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+      this._loadingButton = false;
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._loadingButton = false;
+    });
+  }
+
+  public sendTestEmails() {
+    const objective = this._modalTemplateType;
+    this._innovationService.sendFollowUpEmails(this._project._id, objective).subscribe(() => {
       this._translateNotificationsService.success('ERROR.PROJECT.SEND_EMAILS', 'ERROR.PROJECT.SEND_EMAILS_OK');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -301,6 +315,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   get showWarningModal(): boolean {
     return this._showWarningModal;
+  }
+
+  get loadingButton(): boolean {
+    return this._loadingButton;
   }
 
   set showWarningModal(value: boolean) {

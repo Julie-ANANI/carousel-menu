@@ -184,6 +184,7 @@
         [professionals]="pros"
         [(ccEmail)]="project.followUpEmails.ccEmail"
         [customFields]="customFields"
+        (sendTestEmails)="sendTestEmails()"
         [(emailsObject)]="emailsObject">
       </shared-mail-editor>
     </div>
@@ -246,11 +247,13 @@
 <!-- modal for sending emails : are you sure ? -->
 <app-modal [(showModal)]="showSendModal">
   <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
+
     <!-- close button -->
     <div [ngStyle]="{ 'right': '15px', 'top': '23px' }" class="absolute">
       <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
     </div>
     <!-- /close button -->
+
     <h5 class="text-center">
       {{ prosInterview.length + prosOpening.length + prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.MODAL.EMAILS_READY' | translate }}
     </h5>
@@ -327,6 +330,7 @@
         (click)="onClickConfirm($event)"
         [textContent]="'COMMON.BUTTON.SEND'"
         class="button is-lg is-primary"
+        [disabled]="loadingButton"
         translate>
       </button>
 
