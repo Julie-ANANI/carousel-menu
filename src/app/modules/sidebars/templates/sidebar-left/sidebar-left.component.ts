@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 @Component({
-  selector: 'sidebar2',
+  selector: 'sidebar-left',
   templateUrl: './sidebar-left.component.html',
   styleUrls: ['./sidebar-left.component.scss']
 })

@@ -149,12 +149,12 @@
 
 
 <!-- filter sidebar -->
-<sidebar2 [(sidebarTemplate)]="sidebarTemplate">
+<sidebar-left [(sidebarTemplate)]="sidebarTemplate">
   <sidebar-market-report
     [templateType]="sidebarTemplate.type"
     (closeSidebar)="sidebarTemplate.animate_state = 'inactive'">
   </sidebar-market-report>
-</sidebar2>
+</sidebar-left>
 <!-- /sidebar -->
 
 
