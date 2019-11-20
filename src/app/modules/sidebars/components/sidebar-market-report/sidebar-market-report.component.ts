@@ -37,10 +37,17 @@ export class SidebarMarketReportComponent implements OnInit {
 
   @Input() set questions(value: Array<Question>) {
     this._questions = value;
+    this._questions.forEach(question => {
+      this.showSection[question.identifier] = this._templateType === 'market-report';
+    });
   }
 
   @Input() set templateType(value: string) {
     this._templateType = value;
+    if (value === 'market-report') {
+      this.showSection.map = true;
+      this.showSection.professionals = true;
+    }
   }
 
   /***
@@ -64,6 +71,8 @@ export class SidebarMarketReportComponent implements OnInit {
   private _activatedCustomFilters: Array<string> = [];
 
   private _questions: Array<Question> = [];
+
+  public showSection: {[questionId: string]: boolean} = {};
 
   public seeMore: {[questionId: string]: boolean} = {};
 

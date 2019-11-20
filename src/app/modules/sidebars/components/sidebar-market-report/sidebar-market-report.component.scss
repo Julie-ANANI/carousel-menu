@@ -10,6 +10,11 @@
   font-weight: $font-weight-medium;
   color: $text-background-color;
 
+  i {
+    font-size: 18px;
+    padding-right: 5px;
+  }
+
   .filter-icon-wrapper {
     font-size: $font-size-md;
   }
