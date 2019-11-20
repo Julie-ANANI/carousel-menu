@@ -32,7 +32,6 @@ export class SidebarMarketReportComponent implements OnInit {
   }
 
   @Input() set questions(value: Array<Question>) {
-    console.log(value);
     this._questions = value;
   }
 
@@ -46,6 +45,8 @@ export class SidebarMarketReportComponent implements OnInit {
    */
   @Output() closeSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Output() onSelectContacts: EventEmitter<Array<Answer>> = new EventEmitter<Array<Answer>>();
+
   private _templateType: string;
 
   private _innovation: Innovation = <Innovation> {};
@@ -55,6 +56,8 @@ export class SidebarMarketReportComponent implements OnInit {
   private _filterName = '';
 
   private _answers: Array<Answer> = [];
+
+  private _filteredAnswers: Array<Answer> = [];
 
   private _activatedCustomFilters: Array<string> = [];
 
@@ -69,6 +72,10 @@ export class SidebarMarketReportComponent implements OnInit {
               private _filterService: FilterService,) { }
 
   ngOnInit() {
+    this._filterService.filtersUpdate.subscribe((value: any) => {
+      this._filteredAnswers = this._filterService.filter(this._answers);
+    });
+
   }
 
   private _loadSharedFiltersList() {
@@ -79,6 +86,18 @@ export class SidebarMarketReportComponent implements OnInit {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'SIDEBAR_MARKET_REPORT.ERRORS.VIEWS');
     });
+  }
+
+  public resetFilters(event: Event) {
+    event.preventDefault();
+    this._activatedCustomFilters = [];
+    this._tagService.reselectEveryTags();
+    this._worldmapFilterService.reset();
+    this._filterService.reset();
+  }
+
+  public selectContacts() {
+    this.onSelectContacts.emit(this._filteredAnswers);
   }
 
   public registerNewFilter() {
@@ -103,6 +122,28 @@ export class SidebarMarketReportComponent implements OnInit {
       this._translateNotificationsService.error('ERROR.ERROR', 'SIDEBAR_MARKET_REPORT.ERRORS.VIEW_ALREADY_EXIST');
     }
 
+  }
+
+  public checkOption(event: Event, question: Question) {
+    event.preventDefault();
+    const checked = (event.target as HTMLInputElement).checked;
+    let filterValue: any;
+    if (this._filterService.filters[question.identifier]) {
+      filterValue = this._filterService.filters[question.identifier].value;
+    } else {
+      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
+    }
+    filterValue[(event.target as HTMLInputElement).name] = checked;
+    const removeFilter = checked && Object.keys(filterValue).every((k) => filterValue[k] === true);
+    if (removeFilter) {
+      this._filterService.deleteFilter(question.identifier);
+    } else {
+      this._filterService.addFilter({
+        status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
+        questionId: question.identifier,
+        value: filterValue
+      });
+    }
   }
 
   public deleteCustomFilter(event: Event, name: string) {
@@ -218,6 +259,10 @@ export class SidebarMarketReportComponent implements OnInit {
 
   get answers(): Array<Answer> {
     return this._answers;
+  }
+
+  get filteredAnswers(): Array<Answer> {
+    return this._filteredAnswers;
   }
 
   get activatedCustomFilters() {

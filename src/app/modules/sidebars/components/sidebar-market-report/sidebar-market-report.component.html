@@ -4,8 +4,16 @@
   <div *ngIf="templateType === 'follow-up'">
 
     <!-- no contact selected -->
-    <h6 [innerText]="'SIDEBAR_MARKET_REPORT.SELECT_CONTACTS_CRITERIA'" class="m-no-bottom text-bold" translate></h6>
+    <h6 *ngIf="!filteredAnswers.length" [innerText]="'SIDEBAR_MARKET_REPORT.SELECT_CONTACTS_CRITERIA'" class="m-no-bottom text-bold" translate></h6>
     <!-- /no contact selected -->
+
+    <!-- button select contacts -->
+    <a *ngIf="filteredAnswers.length" (click)="selectContacts()" class="btn btn-primary">
+      <i class="fas fa-share"></i>
+      {{ 'SIDEBAR_MARKET_REPORT.SELECT' | translate }} {{ filteredAnswers.length }} {{ 'SIDEBAR_MARKET_REPORT.CONTACTS' | translate }}
+    </a>
+
+    <!-- button select contacts -->
 
   </div>
   <!-- /selected contacts -->
@@ -104,13 +112,27 @@
   <!-- /view activated -->
 
   <!-- reset filters -->
-  <div *ngIf="filtersCount > 0" class="filter-reset-wrapper">
+  <div *ngIf="templateType === 'market-report' && filtersCount > 0" class="filter-reset-wrapper">
       <span class="text-link" (click)="resetFilters($event)">
         <i class="fas fa-times"></i>
         <span [innerText]="'MARKET_REPORT.RESET_FILTERS'" translate></span>
       </span>
   </div>
   <!-- /reset filters -->
+
+  <!-- select/unselect all
+  <div *ngIf="templateType === 'follow-up'">
+    <label class="form-checkbox p-no-right">
+      {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+      <input
+        type="checkbox"
+        (change)=""
+        [checked]="">
+      <i class="form-icon"></i>
+    </label>
+  </div>
+  <!-- /select/unselect all -->
+
 
 
   <!-- executive report -->

@@ -225,6 +225,13 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
+  public selectContacts(answers: Array<Answer>) {
+    answers.forEach((selectedAnswer: Answer) => {
+      const answerToUpdate = this._answers.findIndex(answer => answer._id === selectedAnswer._id);
+      this._answers[answerToUpdate]._isSelected = true;
+    });
+  }
+
   seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
 

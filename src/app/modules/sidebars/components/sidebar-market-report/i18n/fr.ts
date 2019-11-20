@@ -4,6 +4,10 @@ export const SIDEBAR_MARKET_REPORT = {
 
   'SELECT_CONTACTS_CRITERIA': 'Sélectionner des contacts selon vos critères',
 
+  'SELECT': 'Sélectionner',
+
+  'CONTACTS': 'contacts',
+
   'FORM_VIEW_PLACEHOLDER': 'Nom de votre vue',
 
   'TOOLTIP_LOAD_VIEW': 'Vue de charge',

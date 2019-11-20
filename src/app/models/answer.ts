@@ -15,6 +15,7 @@ export interface Answer {
   time_elapsed?: number;
   country: {flag: string, domain?: string, name?: string};
   job: string;
+  _isSelected?: boolean;
   company: Clearbit;
   mailType?: string;
   readonly ip?: any;
