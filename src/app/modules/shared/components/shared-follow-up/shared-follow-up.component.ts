@@ -13,6 +13,9 @@ import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { Question } from "../../../../models/question";
 import { ResponseService } from "../shared-market-report/services/response.service";
+import { Tag } from "../../../../models/tag";
+import { TagsFiltersService }  from "../shared-market-report/services/tags-filter.service";
+import { FilterService } from "../shared-market-report/services/filters.service";
 
 @Component({
   selector: 'shared-follow-up',
@@ -52,6 +55,8 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
+  private _filteredAnswers: Array<Answer> = [];
+
   private _tableInfos: Table;
 
   private _pendingAction: {
@@ -85,6 +90,8 @@ export class SharedFollowUpComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
+              private _filterService: FilterService,
+              private _tagFiltersService: TagsFiltersService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -131,6 +138,32 @@ export class SharedFollowUpComponent implements OnInit {
 
         this._total = this._answers.length;
         this._initializeTable();
+
+        this._filterService.filtersUpdate.subscribe(() => {
+          this._selectContacts();
+        });
+
+        /*
+         * compute tag list globally
+         */
+        const tagsDict = response.answers.reduce(function (acc, answer) {
+          answer.tags.forEach((tag) => {
+            if (!acc[tag._id]) {
+              acc[tag._id] = tag;
+            }
+          });
+          return acc;
+        }, {} as {[id: string]: Tag});
+        this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
+
+        /*
+         * compute tags lists for each questions of type textarea
+         */
+        this._questions.forEach((question) => {
+          const tags = ResponseService.getTagsList(response.answers, question);
+          const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
+          this._tagFiltersService.setAnswerTags(identifier, tags);
+        });
 
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
@@ -225,10 +258,11 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
-  public selectContacts(answers: Array<Answer>) {
-    answers.forEach((selectedAnswer: Answer) => {
-      const answerToUpdate = this._answers.findIndex(answer => answer._id === selectedAnswer._id);
-      this._answers[answerToUpdate]._isSelected = true;
+  private _selectContacts() {
+    this._filteredAnswers = this._filterService.filter(this._answers);
+    const selectedIds = this._filteredAnswers.map(answer => answer._id);
+    this._answers.forEach(answer => {
+      answer._isSelected = selectedIds.indexOf(answer._id) > -1;
     });
   }
 
@@ -334,6 +368,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   get answers(): Array<Answer> {
     return this._answers;
+  }
+
+  get filteredAnswers(): Array<Answer> {
+    return this._filteredAnswers;
   }
 
   get tableInfos(): Table {

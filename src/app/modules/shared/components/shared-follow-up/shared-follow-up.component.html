@@ -154,7 +154,7 @@
     [templateType]="sidebarTemplate.type"
     [questions]="questions"
     [answers]="answers"
-    (onSelectContacts)="selectContacts($event)"
+    [filterNumber]="filteredAnswers.length"
     (closeSidebar)="sidebarTemplate.animate_state = 'inactive'">
   </sidebar-market-report>
 </sidebar-left>

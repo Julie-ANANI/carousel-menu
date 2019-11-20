@@ -31,6 +31,10 @@ export class SidebarMarketReportComponent implements OnInit {
     this._answers = value;
   }
 
+  @Input() set filterNumber(value: number) {
+    this._filterNumber = value;
+  }
+
   @Input() set questions(value: Array<Question>) {
     this._questions = value;
   }
@@ -45,9 +49,9 @@ export class SidebarMarketReportComponent implements OnInit {
    */
   @Output() closeSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @Output() onSelectContacts: EventEmitter<Array<Answer>> = new EventEmitter<Array<Answer>>();
-
   private _templateType: string;
+
+  private _filterNumber = 0;
 
   private _innovation: Innovation = <Innovation> {};
 
@@ -56,8 +60,6 @@ export class SidebarMarketReportComponent implements OnInit {
   private _filterName = '';
 
   private _answers: Array<Answer> = [];
-
-  private _filteredAnswers: Array<Answer> = [];
 
   private _activatedCustomFilters: Array<string> = [];
 
@@ -72,10 +74,6 @@ export class SidebarMarketReportComponent implements OnInit {
               private _filterService: FilterService,) { }
 
   ngOnInit() {
-    this._filterService.filtersUpdate.subscribe((value: any) => {
-      this._filteredAnswers = this._filterService.filter(this._answers);
-    });
-
   }
 
   private _loadSharedFiltersList() {
@@ -94,10 +92,6 @@ export class SidebarMarketReportComponent implements OnInit {
     this._tagService.reselectEveryTags();
     this._worldmapFilterService.reset();
     this._filterService.reset();
-  }
-
-  public selectContacts() {
-    this.onSelectContacts.emit(this._filteredAnswers);
   }
 
   public registerNewFilter() {
@@ -198,6 +192,18 @@ export class SidebarMarketReportComponent implements OnInit {
   }
 
 
+  public checkTag(event: Event, tagId: string) {
+    event.preventDefault();
+    this._tagService.checkTag(tagId, (event.target as HTMLInputElement).checked);
+  }
+
+
+  public checkAnswerTag(event: Event, questionIdentifier: string) {
+    event.preventDefault();
+    this._tagService.checkAnswerTag(questionIdentifier, (event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
+  }
+
+
   public filterEverything(event: Event, filterArray: Array<any>, typeFilter: string) {
     event.preventDefault();
     let question: Question;
@@ -253,16 +259,16 @@ export class SidebarMarketReportComponent implements OnInit {
     return this._filterName;
   }
 
+  get filterNumber(): number {
+    return this._filterNumber;
+  }
+
   set filterName(value: string) {
     this._filterName = value;
   }
 
   get answers(): Array<Answer> {
     return this._answers;
-  }
-
-  get filteredAnswers(): Array<Answer> {
-    return this._filteredAnswers;
   }
 
   get activatedCustomFilters() {
@@ -287,6 +293,10 @@ export class SidebarMarketReportComponent implements OnInit {
 
   get filters() {
     return this._filterService.filters;
+  }
+
+  get selectedTags(): {[t: string]: boolean} {
+    return this._tagService.selectedTags;
   }
 
 
