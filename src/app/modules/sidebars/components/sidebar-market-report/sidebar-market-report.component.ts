@@ -37,18 +37,24 @@ export class SidebarMarketReportComponent implements OnInit {
     }
   }
 
-  @Input() set questions(value: Array<Question>) {
-    this._questions = value;
-  }
-
   @Input() set templateType(value: string) {
     this._templateType = value;
     if (value === 'market-report') {
       this.showSection.map = true;
       this.showSection.professionals = true;
     }
+  }
+
+  @Input() set questions(value: Array<Question>) {
+    this._questions = value;
+    this._displayedQuestions = [];
     this._questions.forEach((question: Question) => {
       this.showSection[question.identifier] = this._templateType === 'market-report';
+      if (this.templateType === 'market-report' || question.controlType === 'checkbox' ||
+        question.controlType === 'radio' || this.answersTagsLists[question.identifier] &&
+        this.answersTagsLists[question.identifier].length) {
+        this._displayedQuestions.push(question);
+      }
     });
   }
 
@@ -73,6 +79,8 @@ export class SidebarMarketReportComponent implements OnInit {
   private _activatedCustomFilters: Array<string> = [];
 
   private _questions: Array<Question> = [];
+
+  private _displayedQuestions: Array<Question> = [];
 
   public showSection: {[questionId: string]: boolean} = {};
 
@@ -293,6 +301,10 @@ export class SidebarMarketReportComponent implements OnInit {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  get displayedQuestions(): Array<Question> {
+    return this._displayedQuestions;
   }
 
   get continentsList(): Array<string> {

@@ -260,14 +260,14 @@
 
 
   <!-- questions filters -->
-  <div *ngFor="let question of questions" class="filter-rest-wrapper filter-question">
+  <div *ngFor="let question of displayedQuestions" class="filter-rest-wrapper filter-question">
     <!-- textarea -->
-    <ng-container *ngIf="(templateType === 'market-report' || answersTagsLists[question.identifier]?.length > 0) && question.controlType === 'textarea'">
+    <ng-container *ngIf="question.controlType === 'textarea'">
       <div class="m-bottom-15">
           <span class="d-flex align-center" (click)="showSection[question.identifier] = !showSection[question.identifier]">
             <a *ngIf="templateType === 'market-report'" [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
-              <i *ngIf="showSection[question.identifier]" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-              <i *ngIf="!showSection[question.identifier]" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
+              <i *ngIf="showSection[question.identifier] && answersTagsLists[question.identifier]?.length > 0" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
+              <i *ngIf="!showSection[question.identifier] && answersTagsLists[question.identifier]?.length > 0" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
               <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
             </a>
             <span *ngIf="templateType === 'follow-up'">
@@ -354,14 +354,12 @@
     </ng-container>
 
     <!-- other types -->
-    <ng-container *ngIf="templateType === 'market-report' && question.controlType !== 'textarea' && question.controlType !== 'checkbox' && question.controlType !== 'radio'">
+    <ng-container *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox' && question.controlType !== 'radio'">
       <div class="m-bottom-15">
           <span class="d-flex align-center">
-            <div style="flex: 1;">
-              <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
-                <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
-              </a>
-            </div>
+            <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
+              <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
+            </a>
           </span>
       </div>
     </ng-container>
