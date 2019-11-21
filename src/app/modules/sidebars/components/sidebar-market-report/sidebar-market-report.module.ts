@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { SidebarMarketReportComponent } from './sidebar-market-report.component';
 import {PipeModule} from "../../../../pipe/pipe.module";
+import {NgxPageScrollModule} from "ngx-page-scroll";
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import {PipeModule} from "../../../../pipe/pipe.module";
     TranslateModule.forChild(),
     FormsModule,
     PipeModule,
+    NgxPageScrollModule
   ],
   declarations: [
    SidebarMarketReportComponent
