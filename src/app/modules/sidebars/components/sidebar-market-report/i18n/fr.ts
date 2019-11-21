@@ -10,13 +10,13 @@ export const SIDEBAR_MARKET_REPORT = {
 
   'FORM_VIEW_PLACEHOLDER': 'Nom de votre vue',
 
-  'TOOLTIP_LOAD_VIEW': 'Vue de charge',
+  'TOOLTIP_LOAD_VIEW': 'Activer la vue',
 
   'ACTIVATED_VIEW': 'Vue activée',
 
   'ERROR': {
     'VIEWS': 'Nous avons du mal à récupérer vos vues personnalisées.',
-    'VIEW_ALREADY_EXIST': 'La vue avec ce nom existe déjà.',
+    'VIEW_ALREADY_EXIST': 'Une vue existe déjà avec ce nom.',
     'VIEW_ALREADY_ACTIVATED': 'La vue est déjà active.',
   }
 
