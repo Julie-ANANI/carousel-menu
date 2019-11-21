@@ -370,10 +370,6 @@ export class SharedFollowUpComponent implements OnInit {
     return this._answers;
   }
 
-  get filteredAnswers(): Array<Answer> {
-    return this._filteredAnswers;
-  }
-
   get tableInfos(): Table {
     return this._tableInfos;
   }

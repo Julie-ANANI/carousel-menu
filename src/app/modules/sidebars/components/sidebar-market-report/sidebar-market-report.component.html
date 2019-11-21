@@ -111,23 +111,14 @@
   </div>
   <!-- /view activated -->
 
-  <!-- reset filters -->
-  <div *ngIf="templateType === 'market-report' && filtersCount > 0" class="filter-reset-wrapper">
-      <span class="text-link" (click)="resetFilters($event)">
-        <i class="fas fa-times"></i>
-        <span [innerText]="'MARKET_REPORT.RESET_FILTERS'" translate></span>
-      </span>
-  </div>
-  <!-- /reset filters -->
-
-  <!-- select/unselect all
+  <!-- select/unselect all -->
   <div *ngIf="templateType === 'follow-up'">
     <label class="form-checkbox p-no-right">
       {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
       <input
         type="checkbox"
-        (change)=""
-        [checked]="">
+        (change)="resetFilters(!!filtersCount)"
+        [checked]="!filtersCount">
       <i class="form-icon"></i>
     </label>
   </div>
@@ -186,7 +177,7 @@
         {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
         <input
           type="checkbox"
-          (change)="filterEverything($event, continentsList, 'CONTINENT')"
+          (change)="filterEverything($event.target.checked, continentsList, 'CONTINENT')"
           [checked]="!(filters['worldmap'])">
         <i class="form-icon"></i>
       </label>
@@ -227,7 +218,7 @@
         {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
         <input
           type="checkbox"
-          (change)="filterEverything($event, tagsList, 'TAG')"
+          (change)="filterEverything($event.target.checked, tagsList, 'TAG')"
           [checked]="!filters['tags']">
         <i class="form-icon"></i>
       </label>
@@ -291,7 +282,7 @@
           {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
           <input
             type="checkbox"
-            (change)="filterEverything($event, [question], question.controlType)"
+            (change)="filterEverything($event.target.checked, [question], question.controlType)"
             [checked]="!filters[question.identifier]">
           <i class="form-icon"></i>
         </label>
@@ -345,7 +336,7 @@
           {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
           <input
             type="checkbox"
-            (change)="filterEverything($event, [question], question.controlType)"
+            (change)="filterEverything($event.target.checked, [question], question.controlType)"
             [checked]="!filters[question.identifier]">
           <i class="form-icon"></i>
         </label>

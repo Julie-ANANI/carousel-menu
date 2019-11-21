@@ -29,10 +29,12 @@ export class SidebarMarketReportComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
-  }
-
-  @Input() set filterNumber(value: number) {
-    this._filterNumber = value;
+    this._filterService.filtersUpdate.subscribe(() => {
+      this._filterNumber = this._filterService.filter(this._answers).length;
+    });
+    if (this.templateType === 'follow-up') {
+      this.resetFilters(false);
+    }
   }
 
   @Input() set questions(value: Array<Question>) {
@@ -95,12 +97,19 @@ export class SidebarMarketReportComponent implements OnInit {
     });
   }
 
-  public resetFilters(event: Event) {
-    event.preventDefault();
-    this._activatedCustomFilters = [];
-    this._tagService.reselectEveryTags();
-    this._worldmapFilterService.reset();
-    this._filterService.reset();
+  public resetFilters(value: boolean) {
+    if (value) {
+      this._activatedCustomFilters = [];
+      this._tagService.reselectEveryTags();
+      this._worldmapFilterService.reset();
+      this._filterService.reset();
+    } else {
+      this.filterEverything(false, this.continentsList, 'CONTINENT');
+      this.filterEverything(false, this.tagsList, 'TAG');
+      this._questions.forEach(question => {
+        this.filterEverything(false, [question], question.controlType);
+      });
+    }
   }
 
   public registerNewFilter() {
@@ -213,10 +222,8 @@ export class SidebarMarketReportComponent implements OnInit {
   }
 
 
-  public filterEverything(event: Event, filterArray: Array<any>, typeFilter: string) {
-    event.preventDefault();
+  public filterEverything(isChecked: boolean, filterArray: Array<any>, typeFilter: string) {
     let question: Question;
-    const isChecked = (event.target as HTMLInputElement).checked;
     switch (typeFilter) {
       case 'CONTINENT':
         filterArray.forEach(continent => {
@@ -304,8 +311,16 @@ export class SidebarMarketReportComponent implements OnInit {
     return this._filterService.filters;
   }
 
+  get filteredContinents() {
+    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value : null;
+  }
+
   get selectedTags(): {[t: string]: boolean} {
     return this._tagService.selectedTags;
+  }
+
+  get filtersCount() {
+    return Object.keys(this._filterService.filters).length;
   }
 
 
