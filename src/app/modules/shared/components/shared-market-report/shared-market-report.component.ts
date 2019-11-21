@@ -80,6 +80,11 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _modalAnswer: Answer = null;
 
+  private _leftSidebarTemplateValue: SidebarInterface = {
+    animate_state: 'active',
+    type: 'market-report'
+  };
+
   private _sidebarTemplateValue: SidebarInterface = {};
 
   private _companies: Array<Clearbit>;
@@ -467,6 +472,14 @@ export class SharedMarketReportComponent implements OnInit {
 
   get adminSide(): boolean {
     return this._adminSide;
+  }
+
+  get leftSidebarTemplateValue(): SidebarInterface {
+    return this._leftSidebarTemplateValue;
+  }
+
+  set leftSidebarTemplateValue(value: SidebarInterface) {
+    this._leftSidebarTemplateValue = value;
   }
 
   get sidebarTemplateValue(): SidebarInterface {

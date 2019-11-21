@@ -151,13 +151,14 @@
 <!-- filter sidebar -->
 <sidebar-left [(sidebarTemplate)]="sidebarTemplate">
   <sidebar-market-report
+    [innovation]="project"
     [templateType]="sidebarTemplate.type"
     [questions]="questions"
     [answers]="answers"
     (closeSidebar)="sidebarTemplate.animate_state = 'inactive'">
   </sidebar-market-report>
 </sidebar-left>
-<!-- /sidebar -->
+<!-- /filter sidebar -->
 
 
 <!-- modal for mails -->

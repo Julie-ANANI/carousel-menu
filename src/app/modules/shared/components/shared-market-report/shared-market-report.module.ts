@@ -40,6 +40,8 @@ import { CommonService } from '../../../../services/common/common.service';
 import { DataService } from './services/data.service';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
+import { SidebarLeftModule } from "../../../sidebars/templates/sidebar-left/sidebar-left.module";
+import { SidebarMarketReportModule } from "../../../sidebars/components/sidebar-market-report/sidebar-market-report.module";
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { TagsFiltersService } from './services/tags-filter.service';
     TranslateModule.forChild(),
     NgxPageScrollModule,
     SidebarModule,
+    SidebarLeftModule,
+    SidebarMarketReportModule,
     RouterModule,
     SharedLoaderModule,
     FormsModule,

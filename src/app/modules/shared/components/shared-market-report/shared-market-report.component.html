@@ -315,6 +315,18 @@
     </ng-container>
     <!-- /project status done or preview mode or not editing -->
 
+    <!-- filter sidebar -->
+    <sidebar-left [(sidebarTemplate)]="leftSidebarTemplateValue">
+      <sidebar-market-report
+        [innovation]="innovation"
+        [templateType]="leftSidebarTemplateValue.type"
+        [questions]="questions"
+        [answers]="answers"
+        (closeSidebar)="leftSidebarTemplateValue.animate_state = 'inactive'">
+      </sidebar-market-report>
+    </sidebar-left>
+    <!-- /filter sidebar -->
+
 
     <!-- insight preview -->
     <app-sidebar [(template)]="sidebarTemplateValue">

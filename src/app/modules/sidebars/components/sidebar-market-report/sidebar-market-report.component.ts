@@ -39,9 +39,6 @@ export class SidebarMarketReportComponent implements OnInit {
 
   @Input() set questions(value: Array<Question>) {
     this._questions = value;
-    this._questions.forEach(question => {
-      this.showSection[question.identifier] = this._templateType === 'market-report';
-    });
   }
 
   @Input() set templateType(value: string) {
@@ -50,6 +47,9 @@ export class SidebarMarketReportComponent implements OnInit {
       this.showSection.map = true;
       this.showSection.professionals = true;
     }
+    this._questions.forEach((question: Question) => {
+      this.showSection[question.identifier] = this._templateType === 'market-report';
+    });
   }
 
   /***
