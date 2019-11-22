@@ -152,13 +152,13 @@
 
         <!-- body -->
         <tbody>
-          <tr *ngFor="let row of getRowsKeys(); let rowIndex = index;" [ngClass]="{ 'active': table._content[row]?._isSelected, 'disabled': disabledRow(row) }">
+          <tr *ngFor="let row of getRowsKeys(); let rowIndex = index;" [ngClass]="{ 'active': table._content[row]?._isSelected, 'disabled': disabledRow(table._content[row]) }">
 
             <!-- if we have selectable -->
             <ng-container *ngIf="table._isSelectable">
               <td class="th-checkbox">
-                <label class="flex-centered" [ngClass]="{ 'active': table._content[row]?._isSelected, 'disabled': disabledRow(row) }">
-                  <input type="checkbox" (click)="selectRow(row);" [disabled]=disabledRow(row)>
+                <label class="flex-centered" [ngClass]="{ 'active': table._content[row]?._isSelected, 'disabled': disabledRow(table._content[row]) }">
+                  <input type="checkbox" (click)="selectRow(row);" [disabled]=disabledRow(table._content[row])>
                   <i class="icon icon-check"></i>
                 </label>
               </td>
@@ -295,7 +295,7 @@
 
                   <!-- if type is a dropdown -->
                   <ng-container *ngSwitchCase="'DROPDOWN'">
-                    <span class="dropdown is-right" [ngClass]="{ 'disabled': disabledRow(row) }">
+                    <span class="dropdown is-right" [ngClass]="{ 'disabled': disabledRow(table._content[row]) }">
 
                       <a
                         [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))

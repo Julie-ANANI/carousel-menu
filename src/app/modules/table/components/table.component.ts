@@ -658,7 +658,7 @@ export class TableComponent {
   }
 
   public disabledRow(content: any): boolean {
-    return this._table._isRowDisabled ? this._table._isRowDisabled(content) : false;
+    return this._table._isRowDisabled && this._table._isRowDisabled(content);
   }
 
   public onClickDropdownItem(content: any, item: Choice) {

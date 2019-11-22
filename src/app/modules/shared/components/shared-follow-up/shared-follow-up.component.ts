@@ -104,6 +104,8 @@ export class SharedFollowUpComponent implements OnInit {
       _content: this._answers,
       _total: this._total,
       _isSelectable: true,
+      _isRowDisabled: (answer: any) => {
+        return answer.followUp && answer.followUp.date},
       _isEditable: true,
       _clickIndex: 1,
       _buttons: [
