@@ -299,6 +299,13 @@ export class SharedFollowUpComponent implements OnInit {
     }
   }
 
+  public closeSidebar() {
+    this._sidebarTemplate = {
+      animate_state: 'inactive',
+      type: 'follow-up'
+    };
+  }
+
   public updateManyObjectives(answersIds: Array<string>, objective: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW') {
     this._pendingAction = {};
     this._showWarningModal = false;

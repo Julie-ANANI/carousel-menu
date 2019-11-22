@@ -8,7 +8,7 @@
     <!-- /no contact selected -->
 
     <!-- button select contacts -->
-    <a *ngIf="filterNumber" (click)="console.log('HEY')" class="btn btn-primary">
+    <a *ngIf="filterNumber" (click)="onClickSelect()" class="button is-primary" style="white-space: normal; height: unset" type="button">
       <i class="fas fa-share"></i>
       {{ 'SIDEBAR_MARKET_REPORT.SELECT' | translate }} {{ filterNumber }} {{ 'SIDEBAR_MARKET_REPORT.CONTACTS' | translate }}
     </a>

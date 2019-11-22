@@ -14,7 +14,7 @@ export class SidebarLeftComponent {
       size: value.size || '263px',
       animate_state: value.animate_state || 'inactive',
       type: value.type || ''
-    }
+    };
   }
 
   @Output() sidebarTemplateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();

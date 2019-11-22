@@ -29,12 +29,10 @@ export class SidebarMarketReportComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
+    this._filterNumber = value.length;
     this._filterService.filtersUpdate.subscribe(() => {
       this._filterNumber = this._filterService.filter(this._answers).length;
     });
-    if (this.templateType === 'follow-up') {
-      this.resetFilters(false);
-    }
   }
 
   @Input() set templateType(value: string) {
@@ -62,7 +60,7 @@ export class SidebarMarketReportComponent implements OnInit {
    * this is to emit the event that will close the
    * sidebar.
    */
-  @Output() closeSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() closeSidebar: EventEmitter<null> = new EventEmitter<null>();
 
   private _templateType: string;
 
@@ -118,6 +116,10 @@ export class SidebarMarketReportComponent implements OnInit {
         this.filterEverything(false, [question], question.controlType);
       });
     }
+  }
+
+  public onClickSelect() {
+    this.closeSidebar.emit();
   }
 
   public registerNewFilter() {
