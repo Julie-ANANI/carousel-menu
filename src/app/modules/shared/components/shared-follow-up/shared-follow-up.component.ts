@@ -33,7 +33,6 @@ export class SharedFollowUpComponent implements OnInit {
         this._questions = ResponseService.getPresets(this._project);
       }
       this._getAnswers();
-      this._initializeMailCustomFields();
     }
   }
 
@@ -225,6 +224,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   public onClickSee(event: Event, type: string) {
     event.preventDefault();
+    this._initializeMailCustomFields();
     this._modalTemplateType = type;
     this._showEmailsModal = true;
   }
