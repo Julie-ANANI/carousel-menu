@@ -264,7 +264,9 @@ export class SharedFollowUpComponent implements OnInit {
     this._filteredAnswers = this._filterService.filter(this._answers);
     const selectedIds = this._filteredAnswers.map(answer => answer._id);
     this._answers.forEach(answer => {
-      answer._isSelected = selectedIds.indexOf(answer._id) > -1;
+      if (!answer.followUp || !answer.followUp.date) {
+        answer._isSelected = selectedIds.indexOf(answer._id) > -1;
+      }
     });
   }
 
