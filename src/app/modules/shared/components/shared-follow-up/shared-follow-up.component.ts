@@ -219,6 +219,8 @@ export class SharedFollowUpComponent implements OnInit {
   public closeModal(event: Event) {
     event.preventDefault();
     this._showEmailsModal = false;
+    this._showWarningModal = false;
+    this._showSendModal = false;
     this._modalTemplateType = '';
   }
 
