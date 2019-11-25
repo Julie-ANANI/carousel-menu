@@ -39,6 +39,7 @@ export class SharedMailEditorComponent {
 
   @Input() set customFields(value: { [prop: string]: Array<{label: string, value: string}> }) {
     if (value) {
+      console.log(value);
       this._customField = value[this._translateService.currentLang];
 
       for (let valueKey in value) {
