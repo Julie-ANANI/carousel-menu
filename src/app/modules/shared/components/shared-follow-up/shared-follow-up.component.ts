@@ -458,4 +458,12 @@ export class SharedFollowUpComponent implements OnInit {
     return this._questions;
   }
 
+  get ccEmail(): string {
+    return this._project.followUpEmails.ccEmail;
+  }
+
+  set ccEmail(value: string) {
+    this._project.followUpEmails.ccEmail = value;
+  }
+
 }

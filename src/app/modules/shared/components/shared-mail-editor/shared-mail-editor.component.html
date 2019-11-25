@@ -86,7 +86,7 @@
 
               <label *ngIf="isEditableMode" [ngStyle]="{ 'flex': '1' }">
                 <input
-                  (ngModelChange)="updateChanges($event)"
+                  (ngModelChange)="onUpdate($event, 'en')"
                   [(ngModel)]="emailsObject['en'].subject"
                   [ngStyle]="{ 'height': '40px', 'font-size': '13px' }"
                   class="form-input"
@@ -126,7 +126,7 @@
             <app-text-zone
                 #textZone
                 [hideToolbar]="true"
-                (onTextChange)="updateChanges($event)"
+                (onTextChange)="updateContent($event, 'en')"
                 [data]="emailsObject['en'].content || ''"
                 [readonly]="!isEditableMode"
                 [variableMapping]="variableMapping['en']">
@@ -152,7 +152,7 @@
 
               <label *ngIf="isEditableMode" [ngStyle]="{ 'flex': '1' }">
                 <input
-                  (ngModelChange)="updateChanges($event)"
+                  (ngModelChange)="onUpdate($event, 'fr')"
                   [(ngModel)]="emailsObject['fr'].subject"
                   [ngStyle]="{ 'height': '40px', 'font-size': '13px' }"
                   class="form-input"
@@ -193,7 +193,7 @@
                 *ngIf="display"
                 #textZone
                 [hideToolbar]="true"
-                (onTextChange)="updateChanges($event)"
+                (onTextChange)="updateContent($event, 'fr')"
                 [data]="emailsObject['fr'].content || ''"
                 [readonly]="!isEditableMode"
                 [variableMapping]="variableMapping['fr']">

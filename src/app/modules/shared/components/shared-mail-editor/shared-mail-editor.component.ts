@@ -40,7 +40,6 @@ export class SharedMailEditorComponent {
   @Input() set customFields(value: { [prop: string]: Array<{label: string, value: string}> }) {
     this._display = false;
     if (value) {
-      console.log(value);
       this._customField = value[this._translateService.currentLang];
 
       for (let valueKey in value) {
@@ -159,9 +158,8 @@ export class SharedMailEditorComponent {
     }
   }
 
-  public updateChanges(event: Event) {
-    this.emailsObjectChange.emit(this._emailsObject);
-    this.ccEmailChange.emit(this._ccEmail);
+  public updateChanges(ccEmail: string) {
+    this.ccEmailChange.emit(ccEmail);
   }
 
   public onPreview() {
@@ -173,13 +171,15 @@ export class SharedMailEditorComponent {
     this.languageChange.emit(value);
   }
 
-  onUpdate(event: any) {
-    this._emailsObject[this._language].subject = event;
+  onUpdate(event: any, language?: string) {
+    language = language || this._language;
+    this._emailsObject[language].subject = event;
     this.emailChange.emit(this._emailsObject);
   }
 
-  updateContent(event: any) {
-    this._emailsObject[this._language].content = event.content;
+  updateContent(event: any, language?: string) {
+    language = language || this._language;
+    this._emailsObject[language].content = event.content;
     this.emailChange.emit(this._emailsObject);
   }
 
