@@ -24,6 +24,64 @@
   <!-- /divider -->
 
 
+  <!-- different actions for admin -->
+  <ng-container *ngIf="templateType === 'market-report' && isAdmin && isAdminSide">
+    <div class="dropdown">
+
+      <a class="button dropdown-toggle is-outlined is-primary" tabindex="0">
+        Actions <i class="fas fa-caret-down"> </i>
+      </a>
+
+      <div class="menu">
+
+        <div
+          (click)="modalPreviewInnovation = true"
+          *ngIf="!innovation.previewMode && innovation.status !== 'DONE'"
+          class="menu-item">
+          <span>{{ 'MARKET_REPORT.SIDEBAR.MAKE_VISIBLE' | translate }}</span>
+        </div>
+
+        <div
+          (click)="modalPreviewInnovation = true"
+          *ngIf="innovation.previewMode && innovation.status !== 'DONE'"
+          class="menu-item">
+          <span>{{ 'MARKET_REPORT.SIDEBAR.MAKE_INVISIBLE' | translate }}</span>
+        </div>
+
+        <div class="menu-item">
+          <a href="#executive-generate" pageScroll>{{ 'MARKET_REPORT.SIDEBAR.GENERATE_REPORT' | translate }}</a>
+        </div>
+
+        <div
+          (click)="modalResetReport = true"
+          *ngIf="innovation.executiveReport.totalSections > 0 && isAdminSide"
+          class="menu-item">
+          <span>{{ 'MARKET_REPORT.SIDEBAR.RESET_REPORT' | translate }}</span>
+        </div>
+
+        <div class="menu-item" (click)="modalEndInnovation = true">
+          <span>{{ 'MARKET_REPORT.SIDEBAR.END_PROJECT' | translate }}</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+  </ng-container>
+  <!-- /different actions for admin -->
+
+
+  <!-- export option -->
+  <div *ngIf="isOwner && !isAdminSide && !reportShared" class="text-center">
+    <button class="btn btn-primary gtm-export-synthesis" (click)="modalExport = true"
+            [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
+    <div class="divider"></div>
+  </div>
+  <!-- /export option -->
+
+
   <!-- views wrapper -->
   <div class="view-wrapper">
 
@@ -381,3 +439,71 @@
 
 
 </div>
+
+
+<!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
+<app-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
+
+  <section class="modal-body">
+    <ng-container *ngIf="!innovation.previewMode">
+      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
+    </ng-container>
+
+    <ng-container *ngIf="innovation.previewMode">
+      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_INVISIBLE' | translate }}</span>
+    </ng-container>
+  </section>
+
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
+
+</app-modal>
+<!-- /Modal to ask the admin to confirm for the preview of the innovation at the side of the client -->
+
+
+<!-- Modal to ask the operator to confirm for the reset of the executive report -->
+<app-modal [(showModal)]="modalResetReport" [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'">
+
+  <section class="modal-body">
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_RESET_REPORT' | translate }}</span>
+  </section>
+
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickResetConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
+
+</app-modal>
+<!-- /Modal to ask the operator to confirm for the reset of the executive report -->
+
+
+<!-- Modal to ask the operator to sure about ending the project -->
+<app-modal [(showModal)]="modalEndInnovation" [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'">
+
+  <section class="modal-body">
+    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
+  </section>
+
+  <!-- footer -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+  <!-- /footer -->
+
+</app-modal>
+<!-- /Modal to ask operator to sure about ending the project -->
+
+
+<!-- Modal to ask operator and client to export different reports -->
+<ng-container *ngIf="isOwner">
+  <app-market-report-export-modal [innovation]="innovation"
+                                  [(showModal)]="modalExport"></app-market-report-export-modal>
+</ng-container>
+<!-- /Modal to ask operator and client to export different reports -->

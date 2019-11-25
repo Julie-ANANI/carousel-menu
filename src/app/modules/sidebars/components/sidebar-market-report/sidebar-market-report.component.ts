@@ -56,6 +56,23 @@ export class SidebarMarketReportComponent implements OnInit {
     });
   }
 
+  @Input() set reportShared(value: boolean) {
+    this._reportShared = value;
+  }
+
+  @Input() set isAdmin(value: boolean) {
+    this._isAdmin = value;
+  }
+
+  @Input() set isAdminSide(value: boolean) {
+    this._isAdminSide = value;
+  }
+
+  @Input() set isOwner(value: boolean) {
+    this._isOwner = value;
+  }
+
+
   /***
    * this is to emit the event that will close the
    * sidebar.
@@ -63,6 +80,22 @@ export class SidebarMarketReportComponent implements OnInit {
   @Output() closeSidebar: EventEmitter<null> = new EventEmitter<null>();
 
   private _templateType: string;
+
+  private _reportShared: boolean;
+
+  private _isAdmin: boolean;
+
+  private _isAdminSide: boolean;
+
+  private _isOwner: boolean;
+
+  private _modalEndInnovation: boolean;
+
+  private _modalPreviewInnovation: boolean;
+
+  private _modalExport: boolean;
+
+  private _modalResetReport: boolean;
 
   private _filterNumber = 0;
 
@@ -166,6 +199,65 @@ export class SidebarMarketReportComponent implements OnInit {
         value: filterValue
       });
     }
+  }
+
+
+  public onClickPreviewConfirm(event: Event) {
+    event.preventDefault();
+    this._innovation.previewMode = !this._innovation.previewMode;
+
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
+      if (response.previewMode) {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
+      } else {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
+      }
+    }, () => {
+      this._innovation.previewMode = !this._innovation.previewMode;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+
+    this._modalPreviewInnovation = false;
+
+  }
+
+
+  public onClickResetConfirm(event: Event) {
+    event.preventDefault();
+    const totalSections = this._innovation.executiveReport.totalSections;
+    const sections = this._innovation.executiveReport.sections;
+
+    this._innovation.executiveReport.totalSections = 0;
+    this._innovation.executiveReport.sections = [];
+
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'The executive report has been reset successfully.');
+    }, () => {
+      this._innovation.executiveReport.totalSections = totalSections;
+      this._innovation.executiveReport.sections = sections;
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+
+    this._modalResetReport = false;
+
+  }
+
+
+  /***
+   * This function will make the project end and synthesis will be available to the client.
+   * @param {Event} event
+   */
+  public onClickEndInnovationConfirm(event: Event) {
+    event.preventDefault();
+
+    this._innovationService.save(this._innovation._id, {status: 'DONE'}).subscribe(() => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+    }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+
+    this._modalEndInnovation = false;
+
   }
 
   public deleteCustomFilter(event: Event, name: string) {
@@ -335,6 +427,54 @@ export class SidebarMarketReportComponent implements OnInit {
 
   get filtersCount() {
     return Object.keys(this._filterService.filters).length;
+  }
+
+  get isAdmin(): boolean {
+    return this._isAdmin;
+  }
+
+  get isAdminSide(): boolean {
+    return this._isAdminSide;
+  }
+
+  get isOwner(): boolean {
+    return this._isOwner;
+  }
+
+  get reportShared(): boolean {
+    return this._reportShared;
+  }
+
+  get modalEndInnovation(): boolean {
+    return this._modalEndInnovation;
+  }
+
+  set modalEndInnovation(value: boolean) {
+    this._modalEndInnovation = value;
+  }
+
+  get modalPreviewInnovation(): boolean {
+    return this._modalPreviewInnovation;
+  }
+
+  set modalPreviewInnovation(value: boolean) {
+    this._modalPreviewInnovation = value;
+  }
+
+  get modalExport(): boolean {
+    return this._modalExport;
+  }
+
+  set modalExport(value: boolean) {
+    this._modalExport = value;
+  }
+
+  get modalResetReport(): boolean {
+    return this._modalResetReport;
+  }
+
+  set modalResetReport(value: boolean) {
+    this._modalResetReport = value;
   }
 
 

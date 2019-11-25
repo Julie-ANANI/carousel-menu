@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { SidebarMarketReportComponent } from './sidebar-market-report.component';
 import {PipeModule} from "../../../../pipe/pipe.module";
 import {NgxPageScrollModule} from "ngx-page-scroll";
+import {ModalModule} from "../../../utility-components/modals/modal/modal.module";
+import {ExportModalComponent} from "./export-modal/export-modal.component";
 
 
 @NgModule({
@@ -14,10 +16,12 @@ import {NgxPageScrollModule} from "ngx-page-scroll";
     TranslateModule.forChild(),
     FormsModule,
     PipeModule,
-    NgxPageScrollModule
+    NgxPageScrollModule,
+    ModalModule
   ],
   declarations: [
-   SidebarMarketReportComponent
+    SidebarMarketReportComponent,
+    ExportModalComponent
   ],
   exports: [
     SidebarMarketReportComponent

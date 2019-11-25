@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { AuthService } from '../../../../../../services/auth/auth.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { Innovation } from '../../../../../../models/innovation';
-import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { Share } from '../../../../../../models/share';
-import { environment } from '../../../../../../../environments/environment';
+import { AnswerService } from '../../../../../services/answer/answer.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { Innovation } from '../../../../../models/innovation';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { Share } from '../../../../../models/share';
+import { environment } from '../../../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { ShareService } from '../../../../../../services/share/share.service';
+import { ShareService } from '../../../../../services/share/share.service';
 
 export enum ExportType { csv = 'csv', executiveReport = 'executiveReport', respReport = 'respReport', shareReport = 'shareReport' }
 

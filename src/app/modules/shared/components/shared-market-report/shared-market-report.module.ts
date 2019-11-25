@@ -32,8 +32,6 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
-import { ExportModalComponent } from './components/export-modal/export-modal.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 
 import { CommonService } from '../../../../services/common/common.service';
@@ -87,8 +85,6 @@ import { SidebarMarketReportModule } from "../../../sidebars/components/sidebar-
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
     StarsComponent,
-    ExportModalComponent,
-    SidebarComponent
   ],
   exports: [
     SharedMarketReportComponent
