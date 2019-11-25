@@ -26,6 +26,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input() set variableMapping(value: any) {
+    console.log(value);
     this._variableMapping = value;
   }
 
