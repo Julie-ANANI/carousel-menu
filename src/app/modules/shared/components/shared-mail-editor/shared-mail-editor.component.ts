@@ -38,6 +38,7 @@ export class SharedMailEditorComponent {
   }
 
   @Input() set customFields(value: { [prop: string]: Array<{label: string, value: string}> }) {
+    this._display = false;
     if (value) {
       console.log(value);
       this._customField = value[this._translateService.currentLang];
@@ -47,6 +48,7 @@ export class SharedMailEditorComponent {
           this._variableMapping[valueKey][field.value.replace(/[\|\*]/g, '')] = field.label;
         });
       }
+      this._display = true;
 
     }
   }
@@ -88,6 +90,8 @@ export class SharedMailEditorComponent {
   @ViewChild('textZone') child: any;
 
   private _professionals: Array<Professional> = [];
+
+  private _display = false;
 
   private _templateType: editorTypes = '';
 
@@ -225,6 +229,10 @@ export class SharedMailEditorComponent {
 
   get professionalPreview(): string {
     return this._professionalPreview;
+  }
+
+  get display(): boolean {
+    return this._display;
   }
 
 }

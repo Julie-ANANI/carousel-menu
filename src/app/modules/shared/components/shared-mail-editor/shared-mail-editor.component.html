@@ -190,6 +190,7 @@
 
             <!-- message -->
             <app-text-zone
+                *ngIf="display"
                 #textZone
                 [hideToolbar]="true"
                 (onTextChange)="updateChanges($event)"
