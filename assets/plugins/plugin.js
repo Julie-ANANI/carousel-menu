@@ -90,7 +90,9 @@ tinymce.PluginManager.add('variable', function(editor) {
    */
   const stringToHTML = () =>
   {
+    // we save the cursor position
     cursor = editor.selection.getNode();
+    offset = editor.selection.getRng().startOffset;
 
     const nodeList = [];
     let nodeValue;
@@ -119,7 +121,7 @@ tinymce.PluginManager.add('variable', function(editor) {
 
       editor.dom.remove(nodeList[i]);
     }
-    //editor.selection.setCursorLocation(cursor);
+    editor.selection.setCursorLocation(cursor);
   };
 
   /**
