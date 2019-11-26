@@ -26,7 +26,6 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input() set variableMapping(value: any) {
-    console.log(value);
     this._variableMapping = value;
   }
 
@@ -96,7 +95,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
           this.editor = editor;
           this._contentHash = SharedTextZoneComponent.hashString(this._text);
           editor
-            .on('Blur', () => {
+            .on('MouseLeave', () => {
               const actualHash = this._contentHash;
               const content = editor.getContent();
               this._contentHash = SharedTextZoneComponent.hashString(content);
