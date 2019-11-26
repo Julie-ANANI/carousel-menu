@@ -34,7 +34,7 @@ import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/en'
 import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/en';
 import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
 import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/en';
-import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-market-report/i18n/en';
+import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-filter-answers/i18n/en';
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/en';
 
 export const en = {

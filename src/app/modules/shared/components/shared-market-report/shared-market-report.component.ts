@@ -413,6 +413,13 @@ export class SharedMarketReportComponent implements OnInit {
 
   }
 
+  public closeSidebar() {
+    this._leftSidebarTemplateValue = {
+      animate_state: 'inactive',
+      type: 'market-report'
+    };
+  }
+
 
   public get mainDomain(): boolean {
     return environment.domain === 'umi';

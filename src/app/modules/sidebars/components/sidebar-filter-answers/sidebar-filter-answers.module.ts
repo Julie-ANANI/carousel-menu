@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
-import { SidebarMarketReportComponent } from './sidebar-market-report.component';
+import { SidebarFilterAnswersComponent } from './sidebar-filter-answers.component';
 import {PipeModule} from "../../../../pipe/pipe.module";
 import {NgxPageScrollModule} from "ngx-page-scroll";
 import {ModalModule} from "../../../utility-components/modals/modal/modal.module";
@@ -20,12 +20,12 @@ import {ExportModalComponent} from "./export-modal/export-modal.component";
     ModalModule
   ],
   declarations: [
-    SidebarMarketReportComponent,
+    SidebarFilterAnswersComponent,
     ExportModalComponent
   ],
   exports: [
-    SidebarMarketReportComponent
+    SidebarFilterAnswersComponent
   ]
 })
 
-export class SidebarMarketReportModule {}
+export class SidebarFilterAnswersModule {}

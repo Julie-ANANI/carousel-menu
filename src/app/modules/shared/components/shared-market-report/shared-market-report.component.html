@@ -297,7 +297,7 @@
 
     <!-- filter sidebar -->
     <sidebar-left [(sidebarTemplate)]="leftSidebarTemplateValue">
-      <sidebar-market-report
+      <sidebar-filter-answers
         [innovation]="innovation"
         [templateType]="leftSidebarTemplateValue.type"
         [questions]="questions"
@@ -305,8 +305,8 @@
         [isAdmin]="adminMode"
         [isAdminSide]="adminSide"
         [isOwner]="isOwner"
-        (closeSidebar)="leftSidebarTemplateValue.animate_state = 'inactive'">
-      </sidebar-market-report>
+        (closeSidebar)="closeSidebar()">
+      </sidebar-filter-answers>
     </sidebar-left>
     <!-- /filter sidebar -->
 

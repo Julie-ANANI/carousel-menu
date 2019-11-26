@@ -39,7 +39,7 @@ import { DataService } from './services/data.service';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { SidebarLeftModule } from "../../../sidebars/templates/sidebar-left/sidebar-left.module";
-import { SidebarMarketReportModule } from "../../../sidebars/components/sidebar-market-report/sidebar-market-report.module";
+import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module";
 
 
 @NgModule({
@@ -52,7 +52,7 @@ import { SidebarMarketReportModule } from "../../../sidebars/components/sidebar-
     NgxPageScrollModule,
     SidebarModule,
     SidebarLeftModule,
-    SidebarMarketReportModule,
+    SidebarFilterAnswersModule,
     RouterModule,
     SharedLoaderModule,
     FormsModule,

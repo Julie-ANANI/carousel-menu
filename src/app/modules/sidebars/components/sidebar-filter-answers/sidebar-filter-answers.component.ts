@@ -13,12 +13,12 @@ import {TagsFiltersService} from "../../../shared/components/shared-market-repor
 import {WorldmapFiltersService} from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
 
 @Component({
-  selector: 'sidebar-market-report',
-  templateUrl: './sidebar-market-report.component.html',
-  styleUrls: ['./sidebar-market-report.component.scss']
+  selector: 'sidebar-filter-answers',
+  templateUrl: './sidebar-filter-answer.component.html',
+  styleUrls: ['./sidebar-filter-answers.component.scss']
 })
 
-export class SidebarMarketReportComponent implements OnInit {
+export class SidebarFilterAnswersComponent implements OnInit {
 
   @Input() set innovation(value: Innovation) {
     if (value) {
