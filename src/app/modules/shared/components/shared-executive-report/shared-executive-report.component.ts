@@ -14,6 +14,7 @@ export class SharedExecutiveReportComponent {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
+    this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
     this._getAnswers();
   }
 
@@ -25,6 +26,8 @@ export class SharedExecutiveReportComponent {
 
   private _answers: Array<Answer> = [];
 
+  private _anonymousAnswers = false;
+
   constructor (private _answerService: AnswerService,
                private _translateNotificationsService: TranslateNotificationsService) { }
 
@@ -34,6 +37,32 @@ export class SharedExecutiveReportComponent {
         this._answers = response.answers.sort((a, b) => {
           return b.profileQuality - a.profileQuality;
         });
+
+        if( this._anonymousAnswers ) {
+          this._answers = <Array<Answer>>this._answers.map( answer => {
+            const _answer = {};
+            Object.keys(answer).forEach(key => {
+              switch(key) {
+                case('company'):
+                  _answer[key] = {
+                    'name': ''
+                  };
+                  break;
+                case('professional'):
+                    if (answer[key]['company']) {
+                      _answer[key] = {
+                        'company': ''
+                      };
+                    }
+                  break;
+                default:
+                  _answer[key] = answer[key];
+              }
+            });
+            return _answer;
+          });
+        }
+
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR_EN');
       });
