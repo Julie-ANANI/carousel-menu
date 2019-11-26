@@ -48,7 +48,7 @@
     <!-- company -->
     <ng-container *ngIf="answer.company?.name || answer.professional?.company">
       <p class="text-notify text-medium">
-        {{ (answer?.company?.name || answer?.professional?.company) |FormatText:true }}
+        {{ (answer?.company?.name || answer?.professional?.company || "") |FormatText:true }}
       </p>
     </ng-container>
 
