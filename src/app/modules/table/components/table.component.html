@@ -295,7 +295,15 @@
 
                   <!-- if type is a dropdown -->
                   <ng-container *ngSwitchCase="'DROPDOWN'">
-                    <span class="dropdown is-right" [ngClass]="{ 'disabled': disabledRow(table._content[row]) }">
+                    <span *ngIf="disabledRow(table._content[row]) && getDisabledState(column)">
+                      <ng-container *ngIf="getDisabledState(column)._type === 'DATE'">
+                      <i class="fas fa-paper-plane" [ngClass]="getChoiceDisabledClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"></i>
+                      {{ (getContentValue(row, getDisabledState(column)._attrs) | date:dateFormat) }}
+                        </ng-container>
+                    </span>
+
+                    <span class="dropdown is-right" [ngClass]="{ 'disabled': disabledRow(table._content[row]) }"
+                    *ngIf="!disabledRow(table._content[row]) || !getDisabledState(column)">
 
                       <a
                         [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))

@@ -407,6 +407,15 @@ export class TableComponent {
   }
 
   /***
+   * This function returns the disabled state of the column
+   * @param {Column} column
+   * @returns {string[]}
+   */
+  public getDisabledState(column: Column) {
+    return column._disabledState;
+  }
+
+  /***
    * This function returns the index of one attribute of a column
    * @param {Column} column
    * @param {string} attr
@@ -466,6 +475,15 @@ export class TableComponent {
    */
   public getChoiceClass(choice: Choice): string {
     return choice._class || '';
+  }
+
+  /***
+   * This function returns the label corresponding to a choice
+   * @param {Choice} choice
+   * @returns {string}
+   */
+  public getChoiceDisabledClass(choice: Choice): string {
+    return choice._disabledClass || '';
   }
 
   /***
