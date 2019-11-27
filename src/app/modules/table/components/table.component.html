@@ -380,13 +380,14 @@
 
                     <!-- text clickable -->
                     <ng-container *ngIf="i === table._clickIndex - 1">
-                      <span
-                        (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
-                        *ngFor="let attr of getAttrs(column)"
-                        [ngClass]="{ 'text-primary': rowIndex === this.selectedIndex }"
-                        class="c-hand">
-                      {{ (getContentValue(row, attr)|| " - ").toString() | FormatText:true }}
-                    </span>
+                      <span class="clickable-text">
+                        <span
+                          (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
+                          *ngFor="let attr of getAttrs(column)"
+                          [ngClass]="{ 'text-primary': rowIndex === this.selectedIndex }">
+                          {{ (getContentValue(row, attr)|| " - ").toString() | FormatText:true }}
+                        </span>
+                      </span>
                     </ng-container>
                     <!-- /text clickable -->
 

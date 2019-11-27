@@ -69,6 +69,14 @@
 
         td {
 
+          .clickable-text {
+            cursor: pointer;
+          }
+
+          .clickable-text:hover {
+            color: $primary-color;
+          }
+
           .tbody-td-data {
             flex: 1;
             max-width: 100%;
