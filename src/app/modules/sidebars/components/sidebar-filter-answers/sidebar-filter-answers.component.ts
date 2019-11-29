@@ -477,5 +477,9 @@ export class SidebarFilterAnswersComponent implements OnInit {
     this._modalResetReport = value;
   }
 
+  get selectedAnswersTags(): {[questionId: string]: {[t: string]: boolean}} {
+    return this._tagService.selectedAnswersTags;
+  }
+
 
 }
