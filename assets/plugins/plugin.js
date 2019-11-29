@@ -121,7 +121,7 @@ tinymce.PluginManager.add('variable', function(editor) {
 
       editor.dom.remove(nodeList[i]);
     }
-    editor.selection.setCursorLocation(cursor);
+    editor.selection.setCursorLocation(cursor, offset);
   };
 
   /**
