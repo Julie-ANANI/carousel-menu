@@ -121,7 +121,11 @@ tinymce.PluginManager.add('variable', function(editor) {
 
       editor.dom.remove(nodeList[i]);
     }
-    editor.selection.setCursorLocation(cursor, offset);
+    try {
+      editor.selection.setCursorLocation(cursor, offset);
+    } catch (e) {
+      //FIXME: understand why an error is thrown ?!
+    }
   };
 
   /**
@@ -162,8 +166,12 @@ tinymce.PluginManager.add('variable', function(editor) {
       // because we now have an text representation of the variable
       editor.dom.remove(nodeList[i]);
     }
-    editor.selection.setCursorLocation(cursor, offset);
 
+    try {
+      editor.selection.setCursorLocation(cursor, offset);
+    } catch (e) {
+      //FIXME: understand why an error is thrown ?!
+    }
   };
 
   /**
