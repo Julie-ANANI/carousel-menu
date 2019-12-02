@@ -335,7 +335,7 @@
             </span>
           </span>
       </div>
-      <ng-container *ngIf="answersTagsLists[question.identifier]?.length > 0">
+      <div *ngIf="answersTagsLists[question.identifier]?.length > 0" [hidden]="!showSection[question.identifier]">
         <label *ngIf="answersTagsLists[question.identifier]?.length > 0" class="form-checkbox p-no-right">
           {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
           <input
@@ -368,7 +368,7 @@
             <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
                   (click)="seeMore[question.identifier] = false"></span>
         </div>
-      </ng-container>
+      </div>
     </ng-container>
 
     <!-- checkbox/radio -->
