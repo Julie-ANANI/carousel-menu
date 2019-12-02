@@ -17,6 +17,8 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
   @Input() hideToolbar = false;
 
+  @Input() useVariables = false;
+
   @Input() set data(value: string) {
     this._text = value;
     this._contentHash = SharedTextZoneComponent.hashString(value);
@@ -72,10 +74,14 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    const plugins = ['link', 'paste', 'lists', 'advlist', 'textcolor'];
+    if (this.useVariables) {
+      plugins.push('variable');
+    }
     if (isPlatformBrowser(this.platformId) && !this.readonly) {
       tinymce.init({
         selector: '#' + this._htmlId,
-        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'variable'], // Voir .angular-cli.json
+        plugins: plugins, // Voir .angular-cli.json
         variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
         variable_mapper: this._variableMapping,
         default_link_target: '_blank',

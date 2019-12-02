@@ -126,6 +126,7 @@
             <app-text-zone
                 #textZone
                 [hideToolbar]="true"
+                [useVariables]="true"
                 (onTextChange)="updateContent($event, 'en')"
                 [data]="emailsObject['en'].content || ''"
                 [readonly]="!isEditableMode"
@@ -193,6 +194,7 @@
                 *ngIf="display"
                 #textZone
                 [hideToolbar]="true"
+                [useVariables]="true"
                 (onTextChange)="updateContent($event, 'fr')"
                 [data]="emailsObject['fr'].content || ''"
                 [readonly]="!isEditableMode"
