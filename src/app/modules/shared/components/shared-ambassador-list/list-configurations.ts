@@ -8,7 +8,7 @@ export class ListConfigurations {
       _total: -1,
       _isDeletable: true,
       _isSelectable: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _isLocal: true,
       _isPaginable: true,
       _columns: [
@@ -29,7 +29,7 @@ export class ListConfigurations {
       _total: -1,
       _isTitle: true,
       _isSelectable: true,
-      _editIndex: 1,
+      _clickIndex: 1,
       _activeMinHeight: true,
       _isLocal: true,
       _isPaginable: true,
