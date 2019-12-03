@@ -34,8 +34,6 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
 
   @Output() ownerLanguageChange = new EventEmitter<string>();
 
-  @Output() sendMail = new EventEmitter<any>();
-
   isPitch = false;
   isTargeting = false;
   isStatus = false;
@@ -182,45 +180,13 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
   // TODO : Implement functionality to send mail
   onSubmit() {
     this._isChange = false;
-    switch (this.type) {
-      case('pitch') : {
-        this.calculatePercentage();
-        if (this._saveCardComment) {
-          this._saveComment();
-        }
-        this.projectChange.emit(this._project);
-        break;
-      } case('targeting'): {
-        this.calculatePercentage();
-        this.projectChange.emit(this._project);
-        break;
-      } case('satisfaction'): {
-        this.projectChange.emit(this._project);
-        break;
-      } case('status'): {
-        this.projectChange.emit(this._project);
-        if (this.sendMail.constructor === Object && Object.keys(this.sendMail).length !== 0) {
-          this.sendMail.emit(this._email);
-        }
-        this.sendMail.emit(this._email);
-        break;
-      } case('feedback'): {
-        this.projectChange.emit(this._project);
-        break;
-      } case('preview'): {
-        break;
-      } case('send-ending-mail'): {
-        this._project._metadata.delivery.endingmail = true;
-        this.projectChange.emit(this._project);
-        if (this.sendMail.constructor === Object && Object.keys(this.sendMail).length !== 0) {
-          this.sendMail.emit(this._email);
-        }
-        break;
-      }
-      default: {
-        break;
+    if (this.type === 'pitch' || this.type === 'targeting') {
+      this.calculatePercentage();
+      if (this._saveCardComment) {
+        this._saveComment();
       }
     }
+    this.projectChange.emit(this._project);
   }
 
   projectEdit(value: Innovation) {

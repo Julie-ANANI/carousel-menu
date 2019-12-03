@@ -327,18 +327,6 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
-   *
-   * @param mail
-   */
-  sendMailToOwner(mail: any) {
-    /* We do not want to send a mail to the owner every time we change the status !
-    this._innovationService.sendMailToOwner(this._project._id, mail).subscribe((answer: any) => {
-      console.log(answer);
-    });
-    */
-  }
-
-  /***
    * This function is call when the user edit the mails and domais to blacklist on the project
    * Change the sidebar to the excludeEmails sidebar
    */
