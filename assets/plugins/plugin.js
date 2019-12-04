@@ -50,6 +50,9 @@ tinymce.PluginManager.add('variable', function(editor) {
     return mapper.hasOwnProperty(cleanValue) ? mapper[cleanValue] : cleanValue;
   };
 
+  let cursor;
+  let offset;
+
   /**
    * Strip variable to keep the plain variable string
    * @example "{test}" => "test"
@@ -88,11 +91,10 @@ tinymce.PluginManager.add('variable', function(editor) {
    * convert variable strings into html elements
    * @return {void}
    */
-  const stringToHTML = () =>
-  {
+  const stringToHTML = () => {
     // we save the cursor position
-    cursor = editor.selection.getNode();
-    offset = editor.selection.getRng().startOffset;
+    const cursor = editor.selection.getNode();
+    const offset = editor.selection.getRng().startOffset;
 
     const nodeList = [];
     let nodeValue;
@@ -122,7 +124,7 @@ tinymce.PluginManager.add('variable', function(editor) {
       editor.dom.remove(nodeList[i]);
     }
     try {
-      editor.selection.setCursorLocation(cursor, offset);
+      //editor.selection.setCursorLocation(cursor, offset);
     } catch (e) {
       //FIXME: understand why an error is thrown ?!
     }
@@ -133,12 +135,7 @@ tinymce.PluginManager.add('variable', function(editor) {
    * for example when a user opens source view
    * @return {void}
    */
-  const htmlToString = () =>
-  {
-    // we save the cursor position
-    cursor = editor.selection.getNode();
-    offset = editor.selection.getRng().startOffset;
-
+  const htmlToString = () => {
     const nodeList = [];
     let nodeValue;
     let node;
@@ -166,6 +163,13 @@ tinymce.PluginManager.add('variable', function(editor) {
       // because we now have an text representation of the variable
       editor.dom.remove(nodeList[i]);
     }
+  };
+
+  const getContent = () => {
+    // we save the cursor position
+    cursor = editor.selection.getNode();
+    offset = editor.selection.getRng().startOffset;
+    stringToHTML();
 
     try {
       editor.selection.setCursorLocation(cursor, offset);
@@ -208,7 +212,7 @@ tinymce.PluginManager.add('variable', function(editor) {
   editor.on('nodechange', stringToHTML );
   editor.on('keyup', stringToHTML );
   editor.on('beforegetcontent', htmlToString);
-  editor.on('getcontent', stringToHTML);
+  editor.on('getcontent', getContent);
   editor.on('click', handleClick);
 
   this.addVariable = addVariable;
