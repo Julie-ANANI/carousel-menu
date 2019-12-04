@@ -155,6 +155,22 @@ export class SidebarFilterAnswersComponent implements OnInit {
     this.closeSidebar.emit();
   }
 
+  public deleteProfessionalFilter(event: Event, id: string) {
+    event.preventDefault();
+    const filterValue = this._filterService.filters['professionals'].value;
+    delete filterValue[id];
+    const removeFilter = Object.keys(filterValue).length === 0;
+    if (removeFilter) {
+      this._filterService.deleteFilter('professionals');
+    } else {
+      this._filterService.addFilter({
+        status: 'PROFESSIONALS',
+        questionId: 'professionals',
+        value: filterValue
+      });
+    }
+  }
+
   public registerNewFilter() {
 
     const find = this._sharedFiltersList.find((filter) => filter.name.toLowerCase() === this._filterName.toLowerCase());
