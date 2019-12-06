@@ -72,8 +72,8 @@
         <div class="d-flex flex-wrap m-bottom-3">
           <p class="text-sm text-medium text-notify">
             <span *ngIf="project?.owner?.name">{{ project?.owner?.name }}</span>
-            <span *ngIf="project?.owner?.company" class="m-left-1 m-right-1">-</span>
-            <span *ngIf="project?.owner?.company">{{ project?.owner?.company }}</span>
+            <span *ngIf="project?.owner?.company?.name" class="m-left-1 m-right-1">-</span>
+            <span *ngIf="project?.owner?.company?.name">{{ project?.owner?.company?.name }}</span>
             <span *ngIf="project.created" class="m-left-1 m-right-1">-</span>
             <span>{{ 'COMMON.LABEL.CREATED_ON' | translate }} {{ project.created | date:dateFormat }}</span>
             <span class="m-left-1 m-right-1">-</span>
