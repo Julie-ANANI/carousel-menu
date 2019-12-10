@@ -102,8 +102,9 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
           this._contentHash = SharedTextZoneComponent.hashString(this._text);
           editor
             .on('MouseLeave', () => {
+              //When the user leaves the tinyMCE box, we save the content
               const actualHash = this._contentHash;
-              const content = editor.getContent();
+              const content = this._htmlToString(editor.getContent());
               this._contentHash = SharedTextZoneComponent.hashString(content);
               if (this._contentHash !== actualHash) {
                 this.onTextChange.emit({content: content});
@@ -119,6 +120,11 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
         this.editor.setContent(this._text);
       }
     }
+  }
+
+  private _htmlToString(htmlContent: string) {
+    const regex: RegExp = new RegExp(/<span style=\"[\w; :#-]*\" contenteditable=\"[\w]*\" data-original-variable=\"([A-Z_]*)\">.*<\/span>/, 'g');
+    return htmlContent.replace(regex, '*|$1|*');
   }
 
   _configEditor(name: string) {

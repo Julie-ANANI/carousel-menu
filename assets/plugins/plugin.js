@@ -88,11 +88,7 @@ tinymce.PluginManager.add('variable', function(editor) {
    * convert variable strings into html elements
    * @return {void}
    */
-  const stringToHTML = () =>
-  {
-    // we save the cursor position
-    cursor = editor.selection.getNode();
-    offset = editor.selection.getRng().startOffset;
+  const stringToHTML = () => {
 
     const nodeList = [];
     let nodeValue;
@@ -120,57 +116,6 @@ tinymce.PluginManager.add('variable', function(editor) {
       }
 
       editor.dom.remove(nodeList[i]);
-    }
-    try {
-      editor.selection.setCursorLocation(cursor, offset);
-    } catch (e) {
-      //FIXME: understand why an error is thrown ?!
-    }
-  };
-
-  /**
-   * convert HTML variables back into their original string format
-   * for example when a user opens source view
-   * @return {void}
-   */
-  const htmlToString = () =>
-  {
-    // we save the cursor position
-    cursor = editor.selection.getNode();
-    offset = editor.selection.getRng().startOffset;
-
-    const nodeList = [];
-    let nodeValue;
-    let node;
-    let div;
-
-    // find nodes that contain a HTML variable
-    tinymce.walk( editor.getBody(), n => {
-      if (n.nodeType == 1) {
-        let original = n.getAttribute('data-original-variable');
-        if (original !== null) {
-          nodeList.push(n);
-        }
-      }
-    }, 'childNodes');
-
-    // loop over all nodes that contain a HTML variable
-    for (let i = 0; i < nodeList.length; i++) {
-      nodeValue = `*|${nodeList[i].getAttribute('data-original-variable')}|*`;
-      div = editor.dom.create('div', null, nodeValue);
-      while ((node = div.lastChild)) {
-        editor.dom.insertAfter(node, nodeList[i]);
-      }
-
-      // remove HTML variable node
-      // because we now have an text representation of the variable
-      editor.dom.remove(nodeList[i]);
-    }
-
-    try {
-      editor.selection.setCursorLocation(cursor, offset);
-    } catch (e) {
-      //FIXME: understand why an error is thrown ?!
     }
   };
 
@@ -205,10 +150,8 @@ tinymce.PluginManager.add('variable', function(editor) {
     });
   };
 
-  editor.on('nodechange', stringToHTML );
   editor.on('keyup', stringToHTML );
-  editor.on('beforegetcontent', htmlToString);
-  editor.on('getcontent', stringToHTML);
+  editor.on('setcontent', stringToHTML );
   editor.on('click', handleClick);
 
   this.addVariable = addVariable;
