@@ -1,0 +1,49 @@
+.enterprise-management-wrapper {
+  margin-top: 20px;
+}
+
+
+.search-button {
+  margin-top: 15px;
+}
+
+.top-button-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.patterns-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.pattern-item {
+  flex-shrink: 1;
+}
+
+.logo-info-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo-item {
+  flex-shrink: 1;
+}
+
+.logo-image {
+  position: relative;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+}
+
+.logo-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.change-symbol {
+  color: black;
+}

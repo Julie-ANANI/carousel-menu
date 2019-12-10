@@ -1,0 +1,216 @@
+<div class="enterprise-management-wrapper">
+  <div class="top-button-container">
+    <button
+        class="button is-primary is-lg"
+        style="min-width: 215px"
+        type="submit"
+        (click)="createEnterpriseSidebar($event)">
+      <span><i class="fas fa-plus"></i>Create enterprise</span>
+    </button>
+  </div>
+  <div [hidden]="results.length > 0">
+    <form novalidate [formGroup]="searchForm" (ngSubmit)="doSearch()" autocomplete="off">
+      <!-- First name -->
+      <div class="form-group has-error">
+        <label class="form-label" for="search-form-searchString">Search here!</label>
+        <input
+            class="form-input"
+            formControlName="searchString"
+            id="search-form-searchString"
+            type="text"
+            placeholder="Your search here">
+
+        <div class="search-button text-center">
+          <button
+              [disabled]="searchForm.get('searchString').value === ''"
+              class="button is-primary is-lg"
+              style="min-width: 215px"
+              type="submit">
+            <span [hidden]="!displayLoading" class="loading is-white"></span>
+            <span [hidden]="displayLoading">Search</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div [hidden]="results.length === 0">
+    The results
+  </div>
+</div>
+
+
+<!-- sign up sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <form novalidate [formGroup]="newEnterpriseForm" (ngSubmit)="createEnterprise()" autocomplete="off">
+      <!-- Company name -->
+      <label class="form-label" for="enterprise-form-name">Enterprise name</label>
+      <input
+          auto-complete
+          class="form-input"
+          formControlName="name"
+          id="enterprise-form-name"
+          type="text"
+          placeholder="New enterprise name"
+          [min-chars]="2"
+          [list-formatter]="autocompleteCompanyListFormatter"
+          [source]="companiesSuggestions"
+          (valueChanged)="selectCompany($event)">
+
+      <!-- Top level domain -->
+      <label class="form-label" for="enterprise-form-domain">Enterprise domain</label>
+      <input
+          class="form-input"
+          formControlName="topLevelDomain"
+          id="enterprise-form-domain"
+          type="text"
+          placeholder="Enterprise domain (enterprise.com)">
+
+      <!-- URL -->
+      <label class="form-label" for="enterprise-form-url">Enterprise url</label>
+      <input
+          class="form-input"
+          formControlName="enterpriseURL"
+          id="enterprise-form-url"
+          type="text"
+          placeholder="Enterprise url">
+
+      <!-- Logo -->
+      <label class="form-label" for="enterprise-form-logo">Enterprise logo</label>
+      <div id="enterprise-form-logo" class="logo-info-container">
+        <div class="add-milestone logo-item">
+          <div class="logo-image" (click)="changeLogo($event)">
+            <img width="150px" height="150px" src="{{logoUrl}}">
+            <div class="logo-centered">
+              <span class="fa-stack change-symbol">
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-pencil-alt fa-stack-1x"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <input
+            class="form-input logo-item"
+            formControlName="logo"
+            type="hidden"
+            placeholder="Enterprise logo">
+      </div>
+
+      <!-- Subsidiaries -->
+      <label class="form-label" for="enterprise-form-subsidiaries">Enterprise subsidiaries</label>
+      <input
+          class="form-input"
+          formControlName="subsidiaries"
+          id="enterprise-form-subsidiaries"
+          type="text"
+          placeholder="Enterprise subsidiaries">
+
+      <!-- Parent enterprise -->
+      <label class="form-label" for="enterprise-form-parent">Parent enterprise</label>
+      <input
+          class="form-input"
+          formControlName="parentEnterprise"
+          id="enterprise-form-parent"
+          type="text"
+          placeholder="Parent enterprise">
+
+      <!-- Patterns -->
+      <label class="form-label" for="enterprise-form-patterns">Enterprise pattern</label>
+      <div id="enterprise-form-patterns" class="patterns-container">
+        <input
+            class="form-input pattern-item"
+            formControlName="patterns"
+            type="text"
+            placeholder="Enterprise patterns">
+        <div class="add-milestone pattern-item" (click)="newPattern($event)">
+          <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+
+      <!-- <div formArrayName="patterns" id="enterprise-form-patterns">
+        <ng-container *ngFor="let pattern of patterns.controls; index as i">
+          <div [formGroupName]="i" class="columns">
+            <div class="column col-5">
+              <div class="form-group">
+                <label class="form-label" for="enterprise-form-{{i}}-pattern">Pattern {{i+1}}</label>
+                <input
+                    class="form-input"
+                    formControlName="name"
+                    id="enterprise-form-{{i}}-pattern"
+                    type="text"
+                    placeholder="Enter a pattern">
+              </div>
+            </div>
+            <div class="column col-2">
+              <button (click)="removePattern($event, i)" class="button is-action is-danger is-circled is-sm">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <div class="add-milestone" (click)="newPattern($event)">
+          <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
+        </div>
+      </div> -->
+
+      <!-- Enterprise type -->
+      <label class="form-label" for="enterprise-form-enterpriseType">Enterprise type</label>
+      <input
+          class="form-input"
+          formControlName="enterpriseType"
+          id="enterprise-form-enterpriseType"
+          type="text"
+          placeholder="Enterprise type">
+
+      <!-- Enterprise industries -->
+      <label class="form-label" for="enterprise-form-industries">Enterprise industries</label>
+      <input
+          class="form-input"
+          formControlName="industries"
+          id="enterprise-form-industries"
+          type="text"
+          placeholder="Enterprise industries">
+
+      <!-- Enterprise brands -->
+      <label class="form-label" for="enterprise-form-brands">Enterprise brands</label>
+      <input
+          class="form-input"
+          formControlName="brands"
+          id="enterprise-form-brands"
+          type="text"
+          placeholder="Enterprise brands">
+
+      <!-- Enterprise geographical zone -->
+      <label class="form-label" for="enterprise-form-geographicalZone">Enterprise geographical zone</label>
+      <input
+          class="form-input"
+          formControlName="geographicalZone"
+          id="enterprise-form-geographicalZone"
+          type="text"
+          placeholder="Enterprise geographical zone">
+
+      <!-- Submit button -->
+      <div class="signup-wrapper section-light-pad rm-pad-bottom text-center">
+        <button
+            [disabled]="newEnterpriseForm.invalid"
+            class="button is-primary is-lg"
+            style="min-width: 215px"
+            type="submit">
+          Save
+        </button>
+      </div>
+
+    </form>
+  </div>
+</app-sidebar>
+<!-- /new enterprise sidebar -->
+
+<app-modal [(showModal)]="uploadLogoModal" [title]="'Upload a file for the new logo'">
+  <section class="modal-body">
+  <div>
+    <app-shared-upload-zone-photo [uri]="logoUploadUri" (cbFn)="uploadImage($event)"></app-shared-upload-zone-photo>
+  </div>
+  </section>
+</app-modal>
+

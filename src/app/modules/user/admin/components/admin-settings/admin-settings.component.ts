@@ -9,7 +9,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 
 export class AdminSettingsComponent implements OnInit {
 
-  private _tabs: Array<string> = ['blacklist', 'countries'];
+  private _tabs: Array<string> = ['blacklist', 'countries', 'enterprises'];
 
   constructor(private translateTitleService: TranslateTitleService) {}
 
