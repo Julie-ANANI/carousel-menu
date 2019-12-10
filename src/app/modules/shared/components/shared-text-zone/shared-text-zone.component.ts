@@ -23,7 +23,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     this._text = value;
     this._contentHash = SharedTextZoneComponent.hashString(value);
     if (this.editor) {
-      this._setContent(this._text);
+      this.editor.setContent(this._text);
     }
   }
 
@@ -36,8 +36,6 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   @Output() onTextChange = new EventEmitter<any>();
 
   private _contentHash: number;
-
-  private _bookmark: any;
 
   private _text: string;
 
@@ -77,6 +75,9 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     const plugins = ['link', 'paste', 'lists', 'advlist', 'textcolor'];
+    if (this.useVariables) {
+      plugins.push('variable');
+    }
     if (isPlatformBrowser(this.platformId) && !this.readonly) {
       tinymce.init({
         selector: '#' + this._htmlId,
@@ -100,15 +101,13 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
           this.editor = editor;
           this._contentHash = SharedTextZoneComponent.hashString(this._text);
           editor
-            .on('Change', () => {
+            .on('MouseLeave', () => {
+              //When the user leaves the tinyMCE box, we save the content
               const actualHash = this._contentHash;
-              this._bookmark = this.editor.selection.getBookmark();
               const content = this._htmlToString(editor.getContent());
               this._contentHash = SharedTextZoneComponent.hashString(content);
               if (this._contentHash !== actualHash) {
                 this.onTextChange.emit({content: content});
-              } else {
-                this._setContent(content);
               }
               /*if(this._sharedEditor) {
                 this._sharedEditor.set('text', this._text);
@@ -118,40 +117,13 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
         },
       });
       if (this._text && this.editor) {
-        this.editor.setContent(this._stringToHtml(this._text));
+        this.editor.setContent(this._text);
       }
     }
   }
 
-  private _setContent(content: string) {
-    console.log(content);
-    const htmlContent = this._stringToHtml(content);
-    this.editor.setContent(htmlContent);
-    console.log(htmlContent);
-    this.editor.selection.moveToBookmark(this._bookmark);
-  }
-
-  private _stringToHtml(content: string) {
-    const htmlVariable = (variable: string) => {
-      return `<span style="color:#0B90C6; background-color: #CCEBF8; padding: 4px 10px; font-size: 12px; border-radius: 3px; margin-left: 2px; margin-right: 4px; margin-bottom: 4px;" data-original-variable="${variable}" contenteditable="false">${this._variableMapping[variable]}</span>`;
-    };
-
-    let htmlContent = content;
-    const regex = new RegExp(/\*\|(.*)\|\*/, 'g');
-    let variables = content.match(regex);
-    if(variables) {
-      variables = variables.map((variable: string) => variable.replace(/[\|\*]*/g, ''));
-      variables.forEach((variable: string) => {
-        if (this._variableMapping[variable]) {
-          htmlContent = htmlContent.replace(`*|${variable}|*`, htmlVariable(variable));
-        }
-      });
-    }
-    return htmlContent;
-  }
-
   private _htmlToString(htmlContent: string) {
-    const regex: RegExp = new RegExp(/<span style=\"[\w; :#-]*\" contenteditable=\"[\w]*\" data-original-variable=\"([A-Z_]*)\">[\w\s]*<\/span>/, 'g');
+    const regex: RegExp = new RegExp(/<span style=\"[\w; :#-]*\" contenteditable=\"[\w]*\" data-original-variable=\"([A-Z_]*)\">.*<\/span>/, 'g');
     return htmlContent.replace(regex, '*|$1|*');
   }
 
