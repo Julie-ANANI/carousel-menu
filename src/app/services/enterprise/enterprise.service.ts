@@ -14,8 +14,8 @@ export class EnterpriseService {
     return this._http.post(`/enterprise/`, enterprise);
   }
 
-  public get(id?: string, config?: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get( `/enterprise/${id?id:''}`, config );
+  public get(id?: string, config?: {[header: string]: string | string[] }): Observable<any> {
+    return this._http.get( `/enterprise/${id?id:''}`, {params: config} );
   }
 
   public remove(professionalId: string): Observable<any> {

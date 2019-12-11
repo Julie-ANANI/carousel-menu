@@ -4,11 +4,11 @@
         class="button is-primary is-lg"
         style="min-width: 215px"
         type="submit"
-        (click)="createEnterpriseSidebar($event)">
+        (click)="openSidebar($event, 'create')">
       <span><i class="fas fa-plus"></i>Create enterprise</span>
     </button>
   </div>
-  <div [hidden]="results.length > 0">
+  <div [hidden]="results">
     <form novalidate [formGroup]="searchForm" (ngSubmit)="doSearch()" autocomplete="off">
       <!-- First name -->
       <div class="form-group has-error">
@@ -34,13 +34,21 @@
     </form>
   </div>
 
-  <div [hidden]="results.length === 0">
-    The results
+  <!-- the results go here! -->
+  <div [hidden]="!results">
+    <app-shared-table
+        [data]="resultTableConfiguration"
+        [(config)]="queryConfig"
+        (editRow)="openSidebar($event, 'edit')">
+    </app-shared-table>
+  </div>
+  <div [hidden]="!nothingFound">
+    <h5>I tried hard, but couldn't find anything. Try harder and refine your search (or create a new enterprise)</h5>
   </div>
 </div>
 
 
-<!-- sign up sidebar -->
+<!-- new/edit enterprise sidebar -->
 <app-sidebar [(template)]="sidebarValue">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <form novalidate [formGroup]="newEnterpriseForm" (ngSubmit)="createEnterprise()" autocomplete="off">
@@ -204,7 +212,7 @@
     </form>
   </div>
 </app-sidebar>
-<!-- /new enterprise sidebar -->
+<!-- /new/edit enterprise sidebar -->
 
 <app-modal [(showModal)]="uploadLogoModal" [title]="'Upload a file for the new logo'">
   <section class="modal-body">

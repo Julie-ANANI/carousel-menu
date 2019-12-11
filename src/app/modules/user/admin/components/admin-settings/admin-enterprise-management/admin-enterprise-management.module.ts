@@ -19,7 +19,7 @@ import {SharedUploadZonePhotoModule} from "../../../../../shared/components/shar
     CommonModule,
     SidebarModule,
     TableModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     SidebarEmailFormModule,
     ModalModule,
     ReactiveFormsModule,

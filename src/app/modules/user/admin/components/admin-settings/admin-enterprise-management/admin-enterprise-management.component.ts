@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import {Clearbit} from "../../../../../../models/clearbit";
 import {AutocompleteService} from "../../../../../../services/autocomplete/autocomplete.service";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {Table} from "../../../../../table/models/table";
 
 
 @Component({
@@ -26,7 +27,37 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private _sidebarValue: SidebarInterface = {};
   private _uploadLogoModal: boolean = false;
 
-  private _results: Array<any> = [];
+  private _results: boolean = false;
+  private _nothingFound: boolean = false;
+
+  private _queryConfig: any = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
+
+  private _resultTableConfiguration: Table = {
+    _selector: 'admin-enterprises-table',
+    _title: 'ENTERPRISE.TITLE',
+    _content: [],
+    _total: 0,
+    _isTitle: true,
+    _isSearchable: false,
+    _isSelectable: true,
+    _isEditable: true,
+    _isPaginable: true,
+    _clickIndex: 2,
+    _columns: [
+      {_attrs: ['logo.uri'], _name: 'ENTERPRISE.LOGO', _type: 'PICTURE', _isSearchable: false},
+      {_attrs: ['name'], _name: 'ENTERPRISE.NAME', _type: 'TEXT', _isSearchable: true},
+      {_attrs: ['topLevelDomain'], _name: 'ENTERPRISE.TOP_LEVEL_DOMAIN', _type: 'TEXT', _isSortable: true},
+      {_attrs: ['enterpriseURL'], _name: 'ENTERPRISE.ENTERPRISE_URL', _type: 'TEXT', _isSortable: true},
+      {_attrs: ['subsidiaries'], _name: 'ENTERPRISE.SUBSIDIARIES', _type: 'LENGTH', _isSearchable: false},
+      {_attrs: ['parentEnterprise.name'], _name: 'ENTERPRISE.PARENT_ENTERPRISE', _type: 'TEXT', _isSearchable: true}
+    ]
+  };
 
   constructor(private _enterpriseService: EnterpriseService,
               private _formBuilder: FormBuilder,
@@ -41,22 +72,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     });
 
     // New company form
-    /*
-    logo: {
-        uri: {
-          type: String,
-          default: 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png' //TODO put here a generic logo
-        },
-        alt: {
-          type: String,
-          default: 'Company name'
-        },
-        id: {
-          type: String,
-          default: ''
-        }
-      }
-     */
     this._newEnterpriseForm = this._formBuilder.group({
       name: [null, [Validators.required]],
       topLevelDomain: [null, [Validators.required]],
@@ -79,9 +94,19 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   public doSearch() {
     this._displayLoading = true;
-    this._enterpriseService.get()
-      .subscribe( (result:any) => {
-        console.log(result);
+    this._nothingFound = false;
+    this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
+    // This is a search because the fucking indexes are not working grrrr
+    this._enterpriseService.get(null, this._queryConfig)
+      .subscribe( (enterprises:any) => {
+        if(enterprises && enterprises.result && enterprises.result.length) {
+          this._resultTableConfiguration._content = enterprises.result;
+          this._resultTableConfiguration._total = enterprises._metadata.totalCount;
+          this._results = true;
+        } else {
+          this._results = false;
+          this._nothingFound = true;
+        }
         this._displayLoading = false;
       }, (err: any)=> {
         console.error(err);
@@ -89,12 +114,26 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       });
   }
 
-  public createEnterpriseSidebar(event: Event) {
-    console.log("Let's open the sidebar");
-    this._sidebarValue = {
-      animate_state: 'active',
-      title: 'Add a new enterprise',
-      type: 'enterprise'
+  public openSidebar(event: Event, type: string) {
+    switch(type) {
+      case 'create':
+        event.preventDefault();
+        this._sidebarValue = {
+          animate_state: 'active',
+          title: 'Add a new enterprise',
+          type: 'enterprise'
+        };
+        break;
+      case 'edit':
+        this._newEnterpriseForm.patchValue(event);
+        this._sidebarValue = {
+          animate_state: 'active',
+          title: 'Edit enterprise',
+          type: 'enterprise'
+        };
+        break;
+      default:
+        //NOOP
     }
   }
 
@@ -160,7 +199,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   public changeLogo(event: Event) {
     event.preventDefault();
     this._uploadLogoModal = true;
-    console.log("Change the logo");
   }
 
   public removePattern(event: Event, index: number) {
@@ -178,7 +216,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return `/enterprise....`;
   }
 
-  get results(): Array<any> {
+  get results(): boolean {
     return this._results;
   }
 
@@ -207,7 +245,9 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   }
 
   get logoUrl(): string {
-    return this._newEnterpriseForm.get('logo').value || this._defaultLogoURI;
+    let logoValue = this._newEnterpriseForm.get('logo').value;
+    logoValue = logoValue && typeof logoValue === 'object' ?  logoValue.uri || this._defaultLogoURI : logoValue;
+    return  logoValue || this._defaultLogoURI;
   }
 
   get uploadLogoModal(): boolean {
@@ -216,6 +256,22 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set uploadLogoModal(value: boolean) {
     this._uploadLogoModal = value;
+  }
+
+  get resultTableConfiguration(): Table {
+    return this._resultTableConfiguration;
+  }
+
+  get queryConfig(): any {
+    return this._queryConfig;
+  }
+
+  set queryConfig(value: any) {
+    this._queryConfig = value;
+  }
+
+  get nothingFound(): boolean {
+    return this._nothingFound;
   }
 
 }
