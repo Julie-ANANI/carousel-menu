@@ -14,6 +14,11 @@
 
 .patterns-container {
   display: flex;
+  flex-direction: column;
+}
+
+.patterns-form-container {
+  display: flex;
   flex-direction: row;
 }
 
@@ -46,4 +51,9 @@
 
 .change-symbol {
   color: black;
+}
+
+.delete-pattern {
+  margin-left: 15px;
+  cursor: pointer;
 }

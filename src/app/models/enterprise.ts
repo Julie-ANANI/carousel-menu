@@ -1,4 +1,4 @@
-interface Pattern {
+export interface Pattern {
   pattern: {expression: string};
   avg?: number
 }
@@ -10,6 +10,7 @@ interface LogoMedia {
 }
 
 export interface Enterprise {
+  id?: string;
   name: string;
   topLevelDomain: string;
   enterpriseURL?: string;

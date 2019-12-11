@@ -51,7 +51,7 @@
 <!-- new/edit enterprise sidebar -->
 <app-sidebar [(template)]="sidebarValue">
   <div class="column col-xs-12 col-11 col-mx-auto">
-    <form novalidate [formGroup]="newEnterpriseForm" (ngSubmit)="createEnterprise()" autocomplete="off">
+    <form novalidate [formGroup]="newEnterpriseForm" (ngSubmit)="saveEnterprise()" autocomplete="off">
       <!-- Company name -->
       <label class="form-label" for="enterprise-form-name">Enterprise name</label>
       <input
@@ -116,23 +116,52 @@
 
       <!-- Parent enterprise -->
       <label class="form-label" for="enterprise-form-parent">Parent enterprise</label>
-      <input
-          class="form-input"
-          formControlName="parentEnterprise"
-          id="enterprise-form-parent"
-          type="text"
-          placeholder="Parent enterprise">
-
+      <div class="patterns-container">
+        <div id="enterprise-form-parent" class="patterns-form-container">
+          <input
+              auto-complete
+              class="form-input"
+              formControlName="parentEnterprise"
+              type="text"
+              placeholder="Parent enterprise"
+              [min-chars]="2"
+              [list-formatter]="autocompleteEnterpriseListFormatter"
+              [source]="enterpriseSuggestions"
+              (valueChanged)="selectEnterprise($event)">
+        </div>
+        <div class="patterns-container" *ngFor="let pattern of activePatterns; index as i">
+          <div class="patterns-form-container">
+            <div class="pattern-item">
+              <p>{{pattern.pattern.expression}}</p>
+            </div>
+            <div class="pattern-item delete-pattern" (click)="removePattern($event, i)">
+              <span><i class="fas fa-trash"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Patterns -->
       <label class="form-label" for="enterprise-form-patterns">Enterprise pattern</label>
-      <div id="enterprise-form-patterns" class="patterns-container">
-        <input
-            class="form-input pattern-item"
-            formControlName="patterns"
-            type="text"
-            placeholder="Enterprise patterns">
-        <div class="add-milestone pattern-item" (click)="newPattern($event)">
-          <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
+      <div class="patterns-container">
+        <div id="enterprise-form-patterns" class="patterns-form-container">
+          <input
+              class="form-input pattern-item"
+              formControlName="patterns"
+              type="text"
+              placeholder="Enterprise patterns">
+          <div class="add-milestone pattern-item" (click)="newPattern($event)">
+            <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="patterns-container" *ngFor="let pattern of activePatterns; index as i">
+          <div class="patterns-form-container">
+            <div class="pattern-item">
+              <p>{{pattern.pattern.expression}}</p>
+            </div>
+            <div class="pattern-item delete-pattern" (click)="removePattern($event, i)">
+              <span><i class="fas fa-trash"></i></span>
+            </div>
+          </div>
         </div>
       </div>
 

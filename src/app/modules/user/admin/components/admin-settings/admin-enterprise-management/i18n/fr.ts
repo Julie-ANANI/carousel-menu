@@ -6,6 +6,7 @@ export const ENTERPRISE = {
   'LOGO': 'Logo',
   'SUBSIDIARIES': 'Filiales',
   'PARENT_ENTERPRISE': 'Entreprise mère',
+  'PATTERNS': 'Patterns',
   'PATTERN': {
     'VALUE': 'Pattern',
     'AVG_SCORE': 'Taux conf. moy.'
