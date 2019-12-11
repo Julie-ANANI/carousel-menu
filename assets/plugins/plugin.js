@@ -29,12 +29,6 @@ tinymce.PluginManager.add('variable', function(editor) {
   const valid = editor.getParam("variable_valid", null);
 
   /**
-   * Prefix and suffix to use to mark a variable
-   * @type {string}
-   */
-  const stringVariableRegex = new RegExp(/\*\|([A-Z. _]*)\|\*/, 'g');
-
-  /**
    * check if a certain variable is valid
    * @param {string} name
    * @return {bool}
@@ -90,6 +84,7 @@ tinymce.PluginManager.add('variable', function(editor) {
    */
   const stringToHTML = () => {
 
+    const stringVariableRegex = new RegExp(/\*\|(.*)\|\*/, 'g');
     const nodeList = [];
     let nodeValue;
     let node;

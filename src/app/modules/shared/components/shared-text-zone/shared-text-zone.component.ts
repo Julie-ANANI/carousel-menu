@@ -22,9 +22,6 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   @Input() set data(value: string) {
     this._text = value;
     this._contentHash = SharedTextZoneComponent.hashString(value);
-    if (this.editor) {
-      this.editor.setContent(this._text);
-    }
   }
 
   @Input() set variableMapping(value: any) {
@@ -74,14 +71,10 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const plugins = ['link', 'paste', 'lists', 'advlist', 'textcolor'];
-    if (this.useVariables) {
-      plugins.push('variable');
-    }
     if (isPlatformBrowser(this.platformId) && !this.readonly) {
       tinymce.init({
         selector: '#' + this._htmlId,
-        plugins: plugins, // Voir .angular-cli.json
+        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor'], // Voir .angular-cli.json
         variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
         variable_mapper: this._variableMapping,
         default_link_target: '_blank',
@@ -117,7 +110,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
         },
       });
       if (this._text && this.editor) {
-        this.editor.setContent(this._text);
+        this._setContent(this._text);
       }
     }
   }
@@ -125,6 +118,10 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   private _htmlToString(htmlContent: string) {
     const regex: RegExp = new RegExp(/<span style=\"[\w; :#-]*\" contenteditable=\"[\w]*\" data-original-variable=\"([A-Z_]*)\">.*<\/span>/, 'g');
     return htmlContent.replace(regex, '*|$1|*');
+  }
+
+  private _setContent(content: string) {
+    this.editor.setContent(content);
   }
 
   _configEditor(name: string) {
