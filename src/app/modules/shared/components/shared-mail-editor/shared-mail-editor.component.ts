@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 import { EmailTemplate } from '../../../../models/email-template';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +19,8 @@ interface Mapping {
 @Component({
   selector: 'shared-mail-editor',
   templateUrl: './shared-mail-editor.component.html',
-  styleUrls: ['./shared-mail-editor.component.scss']
+  styleUrls: ['./shared-mail-editor.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class SharedMailEditorComponent {
@@ -147,12 +148,13 @@ export class SharedMailEditorComponent {
     if (professionalId) {
       const pro = this._professionals.find(pro => pro._id === professionalId);
       const language = pro.language;
-      this._professionalPreview = `<h5>${this._emailsObject[language].subject}</h5><p>${this._emailsObject[language].content}</p>`
-        .replace(/\*\|FIRSTNAME\|\*/g, pro.firstName)
-        .replace(/\*\|LASTNAME\|\*/g, pro.lastName)
-        .replace(/\*\|TITLE\|\*/g, this._variableMapping[language].TITLE)
-        .replace(/\*\|CLIENT_NAME\|\*/g, this._variableMapping[language].CLIENT_NAME)
-        .replace(/\*\|COMPANY_NAME\|\*/g, this._variableMapping[language].COMPANY_NAME);
+      const html = '<span class="variable">';
+      this._professionalPreview = `${this._emailsObject[language].subject}<p>${this._emailsObject[language].content}</p>`
+        .replace(/\*\|FIRSTNAME\|\*/g, `${html}${pro.firstName}</span`)
+        .replace(/\*\|LASTNAME\|\*/g, `${html}${pro.lastName}</span`)
+        .replace(/\*\|TITLE\|\*/g, `${html}${this._variableMapping[language].TITLE}</span`)
+        .replace(/\*\|CLIENT_NAME\|\*/g, `${html}${this._variableMapping[language].CLIENT_NAME}</span`)
+        .replace(/\*\|COMPANY_NAME\|\*/g, `${html}${this._variableMapping[language].COMPANY_NAME}</span`);
     } else {
       this._professionalPreview = '';
     }
