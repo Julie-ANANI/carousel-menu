@@ -22,6 +22,9 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   @Input() set data(value: string) {
     this._text = value;
     this._contentHash = SharedTextZoneComponent.hashString(value);
+    if (this.editor && !this.useVariables) {
+      this.editor.setContent(this._text);
+    }
   }
 
   @Input() set variableMapping(value: any) {
