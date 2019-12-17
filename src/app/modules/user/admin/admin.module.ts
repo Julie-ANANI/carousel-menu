@@ -26,6 +26,7 @@ import { SidebarInnovationPreviewModule } from '../../sidebars/components/innova
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
+import { AdminEnterpriseManagementModule } from "./components/admin-settings/admin-enterprise-management/admin-enterprise-management.module";
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
@@ -54,6 +55,7 @@ import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answe
 import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
 import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
 import { ShieldService } from "../../../services/shield/shield.service";
+import { EnterpriseService } from "../../../services/enterprise/enterprise.service";
 
 @NgModule({
   imports: [
@@ -80,7 +82,10 @@ import { ShieldService } from "../../../services/shield/shield.service";
     LogoutModule,
     InputListModule,
     SidebarInnovationPreviewModule,
-    AdminCommunityModule
+    AdminCommunityModule,
+    AdminEnterpriseManagementModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AdminSettingsComponent
@@ -114,7 +119,8 @@ import { ShieldService } from "../../../services/shield/shield.service";
     CampaignAnswersResolver,
     CampaignProfessionalsResolver,
     ProjectTagsPoolResolver,
-    ShieldService
+    ShieldService,
+    EnterpriseService
   ]
 })
 
