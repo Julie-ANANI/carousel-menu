@@ -106,7 +106,9 @@ export const SHARED_PROJECT_EDIT = {
   'PLACEHOLDERS': {
     'COMMENT': 'Commentaire de l\'opérateur',
     'SUGGESTION': 'Suggestion de l\'opérateur',
-  }
+  },
+
+  'ADVISE_BUTTON': 'Conseils de rédaction'
 
 
 };

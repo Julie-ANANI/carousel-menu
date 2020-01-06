@@ -107,6 +107,8 @@ export const SHARED_PROJECT_EDIT = {
   'PLACEHOLDERS': {
     'COMMENT': 'Operator comment',
     'SUGGESTION': 'Operator suggestion',
-  }
+  },
+
+  'ADVISE_BUTTON': 'Writing tips'
 
 };
