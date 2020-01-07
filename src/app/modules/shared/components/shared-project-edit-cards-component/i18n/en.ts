@@ -86,9 +86,9 @@ export const SHARED_PROJECT_EDIT = {
     'HELP': 'We highly recommended and projects with media attached tend to have a much better response rate.',
     'MAIN': 'Main Media',
     'SECONDARY': 'Secondary Medias',
-    'UPLOAD_PICTURE': 'Upload Picture',
-    'UPLOAD_VIDEO': 'Upload Video',
-    'SLIDE': 'drag the file here',
+    'UPLOAD_PICTURE': 'Upload picture',
+    'UPLOAD_VIDEO': 'Upload video',
+    'SLIDE': 'Drag a file here',
     'URL': 'Enter the address of your Youtube or Vimeo video here',
     'MAKE_MAIN': 'Make as main media',
     'NO_MEDIA': 'No media uploaded.'

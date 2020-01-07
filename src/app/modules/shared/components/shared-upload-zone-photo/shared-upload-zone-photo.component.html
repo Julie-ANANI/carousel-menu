@@ -1,18 +1,29 @@
 <file-drop class="drop-container text-center" customstyle="upload-zone" (onFileDrop)="dropped($event)">
 
   <ng-container *ngIf="!loading">
-
     <input (change)="dropped($event)" type="file" #fileInput>
 
-    <button
-      class="btn btn-primary"
-      (click)="fileInput.click($event)">
-      <i class="fas fa-upload"></i>{{ 'SHARED_PROJECT_EDIT.MEDIA.UPLOAD_PICTURE' | translate }}
+    <p class="text-sm text-primary-dark m-no-bottom">
+      {{ 'SHARED_PROJECT_EDIT.MEDIA.SLIDE' | translate }}
+    </p>
+
+    <div
+      class="divider m-30"
+      [attr.data-content]="'COMMON.OR' | translate | lowercase"
+      [ngStyle]="{ 'width': '120px' }">
+    </div>
+
+    <button (click)="fileInput.click()" class="button is-primary">
+      <i class="fas fa-upload icon-left"></i>
+      {{ 'SHARED_PROJECT_EDIT.MEDIA.UPLOAD_PICTURE' | translate }}
     </button>
 
-    <p class="text">{{ 'COMMON.OR' | translate | lowercase }} {{ 'SHARED_PROJECT_EDIT.MEDIA.SLIDE' | translate }}</p>
+    <p class="text-notify text-xs text-medium m-top-2">
+      {{ 'COMMON.MEDIA.FORMAT' | translate }}, {{ 'COMMON.MEDIA.SIZE' | translate }}
+    </p>
 
   </ng-container>
+
 
   <ng-container *ngIf="loading">
     <div class="loading is-lg"></div>

@@ -388,6 +388,11 @@ export const COMMON = {
   'SIGNATURES': {
     'NO_SIGNATURES_ADMIN': 'Pas de signature. Essayez d\'en ajouter !',
     'DELETE_SIGNATURES': 'Voulez-vous vraiment effacer la ou les signature(s) sélectionnée(s) ?'
+  },
+
+  'MEDIA': {
+    'FORMAT': 'Format : jpeg',
+    'SIZE': 'Max size : 2Mb'
   }
 
 };

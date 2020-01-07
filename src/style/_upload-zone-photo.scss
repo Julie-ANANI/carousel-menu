@@ -22,12 +22,6 @@ file-drop.drop-container {
     min-height: inherit;
   }
 
-  .text {
-    font-size: $font-size-sm;
-    color: $text-primary-dark-color;
-    margin-top: $unit-2;
-  }
-
 }
 
 .ngx-file-drop__drop-zone, .ngx-file-drop__content {
@@ -46,6 +40,15 @@ file-drop.drop-container {
 file-drop.drop-container:hover {
   border-color: $primary-color;
   background-color: $hover-background-color;
+
+  .divider {
+
+    &[data-content]::after {
+      background-color: $hover-background-color;
+    }
+
+  }
+
 }
 
 .nv-file-over {

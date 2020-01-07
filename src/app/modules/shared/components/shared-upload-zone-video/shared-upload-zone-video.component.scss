@@ -5,14 +5,12 @@
   position: relative;
   border-radius: $border-radius;
   min-height: 12.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   padding: $unit-2;
 
-
-  .logos {
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
     padding-bottom: $unit-5;
 
     img {
@@ -25,12 +23,8 @@
     max-width: 450px;
   }
 
-  .form-input.ng-touched.ng-invalid{
+  .form-input.ng-touched.ng-invalid {
     border-color: unset !important;
-  }
-
-  .btn {
-    margin-top: $unit-5;
   }
 
 }
