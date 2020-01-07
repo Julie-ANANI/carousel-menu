@@ -119,28 +119,6 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
 
-  /**
-   * Minor modif
-   */
-  public getMessage(): string {
-    switch (this._innovation.status) {
-
-      case 'EDITING':
-        return this._innovation.reviewing ? 'MARKET_REPORT.MESSAGE.REVIEWING' : 'MARKET_REPORT.MESSAGE.EDITING';
-
-      case 'EVALUATING':
-        return 'MARKET_REPORT.MESSAGE.EVALUATING';
-
-      case 'SUBMITTED':
-        return 'MARKET_REPORT.MESSAGE.SUBMITTED';
-
-      default:
-        return '';
-
-    }
-  }
-
-
   /***
    *This function is to initialize the variables regarding the innovation and the projectt.
    */
