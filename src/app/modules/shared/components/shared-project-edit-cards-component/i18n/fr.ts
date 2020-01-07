@@ -27,7 +27,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'TITLE': {
-      'LABEL': 'Quel titre aimeriez-vous donner à votre projet ?',
+      'LABEL': 'Je donne un titre à mon projet.',
       'PLACEHOLDER': 'Entrez le titre de votre projet',
       'ERROR': 'Veuillez donner un titre à votre projet s\'il vous plaît',
       'HELP': 'Le titre est présent dans l’objet des emails que l’on envoie aux milliers de professionnels, il ne ' +
@@ -35,7 +35,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'SUMMARY': {
-      'LABEL': 'Comment résumeriez-vous votre projet ?',
+      'LABEL': 'Je résume ma solution en 2 lignes.',
       'PLACEHOLDER': 'Le résumé doit être très bref, composé de quelques phrases claires et concises, telles qu\'elles seront présentées dans le corps des courriels de contact qui seront envoyés.',
       'ERROR': 'Veuillez écrire un résumé de votre projet s\'il vous plaît.',
       'HELP': 'Le pitch doit prendre la forme de deux phrases maximum mettant en lumière la proposition de valeur forte et ' +
@@ -43,7 +43,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'PROBLEM': {
-      'LABEL': 'Quelles sont les problématiques du marché ?',
+      'LABEL': 'J’explique le contexte marché et les problématiques rencontrées par celui-ci.',
       'PLACEHOLDER': 'Cette partie est entièrement consacrée à expliquer pourquoi ce concept/innovation a vu le jour, à quel problème mondial ou problème de marché il répond, etc.',
       'ERROR': 'Veuillez décrire le problème qui a motivé votre projet s\'il vous plaît.',
       'HELP': {
@@ -55,7 +55,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'SOLUTION': {
-      'LABEL': 'Décrivez votre solution et comment elle répond à la problématique décrite ?',
+      'LABEL': 'Je décris ma solution et comment elle répond aux problématiques marché citées plus haut.',
       'PLACEHOLDER': 'La description de la solution doit détailler en quoi consiste exactement l\'innovation et ' +
         'comment elle répond aux problèmes susmentionnés de la question précédente. Il n\'est pas nécessaire d\'être ' +
         'trop technique avec beaucoup de chiffres, mais certaines informations dans ce sens aident les répondants à se ' +
@@ -81,7 +81,7 @@ export const SHARED_PROJECT_EDIT = {
   },
 
   'MEDIA': {
-    'LABEL': 'Ajouter des images ou des vidéos à mon projet',
+    'LABEL': 'Ajouter des images ou des vidéos à mon projet.',
     'HELP': 'Nous vous le recommandons car les projets avec des illustrations ont un taux de réponse bien meilleur.',
     'UPLOAD_PICTURE': 'Télécharger la photo',
     'MAIN': 'Média principal',

@@ -55,7 +55,7 @@
 
   <!-- questions section -->
   <section *ngIf="innovation.innovationCards"
-           [ngClass]="isAdminSide ? 'col-11 col-xs-12' : 'col-md-12 col-lg-10 col-xl-8 col-7'">
+           [ngClass]="isAdminSide ? 'col-11 col-xs-12' : 'col-md-12 col-lg-10 col-xl-8 col-8'">
     <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
       <div *ngIf="selectedCardIndex === i">
 
@@ -584,7 +584,7 @@
           <!-- /translation button -->
 
           <!-- input field -->
-          <div class="m-top-25">
+          <div class="m-top-25" [ngStyle]="{ 'max-width': '750px' }">
             <app-input-list
               (update)="updateAdvantage($event, i)"
               [config]="config('advantages')"
