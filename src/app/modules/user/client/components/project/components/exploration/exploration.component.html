@@ -18,7 +18,12 @@
         <!-- section title -->
         <div class="section-title flex-between">
           <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h2>
-          <a class="btn btn-primary gtm-exploration-contact-operator" href="{{ contactUrl }}"><span>{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</span></a>
+          <a
+            *ngIf="contactUrl"
+            class="btn btn-primary gtm-exploration-contact-operator"
+            href="{{ contactUrl }}">
+            <span>{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</span>
+          </a>
         </div>
         <!-- /section title -->
 
