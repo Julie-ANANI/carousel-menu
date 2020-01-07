@@ -1,17 +1,15 @@
-<main class="section-pad" id="welcome-page">
+<main class="p-top-50 p-bottom-50" id="welcome-page">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <section>
 
-      <h1 class="title-primary">{{ 'WELCOME.WELCOME' | translate }} {{ name }}!</h1>
-      <p class="text">{{ 'WELCOME.MAIN_SENTENCE' | translate }}</p>
+      <h1 class="title-primary text-center">{{ 'WELCOME.WELCOME' | translate }} {{ name }}!</h1>
+      <p class="text p-top-20 text-center">{{ 'WELCOME.MAIN_SENTENCE' | translate }}</p>
 
       <ng-container *ngIf="isMainDomain()">
-        <div class="section-light-pad rm-pad-bottom">
-
-          <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif" class="img-responsive" alt=" "/>
+        <div class="p-top-30">
 
           <ng-container *ngIf="isAdmin">
-            <div class="section-light-pad rm-pad-bottom">
+            <div>
 
               <p class="text">{{ 'WELCOME.ADMIN_SENTENCE' | translate }}</p>
 
@@ -24,9 +22,9 @@
             </div>
           </ng-container>
 
-          <h2 class="section-light-pad rm-pad-bottom title-secondary">Happy UMIing!</h2>
+          <h2 class="p-top-25 title-secondary text-center">Happy UMIing!</h2>
 
-          <div class="section-terms">
+          <div class="section-terms text-center">
 
             <span class="text">{{ 'WELCOME.I_UNDERSTAND' | translate }}</span>
 
@@ -42,10 +40,10 @@
       </ng-container>
 
       <ng-container *ngIf="!isMainDomain()">
-        <span class="text">{{ 'WELCOME.I_UNDERSTAND' | translate }} {{ 'WELCOME.TERMS' | translate }}</span>
+        <div class="text text-center">{{ 'WELCOME.I_UNDERSTAND' | translate }} {{ 'WELCOME.TERMS' | translate }}</div>
       </ng-container>
 
-      <div class="section-light-pad rm-pad-bottom">
+      <div class="p-top-25 text-center">
         <button class="btn btn-primary" (click)="acceptTerms($event)" [disabled]="isAdmin && !tokenEmail">
           {{ 'COMMON.ACCEPT' | translate }}
         </button>
