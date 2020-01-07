@@ -70,7 +70,7 @@ export class ExplorationComponent implements OnInit {
     if (this._innovation) {
       this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
 
-      if (this._innovation && this._innovation.operator && this._innovation.operator.email) {
+      if (this._innovation.operator && this._innovation.operator.email) {
         this._contactUrl = encodeURI(`mailto:${this._innovation.operator.email}?subject=` + this._innovation.name);
       } else {
         this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this._innovation.name);
