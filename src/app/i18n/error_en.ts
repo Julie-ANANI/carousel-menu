@@ -33,6 +33,12 @@ export const ERROR = {
 
   'CARD_NOT_FOUND': 'We could not find the innovation that you are looking for.',
 
+  'URL_NOT_FOUND': 'The requested URL was not found on the server.',
+
+  'NO_PERMISSION': 'You don\'t have permission to perform this request.',
+
+  'NO_AUTHORIZED': 'You are not authorized to perform this request.',
+
 
   'FORM': {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',

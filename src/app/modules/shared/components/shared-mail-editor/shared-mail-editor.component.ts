@@ -40,6 +40,7 @@ export class SharedMailEditorComponent {
 
   @Input() set customFields(value: { [prop: string]: Array<{label: string, value: string}> }) {
     this._display = false;
+
     if (value) {
       this._customField = value[this._translateService.currentLang];
 
@@ -48,9 +49,11 @@ export class SharedMailEditorComponent {
           this._variableMapping[valueKey][field.value.replace(/[\|\*]/g, '')] = field.label;
         });
       }
+
       this._display = true;
 
     }
+
   }
 
   @Input() set ccEmail(value: string) {

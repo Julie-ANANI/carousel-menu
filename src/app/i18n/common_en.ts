@@ -396,7 +396,7 @@ export const COMMON = {
 
   'MEDIA': {
     'FORMAT': 'Format: jpeg',
-    'SIZE': 'Max size: 2Mb'
+    'SIZE': 'Max size: 1Mb'
   }
 
 };

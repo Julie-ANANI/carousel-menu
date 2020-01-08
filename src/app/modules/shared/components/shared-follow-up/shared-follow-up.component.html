@@ -1,9 +1,9 @@
-<div id="shared-follow-up">
-  <section class="columns">
+<div *ngIf="project" id="shared-follow-up">
+  <div class="columns">
 
     <!-- table -->
-    <div class="column col-xl-12 col-9">
-      <div class="p-bottom-25">
+    <section class="column col-xl-12 col-9">
+      <div class="p-bottom-30">
 
         <!-- heading -->
         <h6 class="text-sm text-notify m-bottom-10">
@@ -11,6 +11,7 @@
           <span class="text-background">{{ prosWithoutObjective.length }}</span> {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
         </h6>
         <!-- /heading -->
+
 
         <!-- table -->
         <app-shared-table
@@ -23,36 +24,36 @@
         <!-- /table -->
 
       </div>
-    </div>
+    </section>
     <!-- /table -->
 
 
     <!-- emails and finish button -->
-    <div class="column col-sm-12 col-md-5 col-lg-4 col-3">
-      <div [ngStyle]="{ 'min-height': '552px' }" class="d-flex justify-space flex-d-column p-bottom-25">
+    <aside class="column col-sm-12 col-md-5 col-lg-4 col-3">
+      <div [ngStyle]="{ 'min-height': '552px' }" class="d-flex justify-space flex-d-column p-bottom-30">
 
         <!-- emails -->
         <div>
 
           <!-- heading -->
-          <h6 class="text-sm text-notify m-no-bottom" [innerText]="'EMAILS'"></h6>
+          <h6 class="text-sm text-notify m-no-bottom">{{ 'EMAILS' }}</h6>
           <!-- /heading -->
 
 
           <!-- appointment -->
-          <div class="p-bottom-h">
+          <div class="p-top-1 p-bottom-3">
 
-            <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.INTERVIEW'" [ngStyle]="{ 'color': '#1E3147' }"
-                    class="text-sm m-right-2" translate></span>
-              <span (click)="onClickSee($event, 'interview')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
-                    [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs" translate></span>
-            </p>
+            <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
+              <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">{{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}</span>
+              <span (click)="onClickSee($event, 'interview')" [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs">
+                {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
+              </span>
+            </div>
 
-            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+            <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
               <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
               <span>{{ prosInterviewSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
-            </p>
+            </div>
 
           </div>
           <!-- /appointment -->
@@ -64,20 +65,19 @@
 
 
           <!-- open -->
-          <div class="p-top-h p-bottom-h">
+          <div class="p-top-1 p-bottom-3">
 
-            <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.OPENING'" [ngStyle]="{ 'color': '#1E3147' }"
-                    class="text-sm m-right-2" translate></span>
-              <span (click)="onClickSee($event, 'opening')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
-                    [ngStyle]="{ 'margin-top': '3px' }"
-                    class="text-link text-xs" translate></span>
-            </p>
+            <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
+              <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">{{ 'SHARED_FOLLOW_UP.OPENING' | translate }}</span>
+              <span (click)="onClickSee($event, 'opening')" [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs">
+                {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
+              </span>
+            </div>
 
-            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+            <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
               <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
               <span>{{ prosOpeningSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
-            </p>
+            </div>
 
           </div>
           <!-- /open -->
@@ -89,20 +89,19 @@
 
 
           <!-- thank -->
-          <div class="p-top-h p-bottom-h">
+          <div class="p-top-1 p-bottom-3">
 
-            <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.NOFOLLOW'" [ngStyle]="{ 'color': '#1E3147' }"
-                    class="text-sm m-right-2" translate></span>
-              <span (click)="onClickSee($event, 'noFollow')" [innerText]="'SHARED_FOLLOW_UP.BUTTON_SEE'"
-                    [ngStyle]="{ 'margin-top': '3px' }"
-                    class="text-link text-xs" translate></span>
-            </p>
+            <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
+              <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">{{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}</span>
+              <span (click)="onClickSee($event, 'noFollow')" [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs">
+                {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
+              </span>
+            </div>
 
-            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
+            <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
               <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
               <span>{{ prosNoFollowSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
-            </p>
+            </div>
 
           </div>
           <!-- /thank -->
@@ -118,34 +117,32 @@
            {{ prosWithoutObjective.length }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
           </p>
 
-          <button
-            (click)="showSendModal = true"
-            [textContent]="'SHARED_FOLLOW_UP.BUTTON_DONE'"
-            class="button is-lg is-primary"
-            translate>
+          <button (click)="showSendModal = true" class="button is-lg is-primary">
+            {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
           </button>
 
         </div>
         <!-- /button -->
 
       </div>
-    </div>
+    </aside>
     <!-- /emails and finish button -->
 
-  </section>
+  </div>
 </div>
 
 
 <!-- answer sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarAnswer">
   <app-user-answer
-    [sidebarState]="sidebarValue.animate_state"
+    [sidebarState]="sidebarAnswer.animate_state"
     [adminMode]="true"
     [(userAnswer)]="modalAnswer"
     [projectId]="project._id"
     [questions]="questions">
   </app-user-answer>
 </app-sidebar>
+<!-- /answer sidebar -->
 
 
 <!-- filter sidebar -->
@@ -162,19 +159,18 @@
 
 
 <!-- modal for mails -->
-<app-modal *ngIf="emailsObject && showEmailsModal" [(showModal)]="showEmailsModal" [maxWidth]="'1024px'">
+<app-modal *ngIf="emailsObject && showEmailsModal" [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
   <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
     <!-- heading -->
-    <h5 [innerText]="'SHARED_FOLLOW_UP.' + this.modalTemplateType.toUpperCase()"
-        class="title text-lg text-bold text-center"
-        translate>
+    <h5 class="title text-lg text-bold text-center">
+      {{ 'SHARED_FOLLOW_UP.' + this.modalTemplateType.toUpperCase() | translate }}
     </h5>
     <!-- /heading -->
 
 
     <!-- close button -->
-    <div [ngStyle]="{ 'right': '15px', 'top': '23px' }" class="absolute">
+    <div [ngStyle]="{ 'right': '15px', 'top': '21px' }" class="absolute">
       <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
     </div>
     <!-- /close button -->
@@ -195,14 +191,17 @@
 
 
     <!-- save button -->
-    <div  class="text-center">
-      <button (click)="saveProject()" [textContent]="'COMMON.BUTTON.SAVE'" class="button is-primary" translate></button>
+    <div class="text-center">
+      <button (click)="saveProject()" [ngStyle]="{ 'min-width': '141px' }" class="button is-primary">
+        {{ 'COMMON.BUTTON.SAVE' | translate }}
+      </button>
     </div>
     <!-- /save button -->
 
   </section>
 </app-modal>
 <!-- /modal for mails -->
+
 
 <!-- modal for warning : objective already assigned -->
 <app-modal [(showModal)]="showWarningModal">
@@ -249,98 +248,117 @@
 
 
 <!-- modal for sending emails : are you sure ? -->
-<app-modal [(showModal)]="showSendModal">
+<app-modal *ngIf="showSendModal" [(showModal)]="showSendModal">
   <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
+    <!-- heading -->
+    <h5 class="title text-lg text-bold text-center">
+      {{ prosInterview.length + prosOpening.length + prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.MODAL.EMAILS_READY' | translate }}
+    </h5>
+    <!-- /heading -->
+
+
     <!-- close button -->
-    <div [ngStyle]="{ 'right': '15px', 'top': '23px' }" class="absolute">
+    <div [ngStyle]="{ 'right': '15px', 'top': '21px' }" class="absolute">
       <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
     </div>
     <!-- /close button -->
 
-    <h5 class="text-center">
-      {{ prosInterview.length + prosOpening.length + prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.MODAL.EMAILS_READY' | translate }}
-    </h5>
 
-    <div class="columns" style="min-height: 150px">
+   <!-- content -->
+    <div [ngStyle]="{ 'min-height': '150px' }" class="p-bottom-20">
+      <div class="columns">
 
-      <div class="col-6">
-        <img src="https://res.cloudinary.com/umi/image/upload/v1574086949/pictos/mix/email.svg" alt=" " class="img-responsive">
-      </div>
+        <!-- image -->
+        <div class="column col-sm-12 col-6 col-mx-auto">
+          <div class="p-top-15">
+            <img
+              src="https://res.cloudinary.com/umi/image/upload/v1574086949/pictos/mix/email.svg"
+              alt=" "
+              class="img-responsive m-auto">
+          </div>
+        </div>
+        <!-- /image -->
 
-      <div class="d-flex justify-center flex-d-column col-6">
+
         <!-- emails -->
-          <!-- appointment -->
-          <div class="p-bottom-h">
+        <div class="column col-sm-12 col-6">
+          <div class="d-flex justify-center flex-d-column p-top-40">
 
-            <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.INTERVIEW'" [ngStyle]="{ 'color': '#1E3147' }"
-                    class="text-sm m-right-2" translate></span>
-            </p>
+            <!-- appointment -->
+            <div class="p-top-1 p-bottom-3">
 
-            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
-              <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}</span>
-            </p>
+              <div [ngStyle]="{ 'line-height': '1', 'color': '#1E3147' }" class="text-bold m-bottom-2 text-sm">
+                {{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}
+              </div>
+
+              <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+                {{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
+              </div>
+
+            </div>
+            <!-- /appointment -->
+
+
+            <!-- divider -->
+            <div class="divider is-lg"></div>
+            <!-- /divider -->
+
+
+            <!-- open -->
+            <div class="p-top-2 p-bottom-3">
+
+              <div [ngStyle]="{ 'line-height': '1', 'color': '#1E3147' }" class="text-bold m-bottom-2 text-sm">
+                {{ 'SHARED_FOLLOW_UP.OPENING' | translate }}
+              </div>
+
+              <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+                {{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
+              </div>
+
+            </div>
+            <!-- /open -->
+
+
+            <!-- divider -->
+            <div class="divider is-lg"></div>
+            <!-- /divider -->
+
+
+            <!-- thank -->
+            <div class="p-top-2 p-bottom-3">
+
+              <div [ngStyle]="{ 'line-height': '1', 'color': '#1E3147' }" class="text-bold m-bottom-2 text-sm">
+                {{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}
+              </div>
+
+              <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+                {{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
+              </div>
+
+            </div>
+            <!-- /thank -->
 
           </div>
-          <!-- /appointment -->
-
-          <!-- divider -->
-          <div class="divider"></div>
-          <!-- /divider -->
-
-          <!-- open -->
-          <div class="p-top-h p-bottom-h">
-
-            <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.OPENING'" [ngStyle]="{ 'color': '#1E3147' }"
-                    class="text-sm m-right-2" translate></span>
-            </p>
-
-            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
-              <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}</span>
-            </p>
-
-          </div>
-          <!-- /open -->
-
-          <!-- divider -->
-          <div class="divider"></div>
-          <!-- /divider -->
-
-          <!-- thank -->
-          <div class="p-top-h p-bottom-h">
-
-            <p class="text-bold m-no-bottom">
-              <span [innerText]="'SHARED_FOLLOW_UP.NOFOLLOW'" [ngStyle]="{ 'color': '#1E3147' }"
-                    class="text-sm m-right-2" translate></span>
-            </p>
-
-            <p class="text-notify text-medium" [ngStyle]="{ 'font-size': '13px' }">
-              <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}</span>
-            </p>
-
-          </div>
-          <!-- /thank -->
+        </div>
         <!-- /emails -->
-      </div>
 
+      </div>
     </div>
+   <!-- /content -->
+
 
     <!-- button -->
     <div class="text-center">
-
       <button
         (click)="onClickConfirm($event)"
-        [textContent]="'COMMON.BUTTON.SEND'"
-        class="button is-lg is-primary"
         [disabled]="loadingButton"
-        translate>
+        class="button is-lg is-primary">
+        {{ 'SHARED_FOLLOW_UP.BUTTON.INFORM_UMI' | translate }}
       </button>
-
     </div>
     <!-- /button -->
 
   </section>
 </app-modal>
-<!-- /modal for mails -->
+<!-- /modal for sending emails : are you sure ? -->

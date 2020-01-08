@@ -26,13 +26,10 @@ export const SHARED_FOLLOW_UP = {
 
   'BUTTON': {
     'INTERVIEW': 'Appointment',
-
     'OPENING': 'Opening',
-
     'NO_FOLLOW': 'No further action',
-
-    'WITHOUT_OBJECTIVE': 'Without objective'
-
+    'WITHOUT_OBJECTIVE': 'Without objective',
+    'INFORM_UMI': 'Inform UMI'
   },
 
   'MODAL': {
