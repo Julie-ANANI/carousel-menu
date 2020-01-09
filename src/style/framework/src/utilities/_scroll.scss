@@ -1,7 +1,7 @@
 @import "../variables";
 
 .scroll-no {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .scroll-y {
@@ -19,7 +19,7 @@
 }
 
 .scroll-xy {
-  display: block;
-  white-space: nowrap;
-  overflow: auto;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: auto !important;
 }

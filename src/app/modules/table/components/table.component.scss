@@ -13,25 +13,111 @@
 
   .table {
 
-    tr {
-      position: relative;
+    thead {
+
+      th {
+        padding: 0;
+
+        &:hover {
+          background-color: $table-th-hover-background-color !important;
+        }
+
+        &.cell-checkbox:hover, &.is-no-hovered:hover {
+          background-color: transparent !important;
+        }
+
+      }
+
+    }
+
+    tbody {
+
+      tr {
+        flex-grow: 1;
+
+        td {
+          padding: 0;
+        }
+
+        &:hover {
+          background-color: $table-tr-hover-background-color;
+        }
+
+        &.disabled {
+          cursor: not-allowed;
+          background-color: #F0F0F0 !important;
+        }
+
+      }
+
+    }
+
+    .flex-wrapper {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: flex-start;
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+    }
+
+    .truncate-text {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+
+    .cell-text {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      flex-grow: 1;
+      padding: 2px 20px;
+    }
+
+    .cell-action {
+      display: flex;
+      align-items: center;
+      padding: 2px 25px;
+      height: 100%;
+
+      .button {
+
+        &.is-link {
+          height: unset;
+        }
+
+        &.is-outlined {
+          border-width: $border-width-lg !important;
+          border-style: solid !important;
+          padding: 6px 16px !important;
+          font-size: 12px !important;
+          text-decoration: none !important;
+        }
+
+      }
+
     }
 
     th, tbody td {
-      max-width: 200px;
+      /*max-width: 200px;
       height: 44px;
       max-height: 44px;
       padding: $unit-h $unit-5;
 
       &.max-width {
         max-width: 300px;
-      }
+      }*/
 
     }
 
     th {
 
-      .th-name {
+      /*.th-name {
         top: 50%;
         margin-top: -19px;
         height: 38px;
@@ -51,21 +137,21 @@
           text-decoration: underline;
         }
 
-      }
+      }*/
 
     }
 
-    th:first-child, tbody tr {
+    /*th:first-child, tbody tr {
       border-left-color: transparent;
     }
 
     th:last-child, tbody tr {
       border-right-color: transparent;
-    }
+    }*/
 
     tbody {
 
-      tr {
+      /*tr {
 
         td {
 
@@ -260,12 +346,12 @@
           background-color: #F0F0F0;
         }
 
-      }
+      }*/
 
     }
 
     .th-checkbox {
-      min-width: 45px !important;
+      /*min-width: 45px !important;
       max-width: 45px !important;
       width: 45px !important;
       padding: 0.5rem !important;
@@ -302,12 +388,24 @@
 
         }
 
-      }
+      }*/
 
     }
 
   }
 
+
+}
+
+@media screen and (min-width: $size-2x) {
+
+  #table-wrapper {
+
+    .table-responsive {
+      overflow-x: hidden;
+    }
+
+  }
 
 }
 
