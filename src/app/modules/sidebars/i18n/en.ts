@@ -4,6 +4,7 @@ export const SIDEBAR = {
     'SIGN_UP': 'Sign Up',
     'COLLABORATOR': 'Collaborators Management',
     'PREVIEW': 'Preview',
+    'EXAMPLE': 'Innovation Example',
     'EDIT_USER': 'Edit User',
     'EDIT_PROFESSIONAL': 'Edit Professional',
     'ADD_TAGS': 'Add Tags',
