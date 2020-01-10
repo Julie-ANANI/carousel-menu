@@ -1,4 +1,4 @@
-<div class="tooltip" [attr.data-tooltip]="name" id="country-flag" *ngIf="countryToDisplay">
+<div *ngIf="countryToDisplay" [attr.data-tooltip]="name" class="tooltip d-flex" id="country-flag">
   <img
     [height]="height"
     [ngStyle]="{ 'height': height + 'px', 'width': width + 'px' }"

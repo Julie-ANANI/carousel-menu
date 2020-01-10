@@ -15,7 +15,6 @@ export interface Column {
   readonly _width?: string;
   readonly _maxWidth?: string;
   readonly _enableTooltip?: boolean;
-  readonly _imgHeight?: string;
 }
 
 export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'MULTI-IMAGE-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL' | 'MULTILING' | 'TAG-LIST' | 'COUNTRY-NAME' | 'LENGTH' | 'DAYS-TO' | 'DROPDOWN';

@@ -147,10 +147,14 @@
     }
 
     td {
-      // border-top: $border-width solid $table-tr-border-color;
+
+      &.cell-checkbox {
+        border-right: none !important;
+      }
+
     }
 
-    &.is-active {
+    &.active {
       background: $table-tr-hover-background-color;
     }
 

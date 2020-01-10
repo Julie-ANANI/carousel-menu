@@ -13,45 +13,6 @@
 
   .table {
 
-    thead {
-
-      th {
-        padding: 0;
-
-        &:hover {
-          background-color: $table-th-hover-background-color !important;
-        }
-
-        &.cell-checkbox:hover, &.is-no-hovered:hover {
-          background-color: transparent !important;
-        }
-
-      }
-
-    }
-
-    tbody {
-
-      tr {
-        flex-grow: 1;
-
-        td {
-          padding: 0;
-        }
-
-        &:hover {
-          background-color: $table-tr-hover-background-color;
-        }
-
-        &.disabled {
-          cursor: not-allowed;
-          background-color: #F0F0F0 !important;
-        }
-
-      }
-
-    }
-
     .flex-wrapper {
       display: flex;
       flex-grow: 1;
@@ -66,7 +27,6 @@
       display: flex;
       flex-direction: row;
       flex-grow: 1;
-      justify-content: space-between;
       height: 100%;
       width: 100%;
     }
@@ -97,6 +57,110 @@
           padding: 6px 16px !important;
           font-size: 12px !important;
           text-decoration: none !important;
+        }
+
+      }
+
+    }
+
+    thead {
+
+      th {
+        padding: 0;
+
+        &:hover {
+          background-color: $table-th-hover-background-color !important;
+        }
+
+        &.cell-checkbox:hover, &.is-no-hovered:hover {
+          background-color: transparent !important;
+        }
+
+      }
+
+    }
+
+    tbody {
+
+      tr {
+        flex-grow: 1;
+
+        td {
+          font-size: 13px;
+          padding: 0;
+
+          &:not(.cell-checkbox) {
+            padding: 2px 25px;
+          }
+
+          .td-tag-label {
+            display: block;
+            max-width: 100px;
+          }
+
+          .td-multi-choice-label {
+            display: block;
+            margin: 0;
+            width: 100%;
+            max-width: 100px;
+          }
+
+          .td-multi-label {
+            display: block;
+            margin: 0;
+            padding: $unit-2;
+            width: 100%;
+            max-width: 60px;
+            border-radius: 3px;
+
+            &.is-left-label {
+              border-bottom-right-radius: 0;
+              border-top-right-radius: 0;
+            }
+
+            &.is-middle-label {
+              border-radius: 0;
+            }
+
+            &.is-right-label {
+              border-bottom-left-radius: 0;
+              border-top-left-radius: 0;
+            }
+
+          }
+
+          .clickable-text {
+            cursor: pointer;
+
+            &:hover {
+              color: $primary-color;
+            }
+
+            &.active {
+              color: $primary-color;
+            }
+
+          }
+
+          .td-dropdown {
+
+            .button {
+              font-size: $font-size-xs;
+              padding: 6px 9px;
+              height: unset;
+            }
+
+          }
+
+        }
+
+        &:hover {
+          background-color: $table-tr-hover-background-color;
+        }
+
+        &.disabled {
+          cursor: not-allowed;
+          background-color: #F0F0F0 !important;
         }
 
       }
