@@ -1,6 +1,6 @@
 @import "../../../../../style/framework/src/variables";
 
-#innovation-preview-component {
+#innovation-preview {
   padding-top: 1.5rem;
 
   .title-primary, .title-secondary {
@@ -74,7 +74,7 @@
 
 @media (max-width: $size-xs) {
 
-  #innovation-preview-component {
+  #innovation-preview {
 
     .section-images .media-wrapper {
       margin-left: 0 !important;

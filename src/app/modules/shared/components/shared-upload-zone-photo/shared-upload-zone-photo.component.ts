@@ -17,16 +17,16 @@ export class SharedUploadZonePhotoComponent {
 
   @ViewChild('fileInput') fileInput: any;
 
-  loading = false;
+  private _loading = false;
 
   constructor(private _translateNotificationsService: TranslateNotificationsService,
               private _httpClient: HttpClient) { }
 
 
   public dropped(event: any) {
-    if (this.loading === false) {
+    if (this._loading === false) {
       if (event.files) {
-        this.loading = true;
+        this._loading = true;
 
         for (const droppedFile of event.files) {
           // Is it a file?
@@ -35,11 +35,11 @@ export class SharedUploadZonePhotoComponent {
             fileEntry.file(this.uploadFile);
           } else {
             // It was a directory (empty directories are added, otherwise only files)
-            this.loading = false;
+            this._loading = false;
           }
         }
       } else if (event.target.files) {
-        this.loading = true;
+        this._loading = true;
 
         for (const file of event.target.files) {
           this.uploadFile(file);
@@ -56,13 +56,17 @@ export class SharedUploadZonePhotoComponent {
 
     this._httpClient.post(this.uri, formData).subscribe((data: any) => {
       // Sanitized logo returned from backend.
-      this.loading = false;
+      this._loading = false;
       this.cbFn.emit(data);
       }, () => {
-      this.loading = false;
+      this._loading = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
+  }
+
+  get loading(): boolean {
+    return this._loading;
   }
 
 }

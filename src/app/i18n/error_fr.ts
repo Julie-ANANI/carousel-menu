@@ -33,6 +33,12 @@ export const ERROR = {
 
   'CARD_NOT_FOUND': 'Nous n\'avons pas trouvé l\'innovation que vous recherchez.',
 
+  'URL_NOT_FOUND': 'L\'URL demandée n\'a pas été trouvée sur le serveur.',
+
+  'NO_PERMISSION': 'Vous n\'avez pas la permission d\'exécuter cette demande.',
+
+  'NO_AUTHORIZED': 'Vous n\'êtes pas autorisé à exécuter cette demande.',
+
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',

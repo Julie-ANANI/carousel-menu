@@ -107,28 +107,52 @@
     <!-- /tab section -->
 
     <!-- different section -->
-    <div class="p-top-50">
+    <div class="p-top-25">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- objectives -->
-        <ng-container *ngIf="currentPage === 'objectives'">
+        <div *ngIf="currentPage === 'objectives'" class="p-top-25">
           <app-objectives [project]="innovation" [editable]="canEdit"></app-objectives>
-        </ng-container>
+        </div>
+
 
         <!-- pitch -->
         <div *ngIf="currentPage === 'pitch'">
-          <app-shared-project-edit-cards [innovation]="innovation" [isEditable]="canEdit"></app-shared-project-edit-cards>
+
+          <!-- example -->
+          <ng-container *ngIf="innovationExample && innovationExample.innovationCards && innovation.status === 'EDITING'">
+            <div class="text-center text-md" [ngStyle]="{ 'line-height': '1' }">
+              {{ 'PROJECT_MODULE.SETUP.EXAMPLE_TEXT' | translate }}
+              <button
+                (click)="onClickExample($event)"
+                class="button p-left-1 text-md is-link">
+                {{ 'PROJECT_MODULE.SETUP.INNOVATION_EXAMPLE' | translate }}.
+              </button>
+            </div>
+          </ng-container>
+          <!-- /example -->
+
+
+          <div class="p-top-25">
+            <app-shared-project-edit-cards
+              [innovation]="innovation"
+              [isEditable]="canEdit">
+            </app-shared-project-edit-cards>
+          </div>
+
         </div>
 
+
         <!-- targeting -->
-        <ng-container *ngIf="currentPage === 'targeting'">
+        <div *ngIf="currentPage === 'targeting'" class="p-top-25">
           <app-shared-project-settings [project]="innovation" [editable]="canEdit"></app-shared-project-settings>
-        </ng-container>
+        </div>
+
 
         <!-- survey -->
-        <ng-container *ngIf="currentPage === 'survey'">
+        <div *ngIf="currentPage === 'survey'" class="p-top-25">
           <app-survey [innovation]="innovation"></app-survey>
-        </ng-container>
+        </div>
 
       </div>
     </div>
@@ -137,11 +161,11 @@
   </section>
 
 
-  <!-- innovation preview sidebar -->
+  <!-- innovation view sidebar -->
   <app-sidebar [(template)]="sidebarValue">
-    <app-innovation-preview [projectCard]="innovation.innovationCards[selectedInnovationIndex]"></app-innovation-preview>
+    <app-innovation-preview [projectCard]="innovationToView"></app-innovation-preview>
   </app-sidebar>
-  <!-- /innovation preview sidebar -->
+  <!-- /innovation view sidebar -->
 
 </ng-container>
 

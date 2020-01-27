@@ -49,5 +49,12 @@ export const SETUP = {
     'CONTENT': 'Voulez-vous vraiment supprimer ce projet ?'
   },
 
-  'EMAIL_DOMAINS': 'Domaines à utiliser'
+  'EMAIL_DOMAINS': 'Domaines à utiliser',
+
+  'EXAMPLE_TEXT': 'Cette section permet de construire la landing page qui sera envoyée aux professionnels. Vous ' +
+    'y décrirez votre solution selon la méthodologie UMI. Pour vous aider dans la rédaction, vous pouvez vous appuyer ' +
+    'sur les conseils associés à chaque section et cet',
+
+  'INNOVATION_EXAMPLE': 'exemple d\'innovation'
+
 };

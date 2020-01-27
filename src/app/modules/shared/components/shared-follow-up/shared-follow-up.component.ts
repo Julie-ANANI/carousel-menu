@@ -16,6 +16,8 @@ import { ResponseService } from "../shared-market-report/services/response.servi
 import { Tag } from "../../../../models/tag";
 import { TagsFiltersService }  from "../shared-market-report/services/tags-filter.service";
 import { FilterService } from "../shared-market-report/services/filters.service";
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front';
 
 @Component({
   selector: 'shared-follow-up',
@@ -28,11 +30,6 @@ export class SharedFollowUpComponent implements OnInit {
   @Input() set project(value: Innovation) {
     if (value) {
       this._project = value;
-      this._project.followUpEmails = this._project.followUpEmails || {};
-      if (this._project.preset && this._project.preset.sections) {
-        this._questions = ResponseService.getPresets(this._project);
-      }
-      this._getAnswers();
     }
   }
 
@@ -44,13 +41,13 @@ export class SharedFollowUpComponent implements OnInit {
     sort: '{ "created": "-1" }'
   };
 
-  private _project: Innovation = <Innovation> {};
+  private _project: Innovation = {};
 
   private _questions: Array<Question> = [];
 
   private _modalAnswer: Answer = null;
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarAnswer: SidebarInterface = {};
 
   private _answers: Array<Answer> = [];
 
@@ -93,8 +90,15 @@ export class SharedFollowUpComponent implements OnInit {
               private _tagFiltersService: TagsFiltersService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
-  ngOnInit() {
-    this._initializeTable();
+  ngOnInit(): void {
+
+    if (this._project) {
+      this._project.followUpEmails = this._project.followUpEmails || {};
+      this._questions = InnovationFrontService.presets(this._project);
+      this._initializeTable();
+      this._getAnswers();
+    }
+
   }
 
   private _initializeTable() {
@@ -142,7 +146,7 @@ export class SharedFollowUpComponent implements OnInit {
         this._total = this._answers.length;
         this._initializeTable();
 
-        this._filterService.filtersUpdate.subscribe(() => {
+        this._filterService.filtersUpdate.pipe(first()).subscribe(() => {
           this._selectContacts();
         });
 
@@ -168,18 +172,19 @@ export class SharedFollowUpComponent implements OnInit {
           this._tagFiltersService.setAnswerTags(identifier, tags);
         });
 
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
       });
     }
   }
 
   public saveProject() {
     this._innovationService.save(this._project._id, this._project).subscribe((response: Innovation) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       this._project = response;
-      this._translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SAVED_TEXT');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 
@@ -218,17 +223,22 @@ export class SharedFollowUpComponent implements OnInit {
     return this._answers.filter(answer => !!answer.followUp.date === sent && answer.followUp.objective === objective);
   }
 
-  public closeModal(event: Event) {
-    event.preventDefault();
+  private _reinitializeVariables() {
     this._showEmailsModal = false;
     this._showWarningModal = false;
     this._showSendModal = false;
     this._modalTemplateType = '';
   }
 
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._reinitializeVariables();
+  }
+
   public onClickSee(event: Event, type: string) {
     event.preventDefault();
     this._initializeMailCustomFields();
+    this._reinitializeVariables();
     this._modalTemplateType = type;
     this._showEmailsModal = true;
   }
@@ -246,22 +256,27 @@ export class SharedFollowUpComponent implements OnInit {
     });
     */
 
-    this._innovationService.sendFollowUpEmails(this.project._id).subscribe((value) => {
-      this._translateNotificationsService.success('ERROR.PROJECT.SEND_EMAILS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+    this._innovationService.sendFollowUpEmails(this._project._id).subscribe((value) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
       this._loadingButton = false;
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       this._loadingButton = false;
     });
+
   }
 
   public sendTestEmails() {
     const objective = this._modalTemplateType;
+
     this._innovationService.sendFollowUpEmails(this._project._id, objective).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.PROJECT.SEND_EMAILS', 'ERROR.PROJECT.SEND_EMAILS_OK');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
+
   }
 
   private _selectContacts() {
@@ -274,14 +289,15 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
-  seeAnswer(answer: Answer) {
+  public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
 
-    this._sidebarValue = {
+    this._sidebarAnswer = {
       animate_state: 'active',
       title: 'SIDEBAR.TITLE.EDIT_INSIGHT',
       size: '726px'
     };
+
   }
 
   performActions(action: any) {
@@ -436,7 +452,7 @@ export class SharedFollowUpComponent implements OnInit {
     return this._total;
   }
 
-  get pendingAction(): {answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', assignedAnswers?: Array<{name: string, objective: string}>} {
+  get pendingAction(): { answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', assignedAnswers?: Array<{name: string, objective: string}>} {
     return this._pendingAction;
   }
 
@@ -448,12 +464,12 @@ export class SharedFollowUpComponent implements OnInit {
     this._modalAnswer = modalAnswer;
   }
 
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
+  get sidebarAnswer(): SidebarInterface {
+    return this._sidebarAnswer;
   }
 
-  set sidebarValue(value: SidebarInterface) {
-    this._sidebarValue = value;
+  set sidebarAnswer(value: SidebarInterface) {
+    this._sidebarAnswer = value;
   }
 
   get questions(): Array<Question> {

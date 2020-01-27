@@ -176,6 +176,7 @@ export class SearchService {
 
   public importList(file:File, fileName: string): Observable<any> {
     const formData = new FormData();
+    fileName = fileName || "Recherche de mails";
     formData.append('file', file, fileName);
     return this._http.post('/search/mailsList/', formData);
   }

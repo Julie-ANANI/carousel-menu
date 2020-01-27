@@ -10,6 +10,8 @@ import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
 import { InnovCard } from '../../models/innov-card';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
+import { Question } from '../../models/question';
+import { Section } from '../../models/section';
 
 export interface Values {
   settingPercentage?: number;
@@ -244,6 +246,23 @@ export class InnovationFrontService {
       }
 
     }
+  }
+
+  /***
+   * This function is to get and returns the questions from the innovation.
+   */
+  static presets(innovation: Innovation): Array<Question> {
+
+    let questions: Array<Question> = [];
+
+    if (innovation && innovation.preset && innovation.preset.sections) {
+      questions = innovation.preset.sections.reduce((questionArray: Array<Question>, section: Section) => {
+        return questionArray.concat(section.questions);
+      }, []);
+    }
+
+    return questions;
+
   }
 
   /***

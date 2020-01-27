@@ -28,7 +28,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'TITLE': {
-      'LABEL': 'What title would you like to give to your project?',
+      'LABEL': 'I give a title to my project.',
       'PLACEHOLDER': 'Enter the title of your project',
       'ERROR': 'Title is required.',
       'HELP': 'The title is present in the subject line of emails sent to thousands of professionals, it should include ' +
@@ -36,7 +36,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'SUMMARY': {
-      'LABEL': 'How would you summarise your project?',
+      'LABEL': 'I summarize my solution in 2 lines.',
       'PLACEHOLDER': 'The summary should be very brief, a couple of sentences that are clear and concise, as it will be presented in the body of the contact emails that will be sent out',
       'ERROR': 'Summary is required.',
       'HELP': 'The pitch should be two sentences max and highlight the strong and differentiating value proposition of the project. ' +
@@ -44,7 +44,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'PROBLEM': {
-      'LABEL': ' What issues or problems motivated the creation of this project? ',
+      'LABEL': 'I explain the market context and the problems encountered by the market.',
       'PLACEHOLDER': 'This part is entirely dedicated to explaining why this concept/innovation came to be, what world problem or market problem is it responding to, etc. ',
       'ERROR': 'Problem or issue motivated is required.',
       'HELP': {
@@ -56,7 +56,7 @@ export const SHARED_PROJECT_EDIT = {
     },
 
     'SOLUTION': {
-      'LABEL': 'What solution do you propose and what are the benefits?',
+      'LABEL': 'I describe my solution and how it responds to the market issues mentioned above.',
       'PLACEHOLDER': 'The solution description should detail what the innovation is exactly and how it responds to ' +
         'the aforementioned problems in the previous question. It doesn’t have to be too technical with a lot of figures, but ' +
         'some information along these lines does help the respondents to get a better idea. The most important is to explain WHY ' +
@@ -82,13 +82,13 @@ export const SHARED_PROJECT_EDIT = {
   },
 
   'MEDIA': {
-    'LABEL': 'Add images or videos to my project',
+    'LABEL': 'Add images or videos to my project.',
     'HELP': 'We highly recommended and projects with media attached tend to have a much better response rate.',
     'MAIN': 'Main Media',
     'SECONDARY': 'Secondary Medias',
-    'UPLOAD_PICTURE': 'Upload Picture',
-    'UPLOAD_VIDEO': 'Upload Video',
-    'SLIDE': 'drag the file here',
+    'UPLOAD_PICTURE': 'Upload picture',
+    'UPLOAD_VIDEO': 'Upload video',
+    'SLIDE': 'Drag a file here',
     'URL': 'Enter the address of your Youtube or Vimeo video here',
     'MAKE_MAIN': 'Make as main media',
     'NO_MEDIA': 'No media uploaded.'
@@ -107,6 +107,8 @@ export const SHARED_PROJECT_EDIT = {
   'PLACEHOLDERS': {
     'COMMENT': 'Operator comment',
     'SUGGESTION': 'Operator suggestion',
-  }
+  },
+
+  'ADVISE_BUTTON': 'Writing tips'
 
 };

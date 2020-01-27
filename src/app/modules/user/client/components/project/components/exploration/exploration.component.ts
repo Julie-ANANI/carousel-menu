@@ -66,10 +66,18 @@ export class ExplorationComponent implements OnInit {
               private translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this._innovation.name);
+
     if (this._innovation) {
       this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
+
+      if (this._innovation.operator && this._innovation.operator.email) {
+        this._contactUrl = encodeURI(`mailto:${this._innovation.operator.email}?subject=` + this._innovation.name);
+      } else {
+        this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this._innovation.name);
+      }
+
     }
+
     this.loadAnswers();
   }
 
@@ -156,32 +164,6 @@ export class ExplorationComponent implements OnInit {
       });
     }
 
-  }
-
-
-  getMessage():string {
-    let message = '';
-
-    switch (this._innovation.status) {
-
-      case 'EDITING':
-        if (this._innovation.reviewing) {
-          message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING';
-        } else if (!this._innovation.reviewing) {
-          message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING';
-        }
-        break;
-
-      case 'SUBMITTED':
-        message = 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED';
-        break;
-
-      default:
-        // do nothing...
-
-    }
-
-    return message;
   }
 
 

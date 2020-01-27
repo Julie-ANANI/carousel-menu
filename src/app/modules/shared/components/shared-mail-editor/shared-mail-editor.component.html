@@ -18,8 +18,8 @@
             <li
               (click)="insertTextAtCursor(field.value)"
               *ngFor="let field of customField"
-              [innerText]="field.value"
               class="menu-item">
+              {{ field.value }}
             </li>
           </ul>
 
@@ -31,8 +31,7 @@
         <div class="m-left-10 m-bottom-10 m-right-10">
           <button
             (click)="onClickTestEmails($event)"
-            [ngStyle]="{ 'text-decoration': 'none' }"
-            class="button is-draft is-link"
+            class="button is-draft is-link text-no-underline"
             type="button">
             <i class="fas fa-paper-plane icon-left text-primary"></i> {{ 'SHARED_MAIL_EDITOR.TEST_EMAILS' | translate }}
           </button>
@@ -125,7 +124,6 @@
             <!-- message -->
             <app-text-zone
                 #textZone
-                [hideToolbar]="true"
                 [useVariables]="true"
                 (onTextChange)="updateContent($event, 'en')"
                 [data]="emailsObject['en'].content || ''"
@@ -193,7 +191,6 @@
             <app-text-zone
                 *ngIf="display"
                 #textZone
-                [hideToolbar]="true"
                 [useVariables]="true"
                 (onTextChange)="updateContent($event, 'fr')"
                 [data]="emailsObject['fr'].content || ''"

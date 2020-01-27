@@ -67,7 +67,8 @@ export class HeaderComponent {
     { pageName: 'Projects', pageLink: '/user/admin/projects', adminLevel: 1 },
     { pageName: 'Libraries', pageLink: '/user/admin/libraries', adminLevel: 3 },
     { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', adminLevel: 3 },
-    { pageName: 'Settings', pageLink: '/user/admin/settings', adminLevel: 3 }
+    { pageName: 'Settings', pageLink: '/user/admin/settings', adminLevel: 3 },
+    { pageName: 'Search', pageLink: '/user/admin/search/pros', adminLevel: 3 },
   ];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,

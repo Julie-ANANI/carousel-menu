@@ -3,7 +3,7 @@ export const EXPLORATION = {
 
   'MESSAGE': {
     'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
-    'EDITING': 'Please finish setup of your project and submit it.',
+    'EDITING': 'Once your market test is launched, you will be able to consult on this page, in real time, the opinions of professionals.',
     'REVIEWING': 'You have some modification to do, please check your e-mail and re-submit your project.'
   },
 

@@ -14,7 +14,9 @@ import { InnovationFrontService } from '../../../../services/innovation/innovati
 export class InnovationPreviewComponent {
 
   @Input() set projectCard(value: InnovCard) {
-    this._innovationCard = value;
+    if (value) {
+      this._innovationCard = value;
+    }
   }
 
   @Input() set batchInfo(data: any) {

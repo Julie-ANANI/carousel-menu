@@ -7,7 +7,7 @@
       <ng-container *ngIf="innovation.status === 'EDITING' || innovation.status === 'SUBMITTED'">
         <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h2>
         <div class="section-light-pad rm-pad-bottom">
-          <app-message-template-1 [widthMax]="'337px'">{{ getMessage() | translate }}</app-message-template-1>
+          <app-message-template-1 [widthMax]="'337px'">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING' | translate }}</app-message-template-1>
         </div>
       </ng-container>
        <!-- /project under editing and submitted status -->
@@ -18,7 +18,12 @@
         <!-- section title -->
         <div class="section-title flex-between">
           <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h2>
-          <a class="btn btn-primary gtm-exploration-contact-operator" href="{{ contactUrl }}"><span>{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</span></a>
+          <a
+            *ngIf="contactUrl"
+            class="btn btn-primary gtm-exploration-contact-operator"
+            href="{{ contactUrl }}">
+            <span>{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</span>
+          </a>
         </div>
         <!-- /section title -->
 

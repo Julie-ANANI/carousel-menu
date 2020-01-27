@@ -83,7 +83,7 @@
 <!-- modal -->
 <app-modal [(showModal)]="showPresetModal" [title]="'COMMON.MODAL.TITLE_IMPORT'">
 
-  <section class="modal-body">
+  <section class="modal-body" [ngStyle]="{ 'height': '250px' }">
 
     <div class="form-group">
       <label class="form-label" for="preset-choice">{{ 'COMMON.LABEL.PRESET' | translate }}</label>
