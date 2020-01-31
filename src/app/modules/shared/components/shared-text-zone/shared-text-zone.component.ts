@@ -20,15 +20,12 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   @Input() useVariables = false;
 
   @Input() set data(value: string) {
-    if (!this._isSaving) {
-      this._contentHash = SharedTextZoneComponent.hashString(value);
-      if (this.editor && !this.useVariables) {
-        this._setContent(value);
-      }
-    } else {
-      this._isSaving = false;
+    this._contentHash = SharedTextZoneComponent.hashString(value);
+    if (this.editor && !this.useVariables && !this._isSaving) {
+      this._setContent(value);
     }
     this._text = value;
+    this._isSaving = false;
   }
 
   @Input() set variableMapping(value: any) {
