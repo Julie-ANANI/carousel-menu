@@ -80,7 +80,14 @@ export class SearchService {
     return this._http.post('/search/searchMails', config);
   }
 
-  public export(requestId: string, config: string): Observable<any> {
+  public export(requestId: string, config: any): Observable<any> {
+    if (config.query) {
+      Object.keys(config.query).forEach(key => {
+        try {
+          config.query[key] = JSON.parse(config.query[key]);
+        } catch (e) {}
+      });
+    }
     const query = {
       path: '/request/' + requestId + '/export/people',
       data: config

@@ -77,7 +77,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.platformId) && !this.readonly) {
       tinymce.init({
         selector: '#' + this._htmlId,
-        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor'], // Voir .angular-cli.json
+        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'code'], // Voir .angular-cli.json
         variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
         variable_mapper: this._variableMapping,
         default_link_target: '_blank',
@@ -91,7 +91,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
         // paste_retain_style_properties: "color font-size font-weight",
         paste_retain_style_properties: 'none',
         fontsize_formats: "8pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
-        toolbar : !this.hideToolbar && 'undo redo | fontsizeselect | bold italic underline forecolor | bullist numlist | link',
+        toolbar : !this.hideToolbar && 'undo redo | fontsizeselect | bold italic underline forecolor | bullist numlist | link | code',
         skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
         setup: (editor: any) => {
           this.editor = editor;
