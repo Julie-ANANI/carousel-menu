@@ -34,6 +34,7 @@
               "node_modules/tinymce/plugins/link/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -186,6 +187,7 @@
               "node_modules/tinymce/plugins/link/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ],
             "styles": [
@@ -273,6 +275,7 @@
               "node_modules/tinymce/plugins/link/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -388,6 +391,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ],
             "styles": [
@@ -448,6 +452,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -547,6 +552,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ],
             "styles": [
@@ -607,6 +613,7 @@
               "node_modules/tinymce/plugins/link/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -714,6 +721,7 @@
               "node_modules/tinymce/plugins/link/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ],
             "styles": [
@@ -774,6 +782,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -930,6 +939,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -1026,6 +1036,7 @@
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ],
             "styles": [
@@ -1086,6 +1097,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -1182,6 +1194,7 @@
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ],
             "styles": [
@@ -1242,6 +1255,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
@@ -1338,6 +1352,7 @@
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
               "assets/plugins/plugin.js"
             ],
             "styles": [
