@@ -46,7 +46,7 @@
         <section id="answer-wrapper" class="column col-xs-12 col-11 col-mx-auto">
 
 
-          <!-- main page goal -->
+          <!-- main page goal // todo remove
           <ng-container *ngIf="adminSide">
             <section class="section-pad" id="innovation-goal">
               <div class="section-light-pad bg-white full-light">
@@ -76,10 +76,10 @@
               </div>
             </section>
           </ng-container>
-          <!-- /main page goal -->
+          /main page goal -->
 
 
-          <!-- executive report generation -->
+          <!-- executive report generation // todo remove this
           <ng-container *ngIf="adminSide">
             <section class="section-pad" id="executive-generate">
               <div class="section-pad full d-flex executive-generate-wrapper bg-white">
@@ -112,14 +112,14 @@
               </div>
             </section>
           </ng-container>
-          <!-- /executive report generation -->
+           /executive report generation -->
 
 
-          <!-- main page -->
+          <!-- main page // todo remove this
           <div id="main-page" class="d-none">
             <app-shared-main-page [project]="innovation"></app-shared-main-page>
           </div>
-          <!-- /main page -->
+           /main page -->
 
 
           <!-- umi intro -->
@@ -129,13 +129,13 @@
           <!-- /umi intro -->
 
 
-          <!-- executive report -->
+          <!-- executive report // todo remove this
           <ng-container *ngIf="innovation.executiveReport && innovation.executiveReport.totalSections">
             <section *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" id="executive-report" class="section-light-pad">
               <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
             </section>
           </ng-container>
-          <!-- /executive report -->
+           /executive report -->
 
 
           <!-- key learning section -->
@@ -188,7 +188,6 @@
                   <label for="market-report-professionals"></label>
 
                   <textarea
-                    (blur)="updateExecutiveReport($event)"
                     [(ngModel)]="innovation.executiveReport.professionalAbstract"
                     placeholder="Describe the professional abstract of this innovation within 160 words."
                     class="form-input"
