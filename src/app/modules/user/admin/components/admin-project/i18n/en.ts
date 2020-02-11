@@ -56,6 +56,7 @@ export const PROJECT = {
     'MAIL': 'Share by email',
   },
   'SETTINGS': 'Settings',
+  'STORYBOARD': 'Storyboard',
 
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choose questionnaire',
