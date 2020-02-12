@@ -6,8 +6,8 @@ import { Innovation } from '../../../../../models/innovation';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Tag } from '../../../../../models/tag';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+// import { InnovationService } from '../../../../../services/innovation/innovation.service';
+// import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { DataService } from '../../shared-market-report/services/data.service';
 
 @Component({
@@ -15,6 +15,8 @@ import { DataService } from '../../shared-market-report/services/data.service';
   templateUrl: './executive-section.component.html',
   styleUrls: ['./executive-section.component.scss']
 })
+
+// todo verfiy this again.
 
 export class ExecutiveSectionComponent {
 
@@ -28,11 +30,11 @@ export class ExecutiveSectionComponent {
   }
 
   @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
+    // this._answers = value;
     this._getSectionInformation(this._sectionNumber);
   }
 
-  private _answers: Array<Answer> = [];
+  // private _answers: Array<Answer> = [];
 
   private _innovation: Innovation;
 
@@ -50,12 +52,12 @@ export class ExecutiveSectionComponent {
 
   private _stats: { nbAnswers?: number, percentage?: number };
 
-  constructor(private _responseService: ResponseService,
+  constructor(/*private _responseService: ResponseService,*/
               private _dataService: DataService,
               private _location: Location,
               private _translateService: TranslateService,
-              private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              /*private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService*/) {
 
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
@@ -86,7 +88,7 @@ export class ExecutiveSectionComponent {
    * @param {Event} event
    * @param {Question} option
    */
-  public onTitleClicked(event: Event, option: Question) {
+  public onTitleClicked(event: Event, option: Question) {/*
     this._innovation.executiveReport.sections[this._sectionNumber] = { quesId: option._id };
 
     this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
@@ -94,7 +96,7 @@ export class ExecutiveSectionComponent {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
-    this._getSectionInformation(this._sectionNumber);
+    this._getSectionInformation(this._sectionNumber);*/
   }
 
 
@@ -105,7 +107,7 @@ export class ExecutiveSectionComponent {
    */
   private _getSectionInformation(sectionNumber: number) {
 
-    if (this._innovation.executiveReport.sections[sectionNumber]) {
+    /*if (this._innovation.executiveReport.sections[sectionNumber]) {
 
       this._questionSelected = this._questions.find((ques) => ques._id === this._innovation.executiveReport.sections[sectionNumber].quesId);
 
@@ -123,7 +125,7 @@ export class ExecutiveSectionComponent {
 
       }
 
-    }
+    }*/
 
   }
 
@@ -132,7 +134,7 @@ export class ExecutiveSectionComponent {
    * this function is to get the abstract value from the abstracts array by using
    * quesId.
    */
-  private _getAbstractValue() {
+  /*private _getAbstractValue() {
 
     this._abstractValue = '';
 
@@ -143,7 +145,7 @@ export class ExecutiveSectionComponent {
       }
     }
 
-  }
+  }*/
 
   get lang(): string {
     return this._translateService.currentLang;

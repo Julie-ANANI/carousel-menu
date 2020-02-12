@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ExecutiveProfessionalComponent {
 
   @Input() set project(value: Innovation) {
-    this._professionalAbstract = value.executiveReport.professionalAbstract;
+    // this._professionalAbstract = value.executiveReport.professionalAbstract;
   }
 
   @Input() set answers(value: Array<Answer>) {

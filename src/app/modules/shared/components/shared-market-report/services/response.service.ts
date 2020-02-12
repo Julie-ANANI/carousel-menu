@@ -9,6 +9,7 @@ import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
 import { PieChart } from '../../../../../models/pie-chart';
 
+// todo revisit again
 @Injectable()
 export class ResponseService {
 
@@ -136,7 +137,7 @@ export class ResponseService {
    */
   saveInnovationAbstract(project: Innovation, abstractValue: string, quesId: string): Innovation {
     const innovation = project;
-    const index = innovation.executiveReport.abstracts.findIndex((ques) => ques.quesId === quesId);
+    /*const index = innovation.executiveReport.abstracts.findIndex((ques) => ques.quesId === quesId);
 
     if (index !== -1) {
       innovation.executiveReport.abstracts[index].value = abstractValue;
@@ -144,7 +145,7 @@ export class ResponseService {
       innovation.executiveReport.abstracts.push({
         quesId: quesId, value: abstractValue
       });
-    }
+    }*/
 
     return innovation;
 
@@ -158,8 +159,9 @@ export class ResponseService {
    * @returns {string}
    */
   getInnovationAbstract(innovation: Innovation, quesId: string): string {
-    const abstract = innovation.executiveReport.abstracts.find((ques) => ques.quesId === quesId);
-    return abstract ? abstract.value : '';
+    // const abstract = innovation.executiveReport.abstracts.find((ques) => ques.quesId === quesId);
+    // return abstract ? abstract.value : '';
+    return '';
   }
 
 
