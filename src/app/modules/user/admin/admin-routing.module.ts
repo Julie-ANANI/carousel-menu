@@ -107,7 +107,9 @@ const adminRoutes: Routes = [
         path: 'projects/project/:projectId/storyboard',
         canActivate: [AdminAuthGuard],
         component: AdminProjectStoryboardComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        resolve: { innovation : InnovationResolver },
+        runGuardsAndResolvers: 'always',
       },
       {
         path: 'projects',

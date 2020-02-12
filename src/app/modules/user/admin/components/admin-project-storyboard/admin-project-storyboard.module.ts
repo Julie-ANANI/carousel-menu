@@ -4,10 +4,13 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminProjectStoryboardComponent } from './admin-project-storyboard.component';
 
+import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
+    ModalModule
   ],
   declarations: [
     AdminProjectStoryboardComponent

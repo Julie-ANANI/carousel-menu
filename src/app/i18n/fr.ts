@@ -37,6 +37,7 @@ import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/
 import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-filter-answers/i18n/fr';
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/fr';
 import { ENTERPRISE } from "../modules/user/admin/components/admin-settings/admin-enterprise-management/i18n/fr";
+import { STORYBOARD } from '../modules/user/admin/components/admin-project-storyboard/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -77,5 +78,6 @@ export const fr = {
   'SHARED_FOLLOW_UP': SHARED_FOLLOW_UP,
   'SIDEBAR_MARKET_REPORT': SIDEBAR_MARKET_REPORT,
   'SHARED_MAIL_EDITOR': SHARED_MAIL_EDITOR,
-  'ENTERPRISE': ENTERPRISE
+  'ENTERPRISE': ENTERPRISE,
+  'STORYBOARD': STORYBOARD
 };

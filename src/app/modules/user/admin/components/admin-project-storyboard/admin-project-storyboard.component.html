@@ -1,3 +1,101 @@
-<p>
-  admin-storyboard works!
-</p>
+<div *ngIf="!isLoading">
+  <div class="p-top-50 p-bottom-30" id="admin-project-storyboard">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+
+
+        <!-- header section -->
+        <section class="header-wrapper">
+          <div class="d-flex flex-wrap">
+
+            <!-- heading / lang -->
+            <div class="content-wrapper p-right-10">
+
+              <!-- heading -->
+              <h1 class="title m-no-bottom text-background">Storyboard</h1>
+              <!-- /heading -->
+
+
+              <!-- change lang -->
+              <ng-container *ngIf="executiveReport.lang">
+                <div class="text-notify text-lg">
+                  {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}
+                  <span (click)="openLangModal($event)" class="text-link text-normal">
+                    {{ 'STORYBOARD.CHANGE_LANG.B' | translate }}
+                  </span>
+                  {{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
+                </div>
+              </ng-container>
+              <!-- /change lang -->
+
+
+              <!-- select lang -->
+              <ng-container *ngIf="!executiveReport.lang">
+                <div class="text-notify text-lg">
+                  {{ 'STORYBOARD.SELECT_LANG.A' | translate }}
+                  <span (click)="openLangModal($event)" class="text-link text-normal">
+                    {{ 'STORYBOARD.SELECT_LANG.B' | translate }}
+                  </span>
+                  {{ 'STORYBOARD.SELECT_LANG.C' | translate }}
+                </div>
+              </ng-container>
+              <!-- /select lang -->
+
+            </div>
+            <!-- /heading / lang -->
+
+
+            <!-- buttons / links -->
+            <div class="content-wrapper">
+
+            </div>
+            <!-- /buttons / links -->
+
+          </div>
+        </section>
+        <!-- /header section -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- modal to select/change language -->
+<app-modal *ngIf="!isLoading && isModalLang" [(showModal)]="isModalLang" [title]="modalTitle | translate">
+
+  <section class="modal-body p-top-40">
+    <div class="form-group d-flex justify-center m-no-bottom">
+      <label class="form-radio is-inline">
+        <input
+          (change)="setNewSelectedLang('en')"
+          [checked]="selectedLang === 'en'"
+          id="lang-en"
+          name="lang"
+          type="radio"
+          value="en">
+        <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
+      </label>
+      <label class="form-radio is-inline">
+        <input
+          (change)="setNewSelectedLang('fr')"
+          [checked]="selectedLang === 'fr'"
+          id="lang-fr"
+          name="lang"
+          type="radio"
+          value="fr">
+        <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
+      </label>
+    </div>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickConfirm($event)" class="button is-primary">
+      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+    </button>
+  </footer>
+
+</app-modal>
+<!-- /modal to select/change language -->
