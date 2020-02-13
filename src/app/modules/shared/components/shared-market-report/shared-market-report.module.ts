@@ -31,8 +31,6 @@ import { SharedMarketReportPopoverComponent } from './components/shared-market-r
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 
-
-import { CommonService } from '../../../../services/common/common.service';
 import { DataService } from './services/data.service';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
@@ -63,7 +61,6 @@ import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar
     PieChartModule,
   ],
   providers: [
-    CommonService,
     DataService,
     ResponseService,
     TagsFiltersService
