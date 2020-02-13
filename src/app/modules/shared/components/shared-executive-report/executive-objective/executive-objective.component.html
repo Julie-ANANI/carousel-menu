@@ -1,0 +1,100 @@
+<div class="d-flex flex-wrap justify-center" id="executive-objective">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- objective -->
+    <div>
+      <label>
+        <textarea
+          (change)="emitChanges($event)"
+          [(ngModel)]="config.objective"
+          [attr.placeholder]="'EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
+          [ngStyle]="{ 'height': '90px' }"
+          class="form-input"
+          type="text">
+        </textarea>
+      </label>
+    </div>
+    <!-- /objective -->
+
+
+    <!-- project leader -->
+    <div [ngStyle]="{ 'padding-top': '74px' }">
+
+      <div class="m-bottom-10">
+        <label>
+          <input
+            (change)="emitChanges($event)"
+            [(ngModel)]="config.owner.name"
+            [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_NAME' | translate"
+            class="form-input"
+            type="text">
+        </label>
+      </div>
+
+      <div>
+        <label>
+          <input
+            (change)="emitChanges($event)"
+            [(ngModel)]="config.owner.email"
+            [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_EMAIL' | translate"
+            class="form-input"
+            type="text">
+        </label>
+      </div>
+
+    </div>
+    <!-- /project leader -->
+
+
+    <!-- commercial -->
+    <div [ngStyle]="{ 'padding-top': '74px' }">
+      <label>
+        <select (change)="selectCommercial($event)" class="form-select p-left-15 p-right-15">
+          <option [ngValue]="''" selected>{{ 'COMMON.PLACEHOLDER.CHOOSE_SALE' | translate }}</option>
+          <option *ngFor="let commercial of allCommercials" [ngValue]="commercial">
+            {{ commercial.name }}
+          </option>
+        </select>
+      </label>
+    </div>
+    <!-- /commercial -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border p-20 d-flex justify-space flex-d-column">
+
+    <!-- objective text -->
+    <div>
+      <h4>{{ 'EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate }}</h4>
+      <p>{{ config.objective }}</p>
+    </div>
+    <!-- /objective text -->
+
+
+    <!-- project leader -->
+    <div class="p-top-40">
+      <h4>{{ 'EXECUTIVE_REPORT.OBJECTIVE.LEADER' | translate }}</h4>
+      <p>{{ config.owner.name }}</p>
+      <p>{{ config.owner.email }}</p>
+    </div>
+    <!-- /project leader -->
+
+
+    <!-- contact -->
+    <div class="p-top-40">
+      <h4>{{ 'EXECUTIVE_REPORT.OBJECTIVE.CONTACT' | translate }}</h4>
+      <p>{{ commercial.name }}</p>
+      <p>{{ commercial.phone }}</p>
+      <p>{{ commercial.email }}</p>
+    </div>
+    <!-- /contact -->
+
+  </div>
+  <!-- /view side -->
+
+</div>

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ExecutiveReport} from '../../../../models/executive-report';
+import {ExecutiveObjective, ExecutiveReport} from '../../../../models/executive-report';
 // import { Innovation } from '../../../../models/innovation';
 // import { Answer } from '../../../../models/answer';
 // import { AnswerService } from '../../../../services/answer/answer.service';
@@ -15,11 +15,14 @@ export class SharedExecutiveReportComponent {
 
   @Input() set executiveReport(value: ExecutiveReport) {
     this._executiveReport = value;
+    this._setData();
   }
 
   @Output() executiveReportChange: EventEmitter<ExecutiveReport> = new EventEmitter<ExecutiveReport>();
 
   private _executiveReport: ExecutiveReport = <ExecutiveReport>{};
+
+  private _objectiveConfig: ExecutiveObjective = <ExecutiveObjective>{};
 
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
@@ -38,7 +41,17 @@ export class SharedExecutiveReportComponent {
   private _anonymousAnswers = false;*/
 
   constructor (/*private _answerService: AnswerService,
-               private _translateNotificationsService: TranslateNotificationsService*/) { }
+               private _translateNotificationsService: TranslateNotificationsService*/) {
+
+  }
+
+  private _setData() {
+    /*this._objectiveConfig = {
+      umiCommercial: this._executiveReport.umiCommercial,
+      owner: this._executiveReport.owner,
+      objective: this._executiveReport.objective
+    }*/
+  }
 
   /*private _getAnswers() {
     if (this._innovation) {
@@ -96,6 +109,15 @@ export class SharedExecutiveReportComponent {
 
   get executiveReport(): ExecutiveReport {
     return this._executiveReport;
+  }
+
+  get objectiveConfig(): ExecutiveObjective {
+    return this._objectiveConfig;
+  }
+
+  set objectiveConfig(value: ExecutiveObjective) {
+    this._objectiveConfig = value;
+    console.log(value);
   }
 
 }

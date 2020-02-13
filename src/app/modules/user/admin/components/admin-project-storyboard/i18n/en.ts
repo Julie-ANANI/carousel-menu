@@ -6,6 +6,12 @@ export const STORYBOARD = {
     'C': '? It will reset everything...'
   },
 
+  'AUTOFILL': {
+    'A': 'Are you lucky today? Try',
+    'B': 'autofill',
+    'C': 'and save time!'
+  },
+
   'SELECT_LANG': {
     'A': 'To start editing the Storyboard,',
     'B': 'select the language',

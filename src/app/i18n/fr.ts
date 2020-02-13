@@ -38,6 +38,7 @@ import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-fi
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/fr';
 import { ENTERPRISE } from "../modules/user/admin/components/admin-settings/admin-enterprise-management/i18n/fr";
 import { STORYBOARD } from '../modules/user/admin/components/admin-project-storyboard/i18n/fr';
+import { EXECUTIVE_REPORT } from '../modules/shared/components/shared-executive-report/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -79,5 +80,6 @@ export const fr = {
   'SIDEBAR_MARKET_REPORT': SIDEBAR_MARKET_REPORT,
   'SHARED_MAIL_EDITOR': SHARED_MAIL_EDITOR,
   'ENTERPRISE': ENTERPRISE,
-  'STORYBOARD': STORYBOARD
+  'STORYBOARD': STORYBOARD,
+  'EXECUTIVE_REPORT': EXECUTIVE_REPORT
 };

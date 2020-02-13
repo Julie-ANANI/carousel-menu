@@ -159,7 +159,10 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Entrez le nom de la signature',
     'PRESET_NAME': 'Entrer le nom du preset',
     'EXISTING_TAG': 'Ajouter un tag existant',
-    'INPUT_LIST_DEFAULT': 'Entrez la réponse ici'
+    'INPUT_LIST_DEFAULT': 'Entrez la réponse ici',
+    'CLIENT_NAME': 'Nom du client',
+    'CLIENT_EMAIL': 'Client email',
+    'CHOOSE_SALE': 'Choose sale',
   },
 
   'REQUIRED': {

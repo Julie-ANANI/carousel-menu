@@ -1,6 +1,6 @@
 @import "../../../../../style/framework/src/variables";
 
-#executive-report-wrapper {
+/*#executive-report-wrapper {
 
   .page-first {
     background-color: $bg-light-color;
@@ -62,12 +62,12 @@
     border-left: none;
   }
 
-}
+}*/
 
 
 @media (max-width: $size-lg) {
 
-  #executive-report-wrapper {
+  /*#executive-report-wrapper {
 
     .page-first, .second-page-wrapper {
       flex-direction: column;
@@ -81,14 +81,14 @@
       min-height: 446px;
     }
 
-  }
+  }*/
 
 }
 
 
 @media (max-width: $size-md) {
 
-  #executive-report-wrapper {
+  /*#executive-report-wrapper {
 
     .section {
       width: 100%;
@@ -96,6 +96,6 @@
     }
 
 
-  }
+  }*/
 
 }

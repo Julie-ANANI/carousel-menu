@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 
 import { environment } from '../../../environments/environment';
-import {Tag} from '../../models/tag';
+import { Tag } from '../../models/tag';
 
 @Injectable()
 export class UserService {
@@ -79,4 +79,5 @@ export class UserService {
   public createSwellUsers(): Observable<any> {
     return this._http.post('/misc/swellrt/synchronizeUsers', {});
   }
+
 }

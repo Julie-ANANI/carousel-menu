@@ -72,7 +72,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
       // temporary
       this._executiveReport = {
         lang: 'en',
-        completion: 100
+        completion: 0
       };
 
       this._isLoading = false;
@@ -90,6 +90,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public setNewSelectedLang(value?: string) {
     this.newSelectedLang = value ? value : this._selectedLang;
+  }
+
+  public autofillExecutiveReport(event: Event) {
+    event.preventDefault();
   }
 
   public openLangModal(event: Event) {

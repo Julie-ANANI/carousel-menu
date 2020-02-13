@@ -16,15 +16,27 @@
               <!-- /heading -->
 
 
-              <!-- change lang -->
+              <!-- autofill / change lang -->
               <div *ngIf="executiveReport.lang" class="text-notify text-lg">
-                {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}
-                <span (click)="openLangModal($event)" class="text-link text-normal">
+
+                <div>
+                  {{ 'STORYBOARD.AUTOFILL.A' | translate }}
+                  <span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
+                    {{ 'STORYBOARD.AUTOFILL.B' | translate }}
+                  </span>
+                  {{ 'STORYBOARD.AUTOFILL.C' | translate }}
+                </div>
+
+                <div>
+                  {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}
+                  <span (click)="openLangModal($event)" class="text-link text-normal">
                     {{ 'STORYBOARD.CHANGE_LANG.B' | translate }}
                   </span>
-                {{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
+                  {{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
+                </div>
+
               </div>
-              <!-- /change lang -->
+              <!-- /autofill / change lang -->
 
 
               <!-- select lang -->
@@ -122,7 +134,7 @@
 
 
         <!-- executive report section -->
-        <section class="p-top-50">
+        <section *ngIf="executiveReport.lang" class="p-top-50">
           <app-shared-executive-report
             [(executiveReport)]="executiveReport">
           </app-shared-executive-report>
