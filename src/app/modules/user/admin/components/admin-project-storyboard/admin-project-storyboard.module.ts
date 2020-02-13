@@ -5,12 +5,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminProjectStoryboardComponent } from './admin-project-storyboard.component';
 
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { SharedExecutiveReportModule } from '../../../../shared/components/shared-executive-report/shared-executive-report.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    ModalModule
+    ModalModule,
+    SharedExecutiveReportModule
   ],
   declarations: [
     AdminProjectStoryboardComponent

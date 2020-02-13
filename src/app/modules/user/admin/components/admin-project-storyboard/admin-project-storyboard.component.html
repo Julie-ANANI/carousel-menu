@@ -120,6 +120,26 @@
         </section>
         <!-- /header section -->
 
+
+        <!-- executive report section -->
+        <section class="p-top-50">
+          <app-shared-executive-report
+            [(executiveReport)]="executiveReport">
+          </app-shared-executive-report>
+        </section>
+        <!-- /executive report section -->
+
+
+        <!-- save button -->
+        <div *ngIf="toBeSaved && executiveReport.lang" class="btn-save-float-wrapper">
+          <button
+            (click)="saveExecutiveReport($event)"
+            class="button is-primary animate-slide slide-down is-3 is-rounded">
+            {{ 'COMMON.BUTTON.SAVE' | translate }}
+          </button>
+        </div>
+        <!-- /save button -->
+
       </div>
     </div>
   </div>

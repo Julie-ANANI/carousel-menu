@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { Innovation } from '../../../../models/innovation';
-import { Answer } from '../../../../models/answer';
-import { AnswerService } from '../../../../services/answer/answer.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ExecutiveReport} from '../../../../models/executive-report';
+// import { Innovation } from '../../../../models/innovation';
+// import { Answer } from '../../../../models/answer';
+// import { AnswerService } from '../../../../services/answer/answer.service';
+// import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-executive-report',
@@ -12,13 +13,21 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 
 export class SharedExecutiveReportComponent {
 
-  @Input() set project(value: Innovation) {
+  @Input() set executiveReport(value: ExecutiveReport) {
+    this._executiveReport = value;
+  }
+
+  @Output() executiveReportChange: EventEmitter<ExecutiveReport> = new EventEmitter<ExecutiveReport>();
+
+  private _executiveReport: ExecutiveReport = <ExecutiveReport>{};
+
+  /*@Input() set project(value: Innovation) {
     this._innovation = value;
     this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
     this._getAnswers();
-  }
+  }*/
 
-  private _innovation: Innovation = {};
+  /*private _innovation: Innovation = {};
 
   private _firstPageSections = [0, 1, 2, 3];
 
@@ -26,12 +35,12 @@ export class SharedExecutiveReportComponent {
 
   private _answers: Array<Answer> = [];
 
-  private _anonymousAnswers = false;
+  private _anonymousAnswers = false;*/
 
-  constructor (private _answerService: AnswerService,
-               private _translateNotificationsService: TranslateNotificationsService) { }
+  constructor (/*private _answerService: AnswerService,
+               private _translateNotificationsService: TranslateNotificationsService*/) { }
 
-  private _getAnswers() {
+  /*private _getAnswers() {
     if (this._innovation) {
       this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
         this._answers = response.answers.sort((a, b) => {
@@ -67,22 +76,26 @@ export class SharedExecutiveReportComponent {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR_EN');
       });
     }
-  }
+  }*/
 
-  get innovation(): Innovation {
+  /*get innovation(): Innovation {
     return this._innovation;
-  }
+  }*/
 
-  get firstPageSections(): number[] {
+  /*get firstPageSections(): number[] {
     return this._firstPageSections;
-  }
+  }*/
 
-  get secondPageSections(): number[] {
+  /*get secondPageSections(): number[] {
     return this._secondPageSections;
-  }
+  }*/
 
-  get answers(): Array<Answer> {
+  /*get answers(): Array<Answer> {
     return this._answers;
+  }*/
+
+  get executiveReport(): ExecutiveReport {
+    return this._executiveReport;
   }
 
 }

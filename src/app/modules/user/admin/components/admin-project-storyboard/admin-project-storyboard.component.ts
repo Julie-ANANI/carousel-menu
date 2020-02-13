@@ -31,6 +31,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   newSelectedLang = this.currentLang;
 
+  private _toBeSaved = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
@@ -66,6 +68,13 @@ export class AdminProjectStoryboardComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       // todo add the service to get the executive report from back using id.
       // todo assign the selected lang, nextSelected lang, executiveReport
+
+      // temporary
+      this._executiveReport = {
+        lang: 'en',
+        completion: 100
+      };
+
       this._isLoading = false;
       this._setSpinner(false);
     }
@@ -117,6 +126,15 @@ export class AdminProjectStoryboardComponent implements OnInit {
     event.preventDefault();
   }
 
+  public saveExecutiveReport(event: Event) {
+    event.preventDefault();
+
+    // todo save the executive report in back
+    // todo show notification success or error.
+    // todo make saveButton value false toBeSaved = false;
+
+  }
+
   get currentLang(): string {
     return this._translateService.currentLang;
   }
@@ -133,6 +151,11 @@ export class AdminProjectStoryboardComponent implements OnInit {
     return this._executiveReport;
   }
 
+  set executiveReport(value: ExecutiveReport) {
+    this._executiveReport = value;
+    this._toBeSaved = true;
+  }
+
   get isLoading(): boolean {
     return this._isLoading;
   }
@@ -143,6 +166,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get modalTitle(): string {
     return this._modalTitle;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
   }
 
 }
