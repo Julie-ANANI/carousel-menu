@@ -15,6 +15,14 @@ export const STORYBOARD = {
   'MODAL':{
     'CHANGE_TITLE': 'Changer de langue',
     'SELECT_TITLE': 'Sélection de la langue'
+  },
+
+  'LAST_GENERATE': 'Dernière génération',
+
+  'AT': 'à',
+
+  'TOAST': {
+    'URL_COPIED': 'L\'URL a été copié avec succès.'
   }
 
 };

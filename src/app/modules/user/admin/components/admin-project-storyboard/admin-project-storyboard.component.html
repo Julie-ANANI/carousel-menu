@@ -9,7 +9,7 @@
           <div class="d-flex flex-wrap">
 
             <!-- heading / lang -->
-            <div class="content-wrapper p-right-10">
+            <div class="content-wrapper p-right-10 p-bottom-30">
 
               <!-- heading -->
               <h1 class="title m-no-bottom text-background">Storyboard</h1>
@@ -17,28 +17,24 @@
 
 
               <!-- change lang -->
-              <ng-container *ngIf="executiveReport.lang">
-                <div class="text-notify text-lg">
-                  {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}
-                  <span (click)="openLangModal($event)" class="text-link text-normal">
+              <div *ngIf="executiveReport.lang" class="text-notify text-lg">
+                {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}
+                <span (click)="openLangModal($event)" class="text-link text-normal">
                     {{ 'STORYBOARD.CHANGE_LANG.B' | translate }}
                   </span>
-                  {{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
-                </div>
-              </ng-container>
+                {{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
+              </div>
               <!-- /change lang -->
 
 
               <!-- select lang -->
-              <ng-container *ngIf="!executiveReport.lang">
-                <div class="text-notify text-lg">
-                  {{ 'STORYBOARD.SELECT_LANG.A' | translate }}
-                  <span (click)="openLangModal($event)" class="text-link text-normal">
+              <div *ngIf="!executiveReport.lang" class="text-notify text-lg">
+                {{ 'STORYBOARD.SELECT_LANG.A' | translate }}
+                <span (click)="openLangModal($event)" class="text-link text-normal">
                     {{ 'STORYBOARD.SELECT_LANG.B' | translate }}
                   </span>
-                  {{ 'STORYBOARD.SELECT_LANG.C' | translate }}
-                </div>
-              </ng-container>
+                {{ 'STORYBOARD.SELECT_LANG.C' | translate }}
+              </div>
               <!-- /select lang -->
 
             </div>
@@ -46,7 +42,76 @@
 
 
             <!-- buttons / links -->
-            <div class="content-wrapper">
+            <div *ngIf="executiveReport.lang" class="content-wrapper p-bottom-15">
+
+              <!-- video -->
+              <div class="video-wrapper">
+
+                <!-- link -->
+                <div class="text-sm m-right-15 m-bottom-15">
+
+                  <!-- last generated date and time -->
+                  <p>
+                    {{ 'STORYBOARD.LAST_GENERATE' | translate }} 01/02/20 {{ 'STORYBOARD.AT' | translate }} 12:14
+                  </p>
+
+                  <!-- video url -->
+                  <p [ngStyle]="{ 'white-space': 'nowrap' }" class="text-bold">
+                    https://vimeo.com/387669379/02494b7130
+                    <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.COPY' | translate">
+                      <i (click)="copyLink($event, 'https://vimeo.com/387669379/02494b7130')"
+                         class="icon icon-copy">
+                      </i>
+                    </span>
+                  </p>
+
+                </div>
+                <!-- /link -->
+
+                <button
+                  [disabled]="executiveReport.completion !== 100"
+                  (click)="generateVideo($event)"
+                  class="button is-primary m-bottom-15">
+                  {{ 'COMMON.BUTTON.GENERATE_VIDEO' | translate }}
+                </button>
+
+              </div>
+              <!-- /video -->
+
+
+              <!-- pdf -->
+              <div class="pdf-wrapper">
+
+                <!-- link -->
+                <div class="text-sm m-bottom-15 m-right-15">
+
+                  <!-- last generated date and time -->
+                  <p>
+                    {{ 'STORYBOARD.LAST_GENERATE' | translate }} 01/02/20 {{ 'STORYBOARD.AT' | translate }} 12:14
+                  </p>
+
+                  <!-- video url -->
+                  <p [ngStyle]="{ 'white-space': 'nowrap' }" class="text-bold">
+                    https://umi.us/65118fd4df8g4dg98ddf5g4
+                    <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.COPY' | translate">
+                      <i (click)="copyLink($event, 'https://umi.us/65118fd4df8g4dg98ddf5g4')"
+                         class="icon icon-copy">
+                      </i>
+                    </span>
+                  </p>
+
+                </div>
+                <!-- /link -->
+
+                <button
+                  [disabled]="executiveReport.completion !== 100"
+                  (click)="generatePdf($event)"
+                  class="button is-primary is-outlined m-bottom-15">
+                  {{ 'COMMON.BUTTON.GENERATE_PDF' | translate }}
+                </button>
+
+              </div>
+              <!-- /pdf -->
 
             </div>
             <!-- /buttons / links -->

@@ -224,6 +224,8 @@ export const COMMON = {
     'EXPORT_WORKFLOW': 'Export all the workflows',
     'IMPORT_QUESTIONNAIRE': 'Import questionnaire',
     'EXPORT_QUESTIONNAIRE': 'Export all the questionnaires',
+    'GENERATE_VIDEO': 'Generate video',
+    'GENERATE_PDF': 'Generate PDF'
   },
 
   'PROJECT': {
@@ -386,7 +388,8 @@ export const COMMON = {
     'MOVE_UP': 'Move up',
     'MOVE_DOWN': 'Move down',
     'ADVANCE_SETTINGS': 'Advance settings',
-    'SAVE_CHANGES': 'Save changes'
+    'SAVE_CHANGES': 'Save changes',
+    'COPY': 'Copy'
   },
 
   'SIGNATURES': {

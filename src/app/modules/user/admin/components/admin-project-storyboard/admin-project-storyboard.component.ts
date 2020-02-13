@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { ExecutiveReport } from '../../../../../models/executive-report';
 import { Innovation } from '../../../../../models/innovation';
+import { CommonService } from '../../../../../services/common/common.service';
 
 @Component({
   selector: 'admin-storyboard',
@@ -34,6 +35,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
+              private _commonService: CommonService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
@@ -43,22 +45,21 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._getExecutiveReport(params['projectId']);
     });
 
-    this._activatedRoute.data.subscribe((response) => {
-      const innovation: Innovation = response['innovation'];
-      this._setTitle(InnovationFrontService.currentLangInnovationCard(innovation, this.currentLang, 'title'));
-
-      if (typeof innovation === 'undefined' || (innovation && !innovation._id)) {
-        this._isLoading = true;
-        this._setSpinner(false);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
-      }
-
-    })
-
   }
 
   ngOnInit() {
+
+    const innovation: Innovation = this._activatedRoute.snapshot.data['innovation'];
+    this._setTitle(InnovationFrontService.currentLangInnovationCard(innovation, this.currentLang, 'title'));
+
+    if (typeof innovation === 'undefined' || (innovation && !innovation._id)) {
+      this._isLoading = true;
+      this._setSpinner(false);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+    }
+
     this.setNewSelectedLang();
+
   }
 
   private _getExecutiveReport(id: string) {
@@ -100,6 +101,20 @@ export class AdminProjectStoryboardComponent implements OnInit {
     // todo add the service to create the executive report.
     this._setSpinner(false);
     this._isLoading = false;
+  }
+
+  public copyLink(event: Event, linkToCopy: string) {
+    event.preventDefault();
+    this._commonService.copyToClipboard(linkToCopy);
+    this._translateNotificationsService.success('ERROR.SUCCESS', 'STORYBOARD.TOAST.URL_COPIED');
+  }
+
+  public generateVideo(event: Event) {
+    event.preventDefault();
+  }
+
+  public generatePdf(event: Event) {
+    event.preventDefault();
   }
 
   get currentLang(): string {

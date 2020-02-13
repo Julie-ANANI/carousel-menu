@@ -37,7 +37,6 @@ import { EmailService } from '../../../services/email/email.service';
 import { TagsService } from '../../../services/tags/tags.service';
 import { CampaignService } from '../../../services/campaign/campaign.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
-import { CommonService } from '../../../services/common/common.service';
 import { AnswerService } from '../../../services/answer/answer.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { DownloadService } from '../../../services/download/download.service';
@@ -103,7 +102,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     TagsService,
     CampaignService,
     CampaignResolver,
-    CommonService,
     AnswerService,
     AutocompleteService,
     DownloadService,

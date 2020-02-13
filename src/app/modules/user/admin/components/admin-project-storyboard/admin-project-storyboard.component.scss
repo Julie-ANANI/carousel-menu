@@ -7,10 +7,31 @@
 
     .content-wrapper {
       flex: 1;
-      padding-bottom: 20px;
 
       .title {
         font-size: 28px;
+      }
+
+      .video-wrapper, .pdf-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        text-align: right;
+
+        p {
+          margin-bottom: 0;
+
+          i {
+            color: $primary-color;
+            cursor: pointer;
+          }
+
+        }
+
+        .button {
+          min-width: 172px;
+        }
+
       }
 
     }
