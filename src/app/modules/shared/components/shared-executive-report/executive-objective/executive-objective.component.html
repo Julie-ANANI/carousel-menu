@@ -5,15 +5,22 @@
 
     <!-- objective -->
     <div>
-      <label>
+      <label class="relative d-block">
+
         <textarea
-          (change)="emitChanges($event)"
+          (change)="emitChanges($event, 'objective')"
           [(ngModel)]="config.objective"
           [attr.placeholder]="'EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
           [ngStyle]="{ 'height': '90px' }"
+          maxlength="120"
           class="form-input"
           type="text">
         </textarea>
+
+        <span [ngStyle]="{ 'color': objectiveColor }" class="absolute text-limit-wrapper">
+          {{ 120 - config.objective.length }}
+        </span>
+
       </label>
     </div>
     <!-- /objective -->
@@ -23,24 +30,38 @@
     <div [ngStyle]="{ 'padding-top': '74px' }">
 
       <div class="m-bottom-10">
-        <label>
+        <label class="relative d-block">
+
           <input
-            (change)="emitChanges($event)"
+            (change)="emitChanges($event, 'clientName')"
             [(ngModel)]="config.owner.name"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_NAME' | translate"
+            maxlength="58"
             class="form-input"
             type="text">
+
+          <span [ngStyle]="{ 'color': clientNameColor }" class="absolute text-limit-wrapper">
+            {{ 58 - config.owner.name.length }}
+          </span>
+
         </label>
       </div>
 
       <div>
-        <label>
+        <label class="relative d-block">
+
           <input
-            (change)="emitChanges($event)"
+            (change)="emitChanges($event, 'clientEmail')"
             [(ngModel)]="config.owner.email"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_EMAIL' | translate"
+            maxlength="58"
             class="form-input"
             type="text">
+
+          <span [ngStyle]="{ 'color': clientEmailColor }" class="absolute text-limit-wrapper">
+            {{ 58 - config.owner.email.length }}
+          </span>
+
         </label>
       </div>
 

@@ -17,6 +17,13 @@
       font-size: $font-size-sm;
     }
 
+    .text-limit-wrapper {
+      top: 8px;
+      right: 10px;
+      font-size: 13px;
+      font-weight: $font-weight-medium;
+    }
+
     &.has-border {
       border: 2px solid $border-color;
       border-radius: 8px;

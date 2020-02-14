@@ -101,5 +101,20 @@ export class CommonService {
     }
   }
 
+  /***
+   * this function is to return the color based on the length and limit.
+   * @param length
+   * @param limit
+   */
+  public static getLimitColor(length: number, limit: number): string {
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < (limit/2)) {
+      return '#F0AD4E';
+    } else {
+      return '#2ECC71';
+    }
+  }
+
 }
 

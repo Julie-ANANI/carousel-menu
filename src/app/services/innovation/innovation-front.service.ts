@@ -154,6 +154,7 @@ export class InnovationFrontService {
    * @param length
    * @param limit
    */
+  // todo remove this
   public static getColor(length: number, limit: number): string {
     if (length <= 0) {
       return '#EA5858';

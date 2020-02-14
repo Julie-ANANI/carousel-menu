@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ExecutiveObjective } from '../../../../../models/executive-report';
 import { User } from '../../../../../models/user.model';
+import { CommonService } from '../../../../../services/common/common.service';
 
 @Component({
   selector: 'executive-objective',
@@ -33,11 +34,34 @@ export class ExecutiveObjectiveComponent {
 
   private _commercial: User = <User>{};
 
+  private _objectiveColor = '#2ECC71';
+
+  private _clientNameColor = '#2ECC71';
+
+  private _clientEmailColor = '#2ECC71';
+
   constructor() { }
 
-  public emitChanges(event: Event) {
+  public emitChanges(event: Event, field?: string) {
     event.preventDefault();
     this.configChange.emit(this._config);
+
+    switch (field) {
+
+      case 'objective':
+        this._objectiveColor = CommonService.getLimitColor(this._config.objective.length, 120);
+        break;
+
+      case 'clientName':
+        this._clientNameColor = CommonService.getLimitColor(this._config.owner.name.length, 58);
+        break;
+
+      case 'clientEmail':
+        this._clientEmailColor = CommonService.getLimitColor(this._config.owner.email.length, 58);
+        break;
+
+    }
+
   }
 
   public selectCommercial(event: Event) {
@@ -57,6 +81,18 @@ export class ExecutiveObjectiveComponent {
 
   get commercial(): User {
     return this._commercial;
+  }
+
+  get objectiveColor(): string {
+    return this._objectiveColor;
+  }
+
+  get clientNameColor(): string {
+    return this._clientNameColor;
+  }
+
+  get clientEmailColor(): string {
+    return this._clientEmailColor;
   }
 
 }
