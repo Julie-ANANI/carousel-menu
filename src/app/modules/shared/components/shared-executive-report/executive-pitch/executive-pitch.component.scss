@@ -1,6 +1,6 @@
 @import "../../../../../../style/framework/src/variables";
 
-#executive-objective {
+#executive-pitch {
 
   .content-wrapper {
     max-width: 438px;
@@ -10,9 +10,6 @@
 
     .form-input {
       padding: 15px 20px 15px 15px;
-    }
-
-    .form-input, .form-select {
       border: 2px solid #000000;
       font-size: $font-size-sm;
     }
@@ -28,18 +25,13 @@
       border: 2px solid $border-color;
       border-radius: 8px;
       box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+      text-align: center;
 
-      p, h4 {
-        margin-bottom: 0;
-      }
-
-      p {
+      .text-wrapper {
         word-break: break-all;
-      }
-
-      div {
-        font-size: $font-size-sm;
-        text-align: center;
+        border-radius: 5px;
+        background-color: #D8D8D8;
+        min-height: 212px;
       }
 
     }

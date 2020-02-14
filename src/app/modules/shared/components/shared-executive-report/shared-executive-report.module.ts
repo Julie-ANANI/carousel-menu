@@ -20,6 +20,7 @@ import { CountryFlagModule } from '../../../utility-components/country-flag/coun
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ChartsModule } from 'ng2-charts';
 import { PieChartModule } from "../../../utility-components/canvas/piechart/pie-chart.module";
+import { ExecutivePitchComponent } from './executive-pitch/executive-pitch.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { PieChartModule } from "../../../utility-components/canvas/piechart/pie-
     StarsComponent,
     PieChartComponent,
     BarChartComponent,
-    ExecutiveObjectiveComponent
+    ExecutiveObjectiveComponent,
+    ExecutivePitchComponent
   ],
   exports: [
     SharedExecutiveReportComponent

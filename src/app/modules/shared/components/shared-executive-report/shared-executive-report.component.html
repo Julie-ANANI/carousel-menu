@@ -1,10 +1,27 @@
 <div id="shared-executive-report">
 
   <!-- objective / owner / umi commercial -->
-  <section>
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
     <executive-objective [(config)]="objectiveConfig"></executive-objective>
   </section>
   <!-- /objective / owner / umi commercial -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- pitch -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-pitch [(pitch)]="executivePitch"></executive-pitch>
+  </section>
+  <!-- /pitch -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
 
 </div>
 

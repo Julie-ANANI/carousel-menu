@@ -24,6 +24,8 @@ export class SharedExecutiveReportComponent {
 
   private _objectiveConfig: ExecutiveObjective = <ExecutiveObjective>{};
 
+  private _executivePitch = '';
+
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
     this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
@@ -46,11 +48,19 @@ export class SharedExecutiveReportComponent {
   }
 
   private _setData() {
-    /*this._objectiveConfig = {
+
+    this._objectiveConfig = {
       umiCommercial: this._executiveReport.umiCommercial,
       owner: this._executiveReport.owner,
       objective: this._executiveReport.objective
-    }*/
+    };
+
+    this._executivePitch = this._executiveReport.summary;
+
+  }
+
+  public emitChanges() {
+    this.executiveReportChange.emit(this._executiveReport);
   }
 
   /*private _getAnswers() {
@@ -117,7 +127,20 @@ export class SharedExecutiveReportComponent {
 
   set objectiveConfig(value: ExecutiveObjective) {
     this._objectiveConfig = value;
-    console.log(value);
+    this._executiveReport.umiCommercial = this._objectiveConfig.umiCommercial;
+    this._executiveReport.owner = this._objectiveConfig.owner;
+    this._executiveReport.objective = this._objectiveConfig.objective;
+    this.emitChanges();
+  }
+
+  get executivePitch(): string {
+    return this._executivePitch;
+  }
+
+  set executivePitch(value: string) {
+    this._executivePitch = value;
+    this._executiveReport.summary = this._executivePitch;
+    this.emitChanges();
   }
 
 }

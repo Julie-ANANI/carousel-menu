@@ -103,10 +103,13 @@ export class CommonService {
 
   /***
    * this function is to return the color based on the length and limit.
-   * @param length
+   * @param textLength
    * @param limit
    */
-  public static getLimitColor(length: number, limit: number): string {
+  public static getLimitColor(textLength: number, limit: number): string {
+
+    const length = limit - textLength;
+
     if (length <= 0) {
       return '#EA5858';
     } else if (length > 0 && length < (limit/2)) {
@@ -114,6 +117,7 @@ export class CommonService {
     } else {
       return '#2ECC71';
     }
+
   }
 
 }

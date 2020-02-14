@@ -10,12 +10,13 @@ export interface ExecutiveObjective {
 }
 
 export interface ExecutiveReport {
-  // readonly _id: string;
+  readonly _id: string;
   readonly completion: number
   lang: 'en' | 'fr';
-  // umiCommercial: string
-  // owner: ExecutiveOwner;
-  // objective: string;
-  // created: Date;
-  // updated: Date;
+  summary: string;
+  umiCommercial: string
+  owner: ExecutiveOwner;
+  objective: string;
+  created: Date;
+  updated: Date;
 }

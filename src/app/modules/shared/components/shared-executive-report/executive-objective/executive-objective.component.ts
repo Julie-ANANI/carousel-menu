@@ -24,7 +24,14 @@ export class ExecutiveObjectiveComponent {
 
   @Output() configChange: EventEmitter<ExecutiveObjective> = new EventEmitter<ExecutiveObjective>();
 
-  private _config: ExecutiveObjective = <ExecutiveObjective>{};
+  private _config: ExecutiveObjective = <ExecutiveObjective> {
+    objective: '',
+    owner: {
+      name: '',
+      email: '',
+    },
+    umiCommercial: ''
+  };
 
   // todo uncomment this
   // private readonly _allCommercials: Observable<Array<User>> = call service here;
@@ -34,18 +41,15 @@ export class ExecutiveObjectiveComponent {
 
   private _commercial: User = <User>{};
 
-  private _objectiveColor = '#2ECC71';
+  private _objectiveColor = CommonService.getLimitColor(this._config.objective.length, 120);
 
-  private _clientNameColor = '#2ECC71';
+  private _clientNameColor = CommonService.getLimitColor(this._config.owner.name.length, 58);
 
-  private _clientEmailColor = '#2ECC71';
+  private _clientEmailColor = CommonService.getLimitColor(this._config.owner.email.length, 58);
 
   constructor() { }
 
-  public emitChanges(event: Event, field?: string) {
-    event.preventDefault();
-    this.configChange.emit(this._config);
-
+  public textColor(field: string) {
     switch (field) {
 
       case 'objective':
@@ -61,7 +65,11 @@ export class ExecutiveObjectiveComponent {
         break;
 
     }
+  }
 
+  public emitChanges(event: Event) {
+    event.preventDefault();
+    this.configChange.emit(this._config);
   }
 
   public selectCommercial(event: Event) {
